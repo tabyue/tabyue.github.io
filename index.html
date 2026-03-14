@@ -3,1047 +3,1299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tabyue | 具身智能技术前沿</title>
-    <meta name="description" content="tabyue 的个人主页 - 具身智能 Embodied AI 技术文章聚合与前沿洞察">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>tabyue | 具身智能周刊 - Embodied AI Weekly</title>
+    <meta name="description" content="tabyue 的具身智能技术前沿周刊 - 精选30篇高质量文章，涵盖产业动态、技术突破、融资创投、学术研究">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #6366f1;
+            --primary-light: #818cf8;
             --primary-dark: #4f46e5;
             --secondary: #10b981;
+            --secondary-light: #34d399;
             --accent: #f59e0b;
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --border: #334155;
+            --accent-light: #fbbf24;
+            --pink: #ec4899;
+            --pink-light: #f472b6;
+            --cyan: #06b6d4;
+            --cyan-light: #22d3ee;
+            --bg-dark: #0a0e1a;
+            --bg-section: #0f1525;
+            --bg-card: #151c30;
+            --bg-card-hover: #1a2340;
+            --text-primary: #f1f5f9;
+            --text-secondary: #8b95b0;
+            --text-muted: #5b6580;
+            --border: #1e2a45;
+            --border-light: #2a3655;
+            --glass: rgba(15, 21, 37, 0.7);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Noto Sans SC', sans-serif;
+            font-family: 'Noto Sans SC', -apple-system, sans-serif;
             background: var(--bg-dark);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.7;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Top Nav */
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ===== Scrollbar ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        /* ===== Top Nav ===== */
         .top-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            padding: 0 30px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s ease;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            background: rgba(10, 14, 26, 0.8);
+            backdrop-filter: blur(24px) saturate(1.2);
+            -webkit-backdrop-filter: blur(24px) saturate(1.2);
+            border-bottom: 1px solid transparent;
+            padding: 0 40px; height: 64px;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: all 0.4s cubic-bezier(.4,0,.2,1);
         }
 
         .top-nav.scrolled {
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            border-bottom-color: var(--border);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
         }
+
+        .nav-left { display: flex; align-items: center; gap: 32px; }
 
         .nav-logo {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-decoration: none;
+            font-size: 1.3rem; font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-light), var(--cyan-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem; font-weight: 500;
+            padding: 3px 10px;
+            background: linear-gradient(135deg, var(--primary), var(--cyan));
+            border-radius: 20px; color: white;
+            letter-spacing: 0.05em;
         }
 
         .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
+            display: flex; gap: 6px; list-style: none;
         }
 
         .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-            position: relative;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 0.85rem; font-weight: 500;
+            padding: 6px 14px; border-radius: 8px;
+            transition: all 0.3s ease;
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
+        .nav-links a:hover, .nav-links a.active {
             color: var(--text-primary);
+            background: rgba(99,102,241,0.1);
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
 
         .nav-github {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.875rem;
-            padding: 6px 16px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            display: flex; align-items: center; gap: 6px;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 0.8rem; padding: 7px 16px;
+            border: 1px solid var(--border); border-radius: 10px;
             transition: all 0.3s ease;
         }
 
         .nav-github:hover {
             color: var(--text-primary);
             border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(99,102,241,0.08);
         }
 
-        .nav-github svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
+        .nav-github svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .nav-toggle {
+            display: none; background: none; border: none;
+            color: var(--text-primary); font-size: 1.4rem; cursor: pointer;
+            padding: 4px 8px;
         }
 
-        /* Hero Section */
+        /* ===== Hero ===== */
         .hero {
             position: relative;
-            padding: 140px 20px 60px;
+            padding: 140px 20px 80px;
             text-align: center;
             overflow: hidden;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+            background: linear-gradient(160deg, #0a0e1a 0%, #0f1a3a 30%, #1a0e2e 60%, #0a0e1a 100%);
         }
 
         .hero::before {
             content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 50%);
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 600px 400px at 25% 40%, rgba(99,102,241,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 350px at 75% 60%, rgba(6,182,212,0.1) 0%, transparent 70%),
+                radial-gradient(ellipse 400px 300px at 50% 80%, rgba(236,72,153,0.06) 0%, transparent 70%);
             pointer-events: none;
         }
 
-        /* Floating particles */
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+        .hero-grid {
+            position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
             pointer-events: none;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: float-particle linear infinite;
-        }
-
-        @keyframes float-particle {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
         }
 
         .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-            margin: 0 auto;
+            position: relative; z-index: 1;
+            max-width: 880px; margin: 0 auto;
         }
 
-        .hero-avatar {
-            width: 80px;
-            height: 80px;
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem; font-weight: 500;
+            color: var(--cyan-light);
+            padding: 6px 18px;
+            background: rgba(6,182,212,0.08);
+            border: 1px solid rgba(6,182,212,0.2);
+            border-radius: 30px;
+            margin-bottom: 28px;
+            letter-spacing: 0.04em;
+        }
+
+        .hero-eyebrow .pulse {
+            width: 7px; height: 7px;
+            background: var(--cyan-light);
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 0 auto 20px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
         }
 
         .hero h1 {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #6366f1, #10b981, #f59e0b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradient-shift 8s ease infinite;
-            background-size: 200% 200%;
-        }
-
-        .hero .author-line {
-            font-size: 1rem;
-            color: var(--text-secondary);
+            font-size: 3.8rem; font-weight: 700;
+            line-height: 1.15; letter-spacing: -0.03em;
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
         }
 
-        .author-line .dot {
-            width: 6px;
-            height: 6px;
-            background: var(--secondary);
-            border-radius: 50%;
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #818cf8, #22d3ee, #f472b6);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradient-flow 6s ease infinite;
         }
 
-        @keyframes gradient-shift {
+        @keyframes gradient-flow {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
         }
 
         .hero .subtitle {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto 30px;
-            line-height: 1.8;
+            font-size: 1.1rem; color: var(--text-secondary);
+            max-width: 640px; margin: 0 auto 40px;
+            line-height: 1.85;
         }
 
         .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
+            display: flex; justify-content: center; gap: 48px;
+            padding: 32px 0;
         }
 
-        .stat-item {
-            text-align: center;
-        }
+        .stat-item { text-align: center; }
 
         .stat-value {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
+            font-size: 2.8rem; font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-light), var(--cyan-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .stat-label {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
+            font-size: 0.8rem; color: var(--text-muted);
+            margin-top: 4px; letter-spacing: 0.03em;
         }
 
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
+        .stat-divider {
+            width: 1px; background: var(--border);
+            align-self: stretch; margin: 8px 0;
         }
 
-        /* Section */
-        .section {
-            margin-bottom: 60px;
+        /* ===== Filter Bar ===== */
+        .filter-bar {
+            position: sticky; top: 64px; z-index: 99;
+            background: rgba(10,14,26,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 40px;
         }
 
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .section-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .section-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 600;
-        }
-
-        /* Definition Card */
-        .definition-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .definition-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(180deg, var(--primary), var(--secondary));
-        }
-
-        .definition-text {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        .definition-text strong {
-            color: var(--text-primary);
-        }
-
-        .pie-framework {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 30px;
+        .filter-inner {
+            max-width: 1280px; margin: 0 auto;
+            display: flex; align-items: center; gap: 12px;
             flex-wrap: wrap;
         }
 
-        .pie-item {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 12px;
-            padding: 20px 30px;
-            text-align: center;
-            transition: all 0.3s ease;
+        .filter-label {
+            font-size: 0.8rem; color: var(--text-muted);
+            font-weight: 500; margin-right: 4px;
+            white-space: nowrap;
         }
 
-        .pie-item:hover {
-            transform: translateY(-5px);
+        .filter-btn {
+            padding: 6px 16px; border-radius: 20px;
+            font-size: 0.8rem; font-weight: 500;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--border-light);
+            background: rgba(99,102,241,0.06);
+        }
+
+        .filter-btn.active {
+            color: white;
+            background: var(--primary);
             border-color: var(--primary);
-            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
         }
 
-        .pie-letter {
+        .filter-search {
+            margin-left: auto;
+            position: relative;
+        }
+
+        .filter-search input {
+            background: rgba(30,42,69,0.5);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 7px 14px 7px 36px;
+            color: var(--text-primary);
+            font-size: 0.82rem;
+            width: 220px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .filter-search input::placeholder { color: var(--text-muted); }
+
+        .filter-search input:focus {
+            border-color: var(--primary);
+            background: rgba(30,42,69,0.8);
+            width: 280px;
+        }
+
+        .filter-search svg {
+            position: absolute; left: 11px; top: 50%;
+            transform: translateY(-50%);
+            width: 15px; height: 15px;
+            fill: none; stroke: var(--text-muted); stroke-width: 2;
+        }
+
+        /* ===== Container ===== */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 50px 40px;
+        }
+
+        /* ===== Section ===== */
+        .section { margin-bottom: 64px; }
+
+        .section-header {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .section-icon {
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .section-icon.purple { background: rgba(99,102,241,0.12); }
+        .section-icon.green { background: rgba(16,185,129,0.12); }
+        .section-icon.pink { background: rgba(236,72,153,0.12); }
+        .section-icon.cyan { background: rgba(6,182,212,0.12); }
+        .section-icon.amber { background: rgba(245,158,11,0.12); }
+
+        .section-title {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
+            font-size: 1.5rem; font-weight: 600;
+            letter-spacing: -0.01em;
         }
 
-        .pie-word {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-top: 5px;
+        .section-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: rgba(99,102,241,0.08);
+            padding: 2px 10px;
+            border-radius: 20px;
+            margin-left: 8px;
         }
 
-        /* Article Grid */
+        /* ===== Article Grid ===== */
         .article-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+            gap: 20px;
         }
 
         .article-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 25px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            display: block;
+            padding: 24px;
+            text-decoration: none; color: inherit; display: flex;
+            flex-direction: column;
+            transition: all 0.35s cubic-bezier(.4,0,.2,1);
+            position: relative; overflow: hidden;
         }
 
         .article-card::before {
             content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--cyan));
+            transform: scaleX(0); transform-origin: left;
+            transition: transform 0.4s cubic-bezier(.4,0,.2,1);
         }
 
         .article-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-4px);
+            border-color: var(--border-light);
+            background: var(--bg-card-hover);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.35), 0 0 0 1px rgba(99,102,241,0.08);
         }
 
-        .article-card:hover::before {
-            transform: scaleX(1);
+        .article-card:hover::before { transform: scaleX(1); }
+
+        .card-top {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 14px;
         }
 
         .article-tag {
-            display: inline-block;
-            padding: 4px 12px;
-            background: rgba(99, 102, 241, 0.15);
-            color: var(--primary);
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            margin-bottom: 15px;
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 3px 11px; border-radius: 6px;
+            font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 0.03em;
         }
 
-        .article-tag.tech { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
-        .article-tag.industry { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-        .article-tag.research { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-        .article-tag.policy { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+        .tag-industry { background: rgba(16,185,129,0.1); color: var(--secondary-light); }
+        .tag-tech { background: rgba(99,102,241,0.1); color: var(--primary-light); }
+        .tag-funding { background: rgba(245,158,11,0.1); color: var(--accent-light); }
+        .tag-policy { background: rgba(236,72,153,0.1); color: var(--pink-light); }
+        .tag-research { background: rgba(6,182,212,0.1); color: var(--cyan-light); }
+        .tag-product { background: rgba(139,92,246,0.1); color: #a78bfa; }
+
+        .card-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem; color: var(--text-muted);
+            opacity: 0.5;
+        }
 
         .article-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            line-height: 1.5;
+            font-size: 1.02rem; font-weight: 600;
+            line-height: 1.55; margin-bottom: 10px;
             color: var(--text-primary);
+            display: -webkit-box; -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical; overflow: hidden;
         }
 
         .article-desc {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            font-size: 0.82rem; color: var(--text-secondary);
+            line-height: 1.7; margin-bottom: 16px; flex: 1;
+            display: -webkit-box; -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical; overflow: hidden;
         }
 
         .article-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
+            display: flex; align-items: center; justify-content: space-between;
+            font-size: 0.72rem; color: var(--text-muted);
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
         }
 
-        .article-source {
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        .meta-source {
+            display: flex; align-items: center; gap: 6px;
+            font-weight: 500;
         }
 
-        /* Timeline */
-        .timeline {
-            position: relative;
-            padding-left: 30px;
+        .source-dot {
+            width: 5px; height: 5px; border-radius: 50%;
         }
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent));
+        .source-dot.green { background: var(--secondary); }
+        .source-dot.purple { background: var(--primary); }
+        .source-dot.pink { background: var(--pink); }
+        .source-dot.cyan { background: var(--cyan); }
+        .source-dot.amber { background: var(--accent); }
+
+        .meta-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
         }
 
-        .timeline-item {
-            position: relative;
-            padding-bottom: 30px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -34px;
-            top: 5px;
-            width: 10px;
-            height: 10px;
-            background: var(--primary);
-            border-radius: 50%;
-            border: 3px solid var(--bg-dark);
-        }
-
-        .timeline-date {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--secondary);
-            margin-bottom: 8px;
-        }
-
-        .timeline-content {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-        }
-
-        .timeline-title {
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .timeline-desc {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        /* Tech Categories */
-        .tech-categories {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-
-        .tech-tag {
-            padding: 10px 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
+        .card-arrow {
+            position: absolute; bottom: 24px; right: 24px;
+            opacity: 0; transform: translate(-4px, 0);
             transition: all 0.3s ease;
-            cursor: pointer;
+            color: var(--primary-light); font-size: 1.1rem;
         }
 
-        .tech-tag:hover, .tech-tag.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
+        .article-card:hover .card-arrow {
+            opacity: 1; transform: translate(0, 0);
         }
 
-        /* Back to Top */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 44px;
-            height: 44px;
-            background: var(--primary);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 1.25rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            z-index: 99;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        /* ===== Highlight Card ===== */
+        .highlight-card {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(6,182,212,0.04));
+            border-color: rgba(99,102,241,0.15);
+            padding: 32px;
         }
 
-        .back-to-top.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .highlight-card .article-title {
+            font-size: 1.2rem;
+            -webkit-line-clamp: unset;
         }
 
-        .back-to-top:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
+        .highlight-card .article-desc {
+            -webkit-line-clamp: 4;
         }
 
-        /* Footer */
+        .highlight-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem; padding: 2px 8px;
+            background: linear-gradient(135deg, var(--primary), var(--cyan));
+            border-radius: 4px; color: white;
+            letter-spacing: 0.05em;
+        }
+
+        /* ===== Footer ===== */
         .footer {
             text-align: center;
-            padding: 40px 20px;
+            padding: 48px 20px;
             border-top: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-size: 0.875rem;
         }
 
-        .footer a {
-            color: var(--primary);
+        .footer-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem; font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .footer-brand a {
+            color: var(--primary-light);
             text-decoration: none;
         }
 
-        .footer a:hover {
-            text-decoration: underline;
+        .footer-brand a:hover { text-decoration: underline; }
+
+        .footer-sub {
+            font-size: 0.78rem; color: var(--text-muted);
         }
 
-        /* Mobile Nav */
-        .nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
+        /* ===== Back to Top ===== */
+        .back-to-top {
+            position: fixed; bottom: 28px; right: 28px;
+            width: 42px; height: 42px;
+            background: var(--primary);
+            border: none; border-radius: 12px;
+            color: white; font-size: 1.1rem;
             cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: translateY(12px);
+            transition: all 0.35s cubic-bezier(.4,0,.2,1);
+            z-index: 99;
+            box-shadow: 0 4px 20px rgba(99,102,241,0.35);
         }
 
-        /* Responsive */
+        .back-to-top.visible { opacity: 1; transform: translateY(0); }
+        .back-to-top:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 1024px) {
+            .highlight-card { grid-column: span 1; }
+        }
+
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero {
-                padding: 120px 20px 40px;
-            }
-
-            .hero-stats {
-                gap: 20px;
-            }
-
-            .stat-value {
-                font-size: 1.75rem;
-            }
-
-            .article-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .pie-framework {
-                gap: 15px;
-            }
-
-            .pie-item {
-                padding: 15px 20px;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                right: 0;
-                background: rgba(15, 23, 42, 0.95);
+            .top-nav { padding: 0 20px; }
+            .nav-links, .nav-badge { display: none; }
+            .nav-links.open {
+                display: flex; flex-direction: column;
+                position: absolute; top: 64px; left: 0; right: 0;
+                background: rgba(10,14,26,0.95);
                 backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 20px 30px;
-                gap: 15px;
+                padding: 16px 20px; gap: 4px;
                 border-bottom: 1px solid var(--border);
             }
+            .nav-toggle { display: block; }
+            .nav-github { display: none; }
 
-            .nav-links.open {
-                display: flex;
-            }
+            .hero { padding: 120px 20px 50px; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero-stats { gap: 20px; flex-wrap: wrap; }
+            .stat-value { font-size: 1.8rem; }
+            .stat-divider { display: none; }
 
-            .nav-toggle {
-                display: block;
-            }
+            .filter-bar { padding: 12px 20px; }
+            .filter-inner { gap: 8px; }
+            .filter-search { margin-left: 0; width: 100%; margin-top: 8px; }
+            .filter-search input { width: 100%; }
+            .filter-search input:focus { width: 100%; }
 
-            .nav-github {
-                display: none;
-            }
+            .container { padding: 30px 20px; }
+            .article-grid { grid-template-columns: 1fr; }
+            .highlight-card { grid-column: span 1; }
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* ===== Animations ===== */
+        .fade-up {
+            opacity: 0; transform: translateY(18px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
-        .animate-in {
-            animation: fadeInUp 0.6s ease forwards;
-        }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
+        /* hidden cards by filter */
+        .article-card.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <!-- Top Navigation -->
-    <nav class="top-nav" id="topNav">
+
+<!-- Top Nav -->
+<nav class="top-nav" id="topNav">
+    <div class="nav-left">
         <a href="#" class="nav-logo">tabyue</a>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+        <span class="nav-badge">WEEKLY</span>
         <ul class="nav-links" id="navLinks">
-            <li><a href="#about">What is</a></li>
-            <li><a href="#news">News</a></li>
-            <li><a href="#tech">Tech</a></li>
-            <li><a href="#timeline">Timeline</a></li>
-            <li><a href="#reports">Reports</a></li>
+            <li><a href="#industry">产业动态</a></li>
+            <li><a href="#funding">融资创投</a></li>
+            <li><a href="#tech">技术突破</a></li>
+            <li><a href="#research">学术研究</a></li>
+            <li><a href="#global">全球视野</a></li>
         </ul>
+    </div>
+    <div class="nav-right">
+        <button class="nav-toggle" id="navToggle">&#9776;</button>
         <a href="https://github.com/tabyue" target="_blank" class="nav-github">
             <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
             GitHub
         </a>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Floating Particles -->
-    <div class="particles" id="particles"></div>
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+        <div class="hero-eyebrow">
+            <span class="pulse"></span>
+            <span>2026.03.08 — 2026.03.14</span>
+        </div>
+        <h1>
+            <span class="gradient-text">Embodied AI</span><br>
+            Weekly Digest
+        </h1>
+        <p class="subtitle">
+            过去一周具身智能领域最值得关注的 30 篇文章精选<br>
+            产业动态 · 融资创投 · 技术突破 · 学术研究 · 全球视野
+        </p>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-value">30</div>
+                <div class="stat-label">精选文章</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <div class="stat-value">200亿</div>
+                <div class="stat-label">两月融资规模</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <div class="stat-value">¥300B+</div>
+                <div class="stat-label">2026市场规模预测</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <div class="stat-value">5</div>
+                <div class="stat-label">内容分类</div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-avatar">T</div>
-            <h1>Embodied AI Hub</h1>
-            <div class="author-line">
-                <span>by tabyue</span>
-                <span class="dot"></span>
-                <span>Embodied Intelligence Explorer</span>
-            </div>
-            <p class="subtitle">具身智能强调智能体从感知、决策到行动的连续学习与进化，通过与物理世界交互实现信息获取、决策与执行。它是迈向通用人工智能（AGI）的重要一步。</p>
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-value">$380B</div>
-                    <div class="stat-label">2030 Market Forecast</div>
+<!-- Filter Bar -->
+<div class="filter-bar" id="filterBar">
+    <div class="filter-inner">
+        <span class="filter-label">筛选：</span>
+        <button class="filter-btn active" data-filter="all">全部</button>
+        <button class="filter-btn" data-filter="industry">产业动态</button>
+        <button class="filter-btn" data-filter="funding">融资创投</button>
+        <button class="filter-btn" data-filter="tech">技术突破</button>
+        <button class="filter-btn" data-filter="research">学术研究</button>
+        <button class="filter-btn" data-filter="global">全球视野</button>
+        <div class="filter-search">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchInput" placeholder="搜索文章...">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- ===== 产业动态 ===== -->
+    <section class="section" id="industry">
+        <div class="section-header">
+            <div class="section-icon green">🏭</div>
+            <h2 class="section-title">产业动态</h2>
+            <span class="section-count">8 articles</span>
+        </div>
+        <div class="article-grid">
+
+            <a class="article-card highlight-card fade-up" data-category="industry" href="https://www.xinhuanet.com/tech/20260309/f25f9688d2e2470c8654ee4c2d107063/c.html" target="_blank">
+                <div class="card-top">
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <span class="article-tag tag-industry">产业动态</span>
+                        <span class="highlight-badge">TOP</span>
+                    </div>
+                    <span class="card-number">#01</span>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">2025</div>
-                    <div class="stat-label">Industry Launch Year</div>
+                <h3 class="article-title">具身智能：从场景落地到产业崛起</h3>
+                <p class="article-desc">新华社深度报道。从春晚舞台的灵动表演到银行大堂的贴心服务，从工业车间的高效作业到训练中心的家务练习，具身智能正走进越来越多的场景。2026年政府工作报告将具身智能列为重点培育的未来产业，优必选预计2026年工业人形机器人产能可达万台。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot green"></span>新华网</span>
+                    <span class="meta-date">2026-03-09</span>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value">PIE</div>
-                    <div class="stat-label">Core Architecture</div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="industry" href="https://news.cctv.cn/2026/03/01/ARTIbXD8De5pudw4GuYxCo6S260301.shtml" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-policy">政策标准</span>
+                    <span class="card-number">#02</span>
                 </div>
-            </div>
+                <h3 class="article-title">我国首个国家级人形机器人与具身智能标准体系发布</h3>
+                <p class="article-desc">工信部正式发布《人形机器人与具身智能标准体系（2026版）》，覆盖人形机器人全产业链与全生命周期，联合120余家产学研单位编制，为行业从万台级向规模化过渡铺路。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot green"></span>央视新闻</span>
+                    <span class="meta-date">2026-03-01</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="industry" href="https://finance.sina.com.cn/wm/2026-03-12/doc-inhqsxnq4942021.shtml" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-policy">政策</span>
+                    <span class="card-number">#03</span>
+                </div>
+                <h3 class="article-title">具身智能再被写入政府工作报告，人才培养如何跟上？</h3>
+                <p class="article-desc">具身智能产业规模加速扩张，有望在2035年突破万亿元。但数据显示，行业正面临严峻的复合型技术人才短缺问题，产学研结合成为破局关键。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot green"></span>新浪财经</span>
+                    <span class="meta-date">2026-03-12</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="industry" href="https://www.36kr.com/p/3721088135492104" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-industry">产业分析</span>
+                    <span class="card-number">#04</span>
+                </div>
+                <h3 class="article-title">人形机器人或许将是我们第一次完整经历的产业革命</h3>
+                <p class="article-desc">2026年人形机器人产业化拐点即将到来。特斯拉Optimus核心零部件成本下降67%，全球量产规模2030年有望达100万台。文章类比十年前新能源产业，论证万亿级市场爆发的逻辑。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot purple"></span>36氪</span>
+                    <span class="meta-date">2026-03-13</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="industry" href="https://www.chinanews.com.cn/cj/2026/03-11/10585320.shtml" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-industry">展会</span>
+                    <span class="card-number">#05</span>
+                </div>
+                <h3 class="article-title">数百家企业亮相中国具身智能机器人产业大会</h3>
+                <p class="article-desc">第三届中国具身智能机器人产业大会在杭州开幕，数百家企业集中亮相，涵盖从算法到终端、从零部件到整机的完整产业链条。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot green"></span>中国新闻网</span>
+                    <span class="meta-date">2026-03-11</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="industry" href="https://www.itshenji.com/article/340" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-policy">标准解读</span>
+                    <span class="card-number">#06</span>
+                </div>
+                <h3 class="article-title">解读《人形机器人与具身智能标准体系（2026版）》</h3>
+                <p class="article-desc">全面解读工信部标委会发布的首个人形机器人国家标准体系。该体系由120余家产学研单位编制，覆盖基础共性、整机系统、关键部组件、软件算法等七大领域。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot cyan"></span>IT审计网</span>
+                    <span class="meta-date">2026-03-03</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="industry" href="https://robottoday.com/article/china-s-15th-five-year-plan-2026-2030-embodied-intelligence-as-national-industrial-strategy" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-policy">战略规划</span>
+                    <span class="card-number">#07</span>
+                </div>
+                <h3 class="article-title">China's 15th Five-Year Plan: Embodied Intelligence as National Strategy</h3>
+                <p class="article-desc">中国"十五五"规划首次将具身智能提升为国家产业优先战略，分析了规划中的机器人指令及对产业生态的深远影响。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot cyan"></span>RobotToday</span>
+                    <span class="meta-date">2026-03-14</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="industry" href="https://www.baogaobox.com/insights/260309000026149.html" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-industry">产业报告</span>
+                    <span class="card-number">#08</span>
+                </div>
+                <h3 class="article-title">2026年具身智能的产业化之路面临哪些挑战？</h3>
+                <p class="article-desc">机器人产业独立研究报告，深度分析具身智能产业发展现状与趋势，涵盖技术路线、商业化验证、核心零部件国产化等关键议题。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot purple"></span>报告盒子</span>
+                    <span class="meta-date">2026-03-09</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
         </div>
     </section>
 
-    <div class="container">
-        <!-- Definition Section -->
-        <section class="section" id="about">
-            <div class="section-header">
-                <div class="section-icon">&#129504;</div>
-                <h2 class="section-title">What is Embodied AI?</h2>
-            </div>
-            <div class="definition-card">
-                <p class="definition-text">
-                    <strong>Embodied AI (Embodied Intelligence)</strong> is an intelligent system based on physical perception and action, achieving information acquisition, decision-making, and execution through interaction with the environment. Unlike traditional AI that "thinks in computers," it emphasizes "<strong>learning by entering the physical world</strong>."
-                    <br><br>
-                    As a foundation connecting cyberspace with physical-world applications (such as intelligent mechatronic systems and smart manufacturing), Embodied AI is a key technical pathway toward Artificial General Intelligence (AGI).
-                </p>
-                <div class="pie-framework">
-                    <div class="pie-item">
-                        <div class="pie-letter">P</div>
-                        <div class="pie-word">Perception<br>&#24863;&#30693;</div>
+    <!-- ===== 融资创投 ===== -->
+    <section class="section" id="funding">
+        <div class="section-header">
+            <div class="section-icon amber">💰</div>
+            <h2 class="section-title">融资创投</h2>
+            <span class="section-count">7 articles</span>
+        </div>
+        <div class="article-grid">
+
+            <a class="article-card highlight-card fade-up" data-category="funding" href="https://www.36kr.com/p/3719298629858056" target="_blank">
+                <div class="card-top">
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <span class="article-tag tag-funding">融资创投</span>
+                        <span class="highlight-badge">HOT</span>
                     </div>
-                    <div class="pie-item">
-                        <div class="pie-letter">I</div>
-                        <div class="pie-word">Interaction<br>&#20132;&#20114;</div>
-                    </div>
-                    <div class="pie-item">
-                        <div class="pie-letter">E</div>
-                        <div class="pie-word">Execution<br>&#25191;&#34892;</div>
-                    </div>
+                    <span class="card-number">#09</span>
                 </div>
-            </div>
-        </section>
-
-        <!-- Latest News -->
-        <section class="section" id="news">
-            <div class="section-header">
-                <div class="section-icon">&#128240;</div>
-                <h2 class="section-title">Latest News</h2>
-            </div>
-            <div class="article-grid">
-                <a class="article-card" href="https://www.thepaper.cn/detail/32376110" target="_blank">
-                    <span class="article-tag policy">Policy</span>
-                    <h3 class="article-title">Embodied AI Written into Government Work Report for the First Time</h3>
-                    <p class="article-desc">In 2025, "Embodied AI" was included in the government work report for the first time, becoming a key future industry. The 15th Five-Year Plan promotes Embodied AI as a new economic growth driver.</p>
-                    <div class="article-meta">
-                        <span class="article-source">The Paper</span>
-                        <span>2026-01-14</span>
-                    </div>
-                </a>
-
-                <a class="article-card" href="https://news.qq.com/rain/a/20260313A054AL00" target="_blank">
-                    <span class="article-tag tech">Tech</span>
-                    <h3 class="article-title">The Era of Physical AI Has Arrived</h3>
-                    <p class="article-desc">In spring 2026, Embodied AI truly enters factories, homes, and complex outdoor scenarios. LiDAR and sensor technologies become the cornerstone of "Physical AI."</p>
-                    <div class="article-meta">
-                        <span class="article-source">QQ News</span>
-                        <span>2026-03-13</span>
-                    </div>
-                </a>
-
-                <a class="article-card" href="https://www.vzkoo.com/read/202507150644a65fb34f8d8aca1177cd.html" target="_blank">
-                    <span class="article-tag industry">Industry</span>
-                    <h3 class="article-title">$38 Billion Blue Ocean Market</h3>
-                    <p class="article-desc">According to JiaZi GuangNian research, Embodied AI — the deep fusion of AI and robotics — is creating a $38 billion new market opportunity in 2025.</p>
-                    <div class="article-meta">
-                        <span class="article-source">JiaZi GuangNian</span>
-                        <span>2025-07-15</span>
-                    </div>
-                </a>
-
-                <a class="article-card" href="https://zhuanlan.zhihu.com/p/2007642510491661595" target="_blank">
-                    <span class="article-tag research">Research</span>
-                    <h3 class="article-title">Top Conference Papers Reveal Latest Breakthroughs</h3>
-                    <p class="article-desc">Best papers from RSS, ICRA, CoRL 2025 reveal the latest breakthroughs in Embodied AI across technology, applications, and development recommendations.</p>
-                    <div class="article-meta">
-                        <span class="article-source">Zhihu</span>
-                        <span>2026-02-19</span>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <!-- Tech Progress -->
-        <section class="section" id="tech">
-            <div class="section-header">
-                <div class="section-icon">&#128640;</div>
-                <h2 class="section-title">Tech Progress</h2>
-            </div>
-            <div class="tech-categories">
-                <span class="tech-tag active">Multimodal LLM</span>
-                <span class="tech-tag">Reinforcement Learning</span>
-                <span class="tech-tag">Sim2Real</span>
-                <span class="tech-tag">Tactile Sensing</span>
-                <span class="tech-tag">Vision-Language Model</span>
-                <span class="tech-tag">Robot Morphology</span>
-            </div>
-            <div class="article-grid">
-                <a class="article-card" href="https://cloud.tencent.com/developer/article/2637160" target="_blank">
-                    <span class="article-tag tech">Multimodal</span>
-                    <h3 class="article-title">Comprehensive Survey on Embodied AI</h3>
-                    <p class="article-desc">Multimodal large models are increasingly applied in Embodied AI, enabling end-to-end intelligence from vision to language to action.</p>
-                    <div class="article-meta">
-                        <span class="article-source">Tencent Cloud</span>
-                        <span>2026-03</span>
-                    </div>
-                </a>
-
-                <a class="article-card" href="https://www.thepaper.cn/detail/32376110" target="_blank">
-                    <span class="article-tag research">Research</span>
-                    <h3 class="article-title">From "Agile Limbs" to "Intelligent Brains"</h3>
-                    <p class="article-desc">2025 marks the paradigm shift in Embodied AI — from hardware to software, from limbs to brains.</p>
-                    <div class="article-meta">
-                        <span class="article-source">The Paper</span>
-                        <span>2026-01</span>
-                    </div>
-                </a>
-
-                <a class="article-card" href="https://www.ccf.org.cn/Focus/2025-08-20/847595.shtml" target="_blank">
-                    <span class="article-tag research">Research</span>
-                    <h3 class="article-title">CCCF Publishes "Embodied AI" Special Issue</h3>
-                    <p class="article-desc">China Computer Federation CCCF August 2025 issue features an "Embodied AI" special, exploring new paradigms in AI for Science.</p>
-                    <div class="article-meta">
-                        <span class="article-source">CCF</span>
-                        <span>2025-08</span>
-                    </div>
-                </a>
-
-                <a class="article-card" href="https://www.toutiao.com/article/7498353150873633289/" target="_blank">
-                    <span class="article-tag tech">Tech</span>
-                    <h3 class="article-title">Frontier Tech Progress in Embodied AI 2025</h3>
-                    <p class="article-desc">Deep dive into the PIE architecture: Perception, Interaction, Execution — the core framework of Embodied AI.</p>
-                    <div class="article-meta">
-                        <span class="article-source">Toutiao</span>
-                        <span>2025-04</span>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <!-- Development Timeline -->
-        <section class="section" id="timeline">
-            <div class="section-header">
-                <div class="section-icon">&#128200;</div>
-                <h2 class="section-title">Development Timeline</h2>
-            </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-date">2025</div>
-                    <div class="timeline-content">
-                        <h4 class="timeline-title">Industry Launch Year</h4>
-                        <p class="timeline-desc">Embodied AI first written into government work report, becoming a key future industry. The 15th Five-Year Plan promotes it as a new economic growth engine.</p>
-                    </div>
+                <h3 class="article-title">两百亿热钱涌入，具身智能卡在"手套"上</h3>
+                <p class="article-desc">2026年开年两月融资约200亿元，催生七家新晋百亿估值独角兽。但资本狂热背后是落地难的现状——缺乏真实数据导致无法大规模部署，竞争已从硬件比拼转向"大脑"模型与高质量数据的争夺。灵初智能提出"数据手套"采集路线。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot purple"></span>36氪 × 财能圈</span>
+                    <span class="meta-date">2026-03-12</span>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2025</div>
-                    <div class="timeline-content">
-                        <h4 class="timeline-title">Academic Breakthroughs</h4>
-                        <p class="timeline-desc">Best papers from RSS, ICRA, CoRL showcase major advances in Embodied AI research, spanning manipulation, navigation, and reasoning.</p>
-                    </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="funding" href="https://www.36kr.com/p/3711388372201858" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-funding">融资趋势</span>
+                    <span class="card-number">#10</span>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2026</div>
-                    <div class="timeline-content">
-                        <h4 class="timeline-title">Physical AI Era</h4>
-                        <p class="timeline-desc">Embodied AI moves from labs into factories, homes, and complex outdoor environments. LiDAR and sensor technologies become key competitive battlegrounds.</p>
-                    </div>
+                <h3 class="article-title">进入2026年，每天至少有5亿元砸向具身智能</h3>
+                <p class="article-desc">银河通用25亿元融资刷新单轮纪录，国资入局、大厂加码，呈现"订单式投资"特征。国家大基金三期、宁德时代等纷纷布局具身智能赛道。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot purple"></span>36氪</span>
+                    <span class="meta-date">2026-03-07</span>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">2030</div>
-                    <div class="timeline-content">
-                        <h4 class="timeline-title">$380B Market</h4>
-                        <p class="timeline-desc">Industry forecasts predict Embodied AI will create a $380 billion market, becoming the core domain of AI-robotics convergence.</p>
-                    </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="funding" href="https://finance.sina.com.cn/roll/2026-03-11/doc-inhqrrte5444291.shtml" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-funding">深度调查</span>
+                    <span class="card-number">#11</span>
                 </div>
-            </div>
-        </section>
+                <h3 class="article-title">两个月200亿元，谁在推高具身智能融资热度？</h3>
+                <p class="article-desc">《财经》杂志深度调查：至少六家具身智能创业公司计划今年上市，上市预期推高估值。文章揭示了融资热潮背后的资本逻辑与行业真实水位。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot amber"></span>《财经》杂志</span>
+                    <span class="meta-date">2026-03-11</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
 
-        <!-- Research Reports -->
-        <section class="section" id="reports">
-            <div class="section-header">
-                <div class="section-icon">&#128202;</div>
-                <h2 class="section-title">Industry Reports</h2>
-            </div>
-            <div class="article-grid">
-                <a class="article-card" href="https://www.caict.ac.cn/kxyj/qwfb/bps/202601/P020260130541978285206.pdf" target="_blank">
-                    <span class="article-tag research">Report</span>
-                    <h3 class="article-title">CAICT: Embodied AI Development Report</h3>
-                    <p class="article-desc">Authoritative report released Feb 2026, systematically analyzing the global Embodied AI landscape — technology, applications, and recommendations.</p>
-                    <div class="article-meta">
-                        <span class="article-source">CAICT</span>
-                        <span>2026-02</span>
+            <a class="article-card fade-up" data-category="funding" href="https://www.geekpark.net/news/360789" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-funding">融资</span>
+                    <span class="card-number">#12</span>
+                </div>
+                <h3 class="article-title">银河通用拿下25亿融资，刷新具身智能单轮融资金额</h3>
+                <p class="article-desc">国家大基金三期、宁德时代领投，银河通用三年累计融资70亿估值200亿。融资进入"重装时代"，IPO已紧锣密鼓筹备中。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot green"></span>极客公园</span>
+                    <span class="meta-date">2026-03-09</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="funding" href="https://news.10jqka.com.cn/20260311/c675210134.shtml" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-funding">估值俱乐部</span>
+                    <span class="card-number">#13</span>
+                </div>
+                <h3 class="article-title">中国具身智能"百亿估值俱乐部"成型</h3>
+                <p class="article-desc">帕西尼感知科技完成超10亿B轮融资，估值突破100亿。百亿估值俱乐部包括宇树科技、智元机器人、银河通用、星动纪元等核心企业。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot amber"></span>同花顺</span>
+                    <span class="meta-date">2026-03-11</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="funding" href="https://finance.sina.cn/2026-02-27/detail-inhphuuw6420056.d.html" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-funding">行业分析</span>
+                    <span class="card-number">#14</span>
+                </div>
+                <h3 class="article-title">具身智能企业的B轮融资，10亿只是"起步价"</h3>
+                <p class="article-desc">2026年具身智能产业站在分水岭：一边是轰鸣不止的融资新闻，另一边是仍在路上的工程化和商业化进度。10亿元B轮门槛让生存压力加剧。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot amber"></span>新浪财经</span>
+                    <span class="meta-date">2026-02-27</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="funding" href="https://news.qq.com/rain/a/20260211A06ZP400" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-funding">年度报告</span>
+                    <span class="card-number">#15</span>
+                </div>
+                <h3 class="article-title">2025具身智能创投全景：554亿热钱，4大估值梯队</h3>
+                <p class="article-desc">量子位智库报告。2025年全年具身智能赛道融资总额达554亿元，形成四大估值梯队，10亿元现金流成为企业生存门槛。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot cyan"></span>量子位</span>
+                    <span class="meta-date">2026-02-11</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- ===== 技术突破 ===== -->
+    <section class="section" id="tech">
+        <div class="section-header">
+            <div class="section-icon purple">⚡</div>
+            <h2 class="section-title">技术突破</h2>
+            <span class="section-count">7 articles</span>
+        </div>
+        <div class="article-grid">
+
+            <a class="article-card highlight-card fade-up" data-category="tech" href="https://agent.ren/2026/0312/9362.shtml" target="_blank">
+                <div class="card-top">
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <span class="article-tag tag-tech">技术突破</span>
+                        <span class="highlight-badge">NEW</span>
                     </div>
-                </a>
+                    <span class="card-number">#16</span>
+                </div>
+                <h3 class="article-title">DreamZero开创具身智能新范式：从语言理解迈向世界建模</h3>
+                <p class="article-desc">具身智能面临泛化能力不足、物理机理建模困难以及跨场景迁移性差等核心挑战。DreamZero提出全新范式，超越传统VLA模型，通过世界模型实现从"语言理解"到"物理交互"的跨越。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot purple"></span>A³ 智能体</span>
+                    <span class="meta-date">2026-03-12</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
 
-                <a class="article-card" href="https://blog.csdn.net/weixin_47201270/article/details/147620983" target="_blank">
-                    <span class="article-tag industry">Report</span>
-                    <h3 class="article-title">2025 Embodied AI Technology Report</h3>
-                    <p class="article-desc">Based on domestic and international authoritative news sources and industry research, presented through data visualization and in-depth analysis.</p>
-                    <div class="article-meta">
-                        <span class="article-source">CSDN</span>
-                        <span>2025-04</span>
-                    </div>
-                </a>
+            <a class="article-card fade-up" data-category="tech" href="https://www.iyiou.com/research/202601091626" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-tech">灵巧手</span>
+                    <span class="card-number">#17</span>
+                </div>
+                <h3 class="article-title">2026中国具身智能灵巧手市场洞察报告</h3>
+                <p class="article-desc">亿欧智库深度报告。灵巧手市场复合增长率预计高达72.38%，自由度提升至22个，寿命大幅延长。灵巧手被视为具身智能的"iPhone时刻"关键硬件。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot green"></span>亿欧智库</span>
+                    <span class="meta-date">2026-01-09</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
 
-                <a class="article-card" href="https://www.engineering.org.cn/sscae/CN/10.15302/J-SSCAE-2025.07.019" target="_blank">
-                    <span class="article-tag research">Report</span>
-                    <h3 class="article-title">Embodied AI: Trends and Outlook</h3>
-                    <p class="article-desc">Published in the CAE journal, exploring the continuous learning and evolution mechanisms of Embodied AI from perception to decision-making to action.</p>
-                    <div class="article-meta">
-                        <span class="article-source">CAE</span>
-                        <span>2025-07</span>
-                    </div>
-                </a>
-            </div>
-        </section>
-    </div>
+            <a class="article-card fade-up" data-category="tech" href="https://cloud.tencent.com/developer/article/2637160" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-research">综述</span>
+                    <span class="card-number">#18</span>
+                </div>
+                <h3 class="article-title">具身人工智能全面综述</h3>
+                <p class="article-desc">腾讯云开发者社区最新发布。系统性梳理具身AI从概念到实践的全链路，覆盖多模态大模型、感知决策执行一体化、Sim2Real迁移等前沿技术。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot cyan"></span>腾讯云</span>
+                    <span class="meta-date">2026-03-11</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>Built with passion by <a href="https://github.com/tabyue" target="_blank">tabyue</a></p>
-        <p style="margin-top: 10px; opacity: 0.6;">Embodied AI Tech Hub &mdash; Continuously Updated</p>
-    </footer>
+            <a class="article-card fade-up" data-category="tech" href="https://arxiv.org/html/2603.11101v1" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-research">大规模训练</span>
+                    <span class="card-number">#19</span>
+                </div>
+                <h3 class="article-title">千GPU大规模训练：具身AI模型优化实践</h3>
+                <p class="article-desc">基于LeRobot开源框架的大规模具身模型训练方案，支持业界最多样的具身模型类型，整合云原生AI基础设施实现千卡并行训练。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot purple"></span>arXiv</span>
+                    <span class="meta-date">2026-03-13</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
 
-    <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
+            <a class="article-card fade-up" data-category="tech" href="https://opendrivelab.com/EmbodiedAI" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-tech">世界模型</span>
+                    <span class="card-number">#20</span>
+                </div>
+                <h3 class="article-title">RISE: 利用组合世界模型实现机器人策略自我改进</h3>
+                <p class="article-desc">OpenDriveLab最新研究，首次将世界模型作为有效学习环境用于机器人策略的自我改进，突破了传统强化学习对真实环境交互的依赖。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot green"></span>OpenDriveLab</span>
+                    <span class="meta-date">2026-02-11</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
 
-    <script>
-        // Mobile nav toggle
-        const navToggle = document.getElementById('navToggle');
-        const navLinks = document.getElementById('navLinks');
-        navToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-        });
+            <a class="article-card fade-up" data-category="tech" href="https://finance.sina.com.cn/roll/2026-03-08/doc-inhqhuhf4192121.shtml" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-tech">产品应用</span>
+                    <span class="card-number">#21</span>
+                </div>
+                <h3 class="article-title">魔法原子登上"春晚"：具身智能技术的实力证明</h3>
+                <p class="article-desc">魔法原子联合创始人顾诗韬详解春晚背后的技术突破。具身智能被连续两次写入政府工作报告，从学术概念走向大众视野，春晚成为技术实力的最佳展示舞台。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot amber"></span>新浪财经</span>
+                    <span class="meta-date">2026-03-08</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
 
-        // Close nav on link click (mobile)
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('open');
-            });
-        });
+            <a class="article-card fade-up" data-category="tech" href="https://www.eetimes.com/humanoid-robots-exit-labs-mapping-the-technical-path-to-embodied-ai-at-aw-2026/" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-tech">技术路线</span>
+                    <span class="card-number">#22</span>
+                </div>
+                <h3 class="article-title">Humanoid Robots Exit Labs: Mapping the Technical Path at AW 2026</h3>
+                <p class="article-desc">EE Times报道AWE 2026首届"中国人形机器人大会"。专家指出具身AI正从算法驱动的研究范式，转向软硬件协同的工程化落地阶段。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot cyan"></span>EE Times</span>
+                    <span class="meta-date">2026-03-10</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
 
-        // Nav scroll effect
-        const topNav = document.getElementById('topNav');
-        const backToTop = document.getElementById('backToTop');
+        </div>
+    </section>
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                topNav.classList.add('scrolled');
-            } else {
-                topNav.classList.remove('scrolled');
-            }
+    <!-- ===== 学术研究 ===== -->
+    <section class="section" id="research">
+        <div class="section-header">
+            <div class="section-icon cyan">📚</div>
+            <h2 class="section-title">学术研究</h2>
+            <span class="section-count">5 articles</span>
+        </div>
+        <div class="article-grid">
 
-            if (window.scrollY > 500) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        });
+            <a class="article-card fade-up" data-category="research" href="https://zhuanlan.zhihu.com/p/2007642510491661595" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-research">顶会论文</span>
+                    <span class="card-number">#23</span>
+                </div>
+                <h3 class="article-title">具身智能机器人技术进展、应用场景与发展建议深度分析</h3>
+                <p class="article-desc">基于RSS、ICRA、CoRL 2025十篇顶会最佳论文，从技术进展、应用场景、发展建议三个维度系统性分析具身智能领域最新突破。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot purple"></span>知乎</span>
+                    <span class="meta-date">2026-02-19</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
 
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+            <a class="article-card fade-up" data-category="research" href="https://calmops.com/ai/world-models-embodied-ai-complete-guide/" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-research">世界模型</span>
+                    <span class="card-number">#24</span>
+                </div>
+                <h3 class="article-title">World Models and Embodied AI Complete Guide 2026</h3>
+                <p class="article-desc">全面指南：世界模型如何改变具身AI。从数字空间到物理世界交互的技术路径，涵盖操控、导航、自动驾驶等多个应用领域。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot cyan"></span>CalmOps</span>
+                    <span class="meta-date">2026-03-02</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
 
-        // Smooth scroll for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
+            <a class="article-card fade-up" data-category="research" href="https://ijsate.com/wp-content/uploads/2026/03/V3I3P14_IJSATE0326019.pdf" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-research">综述论文</span>
+                    <span class="card-number">#25</span>
+                </div>
+                <h3 class="article-title">Overview of Research Progress on Embodied Intelligent Robots</h3>
+                <p class="article-desc">最新学术综述，分析具身智能机器人如何突破传统"感知-决策-执行"工作模式，实现与人类水平接近的任务泛化能力。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot purple"></span>IJSATE</span>
+                    <span class="meta-date">2026-03-08</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
 
-        // Tech tag filter
-        const techTags = document.querySelectorAll('.tech-tag');
-        techTags.forEach(tag => {
-            tag.addEventListener('click', () => {
-                techTags.forEach(t => t.classList.remove('active'));
-                tag.classList.add('active');
-            });
-        });
+            <a class="article-card fade-up" data-category="research" href="https://github.com/NVIDIA/Isaac-GR00T" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-tech">开源模型</span>
+                    <span class="card-number">#26</span>
+                </div>
+                <h3 class="article-title">NVIDIA Isaac GR00T N1.6：人形机器人通用基础模型</h3>
+                <p class="article-desc">NVIDIA发布GR00T N1.6更新版，为人形机器人提供通用基础模型。支持跨本体预训练、多任务微调，具备类人推理与操控能力。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot green"></span>GitHub / NVIDIA</span>
+                    <span class="meta-date">2026-03-07</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
 
-        // Scroll animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+            <a class="article-card fade-up" data-category="research" href="https://nvidianews.nvidia.com/news/nvidia-releases-new-physical-ai-models-as-global-partners-unveil-next-generation-robots" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-research">Physical AI</span>
+                    <span class="card-number">#27</span>
+                </div>
+                <h3 class="article-title">NVIDIA Releases New Physical AI Models for Next-Gen Robots</h3>
+                <p class="article-desc">NVIDIA发布新一代物理AI开源模型、框架和基础设施，全球合作伙伴同步发布新一代机器人产品，推动具身智能从实验室走向产业。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot green"></span>NVIDIA News</span>
+                    <span class="meta-date">2026-01-05</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
+        </div>
+    </section>
 
-        document.querySelectorAll('.article-card, .timeline-item, .definition-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
+    <!-- ===== 全球视野 ===== -->
+    <section class="section" id="global">
+        <div class="section-header">
+            <div class="section-icon pink">🌍</div>
+            <h2 class="section-title">全球视野</h2>
+            <span class="section-count">3 articles</span>
+        </div>
+        <div class="article-grid">
 
-        // Generate floating particles
-        const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 20; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
-            particle.style.animationDelay = (Math.random() * 10) + 's';
-            particle.style.width = (Math.random() * 4 + 2) + 'px';
-            particle.style.height = particle.style.width;
-            if (Math.random() > 0.5) {
-                particle.style.background = 'var(--secondary)';
-            }
-            particlesContainer.appendChild(particle);
+            <a class="article-card fade-up" data-category="global" href="https://www.teslarati.com/tesla-optimus-awe-2026-shanghai/" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-product">产品发布</span>
+                    <span class="card-number">#28</span>
+                </div>
+                <h3 class="article-title">Tesla Optimus Gen 3 亮相AWE 2026上海展</h3>
+                <p class="article-desc">特斯拉第三代人形机器人在AWE 2026上海展首秀，这是Optimus首款量产版本。中国企业宇树、智元等同台竞技，全球人形机器人竞赛白热化。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot pink"></span>Teslarati</span>
+                    <span class="meta-date">2026-03-12</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="global" href="https://calmops.com/ai/physical-ai-humanoid-robots-2026-complete-guide/" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-product">全球竞赛</span>
+                    <span class="card-number">#29</span>
+                </div>
+                <h3 class="article-title">Physical AI & Humanoid Robots 2026: The Rise of Embodied Intelligence</h3>
+                <p class="article-desc">全面解析2026年物理AI与人形机器人产业格局。从Boston Dynamics Atlas到Tesla Optimus，从Figure AI到中国军团，描绘全球具身智能竞赛版图。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot cyan"></span>CalmOps</span>
+                    <span class="meta-date">2026-03-03</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+            <a class="article-card fade-up" data-category="global" href="https://embodied-intelligence.org/" target="_blank">
+                <div class="card-top">
+                    <span class="article-tag tag-research">学术会议</span>
+                    <span class="card-number">#30</span>
+                </div>
+                <h3 class="article-title">Embodied Intelligence Conference 2026 (March 18-20)</h3>
+                <p class="article-desc">2026年具身智能国际学术大会即将于3月18-20日在线举行，汇聚全球顶尖学者和产业领袖，聚焦机器人操控、导航、多模态感知等核心议题。</p>
+                <div class="article-meta">
+                    <span class="meta-source"><span class="source-dot purple"></span>Official</span>
+                    <span class="meta-date">2026-03-11</span>
+                </div>
+                <span class="card-arrow">→</span>
+            </a>
+
+        </div>
+    </section>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p class="footer-brand">Built with ❤ by <a href="https://github.com/tabyue" target="_blank">tabyue</a></p>
+    <p class="footer-sub">Embodied AI Weekly Digest · 2026.03.08 — 2026.03.14 · Continuously Updated</p>
+</footer>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop">↑</button>
+
+<script>
+// Mobile nav toggle
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(link =>
+    link.addEventListener('click', () => navLinks.classList.remove('open'))
+);
+
+// Scroll effects
+const topNav = document.getElementById('topNav');
+const backToTop = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+    topNav.classList.toggle('scrolled', window.scrollY > 50);
+    backToTop.classList.toggle('visible', window.scrollY > 500);
+});
+
+backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            const offset = 130; // nav + filter bar
+            const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top, behavior: 'smooth' });
         }
-    </script>
+    });
+});
+
+// Filter
+const filterBtns = document.querySelectorAll('.filter-btn');
+const cards = document.querySelectorAll('.article-card');
+const sections = document.querySelectorAll('.section');
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+
+        if (filter === 'all') {
+            cards.forEach(c => c.classList.remove('hidden'));
+            sections.forEach(s => s.style.display = '');
+        } else {
+            cards.forEach(c => {
+                c.classList.toggle('hidden', c.dataset.category !== filter);
+            });
+            sections.forEach(s => {
+                const sectionCards = s.querySelectorAll('.article-card');
+                const hasVisible = Array.from(sectionCards).some(c => !c.classList.contains('hidden'));
+                s.style.display = hasVisible ? '' : 'none';
+            });
+        }
+    });
+});
+
+// Search
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    // Reset filter buttons
+    filterBtns.forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-filter="all"]').classList.add('active');
+
+    if (!query) {
+        cards.forEach(c => c.classList.remove('hidden'));
+        sections.forEach(s => s.style.display = '');
+        return;
+    }
+
+    cards.forEach(c => {
+        const title = c.querySelector('.article-title')?.textContent.toLowerCase() || '';
+        const desc = c.querySelector('.article-desc')?.textContent.toLowerCase() || '';
+        const tag = c.querySelector('.article-tag')?.textContent.toLowerCase() || '';
+        const match = title.includes(query) || desc.includes(query) || tag.includes(query);
+        c.classList.toggle('hidden', !match);
+    });
+
+    sections.forEach(s => {
+        const sectionCards = s.querySelectorAll('.article-card');
+        const hasVisible = Array.from(sectionCards).some(c => !c.classList.contains('hidden'));
+        s.style.display = hasVisible ? '' : 'none';
+    });
+});
+
+// Intersection Observer for fade-up
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Active nav link on scroll
+const navAnchors = document.querySelectorAll('.nav-links a');
+const sectionIds = ['industry', 'funding', 'tech', 'research', 'global'];
+
+window.addEventListener('scroll', () => {
+    let current = '';
+    sectionIds.forEach(id => {
+        const section = document.getElementById(id);
+        if (section) {
+            const top = section.getBoundingClientRect().top;
+            if (top < 200) current = id;
+        }
+    });
+    navAnchors.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+});
+</script>
 </body>
 </html>
