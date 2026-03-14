@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>具身智能 | Embodied AI 技术前沿</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 80px 20px 60px;
+            text-align: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #6366f1, #10b981, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 8s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+        }
+
+        /* Definition Card */
+        .definition-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .definition-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+        }
+
+        .definition-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .definition-text strong {
+            color: var(--text-primary);
+        }
+
+        .pie-framework {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .pie-item {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            padding: 20px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .pie-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .pie-letter {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .pie-word {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* Article Grid */
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .article-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .article-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .article-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .article-tag.tech { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+        .article-tag.industry { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .article-tag.research { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .article-tag.policy { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+
+        .article-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        .article-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .article-source {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid var(--bg-dark);
+        }
+
+        .timeline-date {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+
+        .timeline-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Tech Categories */
+        .tech-categories {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .tech-tag {
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tech-tag:hover, .tech-tag.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-stats {
+                gap: 20px;
+            }
+
+            .stat-value {
+                font-size: 1.75rem;
+            }
+
+            .article-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pie-framework {
+                gap: 15px;
+            }
+
+            .pie-item {
+                padding: 15px 20px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>具身智能 Embodied AI</h1>
+            <p class="subtitle">具身智能强调智能体从感知、决策到行动的连续学习与进化，通过与物理世界交互实现信息获取、决策与执行。它是迈向通用人工智能（AGI）的重要一步。</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-value">$380B</div>
+                    <div class="stat-label">2030年市场规模预测</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">2025</div>
+                    <div class="stat-label">产业落地元年</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">PIE</div>
+                    <div class="stat-label">核心架构范式</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Definition Section -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">🧠</div>
+                <h2 class="section-title">什么是具身智能？</h2>
+            </div>
+            <div class="definition-card">
+                <p class="definition-text">
+                    <strong>具身智能（Embodied AI）</strong>是一种基于物理身体感知和行动的智能系统，通过与环境交互实现信息获取、决策与执行。它不同于传统人工智能"在计算机中思考"的模式，而是强调"<strong>走进物理世界学习</strong>"。
+                    <br><br>
+                    具身智能作为连接网络空间与物理世界各类应用（如智能机电系统、智能制造）的基础，是实现通用人工智能（AGI）的关键技术路径。
+                </p>
+                <div class="pie-framework">
+                    <div class="pie-item">
+                        <div class="pie-letter">P</div>
+                        <div class="pie-word">Perception<br>感知</div>
+                    </div>
+                    <div class="pie-item">
+                        <div class="pie-letter">I</div>
+                        <div class="pie-word">Interaction<br>交互</div>
+                    </div>
+                    <div class="pie-item">
+                        <div class="pie-letter">E</div>
+                        <div class="pie-word">Execution<br>执行</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest News -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">📰</div>
+                <h2 class="section-title">最新资讯</h2>
+            </div>
+            <div class="article-grid">
+                <article class="article-card">
+                    <span class="article-tag policy">政策</span>
+                    <h3 class="article-title">具身智能首次写入政府工作报告</h3>
+                    <p class="article-desc">2025年，"具身智能"首次写入政府工作报告，成为重点培育的未来产业之一。"十五五"规划建议提出，推动具身智能等成为新的经济增长点。</p>
+                    <div class="article-meta">
+                        <span class="article-source">澎湃新闻</span>
+                        <span>2026-01-14</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-tag tech">技术</span>
+                    <h3 class="article-title">物理AI时代全面到来</h3>
+                    <p class="article-desc">2026年春天，具身智能真正走进工厂、家庭与复杂野外场景。激光雷达等传感器技术成为"物理AI"的基石之争。</p>
+                    <div class="article-meta">
+                        <span class="article-source">腾讯新闻</span>
+                        <span>2026-03-13</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-tag industry">行业</span>
+                    <h3 class="article-title">380亿美元新蓝海</h3>
+                    <p class="article-desc">根据甲子光年智库研究，具身智能作为AI与机器人技术深度融合的前沿领域，2025年催生380亿美元新蓝海市场。</p>
+                    <div class="article-meta">
+                        <span class="article-source">甲子光年</span>
+                        <span>2025-07-15</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-tag research">研究</span>
+                    <h3 class="article-title">顶会论文揭示最新突破</h3>
+                    <p class="article-desc">2025年机器人顶级会议（RSS、ICRA、CoRL）评选出一批最佳论文，揭示了具身智能在技术进展、应用场景等方面的最新突破。</p>
+                    <div class="article-meta">
+                        <span class="article-source">知乎</span>
+                        <span>2026-02-19</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Tech Progress -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">🚀</div>
+                <h2 class="section-title">技术进展</h2>
+            </div>
+            <div class="tech-categories">
+                <span class="tech-tag active">多模态大模型</span>
+                <span class="tech-tag">强化学习</span>
+                <span class="tech-tag">Sim2Real</span>
+                <span class="tech-tag">触觉感知</span>
+                <span class="tech-tag">视觉语言模型</span>
+                <span class="tech-tag">机器人本体</span>
+            </div>
+            <div class="article-grid">
+                <article class="article-card">
+                    <span class="article-tag tech">多模态</span>
+                    <h3 class="article-title">具身人工智能全面综述</h3>
+                    <p class="article-desc">多模态大模型在具身智能中的应用日趋广泛，实现了从视觉到语言再到动作的端到端智能化。</p>
+                    <div class="article-meta">
+                        <span class="article-source">腾讯云</span>
+                        <span>2026-03</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-tag research">研究</span>
+                    <h3 class="article-title">从"灵活的肢体"转向"智能的大脑"</h3>
+                    <p class="article-desc">2025年具身智能产业落地元年，完成了从硬件到软件、从肢体到大脑的范式转变。</p>
+                    <div class="article-meta">
+                        <span class="article-source">澎湃</span>
+                        <span>2026-01</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-tag research">研究</span>
+                    <h3 class="article-title">CCCF发布"具身智能"专题</h3>
+                    <p class="article-desc">中国计算机学会CCCF 2025年8月刊发布"具身智能"专题，探讨智能化科研（AI for Science）新范式。</p>
+                    <div class="article-meta">
+                        <span class="article-source">CCF</span>
+                        <span>2025-08</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-tag tech">技术</span>
+                    <h3 class="article-title">具身智能2025最前沿技术进展</h3>
+                    <p class="article-desc">深度解析具身智能的核心架构PIE范式：Perception（感知）、Interaction（交互）、Execution（执行）。</p>
+                    <div class="article-meta">
+                        <span class="article-source">今日头条</span>
+                        <span>2025-04</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Development Timeline -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">📈</div>
+                <h2 class="section-title">发展历程</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2025年</div>
+                    <div class="timeline-content">
+                        <h4 class="timeline-title">产业落地元年</h4>
+                        <p class="timeline-desc">具身智能首次写入政府工作报告，成为重点培育的未来产业，"十五五"规划推动具身智能成为新经济增长点。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025年</div>
+                    <div class="timeline-content">
+                        <h4 class="timeline-title">顶会密集突破</h4>
+                        <p class="timeline-desc">RSS、ICRA、CoRL等机器人顶级会议评选出最佳论文，具身智能在学术研究方面取得重大进展。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026年</div>
+                    <div class="timeline-content">
+                        <h4 class="timeline-title">物理AI时代</h4>
+                        <p class="timeline-desc">具身智能从实验室走进工厂、家庭与复杂野外场景，激光雷达等传感器技术成为核心竞争点。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2030年</div>
+                    <div class="timeline-content">
+                        <h4 class="timeline-title">380亿美元市场</h4>
+                        <p class="timeline-desc">甲子光年智库预测，具身智能将催生380亿美元新蓝海，成为AI与机器人融合的核心领域。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Reports -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">📊</div>
+                <h2 class="section-title">行业报告</h2>
+            </div>
+            <div class="article-grid">
+                <article class="article-card">
+                    <span class="article-tag research">报告</span>
+                    <h3 class="article-title">中国信通院：具身智能发展报告</h3>
+                    <p class="article-desc">2026年2月发布的权威报告，系统分析全球具身智能总体发展情况，涵盖技术进展、应用场景与发展建议。</p>
+                    <div class="article-meta">
+                        <span class="article-source">中国信通院</span>
+                        <span>2026-02</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-tag industry">报告</span>
+                    <h3 class="article-title">2025年具身智能科技研报</h3>
+                    <p class="article-desc">基于国内外权威新闻源与行业研究报告，通过数据可视化与深度分析相结合的方式呈现。</p>
+                    <div class="article-meta">
+                        <span class="article-source">CSDN</span>
+                        <span>2025-04</span>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <span class="article-tag research">报告</span>
+                    <h3 class="article-title">具身智能发展趋势与展望</h3>
+                    <p class="article-desc">CAE权威期刊发表，探讨具身智能从感知到决策到行动的连续学习与进化机制。</p>
+                    <div class="article-meta">
+                        <span class="article-source">CAE</span>
+                        <span>2025-07</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>具身智能技术文章聚合 | Embodied AI Tech Hub</p>
+        <p style="margin-top: 10px; opacity: 0.6;">持续更新中...</p>
+    </footer>
+
+    <script>
+        // Tech tag filter functionality
+        const techTags = document.querySelectorAll('.tech-tag');
+        const articles = document.querySelectorAll('.article-card');
+
+        techTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                techTags.forEach(t => t.classList.remove('active'));
+                tag.classList.add('active');
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.article-card, .timeline-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
