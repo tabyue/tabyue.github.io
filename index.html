@@ -1,52 +1,1049 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <!-- 元数据部分，包含页面的基本配置信息 -->
-    <meta charset="UTF-8"> <!-- 设置字符编码为UTF-8，确保中文正确显示 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 让页面在移动端正常显示 -->
-    <meta name="description" content="这是我的个人网站主页。"> <!-- 页面描述，对SEO很重要 -->
-    <meta name="keywords" content="个人网站, 主页"> <!-- 页面关键词 -->
-    <title>我的个人主页</title> <!-- 显示在浏览器标签页上的标题 -->
-    <!-- 链接外部CSS样式表 -->
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tabyue | 具身智能技术前沿</title>
+    <meta name="description" content="tabyue 的个人主页 - 具身智能 Embodied AI 技术文章聚合与前沿洞察">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Top Nav */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 30px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .top-nav.scrolled {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-github {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 6px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-github:hover {
+            color: var(--text-primary);
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .nav-github svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 140px 20px 60px;
+            text-align: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float-particle linear infinite;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #6366f1, #10b981, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 8s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        .hero .author-line {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .author-line .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--secondary);
+            border-radius: 50%;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+        }
+
+        /* Definition Card */
+        .definition-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .definition-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+        }
+
+        .definition-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .definition-text strong {
+            color: var(--text-primary);
+        }
+
+        .pie-framework {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .pie-item {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            padding: 20px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .pie-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .pie-letter {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .pie-word {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* Article Grid */
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .article-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .article-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .article-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .article-tag.tech { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+        .article-tag.industry { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .article-tag.research { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .article-tag.policy { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+
+        .article-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        .article-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .article-source {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid var(--bg-dark);
+        }
+
+        .timeline-date {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+
+        .timeline-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Tech Categories */
+        .tech-categories {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .tech-tag {
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tech-tag:hover, .tech-tag.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile Nav */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero {
+                padding: 120px 20px 40px;
+            }
+
+            .hero-stats {
+                gap: 20px;
+            }
+
+            .stat-value {
+                font-size: 1.75rem;
+            }
+
+            .article-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pie-framework {
+                gap: 15px;
+            }
+
+            .pie-item {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: rgba(15, 23, 42, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 20px 30px;
+                gap: 15px;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-github {
+                display: none;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+    </style>
 </head>
 <body>
-    <!-- 页面头部区域，通常包含网站标题和导航 -->
-    <header>
-        <h1>欢迎来到我的个人空间</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">首页</a></li>
-                <li><a href="#about">关于我</a></li>
-                <li><a href="#contact">联系我</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Top Navigation -->
+    <nav class="top-nav" id="topNav">
+        <a href="#" class="nav-logo">tabyue</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about">What is</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#tech">Tech</a></li>
+            <li><a href="#timeline">Timeline</a></li>
+            <li><a href="#reports">Reports</a></li>
+        </ul>
+        <a href="https://github.com/tabyue" target="_blank" class="nav-github">
+            <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            GitHub
+        </a>
+    </nav>
 
-    <!-- 页面主体内容区域 -->
-    <main>
-        <section id="home">
-            <h2>首页</h2>
-            <p>这里是网站的主要介绍内容。</p>
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-avatar">T</div>
+            <h1>Embodied AI Hub</h1>
+            <div class="author-line">
+                <span>by tabyue</span>
+                <span class="dot"></span>
+                <span>Embodied Intelligence Explorer</span>
+            </div>
+            <p class="subtitle">具身智能强调智能体从感知、决策到行动的连续学习与进化，通过与物理世界交互实现信息获取、决策与执行。它是迈向通用人工智能（AGI）的重要一步。</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-value">$380B</div>
+                    <div class="stat-label">2030 Market Forecast</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">2025</div>
+                    <div class="stat-label">Industry Launch Year</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">PIE</div>
+                    <div class="stat-label">Core Architecture</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Definition Section -->
+        <section class="section" id="about">
+            <div class="section-header">
+                <div class="section-icon">&#129504;</div>
+                <h2 class="section-title">What is Embodied AI?</h2>
+            </div>
+            <div class="definition-card">
+                <p class="definition-text">
+                    <strong>Embodied AI (Embodied Intelligence)</strong> is an intelligent system based on physical perception and action, achieving information acquisition, decision-making, and execution through interaction with the environment. Unlike traditional AI that "thinks in computers," it emphasizes "<strong>learning by entering the physical world</strong>."
+                    <br><br>
+                    As a foundation connecting cyberspace with physical-world applications (such as intelligent mechatronic systems and smart manufacturing), Embodied AI is a key technical pathway toward Artificial General Intelligence (AGI).
+                </p>
+                <div class="pie-framework">
+                    <div class="pie-item">
+                        <div class="pie-letter">P</div>
+                        <div class="pie-word">Perception<br>&#24863;&#30693;</div>
+                    </div>
+                    <div class="pie-item">
+                        <div class="pie-letter">I</div>
+                        <div class="pie-word">Interaction<br>&#20132;&#20114;</div>
+                    </div>
+                    <div class="pie-item">
+                        <div class="pie-letter">E</div>
+                        <div class="pie-word">Execution<br>&#25191;&#34892;</div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section id="about">
-            <h2>关于我</h2>
-            <p>在这里介绍一下你自己。</p>
+        <!-- Latest News -->
+        <section class="section" id="news">
+            <div class="section-header">
+                <div class="section-icon">&#128240;</div>
+                <h2 class="section-title">Latest News</h2>
+            </div>
+            <div class="article-grid">
+                <a class="article-card" href="https://www.thepaper.cn/detail/32376110" target="_blank">
+                    <span class="article-tag policy">Policy</span>
+                    <h3 class="article-title">Embodied AI Written into Government Work Report for the First Time</h3>
+                    <p class="article-desc">In 2025, "Embodied AI" was included in the government work report for the first time, becoming a key future industry. The 15th Five-Year Plan promotes Embodied AI as a new economic growth driver.</p>
+                    <div class="article-meta">
+                        <span class="article-source">The Paper</span>
+                        <span>2026-01-14</span>
+                    </div>
+                </a>
+
+                <a class="article-card" href="https://news.qq.com/rain/a/20260313A054AL00" target="_blank">
+                    <span class="article-tag tech">Tech</span>
+                    <h3 class="article-title">The Era of Physical AI Has Arrived</h3>
+                    <p class="article-desc">In spring 2026, Embodied AI truly enters factories, homes, and complex outdoor scenarios. LiDAR and sensor technologies become the cornerstone of "Physical AI."</p>
+                    <div class="article-meta">
+                        <span class="article-source">QQ News</span>
+                        <span>2026-03-13</span>
+                    </div>
+                </a>
+
+                <a class="article-card" href="https://www.vzkoo.com/read/202507150644a65fb34f8d8aca1177cd.html" target="_blank">
+                    <span class="article-tag industry">Industry</span>
+                    <h3 class="article-title">$38 Billion Blue Ocean Market</h3>
+                    <p class="article-desc">According to JiaZi GuangNian research, Embodied AI — the deep fusion of AI and robotics — is creating a $38 billion new market opportunity in 2025.</p>
+                    <div class="article-meta">
+                        <span class="article-source">JiaZi GuangNian</span>
+                        <span>2025-07-15</span>
+                    </div>
+                </a>
+
+                <a class="article-card" href="https://zhuanlan.zhihu.com/p/2007642510491661595" target="_blank">
+                    <span class="article-tag research">Research</span>
+                    <h3 class="article-title">Top Conference Papers Reveal Latest Breakthroughs</h3>
+                    <p class="article-desc">Best papers from RSS, ICRA, CoRL 2025 reveal the latest breakthroughs in Embodied AI across technology, applications, and development recommendations.</p>
+                    <div class="article-meta">
+                        <span class="article-source">Zhihu</span>
+                        <span>2026-02-19</span>
+                    </div>
+                </a>
+            </div>
         </section>
 
-        <section id="contact">
-            <h2>联系我</h2>
-            <p>通过邮箱 example@example.com 与我联系。</p>
-        </section>
-    </main>
+        <!-- Tech Progress -->
+        <section class="section" id="tech">
+            <div class="section-header">
+                <div class="section-icon">&#128640;</div>
+                <h2 class="section-title">Tech Progress</h2>
+            </div>
+            <div class="tech-categories">
+                <span class="tech-tag active">Multimodal LLM</span>
+                <span class="tech-tag">Reinforcement Learning</span>
+                <span class="tech-tag">Sim2Real</span>
+                <span class="tech-tag">Tactile Sensing</span>
+                <span class="tech-tag">Vision-Language Model</span>
+                <span class="tech-tag">Robot Morphology</span>
+            </div>
+            <div class="article-grid">
+                <a class="article-card" href="https://cloud.tencent.com/developer/article/2637160" target="_blank">
+                    <span class="article-tag tech">Multimodal</span>
+                    <h3 class="article-title">Comprehensive Survey on Embodied AI</h3>
+                    <p class="article-desc">Multimodal large models are increasingly applied in Embodied AI, enabling end-to-end intelligence from vision to language to action.</p>
+                    <div class="article-meta">
+                        <span class="article-source">Tencent Cloud</span>
+                        <span>2026-03</span>
+                    </div>
+                </a>
 
-    <!-- 页面页脚区域，通常包含版权信息等 -->
-    <footer>
-        <p>&copy; 2025 我的个人主页. 保留所有权利.</p>
+                <a class="article-card" href="https://www.thepaper.cn/detail/32376110" target="_blank">
+                    <span class="article-tag research">Research</span>
+                    <h3 class="article-title">From "Agile Limbs" to "Intelligent Brains"</h3>
+                    <p class="article-desc">2025 marks the paradigm shift in Embodied AI — from hardware to software, from limbs to brains.</p>
+                    <div class="article-meta">
+                        <span class="article-source">The Paper</span>
+                        <span>2026-01</span>
+                    </div>
+                </a>
+
+                <a class="article-card" href="https://www.ccf.org.cn/Focus/2025-08-20/847595.shtml" target="_blank">
+                    <span class="article-tag research">Research</span>
+                    <h3 class="article-title">CCCF Publishes "Embodied AI" Special Issue</h3>
+                    <p class="article-desc">China Computer Federation CCCF August 2025 issue features an "Embodied AI" special, exploring new paradigms in AI for Science.</p>
+                    <div class="article-meta">
+                        <span class="article-source">CCF</span>
+                        <span>2025-08</span>
+                    </div>
+                </a>
+
+                <a class="article-card" href="https://www.toutiao.com/article/7498353150873633289/" target="_blank">
+                    <span class="article-tag tech">Tech</span>
+                    <h3 class="article-title">Frontier Tech Progress in Embodied AI 2025</h3>
+                    <p class="article-desc">Deep dive into the PIE architecture: Perception, Interaction, Execution — the core framework of Embodied AI.</p>
+                    <div class="article-meta">
+                        <span class="article-source">Toutiao</span>
+                        <span>2025-04</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Development Timeline -->
+        <section class="section" id="timeline">
+            <div class="section-header">
+                <div class="section-icon">&#128200;</div>
+                <h2 class="section-title">Development Timeline</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2025</div>
+                    <div class="timeline-content">
+                        <h4 class="timeline-title">Industry Launch Year</h4>
+                        <p class="timeline-desc">Embodied AI first written into government work report, becoming a key future industry. The 15th Five-Year Plan promotes it as a new economic growth engine.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025</div>
+                    <div class="timeline-content">
+                        <h4 class="timeline-title">Academic Breakthroughs</h4>
+                        <p class="timeline-desc">Best papers from RSS, ICRA, CoRL showcase major advances in Embodied AI research, spanning manipulation, navigation, and reasoning.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026</div>
+                    <div class="timeline-content">
+                        <h4 class="timeline-title">Physical AI Era</h4>
+                        <p class="timeline-desc">Embodied AI moves from labs into factories, homes, and complex outdoor environments. LiDAR and sensor technologies become key competitive battlegrounds.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2030</div>
+                    <div class="timeline-content">
+                        <h4 class="timeline-title">$380B Market</h4>
+                        <p class="timeline-desc">Industry forecasts predict Embodied AI will create a $380 billion market, becoming the core domain of AI-robotics convergence.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Reports -->
+        <section class="section" id="reports">
+            <div class="section-header">
+                <div class="section-icon">&#128202;</div>
+                <h2 class="section-title">Industry Reports</h2>
+            </div>
+            <div class="article-grid">
+                <a class="article-card" href="https://www.caict.ac.cn/kxyj/qwfb/bps/202601/P020260130541978285206.pdf" target="_blank">
+                    <span class="article-tag research">Report</span>
+                    <h3 class="article-title">CAICT: Embodied AI Development Report</h3>
+                    <p class="article-desc">Authoritative report released Feb 2026, systematically analyzing the global Embodied AI landscape — technology, applications, and recommendations.</p>
+                    <div class="article-meta">
+                        <span class="article-source">CAICT</span>
+                        <span>2026-02</span>
+                    </div>
+                </a>
+
+                <a class="article-card" href="https://blog.csdn.net/weixin_47201270/article/details/147620983" target="_blank">
+                    <span class="article-tag industry">Report</span>
+                    <h3 class="article-title">2025 Embodied AI Technology Report</h3>
+                    <p class="article-desc">Based on domestic and international authoritative news sources and industry research, presented through data visualization and in-depth analysis.</p>
+                    <div class="article-meta">
+                        <span class="article-source">CSDN</span>
+                        <span>2025-04</span>
+                    </div>
+                </a>
+
+                <a class="article-card" href="https://www.engineering.org.cn/sscae/CN/10.15302/J-SSCAE-2025.07.019" target="_blank">
+                    <span class="article-tag research">Report</span>
+                    <h3 class="article-title">Embodied AI: Trends and Outlook</h3>
+                    <p class="article-desc">Published in the CAE journal, exploring the continuous learning and evolution mechanisms of Embodied AI from perception to decision-making to action.</p>
+                    <div class="article-meta">
+                        <span class="article-source">CAE</span>
+                        <span>2025-07</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Built with passion by <a href="https://github.com/tabyue" target="_blank">tabyue</a></p>
+        <p style="margin-top: 10px; opacity: 0.6;">Embodied AI Tech Hub &mdash; Continuously Updated</p>
     </footer>
 
-    <!-- 链接外部JavaScript文件 -->
-    <script src="script.js"></script>
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
+
+    <script>
+        // Mobile nav toggle
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+
+        // Close nav on link click (mobile)
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // Nav scroll effect
+        const topNav = document.getElementById('topNav');
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                topNav.classList.add('scrolled');
+            } else {
+                topNav.classList.remove('scrolled');
+            }
+
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Tech tag filter
+        const techTags = document.querySelectorAll('.tech-tag');
+        techTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                techTags.forEach(t => t.classList.remove('active'));
+                tag.classList.add('active');
+            });
+        });
+
+        // Scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.article-card, .timeline-item, .definition-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Generate floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+            particle.style.animationDelay = (Math.random() * 10) + 's';
+            particle.style.width = (Math.random() * 4 + 2) + 'px';
+            particle.style.height = particle.style.width;
+            if (Math.random() > 0.5) {
+                particle.style.background = 'var(--secondary)';
+            }
+            particlesContainer.appendChild(particle);
+        }
+    </script>
 </body>
 </html>
