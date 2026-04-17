@@ -1,0 +1,7 @@
+{
+  "id": "p009",
+  "methodology": "### 系统架构\n\n**System 1: 快速反应系统**\n- 小型 MLP/Transformer（~100M 参数）\n- 输入：关节状态 + IMU + 触觉\n- 输出：关节力矩指令\n- 延迟：< 20ms\n- 用途：步态平衡、碰撞避让、力控制\n\n**System 2: 慢速规划系统**\n- 大型 VLA 模型（~2B 参数）\n- 输入：相机图像 + 语言指令\n- 输出：子任务规划 + 高层动作目标\n- 延迟：50-200ms\n- 用途：物体识别、任务规划、语义理解\n\n**协同工作**\n```\n[System 2] → 高层目标: \"走到桌子前，拿起杯子\"\n     ↓\n[System 1] → 低层执行: 步态控制 + 手臂运动\n     ↓\n[传感器反馈] → 实时调整\n```",
+  "experiments": "### 演示结果\n\n- 人形机器人在 Isaac Sim 中完成 100+ 种操作任务\n- 跨本体迁移：在 Unitree H1 上训练 → 直接部署到其他人形平台\n- 全身协调：边走路边操作（移动操作）\n- Jetson Thor 上实时推理：System 1 @ 500Hz, System 2 @ 5Hz",
+  "reproduction": "### Isaac GR00T 使用指南\n\n```bash\n# 1. 安装 Isaac Sim (需要 NVIDIA GPU)\n# 下载: https://developer.nvidia.com/isaac-sim\n\n# 2. 克隆 GR00T\ngit clone https://github.com/NVIDIA/Isaac-GR00T.git\ncd Isaac-GR00T\npip install -e .\n\n# 3. 下载预训练模型\npython scripts/download_models.py --model gr00t-n1-base\n\n# 4. 在 Isaac Sim 中运行演示\npython examples/humanoid_manipulation.py\n\n# 5. 微调到自定义任务\npython train.py --config configs/finetune_pick_place.yaml\n```",
+  "mathDetails": ""
+}
