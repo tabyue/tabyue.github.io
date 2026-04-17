@@ -1,0 +1,293 @@
+{
+  "lastUpdated": "2026-04-17",
+  "stages": [
+    {
+      "id": "foundation",
+      "title": "🏗️ 阶段一：数学与编程基础",
+      "subtitle": "夯实地基 · 预计 2-3 个月",
+      "level": "入门",
+      "color": "#10b981",
+      "modules": [
+        {
+          "name": "线性代数",
+          "importance": "核心",
+          "description": "矩阵运算、特征值分解、SVD 分解是理解机器人运动学和计算机视觉的基石",
+          "topics": ["向量与矩阵运算", "特征值与特征向量", "SVD 分解", "正交变换与旋转矩阵", "齐次坐标系"],
+          "resources": ["MIT 18.06 Gilbert Strang 线性代数", "3Blue1Brown《线性代数的本质》", "《Linear Algebra and Its Applications》"],
+          "howTo": "先看 3Blue1Brown 建立直觉，再跟 MIT 18.06 系统学习，每章做习题巩固",
+          "weeklyPlan": "每周 2 章，共 6 周完成。重点掌握矩阵分解和变换"
+        },
+        {
+          "name": "微积分与优化",
+          "importance": "核心",
+          "description": "梯度、Hessian 矩阵、拉格朗日乘子法是机器学习和控制优化的理论基础",
+          "topics": ["多元微积分", "梯度与 Jacobian 矩阵", "凸优化基础", "拉格朗日对偶", "数值优化方法 (SGD, Adam)"],
+          "resources": ["MIT 18.01/18.02 微积分", "Boyd《Convex Optimization》", "Nocedal《Numerical Optimization》"],
+          "howTo": "微积分基础 2 周速过，重点放在优化理论（4 周），结合 Python 编程练习",
+          "weeklyPlan": "微积分复习 2 周 + 凸优化 4 周，做课后编程作业"
+        },
+        {
+          "name": "概率与统计",
+          "importance": "核心",
+          "description": "贝叶斯推断、高斯过程、蒙特卡洛方法是机器人感知和决策的数学语言",
+          "topics": ["贝叶斯定理与推断", "高斯分布与 GMM", "蒙特卡洛方法", "卡尔曼滤波", "信息论基础"],
+          "resources": ["MIT 6.041 概率论", "Bishop《PRML》前 3 章", "Thrun《Probabilistic Robotics》"],
+          "howTo": "先学概率论基础，再切入贝叶斯推断，最后学卡尔曼滤波（直接与机器人对接）",
+          "weeklyPlan": "4 周：概率基础(1周) → 贝叶斯(1周) → 卡尔曼滤波(1周) → 蒙特卡洛(1周)"
+        },
+        {
+          "name": "Python 编程与科学计算",
+          "importance": "必备",
+          "description": "Python 是具身智能领域的通用语言，NumPy/PyTorch 是日常工具",
+          "topics": ["Python 高级特性", "NumPy/SciPy 科学计算", "PyTorch 基础", "数据可视化 (Matplotlib)", "ROS2 Python 接口"],
+          "resources": ["Python 官方教程", "NumPy 官方文档", "PyTorch 官方 Tutorials", "《Python Robotics》开源项目"],
+          "howTo": "边学边练，从 NumPy 矩阵运算开始，逐步过渡到 PyTorch 张量操作",
+          "weeklyPlan": "2 周集中学习，之后在后续学习中持续强化"
+        },
+        {
+          "name": "C++ 编程基础",
+          "importance": "重要",
+          "description": "机器人底层控制、实时系统、ROS2 核心节点通常用 C++ 编写",
+          "topics": ["Modern C++ (C++17/20)", "STL 容器与算法", "多线程编程", "CMake 构建系统", "ROS2 C++ 接口"],
+          "resources": ["《C++ Primer》", "CppCon 演讲系列", "ROS2 官方 C++ Tutorials"],
+          "howTo": "不需要精通所有 C++ 特性，重点掌握 Modern C++ 和多线程，够用即可",
+          "weeklyPlan": "3 周：基础语法(1周) → Modern C++(1周) → ROS2 C++ 实践(1周)"
+        }
+      ]
+    },
+    {
+      "id": "robotics-fundamentals",
+      "title": "🤖 阶段二：机器人学基础",
+      "subtitle": "理解机器人本体 · 预计 3-4 个月",
+      "level": "进阶",
+      "color": "#6366f1",
+      "modules": [
+        {
+          "name": "机器人运动学",
+          "importance": "核心",
+          "description": "理解机器人如何描述和计算关节与末端执行器的位置、速度关系",
+          "topics": ["刚体变换与齐次矩阵", "DH 参数法", "正运动学", "逆运动学 (解析法/数值法)", "Jacobian 矩阵与速度运动学"],
+          "resources": ["Craig《Introduction to Robotics: Mechanics and Control》", "Lynch & Park《Modern Robotics》", "MATLAB Robotics Toolbox"],
+          "howTo": "先学 Craig 的经典教材建立概念，再用 Modern Robotics 的几何方法深化理解，配合 MATLAB/Python 仿真",
+          "weeklyPlan": "6 周：刚体变换(1周) → 正运动学(1周) → 逆运动学(2周) → Jacobian(2周)"
+        },
+        {
+          "name": "机器人动力学",
+          "importance": "核心",
+          "description": "理解力、力矩与运动的关系，是控制器设计的物理基础",
+          "topics": ["Lagrange 力学", "Newton-Euler 递推算法", "动力学方程", "质量矩阵与科里奥利力", "接触力学基础"],
+          "resources": ["Featherstone《Rigid Body Dynamics Algorithms》", "《Modern Robotics》Ch8", "Drake/MuJoCo 仿真"],
+          "howTo": "Lagrange 方法入门，Newton-Euler 实战，用 MuJoCo 验证动力学模型",
+          "weeklyPlan": "4 周：Lagrange(1周) → Newton-Euler(1周) → 动力学建模(1周) → 仿真验证(1周)"
+        },
+        {
+          "name": "控制理论",
+          "importance": "核心",
+          "description": "让机器人稳定、精确地执行期望运动的核心理论",
+          "topics": ["PID 控制", "状态空间法", "LQR 最优控制", "模型预测控制 (MPC)", "阻抗/导纳控制", "自适应控制"],
+          "resources": ["Ogata《Modern Control Engineering》", "Tedrake《Underactuated Robotics》(MIT OCW)", "《Robotics: Modelling, Planning and Control》"],
+          "howTo": "PID 入门（1周做出一个倒立摆），LQR/MPC 进阶，最后学阻抗控制（与环境交互关键）",
+          "weeklyPlan": "6 周：PID(1周) → 状态空间(1周) → LQR(1周) → MPC(2周) → 阻抗控制(1周)"
+        },
+        {
+          "name": "机械设计基础",
+          "importance": "重要",
+          "description": "了解机器人硬件构造，包括驱动器、传感器、结构设计",
+          "topics": ["电机类型 (BLDC/步进/直驱)", "减速器 (谐波/行星/RV)", "传感器 (编码器/IMU/力传感器)", "3D 打印与 CNC 加工", "灵巧手机构设计"],
+          "resources": ["《机器人学导论》(Niku)", "各电机厂商数据手册", "RoboClaw 控制器文档", "OpenSource 灵巧手项目"],
+          "howTo": "理论学习 + 动手实践。买一套电机驱动板（如 RoboClaw），搭建简单的单自由度系统",
+          "weeklyPlan": "3 周理论 + 1 周动手搭建一个简单关节模组"
+        },
+        {
+          "name": "电子电路基础",
+          "importance": "重要",
+          "description": "理解机器人电气系统的基本原理",
+          "topics": ["电路分析基础", "PCB 设计入门", "嵌入式系统 (STM32/ESP32)", "电机驱动电路", "电源管理", "通信协议 (CAN/I2C/SPI/UART)"],
+          "resources": ["《The Art of Electronics》", "STM32 官方教程", "Arduino/ESP32 项目实践"],
+          "howTo": "从 Arduino 入门，逐步过渡到 STM32，重点掌握电机驱动和通信协议",
+          "weeklyPlan": "4 周：基础电路(1周) → 嵌入式编程(1周) → 电机驱动(1周) → 通信协议(1周)"
+        },
+        {
+          "name": "ROS2 机器人操作系统",
+          "importance": "必备",
+          "description": "ROS2 是机器人软件开发的事实标准框架",
+          "topics": ["ROS2 Humble/Iron 安装配置", "话题/服务/动作通信", "TF2 坐标变换", "URDF 模型描述", "launch 文件", "Nav2 导航框架", "MoveIt2 运动规划"],
+          "resources": ["ROS2 官方文档", "《A Gentle Introduction to ROS2》", "The Construct 在线课程"],
+          "howTo": "按官方 Tutorials 走一遍，然后搭建一个完整的小车导航 Demo",
+          "weeklyPlan": "4 周：基础(1周) → 通信(1周) → TF2+URDF(1周) → Nav2/MoveIt2(1周)"
+        }
+      ]
+    },
+    {
+      "id": "perception",
+      "title": "👁️ 阶段三：感知与视觉",
+      "subtitle": "让机器人看懂世界 · 预计 2-3 个月",
+      "level": "进阶",
+      "color": "#06b6d4",
+      "modules": [
+        {
+          "name": "计算机视觉基础",
+          "importance": "核心",
+          "description": "图像处理、特征提取、目标检测是机器人感知环境的第一步",
+          "topics": ["图像处理 (OpenCV)", "特征检测与匹配 (SIFT/ORB)", "目标检测 (YOLO/DETR)", "语义分割", "实例分割", "姿态估计"],
+          "resources": ["CS231n (Stanford)", "OpenCV 官方教程", "Ultralytics YOLOv8 文档"],
+          "howTo": "先掌握 OpenCV 基本操作，再学深度学习目标检测，最后做一个机器人视觉抓取 Demo",
+          "weeklyPlan": "6 周：OpenCV(2周) → CNN 基础(1周) → 目标检测(2周) → 分割(1周)"
+        },
+        {
+          "name": "3D 视觉与点云",
+          "importance": "核心",
+          "description": "深度感知和 3D 理解是机器人在真实世界中操作的关键",
+          "topics": ["深度相机原理 (RealSense/Azure Kinect)", "点云处理 (Open3D/PCL)", "3D 目标检测", "6DoF 位姿估计", "NeRF/3D Gaussian Splatting", "SLAM 基础"],
+          "resources": ["Open3D 官方教程", "PointNet/PointNet++ 论文", "ORB-SLAM3 源码", "高翔《视觉 SLAM 十四讲》"],
+          "howTo": "买一个 RealSense 相机，从点云采集开始，逐步实现位姿估计和简单 SLAM",
+          "weeklyPlan": "6 周：深度相机(1周) → 点云处理(2周) → 位姿估计(2周) → SLAM(1周)"
+        },
+        {
+          "name": "多模态感知",
+          "importance": "重要",
+          "description": "融合视觉、触觉、听觉等多种感知模态提升机器人理解能力",
+          "topics": ["触觉传感器 (GelSight/DIGIT)", "力/力矩传感器", "多传感器融合", "语音识别与理解", "多模态特征对齐"],
+          "resources": ["GelSight 项目文档", "触觉传感综述论文", "多传感器融合教材"],
+          "howTo": "从视觉+力觉融合开始，做一个简单的柔性物体抓取实验",
+          "weeklyPlan": "3 周：触觉传感(1周) → 力传感(1周) → 多模态融合实验(1周)"
+        }
+      ]
+    },
+    {
+      "id": "ai-brain",
+      "title": "🧠 阶段四：AI 大脑（核心算法）",
+      "subtitle": "具身智能的灵魂 · 预计 4-6 个月",
+      "level": "高级",
+      "color": "#8b5cf6",
+      "modules": [
+        {
+          "name": "深度学习基础",
+          "importance": "核心",
+          "description": "CNN、Transformer、注意力机制是所有现代具身智能算法的基石",
+          "topics": ["CNN 架构 (ResNet/EfficientNet)", "Transformer 与自注意力", "训练技巧 (BN/Dropout/LR Schedule)", "迁移学习", "模型蒸馏与量化"],
+          "resources": ["CS231n + CS224n (Stanford)", "李沐《动手学深度学习》", "PyTorch 官方 Tutorials"],
+          "howTo": "跟李沐的课程走，每章写代码复现，2 个月打下坚实基础",
+          "weeklyPlan": "8 周：CNN(2周) → RNN/LSTM(1周) → Transformer(2周) → 训练技巧(1周) → 实践项目(2周)"
+        },
+        {
+          "name": "强化学习",
+          "importance": "核心",
+          "description": "让机器人通过试错学习最优行为策略的核心方法",
+          "topics": ["MDP 与 Bellman 方程", "Q-Learning / DQN", "Policy Gradient (PPO/SAC)", "Model-Based RL", "Sim-to-Real Transfer", "多任务/元学习"],
+          "resources": ["Sutton & Barto《Reinforcement Learning》", "Spinning Up (OpenAI)", "Stable Baselines3", "CS285 (Berkeley)"],
+          "howTo": "先读 Sutton 教材前 6 章，再用 Stable Baselines3 做 Gym 环境实验，最后迁移到机器人仿真",
+          "weeklyPlan": "8 周：理论(3周) → DQN/PPO 实现(2周) → 机器人仿真(2周) → Sim2Real(1周)"
+        },
+        {
+          "name": "模仿学习 (Imitation Learning)",
+          "importance": "核心",
+          "description": "从人类演示中学习机器人技能，是当前最实用的机器人学习范式",
+          "topics": ["行为克隆 (BC)", "DAgger 算法", "Diffusion Policy", "ACT (Action Chunking with Transformers)", "遥操作数据采集", "数据增强技术"],
+          "resources": ["Diffusion Policy 论文与代码", "ACT 论文与代码", "ALOHA 项目", "LeRobot (HuggingFace)"],
+          "howTo": "先理解 BC 基本原理，然后复现 Diffusion Policy，用 LeRobot 框架做实验",
+          "weeklyPlan": "6 周：BC 基础(1周) → Diffusion Policy(2周) → ACT(2周) → LeRobot 实践(1周)"
+        },
+        {
+          "name": "视觉-语言-动作模型 (VLA)",
+          "importance": "前沿",
+          "description": "结合视觉理解、语言指令和动作生成的端到端模型，是具身智能的前沿方向",
+          "topics": ["RT-2 / RT-X 系列", "OpenVLA", "π₀ (Physical Intelligence)", "NVIDIA GR00T", "多模态 Tokenization", "交叉注意力机制"],
+          "resources": ["RT-2 论文 (Google DeepMind)", "OpenVLA GitHub 仓库", "GR00T N1 技术报告", "π₀ 论文"],
+          "howTo": "先精读 RT-2 论文理解 VLA 范式，再研究 OpenVLA 的开源实现",
+          "weeklyPlan": "4 周：RT-2 论文精读(1周) → OpenVLA 源码(2周) → 实验复现(1周)"
+        },
+        {
+          "name": "世界模型 (World Model)",
+          "importance": "前沿",
+          "description": "让机器人在内心构建物理世界的模型，用于规划和想象未来",
+          "topics": ["世界模型概念与历史", "视频预测模型", "UniSim / Genie", "DreamZero 范式", "基于世界模型的规划", "物理仿真与世界模型的对比"],
+          "resources": ["Ha & Schmidhuber 世界模型论文", "UniSim 论文", "DreamZero 论文", "Yann LeCun JEPA 论文"],
+          "howTo": "先理解世界模型的哲学基础（为什么需要），再读技术论文",
+          "weeklyPlan": "3 周：概念理解(1周) → 经典论文(1周) → 最新进展(1周)"
+        },
+        {
+          "name": "大语言模型 + 机器人",
+          "importance": "前沿",
+          "description": "利用 LLM 的常识推理能力赋能机器人任务规划和交互",
+          "topics": ["LLM as Planner (SayCan/Code as Policies)", "LLM + 视觉 (GPT-4V/Gemini)", "Prompt Engineering for Robotics", "具身 Agent 框架", "LLM 幻觉问题与安全"],
+          "resources": ["SayCan 论文 (Google)", "Code as Policies 论文", "Inner Monologue 论文", "VIMA 论文"],
+          "howTo": "先玩几个 LLM API，理解 Prompt Engineering，再读 SayCan 等经典论文",
+          "weeklyPlan": "3 周：LLM 基础(1周) → 机器人应用论文(1周) → 实践 Demo(1周)"
+        }
+      ]
+    },
+    {
+      "id": "simulation",
+      "title": "🎮 阶段五：仿真与 Sim-to-Real",
+      "subtitle": "虚拟到现实的桥梁 · 预计 2-3 个月",
+      "level": "高级",
+      "color": "#ec4899",
+      "modules": [
+        {
+          "name": "物理仿真引擎",
+          "importance": "核心",
+          "description": "仿真环境是训练和验证具身智能算法的核心基础设施",
+          "topics": ["MuJoCo 入门与进阶", "Isaac Sim / Isaac Lab", "Gazebo / Ignition", "PyBullet", "Genesis (新一代仿真)", "仿真器性能对比与选型"],
+          "resources": ["MuJoCo 官方文档", "NVIDIA Isaac Sim 教程", "dm_control (DeepMind)", "Genesis 开源项目"],
+          "howTo": "从 MuJoCo 入手（最简洁），然后学 Isaac Sim（最接近工业级），按项目需求选择",
+          "weeklyPlan": "4 周：MuJoCo(2周) → Isaac Sim(2周)"
+        },
+        {
+          "name": "Sim-to-Real 迁移",
+          "importance": "核心",
+          "description": "把仿真中训练好的策略成功部署到真实机器人上",
+          "topics": ["Domain Randomization", "System Identification", "Domain Adaptation", "Sim2Real Gap 分析", "Teacher-Student 蒸馏", "Real2Sim 建模"],
+          "resources": ["OpenAI Rubik's Cube 论文", "NVIDIA Sim2Real 技术博客", "Legged Gym (ETH Zurich)"],
+          "howTo": "先在仿真中训练一个简单任务（如抓取），然后分析 Sim2Real Gap，逐步优化",
+          "weeklyPlan": "4 周：Domain Randomization(1周) → System ID(1周) → 迁移实验(2周)"
+        },
+        {
+          "name": "数据采集与管理",
+          "importance": "重要",
+          "description": "高质量的训练数据是具身智能成功的关键",
+          "topics": ["遥操作系统 (ALOHA/UMI/Gello)", "VR 遥操作", "自动数据采集", "数据格式标准 (Open X-Embodiment)", "数据增强与清洗"],
+          "resources": ["ALOHA 项目", "UMI 项目 (Columbia)", "Open X-Embodiment 数据集", "RLDS 格式文档"],
+          "howTo": "搭建一套简单的遥操作系统，采集数据并训练 BC 策略",
+          "weeklyPlan": "3 周：遥操作搭建(1周) → 数据采集(1周) → 数据管理(1周)"
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "title": "🔧 阶段六：项目实战",
+      "subtitle": "从零到一构建具身智能系统 · 持续迭代",
+      "level": "实战",
+      "color": "#f59e0b",
+      "modules": [
+        {
+          "name": "桌面级机械臂项目",
+          "importance": "入门实战",
+          "description": "用低成本机械臂（如 SO-100/Koch v1.1）完成基本的抓取任务",
+          "topics": ["硬件选型与组装", "控制器调参", "视觉抓取 Pipeline", "模仿学习训练", "部署与调试"],
+          "resources": ["SO-100 机械臂开源项目", "Koch v1.1 设计文档", "LeRobot 教程"],
+          "howTo": "买一台 SO-100，按教程组装，用 LeRobot 训练第一个抓取任务",
+          "weeklyPlan": "4 周：硬件搭建(1周) → 标定(0.5周) → 数据采集(1周) → 训练部署(1.5周)"
+        },
+        {
+          "name": "移动机器人导航项目",
+          "importance": "进阶实战",
+          "description": "构建一个能在室内自主导航的移动机器人",
+          "topics": ["底盘选型 (差速/全向)", "激光雷达 SLAM", "Nav2 路径规划", "避障与局部规划", "语音交互集成"],
+          "resources": ["TurtleBot 系列", "Nav2 官方文档", "SLAM Toolbox"],
+          "howTo": "TurtleBot 或自制底盘 + RealSense + 激光雷达，实现办公室导航",
+          "weeklyPlan": "6 周：底盘搭建(1周) → SLAM 建图(2周) → 导航调参(2周) → 集成测试(1周)"
+        },
+        {
+          "name": "人形机器人全栈项目",
+          "importance": "高级实战",
+          "description": "参与或构建一个人形机器人的完整软件栈",
+          "topics": ["步态规划与控制", "全身运动控制 (Whole-Body Control)", "VLA 模型部署", "多任务技能学习", "人机交互"],
+          "resources": ["Unitree 系列人形机器人 SDK", "宇树 H1/G1 开源控制", "NVIDIA Project GR00T"],
+          "howTo": "从开源人形机器人仿真开始（如 Humanoid Gym），逐步接触真机",
+          "weeklyPlan": "长期项目，按子任务迭代：步态(4周) → 操作(4周) → 集成(4周)"
+        }
+      ]
+    }
+  ]
+}

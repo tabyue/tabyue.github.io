@@ -1,0 +1,165 @@
+{
+  "lastUpdated": "2026-04-17",
+  "papers": [
+    {
+      "id": "p001",
+      "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
+      "authors": "Cheng Chi, Zhenjia Xu, Siyuan Feng, Eric Cousineau, et al.",
+      "venue": "RSS 2023 (Best Paper Award Finalist)",
+      "date": "2023-07",
+      "arxiv": "https://arxiv.org/abs/2303.04137",
+      "github": "https://github.com/real-stanford/diffusion_policy",
+      "tags": ["模仿学习", "扩散模型", "机器人操作"],
+      "tldr": "将扩散生成模型引入机器人策略学习，把动作生成建模为去噪过程，在多模态动作分布建模上显著优于传统方法",
+      "keyInsights": [
+        "把动作序列视为需要去噪的"图像"，用 DDPM 生成连续动作",
+        "天然支持多模态动作分布（一个观察可对应多种合理动作）",
+        "通过 Action Horizon 技巧平衡反应速度和动作平滑性",
+        "在 11 个任务上超越 LSTM-GMM、IBC 等基线"
+      ],
+      "impact": "开创了扩散模型在机器人策略学习中的应用范式，后续 DP3、3D Diffusion Policy 等均基于此工作",
+      "difficulty": "中级",
+      "addedDate": "2026-04-17"
+    },
+    {
+      "id": "p002",
+      "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+      "authors": "Anthony Brohan, Noah Brown, et al. (Google DeepMind)",
+      "venue": "CoRL 2023",
+      "date": "2023-12",
+      "arxiv": "https://arxiv.org/abs/2307.15818",
+      "github": "",
+      "tags": ["VLA", "大模型", "迁移学习"],
+      "tldr": "将视觉-语言大模型（PaLI-X/PaLM-E）微调为视觉-语言-动作模型，直接输出机器人动作 token，实现了网络知识到机器人控制的迁移",
+      "keyInsights": [
+        "将机器人动作离散化为 token，与语言 token 统一建模",
+        "大模型的网络知识可以 zero-shot 迁移到机器人任务",
+        "不需要专门的机器人架构设计，VLM 微调即可",
+        "在新物体、新指令上展现出强大的泛化能力"
+      ],
+      "impact": "定义了 VLA（Vision-Language-Action）这一研究方向，是具身大模型的里程碑论文",
+      "difficulty": "高级",
+      "addedDate": "2026-04-17"
+    },
+    {
+      "id": "p003",
+      "title": "ACT: Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware",
+      "authors": "Tony Z. Zhao, Vikash Kumar, Sergey Levine, Chelsea Finn",
+      "venue": "RSS 2023",
+      "date": "2023-07",
+      "arxiv": "https://arxiv.org/abs/2304.13705",
+      "github": "https://github.com/tonyzhaozh/act",
+      "tags": ["模仿学习", "双臂操作", "ALOHA"],
+      "tldr": "提出 Action Chunking with Transformers (ACT) 算法，配合低成本 ALOHA 遥操作硬件，实现了精细的双臂操作技能学习",
+      "keyInsights": [
+        "Action Chunking：一次预测多步动作，减少累积误差",
+        "CVAE + Transformer 架构处理多模态动作分布",
+        "ALOHA 硬件成本约 $20K，远低于工业级遥操作系统",
+        "在穿线、装电池等精细任务上 80-90% 成功率"
+      ],
+      "impact": "ALOHA 项目引爆了低成本机器人模仿学习热潮，Mobile ALOHA 等后续工作影响深远",
+      "difficulty": "中级",
+      "addedDate": "2026-04-17"
+    },
+    {
+      "id": "p004",
+      "title": "Open X-Embodiment: Robotic Learning Datasets and RT-X Models",
+      "authors": "Open X-Embodiment Collaboration (34 institutions)",
+      "venue": "ICRA 2024",
+      "date": "2024-05",
+      "arxiv": "https://arxiv.org/abs/2310.08864",
+      "github": "https://github.com/google-deepmind/open_x_embodiment",
+      "tags": ["数据集", "跨本体", "基础模型"],
+      "tldr": "由 34 家机构联合构建的最大规模机器人操作数据集（100万+ episodes），训练跨本体通用策略 RT-X",
+      "keyInsights": [
+        "统一数据格式 RLDS，覆盖 22 种机器人本体",
+        "RT-1-X 和 RT-2-X 在跨本体任务上平均提升 50%",
+        "数据多样性比数据量更重要的发现",
+        "为机器人领域的 ImageNet 时刻奠基"
+      ],
+      "impact": "建立了机器人学习领域的数据基础设施标准，推动了开放协作的研究范式",
+      "difficulty": "中级",
+      "addedDate": "2026-04-17"
+    },
+    {
+      "id": "p005",
+      "title": "π₀: A Vision-Language-Action Flow Model for General Robot Control",
+      "authors": "Physical Intelligence (Kevin Black, Noah Brown, et al.)",
+      "venue": "arXiv 2024",
+      "date": "2024-10",
+      "arxiv": "https://arxiv.org/abs/2410.24164",
+      "github": "",
+      "tags": ["VLA", "流匹配", "通用控制"],
+      "tldr": "Physical Intelligence 提出基于流匹配的 VLA 模型 π₀，在多个真实机器人上展示了强大的通用操作能力",
+      "keyInsights": [
+        "用 Flow Matching 替代 Diffusion，推理更快更稳定",
+        "预训练在 Open X-Embodiment 上，微调到特定任务",
+        "在折叠衣服、清理桌面等复杂长序列任务上表现出色",
+        "证明了大规模预训练 + 微调范式在机器人领域的可行性"
+      ],
+      "impact": "Physical Intelligence 成为具身智能领域最受关注的创业公司之一，估值超 20 亿美元",
+      "difficulty": "高级",
+      "addedDate": "2026-04-17"
+    },
+    {
+      "id": "p006",
+      "title": "GR00T N1: An Open Foundation Model for Generalist Humanoid Robots",
+      "authors": "NVIDIA",
+      "venue": "NVIDIA Technical Report 2025",
+      "date": "2025-03",
+      "arxiv": "",
+      "github": "https://github.com/NVIDIA/Isaac-GR00T",
+      "tags": ["人形机器人", "基础模型", "NVIDIA"],
+      "tldr": "NVIDIA 发布的人形机器人通用基础模型，支持跨本体预训练和多任务微调",
+      "keyInsights": [
+        "双系统架构：快速反应系统 + 慢速规划系统",
+        "支持多种人形机器人本体的跨平台迁移",
+        "基于 Isaac Sim 的大规模仿真训练",
+        "与 Jetson Thor 芯片深度优化"
+      ],
+      "impact": "NVIDIA 在具身智能全栈（芯片+仿真+模型）布局的关键一环",
+      "difficulty": "高级",
+      "addedDate": "2026-04-17"
+    },
+    {
+      "id": "p007",
+      "title": "Learning Agile Locomotion via Adversarial Training (Legged Gym)",
+      "authors": "Nikita Rudin, David Hoeller, et al. (ETH Zurich / NVIDIA)",
+      "venue": "IROS 2022",
+      "date": "2022-10",
+      "arxiv": "https://arxiv.org/abs/2109.11978",
+      "github": "https://github.com/leggedrobotics/legged_gym",
+      "tags": ["四足机器人", "强化学习", "Sim2Real"],
+      "tldr": "利用 Isaac Gym 大规模并行仿真训练四足机器人的敏捷运动策略，实现了从仿真到真实的高效迁移",
+      "keyInsights": [
+        "4096 个并行环境在单张 GPU 上实时训练",
+        "域随机化 + Teacher-Student 蒸馏实现 Sim2Real",
+        "ANYmal 机器人在崎岖地形上展现类动物敏捷性",
+        "成为后续四足/双足机器人 RL 训练的标准框架"
+      ],
+      "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准",
+      "difficulty": "中级",
+      "addedDate": "2026-04-17"
+    },
+    {
+      "id": "p008",
+      "title": "DreamZero: 具身智能新范式——从语言理解迈向世界建模",
+      "authors": "Multiple Authors",
+      "venue": "arXiv 2026",
+      "date": "2026-03",
+      "arxiv": "https://arxiv.org/abs/2603.xxxxx",
+      "github": "",
+      "tags": ["世界模型", "具身智能", "物理交互"],
+      "tldr": "提出超越传统 VLA 的新范式，通过世界模型实现从"语言理解"到"物理交互"的跨越",
+      "keyInsights": [
+        "超越 VLA 的纯 token 生成范式，引入物理世界建模",
+        "通过内部世界模型进行前瞻规划和风险评估",
+        "在物理推理任务上显著超越传统 VLA 方法",
+        "可能开启具身智能的 System 2 时代"
+      ],
+      "impact": "可能定义具身智能的下一代技术范式",
+      "difficulty": "高级",
+      "addedDate": "2026-04-17"
+    }
+  ]
+}

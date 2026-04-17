@@ -1,0 +1,221 @@
+{
+  "lastUpdated": "2026-04-17",
+  "projects": [
+    {
+      "id": "os001",
+      "name": "LeRobot",
+      "org": "Hugging Face",
+      "github": "https://github.com/huggingface/lerobot",
+      "stars": "12.5k+",
+      "tags": ["框架", "模仿学习", "全栈"],
+      "description": "Hugging Face 推出的端到端机器人学习框架，支持数据采集、训练、评估全流程。集成 Diffusion Policy、ACT 等主流算法，支持多种硬件平台。",
+      "highlights": [
+        "统一的数据格式和 Hub 生态",
+        "支持 SO-100、Koch v1.1 等多种低成本机械臂",
+        "内置 Diffusion Policy、ACT、TDMPC 等算法",
+        "完善的训练和评估 Pipeline"
+      ],
+      "getStarted": "pip install lerobot → 下载预训练模型 → 在仿真中评估 → 连接真实机械臂",
+      "difficulty": "入门友好",
+      "category": "学习框架"
+    },
+    {
+      "id": "os002",
+      "name": "MuJoCo",
+      "org": "Google DeepMind",
+      "github": "https://github.com/google-deepmind/mujoco",
+      "stars": "8.5k+",
+      "tags": ["仿真", "物理引擎", "C++"],
+      "description": "Multi-Joint dynamics with Contact，业界最流行的机器人物理仿真引擎。以精确的接触动力学和高效的仿真速度著称。",
+      "highlights": [
+        "精确的刚体接触动力学",
+        "Python 绑定 (mujoco-py / dm_control)",
+        "极高的仿真效率，适合大规模 RL 训练",
+        "丰富的机器人模型库"
+      ],
+      "getStarted": "pip install mujoco → 加载 MJCF 模型 → 运行仿真 → 渲染可视化",
+      "difficulty": "中级",
+      "category": "仿真平台"
+    },
+    {
+      "id": "os003",
+      "name": "NVIDIA Isaac Lab",
+      "org": "NVIDIA",
+      "github": "https://github.com/NVIDIA/IsaacLab",
+      "stars": "3k+",
+      "tags": ["仿真", "GPU加速", "RL"],
+      "description": "基于 Isaac Sim 的机器人学习框架，利用 GPU 加速实现数千并行环境的高效仿真训练。",
+      "highlights": [
+        "GPU 加速的并行仿真（数千环境同时运行）",
+        "高保真渲染，支持合成数据生成",
+        "与 NVIDIA Omniverse 生态深度集成",
+        "内置多种机器人环境和基准任务"
+      ],
+      "getStarted": "安装 Isaac Sim → Clone IsaacLab → 运行示例环境 → 训练 RL 策略",
+      "difficulty": "中高级",
+      "category": "仿真平台"
+    },
+    {
+      "id": "os004",
+      "name": "Genesis",
+      "org": "Genesis Embodied AI",
+      "github": "https://github.com/Genesis-Embodied-AI/Genesis",
+      "stars": "22k+",
+      "tags": ["仿真", "可微分", "Python"],
+      "description": "新一代通用物理仿真平台，完全 Python 原生，支持可微分仿真，速度极快。",
+      "highlights": [
+        "纯 Python API，极低学习门槛",
+        "可微分物理引擎，支持基于梯度的优化",
+        "速度比 MuJoCo 快 10-80x（GPU 加速）",
+        "支持刚体、软体、流体、布料等多种物理"
+      ],
+      "getStarted": "pip install genesis-world → 创建场景 → 添加机器人 → 运行仿真",
+      "difficulty": "入门友好",
+      "category": "仿真平台"
+    },
+    {
+      "id": "os005",
+      "name": "OpenVLA",
+      "org": "Stanford / TRI",
+      "github": "https://github.com/openvla/openvla",
+      "stars": "2.5k+",
+      "tags": ["VLA", "大模型", "机器人控制"],
+      "description": "开源的 Vision-Language-Action 模型，基于 Prismatic VLM 微调，支持直接输出机器人动作。",
+      "highlights": [
+        "7B 参数的开源 VLA 模型",
+        "在 Open X-Embodiment 数据集上训练",
+        "支持自然语言指令输入",
+        "可微调适配不同机器人平台"
+      ],
+      "getStarted": "下载预训练权重 → 准备少量目标数据 → LoRA 微调 → 部署推理",
+      "difficulty": "高级",
+      "category": "AI模型"
+    },
+    {
+      "id": "os006",
+      "name": "ALOHA / Mobile ALOHA",
+      "org": "Stanford",
+      "github": "https://github.com/tonyzhaozh/aloha",
+      "stars": "4k+",
+      "tags": ["遥操作", "硬件", "双臂"],
+      "description": "低成本双臂遥操作系统，配合 ACT 算法实现精细操作技能的模仿学习。Mobile ALOHA 版本增加移动底盘。",
+      "highlights": [
+        "硬件成本约 $20K，远低于工业级系统",
+        "支持 6DoF 双臂精细操作",
+        "完整的数据采集和训练 Pipeline",
+        "Mobile 版本支持移动操作任务"
+      ],
+      "getStarted": "购买/3D 打印硬件 → 组装标定 → 遥操作采集数据 → ACT 训练 → 自主执行",
+      "difficulty": "中级",
+      "category": "硬件方案"
+    },
+    {
+      "id": "os007",
+      "name": "Legged Gym",
+      "org": "ETH Zurich / NVIDIA",
+      "github": "https://github.com/leggedrobotics/legged_gym",
+      "stars": "3k+",
+      "tags": ["四足机器人", "RL", "运动控制"],
+      "description": "基于 Isaac Gym 的四足机器人 RL 训练框架，是足式机器人强化学习的标准开发平台。",
+      "highlights": [
+        "Isaac Gym GPU 并行仿真（4096 环境）",
+        "支持 ANYmal、A1 等多种四足平台",
+        "完整的 Sim2Real Pipeline",
+        "Teacher-Student 策略蒸馏"
+      ],
+      "getStarted": "安装 Isaac Gym → Clone Legged Gym → 选择机器人 → 训练 PPO → 部署",
+      "difficulty": "中高级",
+      "category": "运动控制"
+    },
+    {
+      "id": "os008",
+      "name": "Isaac GR00T",
+      "org": "NVIDIA",
+      "github": "https://github.com/NVIDIA/Isaac-GR00T",
+      "stars": "3k+",
+      "tags": ["人形机器人", "基础模型", "NVIDIA"],
+      "description": "NVIDIA 的人形机器人通用基础模型工具包，支持人形机器人的跨本体学习和部署。",
+      "highlights": [
+        "人形机器人专用基础模型",
+        "跨本体预训练和迁移",
+        "与 Isaac Sim / Isaac Lab 深度集成",
+        "支持 Jetson Thor 边缘部署"
+      ],
+      "getStarted": "安装依赖 → 下载预训练模型 → 在 Isaac Sim 中评估 → 微调适配",
+      "difficulty": "高级",
+      "category": "AI模型"
+    },
+    {
+      "id": "os009",
+      "name": "Stable Baselines3",
+      "org": "DLR-RM",
+      "github": "https://github.com/DLR-RM/stable-baselines3",
+      "stars": "9k+",
+      "tags": ["RL", "PyTorch", "算法库"],
+      "description": "最流行的强化学习算法库，实现了 PPO、SAC、TD3 等主流算法，API 简洁易用。",
+      "highlights": [
+        "PyTorch 实现，代码清晰可读",
+        "PPO, SAC, TD3, A2C, DQN 等算法",
+        "与 Gym/Gymnasium 生态完美兼容",
+        "丰富的回调和日志功能"
+      ],
+      "getStarted": "pip install stable-baselines3 → 创建环境 → 选择算法 → model.learn() → 评估",
+      "difficulty": "入门友好",
+      "category": "AI模型"
+    },
+    {
+      "id": "os010",
+      "name": "Open3D",
+      "org": "Intel ISL",
+      "github": "https://github.com/isl-org/Open3D",
+      "stars": "11k+",
+      "tags": ["3D视觉", "点云", "重建"],
+      "description": "快速开发 3D 数据处理的开源库，支持点云处理、3D 重建、可视化等功能。",
+      "highlights": [
+        "点云处理全套工具（滤波/配准/分割）",
+        "RGBD 图像处理和 3D 重建",
+        "GPU 加速的张量操作",
+        "交互式 3D 可视化"
+      ],
+      "getStarted": "pip install open3d → 读取点云/RGBD → 预处理 → 配准/重建 → 可视化",
+      "difficulty": "中级",
+      "category": "感知工具"
+    },
+    {
+      "id": "os011",
+      "name": "ORB-SLAM3",
+      "org": "Universidad de Zaragoza",
+      "github": "https://github.com/UZ-SLAMLab/ORB_SLAM3",
+      "stars": "6.5k+",
+      "tags": ["SLAM", "视觉定位", "C++"],
+      "description": "最先进的特征点法视觉 SLAM 系统，支持单目/双目/RGB-D/IMU 多种传感器配置。",
+      "highlights": [
+        "支持单目/双目/RGB-D/IMU 多种配置",
+        "多地图系统，支持地图合并",
+        "实时重定位和回环检测",
+        "Atlas 多地图管理系统"
+      ],
+      "getStarted": "安装 OpenCV + Pangolin → 编译 ORB-SLAM3 → 运行 EuRoC/TUM 数据集 → 尝试实时 SLAM",
+      "difficulty": "中高级",
+      "category": "感知工具"
+    },
+    {
+      "id": "os012",
+      "name": "ROS2 (Robot Operating System 2)",
+      "org": "Open Robotics / OSRF",
+      "github": "https://github.com/ros2",
+      "stars": "N/A",
+      "tags": ["中间件", "通信框架", "标准"],
+      "description": "机器人软件开发的事实标准框架，提供通信、工具链、仿真集成等全套基础设施。",
+      "highlights": [
+        "DDS 分布式通信，低延迟高可靠",
+        "丰富的工具链 (rviz2, rosbag2, tf2)",
+        "Nav2 导航 + MoveIt2 运动规划",
+        "支持实时系统和安全关键应用"
+      ],
+      "getStarted": "安装 ROS2 Humble → 完成 Tutorials → 编写第一个节点 → 集成仿真器",
+      "difficulty": "中级",
+      "category": "学习框架"
+    }
+  ]
+}
