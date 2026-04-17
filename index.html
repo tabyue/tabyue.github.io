@@ -892,7 +892,7 @@ async function loadPyodide_(){
 }
 
 // Pyodide 可安装的包映射
-const _pyPkgMap={'matplotlib':'matplotlib','sklearn':'scikit-learn','cv2':'opencv-python','PIL':'Pillow','sympy':'sympy','pandas':'pandas'};
+const _pyPkgMap={'matplotlib':'matplotlib','sklearn':'scikit-learn','PIL':'Pillow','sympy':'sympy','pandas':'pandas','cvxpy':'cvxpy','pywt':'PyWavelets','yaml':'pyyaml','scipy':'scipy'};
 
 async function runPython(btn){
     const wrap=btn.closest('.copy-wrap');
@@ -914,7 +914,7 @@ async function runPython(btn){
         const imports=code.match(/(?:^|\n)\s*(?:import|from)\s+(\w+)/g)||[];
         const needed=new Set();
         const unsupported=[];
-        const noSupport=['torch','torchvision','mujoco','gym','gymnasium','rclpy','ros2','cv2','open3d','pyrealsense2','deepspeed','tensorrt','wandb','digit_interface'];
+        const noSupport=['torch','torchvision','tensorflow','mujoco','gym','gymnasium','rclpy','ros2','cv2','open3d','pyrealsense2','deepspeed','tensorrt','wandb','digit_interface','moveit2','peft','ultralytics','segment_anything','groundingdino','genesis','stable_baselines3','aiohttp','fastapi'];
         imports.forEach(imp=>{
             const pkg=imp.replace(/(?:^|\n)\s*(?:import|from)\s+/,'').trim();
             if(noSupport.includes(pkg)){unsupported.push(pkg);return}
