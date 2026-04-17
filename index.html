@@ -153,6 +153,21 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .ncat-全球视野{background:rgba(6,182,212,.1);color:var(--cyl)}
 .ncat-学术研究{background:rgba(139,92,246,.1);color:var(--vl)}
 
+/* === OPENSOURCE CATEGORY GROUPS === */
+.os-group{margin-bottom:32px}
+.os-group-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--bd)}
+.os-group-icon{font-size:1.3rem}
+.os-group-name{font-size:1.05rem;font-weight:700;color:var(--t1)}
+.os-group-count{font-size:.72rem;color:var(--t3);font-family:'JetBrains Mono';background:var(--bg3);padding:2px 8px;border-radius:8px}
+.os-cat-badge{font-size:.64rem;font-weight:600;padding:2px 8px;border-radius:6px;display:inline-block}
+.os-cat-simulation{background:rgba(245,158,11,.1);color:var(--al)}
+.os-cat-ai-model{background:rgba(99,102,241,.1);color:var(--pl)}
+.os-cat-framework{background:rgba(16,185,129,.1);color:var(--sl)}
+.os-cat-locomotion{background:rgba(236,72,153,.1);color:var(--pkl)}
+.os-cat-perception{background:rgba(6,182,212,.1);color:var(--cyl)}
+.os-cat-hardware{background:rgba(139,92,246,.1);color:var(--vl)}
+.os-cat-data-tools{background:rgba(234,179,8,.1);color:#b45309}
+
 /* === MODAL === */
 .modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);display:none;align-items:flex-start;justify-content:center;padding:56px 16px 16px;overflow-y:auto}
 .modal-overlay.open{display:flex}
@@ -373,8 +388,11 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 
 <!-- OPENSOURCE -->
 <div class="page" id="pg-opensource">
-    <div class="page-header"><h1 class="page-title"><span class="icon">💻</span> 开源生态</h1><p class="page-sub">具身智能核心开源项目导航。</p></div>
-    <div class="page-body"><div class="card-grid" id="osGrid"></div></div>
+    <div class="page-header"><h1 class="page-title"><span class="icon">💻</span> 开源生态 <span style="font-family:'JetBrains Mono';font-size:.7rem;color:var(--t3);font-weight:400" id="osCount"></span></h1><p class="page-sub">具身智能核心开源项目导航，按分类快速定位你需要的工具。</p></div>
+    <div class="page-body">
+        <div class="filters" id="osFilters"></div>
+        <div id="osGrouped"></div>
+    </div>
 </div>
 
 <!-- NEWS -->
@@ -1079,11 +1097,51 @@ function copyBlock(btn, type){
 // === RENDER OS ===
 function renderOS(){
     if(!OD)return;
-    let h='';
-    OD.projects.forEach(p=>{
-        h+=`<div class="card"><div class="card-tags"><span class="os-stars">⭐ ${p.stars}</span>${p.tags.map(t=>`<span class="tag tag-purple">${t}</span>`).join('')}</div><div class="card-title">${p.name} <span style="font-size:.78rem;color:var(--t3);font-weight:400">${p.org}</span></div><div class="card-desc">${p.description}</div><div class="card-footer"><a href="${p.github}" target="_blank" class="card-btn primary">💻 GitHub</a></div></div>`;
+    const cats=OD.categories||[{id:'all',name:'全部',icon:'🌐'}];
+    document.getElementById('osCount').textContent=OD.projects.length+' 个项目';
+    // 渲染筛选按钮
+    document.getElementById('osFilters').innerHTML=cats.map((c,i)=>{
+        const cnt=c.id==='all'?OD.projects.length:OD.projects.filter(p=>p.category===c.id).length;
+        return `<button class="fbtn${i===0?' active':''}" onclick="filterOS(this,'${c.id}')">${c.icon} ${c.name} <span style="opacity:.5;font-size:.68rem">${cnt}</span></button>`;
+    }).join('');
+    // 分组渲染
+    renderOSGrouped('all');
+}
+function renderOSGrouped(catFilter){
+    const cats=(OD.categories||[]).filter(c=>c.id!=='all');
+    const container=document.getElementById('osGrouped');
+    let html='';
+    cats.forEach(cat=>{
+        const projs=OD.projects.filter(p=>p.category===cat.id);
+        if(!projs.length)return;
+        const visible=catFilter==='all'||catFilter===cat.id;
+        html+=`<div class="os-group" data-cat="${cat.id}" style="${visible?'':'display:none'}">`;
+        html+=`<div class="os-group-header"><span class="os-group-icon">${cat.icon}</span><span class="os-group-name">${cat.name}</span><span class="os-group-count">${projs.length}</span></div>`;
+        html+=`<div class="card-grid">`;
+        projs.forEach(p=>{
+            html+=`<div class="card" data-cat="${p.category}"><div class="card-tags"><span class="os-stars">⭐ ${p.stars}</span><span class="os-cat-badge os-cat-${p.category}">${cat.name}</span>${(p.tags||[]).map(t=>`<span class="tag tag-purple">${t}</span>`).join('')}</div><div class="card-title">${p.name} <span style="font-size:.78rem;color:var(--t3);font-weight:400">${p.org}</span></div><div class="card-desc">${p.description}</div>${p.difficulty?`<div style="font-size:.72rem;color:var(--t3);margin-top:6px">📊 难度: ${p.difficulty}</div>`:''}<div class="card-footer"><a href="${p.github}" target="_blank" class="card-btn primary">💻 GitHub</a></div></div>`;
+        });
+        html+=`</div></div>`;
     });
-    document.getElementById('osGrid').innerHTML=h;
+    // 处理没有分类的项目
+    const uncategorized=OD.projects.filter(p=>!p.category||!cats.find(c=>c.id===p.category));
+    if(uncategorized.length){
+        const visible=catFilter==='all';
+        html+=`<div class="os-group" data-cat="other" style="${visible?'':'display:none'}">`;
+        html+=`<div class="os-group-header"><span class="os-group-icon">📦</span><span class="os-group-name">其他</span><span class="os-group-count">${uncategorized.length}</span></div>`;
+        html+=`<div class="card-grid">`;
+        uncategorized.forEach(p=>{
+            html+=`<div class="card"><div class="card-tags"><span class="os-stars">⭐ ${p.stars}</span>${(p.tags||[]).map(t=>`<span class="tag tag-purple">${t}</span>`).join('')}</div><div class="card-title">${p.name} <span style="font-size:.78rem;color:var(--t3);font-weight:400">${p.org}</span></div><div class="card-desc">${p.description}</div><div class="card-footer"><a href="${p.github}" target="_blank" class="card-btn primary">💻 GitHub</a></div></div>`;
+        });
+        html+=`</div></div>`;
+    }
+    container.innerHTML=html;
+}
+function filterOS(el,cat){
+    el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));el.classList.add('active');
+    document.querySelectorAll('#osGrouped .os-group').forEach(g=>{
+        g.style.display=(cat==='all'||g.dataset.cat===cat)?'':'none';
+    });
 }
 
 // === RENDER NEWS ===
