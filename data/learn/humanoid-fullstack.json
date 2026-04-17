@@ -1,17 +1,54 @@
 {
-  "id": "humanoid-fullstack", "name": "人形机器人全栈项目", "stage": "阶段六：项目实战", "importance": "高级实战", "estimatedHours": 100,
+  "id": "humanoid-fullstack",
+  "name": "人形机器人全栈项目",
+  "stage": "阶段六：项目实战",
+  "importance": "高级实战",
+  "estimatedHours": 100,
   "description": "参与或构建一个人形机器人的完整软件栈。从步态控制到全身运动到 VLA 部署。",
-  "prerequisites": ["控制理论", "强化学习", "VLA 模型"],
+  "prerequisites": [
+    "控制理论",
+    "强化学习",
+    "VLA 模型"
+  ],
   "sections": [
-    {"title":"步态规划与控制","content":"### 两种范式\n\n**传统方法：ZMP 步态**\n- 零力矩点保持在支撑多边形内\n- 预规划步态 → 轨迹跟踪\n- 稳定但不灵活\n\n**RL 方法：端到端步态学习**\n- Legged Gym / Humanoid Gym\n- PPO 训练，4096 并行环境\n- 更鲁棒，能处理未知地形\n\n```python\n# Humanoid Gym 训练配置（简化）\nclass HumanoidCfg:\n    class env:\n        num_envs = 4096\n        episode_length_s = 20\n    \n    class rewards:\n        # 奖励设计是核心\n        class scales:\n            tracking_lin_vel = 1.0      # 跟踪目标速度\n            tracking_ang_vel = 0.5\n            feet_air_time = 1.0         # 鼓励抬脚\n            action_rate = -0.01         # 动作平滑\n            torques = -0.0001           # 最小力矩\n            orientation = -5.0          # 保持直立\n    \n    class domain_rand:\n        friction_range = [0.2, 1.5]\n        push_robots = True              # 随机推力扰动\n        max_push_vel_xy = 1.0\n```\n\n### 练习\n1. 在 Humanoid Gym 中用 PPO 训练人形步态\n2. 调整奖励权重观察步态变化\n3. 加入 Domain Randomization 提升鲁棒性"},
-    {"title":"全身运动控制","content":"### Whole-Body Control (WBC)\n\n同时控制腿部（平衡）和手臂（操作）。优先级框架：\n\n1. **平衡**（最高优先级）：保持质心在支撑多边形内\n2. **碰撞避免**：自碰撞+环境碰撞\n3. **任务执行**：手臂到达目标位置\n\n```python\nimport numpy as np\nfrom scipy.optimize import minimize\n\ndef whole_body_qp(robot, task_targets, priorities):\n    \"\"\"优先级 QP 全身控制\"\"\"\n    n_joints = robot.n_joints\n    \n    # 决策变量：关节加速度 ddq + 接触力 f\n    n_vars = n_joints + 6 * len(robot.contacts)\n    \n    # 约束：动力学方程 M*ddq + h = S*tau + J_c^T*f\n    # 约束：摩擦锥 |f_t| <= mu * f_n\n    # 约束：关节限位\n    \n    # 按优先级逐层求解\n    # 层1：平衡 → 层2：避碰 → 层3：任务\n    pass\n```\n\n宇树 H1/G1 的开源控制代码是很好的学习材料。\n\n### 练习\n1. 实现简化的 WBC：平面双足 + 单臂够取\n2. 用 MuJoCo 仿真验证全身控制效果\n3. 分析不同优先级设置对行为的影响"},
-    {"title":"VLA 模型部署","content":"### 在人形机器人上部署 VLA\n\n挑战：\n- **实时性**：全身控制需要 200-500Hz，VLA 推理 ~5-10Hz\n- **动作空间大**：人形 20+ 个关节\n- **安全约束**：不能摔倒\n\n### 解决方案：分层架构\n\n```\n高层 VLA（5-10Hz）：  图像+语言 → 目标位姿/子任务\n中层运动规划（50Hz）：目标位姿 → 关节轨迹\n低层控制（500Hz）：   关节轨迹 → 力矩指令\n```\n\nNVIDIA GR00T N1 专门为人形设计，采用类似分层架构。\n\n### 练习\n1. 在仿真中部署一个简单 VLA：语言指令 → 手臂抓取\n2. 实现安全层：检测到失衡时切换到恢复策略\n3. 分析 VLA 推理延迟对全身控制的影响"}
+    {
+      "title": "步态规划与控制",
+      "content": "### 两种范式\n\n**传统方法：ZMP 步态**\n- 零力矩点保持在支撑多边形内\n- 预规划步态 → 轨迹跟踪\n- 稳定但不灵活\n\n**RL 方法：端到端步态学习**\n- Legged Gym / Humanoid Gym\n- PPO 训练，4096 并行环境\n- 更鲁棒，能处理未知地形\n\n```python\n# Humanoid Gym 训练配置（简化）\nclass HumanoidCfg:\n    class env:\n        num_envs = 4096\n        episode_length_s = 20\n    \n    class rewards:\n        # 奖励设计是核心\n        class scales:\n            tracking_lin_vel = 1.0      # 跟踪目标速度\n            tracking_ang_vel = 0.5\n            feet_air_time = 1.0         # 鼓励抬脚\n            action_rate = -0.01         # 动作平滑\n            torques = -0.0001           # 最小力矩\n            orientation = -5.0          # 保持直立\n    \n    class domain_rand:\n        friction_range = [0.2, 1.5]\n        push_robots = True              # 随机推力扰动\n        max_push_vel_xy = 1.0\n```\n\n### 练习\n1. 在 Humanoid Gym 中用 PPO 训练人形步态\n2. 调整奖励权重观察步态变化\n3. 加入 Domain Randomization 提升鲁棒性\n\n### 参考答案\n\n**1. 在 Humanoid Gym 中用 PPO 训练人形步态**\n\n提示：使用本章给出的训练循环代码，调整超参数（学习率、batch size、epoch 数），观察 loss 收敛情况。\n\n**2. 调整奖励权重观察步态变化**\n\n提示：结合本章的概念讲解和代码示例完成，核心步骤已在正文中详细说明。\n\n**3. 加入 Domain Randomization 提升鲁棒性**\n\n提示：结合本章的概念讲解和代码示例完成，核心步骤已在正文中详细说明。\n"
+    },
+    {
+      "title": "全身运动控制",
+      "content": "### Whole-Body Control (WBC)\n\n同时控制腿部（平衡）和手臂（操作）。优先级框架：\n\n1. **平衡**（最高优先级）：保持质心在支撑多边形内\n2. **碰撞避免**：自碰撞+环境碰撞\n3. **任务执行**：手臂到达目标位置\n\n```python\nimport numpy as np\nfrom scipy.optimize import minimize\n\ndef whole_body_qp(robot, task_targets, priorities):\n    \"\"\"优先级 QP 全身控制\"\"\"\n    n_joints = robot.n_joints\n    \n    # 决策变量：关节加速度 ddq + 接触力 f\n    n_vars = n_joints + 6 * len(robot.contacts)\n    \n    # 约束：动力学方程 M*ddq + h = S*tau + J_c^T*f\n    # 约束：摩擦锥 |f_t| <= mu * f_n\n    # 约束：关节限位\n    \n    # 按优先级逐层求解\n    # 层1：平衡 → 层2：避碰 → 层3：任务\n    pass\n```\n\n宇树 H1/G1 的开源控制代码是很好的学习材料。\n\n### 练习\n1. 实现简化的 WBC：平面双足 + 单臂够取\n2. 用 MuJoCo 仿真验证全身控制效果\n3. 分析不同优先级设置对行为的影响\n\n### 参考答案\n\n**1. 实现简化的 WBC：平面双足 + 单臂够取**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n\n**2. 用 MuJoCo 仿真验证全身控制效果**\n\n提示：结合本章的概念讲解和代码示例完成，核心步骤已在正文中详细说明。\n\n**3. 分析不同优先级设置对行为的影响**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n"
+    },
+    {
+      "title": "VLA 模型部署",
+      "content": "### 在人形机器人上部署 VLA\n\n挑战：\n- **实时性**：全身控制需要 200-500Hz，VLA 推理 ~5-10Hz\n- **动作空间大**：人形 20+ 个关节\n- **安全约束**：不能摔倒\n\n### 解决方案：分层架构\n\n```\n高层 VLA（5-10Hz）：  图像+语言 → 目标位姿/子任务\n中层运动规划（50Hz）：目标位姿 → 关节轨迹\n低层控制（500Hz）：   关节轨迹 → 力矩指令\n```\n\nNVIDIA GR00T N1 专门为人形设计，采用类似分层架构。\n\n### 练习\n1. 在仿真中部署一个简单 VLA：语言指令 → 手臂抓取\n2. 实现安全层：检测到失衡时切换到恢复策略\n3. 分析 VLA 推理延迟对全身控制的影响\n\n### 参考答案\n\n**1. 在仿真中部署一个简单 VLA：语言指令 → 手臂抓取**\n\n提示：结合本章的概念讲解和代码示例完成，核心步骤已在正文中详细说明。\n\n**2. 实现安全层：检测到失衡时切换到恢复策略**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n\n**3. 分析 VLA 推理延迟对全身控制的影响**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n"
+    }
   ],
   "resources": [
-    {"name":"Humanoid Gym","url":"https://github.com/roboterax/humanoid-gym","type":"项目","description":"人形机器人 RL 训练框架。"},
-    {"name":"Unitree H1/G1 SDK","url":"https://github.com/unitreerobotics","type":"工具","description":"宇树人形机器人开源 SDK。"},
-    {"name":"GR00T","url":"https://developer.nvidia.com/groot","type":"工具","description":"NVIDIA 人形机器人基础模型。"},
-    {"name":"Legged Gym","url":"https://github.com/leggedrobotics/legged_gym","type":"项目","description":"足式机器人 RL 训练的标准框架。"}
+    {
+      "name": "Humanoid Gym",
+      "url": "https://github.com/roboterax/humanoid-gym",
+      "type": "项目",
+      "description": "人形机器人 RL 训练框架。"
+    },
+    {
+      "name": "Unitree H1/G1 SDK",
+      "url": "https://github.com/unitreerobotics",
+      "type": "工具",
+      "description": "宇树人形机器人开源 SDK。"
+    },
+    {
+      "name": "GR00T",
+      "url": "https://developer.nvidia.com/groot",
+      "type": "工具",
+      "description": "NVIDIA 人形机器人基础模型。"
+    },
+    {
+      "name": "Legged Gym",
+      "url": "https://github.com/leggedrobotics/legged_gym",
+      "type": "项目",
+      "description": "足式机器人 RL 训练的标准框架。"
+    }
   ],
   "weeklyPlan": "**第1-4周**：Humanoid Gym 步态训练\\n**第5-8周**：全身运动控制\\n**第9-12周**：VLA 集成"
 }

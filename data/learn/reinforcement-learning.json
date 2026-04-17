@@ -1,17 +1,53 @@
 {
-  "id": "reinforcement-learning", "name": "强化学习", "stage": "阶段四：AI 大脑", "importance": "核心", "estimatedHours": 60,
+  "id": "reinforcement-learning",
+  "name": "强化学习",
+  "stage": "阶段四：AI 大脑",
+  "importance": "核心",
+  "estimatedHours": 60,
   "description": "让机器人通过试错学习最优行为策略。PPO 是四足步态训练的标配，SAC 适合连续动作空间。",
-  "prerequisites": ["深度学习基础", "概率与统计"],
+  "prerequisites": [
+    "深度学习基础",
+    "概率与统计"
+  ],
   "sections": [
-    {"title":"MDP 与 Bellman 方程","content":"### 核心\n\nV*(s) = max_a [R(s,a) + γ Σ P(s'|s,a) V*(s')]\n\n```python\nimport numpy as np\ndef value_iteration(P, R, gamma=0.99, n_iter=1000):\n    n_s, n_a = R.shape\n    V = np.zeros(n_s)\n    for _ in range(n_iter):\n        V = np.max(R + gamma * np.einsum('san,n->sa', P, V), axis=1)\n    return V\n```\n\n### 练习\n1. 实现值迭代在 GridWorld 上\n2. 实现策略迭代并对比收敛速度\n3. 用 Gymnasium FrozenLake 验证"},
-    {"title":"PPO 与 SAC","content":"### PPO\n\n机器人 RL 最常用算法，Clipped Surrogate Objective 保证训练稳定。\n\n```python\nimport torch\n# PPO 核心更新\ndef ppo_loss(new_logp, old_logp, adv, clip=0.2):\n    ratio = (new_logp - old_logp).exp()\n    loss1 = ratio * adv\n    loss2 = ratio.clamp(1-clip, 1+clip) * adv\n    return -torch.min(loss1, loss2).mean()\n```\n\n**SAC**：最大熵 RL，鼓励探索，适合连续动作。\n\nLegged Gym 用 PPO 训四足步态，4096 并行环境在 Isaac Gym 中训练。\n\n### 练习\n1. 用 SB3 的 PPO 训练 CartPole 和 HalfCheetah\n2. 从零实现 PPO\n3. PPO vs SAC 在 HalfCheetah 上对比"},
-    {"title":"Sim-to-Real 迁移","content":"### Domain Randomization\n\n随机化仿真参数（摩擦 0.2-1.5、质量 ±20%、延迟 0-40ms），让策略对不确定性鲁棒。\n\n### Teacher-Student 蒸馏\n\nTeacher 用完美信息训练 → Student 只用传感器学 Teacher 行为。标准 Sim2Real 做法。\n\n### 练习\n1. 在 Isaac Gym 加入 Domain Randomization\n2. 实现 Teacher-Student 蒸馏\n3. 分析随机化范围对迁移成功率的影响"}
+    {
+      "title": "MDP 与 Bellman 方程",
+      "content": "### 核心\n\nV*(s) = max_a [R(s,a) + γ Σ P(s'|s,a) V*(s')]\n\n```python\nimport numpy as np\ndef value_iteration(P, R, gamma=0.99, n_iter=1000):\n    n_s, n_a = R.shape\n    V = np.zeros(n_s)\n    for _ in range(n_iter):\n        V = np.max(R + gamma * np.einsum('san,n->sa', P, V), axis=1)\n    return V\n```\n\n### 练习\n1. 实现值迭代在 GridWorld 上\n2. 实现策略迭代并对比收敛速度\n3. 用 Gymnasium FrozenLake 验证\n\n### 参考答案\n\n**1. 实现值迭代在 GridWorld 上**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n\n**2. 实现策略迭代并对比收敛速度**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n\n**3. 用 Gymnasium FrozenLake 验证**\n\n提示：结合本章的概念讲解和代码示例完成，核心步骤已在正文中详细说明。\n"
+    },
+    {
+      "title": "PPO 与 SAC",
+      "content": "### PPO\n\n机器人 RL 最常用算法，Clipped Surrogate Objective 保证训练稳定。\n\n```python\nimport torch\n# PPO 核心更新\ndef ppo_loss(new_logp, old_logp, adv, clip=0.2):\n    ratio = (new_logp - old_logp).exp()\n    loss1 = ratio * adv\n    loss2 = ratio.clamp(1-clip, 1+clip) * adv\n    return -torch.min(loss1, loss2).mean()\n```\n\n**SAC**：最大熵 RL，鼓励探索，适合连续动作。\n\nLegged Gym 用 PPO 训四足步态，4096 并行环境在 Isaac Gym 中训练。\n\n### 练习\n1. 用 SB3 的 PPO 训练 CartPole 和 HalfCheetah\n2. 从零实现 PPO\n3. PPO vs SAC 在 HalfCheetah 上对比\n\n### 参考答案\n\n**1. 用 SB3 的 PPO 训练 CartPole 和 HalfCheetah**\n\n提示：使用本章给出的训练循环代码，调整超参数（学习率、batch size、epoch 数），观察 loss 收敛情况。\n\n**2. 从零实现 PPO**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n\n**3. PPO vs SAC 在 HalfCheetah 上对比**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n"
+    },
+    {
+      "title": "Sim-to-Real 迁移",
+      "content": "### Domain Randomization\n\n随机化仿真参数（摩擦 0.2-1.5、质量 ±20%、延迟 0-40ms），让策略对不确定性鲁棒。\n\n### Teacher-Student 蒸馏\n\nTeacher 用完美信息训练 → Student 只用传感器学 Teacher 行为。标准 Sim2Real 做法。\n\n### 练习\n1. 在 Isaac Gym 加入 Domain Randomization\n2. 实现 Teacher-Student 蒸馏\n3. 分析随机化范围对迁移成功率的影响\n\n### 参考答案\n\n**1. 在 Isaac Gym 加入 Domain Randomization**\n\n提示：结合本章的概念讲解和代码示例完成，核心步骤已在正文中详细说明。\n\n**2. 实现 Teacher-Student 蒸馏**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n\n**3. 分析随机化范围对迁移成功率的影响**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n"
+    }
   ],
   "resources": [
-    {"name":"Sutton RL 教材","url":"http://incompleteideas.net/book/the-book.html","type":"教材","description":"RL 圣经，免费在线。"},
-    {"name":"Spinning Up","url":"https://spinningup.openai.com/","type":"教程","description":"OpenAI RL 教程，PPO/SAC 代码清晰。"},
-    {"name":"Stable Baselines3","url":"https://stable-baselines3.readthedocs.io/","type":"工具","description":"RL 算法库，开箱即用。"},
-    {"name":"Isaac Gym","url":"https://developer.nvidia.com/isaac-gym","type":"工具","description":"GPU 加速 RL 训练，4096+ 并行。"}
+    {
+      "name": "Sutton RL 教材",
+      "url": "http://incompleteideas.net/book/the-book.html",
+      "type": "教材",
+      "description": "RL 圣经，免费在线。"
+    },
+    {
+      "name": "Spinning Up",
+      "url": "https://spinningup.openai.com/",
+      "type": "教程",
+      "description": "OpenAI RL 教程，PPO/SAC 代码清晰。"
+    },
+    {
+      "name": "Stable Baselines3",
+      "url": "https://stable-baselines3.readthedocs.io/",
+      "type": "工具",
+      "description": "RL 算法库，开箱即用。"
+    },
+    {
+      "name": "Isaac Gym",
+      "url": "https://developer.nvidia.com/isaac-gym",
+      "type": "工具",
+      "description": "GPU 加速 RL 训练，4096+ 并行。"
+    }
   ],
   "weeklyPlan": "**第1-2周**：MDP/Bellman\\n**第3-4周**：PPO/SAC\\n**第5-6周**：Isaac Gym + Sim2Real"
 }

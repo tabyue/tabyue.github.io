@@ -1,16 +1,47 @@
 {
-  "id": "sim-to-real", "name": "Sim-to-Real 迁移", "stage": "阶段五：仿真与 Sim-to-Real", "importance": "核心", "estimatedHours": 40,
+  "id": "sim-to-real",
+  "name": "Sim-to-Real 迁移",
+  "stage": "阶段五：仿真与 Sim-to-Real",
+  "importance": "核心",
+  "estimatedHours": 40,
   "description": "把仿真中训练好的策略成功部署到真实机器人上。Domain Randomization 和 Teacher-Student 是关键技术。",
-  "prerequisites": ["物理仿真引擎", "强化学习"],
+  "prerequisites": [
+    "物理仿真引擎",
+    "强化学习"
+  ],
   "sections": [
-    {"title":"Domain Randomization","content":"### 核心思想\n\n随机化仿真参数，让策略对不确定性鲁棒：\n\n```python\nimport numpy as np\n\nclass DomainRandomizer:\n    params = {\n        'friction': (0.2, 1.5),\n        'mass_scale': (0.8, 1.2),\n        'action_delay_frames': (0, 3),\n        'obs_noise_std': (0, 0.05),\n        'gravity_z': (-10.5, -9.0),\n        'actuator_strength': (0.85, 1.15),\n        'joint_damping_scale': (0.5, 2.0),\n    }\n    \n    def sample(self):\n        return {k: np.random.uniform(*v) for k, v in self.params.items()}\n```\n\nOpenAI 用 100+ 随机化参数训练灵巧手解魔方。\n\n关键：随机化范围要覆盖真实值。太大→策略保守；太小→迁移失败。\n\n### 练习\n1. 在 Isaac Gym 中训练抓取策略，对比有无 DR 的迁移效果\n2. 分析哪些参数对迁移影响最大（消融实验）\n3. 实现自适应 DR：根据真实部署反馈调整随机化范围"},
-    {"title":"System Identification","content":"### 精确辨识真实系统参数\n\n通过真实实验估计物理参数（质量、惯性、摩擦、刚度）：\n\n```python\nfrom scipy.optimize import minimize\n\ndef sim_trajectory(params, actions):\n    \"\"\"给定参数，在仿真中执行动作序列，返回轨迹\"\"\"\n    env = create_env(friction=params[0], mass=params[1])\n    states = []\n    for a in actions:\n        obs, _, _, _ = env.step(a)\n        states.append(obs)\n    return np.array(states)\n\ndef identification_loss(params, real_trajectory, actions):\n    sim_traj = sim_trajectory(params, actions)\n    return np.mean((sim_traj - real_trajectory)**2)\n\n# 用真实数据辨识参数\nresult = minimize(identification_loss, x0=[0.5, 1.0],\n                  args=(real_data, real_actions), method='Nelder-Mead')\nprint(f'辨识参数: friction={result.x[0]:.3f}, mass={result.x[1]:.3f}')\n```\n\n### 练习\n1. 在真实机器人上采集数据，辨识关节摩擦系数\n2. 用辨识后的参数重新建模仿真环境，对比轨迹精度\n3. 实现 Real2Sim：把真实场景精确重建到仿真中"},
-    {"title":"Teacher-Student 蒸馏","content":"### 标准做法\n\n1. **Teacher**：在仿真中用完美信息训练（地形高度图、物体精确位置、接触力）\n2. **Student**：只用真实可获取的传感器信息（关节角度、IMU、相机），通过监督学习模仿 Teacher\n\n```python\nimport torch, torch.nn as nn\n\n# Teacher 策略（用特权信息）\nclass Teacher(nn.Module):\n    def __init__(self):\n        super().__init__()\n        # 输入：关节状态 + 地形高度图 + 物体位置\n        self.net = nn.Sequential(\n            nn.Linear(48 + 187 + 6, 512), nn.ELU(),\n            nn.Linear(512, 256), nn.ELU(),\n            nn.Linear(256, 12))  # 12 个关节动作\n\n# Student 策略（只用传感器）\nclass Student(nn.Module):\n    def __init__(self):\n        super().__init__()\n        # 输入：关节状态 + IMU（无地形、无物体位置）\n        self.net = nn.Sequential(\n            nn.Linear(48, 512), nn.ELU(),\n            nn.Linear(512, 256), nn.ELU(),\n            nn.Linear(256, 12))\n\n# 蒸馏训练\nstudent = Student()\nteacher = Teacher(); teacher.load_state_dict(torch.load('teacher.pth'))\nteacher.eval()\n\noptimizer = torch.optim.Adam(student.parameters(), lr=3e-4)\nfor obs_student, obs_teacher in dataloader:\n    with torch.no_grad():\n        teacher_action = teacher(obs_teacher)\n    student_action = student(obs_student)\n    loss = nn.MSELoss()(student_action, teacher_action)\n    optimizer.zero_grad(); loss.backward(); optimizer.step()\n```\n\nLegged Gym / Humanoid Gym 都用这个方法。\n\n### 练习\n1. 在 Legged Gym 中训练 Teacher → 蒸馏 Student\n2. 对比 Student 在仿真中的性能 vs Teacher\n3. 分析 Teacher 中哪些特权信息最有价值"}
+    {
+      "title": "Domain Randomization",
+      "content": "### 核心思想\n\n随机化仿真参数，让策略对不确定性鲁棒：\n\n```python\nimport numpy as np\n\nclass DomainRandomizer:\n    params = {\n        'friction': (0.2, 1.5),\n        'mass_scale': (0.8, 1.2),\n        'action_delay_frames': (0, 3),\n        'obs_noise_std': (0, 0.05),\n        'gravity_z': (-10.5, -9.0),\n        'actuator_strength': (0.85, 1.15),\n        'joint_damping_scale': (0.5, 2.0),\n    }\n    \n    def sample(self):\n        return {k: np.random.uniform(*v) for k, v in self.params.items()}\n```\n\nOpenAI 用 100+ 随机化参数训练灵巧手解魔方。\n\n关键：随机化范围要覆盖真实值。太大→策略保守；太小→迁移失败。\n\n### 练习\n1. 在 Isaac Gym 中训练抓取策略，对比有无 DR 的迁移效果\n2. 分析哪些参数对迁移影响最大（消融实验）\n3. 实现自适应 DR：根据真实部署反馈调整随机化范围\n\n### 参考答案\n\n**1. 在 Isaac Gym 中训练抓取策略，对比有无 DR 的迁移效果**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n\n**2. 分析哪些参数对迁移影响最大（消融实验）**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n\n**3. 实现自适应 DR：根据真实部署反馈调整随机化范围**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n"
+    },
+    {
+      "title": "System Identification",
+      "content": "### 精确辨识真实系统参数\n\n通过真实实验估计物理参数（质量、惯性、摩擦、刚度）：\n\n```python\nfrom scipy.optimize import minimize\n\ndef sim_trajectory(params, actions):\n    \"\"\"给定参数，在仿真中执行动作序列，返回轨迹\"\"\"\n    env = create_env(friction=params[0], mass=params[1])\n    states = []\n    for a in actions:\n        obs, _, _, _ = env.step(a)\n        states.append(obs)\n    return np.array(states)\n\ndef identification_loss(params, real_trajectory, actions):\n    sim_traj = sim_trajectory(params, actions)\n    return np.mean((sim_traj - real_trajectory)**2)\n\n# 用真实数据辨识参数\nresult = minimize(identification_loss, x0=[0.5, 1.0],\n                  args=(real_data, real_actions), method='Nelder-Mead')\nprint(f'辨识参数: friction={result.x[0]:.3f}, mass={result.x[1]:.3f}')\n```\n\n### 练习\n1. 在真实机器人上采集数据，辨识关节摩擦系数\n2. 用辨识后的参数重新建模仿真环境，对比轨迹精度\n3. 实现 Real2Sim：把真实场景精确重建到仿真中\n\n### 参考答案\n\n**1. 在真实机器人上采集数据，辨识关节摩擦系数**\n\n提示：结合本章的概念讲解和代码示例完成，核心步骤已在正文中详细说明。\n\n**2. 用辨识后的参数重新建模仿真环境，对比轨迹精度**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n\n**3. 实现 Real2Sim：把真实场景精确重建到仿真中**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n"
+    },
+    {
+      "title": "Teacher-Student 蒸馏",
+      "content": "### 标准做法\n\n1. **Teacher**：在仿真中用完美信息训练（地形高度图、物体精确位置、接触力）\n2. **Student**：只用真实可获取的传感器信息（关节角度、IMU、相机），通过监督学习模仿 Teacher\n\n```python\nimport torch, torch.nn as nn\n\n# Teacher 策略（用特权信息）\nclass Teacher(nn.Module):\n    def __init__(self):\n        super().__init__()\n        # 输入：关节状态 + 地形高度图 + 物体位置\n        self.net = nn.Sequential(\n            nn.Linear(48 + 187 + 6, 512), nn.ELU(),\n            nn.Linear(512, 256), nn.ELU(),\n            nn.Linear(256, 12))  # 12 个关节动作\n\n# Student 策略（只用传感器）\nclass Student(nn.Module):\n    def __init__(self):\n        super().__init__()\n        # 输入：关节状态 + IMU（无地形、无物体位置）\n        self.net = nn.Sequential(\n            nn.Linear(48, 512), nn.ELU(),\n            nn.Linear(512, 256), nn.ELU(),\n            nn.Linear(256, 12))\n\n# 蒸馏训练\nstudent = Student()\nteacher = Teacher(); teacher.load_state_dict(torch.load('teacher.pth'))\nteacher.eval()\n\noptimizer = torch.optim.Adam(student.parameters(), lr=3e-4)\nfor obs_student, obs_teacher in dataloader:\n    with torch.no_grad():\n        teacher_action = teacher(obs_teacher)\n    student_action = student(obs_student)\n    loss = nn.MSELoss()(student_action, teacher_action)\n    optimizer.zero_grad(); loss.backward(); optimizer.step()\n```\n\nLegged Gym / Humanoid Gym 都用这个方法。\n\n### 练习\n1. 在 Legged Gym 中训练 Teacher → 蒸馏 Student\n2. 对比 Student 在仿真中的性能 vs Teacher\n3. 分析 Teacher 中哪些特权信息最有价值\n\n### 参考答案\n\n**1. 在 Legged Gym 中训练 Teacher → 蒸馏 Student**\n\n提示：使用本章给出的训练循环代码，调整超参数（学习率、batch size、epoch 数），观察 loss 收敛情况。\n\n**2. 对比 Student 在仿真中的性能 vs Teacher**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n\n**3. 分析 Teacher 中哪些特权信息最有价值**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n"
+    }
   ],
   "resources": [
-    {"name":"OpenAI Rubik's Cube","url":"https://openai.com/research/solving-rubiks-cube","type":"论文","description":"Domain Randomization 的极致应用——灵巧手解魔方。"},
-    {"name":"Legged Gym","url":"https://github.com/leggedrobotics/legged_gym","type":"项目","description":"四足机器人 RL 训练框架，包含完整 Teacher-Student 流程。"},
-    {"name":"NVIDIA IsaacGymEnvs","url":"https://github.com/NVIDIA-Omniverse/IsaacGymEnvs","type":"工具","description":"GPU 加速 RL 训练环境，包含多种 Sim2Real 示例。"}
+    {
+      "name": "OpenAI Rubik's Cube",
+      "url": "https://openai.com/research/solving-rubiks-cube",
+      "type": "论文",
+      "description": "Domain Randomization 的极致应用——灵巧手解魔方。"
+    },
+    {
+      "name": "Legged Gym",
+      "url": "https://github.com/leggedrobotics/legged_gym",
+      "type": "项目",
+      "description": "四足机器人 RL 训练框架，包含完整 Teacher-Student 流程。"
+    },
+    {
+      "name": "NVIDIA IsaacGymEnvs",
+      "url": "https://github.com/NVIDIA-Omniverse/IsaacGymEnvs",
+      "type": "工具",
+      "description": "GPU 加速 RL 训练环境，包含多种 Sim2Real 示例。"
+    }
   ],
   "weeklyPlan": "**第1周**：Domain Randomization\\n**第2周**：System Identification\\n**第3-4周**：Teacher-Student 蒸馏+迁移实验"
 }

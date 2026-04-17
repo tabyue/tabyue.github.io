@@ -5,17 +5,49 @@
   "importance": "重要",
   "estimatedHours": 30,
   "description": "融合视觉、触觉、听觉等多种感知模态提升机器人理解能力。多模态感知是精细操作和安全交互的关键。",
-  "prerequisites": ["计算机视觉基础", "3D 视觉"],
+  "prerequisites": [
+    "计算机视觉基础",
+    "3D 视觉"
+  ],
   "sections": [
-    {"title":"触觉传感器","content":"### 光学触觉传感器\n\n**GelSight 原理**\n1. 弹性体（凝胶）覆盖在传感器表面\n2. 物体接触时弹性体变形\n3. 内部 LED + 相机拍摄变形后的表面\n4. 通过光度立体法（Photometric Stereo）重建接触面 3D 形状\n\n分辨率可达微米级！能感知物体表面纹理、边缘、滑动。\n\n**DIGIT（Meta 开源）**\n- GelSight 的紧凑版，指尖大小\n- USB 接口，即插即用\n- 开源硬件 + 软件\n\n```python\nimport digit_interface\n\n# 连接 DIGIT 传感器\nd = digit_interface.Digit('D12345')\nd.connect()\nd.set_resolution(digit_interface.STREAMS.QVGA)  # 320x240\nd.set_fps(30)\n\n# 读取触觉图像\nframe = d.get_frame()  # BGR 图像\n# 与无接触时的参考帧做差，得到接触信息\ncontact_map = cv2.absdiff(frame, reference_frame)\n\n# 检测接触区域\ngray = cv2.cvtColor(contact_map, cv2.COLOR_BGR2GRAY)\n_, mask = cv2.threshold(gray, 20, 255, cv2.THRESH_BINARY)\ncontact_area = np.sum(mask > 0)\nprint(f'接触面积: {contact_area} pixels')\n```\n\n### 练习\n1. 用 DIGIT 传感器采集不同物体的触觉图像，建立触觉数据集\n2. 训练一个 CNN 分类器区分不同材质（玻璃/金属/木头/布）\n3. 实现滑动检测：当物体在手指上滑动时触发警告"},
-    {"title":"力/力矩传感器","content":"### 6 轴 F/T 传感器\n\n测量 3 个力分量 (Fx, Fy, Fz) + 3 个力矩分量 (Tx, Ty, Tz)。\n\n```python\nimport numpy as np\n\nclass FTSensor:\n    def __init__(self, bias=None):\n        self.bias = bias if bias is not None else np.zeros(6)\n    \n    def calibrate(self, n_samples=100):\n        \"\"\"零偏标定：静止时采集 n_samples 个数据取平均\"\"\"\n        readings = [self.read_raw() for _ in range(n_samples)]\n        self.bias = np.mean(readings, axis=0)\n        print(f'标定完成，零偏: {self.bias}')\n    \n    def read(self):\n        \"\"\"去零偏后的读数\"\"\"\n        raw = self.read_raw()\n        return raw - self.bias\n    \n    def get_force(self):\n        data = self.read()\n        return data[:3]  # [Fx, Fy, Fz]\n    \n    def get_torque(self):\n        data = self.read()\n        return data[3:]  # [Tx, Ty, Tz]\n\n# 力控抓取策略\ndef force_controlled_grasp(ft_sensor, target_force=5.0, max_force=20.0):\n    \"\"\"恒力抓取：闭合夹爪直到达到目标接触力\"\"\"\n    while True:\n        force = ft_sensor.get_force()\n        contact_force = np.linalg.norm(force[:2])  # 法向力\n        \n        if contact_force > max_force:\n            print('力过大，停止！')\n            break\n        elif contact_force > target_force:\n            print(f'达到目标力 {contact_force:.1f}N')\n            break\n        else:\n            close_gripper_step(0.001)  # 闭合一小步\n```\n\n### 练习\n1. 实现力矩传感器的零偏标定和温度漂移补偿\n2. 用力传感器实现恒力擦拭：保持 5N 法向接触力沿桌面移动\n3. 实现碰撞检测：当外力超过阈值时紧急停止"},
-    {"title":"多传感器融合","content":"### 融合策略\n\n**早期融合（特征级）**\n- 各模态分别提取特征 → 拼接 → 统一处理\n- 简单直接，但要求模态同步\n\n**晚期融合（决策级）**\n- 各模态独立做决策 → 加权平均/投票\n- 各模态独立，容错性好\n\n**注意力融合（Transformer）**\n- Cross-Attention 让各模态互相关注\n- 最灵活，能学到复杂的跨模态关系\n\n```python\nimport torch\nimport torch.nn as nn\n\nclass MultimodalPolicy(nn.Module):\n    \"\"\"视觉+触觉+本体感觉 融合策略\"\"\"\n    def __init__(self, vis_dim=512, tac_dim=128, prop_dim=14, act_dim=7):\n        super().__init__()\n        # 各模态编码器\n        self.vis_encoder = nn.Sequential(\n            nn.Linear(vis_dim, 256), nn.ReLU())\n        self.tac_encoder = nn.Sequential(\n            nn.Linear(tac_dim, 128), nn.ReLU())\n        self.prop_encoder = nn.Sequential(\n            nn.Linear(prop_dim, 64), nn.ReLU())\n        \n        # Cross-Attention 融合\n        self.cross_attn = nn.MultiheadAttention(\n            embed_dim=256, num_heads=4, batch_first=True)\n        \n        # 动作输出\n        self.action_head = nn.Sequential(\n            nn.Linear(256, 128), nn.ReLU(),\n            nn.Linear(128, act_dim), nn.Tanh())\n    \n    def forward(self, vis, tac, prop):\n        v = self.vis_encoder(vis).unsqueeze(1)  # (B, 1, 256)\n        t = self.tac_encoder(tac)  # (B, 128)\n        p = self.prop_encoder(prop)  # (B, 64)\n        \n        # 触觉+本体 投影到视觉维度\n        tp = torch.cat([t, p], dim=-1)  # (B, 192)\n        tp = nn.Linear(192, 256)(tp).unsqueeze(1)  # (B, 1, 256)\n        \n        # Cross-Attention\n        tokens = torch.cat([v, tp], dim=1)  # (B, 2, 256)\n        fused, _ = self.cross_attn(tokens, tokens, tokens)\n        \n        # 用 CLS-like 方式取第一个 token\n        action = self.action_head(fused[:, 0])\n        return action\n```\n\n### 经典应用\n\n- **视觉+触觉**：看到物体形状 + 感受抓取力度 → 精细操作\n- **视觉+力觉**：看到接触 + 感受接触力 → 安全交互\n- **视觉+听觉**：看到环境 + 听到语音指令 → 人机交互\n\n### 练习\n1. 实现视觉+力觉融合的抓取策略：根据接触力动态调整抓取力度\n2. 用 Transformer 融合 RGB 图像和触觉图像，预测物体材质\n3. 对比早期融合、晚期融合和注意力融合在同一任务上的表现"}
+    {
+      "title": "触觉传感器",
+      "content": "### 光学触觉传感器\n\n**GelSight 原理**\n1. 弹性体（凝胶）覆盖在传感器表面\n2. 物体接触时弹性体变形\n3. 内部 LED + 相机拍摄变形后的表面\n4. 通过光度立体法（Photometric Stereo）重建接触面 3D 形状\n\n分辨率可达微米级！能感知物体表面纹理、边缘、滑动。\n\n**DIGIT（Meta 开源）**\n- GelSight 的紧凑版，指尖大小\n- USB 接口，即插即用\n- 开源硬件 + 软件\n\n```python\nimport digit_interface\n\n# 连接 DIGIT 传感器\nd = digit_interface.Digit('D12345')\nd.connect()\nd.set_resolution(digit_interface.STREAMS.QVGA)  # 320x240\nd.set_fps(30)\n\n# 读取触觉图像\nframe = d.get_frame()  # BGR 图像\n# 与无接触时的参考帧做差，得到接触信息\ncontact_map = cv2.absdiff(frame, reference_frame)\n\n# 检测接触区域\ngray = cv2.cvtColor(contact_map, cv2.COLOR_BGR2GRAY)\n_, mask = cv2.threshold(gray, 20, 255, cv2.THRESH_BINARY)\ncontact_area = np.sum(mask > 0)\nprint(f'接触面积: {contact_area} pixels')\n```\n\n### 练习\n1. 用 DIGIT 传感器采集不同物体的触觉图像，建立触觉数据集\n2. 训练一个 CNN 分类器区分不同材质（玻璃/金属/木头/布）\n3. 实现滑动检测：当物体在手指上滑动时触发警告\n\n### 参考答案\n\n**1. 用 DIGIT 传感器采集不同物体的触觉图像，建立触觉数据集**\n\n提示：结合本章的概念讲解和代码示例完成，核心步骤已在正文中详细说明。\n\n**2. 训练一个 CNN 分类器区分不同材质（玻璃/金属/木头/布）**\n\n提示：使用本章给出的训练循环代码，调整超参数（学习率、batch size、epoch 数），观察 loss 收敛情况。\n\n**3. 实现滑动检测：当物体在手指上滑动时触发警告**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n"
+    },
+    {
+      "title": "力/力矩传感器",
+      "content": "### 6 轴 F/T 传感器\n\n测量 3 个力分量 (Fx, Fy, Fz) + 3 个力矩分量 (Tx, Ty, Tz)。\n\n```python\nimport numpy as np\n\nclass FTSensor:\n    def __init__(self, bias=None):\n        self.bias = bias if bias is not None else np.zeros(6)\n    \n    def calibrate(self, n_samples=100):\n        \"\"\"零偏标定：静止时采集 n_samples 个数据取平均\"\"\"\n        readings = [self.read_raw() for _ in range(n_samples)]\n        self.bias = np.mean(readings, axis=0)\n        print(f'标定完成，零偏: {self.bias}')\n    \n    def read(self):\n        \"\"\"去零偏后的读数\"\"\"\n        raw = self.read_raw()\n        return raw - self.bias\n    \n    def get_force(self):\n        data = self.read()\n        return data[:3]  # [Fx, Fy, Fz]\n    \n    def get_torque(self):\n        data = self.read()\n        return data[3:]  # [Tx, Ty, Tz]\n\n# 力控抓取策略\ndef force_controlled_grasp(ft_sensor, target_force=5.0, max_force=20.0):\n    \"\"\"恒力抓取：闭合夹爪直到达到目标接触力\"\"\"\n    while True:\n        force = ft_sensor.get_force()\n        contact_force = np.linalg.norm(force[:2])  # 法向力\n        \n        if contact_force > max_force:\n            print('力过大，停止！')\n            break\n        elif contact_force > target_force:\n            print(f'达到目标力 {contact_force:.1f}N')\n            break\n        else:\n            close_gripper_step(0.001)  # 闭合一小步\n```\n\n### 练习\n1. 实现力矩传感器的零偏标定和温度漂移补偿\n2. 用力传感器实现恒力擦拭：保持 5N 法向接触力沿桌面移动\n3. 实现碰撞检测：当外力超过阈值时紧急停止\n\n### 参考答案\n\n**1. 实现力矩传感器的零偏标定和温度漂移补偿**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n\n**2. 用力传感器实现恒力擦拭：保持 5N 法向接触力沿桌面移动**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n\n**3. 实现碰撞检测：当外力超过阈值时紧急停止**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n"
+    },
+    {
+      "title": "多传感器融合",
+      "content": "### 融合策略\n\n**早期融合（特征级）**\n- 各模态分别提取特征 → 拼接 → 统一处理\n- 简单直接，但要求模态同步\n\n**晚期融合（决策级）**\n- 各模态独立做决策 → 加权平均/投票\n- 各模态独立，容错性好\n\n**注意力融合（Transformer）**\n- Cross-Attention 让各模态互相关注\n- 最灵活，能学到复杂的跨模态关系\n\n```python\nimport torch\nimport torch.nn as nn\n\nclass MultimodalPolicy(nn.Module):\n    \"\"\"视觉+触觉+本体感觉 融合策略\"\"\"\n    def __init__(self, vis_dim=512, tac_dim=128, prop_dim=14, act_dim=7):\n        super().__init__()\n        # 各模态编码器\n        self.vis_encoder = nn.Sequential(\n            nn.Linear(vis_dim, 256), nn.ReLU())\n        self.tac_encoder = nn.Sequential(\n            nn.Linear(tac_dim, 128), nn.ReLU())\n        self.prop_encoder = nn.Sequential(\n            nn.Linear(prop_dim, 64), nn.ReLU())\n        \n        # Cross-Attention 融合\n        self.cross_attn = nn.MultiheadAttention(\n            embed_dim=256, num_heads=4, batch_first=True)\n        \n        # 动作输出\n        self.action_head = nn.Sequential(\n            nn.Linear(256, 128), nn.ReLU(),\n            nn.Linear(128, act_dim), nn.Tanh())\n    \n    def forward(self, vis, tac, prop):\n        v = self.vis_encoder(vis).unsqueeze(1)  # (B, 1, 256)\n        t = self.tac_encoder(tac)  # (B, 128)\n        p = self.prop_encoder(prop)  # (B, 64)\n        \n        # 触觉+本体 投影到视觉维度\n        tp = torch.cat([t, p], dim=-1)  # (B, 192)\n        tp = nn.Linear(192, 256)(tp).unsqueeze(1)  # (B, 1, 256)\n        \n        # Cross-Attention\n        tokens = torch.cat([v, tp], dim=1)  # (B, 2, 256)\n        fused, _ = self.cross_attn(tokens, tokens, tokens)\n        \n        # 用 CLS-like 方式取第一个 token\n        action = self.action_head(fused[:, 0])\n        return action\n```\n\n### 经典应用\n\n- **视觉+触觉**：看到物体形状 + 感受抓取力度 → 精细操作\n- **视觉+力觉**：看到接触 + 感受接触力 → 安全交互\n- **视觉+听觉**：看到环境 + 听到语音指令 → 人机交互\n\n### 练习\n1. 实现视觉+力觉融合的抓取策略：根据接触力动态调整抓取力度\n2. 用 Transformer 融合 RGB 图像和触觉图像，预测物体材质\n3. 对比早期融合、晚期融合和注意力融合在同一任务上的表现\n\n### 参考答案\n\n**1. 实现视觉+力觉融合的抓取策略：根据接触力动态调整抓取力度**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n\n**2. 用 Transformer 融合 RGB 图像和触觉图像，预测物体材质**\n\n提示：结合本章的概念讲解和代码示例完成，核心步骤已在正文中详细说明。\n\n**3. 对比早期融合、晚期融合和注意力融合在同一任务上的表现**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n"
+    }
   ],
   "resources": [
-    {"name": "DIGIT 项目 (Meta)", "url": "https://digit.ml/", "type": "项目", "description": "Meta 开源的触觉传感器，硬件设计+软件接口+数据集全部开源。"},
-    {"name": "GelSight 项目", "url": "https://gelsight.com/", "type": "项目", "description": "光学触觉传感器先驱，MIT 发明。商业产品+学术论文。"},
-    {"name": "多传感器融合综述", "url": "https://arxiv.org/abs/2202.02703", "type": "论文", "description": "机器人多模态感知融合的最新综述，涵盖视觉-触觉-力觉-听觉融合。"},
-    {"name": "ATI F/T 传感器", "url": "https://www.ati-ia.com/products/ft/ft_models.aspx", "type": "硬件", "description": "工业级 6 轴力/力矩传感器，机器人研究的标准配置。"}
+    {
+      "name": "DIGIT 项目 (Meta)",
+      "url": "https://digit.ml/",
+      "type": "项目",
+      "description": "Meta 开源的触觉传感器，硬件设计+软件接口+数据集全部开源。"
+    },
+    {
+      "name": "GelSight 项目",
+      "url": "https://gelsight.com/",
+      "type": "项目",
+      "description": "光学触觉传感器先驱，MIT 发明。商业产品+学术论文。"
+    },
+    {
+      "name": "多传感器融合综述",
+      "url": "https://arxiv.org/abs/2202.02703",
+      "type": "论文",
+      "description": "机器人多模态感知融合的最新综述，涵盖视觉-触觉-力觉-听觉融合。"
+    },
+    {
+      "name": "ATI F/T 传感器",
+      "url": "https://www.ati-ia.com/products/ft/ft_models.aspx",
+      "type": "硬件",
+      "description": "工业级 6 轴力/力矩传感器，机器人研究的标准配置。"
+    }
   ],
   "weeklyPlan": "**第1周**：触觉传感器原理 + DIGIT 上手\n**第2周**：力传感器接口 + 阻抗控制\n**第3周**：多模态融合实验"
 }

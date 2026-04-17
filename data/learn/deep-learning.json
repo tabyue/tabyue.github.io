@@ -1,16 +1,48 @@
 {
-  "id": "deep-learning", "name": "深度学习基础", "stage": "阶段四：AI 大脑", "importance": "核心", "estimatedHours": 60,
+  "id": "deep-learning",
+  "name": "深度学习基础",
+  "stage": "阶段四：AI 大脑",
+  "importance": "核心",
+  "estimatedHours": 60,
   "description": "CNN、Transformer、注意力机制是所有现代具身智能算法的基石。",
-  "prerequisites": ["Python 编程", "线性代数", "微积分"],
+  "prerequisites": [
+    "Python 编程",
+    "线性代数",
+    "微积分"
+  ],
   "sections": [
-    {"title":"CNN 架构","content":"### 卷积核心\n\n```python\nimport torch.nn as nn\n\n# ResNet 残差块\nclass ResBlock(nn.Module):\n    def __init__(self, ch):\n        super().__init__()\n        self.net = nn.Sequential(\n            nn.Conv2d(ch, ch, 3, padding=1), nn.BatchNorm2d(ch), nn.ReLU(),\n            nn.Conv2d(ch, ch, 3, padding=1), nn.BatchNorm2d(ch))\n    def forward(self, x):\n        return nn.functional.relu(self.net(x) + x)  # 残差连接\n```\n\n关键架构：ResNet（残差连接解决梯度消失）、EfficientNet（复合缩放）、ViT（图像切patch当token）。\n\nRT-1 用 EfficientNet 提取视觉特征，Diffusion Policy 用 ResNet 编码观察。\n\n### 练习\n1. 实现 ResNet-18 在 CIFAR-10 上训练到 90%+\n2. 实现 ViT：图像分 patch → Transformer → 分类\n3. 可视化 CNN 各层特征图"},
-    {"title":"Transformer 与自注意力","content":"### Self-Attention\n\n$$\\text{Attn}(Q,K,V) = \\text{softmax}(QK^T/\\sqrt{d_k})V$$\n\n```python\nimport torch, torch.nn as nn, math\n\nclass MultiHeadAttention(nn.Module):\n    def __init__(self, d=256, h=8):\n        super().__init__()\n        self.h, self.dk = h, d//h\n        self.qkv = nn.Linear(d, 3*d)\n        self.out = nn.Linear(d, d)\n    def forward(self, x):\n        B,T,D = x.shape\n        qkv = self.qkv(x).reshape(B,T,3,self.h,self.dk).permute(2,0,3,1,4)\n        q,k,v = qkv[0],qkv[1],qkv[2]\n        attn = (q@k.transpose(-2,-1))/math.sqrt(self.dk)\n        out = (attn.softmax(-1)@v).transpose(1,2).reshape(B,T,D)\n        return self.out(out)\n```\n\nTransformer 是 VLA 模型的核心：处理图像token+语言token+动作token。\n\n### 练习\n1. 从零实现 Transformer Encoder/Decoder\n2. 可视化注意力权重\n3. 实现 Cross-Attention：图像 token 作 K,V，语言 token 作 Q"},
-    {"title":"训练技巧与微调","content":"### 必备技巧\n\n- **学习率调度**：warmup + cosine decay\n- **混合精度训练**：fp16/bf16 加速 2x\n- **梯度裁剪**：clip_grad_norm_ 防梯度爆炸\n- **LoRA 微调**：只改少量参数适配新任务\n\n```python\nfrom peft import LoraConfig, get_peft_model\nlora_config = LoraConfig(r=16, lora_alpha=32, target_modules=['q_proj','v_proj'])\nmodel = get_peft_model(base_model, lora_config)\n# OpenVLA 用 LoRA 微调到新机器人，只需改几百万参数\n```\n\n### 练习\n1. 对比有无 warmup 的训练曲线\n2. 用 LoRA 微调预训练 ViT\n3. 实现 EMA 权重更新"}
+    {
+      "title": "CNN 架构",
+      "content": "### 卷积核心\n\n```python\nimport torch.nn as nn\n\n# ResNet 残差块\nclass ResBlock(nn.Module):\n    def __init__(self, ch):\n        super().__init__()\n        self.net = nn.Sequential(\n            nn.Conv2d(ch, ch, 3, padding=1), nn.BatchNorm2d(ch), nn.ReLU(),\n            nn.Conv2d(ch, ch, 3, padding=1), nn.BatchNorm2d(ch))\n    def forward(self, x):\n        return nn.functional.relu(self.net(x) + x)  # 残差连接\n```\n\n关键架构：ResNet（残差连接解决梯度消失）、EfficientNet（复合缩放）、ViT（图像切patch当token）。\n\nRT-1 用 EfficientNet 提取视觉特征，Diffusion Policy 用 ResNet 编码观察。\n\n### 练习\n1. 实现 ResNet-18 在 CIFAR-10 上训练到 90%+\n2. 实现 ViT：图像分 patch → Transformer → 分类\n3. 可视化 CNN 各层特征图\n\n### 参考答案\n\n**1. 实现 ResNet-18 在 CIFAR-10 上训练到 90%+**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n\n**2. 实现 ViT：图像分 patch → Transformer → 分类**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n\n**3. 可视化 CNN 各层特征图**\n\n```python\nimport matplotlib.pyplot as plt\n# 参考本章代码，将计算结果用 plt.plot/plt.imshow 可视化\n# plt.savefig(\"result.png\", dpi=150)\n```\n"
+    },
+    {
+      "title": "Transformer 与自注意力",
+      "content": "### Self-Attention\n\n$$\\text{Attn}(Q,K,V) = \\text{softmax}(QK^T/\\sqrt{d_k})V$$\n\n```python\nimport torch, torch.nn as nn, math\n\nclass MultiHeadAttention(nn.Module):\n    def __init__(self, d=256, h=8):\n        super().__init__()\n        self.h, self.dk = h, d//h\n        self.qkv = nn.Linear(d, 3*d)\n        self.out = nn.Linear(d, d)\n    def forward(self, x):\n        B,T,D = x.shape\n        qkv = self.qkv(x).reshape(B,T,3,self.h,self.dk).permute(2,0,3,1,4)\n        q,k,v = qkv[0],qkv[1],qkv[2]\n        attn = (q@k.transpose(-2,-1))/math.sqrt(self.dk)\n        out = (attn.softmax(-1)@v).transpose(1,2).reshape(B,T,D)\n        return self.out(out)\n```\n\nTransformer 是 VLA 模型的核心：处理图像token+语言token+动作token。\n\n### 练习\n1. 从零实现 Transformer Encoder/Decoder\n2. 可视化注意力权重\n3. 实现 Cross-Attention：图像 token 作 K,V，语言 token 作 Q\n\n### 参考答案\n\n**1. 从零实现 Transformer Encoder/Decoder**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n\n**2. 可视化注意力权重**\n\n```python\nimport matplotlib.pyplot as plt\n# 参考本章代码，将计算结果用 plt.plot/plt.imshow 可视化\n# plt.savefig(\"result.png\", dpi=150)\n```\n\n**3. 实现 Cross-Attention：图像 token 作 K,V，语言 token 作 Q**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n"
+    },
+    {
+      "title": "训练技巧与微调",
+      "content": "### 必备技巧\n\n- **学习率调度**：warmup + cosine decay\n- **混合精度训练**：fp16/bf16 加速 2x\n- **梯度裁剪**：clip_grad_norm_ 防梯度爆炸\n- **LoRA 微调**：只改少量参数适配新任务\n\n```python\nfrom peft import LoraConfig, get_peft_model\nlora_config = LoraConfig(r=16, lora_alpha=32, target_modules=['q_proj','v_proj'])\nmodel = get_peft_model(base_model, lora_config)\n# OpenVLA 用 LoRA 微调到新机器人，只需改几百万参数\n```\n\n### 练习\n1. 对比有无 warmup 的训练曲线\n2. 用 LoRA 微调预训练 ViT\n3. 实现 EMA 权重更新\n\n### 参考答案\n\n**1. 对比有无 warmup 的训练曲线**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n\n**2. 用 LoRA 微调预训练 ViT**\n\n提示：使用本章给出的训练循环代码，调整超参数（学习率、batch size、epoch 数），观察 loss 收敛情况。\n\n**3. 实现 EMA 权重更新**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n"
+    }
   ],
   "resources": [
-    {"name":"d2l.ai（李沐）","url":"https://d2l.ai/","type":"教材","description":"动手学深度学习，配 PyTorch 代码，中英文免费。"},
-    {"name":"PyTorch 教程","url":"https://pytorch.org/tutorials/","type":"教程","description":"PyTorch 官方教程，从入门到高级。"},
-    {"name":"HuggingFace PEFT","url":"https://huggingface.co/docs/peft","type":"工具","description":"LoRA/QLoRA 等参数高效微调库。"}
+    {
+      "name": "d2l.ai（李沐）",
+      "url": "https://d2l.ai/",
+      "type": "教材",
+      "description": "动手学深度学习，配 PyTorch 代码，中英文免费。"
+    },
+    {
+      "name": "PyTorch 教程",
+      "url": "https://pytorch.org/tutorials/",
+      "type": "教程",
+      "description": "PyTorch 官方教程，从入门到高级。"
+    },
+    {
+      "name": "HuggingFace PEFT",
+      "url": "https://huggingface.co/docs/peft",
+      "type": "工具",
+      "description": "LoRA/QLoRA 等参数高效微调库。"
+    }
   ],
   "weeklyPlan": "**第1-2周**：CNN\\n**第3-4周**：Transformer\\n**第5-6周**：训练技巧+微调"
 }

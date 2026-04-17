@@ -1,17 +1,52 @@
 {
-  "id": "data-collection", "name": "数据采集与管理", "stage": "阶段五：仿真与 Sim-to-Real", "importance": "重要", "estimatedHours": 30,
+  "id": "data-collection",
+  "name": "数据采集与管理",
+  "stage": "阶段五：仿真与 Sim-to-Real",
+  "importance": "重要",
+  "estimatedHours": 30,
   "description": "高质量的训练数据是具身智能成功的关键。从遥操作到数据格式到增强，构建完整的数据管道。",
-  "prerequisites": ["Python 编程"],
+  "prerequisites": [
+    "Python 编程"
+  ],
   "sections": [
-    {"title":"遥操作系统","content":"### 方案对比\n\n| 方案 | 成本 | 数据质量 | 适用场景 |\n|------|:---:|:---:|------|\n| ALOHA（双臂 leader-follower）| ~$20K | 极高 | 双臂精细操作 |\n| UMI（通用操作接口）| ~$5K | 高 | 通用操作 |\n| Gello（遥操作杆）| ~$500 | 中高 | 单臂操作 |\n| VR（Meta Quest）| ~$500 | 中 | 灵活操作 |\n| 直接示教（手把手拖动）| $0 | 中 | 简单任务 |\n\n### 数据质量 > 数据数量\n\n50 个高质量 demo > 500 个低质量 demo（Scaling Law 论文结论）\n\n高质量 demo 的特征：\n- 操作风格一致\n- 无犹豫和多余动作\n- 覆盖目标物体的不同位置\n\n### 练习\n1. 搭建一套简单遥操作系统（键盘/手柄控制机械臂）\n2. 采集 50 个抓取演示，统计操作时间和一致性\n3. 对比不同遥操作方式的数据采集效率"},
-    {"title":"数据格式与标准","content":"### LeRobot 数据格式\n\n```python\n# LeRobot Episode 结构\nepisode = {\n    'observation.images.top': tensor(T, 3, H, W),     # 顶部相机\n    'observation.images.wrist': tensor(T, 3, H, W),    # 手腕相机\n    'observation.state': tensor(T, 14),                 # 关节状态\n    'action': tensor(T, 14),                            # 动作\n    'episode_index': 0,\n    'timestamp': tensor(T),\n    'language_instruction': 'pick up the red cup',\n}\n\n# 上传到 HuggingFace Hub\nfrom lerobot.common.datasets.lerobot_dataset import LeRobotDataset\ndataset = LeRobotDataset('my_robot_data')\ndataset.push_to_hub('username/my-robot-data')\n```\n\n### Open X-Embodiment / RLDS 格式\n\n统一的 episode 结构，Google RT 系列使用。\n\n### 练习\n1. 把自己采集的数据转换为 LeRobot 格式\n2. 上传到 HuggingFace Hub 并验证可用性\n3. 可视化数据集：画出动作分布、轨迹长度分布"},
-    {"title":"数据增强","content":"### 图像增强\n\n```python\nimport torchvision.transforms as T\n\naugmentation = T.Compose([\n    T.RandomCrop(size=(200, 200)),        # 随机裁剪\n    T.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.2),\n    T.GaussianBlur(kernel_size=3, sigma=(0.1, 2.0)),\n    T.RandomErasing(p=0.1),               # 随机遮挡\n])\n```\n\n### 动作增强\n\n- 添加小幅随机扰动（±2% 关节角度）\n- 时间伸缩（0.8x-1.2x 速度）\n- 镜像翻转（对称任务）\n\n注意：不是所有增强都有效。数据多样性 > 数据量。\n\n### 练习\n1. 对已有数据集应用图像增强，对比训练效果\n2. 实现动作增强并评估对策略鲁棒性的影响\n3. 分析数据多样性 vs 数据量的 Scaling Law"}
+    {
+      "title": "遥操作系统",
+      "content": "### 方案对比\n\n| 方案 | 成本 | 数据质量 | 适用场景 |\n|------|:---:|:---:|------|\n| ALOHA（双臂 leader-follower）| ~$20K | 极高 | 双臂精细操作 |\n| UMI（通用操作接口）| ~$5K | 高 | 通用操作 |\n| Gello（遥操作杆）| ~$500 | 中高 | 单臂操作 |\n| VR（Meta Quest）| ~$500 | 中 | 灵活操作 |\n| 直接示教（手把手拖动）| $0 | 中 | 简单任务 |\n\n### 数据质量 > 数据数量\n\n50 个高质量 demo > 500 个低质量 demo（Scaling Law 论文结论）\n\n高质量 demo 的特征：\n- 操作风格一致\n- 无犹豫和多余动作\n- 覆盖目标物体的不同位置\n\n### 练习\n1. 搭建一套简单遥操作系统（键盘/手柄控制机械臂）\n2. 采集 50 个抓取演示，统计操作时间和一致性\n3. 对比不同遥操作方式的数据采集效率\n\n### 参考答案\n\n**1. 搭建一套简单遥操作系统（键盘/手柄控制机械臂）**\n\n提示：结合本章的概念讲解和代码示例完成，核心步骤已在正文中详细说明。\n\n**2. 采集 50 个抓取演示，统计操作时间和一致性**\n\n提示：结合本章的概念讲解和代码示例完成，核心步骤已在正文中详细说明。\n\n**3. 对比不同遥操作方式的数据采集效率**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n"
+    },
+    {
+      "title": "数据格式与标准",
+      "content": "### LeRobot 数据格式\n\n```python\n# LeRobot Episode 结构\nepisode = {\n    'observation.images.top': tensor(T, 3, H, W),     # 顶部相机\n    'observation.images.wrist': tensor(T, 3, H, W),    # 手腕相机\n    'observation.state': tensor(T, 14),                 # 关节状态\n    'action': tensor(T, 14),                            # 动作\n    'episode_index': 0,\n    'timestamp': tensor(T),\n    'language_instruction': 'pick up the red cup',\n}\n\n# 上传到 HuggingFace Hub\nfrom lerobot.common.datasets.lerobot_dataset import LeRobotDataset\ndataset = LeRobotDataset('my_robot_data')\ndataset.push_to_hub('username/my-robot-data')\n```\n\n### Open X-Embodiment / RLDS 格式\n\n统一的 episode 结构，Google RT 系列使用。\n\n### 练习\n1. 把自己采集的数据转换为 LeRobot 格式\n2. 上传到 HuggingFace Hub 并验证可用性\n3. 可视化数据集：画出动作分布、轨迹长度分布\n\n### 参考答案\n\n**1. 把自己采集的数据转换为 LeRobot 格式**\n\n提示：结合本章的概念讲解和代码示例完成，核心步骤已在正文中详细说明。\n\n**2. 上传到 HuggingFace Hub 并验证可用性**\n\n提示：结合本章的概念讲解和代码示例完成，核心步骤已在正文中详细说明。\n\n**3. 可视化数据集：画出动作分布、轨迹长度分布**\n\n```python\nimport matplotlib.pyplot as plt\n# 参考本章代码，将计算结果用 plt.plot/plt.imshow 可视化\n# plt.savefig(\"result.png\", dpi=150)\n```\n"
+    },
+    {
+      "title": "数据增强",
+      "content": "### 图像增强\n\n```python\nimport torchvision.transforms as T\n\naugmentation = T.Compose([\n    T.RandomCrop(size=(200, 200)),        # 随机裁剪\n    T.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.2),\n    T.GaussianBlur(kernel_size=3, sigma=(0.1, 2.0)),\n    T.RandomErasing(p=0.1),               # 随机遮挡\n])\n```\n\n### 动作增强\n\n- 添加小幅随机扰动（±2% 关节角度）\n- 时间伸缩（0.8x-1.2x 速度）\n- 镜像翻转（对称任务）\n\n注意：不是所有增强都有效。数据多样性 > 数据量。\n\n### 练习\n1. 对已有数据集应用图像增强，对比训练效果\n2. 实现动作增强并评估对策略鲁棒性的影响\n3. 分析数据多样性 vs 数据量的 Scaling Law\n\n### 参考答案\n\n**1. 对已有数据集应用图像增强，对比训练效果**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n\n**2. 实现动作增强并评估对策略鲁棒性的影响**\n\n```python\n# 参考本章代码示例修改即可\n# 核心步骤：\n# 1. 导入必要库\n# 2. 定义函数/类\n# 3. 运行验证\n# 详细实现见本章代码部分\n```\n\n**3. 分析数据多样性 vs 数据量的 Scaling Law**\n\n提示：分别运行两种方法，用相同输入数据对比输出结果（精度/速度/收敛性），以表格或图表展示差异。\n"
+    }
   ],
   "resources": [
-    {"name":"ALOHA","url":"https://tonyzhaozh.github.io/aloha/","type":"项目","description":"低成本双臂遥操作，开源设计。"},
-    {"name":"UMI","url":"https://umi-gripper.github.io/","type":"项目","description":"Columbia 通用操作接口，便携式数据采集。"},
-    {"name":"LeRobot 数据 Hub","url":"https://huggingface.co/lerobot","type":"平台","description":"HuggingFace 上的机器人数据共享平台。"},
-    {"name":"Open X-Embodiment","url":"https://robotics-transformer-x.github.io/","type":"数据集","description":"Google 牵头的大规模机器人数据集联盟。"}
+    {
+      "name": "ALOHA",
+      "url": "https://tonyzhaozh.github.io/aloha/",
+      "type": "项目",
+      "description": "低成本双臂遥操作，开源设计。"
+    },
+    {
+      "name": "UMI",
+      "url": "https://umi-gripper.github.io/",
+      "type": "项目",
+      "description": "Columbia 通用操作接口，便携式数据采集。"
+    },
+    {
+      "name": "LeRobot 数据 Hub",
+      "url": "https://huggingface.co/lerobot",
+      "type": "平台",
+      "description": "HuggingFace 上的机器人数据共享平台。"
+    },
+    {
+      "name": "Open X-Embodiment",
+      "url": "https://robotics-transformer-x.github.io/",
+      "type": "数据集",
+      "description": "Google 牵头的大规模机器人数据集联盟。"
+    }
   ],
   "weeklyPlan": "**第1周**：遥操作系统搭建\\n**第2周**：数据采集\\n**第3周**：格式转换+增强+训练"
 }
