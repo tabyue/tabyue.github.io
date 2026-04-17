@@ -56,7 +56,7 @@
         "GPU加速",
         "RL"
       ],
-      "description": "基于 Isaac Sim 的机器人学习框架，利用 GPU 加速实现数千并行环境的高效仿真训练。",
+      "description": "基于Omniverse的GPU加速机器人仿真框架。支持4096+并行环境，PPO训练的标配。高保真渲染可生成合成训练数据，与GR00T/Jetson深度集成。",
       "highlights": [
         "GPU 加速的并行仿真（数千环境同时运行）",
         "高保真渲染，支持合成数据生成",
@@ -78,7 +78,7 @@
         "可微分",
         "Python"
       ],
-      "description": "新一代通用物理仿真平台，完全 Python 原生，支持可微分仿真，速度极快。",
+      "description": "新一代Python原生可微分物理仿真引擎，Taichi后端GPU加速，比MuJoCo快10-80x。支持刚体/软体/流体/布料多物理耦合，可微分特性允许基于梯度优化轨迹。",
       "highlights": [
         "纯 Python API，极低学习门槛",
         "可微分物理引擎，支持基于梯度的优化",
@@ -144,7 +144,7 @@
         "RL",
         "运动控制"
       ],
-      "description": "基于 Isaac Gym 的四足机器人 RL 训练框架，是足式机器人强化学习的标准开发平台。",
+      "description": "ETH Zurich的足式机器人RL训练框架。基于Isaac Gym，包含完整的PPO训练+Domain Randomization+Teacher-Student蒸馏流程。四足/人形步态训练的社区标准。",
       "highlights": [
         "Isaac Gym GPU 并行仿真（4096 环境）",
         "支持 ANYmal、A1 等多种四足平台",
@@ -166,7 +166,7 @@
         "基础模型",
         "NVIDIA"
       ],
-      "description": "NVIDIA 的人形机器人通用基础模型工具包，支持人形机器人的跨本体学习和部署。",
+      "description": "NVIDIA的人形机器人基础模型框架。双系统架构(System 1快速反应+System 2慢思考)，Eagle-2视觉骨干+Diffusion动作头，支持跨本体迁移。",
       "highlights": [
         "人形机器人专用基础模型",
         "跨本体预训练和迁移",
@@ -188,7 +188,7 @@
         "PyTorch",
         "算法库"
       ],
-      "description": "最流行的强化学习算法库，实现了 PPO、SAC、TD3 等主流算法，API 简洁易用。",
+      "description": "PyTorch实现的RL算法库，开箱即用。内置PPO/SAC/DQN/A2C/TD3等经典算法，API统一简洁，是RL入门和快速实验的首选工具。",
       "highlights": [
         "PyTorch 实现，代码清晰可读",
         "PPO, SAC, TD3, A2C, DQN 等算法",
@@ -210,7 +210,7 @@
         "点云",
         "重建"
       ],
-      "description": "快速开发 3D 数据处理的开源库，支持点云处理、3D 重建、可视化等功能。",
+      "description": "现代3D数据处理库(C++/Python)。支持点云读取/体素下采样/法线估计/RANSAC分割/DBSCAN聚类/ICP配准/3D可视化。机器人3D感知的瑞士军刀。",
       "highlights": [
         "点云处理全套工具（滤波/配准/分割）",
         "RGBD 图像处理和 3D 重建",
@@ -232,7 +232,7 @@
         "视觉定位",
         "C++"
       ],
-      "description": "最先进的特征点法视觉 SLAM 系统，支持单目/双目/RGB-D/IMU 多种传感器配置。",
+      "description": "最经典的视觉SLAM系统。支持单目/双目/RGB-D/IMU多种传感器，特征点法+图优化后端+回环检测。精度高、鲁棒性好，SLAM研究的基准参考。",
       "highlights": [
         "支持单目/双目/RGB-D/IMU 多种配置",
         "多地图系统，支持地图合并",
@@ -254,7 +254,7 @@
         "通信框架",
         "标准"
       ],
-      "description": "机器人软件开发的事实标准框架，提供通信、工具链、仿真集成等全套基础设施。",
+      "description": "机器人软件开发的事实标准框架。基于DDS的发布/订阅通信，支持实时、多机器人、跨平台。Nav2导航+MoveIt2规划+TF2坐标变换，生态最完善。",
       "highlights": [
         "DDS 分布式通信，低延迟高可靠",
         "丰富的工具链 (rviz2, rosbag2, tf2)",
@@ -445,7 +445,7 @@
         "数据采集",
         "遥操作"
       ],
-      "description": "通用操作数据采集接口。低成本手持夹爪方案，无需leader臂就能采集高质量操作演示数据。"
+      "description": "Columbia大学的通用操作数据采集接口。低成本手持夹爪方案（~$300），无需leader机械臂就能采集高质量操作演示数据，降低数据采集门槛。"
     },
     {
       "id": "os028",
@@ -481,7 +481,7 @@
         "MLOps",
         "数据管理"
       ],
-      "description": "数据版本管理工具，Git for Data。管理大型机器人演示数据集的版本、复现实验、团队协作。"
+      "description": "数据版本管理工具(Git for Data)。用Git管理代码+DVC管理大型数据集，支持远程存储(S3/GCS)、数据Pipeline、实验复现。机器人数据集管理必备。"
     }
   ]
 }
