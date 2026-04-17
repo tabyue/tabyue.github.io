@@ -721,6 +721,8 @@ function closeLearnModal(){
 function tagClass(t){const m={'模仿学习':'green','VLA':'violet','强化学习':'amber','数据集':'cyan','世界模型':'pink','人形机器人':'purple'};return 'tag-'+(m[t]||'purple')}
 function renderPapers(){
     if(!PD)return;
+    // 按日期倒序排列（最新的在前面）
+    PD.papers.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
     document.getElementById('paperCount').textContent=PD.papers.length+' papers';
     let h='';
     PD.papers.forEach((p,i)=>{

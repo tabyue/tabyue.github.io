@@ -2,142 +2,27 @@
   "lastUpdated": "2026-04-17",
   "papers": [
     {
-      "id": "p001",
-      "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
-      "authors": "Cheng Chi, Zhenjia Xu, Siyuan Feng, Eric Cousineau, Benjamin Burchfiel, Shuran Song",
-      "venue": "RSS 2023 (Best Paper Award Finalist)",
-      "date": "2023-07",
-      "arxiv": "https://arxiv.org/abs/2303.04137",
-      "github": "https://github.com/real-stanford/diffusion_policy",
-      "tags": [
-        "模仿学习",
-        "VLA"
-      ],
-      "tldr": "将扩散生成模型（DDPM）引入机器人策略学习，把动作生成建模为迭代去噪过程，在多模态动作分布建模上显著优于传统方法",
-      "difficulty": "中级",
-      "addedDate": "2026-04-17",
-      "keyInsights": [
-        "把动作序列视为需要去噪的信号，用 DDPM 从高斯噪声逐步生成连续动作",
-        "天然支持多模态动作分布（同一观察可对应多种合理动作路径）",
-        "通过 Action Horizon 技巧平衡反应速度和动作平滑性：预测 T_p 步但只执行 T_a 步",
-        "在 11 个任务上超越 LSTM-GMM、IBC、BeT 等基线，平均成功率提升 46.9%"
-      ],
-      "impact": "开创了扩散模型在机器人策略学习中的应用范式，DP3、3D Diffusion Policy、Diffusion Policy 3D 等均基于此工作"
-    },
-    {
-      "id": "p002",
-      "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
-      "authors": "Anthony Brohan, Noah Brown, Justice Carbajal, et al. (Google DeepMind)",
-      "venue": "CoRL 2023",
-      "date": "2023-12",
-      "arxiv": "https://arxiv.org/abs/2307.15818",
+      "id": "p010",
+      "title": "Data Scaling Laws in Imitation Learning for Robotic Manipulation",
+      "authors": "Fanqi Lin, Yingdong Hu, et al.",
+      "venue": "ICLR 2025 (Spotlight)",
+      "date": "2025-05",
+      "arxiv": "https://arxiv.org/abs/2410.18647",
       "github": "",
-      "tags": [
-        "VLA",
-        "强化学习"
-      ],
-      "tldr": "将视觉-语言大模型（PaLI-X 55B / PaLM-E 12B）微调为视觉-语言-动作模型，将机器人动作离散化为 token 与语言统一建模，实现网络知识到机器人控制的迁移",
-      "difficulty": "高级",
-      "addedDate": "2026-04-17",
-      "keyInsights": [
-        "将机器人动作（7DoF: x, y, z, rx, ry, rz, gripper）离散化为 256 bins 的 token",
-        "动作 token 与语言 token 在同一词表中统一解码，无需额外网络头",
-        "大模型的网络知识可 zero-shot 迁移到机器人任务（如识别 Taylor Swift → 拿起相关物品）",
-        "Chain-of-thought 推理可提升机器人任务成功率（RT-2 + CoT）"
-      ],
-      "impact": "定义了 VLA（Vision-Language-Action）这一研究方向，是具身大模型的里程碑论文，后续 OpenVLA、π₀ 等均受其启发"
-    },
-    {
-      "id": "p003",
-      "title": "ACT: Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware",
-      "authors": "Tony Z. Zhao, Vikash Kumar, Sergey Levine, Chelsea Finn",
-      "venue": "RSS 2023",
-      "date": "2023-07",
-      "arxiv": "https://arxiv.org/abs/2304.13705",
-      "github": "https://github.com/tonyzhaozh/act",
-      "tags": [
-        "模仿学习",
-        "人形机器人"
-      ],
-      "tldr": "提出 Action Chunking with Transformers (ACT) 算法，配合低成本 ALOHA 遥操作硬件（~$20K），实现穿线、装电池等精细双臂操作技能学习",
-      "difficulty": "中级",
-      "addedDate": "2026-04-17",
-      "keyInsights": [
-        "Action Chunking：一次预测 k 步动作（如 k=100），减少模仿学习的累积误差",
-        "CVAE + Transformer 架构处理多模态动作分布，encoder 学习潜在风格变量 z",
-        "ALOHA 硬件成本约 $20K，由 4 个 ViperX 300 机械臂组成（2 个 leader + 2 个 follower）",
-        "在穿线、装电池等精细任务上 80-90% 成功率，仅需 50 个演示"
-      ],
-      "impact": "ALOHA 项目引爆了低成本机器人模仿学习热潮，Mobile ALOHA、ALOHA 2、UMI 等后续工作影响深远"
-    },
-    {
-      "id": "p004",
-      "title": "Open X-Embodiment: Robotic Learning Datasets and RT-X Models",
-      "authors": "Open X-Embodiment Collaboration (34 institutions, 150+ researchers)",
-      "venue": "ICRA 2024",
-      "date": "2024-05",
-      "arxiv": "https://arxiv.org/abs/2310.08864",
-      "github": "https://github.com/google-deepmind/open_x_embodiment",
       "tags": [
         "数据集",
-        "VLA"
+        "模仿学习"
       ],
-      "tldr": "由 34 家机构联合构建的最大规模机器人操作数据集（100 万+ episodes, 22 种机器人），训练跨本体通用策略 RT-1-X 和 RT-2-X",
+      "tldr": "首次系统研究机器人模仿学习的 Scaling Law：数据量、数据多样性、模型大小三者如何影响性能，发现\"数据多样性\"是最关键因素",
       "difficulty": "中级",
       "addedDate": "2026-04-17",
       "keyInsights": [
-        "统一数据格式 RLDS (Reinforcement Learning Datasets)，标准化存储和加载",
-        "覆盖 22 种不同机器人本体（UR5, Franka, Kuka, Hello Robot 等）",
-        "RT-1-X 在跨本体任务上平均提升 50%（vs 单机器人训练）",
-        "数据多样性比数据量更重要——验证了机器人领域的 scaling law"
+        "数据量 Scaling Law: 性能 ∝ log(数据量)，边际收益递减",
+        "数据多样性是最强因素：10 个不同场景的少量数据 > 1 个场景的大量数据",
+        "模型大小 Scaling Law: 小模型也能在小数据上表现好，大模型需要大数据",
+        "发现了\"多样性饱和\"现象：超过某个阈值后增加多样性不再有效"
       ],
-      "impact": "建立了机器人学习领域的数据基础设施标准，推动了开放协作的研究范式，被称为\"机器人的 ImageNet 时刻\""
-    },
-    {
-      "id": "p005",
-      "title": "π₀: A Vision-Language-Action Flow Model for General Robot Control",
-      "authors": "Kevin Black, Noah Brown, Danny Driess, et al. (Physical Intelligence)",
-      "venue": "arXiv 2024",
-      "date": "2024-10",
-      "arxiv": "https://arxiv.org/abs/2410.24164",
-      "github": "",
-      "tags": [
-        "VLA",
-        "模仿学习"
-      ],
-      "tldr": "Physical Intelligence 提出基于 Flow Matching 的 VLA 模型 π₀，用 PaliGemma 2B 作视觉-语言骨干，连续动作通过 flow matching 生成，在折衣服、清桌面等复杂任务上表现出色",
-      "difficulty": "高级",
-      "addedDate": "2026-04-17",
-      "keyInsights": [
-        "用 Flow Matching 替代 Diffusion，推理更快（10 步 vs 100 步），训练更稳定",
-        "双塔架构：PaliGemma 2B 处理视觉+语言，独立 flow head 生成连续动作",
-        "预训练在 OXE + 自有大规模数据集（10K+ hours）上",
-        "在折叠衣服（多步骤、变形物体）任务上首次达到实用水平"
-      ],
-      "impact": "Physical Intelligence 凭此成为估值超 20 亿美元的具身智能创业公司，证明了\"大规模预训练+微调\"在机器人领域的可行性"
-    },
-    {
-      "id": "p006",
-      "title": "FAST: Efficient Action Tokenization for Vision-Language-Action Models",
-      "authors": "Karl Pertsch, Kyle Stachowicz, et al. (Physical Intelligence)",
-      "venue": "arXiv 2025",
-      "date": "2025-01",
-      "arxiv": "https://arxiv.org/abs/2501.09747",
-      "github": "https://github.com/physical-intelligence/fast",
-      "tags": [
-        "VLA",
-        "模仿学习"
-      ],
-      "tldr": "提出基于 DCT（离散余弦变换）的机器人动作 tokenizer FAST，比传统 bin-based tokenization 更高效，训练自回归 VLA（π₀-FAST）速度快 5x，性能与扩散版 π₀ 相当",
-      "difficulty": "高级",
-      "addedDate": "2026-04-17",
-      "keyInsights": [
-        "传统 bin-based tokenization 每个动作维度 1 个 token → 7DoF × 50 步 = 350 个 token，序列太长",
-        "FAST 用 DCT 将动作序列压缩到频域，低频系数即可重建动作，token 数大幅减少",
-        "π₀-FAST：自回归生成动作 token，训练速度比扩散版 π₀ 快 5 倍",
-        "支持高频控制（250Hz+），是 bin-based 方法无法达到的"
-      ],
-      "impact": "解决了 VLA 模型动作 tokenization 的关键瓶颈，使自回归 VLA 在高频控制任务上首次可行"
+      "impact": "为机器人数据采集策略提供了科学依据，影响了后续所有大规模数据采集项目的策略"
     },
     {
       "id": "p007",
@@ -163,29 +48,6 @@
       "impact": "可能定义具身智能的 System 2 推理范式，高层推理 + 低层执行的架构被广泛跟进"
     },
     {
-      "id": "p008",
-      "title": "Learning Agile Locomotion via Adversarial Training (Legged Gym)",
-      "authors": "Nikita Rudin, David Hoeller, Philipp Reist, Marco Hutter (ETH Zurich / NVIDIA)",
-      "venue": "IROS 2022 → Nature 2023",
-      "date": "2022-10",
-      "arxiv": "https://arxiv.org/abs/2109.11978",
-      "github": "https://github.com/leggedrobotics/legged_gym",
-      "tags": [
-        "强化学习",
-        "人形机器人"
-      ],
-      "tldr": "利用 Isaac Gym 4096 个并行环境在单 GPU 上训练四足机器人敏捷运动策略，通过域随机化 + Teacher-Student 蒸馏实现 Sim2Real 迁移",
-      "difficulty": "中级",
-      "addedDate": "2026-04-17",
-      "keyInsights": [
-        "4096 个并行环境在单张 GPU 上实时训练，20 分钟学会走路",
-        "域随机化 (Domain Randomization)：地形、摩擦力、质量、延迟等",
-        "Teacher-Student 蒸馏：Teacher 有完美状态信息，Student 只用传感器",
-        "ANYmal 机器人在崎岖地形上展现类动物敏捷性，登上 Nature 封面"
-      ],
-      "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
-    },
-    {
       "id": "p009",
       "title": "GR00T N1: An Open Foundation Model for Generalist Humanoid Robots",
       "authors": "NVIDIA Research",
@@ -209,27 +71,27 @@
       "impact": "NVIDIA 在具身智能全栈（芯片 + 仿真 + 模型）布局的关键一环"
     },
     {
-      "id": "p010",
-      "title": "Data Scaling Laws in Imitation Learning for Robotic Manipulation",
-      "authors": "Fanqi Lin, Yingdong Hu, et al.",
-      "venue": "ICLR 2025 (Spotlight)",
-      "date": "2025-05",
-      "arxiv": "https://arxiv.org/abs/2410.18647",
-      "github": "",
+      "id": "p006",
+      "title": "FAST: Efficient Action Tokenization for Vision-Language-Action Models",
+      "authors": "Karl Pertsch, Kyle Stachowicz, et al. (Physical Intelligence)",
+      "venue": "arXiv 2025",
+      "date": "2025-01",
+      "arxiv": "https://arxiv.org/abs/2501.09747",
+      "github": "https://github.com/physical-intelligence/fast",
       "tags": [
-        "数据集",
+        "VLA",
         "模仿学习"
       ],
-      "tldr": "首次系统研究机器人模仿学习的 Scaling Law：数据量、数据多样性、模型大小三者如何影响性能，发现\"数据多样性\"是最关键因素",
-      "difficulty": "中级",
+      "tldr": "提出基于 DCT（离散余弦变换）的机器人动作 tokenizer FAST，比传统 bin-based tokenization 更高效，训练自回归 VLA（π₀-FAST）速度快 5x，性能与扩散版 π₀ 相当",
+      "difficulty": "高级",
       "addedDate": "2026-04-17",
       "keyInsights": [
-        "数据量 Scaling Law: 性能 ∝ log(数据量)，边际收益递减",
-        "数据多样性是最强因素：10 个不同场景的少量数据 > 1 个场景的大量数据",
-        "模型大小 Scaling Law: 小模型也能在小数据上表现好，大模型需要大数据",
-        "发现了\"多样性饱和\"现象：超过某个阈值后增加多样性不再有效"
+        "传统 bin-based tokenization 每个动作维度 1 个 token → 7DoF × 50 步 = 350 个 token，序列太长",
+        "FAST 用 DCT 将动作序列压缩到频域，低频系数即可重建动作，token 数大幅减少",
+        "π₀-FAST：自回归生成动作 token，训练速度比扩散版 π₀ 快 5 倍",
+        "支持高频控制（250Hz+），是 bin-based 方法无法达到的"
       ],
-      "impact": "为机器人数据采集策略提供了科学依据，影响了后续所有大规模数据采集项目的策略"
+      "impact": "解决了 VLA 模型动作 tokenization 的关键瓶颈，使自回归 VLA 在高频控制任务上首次可行"
     },
     {
       "id": "p011",
@@ -255,90 +117,48 @@
       "impact": "降低了机器人仿真的门槛，GitHub 22k+ stars，被多家机器人公司采用"
     },
     {
-      "id": "p012",
-      "title": "Octo: An Open-Source Generalist Robot Policy",
-      "authors": "Octo Model Team (UC Berkeley, Stanford, CMU, Google)",
-      "venue": "RSS 2024",
-      "date": "2024-07",
-      "arxiv": "https://arxiv.org/abs/2405.12213",
-      "github": "https://github.com/octo-models/octo",
+      "id": "p005",
+      "title": "π₀: A Vision-Language-Action Flow Model for General Robot Control",
+      "authors": "Kevin Black, Noah Brown, Danny Driess, et al. (Physical Intelligence)",
+      "venue": "arXiv 2024",
+      "date": "2024-10",
+      "arxiv": "https://arxiv.org/abs/2410.24164",
+      "github": "",
       "tags": [
         "VLA",
         "模仿学习"
       ],
-      "tldr": "基于 Transformer 的开源通用机器人策略模型，在 OXE 800K episodes 上预训练，支持语言指令/目标图像输入，可高效微调到新机器人",
-      "difficulty": "中级",
+      "tldr": "Physical Intelligence 提出基于 Flow Matching 的 VLA 模型 π₀，用 PaliGemma 2B 作视觉-语言骨干，连续动作通过 flow matching 生成，在折衣服、清桌面等复杂任务上表现出色",
+      "difficulty": "高级",
       "addedDate": "2026-04-17",
       "keyInsights": [
-        "Transformer backbone + Diffusion action head 的混合架构",
-        "支持两种任务指定方式：语言指令 or 目标图像",
-        "在 OXE 数据集上预训练，可在 30 分钟内微调到新机器人",
-        "开源权重 + 训练代码 + 微调脚本，真正可用"
+        "用 Flow Matching 替代 Diffusion，推理更快（10 步 vs 100 步），训练更稳定",
+        "双塔架构：PaliGemma 2B 处理视觉+语言，独立 flow head 生成连续动作",
+        "预训练在 OXE + 自有大规模数据集（10K+ hours）上",
+        "在折叠衣服（多步骤、变形物体）任务上首次达到实用水平"
       ],
-      "impact": "第一个真正可用的开源通用机器人策略模型，被大量学术实验室和小型机器人公司采用"
+      "impact": "Physical Intelligence 凭此成为估值超 20 亿美元的具身智能创业公司，证明了\"大规模预训练+微调\"在机器人领域的可行性"
     },
     {
-      "id": "p013",
-      "title": "Humanoid Locomotion as Next Token Prediction",
-      "authors": "Ilija Radosavovic et al. (UC Berkeley / Meta)",
+      "id": "p017",
+      "title": "Scaling Proprioceptive-Visual Learning with Heterogeneous Pre-trained Transformers (π₀)",
+      "authors": "Physical Intelligence",
       "venue": "arXiv 2024",
-      "date": "2024-02",
+      "date": "2024-10",
       "tags": [
-        "人形机器人",
-        "强化学习"
-      ],
-      "difficulty": "高级",
-      "tldr": "用 Transformer 将人形步态控制建模为 next token prediction 问题，在真实 Digit 人形机器人上实现自主行走",
-      "keyInsights": [
-        "步态控制 = 序列预测",
-        "Transformer 可以学到稳定的行走策略",
-        "Sim-to-Real 成功迁移到真实人形机器人"
-      ],
-      "impact": "证明了 Transformer/LLM 范式在底层运动控制上的可行性",
-      "arxiv": "https://arxiv.org/abs/2402.19469",
-      "github": ""
-    },
-    {
-      "id": "p014",
-      "title": "RoboCasa: Large-Scale Simulation of Everyday Tasks for Generalist Robots",
-      "authors": "Yuke Zhu et al. (UT Austin / NVIDIA)",
-      "venue": "RSS 2024",
-      "date": "2024-06",
-      "tags": [
-        "数据集",
-        "世界模型"
-      ],
-      "difficulty": "中级",
-      "tldr": "大规模厨房/家庭环境仿真平台，100+任务、数千种物体，用AI生成多样化场景",
-      "keyInsights": [
-        "AI 生成仿真场景大幅降低场景设计成本",
-        "多样化环境是训练泛化策略的关键",
-        "提供标准化 benchmark 评估具身AI"
-      ],
-      "impact": "具身智能的 ImageNet 级别 benchmark，推动标准化评估",
-      "arxiv": "https://arxiv.org/abs/2406.02523",
-      "github": "https://github.com/robocasa/robocasa"
-    },
-    {
-      "id": "p015",
-      "title": "DexCap: Scalable and Portable Mocap Data Collection System for Dexterous Manipulation",
-      "authors": "Chen Wang et al. (Stanford)",
-      "venue": "RSS 2024",
-      "date": "2024-03",
-      "tags": [
-        "数据集",
+        "VLA",
         "模仿学习"
       ],
-      "difficulty": "中级",
-      "tldr": "用手部动捕手套低成本采集灵巧手操作数据，无需遥操作硬件，直接用人手演示",
+      "difficulty": "高级",
+      "tldr": "π₀ 的完整技术报告：PaliGemma 2B 视觉-语言骨干 + Flow Matching 动作头，在 10000+ 小时数据上预训练",
       "keyInsights": [
-        "手套采集比遥操作便宜10x+",
-        "人手动作可以重定向到机器人手",
-        "数据采集效率大幅提升"
+        "Flow Matching 比 Diffusion 推理快5x",
+        "预训练 → 微调范式在机器人上也成立",
+        "10步推理即可生成高质量动作"
       ],
-      "impact": "降低灵巧操作数据采集门槛，加速灵巧手研究",
-      "arxiv": "https://arxiv.org/abs/2403.07788",
-      "github": "https://github.com/j96w/DexCap"
+      "impact": "目前性能最强的 VLA 模型之一，证明了大规模预训练的价值",
+      "arxiv": "https://arxiv.org/abs/2410.24164",
+      "github": ""
     },
     {
       "id": "p016",
@@ -362,24 +182,154 @@
       "github": "https://github.com/liruiw/HPT"
     },
     {
-      "id": "p017",
-      "title": "Scaling Proprioceptive-Visual Learning with Heterogeneous Pre-trained Transformers (π₀)",
-      "authors": "Physical Intelligence",
-      "venue": "arXiv 2024",
-      "date": "2024-10",
+      "id": "p012",
+      "title": "Octo: An Open-Source Generalist Robot Policy",
+      "authors": "Octo Model Team (UC Berkeley, Stanford, CMU, Google)",
+      "venue": "RSS 2024",
+      "date": "2024-07",
+      "arxiv": "https://arxiv.org/abs/2405.12213",
+      "github": "https://github.com/octo-models/octo",
       "tags": [
         "VLA",
         "模仿学习"
       ],
-      "difficulty": "高级",
-      "tldr": "π₀ 的完整技术报告：PaliGemma 2B 视觉-语言骨干 + Flow Matching 动作头，在 10000+ 小时数据上预训练",
+      "tldr": "基于 Transformer 的开源通用机器人策略模型，在 OXE 800K episodes 上预训练，支持语言指令/目标图像输入，可高效微调到新机器人",
+      "difficulty": "中级",
+      "addedDate": "2026-04-17",
       "keyInsights": [
-        "Flow Matching 比 Diffusion 推理快5x",
-        "预训练 → 微调范式在机器人上也成立",
-        "10步推理即可生成高质量动作"
+        "Transformer backbone + Diffusion action head 的混合架构",
+        "支持两种任务指定方式：语言指令 or 目标图像",
+        "在 OXE 数据集上预训练，可在 30 分钟内微调到新机器人",
+        "开源权重 + 训练代码 + 微调脚本，真正可用"
       ],
-      "impact": "目前性能最强的 VLA 模型之一，证明了大规模预训练的价值",
-      "arxiv": "https://arxiv.org/abs/2410.24164",
+      "impact": "第一个真正可用的开源通用机器人策略模型，被大量学术实验室和小型机器人公司采用"
+    },
+    {
+      "id": "p014",
+      "title": "RoboCasa: Large-Scale Simulation of Everyday Tasks for Generalist Robots",
+      "authors": "Yuke Zhu et al. (UT Austin / NVIDIA)",
+      "venue": "RSS 2024",
+      "date": "2024-06",
+      "tags": [
+        "数据集",
+        "世界模型"
+      ],
+      "difficulty": "中级",
+      "tldr": "大规模厨房/家庭环境仿真平台，100+任务、数千种物体，用AI生成多样化场景",
+      "keyInsights": [
+        "AI 生成仿真场景大幅降低场景设计成本",
+        "多样化环境是训练泛化策略的关键",
+        "提供标准化 benchmark 评估具身AI"
+      ],
+      "impact": "具身智能的 ImageNet 级别 benchmark，推动标准化评估",
+      "arxiv": "https://arxiv.org/abs/2406.02523",
+      "github": "https://github.com/robocasa/robocasa"
+    },
+    {
+      "id": "p004",
+      "title": "Open X-Embodiment: Robotic Learning Datasets and RT-X Models",
+      "authors": "Open X-Embodiment Collaboration (34 institutions, 150+ researchers)",
+      "venue": "ICRA 2024",
+      "date": "2024-05",
+      "arxiv": "https://arxiv.org/abs/2310.08864",
+      "github": "https://github.com/google-deepmind/open_x_embodiment",
+      "tags": [
+        "数据集",
+        "VLA"
+      ],
+      "tldr": "由 34 家机构联合构建的最大规模机器人操作数据集（100 万+ episodes, 22 种机器人），训练跨本体通用策略 RT-1-X 和 RT-2-X",
+      "difficulty": "中级",
+      "addedDate": "2026-04-17",
+      "keyInsights": [
+        "统一数据格式 RLDS (Reinforcement Learning Datasets)，标准化存储和加载",
+        "覆盖 22 种不同机器人本体（UR5, Franka, Kuka, Hello Robot 等）",
+        "RT-1-X 在跨本体任务上平均提升 50%（vs 单机器人训练）",
+        "数据多样性比数据量更重要——验证了机器人领域的 scaling law"
+      ],
+      "impact": "建立了机器人学习领域的数据基础设施标准，推动了开放协作的研究范式，被称为\"机器人的 ImageNet 时刻\""
+    },
+    {
+      "id": "p021",
+      "title": "LEGATO: Learning Manipulation of Language-Instructed Deformable Objects",
+      "authors": "Various (CMU)",
+      "venue": "ICRA 2024",
+      "date": "2024-05",
+      "tags": [
+        "模仿学习",
+        "强化学习"
+      ],
+      "difficulty": "中级",
+      "tldr": "用语言指令引导变形物体操作（折叠衣服、揉面团等），结合视觉和触觉感知",
+      "keyInsights": [
+        "变形物体操作是具身智能的核心难题",
+        "多模态感知（视觉+触觉）对软体操作至关重要",
+        "语言指令提供灵活的任务规范"
+      ],
+      "impact": "推动具身智能在非刚性物体操作上的进展",
+      "arxiv": "https://arxiv.org/abs/2404.13268",
+      "github": ""
+    },
+    {
+      "id": "p022",
+      "title": "Humanoid-Gym: Reinforcement Learning for Humanoid Robot with Zero-Shot Sim2Real Transfer",
+      "authors": "RobotEra Team",
+      "venue": "arXiv 2024",
+      "date": "2024-04",
+      "tags": [
+        "人形机器人",
+        "强化学习"
+      ],
+      "difficulty": "中级",
+      "tldr": "开源人形机器人RL训练框架，PPO+Domain Randomization实现零样本Sim2Real步态迁移",
+      "keyInsights": [
+        "开源的人形RL训练框架",
+        "Teacher-Student蒸馏实现零样本迁移",
+        "奖励函数设计是关键"
+      ],
+      "impact": "降低人形机器人RL训练的入门门槛，开源社区标准工具",
+      "arxiv": "https://arxiv.org/abs/2404.05695",
+      "github": "https://github.com/roboterax/humanoid-gym"
+    },
+    {
+      "id": "p015",
+      "title": "DexCap: Scalable and Portable Mocap Data Collection System for Dexterous Manipulation",
+      "authors": "Chen Wang et al. (Stanford)",
+      "venue": "RSS 2024",
+      "date": "2024-03",
+      "tags": [
+        "数据集",
+        "模仿学习"
+      ],
+      "difficulty": "中级",
+      "tldr": "用手部动捕手套低成本采集灵巧手操作数据，无需遥操作硬件，直接用人手演示",
+      "keyInsights": [
+        "手套采集比遥操作便宜10x+",
+        "人手动作可以重定向到机器人手",
+        "数据采集效率大幅提升"
+      ],
+      "impact": "降低灵巧操作数据采集门槛，加速灵巧手研究",
+      "arxiv": "https://arxiv.org/abs/2403.07788",
+      "github": "https://github.com/j96w/DexCap"
+    },
+    {
+      "id": "p013",
+      "title": "Humanoid Locomotion as Next Token Prediction",
+      "authors": "Ilija Radosavovic et al. (UC Berkeley / Meta)",
+      "venue": "arXiv 2024",
+      "date": "2024-02",
+      "tags": [
+        "人形机器人",
+        "强化学习"
+      ],
+      "difficulty": "高级",
+      "tldr": "用 Transformer 将人形步态控制建模为 next token prediction 问题，在真实 Digit 人形机器人上实现自主行走",
+      "keyInsights": [
+        "步态控制 = 序列预测",
+        "Transformer 可以学到稳定的行走策略",
+        "Sim-to-Real 成功迁移到真实人形机器人"
+      ],
+      "impact": "证明了 Transformer/LLM 范式在底层运动控制上的可行性",
+      "arxiv": "https://arxiv.org/abs/2402.19469",
       "github": ""
     },
     {
@@ -446,46 +396,96 @@
       "github": ""
     },
     {
-      "id": "p021",
-      "title": "LEGATO: Learning Manipulation of Language-Instructed Deformable Objects",
-      "authors": "Various (CMU)",
-      "venue": "ICRA 2024",
-      "date": "2024-05",
+      "id": "p002",
+      "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+      "authors": "Anthony Brohan, Noah Brown, Justice Carbajal, et al. (Google DeepMind)",
+      "venue": "CoRL 2023",
+      "date": "2023-12",
+      "arxiv": "https://arxiv.org/abs/2307.15818",
+      "github": "",
       "tags": [
-        "模仿学习",
+        "VLA",
         "强化学习"
       ],
-      "difficulty": "中级",
-      "tldr": "用语言指令引导变形物体操作（折叠衣服、揉面团等），结合视觉和触觉感知",
+      "tldr": "将视觉-语言大模型（PaLI-X 55B / PaLM-E 12B）微调为视觉-语言-动作模型，将机器人动作离散化为 token 与语言统一建模，实现网络知识到机器人控制的迁移",
+      "difficulty": "高级",
+      "addedDate": "2026-04-17",
       "keyInsights": [
-        "变形物体操作是具身智能的核心难题",
-        "多模态感知（视觉+触觉）对软体操作至关重要",
-        "语言指令提供灵活的任务规范"
+        "将机器人动作（7DoF: x, y, z, rx, ry, rz, gripper）离散化为 256 bins 的 token",
+        "动作 token 与语言 token 在同一词表中统一解码，无需额外网络头",
+        "大模型的网络知识可 zero-shot 迁移到机器人任务（如识别 Taylor Swift → 拿起相关物品）",
+        "Chain-of-thought 推理可提升机器人任务成功率（RT-2 + CoT）"
       ],
-      "impact": "推动具身智能在非刚性物体操作上的进展",
-      "arxiv": "https://arxiv.org/abs/2404.13268",
-      "github": ""
+      "impact": "定义了 VLA（Vision-Language-Action）这一研究方向，是具身大模型的里程碑论文，后续 OpenVLA、π₀ 等均受其启发"
     },
     {
-      "id": "p022",
-      "title": "Humanoid-Gym: Reinforcement Learning for Humanoid Robot with Zero-Shot Sim2Real Transfer",
-      "authors": "RobotEra Team",
-      "venue": "arXiv 2024",
-      "date": "2024-04",
+      "id": "p001",
+      "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
+      "authors": "Cheng Chi, Zhenjia Xu, Siyuan Feng, Eric Cousineau, Benjamin Burchfiel, Shuran Song",
+      "venue": "RSS 2023 (Best Paper Award Finalist)",
+      "date": "2023-07",
+      "arxiv": "https://arxiv.org/abs/2303.04137",
+      "github": "https://github.com/real-stanford/diffusion_policy",
       "tags": [
-        "人形机器人",
-        "强化学习"
+        "模仿学习",
+        "VLA"
       ],
+      "tldr": "将扩散生成模型（DDPM）引入机器人策略学习，把动作生成建模为迭代去噪过程，在多模态动作分布建模上显著优于传统方法",
       "difficulty": "中级",
-      "tldr": "开源人形机器人RL训练框架，PPO+Domain Randomization实现零样本Sim2Real步态迁移",
+      "addedDate": "2026-04-17",
       "keyInsights": [
-        "开源的人形RL训练框架",
-        "Teacher-Student蒸馏实现零样本迁移",
-        "奖励函数设计是关键"
+        "把动作序列视为需要去噪的信号，用 DDPM 从高斯噪声逐步生成连续动作",
+        "天然支持多模态动作分布（同一观察可对应多种合理动作路径）",
+        "通过 Action Horizon 技巧平衡反应速度和动作平滑性：预测 T_p 步但只执行 T_a 步",
+        "在 11 个任务上超越 LSTM-GMM、IBC、BeT 等基线，平均成功率提升 46.9%"
       ],
-      "impact": "降低人形机器人RL训练的入门门槛，开源社区标准工具",
-      "arxiv": "https://arxiv.org/abs/2404.05695",
-      "github": "https://github.com/roboterax/humanoid-gym"
+      "impact": "开创了扩散模型在机器人策略学习中的应用范式，DP3、3D Diffusion Policy、Diffusion Policy 3D 等均基于此工作"
+    },
+    {
+      "id": "p003",
+      "title": "ACT: Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware",
+      "authors": "Tony Z. Zhao, Vikash Kumar, Sergey Levine, Chelsea Finn",
+      "venue": "RSS 2023",
+      "date": "2023-07",
+      "arxiv": "https://arxiv.org/abs/2304.13705",
+      "github": "https://github.com/tonyzhaozh/act",
+      "tags": [
+        "模仿学习",
+        "人形机器人"
+      ],
+      "tldr": "提出 Action Chunking with Transformers (ACT) 算法，配合低成本 ALOHA 遥操作硬件（~$20K），实现穿线、装电池等精细双臂操作技能学习",
+      "difficulty": "中级",
+      "addedDate": "2026-04-17",
+      "keyInsights": [
+        "Action Chunking：一次预测 k 步动作（如 k=100），减少模仿学习的累积误差",
+        "CVAE + Transformer 架构处理多模态动作分布，encoder 学习潜在风格变量 z",
+        "ALOHA 硬件成本约 $20K，由 4 个 ViperX 300 机械臂组成（2 个 leader + 2 个 follower）",
+        "在穿线、装电池等精细任务上 80-90% 成功率，仅需 50 个演示"
+      ],
+      "impact": "ALOHA 项目引爆了低成本机器人模仿学习热潮，Mobile ALOHA、ALOHA 2、UMI 等后续工作影响深远"
+    },
+    {
+      "id": "p008",
+      "title": "Learning Agile Locomotion via Adversarial Training (Legged Gym)",
+      "authors": "Nikita Rudin, David Hoeller, Philipp Reist, Marco Hutter (ETH Zurich / NVIDIA)",
+      "venue": "IROS 2022 → Nature 2023",
+      "date": "2022-10",
+      "arxiv": "https://arxiv.org/abs/2109.11978",
+      "github": "https://github.com/leggedrobotics/legged_gym",
+      "tags": [
+        "强化学习",
+        "人形机器人"
+      ],
+      "tldr": "利用 Isaac Gym 4096 个并行环境在单 GPU 上训练四足机器人敏捷运动策略，通过域随机化 + Teacher-Student 蒸馏实现 Sim2Real 迁移",
+      "difficulty": "中级",
+      "addedDate": "2026-04-17",
+      "keyInsights": [
+        "4096 个并行环境在单张 GPU 上实时训练，20 分钟学会走路",
+        "域随机化 (Domain Randomization)：地形、摩擦力、质量、延迟等",
+        "Teacher-Student 蒸馏：Teacher 有完美状态信息，Student 只用传感器",
+        "ANYmal 机器人在崎岖地形上展现类动物敏捷性，登上 Nature 封面"
+      ],
+      "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
     }
   ]
 }
