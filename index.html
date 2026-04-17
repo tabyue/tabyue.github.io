@@ -300,7 +300,16 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 
 <!-- LEARN -->
 <div class="page" id="pg-learn">
-    <div class="page-header"><h1 class="page-title"><span class="icon">📚</span> 学习中心</h1><p class="page-sub">从零基础到独立完成具身智能项目。点击任意模块进入详细学习内容（概念讲解、代码示例、练习题）。</p></div>
+    <div class="page-header">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+            <div><h1 class="page-title"><span class="icon">📚</span> 学习中心</h1><p class="page-sub">从零基础到独立完成具身智能项目。点击任意模块进入详细学习内容（概念讲解、代码示例、练习题）。</p></div>
+            <div style="display:flex;gap:6px;flex-shrink:0;margin-top:8px">
+                <button class="card-btn" onclick="exportProgress()" title="导出进度码，在其他设备导入即可恢复">📤 导出进度</button>
+                <button class="card-btn" onclick="importProgress()" title="粘贴进度码恢复学习记录">📥 导入进度</button>
+                <button class="card-btn" onclick="resetProgress()" title="清除所有学习记录" style="color:var(--t3)">🗑️</button>
+            </div>
+        </div>
+    </div>
     <div class="page-body" id="learnBody"><div style="color:var(--t3);text-align:center;padding:40px">加载中...</div></div>
 </div>
 
@@ -473,6 +482,77 @@ function timeAgo(ts){
     if(d<3600000)return Math.floor(d/60000)+'分钟前';
     if(d<86400000)return Math.floor(d/3600000)+'小时前';
     return Math.floor(d/86400000)+'天前';
+}
+
+// === PROGRESS EXPORT / IMPORT ===
+function exportProgress(){
+    const p=getProgress();
+    if(!Object.keys(p).length){alert('还没有学习记录哦，先去学习吧！');return}
+    const json=JSON.stringify(p);
+    const code=btoa(unescape(encodeURIComponent(json)));
+    // 创建弹窗
+    const d=document.createElement('div');
+    d.style.cssText='position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;padding:20px';
+    d.innerHTML=`<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:16px;padding:24px;max-width:500px;width:100%">
+        <h3 style="margin-bottom:12px;font-size:1rem">📤 导出学习进度</h3>
+        <p style="font-size:.82rem;color:var(--t2);margin-bottom:12px">复制下方进度码，在其他设备点击「📥 导入进度」粘贴即可恢复。</p>
+        <textarea id="exportCode" readonly style="width:100%;height:100px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;padding:12px;color:var(--cyl);font-family:JetBrains Mono;font-size:.72rem;resize:none">${code}</textarea>
+        <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="card-btn primary" onclick="document.getElementById('exportCode').select();document.execCommand('copy');this.textContent='已复制 ✓';setTimeout(()=>this.textContent='复制进度码',2000)">复制进度码</button>
+            <button class="card-btn" onclick="this.closest('div[style*=fixed]').remove()">关闭</button>
+        </div>
+    </div>`;
+    document.body.appendChild(d);
+    d.onclick=e=>{if(e.target===d)d.remove()};
+}
+
+function importProgress(){
+    const d=document.createElement('div');
+    d.style.cssText='position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;padding:20px';
+    d.innerHTML=`<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:16px;padding:24px;max-width:500px;width:100%">
+        <h3 style="margin-bottom:12px;font-size:1rem">📥 导入学习进度</h3>
+        <p style="font-size:.82rem;color:var(--t2);margin-bottom:12px">粘贴从其他设备导出的进度码：</p>
+        <textarea id="importCode" placeholder="粘贴进度码..." style="width:100%;height:100px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;padding:12px;color:var(--t1);font-family:JetBrains Mono;font-size:.72rem;resize:none"></textarea>
+        <div id="importMsg" style="font-size:.78rem;margin-top:8px;min-height:20px"></div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="card-btn primary" onclick="doImport()">导入</button>
+            <button class="card-btn" onclick="this.closest('div[style*=fixed]').remove()">取消</button>
+        </div>
+    </div>`;
+    document.body.appendChild(d);
+    d.onclick=e=>{if(e.target===d)d.remove()};
+}
+
+function doImport(){
+    const code=document.getElementById('importCode').value.trim();
+    const msg=document.getElementById('importMsg');
+    if(!code){msg.innerHTML='<span style="color:var(--al)">请粘贴进度码</span>';return}
+    try{
+        const json=decodeURIComponent(escape(atob(code)));
+        const data=JSON.parse(json);
+        // 合并进度（保留更高的访问次数和更多的已读章节）
+        const current=getProgress();
+        Object.keys(data).forEach(k=>{
+            if(!current[k]){current[k]=data[k];return}
+            current[k].visits=Math.max(current[k].visits||0,data[k].visits||0);
+            const mergedSecs=new Set([...(current[k].sections||[]),...(data[k].sections||[])]);
+            current[k].sections=[...mergedSecs];
+            current[k].lastVisit=Math.max(current[k].lastVisit||0,data[k].lastVisit||0);
+            current[k].firstVisit=Math.min(current[k].firstVisit||Infinity,data[k].firstVisit||Infinity);
+        });
+        saveProgress(current);
+        renderLearn();
+        msg.innerHTML='<span style="color:var(--sl)">✓ 导入成功！已合并 '+Object.keys(data).length+' 个模块的进度</span>';
+        setTimeout(()=>document.querySelector('div[style*=fixed]:last-of-type')?.remove(),1500);
+    }catch(e){
+        msg.innerHTML='<span style="color:#f87171">✗ 进度码无效，请检查是否完整粘贴</span>';
+    }
+}
+
+function resetProgress(){
+    if(!confirm('确定要清除所有学习记录吗？此操作不可恢复。'))return;
+    localStorage.removeItem(LP_KEY);
+    renderLearn();
 }
 const learnCache={};
 async function openLearnModule(modId, el){
