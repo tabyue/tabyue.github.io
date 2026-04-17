@@ -216,6 +216,16 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .learn-stat{text-align:center}
 .learn-stat-v{font-family:'Space Grotesk';font-size:1.4rem;font-weight:700}
 .learn-stat-l{font-size:.7rem;color:var(--t3);margin-top:2px}
+/* Auxiliary collapsible cards */
+.aux-card{border:1px solid var(--bd);border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.aux-card:hover{border-color:var(--bd2)}
+.aux-header{padding:14px 18px;display:flex;align-items:center;gap:10px;font-size:.88rem;font-weight:600;color:var(--t1);background:var(--bg3)}
+.aux-meta{font-size:.7rem;font-weight:400;color:var(--t3);padding:2px 8px;background:rgba(99,102,241,.06);border-radius:6px}
+.aux-arrow{margin-left:auto;font-size:.7rem;color:var(--t3);transition:transform .2s}
+.aux-card.open .aux-arrow{transform:rotate(180deg)}
+.aux-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.aux-card.open .aux-body{max-height:2000px}
+.aux-body>*{padding:16px 18px}
 .md-content table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.82rem}
 .md-content th{background:var(--bg4);padding:8px 12px;text-align:left;font-weight:600;color:var(--t1);border:1px solid var(--bd)}
 .md-content td{padding:8px 12px;border:1px solid var(--bd)}
@@ -597,39 +607,42 @@ async function openLearnModule(modId, el){
     h+=`<h2 style="margin-bottom:6px">${d.name}</h2>`;
     h+=`<p style="color:var(--t2);margin-bottom:24px;line-height:1.8">${d.description}</p>`;
 
-    // Sections as tabs (+ 学习计划 + 推荐资源 作为额外 tab)
+    // Sections as tabs (只有章节内容)
     if(d.sections&&d.sections.length>0){
         const prog=getProgress()[modId];
         const visitedSecs=new Set(prog?.sections||[]);
-        const totalTabs=d.sections.length+(d.weeklyPlan?1:0)+(d.resources&&d.resources.length?1:0);
         h+=`<div class="modal-tabs" id="learn-tabs">`;
         d.sections.forEach((sec,i)=>{
             const visited=visitedSecs.has(i)?'tab-visited':'';
             h+=`<div class="modal-tab${i===0?' active':''} ${visited}" onclick="switchLearnTab(${i},'${modId}')">${sec.title}</div>`;
         });
-        if(d.weeklyPlan){h+=`<div class="modal-tab" onclick="switchLearnTab(${d.sections.length},'${modId}')">📅 学习计划</div>`}
-        if(d.resources&&d.resources.length){h+=`<div class="modal-tab" onclick="switchLearnTab(${d.sections.length+(d.weeklyPlan?1:0)},'${modId}')">📖 推荐资源</div>`}
         h+='</div>';
         d.sections.forEach((sec,i)=>{
             h+=`<div class="modal-panel learn-panel${i===0?' active':''}" data-lidx="${i}"><div class="md-content">${renderMd(sec.content)}</div></div>`;
         });
-        // 学习计划 tab
-        if(d.weeklyPlan){
-            h+=`<div class="modal-panel learn-panel" data-lidx="${d.sections.length}"><div class="md-content"><div style="padding:20px 0"><h3 style="margin-bottom:16px;display:flex;align-items:center;gap:8px"><span style="font-size:1.3rem">📅</span> 学习计划</h3><div style="padding:16px 20px;background:rgba(99,102,241,.04);border-radius:12px;border-left:3px solid var(--p);line-height:2">${renderMd(d.weeklyPlan)}</div>`;
-            if(d.estimatedHours){h+=`<div style="margin-top:16px;padding:12px 16px;background:rgba(16,185,129,.04);border-radius:10px;border-left:3px solid var(--s);font-size:.85rem;color:var(--sl)">⏱️ 预计总学时：<strong>${d.estimatedHours} 小时</strong></div>`}
-            if(d.prerequisites&&d.prerequisites.length){h+=`<div style="margin-top:12px;font-size:.82rem;color:var(--t3)">📋 前置要求：${d.prerequisites.join('、')}</div>`}
-            h+=`</div></div></div>`;
-        }
-        // 推荐资源 tab
-        if(d.resources&&d.resources.length){
-            let rh=`<div class="modal-panel learn-panel" data-lidx="${d.sections.length+(d.weeklyPlan?1:0)}"><div style="padding:20px 0"><h3 style="margin-bottom:16px;display:flex;align-items:center;gap:8px"><span style="font-size:1.3rem">📖</span> 推荐资源</h3><div style="display:grid;gap:10px">`;
-            d.resources.forEach(r=>{
-                rh+=`<a href="${r.url}" target="_blank" style="display:block;padding:14px 18px;background:var(--bg3);border:1px solid var(--bd);border-radius:12px;text-decoration:none;color:inherit;transition:all .2s" onmouseover="this.style.borderColor='var(--pl)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--bd)';this.style.transform=''"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:.82rem;font-weight:600;color:var(--t1)">${r.name}</span><span class="tag tag-cyan" style="font-size:.58rem">${r.type}</span></div><div style="font-size:.78rem;color:var(--t3);line-height:1.6">${r.description}</div></a>`;
-            });
-            rh+='</div></div></div>';
-            h+=rh;
-        }
     }
+
+    // 底部辅助信息区（折叠卡片）
+    h+=`<div style="margin-top:28px;display:flex;flex-direction:column;gap:12px">`;
+    // 学习计划
+    if(d.weeklyPlan){
+        h+=`<div class="aux-card" onclick="this.classList.toggle('open')">
+            <div class="aux-header"><span>📅 学习计划</span>${d.estimatedHours?`<span class="aux-meta">预计 ${d.estimatedHours} 小时</span>`:''}${d.prerequisites?.length?`<span class="aux-meta">前置：${d.prerequisites.join('、')}</span>`:''}<span class="aux-arrow">▼</span></div>
+            <div class="aux-body"><div class="md-content">${renderMd(d.weeklyPlan)}</div></div>
+        </div>`;
+    }
+    // 推荐资源
+    if(d.resources&&d.resources.length>0){
+        let resHtml='';
+        d.resources.forEach(r=>{
+            resHtml+=`<a href="${r.url}" target="_blank" onclick="event.stopPropagation()" style="display:block;padding:12px 16px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;text-decoration:none;color:inherit;transition:all .2s" onmouseover="this.style.borderColor='var(--pl)'" onmouseout="this.style.borderColor='var(--bd)'"><div style="display:flex;align-items:center;gap:8px;margin-bottom:3px"><span style="font-size:.8rem;font-weight:600;color:var(--t1)">${r.name}</span><span class="tag tag-cyan" style="font-size:.55rem">${r.type}</span></div><div style="font-size:.75rem;color:var(--t3);line-height:1.5">${r.description}</div></a>`;
+        });
+        h+=`<div class="aux-card" onclick="this.classList.toggle('open')">
+            <div class="aux-header"><span>📖 推荐资源 <span style="font-size:.7rem;color:var(--t3)">(${d.resources.length})</span></span><span class="aux-arrow">▼</span></div>
+            <div class="aux-body"><div style="display:grid;gap:8px">${resHtml}</div></div>
+        </div>`;
+    }
+    h+=`</div>`;
 
     body.innerHTML=h;
     body.querySelectorAll('.modal-panel.active pre code').forEach(el=>hljs?.highlightElement(el));
