@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
     <style>
 :root{--p:#6366f1;--pl:#818cf8;--pd:#4f46e5;--s:#10b981;--sl:#34d399;--a:#f59e0b;--al:#fbbf24;--pk:#ec4899;--pkl:#f472b6;--cy:#06b6d4;--cyl:#22d3ee;--v:#8b5cf6;--vl:#a78bfa;--bg:#0a0e1a;--bg2:#0f1525;--bg3:#151c30;--bg4:#1a2340;--t1:#f1f5f9;--t2:#94a3b8;--t3:#64748b;--bd:#1e293b;--bd2:#334155;--r:16px}
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
@@ -174,7 +176,10 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .md-content p{margin-bottom:12px}.md-content strong{color:var(--t1)}
 .md-content ul,.md-content ol{padding-left:20px;margin-bottom:12px}.md-content li{margin-bottom:4px}
 .md-content code{font-family:'JetBrains Mono';font-size:.82rem;background:rgba(99,102,241,.1);padding:1px 5px;border-radius:4px;color:var(--cyl)}
-.md-content pre{margin:12px 0;border-radius:12px;overflow:hidden;border:1px solid var(--bd)}.md-content pre code{background:none;padding:0;display:block}
+.md-content pre{margin:12px 0;border-radius:12px;overflow:hidden;border:1px solid var(--bd);overflow-x:auto}.md-content pre code{background:none;padding:14px 16px;display:block;white-space:pre;word-wrap:normal;overflow-x:auto;font-size:.82rem;line-height:1.6}
+.katex-block{margin:16px 0;padding:14px 18px;background:rgba(99,102,241,.04);border-radius:10px;overflow-x:auto;text-align:center}
+.katex-block .katex{font-size:1.1em}
+.md-content .katex{font-size:.95em}
 .md-content table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.82rem}
 .md-content th{background:var(--bg4);padding:8px 12px;text-align:left;font-weight:600;color:var(--t1);border:1px solid var(--bd)}
 .md-content td{padding:8px 12px;border:1px solid var(--bd)}
@@ -496,18 +501,56 @@ function closePaperModal(){document.getElementById('paperModal').classList.remov
 function renderMd(t){
     if(!t)return'';
     let h=t;
-    h=h.replace(/```(\w*)\n([\s\S]*?)```/g,(_,l,c)=>'<pre><code class="language-'+(l||'text')+'">'+c.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</code></pre>');
-    h=h.replace(/`([^`]+)`/g,'<code>$1</code>');
+    // 1. 保护代码块（先提取，用占位符替换，最后还原）
+    const codeBlocks=[];
+    h=h.replace(/```(\w*)\n([\s\S]*?)```/g,(_,lang,code)=>{
+        const escaped=code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        const idx=codeBlocks.length;
+        codeBlocks.push('<pre><code class="language-'+(lang||'text')+'">'+escaped+'</code></pre>');
+        return'\n%%CODEBLOCK_'+idx+'%%\n';
+    });
+    // 2. 保护行内代码
+    const inlineCodes=[];
+    h=h.replace(/`([^`]+)`/g,(_,code)=>{
+        const idx=inlineCodes.length;
+        inlineCodes.push('<code>'+code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</code>');
+        return'%%INLINE_'+idx+'%%';
+    });
+    // 3. 数学公式：$$...$$ 块级
+    h=h.replace(/\$\$([\s\S]*?)\$\$/g,(_,tex)=>{
+        try{return'<div class="katex-block">'+katex.renderToString(tex.trim(),{displayMode:true,throwOnError:false})+'</div>'}
+        catch(e){return'<div class="katex-block" style="color:var(--al)">'+tex.trim()+'</div>'}
+    });
+    // 4. 数学公式：$...$ 行内
+    h=h.replace(/\$([^\$\n]+?)\$/g,(_,tex)=>{
+        try{return katex.renderToString(tex.trim(),{displayMode:false,throwOnError:false})}
+        catch(e){return'<span style="color:var(--al)">'+tex.trim()+'</span>'}
+    });
+    // 5. 标题
     h=h.replace(/^### (.+)$/gm,'<h4>$1</h4>');
     h=h.replace(/^## (.+)$/gm,'<h3>$1</h3>');
+    // 6. 粗体
     h=h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+    // 7. 表格
     h=h.replace(/^\|(.+)\|$/gm,l=>{const c=l.split('|').filter(x=>x.trim());if(c.every(x=>/^[\s:-]+$/.test(x)))return'';return'<tr>'+c.map(x=>'<td>'+x.trim()+'</td>').join('')+'</tr>'});
     h=h.replace(/((?:<tr>.*<\/tr>\s*)+)/g,'<table>$1</table>');
+    // 8. 列表
     h=h.replace(/^- (.+)$/gm,'<li>$1</li>');
     h=h.replace(/((?:<li>.*<\/li>\s*)+)/g,'<ul>$1</ul>');
-    h=h.replace(/\n\n/g,'</p><p>');h=h.replace(/\n/g,'<br>');
+    // 9. 有序列表
+    h=h.replace(/^\d+\.\s+(.+)$/gm,'<li>$1</li>');
+    // 10. 段落和换行
+    h=h.replace(/\n\n/g,'</p><p>');
+    h=h.replace(/\n/g,'<br>');
     h='<p>'+h+'</p>';
-    h=h.replace(/<p>\s*(<[hupot])/g,'$1').replace(/(<\/[hupot][^>]*>)\s*<\/p>/g,'$1');
+    h=h.replace(/<p>\s*(<[hupotd])/g,'$1').replace(/(<\/[hupotd][^>]*>)\s*<\/p>/g,'$1');
+    // 11. 还原代码块
+    h=h.replace(/%%CODEBLOCK_(\d+)%%/g,(_,i)=>codeBlocks[+i]);
+    // 12. 还原行内代码
+    h=h.replace(/%%INLINE_(\d+)%%/g,(_,i)=>inlineCodes[+i]);
+    // 清理多余的 <br> 在块元素周围
+    h=h.replace(/<br>\s*<(pre|table|div|h[34]|ul)/g,'<$1');
+    h=h.replace(/<\/(pre|table|div|h[34]|ul)>\s*<br>/g,'</$1>');
     return h;
 }
 
