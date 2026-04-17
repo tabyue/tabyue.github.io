@@ -187,6 +187,15 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .copy-btn:hover{color:var(--cyl);border-color:var(--cyl);background:rgba(6,182,212,.08)}
 .copy-btn.copied{color:var(--sl);border-color:var(--sl);opacity:1;pointer-events:auto}
 .copy-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* Run button */
+.run-btn{position:absolute;top:8px;right:80px;z-index:2;display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:8px;border:1px solid rgba(16,185,129,.3);background:rgba(16,185,129,.08);color:var(--sl);font-family:'JetBrains Mono';font-size:.65rem;cursor:pointer;transition:all .2s;opacity:0;pointer-events:none}
+.copy-wrap:hover .run-btn{opacity:1;pointer-events:auto}
+.run-btn:hover{background:rgba(16,185,129,.15);border-color:var(--sl)}
+.run-btn.running{opacity:1;pointer-events:none;color:var(--al);border-color:var(--al)}
+.run-btn svg{width:11px;height:11px;fill:currentColor}
+.code-output{margin:-10px 0 12px;padding:10px 16px;background:rgba(16,185,129,.04);border:1px solid rgba(16,185,129,.15);border-radius:0 0 12px 12px;font-family:'JetBrains Mono';font-size:.78rem;color:var(--sl);line-height:1.6;white-space:pre-wrap;max-height:300px;overflow-y:auto;display:none}
+.code-output.visible{display:block}
+.code-output .err{color:#f87171}
 /* Exercise & Answer cards */
 .exercise-card{margin:20px 0;border-radius:14px;border:1px solid var(--bd);overflow:hidden;background:var(--bg3)}
 .exercise-header{padding:12px 18px;font-size:.85rem;font-weight:600;color:var(--t1);display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--bd);background:rgba(99,102,241,.04)}
@@ -816,9 +825,13 @@ function renderMd(t){
     h=h.replace(/\n/g,'<br>');
     h='<p>'+h+'</p>';
     h=h.replace(/<p>\s*(<[hupotd])/g,'$1').replace(/(<\/[hupotd][^>]*>)\s*<\/p>/g,'$1');
-    // 11. 还原代码块（包裹复制容器）
+    // 11. 还原代码块（包裹复制容器 + Python加运行按钮）
     h=h.replace(/%%CODEBLOCK_(\d+)%%/g,(_,i)=>{
-        return'<div class="copy-wrap">'+codeBlocks[+i]+'<button class="copy-btn" onclick="copyBlock(this,\'code\')" title="复制代码"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span>复制</span></button></div>';
+        const block=codeBlocks[+i];
+        const isPython=block.includes('language-python');
+        const runBtn=isPython?'<button class="run-btn" onclick="runPython(this)" title="在浏览器中运行"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg><span>运行</span></button>':'';
+        const output=isPython?'<div class="code-output"></div>':'';
+        return'<div class="copy-wrap">'+block+runBtn+'<button class="copy-btn" onclick="copyBlock(this,\'code\')" title="复制代码"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span>复制</span></button></div>'+output;
     });
     // 12. 还原行内代码
     h=h.replace(/%%INLINE_(\d+)%%/g,(_,i)=>inlineCodes[+i]);
@@ -853,6 +866,71 @@ function renderMd(t){
         return'<div class="md-content"><p>'+t.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')+'</p></div>';
     }
 }
+
+// === PYTHON RUNNER (Pyodide) ===
+let _pyodide=null;
+let _pyodideLoading=false;
+async function loadPyodide_(){
+    if(_pyodide)return _pyodide;
+    if(_pyodideLoading)return new Promise(r=>{const i=setInterval(()=>{if(_pyodide){clearInterval(i);r(_pyodide)}},200)});
+    _pyodideLoading=true;
+    // 动态加载 Pyodide
+    if(!document.querySelector('script[src*="pyodide"]')){
+        const s=document.createElement('script');
+        s.src='https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js';
+        document.head.appendChild(s);
+        await new Promise(r=>s.onload=r);
+    }
+    _pyodide=await loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/'});
+    await _pyodide.loadPackage('numpy');
+    _pyodideLoading=false;
+    return _pyodide;
+}
+
+async function runPython(btn){
+    const wrap=btn.closest('.copy-wrap');
+    const code=wrap.querySelector('pre code').textContent;
+    const outputEl=wrap.nextElementSibling;
+    
+    // UI: 加载中
+    btn.classList.add('running');
+    const origText=btn.querySelector('span').textContent;
+    btn.querySelector('span').textContent='加载中...';
+    outputEl.classList.add('visible');
+    outputEl.textContent='⏳ 正在加载 Python 运行环境（首次约 5-10 秒）...';
+    
+    try{
+        const py=await loadPyodide_();
+        btn.querySelector('span').textContent='运行中...';
+        
+        // 捕获 print 输出
+        py.runPython(`
+import sys, io
+_captured_output = io.StringIO()
+sys.stdout = _captured_output
+sys.stderr = _captured_output
+`);
+        
+        // 运行用户代码
+        try{
+            py.runPython(code);
+            const output=py.runPython('_captured_output.getvalue()');
+            outputEl.innerHTML=output?`<span style="color:var(--sl)">✓ 输出:</span>\n${escapeHtml(output)}`:'<span style="color:var(--t3)">✓ 运行完成（无输出）</span>';
+        }catch(e){
+            outputEl.innerHTML=`<span class="err">✗ 运行错误:</span>\n<span class="err">${escapeHtml(e.message)}</span>`;
+        }
+        
+        // 恢复 stdout
+        py.runPython('sys.stdout = sys.__stdout__; sys.stderr = sys.__stderr__');
+    }catch(e){
+        outputEl.innerHTML=`<span class="err">✗ 环境加载失败: ${escapeHtml(e.message)}</span>\n<span style="color:var(--t3)">提示: 部分代码需要 PyTorch/MuJoCo 等库，建议在本地运行。</span>`;
+    }
+    
+    btn.classList.remove('running');
+    btn.querySelector('span').textContent=origText;
+}
+
+function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
 // === COPY BLOCK ===
 function copyBlock(btn, type){
