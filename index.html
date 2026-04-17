@@ -204,6 +204,15 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .modal-tab:hover{color:var(--t1);background:rgba(255,255,255,.05)}.modal-tab.active{color:#fff;background:linear-gradient(135deg,var(--pl),var(--v));border-color:transparent;box-shadow:0 2px 8px rgba(99,102,241,.3)}
 .modal-tab.tab-visited{color:var(--s)}
 .modal-panel{display:none}.modal-panel.active{display:block}
+.sec-nav{display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:20px;border-top:1px solid var(--bd);gap:12px}
+.sec-nav-btn{display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:10px;cursor:pointer;font-size:.82rem;font-weight:500;transition:all .25s;border:1px solid var(--bd);background:var(--bg3);color:var(--t2);flex-shrink:0}
+.sec-nav-btn:hover{border-color:var(--pl);color:var(--pl);background:rgba(99,102,241,.06)}
+.sec-nav-btn.primary{background:linear-gradient(135deg,var(--pl),var(--v));color:#fff;border:none;box-shadow:0 2px 10px rgba(99,102,241,.3)}
+.sec-nav-btn.primary:hover{box-shadow:0 4px 16px rgba(99,102,241,.45);transform:translateY(-1px)}
+.sec-nav-btn .arrow-icon{font-size:1rem;line-height:1}
+.sec-nav-label{font-size:.7rem;color:var(--t3);text-align:center;flex:1;min-width:0}
+.next-mod-btn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:24px;padding:14px 24px;border-radius:12px;cursor:pointer;font-size:.88rem;font-weight:600;background:linear-gradient(135deg,var(--s),#06b6d4);color:#fff;border:none;box-shadow:0 2px 12px rgba(16,185,129,.3);transition:all .25s;width:100%}
+.next-mod-btn:hover{box-shadow:0 4px 20px rgba(16,185,129,.45);transform:translateY(-1px)}
 .modal-panel .md-content{font-size:.88rem;color:var(--t2);line-height:1.85}
 .md-content h3,.md-content h4,.md-content h5{color:var(--t1);margin:18px 0 10px}.md-content h3{font-size:1.05rem;border-bottom:1px solid var(--bd);padding-bottom:6px}.md-content h4{font-size:.92rem;color:var(--pl)}.md-content h5{font-size:.86rem;color:var(--cyl);font-weight:600;margin:14px 0 8px}
 .md-content p{margin-bottom:12px}.md-content strong{color:var(--t1)}
@@ -673,6 +682,29 @@ function resetProgress(){
     renderLearn();
 }
 const learnCache={};
+
+// 获取学习路径中所有模块的有序列表
+function getAllModuleIds(){
+    if(!LD||!LD.stages)return[];
+    const list=[];
+    LD.stages.forEach(s=>s.modules.forEach(m=>{
+        const id=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
+        list.push({id,name:m.name});
+    }));
+    return list;
+}
+// 获取当前模块的下一个模块
+function getNextModule(currentModId){
+    const all=getAllModuleIds();
+    const idx=all.findIndex(m=>m.id===currentModId);
+    return idx>=0&&idx<all.length-1?all[idx+1]:null;
+}
+// 获取当前模块的上一个模块
+function getPrevModule(currentModId){
+    const all=getAllModuleIds();
+    const idx=all.findIndex(m=>m.id===currentModId);
+    return idx>0?all[idx-1]:null;
+}
 async function openLearnModule(modId, el){
     const modal=document.getElementById('learnModal');
     const body=document.getElementById('learnModalBody');
@@ -725,8 +757,29 @@ async function openLearnModule(modId, el){
             h+=`<div class="modal-tab${i===0?' active':''} ${visited}" onclick="switchLearnTab(${i},'${modId}')">${sec.title}</div>`;
         });
         h+='</div>';
+        const secLen=d.sections.length;
+        const nextMod=getNextModule(modId);
         d.sections.forEach((sec,i)=>{
-            h+=`<div class="modal-panel learn-panel${i===0?' active':''}" data-lidx="${i}"><div class="md-content">${renderMd(sec.content)}</div><div class="read-sentinel" data-sec="${i}" style="height:1px"></div></div>`;
+            h+=`<div class="modal-panel learn-panel${i===0?' active':''}" data-lidx="${i}"><div class="md-content">${renderMd(sec.content)}</div><div class="read-sentinel" data-sec="${i}" style="height:1px"></div>`;
+            // 章节底部导航
+            h+=`<div class="sec-nav">`;
+            if(i>0){
+                h+=`<div class="sec-nav-btn" onclick="switchLearnTab(${i-1},'${modId}');document.getElementById('learnModalBody').scrollTop=0"><span class="arrow-icon">←</span> ${d.sections[i-1].title}</div>`;
+            }else{
+                h+=`<div></div>`;
+            }
+            h+=`<div class="sec-nav-label">${i+1} / ${secLen}</div>`;
+            if(i<secLen-1){
+                h+=`<div class="sec-nav-btn primary" onclick="switchLearnTab(${i+1},'${modId}');document.getElementById('learnModalBody').scrollTop=0">下一章 <span class="arrow-icon">→</span></div>`;
+            }else{
+                h+=`<div></div>`;
+            }
+            h+=`</div>`;
+            // 最后一章显示"下一个模块"
+            if(i===secLen-1&&nextMod){
+                h+=`<div class="next-mod-btn" onclick="openLearnModule('${nextMod.id}')">📖 继续学习：${nextMod.name} <span class="arrow-icon">→</span></div>`;
+            }
+            h+=`</div>`;
         });
     }
 
