@@ -495,16 +495,20 @@
     {
       "id": "r001",
       "name": "具身智能企业图谱",
-      "description": "国内外具身智能核心企业分类图谱",
+      "description": "国内外具身智能核心企业分类图谱（2026年4月更新）",
       "category": "产业资源",
       "items": [
         {
           "name": "本体厂商",
-          "list": "宇树科技、智元机器人、银河通用、Figure AI、Tesla Bot、Boston Dynamics、1X Technologies",
+          "list": "宇树科技、智元机器人、银河通用、优必选、乐聚机器人、UniX AI、加速进化、Figure AI、Tesla Bot、Boston Dynamics、1X Technologies",
           "links": [
             "https://www.unitree.com/",
             "https://www.agibot.com/",
             "https://www.galbot.com/",
+            "https://www.ubtech.com/",
+            "https://www.lejurobot.com/",
+            "https://www.unix-ai.com/",
+            "https://www.booster-robotics.com/",
             "https://www.figure.ai/",
             "https://www.tesla.com/optimus",
             "https://bostondynamics.com/",
@@ -513,40 +517,45 @@
         },
         {
           "name": "算法公司",
-          "list": "Physical Intelligence、Covariant、Skild AI",
+          "list": "Physical Intelligence、千寻智能、它石智航、Skild AI、Covariant",
           "links": [
             "https://www.physicalintelligence.company/",
-            "https://covariant.ai/",
-            "https://www.skild.ai/"
+            "https://www.spirit-ai.com/",
+            "https://www.tarsrobot.com/",
+            "https://www.skild.ai/",
+            "https://covariant.ai/"
           ]
         },
         {
-          "name": "零部件",
-          "list": "绿的谐波、汇川技术、步科股份、兆威机电",
+          "name": "零部件与芯片",
+          "list": "绿的谐波、汇川技术、地平线（D-Robotics）、步科股份、兆威机电",
           "links": [
             "https://www.ldrobot.com/",
             "https://www.inovance.com/",
+            "https://www.d-robotics.cc/",
             "https://www.kinco.cn/",
             "https://www.zwmec.com/"
           ]
         },
         {
           "name": "仿真平台",
-          "list": "NVIDIA Isaac、MuJoCo、Genesis、Gazebo",
+          "list": "NVIDIA Isaac Lab、MuJoCo、ManiSkill3、Genesis、Gazebo",
           "links": [
-            "https://developer.nvidia.com/isaac",
+            "https://github.com/isaac-sim/IsaacLab",
             "https://mujoco.org/",
+            "https://www.maniskill.ai/",
             "https://genesis-embodied-ai.github.io/",
             "https://gazebosim.org/"
           ]
         },
         {
           "name": "数据服务",
-          "list": "Scale AI、AGIBOT WORLD、Open X-Embodiment",
+          "list": "Scale AI、AGIBOT WORLD、Open X-Embodiment、DROID",
           "links": [
             "https://scale.com/",
             "https://agibot-world.com/",
-            "https://robotics-transformer-x.github.io/"
+            "https://robotics-transformer-x.github.io/",
+            "https://droid-dataset.github.io/"
           ]
         }
       ]
@@ -559,14 +568,15 @@
       "items": [
         {
           "name": "机器人会议",
-          "list": "ICRA、IROS、RSS、CoRL、HRI、RO-MAN",
+          "list": "ICRA、IROS、RSS、CoRL、HRI、RO-MAN、CEAI",
           "links": [
             "https://www.ieee-ras.org/conferences-workshops/fully-sponsored/icra",
-            "https://www.iros2024.org/",
+            "https://iros2026.org/",
             "https://roboticsconference.org/",
             "https://www.corl.org/",
             "https://humanrobotinteraction.org/",
-            "https://ro-man2024.org/"
+            "https://ro-man2026.org/",
+            "https://www.caai.cn/"
           ]
         },
         {
@@ -584,22 +594,24 @@
         },
         {
           "name": "期刊",
-          "list": "IEEE T-RO、IJRR、Science Robotics、RA-L",
+          "list": "IEEE T-RO、IJRR、Science Robotics、RA-L、Nature Machine Intelligence",
           "links": [
             "https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=8860",
             "https://journals.sagepub.com/home/ijr",
             "https://www.science.org/journal/scirobotics",
-            "https://www.ieee-ras.org/publications/ra-l"
+            "https://www.ieee-ras.org/publications/ra-l",
+            "https://www.nature.com/natmachintell/"
           ]
         },
         {
-          "name": "预印本",
-          "list": "cs.RO、cs.CV、cs.AI、cs.LG",
+          "name": "预印本与论文追踪",
+          "list": "cs.RO、cs.CV、cs.AI、cs.LG、Robotics Arxiv Daily",
           "links": [
             "https://arxiv.org/list/cs.RO/recent",
             "https://arxiv.org/list/cs.CV/recent",
             "https://arxiv.org/list/cs.AI/recent",
-            "https://arxiv.org/list/cs.LG/recent"
+            "https://arxiv.org/list/cs.LG/recent",
+            "https://jiangranlv.github.io/robotics_arXiv_daily/"
           ]
         }
       ]
@@ -612,39 +624,43 @@
       "items": [
         {
           "name": "中文社区",
-          "list": "知乎具身智能话题、深蓝学院、古月居、机器之心",
+          "list": "知乎具身智能话题、深蓝学院、古月居、机器之心、量子位",
           "links": [
             "https://www.zhihu.com/topic/21615049",
             "https://www.shenlanxueyuan.com/",
             "https://www.guyuehome.com/",
-            "https://www.jiqizhixin.com/"
+            "https://www.jiqizhixin.com/",
+            "https://www.qbitai.com/"
           ]
         },
         {
           "name": "英文社区",
-          "list": "r/robotics、Robotics Stack Exchange、The Robot Report",
+          "list": "r/robotics、Robotics Stack Exchange、The Robot Report、Humanoids Daily",
           "links": [
             "https://www.reddit.com/r/robotics/",
             "https://robotics.stackexchange.com/",
-            "https://www.therobotreport.com/"
+            "https://www.therobotreport.com/",
+            "https://www.humanoidsdaily.com/"
           ]
         },
         {
           "name": "开源社区",
-          "list": "Hugging Face LeRobot、NVIDIA Isaac 论坛、ROS Discourse",
+          "list": "Hugging Face LeRobot、NVIDIA Isaac 论坛、ROS Discourse、DORA-rs",
           "links": [
             "https://github.com/huggingface/lerobot",
             "https://forums.developer.nvidia.com/c/isaac/",
-            "https://discourse.ros.org/"
+            "https://discourse.ros.org/",
+            "https://github.com/dora-rs/dora"
           ]
         },
         {
           "name": "播客/视频",
-          "list": "Lex Fridman Podcast、Robot Brains Podcast、Two Minute Papers",
+          "list": "Lex Fridman Podcast、Robot Brains Podcast、Two Minute Papers、Pieter Abbeel讲座",
           "links": [
             "https://lexfridman.com/podcast/",
             "https://www.therobotbrains.ai/",
-            "https://www.youtube.com/@TwoMinutePapers"
+            "https://www.youtube.com/@TwoMinutePapers",
+            "https://www.youtube.com/@BerkeleyAI"
           ]
         }
       ]
