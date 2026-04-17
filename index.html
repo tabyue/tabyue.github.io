@@ -448,11 +448,8 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 </div>
 
 <!-- HW Detail Modal -->
-<div class="modal" id="hwModal">
-    <div class="modal-inner" style="max-width:820px">
-        <div class="modal-close" onclick="document.getElementById('hwModal').classList.remove('open');document.body.style.overflow=''">×</div>
-        <div class="modal-body" id="hwModalBody"></div>
-    </div>
+<div class="modal-overlay" id="hwModal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}">
+    <div class="modal" style="max-width:820px"><div class="modal-close"><button class="modal-close-btn" onclick="document.getElementById('hwModal').classList.remove('open');document.body.style.overflow=''">✕</button></div><div class="modal-body" id="hwModalBody"></div></div>
 </div>
 
 <!-- NEWS -->
