@@ -570,10 +570,9 @@ async function openLearnModule(modId, el){
     }
     const d=learnCache[modId];
 
-    // Track visit
+    // Track module open (不标记任何章节已读，由曝光检测处理)
     const totalSec=d?d.sections?.length||0:0;
     trackModuleVisit(modId, totalSec);
-    if(totalSec>0)trackSectionVisit(modId, 0); // 默认看第一章
     if(!d){
         // Fallback: show basic info from learning-path.json
         let mod=null;
@@ -634,23 +633,43 @@ async function openLearnModule(modId, el){
 
     body.innerHTML=h;
     body.querySelectorAll('.modal-panel.active pre code').forEach(el=>hljs?.highlightElement(el));
+    // 启动第一章的曝光检测
+    if(d.sections?.length>0)switchLearnTab(0, modId);
 }
+let _readTimer=null;
+let _readObserver=null;
 function switchLearnTab(idx,modId){
     document.querySelectorAll('#learn-tabs .modal-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
     document.querySelectorAll('.learn-panel').forEach(p=>p.classList.toggle('active',+p.dataset.lidx===idx));
     const active=document.querySelector('.learn-panel.active');
     if(active)active.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.hl){hljs?.highlightElement(el);el.dataset.hl='1'}});
-    // Track section visit
-    if(modId){
-        trackSectionVisit(modId, idx);
-        // Add visited marker to current tab
-        const tabs=document.querySelectorAll('#learn-tabs .modal-tab');
-        if(tabs[idx])tabs[idx].classList.add('tab-visited');
-    }
+    // 曝光检测：当前面板可见 3 秒后标记已读
+    if(_readTimer)clearTimeout(_readTimer);
+    if(_readObserver)_readObserver.disconnect();
+    if(!modId)return;
+    const panel=document.querySelector(`.learn-panel[data-lidx="${idx}"]`);
+    if(!panel)return;
+    _readObserver=new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+            if(entry.isIntersecting){
+                _readTimer=setTimeout(()=>{
+                    trackSectionVisit(modId, idx);
+                    const tabs=document.querySelectorAll('#learn-tabs .modal-tab');
+                    if(tabs[idx])tabs[idx].classList.add('tab-visited');
+                    _readObserver?.disconnect();
+                },3000); // 可见 3 秒才算已读
+            }else{
+                if(_readTimer)clearTimeout(_readTimer);
+            }
+        });
+    },{root:document.querySelector('.modal'),threshold:0.3});
+    _readObserver.observe(panel);
 }
 function closeLearnModal(){
     document.getElementById('learnModal').classList.remove('open');
     document.body.style.overflow='';
+    if(_readTimer)clearTimeout(_readTimer);
+    if(_readObserver)_readObserver.disconnect();
     renderLearn(); // 刷新卡片进度
 }
 
