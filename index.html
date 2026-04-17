@@ -363,7 +363,6 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
             <div class="home-stat"><div class="home-stat-v" id="sPapers">-</div><div class="home-stat-l">论文解读</div></div>
             <div class="home-stat"><div class="home-stat-v" id="sOS">-</div><div class="home-stat-l">开源项目</div></div>
             <div class="home-stat"><div class="home-stat-v" id="sNews">-</div><div class="home-stat-l">行业资讯</div></div>
-            <div class="home-stat"><div class="home-stat-v" id="sJobs">-</div><div class="home-stat-l">招聘岗位</div></div>
         </div>
     </div>
     <div class="quick-grid">
@@ -372,13 +371,6 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
         <div class="quick-card" onclick="go('opensource')"><div class="qc-icon">💻</div><div class="qc-title">开源生态</div><div class="qc-desc">LeRobot、MuJoCo、Genesis 等核心项目入门教程</div></div>
         <div class="quick-card" onclick="go('news')"><div class="qc-icon">📰</div><div class="qc-title">行业资讯</div><div class="qc-desc">融资动态 · 技术突破 · 政策标准 · 企业图谱</div></div>
 
-    </div>
-    <div style="max-width:1200px;margin:0 auto;padding:12px 32px 0">
-        <div class="quick-card" onclick="go('jobs')" style="display:inline-flex;align-items:center;gap:14px;padding:14px 22px;width:auto">
-            <span style="font-size:1.3rem">💼</span>
-            <span><span class="qc-title" style="margin-bottom:0">求职招聘</span> <span class="qc-desc" style="display:inline;margin-left:6px">社招 · 校招 · 实习岗位聚合</span></span>
-            <span style="font-family:'JetBrains Mono';font-size:.75rem;color:var(--al);margin-left:auto" id="sJobsBanner">→</span>
-        </div>
     </div>
     <div class="home-latest">
         <div class="home-latest-title">🔥 最新动态</div>
@@ -474,7 +466,6 @@ async function init(){
     if(PD)document.getElementById('sPapers').textContent=PD.papers.length;
     if(OD)document.getElementById('sOS').textContent=OD.projects.length;
     if(ND)document.getElementById('sNews').textContent=ND.news.length;
-    if(JD){document.getElementById('sJobs').textContent=JD.jobs.length;const b=document.getElementById('sJobsBanner');if(b)b.textContent=JD.jobs.length+' 个岗位 →';}
     const dates=[LD?.lastUpdated,PD?.lastUpdated,OD?.lastUpdated,ND?.lastUpdated,JD?.lastUpdated].filter(Boolean);
     if(dates.length)document.getElementById('updateTime').textContent='更新 '+dates.sort().pop();
     renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();
