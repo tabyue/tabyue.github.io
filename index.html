@@ -518,8 +518,8 @@ function filterNews(el,cat){
 
 function renderHomeLatest(){
     if(!ND)return;
-    const latest=ND.news.slice(0,5);
-    document.getElementById('homeLatest').innerHTML='<div style="display:flex;flex-direction:column;gap:12px">'+latest.map(n=>`<a href="${n.url}" target="_blank" style="display:flex;gap:16px;align-items:flex-start;padding:16px 20px;background:var(--bg3);border:1px solid var(--bd);border-radius:12px;text-decoration:none;color:inherit;transition:all .2s" onmouseover="this.style.borderColor='var(--bd2)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--bd)';this.style.transform=''"><span class="news-cat ncat-${n.category}" style="flex-shrink:0;margin:0">${n.category}</span><div style="flex:1;min-width:0"><div style="font-size:.92rem;font-weight:600;margin-bottom:4px">${n.title}</div><div style="font-size:.78rem;color:var(--t3)">${n.source} · ${n.date}</div></div></a>`).join('')+'</div>';
+    const latest=ND.news.slice(0,6);
+    document.getElementById('homeLatest').innerHTML='<div style="display:flex;gap:16px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory;-ms-overflow-style:none;scrollbar-width:none">'+latest.map(n=>`<a href="${n.url}" target="_blank" style="flex:0 0 320px;scroll-snap-align:start;padding:20px;background:var(--bg3);border:1px solid var(--bd);border-radius:14px;text-decoration:none;color:inherit;transition:all .25s" onmouseover="this.style.borderColor='var(--bd2)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='var(--bd)';this.style.transform=''"><span class="news-cat ncat-${n.category}">${n.category}</span><div style="font-size:.92rem;font-weight:600;line-height:1.5;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${n.title}</div><div style="font-size:.78rem;color:var(--t2);line-height:1.7;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:10px">${n.summary}</div><div style="font-size:.7rem;color:var(--t3)">${n.source} · ${n.date}</div></a>`).join('')+'</div>';
 }
 
 init();
