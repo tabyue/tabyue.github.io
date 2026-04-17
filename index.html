@@ -1136,14 +1136,36 @@ function renderNews(){
 function filterNews(el,cat){
     el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));el.classList.add('active');
     document.querySelectorAll('#newsGrid .card').forEach(c=>{c.style.display=(cat==='全部'||c.dataset.cat===cat)?'':'none'});
-    // 隐藏空的月份分组标签
+    // 统计每个月份可见数量并更新时间轴
+    const ymCounts={};
     document.querySelectorAll('#newsGrid .tl-group-label').forEach(label=>{
-        let next=label.nextElementSibling;let hasVisible=false;
+        const ym=label.id.replace('news-','');
+        let next=label.nextElementSibling;let count=0;
         while(next&&!next.classList.contains('tl-group-label')){
-            if(next.classList.contains('card')&&next.style.display!=='none')hasVisible=true;
+            if(next.classList.contains('card')&&next.style.display!=='none')count++;
             next=next.nextElementSibling;
         }
-        label.style.display=hasVisible?'':'none';
+        ymCounts[ym]=count;
+        label.style.display=count>0?'':'none';
+    });
+    // 更新时间轴数量和可见性
+    document.querySelectorAll('#newsTimeline .tl-month').forEach(m=>{
+        const ym=m.dataset.ym;
+        const count=ymCounts[ym]||0;
+        const countEl=m.querySelector('.tl-count');
+        if(countEl)countEl.textContent=count;
+        m.style.display=count>0?'':'none';
+    });
+    // 隐藏空年份标题
+    document.querySelectorAll('#newsTimeline .tl-year').forEach(y=>{
+        let next=y.nextElementSibling;let hasVisible=false;
+        while(next&&!next.classList.contains('tl-year')&&!next.classList.contains('tl-divider')){
+            if(next.classList.contains('tl-month')&&next.style.display!=='none')hasVisible=true;
+            next=next.nextElementSibling;
+        }
+        y.style.display=hasVisible?'':'none';
+        // 也隐藏其前面的分隔线
+        if(next&&next.classList.contains('tl-divider'))next.style.display=hasVisible?'':'none';
     });
 }
 
