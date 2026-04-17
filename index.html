@@ -822,6 +822,11 @@ function renderMd(t){
     if(!t)return'';
     try{
     let h=t;
+    // 0. 引用块（在代码块之前处理，这样引用块内的代码块也能被后续步骤正确识别）
+    h=h.replace(/(^|\n)((?:>[ ]?[^\n]*\n?)+)/g,(_,pre,block)=>{
+        const lines=block.split('\n').filter(l=>l.trim()).map(l=>l.replace(/^>\s?/,'')).join('\n');
+        return pre+'\n<blockquote class="md-quote">\n'+lines+'\n</blockquote>\n';
+    });
     // 1. 保护代码块（先提取，用占位符替换，最后还原）
     const codeBlocks=[];
     h=h.replace(/```(\w*)\n([\s\S]*?)```/g,(_,lang,code)=>{
@@ -873,16 +878,11 @@ function renderMd(t){
     h=h.replace(/((?:<li>.*<\/li>\s*)+)/g,'<ul>$1</ul>');
     // 9. 有序列表
     h=h.replace(/^\d+\.\s+(.+)$/gm,'<li>$1</li>');
-    // 9.5 引用块 (blockquote >)
-    h=h.replace(/(?:^|\n)(?:> (.+)\n?)+/g,(match)=>{
-        const lines=match.trim().split('\n').map(l=>l.replace(/^>\s?/,'')).join('\n');
-        return'\n<blockquote class="md-quote">'+lines+'</blockquote>\n';
-    });
     // 10. 段落和换行
     h=h.replace(/\n\n/g,'</p><p>');
     h=h.replace(/\n/g,'<br>');
     h='<p>'+h+'</p>';
-    h=h.replace(/<p>\s*(<[hupotd])/g,'$1').replace(/(<\/[hupotd][^>]*>)\s*<\/p>/g,'$1');
+    h=h.replace(/<p>\s*(<[hupotdb])/g,'$1').replace(/(<\/[hupotdb][^>]*>)\s*<\/p>/g,'$1');
     // 11. 还原代码块（包裹复制容器 + Python加运行按钮）
     h=h.replace(/%%CODEBLOCK_(\d+)%%/g,(_,i)=>{
         const block=codeBlocks[+i];
