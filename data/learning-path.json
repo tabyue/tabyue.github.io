@@ -594,56 +594,6 @@
           ],
           "howTo": "先理解世界模型的哲学基础（为什么需要内部模型），再读SayCan等经典论文，最后跟踪π₀.5等前沿工作。这是研究前沿，重理解轻复现。",
           "weeklyPlan": "第1周：世界模型概念+经典论文 | 第2周：LLM+机器人论文(SayCan/Code as Policies) | 第3周：前沿跟踪(π₀.5等)"
-        },
-        {
-          "name": "模型训练与推理优化",
-          "importance": "核心",
-          "description": "分布式训练、模型压缩量化、端侧推理部署，让大模型能跑在真实机器人上",
-          "topics": [
-            {
-              "title": "分布式训练",
-              "detail": "数据并行(DDP)、模型并行、ZeRO优化器(DeepSpeed)、FSDP。大模型(VLA 7B+)必须多卡训练。混合精度(FP16/BF16)加速2x。"
-            },
-            {
-              "title": "模型压缩与量化",
-              "detail": "INT8/INT4量化(2-8x压缩)、知识蒸馏(大模型教小模型)、剪枝(去除冗余权重)。7B模型: FP16 14GB → Q4 约4GB。TensorRT/ONNX Runtime端侧部署。"
-            },
-            {
-              "title": "端侧推理部署",
-              "detail": "Jetson Orin系列(40-275 TOPS)、TensorRT加速(FP16/INT8)、ONNX导出、CUDA Graphs减少开销。目标：策略网络100Hz+实时推理。"
-            }
-          ],
-          "resources": [
-            "DeepSpeed文档",
-            "TensorRT文档",
-            "ONNX Runtime",
-            "llama.cpp"
-          ],
-          "howTo": "先学DDP基础，再上DeepSpeed ZeRO训练大模型，然后学TensorRT部署到Jetson。",
-          "weeklyPlan": "第1-2周：分布式训练 | 第3周：模型压缩 | 第4-5周：端侧部署"
-        },
-        {
-          "name": "具身Agent系统",
-          "importance": "前沿",
-          "description": "将LLM/VLM作为机器人认知大脑，结合感知、记忆、规划、执行构建完整Agent",
-          "topics": [
-            {
-              "title": "Agent架构设计",
-              "detail": "认知核心(LLM推理) + 感知模块(VLM理解) + 记忆系统(短期/长期/空间) + 执行模块(技能策略)。ReAct框架：推理→行动→观察循环。"
-            },
-            {
-              "title": "多Agent协作",
-              "detail": "中央调度(全局最优)、去中心化(消息协商)、层级式(Leader-Follower)。多机器人任务分配、冲突解决、协作搬运。"
-            }
-          ],
-          "resources": [
-            "LangChain",
-            "SayCan论文",
-            "Voyager论文",
-            "ROS2 Multi-Robot教程"
-          ],
-          "howTo": "先理解Agent架构设计，实现一个ReAct循环的简单Agent，再扩展到多Agent协作。",
-          "weeklyPlan": "第1-2周：Agent架构+ReAct | 第3周：记忆系统 | 第4周：多Agent协作"
         }
       ]
     },
@@ -736,19 +686,54 @@
           ],
           "howTo": "搭建一套简单的遥操作系统（从Gello或UMI开始），采集50-100个演示，训练一个BC/ACT策略。体验完整的\"数据采集→训练→部署\"流程。",
           "weeklyPlan": "第1周：遥操作系统搭建 | 第2周：数据采集（50+episodes）| 第3周：数据管理+格式转换+训练"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "⚙️ 阶段六：系统工程与部署",
+      "subtitle": "从实验室到产品 · 预计 2-3 个月",
+      "level": "高级",
+      "modules": [
+        {
+          "name": "模型训练与推理优化",
+          "importance": "核心",
+          "description": "分布式训练、模型压缩量化、端侧推理部署，让大模型能跑在真实机器人上",
+          "topics": [
+            {
+              "title": "分布式训练",
+              "detail": "数据并行(DDP)、模型并行、ZeRO优化器(DeepSpeed)、FSDP。大模型(VLA 7B+)必须多卡训练。混合精度(FP16/BF16)加速2x。"
+            },
+            {
+              "title": "模型压缩与量化",
+              "detail": "INT8/INT4量化(2-8x压缩)、知识蒸馏(大模型教小模型)、剪枝(去除冗余权重)。7B模型: FP16 14GB → Q4 约4GB。"
+            },
+            {
+              "title": "端侧推理部署",
+              "detail": "Jetson Orin系列(40-275 TOPS)、TensorRT加速(FP16/INT8)、ONNX导出、CUDA Graphs减少开销。目标：策略网络100Hz+实时推理。"
+            }
+          ],
+          "resources": [
+            "DeepSpeed文档",
+            "TensorRT文档",
+            "ONNX Runtime",
+            "llama.cpp"
+          ],
+          "howTo": "先学DDP基础，再上DeepSpeed ZeRO训练大模型，然后学TensorRT部署到Jetson。",
+          "weeklyPlan": "第1-2周：分布式训练 | 第3周：模型压缩 | 第4-5周：端侧部署"
         },
         {
-          "name": "云边端协同",
+          "name": "云边端协同架构",
           "importance": "重要",
-          "description": "云端大模型思考、边缘计算感知、端侧实时控制的三层协同架构",
+          "description": "云端大模型思考、边缘计算感知、端侧实时控制的三层协同，让机器人既聪明又快",
           "topics": [
             {
               "title": "三层架构设计",
-              "detail": "云端(VLA推理/任务规划, 100ms-1s) → 边缘(视觉感知/SLAM, 5-50ms) → 端侧(电机控制/安全, <1ms)。断网容错：边缘本地fallback。"
+              "detail": "云端(VLA推理/任务规划, 100ms-1s) → 边缘(Jetson视觉感知/SLAM, 5-50ms) → 端侧(MCU电机控制/安全, <1ms)。断网容错：边缘本地fallback。"
             },
             {
               "title": "边缘AI与实时计算",
-              "detail": "Jetson Orin系列部署。ROS2实时配置(RT-Linux/CPU affinity/优先级)。感知-规划-控制多线程Pipeline。"
+              "detail": "Jetson Orin生态、ROS2实时配置(RT-Linux/CPU affinity)、感知-规划-控制多线程Pipeline。控制循环不能被阻塞。"
             }
           ],
           "resources": [
@@ -759,12 +744,35 @@
           ],
           "howTo": "先理解三层架构的分工，在Jetson上部署边缘AI，搭建云端API服务。",
           "weeklyPlan": "第1-2周：架构设计+Jetson入门 | 第3周：边缘部署 | 第4周：实时优化"
+        },
+        {
+          "name": "MLOps与持续交付",
+          "importance": "重要",
+          "description": "数据版本管理、实验追踪、自动化测试、容器化部署的全流程工程实践",
+          "topics": [
+            {
+              "title": "数据与实验管理",
+              "detail": "DVC数据版本管理、W&B/MLflow实验追踪、Rerun.io数据可视化、HuggingFace Hub数据共享。全流程：采集→清洗→增强→训练→评估→部署。"
+            },
+            {
+              "title": "CI/CD与容器化",
+              "detail": "GitHub Actions自动化测试、仿真回归测试(100 episodes成功率>80%)、Docker容器化ROS2软件栈、OTA推送模型更新。"
+            }
+          ],
+          "resources": [
+            "Weights & Biases",
+            "DVC",
+            "Rerun.io",
+            "Docker+ROS2教程"
+          ],
+          "howTo": "搭建DVC数据管理+W&B实验追踪，配置CI/CD自动化测试，Docker容器化部署。",
+          "weeklyPlan": "第1-2周：MLOps搭建 | 第3周：CI/CD | 第4周：Docker部署"
         }
       ]
     },
     {
       "id": "practice",
-      "title": "🔧 阶段六：项目实战",
+      "title": "🔧 阶段七：项目实战",
       "subtitle": "从零到一构建具身智能系统 · 持续迭代",
       "level": "实战",
       "modules": [
@@ -848,27 +856,27 @@
           "weeklyPlan": "长期项目：第1-4周：Humanoid Gym步态训练 | 第5-8周：加入上半身操作 | 第9-12周：VLA集成（如有真机）"
         },
         {
-          "name": "具身智能平台工程",
-          "importance": "重要",
-          "description": "从数据管理、模型训练、仿真测试到部署运维的全流程工程化",
+          "name": "具身Agent实战项目",
+          "importance": "高级实战",
+          "description": "整合LLM+感知+规划+执行，构建一个能理解语言指令并自主完成任务的具身Agent",
           "topics": [
             {
-              "title": "MLOps与数据平台",
-              "detail": "数据版本管理(DVC)、实验追踪(W&B/MLflow)、数据可视化(Rerun.io)、数据共享(HuggingFace Hub)。全流程：采集→清洗→增强→训练→评估→部署。"
+              "title": "Agent架构设计",
+              "detail": "认知核心(LLM推理) + 感知模块(VLM理解) + 记忆系统(短期/长期/空间) + 执行模块(技能策略)。ReAct框架：推理→行动→观察循环。"
             },
             {
-              "title": "CI/CD与自动化测试",
-              "detail": "GitHub Actions CI、仿真自动化测试(100 episodes成功率>80%)、Docker容器化、OTA推送、监控告警(Grafana)。"
+              "title": "多Agent协作",
+              "detail": "中央调度/去中心化/层级式三种模式。多机器人任务分配、冲突解决、协作搬运。ROS2 Multi-Robot系统。"
             }
           ],
           "resources": [
-            "Weights & Biases",
-            "DVC",
-            "Rerun.io",
-            "Docker+ROS2教程"
+            "LangChain",
+            "SayCan论文",
+            "Voyager论文",
+            "ROS2 Multi-Robot教程"
           ],
-          "howTo": "搭建DVC数据管理+W&B实验追踪，配置CI/CD自动化测试，Docker容器化部署。",
-          "weeklyPlan": "第1-2周：MLOps搭建 | 第3周：CI/CD | 第4周：Docker部署"
+          "howTo": "从一个简单的LLM+ROS2 Agent开始，逐步加入视觉理解、记忆系统、多Agent协作。",
+          "weeklyPlan": "第1-2周：Agent架构+ReAct | 第3-4周：集成视觉感知 | 第5-6周：多Agent协作"
         }
       ]
     }
