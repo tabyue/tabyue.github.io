@@ -1,0 +1,26 @@
+{
+  "id": "embodied-agent",
+  "name": "具身Agent系统",
+  "stage": "阶段四：AI 大脑",
+  "importance": "前沿",
+  "estimatedHours": 40,
+  "description": "将LLM/VLM作为机器人的认知大脑，结合感知、记忆、规划、执行构建完整的具身智能Agent。",
+  "prerequisites": ["VLA 模型", "世界模型与LLM+机器人"],
+  "sections": [
+    {
+      "title": "Agent架构设计",
+      "content": "### 具身Agent vs 传统控制\n\n| 维度 | 传统机器人控制 | 具身Agent |\n|------|:----------:|:--------:|\n| 任务描述 | 预编程/状态机 | 自然语言指令 |\n| 感知理解 | 特征工程 | VLM 语义理解 |\n| 规划方式 | 搜索算法 | LLM 推理 |\n| 知识来源 | 手动编码规则 | 预训练世界知识 |\n| 泛化能力 | 差（新任务需重写）| 强（zero-shot）|\n| 错误处理 | if-else 分支 | 反思+重规划 |\n\n### Agent 核心模块\n\n```\n┌─────────────────────────────────────────┐\n│  🧠 认知核心 (LLM/VLM)                   │\n│  ├── 任务理解: 自然语言 → 结构化目标     │\n│  ├── 推理规划: 分解为可执行子任务         │\n│  ├── 常识推理: 利用预训练世界知识         │\n│  └── 反思纠错: 失败后分析原因重新规划     │\n├─────────────────────────────────────────┤\n│  👁️ 感知模块                              │\n│  ├── 视觉理解: VLM 场景描述              │\n│  ├── 物体检测: Grounding DINO + SAM      │\n│  ├── 空间理解: 深度估计 + 点云           │\n│  └── 状态估计: 关节角度 + IMU            │\n├─────────────────────────────────────────┤\n│  🗺️ 记忆系统                              │\n│  ├── 短期记忆: 当前任务上下文             │\n│  ├── 长期记忆: 成功/失败经验数据库        │\n│  ├── 空间记忆: 语义地图                  │\n│  └── 技能库: 已学会的原子操作             │\n├─────────────────────────────────────────┤\n│  🦾 执行模块                              │\n│  ├── 技能策略: ACT/Diffusion Policy      │\n│  ├── 运动规划: MoveIt2 / MPC            │\n│  ├── 导航: Nav2                          │\n│  └── 力控: 阻抗/导纳控制                 │\n└─────────────────────────────────────────┘\n```\n\n### 经典Agent框架\n\n| 框架 | 核心思想 | 示例 |\n|------|---------|------|\n| ReAct | 推理(Reason)+行动(Act)交替 | 想→做→观察→想→做 |\n| Reflexion | 失败后自我反思改进 | 分析错误原因→修改计划 |\n| SayCan | LLM提议+价值函数过滤 | \"我能做X吗？\" 打分 |\n| Voyager | 持续学习+技能积累 | 新技能存入代码库 |\n| COME | 协作多Agent | 多机器人分工协作 |\n\n### 练习\n1. 设计一个厨房助手 Agent 的完整架构（感知→规划→执行→反思）\n2. 用 LangChain + ROS2 实现一个简单的语音控制机器人 Agent\n3. 实现 ReAct 循环：LLM 推理 → 调用机器人API → 观察结果 → 继续推理\n\n### 参考答案\n\n**1. 厨房助手架构**\n\n提示：感知(相机识别食材) → 规划(LLM分解菜谱步骤) → 执行(抓取/放置/搅拌) → 反思(检查结果)。\n\n**2. LangChain + ROS2**\n\n提示：LangChain Tool 封装 ROS2 Service 调用。\n\n**3. ReAct 循环**\n\n提示：LLM system prompt 定义可用工具，循环 Thought→Action→Observation。"
+    },
+    {
+      "title": "多Agent协作",
+      "content": "### 多机器人协作模式\n\n```\n模式1: 中央调度\n  中央大脑 (LLM) → 分配任务给各机器人\n  优点: 全局最优    缺点: 单点故障\n\n模式2: 去中心化\n  每个机器人有自己的 Agent\n  通过消息传递协商分工\n  优点: 鲁棒    缺点: 可能冲突\n\n模式3: 层级式\n  Leader Agent (规划) → Follower Agents (执行)\n  类似项目经理+员工\n```\n\n### 协作通信协议\n\n```python\n# 多Agent消息格式\nclass AgentMessage:\n    sender: str        # \"robot_1\"\n    receiver: str      # \"robot_2\" or \"broadcast\"\n    msg_type: str      # \"task_assign\" / \"status_report\" / \"help_request\"\n    content: dict      # 任务详情\n    priority: int      # 0=低 5=紧急\n\n# 示例：Robot1 请求 Robot2 帮忙\nmsg = AgentMessage(\n    sender='robot_1',\n    receiver='robot_2',\n    msg_type='help_request',\n    content={'task': '搬运大箱子', 'location': [2.0, 3.0]},\n    priority=3\n)\n```\n\n### 练习\n1. 设计一个仓库场景的多机器人协作方案（3个机器人分工）\n2. 实现基于 ROS2 的多机器人通信框架\n3. 模拟任务冲突解决：两个机器人同时想抓同一个物体\n\n### 参考答案\n\n**1. 仓库协作方案**\n\n提示：Robot1 负责拣货，Robot2 负责搬运，Robot3 负责打包。\n\n**2. ROS2 多机器人通信**\n\n提示：每个机器人一个 namespace，用 /fleet/task_assign topic 通信。\n\n**3. 冲突解决**\n\n提示：基于优先级（距离近的优先）或拍卖机制（出价高的执行）。"
+    }
+  ],
+  "resources": [
+    {"name": "LangChain", "url": "https://python.langchain.com/", "type": "框架", "description": "LLM Agent 开发框架，支持 Tool 调用和 ReAct 模式。"},
+    {"name": "SayCan", "url": "https://say-can.github.io/", "type": "论文", "description": "Google 的 LLM+机器人经典工作。"},
+    {"name": "Voyager", "url": "https://voyager.minedojo.org/", "type": "论文", "description": "持续学习的 LLM Agent，自动积累技能。"},
+    {"name": "ROS2 Multi-Robot", "url": "https://docs.ros.org/en/humble/Tutorials/Advanced/Multi-Robot.html", "type": "教程", "description": "ROS2 多机器人系统教程。"}
+  ],
+  "weeklyPlan": "**第1-2周**：Agent 架构设计 + ReAct 实现\n**第3周**：记忆系统 + 技能库\n**第4周**：多Agent协作"
+}

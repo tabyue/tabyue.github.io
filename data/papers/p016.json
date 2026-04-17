@@ -1,0 +1,6 @@
+{
+  "id": "p016",
+  "methodology": "### HPT: Heterogeneous Pre-trained Transformers\n\n**核心方法**\n\n1. 不同机器人可以共享同一个 Transformer 骨干\n2. 异构 tokenizer 解决跨本体问题\n3. 预训练在混合数据上提升下游任务性能\n\n**技术细节**\n\n详见论文原文: https://arxiv.org/abs/2409.20537",
+  "experiments": "### 实验概述\n\n论文展示了在多个场景下的实验结果。\n\n**关键发现**: 统一不同机器人本体的预训练 Transformer，用异构 tokenizer 处理不同传感器和执行器",
+  "reproduction": "### 复现指南\n\n```bash\n# 克隆代码\ngit clone https://github.com/liruiw/HPT\ncd HPT\npip install -e .\n\n# 查看 README 获取详细说明\n```"
+}

@@ -1,0 +1,6 @@
+{
+  "id": "p013",
+  "methodology": "### Humanoid Locomotion as Next Token Prediction\n\n**核心方法**\n\n1. 步态控制 = 序列预测\n2. Transformer 可以学到稳定的行走策略\n3. Sim-to-Real 成功迁移到真实人形机器人\n\n**技术细节**\n\n详见论文原文: https://arxiv.org/abs/2402.19469",
+  "experiments": "### 实验概述\n\n论文展示了在多个场景下的实验结果。\n\n**关键发现**: 用 Transformer 将人形步态控制建模为 next token prediction 问题，在真实 Digit 人形机器人上实现自主行走",
+  "reproduction": "### 复现指南\n\n暂无开源代码，请参考论文原文实现。"
+}

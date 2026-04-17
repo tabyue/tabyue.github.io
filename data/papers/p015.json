@@ -1,0 +1,6 @@
+{
+  "id": "p015",
+  "methodology": "### DexCap: Scalable and Portable Mocap Data Collection System for Dexterous Manipulation\n\n**核心方法**\n\n1. 手套采集比遥操作便宜10x+\n2. 人手动作可以重定向到机器人手\n3. 数据采集效率大幅提升\n\n**技术细节**\n\n详见论文原文: https://arxiv.org/abs/2403.07788",
+  "experiments": "### 实验概述\n\n论文展示了在多个场景下的实验结果。\n\n**关键发现**: 用手部动捕手套低成本采集灵巧手操作数据，无需遥操作硬件，直接用人手演示",
+  "reproduction": "### 复现指南\n\n```bash\n# 克隆代码\ngit clone https://github.com/j96w/DexCap\ncd DexCap\npip install -e .\n\n# 查看 README 获取详细说明\n```"
+}

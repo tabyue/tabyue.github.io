@@ -276,6 +276,216 @@
         "开源权重 + 训练代码 + 微调脚本，真正可用"
       ],
       "impact": "第一个真正可用的开源通用机器人策略模型，被大量学术实验室和小型机器人公司采用"
+    },
+    {
+      "id": "p013",
+      "title": "Humanoid Locomotion as Next Token Prediction",
+      "authors": "Ilija Radosavovic et al. (UC Berkeley / Meta)",
+      "venue": "arXiv 2024",
+      "date": "2024-02",
+      "tags": [
+        "人形机器人",
+        "强化学习"
+      ],
+      "difficulty": "高级",
+      "tldr": "用 Transformer 将人形步态控制建模为 next token prediction 问题，在真实 Digit 人形机器人上实现自主行走",
+      "keyInsights": [
+        "步态控制 = 序列预测",
+        "Transformer 可以学到稳定的行走策略",
+        "Sim-to-Real 成功迁移到真实人形机器人"
+      ],
+      "impact": "证明了 Transformer/LLM 范式在底层运动控制上的可行性",
+      "arxiv": "https://arxiv.org/abs/2402.19469",
+      "github": ""
+    },
+    {
+      "id": "p014",
+      "title": "RoboCasa: Large-Scale Simulation of Everyday Tasks for Generalist Robots",
+      "authors": "Yuke Zhu et al. (UT Austin / NVIDIA)",
+      "venue": "RSS 2024",
+      "date": "2024-06",
+      "tags": [
+        "数据集",
+        "世界模型"
+      ],
+      "difficulty": "中级",
+      "tldr": "大规模厨房/家庭环境仿真平台，100+任务、数千种物体，用AI生成多样化场景",
+      "keyInsights": [
+        "AI 生成仿真场景大幅降低场景设计成本",
+        "多样化环境是训练泛化策略的关键",
+        "提供标准化 benchmark 评估具身AI"
+      ],
+      "impact": "具身智能的 ImageNet 级别 benchmark，推动标准化评估",
+      "arxiv": "https://arxiv.org/abs/2406.02523",
+      "github": "https://github.com/robocasa/robocasa"
+    },
+    {
+      "id": "p015",
+      "title": "DexCap: Scalable and Portable Mocap Data Collection System for Dexterous Manipulation",
+      "authors": "Chen Wang et al. (Stanford)",
+      "venue": "RSS 2024",
+      "date": "2024-03",
+      "tags": [
+        "数据集",
+        "模仿学习"
+      ],
+      "difficulty": "中级",
+      "tldr": "用手部动捕手套低成本采集灵巧手操作数据，无需遥操作硬件，直接用人手演示",
+      "keyInsights": [
+        "手套采集比遥操作便宜10x+",
+        "人手动作可以重定向到机器人手",
+        "数据采集效率大幅提升"
+      ],
+      "impact": "降低灵巧操作数据采集门槛，加速灵巧手研究",
+      "arxiv": "https://arxiv.org/abs/2403.07788",
+      "github": "https://github.com/j96w/DexCap"
+    },
+    {
+      "id": "p016",
+      "title": "HPT: Heterogeneous Pre-trained Transformers",
+      "authors": "Lirui Wang et al. (MIT)",
+      "venue": "CoRL 2024",
+      "date": "2024-09",
+      "tags": [
+        "VLA",
+        "模仿学习"
+      ],
+      "difficulty": "高级",
+      "tldr": "统一不同机器人本体的预训练 Transformer，用异构 tokenizer 处理不同传感器和执行器",
+      "keyInsights": [
+        "不同机器人可以共享同一个 Transformer 骨干",
+        "异构 tokenizer 解决跨本体问题",
+        "预训练在混合数据上提升下游任务性能"
+      ],
+      "impact": "通向通用机器人基础模型的重要一步",
+      "arxiv": "https://arxiv.org/abs/2409.20537",
+      "github": "https://github.com/liruiw/HPT"
+    },
+    {
+      "id": "p017",
+      "title": "Scaling Proprioceptive-Visual Learning with Heterogeneous Pre-trained Transformers (π₀)",
+      "authors": "Physical Intelligence",
+      "venue": "arXiv 2024",
+      "date": "2024-10",
+      "tags": [
+        "VLA",
+        "模仿学习"
+      ],
+      "difficulty": "高级",
+      "tldr": "π₀ 的完整技术报告：PaliGemma 2B 视觉-语言骨干 + Flow Matching 动作头，在 10000+ 小时数据上预训练",
+      "keyInsights": [
+        "Flow Matching 比 Diffusion 推理快5x",
+        "预训练 → 微调范式在机器人上也成立",
+        "10步推理即可生成高质量动作"
+      ],
+      "impact": "目前性能最强的 VLA 模型之一，证明了大规模预训练的价值",
+      "arxiv": "https://arxiv.org/abs/2410.24164",
+      "github": ""
+    },
+    {
+      "id": "p018",
+      "title": "UniSim: Learning Interactive Real-World Simulators",
+      "authors": "Mengjiao Yang et al. (Google DeepMind)",
+      "venue": "ICLR 2024",
+      "date": "2024-01",
+      "tags": [
+        "世界模型",
+        "数据集"
+      ],
+      "difficulty": "高级",
+      "tldr": "用视频生成模型学习交互式世界模拟器，可以根据动作预测未来视觉观察",
+      "keyInsights": [
+        "视频生成 = 世界模型",
+        "学到的模拟器可以做模型预测控制",
+        "不需要物理引擎也能预测物理交互"
+      ],
+      "impact": "Yann LeCun JEPA 思想的实际实现，世界模型研究的前沿",
+      "arxiv": "https://arxiv.org/abs/2310.06114",
+      "github": ""
+    },
+    {
+      "id": "p019",
+      "title": "Mobile ALOHA: Learning Bimanual Mobile Manipulation with Low-Cost Whole-Body Teleoperation",
+      "authors": "Zipeng Fu et al. (Stanford)",
+      "venue": "CoRL 2024",
+      "date": "2024-01",
+      "tags": [
+        "模仿学习",
+        "人形机器人"
+      ],
+      "difficulty": "中级",
+      "tldr": "在移动底盘上的双臂ALOHA系统，50个演示就能学会做饭、清洁等复杂家务任务",
+      "keyInsights": [
+        "移动+双臂是通用家务机器人的最小配置",
+        "ACT + co-training 策略效果好",
+        "全身遥操作直觉自然"
+      ],
+      "impact": "展示了低成本硬件+模仿学习做复杂家务任务的可行性",
+      "arxiv": "https://arxiv.org/abs/2401.02117",
+      "github": "https://github.com/MarkFzp/mobile-aloha"
+    },
+    {
+      "id": "p020",
+      "title": "SpatialVLM: Endowing Vision-Language Models with Spatial Reasoning",
+      "authors": "Boyuan Chen et al. (Google DeepMind)",
+      "venue": "CVPR 2024",
+      "date": "2024-01",
+      "tags": [
+        "VLA",
+        "数据集"
+      ],
+      "difficulty": "中级",
+      "tldr": "赋予VLM空间推理能力（距离估计、空间关系判断），用自动生成的3D标注数据训练",
+      "keyInsights": [
+        "VLM 缺乏空间理解是机器人应用的主要瓶颈",
+        "用深度估计自动生成空间标注数据",
+        "空间推理能力可以迁移到机器人导航和操作"
+      ],
+      "impact": "填补 VLM 空间理解能力的空白，对具身智能至关重要",
+      "arxiv": "https://arxiv.org/abs/2401.12168",
+      "github": ""
+    },
+    {
+      "id": "p021",
+      "title": "LEGATO: Learning Manipulation of Language-Instructed Deformable Objects",
+      "authors": "Various (CMU)",
+      "venue": "ICRA 2024",
+      "date": "2024-05",
+      "tags": [
+        "模仿学习",
+        "强化学习"
+      ],
+      "difficulty": "中级",
+      "tldr": "用语言指令引导变形物体操作（折叠衣服、揉面团等），结合视觉和触觉感知",
+      "keyInsights": [
+        "变形物体操作是具身智能的核心难题",
+        "多模态感知（视觉+触觉）对软体操作至关重要",
+        "语言指令提供灵活的任务规范"
+      ],
+      "impact": "推动具身智能在非刚性物体操作上的进展",
+      "arxiv": "https://arxiv.org/abs/2404.13268",
+      "github": ""
+    },
+    {
+      "id": "p022",
+      "title": "Humanoid-Gym: Reinforcement Learning for Humanoid Robot with Zero-Shot Sim2Real Transfer",
+      "authors": "RobotEra Team",
+      "venue": "arXiv 2024",
+      "date": "2024-04",
+      "tags": [
+        "人形机器人",
+        "强化学习"
+      ],
+      "difficulty": "中级",
+      "tldr": "开源人形机器人RL训练框架，PPO+Domain Randomization实现零样本Sim2Real步态迁移",
+      "keyInsights": [
+        "开源的人形RL训练框架",
+        "Teacher-Student蒸馏实现零样本迁移",
+        "奖励函数设计是关键"
+      ],
+      "impact": "降低人形机器人RL训练的入门门槛，开源社区标准工具",
+      "arxiv": "https://arxiv.org/abs/2404.05695",
+      "github": "https://github.com/roboterax/humanoid-gym"
     }
   ]
 }

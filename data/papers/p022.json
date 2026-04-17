@@ -1,0 +1,6 @@
+{
+  "id": "p022",
+  "methodology": "### Humanoid-Gym: Reinforcement Learning for Humanoid Robot with Zero-Shot Sim2Real Transfer\n\n**核心方法**\n\n1. 开源的人形RL训练框架\n2. Teacher-Student蒸馏实现零样本迁移\n3. 奖励函数设计是关键\n\n**技术细节**\n\n详见论文原文: https://arxiv.org/abs/2404.05695",
+  "experiments": "### 实验概述\n\n论文展示了在多个场景下的实验结果。\n\n**关键发现**: 开源人形机器人RL训练框架，PPO+Domain Randomization实现零样本Sim2Real步态迁移",
+  "reproduction": "### 复现指南\n\n```bash\n# 克隆代码\ngit clone https://github.com/roboterax/humanoid-gym\ncd humanoid-gym\npip install -e .\n\n# 查看 README 获取详细说明\n```"
+}

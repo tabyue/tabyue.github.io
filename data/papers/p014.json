@@ -1,0 +1,6 @@
+{
+  "id": "p014",
+  "methodology": "### RoboCasa: Large-Scale Simulation of Everyday Tasks for Generalist Robots\n\n**核心方法**\n\n1. AI 生成仿真场景大幅降低场景设计成本\n2. 多样化环境是训练泛化策略的关键\n3. 提供标准化 benchmark 评估具身AI\n\n**技术细节**\n\n详见论文原文: https://arxiv.org/abs/2406.02523",
+  "experiments": "### 实验概述\n\n论文展示了在多个场景下的实验结果。\n\n**关键发现**: 大规模厨房/家庭环境仿真平台，100+任务、数千种物体，用AI生成多样化场景",
+  "reproduction": "### 复现指南\n\n```bash\n# 克隆代码\ngit clone https://github.com/robocasa/robocasa\ncd robocasa\npip install -e .\n\n# 查看 README 获取详细说明\n```"
+}
