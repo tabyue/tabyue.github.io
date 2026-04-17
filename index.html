@@ -199,6 +199,23 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .answer-body{padding:14px 18px}
 .answer-body strong{display:block;margin:16px 0 8px;padding:8px 12px;background:rgba(99,102,241,.04);border-radius:8px;border-left:3px solid var(--p);font-size:.86rem;color:var(--t1)}
 .answer-body strong:first-child{margin-top:0}
+/* Learning progress */
+.progress-bar{height:3px;background:var(--bd);border-radius:2px;margin-top:12px;overflow:hidden}
+.progress-fill{height:100%;border-radius:2px;transition:width .4s ease}
+.progress-fill.lv0{width:0;background:var(--bd)}
+.progress-fill.lv1{background:var(--pl)}
+.progress-fill.lv2{background:var(--sl)}
+.progress-fill.lv3{background:var(--al)}
+.status-tag{font-family:'JetBrains Mono';font-size:.6rem;padding:2px 8px;border-radius:8px;font-weight:500}
+.status-new{background:rgba(100,116,139,.1);color:var(--t3)}
+.status-learning{background:rgba(99,102,241,.1);color:var(--pl)}
+.status-done{background:rgba(16,185,129,.1);color:var(--sl)}
+.status-review{background:rgba(245,158,11,.1);color:var(--al)}
+.tab-visited::after{content:'';display:inline-block;width:5px;height:5px;background:var(--sl);border-radius:50%;margin-left:5px;vertical-align:middle}
+.learn-stats{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px;padding:16px 20px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r)}
+.learn-stat{text-align:center}
+.learn-stat-v{font-family:'Space Grotesk';font-size:1.4rem;font-weight:700}
+.learn-stat-l{font-size:.7rem;color:var(--t3);margin-top:2px}
 .md-content table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.82rem}
 .md-content th{background:var(--bg4);padding:8px 12px;text-align:left;font-weight:600;color:var(--t1);border:1px solid var(--bd)}
 .md-content td{padding:8px 12px;border:1px solid var(--bd)}
@@ -352,12 +369,39 @@ async function init(){
 // === RENDER LEARN ===
 function renderLearn(){
     if(!LD)return;
-    let h='';
+    // 统计面板
+    let totalMods=0,startedMods=0,doneMods=0,totalSecs=0,doneSecs=0;
+    LD.stages.forEach(s=>s.modules.forEach(m=>{
+        totalMods++;
+        const modId=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
+        const secCount=(m.topics||[]).length||3;
+        totalSecs+=secCount;
+        const st=getModuleStatus(modId,secCount);
+        if(st.status!=='new'){startedMods++;doneSecs+=(getProgress()[modId]?.sections||[]).length}
+        if(st.pct>=100)doneMods++;
+    }));
+    let h=`<div class="learn-stats">
+        <div class="learn-stat"><div class="learn-stat-v" style="color:var(--pl)">${totalMods}</div><div class="learn-stat-l">总模块</div></div>
+        <div class="learn-stat"><div class="learn-stat-v" style="color:var(--cyl)">${startedMods}</div><div class="learn-stat-l">已开始</div></div>
+        <div class="learn-stat"><div class="learn-stat-v" style="color:var(--sl)">${doneMods}</div><div class="learn-stat-l">已完成</div></div>
+        <div class="learn-stat"><div class="learn-stat-v" style="color:var(--al)">${totalSecs>0?Math.round(doneSecs/totalSecs*100):0}%</div><div class="learn-stat-l">总进度</div></div>
+    </div>`;
     LD.stages.forEach((s,i)=>{
         h+=`<div class="stage${i>2?' collapsed':''}"><div class="stage-head" onclick="this.parentElement.classList.toggle('collapsed')"><span class="stage-badge badge-${s.level}">${s.level}</span><div class="stage-info"><div class="stage-name">${s.title}</div><div class="stage-sub">${s.subtitle}</div></div><span class="arrow">▼</span></div><div class="stage-body"><div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">`;
         s.modules.forEach(m=>{
             const modId=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
-            h+=`<div class="card" style="cursor:pointer" onclick="openLearnModule('${modId}',this)"><div class="card-tags"><span class="tag tag-purple">${m.importance}</span></div><div class="card-title" style="font-size:.95rem">${m.name}</div><div class="card-desc" style="-webkit-line-clamp:2">${m.description}</div><div style="margin-top:10px"><span class="card-btn primary" style="font-size:.7rem">📖 进入学习 →</span></div></div>`;
+            const secCount=(m.topics||[]).length||3;
+            const st=getModuleStatus(modId,secCount);
+            const prog=getProgress()[modId];
+            const lastTip=prog?.lastVisit?`上次学习: ${timeAgo(prog.lastVisit)}`:'';
+            const fillCls=st.pct>=100?(st.visits>1?'lv3':'lv2'):(st.pct>0?'lv1':'lv0');
+            h+=`<div class="card" style="cursor:pointer" onclick="openLearnModule('${modId}',this)" title="${lastTip}">
+                <div class="card-tags"><span class="tag tag-purple">${m.importance}</span><span class="status-tag ${st.cls}" style="margin-left:auto">${st.label}</span></div>
+                <div class="card-title" style="font-size:.95rem">${m.name}</div>
+                <div class="card-desc" style="-webkit-line-clamp:2">${m.description}</div>
+                <div class="progress-bar"><div class="progress-fill ${fillCls}" style="width:${st.pct}%"></div></div>
+                <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:.65rem;color:var(--t3)"><span>${st.pct>0?st.pct+'%':''}</span><span>${lastTip}</span></div>
+            </div>`;
         });
         h+='</div></div></div>';
     });
@@ -391,6 +435,45 @@ const learnFileMap={
 '移动机器人导航项目':'mobile-robot-navigation',
 '人形机器人全栈项目':'humanoid-fullstack'
 };
+
+// === LEARNING PROGRESS ===
+const LP_KEY='eai_learn_progress';
+function getProgress(){try{return JSON.parse(localStorage.getItem(LP_KEY))||{}}catch(e){return{}}}
+function saveProgress(p){localStorage.setItem(LP_KEY,JSON.stringify(p))}
+function trackModuleVisit(modId, totalSections){
+    const p=getProgress();
+    if(!p[modId])p[modId]={visits:0,sections:[],firstVisit:Date.now(),lastVisit:0};
+    p[modId].visits++;
+    p[modId].lastVisit=Date.now();
+    if(totalSections)p[modId].totalSections=totalSections;
+    saveProgress(p);
+}
+function trackSectionVisit(modId, secIdx){
+    const p=getProgress();
+    if(!p[modId])p[modId]={visits:1,sections:[],firstVisit:Date.now(),lastVisit:Date.now()};
+    if(!p[modId].sections.includes(secIdx))p[modId].sections.push(secIdx);
+    p[modId].lastVisit=Date.now();
+    saveProgress(p);
+}
+function getModuleStatus(modId, totalSections){
+    const p=getProgress();
+    const m=p[modId];
+    if(!m||m.visits===0)return{status:'new',label:'未学习',pct:0,visits:0,cls:'status-new'};
+    const sectionsRead=(m.sections||[]).length;
+    const pct=totalSections>0?Math.round(sectionsRead/totalSections*100):0;
+    if(pct>=100&&m.visits>1)return{status:'review',label:`复习 ${m.visits} 次`,pct:100,visits:m.visits,cls:'status-review'};
+    if(pct>=100)return{status:'done',label:'已完成',pct:100,visits:m.visits,cls:'status-done'};
+    if(sectionsRead>0)return{status:'learning',label:`${sectionsRead}/${totalSections} 章`,pct,visits:m.visits,cls:'status-learning'};
+    return{status:'visited',label:'已开始',pct:5,visits:m.visits,cls:'status-learning'};
+}
+function timeAgo(ts){
+    if(!ts)return'';
+    const d=Date.now()-ts;
+    if(d<60000)return'刚刚';
+    if(d<3600000)return Math.floor(d/60000)+'分钟前';
+    if(d<86400000)return Math.floor(d/3600000)+'小时前';
+    return Math.floor(d/86400000)+'天前';
+}
 const learnCache={};
 async function openLearnModule(modId, el){
     const modal=document.getElementById('learnModal');
@@ -406,6 +489,11 @@ async function openLearnModule(modId, el){
         if(data)learnCache[modId]=data;
     }
     const d=learnCache[modId];
+
+    // Track visit
+    const totalSec=d?d.sections?.length||0:0;
+    trackModuleVisit(modId, totalSec);
+    if(totalSec>0)trackSectionVisit(modId, 0); // 默认看第一章
     if(!d){
         // Fallback: show basic info from learning-path.json
         let mod=null;
@@ -432,11 +520,16 @@ async function openLearnModule(modId, el){
 
     // Sections as tabs (+ 学习计划 + 推荐资源 作为额外 tab)
     if(d.sections&&d.sections.length>0){
+        const prog=getProgress()[modId];
+        const visitedSecs=new Set(prog?.sections||[]);
         const totalTabs=d.sections.length+(d.weeklyPlan?1:0)+(d.resources&&d.resources.length?1:0);
         h+=`<div class="modal-tabs" id="learn-tabs">`;
-        d.sections.forEach((sec,i)=>{h+=`<div class="modal-tab${i===0?' active':''}" onclick="switchLearnTab(${i})">${sec.title}</div>`});
-        if(d.weeklyPlan){h+=`<div class="modal-tab" onclick="switchLearnTab(${d.sections.length})">📅 学习计划</div>`}
-        if(d.resources&&d.resources.length){h+=`<div class="modal-tab" onclick="switchLearnTab(${d.sections.length+(d.weeklyPlan?1:0)})">📖 推荐资源</div>`}
+        d.sections.forEach((sec,i)=>{
+            const visited=visitedSecs.has(i)?'tab-visited':'';
+            h+=`<div class="modal-tab${i===0?' active':''} ${visited}" onclick="switchLearnTab(${i},'${modId}')">${sec.title}</div>`;
+        });
+        if(d.weeklyPlan){h+=`<div class="modal-tab" onclick="switchLearnTab(${d.sections.length},'${modId}')">📅 学习计划</div>`}
+        if(d.resources&&d.resources.length){h+=`<div class="modal-tab" onclick="switchLearnTab(${d.sections.length+(d.weeklyPlan?1:0)},'${modId}')">📖 推荐资源</div>`}
         h+='</div>';
         d.sections.forEach((sec,i)=>{
             h+=`<div class="modal-panel learn-panel${i===0?' active':''}" data-lidx="${i}"><div class="md-content">${renderMd(sec.content)}</div></div>`;
@@ -462,13 +555,24 @@ async function openLearnModule(modId, el){
     body.innerHTML=h;
     body.querySelectorAll('.modal-panel.active pre code').forEach(el=>hljs?.highlightElement(el));
 }
-function switchLearnTab(idx){
+function switchLearnTab(idx,modId){
     document.querySelectorAll('#learn-tabs .modal-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
     document.querySelectorAll('.learn-panel').forEach(p=>p.classList.toggle('active',+p.dataset.lidx===idx));
     const active=document.querySelector('.learn-panel.active');
     if(active)active.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.hl){hljs?.highlightElement(el);el.dataset.hl='1'}});
+    // Track section visit
+    if(modId){
+        trackSectionVisit(modId, idx);
+        // Add visited marker to current tab
+        const tabs=document.querySelectorAll('#learn-tabs .modal-tab');
+        if(tabs[idx])tabs[idx].classList.add('tab-visited');
+    }
 }
-function closeLearnModal(){document.getElementById('learnModal').classList.remove('open');document.body.style.overflow=''}
+function closeLearnModal(){
+    document.getElementById('learnModal').classList.remove('open');
+    document.body.style.overflow='';
+    renderLearn(); // 刷新卡片进度
+}
 
 // === RENDER PAPERS ===
 function tagClass(t){const m={'模仿学习':'green','VLA':'violet','强化学习':'amber','数据集':'cyan','世界模型':'pink','人形机器人':'purple'};return 'tag-'+(m[t]||'purple')}
