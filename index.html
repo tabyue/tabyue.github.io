@@ -177,6 +177,9 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .md-content p:empty{display:none}.md-content br+br{display:none}
 .md-content ul,.md-content ol{padding-left:20px;margin-bottom:12px}.md-content li{margin-bottom:4px}
 .md-content code{font-family:'JetBrains Mono';font-size:.82rem;background:rgba(99,102,241,.1);padding:1px 5px;border-radius:4px;color:var(--cyl)}
+.md-content .md-quote{margin:14px 0;padding:12px 18px;border-left:3px solid var(--al);background:rgba(245,158,11,.04);border-radius:0 10px 10px 0;font-size:.84rem;color:var(--t2);line-height:1.7}
+.md-content .md-quote code{font-size:.76rem}
+.md-content .md-quote pre{margin:8px 0;border-radius:8px}
 .md-content pre{margin:12px 0;border-radius:12px;overflow:hidden;border:1px solid var(--bd);overflow-x:auto;position:relative}.md-content pre code{background:none;padding:14px 16px;display:block;white-space:pre;word-wrap:normal;overflow-x:auto;font-size:.82rem;line-height:1.6}
 .katex-block{margin:16px 0;padding:14px 18px;background:rgba(99,102,241,.04);border-radius:10px;overflow-x:auto;text-align:center;position:relative}
 .katex-block .katex{font-size:1.1em}
@@ -821,6 +824,11 @@ function renderMd(t){
     h=h.replace(/((?:<li>.*<\/li>\s*)+)/g,'<ul>$1</ul>');
     // 9. 有序列表
     h=h.replace(/^\d+\.\s+(.+)$/gm,'<li>$1</li>');
+    // 9.5 引用块 (blockquote >)
+    h=h.replace(/(?:^|\n)(?:> (.+)\n?)+/g,(match)=>{
+        const lines=match.trim().split('\n').map(l=>l.replace(/^>\s?/,'')).join('\n');
+        return'\n<blockquote class="md-quote">'+lines+'</blockquote>\n';
+    });
     // 10. 段落和换行
     h=h.replace(/\n\n/g,'</p><p>');
     h=h.replace(/\n/g,'<br>');
@@ -925,7 +933,10 @@ async function runPython(btn){
         });
         
         if(unsupported.length>0){
-            outputEl.innerHTML=`<span style="color:var(--al)">⚠️ 此代码需要 ${unsupported.join(', ')} 等库，无法在浏览器中运行。</span>\n<span style="color:var(--t3)">建议：复制代码到本地 Python 环境或 Google Colab 运行。</span>\n<a href="https://colab.research.google.com/#create=true" target="_blank" style="color:var(--cyl);text-decoration:underline">→ 打开 Google Colab</a>`;
+            const installHints={'torch':'pip install torch torchvision','cv2':'pip install opencv-python','open3d':'pip install open3d','mujoco':'pip install mujoco','gymnasium':'pip install gymnasium','rclpy':'需要安装 ROS2','peft':'pip install peft','ultralytics':'pip install ultralytics','stable_baselines3':'pip install stable-baselines3','wandb':'pip install wandb','deepspeed':'pip install deepspeed','fastapi':'pip install fastapi uvicorn','pybullet':'pip install pybullet','genesis':'pip install genesis-world'};
+            const cmds=unsupported.map(l=>installHints[l]||('pip install '+l));
+            const uniqueCmds=[...new Set(cmds)];
+            outputEl.innerHTML=`<span style="color:var(--al)">⚠️ 此代码需要本地 Python 环境运行</span>\n\n<span style="color:var(--t2)">📦 安装依赖：</span>\n<code style="display:block;padding:8px 12px;background:var(--bg3);border-radius:6px;margin:6px 0;font-size:.78rem">${uniqueCmds.join('\\n')}</code>\n\n<span style="color:var(--t3)">💡 或一键在云端运行：</span> <a href="https://colab.research.google.com/#create=true" target="_blank" style="color:var(--cyl);text-decoration:underline">打开 Google Colab →</a>`;
             btn.classList.remove('running');
             btn.querySelector('span').textContent=origText;
             return;
