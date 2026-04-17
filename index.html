@@ -518,8 +518,8 @@ function filterNews(el,cat){
 
 function renderHomeLatest(){
     if(!ND)return;
-    const latest=ND.news.slice(0,4);
-    document.getElementById('homeLatest').innerHTML=latest.map(n=>`<a class="card" href="${n.url}" target="_blank" style="text-decoration:none;color:inherit"><span class="news-cat ncat-${n.category}">${n.category}</span><div class="card-title">${n.title}</div><div class="card-desc">${n.summary}</div><div class="card-meta" style="margin-top:8px">${n.source} · ${n.date}</div></a>`).join('');
+    const latest=ND.news.slice(0,5);
+    document.getElementById('homeLatest').innerHTML='<div style="display:flex;flex-direction:column;gap:12px">'+latest.map(n=>`<a href="${n.url}" target="_blank" style="display:flex;gap:16px;align-items:flex-start;padding:16px 20px;background:var(--bg3);border:1px solid var(--bd);border-radius:12px;text-decoration:none;color:inherit;transition:all .2s" onmouseover="this.style.borderColor='var(--bd2)';this.style.transform='translateX(4px)'" onmouseout="this.style.borderColor='var(--bd)';this.style.transform=''"><span class="news-cat ncat-${n.category}" style="flex-shrink:0;margin:0">${n.category}</span><div style="flex:1;min-width:0"><div style="font-size:.92rem;font-weight:600;margin-bottom:4px">${n.title}</div><div style="font-size:.78rem;color:var(--t3)">${n.source} · ${n.date}</div></div></a>`).join('')+'</div>';
 }
 
 init();
