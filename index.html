@@ -187,6 +187,18 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .copy-btn:hover{color:var(--cyl);border-color:var(--cyl);background:rgba(6,182,212,.08)}
 .copy-btn.copied{color:var(--sl);border-color:var(--sl);opacity:1;pointer-events:auto}
 .copy-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* Exercise & Answer cards */
+.exercise-card{margin:20px 0;border-radius:14px;border:1px solid var(--bd);overflow:hidden;background:var(--bg3)}
+.exercise-header{padding:12px 18px;font-size:.85rem;font-weight:600;color:var(--t1);display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--bd);background:rgba(99,102,241,.04)}
+.exercise-icon{font-size:1rem}
+.exercise-item{display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid rgba(30,41,59,.4);font-size:.86rem;color:var(--t2);line-height:1.75}
+.exercise-item:last-child{border-bottom:none}
+.exercise-num{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:rgba(99,102,241,.12);color:var(--pl);font-family:'JetBrains Mono';font-size:.72rem;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.answer-card{border-color:rgba(16,185,129,.2)}
+.answer-card .exercise-header{background:rgba(16,185,129,.04);color:var(--sl)}
+.answer-body{padding:14px 18px}
+.answer-body strong{display:block;margin:16px 0 8px;padding:8px 12px;background:rgba(99,102,241,.04);border-radius:8px;border-left:3px solid var(--p);font-size:.86rem;color:var(--t1)}
+.answer-body strong:first-child{margin-top:0}
 .md-content table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.82rem}
 .md-content th{background:var(--bg4);padding:8px 12px;text-align:left;font-weight:600;color:var(--t1);border:1px solid var(--bd)}
 .md-content td{padding:8px 12px;border:1px solid var(--bd)}
@@ -568,6 +580,18 @@ function renderMd(t){
     // 清理多余的 <br> 在块元素周围
     h=h.replace(/<br>\s*<(pre|table|div|h[34]|ul)/g,'<$1');
     h=h.replace(/<\/(pre|table|div|h[34]|ul)>\s*<br>/g,'</$1>');
+    // 14. 练习和答案区块统一卡片样式
+    h=h.replace(/<h4>练习<\/h4>([\s\S]*?)(?=<h4>参考答案<\/h4>|$)/g,(_,content)=>{
+        // 把列表项转成编号格式
+        let items=content;
+        let num=0;
+        items=items.replace(/<li>([\s\S]*?)<\/li>/g,(_,text)=>{num++;return`<div class="exercise-item"><span class="exercise-num">${num}</span><div>${text}</div></div>`});
+        items=items.replace(/<\/?ul>/g,'');
+        return`<div class="exercise-card"><div class="exercise-header"><span class="exercise-icon">✏️</span> 练习</div>${items}</div>`;
+    });
+    h=h.replace(/<h4>参考答案<\/h4>([\s\S]*?)$/g,(_,content)=>{
+        return`<div class="exercise-card answer-card"><div class="exercise-header"><span class="exercise-icon">💡</span> 参考答案</div><div class="answer-body">${content}</div></div>`;
+    });
     return h;
 }
 
