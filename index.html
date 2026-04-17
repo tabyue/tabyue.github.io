@@ -176,10 +176,17 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .md-content p{margin-bottom:12px}.md-content strong{color:var(--t1)}
 .md-content ul,.md-content ol{padding-left:20px;margin-bottom:12px}.md-content li{margin-bottom:4px}
 .md-content code{font-family:'JetBrains Mono';font-size:.82rem;background:rgba(99,102,241,.1);padding:1px 5px;border-radius:4px;color:var(--cyl)}
-.md-content pre{margin:12px 0;border-radius:12px;overflow:hidden;border:1px solid var(--bd);overflow-x:auto}.md-content pre code{background:none;padding:14px 16px;display:block;white-space:pre;word-wrap:normal;overflow-x:auto;font-size:.82rem;line-height:1.6}
-.katex-block{margin:16px 0;padding:14px 18px;background:rgba(99,102,241,.04);border-radius:10px;overflow-x:auto;text-align:center}
+.md-content pre{margin:12px 0;border-radius:12px;overflow:hidden;border:1px solid var(--bd);overflow-x:auto;position:relative}.md-content pre code{background:none;padding:14px 16px;display:block;white-space:pre;word-wrap:normal;overflow-x:auto;font-size:.82rem;line-height:1.6}
+.katex-block{margin:16px 0;padding:14px 18px;background:rgba(99,102,241,.04);border-radius:10px;overflow-x:auto;text-align:center;position:relative}
 .katex-block .katex{font-size:1.1em}
 .md-content .katex{font-size:.95em}
+/* Copy button */
+.copy-wrap{position:relative}
+.copy-btn{position:absolute;top:8px;right:8px;z-index:2;display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:8px;border:1px solid var(--bd);background:rgba(15,21,37,.85);backdrop-filter:blur(8px);color:var(--t3);font-family:'JetBrains Mono';font-size:.65rem;cursor:pointer;transition:all .2s;opacity:0;pointer-events:none}
+.copy-wrap:hover .copy-btn{opacity:1;pointer-events:auto}
+.copy-btn:hover{color:var(--cyl);border-color:var(--cyl);background:rgba(6,182,212,.08)}
+.copy-btn.copied{color:var(--sl);border-color:var(--sl);opacity:1;pointer-events:auto}
+.copy-btn svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .md-content table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.82rem}
 .md-content th{background:var(--bg4);padding:8px 12px;text-align:left;font-weight:600;color:var(--t1);border:1px solid var(--bd)}
 .md-content td{padding:8px 12px;border:1px solid var(--bd)}
@@ -544,14 +551,48 @@ function renderMd(t){
     h=h.replace(/\n/g,'<br>');
     h='<p>'+h+'</p>';
     h=h.replace(/<p>\s*(<[hupotd])/g,'$1').replace(/(<\/[hupotd][^>]*>)\s*<\/p>/g,'$1');
-    // 11. 还原代码块
-    h=h.replace(/%%CODEBLOCK_(\d+)%%/g,(_,i)=>codeBlocks[+i]);
+    // 11. 还原代码块（包裹复制容器）
+    h=h.replace(/%%CODEBLOCK_(\d+)%%/g,(_,i)=>{
+        return'<div class="copy-wrap">'+codeBlocks[+i]+'<button class="copy-btn" onclick="copyBlock(this,\'code\')" title="复制代码"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span>复制</span></button></div>';
+    });
     // 12. 还原行内代码
     h=h.replace(/%%INLINE_(\d+)%%/g,(_,i)=>inlineCodes[+i]);
+    // 13. 给公式块加复制按钮
+    h=h.replace(/<div class="katex-block">/g,'<div class="copy-wrap"><div class="katex-block">' +
+        '<button class="copy-btn" onclick="copyBlock(this,\'formula\')" title="复制公式"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span>复制</span></button>');
     // 清理多余的 <br> 在块元素周围
     h=h.replace(/<br>\s*<(pre|table|div|h[34]|ul)/g,'<$1');
     h=h.replace(/<\/(pre|table|div|h[34]|ul)>\s*<br>/g,'</$1>');
     return h;
+}
+
+// === COPY BLOCK ===
+function copyBlock(btn, type){
+    let text='';
+    const wrap=btn.closest('.copy-wrap');
+    if(type==='code'){
+        const code=wrap.querySelector('pre code');
+        text=code?.textContent||'';
+    }else{
+        const ann=wrap.querySelector('annotation[encoding]');
+        if(ann)text='$$'+ann.textContent.trim()+'$$';
+        else text=wrap.querySelector('.katex')?.textContent||'';
+    }
+    navigator.clipboard.writeText(text.trim()).then(()=>{
+        const span=btn.querySelector('span');
+        span.textContent='已复制 ✓';
+        btn.classList.add('copied');
+        setTimeout(()=>{span.textContent='复制';btn.classList.remove('copied')},2000);
+    }).catch(()=>{
+        // fallback for older browsers
+        const ta=document.createElement('textarea');
+        ta.value=text.trim();ta.style.position='fixed';ta.style.opacity='0';
+        document.body.appendChild(ta);ta.select();document.execCommand('copy');
+        document.body.removeChild(ta);
+        const span=btn.querySelector('span');
+        span.textContent='已复制 ✓';btn.classList.add('copied');
+        setTimeout(()=>{span.textContent='复制';btn.classList.remove('copied')},2000);
+    });
 }
 
 // === RENDER OS ===
