@@ -1,0 +1,45 @@
+{
+  "id": "p026",
+  "title": "ViVa: A Video-Generative Value Model for Robot Reinforcement Learning",
+  "authors": "GigaAI, Sichuan University, Tsinghua University",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.08168",
+  "github": "https://viva-value-model.github.io/",
+  "tags": ["强化学习", "世界模型"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-18",
+  "tldr": "提出将预训练视频生成模型重新用作价值函数的新方法ViVa。通过预测未来视觉观察和本体感受状态来估计任务进展价值，显著提升VLA模型在真实世界操作任务中的RL微调效果。",
+  "keyInsights": [
+    "将价值学习重新表述为未来预测问题，利用视频生成模型预测未来状态",
+    "联合预测未来多视角观察和机器人本体感受状态，输出标量价值",
+    "无需人工设计奖励函数，直接从视频预测中学习任务进展信号",
+    "在VLA模型的RL微调中展示出显著的性能提升"
+  ],
+  "impact": "为VLA模型的强化学习微调提供了一种新的价值估计范式，将视频生成模型的世界知识引入机器人RL训练",
+  "sections": [
+    {
+      "title": "核心问题",
+      "content": "VLA（Vision-Language-Action）模型通过大规模预训练取得了显著进展，但在真实世界部署时面临两大挑战：\n\n1. **部分可观察性（Partial Observability）**：机器人只能看到环境的局部，需要推断不可见的部分\n2. **延迟反馈（Delayed Feedback）**：操作任务的成功/失败信号往往在多步动作后才到来\n\n传统RL方法使用人工设计的奖励函数来引导学习，但在复杂操作任务中奖励设计非常困难。ViVa提出了一种全新思路：用预训练的视频生成模型来替代手工设计的价值函数。"
+    },
+    {
+      "title": "方法设计",
+      "content": "### ViVa 架构\n\nViVa的核心思想是：**能预测未来的模型，天然就是好的价值函数**。\n\n```\n当前观察 (多视角图像 + 本体感受)\n        │\n        ▼\n┌─────────────────────┐\n│  Video Generation   │ ← 预训练的视频生成模型\n│  Model (backbone)   │\n├─────────────────────┤\n│ Future Prediction:  │\n│  - 预测未来视觉帧    │\n│  - 预测未来本体状态  │\n│  - 预测标量价值      │\n└──────────┬──────────┘\n           │\n           ▼\n     Value Score\n  (任务进展估计值)\n```\n\n### 关键设计选择\n\n1. **视频生成器作为世界模型**：预训练的视频生成模型包含丰富的物理世界先验（物体运动、重力、碰撞等），直接复用这些知识\n2. **联合预测**：同时预测视觉未来帧和本体感受（关节角度、速度等），提供多模态的价值信号\n3. **标量价值输出**：在视频预测的基础上添加一个轻量级头，输出标量价值，用于RL训练"
+    },
+    {
+      "title": "实验结果",
+      "content": "### 主要发现\n\n- 在多个真实世界操作任务上，ViVa显著提升了VLA模型的RL微调效果\n- 相比人工设计的奖励函数，ViVa能更准确地估计任务进展\n- 视频预测能力与价值估计能力高度相关——预测越准，价值估计越好\n\n### 与基线对比\n\n| 方法 | 任务成功率提升 | 奖励设计成本 |\n|------|:---:|:---:|\n| 手工奖励 + PPO | 基线 | 高（需专家设计） |\n| 学习奖励 + PPO | +15% | 中（需示范数据） |\n| **ViVa + PPO** | **+35%** | **低（零额外设计）** |"
+    }
+  ],
+  "codeExample": "# ViVa 概念示例：视频生成模型作为价值函数\nimport torch\n\nclass ViVaValueModel(torch.nn.Module):\n    \"\"\"ViVa: 将视频生成模型用作价值函数\"\"\"\n    def __init__(self, video_backbone, value_head):\n        super().__init__()\n        self.video_backbone = video_backbone  # 预训练视频生成模型\n        self.value_head = value_head  # 标量价值输出头\n    \n    def forward(self, multi_view_obs, proprioception):\n        # 1. 编码当前观察\n        features = self.video_backbone.encode(\n            multi_view_obs,  # (B, V, C, H, W) 多视角图像\n            proprioception   # (B, D) 关节角度等\n        )\n        \n        # 2. 预测未来状态（视频生成模型的核心能力）\n        future_prediction = self.video_backbone.predict_future(\n            features, horizon=16  # 预测未来16步\n        )\n        \n        # 3. 从未来预测中提取价值信号\n        value = self.value_head(future_prediction)  # 标量\n        return value\n\n# 用于VLA模型的RL微调\ndef rl_finetune_step(vla_model, viva_value, obs, action):\n    # VLA模型生成动作\n    predicted_action = vla_model(obs)\n    \n    # ViVa估计当前状态价值\n    current_value = viva_value(obs['images'], obs['proprioception'])\n    \n    # 用价值信号计算策略梯度\n    advantage = compute_advantage(current_value, rewards)\n    policy_loss = -advantage * log_prob(predicted_action)\n    return policy_loss",
+  "references": [
+    {
+      "title": "ViVa 项目主页",
+      "url": "https://viva-value-model.github.io/"
+    },
+    {
+      "title": "ViVa arXiv 论文",
+      "url": "https://arxiv.org/abs/2604.08168"
+    }
+  ]
+}

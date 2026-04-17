@@ -2,6 +2,46 @@
   "lastUpdated": "2026-04-18",
   "papers": [
     {
+      "id": "p026",
+      "title": "ViVa: A Video-Generative Value Model for Robot Reinforcement Learning",
+      "authors": "GigaAI, Sichuan University, Tsinghua University",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.08168",
+      "github": "https://viva-value-model.github.io/",
+      "tags": ["强化学习", "世界模型"],
+      "tldr": "提出将预训练视频生成模型重新用作价值函数的新方法ViVa。通过预测未来视觉观察和本体感受状态来估计任务进展价值，显著提升VLA模型在真实世界操作任务中的RL微调效果。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-18",
+      "keyInsights": [
+        "将价值学习重新表述为未来预测问题，利用视频生成模型预测未来状态",
+        "联合预测未来多视角观察和机器人本体感受状态，输出标量价值",
+        "无需人工设计奖励函数，直接从视频预测中学习任务进展信号",
+        "在VLA模型的RL微调中展示出显著的性能提升"
+      ],
+      "impact": "为VLA模型的强化学习微调提供了一种新的价值估计范式，将视频生成模型的世界知识引入机器人RL训练"
+    },
+    {
+      "id": "p025",
+      "title": "Gemini Robotics-ER: Enhanced Embodied Reasoning for Physical AI",
+      "authors": "Google DeepMind",
+      "venue": "Google DeepMind Technical Report 2026",
+      "date": "2026-04",
+      "arxiv": "",
+      "github": "",
+      "tags": ["VLA", "世界模型"],
+      "tldr": "Google DeepMind发布的具身推理增强模型，在空间推理、多视角理解和仪表读取上大幅升级。采用双模型架构：Gemini Robotics 1.5作为VLA模型负责动作生成，ER 1.6负责高层空间推理和工具调用，支持Function Calling集成外部能力。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-18",
+      "keyInsights": [
+        "双模型架构：ER 1.6负责高层具身推理，Robotics 1.5负责底层VLA动作控制",
+        "空间推理能力显著提升：物体计数、空间关系判断、任务成功检测",
+        "新增仪表读取能力：可读取物理世界中的仪表盘、刻度值",
+        "支持Function Calling：可调用搜索、VLA或任意自定义工具"
+      ],
+      "impact": "代表Google在具身智能领域从通用VLM走向专用具身推理模型的战略演进，推动机器人认知能力的产品化"
+    },
+    {
       "id": "p024",
       "title": "AGIBOT WORLD 2026: A Full-Spectrum Real-World Embodied Dataset",
       "authors": "AgiBot Team (智元机器人 / 上海人工智能实验室)",

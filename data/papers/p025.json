@@ -1,0 +1,45 @@
+{
+  "id": "p025",
+  "title": "Gemini Robotics-ER: Enhanced Embodied Reasoning for Physical AI",
+  "authors": "Google DeepMind",
+  "venue": "Google DeepMind Technical Report 2026",
+  "date": "2026-04",
+  "arxiv": "",
+  "github": "",
+  "tags": ["VLA", "世界模型"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-18",
+  "tldr": "Google DeepMind发布的具身推理增强模型，在空间推理、多视角理解和仪表读取上大幅升级。采用双模型架构：Gemini Robotics 1.5作为VLA模型负责动作生成，ER 1.6负责高层空间推理和工具调用。",
+  "keyInsights": [
+    "双模型架构：ER 1.6负责高层具身推理，Robotics 1.5负责底层VLA动作控制",
+    "空间推理能力显著提升：物体计数、空间关系判断、任务成功检测",
+    "新增仪表读取能力：可读取物理世界中的仪表盘、刻度值",
+    "支持Function Calling：可调用搜索、VLA或任意自定义工具"
+  ],
+  "impact": "代表Google在具身智能领域从通用VLM走向专用具身推理模型的战略演进，推动机器人认知能力的产品化",
+  "sections": [
+    {
+      "title": "背景与动机",
+      "content": "机器人要在真实物理世界中工作，需要深层次的空间理解能力——不仅要识别物体，还要理解物体之间的空间关系、距离、方向。现有的VLM模型虽然在图像理解上表现优秀，但在三维空间推理上仍有显著差距。\n\n### 具身推理 vs 通用视觉理解\n\n| 能力 | 通用VLM | 具身推理(ER) |\n|------|---------|-------------|\n| 物体识别 | ✅ 优秀 | ✅ 优秀 |\n| 空间关系 | ⚠️ 一般 | ✅ 强化 |\n| 距离估计 | ❌ 弱 | ✅ 强化 |\n| 物体计数 | ⚠️ 一般 | ✅ 强化 |\n| 仪表读取 | ❌ 不支持 | ✅ 新增 |\n| Function Calling | ❌ | ✅ 支持 |"
+    },
+    {
+      "title": "架构设计",
+      "content": "### 双模型协作架构\n\n```\n用户指令 / 自主目标\n        │\n        ▼\n┌─────────────────────┐\n│  Gemini Robotics     │\n│  ER 1.6             │ ← 高层推理：空间理解、任务规划\n│  (Embodied Reasoner) │    工具调用：Function Calling\n└──────────┬──────────┘\n           │ 子任务指令\n           ▼\n┌─────────────────────┐\n│  Gemini Robotics     │\n│  1.5 (VLA)          │ ← 底层执行：视觉-语言-动作\n│                     │    实时控制：连续动作生成\n└──────────┬──────────┘\n           │\n           ▼\n      机器人执行\n```\n\n### Function Calling 能力\n\nER 1.6支持在推理过程中调用外部工具：\n- Google搜索：查询未知物体信息\n- VLA模型：调用底层动作控制\n- 自定义函数：开发者定义的任意能力\n\n这使得机器人可以在执行任务时动态获取知识、调用专业工具。"
+    },
+    {
+      "title": "关键能力",
+      "content": "### 1. 增强的空间推理\n- 精确判断物体间的前后左右上下关系\n- 估计物体距离和尺寸\n- 准确计数场景中的物体数量\n\n### 2. 任务成功检测\n- 自动判断操作任务是否成功完成\n- 可用于RL的奖励信号和质量控制\n\n### 3. 仪表读取（新能力）\n- 读取工厂仪表盘上的数值\n- 理解指针位置和刻度含义\n- 适用于工业巡检场景\n\n### 4. 多视角融合\n- 整合来自不同相机的视角信息\n- 构建更完整的场景理解"
+    }
+  ],
+  "codeExample": "# Gemini Robotics-ER 1.6 API 调用示例（概念）\n# 通过 Google AI Studio / Gemini API 接入\n\nimport google.generativeai as genai\n\n# 配置模型\nmodel = genai.GenerativeModel('gemini-robotics-er-1.6')\n\n# 发送多视角图像进行空间推理\nresponse = model.generate_content([\n    \"分析这个场景中物体的空间关系。红色杯子在蓝色盘子的什么方位？\",\n    image_front_view,   # 正面视角\n    image_top_view,     # 俯视视角\n])\nprint(response.text)\n# → \"红色杯子在蓝色盘子的左前方约15cm处\"\n\n# 使用Function Calling执行机器人任务\ntools = [\n    genai.Tool(function_declarations=[\n        genai.FunctionDeclaration(\n            name=\"pick_object\",\n            description=\"拾取指定物体\",\n            parameters={\"object_name\": \"string\"}\n        ),\n        genai.FunctionDeclaration(\n            name=\"place_on\",\n            description=\"将物体放到指定位置\",\n            parameters={\"target_location\": \"string\"}\n        ),\n    ])\n]\n\nresponse = model.generate_content(\n    \"把红色杯子放到蓝色盘子上\",\n    tools=tools\n)\n# ER模型会自动调用: pick_object('红色杯子') → place_on('蓝色盘子')",
+  "references": [
+    {
+      "title": "Gemini Robotics-ER 1.6 官方博客",
+      "url": "https://deepmind.google/blog/gemini-robotics-er-1-6/"
+    },
+    {
+      "title": "Google AI Studio (可直接试用)",
+      "url": "https://aistudio.google.com/"
+    }
+  ]
+}

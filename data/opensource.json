@@ -12,6 +12,26 @@
   ],
   "projects": [
     {
+      "name": "DORA-rs",
+      "org": "dora-rs Community",
+      "description": "基于Rust的新一代机器人数据流中间件（Dataflow Oriented Robotic Architecture），提供统一的数据流建模和低延迟通信。已发表于arXiv，在延迟和吞吐量上显著优于ROS2。支持Python/Rust/C++多语言，零拷贝传输，适合构建高性能具身AI应用。",
+      "github": "https://github.com/dora-rs/dora",
+      "stars": "3.5k",
+      "tags": ["中间件", "Rust", "数据流", "高性能"],
+      "category": "framework",
+      "addedDate": "2026-04-18"
+    },
+    {
+      "name": "ViVa (Video-generative Value Model)",
+      "org": "GigaAI / Tsinghua / Sichuan Univ.",
+      "description": "将预训练视频生成模型重新用作机器人强化学习的价值函数。通过预测未来视觉观察和本体感受状态来估计任务进展，无需人工设计奖励函数。在VLA模型的RL微调中提升35%+任务成功率。",
+      "github": "https://viva-value-model.github.io/",
+      "stars": "500+",
+      "tags": ["VLA", "强化学习", "价值函数", "视频生成"],
+      "category": "ai-model",
+      "addedDate": "2026-04-18"
+    },
+    {
       "name": "ROS-LLM",
       "org": "Auromix / TU Darmstadt",
       "description": "ROS2 + LLM Agent 具身智能框架，用自然语言编程机器人任务。发表于 Nature Machine Intelligence，提供完整的 ROS2 集成方案。",
