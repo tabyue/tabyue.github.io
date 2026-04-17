@@ -172,7 +172,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .modal-tab:hover{color:var(--t1)}.modal-tab.active{color:var(--pl);border-bottom-color:var(--pl)}
 .modal-panel{display:none}.modal-panel.active{display:block}
 .modal-panel .md-content{font-size:.88rem;color:var(--t2);line-height:1.85}
-.md-content h3,.md-content h4{color:var(--t1);margin:18px 0 10px}.md-content h3{font-size:1.05rem;border-bottom:1px solid var(--bd);padding-bottom:6px}.md-content h4{font-size:.92rem;color:var(--pl)}
+.md-content h3,.md-content h4,.md-content h5{color:var(--t1);margin:18px 0 10px}.md-content h3{font-size:1.05rem;border-bottom:1px solid var(--bd);padding-bottom:6px}.md-content h4{font-size:.92rem;color:var(--pl)}.md-content h5{font-size:.86rem;color:var(--cyl);font-weight:600;margin:14px 0 8px}
 .md-content p{margin-bottom:12px}.md-content strong{color:var(--t1)}
 .md-content p:empty{display:none}.md-content br+br{display:none}
 .md-content ul,.md-content ol{padding-left:20px;margin-bottom:12px}.md-content li{margin-bottom:4px}
@@ -859,7 +859,8 @@ function renderMd(t){
         if(!embedUrl)return`<a href="${url}" target="_blank" class="card-btn">🎬 ${title||'观看视频'}</a>`;
         return`<div class="video-embed">${title?`<div class="video-title">🎬 ${title}</div>`:''}<div class="video-container"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div>`;
     });
-    // 5. 标题
+    // 5. 标题（从多到少处理，避免 #### 被 ### 先匹配）
+    h=h.replace(/^#### (.+)$/gm,'<h5 class="md-h5">$1</h5>');
     h=h.replace(/^### (.+)$/gm,'<h4>$1</h4>');
     h=h.replace(/^## (.+)$/gm,'<h3>$1</h3>');
     // 6. 粗体
