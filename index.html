@@ -618,7 +618,7 @@ async function openLearnModule(modId, el){
         });
         h+='</div>';
         d.sections.forEach((sec,i)=>{
-            h+=`<div class="modal-panel learn-panel${i===0?' active':''}" data-lidx="${i}"><div class="md-content">${renderMd(sec.content)}</div></div>`;
+            h+=`<div class="modal-panel learn-panel${i===0?' active':''}" data-lidx="${i}"><div class="md-content">${renderMd(sec.content)}</div><div class="read-sentinel" data-sec="${i}" style="height:1px"></div></div>`;
         });
     }
 
@@ -656,12 +656,18 @@ function switchLearnTab(idx,modId){
     document.querySelectorAll('.learn-panel').forEach(p=>p.classList.toggle('active',+p.dataset.lidx===idx));
     const active=document.querySelector('.learn-panel.active');
     if(active)active.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.hl){hljs?.highlightElement(el);el.dataset.hl='1'}});
-    // 曝光检测：当前面板可见 3 秒后标记已读
-    if(_readTimer)clearTimeout(_readTimer);
-    if(_readObserver)_readObserver.disconnect();
+    // 清理之前的检测
+    if(_readTimer){clearTimeout(_readTimer);_readTimer=null}
+    if(_readObserver){_readObserver.disconnect();_readObserver=null}
     if(!modId)return;
-    const panel=document.querySelector(`.learn-panel[data-lidx="${idx}"]`);
-    if(!panel)return;
+    // 找到当前面板底部的哨兵元素
+    const sentinel=active?.querySelector(`.read-sentinel[data-sec="${idx}"]`);
+    if(!sentinel)return;
+    // 如果已读就不再检测
+    const p=getProgress()[modId];
+    if(p?.sections?.includes(idx))return;
+    // 观察哨兵：用户滚动到章节底部且停留 2 秒才标记已读
+    const modalEl=document.querySelector('#learnModal .modal');
     _readObserver=new IntersectionObserver((entries)=>{
         entries.forEach(entry=>{
             if(entry.isIntersecting){
@@ -670,13 +676,13 @@ function switchLearnTab(idx,modId){
                     const tabs=document.querySelectorAll('#learn-tabs .modal-tab');
                     if(tabs[idx])tabs[idx].classList.add('tab-visited');
                     _readObserver?.disconnect();
-                },3000); // 可见 3 秒才算已读
+                },2000); // 底部可见 2 秒算已读
             }else{
-                if(_readTimer)clearTimeout(_readTimer);
+                if(_readTimer){clearTimeout(_readTimer);_readTimer=null}
             }
         });
-    },{root:document.querySelector('.modal'),threshold:0.3});
-    _readObserver.observe(panel);
+    },{root:modalEl,threshold:0.5});
+    _readObserver.observe(sentinel);
 }
 function closeLearnModal(){
     document.getElementById('learnModal').classList.remove('open');
