@@ -2,6 +2,46 @@
   "lastUpdated": "2026-04-18",
   "papers": [
     {
+      "id": "p028",
+      "title": "Embodied-R1: Reinforced Embodied Reasoning for General Robotic Manipulation",
+      "authors": "Peking University, Tsinghua University, et al.",
+      "venue": "arXiv 2026",
+      "date": "2026-03",
+      "arxiv": "https://arxiv.org/abs/2508.13998",
+      "github": "https://github.com/pickxiguapi/Embodied-R1",
+      "tags": ["VLA", "具身推理"],
+      "tldr": "提出Embodied-R1，一个3B参数的视觉-语言模型，专为具身推理和通用机器人操作设计。核心创新是通过\"Pointing\"机制实现物体和空间概念的统一锚定，使用两阶段强化微调（RFT）训练，在Embodied-Points-200K大规模数据集上验证。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-18",
+      "keyInsights": [
+        "提出Pointing机制作为跨具身平台的中间表征，桥接视觉语言理解与底层动作",
+        "两阶段强化微调（RFT）：先在通用视觉推理上预训练，再在具身任务上强化",
+        "构建Embodied-Points-200K大规模数据集，支持具身指向与推理训练",
+        "仅3B参数即可实现强大的通用操作能力，推理开销小"
+      ],
+      "impact": "将强化学习中的推理增强思路（类R1）引入具身智能，展示了小模型+强化微调在机器人操作中的巨大潜力"
+    },
+    {
+      "id": "p027",
+      "title": "WholeBodyVLA: Towards Unified Latent VLA for Whole-Body Loco-Manipulation",
+      "authors": "Fudan University, HKU, OpenDriveLab (智元机器人)",
+      "venue": "ICLR 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2512.11047",
+      "github": "https://github.com/OpenDriveLab/WholebodyVLA",
+      "tags": ["VLA", "人形机器人"],
+      "tldr": "提出面向人形机器人全身移动操作的统一VLA框架。核心创新是分离的运动/操作潜在动作模型（LAM），可从无动作标签的第一人称视频中学习统一的移动-操作知识，在AgiBot X2人形机器人上验证。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-18",
+      "keyInsights": [
+        "分离的Locomotion/Manipulation Latent Action Model（LAM）统一全身控制",
+        "从低成本无动作标签的第一视角视频中学习移动-操作知识",
+        "设计高效人类数据采集流程以扩展训练数据",
+        "在AgiBot X2人形机器人上实现大空间全身移动操作"
+      ],
+      "impact": "首个在真实人形机器人上实现大空间全身移动操作的VLA框架，被ICLR 2026接收"
+    },
+    {
       "id": "p026",
       "title": "ViVa: A Video-Generative Value Model for Robot Reinforcement Learning",
       "authors": "GigaAI, Sichuan University, Tsinghua University",

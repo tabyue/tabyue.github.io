@@ -70,6 +70,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .quick-card:nth-child(3)::after{background:linear-gradient(90deg,var(--cy),var(--s))}
 .quick-card:nth-child(4)::after{background:linear-gradient(90deg,var(--a),var(--pk))}
 .quick-card:nth-child(5)::after{background:linear-gradient(90deg,var(--pk),var(--v))}
+.quick-card:nth-child(6)::after{background:linear-gradient(90deg,var(--a),var(--s))}
 .qc-icon{font-size:1.6rem;margin-bottom:8px}
 .qc-title{font-size:.95rem;font-weight:600;margin-bottom:4px}
 .qc-desc{font-size:.78rem;color:var(--t3);line-height:1.6}
@@ -152,6 +153,22 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .ncat-技术突破{background:rgba(99,102,241,.1);color:var(--pl)}
 .ncat-全球视野{background:rgba(6,182,212,.1);color:var(--cyl)}
 .ncat-学术研究{background:rgba(139,92,246,.1);color:var(--vl)}
+
+/* === JOBS === */
+.job-type{font-size:.62rem;font-weight:600;padding:2px 8px;border-radius:6px;display:inline-block}
+.jtype-社招{background:rgba(99,102,241,.1);color:var(--pl)}
+.jtype-校招{background:rgba(16,185,129,.1);color:var(--sl)}
+.jtype-实习{background:rgba(245,158,11,.1);color:var(--al)}
+.job-salary{font-family:'JetBrains Mono';font-size:.82rem;font-weight:600;color:var(--al);margin:6px 0}
+.job-info{display:flex;gap:12px;flex-wrap:wrap;font-size:.74rem;color:var(--t3);margin-bottom:8px}
+.job-info span{display:flex;align-items:center;gap:3px}
+.job-company{font-size:.85rem;font-weight:600;color:var(--cyl)}
+.filter-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
+.filter-label{font-size:.72rem;color:var(--t3);font-weight:600;min-width:40px}
+.job-stats{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px;padding:16px 20px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r)}
+.job-stat{text-align:center}
+.job-stat-v{font-family:'Space Grotesk';font-size:1.4rem;font-weight:700}
+.job-stat-l{font-size:.7rem;color:var(--t3);margin-top:2px}
 
 /* === OPENSOURCE CATEGORY GROUPS === */
 .os-group{margin-bottom:32px}
@@ -325,6 +342,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
         <a onclick="go('papers')">📄 论文库</a>
         <a onclick="go('opensource')">💻 开源生态</a>
         <a onclick="go('news')">📰 资讯</a>
+        <a onclick="go('jobs')">💼 求职</a>
     </nav>
     <div class="topbar-meta">
         <span class="topbar-time" id="updateTime"></span>
@@ -345,6 +363,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
             <div class="home-stat"><div class="home-stat-v" id="sPapers">-</div><div class="home-stat-l">论文解读</div></div>
             <div class="home-stat"><div class="home-stat-v" id="sOS">-</div><div class="home-stat-l">开源项目</div></div>
             <div class="home-stat"><div class="home-stat-v" id="sNews">-</div><div class="home-stat-l">行业资讯</div></div>
+            <div class="home-stat"><div class="home-stat-v" id="sJobs">-</div><div class="home-stat-l">招聘岗位</div></div>
         </div>
     </div>
     <div class="quick-grid">
@@ -352,6 +371,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
         <div class="quick-card" onclick="go('papers')"><div class="qc-icon">📄</div><div class="qc-title">论文深度解读</div><div class="qc-desc">方法论详解 · 实验数据 · 代码复现 · 数学原理，真正学到东西</div></div>
         <div class="quick-card" onclick="go('opensource')"><div class="qc-icon">💻</div><div class="qc-title">开源生态</div><div class="qc-desc">LeRobot、MuJoCo、Genesis 等核心项目入门教程</div></div>
         <div class="quick-card" onclick="go('news')"><div class="qc-icon">📰</div><div class="qc-title">行业资讯</div><div class="qc-desc">融资动态 · 技术突破 · 政策标准 · 企业图谱</div></div>
+        <div class="quick-card" onclick="go('jobs')"><div class="qc-icon">💼</div><div class="qc-title">求职招聘</div><div class="qc-desc">社招 · 校招 · 实习，具身智能行业最新岗位</div></div>
 
     </div>
     <div class="home-latest">
@@ -404,6 +424,19 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
         <div style="margin-top:40px"><div class="home-latest-title">🔗 资源导航</div><div class="res-grid" id="resGrid"></div></div>
     </div>
 </div>
+
+<!-- JOBS -->
+<div class="page" id="pg-jobs">
+    <div class="page-header"><h1 class="page-title"><span class="icon">💼</span> 具身智能求职 <span style="font-family:'JetBrains Mono';font-size:.7rem;color:var(--t3);font-weight:400" id="jobCount"></span></h1><p class="page-sub">汇集具身智能/机器人行业的社招、校招、实习岗位。数据定期更新，超过半年的过期岗位会自动清理。</p></div>
+    <div class="page-body">
+        <div class="job-stats" id="jobStats"></div>
+        <div class="filter-row"><span class="filter-label">类型</span><div class="filters" id="jobTypeFilters"></div></div>
+        <div class="filter-row"><span class="filter-label">方向</span><div class="filters" id="jobCatFilters"></div></div>
+        <div class="filter-row"><span class="filter-label">城市</span><div class="filters" id="jobCityFilters"></div></div>
+        <div class="card-grid" id="jobsGrid"></div>
+        <div style="margin-top:40px"><div class="home-latest-title">🔗 求职资源</div><div class="res-grid" id="jobResGrid"></div></div>
+    </div>
+</div>
 </div>
 
 <!-- PAPER MODAL -->
@@ -427,17 +460,18 @@ function go(id){
 addEventListener('scroll',()=>document.getElementById('btt').classList.toggle('show',scrollY>400));
 
 // === DATA ===
-let LD,PD,OD,ND;
+let LD,PD,OD,ND,JD;
 async function loadJ(u){try{const r=await fetch(u+'?t='+Date.now());return r.ok?await r.json():null}catch(e){return null}}
 
 async function init(){
-    [LD,PD,OD,ND]=await Promise.all([loadJ('data/learning-path.json'),loadJ('data/papers-index.json'),loadJ('data/opensource.json'),loadJ('data/news.json')]);
+    [LD,PD,OD,ND,JD]=await Promise.all([loadJ('data/learning-path.json'),loadJ('data/papers-index.json'),loadJ('data/opensource.json'),loadJ('data/news.json'),loadJ('data/jobs.json')]);
     if(PD)document.getElementById('sPapers').textContent=PD.papers.length;
     if(OD)document.getElementById('sOS').textContent=OD.projects.length;
     if(ND)document.getElementById('sNews').textContent=ND.news.length;
-    const dates=[LD?.lastUpdated,PD?.lastUpdated,OD?.lastUpdated,ND?.lastUpdated].filter(Boolean);
+    if(JD)document.getElementById('sJobs').textContent=JD.jobs.length;
+    const dates=[LD?.lastUpdated,PD?.lastUpdated,OD?.lastUpdated,ND?.lastUpdated,JD?.lastUpdated].filter(Boolean);
     if(dates.length)document.getElementById('updateTime').textContent='更新 '+dates.sort().pop();
-    renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();
+    renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();
 }
 
 // === RENDER LEARN ===
@@ -1231,6 +1265,66 @@ function renderHomeLatest(){
     if(!ND)return;
     const latest=ND.news.slice(0,6);
     document.getElementById('homeLatest').innerHTML=latest.map(n=>`<a href="${n.url}" target="_blank" class="card" style="text-decoration:none;color:inherit"><span class="news-cat ncat-${n.category}">${n.category}</span><div class="card-title">${n.title}</div><div class="card-desc">${n.summary}</div><div class="card-meta" style="margin-top:10px">${n.source} · ${n.date}</div></a>`).join('');
+}
+
+// === RENDER JOBS ===
+let _jobFilters={type:'全部',cat:'全部',city:'全部'};
+function renderJobs(){
+    if(!JD)return;
+    // 过滤掉超过半年的过期岗位
+    const sixMonthsAgo=new Date();sixMonthsAgo.setMonth(sixMonthsAgo.getMonth()-6);
+    const cutoff=sixMonthsAgo.toISOString().slice(0,10);
+    JD.jobs=JD.jobs.filter(j=>(j.postDate||j.addedDate||'9999')>=cutoff);
+    // 按发布日期倒序
+    JD.jobs.sort((a,b)=>(b.postDate||'').localeCompare(a.postDate||''));
+    document.getElementById('jobCount').textContent=JD.jobs.length+' 个岗位';
+    // 统计
+    const typeCount={};const catCount={};const cityCount={};
+    JD.jobs.forEach(j=>{typeCount[j.type]=(typeCount[j.type]||0)+1;catCount[j.category]=(catCount[j.category]||0)+1;cityCount[j.city]=(cityCount[j.city]||0)+1});
+    document.getElementById('jobStats').innerHTML=`
+        <div class="job-stat"><div class="job-stat-v" style="color:var(--pl)">${JD.jobs.length}</div><div class="job-stat-l">总岗位</div></div>
+        <div class="job-stat"><div class="job-stat-v" style="color:var(--cyl)">${typeCount['社招']||0}</div><div class="job-stat-l">社招</div></div>
+        <div class="job-stat"><div class="job-stat-v" style="color:var(--sl)">${typeCount['校招']||0}</div><div class="job-stat-l">校招</div></div>
+        <div class="job-stat"><div class="job-stat-v" style="color:var(--al)">${typeCount['实习']||0}</div><div class="job-stat-l">实习</div></div>
+        <div class="job-stat"><div class="job-stat-v" style="color:var(--pkl)">${Object.keys(cityCount).length}</div><div class="job-stat-l">城市</div></div>`;
+    // 筛选按钮
+    const types=JD.types||['全部','社招','校招','实习'];
+    const cats=JD.categories||['全部'];
+    const cities=JD.cities||['全部'];
+    document.getElementById('jobTypeFilters').innerHTML=types.map((t,i)=>`<button class="fbtn${i===0?' active':''}" onclick="filterJobs(this,'type','${t}')">${t}${t!=='全部'?' <span style=\"opacity:.5;font-size:.68rem\">'+(typeCount[t]||0)+'</span>':''}</button>`).join('');
+    document.getElementById('jobCatFilters').innerHTML=cats.map((c,i)=>`<button class="fbtn${i===0?' active':''}" onclick="filterJobs(this,'cat','${c}')">${c}${c!=='全部'?' <span style=\"opacity:.5;font-size:.68rem\">'+(catCount[c]||0)+'</span>':''}</button>`).join('');
+    document.getElementById('jobCityFilters').innerHTML=cities.map((c,i)=>`<button class="fbtn${i===0?' active':''}" onclick="filterJobs(this,'city','${c}')">${c}${c!=='全部'?' <span style=\"opacity:.5;font-size:.68rem\">'+(cityCount[c]||0)+'</span>':''}</button>`).join('');
+    // 渲染卡片
+    renderJobCards();
+    // 求职资源
+    if(JD.resources){
+        document.getElementById('jobResGrid').innerHTML=JD.resources.map(r=>`<a href="${r.url}" target="_blank" class="res-card" style="text-decoration:none;color:inherit;transition:border-color .2s" onmouseover="this.style.borderColor='var(--pl)'" onmouseout="this.style.borderColor='var(--bd)'"><div class="res-name">${r.name}</div><div class="res-desc">${r.description}</div></a>`).join('');
+    }
+}
+function renderJobCards(){
+    const f=_jobFilters;
+    const filtered=JD.jobs.filter(j=>{
+        if(f.type!=='全部'&&j.type!==f.type)return false;
+        if(f.cat!=='全部'&&j.category!==f.cat)return false;
+        if(f.city!=='全部'&&j.city!==f.city)return false;
+        return true;
+    });
+    document.getElementById('jobsGrid').innerHTML=filtered.length?filtered.map(j=>`<a class="card" href="${j.url}" target="_blank" style="text-decoration:none;color:inherit">
+        <div class="card-tags"><span class="job-type jtype-${j.type}">${j.type}</span>${j.tags.map(t=>`<span class="tag tag-purple">${t}</span>`).join('')}</div>
+        <div class="card-title">${j.title}</div>
+        <div class="job-company">${j.company}</div>
+        <div class="job-salary">${j.salary}</div>
+        <div class="job-info"><span>📍 ${j.city}</span><span>🎓 ${j.education}</span><span>📅 ${j.experience}</span><span style="color:var(--t3)">发布: ${j.postDate}</span></div>
+        <div class="card-desc">${j.description}</div>
+        <div class="card-footer"><span class="card-btn primary">查看详情 →</span><span style="font-size:.68rem;color:var(--t3);margin-left:auto">来源: ${j.source}</span></div>
+    </a>`).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:40px">暂无符合条件的岗位</div>';
+}
+function filterJobs(el,dimension,value){
+    _jobFilters[dimension]=value;
+    const containerId=dimension==='type'?'jobTypeFilters':dimension==='cat'?'jobCatFilters':'jobCityFilters';
+    document.getElementById(containerId).querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+    renderJobCards();
 }
 
 init();
