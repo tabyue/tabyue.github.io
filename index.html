@@ -226,6 +226,11 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .aux-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
 .aux-card.open .aux-body{max-height:2000px}
 .aux-body>*{padding:16px 18px}
+/* Video embed */
+.video-embed{margin:16px 0;border-radius:12px;overflow:hidden;border:1px solid var(--bd);background:var(--bg3)}
+.video-title{padding:10px 16px;font-size:.82rem;font-weight:600;color:var(--t1);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:6px}
+.video-container{position:relative;padding-bottom:56.25%;height:0}
+.video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%}
 .md-content table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.82rem}
 .md-content th{background:var(--bg4);padding:8px 12px;text-align:left;font-weight:600;color:var(--t1);border:1px solid var(--bd)}
 .md-content td{padding:8px 12px;border:1px solid var(--bd)}
@@ -780,6 +785,18 @@ function renderMd(t){
     h=h.replace(/\$([^\$\n]+?)\$/g,(_,tex)=>{
         try{return katex.renderToString(tex.trim(),{displayMode:false,throwOnError:false})}
         catch(e){return'<span style="color:var(--al)">'+tex.trim()+'</span>'}
+    });
+    // 4.5 视频嵌入 [video:URL] 或 [video:URL:标题]
+    h=h.replace(/\[video:(https?:\/\/[^\]:\s]+)(?::([^\]]+))?\]/g,(_,url,title)=>{
+        let embedUrl='';
+        // YouTube
+        let yt=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+        if(yt)embedUrl=`https://www.youtube.com/embed/${yt[1]}`;
+        // Bilibili
+        let bl=url.match(/bilibili\.com\/video\/(BV[\w]+)/);
+        if(bl)embedUrl=`https://player.bilibili.com/player.html?bvid=${bl[1]}&high_quality=1`;
+        if(!embedUrl)return`<a href="${url}" target="_blank" class="card-btn">🎬 ${title||'观看视频'}</a>`;
+        return`<div class="video-embed">${title?`<div class="video-title">🎬 ${title}</div>`:''}<div class="video-container"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div>`;
     });
     // 5. 标题
     h=h.replace(/^### (.+)$/gm,'<h4>$1</h4>');
