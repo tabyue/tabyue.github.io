@@ -714,23 +714,24 @@ async function openPaper(idx){
     h+=`<div style="margin-bottom:16px">${p.keyInsights.map(i=>`<div style="font-size:.84rem;color:var(--t2);padding:4px 0 4px 20px;position:relative;line-height:1.7"><span style="position:absolute;left:0">💡</span>${i}</div>`).join('')}</div>`;
     h+=`<div class="impact-box"><strong>影响力：</strong>${p.impact}</div>`;
     h+=`<div style="display:flex;gap:8px;margin-bottom:20px">${p.arxiv?`<a href="${p.arxiv}" target="_blank" class="card-btn">📄 arXiv</a>`:''} ${p.github?`<a href="${p.github}" target="_blank" class="card-btn">💻 GitHub</a>`:''}</div>`;
-    h+=`<div style="text-align:center;color:var(--t3);padding:20px">⏳ 加载深度内容...</div>`;
+    h+=`<div id="paperDeepContent" style="text-align:center;color:var(--t3);padding:20px">⏳ 加载深度内容...</div>`;
     body.innerHTML=h;
     modal.classList.add('open');
     document.body.style.overflow='hidden';
 
     // Lazy load detail
+    const deepEl=document.getElementById('paperDeepContent');
     const detail=await loadJ(`data/papers/${p.id}.json`);
-    if(!detail){body.querySelector('div:last-child').innerHTML='<p style="color:var(--t3)">暂无深度内容</p>';return}
+    if(!detail){deepEl.innerHTML='<p style="color:var(--t3)">暂无深度内容</p>';return}
     const tabs=[];const panels=[];
     if(detail.methodology){tabs.push('📐 方法论');panels.push(detail.methodology)}
     if(detail.experiments){tabs.push('📊 实验');panels.push(detail.experiments)}
     if(detail.reproduction){tabs.push('💻 代码');panels.push(detail.reproduction)}
     if(detail.mathDetails){tabs.push('🔢 数学');panels.push(detail.mathDetails)}
-    if(tabs.length===0){body.querySelector('div:last-child').innerHTML='';return}
+    if(tabs.length===0){deepEl.innerHTML='';return}
     let dh=`<div class="modal-tabs">${tabs.map((t,i)=>`<div class="modal-tab${i===0?' active':''}" onclick="switchModalTab(this,${i})">${t}</div>`).join('')}</div>`;
     dh+=panels.map((c,i)=>`<div class="modal-panel${i===0?' active':''}" data-idx="${i}"><div class="md-content">${renderMd(c)}</div></div>`).join('');
-    body.querySelector('div:last-child').outerHTML=dh;
+    deepEl.outerHTML=dh;
     body.querySelectorAll('.modal-panel.active pre code').forEach(el=>hljs?.highlightElement(el));
 }
 function switchModalTab(el,idx){
