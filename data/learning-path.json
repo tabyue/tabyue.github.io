@@ -311,6 +311,45 @@
           "weeklyPlan": "第1周：电机原理+选型 | 第2周：减速器对比+传动设计 | 第3周：传感器选型+接口调试 | 第4周：搭建一个单关节伺服系统"
         },
         {
+          "name": "传感器与硬件接口",
+          "importance": "核心",
+          "description": "系统学习激光雷达、IMU、触觉传感器、力传感器、编码器等核心传感器的原理、选型和编程接口",
+          "topics": [
+            {
+              "title": "激光雷达 (LiDAR)",
+              "detail": "ToF/FMCW/三角测距三种原理，2D(RPLiDAR)和3D(Velodyne/Ouster/Livox)选型，点云数据格式，RANSAC地面分割，ICP扫描匹配。RPLiDAR A1入门$99，Livox Mid-360机器人3D首选$600。"
+            },
+            {
+              "title": "IMU 与惯性导航",
+              "detail": "加速度计/陀螺仪/磁力计原理，零偏稳定性/ARW等关键参数，Allan方差分析，互补滤波，扩展卡尔曼滤波(EKF) IMU+GPS融合。消费级(MPU-6050)到战术级(ADIS16470)选型。"
+            },
+            {
+              "title": "触觉传感器",
+              "detail": "光学触觉(GelSight/DIGIT)、压阻式(FSR)、电容式(BioTac)、压电式四种技术路线。GelSight原理：弹性体形变→相机重建3D接触面。触觉对抓取脆弱物体、滑动检测至关重要。"
+            },
+            {
+              "title": "力/力矩传感器",
+              "detail": "6轴F/T传感器(ATI/OnRobot)原理：应变片+惠斯通电桥+标定矩阵。重力补偿算法、阻抗控制反馈。关节力矩估计：τ=Kt×I×N×η（电流→力矩）。"
+            },
+            {
+              "title": "编码器与电机反馈",
+              "detail": "光电编码器(14-19bit高精度)vs磁编码器(12-14bit便宜耐用)，绝对式vs增量式，正交4倍频解码，电机PID闭环控制。AS5600磁编码器$2入门。"
+            },
+            {
+              "title": "视觉传感器选型",
+              "detail": "RGB/深度(结构光/ToF/双目)/事件相机/热红外全景对比。RealSense D435室内首选、ZED 2户外、事件相机高速场景。深度图→点云转换（针孔模型）。"
+            }
+          ],
+          "resources": [
+            "GelSight/DIGIT 项目（开源触觉传感器）",
+            "RPLiDAR SDK（2D激光雷达入门）",
+            "Intel RealSense SDK",
+            "ROS2 sensor_msgs 文档"
+          ],
+          "howTo": "按传感器类型逐个学习：先LiDAR（数据采集+可视化），再IMU（噪声模型+滤波），然后触觉和力传感器。每个传感器都要写代码处理真实/模拟数据。",
+          "weeklyPlan": "第1周：LiDAR原理+扫描处理 | 第2周：IMU噪声+EKF融合 | 第3周：触觉传感器+力传感器 | 第4周：编码器+视觉传感器选型 | 第5-6周：多传感器集成项目"
+        },
+        {
           "name": "ROS2 机器人操作系统",
           "importance": "必备",
           "description": "ROS2 是机器人软件开发的事实标准框架",
