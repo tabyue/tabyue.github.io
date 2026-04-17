@@ -5,7 +5,10 @@
   "importance": "重要",
   "estimatedHours": 30,
   "description": "机器人系统中云端大模型、边缘计算和端侧控制的协同架构。让大脑在云端思考，小脑在本地反应。",
-  "prerequisites": ["模型训练与推理优化", "ROS2"],
+  "prerequisites": [
+    "模型训练与推理优化",
+    "ROS2"
+  ],
   "sections": [
     {
       "title": "云边端三层架构",
@@ -17,10 +20,36 @@
     }
   ],
   "resources": [
-    {"name": "JetPack SDK", "url": "https://developer.nvidia.com/embedded/jetpack", "type": "工具", "description": "Jetson 开发套件，包含 CUDA/TensorRT/cuDNN/ROS2。"},
-    {"name": "ROS2 实时指南", "url": "https://docs.ros.org/en/rolling/Tutorials/Demos/Real-Time.html", "type": "教程", "description": "ROS2 官方实时性配置指南。"},
-    {"name": "NVIDIA Isaac ROS", "url": "https://nvidia-isaac-ros.github.io/", "type": "框架", "description": "GPU 加速的 ROS2 感知包，Jetson 优化。"},
-    {"name": "FastAPI", "url": "https://fastapi.tiangolo.com/", "type": "框架", "description": "Python 高性能 API 框架，适合搭建云端推理服务。"}
+    {
+      "name": "JetPack SDK",
+      "url": "https://developer.nvidia.com/embedded/jetpack",
+      "type": "工具",
+      "description": "Jetson 开发套件，包含 CUDA/TensorRT/cuDNN/ROS2。"
+    },
+    {
+      "name": "ROS2 实时指南",
+      "url": "https://docs.ros.org/en/rolling/Tutorials/Demos/Real-Time.html",
+      "type": "教程",
+      "description": "ROS2 官方实时性配置指南。"
+    },
+    {
+      "name": "NVIDIA Isaac ROS",
+      "url": "https://nvidia-isaac-ros.github.io/",
+      "type": "框架",
+      "description": "GPU 加速的 ROS2 感知包，Jetson 优化。"
+    },
+    {
+      "name": "FastAPI",
+      "url": "https://fastapi.tiangolo.com/",
+      "type": "框架",
+      "description": "Python 高性能 API 框架，适合搭建云端推理服务。"
+    },
+    {
+      "name": "NVIDIA Jetson 开发入门",
+      "url": "https://www.youtube.com/results?search_query=nvidia+jetson+orin+getting+started",
+      "type": "视频",
+      "description": "Jetson Orin 开发板入门，JetPack 安装、CUDA 配置、TensorRT 部署。"
+    }
   ],
   "weeklyPlan": "**第1-2周**：云边端架构设计 + Jetson 入门\n**第3周**：边缘 AI 部署（TensorRT + ROS2）\n**第4周**：实时性优化 + 断网容错"
 }

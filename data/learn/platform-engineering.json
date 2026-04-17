@@ -5,7 +5,11 @@
   "importance": "重要",
   "estimatedHours": 40,
   "description": "构建完整的具身智能开发平台：从数据管理、模型训练、仿真测试到部署运维的全流程工程化。",
-  "prerequisites": ["ROS2", "模型训练与推理优化", "物理仿真引擎"],
+  "prerequisites": [
+    "ROS2",
+    "模型训练与推理优化",
+    "物理仿真引擎"
+  ],
   "sections": [
     {
       "title": "MLOps与数据平台",
@@ -17,10 +21,36 @@
     }
   ],
   "resources": [
-    {"name": "Weights & Biases", "url": "https://wandb.ai/", "type": "平台", "description": "ML 实验追踪和可视化平台，免费个人版。"},
-    {"name": "DVC", "url": "https://dvc.org/", "type": "工具", "description": "数据版本管理工具，Git for Data。"},
-    {"name": "Rerun.io", "url": "https://rerun.io/", "type": "工具", "description": "多模态数据可视化工具，支持3D点云/轨迹/图像时间线。"},
-    {"name": "Docker + ROS2", "url": "https://docs.ros.org/en/humble/How-To-Guides/Run-2-nodes-in-single-or-separate-docker-containers.html", "type": "教程", "description": "ROS2 Docker 容器化官方指南。"}
+    {
+      "name": "Weights & Biases",
+      "url": "https://wandb.ai/",
+      "type": "平台",
+      "description": "ML 实验追踪和可视化平台，免费个人版。"
+    },
+    {
+      "name": "DVC",
+      "url": "https://dvc.org/",
+      "type": "工具",
+      "description": "数据版本管理工具，Git for Data。"
+    },
+    {
+      "name": "Rerun.io",
+      "url": "https://rerun.io/",
+      "type": "工具",
+      "description": "多模态数据可视化工具，支持3D点云/轨迹/图像时间线。"
+    },
+    {
+      "name": "Docker + ROS2",
+      "url": "https://docs.ros.org/en/humble/How-To-Guides/Run-2-nodes-in-single-or-separate-docker-containers.html",
+      "type": "教程",
+      "description": "ROS2 Docker 容器化官方指南。"
+    },
+    {
+      "name": "ML 实验管理 W&B 教程",
+      "url": "https://www.youtube.com/results?search_query=weights+and+biases+tutorial+2024",
+      "type": "视频",
+      "description": "Weights & Biases 实验追踪平台的使用教程，从配置到团队协作。"
+    }
   ],
   "weeklyPlan": "**第1-2周**：MLOps 流程搭建（DVC + W&B）\n**第3周**：CI/CD + 仿真自动化测试\n**第4周**：Docker 容器化 + 部署"
 }
