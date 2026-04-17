@@ -353,7 +353,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
         <a onclick="go('opensource')">💻 开源生态</a>
         <a onclick="go('models')">🧠 模型库</a>
         <a onclick="go('news')">📰 资讯</a>
-        <a onclick="go('jobs')">💼 求职</a>
+        <a onclick="go('jobs')">💼 人才生态</a>
     </nav>
     <div class="topbar-meta">
         <span class="topbar-time" id="updateTime"></span>
@@ -383,7 +383,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
         <div class="quick-card" onclick="go('opensource')"><div class="qc-icon">💻</div><div class="qc-title">开源生态</div><div class="qc-desc">LeRobot、MuJoCo、Genesis 等核心项目入门教程</div></div>
         <div class="quick-card" onclick="go('models')"><div class="qc-icon">🧠</div><div class="qc-title">模型库</div><div class="qc-desc">VLA · VLM · ASR · TTS · 视觉 · 声纹，一站式模型索引</div></div>
         <div class="quick-card" onclick="go('news')"><div class="qc-icon">📰</div><div class="qc-title">行业资讯</div><div class="qc-desc">融资动态 · 技术突破 · 政策标准 · 企业图谱</div></div>
-
+        <div class="quick-card" onclick="go('jobs')"><div class="qc-icon">💼</div><div class="qc-title">人才生态</div><div class="qc-desc">社招 · 校招 · 实习，具身智能行业岗位全景</div></div>
     </div>
     <div class="home-latest">
         <div class="home-latest-title">🔥 最新动态</div>
@@ -447,14 +447,14 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 
 <!-- JOBS -->
 <div class="page" id="pg-jobs">
-    <div class="page-header"><h1 class="page-title"><span class="icon">💼</span> 具身智能求职 <span style="font-family:'JetBrains Mono';font-size:.7rem;color:var(--t3);font-weight:400" id="jobCount"></span></h1><p class="page-sub">汇集具身智能/机器人行业的社招、校招、实习岗位。数据定期更新，超过半年的过期岗位会自动清理。</p></div>
+    <div class="page-header"><h1 class="page-title"><span class="icon">💼</span> 人才生态 <span style="font-family:'JetBrains Mono';font-size:.7rem;color:var(--t3);font-weight:400" id="jobCount"></span></h1><p class="page-sub">具身智能 / 机器人行业岗位全景：社招、校招、实习机会持续更新，超过半年自动清理。</p></div>
     <div class="page-body">
         <div class="job-stats" id="jobStats"></div>
         <div class="filter-row"><span class="filter-label">类型</span><div class="filters" id="jobTypeFilters"></div></div>
         <div class="filter-row"><span class="filter-label">方向</span><div class="filters" id="jobCatFilters"></div></div>
         <div class="filter-row"><span class="filter-label">城市</span><div class="filters" id="jobCityFilters"></div></div>
         <div class="card-grid" id="jobsGrid"></div>
-        <div style="margin-top:40px"><div class="home-latest-title">🔗 求职资源</div><div class="res-grid" id="jobResGrid"></div></div>
+        <div style="margin-top:40px"><div class="home-latest-title">🔗 行业资源</div><div class="res-grid" id="jobResGrid"></div></div>
     </div>
 </div>
 </div>
