@@ -747,6 +747,7 @@ function closePaperModal(){document.getElementById('paperModal').classList.remov
 // === MARKDOWN RENDERER ===
 function renderMd(t){
     if(!t)return'';
+    try{
     let h=t;
     // 1. 保护代码块（先提取，用占位符替换，最后还原）
     const codeBlocks=[];
@@ -804,18 +805,27 @@ function renderMd(t){
     h=h.replace(/<br>\s*<(pre|table|div|h[34]|ul)/g,'<$1');
     h=h.replace(/<\/(pre|table|div|h[34]|ul)>\s*<br>/g,'</$1>');
     // 14. 练习和答案区块统一卡片样式
-    h=h.replace(/<h4>练习<\/h4>([\s\S]*?)(?=<h4>参考答案<\/h4>|$)/g,(_,content)=>{
-        // 把列表项转成编号格式
-        let items=content;
-        let num=0;
-        items=items.replace(/<li>([\s\S]*?)<\/li>/g,(_,text)=>{num++;return`<div class="exercise-item"><span class="exercise-num">${num}</span><div>${text}</div></div>`});
-        items=items.replace(/<\/?ul>/g,'');
-        return`<div class="exercise-card"><div class="exercise-header"><span class="exercise-icon">✏️</span> 练习</div>${items}</div>`;
-    });
-    h=h.replace(/<h4>参考答案<\/h4>([\s\S]*?)$/g,(_,content)=>{
-        return`<div class="exercise-card answer-card"><div class="exercise-header"><span class="exercise-icon">💡</span> 参考答案</div><div class="answer-body">${content}</div></div>`;
-    });
+    if(h.includes('<h4>练习</h4>')){
+        h=h.replace(/<h4>练习<\/h4>([\s\S]*?)(?=<h4>参考答案<\/h4>|<div class="exercise-card|$)/,(_,content)=>{
+            let items=content||'';
+            let num=0;
+            items=items.replace(/<li>([\s\S]*?)<\/li>/g,(_,text)=>{num++;return`<div class="exercise-item"><span class="exercise-num">${num}</span><div>${text}</div></div>`});
+            items=items.replace(/<\/?ul>/g,'');
+            if(num===0)return`<div class="exercise-card"><div class="exercise-header"><span class="exercise-icon">✏️</span> 练习</div><div style="padding:14px 18px">${content}</div></div>`;
+            return`<div class="exercise-card"><div class="exercise-header"><span class="exercise-icon">✏️</span> 练习</div>${items}</div>`;
+        });
+    }
+    if(h.includes('<h4>参考答案</h4>')){
+        h=h.replace(/<h4>参考答案<\/h4>([\s\S]*)/,(_,content)=>{
+            return`<div class="exercise-card answer-card"><div class="exercise-header"><span class="exercise-icon">💡</span> 参考答案</div><div class="answer-body">${content||''}</div></div>`;
+        });
+    }
     return h;
+    }catch(e){
+        console.error('renderMd error:',e);
+        // fallback：返回原始文本的基础HTML
+        return'<div class="md-content"><p>'+t.replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>')+'</p></div>';
+    }
 }
 
 // === COPY BLOCK ===
