@@ -345,7 +345,13 @@ function renderLearning(){
     s.forEach((stage,si)=>{
         h+=`<div class="stage${si>2?' collapsed':''}"><div class="stage-head" onclick="this.parentElement.classList.toggle('collapsed')"><span class="stage-level ${stage.level}">${stage.level}</span><div><div class="stage-title">${stage.title}</div><div class="stage-sub">${stage.subtitle}</div></div></div><div class="stage-body">`;
         stage.modules.forEach(m=>{
-            h+=`<div class="module fade-up"><div class="mod-top"><span class="mod-name">${m.name}</span><span class="mod-imp ${m.importance}">${m.importance}</span></div><p class="mod-desc">${m.description}</p><div class="mod-toggle" onclick="this.parentElement.classList.toggle('expanded')">📖 展开详情 ▾</div><div class="mod-detail"><div class="detail-block"><div class="detail-label">📚 知识点</div><ul class="detail-list">${m.topics.map(t=>'<li>'+t+'</li>').join('')}</ul></div><div class="detail-block"><div class="detail-label">🎯 怎么学</div><div class="detail-text">${m.howTo}</div></div><div class="detail-block"><div class="detail-label">📅 学习计划</div><div class="detail-text">${m.weeklyPlan}</div></div><div class="detail-block"><div class="detail-label">📖 推荐资源</div><ul class="detail-list">${m.resources.map(r=>'<li>'+r+'</li>').join('')}</ul></div></div></div>`;
+            const topicsHtml=m.topics.map(t=>{
+                if(typeof t==='object'&&t.title){
+                    return '<li><strong>'+t.title+'</strong>'+(t.detail?'<br><span style="color:var(--t2);font-size:.82rem;line-height:1.7">'+t.detail+'</span>':'')+'</li>';
+                }
+                return '<li>'+t+'</li>';
+            }).join('');
+            h+=`<div class="module fade-up"><div class="mod-top"><span class="mod-name">${m.name}</span><span class="mod-imp ${m.importance}">${m.importance}</span></div><p class="mod-desc">${m.description}</p><div class="mod-toggle" onclick="this.parentElement.classList.toggle('expanded')">📖 展开详情 ▾</div><div class="mod-detail"><div class="detail-block"><div class="detail-label">📚 知识点详解</div><ul class="detail-list">${topicsHtml}</ul></div><div class="detail-block"><div class="detail-label">🎯 怎么学</div><div class="detail-text">${m.howTo}</div></div><div class="detail-block"><div class="detail-label">📅 学习计划</div><div class="detail-text">${m.weeklyPlan}</div></div><div class="detail-block"><div class="detail-label">📖 推荐资源</div><ul class="detail-list">${m.resources.map(r=>'<li>'+r+'</li>').join('')}</ul></div></div></div>`;
         });
         h+='</div></div>';
     });
@@ -355,9 +361,52 @@ function renderLearning(){
 function renderMd(text){
     if(!text)return'';
     try{
-        const html=marked.parse(text);
-        return html;
-    }catch(e){return text.replace(/\n/g,'<br>')}
+        if(typeof marked!=='undefined'&&marked.parse) return marked.parse(text);
+    }catch(e){}
+    // fallback: simple markdown to HTML
+    let h=text;
+    // code blocks ```lang\n...\n```
+    h=h.replace(/```(\w*)\n([\s\S]*?)```/g,function(_,lang,code){
+        code=code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        return '<pre><code class="language-'+(lang||'text')+'">'+code+'</code></pre>';
+    });
+    // inline code
+    h=h.replace(/`([^`]+)`/g,'<code>$1</code>');
+    // headers
+    h=h.replace(/^### (.+)$/gm,'<h4>$1</h4>');
+    h=h.replace(/^## (.+)$/gm,'<h3>$1</h3>');
+    h=h.replace(/^# (.+)$/gm,'<h2>$1</h2>');
+    // bold
+    h=h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+    // italic
+    h=h.replace(/\*(.+?)\*/g,'<em>$1</em>');
+    // tables (simple)
+    h=h.replace(/^\|(.+)\|$/gm,function(line){
+        const cells=line.split('|').filter(c=>c.trim());
+        if(cells.every(c=>/^[\s:-]+$/.test(c))) return '';
+        const tag=cells.some(c=>/^[\s:-]+$/.test(c))?'td':'td';
+        return '<tr>'+cells.map(c=>'<td>'+c.trim()+'</td>').join('')+'</tr>';
+    });
+    h=h.replace(/(<tr>[\s\S]*?<\/tr>\s*)+/g,'<table class="md-table">$&</table>');
+    // unordered list
+    h=h.replace(/^- (.+)$/gm,'<li>$1</li>');
+    h=h.replace(/(<li>[\s\S]*?<\/li>\s*)+/g,'<ul>$&</ul>');
+    // ordered list
+    h=h.replace(/^\d+\.\s(.+)$/gm,'<li>$1</li>');
+    // line breaks for remaining
+    h=h.replace(/\n\n/g,'</p><p>');
+    h=h.replace(/\n/g,'<br>');
+    h='<p>'+h+'</p>';
+    h=h.replace(/<p>\s*<\/p>/g,'');
+    h=h.replace(/<p>\s*(<h[234]>)/g,'$1');
+    h=h.replace(/(<\/h[234]>)\s*<\/p>/g,'$1');
+    h=h.replace(/<p>\s*(<pre>)/g,'$1');
+    h=h.replace(/(<\/pre>)\s*<\/p>/g,'$1');
+    h=h.replace(/<p>\s*(<table)/g,'$1');
+    h=h.replace(/(<\/table>)\s*<\/p>/g,'$1');
+    h=h.replace(/<p>\s*(<ul>)/g,'$1');
+    h=h.replace(/(<\/ul>)\s*<\/p>/g,'$1');
+    return h;
 }
 
 function renderPapers(){
