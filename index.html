@@ -370,11 +370,12 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
         <h1><span class="grad">Embodied AI</span><br>Knowledge Hub</h1>
         <p class="sub">具身智能从业与研究人员的一站式知识门户</p>
         <div class="home-stats">
-            <div class="home-stat"><div class="home-stat-v" id="sStages">7</div><div class="home-stat-l">学习阶段</div></div>
+            <div class="home-stat"><div class="home-stat-v" id="sModules">-</div><div class="home-stat-l">学习模块</div></div>
             <div class="home-stat"><div class="home-stat-v" id="sPapers">-</div><div class="home-stat-l">论文解读</div></div>
             <div class="home-stat"><div class="home-stat-v" id="sOS">-</div><div class="home-stat-l">开源项目</div></div>
             <div class="home-stat"><div class="home-stat-v" id="sModels">-</div><div class="home-stat-l">开源模型</div></div>
             <div class="home-stat"><div class="home-stat-v" id="sNews">-</div><div class="home-stat-l">行业资讯</div></div>
+            <div class="home-stat"><div class="home-stat-v" id="sJobs">-</div><div class="home-stat-l">招聘岗位</div></div>
         </div>
     </div>
     <div class="quick-grid">
@@ -485,10 +486,12 @@ async function loadJ(u){try{const r=await fetch(u+'?t='+Date.now());return r.ok?
 
 async function init(){
     [LD,PD,OD,ND,JD,MD]=await Promise.all([loadJ('data/learning-path.json'),loadJ('data/papers-index.json'),loadJ('data/opensource.json'),loadJ('data/news.json'),loadJ('data/jobs.json'),loadJ('data/models.json')]);
+    if(LD)document.getElementById('sModules').textContent=LD.stages?LD.stages.reduce((s,st)=>s+(st.modules?st.modules.length:0),0):'-';
     if(PD)document.getElementById('sPapers').textContent=PD.papers.length;
     if(OD)document.getElementById('sOS').textContent=OD.projects.length;
     if(MD)document.getElementById('sModels').textContent=MD.models.length;
     if(ND)document.getElementById('sNews').textContent=ND.news.length;
+    if(JD&&JD.jobs)document.getElementById('sJobs').textContent=JD.jobs.length;
     const dates=[LD?.lastUpdated,PD?.lastUpdated,OD?.lastUpdated,ND?.lastUpdated,JD?.lastUpdated,MD?.lastUpdated].filter(Boolean);
     if(dates.length)document.getElementById('updateTime').textContent='更新 '+dates.sort().pop();
     renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();renderModels();
