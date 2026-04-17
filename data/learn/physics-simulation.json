@@ -1,0 +1,17 @@
+{
+  "id": "physics-simulation", "name": "物理仿真引擎", "stage": "阶段五：仿真与 Sim-to-Real", "importance": "核心", "estimatedHours": 40,
+  "description": "仿真环境是训练和验证具身智能算法的核心基础设施。MuJoCo 入门，Isaac Lab 大规模训练。",
+  "prerequisites": ["Python 编程", "机器人动力学"],
+  "sections": [
+    {"title":"MuJoCo","content":"### 入门首选\n\nDeepMind 开源，精确接触动力学，C 语言编写极快。\n\n```python\nimport mujoco\nimport numpy as np\n\n# 加载模型\nmodel = mujoco.MjModel.from_xml_path('humanoid.xml')\ndata = mujoco.MjData(model)\n\n# 仿真循环\nfor _ in range(1000):\n    data.ctrl[:] = np.random.randn(model.nu) * 0.1  # 随机控制\n    mujoco.mj_step(model, data)\n    \nprint(f'时间: {data.time:.2f}s')\nprint(f'质心位置: {data.qpos[:3]}')\n\n# 渲染\nwith mujoco.Renderer(model) as renderer:\n    renderer.update_scene(data)\n    pixels = renderer.render()\n```\n\n### MJCF 格式\n\n```xml\n<mujoco>\n  <worldbody>\n    <light diffuse=\"1 1 1\" pos=\"0 0 3\"/>\n    <geom type=\"plane\" size=\"5 5 0.1\"/>\n    <body name=\"box\" pos=\"0 0 1\">\n      <joint type=\"free\"/>\n      <geom type=\"box\" size=\"0.1 0.1 0.1\" mass=\"1\" rgba=\"1 0 0 1\"/>\n    </body>\n  </worldbody>\n</mujoco>\n```\n\n### 练习\n1. 加载 Franka Emika Panda 模型，实现关节位置控制\n2. 搭建一个桌面抓取场景（机械臂+桌子+物体）\n3. 实现一个自定义 Gymnasium 环境，用 MuJoCo 做物理仿真"},
+    {"title":"NVIDIA Isaac Lab","content":"### GPU 加速仿真\n\nIsaac Lab 支持 4096+ 并行环境（PPO 训练的标配），基于 Omniverse。\n\n```python\nfrom omni.isaac.lab.envs import ManagerBasedRLEnv\n\n# 创建并行环境\nenv = ManagerBasedRLEnv(cfg=FrankaReachEnvCfg(), num_envs=4096)\n\nobs = env.reset()\nfor _ in range(1000):\n    actions = torch.randn(4096, 7)  # 4096 个机器人同时动作\n    obs, rewards, dones, infos = env.step(actions)\n```\n\n### 练习\n1. 安装 Isaac Lab 并运行示例环境\n2. 用 PPO 训练一个 Franka 到达任务\n3. 对比 MuJoCo 和 Isaac Lab 的训练速度"},
+    {"title":"Genesis 与仿真器选型","content":"### Genesis\n\n新一代 Python 原生可微仿真引擎，Taichi 后端 GPU 加速：\n- 比 MuJoCo 快 10-80x\n- 支持可微分物理（基于梯度优化轨迹）\n- 多物理耦合（刚体+软体+流体+布料）\n\n### 选型建议\n\n| 场景 | 推荐 |\n|------|------|\n| 入门学习 | MuJoCo |\n| 大规模 RL | Isaac Lab |\n| 研究探索 | Genesis |\n| ROS2 集成 | Gazebo |\n\n### 练习\n1. 安装 Genesis 并运行一个刚体仿真\n2. 用可微分物理优化一个投掷轨迹\n3. 对比三个仿真器在相同任务上的速度和精度"}
+  ],
+  "resources": [
+    {"name":"MuJoCo 文档","url":"https://mujoco.readthedocs.io/","type":"文档","description":"MuJoCo 官方文档，XML 格式+Python API。"},
+    {"name":"Isaac Lab","url":"https://isaac-sim.github.io/IsaacLab/","type":"工具","description":"NVIDIA GPU 加速仿真框架。"},
+    {"name":"Genesis","url":"https://genesis-world.readthedocs.io/","type":"项目","description":"可微分物理仿真引擎，GitHub 22k+ stars。"},
+    {"name":"dm_control","url":"https://github.com/google-deepmind/dm_control","type":"工具","description":"DeepMind 基于 MuJoCo 的 RL 环境套件。"}
+  ],
+  "weeklyPlan": "**第1-2周**：MuJoCo 入门\\n**第3-4周**：Isaac Lab GPU 训练"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "desktop-arm-project", "name": "桌面级机械臂项目", "stage": "阶段六：项目实战", "importance": "入门实战", "estimatedHours": 40,
+  "description": "用低成本机械臂（如 SO-100/Koch v1.1）完成基本的抓取任务。从零到一的完整实战项目。",
+  "prerequisites": ["机器人运动学", "计算机视觉", "模仿学习"],
+  "sections": [
+    {"title":"硬件选型与组装","content":"### 推荐方案\n\n| 机械臂 | DoF | 价格 | 特点 |\n|--------|:---:|:---:|------|\n| SO-100 | 5 | ~$200 | LeRobot 官方支持，入门首选 |\n| Koch v1.1 | 6 | ~$300 | 开源设计，3D 打印 |\n| WidowX 250 | 6 | ~$2.5K | 研究级，精度高 |\n\nSO-100 入门路径：\n1. 购买套件（LeRobot 文档有链接）\n2. 组装（约 2-4 小时）\n3. 安装 LeRobot 软件\n4. 标定（自动标定脚本）\n\n```bash\n# LeRobot 安装\npip install lerobot\n# 标定\npython -m lerobot.scripts.calibrate --robot-type=so100\n# 遥操作测试\npython -m lerobot.scripts.teleoperate --robot-type=so100\n```\n\n### 练习\n1. 组装 SO-100 并完成标定\n2. 用遥操作控制机械臂到达不同位置\n3. 测量重复定位精度"},
+    {"title":"视觉抓取 Pipeline","content":"### 完整流程\n\n```python\nimport cv2\nimport numpy as np\nfrom ultralytics import YOLO\n\n# 1. 检测物体\nmodel = YOLO('yolov8n.pt')\nresults = model(camera_image)\n\n# 2. 获取物体中心（像素坐标）\nbox = results[0].boxes[0]\ncx, cy = (box.xyxy[0][:2] + box.xyxy[0][2:]) / 2\n\n# 3. 像素 → 3D 坐标（用深度相机）\ndepth = depth_image[int(cy), int(cx)] / 1000.0  # mm → m\nx_3d = (cx - K[0,2]) * depth / K[0,0]\ny_3d = (cy - K[1,2]) * depth / K[1,1]\nz_3d = depth\n\n# 4. 相机坐标 → 机器人坐标\ntarget_robot = T_robot_camera @ np.array([x_3d, y_3d, z_3d, 1])\n\n# 5. 逆运动学\njoint_angles = inverse_kinematics(target_robot[:3])\n\n# 6. 执行抓取\nrobot.move_to(pre_grasp_pose)   # 预抓取位置\nrobot.move_to(grasp_pose)        # 下降到抓取位置\nrobot.close_gripper()            # 闭合夹爪\nrobot.move_to(lift_pose)         # 提起\n```\n\n从最简单的「检测+固定高度抓取」开始，逐步加入 6DoF 位姿估计。\n\n### 练习\n1. 实现最简版抓取：颜色检测 → 固定高度抓取\n2. 加入 YOLO 检测 + 深度相机 3D 定位\n3. 加入手眼标定提升精度"},
+    {"title":"模仿学习训练部署","content":"### LeRobot 完整流程\n\n```bash\n# 1. 采集数据（50 个抓取演示）\npython -m lerobot.scripts.record \\\n  --robot-type=so100 \\\n  --dataset-id=my-grasp-data \\\n  --num-episodes=50\n\n# 2. 训练 ACT 策略\npython -m lerobot.scripts.train \\\n  --policy.type=act \\\n  --dataset.repo_id=my-grasp-data \\\n  --training.num_epochs=100 \\\n  --training.batch_size=64\n\n# 3. 评估\npython -m lerobot.scripts.eval \\\n  --policy.path=outputs/act/checkpoints/last \\\n  --robot-type=so100 \\\n  --num-episodes=20\n```\n\n### 关键经验\n\n- 数据质量最重要：采集时保持一致的操作风格\n- 失败分析：记录每次失败的原因（视觉错误？运动学误差？抓取力不够？）\n- 迭代改进：根据失败原因补充针对性数据\n\n### 练习\n1. 完成 50 episodes 数据采集 + ACT 训练\n2. 评估成功率，分析失败原因\n3. 补充数据迭代到 80%+ 成功率"}
+  ],
+  "resources": [
+    {"name":"SO-100 (LeRobot 文档)","url":"https://github.com/huggingface/lerobot/blob/main/examples/10_use_so100.md","type":"教程","description":"SO-100 机械臂完整使用指南。"},
+    {"name":"LeRobot Getting Started","url":"https://github.com/huggingface/lerobot#getting-started","type":"教程","description":"LeRobot 框架入门教程。"},
+    {"name":"Koch v1.1","url":"https://github.com/jess-moss/koch-v1-1","type":"项目","description":"开源机械臂设计，3D打印+舵机。"}
+  ],
+  "weeklyPlan": "**第1周**：硬件组装+标定\\n**第2周**：遥操作+数据采集\\n**第3周**：ACT 训练+评估\\n**第4周**：迭代改进+新任务"
+}

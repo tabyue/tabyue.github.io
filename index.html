@@ -340,7 +340,33 @@ function renderLearn(){
     document.getElementById('learnBody').innerHTML=h;
 }
 
-// Learn detail modal
+// Learn module ID mapping (中文名 → 英文文件名)
+const learnFileMap={
+'线性代数':'linear-algebra',
+'微积分与优化':'calculus-optimization',
+'概率与统计':'probability-statistics',
+'python-编程与科学计算':'python-scientific-computing',
+'c++-编程基础':'cpp-fundamentals',
+'机器人运动学':'robot-kinematics',
+'机器人动力学':'robot-dynamics',
+'控制理论':'control-theory',
+'机械设计基础':'mechanical-design',
+'ros2-机器人操作系统':'ros2',
+'计算机视觉基础':'computer-vision',
+'3d-视觉与点云':'3d-vision-pointcloud',
+'多模态感知':'multimodal-perception',
+'深度学习基础':'deep-learning',
+'强化学习':'reinforcement-learning',
+'模仿学习':'imitation-learning',
+'vla-模型--vision-language-action-':'vla-models',
+'世界模型与llm+机器人':'world-models-llm',
+'物理仿真引擎':'physics-simulation',
+'sim-to-real-迁移':'sim-to-real',
+'数据采集与管理':'data-collection',
+'桌面级机械臂项目':'desktop-arm-project',
+'移动机器人导航项目':'mobile-robot-navigation',
+'人形机器人全栈项目':'humanoid-fullstack'
+};
 const learnCache={};
 async function openLearnModule(modId, el){
     const modal=document.getElementById('learnModal');
@@ -350,8 +376,9 @@ async function openLearnModule(modId, el){
     document.body.style.overflow='hidden';
 
     // Try to load detail JSON
+    const fileId=learnFileMap[modId]||modId;
     if(!learnCache[modId]){
-        const data=await loadJ(`data/learn/${modId}.json`);
+        const data=await loadJ(`data/learn/${fileId}.json`);
         if(data)learnCache[modId]=data;
     }
     const d=learnCache[modId];

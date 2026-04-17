@@ -1,0 +1,17 @@
+{
+  "id": "vla-models", "name": "VLA 模型 (Vision-Language-Action)", "stage": "阶段四：AI 大脑", "importance": "前沿", "estimatedHours": 40,
+  "description": "结合视觉理解、语言指令和动作生成的端到端模型。VLA 是具身智能的前沿方向。",
+  "prerequisites": ["深度学习基础", "模仿学习"],
+  "sections": [
+    {"title":"RT-2 / VLA 范式","content":"### 核心思想\n\n将机器人动作离散化为 token，与语言 token 统一在 VLM 中解码：\n\n输入：[图像 token] + [语言指令 token] → 输出：[动作 token]\n\n动作 token 化方法（RT-2）：\n- 每个动作维度离散化为 256 个 bin\n- 7 维动作 = 7 个 token\n- 直接用 VLM 的 vocabulary 中的未使用 token\n\n### 意义\n\n大语言模型的世界知识（常识推理、语言理解）可以 zero-shot 迁移到机器人任务。\n\n### 练习\n1. 实现动作 bin-based tokenization\n2. 精读 RT-2 论文，理解 co-fine-tuning 策略\n3. 分析 VLA 与传统模仿学习的优劣"},
+    {"title":"OpenVLA 开源实践","content":"### OpenVLA (7B 参数)\n\n```python\nfrom transformers import AutoModelForVision2Seq, AutoProcessor\n\n# 加载模型\nprocessor = AutoProcessor.from_pretrained('openvla/openvla-7b')\nmodel = AutoModelForVision2Seq.from_pretrained('openvla/openvla-7b')\n\n# 推理\ninputs = processor(\n    images=camera_image,\n    text='pick up the red cup',\n    return_tensors='pt')\noutputs = model.generate(**inputs, max_new_tokens=256)\naction = processor.decode_action(outputs)  # 7维连续动作\n```\n\n### LoRA 微调到新机器人\n\n```python\nfrom peft import LoraConfig\nlora_config = LoraConfig(r=32, lora_alpha=32, target_modules=['q_proj','v_proj','k_proj'])\n# 只需 ~50 个演示 + 几小时训练\n```\n\n### 练习\n1. 跑通 OpenVLA 推理\n2. 用 LoRA 微调到自定义任务\n3. 分析推理延迟和动作质量"},
+    {"title":"π₀ 与 Flow Matching","content":"### π₀ 架构\n\nPaliGemma 2B（视觉-语言骨干）+ Flow Matching Action Head\n\n**Flow Matching vs Diffusion**：\n- Diffusion：加噪 → 去噪（需要 50-1000 步）\n- Flow Matching：直线插值，10 步即可推理，速度快 5x\n\n### π₀-FAST\n\n用 DCT tokenizer 替代 bin tokenizer，进一步加速 5x。\n\n### π₀.5 双层架构\n\n- 高层（自回归LM）：预测子任务 token 序列（\"做什么\"）\n- 低层（Flow Matching）：生成连续动作（\"怎么做\"）\n\n这种分层架构可能成为具身智能的主流范式。\n\n### 练习\n1. 精读 π₀ 论文，理解 Flow Matching 的数学原理\n2. 对比 Diffusion vs Flow Matching 的推理速度和质量\n3. 分析 DCT tokenization 的优势"}
+  ],
+  "resources": [
+    {"name":"RT-2 论文","url":"https://arxiv.org/abs/2307.15818","type":"论文","description":"Google DeepMind 的 VLA 开山之作。"},
+    {"name":"OpenVLA","url":"https://github.com/openvla/openvla","type":"项目","description":"开源 7B VLA，Stanford/TRI。"},
+    {"name":"π₀ 论文","url":"https://www.physicalintelligence.company/blog/pi0","type":"论文","description":"Physical Intelligence 的 VLA，Flow Matching。"},
+    {"name":"FAST tokenizer","url":"https://www.physicalintelligence.company/blog/pi0-fast","type":"论文","description":"DCT-based 动作 tokenizer，5x 加速。"}
+  ],
+  "weeklyPlan": "**第1周**：RT-2 论文精读\\n**第2-3周**：OpenVLA 源码+推理\\n**第4周**：π₀/FAST 论文"
+}
