@@ -882,10 +882,13 @@ async function loadPyodide_(){
         await new Promise(r=>s.onload=r);
     }
     _pyodide=await loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/'});
-    await _pyodide.loadPackage('numpy');
+    await _pyodide.loadPackage(['numpy','scipy']);
     _pyodideLoading=false;
     return _pyodide;
 }
+
+// Pyodide 可安装的包映射
+const _pyPkgMap={'matplotlib':'matplotlib','sklearn':'scikit-learn','cv2':'opencv-python','PIL':'Pillow','sympy':'sympy','pandas':'pandas'};
 
 async function runPython(btn){
     const wrap=btn.closest('.copy-wrap');
@@ -903,19 +906,67 @@ async function runPython(btn){
         const py=await loadPyodide_();
         btn.querySelector('span').textContent='运行中...';
         
-        // 捕获 print 输出
+        // 自动检测并安装缺失的包
+        const imports=code.match(/(?:^|\n)\s*(?:import|from)\s+(\w+)/g)||[];
+        const needed=new Set();
+        const unsupported=[];
+        const noSupport=['torch','torchvision','mujoco','gym','gymnasium','rclpy','ros2','cv2','open3d','pyrealsense2','deepspeed','tensorrt','wandb','digit_interface'];
+        imports.forEach(imp=>{
+            const pkg=imp.replace(/(?:^|\n)\s*(?:import|from)\s+/,'').trim();
+            if(noSupport.includes(pkg)){unsupported.push(pkg);return}
+            if(_pyPkgMap[pkg])needed.add(_pyPkgMap[pkg]);
+            else if(!['numpy','scipy','math','sys','os','time','io','json','re','random','collections','functools','itertools','dataclasses','typing','abc'].includes(pkg)){
+                needed.add(pkg);
+            }
+        });
+        
+        if(unsupported.length>0){
+            outputEl.innerHTML=`<span style="color:var(--al)">⚠️ 此代码需要 ${unsupported.join(', ')} 等库，无法在浏览器中运行。</span>\n<span style="color:var(--t3)">建议：复制代码到本地 Python 环境或 Google Colab 运行。</span>\n<a href="https://colab.research.google.com/#create=true" target="_blank" style="color:var(--cyl);text-decoration:underline">→ 打开 Google Colab</a>`;
+            btn.classList.remove('running');
+            btn.querySelector('span').textContent=origText;
+            return;
+        }
+        
+        if(needed.size>0){
+            outputEl.textContent=`📦 安装依赖: ${[...needed].join(', ')}...`;
+            try{await py.loadPackage([...needed])}catch(e){/* 忽略安装失败 */}
+        }
+        
+        // 捕获 print 输出 + matplotlib 补丁
         py.runPython(`
 import sys, io
 _captured_output = io.StringIO()
 sys.stdout = _captured_output
 sys.stderr = _captured_output
+_plot_data = None
+try:
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    _orig_show = plt.show
+    def _patched_show(*a,**k):
+        global _plot_data
+        import base64
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='#0f1525')
+        buf.seek(0)
+        _plot_data = base64.b64encode(buf.read()).decode()
+        plt.close()
+    plt.show = _patched_show
+except: pass
 `);
         
         // 运行用户代码
         try{
             py.runPython(code);
             const output=py.runPython('_captured_output.getvalue()');
-            outputEl.innerHTML=output?`<span style="color:var(--sl)">✓ 输出:</span>\n${escapeHtml(output)}`:'<span style="color:var(--t3)">✓ 运行完成（无输出）</span>';
+            const plotData=py.runPython('_plot_data');
+            let html='';
+            if(output)html+=`<span style="color:var(--sl)">✓ 输出:</span>\n${escapeHtml(output)}`;
+            if(plotData)html+=`${output?'\n':''}<img src="data:image/png;base64,${plotData}" style="max-width:100%;border-radius:8px;margin-top:8px">`;
+            if(!html)html='<span style="color:var(--t3)">✓ 运行完成（无输出）</span>';
+            outputEl.innerHTML=html;
+            py.runPython('_plot_data = None');  // 清理
         }catch(e){
             outputEl.innerHTML=`<span class="err">✗ 运行错误:</span>\n<span class="err">${escapeHtml(e.message)}</span>`;
         }
