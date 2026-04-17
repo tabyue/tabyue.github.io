@@ -352,6 +352,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
         <a onclick="go('papers')">📄 论文库</a>
         <a onclick="go('opensource')">💻 开源生态</a>
         <a onclick="go('models')">🧠 模型库</a>
+        <a onclick="go('hardware')">🔩 硬件图鉴</a>
         <a onclick="go('news')">📰 资讯</a>
         <a onclick="go('jobs')">💼 人才生态</a>
     </nav>
@@ -383,6 +384,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
         <div class="quick-card" onclick="go('papers')"><div class="qc-icon">📄</div><div class="qc-title">论文深度解读</div><div class="qc-desc">方法论详解 · 实验数据 · 代码复现 · 数学原理，真正学到东西</div></div>
         <div class="quick-card" onclick="go('opensource')"><div class="qc-icon">💻</div><div class="qc-title">开源生态</div><div class="qc-desc">LeRobot、MuJoCo、Genesis 等核心项目入门教程</div></div>
         <div class="quick-card" onclick="go('models')"><div class="qc-icon">🧠</div><div class="qc-title">模型库</div><div class="qc-desc">VLA · VLM · ASR · TTS · 视觉 · 声纹，一站式模型索引</div></div>
+        <div class="quick-card" onclick="go('hardware')"><div class="qc-icon">🔩</div><div class="qc-title">硬件图鉴</div><div class="qc-desc">机器人 BOM 拆解 · 传感器选型 · 电机参数 · 购买链接</div></div>
         <div class="quick-card" onclick="go('news')"><div class="qc-icon">📰</div><div class="qc-title">行业资讯</div><div class="qc-desc">融资动态 · 技术突破 · 政策标准 · 企业图谱</div></div>
         <div class="quick-card" onclick="go('jobs')"><div class="qc-icon">💼</div><div class="qc-title">人才生态</div><div class="qc-desc">社招 · 校招 · 实习，具身智能行业岗位全景</div></div>
     </div>
@@ -436,6 +438,23 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
     </div>
 </div>
 
+<!-- HARDWARE -->
+<div class="page" id="pg-hardware">
+    <div class="page-header"><h1 class="page-title"><span class="icon">🔩</span> 硬件图鉴 <span style="font-family:'JetBrains Mono';font-size:.7rem;color:var(--t3);font-weight:400" id="hwCount"></span></h1><p class="page-sub">机器人硬件拆解百科 — 产品 BOM 清单、传感器/电机/控制器参数型号、购买链接、驱动文档，一站查阅。</p></div>
+    <div class="page-body">
+        <div class="filters" id="hwFilters"></div>
+        <div class="card-grid" id="hwGrid"></div>
+    </div>
+</div>
+
+<!-- HW Detail Modal -->
+<div class="modal" id="hwModal">
+    <div class="modal-inner" style="max-width:820px">
+        <div class="modal-close" onclick="document.getElementById('hwModal').classList.remove('open');document.body.style.overflow=''">×</div>
+        <div class="modal-body" id="hwModalBody"></div>
+    </div>
+</div>
+
 <!-- NEWS -->
 <div class="page" id="pg-news">
     <div class="page-header"><h1 class="page-title"><span class="icon">📰</span> 行业资讯</h1></div>
@@ -481,20 +500,20 @@ function go(id){
 addEventListener('scroll',()=>document.getElementById('btt').classList.toggle('show',scrollY>400));
 
 // === DATA ===
-let LD,PD,OD,ND,JD,MD;
+let LD,PD,OD,ND,JD,MD,HD;
 async function loadJ(u){try{const r=await fetch(u+'?t='+Date.now());return r.ok?await r.json():null}catch(e){return null}}
 
 async function init(){
-    [LD,PD,OD,ND,JD,MD]=await Promise.all([loadJ('data/learning-path.json'),loadJ('data/papers-index.json'),loadJ('data/opensource.json'),loadJ('data/news.json'),loadJ('data/jobs.json'),loadJ('data/models.json')]);
+    [LD,PD,OD,ND,JD,MD,HD]=await Promise.all([loadJ('data/learning-path.json'),loadJ('data/papers-index.json'),loadJ('data/opensource.json'),loadJ('data/news.json'),loadJ('data/jobs.json'),loadJ('data/models.json'),loadJ('data/hardware.json')]);
     if(LD)document.getElementById('sModules').textContent=LD.stages?LD.stages.reduce((s,st)=>s+(st.modules?st.modules.length:0),0):'-';
     if(PD)document.getElementById('sPapers').textContent=PD.papers.length;
     if(OD)document.getElementById('sOS').textContent=OD.projects.length;
     if(MD)document.getElementById('sModels').textContent=MD.models.length;
     if(ND)document.getElementById('sNews').textContent=ND.news.length;
     if(JD&&JD.jobs)document.getElementById('sJobs').textContent=JD.jobs.length;
-    const dates=[LD?.lastUpdated,PD?.lastUpdated,OD?.lastUpdated,ND?.lastUpdated,JD?.lastUpdated,MD?.lastUpdated].filter(Boolean);
+    const dates=[LD?.lastUpdated,PD?.lastUpdated,OD?.lastUpdated,ND?.lastUpdated,JD?.lastUpdated,MD?.lastUpdated,HD?.lastUpdated].filter(Boolean);
     if(dates.length)document.getElementById('updateTime').textContent='更新 '+dates.sort().pop();
-    renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();renderModels();
+    renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();renderModels();renderHardware();
 }
 
 // === RENDER LEARN ===
@@ -1427,6 +1446,77 @@ function renderModelCards(cat){
 function filterModels(el,cat){
     el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));el.classList.add('active');
     renderModelCards(cat);
+}
+
+// === RENDER HARDWARE ===
+function renderHardware(){
+    if(!HD)return;
+    document.getElementById('hwCount').textContent=HD.robots.length+' 款产品';
+    const cats=HD.categories||[];
+    document.getElementById('hwFilters').innerHTML=cats.map((c,i)=>`<button class="fbtn${i===0?' active':''}" onclick="filterHW(this,'${c.id}')">${c.icon} ${c.name}</button>`).join('');
+    renderHWCards('all');
+}
+function renderHWCards(cat){
+    const filtered=cat==='all'?HD.robots:HD.robots.filter(r=>r.category===cat);
+    document.getElementById('hwGrid').innerHTML=filtered.length?filtered.map(r=>{
+        const catObj=(HD.categories||[]).find(c=>c.id===r.category);
+        const catLabel=catObj?catObj.icon+' '+catObj.name:r.category;
+        const bomCount=r.bom?r.bom.length:0;
+        return`<div class="card" style="cursor:pointer" onclick="openHWDetail('${r.id}')">
+            <div class="card-tags"><span class="tag tag-blue">${catLabel}</span>${r.tags.map(t=>'<span class="tag tag-purple">'+t+'</span>').join('')}</div>
+            <div class="card-title">${r.name}</div>
+            <div style="font-size:.76rem;color:var(--t2);margin-bottom:4px">${r.manufacturer} · <span style="color:var(--cyl);font-weight:600">${r.price}</span></div>
+            <div class="card-desc">${r.overview.substring(0,100)}...</div>
+            <div class="card-footer"><span class="card-btn primary" style="font-size:.7rem">🔩 查看 BOM (${bomCount}项)</span><span style="font-size:.68rem;color:var(--t3);margin-left:auto">📄 ${r.docs?r.docs.length:0} 份文档</span></div>
+        </div>`;
+    }).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:40px">该分类暂无产品</div>';
+}
+function filterHW(el,cat){
+    el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));el.classList.add('active');
+    renderHWCards(cat);
+}
+function openHWDetail(id){
+    const r=HD.robots.find(x=>x.id===id);
+    if(!r)return;
+    const modal=document.getElementById('hwModal');
+    const body=document.getElementById('hwModalBody');
+    const catObj=(HD.categories||[]).find(c=>c.id===r.category);
+    let h=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap"><span class="tag tag-blue">${catObj?catObj.icon+' '+catObj.name:r.category}</span>${r.tags.map(t=>'<span class="tag tag-purple">'+t+'</span>').join('')}<span style="font-size:.75rem;color:var(--t3)">${r.manufacturer}</span></div>`;
+    h+=`<h2 style="margin-bottom:4px">${r.name}</h2>`;
+    h+=`<div style="font-size:1rem;color:var(--cyl);font-weight:700;margin-bottom:16px">${r.price}</div>`;
+    h+=`<p style="color:var(--t2);line-height:1.8;margin-bottom:20px">${r.overview}</p>`;
+    // Specs table
+    if(r.specs){
+        h+=`<h3 style="font-size:.95rem;color:var(--t1);margin-bottom:10px;border-bottom:1px solid var(--bd);padding-bottom:6px">📋 基本参数</h3>`;
+        h+=`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:24px">`;
+        for(const[k,v] of Object.entries(r.specs)){
+            h+=`<div style="padding:8px 12px;background:var(--bg3);border-radius:8px;border:1px solid var(--bd)"><div style="font-size:.68rem;color:var(--t3)">${k}</div><div style="font-size:.85rem;color:var(--t1);font-weight:600">${v}</div></div>`;
+        }
+        h+=`</div>`;
+    }
+    // BOM table
+    if(r.bom&&r.bom.length){
+        h+=`<h3 style="font-size:.95rem;color:var(--t1);margin-bottom:10px;border-bottom:1px solid var(--bd);padding-bottom:6px">🔩 BOM 硬件清单 (${r.bom.length} 项)</h3>`;
+        h+=`<div style="overflow-x:auto;margin-bottom:24px"><table style="width:100%;border-collapse:collapse;font-size:.78rem">`;
+        h+=`<thead><tr style="background:var(--bg3);color:var(--t3);text-align:left"><th style="padding:8px 10px;border-bottom:1px solid var(--bd)">部件</th><th style="padding:8px 10px;border-bottom:1px solid var(--bd)">型号</th><th style="padding:8px 10px;border-bottom:1px solid var(--bd)">规格参数</th><th style="padding:8px 10px;border-bottom:1px solid var(--bd)">数量</th><th style="padding:8px 10px;border-bottom:1px solid var(--bd)">参考价</th><th style="padding:8px 10px;border-bottom:1px solid var(--bd)">驱动/SDK</th><th style="padding:8px 10px;border-bottom:1px solid var(--bd)">链接</th></tr></thead><tbody>`;
+        r.bom.forEach(b=>{
+            const linkBtn=b.link?`<a href="${b.link}" target="_blank" style="color:var(--pl);text-decoration:none;font-size:.72rem" onclick="event.stopPropagation()">🔗 查看</a>`:`<span style="color:var(--t3)">-</span>`;
+            h+=`<tr style="border-bottom:1px solid var(--bd)"><td style="padding:8px 10px;color:var(--t1);font-weight:500">${b.part}</td><td style="padding:8px 10px;color:var(--cyl);font-family:'JetBrains Mono',monospace;font-size:.72rem">${b.model}</td><td style="padding:8px 10px;color:var(--t2)">${b.specs}</td><td style="padding:8px 10px;text-align:center">${b.qty}</td><td style="padding:8px 10px;color:var(--sl);font-weight:600;white-space:nowrap">${b.price}</td><td style="padding:8px 10px;color:var(--t2);font-size:.72rem">${b.driver||'-'}</td><td style="padding:8px 10px">${linkBtn}</td></tr>`;
+        });
+        h+=`</tbody></table></div>`;
+    }
+    // Docs
+    if(r.docs&&r.docs.length){
+        h+=`<h3 style="font-size:.95rem;color:var(--t1);margin-bottom:10px;border-bottom:1px solid var(--bd);padding-bottom:6px">📄 文档与资源</h3>`;
+        h+=`<div style="display:grid;gap:6px;margin-bottom:16px">`;
+        r.docs.forEach(d=>{
+            h+=`<a href="${d.url}" target="_blank" onclick="event.stopPropagation()" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bg3);border:1px solid var(--bd);border-radius:8px;text-decoration:none;color:var(--t1);font-size:.82rem;transition:border-color .2s" onmouseover="this.style.borderColor='var(--pl)'" onmouseout="this.style.borderColor='var(--bd)'"><span>📎</span>${d.name}<span style="margin-left:auto;color:var(--pl);font-size:.72rem">→</span></a>`;
+        });
+        h+=`</div>`;
+    }
+    body.innerHTML=h;
+    modal.classList.add('open');
+    document.body.style.overflow='hidden';
 }
 
 init();
