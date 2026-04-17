@@ -12,6 +12,26 @@
   ],
   "projects": [
     {
+      "name": "Embodied-R1",
+      "org": "Peking University / Tsinghua University",
+      "description": "面向通用机器人操作的具身推理VLM（3B参数）。核心创新是Pointing机制——模型通过在图像上指向目标位置来桥接视觉语言理解与机器人动作。使用两阶段强化微调（RFT），在Embodied-Points-200K数据集上训练，支持开放词汇操作任务。",
+      "github": "https://github.com/pickxiguapi/Embodied-R1",
+      "stars": "2.1k",
+      "tags": ["VLA", "具身推理", "强化学习", "3B模型"],
+      "category": "ai-model",
+      "addedDate": "2026-04-18"
+    },
+    {
+      "name": "WholeBodyVLA",
+      "org": "OpenDriveLab (智元) / Fudan / HKU",
+      "description": "面向人形机器人全身移动操作的统一VLA框架，ICLR 2026接收论文。提出分离的Locomotion/Manipulation潜在动作模型（LAM），可从无动作标签的第一视角视频中学习。在AgiBot X2人形机器人上实现大空间全身操作。",
+      "github": "https://github.com/OpenDriveLab/WholebodyVLA",
+      "stars": "1.8k",
+      "tags": ["VLA", "人形机器人", "ICLR 2026", "全身控制"],
+      "category": "ai-model",
+      "addedDate": "2026-04-18"
+    },
+    {
       "name": "DORA-rs",
       "org": "dora-rs Community",
       "description": "基于Rust的新一代机器人数据流中间件（Dataflow Oriented Robotic Architecture），提供统一的数据流建模和低延迟通信。已发表于arXiv，在延迟和吞吐量上显著优于ROS2。支持Python/Rust/C++多语言，零拷贝传输，适合构建高性能具身AI应用。",

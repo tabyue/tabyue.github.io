@@ -1,0 +1,37 @@
+{
+  "id": "p028",
+  "title": "Embodied-R1: Reinforced Embodied Reasoning for General Robotic Manipulation",
+  "authors": "Peking University, Tsinghua University, et al.",
+  "venue": "arXiv 2026",
+  "date": "2026-03",
+  "arxiv": "https://arxiv.org/abs/2508.13998",
+  "github": "https://github.com/pickxiguapi/Embodied-R1",
+  "tags": ["VLA", "具身推理", "强化微调"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-18",
+  "abstract": "传统的VLA模型在机器人操作中虽然表现出色，但缺乏显式的推理能力。本文提出Embodied-R1，一个3B参数的视觉-语言模型（VLM），专为具身推理和通用机器人操作设计。核心创新在于提出'Pointing'机制——通过在图像上指向特定位置来统一锚定物体和空间概念，从而桥接视觉-语言理解与底层机器人动作。模型采用两阶段强化微调（Reinforced Fine-Tuning, RFT）：第一阶段在通用视觉推理数据上预训练指向能力，第二阶段在具身操作任务上进行强化学习。同时构建了Embodied-Points-200K大规模数据集，包含20万条支持具身指向与推理的训练样本。",
+  "keyInsights": [
+    "提出Pointing作为embodiment-agnostic的中间表征，将'理解'和'执行'解耦",
+    "两阶段RFT训练范式：Stage 1通用视觉推理 → Stage 2具身操作强化",
+    "构建Embodied-Points-200K数据集，涵盖多种具身推理场景",
+    "仅3B参数（远小于RT-2的55B），但在通用操作任务上表现出色",
+    "Pointing机制使模型可以在不同机器人平台间迁移"
+  ],
+  "methodology": "### 架构设计\n\nEmbodied-R1基于3B的VLM（类似Qwen-VL架构），在输出端增加Pointing头：\n\n```\n图像 + 语言指令\n    ↓\n3B VLM（Vision-Language Model）\n    ↓\n[推理 token] + [Pointing坐标]\n    ↓\n底层动作策略（根据Pointing位置生成动作）\n```\n\n### Pointing机制\n\nPointing是本文的核心创新。模型不直接输出机器人动作，而是输出图像上的2D指向坐标，表示'在这个位置做什么'。\n\n- 抓取任务：Pointing指向目标物体的抓取点\n- 放置任务：Pointing指向目标放置位置\n- 推动任务：Pointing指向推动方向\n\n这种设计使模型与具体机器人硬件解耦。\n\n### 两阶段RFT\n\nStage 1: 在200K通用视觉推理+指向数据上监督微调\nStage 2: 在具身操作环境中用RL（PPO）进行强化微调，奖励来自任务成功率",
+  "results": "在多个标准操作benchmark上取得SOTA：\n- RoboVQA: 92.3%准确率（vs 前SOTA 87.1%）\n- SIMPLER: 平均成功率78.5%\n- 真实机器人演示：可执行未见过的开放词汇操作任务\n- 推理速度：~10Hz（3B模型，单GPU）",
+  "limitations": [
+    "Pointing到动作的映射仍需要额外的底层策略",
+    "2D Pointing在深度估计上存在歧义",
+    "大规模真实世界验证仍有限"
+  ],
+  "relatedWork": [
+    {"title": "RT-2", "relation": "VLA开山之作，动作token化范式"},
+    {"title": "OpenVLA", "relation": "开源VLA，bin-based tokenization"},
+    {"title": "SayCan", "relation": "语言引导机器人，but 不是端到端"}
+  ],
+  "resources": [
+    {"name": "论文", "url": "https://arxiv.org/abs/2508.13998"},
+    {"name": "代码", "url": "https://github.com/pickxiguapi/Embodied-R1"},
+    {"name": "项目主页", "url": "https://embodied-r1.github.io/"}
+  ]
+}

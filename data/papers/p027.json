@@ -1,0 +1,37 @@
+{
+  "id": "p027",
+  "title": "WholeBodyVLA: Towards Unified Latent VLA for Whole-Body Loco-Manipulation",
+  "authors": "Fudan University, HKU, OpenDriveLab (智元机器人)",
+  "venue": "ICLR 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2512.11047",
+  "github": "https://github.com/OpenDriveLab/WholebodyVLA",
+  "tags": ["VLA", "人形机器人", "全身控制", "ICLR"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-18",
+  "abstract": "人形机器人的全身移动操作（Whole-Body Loco-Manipulation）是具身智能的核心挑战之一——机器人需要同时协调腿部运动（移动到目标位置）和手臂操作（执行抓取、放置等任务）。现有方法要么只处理移动，要么只处理操作，无法统一。本文提出WholeBodyVLA，一个面向人形机器人全身移动操作的统一VLA框架。核心创新是提出分离的Locomotion/Manipulation潜在动作模型（LAM），可以从大量无动作标签的第一人称视频中学习移动-操作的统一知识。在AgiBot X2人形机器人上验证了大空间全身移动操作能力。",
+  "keyInsights": [
+    "提出Latent Action Model（LAM）：将VLA中的动作空间分为locomotion和manipulation两个子空间",
+    "Locomotion LAM从行走视频中学习移动模式，Manipulation LAM从操作视频中学习操作技能",
+    "统一框架：VLA模型输出潜在动作表征，再由LAM解码为具体的全身关节动作",
+    "可利用大量无动作标签的第一视角视频（如YouTube视频）进行预训练",
+    "设计了高效的人类遥操作数据采集系统，用于收集全身操作训练数据"
+  ],
+  "methodology": "### 架构设计\n\n```\n图像 + 语言指令\n    ↓\nVision-Language Backbone（如Qwen-VL）\n    ↓\n统一的Latent Action Token\n    ↓\n    ├── Locomotion LAM → 腿部关节动作\n    └── Manipulation LAM → 手臂/手部关节动作\n    ↓\n全身动作 = 腿部 + 手臂（同时执行）\n```\n\n### Latent Action Model（LAM）\n\nLAM的核心思想是：不直接预测关节级动作，而是预测一个中间的'潜在动作'表征，再由专门的解码器映射到具体的关节动作。\n\n这样做的好处：\n1. 潜在动作空间可以从无标签视频中学习（自监督）\n2. 同一个潜在动作可以适配不同的机器人形态\n3. 分离的locomotion和manipulation LAM可以独立训练，再组合使用\n\n### 训练流程\n\nPhase 1: 分别训练Locomotion LAM和Manipulation LAM（自监督，大量视频数据）\nPhase 2: 训练VLA主干，输出潜在动作token（监督学习，遥操作数据）\nPhase 3: 端到端微调全系统（少量全身操作数据）",
+  "results": "在AgiBot X2人形机器人上的实验：\n- 大空间导航+抓取任务：成功率82%（前方法<50%）\n- 多房间全身操作：可在10m+范围内完成导航-操作联合任务\n- 对比ablation：移除LAM后性能下降35%\n- 泛化能力：在未见过的环境中保持70%+成功率",
+  "limitations": [
+    "目前仅在AgiBot X2上验证，跨平台泛化待验证",
+    "LAM的预训练需要大量计算资源",
+    "复杂的双手协作操作尚未充分验证"
+  ],
+  "relatedWork": [
+    {"title": "OpenVLA", "relation": "开源VLA，仅操作无移动"},
+    {"title": "RT-2", "relation": "Google VLA，桌面操作为主"},
+    {"title": "Humanoid-Gym", "relation": "人形机器人RL训练，仅locomotion"}
+  ],
+  "resources": [
+    {"name": "论文", "url": "https://arxiv.org/abs/2512.11047"},
+    {"name": "代码", "url": "https://github.com/OpenDriveLab/WholebodyVLA"},
+    {"name": "ICLR 2026页面", "url": "https://iclr.cc/virtual/2026/poster/10009805"}
+  ]
+}
