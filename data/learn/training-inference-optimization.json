@@ -5,7 +5,9 @@
   "importance": "核心",
   "estimatedHours": 50,
   "description": "大模型训练和端侧部署的工程能力。从分布式训练到模型压缩到推理加速，让模型能跑在真实机器人上。",
-  "prerequisites": ["深度学习基础"],
+  "prerequisites": [
+    "深度学习基础"
+  ],
   "sections": [
     {
       "title": "分布式训练",
@@ -21,11 +23,48 @@
     }
   ],
   "resources": [
-    {"name": "DeepSpeed 文档", "url": "https://www.deepspeed.ai/", "type": "框架", "description": "微软的分布式训练框架，ZeRO 优化器的发明者。"},
-    {"name": "TensorRT 文档", "url": "https://developer.nvidia.com/tensorrt", "type": "工具", "description": "NVIDIA 推理优化引擎，Jetson 部署必备。"},
-    {"name": "ONNX Runtime", "url": "https://onnxruntime.ai/", "type": "工具", "description": "跨平台推理引擎，支持多种硬件后端。"},
-    {"name": "llama.cpp", "url": "https://github.com/ggerganov/llama.cpp", "type": "项目", "description": "大模型量化+CPU推理，GGUF 格式的事实标准。"},
-    {"name": "HuggingFace Optimum", "url": "https://huggingface.co/docs/optimum", "type": "工具", "description": "模型优化工具集，支持量化/剪枝/导出。"}
+    {
+      "name": "DeepSpeed 文档",
+      "url": "https://www.deepspeed.ai/",
+      "type": "框架",
+      "description": "微软的分布式训练框架，ZeRO 优化器的发明者。"
+    },
+    {
+      "name": "TensorRT 文档",
+      "url": "https://developer.nvidia.com/tensorrt",
+      "type": "工具",
+      "description": "NVIDIA 推理优化引擎，Jetson 部署必备。"
+    },
+    {
+      "name": "ONNX Runtime",
+      "url": "https://onnxruntime.ai/",
+      "type": "工具",
+      "description": "跨平台推理引擎，支持多种硬件后端。"
+    },
+    {
+      "name": "llama.cpp",
+      "url": "https://github.com/ggerganov/llama.cpp",
+      "type": "项目",
+      "description": "大模型量化+CPU推理，GGUF 格式的事实标准。"
+    },
+    {
+      "name": "HuggingFace Optimum",
+      "url": "https://huggingface.co/docs/optimum",
+      "type": "工具",
+      "description": "模型优化工具集，支持量化/剪枝/导出。"
+    },
+    {
+      "name": "DeepSpeed 微软官方教程",
+      "url": "https://www.youtube.com/results?search_query=deepspeed+tutorial+microsoft",
+      "type": "视频",
+      "description": "微软团队的 DeepSpeed 使用教程，ZeRO 优化器原理和配置方法。"
+    },
+    {
+      "name": "TensorRT 入门到精通",
+      "url": "https://www.youtube.com/results?search_query=tensorrt+tutorial+optimization",
+      "type": "视频",
+      "description": "TensorRT 模型优化和部署教程，从 ONNX 导出到 INT8 量化。"
+    }
   ],
   "weeklyPlan": "**第1-2周**：分布式训练（DDP → DeepSpeed ZeRO）\n**第3周**：模型压缩（量化 + 蒸馏）\n**第4-5周**：端侧部署（TensorRT + Jetson）"
 }

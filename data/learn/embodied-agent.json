@@ -5,7 +5,10 @@
   "importance": "前沿",
   "estimatedHours": 40,
   "description": "将LLM/VLM作为机器人的认知大脑，结合感知、记忆、规划、执行构建完整的具身智能Agent。",
-  "prerequisites": ["VLA 模型", "世界模型与LLM+机器人"],
+  "prerequisites": [
+    "VLA 模型",
+    "世界模型与LLM+机器人"
+  ],
   "sections": [
     {
       "title": "Agent架构设计",
@@ -17,10 +20,36 @@
     }
   ],
   "resources": [
-    {"name": "LangChain", "url": "https://python.langchain.com/", "type": "框架", "description": "LLM Agent 开发框架，支持 Tool 调用和 ReAct 模式。"},
-    {"name": "SayCan", "url": "https://say-can.github.io/", "type": "论文", "description": "Google 的 LLM+机器人经典工作。"},
-    {"name": "Voyager", "url": "https://voyager.minedojo.org/", "type": "论文", "description": "持续学习的 LLM Agent，自动积累技能。"},
-    {"name": "ROS2 Multi-Robot", "url": "https://docs.ros.org/en/humble/Tutorials/Advanced/Multi-Robot.html", "type": "教程", "description": "ROS2 多机器人系统教程。"}
+    {
+      "name": "LangChain",
+      "url": "https://python.langchain.com/",
+      "type": "框架",
+      "description": "LLM Agent 开发框架，支持 Tool 调用和 ReAct 模式。"
+    },
+    {
+      "name": "SayCan",
+      "url": "https://say-can.github.io/",
+      "type": "论文",
+      "description": "Google 的 LLM+机器人经典工作。"
+    },
+    {
+      "name": "Voyager",
+      "url": "https://voyager.minedojo.org/",
+      "type": "论文",
+      "description": "持续学习的 LLM Agent，自动积累技能。"
+    },
+    {
+      "name": "ROS2 Multi-Robot",
+      "url": "https://docs.ros.org/en/humble/Tutorials/Advanced/Multi-Robot.html",
+      "type": "教程",
+      "description": "ROS2 多机器人系统教程。"
+    },
+    {
+      "name": "LangChain Agent 教程",
+      "url": "https://www.youtube.com/results?search_query=langchain+agent+tutorial+2024",
+      "type": "视频",
+      "description": "LangChain Agent 开发教程，从 Tool 定义到 ReAct 循环到多 Agent。"
+    }
   ],
   "weeklyPlan": "**第1-2周**：Agent 架构设计 + ReAct 实现\n**第3周**：记忆系统 + 技能库\n**第4周**：多Agent协作"
 }
