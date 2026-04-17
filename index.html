@@ -767,13 +767,13 @@ async function openLearnModule(modId, el){
             // 章节底部导航
             h+=`<div class="sec-nav">`;
             if(i>0){
-                h+=`<div class="sec-nav-btn" onclick="switchLearnTab(${i-1},'${modId}');document.getElementById('learnModalBody').scrollTop=0"><span class="arrow-icon">←</span> ${d.sections[i-1].title}</div>`;
+                h+=`<div class="sec-nav-btn" onclick="switchLearnTab(${i-1},'${modId}');this.closest('.modal').scrollTop=0"><span class="arrow-icon">←</span> ${d.sections[i-1].title}</div>`;
             }else{
                 h+=`<div></div>`;
             }
             h+=`<div class="sec-nav-label">${i+1} / ${secLen}</div>`;
             if(i<secLen-1){
-                h+=`<div class="sec-nav-btn primary" onclick="switchLearnTab(${i+1},'${modId}');document.getElementById('learnModalBody').scrollTop=0">下一章 <span class="arrow-icon">→</span></div>`;
+                h+=`<div class="sec-nav-btn primary" onclick="switchLearnTab(${i+1},'${modId}');this.closest('.modal').scrollTop=0">下一章 <span class="arrow-icon">→</span></div>`;
             }else{
                 h+=`<div></div>`;
             }
@@ -818,6 +818,8 @@ let _readObserver=null;
 function switchLearnTab(idx,modId){
     document.querySelectorAll('#learn-tabs .modal-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
     document.querySelectorAll('.learn-panel').forEach(p=>p.classList.toggle('active',+p.dataset.lidx===idx));
+    const modal=document.querySelector('#learnModal .modal');
+    if(modal)modal.scrollTop=0;
     const active=document.querySelector('.learn-panel.active');
     if(active)active.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.hl){hljs?.highlightElement(el);el.dataset.hl='1'}});
     // 清理之前的检测
