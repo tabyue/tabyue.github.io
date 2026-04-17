@@ -6,6 +6,9 @@
     <title>具身智能知识门户 | Embodied AI Hub</title>
     <meta name="description" content="具身智能从业与研究人员的一站式知识门户：学习路径、论文解读、开源项目、行业新闻">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
     <style>
         :root{--p:#6366f1;--pl:#818cf8;--pd:#4f46e5;--s:#10b981;--sl:#34d399;--a:#f59e0b;--al:#fbbf24;--pk:#ec4899;--pkl:#f472b6;--cy:#06b6d4;--cyl:#22d3ee;--v:#8b5cf6;--vl:#a78bfa;--bg:#0a0e1a;--bg2:#0f1525;--bg3:#151c30;--bg4:#1a2340;--t1:#f1f5f9;--t2:#8b95b0;--t3:#5b6580;--bd:#1e2a45;--bd2:#2a3655}
         *{margin:0;padding:0;box-sizing:border-box}
@@ -14,7 +17,6 @@
         ::selection{background:var(--p);color:#fff}
         ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--p)}
 
-        /* NAV */
         .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,14,26,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid transparent;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;transition:all .4s}
         .nav.scrolled{border-bottom-color:var(--bd);box-shadow:0 8px 32px rgba(0,0,0,.4)}
         .nav-logo{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;background:linear-gradient(135deg,var(--pl),var(--cyl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none}
@@ -29,7 +31,6 @@
         .nav-toggle{display:none;background:none;border:none;color:var(--t1);font-size:1.3rem;cursor:pointer;padding:4px 8px}
         .update-time{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--t3);padding:3px 10px;background:rgba(99,102,241,.06);border-radius:12px}
 
-        /* HERO */
         .hero{position:relative;padding:120px 20px 70px;text-align:center;overflow:hidden;background:linear-gradient(160deg,#0a0e1a 0%,#0f1a3a 30%,#1a0e2e 60%,#0a0e1a 100%)}
         .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 600px 400px at 25% 40%,rgba(99,102,241,.12) 0%,transparent 70%),radial-gradient(ellipse 500px 350px at 75% 60%,rgba(6,182,212,.1) 0%,transparent 70%),radial-gradient(ellipse 400px 300px at 50% 80%,rgba(236,72,153,.06) 0%,transparent 70%);pointer-events:none}
         .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(99,102,241,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;mask-image:radial-gradient(ellipse at center,black 30%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at center,black 30%,transparent 70%)}
@@ -42,12 +43,9 @@
         @keyframes gf{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
         .hero .sub{font-size:1.05rem;color:var(--t2);max-width:640px;margin:0 auto 36px;line-height:1.85}
         .hero-stats{display:flex;justify-content:center;gap:40px;padding:24px 0}
-        .stat{text-align:center}
-        .stat-v{font-family:'Space Grotesk',sans-serif;font-size:2.5rem;font-weight:700;background:linear-gradient(135deg,var(--pl),var(--cyl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-        .stat-l{font-size:.78rem;color:var(--t3);margin-top:4px}
-        .stat-d{width:1px;background:var(--bd);align-self:stretch;margin:8px 0}
+        .stat{text-align:center}.stat-v{font-family:'Space Grotesk',sans-serif;font-size:2.5rem;font-weight:700;background:linear-gradient(135deg,var(--pl),var(--cyl));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .stat-l{font-size:.78rem;color:var(--t3);margin-top:4px}.stat-d{width:1px;background:var(--bd);align-self:stretch;margin:8px 0}
 
-        /* SECTION TABS */
         .tabs-bar{position:sticky;top:60px;z-index:99;background:rgba(10,14,26,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);padding:12px 32px}
         .tabs-inner{max-width:1300px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none}
         .tabs-inner::-webkit-scrollbar{display:none}
@@ -55,12 +53,8 @@
         .tab-btn:hover{color:var(--t1);border-color:var(--bd2);background:rgba(99,102,241,.06)}
         .tab-btn.active{color:#fff;background:var(--p);border-color:var(--p)}
 
-        /* CONTAINER */
         .container{max-width:1300px;margin:0 auto;padding:40px 32px}
-
-        /* SECTION */
-        .section{display:none;animation:fadeIn .4s ease}
-        .section.active{display:block}
+        .section{display:none;animation:fadeIn .4s ease}.section.active{display:block}
         @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
         .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:28px}
         .sec-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
@@ -75,25 +69,17 @@
         .stage-head::after{content:'▼';position:absolute;right:28px;font-size:.8rem;color:var(--t3);transition:transform .3s}
         .stage.collapsed .stage-head::after{transform:rotate(-90deg)}
         .stage-level{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:3px 10px;border-radius:12px;font-weight:500}
-        .stage-level.入门{background:rgba(16,185,129,.12);color:var(--sl)}
-        .stage-level.进阶{background:rgba(99,102,241,.12);color:var(--pl)}
-        .stage-level.高级{background:rgba(139,92,246,.12);color:var(--vl)}
-        .stage-level.前沿{background:rgba(236,72,153,.12);color:var(--pkl)}
-        .stage-level.实战{background:rgba(245,158,11,.12);color:var(--al)}
-        .stage-title{font-size:1.2rem;font-weight:600}
-        .stage-sub{font-size:.8rem;color:var(--t3)}
-        .stage-body{padding:0 28px 28px}
-        .stage.collapsed .stage-body{display:none}
+        .stage-level.入门{background:rgba(16,185,129,.12);color:var(--sl)}.stage-level.进阶{background:rgba(99,102,241,.12);color:var(--pl)}.stage-level.高级{background:rgba(139,92,246,.12);color:var(--vl)}.stage-level.前沿{background:rgba(236,72,153,.12);color:var(--pkl)}.stage-level.实战{background:rgba(245,158,11,.12);color:var(--al)}
+        .stage-title{font-size:1.2rem;font-weight:600}.stage-sub{font-size:.8rem;color:var(--t3)}
+        .stage-body{padding:0 28px 28px}.stage.collapsed .stage-body{display:none}
         .module{background:var(--bg3);border:1px solid var(--bd);border-radius:14px;padding:22px;margin-bottom:16px;transition:all .3s}
-        .module:hover{border-color:var(--bd2);background:var(--bg4)}
-        .module:last-child{margin-bottom:0}
+        .module:hover{border-color:var(--bd2);background:var(--bg4)}.module:last-child{margin-bottom:0}
         .mod-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
         .mod-name{font-size:1.02rem;font-weight:600}
         .mod-imp{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:2px 8px;border-radius:8px}
         .mod-imp.核心{background:rgba(239,68,68,.12);color:#f87171}.mod-imp.必备{background:rgba(99,102,241,.12);color:var(--pl)}.mod-imp.重要{background:rgba(245,158,11,.12);color:var(--al)}.mod-imp.前沿{background:rgba(236,72,153,.12);color:var(--pkl)}.mod-imp.入门实战{background:rgba(16,185,129,.12);color:var(--sl)}.mod-imp.进阶实战{background:rgba(99,102,241,.12);color:var(--pl)}.mod-imp.高级实战{background:rgba(139,92,246,.12);color:var(--vl)}
         .mod-desc{font-size:.88rem;color:var(--t2);margin-bottom:14px;line-height:1.7}
-        .mod-detail{display:none}
-        .module.expanded .mod-detail{display:block}
+        .mod-detail{display:none}.module.expanded .mod-detail{display:block}
         .mod-toggle{font-size:.78rem;color:var(--pl);cursor:pointer;padding:4px 0;display:inline-flex;align-items:center;gap:4px;transition:all .2s}
         .mod-toggle:hover{color:var(--cyl)}
         .detail-block{margin-top:14px}
@@ -103,36 +89,54 @@
         .detail-list li::before{content:'›';position:absolute;left:0;color:var(--pl);font-weight:700}
         .detail-text{font-size:.84rem;color:var(--t2);line-height:1.7;padding:8px 14px;background:rgba(99,102,241,.04);border-radius:8px;border-left:3px solid var(--p)}
 
-        /* PAPERS */
-        .paper-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:20px}
-        .paper-card{background:var(--bg3);border:1px solid var(--bd);border-radius:16px;padding:24px;transition:all .35s;position:relative;overflow:hidden}
-        .paper-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--v),var(--cy));transform:scaleX(0);transform-origin:left;transition:transform .4s}
-        .paper-card:hover{transform:translateY(-4px);border-color:var(--bd2);background:var(--bg4);box-shadow:0 16px 48px rgba(0,0,0,.35)}
-        .paper-card:hover::before{transform:scaleX(1)}
+        /* PAPERS - upgraded for deep content */
+        .paper-grid{display:grid;grid-template-columns:1fr;gap:24px}
+        .paper-card{background:var(--bg2);border:1px solid var(--bd);border-radius:20px;overflow:hidden;transition:all .35s}
+        .paper-card:hover{border-color:var(--bd2)}
+        .paper-header{padding:28px 28px 20px;position:relative}
+        .paper-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--v),var(--cy),var(--pk));opacity:.6}
         .paper-top{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
         .paper-tag{padding:3px 10px;border-radius:6px;font-size:.68rem;font-weight:600;letter-spacing:.02em}
-        .paper-tag.模仿学习{background:rgba(16,185,129,.1);color:var(--sl)}
-        .paper-tag.VLA{background:rgba(139,92,246,.1);color:var(--vl)}
-        .paper-tag.强化学习{background:rgba(245,158,11,.1);color:var(--al)}
-        .paper-tag.数据集{background:rgba(6,182,212,.1);color:var(--cyl)}
-        .paper-tag.世界模型{background:rgba(236,72,153,.1);color:var(--pkl)}
-        .paper-tag.人形机器人{background:rgba(99,102,241,.1);color:var(--pl)}
+        .paper-tag.模仿学习{background:rgba(16,185,129,.1);color:var(--sl)}.paper-tag.VLA{background:rgba(139,92,246,.1);color:var(--vl)}.paper-tag.强化学习{background:rgba(245,158,11,.1);color:var(--al)}.paper-tag.数据集{background:rgba(6,182,212,.1);color:var(--cyl)}.paper-tag.世界模型{background:rgba(236,72,153,.1);color:var(--pkl)}.paper-tag.人形机器人{background:rgba(99,102,241,.1);color:var(--pl)}
         .paper-diff{font-family:'JetBrains Mono',monospace;font-size:.6rem;margin-left:auto;padding:2px 8px;border-radius:8px;background:rgba(99,102,241,.08);color:var(--t3)}
-        .paper-title{font-size:1rem;font-weight:600;line-height:1.5;margin-bottom:8px}
-        .paper-authors{font-size:.78rem;color:var(--t3);margin-bottom:6px}
-        .paper-venue{font-size:.74rem;color:var(--pl);font-weight:500;margin-bottom:12px}
-        .paper-tldr{font-size:.86rem;color:var(--t2);line-height:1.7;margin-bottom:14px}
-        .paper-insights{display:none;margin-bottom:14px}
-        .paper-card.expanded .paper-insights{display:block}
-        .insight-item{font-size:.82rem;color:var(--t2);padding:4px 0 4px 18px;position:relative;line-height:1.6}
-        .insight-item::before{content:'💡';position:absolute;left:0;font-size:.7rem}
-        .paper-impact{font-size:.82rem;color:var(--sl);padding:10px 14px;background:rgba(16,185,129,.06);border-radius:8px;border-left:3px solid var(--s);margin-bottom:14px;display:none}
-        .paper-card.expanded .paper-impact{display:block}
-        .paper-links{display:flex;gap:8px;flex-wrap:wrap}
-        .paper-link{font-size:.74rem;padding:4px 12px;border-radius:8px;text-decoration:none;border:1px solid var(--bd);color:var(--t3);transition:all .2s}
-        .paper-link:hover{color:var(--t1);border-color:var(--p);background:rgba(99,102,241,.08)}
-        .paper-expand{font-size:.76rem;color:var(--pl);cursor:pointer;padding:6px 0;display:inline-flex;align-items:center;gap:4px;margin-bottom:10px}
-        .paper-expand:hover{color:var(--cyl)}
+        .paper-title{font-size:1.15rem;font-weight:700;line-height:1.5;margin-bottom:8px}
+        .paper-authors{font-size:.78rem;color:var(--t3);margin-bottom:4px}
+        .paper-venue{font-size:.74rem;color:var(--pl);font-weight:500;margin-bottom:14px}
+        .paper-tldr{font-size:.9rem;color:var(--t2);line-height:1.8;margin-bottom:16px;padding:12px 16px;background:rgba(99,102,241,.04);border-radius:10px;border-left:3px solid var(--v)}
+        .paper-insights-brief{margin-bottom:16px}
+        .paper-insights-brief .insight-item{font-size:.84rem;color:var(--t2);padding:4px 0 4px 22px;position:relative;line-height:1.7}
+        .paper-insights-brief .insight-item::before{content:'💡';position:absolute;left:0;font-size:.72rem}
+        .paper-impact{font-size:.84rem;color:var(--sl);padding:12px 16px;background:rgba(16,185,129,.06);border-radius:10px;border-left:3px solid var(--s);margin-bottom:16px}
+        .paper-links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+        .paper-link{font-size:.76rem;padding:6px 16px;border-radius:10px;text-decoration:none;border:1px solid var(--bd);color:var(--t3);transition:all .25s;font-weight:500}
+        .paper-link:hover{color:var(--t1);border-color:var(--p);background:rgba(99,102,241,.1)}
+
+        /* Deep content tabs inside paper */
+        .paper-deep{display:none;border-top:1px solid var(--bd);background:var(--bg3)}
+        .paper-card.expanded .paper-deep{display:block}
+        .deep-tabs{display:flex;border-bottom:1px solid var(--bd);overflow-x:auto;padding:0 28px}
+        .deep-tab{padding:12px 20px;font-size:.8rem;font-weight:500;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+        .deep-tab:hover{color:var(--t1)}.deep-tab.active{color:var(--pl);border-bottom-color:var(--pl)}
+        .deep-panel{display:none;padding:24px 28px}.deep-panel.active{display:block}
+        .deep-panel .md-content{font-size:.88rem;color:var(--t2);line-height:1.85}
+        .deep-panel .md-content h3{font-size:1.05rem;font-weight:700;color:var(--t1);margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--bd)}
+        .deep-panel .md-content h4{font-size:.92rem;font-weight:600;color:var(--pl);margin:16px 0 8px}
+        .deep-panel .md-content p{margin-bottom:12px}
+        .deep-panel .md-content strong{color:var(--t1)}
+        .deep-panel .md-content ul,.deep-panel .md-content ol{padding-left:20px;margin-bottom:12px}
+        .deep-panel .md-content li{margin-bottom:4px}
+        .deep-panel .md-content code{font-family:'JetBrains Mono',monospace;font-size:.82rem;background:rgba(99,102,241,.1);padding:2px 6px;border-radius:4px;color:var(--cyl)}
+        .deep-panel .md-content pre{margin:12px 0;border-radius:12px;overflow:hidden;border:1px solid var(--bd)}
+        .deep-panel .md-content pre code{background:none;padding:0;display:block}
+        .deep-panel .md-content table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.82rem}
+        .deep-panel .md-content th{background:var(--bg4);padding:8px 12px;text-align:left;font-weight:600;color:var(--t1);border:1px solid var(--bd)}
+        .deep-panel .md-content td{padding:8px 12px;border:1px solid var(--bd)}
+        .deep-panel .md-content blockquote{border-left:3px solid var(--p);padding:8px 16px;margin:12px 0;background:rgba(99,102,241,.04);border-radius:0 8px 8px 0}
+
+        .paper-expand-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;cursor:pointer;color:var(--pl);font-size:.84rem;font-weight:500;transition:all .25s;border-top:1px solid var(--bd);background:rgba(99,102,241,.02)}
+        .paper-expand-btn:hover{background:rgba(99,102,241,.06);color:var(--cyl)}
+        .paper-card.expanded .paper-expand-btn .expand-text::after{content:'收起深度解读 ▴'}
+        .paper-card:not(.expanded) .paper-expand-btn .expand-text::after{content:'📚 展开深度解读：方法论 · 实验 · 代码 · 数学 ▾'}
 
         /* OPENSOURCE */
         .os-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:20px}
@@ -142,13 +146,11 @@
         .os-card:hover::before{transform:scaleX(1)}
         .os-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
         .os-name{font-size:1.08rem;font-weight:700;font-family:'Space Grotesk',sans-serif}
-        .os-org{font-size:.76rem;color:var(--t3)}
-        .os-stars{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--al);margin-left:auto}
+        .os-org{font-size:.76rem;color:var(--t3)}.os-stars{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--al);margin-left:auto}
         .os-desc{font-size:.86rem;color:var(--t2);line-height:1.7;margin-bottom:14px}
         .os-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
         .os-tag{font-size:.68rem;padding:3px 10px;border-radius:12px;background:rgba(99,102,241,.08);color:var(--pl)}
-        .os-highlights{display:none;margin-bottom:14px}
-        .os-card.expanded .os-highlights{display:block}
+        .os-highlights{display:none;margin-bottom:14px}.os-card.expanded .os-highlights{display:block}
         .os-hl-item{font-size:.82rem;color:var(--t2);padding:3px 0 3px 18px;position:relative}
         .os-hl-item::before{content:'✦';position:absolute;left:0;color:var(--sl);font-size:.7rem}
         .os-start{font-size:.82rem;color:var(--cyl);padding:10px 14px;background:rgba(6,182,212,.06);border-radius:8px;border-left:3px solid var(--cy);margin-bottom:14px;display:none}
@@ -159,10 +161,7 @@
         .os-expand{font-size:.76rem;color:var(--sl);cursor:pointer;padding:6px 0;display:inline-flex;align-items:center;gap:4px;margin-bottom:10px}
         .os-expand:hover{color:var(--cyl)}
         .os-diff{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:2px 8px;border-radius:8px}
-        .os-diff.入门友好{background:rgba(16,185,129,.1);color:var(--sl)}
-        .os-diff.中级{background:rgba(99,102,241,.1);color:var(--pl)}
-        .os-diff.中高级{background:rgba(245,158,11,.1);color:var(--al)}
-        .os-diff.高级{background:rgba(139,92,246,.1);color:var(--vl)}
+        .os-diff.入门友好{background:rgba(16,185,129,.1);color:var(--sl)}.os-diff.中级{background:rgba(99,102,241,.1);color:var(--pl)}.os-diff.中高级{background:rgba(245,158,11,.1);color:var(--al)}.os-diff.高级{background:rgba(139,92,246,.1);color:var(--vl)}
 
         /* NEWS */
         .news-filters{display:flex;gap:6px;margin-bottom:24px;flex-wrap:wrap}
@@ -191,33 +190,26 @@
         .res-item-name{font-size:.78rem;font-weight:600;color:var(--pl);margin-bottom:2px}
         .res-item-list{font-size:.82rem;color:var(--t2);line-height:1.7}
 
-        /* FOOTER */
         .footer{text-align:center;padding:40px 20px;border-top:1px solid var(--bd)}
         .footer-brand{font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:600;color:var(--t2);margin-bottom:6px}
         .footer-brand a{color:var(--pl);text-decoration:none}
         .footer-brand a:hover{text-decoration:underline}
         .footer-sub{font-size:.76rem;color:var(--t3)}
 
-        /* BACK TO TOP */
         .btt{position:fixed;bottom:24px;right:24px;width:40px;height:40px;background:var(--p);border:none;border-radius:12px;color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(12px);transition:all .35s;z-index:99;box-shadow:0 4px 20px rgba(99,102,241,.35)}
-        .btt.visible{opacity:1;transform:translateY(0)}
-        .btt:hover{background:var(--pd);transform:translateY(-2px)}
+        .btt.visible{opacity:1;transform:translateY(0)}.btt:hover{background:var(--pd);transform:translateY(-2px)}
 
-        /* RESPONSIVE */
         @media(max-width:768px){
             .nav{padding:0 16px}.nav-links{display:none}.nav-links.open{display:flex;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:rgba(10,14,26,.95);backdrop-filter:blur(20px);padding:12px 16px;gap:4px;border-bottom:1px solid var(--bd)}
             .nav-toggle{display:block}.nav-gh,.nav-badge,.update-time{display:none}
             .hero{padding:100px 16px 50px}.hero h1{font-size:2.2rem}.hero-stats{gap:16px;flex-wrap:wrap}.stat-v{font-size:1.8rem}.stat-d{display:none}
             .tabs-bar{padding:10px 16px}.container{padding:24px 16px}
             .paper-grid,.os-grid,.news-grid,.res-grid{grid-template-columns:1fr}
+            .paper-header{padding:20px 18px 16px}.deep-tabs{padding:0 18px}.deep-panel{padding:18px}
             .stage{margin-bottom:32px}.stage-head{padding:18px 20px}.stage-body{padding:0 20px 20px}
         }
-
-        /* FADE */
         .fade-up{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
         .fade-up.visible{opacity:1;transform:translateY(0)}
-
-        /* LOADING */
         .loading{text-align:center;padding:60px 20px;color:var(--t3)}
         .loading-spinner{width:36px;height:36px;border:3px solid var(--bd);border-top-color:var(--p);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
         @keyframes spin{to{transform:rotate(360deg)}}
@@ -278,96 +270,46 @@
 </div>
 
 <div class="container">
-    <!-- OVERVIEW -->
     <div class="section active" id="sec-overview">
-        <div class="sec-head">
-            <div class="sec-icon purple">📊</div>
-            <h2 class="sec-title">门户总览</h2>
-        </div>
+        <div class="sec-head"><div class="sec-icon purple">📊</div><h2 class="sec-title">门户总览</h2></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-bottom:36px">
-            <div class="module" style="cursor:pointer" onclick="switchTab('learning')">
-                <div class="mod-top"><span style="font-size:1.5rem">🗺️</span><span class="mod-name">学习路径</span></div>
-                <p class="mod-desc">从数学基础到项目实战，6 个阶段 25+ 模块的完整具身智能学习计划，含每周时间安排与推荐资源</p>
-            </div>
-            <div class="module" style="cursor:pointer" onclick="switchTab('papers')">
-                <div class="mod-top"><span style="font-size:1.5rem">📄</span><span class="mod-name">论文解读</span></div>
-                <p class="mod-desc">精选领域核心论文，提供 TL;DR、关键洞察、影响力评估等深度解读，持续更新最新研究</p>
-            </div>
-            <div class="module" style="cursor:pointer" onclick="switchTab('opensource')">
-                <div class="mod-top"><span style="font-size:1.5rem">💻</span><span class="mod-name">开源项目</span></div>
-                <p class="mod-desc">LeRobot、MuJoCo、Isaac Lab 等核心开源项目详细解读，含入门指南与技术要点</p>
-            </div>
-            <div class="module" style="cursor:pointer" onclick="switchTab('news')">
-                <div class="mod-top"><span style="font-size:1.5rem">📰</span><span class="mod-name">行业新闻</span></div>
-                <p class="mod-desc">产业动态、融资创投、技术突破、全球视野等最新行业资讯，每日自动更新</p>
-            </div>
-            <div class="module" style="cursor:pointer" onclick="switchTab('resources')">
-                <div class="mod-top"><span style="font-size:1.5rem">🔗</span><span class="mod-name">资源导航</span></div>
-                <p class="mod-desc">企业图谱、顶级会议、学习社区等一站式资源索引</p>
-            </div>
-            <div class="module">
-                <div class="mod-top"><span style="font-size:1.5rem">🤖</span><span class="mod-name">关于本站</span></div>
-                <p class="mod-desc">本站由 AI 自动化驱动，每天 0 点和 12 点更新内容。所有历史内容持续沉淀累积，越来越丰富。</p>
-            </div>
+            <div class="module" style="cursor:pointer" onclick="switchTab('learning')"><div class="mod-top"><span style="font-size:1.5rem">🗺️</span><span class="mod-name">学习路径</span></div><p class="mod-desc">从数学基础到项目实战，6 个阶段 25+ 模块的完整具身智能学习计划</p></div>
+            <div class="module" style="cursor:pointer" onclick="switchTab('papers')"><div class="mod-top"><span style="font-size:1.5rem">📄</span><span class="mod-name">论文深度解读</span></div><p class="mod-desc">每篇论文含方法论详解、实验数据、代码复现、数学原理，真正学到东西</p></div>
+            <div class="module" style="cursor:pointer" onclick="switchTab('opensource')"><div class="mod-top"><span style="font-size:1.5rem">💻</span><span class="mod-name">开源项目</span></div><p class="mod-desc">LeRobot、MuJoCo、Genesis 等核心项目，含入门教程与技术要点</p></div>
+            <div class="module" style="cursor:pointer" onclick="switchTab('news')"><div class="mod-top"><span style="font-size:1.5rem">📰</span><span class="mod-name">行业新闻</span></div><p class="mod-desc">融资动态、技术突破、政策标准等最新行业资讯</p></div>
+            <div class="module" style="cursor:pointer" onclick="switchTab('resources')"><div class="mod-top"><span style="font-size:1.5rem">🔗</span><span class="mod-name">资源导航</span></div><p class="mod-desc">企业图谱、顶级会议、学习社区等一站式资源索引</p></div>
+            <div class="module"><div class="mod-top"><span style="font-size:1.5rem">🤖</span><span class="mod-name">关于本站</span></div><p class="mod-desc">AI 自动化驱动，每天 0 点和 12 点更新。历史内容持续沉淀积累。</p></div>
         </div>
-
-        <div class="sec-head" style="margin-top:36px">
-            <div class="sec-icon cyan">🔥</div>
-            <h2 class="sec-title">最新动态</h2>
-        </div>
+        <div class="sec-head" style="margin-top:36px"><div class="sec-icon cyan">🔥</div><h2 class="sec-title">最新动态</h2></div>
         <div id="overviewLatest" class="news-grid"></div>
     </div>
 
-    <!-- LEARNING PATH -->
     <div class="section" id="sec-learning">
-        <div class="sec-head">
-            <div class="sec-icon green">🗺️</div>
-            <h2 class="sec-title">具身智能学习路径</h2>
-            <span class="sec-count" id="learningCount"></span>
-        </div>
-        <p style="font-size:.9rem;color:var(--t2);margin-bottom:28px;line-height:1.8">从零基础到独立完成具身智能项目的完整学习路线图。每个模块包含：学什么、为什么学、怎么学、学习计划和推荐资源。点击展开查看详情。</p>
+        <div class="sec-head"><div class="sec-icon green">🗺️</div><h2 class="sec-title">具身智能学习路径</h2><span class="sec-count" id="learningCount"></span></div>
+        <p style="font-size:.9rem;color:var(--t2);margin-bottom:28px;line-height:1.8">从零基础到独立完成具身智能项目的完整学习路线图。点击展开查看详情。</p>
         <div id="learningContent"><div class="loading"><div class="loading-spinner"></div>加载学习路径数据...</div></div>
     </div>
 
-    <!-- PAPERS -->
     <div class="section" id="sec-papers">
-        <div class="sec-head">
-            <div class="sec-icon violet">📄</div>
-            <h2 class="sec-title">论文深度解读</h2>
-            <span class="sec-count" id="papersCount"></span>
-        </div>
-        <p style="font-size:.9rem;color:var(--t2);margin-bottom:28px;line-height:1.8">精选具身智能领域最具影响力的论文，提供一句话总结（TL;DR）、核心洞察、影响力评估。点击「展开详情」查看完整解读。</p>
+        <div class="sec-head"><div class="sec-icon violet">📄</div><h2 class="sec-title">论文深度解读</h2><span class="sec-count" id="papersCount"></span></div>
+        <p style="font-size:.9rem;color:var(--t2);margin-bottom:28px;line-height:1.8">每篇论文提供：TL;DR → 核心洞察 → 方法论详解 → 实验结果 → 代码复现 → 数学原理。点击「展开深度解读」获取完整内容。</p>
         <div id="papersContent"><div class="loading"><div class="loading-spinner"></div>加载论文数据...</div></div>
     </div>
 
-    <!-- OPENSOURCE -->
     <div class="section" id="sec-opensource">
-        <div class="sec-head">
-            <div class="sec-icon green">💻</div>
-            <h2 class="sec-title">开源项目导航</h2>
-            <span class="sec-count" id="osCount"></span>
-        </div>
-        <p style="font-size:.9rem;color:var(--t2);margin-bottom:28px;line-height:1.8">具身智能领域最重要的开源项目合集，包含框架、仿真器、模型、硬件方案等。每个项目附带入门指南和核心亮点。</p>
+        <div class="sec-head"><div class="sec-icon green">💻</div><h2 class="sec-title">开源项目导航</h2><span class="sec-count" id="osCount"></span></div>
+        <p style="font-size:.9rem;color:var(--t2);margin-bottom:28px;line-height:1.8">具身智能领域核心开源项目。</p>
         <div id="osContent"><div class="loading"><div class="loading-spinner"></div>加载开源项目数据...</div></div>
     </div>
 
-    <!-- NEWS -->
     <div class="section" id="sec-news">
-        <div class="sec-head">
-            <div class="sec-icon amber">📰</div>
-            <h2 class="sec-title">行业新闻</h2>
-            <span class="sec-count" id="newsCount"></span>
-        </div>
+        <div class="sec-head"><div class="sec-icon amber">📰</div><h2 class="sec-title">行业新闻</h2><span class="sec-count" id="newsCount"></span></div>
         <div id="newsFilters" class="news-filters"></div>
         <div id="newsContent"><div class="loading"><div class="loading-spinner"></div>加载新闻数据...</div></div>
     </div>
 
-    <!-- RESOURCES -->
     <div class="section" id="sec-resources">
-        <div class="sec-head">
-            <div class="sec-icon pink">🔗</div>
-            <h2 class="sec-title">资源导航</h2>
-        </div>
+        <div class="sec-head"><div class="sec-icon pink">🔗</div><h2 class="sec-title">资源导航</h2></div>
         <p style="font-size:.9rem;color:var(--t2);margin-bottom:4px;line-height:1.8">具身智能从业者和研究者的一站式资源索引。</p>
         <div id="resContent"><div class="loading"><div class="loading-spinner"></div>加载资源数据...</div></div>
     </div>
@@ -381,273 +323,166 @@
 <button class="btt" id="btt">↑</button>
 
 <script>
-// === DATA LOADING ===
-let learningData = null, papersData = null, osData = null, newsData = null;
+let learningData=null,papersData=null,osData=null,newsData=null;
+async function loadJSON(u){try{const r=await fetch(u+'?t='+Date.now());if(!r.ok)throw new Error(r.status);return await r.json()}catch(e){console.error('Load:',u,e);return null}}
 
-async function loadJSON(url) {
-    try {
-        const r = await fetch(url + '?t=' + Date.now());
-        if (!r.ok) throw new Error(r.status);
-        return await r.json();
-    } catch(e) { console.error('Load failed:', url, e); return null; }
+async function initData(){
+    const[ld,pd,od,nd]=await Promise.all([loadJSON('data/learning-path.json'),loadJSON('data/papers.json'),loadJSON('data/opensource.json'),loadJSON('data/news.json')]);
+    learningData=ld;papersData=pd;osData=od;newsData=nd;
+    if(pd)document.getElementById('statPapers').textContent=pd.papers.length;
+    if(od)document.getElementById('statOS').textContent=od.projects.length;
+    if(nd)document.getElementById('statNews').textContent=nd.news.length;
+    const dates=[ld?.lastUpdated,pd?.lastUpdated,od?.lastUpdated,nd?.lastUpdated].filter(Boolean);
+    if(dates.length)document.getElementById('updateTime').textContent='更新: '+dates.sort().pop();
+    renderLearning();renderPapers();renderOS();renderNews();renderResources();renderOverviewLatest();
 }
 
-async function initData() {
-    const [ld, pd, od, nd] = await Promise.all([
-        loadJSON('data/learning-path.json'),
-        loadJSON('data/papers.json'),
-        loadJSON('data/opensource.json'),
-        loadJSON('data/news.json')
-    ]);
-    learningData = ld; papersData = pd; osData = od; newsData = nd;
-
-    if(pd) document.getElementById('statPapers').textContent = pd.papers.length;
-    if(od) document.getElementById('statOS').textContent = od.projects.length;
-    if(nd) document.getElementById('statNews').textContent = nd.news.length;
-
-    const dates = [ld?.lastUpdated, pd?.lastUpdated, od?.lastUpdated, nd?.lastUpdated].filter(Boolean);
-    if(dates.length) document.getElementById('updateTime').textContent = '更新: ' + dates.sort().pop();
-
-    renderLearning();
-    renderPapers();
-    renderOS();
-    renderNews();
-    renderResources();
-    renderOverviewLatest();
+function renderLearning(){
+    if(!learningData){document.getElementById('learningContent').innerHTML='<p style="color:var(--t3)">暂无数据</p>';return}
+    const s=learningData.stages;
+    document.getElementById('learningCount').textContent=s.reduce((a,c)=>a+c.modules.length,0)+' modules';
+    let h='';
+    s.forEach((stage,si)=>{
+        h+=`<div class="stage${si>2?' collapsed':''}"><div class="stage-head" onclick="this.parentElement.classList.toggle('collapsed')"><span class="stage-level ${stage.level}">${stage.level}</span><div><div class="stage-title">${stage.title}</div><div class="stage-sub">${stage.subtitle}</div></div></div><div class="stage-body">`;
+        stage.modules.forEach(m=>{
+            h+=`<div class="module fade-up"><div class="mod-top"><span class="mod-name">${m.name}</span><span class="mod-imp ${m.importance}">${m.importance}</span></div><p class="mod-desc">${m.description}</p><div class="mod-toggle" onclick="this.parentElement.classList.toggle('expanded')">📖 展开详情 ▾</div><div class="mod-detail"><div class="detail-block"><div class="detail-label">📚 知识点</div><ul class="detail-list">${m.topics.map(t=>'<li>'+t+'</li>').join('')}</ul></div><div class="detail-block"><div class="detail-label">🎯 怎么学</div><div class="detail-text">${m.howTo}</div></div><div class="detail-block"><div class="detail-label">📅 学习计划</div><div class="detail-text">${m.weeklyPlan}</div></div><div class="detail-block"><div class="detail-label">📖 推荐资源</div><ul class="detail-list">${m.resources.map(r=>'<li>'+r+'</li>').join('')}</ul></div></div></div>`;
+        });
+        h+='</div></div>';
+    });
+    document.getElementById('learningContent').innerHTML=h;observeFadeUp();
 }
 
-// === RENDER LEARNING PATH ===
-function renderLearning() {
-    if(!learningData) { document.getElementById('learningContent').innerHTML = '<p style="color:var(--t3)">暂无数据</p>'; return; }
-    const s = learningData.stages;
-    document.getElementById('learningCount').textContent = s.reduce((a,c) => a+c.modules.length, 0) + ' modules';
-    let h = '';
-    s.forEach((stage, si) => {
-        h += `<div class="stage${si>2?' collapsed':''}">
-            <div class="stage-head" onclick="this.parentElement.classList.toggle('collapsed')">
-                <span class="stage-level ${stage.level}">${stage.level}</span>
-                <div><div class="stage-title">${stage.title}</div><div class="stage-sub">${stage.subtitle}</div></div>
-            </div>
-            <div class="stage-body">`;
-        stage.modules.forEach(m => {
-            h += `<div class="module fade-up">
-                <div class="mod-top">
-                    <span class="mod-name">${m.name}</span>
-                    <span class="mod-imp ${m.importance}">${m.importance}</span>
-                </div>
-                <p class="mod-desc">${m.description}</p>
-                <div class="mod-toggle" onclick="this.parentElement.classList.toggle('expanded')">📖 展开详情 ▾</div>
-                <div class="mod-detail">
-                    <div class="detail-block">
-                        <div class="detail-label">📚 知识点</div>
-                        <ul class="detail-list">${m.topics.map(t=>'<li>'+t+'</li>').join('')}</ul>
-                    </div>
-                    <div class="detail-block">
-                        <div class="detail-label">🎯 怎么学</div>
-                        <div class="detail-text">${m.howTo}</div>
-                    </div>
-                    <div class="detail-block">
-                        <div class="detail-label">📅 学习计划</div>
-                        <div class="detail-text">${m.weeklyPlan}</div>
-                    </div>
-                    <div class="detail-block">
-                        <div class="detail-label">📖 推荐资源</div>
-                        <ul class="detail-list">${m.resources.map(r=>'<li>'+r+'</li>').join('')}</ul>
-                    </div>
+function renderMd(text){
+    if(!text)return'';
+    try{
+        const html=marked.parse(text);
+        return html;
+    }catch(e){return text.replace(/\n/g,'<br>')}
+}
+
+function renderPapers(){
+    if(!papersData){document.getElementById('papersContent').innerHTML='<p style="color:var(--t3)">暂无数据</p>';return}
+    const papers=papersData.papers;
+    document.getElementById('papersCount').textContent=papers.length+' papers';
+    let h='<div class="paper-grid">';
+    papers.forEach((p,idx)=>{
+        const hasMeth=p.methodology&&p.methodology.length>10;
+        const hasExp=p.experiments&&p.experiments.length>10;
+        const hasCode=p.reproduction&&p.reproduction.length>10;
+        const hasMath=p.mathDetails&&p.mathDetails.length>10;
+        const hasDeep=hasMeth||hasExp||hasCode||hasMath;
+
+        h+=`<div class="paper-card fade-up" id="paper-${idx}">
+            <div class="paper-header">
+                <div class="paper-top">${p.tags.map(t=>'<span class="paper-tag '+t+'">'+t+'</span>').join('')}<span class="paper-diff">${p.difficulty}</span></div>
+                <div class="paper-title">${p.title}</div>
+                <div class="paper-authors">${p.authors}</div>
+                <div class="paper-venue">${p.venue} · ${p.date}</div>
+                <div class="paper-tldr"><strong>TL;DR:</strong> ${p.tldr}</div>
+                <div class="paper-insights-brief">${p.keyInsights.map(i=>'<div class="insight-item">'+i+'</div>').join('')}</div>
+                <div class="paper-impact"><strong>影响力：</strong>${p.impact}</div>
+                <div class="paper-links">
+                    ${p.arxiv?'<a href="'+p.arxiv+'" target="_blank" class="paper-link">📄 arXiv</a>':''}
+                    ${p.github?'<a href="'+p.github+'" target="_blank" class="paper-link">💻 GitHub</a>':''}
                 </div>
             </div>`;
-        });
-        h += '</div></div>';
+
+        if(hasDeep){
+            h+=`<div class="paper-expand-btn" onclick="togglePaper(${idx})"><span class="expand-text"></span></div>
+            <div class="paper-deep">
+                <div class="deep-tabs" id="dtabs-${idx}">
+                    ${hasMeth?'<div class="deep-tab active" onclick="switchDeep('+idx+',\'meth\')">📐 方法论</div>':''}
+                    ${hasExp?'<div class="deep-tab'+(hasMeth?'':' active')+'" onclick="switchDeep('+idx+',\'exp\')">📊 实验结果</div>':''}
+                    ${hasCode?'<div class="deep-tab" onclick="switchDeep('+idx+',\'code\')">💻 代码复现</div>':''}
+                    ${hasMath?'<div class="deep-tab" onclick="switchDeep('+idx+',\'math\')">🔢 数学原理</div>':''}
+                </div>
+                ${hasMeth?'<div class="deep-panel'+(hasMeth?' active':'')+'" data-panel="meth" id="dp-'+idx+'-meth"><div class="md-content">'+renderMd(p.methodology)+'</div></div>':''}
+                ${hasExp?'<div class="deep-panel'+(!hasMeth?' active':'')+'" data-panel="exp" id="dp-'+idx+'-exp"><div class="md-content">'+renderMd(p.experiments)+'</div></div>':''}
+                ${hasCode?'<div class="deep-panel" data-panel="code" id="dp-'+idx+'-code"><div class="md-content">'+renderMd(p.reproduction)+'</div></div>':''}
+                ${hasMath?'<div class="deep-panel" data-panel="math" id="dp-'+idx+'-math"><div class="md-content">'+renderMd(p.mathDetails)+'</div></div>':''}
+            </div>`;
+        }
+        h+=`</div>`;
     });
-    document.getElementById('learningContent').innerHTML = h;
+    h+='</div>';
+    document.getElementById('papersContent').innerHTML=h;
+    // highlight code blocks
+    document.querySelectorAll('.deep-panel pre code').forEach(el=>hljs.highlightElement(el));
     observeFadeUp();
 }
 
-// === RENDER PAPERS ===
-function renderPapers() {
-    if(!papersData) { document.getElementById('papersContent').innerHTML = '<p style="color:var(--t3)">暂无数据</p>'; return; }
-    const papers = papersData.papers;
-    document.getElementById('papersCount').textContent = papers.length + ' papers';
-    let h = '<div class="paper-grid">';
-    papers.forEach(p => {
-        const tag0 = p.tags[0] || '';
-        h += `<div class="paper-card fade-up">
-            <div class="paper-top">
-                ${p.tags.map(t=>'<span class="paper-tag '+t+'">'+t+'</span>').join('')}
-                <span class="paper-diff">${p.difficulty}</span>
-            </div>
-            <div class="paper-title">${p.title}</div>
-            <div class="paper-authors">${p.authors}</div>
-            <div class="paper-venue">${p.venue} · ${p.date}</div>
-            <div class="paper-tldr"><strong>TL;DR:</strong> ${p.tldr}</div>
-            <div class="paper-expand" onclick="this.parentElement.classList.toggle('expanded')">🔍 展开详细解读 ▾</div>
-            <div class="paper-insights">
-                <div style="font-size:.76rem;font-weight:600;color:var(--t3);margin-bottom:6px">核心洞察</div>
-                ${p.keyInsights.map(i=>'<div class="insight-item">'+i+'</div>').join('')}
-            </div>
-            <div class="paper-impact"><strong>影响力：</strong>${p.impact}</div>
-            <div class="paper-links">
-                ${p.arxiv?'<a href="'+p.arxiv+'" target="_blank" class="paper-link">📄 arXiv</a>':''}
-                ${p.github?'<a href="'+p.github+'" target="_blank" class="paper-link">💻 GitHub</a>':''}
-            </div>
-        </div>`;
+function togglePaper(idx){
+    const card=document.getElementById('paper-'+idx);
+    card.classList.toggle('expanded');
+    if(card.classList.contains('expanded')){
+        card.querySelectorAll('.deep-panel pre code').forEach(el=>{if(!el.dataset.highlighted){hljs.highlightElement(el);el.dataset.highlighted='1'}});
+    }
+}
+
+function switchDeep(idx,panel){
+    const tabs=document.getElementById('dtabs-'+idx);
+    tabs.querySelectorAll('.deep-tab').forEach(t=>t.classList.remove('active'));
+    event.target.classList.add('active');
+    const card=document.getElementById('paper-'+idx);
+    card.querySelectorAll('.deep-panel').forEach(p=>{p.classList.toggle('active',p.dataset.panel===panel)});
+    // highlight newly visible code
+    const active=card.querySelector('.deep-panel.active');
+    if(active)active.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.highlighted){hljs.highlightElement(el);el.dataset.highlighted='1'}});
+}
+
+function renderOS(){
+    if(!osData){document.getElementById('osContent').innerHTML='<p style="color:var(--t3)">暂无数据</p>';return}
+    const projects=osData.projects;
+    document.getElementById('osCount').textContent=projects.length+' projects';
+    let h='<div class="os-grid">';
+    projects.forEach(p=>{
+        h+=`<div class="os-card fade-up"><div class="os-top"><span class="os-name">${p.name}</span><span class="os-org">${p.org}</span><span class="os-stars">⭐ ${p.stars}</span></div><div class="os-tags">${p.tags.map(t=>'<span class="os-tag">'+t+'</span>').join('')}<span class="os-diff ${p.difficulty}">${p.difficulty}</span></div><div class="os-desc">${p.description}</div><div class="os-expand" onclick="this.parentElement.classList.toggle('expanded')">✨ 展开详情 ▾</div><div class="os-highlights"><div style="font-size:.76rem;font-weight:600;color:var(--t3);margin-bottom:6px">核心亮点</div>${p.highlights.map(h=>'<div class="os-hl-item">'+h+'</div>').join('')}</div><div class="os-start"><strong>快速上手：</strong>${p.getStarted}</div><div class="os-links"><a href="${p.github}" target="_blank" class="os-link">💻 GitHub</a></div></div>`;
     });
-    h += '</div>';
-    document.getElementById('papersContent').innerHTML = h;
+    h+='</div>';
+    document.getElementById('osContent').innerHTML=h;observeFadeUp();
+}
+
+function renderNews(){
+    if(!newsData){document.getElementById('newsContent').innerHTML='<p style="color:var(--t3)">暂无数据</p>';return}
+    const news=newsData.news,cats=newsData.categories||[];
+    document.getElementById('newsCount').textContent=news.length+' articles';
+    let fh='';cats.forEach((c,i)=>{fh+=`<button class="news-fbtn${i===0?' active':''}" data-cat="${c}">${c}</button>`});
+    document.getElementById('newsFilters').innerHTML=fh;
+    let h='<div class="news-grid" id="newsGrid">';
+    news.forEach(n=>{h+=`<a class="news-card fade-up" href="${n.url}" target="_blank" data-cat="${n.category}"><span class="news-cat ${n.category}">${n.category}</span><div class="news-title">${n.title}</div><div class="news-summary">${n.summary}</div><div class="news-meta"><span>${n.source} · ${n.date}</span><div class="news-tags">${n.tags.map(t=>'<span class="news-tag-sm">'+t+'</span>').join('')}</div></div></a>`});
+    h+='</div>';
+    document.getElementById('newsContent').innerHTML=h;
+    document.querySelectorAll('.news-fbtn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.news-fbtn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const cat=btn.dataset.cat;document.querySelectorAll('#newsGrid .news-card').forEach(c=>{c.classList.toggle('hidden',cat!=='全部'&&c.dataset.cat!==cat)})})});
     observeFadeUp();
 }
 
-// === RENDER OPENSOURCE ===
-function renderOS() {
-    if(!osData) { document.getElementById('osContent').innerHTML = '<p style="color:var(--t3)">暂无数据</p>'; return; }
-    const projects = osData.projects;
-    document.getElementById('osCount').textContent = projects.length + ' projects';
-    let h = '<div class="os-grid">';
-    projects.forEach(p => {
-        h += `<div class="os-card fade-up">
-            <div class="os-top">
-                <span class="os-name">${p.name}</span>
-                <span class="os-org">${p.org}</span>
-                <span class="os-stars">⭐ ${p.stars}</span>
-            </div>
-            <div class="os-tags">${p.tags.map(t=>'<span class="os-tag">'+t+'</span>').join('')}
-                <span class="os-diff ${p.difficulty}">${p.difficulty}</span>
-            </div>
-            <div class="os-desc">${p.description}</div>
-            <div class="os-expand" onclick="this.parentElement.classList.toggle('expanded')">✨ 展开详情 ▾</div>
-            <div class="os-highlights">
-                <div style="font-size:.76rem;font-weight:600;color:var(--t3);margin-bottom:6px">核心亮点</div>
-                ${p.highlights.map(h=>'<div class="os-hl-item">'+h+'</div>').join('')}
-            </div>
-            <div class="os-start"><strong>快速上手：</strong>${p.getStarted}</div>
-            <div class="os-links">
-                <a href="${p.github}" target="_blank" class="os-link">💻 GitHub</a>
-            </div>
-        </div>`;
-    });
-    h += '</div>';
-    document.getElementById('osContent').innerHTML = h;
-    observeFadeUp();
+function renderResources(){
+    if(!newsData||!newsData.resources){document.getElementById('resContent').innerHTML='<p style="color:var(--t3)">暂无数据</p>';return}
+    let h='<div class="res-grid">';
+    newsData.resources.forEach(r=>{h+=`<div class="res-card fade-up"><div class="res-name">${r.name}</div><div class="res-desc">${r.description}</div>${r.items.map(i=>`<div class="res-item"><div class="res-item-name">${i.name}</div><div class="res-item-list">${i.list}</div></div>`).join('')}</div>`});
+    h+='</div>';document.getElementById('resContent').innerHTML=h;observeFadeUp();
 }
 
-// === RENDER NEWS ===
-function renderNews() {
-    if(!newsData) { document.getElementById('newsContent').innerHTML = '<p style="color:var(--t3)">暂无数据</p>'; return; }
-    const news = newsData.news;
-    const cats = newsData.categories || [];
-    document.getElementById('newsCount').textContent = news.length + ' articles';
-
-    // Filters
-    let fh = '';
-    cats.forEach((c,i) => {
-        fh += `<button class="news-fbtn${i===0?' active':''}" data-cat="${c}">${c}</button>`;
-    });
-    document.getElementById('newsFilters').innerHTML = fh;
-
-    // Cards
-    let h = '<div class="news-grid" id="newsGrid">';
-    news.forEach(n => {
-        h += `<a class="news-card fade-up" href="${n.url}" target="_blank" data-cat="${n.category}">
-            <span class="news-cat ${n.category}">${n.category}</span>
-            <div class="news-title">${n.title}</div>
-            <div class="news-summary">${n.summary}</div>
-            <div class="news-meta">
-                <span>${n.source} · ${n.date}</span>
-                <div class="news-tags">${n.tags.map(t=>'<span class="news-tag-sm">'+t+'</span>').join('')}</div>
-            </div>
-        </a>`;
-    });
-    h += '</div>';
-    document.getElementById('newsContent').innerHTML = h;
-
-    // Filter logic
-    document.querySelectorAll('.news-fbtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.news-fbtn').forEach(b=>b.classList.remove('active'));
-            btn.classList.add('active');
-            const cat = btn.dataset.cat;
-            document.querySelectorAll('#newsGrid .news-card').forEach(c => {
-                c.classList.toggle('hidden', cat !== '全部' && c.dataset.cat !== cat);
-            });
-        });
-    });
-    observeFadeUp();
+function renderOverviewLatest(){
+    if(!newsData)return;
+    const latest=newsData.news.slice(0,4);
+    let h='';latest.forEach(n=>{h+=`<a class="news-card fade-up" href="${n.url}" target="_blank"><span class="news-cat ${n.category}">${n.category}</span><div class="news-title">${n.title}</div><div class="news-summary">${n.summary}</div><div class="news-meta"><span>${n.source} · ${n.date}</span></div></a>`});
+    document.getElementById('overviewLatest').innerHTML=h;observeFadeUp();
 }
 
-// === RENDER RESOURCES ===
-function renderResources() {
-    if(!newsData || !newsData.resources) { document.getElementById('resContent').innerHTML = '<p style="color:var(--t3)">暂无数据</p>'; return; }
-    let h = '<div class="res-grid">';
-    newsData.resources.forEach(r => {
-        h += `<div class="res-card fade-up">
-            <div class="res-name">${r.name}</div>
-            <div class="res-desc">${r.description}</div>
-            ${r.items.map(i=>`<div class="res-item"><div class="res-item-name">${i.name}</div><div class="res-item-list">${i.list}</div></div>`).join('')}
-        </div>`;
-    });
-    h += '</div>';
-    document.getElementById('resContent').innerHTML = h;
-    observeFadeUp();
+function switchTab(tabId){
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tabId));
+    document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.tab===tabId));
+    document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id==='sec-'+tabId));
+    window.scrollTo({top:document.querySelector('.tabs-bar').offsetTop-60,behavior:'smooth'});
 }
-
-// === RENDER OVERVIEW LATEST ===
-function renderOverviewLatest() {
-    if(!newsData) return;
-    const latest = newsData.news.slice(0, 4);
-    let h = '';
-    latest.forEach(n => {
-        h += `<a class="news-card fade-up" href="${n.url}" target="_blank">
-            <span class="news-cat ${n.category}">${n.category}</span>
-            <div class="news-title">${n.title}</div>
-            <div class="news-summary">${n.summary}</div>
-            <div class="news-meta"><span>${n.source} · ${n.date}</span></div>
-        </a>`;
-    });
-    document.getElementById('overviewLatest').innerHTML = h;
-    observeFadeUp();
-}
-
-// === TAB SWITCHING ===
-function switchTab(tabId) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
-    document.querySelectorAll('.nav-links a').forEach(a => a.classList.toggle('active', a.dataset.tab === tabId));
-    document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === 'sec-' + tabId));
-    window.scrollTo({top: document.querySelector('.tabs-bar').offsetTop - 60, behavior:'smooth'});
-}
-
-document.querySelectorAll('.tab-btn, .nav-links a').forEach(el => {
-    el.addEventListener('click', (e) => {
-        e.preventDefault();
-        switchTab(el.dataset.tab);
-    });
-});
-
-// === MOBILE NAV ===
-document.getElementById('navToggle').addEventListener('click', () => {
-    document.getElementById('navLinks').classList.toggle('open');
-});
-document.querySelectorAll('.nav-links a').forEach(a => {
-    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
-});
-
-// === SCROLL EFFECTS ===
-const nav = document.getElementById('nav');
-const btt = document.getElementById('btt');
-window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 50);
-    btt.classList.toggle('visible', window.scrollY > 500);
-});
-btt.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
-
-// === INTERSECTION OBSERVER ===
-function observeFadeUp() {
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-    }, {threshold:.05, rootMargin:'0px 0px -30px 0px'});
-    document.querySelectorAll('.fade-up:not(.visible)').forEach(el => obs.observe(el));
-}
-
-// === INIT ===
+document.querySelectorAll('.tab-btn, .nav-links a').forEach(el=>{el.addEventListener('click',e=>{e.preventDefault();switchTab(el.dataset.tab)})});
+document.getElementById('navToggle').addEventListener('click',()=>{document.getElementById('navLinks').classList.toggle('open')});
+document.querySelectorAll('.nav-links a').forEach(a=>{a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open'))});
+const nav=document.getElementById('nav'),btt=document.getElementById('btt');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>50);btt.classList.toggle('visible',window.scrollY>500)});
+btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+function observeFadeUp(){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.05,rootMargin:'0px 0px -30px 0px'});document.querySelectorAll('.fade-up:not(.visible)').forEach(el=>obs.observe(el))}
 initData();
 </script>
 </body>
