@@ -251,13 +251,31 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 /* OS Card extras */
 .os-stars{font-family:'JetBrains Mono';font-size:.68rem;color:var(--al)}
 
+/* === TIMELINE LAYOUT === */
+.tl-wrap{display:flex;gap:0;position:relative}
+.tl-sidebar{width:120px;flex-shrink:0;position:sticky;top:70px;align-self:flex-start;max-height:calc(100vh - 90px);overflow-y:auto;padding:8px 0;scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
+.tl-sidebar::-webkit-scrollbar{width:3px}.tl-sidebar::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.tl-main{flex:1;min-width:0}
+.tl-year{font-family:'Space Grotesk';font-size:.72rem;font-weight:700;color:var(--p);padding:12px 14px 4px;letter-spacing:.5px}
+.tl-month{display:flex;align-items:center;gap:8px;padding:5px 14px;cursor:pointer;font-size:.78rem;color:var(--t3);border-radius:0 8px 8px 0;transition:all .2s;position:relative}
+.tl-month::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--bd);flex-shrink:0;transition:all .2s}
+.tl-month:hover{color:var(--t1);background:rgba(99,102,241,.06)}
+.tl-month:hover::before{background:var(--pl)}
+.tl-month.active{color:var(--p);font-weight:600;background:rgba(99,102,241,.08)}
+.tl-month.active::before{background:var(--p);box-shadow:0 0 6px rgba(99,102,241,.4)}
+.tl-month .tl-count{font-family:'JetBrains Mono';font-size:.62rem;color:var(--t3);margin-left:auto;opacity:.7}
+.tl-divider{height:1px;background:var(--bd);margin:4px 14px;opacity:.4}
+.tl-group-label{font-size:.72rem;font-weight:600;color:var(--al);padding:16px 0 8px;letter-spacing:.5px;border-bottom:1px solid rgba(245,158,11,.15);margin-bottom:12px}
+
 /* === RESOURCES === */
 .res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:18px}
 .res-card{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);padding:22px}
 .res-card:hover{border-color:var(--bd2)}
 .res-name{font-size:1rem;font-weight:600;margin-bottom:6px}
 .res-desc{font-size:.82rem;color:var(--t2);margin-bottom:14px}
-.res-item{margin-bottom:8px}.res-item-name{font-size:.76rem;font-weight:600;color:var(--pl);margin-bottom:2px}.res-item-list{font-size:.82rem;color:var(--t2)}
+.res-item{margin-bottom:8px}.res-item-name{font-size:.76rem;font-weight:600;color:var(--pl);margin-bottom:2px}.res-item-list{font-size:.82rem;color:var(--t2);line-height:1.8}
+.res-link{color:var(--t2);text-decoration:none;transition:color .2s;border-bottom:1px dashed transparent}
+.res-link:hover{color:var(--cyl);border-bottom-color:var(--cyl)}
 
 /* === FOOTER === */
 .footer{text-align:center;padding:36px 20px;border-top:1px solid var(--bd);font-size:.78rem;color:var(--t3)}
@@ -274,6 +292,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
     .menu-btn{display:block}.topbar-meta{display:none}
     .home-hero h1{font-size:2.2rem}.home-stats{gap:20px}.home-stat-v{font-size:1.6rem}
     .quick-grid,.card-grid,.res-grid{grid-template-columns:1fr}
+    .tl-sidebar{display:none}.tl-main{width:100%}
     .page-header{padding:32px 16px 16px}.page-body{padding:0 16px 40px}
     .quick-grid,.home-latest{padding-left:16px;padding-right:16px}
     .modal-body{padding:0 16px 16px}
@@ -349,7 +368,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 <!-- PAPERS -->
 <div class="page" id="pg-papers">
     <div class="page-header"><h1 class="page-title"><span class="icon">📄</span> 论文深度解读 <span style="font-family:'JetBrains Mono';font-size:.7rem;color:var(--t3);font-weight:400" id="paperCount"></span></h1><p class="page-sub">每篇含 TL;DR → 方法论 → 实验 → 代码复现 → 数学原理。点击卡片展开完整解读。</p></div>
-    <div class="page-body"><div class="card-grid" id="papersGrid"></div></div>
+    <div class="page-body"><div class="tl-wrap"><div class="tl-sidebar" id="paperTimeline"></div><div class="tl-main"><div class="card-grid" id="papersGrid"></div></div></div></div>
 </div>
 
 <!-- OPENSOURCE -->
@@ -363,7 +382,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
     <div class="page-header"><h1 class="page-title"><span class="icon">📰</span> 行业资讯</h1></div>
     <div class="page-body">
         <div class="filters" id="newsFilters"></div>
-        <div class="card-grid" id="newsGrid"></div>
+        <div class="tl-wrap"><div class="tl-sidebar" id="newsTimeline"></div><div class="tl-main"><div class="card-grid" id="newsGrid"></div></div></div>
         <div style="margin-top:40px"><div class="home-latest-title">🔗 资源导航</div><div class="res-grid" id="resGrid"></div></div>
     </div>
 </div>
@@ -721,14 +740,41 @@ function closeLearnModal(){
 function tagClass(t){const m={'模仿学习':'green','VLA':'violet','强化学习':'amber','数据集':'cyan','世界模型':'pink','人形机器人':'purple'};return 'tag-'+(m[t]||'purple')}
 function renderPapers(){
     if(!PD)return;
-    // 按日期倒序排列（最新的在前面）
     PD.papers.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
     document.getElementById('paperCount').textContent=PD.papers.length+' papers';
-    let h='';
-    PD.papers.forEach((p,i)=>{
-        h+=`<div class="card" style="cursor:pointer" onclick="openPaper(${i})"><div class="card-tags">${p.tags.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('')}<span class="tag tag-purple" style="margin-left:auto">${p.difficulty}</span></div><div class="card-title">${p.title}</div><div class="card-meta">${p.authors} · ${p.venue} · ${p.date}</div><div class="card-desc"><strong>TL;DR:</strong> ${p.tldr}</div><div class="card-footer">${p.arxiv?`<a href="${p.arxiv}" target="_blank" class="card-btn" onclick="event.stopPropagation()">📄 arXiv</a>`:''} ${p.github?`<a href="${p.github}" target="_blank" class="card-btn" onclick="event.stopPropagation()">💻 Code</a>`:''}<span class="card-btn primary">📚 深度解读 →</span></div></div>`;
+    // 按年月分组
+    const groups={};
+    PD.papers.forEach((p,i)=>{const ym=p.date?p.date.substring(0,7):'unknown';if(!groups[ym])groups[ym]=[];groups[ym].push({p,i})});
+    const monthNames=['','1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+    // 生成时间轴
+    let tlH='';let prevYear='';
+    Object.keys(groups).forEach(ym=>{
+        const [y,m]=ym.split('-');
+        if(y!==prevYear){if(prevYear)tlH+='<div class="tl-divider"></div>';tlH+=`<div class="tl-year">${y}</div>`;prevYear=y}
+        tlH+=`<div class="tl-month" onclick="scrollToGroup('pg-papers','${ym}')" data-ym="${ym}"><span>${monthNames[parseInt(m)]||m}</span><span class="tl-count">${groups[ym].length}</span></div>`;
+    });
+    document.getElementById('paperTimeline').innerHTML=tlH;
+    // 生成内容（带月份分隔标签）
+    let h='';prevYear='';
+    Object.keys(groups).forEach(ym=>{
+        const [y,m]=ym.split('-');
+        h+=`<div class="tl-group-label" id="paper-${ym}" style="grid-column:1/-1">📅 ${y} 年 ${monthNames[parseInt(m)]||m}</div>`;
+        groups[ym].forEach(({p,i})=>{
+            h+=`<div class="card" style="cursor:pointer" onclick="openPaper(${i})"><div class="card-tags">${p.tags.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('')}<span class="tag tag-purple" style="margin-left:auto">${p.difficulty}</span></div><div class="card-title">${p.title}</div><div class="card-meta">${p.authors} · ${p.venue} · ${p.date}</div><div class="card-desc"><strong>TL;DR:</strong> ${p.tldr}</div><div class="card-footer">${p.arxiv?`<a href="${p.arxiv}" target="_blank" class="card-btn" onclick="event.stopPropagation()">📄 arXiv</a>`:''} ${p.github?`<a href="${p.github}" target="_blank" class="card-btn" onclick="event.stopPropagation()">💻 Code</a>`:''}<span class="card-btn primary">📚 深度解读 →</span></div></div>`;
+        });
     });
     document.getElementById('papersGrid').innerHTML=h;
+}
+function scrollToGroup(page,ym){
+    const prefix=page==='pg-papers'?'paper':'news';
+    const el=document.getElementById(prefix+'-'+ym);
+    if(el){el.scrollIntoView({behavior:'smooth',block:'start'});
+        // 高亮时间轴
+        const sidebar=page==='pg-papers'?'paperTimeline':'newsTimeline';
+        document.querySelectorAll('#'+sidebar+' .tl-month').forEach(m=>m.classList.remove('active'));
+        const active=document.querySelector('#'+sidebar+' .tl-month[data-ym="'+ym+'"]');
+        if(active)active.classList.add('active');
+    }
 }
 
 // === PAPER MODAL ===
@@ -1042,23 +1088,62 @@ function renderOS(){
 // === RENDER NEWS ===
 function renderNews(){
     if(!ND)return;
+    // 按日期倒序
+    ND.news.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
     const cats=ND.categories||[];
     document.getElementById('newsFilters').innerHTML=cats.map((c,i)=>`<button class="fbtn${i===0?' active':''}" onclick="filterNews(this,'${c}')">${c}</button>`).join('');
+    // 按年月分组
+    const groups={};
+    ND.news.forEach(n=>{const d=n.date||'';const ym=d.length>=7?d.substring(0,7):(d.length>=4?d.substring(0,4)+'-01':'unknown');if(!groups[ym])groups[ym]=[];groups[ym].push(n)});
+    const monthNames=['','1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+    // 时间轴
+    let tlH='';let prevYear='';
+    Object.keys(groups).forEach(ym=>{
+        const [y,m]=ym.split('-');
+        if(y!==prevYear){if(prevYear)tlH+='<div class="tl-divider"></div>';tlH+=`<div class="tl-year">${y}</div>`;prevYear=y}
+        tlH+=`<div class="tl-month" onclick="scrollToGroup('pg-news','${ym}')" data-ym="${ym}"><span>${monthNames[parseInt(m)]||m}</span><span class="tl-count">${groups[ym].length}</span></div>`;
+    });
+    document.getElementById('newsTimeline').innerHTML=tlH;
+    // 内容
     let h='';
-    ND.news.forEach(n=>{
-        h+=`<a class="card" href="${n.url}" target="_blank" style="text-decoration:none;color:inherit" data-cat="${n.category}"><span class="news-cat ncat-${n.category}">${n.category}</span><div class="card-title">${n.title}</div><div class="card-desc">${n.summary}</div><div class="card-meta" style="margin-top:10px">${n.source} · ${n.date}</div></a>`;
+    Object.keys(groups).forEach(ym=>{
+        const [y,m]=ym.split('-');
+        h+=`<div class="tl-group-label" id="news-${ym}" style="grid-column:1/-1">📅 ${y} 年 ${monthNames[parseInt(m)]||m}</div>`;
+        groups[ym].forEach(n=>{
+            h+=`<a class="card" href="${n.url}" target="_blank" style="text-decoration:none;color:inherit" data-cat="${n.category}"><span class="news-cat ncat-${n.category}">${n.category}</span><div class="card-title">${n.title}</div><div class="card-desc">${n.summary}</div><div class="card-meta" style="margin-top:10px">${n.source} · ${n.date}</div></a>`;
+        });
     });
     document.getElementById('newsGrid').innerHTML=h;
-    // Resources
+    // Resources with links
     if(ND.resources){
         let rh='';
-        ND.resources.forEach(r=>{rh+=`<div class="res-card"><div class="res-name">${r.name}</div><div class="res-desc">${r.description}</div>${r.items.map(i=>`<div class="res-item"><div class="res-item-name">${i.name}</div><div class="res-item-list">${i.list}</div></div>`).join('')}</div>`});
+        ND.resources.forEach(r=>{
+            rh+=`<div class="res-card"><div class="res-name">${r.name}</div><div class="res-desc">${r.description}</div>${r.items.map(i=>{
+                const links=(i.links||[]);
+                const names=i.list.split(/[、,，]/);
+                const rendered=names.map((name,idx)=>{
+                    const nm=name.trim();
+                    const link=links[idx]||(i.urls&&i.urls[nm]);
+                    return link?`<a href="${link}" target="_blank" class="res-link">${nm}</a>`:nm;
+                }).join('、');
+                return`<div class="res-item"><div class="res-item-name">${i.name}</div><div class="res-item-list">${rendered}</div></div>`;
+            }).join('')}</div>`;
+        });
         document.getElementById('resGrid').innerHTML=rh;
     }
 }
 function filterNews(el,cat){
     el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));el.classList.add('active');
     document.querySelectorAll('#newsGrid .card').forEach(c=>{c.style.display=(cat==='全部'||c.dataset.cat===cat)?'':'none'});
+    // 隐藏空的月份分组标签
+    document.querySelectorAll('#newsGrid .tl-group-label').forEach(label=>{
+        let next=label.nextElementSibling;let hasVisible=false;
+        while(next&&!next.classList.contains('tl-group-label')){
+            if(next.classList.contains('card')&&next.style.display!=='none')hasVisible=true;
+            next=next.nextElementSibling;
+        }
+        label.style.display=hasVisible?'':'none';
+    });
 }
 
 function renderHomeLatest(){
