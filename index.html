@@ -337,6 +337,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
     .home-hero h1{font-size:2.2rem}.home-stats{gap:20px}.home-stat-v{font-size:1.6rem}
     .quick-grid,.card-grid,.res-grid{grid-template-columns:1fr}
     .tl-sidebar{display:none}.tl-main{width:100%}
+    #hwSidebar{display:none!important}
     .page-header{padding:32px 16px 16px}.page-body{padding:0 16px 40px}
     .quick-grid,.home-latest{padding-left:16px;padding-right:16px}
     .modal-body{padding:0 16px 16px}
@@ -445,7 +446,10 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
     <div class="page-header"><h1 class="page-title"><span class="icon">🔩</span> 硬件图鉴 <span style="font-family:'JetBrains Mono';font-size:.7rem;color:var(--t3);font-weight:400" id="hwCount"></span></h1><p class="page-sub">机器人硬件拆解百科 — 产品 BOM 清单、传感器/电机/控制器参数型号、购买链接、驱动文档，一站查阅。</p></div>
     <div class="page-body">
         <div class="filters" id="hwFilters"></div>
-        <div class="card-grid" id="hwGrid"></div>
+        <div style="display:flex;gap:20px;align-items:flex-start">
+            <div id="hwSidebar" style="min-width:180px;max-width:200px;position:sticky;top:80px;flex-shrink:0;display:none"></div>
+            <div style="flex:1;min-width:0"><div class="card-grid" id="hwGrid"></div></div>
+        </div>
     </div>
 </div>
 
@@ -1463,11 +1467,37 @@ function renderHardware(){
     if(!HD)return;
     document.getElementById('hwCount').textContent=HD.robots.length+' 款产品';
     const cats=HD.categories||[];
-    document.getElementById('hwFilters').innerHTML=cats.map((c,i)=>`<button class="fbtn${i===0?' active':''}" onclick="filterHW(this,'${c.id}')">${c.icon} ${c.name}</button>`).join('');
-    renderHWCards('all');
+    document.getElementById('hwFilters').innerHTML=cats.map((c,i)=>`<button class="fbtn${i===0?' active':''}" onclick="filterHW(this,'${c.id}','cat')">${c.icon} ${c.name}</button>`).join('');
+    // Build manufacturer sidebar
+    const mfMap={};
+    HD.robots.forEach(r=>{const m=r.manufacturer||'未知';if(!mfMap[m])mfMap[m]=[];mfMap[m].push(r);});
+    const mfList=Object.keys(mfMap).sort((a,b)=>mfMap[b].length-mfMap[a].length);
+    const sb=document.getElementById('hwSidebar');
+    let shtml=`<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:14px;font-size:.8rem">`;
+    shtml+=`<div style="font-weight:700;color:var(--t1);margin-bottom:10px;font-size:.82rem">🏢 按公司</div>`;
+    shtml+=`<div style="display:flex;flex-direction:column;gap:2px">`;
+    shtml+=`<button class="hw-mf-btn active" onclick="filterHW(this,'all','mf')" style="text-align:left;background:none;border:none;padding:6px 10px;border-radius:8px;color:var(--t2);cursor:pointer;font-size:.78rem;transition:all .15s;display:flex;justify-content:space-between;align-items:center">全部 <span style="font-size:.68rem;color:var(--t3);background:var(--bg3);padding:1px 6px;border-radius:10px">${HD.robots.length}</span></button>`;
+    mfList.forEach(m=>{
+        shtml+=`<button class="hw-mf-btn" onclick="filterHW(this,'${m.replace(/'/g,"\\'")}','mf')" style="text-align:left;background:none;border:none;padding:6px 10px;border-radius:8px;color:var(--t2);cursor:pointer;font-size:.78rem;transition:all .15s;display:flex;justify-content:space-between;align-items:center;gap:6px;white-space:nowrap;overflow:hidden"><span style="overflow:hidden;text-overflow:ellipsis">${m}</span> <span style="font-size:.68rem;color:var(--t3);background:var(--bg3);padding:1px 6px;border-radius:10px;flex-shrink:0">${mfMap[m].length}</span></button>`;
+    });
+    shtml+=`</div></div>`;
+    sb.innerHTML=shtml;
+    sb.style.display='block';
+    // Add hover styles for sidebar buttons
+    sb.querySelectorAll('.hw-mf-btn').forEach(btn=>{
+        btn.addEventListener('mouseenter',()=>{if(!btn.classList.contains('active'))btn.style.background='var(--bg3)';});
+        btn.addEventListener('mouseleave',()=>{if(!btn.classList.contains('active'))btn.style.background='none';});
+    });
+    window._hwCatFilter='all';
+    window._hwMfFilter='all';
+    renderHWCards();
 }
-function renderHWCards(cat){
-    const filtered=cat==='all'?HD.robots:HD.robots.filter(r=>r.category===cat);
+function renderHWCards(){
+    const cat=window._hwCatFilter||'all';
+    const mf=window._hwMfFilter||'all';
+    let filtered=HD.robots;
+    if(cat!=='all')filtered=filtered.filter(r=>r.category===cat);
+    if(mf!=='all')filtered=filtered.filter(r=>r.manufacturer===mf);
     document.getElementById('hwGrid').innerHTML=filtered.length?filtered.map(r=>{
         const catObj=(HD.categories||[]).find(c=>c.id===r.category);
         const catLabel=catObj?catObj.icon+' '+catObj.name:r.category;
@@ -1479,11 +1509,26 @@ function renderHWCards(cat){
             <div class="card-desc">${r.overview.substring(0,100)}...</div>
             <div class="card-footer"><span class="card-btn primary" style="font-size:.7rem">🔩 查看 BOM (${bomCount}项)</span><span style="font-size:.68rem;color:var(--t3);margin-left:auto">📄 ${r.docs?r.docs.length:0} 份文档</span></div>
         </div>`;
-    }).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:40px">该分类暂无产品</div>';
+    }).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:40px">该筛选条件下暂无产品</div>';
 }
-function filterHW(el,cat){
-    el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));el.classList.add('active');
-    renderHWCards(cat);
+function filterHW(el,val,type){
+    if(type==='cat'){
+        el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));el.classList.add('active');
+        window._hwCatFilter=val;
+        // Reset manufacturer filter when switching category
+        window._hwMfFilter='all';
+        const sb=document.getElementById('hwSidebar');
+        if(sb)sb.querySelectorAll('.hw-mf-btn').forEach((b,i)=>{b.classList.toggle('active',i===0);b.style.background=i===0?'var(--bg3)':'none';});
+    }else if(type==='mf'){
+        const sb=document.getElementById('hwSidebar');
+        sb.querySelectorAll('.hw-mf-btn').forEach(b=>{b.classList.remove('active');b.style.background='none';});
+        el.classList.add('active');el.style.background='var(--bg3)';
+        window._hwMfFilter=val;
+        // Reset category filter when clicking manufacturer
+        window._hwCatFilter='all';
+        document.getElementById('hwFilters').querySelectorAll('.fbtn').forEach((b,i)=>{b.classList.toggle('active',i===0);});
+    }
+    renderHWCards();
 }
 function openHWDetail(id){
     const r=HD.robots.find(x=>x.id===id);
