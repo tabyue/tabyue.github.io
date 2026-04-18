@@ -358,9 +358,11 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
         <a onclick="go('hardware')">🔩 硬件图鉴</a>
         <a onclick="go('news')">📰 资讯</a>
         <a onclick="go('jobs')">💼 人才生态</a>
+        <a onclick="openInbox();document.getElementById('nav').classList.remove('open')" style="color:#a78bfa">📥 投稿素材</a>
     </nav>
     <div class="topbar-meta">
         <span class="topbar-time" id="updateTime"></span>
+        <button onclick="openInbox()" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;padding:4px 12px;border-radius:8px;font-size:.75rem;cursor:pointer;font-weight:600;transition:transform .15s,box-shadow .15s" onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 2px 12px rgba(99,102,241,.4)'" onmouseout="this.style.transform='';this.style.boxShadow=''">📥 投稿</button>
         <a href="https://github.com/tabyue/tabyue.github.io" target="_blank" class="topbar-gh">⭐ GitHub</a>
     </div>
     <button class="menu-btn" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
@@ -456,6 +458,46 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 <!-- HW Detail Modal -->
 <div class="modal-overlay" id="hwModal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}">
     <div class="modal" style="max-width:820px"><div class="modal-close"><button class="modal-close-btn" onclick="document.getElementById('hwModal').classList.remove('open');document.body.style.overflow=''">✕</button></div><div class="modal-body" id="hwModalBody"></div></div>
+</div>
+
+<!-- INBOX FAB (mobile) -->
+<button id="inboxFab" onclick="openInbox()" style="position:fixed;bottom:80px;right:20px;z-index:900;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;font-size:1.3rem;cursor:pointer;box-shadow:0 4px 16px rgba(99,102,241,.4);transition:transform .2s;display:none" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform=''">📥</button>
+
+<!-- INBOX MODAL -->
+<div class="modal-overlay" id="inboxModal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}">
+    <div class="modal" style="max-width:560px">
+        <div class="modal-close"><button class="modal-close-btn" onclick="document.getElementById('inboxModal').classList.remove('open');document.body.style.overflow=''">✕</button></div>
+        <div class="modal-body" style="padding:24px">
+            <h2 style="margin-bottom:4px">📥 素材投稿箱</h2>
+            <p style="color:var(--t3);font-size:.82rem;margin-bottom:20px;line-height:1.6">看到好文章、好项目、好论文？丢个链接进来！<br>AI 编辑会自动分析并决定是否融入门户内容。</p>
+            <div id="inboxForm">
+                <label style="display:block;font-size:.78rem;color:var(--t2);margin-bottom:4px;font-weight:600">🔗 链接 <span style="color:#ef4444">*</span></label>
+                <input id="inboxUrl" type="url" placeholder="https://arxiv.org/abs/... 或 https://github.com/..." style="width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;color:var(--t1);font-size:.85rem;margin-bottom:14px;box-sizing:border-box;outline:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--pl)'" onblur="this.style.borderColor='var(--bd)'"/>
+                <label style="display:block;font-size:.78rem;color:var(--t2);margin-bottom:4px;font-weight:600">📂 类型</label>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px" id="inboxType">
+                    <button class="fbtn active" onclick="pickInboxType(this)" data-type="auto">🤖 自动识别</button>
+                    <button class="fbtn" onclick="pickInboxType(this)" data-type="news">📰 新闻</button>
+                    <button class="fbtn" onclick="pickInboxType(this)" data-type="paper">📄 论文</button>
+                    <button class="fbtn" onclick="pickInboxType(this)" data-type="project">💻 开源项目</button>
+                    <button class="fbtn" onclick="pickInboxType(this)" data-type="resource">📚 学习资源</button>
+                    <button class="fbtn" onclick="pickInboxType(this)" data-type="other">💡 其他</button>
+                </div>
+                <label style="display:block;font-size:.78rem;color:var(--t2);margin-bottom:4px;font-weight:600">💬 备注 <span style="font-weight:400;color:var(--t3)">(可选)</span></label>
+                <textarea id="inboxNote" placeholder="简单说两句为什么推荐..." rows="3" style="width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;color:var(--t1);font-size:.85rem;margin-bottom:16px;box-sizing:border-box;resize:vertical;font-family:inherit;outline:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--pl)'" onblur="this.style.borderColor='var(--bd)'"></textarea>
+                <button onclick="submitInbox()" style="width:100%;padding:12px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:10px;font-size:.9rem;font-weight:700;cursor:pointer;transition:transform .15s,box-shadow .15s" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 16px rgba(99,102,241,.35)'" onmouseout="this.style.transform='';this.style.boxShadow=''">提交素材</button>
+            </div>
+            <div id="inboxSuccess" style="display:none;text-align:center;padding:30px 0">
+                <div style="font-size:3rem;margin-bottom:12px">✅</div>
+                <div style="font-size:1.1rem;font-weight:700;color:var(--t1);margin-bottom:8px">提交成功！</div>
+                <div style="color:var(--t3);font-size:.82rem;line-height:1.6;margin-bottom:16px">素材已记录，AI 编辑会在下次更新时分析处理。<br>有价值的内容会融入对应板块。</div>
+                <button onclick="resetInbox()" style="padding:8px 20px;background:var(--bg3);border:1px solid var(--bd);border-radius:8px;color:var(--t1);cursor:pointer;font-size:.82rem">继续投稿</button>
+            </div>
+            <div id="inboxHistory" style="margin-top:20px;border-top:1px solid var(--bd);padding-top:14px;display:none">
+                <div style="font-size:.78rem;color:var(--t3);margin-bottom:8px;font-weight:600">📋 我的投稿记录</div>
+                <div id="inboxHistoryList" style="max-height:200px;overflow-y:auto"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- NEWS -->
@@ -1573,6 +1615,73 @@ function openHWDetail(id){
     modal.classList.add('open');
     document.body.style.overflow='hidden';
 }
+
+// === INBOX (素材投稿箱) ===
+function openInbox(){
+    document.getElementById('inboxModal').classList.add('open');
+    document.body.style.overflow='hidden';
+    renderInboxHistory();
+}
+function pickInboxType(el){
+    el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+}
+function submitInbox(){
+    const url=document.getElementById('inboxUrl').value.trim();
+    if(!url){document.getElementById('inboxUrl').style.borderColor='#ef4444';return;}
+    const typeBtn=document.querySelector('#inboxType .fbtn.active');
+    const type=typeBtn?typeBtn.dataset.type:'auto';
+    const note=document.getElementById('inboxNote').value.trim();
+    const item={url,type,note,time:new Date().toISOString(),status:'pending'};
+    // Save to localStorage
+    const inbox=JSON.parse(localStorage.getItem('ei_inbox')||'[]');
+    inbox.unshift(item);
+    localStorage.setItem('ei_inbox',JSON.stringify(inbox));
+    // Also save to data/inbox.json via GitHub Issue (fallback: localStorage only)
+    const issueTitle=encodeURIComponent('[投稿] '+(note||url).substring(0,60));
+    const issueBody=encodeURIComponent('## 素材投稿\n\n- **链接**: '+url+'\n- **类型**: '+type+'\n- **备注**: '+(note||'无')+'\n- **时间**: '+item.time+'\n\n---\n*由具身智能知识门户投稿箱自动创建*');
+    const issueUrl='https://github.com/tabyue/tabyue.github.io/issues/new?title='+issueTitle+'&body='+issueBody+'&labels=inbox';
+    // Show success
+    document.getElementById('inboxForm').style.display='none';
+    document.getElementById('inboxSuccess').style.display='block';
+    // Open GitHub Issue in background
+    window.open(issueUrl,'_blank');
+    renderInboxHistory();
+}
+function resetInbox(){
+    document.getElementById('inboxForm').style.display='block';
+    document.getElementById('inboxSuccess').style.display='none';
+    document.getElementById('inboxUrl').value='';
+    document.getElementById('inboxNote').value='';
+    document.getElementById('inboxUrl').style.borderColor='var(--bd)';
+    document.querySelector('#inboxType .fbtn').click();
+}
+function renderInboxHistory(){
+    const inbox=JSON.parse(localStorage.getItem('ei_inbox')||'[]');
+    const container=document.getElementById('inboxHistory');
+    const list=document.getElementById('inboxHistoryList');
+    if(!inbox.length){container.style.display='none';return;}
+    container.style.display='block';
+    const typeIcons={auto:'🤖',news:'📰',paper:'📄',project:'💻',resource:'📚',other:'💡'};
+    list.innerHTML=inbox.slice(0,10).map((it,i)=>{
+        const icon=typeIcons[it.type]||'📎';
+        const date=new Date(it.time);
+        const timeStr=(date.getMonth()+1)+'/'+date.getDate()+' '+date.getHours()+':'+String(date.getMinutes()).padStart(2,'0');
+        const statusBadge=it.status==='processed'?'<span style="color:#22c55e;font-size:.68rem">✅ 已处理</span>':'<span style="color:var(--cyl);font-size:.68rem">⏳ 待处理</span>';
+        const shortUrl=it.url.replace(/^https?:\/\//,'').substring(0,40)+(it.url.length>50?'...':'');
+        return`<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg3);border-radius:8px;margin-bottom:4px;font-size:.76rem">
+            <span>${icon}</span>
+            <div style="flex:1;min-width:0;overflow:hidden">
+                <div style="color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${shortUrl}</div>
+                ${it.note?'<div style="color:var(--t3);font-size:.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+it.note+'</div>':''}
+            </div>
+            <div style="text-align:right;flex-shrink:0">${statusBadge}<div style="font-size:.65rem;color:var(--t3)">${timeStr}</div></div>
+        </div>`;
+    }).join('');
+}
+// Show FAB on mobile
+if(window.innerWidth<=768)document.getElementById('inboxFab').style.display='block';
+window.addEventListener('resize',()=>{document.getElementById('inboxFab').style.display=window.innerWidth<=768?'block':'none';});
 
 init();
 </script>
