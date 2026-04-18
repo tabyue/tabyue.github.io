@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-17T02:00",
+  "lastUpdated": "2026-04-18T14:48",
   "stages": [
     {
       "id": "foundation",
@@ -698,6 +698,45 @@
           ],
           "howTo": "先在仿真中训练一个简单任务（如CartPole或简单抓取），然后加Domain Randomization看鲁棒性变化。如果有真实机器人，尝试部署并分析Gap。",
           "weeklyPlan": "第1周：Domain Randomization原理+实验 | 第2周：System Identification方法 | 第3-4周：Teacher-Student蒸馏实现+迁移实验"
+        },
+        {
+          "name": "具身数据工程",
+          "importance": "核心",
+          "description": "系统覆盖数据集全景、采集系统、质量工程、合成数据、格式标准与数据闭环，构建完整数据管线",
+          "topics": [
+            {
+              "title": "具身数据集全景图",
+              "detail": "Open X-Embodiment(100万+轨迹,22种平台)、DROID(76K,Franka)、BridgeData V2(60K,WidowX)、AGIBOT WORLD 2026(真实工业场景)、RH20T(精细操作)、RoboCasa(仿真数据)。Scaling Law: 数据翻倍,成功率提升10-15%。"
+            },
+            {
+              "title": "数据采集系统实战",
+              "detail": "ALOHA(双臂,$20K,最高质量)、UMI(手持夹爪,$300)、Gello(遥操作杆,$500)、VR遥操作($500)。数据质量>数量: 50个高质量demo > 500个低质量。渐进式采集: 每轮评估后针对失败场景补充。"
+            },
+            {
+              "title": "数据质量工程",
+              "detail": "四维评估(有效性/一致性/多样性/充分性)。自动清洗Pipeline: NaN检测、平滑度检查、静止检测、成功过滤。DTW异常轨迹检测。归一化统计量(LeRobot stats.json)。"
+            },
+            {
+              "title": "合成数据与数据增强",
+              "detail": "仿真数据自动生成(脚本策略+Domain Randomization,速度比真实快200x)。安全增强(颜色抖动/模糊/擦除)。危险增强需同步变换动作(翻转→y轴取反)。最佳配比: 真实:合成≈1:10-20。"
+            },
+            {
+              "title": "数据格式标准与工具链",
+              "detail": "RLDS(Google/TF)、LeRobot(HuggingFace/PyTorch)、HDF5(通用)格式对比。DVC数据版本管理。Rerun.io多模态可视化。HuggingFace Hub数据共享。"
+            },
+            {
+              "title": "数据闭环系统",
+              "detail": "采集→清洗→训练→部署→评估→针对失败补充采集。自动失败分析器: 聚类失败状态,指导下一轮采集。主动学习: MC Dropout估计不确定性,优先在高不确定区域采集。4轮迭代110条 > 一次性200条。"
+            }
+          ],
+          "resources": [
+            "Open X-Embodiment数据集",
+            "LeRobot框架(HuggingFace)",
+            "DROID/AGIBOT WORLD数据集",
+            "DVC+Rerun工具链"
+          ],
+          "howTo": "从下载Open X-Embodiment子集开始,分析数据分布;搭建UMI/Gello采集系统;实现清洗Pipeline;用MuJoCo生成合成数据;最后跑一轮完整的数据闭环实验。",
+          "weeklyPlan": "第1周：数据集全景+格式标准 | 第2周：采集系统搭建 | 第3周：质量工程+清洗 | 第4周：合成数据+增强 | 第5周：数据闭环实战"
         },
         {
           "name": "数据采集与管理",
