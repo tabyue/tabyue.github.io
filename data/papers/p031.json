@@ -1,0 +1,25 @@
+{
+  "id": "p031",
+  "title": "AGIBOT WORLD 2026: A Heterogeneous Dataset for Embodied AI Research",
+  "authors": "AGIBOT (智元机器人)",
+  "venue": "Technical Report 2026",
+  "date": "2026-04",
+  "arxiv": "https://agibot-world.com/",
+  "github": "https://github.com/agibot-world",
+  "tags": ["数据集", "异构机器人", "真实场景", "开源"],
+  "difficulty": "中级",
+  "addedDate": "2026-04-19",
+  "tldr": "智元机器人开源发布的首个覆盖具身智能全域研究的异构真实场景数据集，100%真实世界采集，系统性支持五大研究方向。",
+  "abstract": "AGIBOT WORLD 2026是在AGIBOT WORLD初版基础上的全面升级，是一个异构多机器人真实场景数据集，旨在系统性支持具身智能五大核心研究方向。数据集100%采集自真实世界环境，覆盖商业空间、家庭、酒店、工业等通用场景，包含多种异构机器人平台（人形机器人、桌面机械臂、移动操作臂等）的操作轨迹数据。配套发布Genie Sim 3.0仿真平台，支持自然语言驱动的数字孪生构建和近乎完美的sim-to-real迁移。",
+  "keyInsights": [
+    "首个覆盖具身智能全域研究的开源数据集，系统性支持五大研究方向",
+    "100%真实世界环境采集，远超仿真数据集的真实性和多样性",
+    "支持多种异构机器人平台，为跨本体泛化研究提供标准化基准",
+    "配套Genie Sim 3.0仿真平台，自然语言生成数字孪生，支持sim-to-real"
+  ],
+  "methodology": "### 数据集特点\n\n1. **五大研究方向覆盖**\n   - 物体操作（Manipulation）\n   - 导航（Navigation）\n   - 人机交互（Interaction）\n   - 多机器人协作（Collaboration）\n   - 长时域任务（Long-horizon Tasks）\n\n2. **异构机器人平台**\n   - AGIBOT G2 人形机器人\n   - AGIBOT G2 Air 移动操作臂\n   - 桌面协作机械臂\n   - 多种末端执行器（灵巧手、夹爪等）\n\n3. **场景多样性**\n   - 商业空间：零售货架、餐厅、酒店\n   - 家庭环境：厨房、客厅、卧室\n   - 工业场景：装配线、仓库、物流\n\n4. **数据采集工具 — MEgo**\n   - 无需机器人本体的\"随走随采\"系统\n   - 同步采集视觉、运动、触觉多模态数据\n   - 自动处理、重建和标注\n\n### 配套工具链\n\n- **Genie Sim 3.0**: 一站式仿真平台，自然语言生成数字孪生\n- **SOP系统**: 分布式在线学习，部署中的机器人持续学习\n- **GO-2 ViLLA模型**: 配套的具身基础模型，支持动作思维链",
+  "experiments": "- 在操作、导航等基准任务上提供标准化评测\n- 与Open X-Embodiment、DROID等数据集的对比分析\n- 证明真实数据在策略训练中的优势",
+  "impact": "为全球具身智能研究者提供高质量、大规模、多样化的训练数据。配套的Genie Sim 3.0和MEgo采集工具大幅降低了数据获取门槛，加速整个领域的算法迭代。",
+  "relatedWork": ["Open X-Embodiment", "DROID", "BridgeData V2", "RoboSet"],
+  "codeAvailable": true
+}

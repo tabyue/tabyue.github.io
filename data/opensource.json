@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-18T13:33",
+  "lastUpdated": "2026-04-19T01:33",
   "categories": [
     {"id": "all", "name": "全部", "icon": "🌐"},
     {"id": "simulation", "name": "仿真平台", "icon": "🎮"},
@@ -11,6 +11,26 @@
     {"id": "data-tools", "name": "数据与工具", "icon": "📊"}
   ],
   "projects": [
+    {
+      "name": "HiVLA",
+      "org": "Shanghai Jiao Tong University",
+      "description": "以视觉定位为中心的分层具身操作系统。HiVLA将高层语义规划与底层电机控制解耦——高层VLM通过Visual Grounding指向目标，底层动作模型负责精确控制。这种分层设计避免了端到端VLA在控制数据微调时的能力退化问题，在SimplerEnv基准和真实机器人实验中超越SOTA端到端方法。",
+      "github": "https://arxiv.org/abs/2604.14125",
+      "stars": "新发布",
+      "tags": ["VLA", "分层架构", "视觉定位", "操作"],
+      "category": "ai-model",
+      "addedDate": "2026-04-19"
+    },
+    {
+      "name": "ROS-LLM (Nature)",
+      "org": "ETH Zurich / 多机构",
+      "description": "发表在Nature Machine Intelligence的LLM+ROS通用具身智能框架。使非专业用户可通过自然语言提示直观编程机器人，实现从自然语言指令到物理执行的完整闭环。框架利用ROS上下文信息（传感器数据、机器人状态等）增强LLM的理解能力，完整实现已开源。",
+      "github": "https://github.com/huawei-noah/ROSLLM",
+      "stars": "3.5k",
+      "tags": ["LLM", "ROS", "Nature", "自然语言编程"],
+      "category": "framework",
+      "addedDate": "2026-04-19"
+    },
     {
       "name": "RoboClaw",
       "org": "MINT Lab / 上海交通大学",

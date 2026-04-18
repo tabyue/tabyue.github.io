@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-18T13:33",
+  "lastUpdated": "2026-04-19T01:33",
   "papers": [
+    {
+      "id": "p032",
+      "title": "HiVLA: A Visual-Grounded-Centric Hierarchical Embodied Manipulation System",
+      "authors": "Shanghai Jiao Tong University et al.",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.14125",
+      "github": "",
+      "tags": ["VLA", "分层架构", "视觉定位"],
+      "tldr": "提出以视觉定位为中心的分层具身操作系统HiVLA。核心思路是将高层语义规划与底层电机控制解耦：高层VLM负责理解任务语义并通过视觉定位（Visual Grounding）指向目标，底层动作模型负责精确运动控制。这种分层设计避免了端到端VLA在狭窄控制数据上微调导致视觉-语言能力退化的问题，在SimplerEnv和真实机器人实验中显著优于SOTA端到端VLA模型。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-19",
+      "keyInsights": [
+        "分层解耦：高层语义规划保留VLM的视觉-语言推理能力，底层专注运动控制",
+        "以视觉定位为桥梁：模型通过在图像上\"指向\"目标位置来连接语义理解和动作生成",
+        "避免端到端VLA的能力退化问题：不在控制数据上微调VLM，保持其通用推理能力",
+        "在多个benchmark上超越OpenVLA等SOTA端到端方法"
+      ],
+      "impact": "提出了VLA领域\"分层vs端到端\"的新思路，证明保持VLM推理能力比端到端微调更重要"
+    },
+    {
+      "id": "p031",
+      "title": "AGIBOT WORLD 2026: A Heterogeneous Dataset for Embodied AI Research",
+      "authors": "AGIBOT (智元机器人)",
+      "venue": "Technical Report 2026",
+      "date": "2026-04",
+      "arxiv": "https://agibot-world.com/",
+      "github": "https://github.com/agibot-world",
+      "tags": ["数据集", "异构机器人", "真实场景"],
+      "tldr": "智元机器人开源发布AGIBOT WORLD 2026——首个覆盖具身智能全域研究的异构真实场景数据集。数据100%来自真实世界环境，覆盖商业空间、家庭、工业等通用场景，系统性支持五大具身智能研究方向。包含多种异构机器人平台（人形、机械臂、移动操作等）的操作数据，为跨本体泛化研究提供标准化基准。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-19",
+      "keyInsights": [
+        "首个覆盖具身智能全域研究的开源数据集，系统性支持五大研究方向",
+        "100%真实世界环境采集，覆盖商业、家庭、工业等多种场景",
+        "支持多种异构机器人平台，为跨本体泛化研究提供基准",
+        "配套Genie Sim 3.0仿真平台，支持数字孪生和sim-to-real迁移"
+      ],
+      "impact": "为全球具身智能研究者提供高质量、大规模、多样化的训练数据，加速算法迭代"
+    },
     {
       "id": "p030",
       "title": "ABot-M0: VLA Foundation Model for Robotic Manipulation with Action Manifold Learning",
