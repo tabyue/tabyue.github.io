@@ -1,0 +1,39 @@
+{
+  "id": "p030",
+  "title": "ABot-M0: VLA Foundation Model for Robotic Manipulation with Action Manifold Learning",
+  "authors": "Yandan Yang, Jingzhou Luo, Yitao Liu, et al. (Alibaba AMAP CV Lab)",
+  "venue": "arXiv 2026",
+  "date": "2026-02",
+  "arxiv": "https://arxiv.org/abs/2602.11236",
+  "github": "https://github.com/amap-cvlab/ABot-Manipulation",
+  "projectPage": "https://amap-cvlab.github.io/ABot-Manipulation/",
+  "tags": ["VLA", "基础模型", "动作流形", "跨本体泛化"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-18",
+  "abstract": "在机器人领域，构建跨多种硬件的通用具身体仍然是核心挑战。ABot-M0提出动作流形学习框架，通过学习异构动作空间的统一低维表征来实现跨本体泛化。模型基于VLM+动作专家架构，采用双流特征交互增强语义理解和动作生成。在整合600万+开源轨迹后构建了目前最大的统一机器人操作数据集，实验证明在跨平台泛化和多任务操作上显著超越现有基线。",
+  "keyContributions": [
+    "动作流形学习：将不同机器人平台（Franka、UR5、xArm等）的异构动作空间映射到统一的低维流形空间，学习跨本体的不变动作表征",
+    "大规模统一数据：整合Open X-Embodiment、DROID、BridgeV2等600万+开源轨迹，建立统一数据管线和标准化预处理流程",
+    "双流特征交互：VLM骨干提取视觉-语言特征，动作专家头进行精细动作解码，两个流之间通过交叉注意力实现深度特征交互",
+    "全面消融实验：系统分析数据规模、模型架构、动作表征方法等因素对泛化性能的影响"
+  ],
+  "methodology": {
+    "architecture": "VLM（视觉-语言模型）+ 动作专家架构。视觉编码器提取多尺度图像特征，语言模型处理任务指令和上下文理解，动作专家头通过学习到的动作流形生成机器人动作。",
+    "trainingPipeline": "两阶段训练：(1) VLM预训练阶段，在大规模视觉-语言数据上学习通用表征；(2) 机器人数据微调阶段，在600万+统一操作数据上学习动作流形和跨本体动作生成。",
+    "actionManifold": "核心创新。不同机器人有不同的动作空间维度和语义（7-DoF关节角 vs 6-DoF末端位姿 vs 手指关节角），动作流形学习通过VAE-like的编码器将这些异构动作映射到共享的低维流形空间，再由解码器映射回特定机器人的动作空间。",
+    "evaluation": "在多个标准基准上评估，包括LIBERO、SimplerEnv、以及真实世界Franka和xArm机器人实验"
+  },
+  "results": [
+    "在LIBERO基准上超越OpenVLA、Octo等基线15%+",
+    "跨本体零样本迁移成功率>60%（Franka→xArm）",
+    "600万轨迹数据量显著提升泛化能力，验证了数据规模效应",
+    "双流特征交互比单流架构提升约12%任务成功率",
+    "已由高德团队全量开源模型权重、训练代码和数据管线"
+  ],
+  "relatedWork": [
+    {"title": "OpenVLA", "relationship": "基线对比，ABot-M0在跨本体泛化上显著优于OpenVLA"},
+    {"title": "Octo", "relationship": "基线对比，Octo是首批开源通用策略之一，ABot-M0在数据规模和跨平台泛化上进一步推进"},
+    {"title": "π₀", "relationship": "同期工作，π₀使用Flow Matching，ABot-M0使用动作流形，技术路线不同"}
+  ],
+  "practicalImplications": "ABot-M0为构建跨平台通用机器人策略提供了新的技术路线。动作流形学习降低了不同机器人之间数据复用的门槛，600万轨迹的统一数据集可直接供社区使用。已全量开源。"
+}

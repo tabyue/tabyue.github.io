@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-18T13:28",
+  "lastUpdated": "2026-04-18T13:33",
   "categories": [
     {"id": "all", "name": "全部", "icon": "🌐"},
     {"id": "simulation", "name": "仿真平台", "icon": "🎮"},
@@ -11,6 +11,26 @@
     {"id": "data-tools", "name": "数据与工具", "icon": "📊"}
   ],
   "projects": [
+    {
+      "name": "RoboClaw",
+      "org": "MINT Lab / 上海交通大学",
+      "description": "首个面向具身智能的开源AI助手框架。RoboClaw通过对话式交互实现机械臂的设置、校准、遥操作、数据采集、训练和推理全流程。支持任意本体和任意环境，提供从自然语言指令到物理执行的完整管线。基于OpenClaw助手系统向真实世界延伸。",
+      "github": "https://github.com/MINT-SJTU/RoboClaw",
+      "stars": "1.5k",
+      "tags": ["AI助手", "具身智能", "对话式", "全流程"],
+      "category": "framework",
+      "addedDate": "2026-04-18"
+    },
+    {
+      "name": "Kairos 3.0-4B (世界模型)",
+      "org": "大晓机器人 (ACE Robotics) / 商汤科技",
+      "description": "首个原生具身世界模型，4B参数。核心创新是混合线性注意力算子，将时序复杂度从O(n²)降至O(n)，支持7分钟长时连贯场景的动态交互预测。在物理一致性和跨本体泛化上达到SOTA，支持实时推理(>10FPS)。",
+      "github": "https://github.com/kairos-agi/kairos-sensenova",
+      "stars": "2.0k",
+      "tags": ["世界模型", "线性注意力", "实时推理", "4B"],
+      "category": "ai-model",
+      "addedDate": "2026-04-18"
+    },
     {
       "name": "Embodied-R1",
       "org": "Peking University / Tsinghua University",

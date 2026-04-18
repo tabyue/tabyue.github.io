@@ -1,0 +1,39 @@
+{
+  "id": "p029",
+  "title": "Kairos 3.0: Real-Time Generative World Model for Embodied Intelligence",
+  "authors": "ACE Robotics (大晓机器人) / SenseTime (商汤科技)",
+  "venue": "arXiv 2026 / Open Source",
+  "date": "2026-03",
+  "arxiv": "https://github.com/kairos-agi/kairos-sensenova",
+  "github": "https://github.com/kairos-agi/kairos-sensenova",
+  "projectPage": "https://www.opensourceforu.com/2026/03/ace-robotics-releases-open-source-embodied-ai-model-kairos-3-0-4b/",
+  "tags": ["世界模型", "实时生成", "具身智能", "线性注意力"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-18",
+  "abstract": "Kairos 3.0-4B是首个专为具身智能原生设计的实时生成世界模型，而非从视频生成模型改造而来。核心创新是混合线性注意力算子（Hybrid Linear Attention），将世界模型的时序建模复杂度从O(n²)降至O(n)，大幅减少显存和计算需求。支持7分钟长时连贯场景的动态交互预测，在物理一致性和跨本体泛化方面达到SOTA水平。",
+  "keyContributions": [
+    "原生具身世界模型：从零构建面向具身智能的世界模型架构，而非改造现有视频生成模型，更好地建模物理交互和因果关系",
+    "混合线性注意力（Hybrid Linear Attention）：首个专为世界模型设计的线性注意力算子，将时序复杂度从O(n²)降到O(n)，VRAM和计算开销大幅下降",
+    "7分钟长时连贯生成：远超现有世界模型的生成长度（通常<30秒），可持续预测长期交互场景",
+    "跨本体泛化能力：单一模型支持多种机器人形态（机械臂、双臂、人形机器人）的世界预测"
+  ],
+  "methodology": {
+    "architecture": "4B参数的Transformer架构，用混合线性注意力替代标准注意力。保留少量全注意力层处理关键帧的全局依赖，其余层使用线性注意力实现高效长序列建模。",
+    "worldModeling": "世界模型接收当前观测（多视角图像+本体感受状态）和动作指令，预测未来多步的视觉观测和状态变化。物理一致性通过专门的物理约束损失函数保证。",
+    "linearAttention": "混合线性注意力核心公式：将标准softmax(QK^T)V替换为φ(Q)φ(K)^T V的线性形式，其中φ是特征映射函数。混合策略在关键位置保留全注意力，平衡效率与表达能力。",
+    "training": "在包含多种机器人平台的大规模交互视频数据集上训练，覆盖室内操作、导航、人机交互等场景"
+  },
+  "results": [
+    "生成长度达7分钟（420秒），是现有世界模型的10倍+",
+    "4B参数规模在物理一致性评估中达到SOTA",
+    "显存使用比标准注意力世界模型减少约60%",
+    "支持实时推理（>10 FPS），满足在线机器人决策需求",
+    "已完全开源模型权重和训练代码"
+  ],
+  "relatedWork": [
+    {"title": "UniSim", "relationship": "前期工作，使用标准Transformer架构，Kairos 3.0在效率和生成长度上大幅超越"},
+    {"title": "ViVa", "relationship": "同期工作，ViVa将视频生成模型用作价值函数，Kairos 3.0专注于世界动态预测"},
+    {"title": "WoW (World of World)", "relationship": "同期调研，Kairos 3.0的实际性能远超WoW报告中的大多数模型"}
+  ],
+  "practicalImplications": "Kairos 3.0为机器人提供了实用级别的世界预测能力，线性注意力创新使其可部署到边缘设备上。长时连贯生成能力对复杂任务规划和安全预测具有重要价值。已完全开源。"
+}

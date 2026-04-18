@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-18T13:28",
+  "lastUpdated": "2026-04-18T13:33",
   "papers": [
+    {
+      "id": "p030",
+      "title": "ABot-M0: VLA Foundation Model for Robotic Manipulation with Action Manifold Learning",
+      "authors": "Alibaba AMAP CV Lab",
+      "venue": "arXiv 2026",
+      "date": "2026-02",
+      "arxiv": "https://arxiv.org/abs/2602.11236",
+      "github": "https://github.com/amap-cvlab/ABot-Manipulation",
+      "tags": ["VLA", "基础模型", "动作流形"],
+      "tldr": "阿里高德实验室提出ABot-M0，一个基于统一架构的通用VLA基础模型。核心创新是动作流形学习（Action Manifold Learning），通过学习跨机器人平台的统一动作表征空间来实现跨本体泛化。整合600万+开源轨迹构建最大统一操作数据集，采用双流特征交互增强语义理解与动作生成。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-18",
+      "keyInsights": [
+        "提出动作流形学习框架，将不同机器人的异构动作空间映射到统一的低维流形",
+        "整合600万+开源轨迹数据构建目前最大的统一机器人操作数据集",
+        "双流特征交互机制同时增强视觉-语言语义理解和精细动作生成",
+        "在跨本体泛化实验中显著超越OpenVLA、Octo等基线模型"
+      ],
+      "impact": "首个由中国互联网公司推出的大规模开源VLA基础模型，动作流形学习为跨平台机器人迁移提供新范式"
+    },
+    {
+      "id": "p029",
+      "title": "Kairos 3.0: Real-Time Generative World Model for Embodied Intelligence",
+      "authors": "ACE Robotics (大晓机器人) / SenseTime",
+      "venue": "arXiv 2026",
+      "date": "2026-03",
+      "arxiv": "https://github.com/kairos-agi/kairos-sensenova",
+      "github": "https://github.com/kairos-agi/kairos-sensenova",
+      "tags": ["世界模型", "实时生成", "具身智能"],
+      "tldr": "大晓机器人联合商汤科技开源Kairos 3.0-4B，一个原生具身世界模型。核心创新是混合线性注意力算子（Hybrid Linear Attention），将时序复杂度从O(n²)降至O(n)，大幅减少显存和计算开销。支持7分钟长时连贯场景的动态交互，实现物理一致性深度理解和跨本体泛化。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-18",
+      "keyInsights": [
+        "首个专为具身智能原生设计的实时生成世界模型，非视频生成模型改造",
+        "混合线性注意力将时序复杂度O(n²)降至O(n)，支持长序列实时推理",
+        "支持7分钟长时连贯交互场景，远超现有世界模型的生成长度",
+        "4B参数规模在物理一致性和跨本体泛化上达到SOTA水平"
+      ],
+      "impact": "首个开源的原生具身世界模型，线性注意力创新显著降低部署门槛，推动世界模型在机器人领域的实用化"
+    },
     {
       "id": "p028",
       "title": "Embodied-R1: Reinforced Embodied Reasoning for General Robotic Manipulation",
