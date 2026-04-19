@@ -272,6 +272,11 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .status-new{background:rgba(99,102,241,.12);color:var(--pl);font-size:.55rem;font-family:'JetBrains Mono';letter-spacing:.5px}
 .tab-visited::after{content:'';display:inline-block;width:5px;height:5px;background:var(--sl);border-radius:50%;margin-left:5px;vertical-align:middle}
 .tab-updated::before{content:'🔥';margin-right:3px}
+.tab-updated{background:rgba(239,68,68,.08)!important;border-color:rgba(239,68,68,.25)!important}
+.sec-update-banner{background:linear-gradient(135deg,rgba(239,68,68,.08),rgba(249,115,22,.08));border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:10px 16px;margin-bottom:20px;font-size:.78rem;color:#fb923c;display:flex;align-items:center;gap:8px;line-height:1.5}
+.panel-updated{border-left:3px solid rgba(239,68,68,.4);padding-left:12px!important}
+.panel-updated .md-content h3{position:relative}
+.panel-updated .md-content h3::after{content:'NEW';font-size:.5rem;font-family:'JetBrains Mono';background:rgba(239,68,68,.15);color:#f87171;padding:1px 6px;border-radius:4px;margin-left:8px;vertical-align:middle;letter-spacing:.5px}
 /* Recent Updates Panel */
 .recent-updates{margin-top:40px;max-width:1200px;margin-left:auto;margin-right:auto;padding:0 24px 40px}
 .ru-header{display:flex;align-items:center;gap:10px;cursor:pointer;padding:14px 20px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);transition:border-color .2s}
@@ -895,7 +900,9 @@ async function openLearnModule(modId, el){
         const secLen=d.sections.length;
         const nextMod=getNextModule(modId);
         d.sections.forEach((sec,i)=>{
-            h+=`<div class="modal-panel learn-panel${i===0?' active':''}" data-lidx="${i}"><div class="md-content">${renderMd(sec.content)}</div><div class="read-sentinel" data-sec="${i}" style="height:1px"></div>`;
+            const secIsNew=sec.lastUpdated&&(Date.now()-new Date(sec.lastUpdated).getTime())<3*86400000;
+            const updBanner=secIsNew?`<div class="sec-update-banner">🔥 本章节已于 ${sec.lastUpdated.replace('T',' ')} 更新 — 新增/修改的内容已用左侧高亮条标记</div>`:'';
+            h+=`<div class="modal-panel learn-panel${i===0?' active':''}${secIsNew?' panel-updated':''}" data-lidx="${i}">${updBanner}<div class="md-content">${renderMd(sec.content)}</div><div class="read-sentinel" data-sec="${i}" style="height:1px"></div>`;
             // 章节底部导航
             h+=`<div class="sec-nav">`;
             if(i>0){
