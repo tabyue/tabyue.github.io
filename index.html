@@ -1794,21 +1794,31 @@ function renderInboxHistory(){
     if(!inbox.length){container.style.display='none';return;}
     container.style.display='block';
     const typeIcons={auto:'🤖',news:'📰',paper:'📄',project:'💻',resource:'📚',other:'💡'};
-    list.innerHTML=inbox.slice(0,10).map((it,i)=>{
+    list.innerHTML=inbox.slice(0,20).map((it,i)=>{
         const icon=typeIcons[it.type]||'📎';
         const date=new Date(it.time);
         const timeStr=(date.getMonth()+1)+'/'+date.getDate()+' '+date.getHours()+':'+String(date.getMinutes()).padStart(2,'0');
         const statusBadge=it.status==='processed'?'<span style="color:#22c55e;font-size:.68rem">✅ 已采纳</span>':it.status==='rejected'?'<span style="color:var(--t3);font-size:.68rem">❌ 未采纳</span>':'<span style="color:var(--cyl);font-size:.68rem">⏳ 待处理</span>';
-        const shortUrl=it.url.replace(/^https?:\/\//,'').substring(0,40)+(it.url.length>50?'...':'');
-        const resultLine=it.result?'<div style="color:#22c55e;font-size:.66rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+it.result.replace(/"/g,'&quot;')+'">→ '+it.result+'</div>':'';
-        return`<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg3);border-radius:8px;margin-bottom:4px;font-size:.76rem">
-            <span>${icon}</span>
-            <div style="flex:1;min-width:0;overflow:hidden">
-                <div style="color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${shortUrl}</div>
-                ${it.note?'<div style="color:var(--t3);font-size:.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+it.note+'</div>':''}
-                ${resultLine}
+        const resultLine=it.result?'<div style="color:#22c55e;font-size:.66rem;margin-top:2px">→ '+it.result+'</div>':'';
+        // Build resubmit GitHub Issue URL
+        const rsTitle=encodeURIComponent('[投稿] '+(it.note||it.url).substring(0,60));
+        const rsBody=encodeURIComponent('## 素材投稿\n\n- **链接**: '+it.url+'\n- **类型**: '+(it.type||'auto')+'\n- **备注**: '+(it.note||'无')+'\n- **时间**: '+it.time+'\n\n---\n*由具身智能知识门户投稿箱自动创建*');
+        const rsUrl='https://github.com/tabyue/tabyue.github.io/issues/new?title='+rsTitle+'&body='+rsBody+'&labels=inbox';
+        const resubmitBtn=it.status==='pending'?`<a href="${rsUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="display:inline-block;font-size:.62rem;padding:2px 8px;background:rgba(99,102,241,.15);color:var(--pl);border-radius:6px;text-decoration:none;white-space:nowrap;margin-top:3px">📤 重新提交</a>`:'';
+        return`<div style="padding:10px 12px;background:var(--bg3);border-radius:10px;margin-bottom:6px;font-size:.76rem">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+                <span>${icon}</span>
+                <span style="flex:1"></span>
+                ${statusBadge}
+                <span style="font-size:.65rem;color:var(--t3)">${timeStr}</span>
             </div>
-            <div style="text-align:right;flex-shrink:0">${statusBadge}<div style="font-size:.65rem;color:var(--t3)">${timeStr}</div></div>
+            <a href="${it.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="display:block;color:var(--cyl);font-size:.72rem;word-break:break-all;line-height:1.5;text-decoration:none;margin-bottom:2px">${it.url}</a>
+            ${it.note?'<div style="color:var(--t3);font-size:.68rem;margin-top:2px">💬 '+it.note+'</div>':''}
+            ${resultLine}
+            <div style="display:flex;gap:6px;margin-top:6px;align-items:center">
+                <button onclick="navigator.clipboard.writeText('${it.url.replace(/'/g,"\\'")}');this.textContent='✓ 已复制';setTimeout(()=>this.textContent='📋 复制链接',1200)" style="font-size:.62rem;padding:2px 8px;background:var(--bg2);border:1px solid var(--bd);color:var(--t2);border-radius:6px;cursor:pointer;white-space:nowrap">📋 复制链接</button>
+                ${resubmitBtn}
+            </div>
         </div>`;
     }).join('');
 }
