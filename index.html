@@ -269,8 +269,35 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .status-done{background:rgba(16,185,129,.1);color:var(--sl)}
 .status-review{background:rgba(245,158,11,.1);color:var(--al)}
 .status-updated{background:rgba(239,68,68,.12);color:#f87171;font-size:.55rem;animation:pulse 2s ease-in-out infinite}
+.status-new{background:rgba(99,102,241,.12);color:var(--pl);font-size:.55rem;font-family:'JetBrains Mono';letter-spacing:.5px}
 .tab-visited::after{content:'';display:inline-block;width:5px;height:5px;background:var(--sl);border-radius:50%;margin-left:5px;vertical-align:middle}
 .tab-updated::before{content:'🔥';margin-right:3px}
+/* Recent Updates Panel */
+.recent-updates{margin-top:40px;max-width:1200px;margin-left:auto;margin-right:auto;padding:0 24px 40px}
+.ru-header{display:flex;align-items:center;gap:10px;cursor:pointer;padding:14px 20px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);transition:border-color .2s}
+.ru-header:hover{border-color:var(--bd2)}
+.ru-title{font-size:.95rem;font-weight:600;color:var(--t1)}
+.ru-count{font-family:'JetBrains Mono';font-size:.68rem;padding:2px 8px;background:rgba(239,68,68,.12);color:#f87171;border-radius:10px}
+.ru-arrow{margin-left:auto;font-size:.7rem;color:var(--t3);transition:transform .25s}
+.ru-open .ru-arrow{transform:rotate(180deg)}
+.ru-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.ru-open .ru-body{max-height:3000px}
+.ru-list{padding:12px 0}
+.ru-item{display:flex;align-items:flex-start;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(30,41,59,.5);cursor:pointer;transition:background .15s}
+.ru-item:hover{background:rgba(99,102,241,.04)}
+.ru-item:last-child{border-bottom:none}
+.ru-icon{font-size:1rem;flex-shrink:0;margin-top:2px}
+.ru-info{flex:1;min-width:0}
+.ru-item-title{font-size:.82rem;color:var(--t1);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ru-item-meta{font-size:.68rem;color:var(--t3);margin-top:2px;display:flex;gap:8px;align-items:center}
+.ru-section-tag{font-size:.6rem;padding:1px 6px;border-radius:6px;font-weight:500}
+.ru-tag-news{background:rgba(245,158,11,.1);color:var(--al)}
+.ru-tag-paper{background:rgba(99,102,241,.1);color:var(--pl)}
+.ru-tag-os{background:rgba(16,185,129,.1);color:var(--sl)}
+.ru-tag-job{background:rgba(236,72,153,.1);color:var(--pk)}
+.ru-tag-learn{background:rgba(139,92,246,.1);color:var(--v)}
+.ru-tag-model{background:rgba(6,182,212,.1);color:var(--cy)}
+.ru-tag-hw{background:rgba(100,116,139,.1);color:var(--t2)}
 .learn-stats{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px;padding:16px 20px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r)}
 .learn-stat{text-align:center}
 .learn-stat-v{font-family:'Space Grotesk';font-size:1.4rem;font-weight:700}
@@ -375,7 +402,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 <!-- HOME -->
 <div class="page active" id="pg-home">
     <div class="home-hero">
-        <div class="home-eyebrow"><span class="dot"></span> 持续更新 · 每日 00:00 & 12:00 · <span id="heroUpdateTime"></span></div>
+        <div class="home-eyebrow"><span class="dot"></span> 持续更新 · 每 6 小时 · <span id="heroUpdateTime"></span></div>
         <h1><span class="grad">Embodied AI</span><br>Knowledge Hub</h1>
         <p class="sub">具身智能从业与研究人员的一站式知识门户</p>
         <div class="home-stats">
@@ -401,6 +428,15 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
     <div class="home-latest">
         <div class="home-latest-title">🔥 最新动态</div>
         <div class="card-grid" id="homeLatest"></div>
+    </div>
+    <div class="recent-updates" id="recentUpdates" style="display:none">
+        <div class="ru-header" onclick="this.parentElement.classList.toggle('ru-open')">
+            <span style="font-size:1rem">📋</span>
+            <span class="ru-title">最近更新一览</span>
+            <span class="ru-count" id="ruCount">0</span>
+            <span class="ru-arrow">▼</span>
+        </div>
+        <div class="ru-body"><div class="ru-list" id="ruList"></div></div>
     </div>
 </div>
 
@@ -584,7 +620,7 @@ async function init(){
             heroEl.textContent=diffH<1?'刚刚更新':diffH<24?diffH+'小时前更新':dateStr+' 更新';
         }
     }
-    renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();renderModels();renderDatasets();renderHardware();
+    renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();renderModels();renderDatasets();renderHardware();renderRecentUpdates();
 }
 
 // === RENDER LEARN ===
@@ -975,7 +1011,8 @@ function renderPapers(){
         const [y,m]=ym.split('-');
         h+=`<div class="tl-group-label" id="paper-${ym}" style="grid-column:1/-1">📅 ${y} 年 ${monthNames[parseInt(m)]||m}</div>`;
         groups[ym].forEach(({p,i})=>{
-            h+=`<div class="card" style="cursor:pointer" onclick="openPaper(${i})"><div class="card-tags">${p.tags.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('')}<span class="tag tag-purple" style="margin-left:auto">${p.difficulty}</span></div><div class="card-title">${p.title}</div><div class="card-meta">${p.authors} · ${p.venue} · ${p.date}</div><div class="card-desc"><strong>TL;DR:</strong> ${p.tldr}</div><div class="card-footer">${p.arxiv?`<a href="${p.arxiv}" target="_blank" class="card-btn" onclick="event.stopPropagation()">📄 arXiv</a>`:''} ${p.github?`<a href="${p.github}" target="_blank" class="card-btn" onclick="event.stopPropagation()">💻 Code</a>`:''}<span class="card-btn primary">📚 深度解读 →</span></div></div>`;
+            const pNew=p.addedDate&&(Date.now()-new Date(p.addedDate).getTime())<3*86400000;
+            h+=`<div class="card" style="cursor:pointer" onclick="openPaper(${i})"><div class="card-tags">${p.tags.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('')}${pNew?'<span class="status-tag status-new">NEW</span>':''}<span class="tag tag-purple" style="margin-left:auto">${p.difficulty}</span></div><div class="card-title">${p.title}</div><div class="card-meta">${p.authors} · ${p.venue} · ${p.date}</div><div class="card-desc"><strong>TL;DR:</strong> ${p.tldr}</div><div class="card-footer">${p.arxiv?`<a href="${p.arxiv}" target="_blank" class="card-btn" onclick="event.stopPropagation()">📄 arXiv</a>`:''} ${p.github?`<a href="${p.github}" target="_blank" class="card-btn" onclick="event.stopPropagation()">💻 Code</a>`:''}<span class="card-btn primary">📚 深度解读 →</span></div></div>`;
         });
     });
     document.getElementById('papersGrid').innerHTML=h;
@@ -1316,7 +1353,8 @@ function renderOSGrouped(catFilter){
         html+=`<div class="os-group-header"><span class="os-group-icon">${cat.icon}</span><span class="os-group-name">${cat.name}</span><span class="os-group-count">${projs.length}</span></div>`;
         html+=`<div class="card-grid">`;
         projs.forEach(p=>{
-            html+=`<div class="card" data-cat="${p.category}"><div class="card-tags"><span class="os-stars">⭐ ${p.stars}</span><span class="os-cat-badge os-cat-${p.category}">${cat.name}</span>${(p.tags||[]).map(t=>`<span class="tag tag-purple">${t}</span>`).join('')}</div><div class="card-title">${p.name} <span style="font-size:.78rem;color:var(--t3);font-weight:400">${p.org}</span></div><div class="card-desc">${p.description}</div>${p.difficulty?`<div style="font-size:.72rem;color:var(--t3);margin-top:6px">📊 难度: ${p.difficulty}</div>`:''}<div class="card-footer"><a href="${p.github}" target="_blank" class="card-btn primary">💻 GitHub</a></div></div>`;
+            const osNew=p.addedDate&&(Date.now()-new Date(p.addedDate).getTime())<3*86400000;
+            html+=`<div class="card" data-cat="${p.category}"><div class="card-tags"><span class="os-stars">⭐ ${p.stars}</span><span class="os-cat-badge os-cat-${p.category}">${cat.name}</span>${osNew?'<span class="status-tag status-new">NEW</span>':''}${(p.tags||[]).map(t=>`<span class="tag tag-purple">${t}</span>`).join('')}</div><div class="card-title">${p.name} <span style="font-size:.78rem;color:var(--t3);font-weight:400">${p.org}</span></div><div class="card-desc">${p.description}</div>${p.difficulty?`<div style="font-size:.72rem;color:var(--t3);margin-top:6px">📊 难度: ${p.difficulty}</div>`:''}<div class="card-footer"><a href="${p.github}" target="_blank" class="card-btn primary">💻 GitHub</a></div></div>`;
         });
         html+=`</div></div>`;
     });
@@ -1366,7 +1404,8 @@ function renderNews(){
         const [y,m]=ym.split('-');
         h+=`<div class="tl-group-label" id="news-${ym}" style="grid-column:1/-1">📅 ${y} 年 ${monthNames[parseInt(m)]||m}</div>`;
         groups[ym].forEach(n=>{
-            h+=`<a class="card" href="${n.url}" target="_blank" style="text-decoration:none;color:inherit" data-cat="${n.category}"><span class="news-cat ncat-${n.category}">${n.category}</span><div class="card-title">${n.title}</div><div class="card-desc">${n.summary}</div><div class="card-meta" style="margin-top:10px">${n.source} · ${n.date}</div></a>`;
+            const nNew=n.addedDate&&(Date.now()-new Date(n.addedDate).getTime())<3*86400000;
+            h+=`<a class="card" href="${n.url}" target="_blank" style="text-decoration:none;color:inherit" data-cat="${n.category}"><span class="news-cat ncat-${n.category}">${n.category}</span>${nNew?'<span class="status-tag status-new" style="float:right;margin-top:2px">NEW</span>':''}<div class="card-title">${n.title}</div><div class="card-desc">${n.summary}</div><div class="card-meta" style="margin-top:10px">${n.source} · ${n.date}</div></a>`;
         });
     });
     document.getElementById('newsGrid').innerHTML=h;
@@ -1472,15 +1511,17 @@ function renderJobCards(){
         if(f.city!=='全部'&&j.city!==f.city)return false;
         return true;
     });
-    document.getElementById('jobsGrid').innerHTML=filtered.length?filtered.map(j=>`<a class="card" href="${j.url}" target="_blank" style="text-decoration:none;color:inherit">
-        <div class="card-tags"><span class="job-type jtype-${j.type}">${j.type}</span>${j.tags.map(t=>`<span class="tag tag-purple">${t}</span>`).join('')}</div>
+    document.getElementById('jobsGrid').innerHTML=filtered.length?filtered.map(j=>{
+        const jNew=j.addedDate&&(Date.now()-new Date(j.addedDate).getTime())<3*86400000;
+        return `<a class="card" href="${j.url}" target="_blank" style="text-decoration:none;color:inherit">
+        <div class="card-tags"><span class="job-type jtype-${j.type}">${j.type}</span>${jNew?'<span class="status-tag status-new">NEW</span>':''}${j.tags.map(t=>`<span class="tag tag-purple">${t}</span>`).join('')}</div>
         <div class="card-title">${j.title}</div>
         <div class="job-company">${j.company}</div>
         <div class="job-salary">${j.salary}</div>
         <div class="job-info"><span>📍 ${j.city}</span><span>🎓 ${j.education}</span><span>📅 ${j.experience}</span><span style="color:var(--t3)">发布: ${j.postDate}</span></div>
         <div class="card-desc">${j.description}</div>
         <div class="card-footer"><span class="card-btn primary">查看详情 →</span><span style="font-size:.68rem;color:var(--t3);margin-left:auto">来源: ${j.source}</span></div>
-    </a>`).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:40px">暂无符合条件的岗位</div>';
+    </a>`}).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:40px">暂无符合条件的岗位</div>';
 }
 function filterJobs(el,dimension,value){
     _jobFilters[dimension]=value;
@@ -1736,6 +1777,60 @@ function renderInboxHistory(){
 // Show FAB on mobile
 if(window.innerWidth<=768)document.getElementById('inboxFab').style.display='block';
 window.addEventListener('resize',()=>{document.getElementById('inboxFab').style.display=window.innerWidth<=768?'block':'none';});
+
+// === RECENT UPDATES PANEL ===
+function renderRecentUpdates(){
+    const THREE_DAYS=3*86400000;
+    const now=Date.now();
+    const items=[];
+    // News
+    if(ND&&ND.news)ND.news.forEach(n=>{
+        if(n.addedDate&&(now-new Date(n.addedDate).getTime())<THREE_DAYS)
+            items.push({type:'news',icon:'📰',tag:'资讯',cls:'ru-tag-news',title:n.title,date:n.addedDate,action:()=>{go('news')}});
+    });
+    // Papers
+    if(PD&&PD.papers)PD.papers.forEach((p,i)=>{
+        if(p.addedDate&&(now-new Date(p.addedDate).getTime())<THREE_DAYS)
+            items.push({type:'paper',icon:'📄',tag:'论文',cls:'ru-tag-paper',title:p.title,date:p.addedDate,action:()=>{go('papers');setTimeout(()=>openPaper(i),300)}});
+    });
+    // Opensource
+    if(OD&&OD.projects)OD.projects.forEach(p=>{
+        if(p.addedDate&&(now-new Date(p.addedDate).getTime())<THREE_DAYS)
+            items.push({type:'os',icon:'💻',tag:'开源',cls:'ru-tag-os',title:p.name+' — '+p.org,date:p.addedDate,action:()=>{go('opensource')}});
+    });
+    // Jobs
+    if(JD&&JD.jobs)JD.jobs.forEach(j=>{
+        if(j.addedDate&&(now-new Date(j.addedDate).getTime())<THREE_DAYS)
+            items.push({type:'job',icon:'💼',tag:'招聘',cls:'ru-tag-job',title:j.title+' · '+j.company,date:j.addedDate,action:()=>{go('jobs')}});
+    });
+    // Learn modules
+    if(LD&&LD.stages)LD.stages.forEach(s=>s.modules.forEach(m=>{
+        if(m.lastUpdated&&(now-new Date(m.lastUpdated).getTime())<THREE_DAYS)
+            items.push({type:'learn',icon:'📚',tag:'学习',cls:'ru-tag-learn',title:m.name,date:m.lastUpdated,action:()=>{go('learn');const mid=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();setTimeout(()=>openLearnModule(mid),300)}});
+    }));
+    // Models
+    if(MD&&MD.models)MD.models.forEach(m=>{
+        if(m.addedDate&&(now-new Date(m.addedDate).getTime())<THREE_DAYS)
+            items.push({type:'model',icon:'🧠',tag:'模型',cls:'ru-tag-model',title:m.name+' · '+m.org,date:m.addedDate,action:()=>{go('models')}});
+    });
+    // Sort by date desc
+    items.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+    const panel=document.getElementById('recentUpdates');
+    if(!items.length){panel.style.display='none';return}
+    panel.style.display='block';
+    document.getElementById('ruCount').textContent=items.length+' 项';
+    const daysAgo=d=>{const diff=Math.floor((now-new Date(d).getTime())/36e5);return diff<1?'刚刚':diff<24?diff+'小时前':Math.floor(diff/24)+'天前'};
+    document.getElementById('ruList').innerHTML=items.map((it,i)=>
+        `<div class="ru-item" onclick="window._ruActions[${i}]()">
+            <span class="ru-icon">${it.icon}</span>
+            <div class="ru-info">
+                <div class="ru-item-title">${it.title}</div>
+                <div class="ru-item-meta"><span class="ru-section-tag ${it.cls}">${it.tag}</span><span>${daysAgo(it.date)}</span></div>
+            </div>
+        </div>`
+    ).join('');
+    window._ruActions=items.map(it=>it.action);
+}
 
 init();
 </script>
