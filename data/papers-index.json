@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-19T15:35",
+  "lastUpdated": "2026-04-19T22:16",
   "papers": [
+    {
+      "id": "p035",
+      "title": "ACoT-VLA: Action Chain-of-Thought for Vision-Language-Action Models",
+      "authors": "AGIBOT (智元机器人) / 北京航空航天大学",
+      "venue": "CVPR 2026",
+      "date": "2026-01",
+      "arxiv": "https://arxiv.org/abs/2601.11404",
+      "github": "https://github.com/AgibotTech/ACoT-VLA",
+      "tags": ["VLA", "Chain-of-Thought", "CVPR 2026", "动作推理"],
+      "tldr": "智元机器人联合北航提出ACoT-VLA，引入动作链式思维(Action Chain-of-Thought)范式，将推理过程形式化为粗粒度动作意图的结构化序列来引导最终策略。打破了传统VLA直接从多模态输入映射动作的范式，在推理过程本身中加入了动作空间的结构化思考。入选CVPR 2026，已完整开源训练和推理代码。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-19",
+      "keyInsights": [
+        "首次提出在VLA中使用动作空间的链式思维推理（而非语言/视觉空间）",
+        "推理过程被结构化为粗粒度动作意图序列，作为最终精细动作的引导",
+        "弥合了VLA模型中语义理解与精确控制之间的语义鸿沟",
+        "入选CVPR 2026，智元开源完整实现"
+      ],
+      "impact": "为VLA模型开辟了新的推理范式，证明动作空间的思维链比语言空间的推理更适合机器人控制"
+    },
+    {
+      "id": "p036",
+      "title": "Embodied-R1: Reinforced Embodied Reasoning for General Robotic Manipulation",
+      "authors": "天津大学 et al.",
+      "venue": "arXiv 2025",
+      "date": "2025-08",
+      "arxiv": "https://arxiv.org/abs/2508.13998",
+      "github": "https://embodied-r1.github.io/",
+      "tags": ["VLM", "具身推理", "Pointing", "强化微调", "3B"],
+      "tldr": "提出Embodied-R1，一个3B参数的视觉语言模型(VLM)，专为通用机器人操作设计。核心创新是'Pointing'机制——用指向目标的中间表征桥接视觉语言理解和底层动作，实现了与机器人本体无关的通用接口。通过两阶段强化微调(RFT)训练方法，Embodied-R1在未见过的机器人和场景中展现出出色的泛化能力。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-19",
+      "keyInsights": [
+        "Pointing作为本体无关的中间表征，可在不同机器人间迁移",
+        "3B参数规模小巧高效，适合边缘部署",
+        "强化微调(RFT)让模型学会从自身经验中改进",
+        "在多种未见机器人本体上验证了泛化能力"
+      ],
+      "impact": "提出了一种优雅的VLM→机器人动作桥接方案，Pointing机制可能成为通用机器人操控的标准接口"
+    },
     {
       "id": "p034",
       "title": "A Careful Examination of Large Behavior Models for Multitask Robot Manipulation",

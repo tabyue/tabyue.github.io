@@ -1,0 +1,39 @@
+{
+  "id": "p035",
+  "title": "ACoT-VLA: Action Chain-of-Thought for Vision-Language-Action Models",
+  "authors": "AGIBOT (智元机器人) / 北京航空航天大学",
+  "venue": "CVPR 2026",
+  "date": "2026-01",
+  "arxiv": "https://arxiv.org/abs/2601.11404",
+  "github": "https://github.com/AgibotTech/ACoT-VLA",
+  "tags": ["VLA", "Chain-of-Thought", "CVPR 2026", "动作推理"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-19",
+  "tldr": "智元机器人联合北航提出ACoT-VLA，引入动作链式思维(Action Chain-of-Thought)范式，将推理过程形式化为粗粒度动作意图的结构化序列来引导最终策略。入选CVPR 2026并完整开源。",
+  "abstract": "Vision-Language-Action models have emerged as essential generalist robot policies for diverse manipulation tasks, conventionally relying on directly translating multimodal inputs into low-level actions. This paper introduces Action Chain-of-Thought (ACoT), a paradigm where the reasoning process itself is formulated as a structured sequence of coarse action intents that guide the final policy. Unlike conventional approaches that map multimodal inputs directly to actions, ACoT introduces an intermediate step of structured action reasoning. This bridges the semantic gap between high-level understanding and precise control, enabling more interpretable and robust robot policies.",
+  "keyInsights": [
+    "首次提出在VLA中使用动作空间的链式思维推理（而非语言/视觉空间）",
+    "推理过程被结构化为粗粒度动作意图序列，作为最终精细动作的引导",
+    "弥合了VLA模型中语义理解与精确控制之间的语义鸿沟",
+    "提供了可解释的中间推理步骤，便于调试和理解模型行为"
+  ],
+  "methodology": "ACoT将VLA推理分为两阶段：1) 生成动作意图序列（Action Chain-of-Thought）——模型先推理出一系列粗粒度的动作意图，如'接近目标'、'调整朝向'、'闭合夹爪'等；2) 基于意图序列生成精确的低层动作。这种分层推理使得模型能够先进行高层规划再执行精细控制，而非一步到位。",
+  "results": "在多个操作基准上优于直接映射的VLA基线方法。动作意图序列提供了可解释性，并在未见场景的泛化测试中展现更好的鲁棒性。",
+  "impact": "为VLA模型开辟了新的推理范式，证明动作空间的思维链比语言空间的推理更适合机器人控制。入选CVPR 2026标志着智元在VLA研究的国际影响力。",
+  "relatedPapers": ["p034", "p032", "p029"],
+  "codeAvailable": true,
+  "sections": [
+    {
+      "title": "核心创新：动作思维链",
+      "content": "传统VLA模型的推理路径：观测(图像+语言) → 直接输出动作。ACoT的推理路径：观测 → 动作意图序列(粗粒度) → 精细动作。这类似于人类操作时的思维过程——先想'我要伸手过去、对准、抓住'，再精确控制肌肉完成动作。"
+    },
+    {
+      "title": "与语言CoT的区别",
+      "content": "语言Chain-of-Thought（如RT-2的推理链）用自然语言描述推理步骤，但语言空间与动作空间存在巨大的语义鸿沟。ACoT直接在动作空间中构建思维链，推理步骤本身就是粗粒度的动作表示，天然与最终的精细动作对齐。"
+    },
+    {
+      "title": "实验设置与结果",
+      "content": "在SimplerEnv和真实机器人上验证。对比基线包括RT-2、OpenVLA、直接映射VLA。ACoT在成功率和泛化性上均有提升，尤其在需要多步推理的复杂任务中优势明显。"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "id": "p036",
+  "title": "Embodied-R1: Reinforced Embodied Reasoning for General Robotic Manipulation",
+  "authors": "天津大学 et al.",
+  "venue": "arXiv 2025",
+  "date": "2025-08",
+  "arxiv": "https://arxiv.org/abs/2508.13998",
+  "github": "https://embodied-r1.github.io/",
+  "tags": ["VLM", "具身推理", "Pointing", "强化微调", "3B"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-19",
+  "tldr": "提出Embodied-R1，一个3B参数的VLM，通过Pointing中间表征和强化微调(RFT)实现通用机器人操作。Pointing机制让同一模型可在不同机器人本体上使用，无需重新训练。",
+  "abstract": "We introduce Embodied-R1, a 3B Vision-Language Model (VLM) specifically designed for embodied reasoning and pointing. We use a wide range of embodied and general visual reasoning data for Supervised Fine-tuning (SFT), then apply Reinforced Fine-tuning (RFT) to further improve reasoning capabilities. The key innovation is the 'Pointing' mechanism that bridges visual-language understanding with low-level robot actions through an embodiment-agnostic intermediate representation.",
+  "keyInsights": [
+    "Pointing作为本体无关的中间表征，可在不同机器人间迁移",
+    "3B参数规模小巧高效，适合边缘部署",
+    "两阶段训练：SFT建立基础能力 + RFT从经验中持续改进",
+    "在多种未见机器人本体上验证了泛化能力"
+  ],
+  "methodology": "Embodied-R1使用VLM理解场景和指令，通过Pointing机制在图像上标注目标操作点，再由底层控制器将Pointing转化为具体动作。训练流程：1) 在大量具身+通用视觉推理数据上SFT；2) 使用RFT让模型在仿真/真机交互中通过奖励信号改进推理能力。Pointing的关键优势是它与具体机器人本体解耦——不同的机械臂只需不同的Pointing→动作转换器。",
+  "results": "在多个操作基准上超越或匹敌更大模型。3B规模使得在边缘设备(如Jetson AGX)上实时推理成为可能。在5种不同机器人本体上验证了Pointing的迁移能力。",
+  "impact": "提出了一种优雅的VLM→机器人动作桥接方案，Pointing机制可能成为通用机器人操控的标准接口。证明了小模型+好的中间表征可以媲美大模型的效果。",
+  "relatedPapers": ["p035", "p032", "p028"],
+  "codeAvailable": true,
+  "sections": [
+    {
+      "title": "Pointing 机制详解",
+      "content": "Pointing是模型在输入图像上标注的操作目标点。例如，指令'拿起红色杯子'时，模型在图像上标注杯子的抓取点位置。这个2D点再通过深度图转为3D坐标，配合逆运动学转化为关节命令。不同机器人只需更换IK求解器，VLM本身完全复用。"
+    },
+    {
+      "title": "强化微调(RFT)",
+      "content": "SFT阶段教会模型基本的场景理解和Pointing能力。RFT阶段让模型在仿真环境中与物理世界交互，通过任务成功/失败的奖励信号进一步优化推理链。这类似于让模型'从做中学'，而不仅仅是从演示中学。"
+    },
+    {
+      "title": "泛化验证",
+      "content": "在Franka、UR5、ARX5、ALOHA和自定义机械臂上验证。同一个3B VLM无需重新训练，仅更换Pointing→动作转换模块即可适配不同本体。证明了Pointing作为通用中间表征的有效性。"
+    }
+  ]
+}

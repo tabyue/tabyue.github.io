@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-19T20:30",
+  "lastUpdated": "2026-04-19T22:16",
   "categories": [
     {"id": "all", "name": "全部", "icon": "🌐"},
     {"id": "simulation", "name": "仿真平台", "icon": "🎮"},
@@ -11,6 +11,26 @@
     {"id": "data-tools", "name": "数据与工具", "icon": "📊"}
   ],
   "projects": [
+    {
+      "name": "ACoT-VLA (动作思维链VLA)",
+      "org": "AGIBOT (智元机器人) / 北京航空航天大学",
+      "description": "CVPR 2026入选的VLA新范式。引入Action Chain-of-Thought，将推理过程形式化为粗粒度动作意图序列来引导最终策略，弥合语义理解与精确控制的鸿沟。提供完整的训练、推理代码和预训练权重。",
+      "github": "https://github.com/AgibotTech/ACoT-VLA",
+      "stars": "1.8k",
+      "tags": ["VLA", "CVPR 2026", "动作推理", "Chain-of-Thought", "智元"],
+      "category": "ai-model",
+      "addedDate": "2026-04-19"
+    },
+    {
+      "name": "Embodied-R1 (具身推理VLM)",
+      "org": "天津大学",
+      "description": "3B参数的视觉语言模型(VLM)，通过创新的Pointing中间表征和强化微调(RFT)实现通用机器人操作。Pointing机制让同一模型无需重新训练即可适配不同机器人本体，在5种机械臂上验证了泛化能力。",
+      "github": "https://embodied-r1.github.io/",
+      "stars": "1.2k",
+      "tags": ["VLM", "3B", "Pointing", "本体无关", "强化微调"],
+      "category": "ai-model",
+      "addedDate": "2026-04-19"
+    },
     {
       "name": "LingBot-Map (流式3D重建)",
       "org": "蚂蚁灵波 / Robbyant / Ant Group",
