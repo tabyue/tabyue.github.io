@@ -1,0 +1,27 @@
+{
+  "id": "p037",
+  "title": "HY-Embodied-0.5: Embodied Foundation Models for Real-World Agents",
+  "authors": "腾讯 Robotics X / 混元视觉团队 (Xumin Yu, +19 authors)",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.07430",
+  "github": "https://github.com/Tencent-Hunyuan/HY-Embodied",
+  "tags": ["VLA", "MoT", "Latent Token", "腾讯混元", "开源", "具身基础模型"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-20",
+  "abstract": "HY-Embodied-0.5是一套专为真实世界具身智能设计的基础模型。为弥合通用视觉-语言模型(VLM)与具身任务之间的差距，模型采用创新的Mixture-of-Transformers (MoT)架构，通过潜在token (Latent Token)实现视觉、语言和动作三种模态的高效跨模态融合。MoT-2B权重已在HuggingFace和ModelScope开源发布。",
+  "keyContributions": [
+    "提出Mixture-of-Transformers (MoT)架构：在共享Transformer骨干中，每个模态拥有独立的参数路由路径，实现'共享但不干扰'的多模态融合",
+    "引入Latent Token机制：通过可学习的潜在token充当模态间的信息桥梁，避免传统简单拼接方案中的模态竞争问题",
+    "MoT-2B规模的设计平衡了性能与部署效率，适合边缘设备（如Jetson）的实时推理",
+    "完整开源：模型权重、推理代码、数据处理pipeline均在GitHub/HuggingFace公开"
+  ],
+  "methodology": "基于通用VLM范式构建，整体包含视觉编码器和大语言模型骨干。创新点在于将传统的单一Transformer替换为MoT结构：每个Transformer层内部包含模态共享的注意力计算和模态特定的FFN路由。视觉信号通过视觉编码器转为token后，与语言token和动作token一起送入MoT进行联合推理。Latent Token作为跨模态通信的'虚拟节点'参与注意力计算，但不属于任何具体模态，从而实现高效信息传递。",
+  "experiments": "在多个真实世界机器人操作基准上评估，涵盖桌面操作、移动操作等场景。实验表明MoT架构相比简单拼接方案在多任务成功率上有显著提升。",
+  "limitations": "当前版本(0.5)为初始发布，模型规模(2B)相对较小；尚未公布大规模真实世界部署数据。",
+  "relatedWork": [
+    {"title": "OpenVLA", "relation": "对比基线：OpenVLA使用标准VLM + bin tokenization，HY-Embodied用MoT架构"},
+    {"title": "RT-2", "relation": "同为VLA范式，RT-2用55B VLM直接token化动作"},
+    {"title": "π₀", "relation": "π₀用Flow Matching生成连续动作，HY-Embodied用MoT架构融合多模态"}
+  ]
+}

@@ -1,6 +1,26 @@
 {
-  "lastUpdated": "2026-04-19T22:16",
+  "lastUpdated": "2026-04-20T04:27",
   "papers": [
+    {
+      "id": "p037",
+      "title": "HY-Embodied-0.5: Embodied Foundation Models for Real-World Agents",
+      "authors": "腾讯 Robotics X / 混元视觉团队 (Xumin Yu et al.)",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.07430",
+      "github": "https://github.com/Tencent-Hunyuan/HY-Embodied",
+      "tags": ["VLA", "MoT", "Latent Token", "腾讯", "开源"],
+      "tldr": "腾讯Robotics X发布HY-Embodied-0.5，专为真实世界具身智能设计的基础模型套件。核心采用Mixture-of-Transformers (MoT)架构——在共享Transformer中通过模态特定参数路由实现视觉、语言、动作的跨模态融合，同时用Latent Token机制保持各模态独立性，避免了传统VLA中简单拼接导致的模态干扰问题。MoT-2B权重已在HuggingFace开源。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-20",
+      "keyInsights": [
+        "Mixture-of-Transformers (MoT)架构：共享Transformer + 模态特定参数路由",
+        "Latent Token机制实现跨模态高效融合而不干扰各模态表示",
+        "MoT-2B规模兼顾效率与性能，适合边缘部署",
+        "腾讯首个开源具身智能基础模型，附带完整推理代码"
+      ],
+      "impact": "填补了国内大厂在开源VLA基础模型领域的空白，MoT架构为多模态融合提供了新范式"
+    },
     {
       "id": "p035",
       "title": "ACoT-VLA: Action Chain-of-Thought for Vision-Language-Action Models",
