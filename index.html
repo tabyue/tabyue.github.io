@@ -388,7 +388,6 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
         <a onclick="go('hardware')">🔩 硬件图鉴</a>
         <a onclick="go('news')">📰 资讯</a>
         <a onclick="go('jobs')">💼 人才生态</a>
-        <a onclick="openInbox();document.getElementById('nav').classList.remove('open')" style="color:#a78bfa">📥 投稿素材</a>
     </nav>
     <div class="topbar-meta">
         <span class="topbar-time" id="updateTime"></span>
@@ -411,6 +410,7 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
             <div class="home-stat"><div class="home-stat-v" id="sOS">-</div><div class="home-stat-l">开源项目</div></div>
             <div class="home-stat"><div class="home-stat-v" id="sModels">-</div><div class="home-stat-l">开源模型</div></div>
             <div class="home-stat"><div class="home-stat-v" id="sDS">-</div><div class="home-stat-l">数据集</div></div>
+            <div class="home-stat"><div class="home-stat-v" id="sHW">-</div><div class="home-stat-l">硬件图鉴</div></div>
             <div class="home-stat"><div class="home-stat-v" id="sNews">-</div><div class="home-stat-l">行业资讯</div></div>
             <div class="home-stat"><div class="home-stat-v" id="sJobs">-</div><div class="home-stat-l">人才生态</div></div>
         </div>
@@ -605,6 +605,7 @@ async function init(){
     if(OD)document.getElementById('sOS').textContent=OD.projects.length;
     if(MD)document.getElementById('sModels').textContent=MD.models.length;
     if(DS)document.getElementById('sDS').textContent=DS.datasets.length;
+    if(HD&&HD.robots)document.getElementById('sHW').textContent=HD.robots.length;
     if(ND)document.getElementById('sNews').textContent=ND.news.length;
     if(JD&&JD.jobs)document.getElementById('sJobs').textContent=JD.jobs.length;
     const dates=[LD?.lastUpdated,PD?.lastUpdated,OD?.lastUpdated,ND?.lastUpdated,JD?.lastUpdated,MD?.lastUpdated,HD?.lastUpdated,DS?.lastUpdated].filter(Boolean);
@@ -621,6 +622,8 @@ async function init(){
         }
     }
     renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();renderModels();renderDatasets();renderHardware();renderRecentUpdates();
+    // Sync inbox submission status from server-side processed records
+    syncInboxStatus();
 }
 
 // === RENDER LEARN ===
@@ -1711,6 +1714,32 @@ function openHWDetail(id){
     document.body.style.overflow='hidden';
 }
 
+// === INBOX STATUS SYNC ===
+async function syncInboxStatus(){
+    try{
+        const resp=await fetch('data/inbox.json?t='+Date.now());
+        if(!resp.ok)return;
+        const data=await resp.json();
+        if(!data.processedItems||!data.processedItems.length)return;
+        const inbox=JSON.parse(localStorage.getItem('ei_inbox')||'[]');
+        if(!inbox.length)return;
+        let changed=false;
+        const processedUrls=new Set(data.processedItems.map(p=>p.url));
+        inbox.forEach(item=>{
+            if(item.status==='pending'&&processedUrls.has(item.url)){
+                const match=data.processedItems.find(p=>p.url===item.url);
+                item.status=match.status||'processed';
+                item.result=match.result||'';
+                item.processedAt=match.processedAt||'';
+                changed=true;
+            }
+        });
+        if(changed){
+            localStorage.setItem('ei_inbox',JSON.stringify(inbox));
+        }
+    }catch(e){}
+}
+
 // === INBOX (素材投稿箱) ===
 function openInbox(){
     document.getElementById('inboxModal').classList.add('open');
@@ -1762,13 +1791,15 @@ function renderInboxHistory(){
         const icon=typeIcons[it.type]||'📎';
         const date=new Date(it.time);
         const timeStr=(date.getMonth()+1)+'/'+date.getDate()+' '+date.getHours()+':'+String(date.getMinutes()).padStart(2,'0');
-        const statusBadge=it.status==='processed'?'<span style="color:#22c55e;font-size:.68rem">✅ 已处理</span>':'<span style="color:var(--cyl);font-size:.68rem">⏳ 待处理</span>';
+        const statusBadge=it.status==='processed'?'<span style="color:#22c55e;font-size:.68rem">✅ 已采纳</span>':it.status==='rejected'?'<span style="color:var(--t3);font-size:.68rem">❌ 未采纳</span>':'<span style="color:var(--cyl);font-size:.68rem">⏳ 待处理</span>';
         const shortUrl=it.url.replace(/^https?:\/\//,'').substring(0,40)+(it.url.length>50?'...':'');
+        const resultLine=it.result?'<div style="color:#22c55e;font-size:.66rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+it.result.replace(/"/g,'&quot;')+'">→ '+it.result+'</div>':'';
         return`<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg3);border-radius:8px;margin-bottom:4px;font-size:.76rem">
             <span>${icon}</span>
             <div style="flex:1;min-width:0;overflow:hidden">
                 <div style="color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${shortUrl}</div>
                 ${it.note?'<div style="color:var(--t3);font-size:.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+it.note+'</div>':''}
+                ${resultLine}
             </div>
             <div style="text-align:right;flex-shrink:0">${statusBadge}<div style="font-size:.65rem;color:var(--t3)">${timeStr}</div></div>
         </div>`;
