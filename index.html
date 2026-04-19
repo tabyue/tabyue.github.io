@@ -268,7 +268,9 @@ body{font-family:'Noto Sans SC',-apple-system,sans-serif;background:var(--bg);co
 .status-learning{background:rgba(99,102,241,.1);color:var(--pl)}
 .status-done{background:rgba(16,185,129,.1);color:var(--sl)}
 .status-review{background:rgba(245,158,11,.1);color:var(--al)}
+.status-updated{background:rgba(239,68,68,.12);color:#f87171;font-size:.55rem;animation:pulse 2s ease-in-out infinite}
 .tab-visited::after{content:'';display:inline-block;width:5px;height:5px;background:var(--sl);border-radius:50%;margin-left:5px;vertical-align:middle}
+.tab-updated::before{content:'🔥';margin-right:3px}
 .learn-stats{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px;padding:16px 20px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r)}
 .learn-stat{text-align:center}
 .learn-stat-v{font-family:'Space Grotesk';font-size:1.4rem;font-weight:700}
@@ -614,8 +616,9 @@ function renderLearn(){
             const prog=getProgress()[modId];
             const lastTip=prog?.lastVisit?`上次学习: ${timeAgo(prog.lastVisit)}`:'';
             const fillCls=st.pct>=100?(st.visits>1?'lv3':'lv2'):(st.pct>0?'lv1':'lv0');
+            const isUpdated=m.lastUpdated&&(Date.now()-new Date(m.lastUpdated).getTime())<3*86400000;
             h+=`<div class="card" style="cursor:pointer" onclick="openLearnModule('${modId}',this)" title="${lastTip}">
-                <div class="card-tags"><span class="tag tag-purple">${m.importance}</span><span class="status-tag ${st.cls}" style="margin-left:auto">${st.label}</span></div>
+                <div class="card-tags"><span class="tag tag-purple">${m.importance}</span>${isUpdated?'<span class="status-tag status-updated">🔥 已更新</span>':''}<span class="status-tag ${st.cls}" style="margin-left:auto">${st.label}</span></div>
                 <div class="card-title" style="font-size:.95rem">${m.name}</div>
                 <div class="card-desc" style="-webkit-line-clamp:2">${m.description}</div>
                 <div class="progress-bar"><div class="progress-fill ${fillCls}" style="width:${st.pct}%"></div></div>
@@ -834,7 +837,8 @@ async function openLearnModule(modId, el){
     }
 
     // Render rich detail page
-    let h=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><span class="tag tag-purple">${d.importance}</span><span style="font-size:.75rem;color:var(--t3)">${d.stage} · 预计 ${d.estimatedHours} 小时</span></div>`;
+    const modUpdated=d.lastUpdated&&(Date.now()-new Date(d.lastUpdated).getTime())<3*86400000;
+    let h=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><span class="tag tag-purple">${d.importance}</span>${modUpdated?'<span class="status-tag status-updated">🔥 最近更新</span>':''}<span style="font-size:.75rem;color:var(--t3)">${d.stage} · 预计 ${d.estimatedHours} 小时</span></div>`;
     h+=`<h2 style="margin-bottom:6px">${d.name}</h2>`;
     h+=`<p style="color:var(--t2);margin-bottom:24px;line-height:1.8">${d.description}</p>`;
 
@@ -845,7 +849,8 @@ async function openLearnModule(modId, el){
         h+=`<div class="modal-tabs" id="learn-tabs">`;
         d.sections.forEach((sec,i)=>{
             const visited=visitedSecs.has(i)?'tab-visited':'';
-            h+=`<div class="modal-tab${i===0?' active':''} ${visited}" onclick="switchLearnTab(${i},'${modId}')">${sec.title}</div>`;
+            const secUpd=sec.lastUpdated&&(Date.now()-new Date(sec.lastUpdated).getTime())<3*86400000;
+            h+=`<div class="modal-tab${i===0?' active':''} ${visited}${secUpd?' tab-updated':''}" onclick="switchLearnTab(${i},'${modId}')">${sec.title}</div>`;
         });
         h+='</div>';
         const secLen=d.sections.length;
