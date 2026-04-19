@@ -1,6 +1,28 @@
 {
-  "lastUpdated": "2026-04-19T15:35",
+  "lastUpdated": "2026-04-19T20:30",
   "news": [
+    {
+      "id": "n048",
+      "title": "NVIDIA cuVSLAM：目前最工程化的视觉SLAM系统深度解析",
+      "source": "点云PCL/NVIDIA",
+      "date": "2026-04-19",
+      "url": "https://mp.weixin.qq.com/s/549IYeWmhQufAcIrXkGJhg",
+      "category": "技术解读",
+      "summary": "NVIDIA cuVSLAM是一套高度工程化的GPU加速视觉SLAM系统，集成了立体视觉、IMU融合、回环检测等模块，专为机器人实时定位与建图设计。文章深度解析了cuVSLAM的架构设计、核心算法、GPU加速策略及与ROS2/Isaac ROS的集成方式，被认为是目前最接近工业级部署的视觉SLAM方案之一。",
+      "tags": ["NVIDIA", "cuVSLAM", "视觉SLAM", "GPU加速", "Isaac ROS"],
+      "addedDate": "2026-04-19"
+    },
+    {
+      "id": "n049",
+      "title": "蚂蚁灵波开源LingBot-Map：普通RGB摄像头实现流式3D重建",
+      "source": "蚂蚁集团/IT之家",
+      "date": "2026-04-16",
+      "url": "https://github.com/robbyant/lingbot-map",
+      "category": "开源发布",
+      "summary": "蚂蚁集团旗下灵波科技（Robbyant）开源流式三维重建模型LingBot-Map。该模型采用前馈式3D基础模型架构，摒弃传统SLAM或NeRF的迭代优化范式，仅需普通RGB摄像头即可在视频采集过程中实时完成相机位姿估计与场景三维结构重建。核心创新包括几何上下文Transformer（统一坐标定位、稠密几何线索和长程漂移校正）。已在GitHub获得大量关注并登上HuggingFace。",
+      "tags": ["LingBot-Map", "3D重建", "蚂蚁灵波", "流式重建", "开源"],
+      "addedDate": "2026-04-19"
+    },
     {
       "id": "n043",
       "title": "Science Robotics重磅论文：丰田研究院系统评估大行为模型(LBM)实现多任务机器人操作",

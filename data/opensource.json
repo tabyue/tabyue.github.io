@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-19T15:35",
+  "lastUpdated": "2026-04-19T20:30",
   "categories": [
     {"id": "all", "name": "全部", "icon": "🌐"},
     {"id": "simulation", "name": "仿真平台", "icon": "🎮"},
@@ -11,6 +11,16 @@
     {"id": "data-tools", "name": "数据与工具", "icon": "📊"}
   ],
   "projects": [
+    {
+      "name": "LingBot-Map (流式3D重建)",
+      "org": "蚂蚁灵波 / Robbyant / Ant Group",
+      "description": "前馈式3D基础模型，仅需普通RGB摄像头即可实现流式场景三维重建。核心创新：几何上下文Transformer统一坐标定位、稠密几何线索和长程漂移校正。摒弃传统SLAM/NeRF的迭代优化范式，采用纯自回归式建模。已在HuggingFace发布模型权重。",
+      "github": "https://github.com/robbyant/lingbot-map",
+      "stars": "3.5k",
+      "tags": ["3D重建", "流式推理", "几何Transformer", "蚂蚁集团", "基础模型"],
+      "category": "perception",
+      "addedDate": "2026-04-19"
+    },
     {
       "name": "LBM-DiT (多任务扩散策略)",
       "org": "Toyota Research Institute / Boston Dynamics",
