@@ -1,6 +1,50 @@
 {
-  "lastUpdated": "2026-04-19T01:33",
+  "lastUpdated": "2026-04-19T15:35",
   "news": [
+    {
+      "id": "n043",
+      "title": "Science Robotics重磅论文：丰田研究院系统评估大行为模型(LBM)实现多任务机器人操作",
+      "source": "Science Robotics/Toyota Research Institute",
+      "date": "2026-04-16",
+      "url": "https://www.science.org/doi/10.1126/scirobotics.aea6201",
+      "category": "学术研究",
+      "summary": "丰田研究院（TRI）在Science Robotics发表重磅论文，系统严谨地评估了\"大行为模型\"（Large Behavior Models, LBMs）在多任务机器人操作中的表现。研究团队将扩散策略（Diffusion Policy）范式扩展到包含仿真和真实场景的大规模任务语料库中进行评估。论文首次在学术顶刊上系统证明了：通过在大规模多样化数据上预训练，LBMs在跨任务泛化、少样本适应和鲁棒性上均优于从零训练的单任务策略。研究同时开源了基于Diffusion Transformer（DiT）的多任务策略实现代码，为具身智能基础模型的规模化研究提供了可复现的标杆。该工作已在Boston Dynamics Atlas人形机器人上验证。",
+      "tags": ["Science Robotics", "LBM", "Diffusion Policy", "TRI", "多任务"],
+      "addedDate": "2026-04-19"
+    },
+    {
+      "id": "n044",
+      "title": "原力灵机（Dexmal）获新融资并启动2027届大规模实习招聘，联合HuggingFace发起全球首个具身智能真实操作评测",
+      "source": "北京大学就业中心/西安电子科技大学",
+      "date": "2026-04-17",
+      "url": "https://scc.pku.edu.cn/f/recruitmentinfo/show?recruitmentId=b4cae94b6c9243048ea9f0dc09e7c28f",
+      "category": "产业动态",
+      "summary": "成立于2025年3月的具身智能新锐企业原力灵机（Dexmal）启动大规模2027届暑期实习招聘，岗位覆盖具身大模型算法、机器人操控算法、机器人运动控制、3D视觉、仿真开发等方向。公司提出\"具身原生\"技术路线，已发布三大核心产品：具身原生大模型DM0、具身原生开发框架Dexbotic以及量产工作流DFOL。更引人注目的是，原力灵机联合Hugging Face发起了全球首个具身智能大规模真实操作评测基准，标志着行业从模拟评测走向真实世界评测的关键转折。核心团队拥有顶尖AI学术背景，提供极具竞争力的薪酬与科学家团队1V1带教。",
+      "tags": ["原力灵机", "Dexmal", "DM0", "具身原生", "HuggingFace评测"],
+      "addedDate": "2026-04-19"
+    },
+    {
+      "id": "n045",
+      "title": "Sim-Real联合训练机理分析登arXiv：揭示仿真数据如何提升真实机器人策略学习",
+      "source": "arXiv/Stanford/NVIDIA",
+      "date": "2026-04-16",
+      "url": "https://arxiv.org/abs/2604.13645",
+      "category": "学术研究",
+      "summary": "来自Stanford和NVIDIA等机构的研究团队在arXiv发表论文，首次对生成式机器人操作策略中的Sim-and-Real联合训练机制进行了系统性的机理分析。研究发现联合训练有两个关键效应：一是\"数据增强效应\"（data augmentation effect），仿真数据扩展了真实数据的分布覆盖；二是\"重要性重加权效应\"（importance reweighting effect），域相关的调制权重在二级水平上起作用。论文通过控制变量的玩具模型实验和大量sim-and-sim、sim-and-real机器人操作实验验证了这些发现，为如何高效利用仿真数据加速真实世界机器人学习提供了理论指导。",
+      "tags": ["Sim-to-Real", "联合训练", "机理分析", "Diffusion Policy"],
+      "addedDate": "2026-04-19"
+    },
+    {
+      "id": "n046",
+      "title": "中兴开源RealMirror平台登ICRA 2026：端到端VLA全栈开源平台，覆盖数据采集到部署",
+      "source": "ICRA 2026/量子位",
+      "date": "2026-04-15",
+      "url": "https://arxiv.org/abs/2509.14687",
+      "category": "技术突破",
+      "summary": "中兴通讯研究团队在机器人顶会ICRA 2026发表的RealMirror平台引发关注。这是一个面向人形机器人VLA研究的综合性开源平台，完整覆盖数据采集、模型训练和实机部署全流程。RealMirror的核心创新在于用端到端仿真替代昂贵的真实世界数据采集——通过高保真仿真环境自动生成大量训练数据，大幅降低VLA模型开发的门槛和成本。平台支持多种机器人本体和任务类型，已在GitHub完整开源。该工作为资源有限的研究团队提供了从零开始构建VLA系统的完整工具链。",
+      "tags": ["RealMirror", "ICRA 2026", "VLA", "中兴", "全栈开源"],
+      "addedDate": "2026-04-19"
+    },
     {
       "id": "n039",
       "title": "智元机器人APC 2026宣布\"部署元年\"：五大机器人平台+八大AI模型+第一万台下线",
@@ -605,7 +649,7 @@
         },
         {
           "name": "算法公司",
-          "list": "Physical Intelligence、千寻智能、它石智航、Skild AI、Covariant、高德具身（ABot-M0）、大晓机器人（Kairos）",
+          "list": "Physical Intelligence、千寻智能、它石智航、Skild AI、Covariant、高德具身（ABot-M0）、大晓机器人（Kairos）、原力灵机（Dexmal）",
           "links": [
             "https://www.physicalintelligence.company/",
             "https://www.spirit-ai.com/",
@@ -613,7 +657,8 @@
             "https://www.skild.ai/",
             "https://covariant.ai/",
             "https://github.com/amap-cvlab/ABot-Manipulation",
-            "https://github.com/kairos-agi/kairos-sensenova"
+            "https://github.com/kairos-agi/kairos-sensenova",
+            "https://dexmal-inc.jobs.feishu.cn/"
           ]
         },
         {

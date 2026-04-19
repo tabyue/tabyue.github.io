@@ -1,0 +1,30 @@
+{
+  "id": "p034",
+  "title": "A Careful Examination of Large Behavior Models for Multitask Robot Manipulation",
+  "authors": "Toyota Research Institute (TRI) / Boston Dynamics / MIT",
+  "venue": "Science Robotics 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2507.05331",
+  "github": "https://github.com/brysonjones/multitask_dit_policy",
+  "projectPage": "https://toyotaresearchinstitute.github.io/lbm1/",
+  "tags": ["LBM", "Diffusion Policy", "多任务", "Science Robotics", "DiT"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-19",
+  "abstract": "机器人操作近年来取得巨大进展，模仿学习策略使灵巧且难以建模的任务得以成功执行。本文系统性地评估了'大行为模型'(Large Behavior Models, LBMs)——一种在多样化机器人数据上预训练的具身AI系统。研究将扩散策略范式扩展到包含仿真和真实场景的大规模多任务语料库中，通过严格的对照实验证明：多任务预训练的LBMs在跨任务泛化、少样本微调和对扰动的鲁棒性上均显著优于单任务策略。",
+  "keyInsights": [
+    "首次在Science Robotics上系统评估大行为模型的多任务能力，使用了规模化实验设计",
+    "基于Diffusion Transformer(DiT)架构——将视觉Transformer的成功经验迁移到动作生成领域",
+    "实验证明数据多样性比模型规模更重要：同样的模型在更多样化的数据上预训练后性能跃升",
+    "少样本微调能力：预训练LBM仅需5-10个demo即可适应新任务，从零训练的策略需要50-100个",
+    "鲁棒性提升：预训练LBM对视觉干扰、物体位置变化等的鲁棒性显著优于基线",
+    "已在Boston Dynamics Atlas人形机器人上完成real-world多任务验证"
+  ],
+  "methodology": "## 方法论\n\n### 1. 模型架构：Diffusion Transformer (DiT)\n\n- **输入**：多视角RGB图像 + 本体感觉 + 语言指令\n- **输出**：连续动作序列（action chunk）\n- **核心**：将Diffusion Policy的U-Net backbone替换为Transformer\n  - 更好的scaling特性\n  - 支持更长的上下文窗口\n  - 更高效的多任务条件化\n\n### 2. 训练流程\n\n```\nPhase 1: 大规模预训练\n  - 仿真数据：1000+任务变体\n  - 真实数据：50+不同任务的遥操作数据\n  - 跨实体数据：不同机器人平台\n\nPhase 2: 任务微调\n  - 冻结backbone，微调action head\n  - 仅需5-10个新任务demo\n```\n\n### 3. 评估维度\n\n- 多任务同时执行成功率\n- 少样本微调效率\n- 对视觉/物理扰动的鲁棒性\n- 从仿真到真实的迁移能力",
+  "impact": "为具身智能大模型的'scaling law'提供了Science级别的实证。证明行为模型与语言/视觉模型一样遵循规模法则——更多数据、更大模型带来系统性的能力提升。同时开源的DiT多任务策略代码为社区提供了可复现的研究基线。",
+  "codeSnippet": "```python\n# 基于DiT的多任务扩散策略伪代码\nimport torch\nfrom diffusion_policy import DiffusionTransformerPolicy\n\n# 初始化DiT策略\npolicy = DiffusionTransformerPolicy(\n    obs_dim=512,         # 视觉编码器输出维度\n    action_dim=7,        # 动作空间维度(6DoF+gripper)\n    action_horizon=16,   # 动作chunk长度\n    n_layers=12,         # Transformer层数\n    n_heads=8,           # 注意力头数\n    d_model=512,         # 隐藏维度\n    task_embed_dim=128   # 任务条件嵌入\n)\n\n# 推理：给定观测和任务描述，生成动作序列\nobs = encoder(images)  # [B, 512]\ntask = language_encoder('pick up the red cup')  # [B, 128]\nactions = policy.predict(obs, task)  # [B, 16, 7]\n```",
+  "relatedPapers": [
+    {"title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion", "url": "https://diffusion-policy.cs.columbia.edu/"},
+    {"title": "Scalable Diffusion Models with Transformers (DiT)", "url": "https://arxiv.org/abs/2212.09748"},
+    {"title": "π0: A Vision-Language-Action Flow Model for General Robot Control", "url": "https://www.physicalintelligence.company/blog/pi0"}
+  ]
+}

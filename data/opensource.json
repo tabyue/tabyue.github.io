@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-19T01:33",
+  "lastUpdated": "2026-04-19T15:35",
   "categories": [
     {"id": "all", "name": "全部", "icon": "🌐"},
     {"id": "simulation", "name": "仿真平台", "icon": "🎮"},
@@ -11,6 +11,26 @@
     {"id": "data-tools", "name": "数据与工具", "icon": "📊"}
   ],
   "projects": [
+    {
+      "name": "LBM-DiT (多任务扩散策略)",
+      "org": "Toyota Research Institute / Boston Dynamics",
+      "description": "登Science Robotics的大行为模型(LBM)开源实现。基于Diffusion Transformer(DiT)架构的多任务机器人操作策略，在大规模仿真+真实数据上预训练后，仅需5-10个demo即可适应新任务。已在Boston Dynamics Atlas人形机器人上验证。提供完整的训练、微调和推理代码。",
+      "github": "https://github.com/brysonjones/multitask_dit_policy",
+      "stars": "2.8k",
+      "tags": ["LBM", "Diffusion Policy", "DiT", "Science Robotics", "多任务"],
+      "category": "ai-model",
+      "addedDate": "2026-04-19"
+    },
+    {
+      "name": "RealMirror (VLA全栈平台)",
+      "org": "ZTE / 中兴通讯 / 香港中文大学",
+      "description": "ICRA 2026发表的面向人形机器人VLA研究的综合性开源平台。完整覆盖数据采集、模型训练和实机部署全流程。核心创新在于用高保真仿真替代昂贵的真实数据采集，大幅降低VLA模型开发门槛。支持多种机器人本体和任务类型，为资源有限的研究团队提供从零构建VLA系统的完整工具链。",
+      "github": "https://github.com/terminators2025/RealMirror",
+      "stars": "1.2k",
+      "tags": ["VLA", "ICRA 2026", "全栈平台", "仿真训练", "人形机器人"],
+      "category": "framework",
+      "addedDate": "2026-04-19"
+    },
     {
       "name": "HiVLA",
       "org": "Shanghai Jiao Tong University",

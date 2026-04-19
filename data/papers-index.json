@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-19T01:33",
+  "lastUpdated": "2026-04-19T15:35",
   "papers": [
+    {
+      "id": "p034",
+      "title": "A Careful Examination of Large Behavior Models for Multitask Robot Manipulation",
+      "authors": "Toyota Research Institute (TRI) / Boston Dynamics / MIT",
+      "venue": "Science Robotics 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2507.05331",
+      "github": "https://github.com/brysonjones/multitask_dit_policy",
+      "tags": ["LBM", "Diffusion Policy", "多任务", "Science Robotics"],
+      "tldr": "丰田研究院在Science Robotics发表系统性评估大行为模型(LBMs)的研究。将扩散策略(Diffusion Policy)范式扩展到大规模仿真+真实任务语料库中，首次在顶刊上证明多任务预训练的LBMs在泛化性、少样本适应和鲁棒性上显著优于单任务策略。开源了基于Diffusion Transformer(DiT)的多任务策略实现，已在Boston Dynamics Atlas上验证。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-19",
+      "keyInsights": [
+        "首次在Science Robotics上系统评估大行为模型的多任务能力",
+        "基于Diffusion Transformer(DiT)架构实现策略生成，兼顾高维连续动作空间",
+        "大规模多样化预训练数据是泛化能力的关键——数据比模型架构更重要",
+        "已在Atlas人形机器人上完成real-world验证，开源DiT多任务策略代码"
+      ],
+      "impact": "为具身智能大模型的'scaling law'提供了Science级别的实证，证明行为模型也遵循规模法则"
+    },
+    {
+      "id": "p033",
+      "title": "A Mechanistic Analysis of Sim-and-Real Co-Training in Generative Robot Policies",
+      "authors": "Stanford University / NVIDIA Research",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.13645",
+      "github": "https://science-of-co-training.github.io/",
+      "tags": ["Sim-to-Real", "联合训练", "机理分析", "Diffusion Policy"],
+      "tldr": "首次对生成式机器人操作策略中Sim-and-Real联合训练机制进行系统性机理分析。发现联合训练有两个关键效应：数据增强效应（扩展分布覆盖）和重要性重加权效应（域相关调制权重）。通过控制变量实验和大量机器人操作实验验证，为高效利用仿真数据加速真实世界机器人学习提供了理论指导。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-19",
+      "keyInsights": [
+        "分离出联合训练的两个独立效应：数据增强效应和重要性重加权效应",
+        "数据增强效应是主要贡献——仿真数据扩展了真实数据的分布覆盖范围",
+        "重要性重加权效应通过域相关调制权重起二级辅助作用",
+        "为sim-to-real迁移的数据混合比例和训练策略提供了理论依据"
+      ],
+      "impact": "将sim-to-real从经验调参提升为有理论指导的系统方法，对所有使用仿真数据的具身AI研究者都有参考价值"
+    },
     {
       "id": "p032",
       "title": "HiVLA: A Visual-Grounded-Centric Hierarchical Embodied Manipulation System",
