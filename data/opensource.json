@@ -44,6 +44,23 @@
   ],
   "projects": [
     {
+      "name": "CaP-X (Code-as-Policy X)",
+      "org": "NVIDIA",
+      "description": "英伟达开源的机器人操控框架，LLM现场生成Python代码控制机器人。包含CaP-Gym交互沙盒（内置SAM3+PyRoki IK）、CaP-Bench层级基准、CaP-Agent0无训练智能体（多轮视觉比对+自动技能库+并行推理）、CaP-RL强化学习后训练。VLA模型作为可调用API集成，编程智能体做高层调度。7项任务中4项超越人类专家。",
+      "github": "https://github.com/NVlabs/CaP-X",
+      "stars": "新发布",
+      "tags": [
+        "Code-as-Policy",
+        "LLM编程",
+        "机器人操控",
+        "技能库",
+        "英伟达"
+      ],
+      "category": "framework",
+      "addedDate": "2026-04-20",
+      "id": "os032"
+    },
+    {
       "name": "HY-Embodied-0.5 (腾讯混元具身基础模型)",
       "org": "腾讯 Robotics X / 混元视觉团队",
       "description": "腾讯首个开源具身智能基础模型。采用创新Mixture-of-Transformers (MoT)架构，通过模态特定参数路由和Latent Token机制实现视觉-语言-动作的高效跨模态融合。MoT-2B权重已在HuggingFace和ModelScope开源，附带完整推理代码。",
