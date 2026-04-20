@@ -1,0 +1,46 @@
+{
+  "id": "p039",
+  "title": "Gemini Robotics-ER 1.6: Enhanced Embodied Reasoning for Autonomous Robots",
+  "authors": "Google DeepMind Robotics Team",
+  "venue": "Technical Report / Google AI 2026",
+  "date": "2026-04",
+  "arxiv": "https://deepmind.google/blog/gemini-robotics-er-1-6/",
+  "github": "",
+  "tags": ["具身推理", "VLM", "空间推理", "函数调用", "Google"],
+  "tldr": "Google DeepMind发布Gemini Robotics-ER 1.6，专为具身推理场景优化的多模态模型。核心升级包括：增强空间推理、多视角理解、任务成功检测和仪表读数能力。支持Function Calling，机器人可在推理中调用外部工具。已通过Gemini API开放。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-20",
+  "keyInsights": [
+    "空间推理大幅增强：物体计数、相对位置判断、3D空间关系理解显著优于前代",
+    "Function Calling集成：推理中可调用外部工具（搜索/VLA/自定义API），实现开放世界交互",
+    "仪表读数能力：新增对仪表盘、刻度盘等工业场景的理解",
+    "已通过Gemini API开放，开发者可直接集成到机器人系统"
+  ],
+  "impact": "降低了具身智能开发门槛，Function Calling机制使LLM与机器人执行层的集成更加标准化",
+  "sections": [
+    {
+      "title": "核心创新",
+      "content": "Gemini Robotics-ER 1.6 是 Google DeepMind 专为机器人设计的具身推理模型的重大升级版本。'ER'代表 Embodied Reasoning（具身推理），强调模型不仅要理解图像和语言，更要在物理世界的约束下进行推理和决策。\n\n**1. 增强空间推理**\n- 物体计数准确率大幅提升\n- 物体间相对位置关系（左右、前后、上下）理解更准确\n- 3D 空间推理：从 2D 图像推断 3D 空间关系\n- 多视角一致性：从不同角度观察同一场景能给出一致判断\n\n**2. 任务成功检测**\n- 给定任务指令和执行前后的图像，判断任务是否成功完成\n- 这对于闭环控制至关重要——机器人需要知道'我做到了吗？'\n\n**3. 仪表读数（全新能力）**\n- 读取各类仪表盘、刻度盘、数字显示屏的数值\n- 适用于工业巡检、设备监控等场景\n\n**4. Function Calling**\n- 模型可以在推理过程中调用外部工具\n- 支持调用 Google 搜索（获取未知物体信息）\n- 支持调用 VLA 模型（执行低层动作）\n- 支持调用开发者自定义函数\n- 这使得 ER 模型成为机器人系统的'高层调度器'"
+    },
+    {
+      "title": "架构与技术细节",
+      "content": "Gemini Robotics-ER 1.6 基于 Gemini 多模态大模型架构，在以下方面进行了针对机器人场景的优化：\n\n**输入**：\n- 多视角 RGB 图像（支持同时处理多个摄像头视角）\n- 语言指令（自然语言任务描述）\n- 机器人本体感觉数据（可选）\n\n**输出**：\n- 结构化推理结果（物体位置、空间关系、成功判断）\n- Function Call 请求（调用外部工具）\n- 自然语言解释（可解释性）\n\n**对比前代**：\n| 能力 | ER 1.5 | Gemini 3.0 Flash | ER 1.6 |\n|------|--------|------------------|--------|\n| 空间推理 | 中 | 中 | 高 |\n| 物体计数 | 低 | 中 | 高 |\n| 多视角理解 | 低 | 低 | 高 |\n| 仪表读数 | 无 | 无 | 有 |\n| Function Calling | 无 | 有 | 有（增强） |\n| 任务成功检测 | 中 | 低 | 高 |"
+    },
+    {
+      "title": "开发者接入",
+      "content": "ER 1.6 已通过两个渠道开放：\n\n**1. Gemini API**\n```python\nimport google.generativeai as genai\n\ngenai.configure(api_key='YOUR_KEY')\nmodel = genai.GenerativeModel('gemini-robotics-er-1.6')\n\n# 空间推理\nresponse = model.generate_content([\n    image_part,\n    'How many red objects are on the table? Which one is closest to the robot?'\n])\n\n# Function Calling\ntools = [{\n    'function_declarations': [{\n        'name': 'move_to_object',\n        'description': 'Move robot arm to target object',\n        'parameters': {'object_name': {'type': 'string'}}\n    }]\n}]\nresponse = model.generate_content(\n    [image_part, 'Pick up the red cup'],\n    tools=tools\n)\n```\n\n**2. Google AI Studio**\n- 可视化界面直接测试\n- 提供官方 Colab 示例\n- 支持多图多轮对话\n\n**典型应用场景**：\n- 工业巡检机器人：读取仪表 + 异常检测\n- 家庭服务机器人：理解场景 + 规划任务\n- 物流分拣：物体识别 + 空间推理 + 抓取规划\n- 远程操控辅助：操作员通过 ER 获取场景理解"
+    }
+  ],
+  "resources": [
+    {
+      "name": "官方博客",
+      "url": "https://deepmind.google/blog/gemini-robotics-er-1-6/",
+      "type": "博客"
+    },
+    {
+      "name": "Google AI Studio",
+      "url": "https://aistudio.google.com/",
+      "type": "平台"
+    }
+  ]
+}

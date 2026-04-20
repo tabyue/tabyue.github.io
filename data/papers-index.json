@@ -1,6 +1,26 @@
 {
-  "lastUpdated": "2026-04-20T10:34",
+  "lastUpdated": "2026-04-20T11:38",
   "papers": [
+    {
+      "id": "p039",
+      "title": "Gemini Robotics-ER 1.6: Enhanced Embodied Reasoning for Autonomous Robots",
+      "authors": "Google DeepMind Robotics Team",
+      "venue": "Technical Report / Google AI 2026",
+      "date": "2026-04",
+      "arxiv": "https://deepmind.google/blog/gemini-robotics-er-1-6/",
+      "github": "",
+      "tags": ["具身推理", "VLM", "空间推理", "函数调用", "Google"],
+      "tldr": "Google DeepMind发布Gemini Robotics-ER 1.6，专为具身推理场景优化的多模态模型。核心升级包括：增强空间推理（物体相对位置、3D关系理解）、多视角理解、任务成功检测、以及全新的仪表/表盘读数能力。支持函数调用（Function Calling），机器人可在推理过程中调用谷歌搜索、VLA模型或自定义工具。已通过Gemini API和Google AI Studio开放开发者访问。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-20",
+      "keyInsights": [
+        "空间推理大幅增强：物体计数、相对位置判断、3D空间关系理解显著优于前代",
+        "Function Calling集成：推理中可调用外部工具（搜索/VLA/自定义API），实现开放世界交互",
+        "仪表读数能力：新增对仪表盘、刻度盘等工业场景的理解",
+        "已通过Gemini API开放，开发者可直接集成到机器人系统"
+      ],
+      "impact": "降低了具身智能开发门槛，Function Calling机制使LLM与机器人执行层的集成更加标准化"
+    },
     {
       "id": "p038",
       "title": "A1: A Fully Transparent Open-Source, Adaptive and Efficient Truncated Vision-Language-Action Model",

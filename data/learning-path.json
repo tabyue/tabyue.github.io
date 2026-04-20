@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-20T04:27",
+  "lastUpdated": "2026-04-20T11:38",
   "stages": [
     {
       "id": "foundation",
@@ -814,6 +814,7 @@
         {
           "name": "云边端协同架构",
           "importance": "重要",
+          "lastUpdated": "2026-04-20T11:38",
           "description": "云端大模型思考、边缘计算感知、端侧实时控制的三层协同，让机器人既聪明又快",
           "topics": [
             {
@@ -823,6 +824,10 @@
             {
               "title": "边缘AI与实时计算",
               "detail": "Jetson Orin生态、ROS2实时配置(RT-Linux/CPU affinity)、感知-规划-控制多线程Pipeline。控制循环不能被阻塞。"
+            },
+            {
+              "title": "MCP协议：LLM与机器人标准化接口",
+              "detail": "Model Context Protocol让LLM通过标准化协议发现和调用机器人能力（Tools/Resources/Prompts）。MCP Server部署在机器人端暴露能力，云端LLM通过MCP Client远程调用。支持多Server组合（机械臂+底盘+视觉）。"
             }
           ],
           "resources": [
