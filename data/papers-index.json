@@ -1,6 +1,26 @@
 {
-  "lastUpdated": "2026-04-20T04:27",
+  "lastUpdated": "2026-04-20T10:34",
   "papers": [
+    {
+      "id": "p038",
+      "title": "A1: A Fully Transparent Open-Source, Adaptive and Efficient Truncated Vision-Language-Action Model",
+      "authors": "ATeam Research",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.05672",
+      "github": "https://github.com/ATeam-Research/A1",
+      "tags": ["VLA", "开源", "高效推理", "自适应", "截断架构"],
+      "tldr": "A1是一个完全透明的开源VLA框架，专为低成本、高吞吐量推理而设计。核心创新Inter-Layer Truncation（层间截断），通过智能跳过冗余Transformer层大幅降低计算量，同时保持操作成功率不变。提供完整的训练、评估和部署代码，以及预训练模型库(Model Zoo)，是目前最易复现的VLA框架之一。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-20",
+      "keyInsights": [
+        "Inter-Layer Truncation: 智能跳过冗余Transformer层，推理成本降低40-60%",
+        "完全开源透明: 训练数据、代码、权重全部公开，学术可复现性极高",
+        "自适应推理: 根据任务复杂度动态调整计算量",
+        "提供完整的Model Zoo，覆盖多种机器人本体"
+      ],
+      "impact": "为VLA模型的低成本部署提供了开箱即用的方案，降低了边缘设备上运行VLA的门槛"
+    },
     {
       "id": "p037",
       "title": "HY-Embodied-0.5: Embodied Foundation Models for Real-World Agents",
