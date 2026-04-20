@@ -1,0 +1,38 @@
+{
+  "id": "p041",
+  "title": "DA-PTQ: Drift-Aware Post-Training Quantization for Vision-Language-Action Models",
+  "authors": "DA-PTQ Team",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.11572",
+  "github": "",
+  "tags": ["VLA", "量化部署", "模型压缩", "边缘推理", "PTQ"],
+  "tldr": "提出DA-PTQ（Drift-Aware Post-Training Quantization），专门针对VLA模型的低比特量化部署方案。核心发现是VLA模型在量化后存在'动作漂移'现象——量化误差在时间步之间累积导致执行轨迹偏移。DA-PTQ通过漂移感知的量化参数优化和时序误差补偿机制，在INT4量化下保持接近FP16的操作成功率。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-20",
+  "keyInsights": [
+    "发现VLA量化中的'动作漂移'现象：量化误差随时间步累积",
+    "漂移感知量化：针对时序累积敏感的通道分配更高比特",
+    "INT4量化下操作成功率接近FP16，模型体积缩小至1/4",
+    "使7B参数VLA模型在边缘设备（如Jetson Orin）上实现实时推理"
+  ],
+  "impact": "解决了VLA模型部署到机器人端侧的关键瓶颈，INT4量化使大模型上机器人成为现实",
+  "sections": [
+    {
+      "title": "核心问题",
+      "content": "VLA模型（如RT-2、OpenVLA）参数量通常在3B-7B，在机器人端侧（如Jetson Orin NX, 16GB）运行面临显存和延迟瓶颈。直接应用通用PTQ方法会导致操作成功率急剧下降。"
+    },
+    {
+      "title": "动作漂移现象",
+      "content": "VLA模型的独特挑战：它是自回归地生成动作序列，每步的量化误差会累积到下一步。这导致轨迹随时间逐渐偏离FP16基线，即'动作漂移'。通用量化方法只考虑单步误差，忽略了时序累积效应。"
+    },
+    {
+      "title": "DA-PTQ方案",
+      "content": "1. **漂移敏感性分析**：识别哪些权重通道对时序累积误差最敏感\n2. **混合精度分配**：敏感通道保留INT8，其余用INT4\n3. **时序误差补偿**：在推理时插入轻量级校正模块，补偿累积漂移\n4. 最终在INT4为主的量化下，模型体积缩小约4倍，推理速度提升2-3倍"
+    },
+    {
+      "title": "实验结果",
+      "content": "在多个VLA基准上测试：\n- INT4量化操作成功率达FP16的95%+（通用PTQ仅70%）\n- Jetson Orin NX上推理延迟从200ms降至60ms\n- 模型显存占用从14GB降至4GB，可在8GB设备上运行"
+    }
+  ]
+}

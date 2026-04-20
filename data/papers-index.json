@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-20T11:38",
+  "lastUpdated": "2026-04-20T20:46",
   "papers": [
+    {
+      "id": "p040",
+      "title": "ESCAPE: Episodic Spatial Memory for Long-Horizon Mobile Manipulation",
+      "authors": "ESCAPE Team",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.13633",
+      "github": "",
+      "tags": ["移动操作", "空间记忆", "长时任务", "ALFRED", "情景记忆"],
+      "tldr": "提出ESCAPE（Episodic Spatial Memory），一种面向长时移动操作任务的情景空间记忆机制。核心思想是让机器人在执行长时任务时构建和维护一个结构化的空间-时间记忆图，记录已访问的位置、发现的物体和执行的交互。在ALFRED基准上取得SOTA，显著提升多步骤家庭任务（如'去厨房拿杯子，加热后放到桌上'）的完成率。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-20",
+      "keyInsights": [
+        "情景空间记忆图：将导航历史、物体发现、交互记录编码为结构化图",
+        "记忆检索机制：根据当前子目标高效检索相关记忆，避免重复探索",
+        "ALFRED基准SOTA：长时多步骤家庭操作任务完成率显著提升",
+        "可扩展到真实机器人：记忆结构不依赖仿真器特定API"
+      ],
+      "impact": "为长时移动操作提供了有效的记忆管理方案，解决了LLM规划+机器人执行中的空间遗忘问题"
+    },
+    {
+      "id": "p041",
+      "title": "DA-PTQ: Drift-Aware Post-Training Quantization for Vision-Language-Action Models",
+      "authors": "DA-PTQ Team",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.11572",
+      "github": "",
+      "tags": ["VLA", "量化部署", "模型压缩", "边缘推理", "PTQ"],
+      "tldr": "提出DA-PTQ（Drift-Aware Post-Training Quantization），专门针对VLA模型的低比特量化部署方案。核心发现是VLA模型在量化后存在'动作漂移'现象——量化误差在时间步之间累积导致执行轨迹偏移。DA-PTQ通过漂移感知的量化参数优化和时序误差补偿机制，在INT4量化下保持接近FP16的操作成功率，使7B VLA模型能在边缘设备上实时推理。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-20",
+      "keyInsights": [
+        "发现VLA量化中的'动作漂移'现象：量化误差随时间步累积",
+        "漂移感知量化：针对时序累积敏感的通道分配更高比特",
+        "INT4量化下操作成功率接近FP16，模型体积缩小至1/4",
+        "使7B参数VLA模型在边缘设备（如Jetson Orin）上实现实时推理"
+      ],
+      "impact": "解决了VLA模型部署到机器人端侧的关键瓶颈，INT4量化使大模型上机器人成为现实"
+    },
     {
       "id": "p039",
       "title": "Gemini Robotics-ER 1.6: Enhanced Embodied Reasoning for Autonomous Robots",
