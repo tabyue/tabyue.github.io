@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-20T20:46",
+  "lastUpdated": "2026-04-21T00:17",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,17 @@
     }
   ],
   "projects": [
+    {
+      "name": "HiVLA (层次化视觉-语言-动作模型)",
+      "org": "HKU / 香港大学",
+      "description": "HiVLA是一个以视觉定位为核心的层次化具身操作系统。将VLA模型解耦为高层VLM规划器（任务分解+视觉定位）和低层DiT动作专家（基于Flow Matching的Diffusion Transformer），通过级联交叉注意力机制融合全局上下文、物体中心裁剪和技能语义。保留VLM零样本推理能力，在长程技能组合和精细操控方面显著优于端到端VLA方法。",
+      "github": "https://github.com/tianshuoy/HiVLA",
+      "stars": "新发布",
+      "category": "ai-model",
+      "tags": ["VLA", "层次化架构", "视觉定位", "Diffusion Transformer", "Flow Matching", "操作"],
+      "addedDate": "2026-04-21",
+      "paperUrl": "https://arxiv.org/abs/2604.14125"
+    },
     {
       "name": "Embodied-R1 (强化具身推理)",
       "org": "天津大学 / ICLR 2026",

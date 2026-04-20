@@ -1,0 +1,28 @@
+{
+  "id": "p042",
+  "title": "HiVLA: A Visual-Grounded-Centric Hierarchical Embodied Manipulation System",
+  "authors": "Tianshuo Yang, Guanyu Chen, Yutian Chen, Zhixuan Liang, Yitian Liu, Zanxin Chen, Chunpu Xu, Haotian Liang, Jiangmiao Pang, Yao Mu, Ping Luo",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.14125",
+  "github": "https://github.com/tianshuoy/HiVLA",
+  "projectPage": "https://tianshuoy.github.io/HiVLA-page/",
+  "tags": ["VLA", "层次化架构", "视觉定位", "Diffusion Transformer", "长程操作", "Flow Matching"],
+  "tldr": "提出HiVLA，一个以视觉定位为核心的层次化具身操作系统，将高层语义规划与低层运动控制显式解耦，在长程技能组合和精细操控方面显著优于SOTA端到端VLA方法。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-21",
+  "abstract": "While end-to-end Vision-Language-Action (VLA) models offer a promising paradigm for robotic manipulation, fine-tuning them on narrow control data often compromises the profound reasoning ability inherited from foundation VLMs. HiVLA proposes a visual-grounded-centric hierarchical framework that explicitly decouples high-level semantic planning from low-level motor control. The high-level VLM planner performs task decomposition and visual grounding to produce structured plans with subtask instructions and precise target bounding boxes. A novel flow-matching-based Diffusion Transformer (DiT) action expert with Cascaded Cross-Attention sequentially fuses global context, high-resolution object-centric crops, and skill semantics for robust action execution.",
+  "keyInsights": [
+    "高低层显式解耦：VLM规划器负责'做什么'（任务分解+视觉定位），DiT动作专家负责'怎么做'（运动控制）",
+    "级联交叉注意力（Cascaded Cross-Attention）：DiT依次融合全局上下文→物体中心高分辨率裁剪→技能语义嵌入，实现物体级精确操控",
+    "视觉定位（Visual Grounding）作为中间表示：高层规划输出目标边界框，指导低层关注正确视觉区域，避免端到端模型的注意力分散",
+    "保留VLM零样本推理：解耦设计使VLM规划器在微调后仍保持强大的语言理解和常识推理能力",
+    "组件独立升级：高层VLM和低层DiT可以分别改进，不互相干扰",
+    "长程技能组合优势：在需要多步骤连续操作（如先开抽屉→取出物体→放到指定位置）的任务中，HiVLA比端到端方法成功率提升显著"
+  ],
+  "methodology": "HiVLA采用两层架构：(1) 高层VLM规划器接收全局图像和语言指令，执行任务分解和视觉定位，输出结构化计划（子任务指令+目标边界框）；(2) 低层DiT动作专家基于Flow Matching的扩散Transformer，通过新颖的级联交叉注意力机制依次融合三类信息——全局上下文、以边界框裁剪的高分辨率物体中心图像、技能语义嵌入——生成精确的连续动作序列。",
+  "impact": "HiVLA提出了VLA模型的新范式，通过层次化解耦有效解决了端到端VLA微调过程中VLM推理能力退化的根本矛盾。该架构为构建可扩展、可组合的具身操作系统提供了清晰的设计框架，预计将影响后续VLA模型的架构设计方向。",
+  "relatedPapers": ["RT-2", "OpenVLA", "π₀", "SayCan", "Inner Monologue"],
+  "codeAvailable": true,
+  "dataAvailable": false
+}

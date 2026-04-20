@@ -1,6 +1,26 @@
 {
-  "lastUpdated": "2026-04-20T20:46",
+  "lastUpdated": "2026-04-21T00:17",
   "papers": [
+    {
+      "id": "p042",
+      "title": "HiVLA: A Visual-Grounded-Centric Hierarchical Embodied Manipulation System",
+      "authors": "Tianshuo Yang, Guanyu Chen, Yutian Chen, Zhixuan Liang, Yitian Liu et al.",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.14125",
+      "github": "https://github.com/tianshuoy/HiVLA",
+      "tags": ["VLA", "层次化架构", "视觉定位", "Diffusion Transformer", "长程操作"],
+      "tldr": "提出HiVLA，一个以视觉定位为核心的层次化具身操作系统。核心创新是将VLA模型显式解耦为两层：高层VLM规划器负责任务分解和视觉定位（生成子任务指令+目标边界框），低层DiT动作专家通过级联交叉注意力机制（Cascaded Cross-Attention）依次融合全局上下文、高分辨率物体中心裁剪图像和技能语义来执行鲁棒的动作生成。解耦设计保留了VLM的零样本推理能力，两个组件可独立升级。在仿真和真实世界中显著优于当前SOTA端到端VLA基线，尤其在长程技能组合和杂乱场景精细操控方面表现突出。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-21",
+      "keyInsights": [
+        "高低层解耦：VLM规划器（任务分解+视觉定位）+ DiT动作专家（运动控制），避免VLA微调损害VLM推理能力",
+        "级联交叉注意力：DiT依次融合全局上下文→物体中心裁剪→技能语义，实现精确的物体级操控",
+        "视觉定位驱动：以边界框为中间表示，高层规划指导低层关注正确的视觉区域",
+        "长程技能组合优势显著：多步骤连续操作任务完成率大幅超越端到端方法"
+      ],
+      "impact": "提出了VLA模型的新范式——层次化解耦，有效解决了端到端VLA在微调过程中丢失VLM推理能力的根本矛盾，为下一代具身操作系统提供了可扩展的架构框架"
+    },
     {
       "id": "p040",
       "title": "ESCAPE: Episodic Spatial Memory for Long-Horizon Mobile Manipulation",
