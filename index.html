@@ -933,7 +933,9 @@ async function openLearnModule(modId, el){
     if(d.resources&&d.resources.length>0){
         let resHtml='';
         d.resources.forEach(r=>{
-            resHtml+=`<a href="${r.url}" target="_blank" onclick="event.stopPropagation()" style="display:block;padding:12px 16px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;text-decoration:none;color:inherit;transition:all .2s" onmouseover="this.style.borderColor='var(--pl)'" onmouseout="this.style.borderColor='var(--bd)'"><div style="display:flex;align-items:center;gap:8px;margin-bottom:3px"><span style="font-size:.8rem;font-weight:600;color:var(--t1)">${r.name}</span><span class="tag tag-cyan" style="font-size:.55rem">${r.type}</span></div><div style="font-size:.75rem;color:var(--t3);line-height:1.5">${r.description}</div></a>`;
+            const isYT=r.url&&r.url.includes('youtube.com');
+            const biliSearch=isYT?`<a href="https://search.bilibili.com/all?keyword=${encodeURIComponent(r.name)}" target="_blank" onclick="event.stopPropagation()" style="font-size:.65rem;color:var(--pl);margin-left:6px;text-decoration:none" title="在B站搜索同类内容">📺 B站搜索</a>`:'';
+            resHtml+=`<a href="${r.url}" target="_blank" onclick="event.stopPropagation()" style="display:block;padding:12px 16px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;text-decoration:none;color:inherit;transition:all .2s" onmouseover="this.style.borderColor='var(--pl)'" onmouseout="this.style.borderColor='var(--bd)'"><div style="display:flex;align-items:center;gap:8px;margin-bottom:3px"><span style="font-size:.8rem;font-weight:600;color:var(--t1)">${r.name}</span><span class="tag tag-cyan" style="font-size:.55rem">${r.type}</span>${isYT?'<span style="font-size:.55rem;color:var(--t3);background:var(--bg2);padding:1px 5px;border-radius:4px">需科学上网</span>':''}</div><div style="font-size:.75rem;color:var(--t3);line-height:1.5">${r.description}${biliSearch}</div></a>`;
         });
         h+=`<div class="aux-card" onclick="this.classList.toggle('open')">
             <div class="aux-header"><span>📖 推荐资源 <span style="font-size:.7rem;color:var(--t3)">(${d.resources.length})</span></span><span class="aux-arrow">▼</span></div>
@@ -1111,14 +1113,22 @@ function renderMd(t){
     });
     // 4.5 视频嵌入 [video:URL] 或 [video:URL:标题]
     h=h.replace(/\[video:(https?:\/\/[^\]:\s]+)(?::([^\]]+))?\]/g,(_,url,title)=>{
-        let embedUrl='';
-        // YouTube
+        // YouTube → 占位卡片（国内无法嵌入iframe）
         let yt=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
-        if(yt)embedUrl=`https://www.youtube.com/embed/${yt[1]}`;
-        // Bilibili
+        if(yt){
+            const vid=yt[1];
+            const thumb=`https://img.youtube.com/vi/${vid}/mqdefault.jpg`;
+            const bSearch=title?encodeURIComponent(title.replace(/[^\w\u4e00-\u9fff\s]/g,' ').trim()):'';
+            const biliBtn=bSearch?`<a href="https://search.bilibili.com/all?keyword=${bSearch}" target="_blank" class="card-btn" style="font-size:0.82rem;padding:4px 10px;background:var(--s2);margin-left:6px" title="在B站搜索同主题视频">📺 B站搜索</a>`:'';
+            return`<div class="video-placeholder" style="border:1px solid var(--bd);border-radius:10px;overflow:hidden;margin:12px 0;max-width:480px"><a href="${url}" target="_blank" rel="noopener" style="display:block;position:relative"><img src="${thumb}" alt="${title||'Video'}" style="width:100%;display:block;aspect-ratio:16/9;object-fit:cover" loading="lazy"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.25)"><div style="width:48px;height:48px;border-radius:50%;background:rgba(255,0,0,.85);display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="8,5 20,12 8,19"/></svg></div></div></a><div style="padding:8px 12px;display:flex;align-items:center;flex-wrap:wrap;gap:4px"><span style="flex:1;font-size:0.88rem;font-weight:500">${title||'YouTube 视频'}</span><a href="${url}" target="_blank" class="card-btn" style="font-size:0.82rem;padding:4px 10px">▶ 观看</a>${biliBtn}</div></div>`;
+        }
+        // Bilibili → 直接嵌入
         let bl=url.match(/bilibili\.com\/video\/(BV[\w]+)/);
-        if(bl)embedUrl=`https://player.bilibili.com/player.html?bvid=${bl[1]}&high_quality=1`;
-        if(!embedUrl)return`<a href="${url}" target="_blank" class="card-btn">🎬 ${title||'观看视频'}</a>`;
+        if(bl){
+            let embedUrl=`https://player.bilibili.com/player.html?bvid=${bl[1]}&high_quality=1`;
+            return`<div class="video-embed">${title?`<div class="video-title">🎬 ${title}</div>`:''}<div class="video-container"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div>`;
+        }
+        return`<a href="${url}" target="_blank" class="card-btn">🎬 ${title||'观看视频'}</a>`;
         return`<div class="video-embed">${title?`<div class="video-title">🎬 ${title}</div>`:''}<div class="video-container"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div>`;
     });
     // 5. 标题（从多到少处理，避免 #### 被 ### 先匹配）
