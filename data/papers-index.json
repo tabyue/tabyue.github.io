@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-21T18:42",
+  "lastUpdated": "2026-04-22T07:00",
   "papers": [
+    {
+      "id": "p049",
+      "title": "HAMLET: Switch Your Vision-Language-Action Model into a History-Aware Policy",
+      "authors": "Myungkyu Koo, Junyoung Park, Jaehyung Kim, Gunhee Kim",
+      "venue": "ICLR 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2510.00695",
+      "github": "https://github.com/myungkyukoo/hamlet",
+      "tags": ["VLA", "历史感知", "时序推理", "微调框架", "ICLR 2026", "KAIST", "UC Berkeley"],
+      "tldr": "提出HAMLET(History-Aware Manipulation with Long-horizon Embodied Transformers)，一种将预训练VLA模型转换为历史感知策略的微调框架。通过在每个时间步压缩感知信息为'moment tokens'（以时间嵌入初始化），并在推理时将多步历史表征拼接输入，使VLA模型能够利用过去的上下文信息。在长时域操作任务上显著提升性能，尤其在需要记忆和时序推理的场景中表现突出。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-22",
+      "keyInsights": [
+        "VLA模型天然缺乏历史感知能力——大多数仅基于当前观测做决策",
+        "Moment tokens以时间嵌入初始化，在每步压缩感知信息，推理时拼接多步历史",
+        "框架可即插即用地增强现有VLA模型，无需重新训练基座",
+        "在长时域操作任务（如多步装配、需要记忆的序列任务）中提升显著"
+      ],
+      "impact": "为VLA模型引入时序推理能力提供了轻量级框架，解决了当前VLA'无记忆'的关键短板"
+    },
+    {
+      "id": "p050",
+      "title": "RoboInter: A Holistic Intermediate Representation Suite Towards Robotic Manipulation",
+      "authors": "Zhaoyang Zhao, Haoran Geng, Hao Dong, He Wang et al.",
+      "venue": "ICLR 2026",
+      "date": "2026-02",
+      "arxiv": "https://arxiv.org/abs/2602.09973",
+      "github": "https://github.com/InternRobotics/RoboInter",
+      "tags": ["中间表示", "VLA", "操作数据集", "具身VQA", "plan-then-execute", "ICLR 2026", "上海AI Lab"],
+      "tldr": "提出RoboInter，首个面向机器人操作的完整中间表示套件。包含三个组件：RoboInter-Tool（半自动标注GUI工具）、RoboInter-Data（23万+轨迹的大规模人工验证数据集，涵盖9类空间+20类时序具身VQA共230万QA样本）、RoboInter-VQA（系统性评测VLM具身推理的基准）。实验验证中间表示监督可显著提升VLA泛化能力，支持'先思考后执行'(plan-then-execute)范式。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-22",
+      "keyInsights": [
+        "现有VLA缺乏中间监督信号，直接从感知到动作的映射导致泛化差",
+        "提供半自动标注工具大幅降低中间表示数据的标注成本",
+        "230万QA样本覆盖空间和时序两大维度的具身推理",
+        "验证中间表示监督对VLA泛化能力的显著提升效果"
+      ],
+      "impact": "为VLA社区提供了从标注工具到数据集到评测基准的完整基础设施，推动'先思考后执行'范式的标准化"
+    },
     {
       "id": "p047",
       "title": "BeTTER: Unmasking the Illusion of Embodied Reasoning in Vision-Language-Action Models",

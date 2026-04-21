@@ -1,0 +1,42 @@
+{
+  "id": "p049",
+  "title": "HAMLET: Switch Your Vision-Language-Action Model into a History-Aware Policy",
+  "authors": "Myungkyu Koo, Junyoung Park, Jaehyung Kim, Gunhee Kim",
+  "affiliations": ["KAIST", "UC Berkeley", "Real World Inc."],
+  "venue": "ICLR 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2510.00695",
+  "github": "https://github.com/myungkyukoo/hamlet",
+  "projectPage": "https://myungkyukoo.github.io/hamlet/",
+  "tags": ["VLA", "历史感知", "时序推理", "微调框架", "ICLR 2026"],
+  "tldr": "提出HAMLET框架，通过moment tokens将预训练VLA模型转换为历史感知策略，在长时域操作任务上显著提升性能。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-22",
+  "abstract": "机器人操作任务本质上是历史依赖的——利用过去的上下文信息可以带来显著收益。然而，大多数现有的视觉-语言-动作(VLA)模型在设计上是无历史的：它们仅基于当前时间步的观测来预测动作。本文提出HAMLET(History-Aware Manipulation with Long-horizon Embodied Transformers)，一种将预训练VLA模型转换为历史感知策略的微调框架。HAMLET的核心思想是在每个时间步将丰富的感知信息压缩为紧凑的'moment tokens'，这些tokens以时间嵌入(temporal embeddings)初始化。在推理时，多步的moment tokens被拼接在一起，为模型提供跨越时间的上下文窗口。",
+  "keyContributions": [
+    "识别了VLA模型缺乏历史感知能力这一关键短板",
+    "提出moment tokens机制：以时间嵌入初始化，逐步压缩感知信息",
+    "设计了即插即用的微调框架，无需修改VLA基座架构",
+    "在LIBERO-LONG和RLBench等长时域基准上验证了显著提升"
+  ],
+  "methodology": {
+    "approach": "在每个时间步t，HAMLET将VLA的视觉和语言特征压缩为K个moment tokens m_t。这些tokens通过可学习的时间嵌入初始化，编码了时间位置信息。在推理时，历史窗口内的moment tokens [m_{t-H}, ..., m_{t-1}, m_t] 被拼接后输入动作预测头，使模型能够访问过去H步的上下文。训练时使用标准的行为克隆损失，仅微调moment token相关的参数，保持VLA基座冻结。",
+    "keyComponents": [
+      "Moment Token Compression: 将每步的多模态特征压缩为K个紧凑tokens",
+      "Temporal Embedding Initialization: 以可学习的时间位置编码初始化moment tokens",
+      "History Concatenation: 推理时拼接多步moment tokens提供时序上下文",
+      "Lightweight Fine-tuning: 仅训练moment token相关层，基座参数冻结"
+    ]
+  },
+  "experiments": {
+    "benchmarks": ["LIBERO-LONG", "RLBench", "Real Robot"],
+    "keyResults": [
+      "在LIBERO-LONG长时域基准上显著优于无历史的VLA基线",
+      "在需要记忆的任务（如'先拿A再拿B'序列任务）中提升最为显著",
+      "框架可适配多种VLA架构（OpenVLA、RT-2等）",
+      "真实机器人实验验证了方法的实际可用性"
+    ]
+  },
+  "relatedWork": ["OpenVLA", "RT-2", "π₀", "HiVLA"],
+  "impact": "为VLA模型引入时序推理能力提供了轻量级框架，解决了当前VLA'无记忆'的关键短板。HAMLET的即插即用设计使其可以快速增强任何现有VLA模型的长时域任务能力。"
+}

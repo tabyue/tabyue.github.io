@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-21T18:42",
+  "lastUpdated": "2026-04-22T07:00",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,17 @@
     }
   ],
   "projects": [
+    {
+      "name": "RoboInter (机器人操作中间表示套件)",
+      "org": "上海AI Lab / 中科大 / 东南大学 / 北京大学",
+      "description": "ICLR 2026收录的完整机器人操作中间表示套件。包含三个核心组件：RoboInter-Tool（半自动中间表示标注GUI，支持人工验证）、RoboInter-Data（23万+轨迹的大规模人工验证数据集，涵盖6D位姿、接触点、抓取策略、子任务分解等丰富中间表示标注）、RoboInter-VQA（9类空间+20类时序具身VQA评测基准，共230万QA样本）。实验验证中间表示监督可使VLA泛化成功率提升15-25%，推动'先思考后执行'范式。",
+      "github": "https://github.com/InternRobotics/RoboInter",
+      "stars": "1.2k",
+      "category": "data-tools",
+      "tags": ["ICLR 2026", "中间表示", "VLA", "数据集", "标注工具", "评测基准", "plan-then-execute", "上海AI Lab"],
+      "highlight": "首个完整的VLA中间表示基础设施(标注工具+23万轨迹数据集+230万QA评测基准)",
+      "addedDate": "2026-04-22"
+    },
     {
       "name": "BeTTER (VLA具身推理诊断基准)",
       "org": "北京大学 / 清华大学",

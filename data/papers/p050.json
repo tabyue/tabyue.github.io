@@ -1,0 +1,42 @@
+{
+  "id": "p050",
+  "title": "RoboInter: A Holistic Intermediate Representation Suite Towards Robotic Manipulation",
+  "authors": "Zhaoyang Zhao, Haoran Geng, Hao Dong, He Wang et al.",
+  "affiliations": ["Shanghai AI Laboratory", "USTC (中国科学技术大学)", "Southeast University (东南大学)", "Peking University"],
+  "venue": "ICLR 2026",
+  "date": "2026-02",
+  "arxiv": "https://arxiv.org/abs/2602.09973",
+  "github": "https://github.com/InternRobotics/RoboInter",
+  "tags": ["中间表示", "VLA", "操作数据集", "具身VQA", "plan-then-execute", "ICLR 2026", "上海AI Lab"],
+  "tldr": "提出RoboInter，首个面向机器人操作的完整中间表示套件，包含标注工具、大规模数据集和评测基准，验证中间表示监督可显著提升VLA泛化能力。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-22",
+  "abstract": "大型视觉-语言模型(VLMs)的进展激发了对机器人操作中视觉-语言-动作(VLA)系统的日益关注。然而，现有的操作模型在从视觉输入直接映射到低级动作的过程中，缺乏中间层次的监督信号，导致泛化能力受限。本文提出RoboInter，一个全面的操作中间表示套件，包含三个互补组件：(1) RoboInter-Tool——一个轻量级GUI，支持多样化中间表示的半自动标注，结合人工验证；(2) RoboInter-Data——一个大规模数据集，包含超过23万条轨迹，覆盖丰富的中间表示标注；(3) RoboInter-VQA——一个系统性评测VLM具身推理能力的基准，包含9类空间和20类时序具身VQA类别，共约230万QA样本。",
+  "keyContributions": [
+    "首个完整的机器人操作中间表示套件(标注工具+数据集+评测基准)",
+    "RoboInter-Tool: 半自动标注GUI，支持人工验证，大幅降低标注成本",
+    "RoboInter-Data: 23万+轨迹的大规模人工验证数据集",
+    "RoboInter-VQA: 9类空间+20类时序具身VQA(共230万QA样本)",
+    "验证中间表示监督对VLA泛化的显著提升效果"
+  ],
+  "methodology": {
+    "approach": "RoboInter基于'先思考后执行'(plan-then-execute)范式，在VLA模型的感知和动作之间插入显式的中间表示层。通过半自动标注工具生成大规模中间表示数据，然后以此作为额外的监督信号来训练VLA模型。中间表示包括：物体的6D位姿、接触点、抓取策略、子任务分解、空间关系等。",
+    "keyComponents": [
+      "Semi-automatic Annotation: 结合模型预测和人工修正的混合标注流程",
+      "Spatial Intermediate Representations: 6D位姿、接触点、空间关系等9类",
+      "Temporal Intermediate Representations: 子任务分解、状态变化等20类",
+      "VQA Benchmark: 以问答形式系统评测VLM的具身推理能力"
+    ]
+  },
+  "experiments": {
+    "benchmarks": ["RLBench", "LIBERO", "Real Robot"],
+    "keyResults": [
+      "中间表示监督使VLA在未见场景上的泛化成功率提升15-25%",
+      "半自动标注效率比纯人工标注提升5-10倍",
+      "RoboInter-VQA揭示了当前VLM在具身时序推理上的薄弱点",
+      "支持多种主流VLA架构的即插即用集成"
+    ]
+  },
+  "relatedWork": ["OpenVLA", "RT-2", "SpatialVLA", "HiVLA", "BeTTER"],
+  "impact": "为VLA社区提供了从标注工具到数据集到评测基准的完整基础设施，推动'先思考后执行'范式的标准化。特别是RoboInter-VQA为评测VLM的具身推理能力提供了统一框架。"
+}
