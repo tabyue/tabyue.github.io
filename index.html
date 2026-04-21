@@ -113,6 +113,35 @@ body{font-family:'Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-serif;back
 .ptag-世界模型{background:rgba(236,72,153,.1);color:var(--pkl)}
 .ptag-人形机器人{background:rgba(99,102,241,.1);color:var(--pl)}
 
+/* === LEARN SPLIT LAYOUT === */
+.learn-layout{display:flex;gap:0;min-height:calc(100vh - 56px - 120px)}
+.learn-sidebar{width:280px;flex-shrink:0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;border-right:1px solid var(--glass-border);background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:16px 0;scrollbar-width:thin;scrollbar-color:var(--bd) transparent;transition:background .3s}
+.learn-sidebar::-webkit-scrollbar{width:3px}.learn-sidebar::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.learn-detail{flex:1;min-width:0;padding:24px 32px 60px;overflow-y:auto}
+.learn-detail-empty{display:flex;align-items:center;justify-content:center;height:60vh;color:var(--t3);font-size:.95rem;text-align:center;flex-direction:column;gap:12px}
+.learn-detail-empty .hint-icon{font-size:2.5rem;opacity:.4}
+/* Sidebar items */
+.ls-stage{margin-bottom:4px}
+.ls-stage-head{padding:10px 16px;font-size:.72rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:6px;cursor:pointer;transition:color .2s}
+.ls-stage-head:hover{color:var(--t1)}
+.ls-stage-head .ls-arrow{font-size:.6rem;transition:transform .2s;margin-left:auto}
+.ls-stage.collapsed .ls-arrow{transform:rotate(-90deg)}
+.ls-stage.collapsed .ls-mods{display:none}
+.ls-mod{display:flex;align-items:center;gap:8px;padding:8px 16px 8px 24px;cursor:pointer;font-size:.82rem;color:var(--t2);transition:all .15s;border-left:2px solid transparent;position:relative}
+.ls-mod:hover{color:var(--t1);background:rgba(99,102,241,.04)}
+.ls-mod.active{color:var(--pl);background:rgba(99,102,241,.08);border-left-color:var(--pl);font-weight:600}
+.ls-mod .ls-prog{width:18px;height:18px;border-radius:50%;border:2px solid var(--bd);font-size:.55rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'JetBrains Mono';color:var(--t3)}
+.ls-mod .ls-prog.done{background:var(--s);border-color:var(--s);color:#fff}
+.ls-mod .ls-prog.partial{border-color:var(--pl);color:var(--pl)}
+.ls-mod .ls-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ls-mod .ls-updated{width:6px;height:6px;background:#f87171;border-radius:50%;flex-shrink:0;animation:pulse 2s infinite}
+/* Mobile: sidebar becomes horizontal scroll */
+@media(max-width:768px){
+    .learn-layout{flex-direction:column}
+    .learn-sidebar{width:100%;height:auto;max-height:40vh;position:relative;top:0;border-right:none;border-bottom:1px solid var(--glass-border)}
+    .learn-detail{padding:16px}
+}
+
 /* === LEARNING PATH === */
 .stage{margin-bottom:28px;border:1px solid var(--card-border);border-radius:var(--r);overflow:hidden;background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:background .3s,border-color .3s}
 .stage-head{padding:20px 24px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:background .2s}
@@ -454,7 +483,7 @@ body{font-family:'Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-serif;back
 <div class="page" id="pg-learn">
     <div class="page-header">
         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
-            <div><h1 class="page-title"><span class="icon">📚</span> 学习中心</h1><p class="page-sub">从零基础到独立完成具身智能项目。点击任意模块进入详细学习内容（概念讲解、代码示例、练习题）。</p></div>
+            <div><h1 class="page-title"><span class="icon">📚</span> 学习中心</h1><p class="page-sub">从零基础到独立完成具身智能项目。左侧选择模块，右侧展开详细内容。</p></div>
             <div style="display:flex;gap:6px;flex-shrink:0;margin-top:8px">
                 <button class="card-btn" onclick="exportProgress()" title="导出进度码，在其他设备导入即可恢复">📤 导出进度</button>
                 <button class="card-btn" onclick="importProgress()" title="粘贴进度码恢复学习记录">📥 导入进度</button>
@@ -462,11 +491,16 @@ body{font-family:'Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-serif;back
             </div>
         </div>
     </div>
-    <div class="page-body" id="learnBody"><div style="color:var(--t3);text-align:center;padding:40px">加载中...</div></div>
+    <div class="learn-layout" style="max-width:1400px;margin:0 auto;padding:0 16px 60px">
+        <div class="learn-sidebar" id="learnSidebar"><div style="color:var(--t3);text-align:center;padding:40px;font-size:.85rem">加载中...</div></div>
+        <div class="learn-detail" id="learnDetail">
+            <div class="learn-detail-empty"><span class="hint-icon">📖</span><div>从左侧选择一个模块开始学习</div><div style="font-size:.78rem;color:var(--t3)">点击模块名称展开详细内容</div></div>
+        </div>
+    </div>
 </div>
 
-<!-- LEARN DETAIL MODAL -->
-<div class="modal-overlay" id="learnModal" onclick="if(event.target===this)closeLearnModal()">
+<!-- LEARN DETAIL (legacy modal, hidden) -->
+<div class="modal-overlay" id="learnModal" style="display:none!important" onclick="if(event.target===this)closeLearnModal()">
     <div class="modal" style="max-width:960px"><div class="modal-close"><button class="modal-close-btn" onclick="closeLearnModal()">✕</button></div><div class="modal-body" id="learnModalBody"></div></div>
 </div>
 
@@ -653,47 +687,33 @@ async function init(){
     syncInboxStatus();
 }
 
-// === RENDER LEARN ===
+// === RENDER LEARN (Split Layout: sidebar + detail) ===
+let _currentLearnMod=null;
 function renderLearn(){
     if(!LD)return;
-    // 统计面板
-    let totalMods=0,startedMods=0,doneMods=0,totalSecs=0,doneSecs=0;
-    LD.stages.forEach(s=>s.modules.forEach(m=>{
-        totalMods++;
-        const modId=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
-        const secCount=(m.topics||[]).length||3;
-        totalSecs+=secCount;
-        const st=getModuleStatus(modId,secCount);
-        if(st.status!=='new'){startedMods++;doneSecs+=(getProgress()[modId]?.sections||[]).length}
-        if(st.pct>=100)doneMods++;
-    }));
-    let h=`<div class="learn-stats">
-        <div class="learn-stat"><div class="learn-stat-v" style="color:var(--pl)">${totalMods}</div><div class="learn-stat-l">总模块</div></div>
-        <div class="learn-stat"><div class="learn-stat-v" style="color:var(--cyl)">${startedMods}</div><div class="learn-stat-l">已开始</div></div>
-        <div class="learn-stat"><div class="learn-stat-v" style="color:var(--sl)">${doneMods}</div><div class="learn-stat-l">已完成</div></div>
-        <div class="learn-stat"><div class="learn-stat-v" style="color:var(--al)">${totalSecs>0?Math.round(doneSecs/totalSecs*100):0}%</div><div class="learn-stat-l">总进度</div></div>
-    </div>`;
-    LD.stages.forEach((s,i)=>{
-        h+=`<div class="stage${i>2?' collapsed':''}"><div class="stage-head" onclick="this.parentElement.classList.toggle('collapsed')"><span class="stage-badge badge-${s.level}">${s.level}</span><div class="stage-info"><div class="stage-name">${s.title}</div><div class="stage-sub">${s.subtitle}</div></div><span class="arrow">▼</span></div><div class="stage-body"><div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">`;
+    // Sidebar: 按阶段分组的目录树
+    let sb='';
+    LD.stages.forEach((s,si)=>{
+        sb+=`<div class="ls-stage${si>3?' collapsed':''}">`;
+        sb+=`<div class="ls-stage-head" onclick="this.parentElement.classList.toggle('collapsed')"><span>${s.title}</span><span class="ls-arrow">▼</span></div>`;
+        sb+=`<div class="ls-mods">`;
         s.modules.forEach(m=>{
             const modId=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
             const secCount=(m.topics||[]).length||3;
             const st=getModuleStatus(modId,secCount);
-            const prog=getProgress()[modId];
-            const lastTip=prog?.lastVisit?`上次学习: ${timeAgo(prog.lastVisit)}`:'';
-            const fillCls=st.pct>=100?(st.visits>1?'lv3':'lv2'):(st.pct>0?'lv1':'lv0');
             const isUpdated=m.lastUpdated&&(Date.now()-new Date(m.lastUpdated).getTime())<3*86400000;
-            h+=`<div class="card" style="cursor:pointer" onclick="openLearnModule('${modId}',this)" title="${lastTip}">
-                <div class="card-tags"><span class="tag tag-purple">${m.importance}</span>${isUpdated?'<span class="status-tag status-updated">🔥 已更新</span>':''}<span class="status-tag ${st.cls}" style="margin-left:auto">${st.label}</span></div>
-                <div class="card-title" style="font-size:.95rem">${m.name}</div>
-                <div class="card-desc" style="-webkit-line-clamp:2">${m.description}</div>
-                <div class="progress-bar"><div class="progress-fill ${fillCls}" style="width:${st.pct}%"></div></div>
-                <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:.65rem;color:var(--t3)"><span>${st.pct>0?st.pct+'%':''}</span><span>${lastTip}</span></div>
-            </div>`;
+            const progCls=st.pct>=100?'done':(st.pct>0?'partial':'');
+            const progText=st.pct>=100?'✓':(st.pct>0?Math.round(st.pct):'');
+            const activeCls=_currentLearnMod===modId?' active':'';
+            sb+=`<div class="ls-mod${activeCls}" data-mod="${modId}" onclick="openLearnModule('${modId}')">`;
+            sb+=`<span class="ls-prog ${progCls}">${progText}</span>`;
+            sb+=`<span class="ls-name">${m.name}</span>`;
+            if(isUpdated)sb+=`<span class="ls-updated"></span>`;
+            sb+=`</div>`;
         });
-        h+='</div></div></div>';
+        sb+=`</div></div>`;
     });
-    document.getElementById('learnBody').innerHTML=h;
+    document.getElementById('learnSidebar').innerHTML=sb;
 }
 
 // Learn module ID mapping (中文名 → 英文文件名)
@@ -866,11 +886,15 @@ function getPrevModule(currentModId){
     return idx>0?all[idx-1]:null;
 }
 async function openLearnModule(modId, el){
-    const modal=document.getElementById('learnModal');
-    const body=document.getElementById('learnModalBody');
-    body.innerHTML='<div style="text-align:center;color:var(--t3);padding:40px">⏳ 加载学习内容...</div>';
-    modal.classList.add('open');
-    document.body.style.overflow='hidden';
+    const body=document.getElementById('learnDetail');
+    body.innerHTML='<div style="text-align:center;color:var(--t3);padding:60px">⏳ 加载学习内容...</div>';
+    
+    // Update sidebar active state
+    _currentLearnMod=modId;
+    document.querySelectorAll('.ls-mod').forEach(m=>m.classList.toggle('active',m.dataset.mod===modId));
+    // Expand parent stage if collapsed
+    const activeMod=document.querySelector(`.ls-mod[data-mod="${modId}"]`);
+    if(activeMod){const stage=activeMod.closest('.ls-stage');if(stage?.classList.contains('collapsed'))stage.classList.remove('collapsed')}
 
     // Try to load detail JSON
     const fileId=learnFileMap[modId]||modId;
@@ -880,11 +904,10 @@ async function openLearnModule(modId, el){
     }
     const d=learnCache[modId];
 
-    // Track module open (不标记任何章节已读，由曝光检测处理)
+    // Track module open
     const totalSec=d?d.sections?.length||0:0;
     trackModuleVisit(modId, totalSec);
     if(!d){
-        // Fallback: show basic info from learning-path.json
         let mod=null;
         LD.stages.forEach(s=>s.modules.forEach(m=>{
             const mid=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
@@ -908,7 +931,7 @@ async function openLearnModule(modId, el){
     h+=`<h2 style="margin-bottom:6px">${d.name}</h2>`;
     h+=`<p style="color:var(--t2);margin-bottom:24px;line-height:1.8">${d.description}</p>`;
 
-    // Sections as tabs (只有章节内容)
+    // Sections as tabs
     if(d.sections&&d.sections.length>0){
         const prog=getProgress()[modId];
         const visitedSecs=new Set(prog?.sections||[]);
@@ -925,21 +948,19 @@ async function openLearnModule(modId, el){
             const secIsNew=sec.lastUpdated&&(Date.now()-new Date(sec.lastUpdated).getTime())<3*86400000;
             const updBanner=secIsNew?`<div class="sec-update-banner">🔥 本章节已于 ${sec.lastUpdated.replace('T',' ')} 更新 — 新增/修改的内容已用左侧高亮条标记</div>`:'';
             h+=`<div class="modal-panel learn-panel${i===0?' active':''}${secIsNew?' panel-updated':''}" data-lidx="${i}">${updBanner}<div class="md-content">${renderMd(sec.content)}</div><div class="read-sentinel" data-sec="${i}" style="height:1px"></div>`;
-            // 章节底部导航
             h+=`<div class="sec-nav">`;
             if(i>0){
-                h+=`<div class="sec-nav-btn" onclick="switchLearnTab(${i-1},'${modId}');this.closest('.modal').scrollTop=0"><span class="arrow-icon">←</span> ${d.sections[i-1].title}</div>`;
+                h+=`<div class="sec-nav-btn" onclick="switchLearnTab(${i-1},'${modId}');document.getElementById('learnDetail').scrollTop=0"><span class="arrow-icon">←</span> ${d.sections[i-1].title}</div>`;
             }else{
                 h+=`<div></div>`;
             }
             h+=`<div class="sec-nav-label">${i+1} / ${secLen}</div>`;
             if(i<secLen-1){
-                h+=`<div class="sec-nav-btn primary" onclick="switchLearnTab(${i+1},'${modId}');this.closest('.modal').scrollTop=0">下一章 <span class="arrow-icon">→</span></div>`;
+                h+=`<div class="sec-nav-btn primary" onclick="switchLearnTab(${i+1},'${modId}');document.getElementById('learnDetail').scrollTop=0">下一章 <span class="arrow-icon">→</span></div>`;
             }else{
                 h+=`<div></div>`;
             }
             h+=`</div>`;
-            // 最后一章显示"下一个模块"
             if(i===secLen-1&&nextMod){
                 h+=`<div class="next-mod-btn" onclick="openLearnModule('${nextMod.id}')">📖 继续学习：${nextMod.name} <span class="arrow-icon">→</span></div>`;
             }
@@ -947,22 +968,20 @@ async function openLearnModule(modId, el){
         });
     }
 
-    // 底部辅助信息区（折叠卡片）
+    // 底部辅助信息区
     h+=`<div style="margin-top:28px;display:flex;flex-direction:column;gap:12px">`;
-    // 学习计划
     if(d.weeklyPlan){
         h+=`<div class="aux-card" onclick="this.classList.toggle('open')">
             <div class="aux-header"><span>📅 学习计划</span>${d.estimatedHours?`<span class="aux-meta">预计 ${d.estimatedHours} 小时</span>`:''}${d.prerequisites?.length?`<span class="aux-meta">前置：${d.prerequisites.join('、')}</span>`:''}<span class="aux-arrow">▼</span></div>
             <div class="aux-body"><div class="md-content">${renderMd(d.weeklyPlan)}</div></div>
         </div>`;
     }
-    // 推荐资源
     if(d.resources&&d.resources.length>0){
         let resHtml='';
         d.resources.forEach(r=>{
             const isYT=r.url&&r.url.includes('youtube.com');
             const biliSearch=isYT?`<a href="https://search.bilibili.com/all?keyword=${encodeURIComponent(r.name)}" target="_blank" onclick="event.stopPropagation()" style="font-size:.65rem;color:var(--pl);margin-left:6px;text-decoration:none" title="在B站搜索同类内容">📺 B站搜索</a>`:'';
-            resHtml+=`<a href="${r.url}" target="_blank" onclick="event.stopPropagation()" style="display:block;padding:12px 16px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;text-decoration:none;color:inherit;transition:all .2s" onmouseover="this.style.borderColor='var(--pl)'" onmouseout="this.style.borderColor='var(--bd)'"><div style="display:flex;align-items:center;gap:8px;margin-bottom:3px"><span style="font-size:.8rem;font-weight:600;color:var(--t1)">${r.name}</span><span class="tag tag-cyan" style="font-size:.55rem">${r.type}</span>${isYT?'<span style="font-size:.55rem;color:var(--t3);background:var(--bg2);padding:1px 5px;border-radius:4px">YouTube</span>':''}</div><div style="font-size:.75rem;color:var(--t3);line-height:1.5">${r.description}${biliSearch}</div></a>`;
+            resHtml+=`<a href="${r.url}" target="_blank" onclick="event.stopPropagation()" style="display:block;padding:12px 16px;background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;text-decoration:none;color:inherit;transition:all .2s" onmouseover="this.style.borderColor='var(--pl)'" onmouseout="this.style.borderColor='var(--glass-border)'"><div style="display:flex;align-items:center;gap:8px;margin-bottom:3px"><span style="font-size:.8rem;font-weight:600;color:var(--t1)">${r.name}</span><span class="tag tag-cyan" style="font-size:.55rem">${r.type}</span>${isYT?'<span style="font-size:.55rem;color:var(--t3);background:var(--bg2);padding:1px 5px;border-radius:4px">YouTube</span>':''}</div><div style="font-size:.75rem;color:var(--t3);line-height:1.5">${r.description}${biliSearch}</div></a>`;
         });
         h+=`<div class="aux-card" onclick="this.classList.toggle('open')">
             <div class="aux-header"><span>📖 推荐资源 <span style="font-size:.7rem;color:var(--t3)">(${d.resources.length})</span></span><span class="aux-arrow">▼</span></div>
@@ -973,30 +992,28 @@ async function openLearnModule(modId, el){
 
     body.innerHTML=h;
     body.querySelectorAll('.modal-panel.active pre code').forEach(el=>hljs?.highlightElement(el));
-    // 启动第一章的曝光检测
     if(d.sections?.length>0)switchLearnTab(0, modId);
+    // Scroll detail panel to top
+    body.scrollTop=0;
 }
 let _readTimer=null;
 let _readObserver=null;
 function switchLearnTab(idx,modId){
     document.querySelectorAll('#learn-tabs .modal-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
     document.querySelectorAll('.learn-panel').forEach(p=>p.classList.toggle('active',+p.dataset.lidx===idx));
-    const modal=document.querySelector('#learnModal .modal');
-    if(modal)modal.scrollTop=0;
+    const detail=document.getElementById('learnDetail');
+    if(detail)detail.scrollTop=0;
     const active=document.querySelector('.learn-panel.active');
     if(active)active.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.hl){hljs?.highlightElement(el);el.dataset.hl='1'}});
     // 清理之前的检测
     if(_readTimer){clearTimeout(_readTimer);_readTimer=null}
     if(_readObserver){_readObserver.disconnect();_readObserver=null}
     if(!modId)return;
-    // 找到当前面板底部的哨兵元素
     const sentinel=active?.querySelector(`.read-sentinel[data-sec="${idx}"]`);
     if(!sentinel)return;
-    // 如果已读就不再检测
     const p=getProgress()[modId];
     if(p?.sections?.includes(idx))return;
-    // 观察哨兵：用户滚动到章节底部且停留 2 秒才标记已读
-    const modalEl=document.querySelector('#learnModal .modal');
+    const rootEl=document.getElementById('learnDetail');
     _readObserver=new IntersectionObserver((entries)=>{
         entries.forEach(entry=>{
             if(entry.isIntersecting){
@@ -1004,21 +1021,24 @@ function switchLearnTab(idx,modId){
                     trackSectionVisit(modId, idx);
                     const tabs=document.querySelectorAll('#learn-tabs .modal-tab');
                     if(tabs[idx])tabs[idx].classList.add('tab-visited');
+                    // Update sidebar progress indicator
+                    renderLearn();
                     _readObserver?.disconnect();
-                },2000); // 底部可见 2 秒算已读
+                },2000);
             }else{
                 if(_readTimer){clearTimeout(_readTimer);_readTimer=null}
             }
         });
-    },{root:modalEl,threshold:0.5});
+    },{root:rootEl,threshold:0.5});
     _readObserver.observe(sentinel);
 }
 function closeLearnModal(){
+    // Legacy: no longer used with split layout, but keep for safety
     document.getElementById('learnModal').classList.remove('open');
     document.body.style.overflow='';
     if(_readTimer)clearTimeout(_readTimer);
     if(_readObserver)_readObserver.disconnect();
-    renderLearn(); // 刷新卡片进度
+    renderLearn();
 }
 
 // === RENDER PAPERS ===
