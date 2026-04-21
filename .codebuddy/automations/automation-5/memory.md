@@ -1,5 +1,18 @@
 # Automation-5 Memory: 具身智能门户每6小时更新
 
+## 2026-04-21T06:28 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿
+- 新闻 +4：智元进厂到特斯拉量产行业全景洞察(腾讯新闻)、智元精灵G2转正龙旗产线(8小时直播/99.5%成功率/5亿订单)、Seeed Studio reBot Arm B601正式发布(千元全开源机械臂)、机器人圈抢人失控(优必选1.24亿招首席科学家)
+- 论文 +2：VGA(视觉→几何映射操作模型,LIBERO 98.1%,中山大学)、WAV(世界-价值-动作隐式规划VLA,arXiv 2604.14732)
+- 开源 +1：reBot-DevArm(Seeed Studio全开源6+1DOF机械臂,2.8k Star,ROS2/LeRobot/IsaacSim)
+- 招聘 +2：安克创新(深圳多方向社招)、智元机器人(上海VLA专家社招60-120K)
+- 学习模块深化 ×1：强化学习新增"RLHF/RLEF：从人类反馈到环境反馈"section（含Bradley-Terry偏好模型+奖励模型训练+RLEF环境反馈+Reward Hacking分析）
+
+**当前数据编号水位：** news→n078, papers→p044, opensource→os036, jobs→j036
+**Git:** 4dfc788→a00810d, pushed to main
+
 ## 2026-04-21T00:17 执行记录
 
 **更新概要：**

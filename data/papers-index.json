@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-21T06:28",
+  "lastUpdated": "2026-04-21T12:31",
   "papers": [
+    {
+      "id": "p045",
+      "title": "π₀.7: a Steerable Generalist Robotic Foundation Model with Emergent Compositional Generalization",
+      "authors": "Physical Intelligence Team",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.15483",
+      "github": "",
+      "tags": ["VLA", "π0.7", "组合泛化", "涌现能力", "通用机器人模型", "Physical Intelligence"],
+      "tldr": "Physical Intelligence发布π0.7，一个可控的通用机器人基础模型，首次在机器人领域展示组合泛化的涌现能力。模型能够在从未见过的语言指令和视觉子目标组合上实现强大的开箱即用性能。π0.7在单一统一模型中支持多样化的指令跟随、视觉引导、跨任务零样本泛化，标志着VLA模型从'专用微调'向'通用涌现'的关键转变。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-21",
+      "keyInsights": [
+        "首次观察到VLA模型的组合泛化涌现：未训练过的指令/物体/场景组合也能执行",
+        "可控性(Steerable)：支持语言指令、视觉子目标、以及两者的灵活组合",
+        "单一统一模型：一个模型覆盖多种机器人、多种任务类型",
+        "从π0到π0.7的演进：保留Flow Matching低层+增强高层可控性"
+      ],
+      "impact": "首次在机器人领域证明了类似LLM的涌现能力，暗示VLA模型的Scaling Law可能产生质变"
+    },
+    {
+      "id": "p046",
+      "title": "VLA-Forget: Vision-Language-Action Unlearning for Embodied Foundation Models",
+      "authors": "Arnab Ranjan, Alice Polyzou et al.",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.03956",
+      "github": "",
+      "tags": ["VLA", "机器遗忘", "安全", "模型编辑", "具身基础模型"],
+      "tldr": "提出VLA-Forget，首个针对具身基础模型(VLA)的机器遗忘框架。VLA模型在部署中可能学到不安全或有偏的行为，需要被安全移除。VLA-Forget采用混合遗忘策略：对感知层使用比率感知选择性编辑(ratio-aware selective editing)实现跨模态特异性，对推理/动作层使用层选择性遗忘。该方法能精准'忘记'指定行为而不影响其他已学能力，为VLA模型的安全部署和行为治理提供了关键工具。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-21",
+      "keyInsights": [
+        "首次系统性研究VLA模型的安全遗忘问题",
+        "分组件遗忘：视觉/语言/动作三个模态的遗忘策略不同",
+        "比率感知编辑：根据各层对目标行为的贡献程度决定遗忘强度",
+        "保留-遗忘平衡：精准移除危险行为同时保留正常能力"
+      ],
+      "impact": "为VLA模型的安全合规部署开辟了新方向——不只是学会做什么，还要能安全地'忘记'不该做的事"
+    },
     {
       "id": "p043",
       "title": "VGA: Robotic Manipulation is Vision-to-Geometry Mapping",
