@@ -1,5 +1,18 @@
 # Automation-5 Memory: 具身智能门户每6小时更新
 
+## 2026-04-21T18:42 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿
+- 新闻 +4：ATEC2026具身智能"图灵测试"全球赛事启动、泉智博数亿元A++轮融资(深投控领投/关节模组)、BeTTER揭示VLA推理幻觉(北大清华)、AGIBOT APC2026全球大会(30国2500+合作伙伴)
+- 论文 +2：BeTTER(VLA具身推理幻觉诊断,arXiv 2604.18000)、AGIBOT WORLD 2026(100万+真实轨迹数据集)
+- 开源 +1：BeTTER(北大清华VLA推理基准,因果干预诊断)
+- 招聘 +2：泉智博(无锡关节模组社招)、华为具身智能(深圳社招)
+- 学习模块深化 ×1：机械设计新增"结构设计与快速原型"section（材料选型+3D打印参数+CAD工具链+URDF导出+reBot案例+连杆设计计算器）
+
+**当前数据编号水位：** news→n086, papers→p048, opensource→os038, jobs→j040
+**Git:** 0fbdfe7→fa867f8, pushed to main
+
 ## 2026-04-21T12:31 执行记录
 
 **更新概要：**
@@ -38,42 +51,3 @@
 
 **当前数据编号水位：** news→n074, papers→p042, opensource→os035, jobs→j034
 **Git:** 90cac1b→d3b3084, pushed to main
-
-## 2026-04-20T20:46 执行记录
-
-**更新概要：**
-- 投稿箱：无新投稿
-- 新闻 +4：荣耀"闪电"50分26秒半马冠军(超人类世界纪录)、高德途途导盲犬机器人发布、擎朗XMAN-R1联名挪瓦咖啡(万店)、猎聘报告人形机器人年薪40万
-- 论文 +2：ESCAPE(长时移动操作情景空间记忆,ALFRED SOTA)、DA-PTQ(VLA模型INT4量化部署)
-- 开源 +1：Embodied-R1 (ICLR 2026, 3B VLM, Pointing机制, 天津大学)
-- 招聘 +2：浙江人形机器人创新中心(多方向社招)、杭州海创/浙大机器人研究院(2026校招)
-- 学习模块深化 ×1：数据采集与管理(新增"大规模数据工程与自动标注"section，含轨迹质量检测器+VLM自动标注流水线+域随机化对比实验)
-
-**当前数据编号水位：** news→n070, papers→p041, opensource→os034, jobs→j032
-**Git:** bd29f09→90cac1b, pushed to main
-
-## 2026-04-20T11:38 执行记录
-
-**更新概要：**
-- 投稿箱：无新投稿
-- 新闻 +4：智元APC 2026大会(4新品+4大模型+7解决方案+XYZ曲线)、Gemini Robotics-ER 1.6(Google DeepMind具身推理)、新华网机器人+赋能行动、PIA Automation成立人形机器人部
-- 论文 +1：Gemini Robotics-ER 1.6 (空间推理+Function Calling+API开放)
-- 开源 +1：RUKA-v2 (腱驱动开源灵巧手)
-- 招聘 +2：银河通用2026校招(具身领航者)、人形机器人创新中心(大模型社招)
-- 学习模块深化 ×1：云边端协同(新增MCP协议section，含Server代码+多Server组合+OpenClaw案例)
-
-**当前数据编号水位：** news→n066, papers→p039, opensource→os033, jobs→j030
-**Git:** aac8dc8→bd29f09, pushed to main
-
-## 2026-04-20T04:27 执行记录
-
-**更新概要：**
-- 投稿箱：无新投稿
-- 新闻 +3：央视深度报道具身智能走进生活(留形科技/优宝特/前海政策)、Q1融资狂飙(50+起/200亿)、腾讯HY-Embodied-0.5发布(MoT架构开源)
-- 论文 +1：HY-Embodied-0.5 (腾讯Robotics X, MoT架构, arXiv 2604.07430)
-- 开源 +1：HY-Embodied-0.5 (腾讯混元具身基础模型)
-- 招聘 +2：纬钛机器人(深圳社招RL/视觉算法)、智平方科技(深圳/北京2026校招)
-- 学习模块深化 ×1：世界模型与LLM(新增"视频世界模型"深度section，含UniSim/Genie 2/ViVa/Kairos 3.0解析+ConvLSTM代码+MPC规划+空间对比实验)
-
-**当前数据编号水位：** news→n057, papers→p037, opensource→os031, jobs→j028
-**Git:** 7280806→3e9f86f, pushed to main
