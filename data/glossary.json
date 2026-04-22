@@ -1,0 +1,196 @@
+{
+  "lastUpdated": "2026-04-22T17:00",
+  "description": "具身智能领域中英专业术语对照表。按学科领域分类，每个术语含英文原文、中文翻译、缩写（若有）、简要释义和关联学习模块。",
+  "categories": [
+    {
+      "id": "robot-kinematics-dynamics",
+      "name": "🦾 机器人运动学与动力学",
+      "terms": [
+        { "en": "Forward Kinematics", "zh": "正运动学", "abbr": "FK", "def": "已知关节角度，求末端执行器位姿。通过 DH 参数连乘齐次变换矩阵实现。", "module": "robot-kinematics" },
+        { "en": "Inverse Kinematics", "zh": "逆运动学", "abbr": "IK", "def": "已知期望末端位姿，求关节角度。通常有多解或无解，常用数值迭代法。", "module": "robot-kinematics" },
+        { "en": "Denavit-Hartenberg Parameters", "zh": "DH 参数", "abbr": "DH", "def": "用 4 个参数(α, a, d, θ)描述相邻关节变换的标准方法。", "module": "robot-kinematics" },
+        { "en": "Jacobian Matrix", "zh": "雅可比矩阵", "abbr": "", "def": "关节速度到末端速度的映射矩阵 v = J(q)·dq/dt。奇异位形时 Jacobian 秩亏。", "module": "robot-kinematics" },
+        { "en": "Singularity", "zh": "奇异位形/奇异点", "abbr": "", "def": "Jacobian 矩阵秩亏的构型，此时末端在某些方向丧失运动自由度。", "module": "robot-kinematics" },
+        { "en": "Workspace", "zh": "工作空间", "abbr": "", "def": "末端执行器可达到的所有位置的集合。分可达工作空间和灵巧工作空间。", "module": "robot-kinematics" },
+        { "en": "Degrees of Freedom", "zh": "自由度", "abbr": "DOF", "def": "描述机构独立运动参数的数目。6DOF 机械臂可在三维空间任意位姿。", "module": "robot-kinematics" },
+        { "en": "End Effector", "zh": "末端执行器", "abbr": "EE", "def": "机械臂末端的执行工具，如夹爪、吸盘、喷枪等。", "module": "robot-kinematics" },
+        { "en": "Homogeneous Transformation Matrix", "zh": "齐次变换矩阵", "abbr": "", "def": "4×4 矩阵 T=[R t; 0 1]，统一表示旋转和平移，属于 SE(3) 群。", "module": "linear-algebra" },
+        { "en": "Quaternion", "zh": "四元数", "abbr": "", "def": "q = w + xi + yj + zk，表示 3D 旋转的无万向锁方法，插值(Slerp)性质好。", "module": "linear-algebra" },
+        { "en": "Euler Angles", "zh": "欧拉角", "abbr": "", "def": "用三个旋转角(Roll/Pitch/Yaw)表示姿态，直观但存在万向锁(Gimbal Lock)。", "module": "linear-algebra" },
+        { "en": "Lagrangian Dynamics", "zh": "拉格朗日动力学", "abbr": "", "def": "通过 L = T - V（动能减势能）推导运动方程，适合多刚体系统。", "module": "robot-dynamics" },
+        { "en": "Newton-Euler Method", "zh": "牛顿-欧拉法", "abbr": "", "def": "递推地计算各连杆的力和力矩，计算效率高于拉格朗日法。", "module": "robot-dynamics" },
+        { "en": "Recursive Newton-Euler Algorithm", "zh": "递归牛顿-欧拉算法", "abbr": "RNEA", "def": "前向递推速度/加速度 + 后向递推力/力矩，O(n) 复杂度的逆动力学。", "module": "robot-dynamics" },
+        { "en": "Inertia Matrix/Tensor", "zh": "惯性矩阵/惯量张量", "abbr": "", "def": "描述刚体旋转惯性的 3×3 对称正定矩阵 I。出现在动力学方程 τ = M(q)q̈ + C(q,q̇)q̇ + g(q)。", "module": "robot-dynamics" },
+        { "en": "Trajectory Planning", "zh": "轨迹规划", "abbr": "", "def": "为机器人生成从起点到终点的平滑运动路径（含时间参数化）。", "module": "robot-kinematics" },
+        { "en": "Motion Planning", "zh": "运动规划", "abbr": "", "def": "在考虑障碍物的情况下规划无碰撞路径。包括 RRT、PRM 等采样算法。", "module": "robot-kinematics" }
+      ]
+    },
+    {
+      "id": "control",
+      "name": "🎛️ 控制理论",
+      "terms": [
+        { "en": "PID Controller", "zh": "PID 控制器", "abbr": "PID", "def": "比例-积分-微分控制器。工业界最常用的反馈控制方案，简单有效。", "module": "control-theory" },
+        { "en": "Model Predictive Control", "zh": "模型预测控制", "abbr": "MPC", "def": "在每个时间步求解有限时域最优控制问题，实现前瞻性控制。", "module": "control-theory" },
+        { "en": "Linear Quadratic Regulator", "zh": "线性二次型调节器", "abbr": "LQR", "def": "线性系统在二次代价函数下的最优反馈控制律 u = -Kx。", "module": "control-theory" },
+        { "en": "Impedance Control", "zh": "阻抗控制", "abbr": "", "def": "控制机器人与环境交互时的等效阻抗（质量-阻尼-刚度），实现柔顺运动。", "module": "control-theory" },
+        { "en": "Admittance Control", "zh": "导纳控制", "abbr": "", "def": "阻抗控制的对偶：测量外力，输出期望位置/速度。适用于刚性位置控制的系统。", "module": "control-theory" },
+        { "en": "Computed Torque Control", "zh": "计算力矩控制", "abbr": "", "def": "利用动力学模型精确补偿非线性项，实现线性化解耦控制。", "module": "control-theory" },
+        { "en": "Sliding Mode Control", "zh": "滑模控制", "abbr": "SMC", "def": "一种鲁棒控制方法，将系统状态驱动到滑模面上，对模型不确定性鲁棒。", "module": "control-theory" },
+        { "en": "Adaptive Control", "zh": "自适应控制", "abbr": "", "def": "控制器参数在线调整以适应未知或变化的系统参数（如 MRAC）。", "module": "control-theory" },
+        { "en": "Whole-Body Control", "zh": "全身控制", "abbr": "WBC", "def": "人形机器人同时协调全身关节完成多优先级任务的控制框架。", "module": "humanoid-fullstack" },
+        { "en": "Operational Space Control", "zh": "操作空间控制", "abbr": "OSC", "def": "直接在末端执行器的笛卡尔空间设计控制律，通过 Jacobian 映射到关节空间。", "module": "control-theory" }
+      ]
+    },
+    {
+      "id": "deep-learning",
+      "name": "🧠 深度学习基础",
+      "terms": [
+        { "en": "Convolutional Neural Network", "zh": "卷积神经网络", "abbr": "CNN", "def": "利用局部感受野和权重共享提取空间特征的网络结构。", "module": "deep-learning" },
+        { "en": "Transformer", "zh": "Transformer", "abbr": "", "def": "基于自注意力(Self-Attention)机制的序列建模架构，已成为多模态AI的通用骨架。", "module": "deep-learning" },
+        { "en": "Self-Attention", "zh": "自注意力", "abbr": "", "def": "序列中每个 token 对所有 token 计算加权注意力 Softmax(QK^T/√d)V。", "module": "deep-learning" },
+        { "en": "Backpropagation", "zh": "反向传播", "abbr": "BP", "def": "通过链式法则逐层计算梯度的算法，是神经网络训练的核心。", "module": "deep-learning" },
+        { "en": "Gradient Descent", "zh": "梯度下降", "abbr": "GD", "def": "沿损失函数负梯度方向更新参数的优化算法。SGD/Adam 是常见变体。", "module": "calculus-optimization" },
+        { "en": "Batch Normalization", "zh": "批归一化", "abbr": "BN", "def": "对每个 mini-batch 的激活值归一化，加速训练并稳定梯度。", "module": "deep-learning" },
+        { "en": "Dropout", "zh": "随机失活", "abbr": "", "def": "训练时随机置零部分神经元输出，防止过拟合的正则化技术。", "module": "deep-learning" },
+        { "en": "Transfer Learning", "zh": "迁移学习", "abbr": "", "def": "将预训练模型的知识迁移到目标任务，通常冻结骨干只微调末层。", "module": "deep-learning" },
+        { "en": "Fine-Tuning", "zh": "微调", "abbr": "FT", "def": "在预训练模型基础上，用目标任务数据继续训练部分或全部参数。", "module": "training-inference-optimization" },
+        { "en": "LoRA (Low-Rank Adaptation)", "zh": "低秩适配", "abbr": "LoRA", "def": "用低秩矩阵分解近似微调权重变化 ΔW = AB，大幅减少可训参数。", "module": "training-inference-optimization" },
+        { "en": "Diffusion Model", "zh": "扩散模型", "abbr": "", "def": "通过逐步去噪过程从高斯噪声生成样本的生成模型。", "module": "deep-learning" },
+        { "en": "Flow Matching", "zh": "流匹配", "abbr": "", "def": "学习概率流 ODE 将噪声分布映射到数据分布的生成方法，训练更稳定。", "module": "deep-learning" },
+        { "en": "Variational Autoencoder", "zh": "变分自编码器", "abbr": "VAE", "def": "通过编码器-解码器结构学习数据的隐变量分布 p(z|x)。", "module": "deep-learning" },
+        { "en": "Knowledge Distillation", "zh": "知识蒸馏", "abbr": "KD", "def": "用大模型(Teacher)的软标签指导小模型(Student)训练。", "module": "training-inference-optimization" }
+      ]
+    },
+    {
+      "id": "reinforcement-learning",
+      "name": "🎮 强化学习",
+      "terms": [
+        { "en": "Markov Decision Process", "zh": "马尔可夫决策过程", "abbr": "MDP", "def": "强化学习的数学框架 (S, A, P, R, γ)：状态、动作、转移概率、奖励、折扣因子。", "module": "reinforcement-learning" },
+        { "en": "Policy", "zh": "策略", "abbr": "π", "def": "状态到动作的映射 π(a|s)，可以是确定性或随机性的。", "module": "reinforcement-learning" },
+        { "en": "Value Function", "zh": "价值函数", "abbr": "V(s)", "def": "从状态 s 出发，遵循策略 π 的期望累积回报。", "module": "reinforcement-learning" },
+        { "en": "Q-Function / Action-Value Function", "zh": "动作价值函数", "abbr": "Q(s,a)", "def": "在状态 s 执行动作 a 后遵循策略 π 的期望累积回报。", "module": "reinforcement-learning" },
+        { "en": "Bellman Equation", "zh": "贝尔曼方程", "abbr": "", "def": "V(s) = R + γΣP·V(s')，将价值函数分解为即时奖励和未来价值之和。", "module": "reinforcement-learning" },
+        { "en": "Proximal Policy Optimization", "zh": "近端策略优化", "abbr": "PPO", "def": "通过裁剪目标函数限制策略更新幅度的 on-policy 算法。具身智能最常用的 RL 算法。", "module": "reinforcement-learning" },
+        { "en": "Soft Actor-Critic", "zh": "柔性演员-评论家", "abbr": "SAC", "def": "最大化奖励+熵的 off-policy 算法，探索性好，适合连续动作空间。", "module": "reinforcement-learning" },
+        { "en": "Reward Shaping", "zh": "奖励塑形", "abbr": "", "def": "在稀疏奖励中添加辅助奖励信号，引导策略更快收敛。需避免 reward hacking。", "module": "reinforcement-learning" },
+        { "en": "Curriculum Learning", "zh": "课程学习", "abbr": "", "def": "从简单任务逐步过渡到困难任务的训练策略，加速学习并提高最终性能。", "module": "reinforcement-learning" },
+        { "en": "Sim-to-Real Transfer", "zh": "仿真到真实迁移", "abbr": "Sim2Real", "def": "将仿真中训练的策略部署到真实机器人上的技术流程。", "module": "sim-to-real" },
+        { "en": "Domain Randomization", "zh": "域随机化", "abbr": "DR", "def": "在仿真中随机化物理/视觉参数，使策略对真实世界参数变化鲁棒。", "module": "sim-to-real" },
+        { "en": "RLHF (RL from Human Feedback)", "zh": "基于人类反馈的强化学习", "abbr": "RLHF", "def": "用人类偏好数据训练奖励模型，再用 RL 优化策略。", "module": "reinforcement-learning" }
+      ]
+    },
+    {
+      "id": "imitation-learning",
+      "name": "🎭 模仿学习",
+      "terms": [
+        { "en": "Behavior Cloning", "zh": "行为克隆", "abbr": "BC", "def": "直接用监督学习拟合专家演示 (obs, action) 对，简单但有 covariate shift 问题。", "module": "imitation-learning" },
+        { "en": "DAgger (Dataset Aggregation)", "zh": "数据聚合", "abbr": "DAgger", "def": "迭代地用学习策略采集数据并请专家标注，缓解 covariate shift。", "module": "imitation-learning" },
+        { "en": "Inverse Reinforcement Learning", "zh": "逆强化学习", "abbr": "IRL", "def": "从专家演示中推断奖励函数，再用 RL 训练策略。", "module": "imitation-learning" },
+        { "en": "Diffusion Policy", "zh": "扩散策略", "abbr": "", "def": "用扩散模型建模动作分布 p(a|o)，天然支持多模态动作，是 2024-2026 主流方法。", "module": "imitation-learning" },
+        { "en": "Action Chunking", "zh": "动作分块", "abbr": "", "def": "一次预测未来多步动作序列再逐步执行，减少 compounding error。ACT 首提。", "module": "imitation-learning" },
+        { "en": "Teleoperation", "zh": "遥操作", "abbr": "Teleop", "def": "人类操作员远程控制机器人执行任务，常用于收集演示数据。", "module": "data-collection" },
+        { "en": "Demonstration", "zh": "演示/示教", "abbr": "Demo", "def": "专家执行任务的状态-动作轨迹，是模仿学习的训练数据。", "module": "imitation-learning" },
+        { "en": "Covariate Shift", "zh": "协变量偏移", "abbr": "", "def": "训练与测试时输入分布不一致的问题。行为克隆中小误差会积累导致严重偏移。", "module": "imitation-learning" }
+      ]
+    },
+    {
+      "id": "vla-models",
+      "name": "🤖 VLA 模型与具身AI",
+      "terms": [
+        { "en": "Vision-Language-Action Model", "zh": "视觉-语言-动作模型", "abbr": "VLA", "def": "将视觉感知、语言理解和动作生成统一到一个模型中的端到端架构。", "module": "vla-models" },
+        { "en": "Vision-Language Model", "zh": "视觉-语言模型", "abbr": "VLM", "def": "同时理解图像和文本的多模态模型，如 GPT-4V、PaliGemma。", "module": "vla-models" },
+        { "en": "Large Language Model", "zh": "大语言模型", "abbr": "LLM", "def": "大规模预训练的自回归语言模型，用于文本理解和生成。", "module": "world-models-llm" },
+        { "en": "End-to-End Learning", "zh": "端到端学习", "abbr": "E2E", "def": "直接从原始输入（图像+语言）到低级动作的学习，省去中间人工设计环节。", "module": "vla-models" },
+        { "en": "Action Tokenization", "zh": "动作 Token 化", "abbr": "", "def": "将连续动作离散化为 token 序列，使 VLA 可用自回归方式生成动作。", "module": "vla-models" },
+        { "en": "Embodied Agent", "zh": "具身智能体", "abbr": "", "def": "具有物理身体、能在真实/仿真环境中感知和行动的 AI 系统。", "module": "embodied-agent" },
+        { "en": "Affordance", "zh": "可供性/功能可见性", "abbr": "", "def": "环境中物体对动作的支持关系。如杯把手的可供性是'可抓取'。", "module": "embodied-agent" },
+        { "en": "Grounding", "zh": "接地/语义落地", "abbr": "", "def": "将语言描述与真实物理世界的对象和动作建立对应关系。", "module": "vla-models" },
+        { "en": "World Model", "zh": "世界模型", "abbr": "", "def": "学习环境动态的内部模型 s_{t+1} = f(s_t, a_t)，用于规划和想象。", "module": "world-models-llm" },
+        { "en": "Scaling Law", "zh": "缩放定律", "abbr": "", "def": "模型性能随数据量/参数量/算力幂律增长的规律。具身AI正在验证自己的Scaling Law。", "module": "vla-models" },
+        { "en": "Emergent Ability", "zh": "涌现能力", "abbr": "", "def": "模型规模突破阈值后突然出现的新能力（如组合泛化），无法从小模型外推。", "module": "vla-models" },
+        { "en": "Compositional Generalization", "zh": "组合泛化", "abbr": "", "def": "对从未见过的指令组合能正确执行的能力。π0.7 首次在机器人领域观察到。", "module": "vla-models" },
+        { "en": "In-Context Learning", "zh": "上下文学习", "abbr": "ICL", "def": "模型通过输入中的示例（而非梯度更新）学会新任务的能力。", "module": "world-models-llm" },
+        { "en": "Zero-Shot / Few-Shot", "zh": "零样本/少样本", "abbr": "", "def": "不提供或只提供极少示例即可完成新任务。衡量模型泛化能力的标准。", "module": "vla-models" }
+      ]
+    },
+    {
+      "id": "perception",
+      "name": "👁️ 感知与视觉",
+      "terms": [
+        { "en": "Point Cloud", "zh": "点云", "abbr": "", "def": "三维空间中的离散点集合，通常由 LiDAR 或深度相机生成。", "module": "3d-vision-pointcloud" },
+        { "en": "Depth Camera / RGB-D Camera", "zh": "深度相机", "abbr": "", "def": "同时输出 RGB 图像和深度图的相机。常用技术：结构光、ToF、主动双目。", "module": "sensors-hardware" },
+        { "en": "LiDAR", "zh": "激光雷达", "abbr": "LiDAR", "def": "Light Detection And Ranging，通过激光测距获取环境 3D 信息。", "module": "sensors-hardware" },
+        { "en": "IMU (Inertial Measurement Unit)", "zh": "惯性测量单元", "abbr": "IMU", "def": "包含加速度计和陀螺仪，测量线加速度和角速度。", "module": "sensors-hardware" },
+        { "en": "SLAM", "zh": "同步定位与建图", "abbr": "SLAM", "def": "Simultaneous Localization and Mapping，边运动边构建环境地图并定位自身。", "module": "3d-vision-pointcloud" },
+        { "en": "Object Detection", "zh": "目标检测", "abbr": "", "def": "从图像中定位和分类物体，输出边界框。代表模型：YOLO、DETR。", "module": "computer-vision" },
+        { "en": "Semantic Segmentation", "zh": "语义分割", "abbr": "", "def": "对图像每个像素分配类别标签。", "module": "computer-vision" },
+        { "en": "6D Pose Estimation", "zh": "6D 位姿估计", "abbr": "", "def": "估计物体在三维空间中的位置(3D)和朝向(3D)，共 6 自由度。", "module": "3d-vision-pointcloud" },
+        { "en": "Tactile Sensing", "zh": "触觉感知", "abbr": "", "def": "通过触觉传感器（光学/压阻/电容）获取接触力、滑动、纹理等信息。", "module": "sensors-hardware" },
+        { "en": "Sensor Fusion", "zh": "传感器融合", "abbr": "", "def": "综合多种传感器数据（视觉+IMU+LiDAR）获得更准确的状态估计。", "module": "multimodal-perception" },
+        { "en": "Extrinsic/Intrinsic Calibration", "zh": "外参/内参标定", "abbr": "", "def": "内参：焦距/主点/畸变。外参：相机在世界/机器人坐标系中的位姿。", "module": "sensors-hardware" },
+        { "en": "Hand-Eye Calibration", "zh": "手眼标定", "abbr": "", "def": "求解相机与机器人末端（或基座）之间固定变换关系 AX=XB。", "module": "sensors-hardware" }
+      ]
+    },
+    {
+      "id": "sim-to-real",
+      "name": "🎮 仿真与 Sim-to-Real",
+      "terms": [
+        { "en": "Sim-to-Real Gap", "zh": "仿真到真实差距", "abbr": "", "def": "仿真环境与真实世界之间的系统性差异，是策略迁移失败的主要原因。", "module": "sim-to-real" },
+        { "en": "Domain Randomization", "zh": "域随机化", "abbr": "DR", "def": "训练时随机化仿真参数使策略对参数变化鲁棒，让真实世界成为变体之一。", "module": "sim-to-real" },
+        { "en": "System Identification", "zh": "系统辨识", "abbr": "SysID", "def": "测量真实系统物理参数（摩擦/质量/阻尼），让仿真精确匹配。", "module": "sim-to-real" },
+        { "en": "Teacher-Student Distillation", "zh": "教师-学生蒸馏", "abbr": "", "def": "Teacher 用完美信息训练，Student 只用真实传感器信息模仿 Teacher。", "module": "sim-to-real" },
+        { "en": "Privileged Information", "zh": "特权信息", "abbr": "", "def": "仿真中可获取但真实中不可用的完美观测（地形图/精确位姿/接触力）。", "module": "sim-to-real" },
+        { "en": "Real-to-Sim-to-Real", "zh": "真实→仿真→真实闭环", "abbr": "R2S2R", "def": "重建真实场景到仿真 → 训练策略 → 部署真机 → 反馈更新仿真的闭环流程。", "module": "sim-to-real" },
+        { "en": "Physics Engine", "zh": "物理引擎", "abbr": "", "def": "模拟刚体碰撞、摩擦、关节约束等物理行为的软件。如 MuJoCo、Isaac Sim。", "module": "physics-simulation" },
+        { "en": "Rigid Body Dynamics", "zh": "刚体动力学", "abbr": "", "def": "假设物体不变形的力学模型，是机器人仿真的基础。", "module": "physics-simulation" },
+        { "en": "Contact Dynamics", "zh": "接触动力学", "abbr": "", "def": "处理物体碰撞、摩擦、弹性变形等接触行为的物理模型。", "module": "physics-simulation" },
+        { "en": "NeRF (Neural Radiance Fields)", "zh": "神经辐射场", "abbr": "NeRF", "def": "用 MLP 表示场景的隐式 3D 表示，可从多视角照片合成新视角。", "module": "sim-to-real" },
+        { "en": "3D Gaussian Splatting", "zh": "3D 高斯散布", "abbr": "3DGS", "def": "用 3D 高斯椭球集合表示场景，训练快且可实时渲染，2024+ 年 Real2Sim 主流方法。", "module": "sim-to-real" }
+      ]
+    },
+    {
+      "id": "hardware",
+      "name": "🔧 硬件与执行器",
+      "terms": [
+        { "en": "Actuator", "zh": "执行器/驱动器", "abbr": "", "def": "将控制信号转换为物理运动的装置，如电机、液压缸、气动肌肉。", "module": "mechanical-design" },
+        { "en": "Servo Motor", "zh": "伺服电机", "abbr": "", "def": "带反馈的精密电机，可精确控制位置/速度/力矩。", "module": "mechanical-design" },
+        { "en": "Brushless DC Motor", "zh": "无刷直流电机", "abbr": "BLDC", "def": "用电子换向替代电刷的高效电机，机器人关节常用。", "module": "mechanical-design" },
+        { "en": "Harmonic Drive", "zh": "谐波减速器", "abbr": "", "def": "高减速比(>50:1)、零齿隙的精密减速器。协作臂标配但贵。", "module": "mechanical-design" },
+        { "en": "Planetary Gearbox", "zh": "行星减速器", "abbr": "", "def": "高承载、紧凑结构的减速器。工业机器人常用。", "module": "mechanical-design" },
+        { "en": "Encoder", "zh": "编码器", "abbr": "", "def": "测量旋转角度/位置的传感器。分增量式（AB相脉冲）和绝对式（输出角度值）。", "module": "sensors-hardware" },
+        { "en": "Gripper", "zh": "夹爪/抓手", "abbr": "", "def": "机器人末端抓取工具。分二指平行/三指自适应/吸盘/软体夹爪。", "module": "mechanical-design" },
+        { "en": "Dexterous Hand", "zh": "灵巧手", "abbr": "", "def": "具有多指多关节的仿人机器手，可执行精细操作。", "module": "mechanical-design" },
+        { "en": "URDF", "zh": "统一机器人描述格式", "abbr": "URDF", "def": "Unified Robot Description Format，XML 格式的机器人模型描述（连杆+关节+几何+惯性）。", "module": "ros2" }
+      ]
+    },
+    {
+      "id": "data-engineering",
+      "name": "📊 数据工程与工具链",
+      "terms": [
+        { "en": "ROS 2 (Robot Operating System)", "zh": "机器人操作系统 2", "abbr": "ROS2", "def": "机器人软件开发的中间件框架，提供话题/服务/动作通信机制。", "module": "ros2" },
+        { "en": "Topic / Publisher / Subscriber", "zh": "话题/发布者/订阅者", "abbr": "Pub/Sub", "def": "ROS2 异步通信模型：Publisher 发布消息到 Topic，Subscriber 订阅接收。", "module": "ros2" },
+        { "en": "TF / TF2", "zh": "坐标变换", "abbr": "TF", "def": "ROS2 中管理多坐标系之间变换关系的库，维护 TF 树。", "module": "ros2" },
+        { "en": "MuJoCo", "zh": "MuJoCo 物理引擎", "abbr": "MuJoCo", "def": "Multi-Joint dynamics with Contact。Google DeepMind 维护的高精度机器人仿真器。", "module": "physics-simulation" },
+        { "en": "Isaac Sim / Isaac Lab", "zh": "Isaac 仿真平台", "abbr": "", "def": "NVIDIA 基于 Omniverse 的 GPU 加速机器人仿真平台，支持大规模并行训练。", "module": "physics-simulation" },
+        { "en": "LeRobot", "zh": "LeRobot 框架", "abbr": "", "def": "HuggingFace 开源的模仿学习/强化学习机器人框架，支持数据采集和策略训练。", "module": "imitation-learning" },
+        { "en": "Open X-Embodiment", "zh": "开放跨具身数据集", "abbr": "OXE", "def": "Google 联合多家机构发布的大规模跨机器人操作数据集。", "module": "embodied-data-engineering" },
+        { "en": "RLDS (Reinforcement Learning Datasets)", "zh": "强化学习数据集格式", "abbr": "RLDS", "def": "Google 定义的机器人轨迹数据标准格式(TFRecord)，OXE 采用。", "module": "embodied-data-engineering" }
+      ]
+    },
+    {
+      "id": "math-foundations",
+      "name": "📐 数学基础",
+      "terms": [
+        { "en": "Singular Value Decomposition", "zh": "奇异值分解", "abbr": "SVD", "def": "任意矩阵分解 A=UΣV^T。应用：伪逆、降维、最小二乘。", "module": "linear-algebra" },
+        { "en": "Eigenvalue / Eigenvector", "zh": "特征值/特征向量", "abbr": "", "def": "Av=λv，变换中方向不变的向量和缩放系数。", "module": "linear-algebra" },
+        { "en": "Positive Definite Matrix", "zh": "正定矩阵", "abbr": "PD", "def": "所有特征值 > 0 的对称矩阵。质量矩阵和协方差矩阵都是正定的。", "module": "linear-algebra" },
+        { "en": "Convex Optimization", "zh": "凸优化", "abbr": "", "def": "目标函数和约束集都是凸的优化问题。局部最优即全局最优。", "module": "calculus-optimization" },
+        { "en": "KKT Conditions", "zh": "KKT 条件", "abbr": "KKT", "def": "Karush-Kuhn-Tucker 条件，约束优化问题最优解的必要条件。", "module": "calculus-optimization" },
+        { "en": "Bayesian Inference", "zh": "贝叶斯推断", "abbr": "", "def": "P(A|B)∝P(B|A)P(A)。后验 ∝ 似然 × 先验。机器人 SLAM/滤波的基础。", "module": "probability-statistics" },
+        { "en": "Kalman Filter", "zh": "卡尔曼滤波", "abbr": "KF", "def": "线性高斯系统的最优状态估计器。预测-更新两步递推。", "module": "probability-statistics" },
+        { "en": "Particle Filter", "zh": "粒子滤波", "abbr": "PF", "def": "用随机粒子集近似后验分布的非参数滤波。AMCL 定位的核心。", "module": "probability-statistics" },
+        { "en": "Monte Carlo Method", "zh": "蒙特卡洛方法", "abbr": "MC", "def": "通过随机采样估计期望值或求解积分的数值方法。", "module": "probability-statistics" }
+      ]
+    }
+  ]
+}

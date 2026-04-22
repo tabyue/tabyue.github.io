@@ -451,6 +451,7 @@ body{font-family:'Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-serif;back
         <a onclick="go('hardware')">🔩 硬件图鉴</a>
         <a onclick="go('news')">📰 资讯</a>
         <a onclick="go('jobs')">💼 人才生态</a>
+        <a onclick="go('glossary')">📖 术语表</a>
     </nav>
     <div class="topbar-meta">
         <span class="topbar-time" id="updateTime"></span>
@@ -638,6 +639,22 @@ body{font-family:'Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-serif;back
 </div>
 </div>
 
+<!-- GLOSSARY -->
+<div class="page" id="pg-glossary">
+    <div class="page-header">
+        <h1 class="page-title"><span class="icon">📖</span> 术语对照表 <span style="font-family:'JetBrains Mono';font-size:.7rem;color:var(--t3);font-weight:400" id="glossaryCount"></span></h1>
+        <p class="page-sub">具身智能领域中英专业术语速查。支持搜索，点击关联模块可跳转学习中心。</p>
+    </div>
+    <div class="page-body">
+        <div style="margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <input type="text" id="glossarySearch" placeholder="🔍 搜索术语（中文/英文/缩写）..." style="flex:1;min-width:240px;padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:var(--card-bg);color:var(--t1);font-size:.95rem;outline:none" oninput="filterGlossary()">
+            <div class="filters" id="glossaryCatFilters"></div>
+        </div>
+        <div id="glossaryBody"></div>
+    </div>
+</div>
+</div>
+
 <!-- PAPER MODAL -->
 <div class="modal-overlay" id="paperModal" onclick="if(event.target===this)closePaperModal()">
     <div class="modal"><div class="modal-close"><button class="modal-close-btn" onclick="closePaperModal()">✕</button></div><div class="modal-body" id="paperModalBody"></div></div>
@@ -685,11 +702,11 @@ function go(id){
 addEventListener('scroll',()=>document.getElementById('btt').classList.toggle('show',scrollY>400));
 
 // === DATA ===
-let LD,PD,OD,ND,JD,MD,HD,DS;
+let LD,PD,OD,ND,JD,MD,HD,DS,GD;
 async function loadJ(u){try{const r=await fetch(u+'?t='+Date.now());return r.ok?await r.json():null}catch(e){return null}}
 
 async function init(){
-    [LD,PD,OD,ND,JD,MD,HD,DS]=await Promise.all([loadJ('data/learning-path.json'),loadJ('data/papers-index.json'),loadJ('data/opensource.json'),loadJ('data/news.json'),loadJ('data/jobs.json'),loadJ('data/models.json'),loadJ('data/hardware.json'),loadJ('data/datasets.json')]);
+    [LD,PD,OD,ND,JD,MD,HD,DS,GD]=await Promise.all([loadJ('data/learning-path.json'),loadJ('data/papers-index.json'),loadJ('data/opensource.json'),loadJ('data/news.json'),loadJ('data/jobs.json'),loadJ('data/models.json'),loadJ('data/hardware.json'),loadJ('data/datasets.json'),loadJ('data/glossary.json')]);
     if(LD)document.getElementById('sModules').textContent=LD.stages?LD.stages.reduce((s,st)=>s+(st.modules?st.modules.length:0),0):'-';
     if(PD)document.getElementById('sPapers').textContent=PD.papers.length;
     if(OD)document.getElementById('sOS').textContent=OD.projects.length;
@@ -711,7 +728,7 @@ async function init(){
             heroEl.textContent=diffH<1?'刚刚更新':diffH<24?diffH+'小时前更新':dateStr+' 更新';
         }
     }
-    renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();renderModels();renderDatasets();renderHardware();renderRecentUpdates();
+    renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();renderModels();renderDatasets();renderHardware();renderRecentUpdates();renderGlossary();
     // Sync inbox submission status from server-side processed records
     syncInboxStatus();
 }
@@ -1913,6 +1930,57 @@ if(window.innerWidth<=768)document.getElementById('inboxFab').style.display='blo
 window.addEventListener('resize',()=>{document.getElementById('inboxFab').style.display=window.innerWidth<=768?'block':'none';});
 
 // === RECENT UPDATES PANEL ===
+// === RENDER GLOSSARY ===
+let _glossaryCat='all';
+function renderGlossary(){
+    if(!GD)return;
+    const totalTerms=GD.categories.reduce((s,c)=>s+c.terms.length,0);
+    document.getElementById('glossaryCount').textContent=totalTerms+' 个术语 · '+GD.categories.length+' 个分类';
+    // Category filters
+    let fhtml=`<button class="fbtn active" onclick="filterGlossaryCat(this,'all')">全部</button>`;
+    GD.categories.forEach(c=>{fhtml+=`<button class="fbtn" onclick="filterGlossaryCat(this,'${c.id}')">${c.name.split(' ')[0]} ${c.name.split(' ').slice(1).join(' ')}</button>`;});
+    document.getElementById('glossaryCatFilters').innerHTML=fhtml;
+    renderGlossaryBody();
+}
+function filterGlossaryCat(el,cat){
+    _glossaryCat=cat;
+    el.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+    renderGlossaryBody();
+}
+function filterGlossary(){renderGlossaryBody();}
+function renderGlossaryBody(){
+    if(!GD)return;
+    const q=(document.getElementById('glossarySearch').value||'').toLowerCase().trim();
+    const cats=_glossaryCat==='all'?GD.categories:GD.categories.filter(c=>c.id===_glossaryCat);
+    let html='';
+    let visibleTerms=0;
+    cats.forEach(cat=>{
+        let terms=cat.terms;
+        if(q){terms=terms.filter(t=>t.en.toLowerCase().includes(q)||t.zh.includes(q)||(t.abbr&&t.abbr.toLowerCase().includes(q))||t.def.toLowerCase().includes(q)||t.def.includes(q));}
+        if(!terms.length)return;
+        visibleTerms+=terms.length;
+        html+=`<div style="margin-bottom:28px">`;
+        html+=`<h3 style="color:var(--t1);margin:0 0 12px;font-size:1.05rem;border-bottom:1px solid var(--border);padding-bottom:8px">${cat.name} <span style="font-size:.75rem;color:var(--t3);font-weight:400">${terms.length} 项</span></h3>`;
+        html+=`<div style="display:grid;gap:8px">`;
+        terms.forEach(t=>{
+            const abbr=t.abbr?`<span style="display:inline-block;background:var(--accent);color:#fff;font-size:.68rem;padding:1px 6px;border-radius:4px;margin-left:6px;font-family:'JetBrains Mono',monospace">${t.abbr}</span>`:'';
+            const modLink=t.module?`<a onclick="go('learn');setTimeout(()=>selectLearnModule&&selectLearnModule('${t.module}'),300)" style="font-size:.72rem;color:var(--accent);cursor:pointer;text-decoration:none;white-space:nowrap">→ ${t.module}</a>`:'';
+            html+=`<div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:12px 16px;transition:border-color .2s;cursor:default" onmouseenter="this.style.borderColor='var(--accent)'" onmouseleave="this.style.borderColor='var(--card-border)'">`;
+            html+=`<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">`;
+            html+=`<span style="font-weight:700;color:var(--t1);font-size:.92rem">${t.en}</span>${abbr}`;
+            html+=`<span style="color:var(--accent);font-size:.88rem;font-weight:600">${t.zh}</span>`;
+            html+=`<span style="flex:1"></span>${modLink}`;
+            html+=`</div>`;
+            html+=`<div style="color:var(--t2);font-size:.82rem;line-height:1.5">${t.def}</div>`;
+            html+=`</div>`;
+        });
+        html+=`</div></div>`;
+    });
+    if(!html)html=`<div style="text-align:center;color:var(--t3);padding:40px 0">没有匹配的术语</div>`;
+    document.getElementById('glossaryBody').innerHTML=html;
+}
+
 function renderRecentUpdates(){
     const THREE_DAYS=3*86400000;
     const now=Date.now();
