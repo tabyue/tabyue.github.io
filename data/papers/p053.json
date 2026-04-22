@@ -1,0 +1,32 @@
+{
+  "id": "p053",
+  "title": "OmniVLA-RL: A Vision-Language-Action Model with Spatial Understanding and Online RL",
+  "authors": "Haoxiang Jie, Yaoyuan Yan, Xiangyu Wei, Kailin Wang, Hongjie Yan, Zhiyou Heng, Daocheng Chen",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.17706",
+  "github": "",
+  "tags": ["VLA", "强化学习", "空间推理", "Flow Matching", "MoT", "LIBERO"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-22",
+  "abstract": "视觉-语言-动作(VLA)模型代表了具身AI的范式转变，但现有框架面临空间感知不精确、多模态融合不理想和强化学习训练不稳定三大挑战。OmniVLA-RL提出Mix-of-Transformers(MoT)架构，协同集成推理专家、空间专家和动作专家。同时引入Flow-GSPO训练方法，将Flow Matching重表述为随机微分方程(SDE)过程，并与分组分段策略优化(GSPO)结合，提升动作精度和训练鲁棒性。在LIBERO和LIBERO-Plus基准上显著超越现有SOTA。",
+  "keyContributions": [
+    "Mix-of-Transformers(MoT)架构：推理专家+空间专家+动作专家协同工作",
+    "Flow-GSPO：将Flow Matching重表述为SDE，结合分组分段策略优化",
+    "专用空间专家模块显著提升空间理解能力",
+    "在线RL有效融入VLA框架，克服训练不稳定问题"
+  ],
+  "methodology": {
+    "architecture": "Mix-of-Transformers: 推理专家(语言理解) + 空间专家(空间感知) + 动作专家(运动输出)",
+    "training": "Flow-GSPO = SDE形式的Flow Matching + 分组分段策略优化(GSPO)",
+    "spatial": "专用空间专家增强几何和空间推理",
+    "rl_integration": "在线强化学习微调，Flow-GSPO保证训练稳定"
+  },
+  "keyResults": [
+    "LIBERO基准SOTA，显著超越现有最佳方法",
+    "LIBERO-Plus基准SOTA，验证泛化能力",
+    "MoT架构比统一Transformer架构更有效",
+    "Flow-GSPO同时提升动作精度和训练鲁棒性"
+  ],
+  "analysis": "OmniVLA-RL的MoT设计思路与MOE(混合专家)类似但面向不同模态而非不同token。将空间理解独立为专家模块的做法值得关注——VLA的空间感知一直是短板。Flow-GSPO为VLA的RL微调提供了新方案。"
+}

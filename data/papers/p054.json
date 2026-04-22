@@ -1,0 +1,32 @@
+{
+  "id": "p054",
+  "title": "ReFineVLA: Multimodal Reasoning-Aware Generalist Robotic Policies via Teacher-Guided Fine-Tuning",
+  "authors": "Tuan Van Vo, Tan Q. Nguyen, Khang Nguyen, Nhat Xuan Tran, Duy H. M. Nguyen, An T. Le, Ngo Anh Vien, Minh Nhat Vu",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.17800",
+  "github": "",
+  "tags": ["VLA", "推理增强", "教师引导", "可解释性", "SimplerEnv", "微调"],
+  "difficulty": "中级",
+  "addedDate": "2026-04-22",
+  "abstract": "现有VLA模型往往只学习功能性的输入-动作映射，缺少关键的逻辑推理步骤，导致在复杂长时序操作任务中可解释性和泛化能力不足。ReFineVLA提出多模态推理感知框架，通过教师引导的推理增强VLA微调。利用专家教师模型为机器人数据集生成推理依据(reasoning rationales)，引导VLA在学习动作的同时学习显式推理过程。注意力图可视化证实模型能聚焦于任务相关视觉区域。在SimplerEnv(WidowX和Google Robot)上达到SOTA。",
+  "keyContributions": [
+    "教师引导的推理增强数据集：用专家教师模型生成reasoning rationales",
+    "推理感知微调框架：保持泛化能力的同时提升推理和可解释性",
+    "注意力图可视化分析视觉-语言-动作三模态对齐",
+    "SimplerEnv (WidowX + Google Robot) 基准SOTA"
+  ],
+  "methodology": {
+    "data_augmentation": "专家教师模型为每条训练数据生成推理链(reasoning rationales)",
+    "fine_tuning": "推理感知微调：VLA同时预测推理过程和动作",
+    "analysis": "注意力图可视化验证模型关注区域与任务语义一致",
+    "evaluation": "SimplerEnv多任务基准(WidowX + Google Robot)"
+  },
+  "keyResults": [
+    "SimplerEnv基准成功率SOTA，超越第二名方法",
+    "推理增强后模型注意力图更集中于任务相关区域",
+    "保持底层VLA泛化能力的同时提升推理能力",
+    "对长时序复杂任务的可解释性显著提升"
+  ],
+  "analysis": "ReFineVLA将CoT推理引入VLA领域，是提升VLA可解释性的重要探索。教师-学生蒸馏推理的方式简单有效，可与大多数VLA架构兼容。不过论文被标注与arXiv:2505.19080有大量文本重叠，需关注其创新性边界。"
+}

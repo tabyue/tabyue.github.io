@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-22T13:15",
+  "lastUpdated": "2026-04-22T19:28",
   "papers": [
+    {
+      "id": "p053",
+      "title": "OmniVLA-RL: A Vision-Language-Action Model with Spatial Understanding and Online RL",
+      "authors": "Haoxiang Jie, Yaoyuan Yan, Xiangyu Wei, Kailin Wang, Hongjie Yan, Zhiyou Heng, Daocheng Chen",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.17706",
+      "github": "",
+      "tags": ["VLA", "强化学习", "空间推理", "Flow Matching", "MoT", "LIBERO"],
+      "tldr": "提出OmniVLA-RL，利用Mix-of-Transformers(MoT)架构协同集成推理专家、空间专家和动作专家三类模块。创新性地引入Flow-GSPO训练方法，将Flow Matching重表述为SDE过程并与分组分段策略优化(GSPO)结合，提升动作精度和训练鲁棒性。在LIBERO和LIBERO-Plus基准上显著超越现有SOTA。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-22",
+      "keyInsights": [
+        "MoT架构将推理/空间/动作解耦为三个专家模块，避免多模态融合不充分的问题",
+        "Flow-GSPO将Flow Matching重表述为SDE，结合分组分段策略优化，同时提升精度和训练稳定性",
+        "专用空间专家模块解决现有VLA空间感知不精确的核心短板",
+        "在线RL集成克服了VLA框架中强化学习阶段不稳定的难题"
+      ],
+      "impact": "首次将MoT设计引入VLA，证明多专家协同比统一架构更适合具身任务；Flow-GSPO为VLA的RL微调提供了稳定高效的新范式"
+    },
+    {
+      "id": "p054",
+      "title": "ReFineVLA: Multimodal Reasoning-Aware Generalist Robotic Policies via Teacher-Guided Fine-Tuning",
+      "authors": "Tuan Van Vo, Tan Q. Nguyen, Khang Nguyen, Nhat Xuan Tran, Duy H. M. Nguyen, An T. Le, Ngo Anh Vien, Minh Nhat Vu",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.17800",
+      "github": "",
+      "tags": ["VLA", "推理增强", "教师引导", "可解释性", "SimplerEnv", "微调"],
+      "tldr": "提出ReFineVLA框架，通过教师模型生成推理依据(reasoning rationales)来增强VLA训练数据，使模型不仅学习动作映射还学习显式推理过程。注意力图可视化证实模型能聚焦于任务相关视觉区域。在SimplerEnv(WidowX+Google Robot)上达SOTA。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-22",
+      "keyInsights": [
+        "现有VLA只学功能映射缺乏显式推理——在复杂长时序任务中可解释性和泛化能力差",
+        "教师引导策略：用专家教师模型为每条数据生成推理链，VLA在微调时同时学习推理和动作",
+        "注意力图可视化验证了视觉-语言-动作三模态的有意义对齐",
+        "推理增强微调可在保持底层泛化能力的同时显著提升性能"
+      ],
+      "impact": "将CoT推理引入VLA微调，是VLA可解释性与推理能力增强的重要探索"
+    },
     {
       "id": "p051",
       "title": "DESPITE: Using Large Language Models for Embodied Planning Introduces Systematic Safety Risks",

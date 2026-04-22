@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-22T07:00",
+  "lastUpdated": "2026-04-22T19:28",
   "stages": [
     {
       "id": "foundation",
@@ -429,6 +429,7 @@
         {
           "name": "3D 视觉与点云",
           "importance": "核心",
+          "lastUpdated": "2026-04-22T19:28",
           "description": "深度感知和 3D 理解是机器人在真实世界中操作的关键",
           "topics": [
             {
@@ -446,6 +447,10 @@
             {
               "title": "SLAM 基础",
               "detail": "同步定位与地图构建。前端：特征提取+匹配+运动估计。后端：位姿图优化。回环检测：识别重访场所修正累积误差。主流方案：ORB-SLAM3（特征点法）、LSD-SLAM（直接法）、RTAB-Map（RGB-D SLAM，ROS2集成好）。"
+            },
+            {
+              "title": "NeRF 与 3D Gaussian Splatting",
+              "detail": "超越点云的神经3D表示。NeRF用MLP隐式编码场景辐射场F(x,d)→(c,σ)，通过体渲染生成新视角；3DGS用各向异性3D高斯显式表示场景，实现>100fps实时渲染。机器人应用：数字孪生、透明物体处理、语义NeRF空间理解、3DGS增强Sim-to-Real。Nerfstudio是入门最佳框架。"
             }
           ],
           "resources": [
