@@ -1,5 +1,18 @@
 # Automation-5 Memory: 具身智能门户每6小时更新
 
+## 2026-04-22T19:28 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿
+- 新闻 +4：新华社人形机器人出海特稿(宇树G1克罗地亚/波兰/出货5500台全球第一)、傲意科技CHREC灵巧手量产加速(月产近千台)、DeepMind Gemini Robotics-ER 1.6(具身推理VLM升级)、CAAI具身智能白皮书2026(合肥CEAI大会发布)
+- 论文 +2：OmniVLA-RL(MoT架构+Flow-GSPO/LIBERO SOTA)、ReFineVLA(教师引导推理增强VLA/SimplerEnv SOTA)
+- 开源 +1：Gemini Robotics-ER 1.6(DeepMind具身推理VLM)
+- 招聘 +2：傲意科技(上海/灵巧手方向)、宇树科技(杭州/40+岗位/IPO筹备中)
+- 学习模块深化 ×1：3D视觉点云新增"NeRF与3D Gaussian Splatting在机器人中的应用"section（NeRF体渲染公式+位置编码+MLP实现+3DGS高斯参数化+协方差投影+alpha-blending+SemanticNeRF+4大机器人应用场景+工程选型）
+
+**当前数据编号水位：** news→n098, papers→p054, opensource→os041, jobs→j046
+**Git:** c9ff82f→a479128, pushed to main
+
 ## 2026-04-22T13:15 执行记录
 
 **更新概要：**

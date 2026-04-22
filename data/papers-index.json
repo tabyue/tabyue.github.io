@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-22T19:28",
+  "lastUpdated": "2026-04-23T02:53",
   "papers": [
+    {
+      "id": "p055",
+      "title": "ST-π: Structured SpatioTemporal VLA for Robotic Manipulation",
+      "authors": "Chuanhao Ma, Zixin Zhou et al.",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.17880",
+      "github": "https://github.com/chuanhaoma/ST-pi",
+      "tags": ["VLA", "时空推理", "结构化规划", "操作任务", "动作专家", "开源"],
+      "tldr": "提出ST-π，一种面向精细时空操作的结构化VLA框架。核心创新是显式双层时空建模：VLM负责全局时空行为规划（将任务分解为带空间位置和时间边界的结构化子行为），动作专家负责局部时空精细控制。区别于VLA-4D等隐式时空方法，ST-π首次显式建模操作行为的空间位置和时间边界，在精细操作和长程任务中表现优异。同时提出真实机器人操作数据集用于验证。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-23",
+      "keyInsights": [
+        "现有VLA的时空推理是隐式的——缺乏对行为空间位置和时间边界的显式建模",
+        "双层结构：VLM做全局时空规划（where+when），动作专家做局部精细控制（how）",
+        "结构化子行为表示：每个子行为包含空间目标位置+起止时间边界+语义描述",
+        "在精细操作任务（如穿针、倒水）上相比VLA-4D等方法有显著提升"
+      ],
+      "impact": "首次将操作任务的时空结构显式引入VLA框架，为精细操作提供了更可控的规划-执行范式"
+    },
+    {
+      "id": "p056",
+      "title": "HiF-VLA: Hindsight, Insight and Foresight through Motion Representation for Vision-Language-Action Models",
+      "authors": "Zexin Lin, Hongjie Ding et al.",
+      "venue": "CVPR 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2512.09928",
+      "github": "https://github.com/HiF-VLA/HiF-VLA",
+      "tags": ["VLA", "CVPR 2026", "时序推理", "运动表示", "双向推理", "Hindsight", "Foresight"],
+      "tldr": "提出HiF-VLA，利用紧凑运动表示（motion representation）实现VLA模型的双向时序推理统一框架。三种推理模式——Hindsight（回顾过去行为理解因果）、Insight（感知当前状态精准定位）、Foresight（预测未来趋势辅助规划）——通过运动信息作为统一桥梁进行融合。运动表示天然编码时序动态，可高效压缩历史和预测未来，同时避免处理完整视频帧的高计算开销。CVPR 2026接收论文。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-23",
+      "keyInsights": [
+        "运动表示是时序推理的自然载体——比逐帧处理更高效且信息更集中",
+        "统一三种时序推理模式(Hindsight/Insight/Foresight)，而非单独设计各个模块",
+        "双向推理：既能从过去推断当前，也能从当前预测未来",
+        "在时序相关操作任务上显著优于仅使用当前观测的VLA方法"
+      ],
+      "impact": "为VLA模型的时序推理能力提供了统一的运动表示范式，CVPR 2026级别的工作表明时序建模正成为VLA研究的核心方向之一"
+    },
     {
       "id": "p053",
       "title": "OmniVLA-RL: A Vision-Language-Action Model with Spatial Understanding and Online RL",

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-22T19:28",
+  "lastUpdated": "2026-04-23T02:53",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,18 @@
     }
   ],
   "projects": [
+    {
+      "id": "os042",
+      "name": "NVIDIA Isaac GR00T N1.7 (开源推理VLA人形机器人模型)",
+      "org": "NVIDIA",
+      "description": "NVIDIA Isaac GR00T N1.7是面向通用人形机器人的开源推理VLA基础模型。N1.7相比N1.6的核心升级：VLM骨干网从Cosmos-2B切换为Cosmos-Reason2-2B（基于Qwen3微调），获得显式推理能力。3B参数量可在边缘设备运行，支持多模态输入（语言指令+视觉+本体感知），输出全身动作控制。支持商业授权，目标是推动人形机器人量产就绪部署。权重已上线HuggingFace (nvidia/GR00T-N1.7-3B)，代码在GitHub开源(NVIDIA/Isaac-GR00T)。",
+      "github": "https://github.com/NVIDIA/Isaac-GR00T",
+      "category": "ai-model",
+      "stars": "4.5k",
+      "tags": ["VLA", "推理模型", "人形机器人", "NVIDIA", "GR00T", "Cosmos-Reason", "商业授权", "开源权重"],
+      "highlight": "首个开源推理VLA人形机器人模型，支持商业授权+边缘部署",
+      "addedDate": "2026-04-23"
+    },
     {
       "id": "os041",
       "name": "Gemini Robotics-ER 1.6 (DeepMind具身推理VLM)",

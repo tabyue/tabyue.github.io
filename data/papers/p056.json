@@ -1,0 +1,35 @@
+{
+  "id": "p056",
+  "title": "HiF-VLA: Hindsight, Insight and Foresight through Motion Representation for Vision-Language-Action Models",
+  "authors": "Zexin Lin, Hongjie Ding et al.",
+  "venue": "CVPR 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2512.09928",
+  "github": "https://github.com/HiF-VLA/HiF-VLA",
+  "tags": ["VLA", "CVPR 2026", "时序推理", "运动表示", "双向推理", "Hindsight", "Foresight"],
+  "abstract": "Vision-Language-Action (VLA) models have emerged as a promising paradigm for robotic manipulation. However, most existing VLA methods only reason about the current observation, lacking the ability to leverage temporal context from past actions or anticipate future states. Building on the observation that motion representations naturally encode temporal dynamics, we propose HiF-VLA (Hindsight, Insight, and Foresight for VLAs), a unified framework that leverages motion for bidirectional temporal reasoning. Hindsight uses motion to understand past behaviors and their causal effects; Insight uses motion to precisely perceive the current state; Foresight uses motion to predict future trends and guide planning. By unifying these three temporal reasoning modes through compact motion representations, HiF-VLA significantly improves VLA performance on temporally challenging manipulation tasks.",
+  "tldr": "提出HiF-VLA，利用紧凑运动表示实现VLA模型的双向时序推理统一框架。三种推理模式（Hindsight回顾/Insight洞察/Foresight前瞻）通过运动信息作为统一桥梁进行融合。CVPR 2026接收论文。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-23",
+  "sections": [
+    {
+      "title": "核心动机",
+      "content": "大多数现有VLA模型是'无记忆'的——它们仅基于当前观测帧做出动作决策，既不回顾过去行为的结果，也不预测未来可能的状态变化。这在简单的单步任务中问题不大，但在需要时序推理的复杂操作（如多步装配、需要根据过去经验调整策略的任务）中成为严重瓶颈。\n\nHiF-VLA的核心洞察：运动信息（motion representation）天然编码了时序动态——物体如何移动、机器人如何运动的轨迹包含了过去/现在/未来的丰富时序信息。利用这种紧凑表示比处理完整视频帧序列更高效。"
+    },
+    {
+      "title": "三种时序推理模式",
+      "content": "**Hindsight（回顾）**：\n- 利用过去的运动轨迹理解已发生行为的因果效果\n- 例如：检测到上一步抓取失败（运动轨迹异常），调整下一步策略\n\n**Insight（洞察）**：\n- 利用当前运动状态精准感知实时情况\n- 例如：通过当前速度和力矩信息判断物体是否被稳定抓住\n\n**Foresight（前瞻）**：\n- 利用运动趋势预测未来可能的状态变化\n- 例如：预测当前轨迹会导致碰撞，提前调整路径\n\n三种模式通过统一的运动表示框架进行融合，而非各自独立设计，这保证了模型可以灵活地在不同推理模式间切换。"
+    },
+    {
+      "title": "技术实现",
+      "content": "运动表示采用紧凑编码方式（而非完整视频帧），将连续帧间的变化压缩为低维运动特征。这种表示方式：\n1. 计算效率高：不需要处理完整的历史视频帧\n2. 信息密度大：运动轨迹天然过滤了静态背景，聚焦动态信息\n3. 双向兼容：同一种表示既能用于回顾过去，也能用于预测未来\n\n框架整体仍基于VLA架构（VLM + Action Head），但在VLM的输入中融入了多帧运动表示信息，使模型获得时序推理能力。"
+    }
+  ],
+  "keyInsights": [
+    "运动表示是时序推理的自然载体——比逐帧处理更高效且信息更集中",
+    "统一三种时序推理模式(Hindsight/Insight/Foresight)，而非单独设计各个模块",
+    "双向推理：既能从过去推断当前，也能从当前预测未来",
+    "在时序相关操作任务上显著优于仅使用当前观测的VLA方法"
+  ],
+  "impact": "为VLA模型的时序推理能力提供了统一的运动表示范式，CVPR 2026级别的工作表明时序建模正成为VLA研究的核心方向之一"
+}

@@ -1,0 +1,35 @@
+{
+  "id": "p055",
+  "title": "ST-π: Structured SpatioTemporal VLA for Robotic Manipulation",
+  "authors": "Chuanhao Ma, Zixin Zhou et al.",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.17880",
+  "github": "https://github.com/chuanhaoma/ST-pi",
+  "tags": ["VLA", "时空推理", "结构化规划", "操作任务", "动作专家", "开源"],
+  "abstract": "Vision-language-action (VLA) models have achieved great success on general robotic tasks, but still face challenges in fine-grained spatiotemporal manipulation. Typically, existing methods mainly focus on learning implicit representations for spatiotemporal reasoning, lacking explicit spatial-temporal behavior modeling. In this work, we propose ST-π, a structured spatiotemporal VLA model for robotic manipulation that explicitly plans global spatiotemporal behavior. Within this structured framework, the VLM explicitly plans global spatiotemporal behavior (decomposing tasks into sub-behaviors with spatial positions and temporal boundaries), and the action expert further refines local spatiotemporal control. We also propose a real-world robotic dataset with structured spatiotemporal annotations for training and evaluation.",
+  "tldr": "提出ST-π，一种面向精细时空操作的结构化VLA框架。核心创新是显式双层时空建模：VLM负责全局时空行为规划（将任务分解为带空间位置和时间边界的结构化子行为），动作专家负责局部时空精细控制。区别于VLA-4D等隐式时空方法，ST-π首次显式建模操作行为的空间位置和时间边界。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-23",
+  "sections": [
+    {
+      "title": "核心动机",
+      "content": "现有VLA模型在处理精细时空操作（如穿针引线、精确倒水等需要空间定位+时间节奏配合的任务）时表现不佳。根本原因是它们的时空推理是隐式的——模型隐含地学习时空模式，但缺乏对操作行为时空结构的显式建模。VLA-4D等先驱工作虽然引入了4D时空感知，但仍是隐式编码。ST-π认为：操作任务天然具有结构化时空特征——每个子行为发生在特定空间位置、持续特定时间段，这种结构应被显式建模。"
+    },
+    {
+      "title": "方法架构",
+      "content": "ST-π采用双层结构化设计：\n\n**全局时空规划层（VLM）**：\n- 输入：语言指令+视觉观测\n- 输出：结构化子行为序列，每个子行为包含：\n  - 空间目标位置（where to act）\n  - 时间边界（when to start/end）\n  - 语义描述（what to do）\n- VLM负责高层理解和全局规划\n\n**局部时空控制层（Action Expert）**：\n- 输入：当前子行为的结构化描述+实时观测\n- 输出：精细动作控制序列\n- 负责将粗粒度的时空规划转化为精确的关节控制\n\n这种显式结构化设计使得：\n1. 规划层可以推理任务的全局时空布局\n2. 控制层可以专注于局部精细执行\n3. 失败时可以精准定位是规划还是执行出了问题"
+    },
+    {
+      "title": "实验与效果",
+      "content": "ST-π在多个精细操作基准上相比隐式时空方法有显著提升，特别是在需要精确空间定位和时间协调的任务上。作者同时提出了一个真实机器人操作数据集，包含结构化时空标注，为后续研究提供了基准。代码和数据集已在GitHub开源。"
+    }
+  ],
+  "keyInsights": [
+    "现有VLA的时空推理是隐式的——缺乏对行为空间位置和时间边界的显式建模",
+    "双层结构：VLM做全局时空规划（where+when），动作专家做局部精细控制（how）",
+    "结构化子行为表示：每个子行为包含空间目标位置+起止时间边界+语义描述",
+    "在精细操作任务上相比VLA-4D等方法有显著提升"
+  ],
+  "impact": "首次将操作任务的时空结构显式引入VLA框架，为精细操作提供了更可控的规划-执行范式"
+}
