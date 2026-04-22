@@ -1638,6 +1638,69 @@ function filterJobs(el,dimension,value){
 }
 
 // === RENDER MODELS ===
+// === BENCHMARK EXPLANATIONS ===
+const _BM_DICT={
+  'SimplerEnv':{name:'SimplerEnv',full:'SimplerEnv Benchmark',what:'Google推出的VLA标准化仿真评测环境，含Google Robot/WidowX等平台多种操作任务。SR=成功率(Success Rate)。',range:'0-100%, 当前SOTA约60-70%'},
+  'LIBERO':{name:'LIBERO',full:'LIBERO Manipulation Benchmark',what:'标准化机器人操作评测基准，含LIBERO-Spatial/Object/Goal/Long四个子集，测试不同维度泛化能力。',range:'0-100% SR, SOTA约85-98%'},
+  'WidowX':{name:'WidowX',full:'WidowX Robot Platform',what:'Berkeley的低成本6-DOF机械臂平台，是OXE数据集和VLA评测中最常用的真机之一。',range:'成功率0-100%'},
+  'WidowX Bridge':{name:'WidowX Bridge',full:'WidowX BridgeV2 Benchmark',what:'基于WidowX机械臂的BridgeV2数据集评测，测试VLA模型在真实环境的操作能力。',range:'成功率0-100%'},
+  'OXE Benchmark':{name:'OXE',full:'Open X-Embodiment Benchmark',what:'Google联合34家机构建立的跨机器人评测基准，涵盖22种机器人本体。',range:'成功率0-100%'},
+  'MMBench':{name:'MMBench',full:'Multi-Modal Benchmark',what:'综合多模态理解评测，涵盖感知、推理、知识等多维度。越高越好。',range:'0-100, GPT-4V约86'},
+  'MMMU':{name:'MMMU',full:'Massive Multi-discipline Multimodal Understanding',what:'大规模多学科多模态理解评测，包含数学、科学、工程等30+学科的大学水平题目。',range:'0-100, GPT-4V约60'},
+  'OCRBench':{name:'OCRBench',full:'OCR Benchmark',what:'文档/文字识别理解评测，含文档解析、表格理解、数学公式等。',range:'0-1000, SOTA约900'},
+  'DocVQA':{name:'DocVQA',full:'Document Visual Question Answering',what:'文档视觉问答基准，要求模型理解文档内容并回答问题。',range:'0-100 F1, SOTA约96'},
+  'VideoMME':{name:'VideoMME',full:'Video Multi-Modal Evaluation',what:'视频多模态理解评测，考察视频内容理解、时序推理能力。',range:'0-100, GPT-4V约72'},
+  'MathVista':{name:'MathVista',full:'Mathematical Visual Understanding',what:'数学视觉理解基准，包含几何、图表、函数等数学视觉推理。',range:'0-100, GPT-4V约50'},
+  'RefCOCO':{name:'RefCOCO',full:'Referring Expression Comprehension on COCO',what:'给定文本描述定位图像中对应区域的评测，衡量视觉接地(grounding)能力。',range:'0-100 Acc, SOTA约92'},
+  'GraspNet-1B':{name:'GraspNet-1B',full:'GraspNet 1-Billion Benchmark',what:'大规模6-DOF抓取检测评测，包含88个场景、190个物体。AP=平均精度。',range:'AP 0-100%, SOTA约65%'},
+  'Push-T':{name:'Push-T',full:'Push-T Task',what:'机器人推动T形物体到指定位置的操作任务，Diffusion Policy的经典评测场景。',range:'成功率0-100%'},
+  'Tool Hang':{name:'Tool Hang',full:'Tool Hang Task',what:'将工具挂到支架上的精细操作任务，需要精确的位姿对齐。',range:'成功率0-100%'},
+  '11 tasks avg':{name:'11 Tasks',full:'11 Manipulation Tasks Average',what:'Diffusion Policy论文中11个操作任务的平均提升幅度(vs LSTM-GMM/IBC/BeT基线)。',range:'成功率提升百分比'},
+  'COCO mAP':{name:'COCO mAP',full:'MS COCO mean Average Precision',what:'目标检测标准评测指标，在COCO数据集上的平均精度。IoU阈值0.5:0.95。',range:'0-100, YOLO11x约54.7'},
+  'COCO zero-shot':{name:'COCO 0-shot',full:'COCO Zero-Shot Detection',what:'不提供COCO训练数据，仅靠文本描述进行零样本目标检测的AP值。',range:'0-100 AP, SOTA约53'},
+  'LVIS':{name:'LVIS',full:'Large Vocabulary Instance Segmentation',what:'大词汇量实例分割评测(1200+类别)，比COCO更难因为类别更多更长尾。',range:'0-100 AP'},
+  'SA-V J&F':{name:'SA-V J&F',full:'SA-V Video Segmentation J&F Score',what:'SAM 2在视频分割上的评测，J=区域相似度，F=轮廓精度，J&F取平均。',range:'0-100, SOTA约82'},
+  'COCO AP':{name:'COCO AP',full:'COCO Keypoint AP',what:'人体关键点检测的标准评测(17个关键点)，基于OKS(Object Keypoint Similarity)。',range:'0-100, SOTA约79'},
+  'WholeBody AP':{name:'WholeBody',full:'COCO WholeBody Keypoint AP',what:'全身关键点检测(身体+手+脸=133个点)评测。比Body-only难很多。',range:'0-100, SOTA约65'},
+  '3DPW MPJPE':{name:'3DPW',full:'3D Pose in the Wild',what:'3D人体姿态估计评测。MPJPE=所有关节平均位置误差(mm)，越小越好。',range:'越小越好, SOTA约44mm'},
+  'FreiHAND':{name:'FreiHAND',full:'FreiHAND Hand Pose Benchmark',what:'3D手部姿态估计评测。PA-MPJPE=对齐后平均关节误差(mm)。',range:'越小越好, SOTA约6mm'},
+  'LFW':{name:'LFW',full:'Labeled Faces in the Wild',what:'人脸验证标准评测(6000对人脸)，衡量同一人/不同人判别准确率。',range:'0-100%, SOTA约99.8%'},
+  'CFP-FP':{name:'CFP-FP',full:'Celebrities in Frontal-Profile',what:'人脸识别中正脸vs侧脸对比的评测，比LFW更难。',range:'0-100%, SOTA约98.5%'},
+  'AgeDB-30':{name:'AgeDB-30',full:'AgeDB with 30-year Gap',what:'跨年龄人脸识别评测，同一人年龄差距30年。',range:'0-100%, SOTA约98.3%'},
+  'LibriSpeech (en)':{name:'LibriSpeech',full:'LibriSpeech English ASR',what:'英文语音识别标准评测(960小时有声书)。WER=词错误率，越低越好。',range:'WER越低越好, SOTA约2%'},
+  'Common Voice (zh)':{name:'CV (zh)',full:'Common Voice Chinese ASR',what:'Mozilla中文语音识别评测数据集。WER=词错误率。',range:'WER越低越好'},
+  'AISHELL-1 (zh)':{name:'AISHELL-1',full:'AISHELL-1 Chinese ASR',what:'中文普通话ASR标准评测(178小时)。WER=字错误率，越低越好。',range:'WER越低越好, SOTA约1.7%'},
+  'AISHELL-1':{name:'AISHELL-1',full:'AISHELL-1 Chinese ASR',what:'中文普通话ASR标准评测(178小时)。WER=字错误率。',range:'WER越低越好, SOTA约1.9%'},
+  'Wenetspeech':{name:'Wenetspeech',full:'WenetSpeech Chinese ASR',what:'大规模中文ASR评测(10000+小时多场景)，比AISHELL更贴近实际。',range:'WER越低越好, SOTA约7%'},
+  'MOS':{name:'MOS',full:'Mean Opinion Score',what:'人类主观评价语音自然度/质量(1-5分)。5=完全自然。由多名评测者打分取平均。',range:'1-5, 真人约4.5, 优秀TTS约4.2+'},
+  'MMLU':{name:'MMLU',full:'Massive Multitask Language Understanding',what:'57个学科的多选题评测(STEM/人文/社科等)，衡量LLM知识广度。',range:'0-100, GPT-4约87, 人类专家约90'},
+  'HumanEval':{name:'HumanEval',full:'HumanEval Code Generation',what:'164个Python编程题评测(OpenAI)，衡量代码生成能力。pass@1=一次通过率。',range:'0-100, GPT-4约87, Claude约93'},
+  'KITTI AbsRel':{name:'KITTI',full:'KITTI Depth Estimation AbsRel',what:'自动驾驶场景单目深度估计评测。AbsRel=相对绝对误差，越小越好。',range:'越小越好, SOTA约0.04'},
+  'NYUv2 AbsRel':{name:'NYUv2',full:'NYU Depth V2 AbsRel',what:'室内场景单目深度估计评测。AbsRel=相对绝对误差。',range:'越小越好, SOTA约0.04'},
+  'KITTI':{name:'KITTI',full:'KITTI Benchmark',what:'自动驾驶/深度估计经典评测数据集(德国卡尔斯鲁厄)。',range:'看具体指标'},
+  'NYUv2':{name:'NYUv2',full:'NYU Depth V2',what:'纽约大学室内RGB-D数据集，单目深度估计标准评测。',range:'看具体指标'},
+  'Fold T-shirt':{name:'Fold',full:'T-shirt Folding Task',what:'机器人折叠T恤任务——涉及变形物体操作，是VLA最具挑战性的任务之一。',range:'成功率0-100%'},
+  'Clear Table':{name:'Clear',full:'Table Clearing Task',what:'清理桌面上多个物体的操作任务，测试多步操作和场景理解。',range:'成功率0-100%'},
+  'Cluttered Grasp':{name:'Cluttered',full:'Cluttered Scene Grasping',what:'杂乱堆叠场景中的抓取任务，物体相互遮挡和接触。',range:'成功率0-100%'},
+  'Loco-Manipulation':{name:'LocoManip',full:'Locomotion + Manipulation',what:'同时涉及移动(走路)和操作(抓取)的综合任务评测。',range:'成功率0-100%'},
+};
+function _bmInfo(key){
+  if(_BM_DICT[key])return _BM_DICT[key];
+  const lk=key.toLowerCase();
+  for(const[k,v]of Object.entries(_BM_DICT)){if(lk.includes(k.toLowerCase())||k.toLowerCase().includes(lk))return v;}
+  return null;
+}
+function showBmTip(el){
+  let tip=el.querySelector('.bm-tip');
+  if(tip)return;
+  tip=document.createElement('div');tip.className='bm-tip';
+  tip.style.cssText='position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);z-index:999;background:var(--card-bg);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;width:280px;box-shadow:0 4px 20px rgba(0,0,0,.3);font-family:inherit;pointer-events:none';
+  const n=el.dataset.bmName,f=el.dataset.bmFull,w=el.dataset.bmWhat,r=el.dataset.bmRange;
+  tip.innerHTML=`<div style="font-weight:700;color:var(--accent);font-size:.78rem;margin-bottom:4px">${f}</div><div style="color:var(--t2);font-size:.73rem;line-height:1.5;margin-bottom:4px">${w}</div><div style="color:var(--t3);font-size:.68rem">📊 ${r}</div>`;
+  el.appendChild(tip);
+}
+function hideBmTip(el){const tip=el.querySelector('.bm-tip');if(tip)tip.remove();}
+
 function renderModels(){
     if(!MD)return;
     document.getElementById('modelCount').textContent=MD.models.length+' 个模型';
@@ -1660,7 +1723,7 @@ function renderModelCards(cat){
             <div class="card-title">${m.name}</div>
             <div style="font-size:.76rem;color:var(--t2);margin-bottom:4px">${m.org} · <span style="font-family:'JetBrains Mono';color:var(--cyl)">${m.params}</span>${m.license?' · <span style="color:var(--sl)">'+m.license+'</span>':''}</div>
             <div class="card-desc">${m.description}</div>
-            ${m.benchmarks?`<div style="margin:6px 0;display:flex;flex-wrap:wrap;gap:4px">${Object.entries(m.benchmarks).map(([k,v])=>`<span style="font-size:.68rem;padding:2px 7px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--t2);font-family:'JetBrains Mono',monospace;white-space:nowrap"><span style="color:var(--t3)">${_escH(k)}</span> <span style="color:var(--accent);font-weight:600">${_escH(v)}</span></span>`).join('')}</div>`:''}
+            ${m.benchmarks?`<div style="margin:6px 0;display:flex;flex-wrap:wrap;gap:4px">${Object.entries(m.benchmarks).map(([k,v])=>{const info=_bmInfo(k);return`<span class="bm-pill" style="font-size:.68rem;padding:2px 7px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--t2);font-family:'JetBrains Mono',monospace;white-space:nowrap;cursor:help;position:relative" ${info?`onmouseenter="showBmTip(this)" onmouseleave="hideBmTip(this)" data-bm-name="${_escH(info.name)}" data-bm-full="${_escH(info.full)}" data-bm-what="${_escH(info.what)}" data-bm-range="${_escH(info.range)}"`:''}><span style="color:var(--t3)">${_escH(k)}</span> <span style="color:var(--accent);font-weight:600">${_escH(v)}</span></span>`;}).join('')}</div>`:''}
             <div class="card-footer" style="gap:6px">${links.join('')}</div>
         </div>`;
     }).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:40px">该分类暂无模型</div>';
