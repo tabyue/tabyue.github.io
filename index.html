@@ -1660,6 +1660,7 @@ function renderModelCards(cat){
             <div class="card-title">${m.name}</div>
             <div style="font-size:.76rem;color:var(--t2);margin-bottom:4px">${m.org} · <span style="font-family:'JetBrains Mono';color:var(--cyl)">${m.params}</span>${m.license?' · <span style="color:var(--sl)">'+m.license+'</span>':''}</div>
             <div class="card-desc">${m.description}</div>
+            ${m.benchmarks?`<div style="margin:6px 0;display:flex;flex-wrap:wrap;gap:4px">${Object.entries(m.benchmarks).map(([k,v])=>`<span style="font-size:.68rem;padding:2px 7px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--t2);font-family:'JetBrains Mono',monospace;white-space:nowrap"><span style="color:var(--t3)">${_escH(k)}</span> <span style="color:var(--accent);font-weight:600">${_escH(v)}</span></span>`).join('')}</div>`:''}
             <div class="card-footer" style="gap:6px">${links.join('')}</div>
         </div>`;
     }).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:40px">该分类暂无模型</div>';

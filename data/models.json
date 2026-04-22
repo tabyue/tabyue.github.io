@@ -1,21 +1,81 @@
 {
-  "lastUpdated": "2026-04-18T13:28",
+  "lastUpdated": "2026-04-22T17:48",
   "categories": [
-    {"id": "all", "name": "全部", "icon": "🌐"},
-    {"id": "vla", "name": "VLA 动作模型", "icon": "🤖"},
-    {"id": "vlm", "name": "VLM 视觉语言", "icon": "👁️"},
-    {"id": "manipulation", "name": "操作与抓取", "icon": "🦾"},
-    {"id": "locomotion", "name": "运动控制", "icon": "🦿"},
-    {"id": "perception-3d", "name": "3D感知与深度", "icon": "📐"},
-    {"id": "detection", "name": "目标检测与分割", "icon": "🎯"},
-    {"id": "pose", "name": "姿态估计", "icon": "🏃"},
-    {"id": "face", "name": "人脸识别", "icon": "😊"},
-    {"id": "asr", "name": "语音识别 ASR", "icon": "🎤"},
-    {"id": "tts", "name": "语音合成 TTS", "icon": "🔊"},
-    {"id": "voiceprint", "name": "声纹识别", "icon": "🔉"},
-    {"id": "multimodal", "name": "多模态感知", "icon": "🧩"},
-    {"id": "llm", "name": "LLM 语言模型", "icon": "💬"},
-    {"id": "world-model", "name": "世界模型", "icon": "🌍"}
+    {
+      "id": "all",
+      "name": "全部",
+      "icon": "🌐"
+    },
+    {
+      "id": "vla",
+      "name": "VLA 动作模型",
+      "icon": "🤖"
+    },
+    {
+      "id": "vlm",
+      "name": "VLM 视觉语言",
+      "icon": "👁️"
+    },
+    {
+      "id": "manipulation",
+      "name": "操作与抓取",
+      "icon": "🦾"
+    },
+    {
+      "id": "locomotion",
+      "name": "运动控制",
+      "icon": "🦿"
+    },
+    {
+      "id": "perception-3d",
+      "name": "3D感知与深度",
+      "icon": "📐"
+    },
+    {
+      "id": "detection",
+      "name": "目标检测与分割",
+      "icon": "🎯"
+    },
+    {
+      "id": "pose",
+      "name": "姿态估计",
+      "icon": "🏃"
+    },
+    {
+      "id": "face",
+      "name": "人脸识别",
+      "icon": "😊"
+    },
+    {
+      "id": "asr",
+      "name": "语音识别 ASR",
+      "icon": "🎤"
+    },
+    {
+      "id": "tts",
+      "name": "语音合成 TTS",
+      "icon": "🔊"
+    },
+    {
+      "id": "voiceprint",
+      "name": "声纹识别",
+      "icon": "🔉"
+    },
+    {
+      "id": "multimodal",
+      "name": "多模态感知",
+      "icon": "🧩"
+    },
+    {
+      "id": "llm",
+      "name": "LLM 语言模型",
+      "icon": "💬"
+    },
+    {
+      "id": "world-model",
+      "name": "世界模型",
+      "icon": "🌍"
+    }
   ],
   "models": [
     {
@@ -28,9 +88,19 @@
       "paper": "https://arxiv.org/abs/2406.09246",
       "license": "MIT",
       "category": "vla",
-      "tags": ["VLA", "7B", "LoRA微调", "Open X-Embodiment"],
+      "tags": [
+        "VLA",
+        "7B",
+        "LoRA微调",
+        "Open X-Embodiment"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2024-06"
+      "updated": "2024-06",
+      "benchmarks": {
+        "SimplerEnv": "~53% SR (Google Robot)",
+        "LIBERO": "~70% avg SR",
+        "WidowX Bridge": "47%"
+      }
     },
     {
       "name": "OpenVLA-OFT",
@@ -42,9 +112,18 @@
       "paper": "",
       "license": "MIT",
       "category": "vla",
-      "tags": ["VLA", "7B", "OFT", "高效微调"],
+      "tags": [
+        "VLA",
+        "7B",
+        "OFT",
+        "高效微调"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-03"
+      "updated": "2025-03",
+      "benchmarks": {
+        "SimplerEnv": "+8-15% over OpenVLA",
+        "LIBERO": "+10% over OpenVLA"
+      }
     },
     {
       "name": "SmolVLA",
@@ -56,9 +135,18 @@
       "paper": "",
       "license": "Apache-2.0",
       "category": "vla",
-      "tags": ["VLA", "轻量级", "400M", "LeRobot", "边缘部署"],
+      "tags": [
+        "VLA",
+        "轻量级",
+        "400M",
+        "LeRobot",
+        "边缘部署"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2026-03"
+      "updated": "2026-03",
+      "benchmarks": {
+        "LeRobot Eval": "400M, edge-friendly"
+      }
     },
     {
       "name": "OpenPI (π₀ 开源版)",
@@ -70,9 +158,19 @@
       "paper": "https://www.physicalintelligence.company/blog/openpi",
       "license": "Apache-2.0",
       "category": "vla",
-      "tags": ["VLA", "3B", "Flow Matching", "π₀"],
+      "tags": [
+        "VLA",
+        "3B",
+        "Flow Matching",
+        "π₀"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2026-01"
+      "updated": "2026-01",
+      "benchmarks": {
+        "Fold T-shirt": "72% SR",
+        "Clear Table": "88% SR",
+        "Latency": "~50ms (10-step Flow)"
+      }
     },
     {
       "name": "Octo",
@@ -84,9 +182,19 @@
       "paper": "https://arxiv.org/abs/2405.12213",
       "license": "MIT",
       "category": "vla",
-      "tags": ["VLA", "93M", "Diffusion", "超轻量"],
+      "tags": [
+        "VLA",
+        "93M",
+        "Diffusion",
+        "超轻量"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2024-10"
+      "updated": "2024-10",
+      "benchmarks": {
+        "OXE Benchmark": "56% avg SR (Base)",
+        "Fine-tune": "30min / 1K demos / 1 GPU",
+        "WidowX": "56% (vs RT-1-X 45%)"
+      }
     },
     {
       "name": "Embodied-R1",
@@ -98,9 +206,19 @@
       "paper": "https://arxiv.org/abs/2508.13998",
       "license": "Apache-2.0",
       "category": "vla",
-      "tags": ["VLA", "3B", "具身推理", "Pointing", "RFT"],
+      "tags": [
+        "VLA",
+        "3B",
+        "具身推理",
+        "Pointing",
+        "RFT"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2026-03"
+      "updated": "2026-03",
+      "benchmarks": {
+        "SimplerEnv": "outperforms OpenVLA",
+        "Params": "3B, edge-deployable"
+      }
     },
     {
       "name": "WholeBodyVLA",
@@ -112,9 +230,18 @@
       "paper": "https://arxiv.org/abs/2512.11047",
       "license": "Apache-2.0",
       "category": "vla",
-      "tags": ["VLA", "人形机器人", "全身控制", "ICLR 2026"],
+      "tags": [
+        "VLA",
+        "人形机器人",
+        "全身控制",
+        "ICLR 2026"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2026-04"
+      "updated": "2026-04",
+      "benchmarks": {
+        "Loco-Manipulation": "82% SR (AgiBot X2)",
+        "Range": "10m+ navigation+manipulation"
+      }
     },
     {
       "name": "OpenHelix",
@@ -126,7 +253,11 @@
       "paper": "",
       "license": "Apache-2.0",
       "category": "vla",
-      "tags": ["VLA", "双系统", "认知架构"],
+      "tags": [
+        "VLA",
+        "双系统",
+        "认知架构"
+      ],
       "addedDate": "2026-04-18",
       "updated": "2025-06"
     },
@@ -140,9 +271,20 @@
       "paper": "https://arxiv.org/abs/2502.13923",
       "license": "Apache-2.0",
       "category": "vlm",
-      "tags": ["VLM", "多尺寸", "视频理解", "OCR"],
+      "tags": [
+        "VLM",
+        "多尺寸",
+        "视频理解",
+        "OCR"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-02"
+      "updated": "2025-02",
+      "benchmarks": {
+        "MMBench": "82.6 (7B)",
+        "OCRBench": "866",
+        "DocVQA": "95.7",
+        "VideoMME": "71.2"
+      }
     },
     {
       "name": "InternVL 2.5",
@@ -154,9 +296,20 @@
       "paper": "https://arxiv.org/abs/2501.12386",
       "license": "MIT",
       "category": "vlm",
-      "tags": ["VLM", "多尺寸", "中文优化", "多模态"],
+      "tags": [
+        "VLM",
+        "多尺寸",
+        "中文优化",
+        "多模态"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-01"
+      "updated": "2025-01",
+      "benchmarks": {
+        "MMBench": "85.0 (78B)",
+        "MMMU": "62.8",
+        "OCRBench": "878",
+        "MathVista": "72.3"
+      }
     },
     {
       "name": "LLaVA-OneVision",
@@ -168,9 +321,18 @@
       "paper": "https://arxiv.org/abs/2408.03326",
       "license": "Apache-2.0",
       "category": "vlm",
-      "tags": ["VLM", "图像+视频", "多尺寸"],
+      "tags": [
+        "VLM",
+        "图像+视频",
+        "多尺寸"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2024-08"
+      "updated": "2024-08",
+      "benchmarks": {
+        "MMBench": "80.8 (7B)",
+        "MMMU": "48.8",
+        "VideoMME": "58.2"
+      }
     },
     {
       "name": "PaliGemma 2",
@@ -182,9 +344,18 @@
       "paper": "",
       "license": "Gemma",
       "category": "vlm",
-      "tags": ["VLM", "Google", "π₀骨干", "多任务"],
+      "tags": [
+        "VLM",
+        "Google",
+        "π₀骨干",
+        "多任务"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2024-12"
+      "updated": "2024-12",
+      "benchmarks": {
+        "RefCOCO": "90.2 (3B)",
+        "Role": "π₀/π₀.5 vision backbone"
+      }
     },
     {
       "name": "AnyGrasp",
@@ -196,9 +367,18 @@
       "paper": "https://arxiv.org/abs/2212.08333",
       "license": "Custom (SDK)",
       "category": "manipulation",
-      "tags": ["抓取检测", "6-DOF", "零样本", "RGB-D"],
+      "tags": [
+        "抓取检测",
+        "6-DOF",
+        "零样本",
+        "RGB-D"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-11"
+      "updated": "2025-11",
+      "benchmarks": {
+        "GraspNet-1B": "AP=64.2% (Top-1)",
+        "Speed": "real-time 6-DOF"
+      }
     },
     {
       "name": "Diffusion Policy",
@@ -210,9 +390,20 @@
       "paper": "https://arxiv.org/abs/2303.04137",
       "license": "MIT",
       "category": "manipulation",
-      "tags": ["Diffusion", "操作策略", "多模态", "SOTA"],
+      "tags": [
+        "Diffusion",
+        "操作策略",
+        "多模态",
+        "SOTA"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2024-06"
+      "updated": "2024-06",
+      "benchmarks": {
+        "11 tasks avg": "+46.9% vs baselines",
+        "Push-T": "86.1% SR",
+        "Tool Hang": "78.9% SR",
+        "Inference": "DDIM 10-step ~50ms"
+      }
     },
     {
       "name": "DexGraspVLA",
@@ -224,9 +415,18 @@
       "paper": "https://arxiv.org/abs/2502.20900",
       "license": "MIT",
       "category": "manipulation",
-      "tags": ["灵巧手", "抓取", "VLA", "AAAI 2026"],
+      "tags": [
+        "灵巧手",
+        "抓取",
+        "VLA",
+        "AAAI 2026"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-11"
+      "updated": "2025-11",
+      "benchmarks": {
+        "Cluttered Grasp": "90%+ SR",
+        "Venue": "AAAI 2026 Oral"
+      }
     },
     {
       "name": "Depth Anything V2",
@@ -238,9 +438,19 @@
       "paper": "https://arxiv.org/abs/2406.09414",
       "license": "Apache-2.0",
       "category": "perception-3d",
-      "tags": ["深度估计", "单目", "多尺寸", "视频支持"],
+      "tags": [
+        "深度估计",
+        "单目",
+        "多尺寸",
+        "视频支持"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-01"
+      "updated": "2025-01",
+      "benchmarks": {
+        "KITTI AbsRel": "0.043 (Large)",
+        "NYUv2 AbsRel": "0.043",
+        "Speed": "~30FPS (Large)"
+      }
     },
     {
       "name": "Depth Anything 3",
@@ -252,9 +462,17 @@
       "paper": "https://arxiv.org/abs/2511.10647",
       "license": "Apache-2.0",
       "category": "perception-3d",
-      "tags": ["深度估计", "多视角", "最新SOTA"],
+      "tags": [
+        "深度估计",
+        "多视角",
+        "最新SOTA"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-11"
+      "updated": "2025-11",
+      "benchmarks": {
+        "KITTI": "~15% better than DAv2",
+        "NYUv2": "~10% better than DAv2"
+      }
     },
     {
       "name": "GroundingDINO 1.5",
@@ -266,9 +484,17 @@
       "paper": "https://arxiv.org/abs/2303.05499",
       "license": "Apache-2.0",
       "category": "detection",
-      "tags": ["开放集检测", "文本引导", "零样本"],
+      "tags": [
+        "开放集检测",
+        "文本引导",
+        "零样本"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2024-05"
+      "updated": "2024-05",
+      "benchmarks": {
+        "COCO zero-shot": "52.5 AP",
+        "LVIS": "32.7 AP"
+      }
     },
     {
       "name": "SAM 2",
@@ -280,9 +506,18 @@
       "paper": "https://arxiv.org/abs/2408.00714",
       "license": "Apache-2.0",
       "category": "detection",
-      "tags": ["通用分割", "视频追踪", "零样本", "提示式"],
+      "tags": [
+        "通用分割",
+        "视频追踪",
+        "零样本",
+        "提示式"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2024-08"
+      "updated": "2024-08",
+      "benchmarks": {
+        "SA-V J&F": "81.2",
+        "Type": "zero-shot promptable segmentation"
+      }
     },
     {
       "name": "YOLO11 / YOLOv11",
@@ -294,9 +529,19 @@
       "paper": "",
       "license": "AGPL-3.0",
       "category": "detection",
-      "tags": ["目标检测", "实例分割", "极速", "工业部署"],
+      "tags": [
+        "目标检测",
+        "实例分割",
+        "极速",
+        "工业部署"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-09"
+      "updated": "2025-09",
+      "benchmarks": {
+        "COCO mAP": "54.7 (YOLO11x)",
+        "Latency": "1.5ms (YOLO11n)",
+        "Tasks": "det/seg/pose/OBB/cls"
+      }
     },
     {
       "name": "RTMPose / MMPose",
@@ -308,9 +553,18 @@
       "paper": "https://arxiv.org/abs/2303.07399",
       "license": "Apache-2.0",
       "category": "pose",
-      "tags": ["姿态估计", "实时", "全身关键点", "100+FPS"],
+      "tags": [
+        "姿态估计",
+        "实时",
+        "全身关键点",
+        "100+FPS"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-06"
+      "updated": "2025-06",
+      "benchmarks": {
+        "COCO AP": "75.3 (Body-L)",
+        "Speed": "100+ FPS (RTMPose-M)"
+      }
     },
     {
       "name": "ViTPose+",
@@ -322,9 +576,18 @@
       "paper": "https://arxiv.org/abs/2212.04246",
       "license": "Apache-2.0",
       "category": "pose",
-      "tags": ["姿态估计", "ViT", "人体+动物", "高精度"],
+      "tags": [
+        "姿态估计",
+        "ViT",
+        "人体+动物",
+        "高精度"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2024-10"
+      "updated": "2024-10",
+      "benchmarks": {
+        "COCO AP": "79.1 (ViTPose-H)",
+        "WholeBody AP": "65.1"
+      }
     },
     {
       "name": "HaMeR / 4DHumans",
@@ -336,9 +599,18 @@
       "paper": "https://arxiv.org/abs/2312.05251",
       "license": "MIT",
       "category": "pose",
-      "tags": ["3D人体重建", "SMPL", "手部", "遥操作"],
+      "tags": [
+        "3D人体重建",
+        "SMPL",
+        "手部",
+        "遥操作"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2024-06"
+      "updated": "2024-06",
+      "benchmarks": {
+        "3DPW MPJPE": "44.7mm",
+        "FreiHAND": "6.0mm PA-MPJPE"
+      }
     },
     {
       "name": "InsightFace / ArcFace",
@@ -350,9 +622,19 @@
       "paper": "https://arxiv.org/abs/1801.07698",
       "license": "MIT",
       "category": "face",
-      "tags": ["人脸识别", "人脸检测", "ArcFace", "工业级"],
+      "tags": [
+        "人脸识别",
+        "人脸检测",
+        "ArcFace",
+        "工业级"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-03"
+      "updated": "2025-03",
+      "benchmarks": {
+        "LFW": "99.83%",
+        "CFP-FP": "98.37%",
+        "AgeDB-30": "98.28%"
+      }
     },
     {
       "name": "FaceXFormer",
@@ -364,9 +646,18 @@
       "paper": "https://arxiv.org/abs/2403.12960",
       "license": "MIT",
       "category": "face",
-      "tags": ["人脸分析", "多任务", "9合1", "ICCV"],
+      "tags": [
+        "人脸分析",
+        "多任务",
+        "9合1",
+        "ICCV"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-06"
+      "updated": "2025-06",
+      "benchmarks": {
+        "Tasks": "9 face analysis tasks unified",
+        "Venue": "ICCV 2025"
+      }
     },
     {
       "name": "Whisper Large V3 Turbo",
@@ -378,9 +669,19 @@
       "paper": "https://arxiv.org/abs/2212.04356",
       "license": "MIT",
       "category": "asr",
-      "tags": ["ASR", "多语言", "99种语言", "工业标准"],
+      "tags": [
+        "ASR",
+        "多语言",
+        "99种语言",
+        "工业标准"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2024-11"
+      "updated": "2024-11",
+      "benchmarks": {
+        "LibriSpeech (en)": "WER 2.4%",
+        "Common Voice (zh)": "WER ~8%",
+        "Speed": "8x faster than V3"
+      }
     },
     {
       "name": "SenseVoice",
@@ -392,9 +693,19 @@
       "paper": "",
       "license": "Apache-2.0",
       "category": "asr",
-      "tags": ["ASR", "多语言", "情感识别", "音频事件"],
+      "tags": [
+        "ASR",
+        "多语言",
+        "情感识别",
+        "音频事件"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-01"
+      "updated": "2025-01",
+      "benchmarks": {
+        "AISHELL-1 (zh)": "WER 1.78%",
+        "Wenetspeech": "WER 7.5%",
+        "Extra": "emotion + audio event detection"
+      }
     },
     {
       "name": "Paraformer",
@@ -406,9 +717,19 @@
       "paper": "",
       "license": "MIT",
       "category": "asr",
-      "tags": ["ASR", "非自回归", "实时流式", "中文优化"],
+      "tags": [
+        "ASR",
+        "非自回归",
+        "实时流式",
+        "中文优化"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-06"
+      "updated": "2025-06",
+      "benchmarks": {
+        "AISHELL-1": "WER 1.95%",
+        "Wenetspeech": "WER 7.8%",
+        "Speed": "non-AR, 10x faster than Whisper"
+      }
     },
     {
       "name": "Fish Speech / FishAudio S1",
@@ -420,9 +741,19 @@
       "paper": "",
       "license": "Apache-2.0",
       "category": "tts",
-      "tags": ["TTS", "语音克隆", "Arena冠军", "零样本"],
+      "tags": [
+        "TTS",
+        "语音克隆",
+        "Arena冠军",
+        "零样本"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-12"
+      "updated": "2025-12",
+      "benchmarks": {
+        "MOS": "4.2/5",
+        "Latency": "streaming ~200ms",
+        "Chinese": "excellent quality"
+      }
     },
     {
       "name": "CosyVoice 2",
@@ -434,9 +765,19 @@
       "paper": "",
       "license": "Apache-2.0",
       "category": "tts",
-      "tags": ["TTS", "声音克隆", "流式", "中英文"],
+      "tags": [
+        "TTS",
+        "声音克隆",
+        "流式",
+        "中英文"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-08"
+      "updated": "2025-08",
+      "benchmarks": {
+        "MOS": "4.3/5",
+        "Zero-shot Clone": "5s audio",
+        "Languages": "zh/en/ja/ko/yue"
+      }
     },
     {
       "name": "Kokoro TTS",
@@ -448,9 +789,20 @@
       "paper": "",
       "license": "Apache-2.0",
       "category": "tts",
-      "tags": ["TTS", "超轻量", "82M", "CPU实时", "边缘部署"],
+      "tags": [
+        "TTS",
+        "超轻量",
+        "82M",
+        "CPU实时",
+        "边缘部署"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-10"
+      "updated": "2025-10",
+      "benchmarks": {
+        "MOS": "4.1/5 (82M)",
+        "RTF": ">40x realtime",
+        "License": "Apache-2.0, edge-ready"
+      }
     },
     {
       "name": "3D-Speaker",
@@ -462,9 +814,18 @@
       "paper": "https://arxiv.org/abs/2403.19971",
       "license": "Apache-2.0",
       "category": "voiceprint",
-      "tags": ["声纹识别", "说话人验证", "多模态", "DAMO"],
+      "tags": [
+        "声纹识别",
+        "说话人验证",
+        "多模态",
+        "DAMO"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2024-12"
+      "updated": "2024-12",
+      "benchmarks": {
+        "EER": "~1.5% (Vox1-O)",
+        "Type": "speaker verification"
+      }
     },
     {
       "name": "WeSpeaker",
@@ -476,9 +837,18 @@
       "paper": "",
       "license": "Apache-2.0",
       "category": "voiceprint",
-      "tags": ["声纹识别", "ECAPA-TDNN", "工业级", "WeNet生态"],
+      "tags": [
+        "声纹识别",
+        "ECAPA-TDNN",
+        "工业级",
+        "WeNet生态"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-04"
+      "updated": "2025-04",
+      "benchmarks": {
+        "EER": "~1.2% (Vox1-O)",
+        "Framework": "open-source speaker toolkit"
+      }
     },
     {
       "name": "ImageBind",
@@ -490,9 +860,17 @@
       "paper": "https://arxiv.org/abs/2305.05665",
       "license": "MIT",
       "category": "multimodal",
-      "tags": ["六模态", "统一嵌入", "跨模态检索"],
+      "tags": [
+        "六模态",
+        "统一嵌入",
+        "跨模态检索"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2024-03"
+      "updated": "2024-03",
+      "benchmarks": {
+        "Modalities": "6 modalities aligned",
+        "Type": "image/text/audio/depth/thermal/IMU"
+      }
     },
     {
       "name": "LanguageBind",
@@ -504,9 +882,17 @@
       "paper": "https://arxiv.org/abs/2310.01852",
       "license": "MIT",
       "category": "multimodal",
-      "tags": ["多模态对齐", "视频+音频+深度", "语言中心"],
+      "tags": [
+        "多模态对齐",
+        "视频+音频+深度",
+        "语言中心"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2024-06"
+      "updated": "2024-06",
+      "benchmarks": {
+        "Modalities": "video/audio/depth/thermal/infrared to language",
+        "Zero-shot": "strong cross-modal retrieval"
+      }
     },
     {
       "name": "Qwen3",
@@ -518,9 +904,18 @@
       "paper": "",
       "license": "Apache-2.0",
       "category": "llm",
-      "tags": ["LLM", "MoE", "工具调用", "多尺寸"],
+      "tags": [
+        "LLM",
+        "MoE",
+        "工具调用",
+        "多尺寸"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-04"
+      "updated": "2025-04",
+      "benchmarks": {
+        "MMLU": "86.7 (235B)",
+        "HumanEval": "84.1"
+      }
     },
     {
       "name": "Llama 4",
@@ -532,9 +927,19 @@
       "paper": "",
       "license": "Llama 4",
       "category": "llm",
-      "tags": ["LLM", "MoE", "10M上下文", "多模态"],
+      "tags": [
+        "LLM",
+        "MoE",
+        "10M上下文",
+        "多模态"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-04"
+      "updated": "2025-04",
+      "benchmarks": {
+        "MMLU": "87.4 (Maverick)",
+        "HumanEval": "86.5",
+        "Arch": "Scout 109B / Maverick 402B MoE"
+      }
     },
     {
       "name": "ViVa (Video-generative Value Model)",
@@ -546,9 +951,18 @@
       "paper": "https://arxiv.org/abs/2604.08168",
       "license": "",
       "category": "world-model",
-      "tags": ["世界模型", "价值函数", "视频生成", "RL"],
+      "tags": [
+        "世界模型",
+        "价值函数",
+        "视频生成",
+        "RL"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2026-04"
+      "updated": "2026-04",
+      "benchmarks": {
+        "RL Fine-tune": "+35% vs hand-crafted reward",
+        "Reward Design": "zero extra design"
+      }
     },
     {
       "name": "Genesis",
@@ -560,9 +974,19 @@
       "paper": "",
       "license": "Apache-2.0",
       "category": "world-model",
-      "tags": ["世界模型", "物理仿真", "生成式", "可微"],
+      "tags": [
+        "世界模型",
+        "物理仿真",
+        "生成式",
+        "可微"
+      ],
       "addedDate": "2026-04-18",
-      "updated": "2025-12"
+      "updated": "2025-12",
+      "benchmarks": {
+        "Speed": "10-80x faster than MuJoCo",
+        "Differentiable": "fully differentiable physics",
+        "Stars": "22k+ GitHub"
+      }
     },
     {
       "name": "Unitree RL GYM",
@@ -574,9 +998,21 @@
       "paper": "",
       "license": "BSD-3-Clause",
       "category": "locomotion",
-      "tags": ["运动控制", "宇树", "Go2", "H1", "G1", "PPO", "sim-to-real"],
+      "tags": [
+        "运动控制",
+        "宇树",
+        "Go2",
+        "H1",
+        "G1",
+        "PPO",
+        "sim-to-real"
+      ],
       "addedDate": "2026-04-20",
-      "updated": "2025-12"
+      "updated": "2025-12",
+      "benchmarks": {
+        "Platform": "Unitree Go2/H1/G1",
+        "Sim2Real": "zero-shot locomotion"
+      }
     },
     {
       "name": "Walk These Ways",
@@ -588,9 +1024,20 @@
       "paper": "https://arxiv.org/abs/2212.11972",
       "license": "MIT",
       "category": "locomotion",
-      "tags": ["运动控制", "四足", "Go1", "多行为", "MoB", "sim-to-real"],
+      "tags": [
+        "运动控制",
+        "四足",
+        "Go1",
+        "多行为",
+        "MoB",
+        "sim-to-real"
+      ],
       "addedDate": "2026-04-20",
-      "updated": "2024-06"
+      "updated": "2024-06",
+      "benchmarks": {
+        "Gaits": "multiple gait styles",
+        "Control": "velocity-conditioned locomotion"
+      }
     },
     {
       "name": "Humanoid-Gym",
@@ -602,9 +1049,18 @@
       "paper": "https://arxiv.org/abs/2404.05695",
       "license": "BSD-3-Clause",
       "category": "locomotion",
-      "tags": ["运动控制", "人形机器人", "零样本迁移", "端到端RL"],
+      "tags": [
+        "运动控制",
+        "人形机器人",
+        "零样本迁移",
+        "端到端RL"
+      ],
       "addedDate": "2026-04-20",
-      "updated": "2024-11"
+      "updated": "2024-11",
+      "benchmarks": {
+        "Sim2Real": "zero-shot humanoid gait",
+        "Framework": "PPO+DR+Teacher-Student"
+      }
     },
     {
       "name": "OmniH2O",
@@ -616,9 +1072,19 @@
       "paper": "https://arxiv.org/abs/2406.08858",
       "license": "MIT",
       "category": "locomotion",
-      "tags": ["运动控制", "人形机器人", "远程操作", "全身控制", "IROS 2024"],
+      "tags": [
+        "运动控制",
+        "人形机器人",
+        "远程操作",
+        "全身控制",
+        "IROS 2024"
+      ],
       "addedDate": "2026-04-20",
-      "updated": "2025-01"
+      "updated": "2025-01",
+      "benchmarks": {
+        "Task": "humanoid teleoperation from RGB",
+        "Platform": "Unitree H1"
+      }
     },
     {
       "name": "ExBody2",
@@ -630,9 +1096,19 @@
       "paper": "https://arxiv.org/abs/2412.13196",
       "license": "MIT",
       "category": "locomotion",
-      "tags": ["运动控制", "人形机器人", "表现力控制", "AMP", "H1"],
+      "tags": [
+        "运动控制",
+        "人形机器人",
+        "表现力控制",
+        "AMP",
+        "H1"
+      ],
       "addedDate": "2026-04-20",
-      "updated": "2025-01"
+      "updated": "2025-01",
+      "benchmarks": {
+        "Task": "expressive whole-body control",
+        "Platform": "Unitree H1"
+      }
     },
     {
       "name": "legged_gym (RSL)",
@@ -644,9 +1120,20 @@
       "paper": "https://arxiv.org/abs/2109.11978",
       "license": "BSD-3-Clause",
       "category": "locomotion",
-      "tags": ["运动控制", "ANYmal", "四足", "PPO", "经典框架"],
+      "tags": [
+        "运动控制",
+        "ANYmal",
+        "四足",
+        "PPO",
+        "经典框架"
+      ],
       "addedDate": "2026-04-20",
-      "updated": "2024-03"
+      "updated": "2024-03",
+      "benchmarks": {
+        "Training": "20min walk (1xRTX3090)",
+        "ANYmal": "Nature 2023 cover",
+        "Sim2Real": "zero-shot transfer"
+      }
     },
     {
       "name": "HumanPlus",
@@ -658,9 +1145,20 @@
       "paper": "https://arxiv.org/abs/2406.10454",
       "license": "MIT",
       "category": "locomotion",
-      "tags": ["运动控制", "人形机器人", "影子学习", "全身模仿", "Stanford"],
+      "tags": [
+        "运动控制",
+        "人形机器人",
+        "影子学习",
+        "全身模仿",
+        "Stanford"
+      ],
       "addedDate": "2026-04-20",
-      "updated": "2024-12"
+      "updated": "2024-12",
+      "benchmarks": {
+        "Task": "humanoid shadowing from human motion",
+        "Platform": "Unitree H1",
+        "Sim2Real": "real-time retargeting"
+      }
     },
     {
       "name": "StreamingVLA",
@@ -672,9 +1170,20 @@
       "paper": "https://arxiv.org/abs/2603.28565",
       "license": "",
       "category": "vla",
-      "tags": ["VLA", "流式推理", "Flow Matching", "自适应观测", "低延迟", "清华"],
+      "tags": [
+        "VLA",
+        "流式推理",
+        "Flow Matching",
+        "自适应观测",
+        "低延迟",
+        "清华"
+      ],
       "addedDate": "2026-04-20",
-      "updated": "2026-03"
+      "updated": "2026-03",
+      "benchmarks": {
+        "Latency": "ultra-low latency VLA",
+        "Type": "streaming inference"
+      }
     }
   ]
 }
