@@ -1968,10 +1968,10 @@ function renderGlossaryBody(){
             const hasDetail=!!t.detail;
             const expandBtn=hasDetail?`<span class="glossary-expand" id="gbtn-${uid}" onclick="toggleGlossaryDetail('${uid}')" style="font-size:.72rem;color:var(--accent);cursor:pointer;margin-left:8px;user-select:none">▶ 详解</span>`:'';
             html+=`<div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:12px 16px;transition:border-color .2s" onmouseenter="this.style.borderColor='var(--accent)'" onmouseleave="this.style.borderColor='var(--card-border)'">`;
-            html+=`<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">`;
-            html+=`<span style="font-weight:700;color:var(--t1);font-size:.92rem">${t.en}</span>${abbr}`;
-            html+=`<span style="color:var(--accent);font-size:.88rem;font-weight:600">${t.zh}</span>`;
-            html+=`<span style="flex:1"></span>${modLink}`;
+            html+=`<div style="display:flex;align-items:baseline;gap:6px;margin-bottom:4px;flex-wrap:wrap">`;
+            html+=`<span style="font-weight:700;color:var(--t1);font-size:.92rem;white-space:nowrap">${t.en}</span>${abbr}`;
+            html+=`<span style="color:var(--accent);font-size:.88rem;font-weight:600;white-space:nowrap">${t.zh}</span>`;
+            html+=`<span style="flex:1;min-width:8px"></span>${modLink}`;
             html+=`</div>`;
             html+=`<div style="color:var(--t2);font-size:.82rem;line-height:1.5">${t.def}${expandBtn}</div>`;
             if(hasDetail){
