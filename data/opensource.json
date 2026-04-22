@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-22T07:00",
+  "lastUpdated": "2026-04-22T13:15",
   "categories": [
     {
       "id": "all",
@@ -44,6 +44,19 @@
   ],
   "projects": [
     {
+      "id": "os040",
+      "name": "DESPITE (LLM具身规划安全基准)",
+      "org": "ETH Zurich / Stanford / UIUC",
+      "description": "DESPITE是首个系统评估LLM作为机器人规划器安全性的大规模基准。包含12,279个确定性验证任务，涵盖物理危险和规范性危险两大类。测试了23个模型后发现：规划能力趋于完美但28.3%任务生成危险计划，安全意识不随模型规模自动提升。提供完整的任务生成器、确定性验证器和评估代码。",
+      "github": "https://despite-safety.github.io/",
+      "stars": "新发布",
+      "category": "data-tools",
+      "tags": ["LLM安全", "具身规划", "基准测试", "安全评估", "12K任务"],
+      "highlight": "首个LLM具身规划安全基准，揭示规划能力≠安全的关键洞察",
+      "addedDate": "2026-04-22"
+    },
+    {
+      "id": "os039",
       "name": "RoboInter (机器人操作中间表示套件)",
       "org": "上海AI Lab / 中科大 / 东南大学 / 北京大学",
       "description": "ICLR 2026收录的完整机器人操作中间表示套件。包含三个核心组件：RoboInter-Tool（半自动中间表示标注GUI，支持人工验证）、RoboInter-Data（23万+轨迹的大规模人工验证数据集，涵盖6D位姿、接触点、抓取策略、子任务分解等丰富中间表示标注）、RoboInter-VQA（9类空间+20类时序具身VQA评测基准，共230万QA样本）。实验验证中间表示监督可使VLA泛化成功率提升15-25%，推动'先思考后执行'范式。",
@@ -55,6 +68,7 @@
       "addedDate": "2026-04-22"
     },
     {
+      "id": "os038",
       "name": "BeTTER (VLA具身推理诊断基准)",
       "org": "北京大学 / 清华大学",
       "description": "BeTTER(Benchmark for Testing True Embodied Reasoning)是首个针对VLA模型具身推理能力的因果诊断基准。通过空间布局变化、时间外推等因果干预手段，系统揭示了当前VLA模型的推理幻觉问题。包含完整的仿真环境、因果干预工具和真机验证代码。论文结论对VLA社区具有重要警示意义。",
@@ -66,6 +80,7 @@
       "addedDate": "2026-04-21"
     },
     {
+      "id": "os037",
       "name": "π0.7 (可控通用机器人基础模型)",
       "org": "Physical Intelligence",
       "description": "Physical Intelligence发布的通用机器人基础模型π0.7，首次展示VLA模型的组合泛化涌现能力。单一模型可跟随多样化语言指令和视觉子目标，在未训练任务上实现开箱即用。基于PaliGemma VLM + Flow Matching动作头架构。论文arXiv 2604.15483详述了可控性设计和涌现现象。目前技术报告和API已开放，模型权重开放计划待定。",
@@ -77,6 +92,7 @@
       "addedDate": "2026-04-21"
     },
     {
+      "id": "os036",
       "name": "reBot-DevArm (开源具身AI机械臂)",
       "org": "Seeed Studio / 矽递科技",
       "description": "面向所有开发者的全开源机械臂项目。6+1自由度、650mm臂展、1.5kg负载，提供达妙电机(B601-DM)和Robostride(B601-RS)两个版本。真正开源——不只代码，还有完整STEP机械图纸、BOM清单（精确到每颗螺丝的规格和购买链接）、电路原理图。已适配ROS2 Humble、LeRobot、Isaac Sim、Pinocchio等主流生态。定位为降低Embodied AI入门门槛的千元级桌面机械臂平台。",
@@ -88,6 +104,7 @@
       "addedDate": "2026-04-21"
     },
     {
+      "id": "os035",
       "name": "HiVLA (层次化视觉-语言-动作模型)",
       "org": "HKU / 香港大学",
       "description": "HiVLA是一个以视觉定位为核心的层次化具身操作系统。将VLA模型解耦为高层VLM规划器（任务分解+视觉定位）和低层DiT动作专家（基于Flow Matching的Diffusion Transformer），通过级联交叉注意力机制融合全局上下文、物体中心裁剪和技能语义。保留VLM零样本推理能力，在长程技能组合和精细操控方面显著优于端到端VLA方法。",

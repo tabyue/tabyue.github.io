@@ -1,0 +1,32 @@
+{
+  "id": "p052",
+  "title": "Goal2Skill: Long-Horizon Manipulation with Adaptive Planning and Reflection",
+  "authors": "Zhen Liu, Xinyu Ning et al.",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.13942",
+  "github": "",
+  "tags": ["长程操作", "VLA", "自适应规划", "反思机制", "双系统架构", "技能融合"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-22",
+  "abstract": "现有VLA系统在单步操作上表现出色，但在长程多步任务中因缺乏持久记忆、自适应分解和失败恢复能力而频繁失败。Goal2Skill提出双系统框架：高层规划器（LLM/VLM）负责目标分解、自适应子任务规划和失败反思；低层VLA策略专注精确视觉运动控制。关键创新包括持久记忆机制（跨步骤保持任务上下文）、自适应任务分解（动态调整计划）和显式失败恢复（分析失败原因后重新规划）。",
+  "keyContributions": [
+    "双系统架构：显式分离高层语义推理和低层运动执行",
+    "持久记忆机制：跨执行步骤维持完整任务上下文",
+    "自适应反思：执行失败后分析原因并动态调整后续计划",
+    "在多步骤长程任务中显著优于端到端VLA方法"
+  ],
+  "methodology": {
+    "architecture": "高层规划器(LLM/VLM) + 低层VLA策略",
+    "memory": "持久记忆图：记录已完成步骤、观测历史、交互结果",
+    "reflection": "失败检测→原因分析→计划修正→重试",
+    "skill_fusion": "自适应技能选择与组合"
+  },
+  "keyResults": [
+    "长程多步任务完成率显著提升",
+    "失败恢复机制大幅降低不可恢复失败率",
+    "持久记忆避免了重复探索和遗忘问题",
+    "泛化到未见过的长程任务组合"
+  ],
+  "relatedPapers": ["p042", "p040", "p044"]
+}

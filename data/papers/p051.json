@@ -1,0 +1,40 @@
+{
+  "id": "p051",
+  "title": "DESPITE: Using Large Language Models for Embodied Planning Introduces Systematic Safety Risks",
+  "authors": "Tao Zhang, Kaixian Qu, Zhibin Li, Jiajun Wu, Marco Hutter, Manling Li, Fan Shi",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.18463",
+  "github": "https://despite-safety.github.io/",
+  "projectPage": "https://despite-safety.github.io/",
+  "tags": ["LLM安全", "具身规划", "安全评估", "基准测试", "ETH Zurich", "Stanford"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-22",
+  "abstract": "大语言模型越来越多地被用作机器人系统的规划器，但其规划的安全性仍是一个开放问题。本文提出DESPITE基准（12,279个任务，涵盖物理危险和规范性危险），采用完全确定性验证。在23个模型测试中发现：规划能力接近完美不保证安全——最佳模型仅0.4%任务无法规划，但28.3%生成危险计划。18个开源模型中规划能力随规模显著提升(0.4%→99.3%)，但安全意识基本持平(38%→57%)。两者呈乘法关系。3个闭源推理模型安全意识达71-81%。提升安全意识成为LLM规划器部署的核心挑战。",
+  "keyContributions": [
+    "DESPITE基准：12,279个确定性验证任务，覆盖物理危险和规范性危险两大类",
+    "首次揭示LLM规划能力与安全意识的乘法关系",
+    "系统比较23个模型（含开源/闭源/推理/非推理），建立安全意识谱系",
+    "发现推理能力(reasoning)可能是安全意识的关键驱动因素"
+  ],
+  "methodology": {
+    "benchmark": "DESPITE - 12,279个任务，完全确定性验证",
+    "models_tested": "23个模型：18个开源(3B-671B) + 5个闭源(含3个推理模型)",
+    "evaluation": "规划成功率 × 安全率 双维度评估",
+    "risk_categories": ["物理危险(碰撞/坠落/高温等)", "规范性危险(违反社会规范/隐私侵犯等)"]
+  },
+  "keyResults": [
+    "最佳模型：0.4%无法规划 但 28.3%生成危险计划",
+    "开源模型规划能力: 3B→671B 从0.4%升至99.3%",
+    "开源模型安全意识: 3B→671B 仅从38%升至57%",
+    "闭源推理模型安全意识: 71%-81%（vs 非推理<57%）",
+    "安全完成率 ≈ 规划能力 × 安全意识（乘法关系）"
+  ],
+  "implications": [
+    "不应假设规划能力提升会自动带来安全性提升",
+    "推理能力是安全意识的潜在关键因素",
+    "LLM规划器部署前需专门的安全对齐训练",
+    "安全评估应成为具身AI基准的标配维度"
+  ],
+  "relatedPapers": ["p046", "p047"]
+}

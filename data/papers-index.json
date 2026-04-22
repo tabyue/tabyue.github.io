@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-22T07:00",
+  "lastUpdated": "2026-04-22T13:15",
   "papers": [
+    {
+      "id": "p051",
+      "title": "DESPITE: Using Large Language Models for Embodied Planning Introduces Systematic Safety Risks",
+      "authors": "Tao Zhang, Kaixian Qu, Zhibin Li, Jiajun Wu, Marco Hutter, Manling Li, Fan Shi",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.18463",
+      "github": "https://despite-safety.github.io/",
+      "tags": ["LLM安全", "具身规划", "安全评估", "基准测试", "ETH Zurich", "Stanford"],
+      "tldr": "提出DESPITE基准（12,279个任务，涵盖物理危险和规范性危险），系统评估LLM作为机器人规划器的安全性。在23个模型测试中，最强模型仅0.4%任务无法规划但28.3%生成危险计划，揭示规划能力≠安全。18个开源模型（3B-671B）中规划能力随规模飙升(0.4%→99.3%)但安全意识几乎持平(38%→57%)，两者呈乘法关系。3个闭源推理模型安全意识达71-81%，显著高于开源和非推理闭源模型(<57%)。随着前沿模型规划能力趋于饱和，提升安全意识成为LLM规划器部署的核心挑战。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-22",
+      "keyInsights": [
+        "规划能力和安全意识是独立维度：规划完美不保证安全",
+        "安全意识不随模型规模自动提升——18个开源模型3B到671B安全意识仅从38%升至57%",
+        "规划能力×安全意识呈乘法关系：更大模型安全完成更多任务主要靠规划能力而非危险规避",
+        "闭源推理模型(71-81%)远优于非推理模型(<57%)——推理能力可能是安全意识的关键"
+      ],
+      "impact": "首个系统性评估LLM具身规划安全性的大规模基准，为具身AI安全部署敲响警钟——规划器的安全对齐应成为研究重点"
+    },
+    {
+      "id": "p052",
+      "title": "Goal2Skill: Long-Horizon Manipulation with Adaptive Planning and Reflection",
+      "authors": "Zhen Liu, Xinyu Ning et al.",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.13942",
+      "github": "",
+      "tags": ["长程操作", "VLA", "自适应规划", "反思机制", "双系统架构", "技能融合"],
+      "tldr": "提出Goal2Skill，一个面向长程具身操作的双系统框架，显式分离高层语义推理和低层运动执行。高层规划器（LLM/VLM）负责目标分解、自适应子任务规划和失败反思，低层VLA策略专注精确视觉运动控制。核心创新包括：持久记忆机制（跨步骤保持任务上下文）、自适应任务分解（根据执行反馈动态调整计划）、显式失败恢复（检测异常后重新规划而非盲目重试）。解决了现有VLA模型在长程多步任务中因缺乏记忆和反思能力而失败的问题。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-22",
+      "keyInsights": [
+        "双系统架构：高层语义规划(System 2) + 低层运动控制(System 1)的显式分离",
+        "持久记忆：跨执行步骤维持任务上下文和历史交互记录",
+        "自适应反思：执行失败后分析原因并动态调整后续计划，而非简单重试",
+        "在多步骤长程操作任务中显著优于端到端VLA和固定分解方法"
+      ],
+      "impact": "为VLA模型在长程复杂操作中的可靠执行提供了系统性解决方案，反思-重规划机制填补了现有方法在鲁棒性上的空白"
+    },
     {
       "id": "p049",
       "title": "HAMLET: Switch Your Vision-Language-Action Model into a History-Aware Policy",
