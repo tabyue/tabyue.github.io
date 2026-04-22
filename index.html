@@ -1947,6 +1947,7 @@ function filterGlossaryCat(el,cat){
     renderGlossaryBody();
 }
 function filterGlossary(){renderGlossaryBody();}
+function _escH(s){return s?s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):'';}
 function renderGlossaryBody(){
     if(!GD)return;
     const q=(document.getElementById('glossarySearch').value||'').toLowerCase().trim();
@@ -1973,9 +1974,9 @@ function renderGlossaryBody(){
             html+=`<span style="color:var(--accent);font-size:.88rem;font-weight:600;white-space:nowrap">${t.zh}</span>`;
             html+=`<span style="flex:1;min-width:8px"></span>${modLink}`;
             html+=`</div>`;
-            html+=`<div style="color:var(--t2);font-size:.82rem;line-height:1.5">${t.def}${expandBtn}</div>`;
+            html+=`<div style="color:var(--t2);font-size:.82rem;line-height:1.5">${_escH(t.def)}${expandBtn}</div>`;
             if(hasDetail){
-                html+=`<div id="gdet-${uid}" style="display:none;margin-top:8px;padding:10px 12px;background:var(--bg2);border-radius:8px;border-left:3px solid var(--accent);color:var(--t2);font-size:.8rem;line-height:1.65">${t.detail}</div>`;
+                html+=`<div id="gdet-${uid}" style="display:none;margin-top:8px;padding:10px 12px;background:var(--bg2);border-radius:8px;border-left:3px solid var(--accent);color:var(--t2);font-size:.8rem;line-height:1.65">${_escH(t.detail)}</div>`;
             }
             html+=`</div>`;
         });
