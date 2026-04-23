@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-23T14:21",
+  "lastUpdated": "2026-04-23T14:33",
   "description": "具身智能领域中英专业术语对照表。按学科领域分类，每个术语含英文原文、中文翻译、缩写（若有）、简要释义、深度解释和关联学习模块。",
   "categories": [
     {
@@ -219,6 +219,13 @@
       "id": "paper-terms",
       "name": "📑 论文高频术语",
       "terms": [
+        { "en": "State of the Art", "zh": "当前最优/最先进水平", "abbr": "SOTA", "def": "某任务或基准上已知的最佳性能。论文中'achieves SOTA'即声称超越了所有已有方法。", "detail": "SOTA 是论文中最高频的缩写之一。用法：'Our method achieves SOTA on LIBERO with 98.1% SR'。注意：SOTA 是动态的——今天的 SOTA 明天可能被超越。评估时要看：① 基准是否公平(同数据/同设置) ② 提升是否显著(误差棒是否重叠) ③ 计算代价是否合理。", "module": "deep-learning" },
+        { "en": "Baseline", "zh": "基线/基准方法", "abbr": "", "def": "用于对比的参考方法。论文中新方法必须与 baseline 比较来证明有效性。", "detail": "好的 baseline 应该：① 是该领域公认的代表性方法 ② 使用相同数据和评测协议 ③ 经过合理调参(不能故意用弱 baseline 衬托自己)。常见表述：'We compare against the following baselines: OpenVLA, Octo, Diffusion Policy...'。", "module": "deep-learning" },
+        { "en": "Benchmark", "zh": "基准测试/评测基准", "abbr": "", "def": "标准化的数据集+评测协议+指标，用于公平比较不同方法的性能。", "detail": "具身智能常用 benchmark：SimplerEnv(VLA仿真评测)、LIBERO(操作四子集)、CALVIN(长程语言条件操作)、RLBench(100个操作任务)、ALFRED(移动操作+语言)。好的 benchmark 应该：可复现、有官方排行榜、评测指标明确、任务难度合理。", "module": "deep-learning" },
+        { "en": "End-to-End (E2E)", "zh": "端到端", "abbr": "E2E", "def": "从原始输入直接到最终输出的学习方式，省去中间人工设计的模块。", "module": "vla-models" },
+        { "en": "Pre-training / Fine-tuning", "zh": "预训练/微调", "abbr": "", "def": "先在大规模数据上预训练通用表示，再在目标任务小数据上微调。大模型时代的标准范式。", "module": "training-inference-optimization" },
+        { "en": "Generalization", "zh": "泛化能力", "abbr": "", "def": "模型在训练时未见过的数据/场景/任务上的表现能力。是衡量模型实用性的核心指标。", "detail": "具身智能的泛化维度：① 新物体(训练时没见过的杯子) ② 新场景(不同桌面/光照) ③ 新指令(未见过的语言描述) ④ 新机器人(跨本体迁移)。π0.7 首次展示了组合泛化的涌现——未训练过的指令×物体组合也能执行。", "module": "vla-models" },
+        { "en": "Inference / Latency", "zh": "推理/延迟", "abbr": "", "def": "模型处理一次输入并输出结果的过程和耗时。机器人要求实时推理（通常 >10Hz）。", "detail": "VLA 模型推理延迟是部署的核心瓶颈：7B 模型在 GPU 上 ~100ms/步，在 Jetson 上可能 >500ms。加速方法：INT4 量化(DA-PTQ)、Speculative Decoding、Flow Matching(10步 vs Diffusion 100步)、层截断(A1 VLA)。目标：操作任务 10-50Hz，步态控制 200-1000Hz。", "module": "training-inference-optimization" },
         { "en": "Diffusion Transformer", "zh": "扩散 Transformer", "abbr": "DiT", "def": "将 Diffusion 模型的 U-Net 骨干替换为 Transformer 架构，获得更好的 scaling 特性和多任务条件化能力。", "detail": "2024 年 Peebles 等人提出将扩散模型的去噪网络从 U-Net 改为 Transformer。优势：① 更好的 scaling（参数越多性能越好）② 支持更长上下文 ③ 更灵活的条件注入。在具身 AI 中，DiT 被用作 VLA 的动作生成骨干（如 HiVLA 的低层动作专家、TRI 的 Science Robotics 论文中的 LBM 架构）。", "module": "deep-learning" },
         { "en": "Autoregressive Generation", "zh": "自回归生成", "abbr": "AR", "def": "逐 token 依次生成序列的方法——每步基于已生成的 token 预测下一个。GPT/RT-2 用此方式生成动作 token。", "detail": "p(x₁, x₂, ..., xₙ) = ∏ p(xᵢ|x₁, ..., xᵢ₋₁)。VLA 中自回归生成动作 token（如 RT-2 式 bin 量化），训练用交叉熵损失。优势：与 LLM 架构天然兼容。劣势：序列太长时生成慢、误差累积。π₀-FAST 用 DCT 压缩将 350 token 降到 32 token，使 AR 在高频控制中可行。", "module": "vla-models" },
         { "en": "Cross-Attention", "zh": "交叉注意力", "abbr": "", "def": "Q 来自一个序列、KV 来自另一个序列的注意力机制，用于跨模态信息融合。", "detail": "Attn(Q_action, K_obs, V_obs) 让动作 token 查询视觉/语言 token 的信息。在 VLA 中广泛使用：π₀ 的 flow head 用 cross-attention 注入观测条件，HiVLA 的级联交叉注意力依次融合全局→物体→技能语义。与 self-attention 的区别：self-attention Q/K/V 来自同一序列，cross-attention 跨序列。", "module": "deep-learning" },
