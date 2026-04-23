@@ -1,6 +1,17 @@
 # Automation-5 Memory: 具身智能门户每6小时更新
 
-## 2026-04-23T02:53 执行记录
+## 2026-04-23T09:03 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿
+- 新闻 +4：CNBC中国人形机器人出货超美国(Omdia前6全中国/估值差距/中东资金)、CGTN中国押注2027具身AI爆发(Q1融资200亿/麦肯锡数据)、Interleave-VLA获ICLR 2026(交错图文指令/泛化2倍)、光明日报追问半马纪录被超越(技术验证+产业信号+社会意义)
+- 论文 +2：Interleave-VLA(ICLR 2026/首个交错图文VLA/上海交大+UCB)、VADF(视觉自适应扩散策略/推理延迟降40-60%)
+- 开源 +1：Interleave-VLA(ICLR 2026/完整代码+预训练权重/数据合成管线)
+- 招聘 +2：小鹏汽车(广州/具身智能仿真/校招)、上海AI Lab(上海/具身智能中心/校招)
+- 学习模块深化 ×1：机器人运动学新增"Product of Exponentials (PoE)公式与螺旋运动理论"section（螺旋轴6维表示+Chasles定理+Rodrigues封闭解+PoE正运动学完整Python实现+空间Jacobian Adjoint表示+DH vs PoE对比表+UR5 PoE实战+速度对比基准测试）
+
+**当前数据编号水位：** news→n106, papers→p058, opensource→os043, jobs→j050
+**Git:** 69ccce6→404818e, pushed to main
 
 **更新概要：**
 - 投稿箱：无新投稿
