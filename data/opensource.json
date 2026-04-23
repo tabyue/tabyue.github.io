@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-23T09:03",
+  "lastUpdated": "2026-04-23T15:46",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,18 @@
     }
   ],
   "projects": [
+    {
+      "id": "os044",
+      "name": "EmbodiedMidtrain (VLM→VLA中间训练框架)",
+      "org": "CMU / 微软研究院",
+      "description": "首个系统性弥合VLM与VLA数据分布鸿沟的中间训练框架。核心组件：（1）分布差距诊断工具，可视化VLM与VLA数据的分离程度；（2）轻量级可学习邻近度估计器，从大规模VLM数据池中自动筛选最接近VLA分布的训练样本；（3）中间训练管线，在VLM→VLA微调之间插入一个精心设计的过渡阶段。在3个机器人操作基准上跨多种VLM骨干一致提升性能，数据引擎倾向选择空间推理任务。承诺完整开源代码、数据和模型。",
+      "github": "https://github.com/EmbodiedMidtrain/EmbodiedMidtrain",
+      "category": "ai-model",
+      "stars": "新发布",
+      "tags": ["VLA", "VLM", "中间训练", "数据选择", "分布对齐", "空间推理", "CMU"],
+      "highlight": "首个系统性解决VLM→VLA分布差距的中间训练方案，低成本大幅提升VLA性能",
+      "addedDate": "2026-04-23"
+    },
     {
       "id": "os043",
       "name": "Interleave-VLA (交错图文指令VLA)",
