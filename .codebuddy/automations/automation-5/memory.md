@@ -1,5 +1,18 @@
 # Automation-5 Memory: 具身智能门户每6小时更新
 
+## 2026-04-23T15:46 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿
+- 新闻 +4：FAIR plus 2026深圳机器人产业链接会(500+企业/白皮书/产值2426亿)、EmbodiedMidtrain(VLM→VLA中间训练/CMU)、JoyAI-RA 0.1(多源多级预训练VLA基础模型)、FingerEye(连续统一视觉-触觉感知/灵巧操作)
+- 论文 +2：EmbodiedMidtrain(arXiv 2604.20012/中间训练弥合VLM-VLA分布鸿沟/邻近度估计器)、JoyAI-RA 0.1(arXiv 2604.20100/四类数据源分层预训练/跨本体泛化SOTA)
+- 开源 +1：EmbodiedMidtrain(VLM→VLA中间训练框架/分布诊断+数据选择+过渡训练)
+- 招聘 +2：舞肌科技(深圳宝安/仿生灵巧手20自由度/FAIR展会)、AIRS(深圳/电力场景具身智能机器人/国网南网/实习)
+- 学习模块深化 ×1：世界模型与LLM+机器人新增"VLM→VLA训练范式：预训练、中间训练与微调"section（分布鸿沟可视化+三阶段训练范式+邻近度估计器数学原理+四种范式对比表+Python模拟实验+核心观点总结）
+
+**当前数据编号水位：** news→n110, papers→p060, opensource→os044, jobs→j052
+**Git:** d5dc874→ffd3524, pushed to main
+
 ## 2026-04-23T09:03 执行记录
 
 **更新概要：**
