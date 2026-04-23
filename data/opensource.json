@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-23T15:46",
+  "lastUpdated": "2026-04-23T22:33",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,19 @@
     }
   ],
   "projects": [
+    {
+      "id": "os045",
+      "name": "PokeVLA (口袋级VLA知识蒸馏框架)",
+      "org": "匿名 (Under Review)",
+      "description": "赋能小型VLA模型的知识蒸馏框架。核心创新：（1）多层次知识蒸馏管线，从GPT-4V级大模型逐级向1-3B参数的小型VLA注入场景理解、物体关系和抓取策略三层语义知识；（2）自适应Token压缩机制，根据任务复杂度动态调整视觉Token数量；（3）轻量化动作头设计。在SimplerEnv和真实机器人上验证，1-3B参数即达接近7B模型性能，推理速度提升3-5倍。为VLA在Jetson等边缘设备的实用化部署开辟路径。",
+      "github": "https://arxiv.org/abs/2604.20834",
+      "stars": "新发布",
+      "language": "Python",
+      "category": "ai-model",
+      "tags": ["VLA", "知识蒸馏", "小型化", "边缘部署", "高效推理"],
+      "highlight": "1-3B参数口袋级VLA，推理速度3-5x提升，知识蒸馏注入高层语义",
+      "addedDate": "2026-04-23"
+    },
     {
       "id": "os044",
       "name": "EmbodiedMidtrain (VLM→VLA中间训练框架)",
