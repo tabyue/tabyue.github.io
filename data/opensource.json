@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-23T02:53",
+  "lastUpdated": "2026-04-23T09:03",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,18 @@
     }
   ],
   "projects": [
+    {
+      "id": "os043",
+      "name": "Interleave-VLA (交错图文指令VLA)",
+      "org": "上海交大 / UC Berkeley / UNC Chapel Hill",
+      "description": "ICLR 2026收录的首个交错图像-文本指令VLA框架。用户可在指令中嵌入目标物体的参考图像（如'把这个[图片]放到那个[图片]旁边'），大幅提升指令精确性和未见物体泛化能力（域外泛化提升2倍）。包含完整的数据合成管线（2D扩散模型自动生成交错图文标注）、训练代码和预训练权重。支持多种VLA骨干网集成。",
+      "github": "https://github.com/Interleave-VLA/Interleave-VLA",
+      "category": "ai-model",
+      "stars": "1.5k",
+      "tags": ["VLA", "ICLR 2026", "交错指令", "图文多模态", "数据合成", "泛化", "开源"],
+      "highlight": "首个交错图文指令VLA，域外泛化能力提升2倍，ICLR 2026接收",
+      "addedDate": "2026-04-23"
+    },
     {
       "id": "os042",
       "name": "NVIDIA Isaac GR00T N1.7 (开源推理VLA人形机器人模型)",

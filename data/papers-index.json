@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-23T02:53",
+  "lastUpdated": "2026-04-23T09:03",
   "papers": [
+    {
+      "id": "p057",
+      "title": "Interleave-VLA: Enhancing Robot Manipulation with Interleaved Image-Text Instructions",
+      "authors": "Junjie Fan, Wenke Jia, Yuxuan Fan et al.",
+      "venue": "ICLR 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2505.02152",
+      "github": "https://github.com/Interleave-VLA/Interleave-VLA",
+      "tags": ["VLA", "ICLR 2026", "交错指令", "图文多模态", "泛化能力", "数据合成", "上海交大", "UC Berkeley"],
+      "tldr": "提出Interleave-VLA，首个能理解交错图像-文本指令并直接生成连续动作序列的VLA框架。现有VLA仅支持纯文本指令，面对未见物体时泛化能力差。核心贡献：（1）定义了交错图文指令的VLA问题范式——用户可在指令中嵌入目标物体/位置的参考图像，大幅提升指令的精确性和灵活性；（2）提出基于2D扩散模型的大规模数据合成管线，自动为现有机器人轨迹数据生成交错图文标注，解决了缺乏大规模交错训练数据的根本问题；（3）在仿真和真实世界评测中，域外物体泛化能力相比纯文本指令方法提升2倍。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-23",
+      "keyInsights": [
+        "首次将交错图文指令从数字世界引入机器人操作——指令中可嵌入目标物体的参考图像",
+        "数据合成管线：2D扩散模型生成物体变体图像 + 自动构建交错图文标注，无需人工标注",
+        "域外泛化能力提升2倍：交错图文指令比纯文本提供更精确的视觉先验",
+        "ICLR 2026接收，代码完整开源，支持多种VLA骨干网"
+      ],
+      "impact": "开辟了VLA指令范式的新方向——从纯文本走向多模态交错指令，为实际部署中的灵活任务指定提供了新可能"
+    },
+    {
+      "id": "p058",
+      "title": "VADF: Vision-Adaptive Diffusion Policy Framework for Efficient Robotic Manipulation",
+      "authors": "Xinglei Yu, Zhenyang Liu, Shufeng Nan, Simo Wu, Yanwei Fu",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.xxxxx",
+      "github": "",
+      "tags": ["Diffusion Policy", "视觉自适应", "高效操作", "VADF", "VLA"],
+      "tldr": "提出VADF（Vision-Adaptive Diffusion Policy Framework），一种面向高效机器人操作的视觉自适应扩散策略框架。核心创新是根据视觉输入的复杂度动态调整扩散步数——简单场景用少量去噪步快速生成动作，复杂场景用更多步保证精度。这种自适应机制在保持操作成功率的同时，将平均推理延迟降低40-60%。在多个操作基准上验证了效率-精度的良好平衡。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-23",
+      "keyInsights": [
+        "视觉自适应扩散：根据场景复杂度动态调整去噪步数，简单场景3-5步，复杂场景10-20步",
+        "视觉复杂度估计器：轻量级网络评估当前观测的信息熵/不确定性",
+        "推理延迟降低40-60%同时保持操作成功率",
+        "可即插即用地应用于现有Diffusion Policy架构"
+      ],
+      "impact": "为Diffusion Policy的实时部署提供了实用的加速方案，解决了扩散策略推理慢的核心瓶颈"
+    },
     {
       "id": "p055",
       "title": "ST-π: Structured SpatioTemporal VLA for Robotic Manipulation",
