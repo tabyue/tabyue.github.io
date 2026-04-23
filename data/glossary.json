@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-22T17:18",
+  "lastUpdated": "2026-04-23T14:21",
   "description": "具身智能领域中英专业术语对照表。按学科领域分类，每个术语含英文原文、中文翻译、缩写（若有）、简要释义、深度解释和关联学习模块。",
   "categories": [
     {
@@ -24,7 +24,13 @@
         { "en": "Trajectory Planning", "zh": "轨迹规划", "abbr": "", "def": "为机器人生成从起点到终点的平滑运动路径（含时间参数化）。", "detail": "轨迹规划 = 路径(几何形状) + 时间律(速度分配)。常用方法：三次/五次多项式(保证速度/加速度连续)、梯形速度曲线(工业标配)、B样条(平滑多路点)。关节空间规划简单但不保证笛卡尔直线，笛卡尔空间规划直观但需要在线 IK。", "module": "robot-kinematics" },
         { "en": "Motion Planning", "zh": "运动规划", "abbr": "", "def": "在考虑障碍物的情况下规划无碰撞路径。包括 RRT、PRM 等采样算法。", "detail": "运动规划在配置空间(C-space)中搜索起点到终点的无碰撞路径。经典算法：RRT(快速随机树，概率完备)、RRT*(渐近最优)、PRM(概率路图，适合多次查询)。现代趋势：学习型规划(MPNet)、优化型(CHOMP/TrajOpt)、结合大模型的语义规划。MoveIt 是 ROS 中最常用的运动规划框架。", "module": "robot-kinematics" },
         { "en": "Configuration Space", "zh": "配置空间/构型空间", "abbr": "C-space", "def": "机器人所有可能关节状态的集合。n-DOF 机器人的 C-space 是 n 维空间，障碍物映射为 C-space 中的禁区。", "detail": "配置空间是运动规划的数学基础。将物理空间的障碍物映射到 C-space 后，机器人变成一个点，碰撞检测变成点是否在禁区内的判定。n-DOF 机器人的 C-space 是 n 维流形，高维空间的搜索是运动规划计算困难的根本原因（维度灾难）。", "module": "robot-kinematics" },
-        { "en": "Grasping / Grasp Planning", "zh": "抓取/抓取规划", "abbr": "", "def": "计算夹爪接触物体的最优位置和力，使抓取稳定（力封闭/形封闭）。", "detail": "力封闭(Force Closure)：接触力能平衡任意外力/外矩。形封闭(Form Closure)：几何约束使物体无法运动。抓取规划需考虑：接触点选择、抓取姿态、接近方向、碰撞避免。深度学习方法(GraspNet/AnyGrasp)直接从点云预测抓取位姿，已广泛应用。", "module": "robot-kinematics" }
+        { "en": "Grasping / Grasp Planning", "zh": "抓取/抓取规划", "abbr": "", "def": "计算夹爪接触物体的最优位置和力，使抓取稳定（力封闭/形封闭）。", "detail": "力封闭(Force Closure)：接触力能平衡任意外力/外矩。形封闭(Form Closure)：几何约束使物体无法运动。抓取规划需考虑：接触点选择、抓取姿态、接近方向、碰撞避免。深度学习方法(GraspNet/AnyGrasp)直接从点云预测抓取位姿，已广泛应用。", "module": "robot-kinematics" },
+        { "en": "Product of Exponentials", "zh": "指数积公式", "abbr": "PoE", "def": "用矩阵指数连乘描述正运动学 T=e^{S1θ1}·...·e^{Snθn}·M，Modern Robotics 的核心方法。", "detail": "PoE 公式基于李群 SE(3) 和螺旋运动理论。每个关节用 6 维螺旋轴 S=(ω,v) 描述，运动量为 θ。相比 DH 参数法：不需要严格的坐标系建立规则，螺旋轴物理含义清晰，Jacobian 形式在 Adjoint 表示下更优雅统一，可自然扩展到树形和闭链结构。Pinocchio/MoveIt2 的底层数学框架。", "module": "robot-kinematics" },
+        { "en": "Screw Axis", "zh": "螺旋轴", "abbr": "", "def": "6 维向量 S=(ω,v) 描述关节的旋转方向和位置，是 PoE 公式的基本单元。", "detail": "Chasles 定理：任何刚体运动都可分解为绕某条轴的旋转+沿该轴的平移（螺旋运动）。对旋转关节：ω 是轴方向（单位向量），v=q×ω（q 是轴上一点）。对移动关节：ω=0，v 是移动方向。螺旋轴在物理上唯一确定，不存在 DH 参数的版本混淆问题。", "module": "robot-kinematics" },
+        { "en": "Adjoint Representation", "zh": "伴随表示", "abbr": "Ad", "def": "6×6 矩阵 Ad_T=[R,0;[p]R,R]，将螺旋轴从一个参考系变换到另一个参考系。", "detail": "PoE 空间 Jacobian 的核心工具。第 i 列 = Ad_{T1...Ti-1}·Si，表示前 i-1 个关节运动后关节 i 的螺旋轴在空间坐标系下的表达。Adjoint 表示使 Jacobian 计算形式统一优雅，是 Modern Robotics 相比 DH 方法在微分运动学上的核心优势。", "module": "robot-kinematics" },
+        { "en": "Lie Group / Lie Algebra", "zh": "李群/李代数", "abbr": "SE(3)/se(3)", "def": "SE(3) 是刚体运动的李群（4×4 矩阵群），se(3) 是其李代数（对应的切空间/螺旋轴空间）。", "detail": "SE(3)={T=[R,p;0,1] | R∈SO(3)}，群运算为矩阵乘法。se(3) 是 4×4 矩阵的 6 维空间，通过指数映射 exp: se(3)→SE(3) 和对数映射 log: SE(3)→se(3) 连接。PoE 公式本质是在 SE(3) 李群上做运算。理解李群/李代数是掌握 Modern Robotics 的数学基础。", "module": "linear-algebra" },
+        { "en": "Rodrigues' Formula", "zh": "罗德里格斯公式", "abbr": "", "def": "旋转轴 ω + 角度 θ → 旋转矩阵的封闭解：R=I+sinθ[ω]+(1-cosθ)[ω]²。", "detail": "比通用矩阵指数 expm 快 10 倍以上且数值更精确，是 PoE 正运动学实时计算的核心。[ω] 是 ω 的 3×3 反对称矩阵。推广到 SE(3) 时还需计算平移部分 p=(Iθ+(1-cosθ)[ω]+(θ-sinθ)[ω]²)v。", "module": "robot-kinematics" },
+        { "en": "Manipulability", "zh": "操纵度/灵巧度", "abbr": "", "def": "w=√det(JJ^T)，衡量机器人在当前构型下各方向运动能力的均匀程度。w→0 为奇异。", "detail": "操纵度椭球：对 J 做 SVD，奇异值 σi 是椭球各主轴长度。σ 均匀→接近球形→各方向运动能力均衡。σ 差异大→扁椭球→某些方向运动受限。操纵度是轨迹规划和冗余分辨中的重要优化指标。", "module": "robot-kinematics" }
       ]
     },
     {
@@ -119,7 +125,11 @@
         { "en": "Compositional Generalization", "zh": "组合泛化", "abbr": "", "def": "对从未见过的指令组合能正确执行的能力。π0.7 首次在机器人领域观察到。", "module": "vla-models" },
         { "en": "In-Context Learning", "zh": "上下文学习", "abbr": "ICL", "def": "模型通过输入中的示例（而非梯度更新）学会新任务的能力。", "module": "world-models-llm" },
         { "en": "Zero-Shot / Few-Shot", "zh": "零样本/少样本", "abbr": "", "def": "不提供或只提供极少示例即可完成新任务。衡量模型泛化能力的标准。", "module": "vla-models" },
-        { "en": "Cross-Embodiment", "zh": "跨具身/跨本体", "abbr": "", "def": "同一个策略/模型能在不同形态的机器人上工作（如从双臂迁移到单臂）。", "detail": "不同机器人有不同的关节数、感知配置和动力学特性，跨具身的目标是学习与具体硬件无关的通用操作知识。Open X-Embodiment 数据集跨 22 种机器人形态，Octo/RT-X 是跨具身模型的代表。关键挑战：如何统一不同机器人的动作空间和观测空间。", "module": "vla-models" }
+        { "en": "Cross-Embodiment", "zh": "跨具身/跨本体", "abbr": "", "def": "同一个策略/模型能在不同形态的机器人上工作（如从双臂迁移到单臂）。", "detail": "不同机器人有不同的关节数、感知配置和动力学特性，跨具身的目标是学习与具体硬件无关的通用操作知识。Open X-Embodiment 数据集跨 22 种机器人形态，Octo/RT-X 是跨具身模型的代表。关键挑战：如何统一不同机器人的动作空间和观测空间。", "module": "vla-models" },
+        { "en": "Interleaved Image-Text Instructions", "zh": "交错图文指令", "abbr": "", "def": "在指令中交替嵌入文本和参考图像（如'把这个[图A]放到[图B]旁边'），比纯文本指令更精确。", "detail": "Interleave-VLA(ICLR 2026)首次将此范式引入机器人操作。纯文本指令无法精确描述目标物体外观，交错图文允许用户嵌入参考图片消除歧义。域外物体泛化能力提升 2 倍。数据合成管线用 2D 扩散模型自动生成物体变体图像+交错标注，无需人工标注。", "module": "vla-models" },
+        { "en": "Mixture of Transformers", "zh": "混合Transformer", "abbr": "MoT", "def": "在共享 Transformer 中通过模态特定参数路由实现视觉/语言/动作的高效融合。腾讯 HY-Embodied 首提。", "detail": "区别于 MoE(混合专家，路由不同 token 到不同 FFN)，MoT 为不同模态设置独立的 QKV 投影和 FFN 参数，但共享注意力计算。OmniVLA-RL 进一步将 MoT 中的专家分为推理/空间/动作三类。MoT 兼顾跨模态融合与模态独立性，避免了简单拼接导致的模态干扰。", "module": "vla-models" },
+        { "en": "Speculative Decoding", "zh": "推测解码", "abbr": "", "def": "用小模型快速生成草稿 token，大模型并行验证并接受/拒绝，加速自回归推理 2-4 倍。", "detail": "核心思想：大模型验证一批 token 的计算量与生成一个 token 相当（并行 attention），所以'生成多个→验证一次'比'逐个生成'更高效。接受率取决于小模型与大模型分布的一致性。在 VLA 推理中，Action Chunking 后动作 token 间相关性高，小模型猜对率高，加速效果显著。", "module": "training-inference-optimization" },
+        { "en": "Token Economy", "zh": "Token 经济", "abbr": "", "def": "智元 CTO 彭志辉提出：AI 时代 Token 是基础货币，具身智能体可能成为最大 Token 消费者。", "detail": "机器人在感知(视觉 token)、推理(语言 token)、决策(中间表示 token)和控制(动作 token)每一步都消耗 Token。单个人形机器人每天可能消耗数十亿 Token。这意味着具身智能将成为 AI 算力需求的最大增长极，也将深刻影响芯片、云服务和能源产业。", "module": "vla-models" }
       ]
     },
     {
@@ -234,7 +244,11 @@
         { "en": "Ablation Study", "zh": "消融实验", "abbr": "", "def": "逐一移除模型的某个组件或设计选择，观察性能变化，以验证每个组件的贡献。", "detail": "论文的标准实验范式。例如：'去掉 Action Chunking → 成功率下降 30%'证明 chunking 的价值。好的消融实验应该：① 每次只改变一个变量 ② 使用同一评测协议 ③ 报告均值和方差。读论文时重点看消融表——它揭示了哪些设计选择真正重要。", "module": "deep-learning" },
         { "en": "Success Rate", "zh": "成功率", "abbr": "SR", "def": "机器人操作任务的主要评测指标——在 N 次尝试中成功完成任务的比例。", "detail": "通常报告 mean ± std over 3+ seeds。注意：不同论文对'成功'的定义可能不同（如物体是否到达目标位置的阈值距离）。仿真成功率通常比真机高 10-30%（Sim-to-Real Gap）。除了 SR 还常报告完成时间、路径效率、能耗等辅助指标。", "module": "vla-models" },
         { "en": "Long-Horizon Task", "zh": "长时域任务/长程任务", "abbr": "", "def": "需要多个连续步骤才能完成的任务（如'打开抽屉→取出杯子→倒水→放回'），是 VLA 的核心挑战。", "detail": "端到端 VLA 在长程任务中容易失败——误差累积、缺乏记忆、无法从失败中恢复。解决方案：层次化架构(HiVLA/π₀.5)、历史感知(HAMLET)、反思重规划(Goal2Skill)、空间记忆(ESCAPE)。LIBERO-LONG 是评测长程操作能力的标准基准。", "module": "vla-models" },
-        { "en": "POMDP (Partially Observable MDP)", "zh": "部分可观马尔可夫决策过程", "abbr": "POMDP", "def": "智能体无法完整观测环境状态的 MDP 扩展。真实机器人几乎都是 POMDP——相机只能看到部分场景。", "detail": "MDP 假设状态完全可观，但机器人只有有限传感器：相机看不到遮挡物、关节编码器不知道外部环境。POMDP 引入信念状态 b(s) = P(s|观测历史)，通过贝叶斯更新维护。实际求解用 belief space planning 或近似方法（如历史编码器/RNN 隐式维护信念）。HAMLET 的 moment tokens 就是一种隐式信念表示。", "module": "reinforcement-learning" }
+        { "en": "POMDP (Partially Observable MDP)", "zh": "部分可观马尔可夫决策过程", "abbr": "POMDP", "def": "智能体无法完整观测环境状态的 MDP 扩展。真实机器人几乎都是 POMDP——相机只能看到部分场景。", "detail": "MDP 假设状态完全可观，但机器人只有有限传感器：相机看不到遮挡物、关节编码器不知道外部环境。POMDP 引入信念状态 b(s) = P(s|观测历史)，通过贝叶斯更新维护。实际求解用 belief space planning 或近似方法（如历史编码器/RNN 隐式维护信念）。HAMLET 的 moment tokens 就是一种隐式信念表示。", "module": "reinforcement-learning" },
+        { "en": "Structured Spatiotemporal VLA", "zh": "结构化时空VLA", "abbr": "ST-π", "def": "显式建模操作任务的空间位置和时间边界的VLA框架，将任务分解为带时空标注的子行为序列。", "detail": "ST-π(arXiv 2604.17880)提出双层显式时空建模：VLM做全局时空规划（每个子行为包含空间目标+起止时间+语义描述），动作专家做局部时空精细控制。区别于VLA-4D等隐式时空方法，首次让VLA显式'知道'什么时候做什么、在哪里做。在穿针、倒水等精细操作上显著优于隐式方法。", "module": "vla-models" },
+        { "en": "Motion Representation", "zh": "运动表示", "abbr": "", "def": "编码视频帧间运动信息的紧凑表征，用于VLA的时序推理。HiF-VLA(CVPR 2026)的核心概念。", "detail": "运动表示天然编码时序动态（方向、速度、变化趋势），比逐帧处理更高效。HiF-VLA用运动表示统一三种时序推理：Hindsight(回顾过去理解因果)、Insight(感知当前精准定位)、Foresight(预测未来辅助规划)。是VLA时序能力增强的新范式。", "module": "vla-models" },
+        { "en": "Reasoning VLA", "zh": "推理型VLA", "abbr": "", "def": "具备显式推理能力的VLA模型，在生成动作前先进行思维链推理或环境分析。", "detail": "代表：NVIDIA GR00T N1.7(VLM骨干从Cosmos-2B升级为Cosmos-Reason2-2B获得推理能力)、ReFineVLA(教师模型生成推理依据增强训练)、ACoT-VLA(动作空间思维链)。推理型VLA标志着从'反射式控制'向'思考后行动'的进化，是2026年VLA研究的核心方向。", "module": "vla-models" },
+        { "en": "Vision-Language-Latent-Action", "zh": "视觉-语言-潜在动作", "abbr": "ViLLA", "def": "智元GO-1提出的框架：不直接预测关节动作，而是预测潜在动作表征，统一不同机器人的动作空间。", "detail": "区别于传统VLA直接输出关节角度/速度，ViLLA在潜在空间(Latent Space)中做动作推理，再由本体特定解码器映射到具体关节。优势：潜在空间与机器人本体无关→天然支持跨具身迁移；可从无动作标签的视频中自监督学习→数据利用率更高。是VLA走向通用化的重要架构创新。", "module": "vla-models" }
       ]
     }
   ]
