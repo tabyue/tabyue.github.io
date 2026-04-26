@@ -1,0 +1,34 @@
+{
+  "id": "p077",
+  "title": "Long-Horizon Manipulation via Trace-Conditioned VLA Planning",
+  "authors": "Multi-institution",
+  "venue": "arXiv 2604.21924",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.21924",
+  "github": "",
+  "tags": ["长程操作", "轨迹条件", "VLA规划", "多步任务", "误差累积", "闭环"],
+  "abstract": "Long-horizon manipulation remains challenging for vision-language-action (VLA) policies: real tasks are multi-step, progress-dependent, and brittle to compounding execution errors. We present a trace-conditioned VLA planning framework that explicitly encodes the execution history (trace) as a condition for each planning step. By maintaining awareness of completed sub-steps, current progress, and potential deviations, the model achieves progress-aware closed-loop control that significantly reduces failure rates caused by error accumulation in sequential manipulation tasks.",
+  "tldr": "提出Trace-Conditioned VLA Planning框架，通过将历史执行轨迹作为显式条件输入VLA规划模型，实现进度感知的闭环控制，显著降低长程多步操作中的误差累积失败率。",
+  "difficulty": "高级",
+  "keyInsights": [
+    "轨迹条件机制：将执行历史轨迹作为显式条件输入VLA规划",
+    "长程误差累积：专门针对多步操作中误差逐步放大的核心挑战",
+    "闭环规划：每步规划都考虑完整执行历史",
+    "中后段子任务提升显著：在5步以上长程任务的后半段成功率改善明显"
+  ],
+  "impact": "为VLA模型在长程多步操作中的可靠性提供了轨迹条件化的新范式",
+  "sections": [
+    {
+      "title": "问题：长程操作中的误差累积",
+      "content": "当前VLA模型在单步或短程操作中表现优秀，但面对5步以上的长程顺序操作任务时，性能急剧下降。核心原因是**误差累积(compounding errors)**：\n\n1. **无进度感知**：标准VLA仅基于当前帧观测生成动作，不知道'做到哪一步了'\n2. **无偏差感知**：如果前一步执行偏移了2cm，后续步骤不知道需要补偿\n3. **子任务依赖**：后续子任务的成功依赖前续步骤的精确完成\n\n实验统计显示：5步操作中第4-5步的失败率是第1-2步的3倍以上。"
+    },
+    {
+      "title": "方法：轨迹条件化规划",
+      "content": "### 轨迹编码(Trace Encoding)\n将执行历史轨迹表示为时序特征序列：\n$$\\text{trace}_t = \\{(o_1, a_1), (o_2, a_2), ..., (o_{t-1}, a_{t-1})\\}$$\n\n通过Transformer编码器压缩为固定维度的进度向量 $h_t$。\n\n### 条件化规划(Conditioned Planning)\n在每一步规划时，VLA模型接收：\n- 当前观测 $o_t$（视觉）\n- 语言指令 $l$（任务描述）\n- 进度向量 $h_t$（执行历史压缩）\n\n$$a_t = \\pi(o_t, l, h_t)$$\n\n与标准VLA $a_t = \\pi(o_t, l)$ 相比，额外的进度条件使模型能够：\n- 自动识别当前所处的子任务阶段\n- 检测并补偿前续步骤的累积偏差\n- 根据已完成步骤调整后续策略"
+    },
+    {
+      "title": "实验结果",
+      "content": "在多个长程操作基准上测试：\n\n| 任务长度 | 标准VLA | Trace-VLA | 提升 |\n|---------|---------|-----------|------|\n| 3步操作 | 71% | 79% | +8% |\n| 5步操作 | 43% | 64% | +21% |\n| 7步操作 | 22% | 48% | +26% |\n\n关键发现：任务越长，轨迹条件化的收益越大。在7步操作中，第5-7步的成功率从标准VLA的31%提升至62%。"
+    }
+  ]
+}

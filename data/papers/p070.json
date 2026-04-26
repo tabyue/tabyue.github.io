@@ -1,0 +1,31 @@
+{
+  "id": "p070",
+  "title": "Embodied-R1: Reinforced Embodied Reasoning for General Robotic Manipulation",
+  "authors": "Tianjin University",
+  "venue": "ICLR 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2508.13998",
+  "github": "https://github.com/pickxiguapi/Embodied-R1",
+  "projectPage": "https://embodied-r1.github.io/",
+  "abstract": "Generalization in embodied AI is hindered by the 'seeing-to-doing gap,' which stems from data scarcity and embodiment heterogeneity. To address this, we pioneer 'pointing' as a unified, embodiment-agnostic intermediate representation that bridges visual understanding and robotic action execution. We introduce Embodied-R1, a 3B Vision-Language Model (VLM) specifically designed for embodied reasoning and pointing. Through Reinforced Fine-Tuning (RFT), the model learns to resolve the multi-solution dilemma for embodied pointing, delivering powerful reasoning capabilities.",
+  "sections": [
+    {
+      "title": "核心问题",
+      "content": "具身AI的泛化面临\"看到→做到\"的鸿沟（seeing-to-doing gap），根源有两个：(1)机器人操作数据稀缺，远不如互联网视觉数据丰富；(2)机器人本体异构性——不同机器人的关节数量、自由度、末端执行器都不同，一个机器人学到的动作无法直接迁移到另一个。"
+    },
+    {
+      "title": "Pointing机制",
+      "content": "Pointing是本文提出的统一中间表示。核心思想：不直接预测机器人关节角度或末端位姿（这些依赖具体机器人形态），而是在观察到的图像上标注'在哪里做'——即用空间指向（pointing）来表达操作意图。这个表示是本体无关的：无论是7轴机械臂、人形双臂还是平行夹爪，都可以理解'在图像上这个位置抓取'。Pointing桥接了高层视觉语义理解（VLM擅长的）和底层动作执行（需要适配具体机器人的）。"
+    },
+    {
+      "title": "强化微调(RFT)",
+      "content": "对于同一操作任务，往往存在多个合理的抓取点（例如拿杯子可以抓杯把或杯身），这导致了多解困境。传统行为克隆会对单一解过拟合，而RFT通过环境反馈（实际尝试后看结果）自动学习在多个可行解中选择最优策略。RFT的训练流程：(1)生成多个candidate pointing；(2)在环境中执行评估；(3)用奖励信号强化好的pointing，抑制差的pointing。"
+    },
+    {
+      "title": "实验结果",
+      "content": "仅3B参数的Embodied-R1在11个机器人操作基准上全面超越现有方法，包括击败参数量是其3-10倍的大模型。在跨本体泛化实验中表现尤为突出——在一种机器人上训练的模型可以zero-shot迁移到不同形态的机器人上，这得益于Pointing表示的本体无关性。"
+    }
+  ],
+  "tags": ["VLM", "Pointing", "RFT", "强化微调", "通用操作", "3B", "ICLR 2026"],
+  "addedDate": "2026-04-25"
+}

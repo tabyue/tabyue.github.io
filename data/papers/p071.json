@@ -1,0 +1,35 @@
+{
+  "id": "p071",
+  "title": "VLM2VLA: Actions as Language — Fine-Tuning VLMs into VLAs Without Catastrophic Forgetting",
+  "authors": "Princeton University (IROM Lab)",
+  "venue": "ICLR 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2509.22195",
+  "github": "https://github.com/irom-princeton/byovla",
+  "projectPage": "https://vlm2vla.github.io/",
+  "abstract": "Vision-Language-Action (VLA) models have emerged as a promising paradigm for general-purpose robotic manipulation. However, fine-tuning a VLM to control a robot often leads to catastrophic forgetting of the VLM's pretrained capabilities. We argue that this catastrophic forgetting is due to a distribution mismatch between the VLM's internet-scale pretraining corpus and the robotics fine-tuning data. Inspired by this observation, we present VLM2VLA, a novel VLA training paradigm that re-represents robot actions as natural language descriptions, thereby aligning the VLA fine-tuning data directly with the VLM's pretrained distribution.",
+  "sections": [
+    {
+      "title": "核心问题：灾难性遗忘",
+      "content": "当VLM被微调为VLA时，模型的视觉理解、语言推理等核心能力会显著退化——这就是灾难性遗忘。具体表现为：微调后的VLA在回答视觉问题、理解场景语义等VLM基准上性能大幅下降，尽管操作能力提升了。"
+    },
+    {
+      "title": "根因分析：分布不匹配",
+      "content": "作者深入分析发现根因是数据分布不匹配。VLM预训练时看到的是互联网上的自然语言文本和图像描述，微调时突然出现了完全不同格式的机器人动作token（关节角度的离散化编码）。这种格式突变导致模型内部表示被扭曲，预训练知识被覆盖。"
+    },
+    {
+      "title": "解决方案：动作语言化",
+      "content": "VLM2VLA的解决方案优雅而简洁——将机器人动作重新表示为自然语言描述。例如，将关节角度[0.1, -0.3, 0.5, 0.2, -0.1, 0.8, 0.6]转化为'手臂向右平移5cm，同时下降2cm，夹爪闭合至80%'。这样微调数据的格式与VLM原始预训练数据完全对齐，消除了分布不匹配问题。"
+    },
+    {
+      "title": "LoRA高效微调",
+      "content": "由于分布已对齐，仅需使用LoRA（低秩适配）进行轻量微调即可获得操作能力，无需全量微调。这不仅大幅降低训练成本，更关键的是LoRA的低秩约束天然限制了对预训练权重的修改幅度，进一步保护了VLM的原始能力。"
+    },
+    {
+      "title": "BYOVLA框架",
+      "content": "作者开源了Bring Your Own VLA (BYOVLA)框架，支持任意VLM骨干网络即插即用地转化为VLA。框架包含动作语言化工具、LoRA训练管线和运行时推理接口，降低了VLA开发门槛。"
+    }
+  ],
+  "tags": ["VLA", "VLM", "灾难性遗忘", "动作语言化", "LoRA", "ICLR 2026"],
+  "addedDate": "2026-04-25"
+}

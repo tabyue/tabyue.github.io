@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-23T22:33",
+  "lastUpdated": "2026-04-26T17:05",
   "categories": [
     {
       "id": "all",
@@ -44,6 +44,196 @@
   ],
   "projects": [
     {
+      "id": "os055",
+      "name": "HEX (Humanoid-Aligned Experts)",
+      "org": "Beijing Humanoid Robot Innovation Center / Xi'an Jiao Tong University / Nankai / PKU",
+      "description": "面向全尺寸双足人形机器人的全身协同操作VLA框架。HEX通过人形对齐通用状态表示将不同构型人形机器人映射到统一骨架空间，结合MoE架构实现上肢操作、下肢行走和躯干平衡的协同端到端控制。支持跨本体迁移——在一种人形平台上训练的全身协调策略可零样本迁移到另一种构型。提供完整的预训练权重、训练代码和跨本体评估脚本。",
+      "url": "https://hex-humanoid.github.io/",
+      "github": "https://hex-humanoid.github.io/",
+      "category": "ai-model",
+      "tags": ["VLA", "人形机器人", "全身操作", "MoE", "跨本体", "全身协调"],
+      "addedDate": "2026-04-26"
+    },
+    {
+      "id": "os054",
+      "name": "Robot Ops (中联重科具身智能操作系统)",
+      "org": "中联重科 / 中科云谷",
+      "description": "中联重科旗下中科云谷自主研发的具身智能统一操作系统，2026汉诺威工博会全球首发。Robot Ops定位为具身智能开发平台，解决三大核心痛点：(1)研发壁垒——提供统一开发SDK和仿真环境，降低机器人智能化开发门槛；(2)碎片化——统一适配工业机器人、协作机器人、人形机器人等多种形态，一套系统覆盖全机型；(3)跨平台部署——支持从仿真到实机的一键部署，以及多机器人协同调度。系统深度集成AI原生智能制造能力，可与中联重科工业场景无缝对接。目前已在Z01双足人形机器人上完成验证，展示了太极拳等复杂全身运动控制能力。",
+      "github": "https://en.zoomlion.com/news/news-detail-614133.htm",
+      "stars": "新发布",
+      "language": "C++/Python",
+      "category": "framework",
+      "tags": ["操作系统", "工业机器人", "人形机器人", "统一平台", "中联重科", "汉诺威", "多形态适配", "工业具身智能"],
+      "highlight": "中国首个面向工业具身智能的统一操作系统，汉诺威工博会全球首发，多机型适配",
+      "addedDate": "2026-04-26"
+    },
+    {
+      "id": "os053",
+      "name": "VistaBot (视角鲁棒机器人操作框架)",
+      "org": "Tsinghua University / Shanghai AI Lab",
+      "description": "VistaBot解决了端到端机器人操作模型对相机视角变化敏感的关键问题。框架整合三个组件：(1)基于VGGT的4D几何估计器——前馈式预测相机位姿和场景深度，无需多视角标定；(2)视频扩散模型驱动的视图合成——带记忆机制生成时空一致的目标视角潜在特征；(3)潜在动作学习——直接从合成潜在特征学习策略，跳过显式图像重建。集成到ACT和π₀两种主流框架中，在相机偏移30°+时仍保持高成功率。提出了新评估指标VGS(视点泛化分数)量化跨视角泛化能力。",
+      "github": "https://arxiv.org/abs/2604.21914",
+      "stars": "新发布",
+      "language": "Python",
+      "category": "ai-model",
+      "tags": [
+        "视角鲁棒",
+        "视图合成",
+        "4D几何",
+        "扩散模型",
+        "ACT",
+        "π₀",
+        "部署友好"
+      ],
+      "highlight": "解决VLA视角敏感性瓶颈：4D几何+视频扩散+潜在学习，部署时无需校准相机",
+      "addedDate": "2026-04-26"
+    },
+    {
+      "id": "os052",
+      "name": "BYOVLA / VLM2VLA (将VLM微调为VLA而不遗忘)",
+      "org": "Princeton University (IROM Lab)",
+      "description": "ICLR 2026收录。BYOVLA (Bring Your Own VLA) 开源框架，实现了VLM2VLA方法——将任意VLM高效微调为VLA模型而不发生灾难性遗忘。核心创新是将低维机器人动作重新表示为自然语言描述（如'向右移动5cm，夹爪闭合到80%'），使微调数据与VLM预训练数据分布对齐，仅用LoRA即可完成训练。框架支持任意VLM骨干即插即用，保留VLM的视觉理解和推理能力，同时获得与全量微调VLA相当的操作性能。完整开源训练代码、数据管线和推理脚本。",
+      "github": "https://github.com/irom-princeton/byovla",
+      "stars": "1.2k+",
+      "language": "Python",
+      "category": "ai-model",
+      "tags": [
+        "VLA",
+        "VLM",
+        "灾难性遗忘",
+        "LoRA",
+        "ICLR 2026",
+        "即插即用",
+        "动作语言化"
+      ],
+      "highlight": "将任意VLM零门槛转换为VLA：动作语言化+LoRA微调，保留推理能力",
+      "addedDate": "2026-04-25"
+    },
+    {
+      "id": "os051",
+      "name": "Embodied-R1 (强化具身推理VLM)",
+      "org": "天津大学 (Tianjin University)",
+      "description": "ICLR 2026收录。3B参数VLM实现11个机器人操作基准SOTA。核心创新Pointing机制——在图像上标注'在哪里做'作为统一的本体无关中间表示，优雅解决不同机器人之间的异构性问题。配合RFT强化微调解决Pointing多解困境。3B击败10B+大模型证明'对的表示+对的训练范式'比堆参数更重要。完整开源代码、权重和训练管线。",
+      "github": "https://github.com/pickxiguapi/Embodied-R1",
+      "stars": "1.5k+",
+      "language": "Python",
+      "category": "ai-model",
+      "tags": [
+        "VLM",
+        "Pointing",
+        "RFT",
+        "ICLR 2026",
+        "通用操作",
+        "3B",
+        "SOTA"
+      ],
+      "addedDate": "2026-04-25"
+    },
+    {
+      "id": "os050",
+      "name": "UnifoLM-VLA-0 (宇树通用操作VLA)",
+      "org": "宇树科技 (Unitree Robotics)",
+      "description": "宇树科技UnifoLM系列首个面向通用人形机器人操作的VLA大模型。专为人形双臂操作场景设计，覆盖桌面整理、工具使用、精密装配等多种任务，支持自然语言指令输入。由全球出货量第一的人形机器人企业发布，模型经过大量真实G系列机器人数据训练验证。完整开源模型权重和推理代码，支持第三方平台适配。标志着宇树从硬件领先走向软硬件生态全面开放。",
+      "github": "https://github.com/unitreerobotics/UnifoLM-VLA-0",
+      "stars": "新发布",
+      "language": "Python",
+      "category": "ai-model",
+      "tags": [
+        "VLA",
+        "人形机器人",
+        "双臂操作",
+        "宇树科技",
+        "开源权重",
+        "自然语言指令"
+      ],
+      "highlight": "全球出货量第一的人形机器人企业发布的首个操作VLA模型，完整开源",
+      "addedDate": "2026-04-25"
+    },
+    {
+      "id": "os049",
+      "name": "ResVLA (频域意图锚定VLA)",
+      "org": "上海AI Lab / 复旦大学 / 香港大学",
+      "description": "ResVLA提出了一种全新的VLA策略生成范式：通过频域（傅里叶/余弦变换）将机器人运动分解为低频全局意图和高频局部动态。确定性网络直接预测低频意图锚（Intent Anchor），残差扩散桥（Residual Diffusion Bridge）仅对高频残差进行精细去噪。这种'意图条件化生成'使扩散过程从有意义的起点出发，大幅缩小搜索空间，去噪步数可减至5步。在多个仿真基准上全面超越现有方法，特别在长程操作和精细装配任务中表现出色。提供完整代码和模型权重。",
+      "github": "https://res-vla.github.io/ResVLA/",
+      "stars": "新发布",
+      "language": "Python",
+      "category": "ai-model",
+      "tags": [
+        "VLA",
+        "频域分析",
+        "意图锚定",
+        "残差扩散桥",
+        "Diffusion Policy",
+        "长程操作"
+      ],
+      "highlight": "频域意图分解+残差扩散桥，VLA策略生成新范式，去噪步数减至5步",
+      "addedDate": "2026-04-25"
+    },
+    {
+      "id": "os048",
+      "name": "ForceVLA2 (力感知VLA框架)",
+      "org": "复旦大学 / 上海交大 / 新加坡国立 / 上海大学 / 西安交大",
+      "description": "CVPR 2026收录的首个力感知VLA框架。基于π₀架构，引入力感知MoE（Mixture of Experts）模块，将力/力矩传感器信号作为独立模态融入VLA，通过专家路由机制实现位置控制和力控制的自动切换。支持接触丰富操作（擦拭、插入、研磨等）。代码基于ForceVLA v1扩展，提供完整训练和推理代码。",
+      "github": "https://github.com/ft-robotic/ForceVLA",
+      "stars": "1.8k",
+      "language": "Python",
+      "category": "ai-model",
+      "tags": [
+        "VLA",
+        "力感知",
+        "CVPR 2026",
+        "混合力位控制",
+        "MoE",
+        "π₀",
+        "接触操作"
+      ],
+      "highlight": "首个力感知VLA框架，CVPR 2026接收，混合力位控制突破接触操作瓶颈",
+      "addedDate": "2026-04-24"
+    },
+    {
+      "id": "os047",
+      "name": "Open-H-Embodiment (医疗机器人VLA数据集)",
+      "org": "Johns Hopkins University / Open-H Community",
+      "description": "首个社区驱动的大规模医疗机器人数据集计划，旨在构建开放共享的基础设施以训练和评估面向医疗领域的通用VLA基础模型。项目通过标准化数据格式和采集流程，聚合来自全球多个研究团队的手术操作（缝合、切割、组织操作）、康复辅助、护理辅助等场景数据。借鉴Open X-Embodiment成功模式，覆盖多种医疗机器人平台，支持社区贡献。有望加速医疗VLA基础模型的研发，推动自主手术机器人从单一任务向通用能力演进。",
+      "github": "https://github.com/open-h/open-h-embodiment",
+      "stars": "新发布",
+      "language": "Python",
+      "category": "data-tools",
+      "tags": [
+        "医疗机器人",
+        "VLA",
+        "数据集",
+        "手术机器人",
+        "开源",
+        "社区驱动",
+        "基础模型"
+      ],
+      "highlight": "医疗机器人领域的Open X-Embodiment，首个面向医疗VLA的大规模开放数据集",
+      "addedDate": "2026-04-24"
+    },
+    {
+      "id": "os046",
+      "name": "FluxVLA Engine (标准化VLA工程底座)",
+      "org": "逐际动力 (LimX Dynamics)",
+      "description": "面向具身智能科研与应用的标准化VLA工程底座。以统一配置、标准接口、模块解耦、加速部署为核心设计理念，将数据处理、模型训练、仿真评测到真机部署全流程标准化。解决行业数据碎片化、代码高耦合及仿真到真机迁移难三大瓶颈。源自企业真机研发工程积累，经过真实机器人平台验证。未来将集成强化学习、世界模型，拓展灵巧手和3D VLA能力，并搭建全球开发者社群。",
+      "github": "https://github.com/limxdynamics/fluxvla-engine",
+      "stars": "新发布",
+      "language": "Python",
+      "category": "framework",
+      "tags": [
+        "VLA",
+        "工程底座",
+        "标准化",
+        "模块解耦",
+        "真机部署",
+        "数据处理",
+        "仿真评测",
+        "逐际动力"
+      ],
+      "highlight": "首个面向具身智能的标准化VLA工程底座，真机验证，全流程标准化",
+      "addedDate": "2026-04-24"
+    },
+    {
       "id": "os045",
       "name": "PokeVLA (口袋级VLA知识蒸馏框架)",
       "org": "匿名 (Under Review)",
@@ -52,7 +242,13 @@
       "stars": "新发布",
       "language": "Python",
       "category": "ai-model",
-      "tags": ["VLA", "知识蒸馏", "小型化", "边缘部署", "高效推理"],
+      "tags": [
+        "VLA",
+        "知识蒸馏",
+        "小型化",
+        "边缘部署",
+        "高效推理"
+      ],
       "highlight": "1-3B参数口袋级VLA，推理速度3-5x提升，知识蒸馏注入高层语义",
       "addedDate": "2026-04-23"
     },
@@ -64,7 +260,15 @@
       "github": "https://github.com/EmbodiedMidtrain/EmbodiedMidtrain",
       "category": "ai-model",
       "stars": "新发布",
-      "tags": ["VLA", "VLM", "中间训练", "数据选择", "分布对齐", "空间推理", "CMU"],
+      "tags": [
+        "VLA",
+        "VLM",
+        "中间训练",
+        "数据选择",
+        "分布对齐",
+        "空间推理",
+        "CMU"
+      ],
       "highlight": "首个系统性解决VLM→VLA分布差距的中间训练方案，低成本大幅提升VLA性能",
       "addedDate": "2026-04-23"
     },
@@ -76,7 +280,15 @@
       "github": "https://github.com/Interleave-VLA/Interleave-VLA",
       "category": "ai-model",
       "stars": "1.5k",
-      "tags": ["VLA", "ICLR 2026", "交错指令", "图文多模态", "数据合成", "泛化", "开源"],
+      "tags": [
+        "VLA",
+        "ICLR 2026",
+        "交错指令",
+        "图文多模态",
+        "数据合成",
+        "泛化",
+        "开源"
+      ],
       "highlight": "首个交错图文指令VLA，域外泛化能力提升2倍，ICLR 2026接收",
       "addedDate": "2026-04-23"
     },
@@ -88,7 +300,16 @@
       "github": "https://github.com/NVIDIA/Isaac-GR00T",
       "category": "ai-model",
       "stars": "4.5k",
-      "tags": ["VLA", "推理模型", "人形机器人", "NVIDIA", "GR00T", "Cosmos-Reason", "商业授权", "开源权重"],
+      "tags": [
+        "VLA",
+        "推理模型",
+        "人形机器人",
+        "NVIDIA",
+        "GR00T",
+        "Cosmos-Reason",
+        "商业授权",
+        "开源权重"
+      ],
       "highlight": "首个开源推理VLA人形机器人模型，支持商业授权+边缘部署",
       "addedDate": "2026-04-23"
     },
@@ -100,7 +321,14 @@
       "github": "https://deepmind.google/blog/gemini-robotics-er-1-6/",
       "category": "ai-model",
       "stars": 0,
-      "tags": ["VLM", "具身推理", "DeepMind", "Gemini", "空间推理", "多视角理解"],
+      "tags": [
+        "VLM",
+        "具身推理",
+        "DeepMind",
+        "Gemini",
+        "空间推理",
+        "多视角理解"
+      ],
       "addedDate": "2026-04-22"
     },
     {
@@ -111,7 +339,13 @@
       "github": "https://despite-safety.github.io/",
       "stars": "新发布",
       "category": "data-tools",
-      "tags": ["LLM安全", "具身规划", "基准测试", "安全评估", "12K任务"],
+      "tags": [
+        "LLM安全",
+        "具身规划",
+        "基准测试",
+        "安全评估",
+        "12K任务"
+      ],
       "highlight": "首个LLM具身规划安全基准，揭示规划能力≠安全的关键洞察",
       "addedDate": "2026-04-22"
     },
@@ -123,7 +357,16 @@
       "github": "https://github.com/InternRobotics/RoboInter",
       "stars": "1.2k",
       "category": "data-tools",
-      "tags": ["ICLR 2026", "中间表示", "VLA", "数据集", "标注工具", "评测基准", "plan-then-execute", "上海AI Lab"],
+      "tags": [
+        "ICLR 2026",
+        "中间表示",
+        "VLA",
+        "数据集",
+        "标注工具",
+        "评测基准",
+        "plan-then-execute",
+        "上海AI Lab"
+      ],
       "highlight": "首个完整的VLA中间表示基础设施(标注工具+23万轨迹数据集+230万QA评测基准)",
       "addedDate": "2026-04-22"
     },
@@ -135,7 +378,15 @@
       "github": "https://github.com/haiweng05/BeTTER",
       "stars": "0.8k",
       "category": "ai-model",
-      "tags": ["VLA", "评测基准", "因果干预", "推理幻觉", "北大", "清华", "具身推理"],
+      "tags": [
+        "VLA",
+        "评测基准",
+        "因果干预",
+        "推理幻觉",
+        "北大",
+        "清华",
+        "具身推理"
+      ],
       "highlight": "首个因果性VLA推理基准，揭示标准评测可能系统性高估模型能力",
       "addedDate": "2026-04-21"
     },
@@ -147,7 +398,14 @@
       "github": "https://github.com/physical-intelligence/openpi",
       "stars": "5.2k",
       "category": "ai-model",
-      "tags": ["VLA", "π0.7", "Physical Intelligence", "组合泛化", "Flow Matching", "机器人基础模型"],
+      "tags": [
+        "VLA",
+        "π0.7",
+        "Physical Intelligence",
+        "组合泛化",
+        "Flow Matching",
+        "机器人基础模型"
+      ],
       "highlight": "首次在机器人领域观察到组合泛化涌现，单一模型跨任务零样本泛化",
       "addedDate": "2026-04-21"
     },
@@ -159,7 +417,15 @@
       "github": "https://github.com/Seeed-Projects/reBot-DevArm",
       "stars": "2.8k",
       "category": "hardware",
-      "tags": ["开源硬件", "机械臂", "LeRobot", "ROS2", "Isaac Sim", "教育", "遥操作"],
+      "tags": [
+        "开源硬件",
+        "机械臂",
+        "LeRobot",
+        "ROS2",
+        "Isaac Sim",
+        "教育",
+        "遥操作"
+      ],
       "highlight": "真正全开源（硬件+软件+BOM），支持LeRobot模仿学习训练",
       "addedDate": "2026-04-21"
     },
@@ -171,7 +437,14 @@
       "github": "https://github.com/tianshuoy/HiVLA",
       "stars": "新发布",
       "category": "ai-model",
-      "tags": ["VLA", "层次化架构", "视觉定位", "Diffusion Transformer", "Flow Matching", "操作"],
+      "tags": [
+        "VLA",
+        "层次化架构",
+        "视觉定位",
+        "Diffusion Transformer",
+        "Flow Matching",
+        "操作"
+      ],
       "addedDate": "2026-04-21",
       "paperUrl": "https://arxiv.org/abs/2604.14125"
     },
@@ -181,7 +454,14 @@
       "description": "Embodied-R1是一个3B参数的视觉语言模型，专为具身推理和机器人操作设计。核心创新是'Pointing'机制——将机器人动作统一表示为图像中的指点坐标，跨越不同硬件平台的动作空间差异。通过两阶段强化微调（RFT），解决具身指点的多解困境。在11个基准上取得SOTA，仅3B参数超越许多更大模型。ICLR 2026接收论文，完全开源。",
       "github": "https://github.com/pickxiguapi/Embodied-R1",
       "stars": "1.5k+",
-      "tags": ["VLM", "具身推理", "Pointing", "强化学习", "ICLR 2026", "开源"],
+      "tags": [
+        "VLM",
+        "具身推理",
+        "Pointing",
+        "强化学习",
+        "ICLR 2026",
+        "开源"
+      ],
       "category": "ai-model",
       "addedDate": "2026-04-20",
       "id": "os034"
@@ -192,7 +472,13 @@
       "description": "RUKA-v2是完全开源的腱驱动五指灵巧手第二代，相比v1大幅提升灵活性和耐用性。采用腱驱动方案，16自由度，支持精密抓取和力反馈。提供完整的3D打印文件、BOM清单、装配指南和控制代码，总硬件成本约$2000。专为机器人灵巧操作研究设计，降低了灵巧手硬件门槛。",
       "github": "https://github.com/ruka-hand/ruka-v2",
       "stars": "新发布",
-      "tags": ["灵巧手", "腱驱动", "开源硬件", "3D打印", "操作研究"],
+      "tags": [
+        "灵巧手",
+        "腱驱动",
+        "开源硬件",
+        "3D打印",
+        "操作研究"
+      ],
       "category": "hardware",
       "addedDate": "2026-04-20",
       "id": "os033"
@@ -203,7 +489,13 @@
       "description": "完全透明开源的VLA框架，Inter-Layer Truncation技术智能跳过冗余Transformer层，推理成本降低40-60%。提供完整训练代码、预训练权重Model Zoo和部署脚本，是目前最易复现的VLA框架之一。",
       "github": "https://github.com/ATeam-Research/A1",
       "stars": "2.1k",
-      "tags": ["VLA", "开源", "高效推理", "截断架构", "Model Zoo"],
+      "tags": [
+        "VLA",
+        "开源",
+        "高效推理",
+        "截断架构",
+        "Model Zoo"
+      ],
       "category": "ai-model",
       "addedDate": "2026-04-20"
     },

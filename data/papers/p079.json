@@ -1,0 +1,47 @@
+{
+  "id": "p079",
+  "title": "HRDexDB: A Large-Scale Dataset of Dexterous Grasping Sequences Featuring Human and Diverse Robotic Hands",
+  "authors": "Multi-institution",
+  "venue": "arXiv 2604.14944",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.14944",
+  "projectPage": "",
+  "github": "",
+  "tags": ["灵巧抓取", "数据集", "多模态", "人手", "机器人手", "抓取规划", "跨形态"],
+  "abstract": "We present HRDexDB, a large-scale, multi-modal dataset of high-fidelity dexterous grasping sequences featuring both human and diverse robotic hands. Unlike existing datasets, HRDexDB provides cross-morphology coverage where the same objects are grasped by both human hands and multiple robot hand configurations, enabling direct human-to-robot skill transfer research. Each sequence includes RGB-D video, hand joint trajectories, contact force distributions, and object 6DoF poses.",
+  "methodology": {
+    "overview": "大规模跨形态灵巧抓取数据集，同时包含人手和多种机器人手的高保真抓取序列及完整多模态标注",
+    "keyComponents": [
+      {
+        "name": "Cross-Morphology Data Collection",
+        "description": "设计统一的数据采集流程，使同一组日常物体分别被人手和多种不同构型的灵巧机器人手（包括平行夹爪升级版、三指手、五指仿人手等）完成抓取。每种手型覆盖精密抓取(precision grasp)和力量抓取(power grasp)两大模式。"
+      },
+      {
+        "name": "Multi-Modal Annotation",
+        "description": "每条抓取序列标注包含：多视角RGB-D视频流、手部关节角度/速度时序轨迹、指尖和掌心接触力分布图（通过触觉传感器采集）、被抓物体6DoF位姿轨迹、以及抓取稳定性评分。"
+      },
+      {
+        "name": "Human-to-Robot Retargeting Baseline",
+        "description": "提供人手到机器人手的运动重定向基线方法，利用数据集中的人-机对照数据训练跨形态映射网络，验证人手灵巧操作技能向机器人手迁移的可行性。"
+      }
+    ]
+  },
+  "results": {
+    "benchmarks": [
+      "灵巧抓取策略学习",
+      "人手到机器人手技能迁移",
+      "抓取质量评估",
+      "接触力预测"
+    ],
+    "highlights": [
+      "数千条高保真抓取序列，覆盖多种日常物体",
+      "首个同时包含人手和多种机器人手对照数据的大规模灵巧抓取数据集",
+      "多模态标注完整度远超现有数据集",
+      "提供人-机运动重定向基线及评估协议"
+    ]
+  },
+  "relatedWork": ["DexGraspNet", "GRAB", "ContactDB"],
+  "difficulty": "中级",
+  "readingTime": "40min",
+  "addedDate": "2026-04-26"
+}

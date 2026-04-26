@@ -1,0 +1,40 @@
+{
+  "id": "p072",
+  "title": "The Developments and Challenges Toward Dexterous and Embodied Robotic Manipulation: A Survey",
+  "authors": "Gaofeng Li, Ruize Wang, Peisen Xu, Qi Ye, Jiming Chen",
+  "affiliation": "Zhejiang University",
+  "venue": "IEEE Robotics & Automation Magazine 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2507.11840",
+  "doi": "10.1109/mra.2025.3642671",
+  "github": "",
+  "tags": ["灵巧操作", "具身智能", "综述", "IEEE RAM", "操作范式演进"],
+  "abstract": "本文是发表在IEEE Robotics & Automation Magazine上的全景综述，系统梳理了机器人灵巧操作从机械编程到具身智能的完整演进历程。综述将操作范式划分为四个阶段：经典控制+轨迹规划、基于学习的抓取与操作、语言/视觉引导的通用操作、具身智能驱动的自主操作。",
+  "sections": [
+    {
+      "title": "1. 研究背景与动机",
+      "content": "实现类人灵巧操作是机器人技术的核心目标。传统方法依赖手工设计的控制策略和精确的物体几何模型，在结构化环境中表现良好但缺乏泛化能力。随着深度学习和大规模预训练模型的发展，机器人操作正在从'编程执行'转向'学习与推理'。"
+    },
+    {
+      "title": "2. 操作范式四阶段演进",
+      "content": "**阶段一：经典控制+轨迹规划**\n- 基于运动学/动力学模型的精确控制\n- 代表方法：RRT/PRM路径规划、阻抗/导纳控制\n- 优势：可预测、可分析；劣势：依赖精确模型，泛化差\n\n**阶段二：基于学习的抓取与操作**\n- 从数据中学习抓取策略\n- 代表方法：GraspNet、DexNet、PPO/SAC强化学习\n- 突破点：从6-DoF到多指灵巧抓取\n\n**阶段三：语言/视觉引导的通用操作**\n- VLM驱动的开放词汇操作\n- 代表方法：RT-2、CLIPort、SayCan\n- 关键创新：将互联网规模知识迁移到机器人控制\n\n**阶段四：具身智能驱动的自主操作**\n- VLA端到端模型、世界模型预测\n- 代表方法：π₀、GR00T、OpenVLA、Embodied-R1\n- 目标：自主推理+自主执行的闭环系统"
+    },
+    {
+      "title": "3. 灵巧手设计与触觉感知",
+      "content": "综述详细分析了多指灵巧手的机械设计趋势（欠驱动vs全驱动、腱绳vs齿轮传动），以及触觉传感器的最新进展（视觉触觉如GelSight/DIGIT、电容式/压电式阵列传感器）。指出触觉反馈对精细操作的必要性，但当前触觉-视觉融合仍是难题。"
+    },
+    {
+      "title": "4. 关键挑战与未来方向",
+      "content": "**挑战：**\n- 接触动力学建模困难（摩擦、柔性、多点接触）\n- 高维多指协调的控制复杂度（20+自由度）\n- Sim-to-Real泛化鸿沟\n- 操作数据获取成本极高\n\n**未来方向：**\n- 基础模型+灵巧手+触觉感知三位一体融合\n- 仿真-现实联合训练（Co-Training）\n- 操作数据的自动采集与标注\n- 安全约束下的力控制与柔顺操作"
+    }
+  ],
+  "keyInsights": [
+    "操作范式四阶段演进：机械编程→学习抓取→语言引导→具身自主",
+    "VLA+灵巧手+触觉感知三位一体是灵巧操作的未来方向",
+    "接触动力学建模和高维多指协调仍是核心瓶颈",
+    "Sim-to-Real迁移需要更好的物理仿真和域随机化策略"
+  ],
+  "impact": "为灵巧操作领域提供了最全面的技术演进图谱",
+  "difficulty": "中级",
+  "addedDate": "2026-04-25"
+}

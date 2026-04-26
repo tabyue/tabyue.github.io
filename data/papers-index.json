@@ -1,6 +1,443 @@
 {
-  "lastUpdated": "2026-04-23T22:33",
+  "lastUpdated": "2026-04-26T17:05",
   "papers": [
+    {
+      "id": "p078",
+      "title": "HEX: Humanoid-Aligned Experts for Cross-Embodiment Whole-Body Manipulation",
+      "authors": "Beijing Humanoid Robot Innovation Center, Xi'an Jiao Tong University, Nankai University, Peking University",
+      "venue": "arXiv 2604.07993",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.07993",
+      "github": "https://hex-humanoid.github.io/",
+      "tags": ["人形机器人", "全身操作", "跨本体", "VLA", "MoE", "全身协调", "双足操作"],
+      "tldr": "北京人形机器人创新中心联合西交大、南开、北大提出HEX，一个面向全尺寸双足人形机器人的全身协同操作VLA框架。与现有VLA模型将机器人各身体部位独立处理不同，HEX通过两大核心创新实现类人全身协调：(1)人形对齐通用状态表示(Humanoid-Aligned Universal State Representation)，将不同机器人本体的关节空间映射到统一的类人骨架表示，使模型能够跨本体迁移；(2)基于混合专家(MoE)的统一本体感知预测器，根据不同身体部位和任务需求动态路由专家模块，实现上肢操作、下肢行走和躯干平衡的协同控制。HEX在多种人形机器人平台上验证了跨本体全身操作能力，包括行走中的双手协作抓取、蹲下拾取物体等复合任务。这是首个专注于全身操作的跨本体人形VLA工作。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-26",
+      "keyInsights": [
+        "人形对齐表示：统一骨架映射解决不同人形本体关节空间差异，实现跨本体迁移",
+        "MoE本体感知：混合专家模块根据身体部位和任务动态路由，上肢/下肢/躯干专家协同",
+        "全身协调操作：首次在VLA框架中实现行走+操作+平衡的统一端到端控制",
+        "跨本体泛化：在多种不同尺寸和构型的人形平台上验证迁移能力"
+      ],
+      "impact": "首个面向全身协调操作的跨本体人形VLA框架，为通用人形机器人操作奠定基础架构"
+    },
+    {
+      "id": "p079",
+      "title": "HRDexDB: A Large-Scale Dataset of Dexterous Grasping Sequences Featuring Human and Diverse Robotic Hands",
+      "authors": "Multi-institution",
+      "venue": "arXiv 2604.14944",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.14944",
+      "github": "",
+      "tags": ["灵巧抓取", "数据集", "多模态", "人手", "机器人手", "抓取规划", "跨形态"],
+      "tldr": "多机构联合发布HRDexDB，一个大规模多模态灵巧抓取数据集，同时包含人手和多种机器人灵巧手的高保真抓取序列。与现有数据集不同，HRDexDB具有三大特色：(1)跨形态覆盖——同一组物体由人手和多种不同构型的机器人手分别完成抓取，提供人-机对照数据；(2)多模态标注——每条序列包含RGB-D视频、手部关节轨迹、接触力分布、物体6DoF位姿等完整感知信息；(3)规模与多样性——涵盖数千个抓取序列，覆盖多种日常物体的精密抓取(precision grasp)和力量抓取(power grasp)。数据集可用于灵巧操作策略学习、人手到机器人手的技能迁移、以及抓取质量评估等多个下游任务。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-26",
+      "keyInsights": [
+        "跨形态对照：同一物体由人手和多种机器人手分别抓取，支持人-机技能迁移研究",
+        "多模态感知：RGB-D+关节轨迹+接触力+物体位姿，为灵巧操作提供完整感知信号",
+        "精密与力量抓取：覆盖precision grasp和power grasp两大类抓取模式",
+        "大规模高保真：数千条序列，物理仿真验证确保数据质量"
+      ],
+      "impact": "填补灵巧操作领域人-机对照大规模数据集空白，为灵巧手技能迁移提供关键基础设施"
+    },
+    {
+      "id": "p076",
+      "title": "Foca-VLA / ForceVLA2: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation",
+      "authors": "Shanghai AI Lab, Tongji University, Shanghai Jiao Tong University, et al.",
+      "venue": "CVPR 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2603.15169",
+      "github": "",
+      "tags": ["力控制", "力-位混合控制", "接触丰富操作", "VLA", "CVPR 2026", "力感知", "MoE"],
+      "tldr": "上海AI Lab联合同济大学、上海交大提出ForceVLA2（CVPR 2026收录），首次将混合力-位置控制与力感知能力统一于端到端VLA框架。此前具身智能在接触丰富操作任务中主要依赖位置控制，对交互力的显式感知和调节鲜有探索，导致在插入、擦拭、打磨等需要精细力控的任务中稳定性不足。ForceVLA2引入力感知专家混合（Force-aware MoE）模块，使VLA模型能够同时输出位置指令和力约束，在执行过程中动态切换和融合力控与位控模式。实验表明在接触丰富操作基准上显著超越纯位控VLA基线，尤其在需要精确力调节的任务（如门把手操作、物体插入、表面擦拭）中提升明显。这是首个在端到端VLA框架中实现工业级力-位混合控制的工作。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-26",
+      "keyInsights": [
+        "力-位混合控制：首次在VLA框架中实现位置控制与力控制的动态融合切换",
+        "Force-aware MoE：力感知专家混合模块，根据接触状态自动选择控制模式",
+        "接触丰富操作：在门把手、插入、擦拭等需要精细力调节的任务中显著超越位控基线",
+        "端到端训练：力感知和混合控制策略在统一VLA框架中端到端学习，无需手工设计力控规则"
+      ],
+      "impact": "首次在端到端VLA中实现工业级力-位混合控制，为接触丰富操作任务的规模化落地提供关键技术"
+    },
+    {
+      "id": "p077",
+      "title": "Long-Horizon Manipulation via Trace-Conditioned VLA Planning",
+      "authors": "Multi-institution",
+      "venue": "arXiv 2604.21924",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.21924",
+      "github": "",
+      "tags": ["长程操作", "轨迹条件", "VLA规划", "多步任务", "误差累积", "闭环"],
+      "tldr": "提出Trace-Conditioned VLA Planning框架，解决VLA策略在长程多步操作中面临的误差累积问题。核心观察：真实操作任务是多步骤的、进度相关的，且对累积执行错误极其脆弱。方法引入'轨迹条件'机制——将历史执行轨迹（trace）作为显式条件输入VLA规划模型，使得模型在每一步规划时能够感知当前进度、已完成的子步骤和潜在的偏差。与传统VLA只基于当前观测生成动作不同，trace-conditioned规划通过编码完整执行历史实现进度感知的闭环控制。在多个长程操作基准上（包括5步以上的顺序操作任务），显著降低了误差累积导致的失败率，尤其在中后段子任务的成功率提升明显。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-26",
+      "keyInsights": [
+        "轨迹条件机制：将执行历史轨迹作为显式条件输入VLA规划，实现进度感知",
+        "长程误差累积：专门针对多步操作中误差逐步放大的核心挑战设计",
+        "闭环规划：每步规划都考虑完整执行历史，而非仅依赖当前帧观测",
+        "中后段子任务提升显著：在5步以上长程任务的后半段成功率改善最为明显"
+      ],
+      "impact": "为VLA模型在长程多步操作中的可靠性提供了轨迹条件化的新范式"
+    },
+    {
+      "id": "p074",
+      "title": "VistaBot: View-Robust Robot Manipulation via Spatiotemporal-Aware View Synthesis",
+      "authors": "Songen Gu, Yuhang Zheng, et al. (Tsinghua University / Shanghai AI Lab)",
+      "venue": "arXiv 2604.21914",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.21914",
+      "github": "",
+      "tags": [
+        "视角鲁棒",
+        "视图合成",
+        "4D几何",
+        "扩散模型",
+        "闭环操作",
+        "ACT",
+        "π₀"
+      ],
+      "tldr": "清华/上海AI Lab提出VistaBot，解决端到端机器人操作模型对相机视角变化敏感的关键问题。核心框架整合三个组件：(1)基于VGGT的4D几何估计——前馈式预测相机位姿和深度，无需多视角标定；(2)视频扩散模型驱动的视图合成——生成时空一致的目标视角潜在特征，带记忆机制保持帧间连贯；(3)潜在动作学习——直接从合成视角的潜在特征中学习策略，无需显式图像重建。VistaBot集成到ACT和π₀两种端到端框架中，并提出了新评估指标'视点泛化分数(VGS)'量化跨视角泛化能力。实验表明在相机位置偏移30°+时仍保持高成功率，无需部署时校准相机。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-26",
+      "keyInsights": [
+        "4D几何估计：VGGT前馈预测位姿和深度，无需多视角标定或SfM预处理",
+        "视频扩散视图合成：带记忆机制生成时空一致的目标视角特征，保持操作连贯性",
+        "潜在空间学习：跳过显式图像重建，直接从合成潜在特征学习策略，更高效更鲁棒",
+        "VGS评估指标：首次量化VLA策略的视角泛化能力，填补评估空白"
+      ],
+      "impact": "首次系统性解决VLA模型的视角敏感性瓶颈，使机器人部署时无需精确对齐相机位置"
+    },
+    {
+      "id": "p075",
+      "title": "VLA-in-the-Loop: Online Policy Correction with World Models for Closed-Loop Robotic Manipulation",
+      "authors": "Multi-institution",
+      "venue": "OpenReview 2026",
+      "date": "2026-04",
+      "arxiv": "https://openreview.net/forum?id=aT4LG8c6DE",
+      "github": "",
+      "tags": [
+        "VLA",
+        "世界模型",
+        "在线校正",
+        "闭环操作",
+        "策略纠偏",
+        "预测模型"
+      ],
+      "tldr": "提出VLA-in-the-Loop框架，将VLA模型与复合世界模型(World Model)集成，实现执行过程中的实时策略校正。核心思想：VLA生成初始动作序列后，世界模型在'心理模拟'中预测执行结果——如果预测结果偏离目标，系统在实际执行前修正动作。复合世界模型结合了视觉预测模型（预测未来图像）和物理约束检查器。与传统VLA的'开环执行→失败→重试'不同，VLA-in-the-Loop实现了'规划→模拟验证→修正→执行'的真正闭环。在接触丰富操作和长程任务中显著降低失败率。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-26",
+      "keyInsights": [
+        "世界模型作为在线验证器：执行前模拟预测动作后果，提前发现和修正错误",
+        "复合世界模型：视觉预测+物理约束检查双重验证，减少幻觉和物理不合理动作",
+        "从开环到闭环：打破VLA'生成即执行'的惯性，引入规划-验证-修正循环",
+        "特别适合接触操作和长程任务中的累积误差修正"
+      ],
+      "impact": "提出VLA+世界模型协同的新范式，使VLA策略具备自我纠错能力，向真正的闭环智能迈进"
+    },
+    {
+      "id": "p072",
+      "title": "The Developments and Challenges Toward Dexterous and Embodied Robotic Manipulation: A Survey",
+      "authors": "Gaofeng Li, Ruize Wang, Peisen Xu, Qi Ye, Jiming Chen (Zhejiang University)",
+      "venue": "IEEE Robotics & Automation Magazine 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2507.11840",
+      "github": "",
+      "tags": [
+        "灵巧操作",
+        "具身智能",
+        "综述",
+        "IEEE RAM",
+        "操作范式演进",
+        "AI+机器人"
+      ],
+      "tldr": "浙江大学团队在IEEE RAM发表的全景综述，系统梳理了机器人灵巧操作从机械编程到具身智能的完整演进历程。综述将操作范式划分为四个阶段：(1)经典控制+轨迹规划、(2)基于学习的抓取与操作、(3)语言/视觉引导的通用操作、(4)具身智能驱动的自主操作。重点分析了VLA模型、灵巧手设计、触觉感知、力控制、Sim-to-Real迁移等关键技术的最新进展和瓶颈。文章指出当前最大挑战在于：真实环境中物体接触动力学的建模困难、多指协调的高维控制复杂度、以及从仿真到真实的泛化鸿沟。综述还提出了未来方向：基础模型+灵巧手+触觉感知的三位一体融合。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-25",
+      "keyInsights": [
+        "操作范式四阶段演进：机械编程→学习抓取→语言引导→具身自主",
+        "VLA+灵巧手+触觉感知三位一体是灵巧操作的未来方向",
+        "接触动力学建模和高维多指协调仍是核心瓶颈",
+        "Sim-to-Real迁移需要更好的物理仿真和域随机化策略"
+      ],
+      "impact": "为灵巧操作领域提供了最全面的技术演进图谱，明确了从经典控制到具身智能的完整路线图"
+    },
+    {
+      "id": "p073",
+      "title": "A Mechanistic Analysis of Sim-and-Real Co-Training in Generative Robot Policy Learning",
+      "authors": "Stanford University / Toyota Research Institute",
+      "venue": "arXiv 2604.13645",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.13645",
+      "github": "",
+      "tags": [
+        "Sim-to-Real",
+        "Co-Training",
+        "Diffusion Policy",
+        "仿真数据",
+        "机理分析",
+        "扩散模型"
+      ],
+      "tldr": "斯坦福/TRI团队对仿真-真实数据联合训练(Co-Training)范式进行了系统性的机理分析。核心问题：为什么混合仿真和真实数据一起训练扩散策略(Diffusion Policy)时，有时比单独用真实数据效果更好，有时反而更差？论文通过受控实验揭示了关键机制：(1)仿真数据在覆盖不足的状态空间区域提供正则化，减少过拟合；(2)但仿真-真实域差异过大时会引入系统性偏差，抵消正则化收益。论文提出了预测Co-Training何时有效的定量指标，并在真实机器人操作实验中验证。这为从业者提供了实用指导：何时应该加仿真数据、加多少、如何调整域差异。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-25",
+      "keyInsights": [
+        "仿真数据的正则化效应：在真实数据覆盖不足的状态空间区域提供支撑",
+        "域差异的双刃剑：过大则引入偏差抵消收益",
+        "提出Co-Training有效性的定量预测指标",
+        "实用指导：什么时候加仿真数据、加多少、域差异阈值"
+      ],
+      "impact": "首次对Sim-Real Co-Training的机理进行系统分析，为扩散策略的数据配比提供了理论指导"
+    },
+    {
+      "id": "p070",
+      "title": "Embodied-R1: Reinforced Embodied Reasoning for General Robotic Manipulation",
+      "authors": "Tianjin University",
+      "venue": "ICLR 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2508.13998",
+      "github": "https://github.com/pickxiguapi/Embodied-R1",
+      "tags": [
+        "VLM",
+        "Pointing",
+        "RFT",
+        "强化微调",
+        "通用操作",
+        "3B",
+        "ICLR 2026"
+      ],
+      "tldr": "天津大学提出Embodied-R1，一个仅3B参数的VLM即在11个机器人操作基准上达到SOTA。核心创新是'Pointing'机制——将视觉理解转化为图像上的空间指向作为统一中间表示，优雅解决了不同机器人本体间的异构性问题（不需要为每种机器人单独训练）。第二个创新是强化微调(RFT)训练：针对Pointing的多解困境（同一任务可能有多个合理抓取点），RFT通过环境反馈自动学习最优策略，而非简单的行为克隆。3B击败10B+模型证明了'对的表示+对的训练范式'比堆参数更重要。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-25",
+      "keyInsights": [
+        "Pointing机制：将动作预测转化为图像空间指向，作为不依赖机器人形态的统一中间表示",
+        "RFT强化微调：用环境反馈解决多解困境，避免行为克隆对单一解的过拟合",
+        "3B参数击败10B+模型，证明表示设计和训练范式比参数规模更重要",
+        "11个基准全面SOTA，包括跨本体泛化场景"
+      ],
+      "impact": "开创了'Pointing+RFT'范式桥接视觉理解与机器人操作，为小模型实现通用操作提供了高效路径"
+    },
+    {
+      "id": "p071",
+      "title": "VLM2VLA: Actions as Language — Fine-Tuning VLMs into VLAs Without Catastrophic Forgetting",
+      "authors": "Princeton University (IROM Lab)",
+      "venue": "ICLR 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2509.22195",
+      "github": "https://github.com/irom-princeton/byovla",
+      "tags": [
+        "VLA",
+        "VLM",
+        "灾难性遗忘",
+        "动作语言化",
+        "LoRA",
+        "ICLR 2026"
+      ],
+      "tldr": "普林斯顿IROM Lab提出VLM2VLA，解决了VLM微调为VLA时的灾难性遗忘问题。核心观察：VLA微调时VLM能力退化，根源是互联网预训练语料与机器人数据之间的分布不匹配。解决方案优雅而简洁——将低维机器人动作重新表示为自然语言描述（如'向右移动5cm，夹爪闭合到80%'），使VLA训练数据的格式与VLM原始预训练数据对齐。这样仅用LoRA即可高效微调，同时保留VLM的视觉理解和推理能力。VLM2VLA在保持VLM基准性能的同时，操作成功率与全量微调VLA相当甚至更优。BYOVLA开源框架支持任意VLM骨干。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-25",
+      "keyInsights": [
+        "灾难性遗忘根因：互联网预训练语料与机器人动作token之间的分布不匹配",
+        "动作语言化：将机器人动作转为自然语言描述，对齐预训练数据格式",
+        "LoRA高效微调：无需全量微调即可训练操作策略，同时保留VLM推理能力",
+        "BYOVLA框架：支持任意VLM骨干即插即用，降低VLA开发门槛"
+      ],
+      "impact": "从数据表示层面根本解决了VLM→VLA微调的灾难性遗忘，使VLA继承VLM全部推理能力成为可能"
+    },
+    {
+      "id": "p068",
+      "title": "ResVLA: From Noise to Intent — Anchoring Generative VLA Policies with Spectral Residual Guidance",
+      "authors": "Shanghai AI Lab, Fudan University, HKU",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.21391",
+      "github": "https://res-vla.github.io/ResVLA/",
+      "tags": [
+        "VLA",
+        "频域分析",
+        "意图锚定",
+        "残差扩散桥",
+        "Diffusion Policy",
+        "长程操作"
+      ],
+      "tldr": "提出ResVLA，将机器人运动通过频域（傅里叶/余弦变换）分解为低频全局意图和高频局部动态。核心创新：确定性网络预测低频意图锚（Intent Anchor），残差扩散桥（Residual Diffusion Bridge）仅对高频残差进行精细去噪——相当于给扩散过程一个'起点指南'，使模型聚焦于精调局部细节而非从零猜测全局方向。这种'意图条件化生成'显著降低了扩散策略的探索空间，在长程操作和精细装配任务中大幅提升成功率。频域分解还天然提供了可解释性——低频=做什么方向，高频=怎么精确做。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-25",
+      "keyInsights": [
+        "频域运动分解：低频=全局运动意图（移动方向/大轨迹），高频=局部运动动态（微调/力控/接触细节）",
+        "意图锚定：确定性网络直接预测低频锚，为扩散过程提供稳定起点，避免全局方向漂移",
+        "残差扩散桥：仅对高频残差去噪，搜索空间大幅缩小，去噪步数可减至5步左右",
+        "天然可解释：低频/高频分离提供了'做什么'和'怎么做'的结构化理解"
+      ],
+      "impact": "提出了VLA策略生成的新范式——将频域分析引入扩散策略，既提升性能又增强可解释性，为VLA的高效部署提供了理论和工程双重支撑"
+    },
+    {
+      "id": "p069",
+      "title": "UnifoLM-VLA-0: A Unified VLA Model for General-Purpose Humanoid Robot Manipulation",
+      "authors": "Unitree Robotics",
+      "venue": "Open Source 2026",
+      "date": "2026-04",
+      "arxiv": "",
+      "github": "https://github.com/unitreerobotics/UnifoLM-VLA-0",
+      "tags": [
+        "VLA",
+        "人形机器人",
+        "操作模型",
+        "宇树科技",
+        "开源",
+        "双臂操作"
+      ],
+      "tldr": "宇树科技开源的UnifoLM系列首个面向通用人形机器人操作的VLA大模型。专为人形双臂操作场景设计，覆盖桌面整理、工具使用、精密装配等任务，支持自然语言指令输入。作为全球人形机器人出货量第一的企业发布的操作VLA模型，兼具工程实用性和研究价值。模型权重和推理代码完整开源。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-25",
+      "keyInsights": [
+        "由全球出货量第一的人形机器人企业发布，模型经过大量真实数据验证",
+        "专为人形双臂操作设计，区别于桌面单臂场景的VLA模型",
+        "完整开源权重和代码，支持第三方平台适配",
+        "UnifoLM系列的首个操作模型，预示后续将有运动控制等方向的模型发布"
+      ],
+      "impact": "宇树从硬件开源走向软件+模型开源，为人形机器人操作研究提供了来自量产企业的高质量预训练模型"
+    },
+    {
+      "id": "p067",
+      "title": "ForceVLA2: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation",
+      "authors": "Fudan University, SJTU, NUS, Shanghai University, Xi'an Jiaotong University",
+      "venue": "CVPR 2026",
+      "date": "2026-03",
+      "arxiv": "https://arxiv.org/abs/2603.15169",
+      "github": "https://github.com/ft-robotic/ForceVLA",
+      "tags": [
+        "VLA",
+        "力感知",
+        "混合力位控制",
+        "MoE",
+        "CVPR 2026",
+        "接触操作",
+        "π₀"
+      ],
+      "tldr": "首个将力感知显式引入VLA框架的工作（CVPR 2026接收）。核心创新：（1）混合力位控制架构——VLA模型同时输出位置指令和力控参数，在接触阶段自动切换力控模式；（2）力感知MoE模块——将力/力矩传感器信号作为独立模态融入VLA，通过专家路由机制动态分配位置控制和力控制权重；（3）基于π₀的Flow Matching动作头同时生成位置轨迹和力参考值。解决了当前VLA模型在接触丰富操作（擦拭、插入、研磨等）中因缺乏力感知而表现差的根本问题。力控专家分支在接触瞬间自动激活，实现了位置控制和力控制的无缝切换。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-24",
+      "keyInsights": [
+        "当前VLA模型几乎全部基于纯位置控制——接触丰富任务是重大盲区",
+        "力感知MoE：力/力矩传感器信号作为独立模态，通过专家路由动态分配力控/位控权重",
+        "混合力位控制：位置主导的自由空间运动 + 力主导的接触阶段，自动无缝切换",
+        "基于π₀ Flow Matching架构，动作头同时输出位置轨迹和力参考值"
+      ],
+      "impact": "CVPR 2026级别工作，首次系统性解决VLA的力感知缺失问题，为接触丰富操作（工业装配、表面处理、精密插入等）的VLA部署开辟道路"
+    },
+    {
+      "id": "p065",
+      "title": "EmbodiedLGR: Integrating Lightweight Graph Representation and Retrieval for Semantic-Spatial Memory in Robotic Agents",
+      "authors": "Paolo Riva, Leonardo Gargani, Matteo Frosi, Matteo Matteucci",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.18271",
+      "github": "",
+      "tags": [
+        "语义图",
+        "RAG",
+        "空间记忆",
+        "VLM",
+        "机器人交互",
+        "NaVQA",
+        "SOTA"
+      ],
+      "tldr": "提出EmbodiedLGR-Agent，一种VLM驱动的机器人语义-空间记忆架构。创新性地采用双层混合构建-检索方法：低层级语义图（基于参数高效VLM）存储物体及空间位置关系，高层级RAG架构保留场景语义描述。解决了机器人在复杂环境中高效构建和检索记忆与观察信息的需求，使机器人能在类似人类的推理时间内回答关于位置、事件或物体的查询。在NaVQA数据集上推理/查询时间达到SOTA，全局任务准确率与最优方法竞争。已在物理机器人上成功部署，VLM和管线均可本地运行。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-24",
+      "keyInsights": [
+        "双层记忆架构：语义图（低层级物体+空间关系）+ RAG（高层级场景语义描述），实现结构化与非结构化信息互补",
+        "参数高效VLM：语义图构建使用轻量级VLM，不依赖大规模云端计算，可本地运行",
+        "推理速度SOTA：在NaVQA数据集上实现最快的推理和查询时间，满足实时人机交互需求",
+        "物理机器人验证：不仅是仿真结果，已在真实机器人上部署验证实际效用"
+      ],
+      "impact": "为具身智能体提供了高效的环境记忆解决方案，结合知识图谱与RAG的优势实现了速度与准确性的兼顾，对长程任务中的场景记忆和人机交互有重要参考价值"
+    },
+    {
+      "id": "p066",
+      "title": "Open-H-Embodiment: A Large-Scale Dataset for Enabling Foundation Models in Medical Robotics",
+      "authors": "Johns Hopkins University (Axel Krieger et al.)",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.21017",
+      "github": "https://github.com/open-h/open-h-embodiment",
+      "tags": [
+        "医疗机器人",
+        "VLA",
+        "数据集",
+        "手术机器人",
+        "基础模型",
+        "开源",
+        "社区驱动"
+      ],
+      "tldr": "提出Open-H-Embodiment，首个社区驱动的大规模医疗机器人数据集计划。旨在构建开放共享的基础设施以训练和评估面向医疗领域的通用VLA基础模型。自主医疗机器人有望改善患者结局、降低工作负荷、普及医疗服务并实现超人精度，但当前缺乏统一的大规模医疗操作数据。该项目通过标准化数据格式和采集流程，聚合全球多个研究团队的手术操作、康复辅助等场景数据，涵盖多种医疗机器人平台。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-24",
+      "keyInsights": [
+        "首个面向医疗机器人领域的大规模开放数据集计划，填补VLA在医疗场景的数据空白",
+        "社区驱动模式：全球多团队贡献数据，标准化格式确保互操作性",
+        "覆盖多场景：手术操作、康复辅助、护理辅助等多种医疗机器人应用",
+        "对标Open X-Embodiment：借鉴通用机器人领域的成功数据集模式，应用于医疗垂直领域"
+      ],
+      "impact": "医疗机器人领域的Open X-Embodiment，有望加速医疗VLA基础模型的研发，推动自主手术机器人从单一任务向通用能力演进"
+    },
+    {
+      "id": "p063",
+      "title": "FluxVLA Engine: A Standardized VLA Engineering Infrastructure for Embodied Intelligence",
+      "authors": "LimX Dynamics Team (逐际动力)",
+      "venue": "Open Source 2026",
+      "date": "2026-04",
+      "arxiv": "",
+      "github": "https://github.com/limxdynamics/fluxvla-engine",
+      "tags": [
+        "VLA",
+        "工程底座",
+        "标准化",
+        "模块解耦",
+        "真机部署",
+        "数据处理",
+        "仿真评测"
+      ],
+      "tldr": "逐际动力开源的面向具身智能科研与应用的标准化VLA工程底座。以统一配置、标准接口、模块解耦、加速部署为核心设计理念，将数据处理、模型训练、仿真评测到真机部署的全流程标准化。解决了行业面临的数据碎片化、代码高耦合及仿真到真机迁移难三大瓶颈。项目源自企业具身智能与通用机器人研发的长期工程积累，经过真机验证。未来将集成强化学习、多元世界模型，拓展灵巧手、3D VLA等前沿能力。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-24",
+      "keyInsights": [
+        "统一配置系统：YAML驱动的全流程配置，降低实验管理复杂度",
+        "标准接口：数据加载/模型训练/评测/部署各环节API标准化，支持即插即用",
+        "模块解耦：数据处理、模型架构、训练策略、部署推理四个核心模块可独立替换",
+        "真机验证：非纯学术框架，经过逐际动力真实机器人平台的生产验证"
+      ],
+      "impact": "填补了VLA领域缺乏标准化工程底座的空白，降低VLA研发从论文到真机的工程门槛，有望成为行业标准化工具链"
+    },
+    {
+      "id": "p064",
+      "title": "Robot Trainers for Embodied AI: Emerging Workforce and Data Collection Paradigms in Real-World Scenarios",
+      "authors": "Xinhua News Agency Investigative Report",
+      "venue": "Xinhua Feature 2026",
+      "date": "2026-04",
+      "arxiv": "",
+      "github": "",
+      "tags": [
+        "数据采集",
+        "机器人训练师",
+        "真实场景",
+        "康养",
+        "物流",
+        "产业调研"
+      ],
+      "tldr": "新华社深度调研报道，系统梳理了具身智能机器人从实验室走向真实场景过程中催生的新职业——'具身智能训练师'。报道聚焦山东省济南、青岛两地的公共机器人数据采集训练场：训练师在模拟还原的汽车制造、3C工厂、物流商超、家居康养等'实操车间'中，一对一指导机器人进行操作训练。青岛康养领域训练验证中心（山东首个）已投入运营，通过专业医疗设施和真实服务场景推动康养机器人技能习得。报道揭示了数据采集作为具身AI'隐性基础设施'的核心地位，以及真实场景数据采集的规模化组织方式。",
+      "difficulty": "入门",
+      "addedDate": "2026-04-24",
+      "keyInsights": [
+        "具身智能训练师作为新职业正在产业化：从零散的实验室操作转向专业化、规模化的公共训练场模式",
+        "青岛康养训练中心模式：专业医疗设施+真实老人互动+标准化采集流程，解决康养场景数据稀缺问题",
+        "训练场覆盖多场景：汽车制造、3C工厂、物流商超、家居康养，反映VLA对多样化数据的刚性需求",
+        "新职业折射产业拐点：从'做Demo'到'大规模部署'，数据采集成为产业化的关键瓶颈和机会"
+      ],
+      "impact": "产业层面的重要调研，揭示了具身AI规模化落地中最容易被忽视的'数据采集基础设施'问题，为理解行业全貌提供独特视角"
+    },
     {
       "id": "p061",
       "title": "Outplaying Elite Table Tennis Players with an Autonomous Robot",
@@ -9,7 +446,15 @@
       "date": "2026-04",
       "arxiv": "https://www.nature.com/articles/s41586-026-10338-5",
       "github": "",
-      "tags": ["强化学习", "乒乓球", "事件相机", "实时交互", "物理AI", "Sony AI", "Nature"],
+      "tags": [
+        "强化学习",
+        "乒乓球",
+        "事件相机",
+        "实时交互",
+        "物理AI",
+        "Sony AI",
+        "Nature"
+      ],
       "tldr": "Sony AI开发的自主乒乓球机器人系统Ace，结合事件相机（event-based vision）和深度强化学习，首次在真实比赛中击败人类精英选手。系统采用双模态视觉（事件相机微秒级延迟+高速RGB）、实时球轨迹预测与旋转估计、分层RL策略（战术规划层+击球控制层）。在与国家级选手对抗中展现连续对打、旋转球处理和战术变化能力。标志着具身AI从受控实验室到真实竞技环境的关键跨越。",
       "difficulty": "高级",
       "addedDate": "2026-04-23",
@@ -29,7 +474,14 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.20834",
       "github": "",
-      "tags": ["VLA", "小型化", "知识蒸馏", "边缘部署", "高效推理", "机器人操作"],
+      "tags": [
+        "VLA",
+        "小型化",
+        "知识蒸馏",
+        "边缘部署",
+        "高效推理",
+        "机器人操作"
+      ],
       "tldr": "提出PokeVLA，一种赋能口袋级（1-3B参数）VLA模型的方法。通过多层次知识蒸馏从大型VLM向小型VLA注入高层语义知识和常识推理能力（场景理解→物体关系→抓取策略），同时设计轻量化动作头和自适应Token压缩提升推理效率。在仅1-3B参数规模下达到接近7B模型的操作性能，推理速度提升3-5倍，为VLA在边缘端（如Jetson）的实用化部署开辟路径。",
       "difficulty": "高级",
       "addedDate": "2026-04-23",
@@ -49,7 +501,15 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.20012",
       "github": "",
-      "tags": ["VLA", "VLM", "中间训练", "数据选择", "分布对齐", "空间推理", "CMU"],
+      "tags": [
+        "VLA",
+        "VLM",
+        "中间训练",
+        "数据选择",
+        "分布对齐",
+        "空间推理",
+        "CMU"
+      ],
       "tldr": "提出EmbodiedMidtrain，首次系统刻画VLM与VLA之间的数据分布鸿沟，并通过轻量级可学习邻近度估计器从大规模VLM数据池中自动筛选最接近VLA分布的样本，在VLM→VLA微调之间插入'中间训练'阶段。该方法为VLA微调提供更优初始化，在3个机器人操作基准上跨多种VLM骨干一致提升性能。数据引擎能捕获数据集级和样本级的对齐信号，倾向选择空间推理任务而非以文本为中心的任务。",
       "difficulty": "高级",
       "addedDate": "2026-04-23",
@@ -69,7 +529,14 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.20100",
       "github": "",
-      "tags": ["VLA", "基础模型", "多源预训练", "跨本体泛化", "人类视频", "仿真数据"],
+      "tags": [
+        "VLA",
+        "基础模型",
+        "多源预训练",
+        "跨本体泛化",
+        "人类视频",
+        "仿真数据"
+      ],
       "tldr": "提出JoyAI-RA 0.1，一个面向通用机器人自主操作的VLA基础模型。核心创新是多源多级预训练框架（multi-source multi-level pretraining），系统性整合四类数据源：（1）网络数据用于视觉-语言对齐；（2）大规模第一人称人类操作视频用于学习操作先验；（3）仿真生成轨迹用于多样化泛化训练；（4）真实机器人数据用于最终微调。通过从粗到细的分层预训练策略，解决了跨本体泛化和数据稀缺两大瓶颈，在多个标准基准上全面超越现有SOTA。",
       "difficulty": "高级",
       "addedDate": "2026-04-23",
@@ -89,7 +556,16 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2505.02152",
       "github": "https://github.com/Interleave-VLA/Interleave-VLA",
-      "tags": ["VLA", "ICLR 2026", "交错指令", "图文多模态", "泛化能力", "数据合成", "上海交大", "UC Berkeley"],
+      "tags": [
+        "VLA",
+        "ICLR 2026",
+        "交错指令",
+        "图文多模态",
+        "泛化能力",
+        "数据合成",
+        "上海交大",
+        "UC Berkeley"
+      ],
       "tldr": "提出Interleave-VLA，首个能理解交错图像-文本指令并直接生成连续动作序列的VLA框架。现有VLA仅支持纯文本指令，面对未见物体时泛化能力差。核心贡献：（1）定义了交错图文指令的VLA问题范式——用户可在指令中嵌入目标物体/位置的参考图像，大幅提升指令的精确性和灵活性；（2）提出基于2D扩散模型的大规模数据合成管线，自动为现有机器人轨迹数据生成交错图文标注，解决了缺乏大规模交错训练数据的根本问题；（3）在仿真和真实世界评测中，域外物体泛化能力相比纯文本指令方法提升2倍。",
       "difficulty": "高级",
       "addedDate": "2026-04-23",
@@ -109,7 +585,13 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.xxxxx",
       "github": "",
-      "tags": ["Diffusion Policy", "视觉自适应", "高效操作", "VADF", "VLA"],
+      "tags": [
+        "Diffusion Policy",
+        "视觉自适应",
+        "高效操作",
+        "VADF",
+        "VLA"
+      ],
       "tldr": "提出VADF（Vision-Adaptive Diffusion Policy Framework），一种面向高效机器人操作的视觉自适应扩散策略框架。核心创新是根据视觉输入的复杂度动态调整扩散步数——简单场景用少量去噪步快速生成动作，复杂场景用更多步保证精度。这种自适应机制在保持操作成功率的同时，将平均推理延迟降低40-60%。在多个操作基准上验证了效率-精度的良好平衡。",
       "difficulty": "高级",
       "addedDate": "2026-04-23",
@@ -129,7 +611,14 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.17880",
       "github": "https://github.com/chuanhaoma/ST-pi",
-      "tags": ["VLA", "时空推理", "结构化规划", "操作任务", "动作专家", "开源"],
+      "tags": [
+        "VLA",
+        "时空推理",
+        "结构化规划",
+        "操作任务",
+        "动作专家",
+        "开源"
+      ],
       "tldr": "提出ST-π，一种面向精细时空操作的结构化VLA框架。核心创新是显式双层时空建模：VLM负责全局时空行为规划（将任务分解为带空间位置和时间边界的结构化子行为），动作专家负责局部时空精细控制。区别于VLA-4D等隐式时空方法，ST-π首次显式建模操作行为的空间位置和时间边界，在精细操作和长程任务中表现优异。同时提出真实机器人操作数据集用于验证。",
       "difficulty": "高级",
       "addedDate": "2026-04-23",
@@ -149,7 +638,15 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2512.09928",
       "github": "https://github.com/HiF-VLA/HiF-VLA",
-      "tags": ["VLA", "CVPR 2026", "时序推理", "运动表示", "双向推理", "Hindsight", "Foresight"],
+      "tags": [
+        "VLA",
+        "CVPR 2026",
+        "时序推理",
+        "运动表示",
+        "双向推理",
+        "Hindsight",
+        "Foresight"
+      ],
       "tldr": "提出HiF-VLA，利用紧凑运动表示（motion representation）实现VLA模型的双向时序推理统一框架。三种推理模式——Hindsight（回顾过去行为理解因果）、Insight（感知当前状态精准定位）、Foresight（预测未来趋势辅助规划）——通过运动信息作为统一桥梁进行融合。运动表示天然编码时序动态，可高效压缩历史和预测未来，同时避免处理完整视频帧的高计算开销。CVPR 2026接收论文。",
       "difficulty": "高级",
       "addedDate": "2026-04-23",
@@ -169,7 +666,14 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.17706",
       "github": "",
-      "tags": ["VLA", "强化学习", "空间推理", "Flow Matching", "MoT", "LIBERO"],
+      "tags": [
+        "VLA",
+        "强化学习",
+        "空间推理",
+        "Flow Matching",
+        "MoT",
+        "LIBERO"
+      ],
       "tldr": "提出OmniVLA-RL，利用Mix-of-Transformers(MoT)架构协同集成推理专家、空间专家和动作专家三类模块。创新性地引入Flow-GSPO训练方法，将Flow Matching重表述为SDE过程并与分组分段策略优化(GSPO)结合，提升动作精度和训练鲁棒性。在LIBERO和LIBERO-Plus基准上显著超越现有SOTA。",
       "difficulty": "高级",
       "addedDate": "2026-04-22",
@@ -189,7 +693,14 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.17800",
       "github": "",
-      "tags": ["VLA", "推理增强", "教师引导", "可解释性", "SimplerEnv", "微调"],
+      "tags": [
+        "VLA",
+        "推理增强",
+        "教师引导",
+        "可解释性",
+        "SimplerEnv",
+        "微调"
+      ],
       "tldr": "提出ReFineVLA框架，通过教师模型生成推理依据(reasoning rationales)来增强VLA训练数据，使模型不仅学习动作映射还学习显式推理过程。注意力图可视化证实模型能聚焦于任务相关视觉区域。在SimplerEnv(WidowX+Google Robot)上达SOTA。",
       "difficulty": "中级",
       "addedDate": "2026-04-22",
@@ -209,7 +720,14 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.18463",
       "github": "https://despite-safety.github.io/",
-      "tags": ["LLM安全", "具身规划", "安全评估", "基准测试", "ETH Zurich", "Stanford"],
+      "tags": [
+        "LLM安全",
+        "具身规划",
+        "安全评估",
+        "基准测试",
+        "ETH Zurich",
+        "Stanford"
+      ],
       "tldr": "提出DESPITE基准（12,279个任务，涵盖物理危险和规范性危险），系统评估LLM作为机器人规划器的安全性。在23个模型测试中，最强模型仅0.4%任务无法规划但28.3%生成危险计划，揭示规划能力≠安全。18个开源模型（3B-671B）中规划能力随规模飙升(0.4%→99.3%)但安全意识几乎持平(38%→57%)，两者呈乘法关系。3个闭源推理模型安全意识达71-81%，显著高于开源和非推理闭源模型(<57%)。随着前沿模型规划能力趋于饱和，提升安全意识成为LLM规划器部署的核心挑战。",
       "difficulty": "高级",
       "addedDate": "2026-04-22",
@@ -229,7 +747,14 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.13942",
       "github": "",
-      "tags": ["长程操作", "VLA", "自适应规划", "反思机制", "双系统架构", "技能融合"],
+      "tags": [
+        "长程操作",
+        "VLA",
+        "自适应规划",
+        "反思机制",
+        "双系统架构",
+        "技能融合"
+      ],
       "tldr": "提出Goal2Skill，一个面向长程具身操作的双系统框架，显式分离高层语义推理和低层运动执行。高层规划器（LLM/VLM）负责目标分解、自适应子任务规划和失败反思，低层VLA策略专注精确视觉运动控制。核心创新包括：持久记忆机制（跨步骤保持任务上下文）、自适应任务分解（根据执行反馈动态调整计划）、显式失败恢复（检测异常后重新规划而非盲目重试）。解决了现有VLA模型在长程多步任务中因缺乏记忆和反思能力而失败的问题。",
       "difficulty": "高级",
       "addedDate": "2026-04-22",
@@ -249,7 +774,15 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2510.00695",
       "github": "https://github.com/myungkyukoo/hamlet",
-      "tags": ["VLA", "历史感知", "时序推理", "微调框架", "ICLR 2026", "KAIST", "UC Berkeley"],
+      "tags": [
+        "VLA",
+        "历史感知",
+        "时序推理",
+        "微调框架",
+        "ICLR 2026",
+        "KAIST",
+        "UC Berkeley"
+      ],
       "tldr": "提出HAMLET(History-Aware Manipulation with Long-horizon Embodied Transformers)，一种将预训练VLA模型转换为历史感知策略的微调框架。通过在每个时间步压缩感知信息为'moment tokens'（以时间嵌入初始化），并在推理时将多步历史表征拼接输入，使VLA模型能够利用过去的上下文信息。在长时域操作任务上显著提升性能，尤其在需要记忆和时序推理的场景中表现突出。",
       "difficulty": "高级",
       "addedDate": "2026-04-22",
@@ -269,7 +802,15 @@
       "date": "2026-02",
       "arxiv": "https://arxiv.org/abs/2602.09973",
       "github": "https://github.com/InternRobotics/RoboInter",
-      "tags": ["中间表示", "VLA", "操作数据集", "具身VQA", "plan-then-execute", "ICLR 2026", "上海AI Lab"],
+      "tags": [
+        "中间表示",
+        "VLA",
+        "操作数据集",
+        "具身VQA",
+        "plan-then-execute",
+        "ICLR 2026",
+        "上海AI Lab"
+      ],
       "tldr": "提出RoboInter，首个面向机器人操作的完整中间表示套件。包含三个组件：RoboInter-Tool（半自动标注GUI工具）、RoboInter-Data（23万+轨迹的大规模人工验证数据集，涵盖9类空间+20类时序具身VQA共230万QA样本）、RoboInter-VQA（系统性评测VLM具身推理的基准）。实验验证中间表示监督可显著提升VLA泛化能力，支持'先思考后执行'(plan-then-execute)范式。",
       "difficulty": "高级",
       "addedDate": "2026-04-22",
@@ -289,7 +830,15 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.18000",
       "github": "https://github.com/haiweng05/BeTTER",
-      "tags": ["VLA", "具身推理", "评测基准", "因果干预", "表征退化", "北大", "清华"],
+      "tags": [
+        "VLA",
+        "具身推理",
+        "评测基准",
+        "因果干预",
+        "表征退化",
+        "北大",
+        "清华"
+      ],
       "tldr": "提出BeTTER(Benchmark for Testing True Embodied Reasoning)，通过因果干预揭示VLA模型的推理能力是'幻觉'。研究发现最先进的VLA模型在动态场景中灾难性失败，暴露了词汇-运动学捷径(Lexical-Kinematic Shortcuts)、行为惯性(Behavioral Inertia)和语义特征坍缩(Semantic Feature Collapse)三大缺陷，根源在于架构层面的容量压缩和短视下采样。真实世界机器人验证了这些问题的普遍性。",
       "difficulty": "高级",
       "addedDate": "2026-04-21",
@@ -309,7 +858,14 @@
       "date": "2026-04",
       "arxiv": "",
       "github": "",
-      "tags": ["数据集", "具身AI", "智元", "真实数据", "大规模", "开源"],
+      "tags": [
+        "数据集",
+        "具身AI",
+        "智元",
+        "真实数据",
+        "大规模",
+        "开源"
+      ],
       "tldr": "智元机器人发布AGIBOT WORLD 2026数据集，包含100万+真实场景操作轨迹，覆盖商业、家居、工业等多种环境。数据100%来自真实机器人（非仿真），是迄今为止最大的真实世界具身AI数据集之一。配套完整的数据处理工具链和基准评测，旨在加速全球具身AI研究从实验室走向真实世界。",
       "difficulty": "中级",
       "addedDate": "2026-04-21",
@@ -329,7 +885,14 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.15483",
       "github": "",
-      "tags": ["VLA", "π0.7", "组合泛化", "涌现能力", "通用机器人模型", "Physical Intelligence"],
+      "tags": [
+        "VLA",
+        "π0.7",
+        "组合泛化",
+        "涌现能力",
+        "通用机器人模型",
+        "Physical Intelligence"
+      ],
       "tldr": "Physical Intelligence发布π0.7，一个可控的通用机器人基础模型，首次在机器人领域展示组合泛化的涌现能力。模型能够在从未见过的语言指令和视觉子目标组合上实现强大的开箱即用性能。π0.7在单一统一模型中支持多样化的指令跟随、视觉引导、跨任务零样本泛化，标志着VLA模型从'专用微调'向'通用涌现'的关键转变。",
       "difficulty": "高级",
       "addedDate": "2026-04-21",
@@ -349,7 +912,13 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.03956",
       "github": "",
-      "tags": ["VLA", "机器遗忘", "安全", "模型编辑", "具身基础模型"],
+      "tags": [
+        "VLA",
+        "机器遗忘",
+        "安全",
+        "模型编辑",
+        "具身基础模型"
+      ],
       "tldr": "提出VLA-Forget，首个针对具身基础模型(VLA)的机器遗忘框架。VLA模型在部署中可能学到不安全或有偏的行为，需要被安全移除。VLA-Forget采用混合遗忘策略：对感知层使用比率感知选择性编辑(ratio-aware selective editing)实现跨模态特异性，对推理/动作层使用层选择性遗忘。该方法能精准'忘记'指定行为而不影响其他已学能力，为VLA模型的安全部署和行为治理提供了关键工具。",
       "difficulty": "高级",
       "addedDate": "2026-04-21",
@@ -369,7 +938,13 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.12908",
       "github": "",
-      "tags": ["VGA", "3D视觉", "几何映射", "机器人操作", "预训练骨干"],
+      "tags": [
+        "VGA",
+        "3D视觉",
+        "几何映射",
+        "机器人操作",
+        "预训练骨干"
+      ],
       "tldr": "提出VGA（Vision-Geometry-Action）模型，将机器人操作重新定义为视觉到几何的直接映射 f(v)→G。核心创新：用预训练3D世界模型骨干（native 3D表示）替代传统的语言/视频模型作为视觉编码器，建立从视觉观测到3D几何（位置+方向）的无缝映射。在LIBERO基准测试达到98.1%成功率，并增强真实世界泛化能力。论文挑战了VLA领域依赖语言模型的主流范式，认为机器人操作的本质是几何问题而非语言问题。",
       "difficulty": "高级",
       "addedDate": "2026-04-21",
@@ -389,7 +964,13 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.14732",
       "github": "",
-      "tags": ["世界模型", "VLA", "隐式规划", "价值函数", "长程操作"],
+      "tags": [
+        "世界模型",
+        "VLA",
+        "隐式规划",
+        "价值函数",
+        "长程操作"
+      ],
       "tldr": "提出WAV（World-Value-Action）模型，将隐式规划能力融入VLA系统。核心思想：整合语言条件化视频生成（世界模型）和价值函数评估，让VLA系统能在不显式搜索的情况下推理长程轨迹并评估后果。解决了现有VLA方法直接预测动作、缺乏对长程轨迹推理和后果评估能力的问题，在复杂操作任务中表现优异。",
       "difficulty": "高级",
       "addedDate": "2026-04-21",
@@ -409,7 +990,13 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.14125",
       "github": "https://github.com/tianshuoy/HiVLA",
-      "tags": ["VLA", "层次化架构", "视觉定位", "Diffusion Transformer", "长程操作"],
+      "tags": [
+        "VLA",
+        "层次化架构",
+        "视觉定位",
+        "Diffusion Transformer",
+        "长程操作"
+      ],
       "tldr": "提出HiVLA，一个以视觉定位为核心的层次化具身操作系统。核心创新是将VLA模型显式解耦为两层：高层VLM规划器负责任务分解和视觉定位（生成子任务指令+目标边界框），低层DiT动作专家通过级联交叉注意力机制（Cascaded Cross-Attention）依次融合全局上下文、高分辨率物体中心裁剪图像和技能语义来执行鲁棒的动作生成。解耦设计保留了VLM的零样本推理能力，两个组件可独立升级。在仿真和真实世界中显著优于当前SOTA端到端VLA基线，尤其在长程技能组合和杂乱场景精细操控方面表现突出。",
       "difficulty": "高级",
       "addedDate": "2026-04-21",
@@ -429,7 +1016,13 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.13633",
       "github": "",
-      "tags": ["移动操作", "空间记忆", "长时任务", "ALFRED", "情景记忆"],
+      "tags": [
+        "移动操作",
+        "空间记忆",
+        "长时任务",
+        "ALFRED",
+        "情景记忆"
+      ],
       "tldr": "提出ESCAPE（Episodic Spatial Memory），一种面向长时移动操作任务的情景空间记忆机制。核心思想是让机器人在执行长时任务时构建和维护一个结构化的空间-时间记忆图，记录已访问的位置、发现的物体和执行的交互。在ALFRED基准上取得SOTA，显著提升多步骤家庭任务（如'去厨房拿杯子，加热后放到桌上'）的完成率。",
       "difficulty": "高级",
       "addedDate": "2026-04-20",
@@ -449,7 +1042,13 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.11572",
       "github": "",
-      "tags": ["VLA", "量化部署", "模型压缩", "边缘推理", "PTQ"],
+      "tags": [
+        "VLA",
+        "量化部署",
+        "模型压缩",
+        "边缘推理",
+        "PTQ"
+      ],
       "tldr": "提出DA-PTQ（Drift-Aware Post-Training Quantization），专门针对VLA模型的低比特量化部署方案。核心发现是VLA模型在量化后存在'动作漂移'现象——量化误差在时间步之间累积导致执行轨迹偏移。DA-PTQ通过漂移感知的量化参数优化和时序误差补偿机制，在INT4量化下保持接近FP16的操作成功率，使7B VLA模型能在边缘设备上实时推理。",
       "difficulty": "高级",
       "addedDate": "2026-04-20",
@@ -469,7 +1068,13 @@
       "date": "2026-04",
       "arxiv": "https://deepmind.google/blog/gemini-robotics-er-1-6/",
       "github": "",
-      "tags": ["具身推理", "VLM", "空间推理", "函数调用", "Google"],
+      "tags": [
+        "具身推理",
+        "VLM",
+        "空间推理",
+        "函数调用",
+        "Google"
+      ],
       "tldr": "Google DeepMind发布Gemini Robotics-ER 1.6，专为具身推理场景优化的多模态模型。核心升级包括：增强空间推理（物体相对位置、3D关系理解）、多视角理解、任务成功检测、以及全新的仪表/表盘读数能力。支持函数调用（Function Calling），机器人可在推理过程中调用谷歌搜索、VLA模型或自定义工具。已通过Gemini API和Google AI Studio开放开发者访问。",
       "difficulty": "高级",
       "addedDate": "2026-04-20",
@@ -489,7 +1094,13 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.05672",
       "github": "https://github.com/ATeam-Research/A1",
-      "tags": ["VLA", "开源", "高效推理", "自适应", "截断架构"],
+      "tags": [
+        "VLA",
+        "开源",
+        "高效推理",
+        "自适应",
+        "截断架构"
+      ],
       "tldr": "A1是一个完全透明的开源VLA框架，专为低成本、高吞吐量推理而设计。核心创新Inter-Layer Truncation（层间截断），通过智能跳过冗余Transformer层大幅降低计算量，同时保持操作成功率不变。提供完整的训练、评估和部署代码，以及预训练模型库(Model Zoo)，是目前最易复现的VLA框架之一。",
       "difficulty": "高级",
       "addedDate": "2026-04-20",
@@ -509,7 +1120,13 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.07430",
       "github": "https://github.com/Tencent-Hunyuan/HY-Embodied",
-      "tags": ["VLA", "MoT", "Latent Token", "腾讯", "开源"],
+      "tags": [
+        "VLA",
+        "MoT",
+        "Latent Token",
+        "腾讯",
+        "开源"
+      ],
       "tldr": "腾讯Robotics X发布HY-Embodied-0.5，专为真实世界具身智能设计的基础模型套件。核心采用Mixture-of-Transformers (MoT)架构——在共享Transformer中通过模态特定参数路由实现视觉、语言、动作的跨模态融合，同时用Latent Token机制保持各模态独立性，避免了传统VLA中简单拼接导致的模态干扰问题。MoT-2B权重已在HuggingFace开源。",
       "difficulty": "高级",
       "addedDate": "2026-04-20",
@@ -529,7 +1146,12 @@
       "date": "2026-01",
       "arxiv": "https://arxiv.org/abs/2601.11404",
       "github": "https://github.com/AgibotTech/ACoT-VLA",
-      "tags": ["VLA", "Chain-of-Thought", "CVPR 2026", "动作推理"],
+      "tags": [
+        "VLA",
+        "Chain-of-Thought",
+        "CVPR 2026",
+        "动作推理"
+      ],
       "tldr": "智元机器人联合北航提出ACoT-VLA，引入动作链式思维(Action Chain-of-Thought)范式，将推理过程形式化为粗粒度动作意图的结构化序列来引导最终策略。打破了传统VLA直接从多模态输入映射动作的范式，在推理过程本身中加入了动作空间的结构化思考。入选CVPR 2026，已完整开源训练和推理代码。",
       "difficulty": "高级",
       "addedDate": "2026-04-19",
@@ -549,7 +1171,13 @@
       "date": "2025-08",
       "arxiv": "https://arxiv.org/abs/2508.13998",
       "github": "https://embodied-r1.github.io/",
-      "tags": ["VLM", "具身推理", "Pointing", "强化微调", "3B"],
+      "tags": [
+        "VLM",
+        "具身推理",
+        "Pointing",
+        "强化微调",
+        "3B"
+      ],
       "tldr": "提出Embodied-R1，一个3B参数的视觉语言模型(VLM)，专为通用机器人操作设计。核心创新是'Pointing'机制——用指向目标的中间表征桥接视觉语言理解和底层动作，实现了与机器人本体无关的通用接口。通过两阶段强化微调(RFT)训练方法，Embodied-R1在未见过的机器人和场景中展现出出色的泛化能力。",
       "difficulty": "高级",
       "addedDate": "2026-04-19",
@@ -569,7 +1197,12 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2507.05331",
       "github": "https://github.com/brysonjones/multitask_dit_policy",
-      "tags": ["LBM", "Diffusion Policy", "多任务", "Science Robotics"],
+      "tags": [
+        "LBM",
+        "Diffusion Policy",
+        "多任务",
+        "Science Robotics"
+      ],
       "tldr": "丰田研究院在Science Robotics发表系统性评估大行为模型(LBMs)的研究。将扩散策略(Diffusion Policy)范式扩展到大规模仿真+真实任务语料库中，首次在顶刊上证明多任务预训练的LBMs在泛化性、少样本适应和鲁棒性上显著优于单任务策略。开源了基于Diffusion Transformer(DiT)的多任务策略实现，已在Boston Dynamics Atlas上验证。",
       "difficulty": "高级",
       "addedDate": "2026-04-19",
@@ -589,7 +1222,12 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.13645",
       "github": "https://science-of-co-training.github.io/",
-      "tags": ["Sim-to-Real", "联合训练", "机理分析", "Diffusion Policy"],
+      "tags": [
+        "Sim-to-Real",
+        "联合训练",
+        "机理分析",
+        "Diffusion Policy"
+      ],
       "tldr": "首次对生成式机器人操作策略中Sim-and-Real联合训练机制进行系统性机理分析。发现联合训练有两个关键效应：数据增强效应（扩展分布覆盖）和重要性重加权效应（域相关调制权重）。通过控制变量实验和大量机器人操作实验验证，为高效利用仿真数据加速真实世界机器人学习提供了理论指导。",
       "difficulty": "高级",
       "addedDate": "2026-04-19",
@@ -609,7 +1247,11 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.14125",
       "github": "",
-      "tags": ["VLA", "分层架构", "视觉定位"],
+      "tags": [
+        "VLA",
+        "分层架构",
+        "视觉定位"
+      ],
       "tldr": "提出以视觉定位为中心的分层具身操作系统HiVLA。核心思路是将高层语义规划与底层电机控制解耦：高层VLM负责理解任务语义并通过视觉定位（Visual Grounding）指向目标，底层动作模型负责精确运动控制。这种分层设计避免了端到端VLA在狭窄控制数据上微调导致视觉-语言能力退化的问题，在SimplerEnv和真实机器人实验中显著优于SOTA端到端VLA模型。",
       "difficulty": "高级",
       "addedDate": "2026-04-19",
@@ -629,7 +1271,11 @@
       "date": "2026-04",
       "arxiv": "https://agibot-world.com/",
       "github": "https://github.com/agibot-world",
-      "tags": ["数据集", "异构机器人", "真实场景"],
+      "tags": [
+        "数据集",
+        "异构机器人",
+        "真实场景"
+      ],
       "tldr": "智元机器人开源发布AGIBOT WORLD 2026——首个覆盖具身智能全域研究的异构真实场景数据集。数据100%来自真实世界环境，覆盖商业空间、家庭、工业等通用场景，系统性支持五大具身智能研究方向。包含多种异构机器人平台（人形、机械臂、移动操作等）的操作数据，为跨本体泛化研究提供标准化基准。",
       "difficulty": "中级",
       "addedDate": "2026-04-19",
@@ -649,7 +1295,11 @@
       "date": "2026-02",
       "arxiv": "https://arxiv.org/abs/2602.11236",
       "github": "https://github.com/amap-cvlab/ABot-Manipulation",
-      "tags": ["VLA", "基础模型", "动作流形"],
+      "tags": [
+        "VLA",
+        "基础模型",
+        "动作流形"
+      ],
       "tldr": "阿里高德实验室提出ABot-M0，一个基于统一架构的通用VLA基础模型。核心创新是动作流形学习（Action Manifold Learning），通过学习跨机器人平台的统一动作表征空间来实现跨本体泛化。整合600万+开源轨迹构建最大统一操作数据集，采用双流特征交互增强语义理解与动作生成。",
       "difficulty": "高级",
       "addedDate": "2026-04-18",
@@ -669,7 +1319,11 @@
       "date": "2026-03",
       "arxiv": "https://github.com/kairos-agi/kairos-sensenova",
       "github": "https://github.com/kairos-agi/kairos-sensenova",
-      "tags": ["世界模型", "实时生成", "具身智能"],
+      "tags": [
+        "世界模型",
+        "实时生成",
+        "具身智能"
+      ],
       "tldr": "大晓机器人联合商汤科技开源Kairos 3.0-4B，一个原生具身世界模型。核心创新是混合线性注意力算子（Hybrid Linear Attention），将时序复杂度从O(n²)降至O(n)，大幅减少显存和计算开销。支持7分钟长时连贯场景的动态交互，实现物理一致性深度理解和跨本体泛化。",
       "difficulty": "高级",
       "addedDate": "2026-04-18",
@@ -689,7 +1343,10 @@
       "date": "2026-03",
       "arxiv": "https://arxiv.org/abs/2508.13998",
       "github": "https://github.com/pickxiguapi/Embodied-R1",
-      "tags": ["VLA", "具身推理"],
+      "tags": [
+        "VLA",
+        "具身推理"
+      ],
       "tldr": "提出Embodied-R1，一个3B参数的视觉-语言模型，专为具身推理和通用机器人操作设计。核心创新是通过\"Pointing\"机制实现物体和空间概念的统一锚定，使用两阶段强化微调（RFT）训练，在Embodied-Points-200K大规模数据集上验证。",
       "difficulty": "高级",
       "addedDate": "2026-04-18",
@@ -709,7 +1366,10 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2512.11047",
       "github": "https://github.com/OpenDriveLab/WholebodyVLA",
-      "tags": ["VLA", "人形机器人"],
+      "tags": [
+        "VLA",
+        "人形机器人"
+      ],
       "tldr": "提出面向人形机器人全身移动操作的统一VLA框架。核心创新是分离的运动/操作潜在动作模型（LAM），可从无动作标签的第一人称视频中学习统一的移动-操作知识，在AgiBot X2人形机器人上验证。",
       "difficulty": "高级",
       "addedDate": "2026-04-18",
@@ -729,7 +1389,10 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.08168",
       "github": "https://viva-value-model.github.io/",
-      "tags": ["强化学习", "世界模型"],
+      "tags": [
+        "强化学习",
+        "世界模型"
+      ],
       "tldr": "提出将预训练视频生成模型重新用作价值函数的新方法ViVa。通过预测未来视觉观察和本体感受状态来估计任务进展价值，显著提升VLA模型在真实世界操作任务中的RL微调效果。",
       "difficulty": "高级",
       "addedDate": "2026-04-18",
@@ -749,7 +1412,10 @@
       "date": "2026-04",
       "arxiv": "",
       "github": "",
-      "tags": ["VLA", "世界模型"],
+      "tags": [
+        "VLA",
+        "世界模型"
+      ],
       "tldr": "Google DeepMind发布的具身推理增强模型，在空间推理、多视角理解和仪表读取上大幅升级。采用双模型架构：Gemini Robotics 1.5作为VLA模型负责动作生成，ER 1.6负责高层空间推理和工具调用，支持Function Calling集成外部能力。",
       "difficulty": "高级",
       "addedDate": "2026-04-18",

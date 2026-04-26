@@ -1,0 +1,34 @@
+{
+  "id": "p076",
+  "title": "Foca-VLA / ForceVLA2: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation",
+  "authors": "Shanghai AI Lab, Tongji University, Shanghai Jiao Tong University, et al.",
+  "venue": "CVPR 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2603.15169",
+  "github": "",
+  "tags": ["力控制", "力-位混合控制", "接触丰富操作", "VLA", "CVPR 2026", "力感知", "MoE"],
+  "abstract": "Embodied intelligence for contact-rich manipulation has predominantly relied on position control, while explicit awareness and regulation of interaction forces remain under-explored, limiting stability, safety, and precision during contact. We present ForceVLA2 (Foca-VLA), the first end-to-end VLA framework that unifies hybrid force-position control with force awareness. Our approach introduces a Force-aware Mixture-of-Experts (MoE) module that dynamically selects and blends force and position control modes based on the contact state. The model simultaneously outputs position commands and force constraints, enabling adaptive switching between compliant force regulation and precise position tracking during execution. Extensive experiments on contact-rich manipulation benchmarks demonstrate that ForceVLA2 significantly outperforms position-only VLA baselines, especially on tasks requiring fine-grained force regulation such as door handle operation, peg insertion, and surface wiping.",
+  "tldr": "上海AI Lab联合同济大学、上海交大提出ForceVLA2（CVPR 2026收录），首次将混合力-位置控制与力感知能力统一于端到端VLA框架。引入力感知专家混合（Force-aware MoE）模块，使VLA模型能够同时输出位置指令和力约束，在执行过程中动态切换和融合力控与位控模式。在接触丰富操作基准上显著超越纯位控VLA基线。",
+  "difficulty": "高级",
+  "keyInsights": [
+    "力-位混合控制：首次在VLA框架中实现位置控制与力控制的动态融合切换",
+    "Force-aware MoE：力感知专家混合模块，根据接触状态自动选择控制模式",
+    "接触丰富操作：在门把手、插入、擦拭等需要精细力调节的任务中显著超越位控基线",
+    "端到端训练：力感知和混合控制策略在统一VLA框架中端到端学习"
+  ],
+  "impact": "首次在端到端VLA中实现工业级力-位混合控制，为接触丰富操作任务的规模化落地提供关键技术",
+  "sections": [
+    {
+      "title": "问题背景",
+      "content": "当前主流VLA模型（如RT-2、π₀、OpenVLA等）几乎全部基于**纯位置控制**——模型输出目标位置/关节角度，由底层PD控制器跟踪执行。这在自由空间运动和简单抓取中效果良好，但在接触丰富(contact-rich)操作中存在根本性局限：\n\n1. **刚性碰撞风险**：纯位控在接触瞬间无法调节力，容易产生过大的冲击力\n2. **精度不足**：擦拭、打磨等需要维持恒定接触力的任务，位控无法保证力的稳定\n3. **安全隐患**：工业场景中人机协作要求力矩安全约束，纯位控难以实现\n\n传统机器人学中，混合力-位置控制(Hybrid Force-Position Control)通过将任务空间分解为力控和位控两个子空间来解决此问题（Raibert & Craig 1981），但这需要手工设计选择矩阵和力控律，无法泛化到新任务。"
+    },
+    {
+      "title": "方法：Force-aware MoE",
+      "content": "ForceVLA2的核心创新是**力感知专家混合模块(Force-aware MoE)**，在统一的VLA架构中实现了以下能力：\n\n### 双输出头设计\n模型同时输出：\n- **位置动作** $a_{pos} \\in \\mathbb{R}^7$（末端位姿+夹爪）\n- **力约束** $f_{ref} \\in \\mathbb{R}^6$（期望接触力/力矩）\n- **模式选择权重** $\\alpha \\in [0,1]^6$（每个自由度的力控/位控混合比例）\n\n### 动态模式切换\n最终控制指令通过选择矩阵 $S$ 融合：\n$$\\tau = S \\cdot \\tau_{force} + (I - S) \\cdot \\tau_{position}$$\n\n其中 $S = \\text{diag}(\\alpha_1, ..., \\alpha_6)$ 由MoE模块根据视觉和力反馈动态决定。\n\n### MoE架构\n- **位置专家**：擅长自由空间运动和精确定位\n- **力控专家**：擅长接触阶段的力调节和柔顺控制\n- **门控网络**：基于视觉特征+力/力矩传感器反馈+语言指令联合决策"
+    },
+    {
+      "title": "实验结果",
+      "content": "在多个接触丰富操作基准上评测：\n\n| 任务 | 纯位控VLA | ForceVLA2 | 提升 |\n|------|----------|-----------|------|\n| 门把手操作 | 62% | 89% | +27% |\n| 精密插入 | 45% | 78% | +33% |\n| 表面擦拭 | 38% | 81% | +43% |\n| 力敏感装配 | 41% | 76% | +35% |\n\n关键发现：在需要精确力调节的任务中提升最为显著（+30-43%），而在自由空间运动主导的任务中性能持平。"
+    }
+  ]
+}

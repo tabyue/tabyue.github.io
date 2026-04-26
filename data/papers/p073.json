@@ -1,0 +1,39 @@
+{
+  "id": "p073",
+  "title": "A Mechanistic Analysis of Sim-and-Real Co-Training in Generative Robot Policy Learning",
+  "authors": "Stanford University, Toyota Research Institute",
+  "affiliation": "Stanford / TRI",
+  "venue": "arXiv 2604.13645",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.13645",
+  "github": "",
+  "tags": ["Sim-to-Real", "Co-Training", "Diffusion Policy", "仿真数据", "机理分析"],
+  "abstract": "本文对仿真-真实数据联合训练(Co-Training)范式进行了系统性的机理分析，揭示了为什么混合仿真和真实数据训练扩散策略有时比单独用真实数据效果更好、有时反而更差的关键机制。",
+  "sections": [
+    {
+      "title": "1. 研究问题",
+      "content": "在机器人策略学习中，仿真数据几乎无限量且采集成本低，但存在域差异（sim-to-real gap）；真实数据质量高但成本昂贵且数量有限。将两者混合训练（Co-Training）是自然的选择，但实践中效果不稳定——有时大幅提升性能，有时反而降低。本文首次对这一现象进行系统性的机理分析。"
+    },
+    {
+      "title": "2. 核心发现：正则化 vs 偏差",
+      "content": "**正则化效应（正面）：**\n仿真数据在真实数据覆盖不足的状态空间区域提供支撑，减少过拟合。特别是在真实数据量少、任务空间大的场景下，仿真数据充当'安全网'，防止策略在未见状态下崩溃。\n\n**偏差引入（负面）：**\n当仿真与真实环境的域差异过大时（如物理参数、视觉外观差异），仿真数据会引入系统性偏差，使策略倾向于在真实环境中'做错事'。这种偏差会抵消甚至超过正则化收益。\n\n**平衡点：** 存在一个域差异阈值，超过则Co-Training弊大于利。"
+    },
+    {
+      "title": "3. 定量预测指标",
+      "content": "论文提出了预测Co-Training有效性的定量指标：基于仿真与真实数据在潜空间中的分布距离（使用Wasserstein距离或MMD），结合真实数据的覆盖度指标，可以在不实际训练策略的情况下预判Co-Training是否值得。这为从业者提供了'先诊断再决策'的实用工具。"
+    },
+    {
+      "title": "4. 实验验证",
+      "content": "在toy模型上验证了理论预测，在真实机器人操作实验（桌面整理、精密插入等）中验证了定量指标的准确性。实验表明：当域差异小于阈值时，仿真数据量增加到真实数据3-5倍时效果最佳；超过此比例收益递减。"
+    }
+  ],
+  "keyInsights": [
+    "仿真数据的正则化效应：在真实数据覆盖不足的状态空间区域提供支撑",
+    "域差异的双刃剑：过大则引入偏差抵消收益",
+    "提出Co-Training有效性的定量预测指标",
+    "最佳配比：仿真数据量为真实数据3-5倍时效果最佳"
+  ],
+  "impact": "首次对Sim-Real Co-Training的机理进行系统分析",
+  "difficulty": "高级",
+  "addedDate": "2026-04-25"
+}

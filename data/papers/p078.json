@@ -1,0 +1,46 @@
+{
+  "id": "p078",
+  "title": "HEX: Humanoid-Aligned Experts for Cross-Embodiment Whole-Body Manipulation",
+  "authors": "Beijing Humanoid Robot Innovation Center, Xi'an Jiao Tong University, Nankai University, Peking University",
+  "venue": "arXiv 2604.07993",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.07993",
+  "projectPage": "https://hex-humanoid.github.io/",
+  "github": "",
+  "tags": ["人形机器人", "全身操作", "跨本体", "VLA", "MoE", "全身协调", "双足操作"],
+  "abstract": "Humans achieve complex manipulation through coordinated whole-body control, whereas most Vision-Language-Action (VLA) models treat robot body parts largely independently, ignoring the rich coupling among upper limbs, lower limbs, and torso. HEX introduces a scalable humanoid whole-body VLA framework with two key innovations: (1) Humanoid-Aligned Universal State Representation that maps diverse robot embodiments to a unified humanoid skeleton, enabling cross-embodiment transfer; (2) a MoE-based unified proprioception predictor that dynamically routes expert modules based on body parts and task demands, achieving coordinated control of manipulation, locomotion, and balance.",
+  "methodology": {
+    "overview": "HEX将不同人形机器人的关节空间统一映射到类人骨架表示，通过MoE架构实现全身协调的跨本体VLA",
+    "keyComponents": [
+      {
+        "name": "Humanoid-Aligned Universal State Representation",
+        "description": "将不同构型人形机器人的关节角度、速度、力矩等本体感知信号，通过预定义的骨架映射矩阵统一转换到23自由度的标准人形骨架空间。映射保留了关节层级结构和运动学约束，使得在一种人形机器人上学到的全身协调策略可以直接迁移到另一种构型。"
+      },
+      {
+        "name": "MoE Proprioception Predictor",
+        "description": "引入混合专家架构处理全身本体感知预测。设计了上肢操作专家、下肢行走专家和躯干平衡专家，通过可学习的路由网络根据当前任务上下文动态分配专家权重。例如在'行走中双手拿取物体'任务中，下肢专家维持步态稳定，上肢专家执行抓取动作，躯干专家负责重心调整。"
+      },
+      {
+        "name": "Cross-Embodiment Pre-training",
+        "description": "在多种人形机器人（不同身高、臂展、关节数）的轨迹数据上进行预训练，利用统一骨架表示实现数据共享。预训练阶段通过自监督本体感知预测任务学习全身协调的通用先验。"
+      }
+    ]
+  },
+  "results": {
+    "benchmarks": [
+      "多种人形机器人平台全身操作任务",
+      "行走中双手协作抓取",
+      "蹲下拾取地面物体",
+      "站立姿态精细桌面操作"
+    ],
+    "highlights": [
+      "首个在VLA框架中实现行走+操作+平衡统一端到端控制",
+      "跨本体迁移：在未见过的人形平台上zero-shot全身操作",
+      "MoE路由可视化显示专家分工与人体运动控制区域高度对应"
+    ]
+  },
+  "relatedWork": ["WholebodyVLA", "GR00T N1", "OKAMI"],
+  "difficulty": "高级",
+  "readingTime": "60min",
+  "addedDate": "2026-04-26"
+}

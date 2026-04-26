@@ -1,0 +1,13 @@
+{
+  "id": "p065",
+  "title": "EmbodiedLGR: Integrating Lightweight Graph Representation and Retrieval for Semantic-Spatial Memory in Robotic Agents",
+  "authors": "Paolo Riva, Leonardo Gargani, Matteo Frosi, Matteo Matteucci",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.18271",
+  "github": "",
+  "problem": "机器人在复杂环境中运行时，需要高效构建和检索关于位置、事件和物体的记忆信息，以实现有效的人机交互。现有方法要么只关注结构化空间信息，要么只关注语义描述，难以同时满足精确性和推理速度的双重需求。",
+  "method": "提出EmbodiedLGR-Agent，一种VLM驱动的双层混合记忆架构：\n\n1. **低层级语义图**：基于参数高效的VLM，将物体及其空间位置关系存储为图结构。每个节点代表一个检测到的物体，边代表空间关系（上方/旁边/内部等）。\n\n2. **高层级RAG架构**：通过检索增强生成（RAG）保留对观察场景的高层级语义描述。当用户提问时，先从语义图中检索相关节点和关系，再结合RAG中的场景描述生成回答。\n\n3. **混合构建-检索管线**：VLM同时负责图的构建（物体检测+关系抽取）和查询时的推理，通过参数高效微调实现轻量级部署。",
+  "results": "- 在NaVQA数据集上推理和查询时间达到SOTA\n- 全局任务准确率与当前最优方法竞争\n- 已在物理机器人上成功部署\n- VLM和构建-检索管线均可本地运行（无需云端）",
+  "significance": "为具身智能体提供了高效的环境记忆解决方案。语义图+RAG的双层架构巧妙结合了结构化知识和非结构化描述的优势，在保证查询速度的同时维持了准确性。对长程任务中的场景记忆、空间问答和自然语言人机交互有重要应用价值。"
+}

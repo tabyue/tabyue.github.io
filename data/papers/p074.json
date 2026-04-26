@@ -1,0 +1,40 @@
+{
+  "id": "p074",
+  "title": "VistaBot: View-Robust Robot Manipulation via Spatiotemporal-Aware View Synthesis",
+  "authors": "Songen Gu, Yuhang Zheng, Weize Li, Yupeng Zheng, Yating Feng, Xiang Li, Yilun Chen, Pengfei Li, et al.",
+  "affiliations": ["Tsinghua University", "Shanghai AI Lab"],
+  "venue": "arXiv 2604.21914",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.21914",
+  "github": "",
+  "projectPage": "",
+  "tags": ["视角鲁棒", "视图合成", "4D几何", "扩散模型", "闭环操作", "ACT", "π₀", "VGGT"],
+  "abstract": "Recently, end-to-end robotic manipulation models have gained significant attention for their generalizability and scalability. However, they often suffer from limited robustness to camera viewpoint changes. In this paper, we propose VistaBot, a novel framework that integrates feed-forward geometric models with video diffusion models to achieve view-robust closed-loop manipulation without requiring camera calibration during deployment.",
+  "sections": [
+    {
+      "title": "问题背景",
+      "content": "当前端到端机器人操作模型（如ACT、π₀等）在训练时使用固定相机视角采集数据。部署时如果相机位置/角度发生偏移（安装误差、多机器人部署、场景变化），模型性能会急剧下降。这是VLA模型走向实际应用的关键瓶颈——不可能为每个部署场景都精确复现训练时的相机配置。"
+    },
+    {
+      "title": "核心方法：三组件框架",
+      "content": "### 组件一：4D几何估计（VGGT）\n基于VGGT（Visual Geometry Grounded Transformer）的前馈式几何估计器，从单帧或少量帧中直接预测相机位姿和场景深度。无需传统的SfM（Structure from Motion）预处理或多视角标定。\n\n### 组件二：视频扩散视图合成\n使用视频扩散模型将当前视角的观察合成到目标视角（训练时的参考视角）。关键创新是引入记忆机制（Memory）——在合成视频帧时参考前几帧的合成结果，保持时间上的连贯性，避免帧间闪烁和不一致。合成在潜在空间(latent space)中完成，输出是潜在特征而非像素图像。\n\n### 组件三：潜在动作学习\n策略网络直接从合成的潜在特征中学习动作预测，跳过了显式的图像重建步骤。这样做有两个好处：(1)避免了重建损失引入的信息丢失；(2)潜在特征比像素图像更紧凑，推理更高效。"
+    },
+    {
+      "title": "评估创新：VGS指标",
+      "content": "提出视点泛化分数（View Generalization Score, VGS）——首个量化VLA策略在不同相机视角下泛化能力的评估指标。VGS衡量模型在多种视角偏移条件下的平均成功率，填补了当前VLA评估体系中缺少视角鲁棒性度量的空白。"
+    },
+    {
+      "title": "实验结果",
+      "content": "VistaBot集成到ACT和π₀两种主流端到端框架中。实验表明：\n- 在相机位置偏移30°+时仍保持高操作成功率\n- 相比基线方法（直接在偏移视角上推理），成功率提升50-80%\n- 无需部署时校准相机，即插即用\n- 潜在空间学习比像素空间学习快2-3倍"
+    }
+  ],
+  "keyInsights": [
+    "4D几何估计：VGGT前馈预测位姿和深度，无需多视角标定或SfM预处理",
+    "视频扩散视图合成：带记忆机制生成时空一致的目标视角特征",
+    "潜在空间学习：跳过显式图像重建，直接从潜在特征学习策略",
+    "VGS评估指标：首次量化VLA策略的视角泛化能力"
+  ],
+  "impact": "首次系统性解决VLA模型的视角敏感性瓶颈，使机器人部署时无需精确对齐相机位置",
+  "difficulty": "高级",
+  "addedDate": "2026-04-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "p075",
+  "title": "VLA-in-the-Loop: Online Policy Correction with World Models for Closed-Loop Robotic Manipulation",
+  "authors": "Multi-institution Collaboration",
+  "affiliations": ["Multi-institution"],
+  "venue": "OpenReview 2026",
+  "date": "2026-04",
+  "arxiv": "https://openreview.net/forum?id=aT4LG8c6DE",
+  "github": "",
+  "projectPage": "",
+  "tags": ["VLA", "世界模型", "在线校正", "闭环操作", "策略纠偏", "预测模型"],
+  "abstract": "This paper introduces VLA-in-the-Loop, a novel framework that integrates Vision-Language-Action (VLA) models with a composite World Model (WM) to enable real-time policy correction during execution, achieving significantly improved success rates in contact-rich and long-horizon manipulation tasks.",
+  "sections": [
+    {
+      "title": "问题背景",
+      "content": "当前VLA模型以开环方式执行：生成动作序列后直接执行到底。在长程任务和接触丰富操作中，早期的微小误差会累积放大，导致最终失败。传统的解决方案是增加推理频率（更频繁地重新规划），但这大幅增加计算开销，且不能根本解决'不知道自己错了'的问题。"
+    },
+    {
+      "title": "核心方法",
+      "content": "### 规划-验证-修正循环\nVLA-in-the-Loop实现了三步闭环：\n1. **规划**：VLA模型根据当前观察生成候选动作序列\n2. **模拟验证**：复合世界模型在'心理空间'中模拟执行该动作序列，预测未来状态\n3. **修正/执行**：如果预测结果偏离目标，修正动作后再执行；如果预测合理，直接执行\n\n### 复合世界模型\n- **视觉预测模型**：预测执行动作后的未来图像/状态\n- **物理约束检查器**：检查预测结果是否满足物理约束（如碰撞、力限制）\n- 两者结合减少幻觉和物理不合理的动作"
+    },
+    {
+      "title": "与现有方法对比",
+      "content": "- **传统VLA**（开环）：生成→执行→失败→重试。无法在执行中纠错\n- **高频VLA**（频繁重规划）：计算开销大，但仍是'被动重规划'而非'主动纠错'\n- **VLA-in-the-Loop**：主动在执行前验证和修正，'先想后做'。特别适合不可逆操作"
+    },
+    {
+      "title": "实验结果",
+      "content": "在接触丰富操作（插入、装配）和长程任务（多步桌面整理）中：\n- 相比开环VLA，成功率提升显著\n- 修正次数集中在任务初期和接触瞬间，说明世界模型能识别关键失败点\n- 额外推理开销约20-30%，在实时性可接受范围内"
+    }
+  ],
+  "keyInsights": [
+    "世界模型作为在线验证器：执行前模拟预测动作后果",
+    "复合世界模型：视觉预测+物理约束检查双重验证",
+    "从开环到闭环：引入规划-验证-修正循环",
+    "特别适合接触操作和长程任务中的累积误差修正"
+  ],
+  "impact": "提出VLA+世界模型协同的新范式，使VLA策略具备自我纠错能力",
+  "difficulty": "高级",
+  "addedDate": "2026-04-26"
+}
