@@ -1,0 +1,39 @@
+{
+  "id": "p080",
+  "title": "DAM-VLA: A Dynamic Action Model-Based Vision-Language-Action Framework for Robot Manipulation",
+  "authors": "Samsung Research",
+  "affiliation": "Samsung Research",
+  "venue": "arXiv 2603.00926",
+  "date": "2026-03",
+  "arxiv": "https://arxiv.org/abs/2603.00926",
+  "github": "",
+  "tags": ["VLA", "解耦控制", "动作路由", "Diffusion", "手臂-夹爪分离"],
+  "abstract": "在仓库、医院、家庭等动态环境中，机器人需要在粗运动和精细操作之间无缝切换以完成复杂任务。DAM-VLA观察到手臂粗运动与夹爪精细操作在路径约束、视觉注意力和数据分布上存在本质差异，提出解耦双Diffusion Head + VLM驱动动态路由的框架。",
+  "sections": [
+    {
+      "title": "1. 核心观察：动作空间的异质性",
+      "content": "手臂运动（arm movement）关注全局路径规划、避障和到达目标位置，动作分布相对平滑连续；夹爪操作（gripper manipulation）关注局部精细控制、接触力调节和小幅微调，动作分布更加离散和多模态。将两者混合在同一个动作头中训练，会导致互相干扰——手臂动作的低频特征稀释了夹爪操作的高频细节。"
+    },
+    {
+      "title": "2. 解耦双头架构",
+      "content": "DAM-VLA为手臂和夹爪分别设计独立的Diffusion Action Head。手臂头学习6D位姿的平滑轨迹分布，使用较大的去噪步长；夹爪头学习1D开合度的精细分布，使用较小的去噪步长。两个头共享VLM提取的视觉-语言特征，但各自维护独立的去噪过程。"
+    },
+    {
+      "title": "3. VLM驱动的动态动作路由",
+      "content": "利用VLM的推理能力作为动作路由器：VLM根据当前视觉观察和语言指令判断任务当前阶段（接近/对齐/操作/撤离），动态调整手臂头和夹爪头的执行权重和优先级。在接近阶段侧重手臂运动，在操作阶段侧重夹爪精细控制。"
+    },
+    {
+      "title": "4. 实验结果",
+      "content": "在仓库物品分拣、医院器械递送、家庭桌面整理等动态环境任务中，DAM-VLA显著超越单一动作头的VLA方法。特别是在需要粗精切换的复合任务（如先移动到目标区域再精确插入）中优势明显。"
+    }
+  ],
+  "keyInsights": [
+    "手臂粗运动与夹爪精细操作的数据分布本质不同",
+    "解耦双Diffusion Head避免互相干扰",
+    "VLM推理驱动动态路由实现粗精自适应",
+    "设计思路可推广到双臂、灵巧手等更复杂场景"
+  ],
+  "impact": "揭示VLA动作空间异质性，为分体式动作头设计提供依据",
+  "difficulty": "中级",
+  "addedDate": "2026-04-26"
+}
