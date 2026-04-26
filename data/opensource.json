@@ -128,7 +128,7 @@
       "name": "UnifoLM-VLA-0 (宇树通用操作VLA)",
       "org": "宇树科技 (Unitree Robotics)",
       "description": "宇树科技UnifoLM系列首个面向通用人形机器人操作的VLA大模型。专为人形双臂操作场景设计，覆盖桌面整理、工具使用、精密装配等多种任务，支持自然语言指令输入。由全球出货量第一的人形机器人企业发布，模型经过大量真实G系列机器人数据训练验证。完整开源模型权重和推理代码，支持第三方平台适配。标志着宇树从硬件领先走向软硬件生态全面开放。",
-      "github": "https://github.com/unitreerobotics/UnifoLM-VLA-0",
+      "github": "",
       "stars": "新发布",
       "language": "Python",
       "category": "ai-model",
@@ -141,7 +141,8 @@
         "自然语言指令"
       ],
       "highlight": "全球出货量第一的人形机器人企业发布的首个操作VLA模型，完整开源",
-      "addedDate": "2026-04-25"
+      "addedDate": "2026-04-25",
+      "url": "https://www.unitree.com/cn/opensource/"
     },
     {
       "id": "os049",
@@ -210,7 +211,7 @@
       "name": "FluxVLA Engine (标准化VLA工程底座)",
       "org": "逐际动力 (LimX Dynamics)",
       "description": "面向具身智能科研与应用的标准化VLA工程底座。以统一配置、标准接口、模块解耦、加速部署为核心设计理念，将数据处理、模型训练、仿真评测到真机部署全流程标准化。解决行业数据碎片化、代码高耦合及仿真到真机迁移难三大瓶颈。源自企业真机研发工程积累，经过真实机器人平台验证。未来将集成强化学习、世界模型，拓展灵巧手和3D VLA能力，并搭建全球开发者社群。",
-      "github": "https://github.com/limxdynamics/fluxvla-engine",
+      "github": "https://github.com/FluxVLA/FluxVLA",
       "stars": "新发布",
       "language": "Python",
       "category": "framework",
@@ -251,7 +252,7 @@
       "name": "EmbodiedMidtrain (VLM→VLA中间训练框架)",
       "org": "CMU / 微软研究院",
       "description": "首个系统性弥合VLM与VLA数据分布鸿沟的中间训练框架。核心组件：（1）分布差距诊断工具，可视化VLM与VLA数据的分离程度；（2）轻量级可学习邻近度估计器，从大规模VLM数据池中自动筛选最接近VLA分布的训练样本；（3）中间训练管线，在VLM→VLA微调之间插入一个精心设计的过渡阶段。在3个机器人操作基准上跨多种VLM骨干一致提升性能，数据引擎倾向选择空间推理任务。承诺完整开源代码、数据和模型。",
-      "github": "https://github.com/EmbodiedMidtrain/EmbodiedMidtrain",
+      "github": "",
       "category": "ai-model",
       "stars": "新发布",
       "tags": [
@@ -264,7 +265,8 @@
         "CMU"
       ],
       "highlight": "首个系统性解决VLM→VLA分布差距的中间训练方案，低成本大幅提升VLA性能",
-      "addedDate": "2026-04-23"
+      "addedDate": "2026-04-23",
+      "url": "https://arxiv.org/abs/2604.20012"
     },
     {
       "id": "os043",
@@ -369,7 +371,7 @@
       "name": "BeTTER (VLA具身推理诊断基准)",
       "org": "北京大学 / 清华大学",
       "description": "BeTTER(Benchmark for Testing True Embodied Reasoning)是首个针对VLA模型具身推理能力的因果诊断基准。通过空间布局变化、时间外推等因果干预手段，系统揭示了当前VLA模型的推理幻觉问题。包含完整的仿真环境、因果干预工具和真机验证代码。论文结论对VLA社区具有重要警示意义。",
-      "github": "https://github.com/haiweng05/BeTTER",
+      "github": "https://github.com/BeingBeyond/BeTTER",
       "stars": "0.8k",
       "category": "ai-model",
       "tags": [
@@ -428,7 +430,7 @@
       "name": "HiVLA (层次化视觉-语言-动作模型)",
       "org": "HKU / 香港大学",
       "description": "HiVLA是一个以视觉定位为核心的层次化具身操作系统。将VLA模型解耦为高层VLM规划器（任务分解+视觉定位）和低层DiT动作专家（基于Flow Matching的Diffusion Transformer），通过级联交叉注意力机制融合全局上下文、物体中心裁剪和技能语义。保留VLM零样本推理能力，在长程技能组合和精细操控方面显著优于端到端VLA方法。",
-      "github": "https://github.com/tianshuoy/HiVLA",
+      "github": "",
       "stars": "新发布",
       "category": "ai-model",
       "tags": [
@@ -440,7 +442,8 @@
         "操作"
       ],
       "addedDate": "2026-04-21",
-      "paperUrl": "https://arxiv.org/abs/2604.14125"
+      "paperUrl": "https://arxiv.org/abs/2604.14125",
+      "url": "https://arxiv.org/abs/2604.14125"
     },
     {
       "name": "Embodied-R1 (强化具身推理)",
@@ -464,7 +467,7 @@
       "name": "RUKA-v2 (开源腱驱动灵巧手)",
       "org": "RUKA Hand Project",
       "description": "RUKA-v2是完全开源的腱驱动五指灵巧手第二代，相比v1大幅提升灵活性和耐用性。采用腱驱动方案，16自由度，支持精密抓取和力反馈。提供完整的3D打印文件、BOM清单、装配指南和控制代码，总硬件成本约$2000。专为机器人灵巧操作研究设计，降低了灵巧手硬件门槛。",
-      "github": "https://github.com/ruka-hand/ruka-v2",
+      "github": "https://github.com/ruka-hand-v2/RUKA-v2",
       "stars": "新发布",
       "tags": [
         "灵巧手",
@@ -660,7 +663,7 @@
       "name": "ROS-LLM (Nature)",
       "org": "ETH Zurich / 多机构",
       "description": "发表在Nature Machine Intelligence的LLM+ROS通用具身智能框架。使非专业用户可通过自然语言提示直观编程机器人，实现从自然语言指令到物理执行的完整闭环。框架利用ROS上下文信息（传感器数据、机器人状态等）增强LLM的理解能力，完整实现已开源。",
-      "github": "https://github.com/huawei-noah/ROSLLM",
+      "github": "https://github.com/huawei-noah/HEBO/tree/master/ROSLLM",
       "stars": "3.5k",
       "tags": [
         "LLM",
@@ -765,7 +768,7 @@
       "name": "ROS-LLM",
       "org": "Auromix / TU Darmstadt",
       "description": "ROS2 + LLM Agent 具身智能框架，用自然语言编程机器人任务。发表于 Nature Machine Intelligence，提供完整的 ROS2 集成方案。",
-      "github": "https://github.com/Auromix/ROS-LLM",
+      "github": "https://github.com/huawei-noah/HEBO/tree/master/ROSLLM",
       "stars": "3.2k",
       "tags": [
         "LLM",
@@ -839,7 +842,7 @@
       "id": "os003",
       "name": "NVIDIA Isaac Lab",
       "org": "NVIDIA",
-      "github": "https://github.com/NVIDIA/IsaacLab",
+      "github": "https://github.com/isaac-sim/IsaacLab",
       "stars": "3k+",
       "tags": [
         "仿真",

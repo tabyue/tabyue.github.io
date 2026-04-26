@@ -8,6 +8,7 @@
 
 ## 数据规范
 - **新闻 date 字段**：必须以文章原始发布日期为准，不能用收录日期。addedDate 是收录日期，date 是文章本身的日期。(2026-04-20 Tab 明确要求)
+- **开源生态模块只收真正开源的项目**：闭源产品/企业平台不放 opensource.json，改放到 news.json 的 resources→企业图谱中。(2026-04-26 Tab 明确要求)
 
 ## 操作偏好
 - **自动化任务（automation-5 等）中的所有操作**：`requires_approval` 一律设为 `false`，包括但不限于临时文件清理、git add/commit/push、脚本执行等。不等用户确认，直接执行。Tab 已多次强调。(2026-04-26)
