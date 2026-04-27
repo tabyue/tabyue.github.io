@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-27T00:27",
+  "lastUpdated": "2026-04-27T09:56",
   "papers": [
+    {
+      "id": "p085",
+      "title": "ETac: A Lightweight and Efficient Tactile Simulation Framework for Learning Dexterous Manipulation",
+      "authors": "Multi-institution",
+      "venue": "arXiv 2604.20295",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.20295",
+      "github": "",
+      "tags": ["触觉仿真", "灵巧操作", "软体建模", "PointNet", "并行仿真", "Sim-to-Real"],
+      "tldr": "触觉传感器日益集成到灵巧机械手中以增强接触感知，但依赖触觉的操作策略学习仍极具挑战——高保真触觉仿真（FEM）速度太慢，低保真方法又丢失关键接触细节。ETac提出一种轻量级数据驱动的触觉仿真框架：核心创新是可学习的指数衰减线性传播模型+轻量PointNet残差修正网络，将FEM变形场以极低误差（平面0.058mm RMSE）蒸馏到粒子级框架上，实现高保真与高效率兼得。ETac支持大规模GPU并行仿真，吞吐量比传统FEM方法提升数个数量级。在全手触觉传感器（1000节点）配置下，训练的灵巧抓取策略在四种物体上达到84.45%平均成功率。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-27",
+      "keyInsights": [
+        "指数衰减线性传播模型将FEM精度蒸馏到轻量框架中",
+        "PointNet残差网络修正粒子级变形预测误差",
+        "支持GPU大规模并行触觉仿真，吞吐量提升数个数量级",
+        "全手1000节点触觉+灵巧操作策略达84.45%抓取成功率"
+      ],
+      "impact": "为触觉驱动的灵巧操作策略学习提供了高保真、高效率的仿真基础设施"
+    },
+    {
+      "id": "p084",
+      "title": "VLA-World: Learning Vision-Language-Action World Models for Autonomous Driving",
+      "authors": "Multi-institution",
+      "venue": "arXiv 2604.09059",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.09059",
+      "github": "",
+      "tags": ["VLA世界模型", "自动驾驶", "预测想象", "反思推理", "端到端", "nuScenes"],
+      "tldr": "VLA模型在端到端自动驾驶中取得显著进展，但当前方法在未来场景想象和反思推理上存在割裂——世界模型能模拟未来场景但无法评估想象质量，VLA模型能推理但缺乏预见能力。VLA-World提出将预测性想象(Predictive Imagination)与反思性推理(Reflective Reasoning)统一到单一VLA世界模型中：模型首先基于当前观测生成多条可能的未来场景轨迹（想象），然后通过语言推理模块评估每条轨迹的安全性和合理性（反思），最终选择最优动作序列。在nuScenes基准上持续超越先前方法。该工作虽然聚焦自动驾驶，但其'想象-反思-行动'范式对通用具身智能具有重要启发。",
+      "difficulty": "中高级",
+      "addedDate": "2026-04-27",
+      "keyInsights": [
+        "统一预测想象与反思推理到单一VLA世界模型",
+        "多轨迹想象+语言推理评估的决策范式",
+        "世界模型从被动预测进化为主动推理的关键一步",
+        "想象-反思-行动范式可迁移到通用具身智能场景"
+      ],
+      "impact": "将世界模型从'预测器'升级为'推理器'，为VLA模型引入了想象力和自我反思能力"
+    },
     {
       "id": "p082",
       "title": "Mask World Model: Predicting What Matters for Robust Robot Policy Learning",
