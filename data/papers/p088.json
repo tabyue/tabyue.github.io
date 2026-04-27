@@ -1,0 +1,40 @@
+{
+  "id": "p088",
+  "title": "FingerViP: Learning Real-World Dexterous Manipulation with Fingertip Visual Perception",
+  "authors": "CUHK / Multi-institution",
+  "venue": "arXiv 2604.21331",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.21331",
+  "github": "",
+  "abstract": "The current practice of dexterous manipulation generally relies on a single wrist-mounted view, which is often occluded and limits performance on tasks requiring multi-view perception. In this work, we present FingerViP, a framework that equips each fingertip with a miniature camera to provide close-range, occlusion-free observations of the manipulated object. We develop a multi-view fusion policy learning method that combines fingertip and wrist views through an occlusion-aware attention mechanism, enabling the agent to dynamically focus on the most informative viewpoints at each manipulation phase.",
+  "tldr": "灵巧操作通常依赖单一腕部相机，但手指在抓取时恰好遮挡视野。FingerViP为每个指尖配备微型相机+多视角融合策略学习+遮挡感知注意力，在真实多指手上实现物体旋转、精密插入等任务，成功率显著提升。",
+  "tags": ["指尖视觉", "灵巧操作", "多指手", "多视角感知", "Sim-to-Real", "遮挡感知"],
+  "difficulty": "高级",
+  "addedDate": "2026-04-27",
+  "sections": [
+    {
+      "title": "核心问题",
+      "content": "灵巧操作的视觉感知通常依赖安装在手腕处的单一相机。然而，多指手在抓取和操作物体时，手指本身恰好遮挡了相机的视野——这在精密操作的关键阶段（如手内旋转、精确插入）尤为严重，导致感知信息缺失和操作失败。"
+    },
+    {
+      "title": "方法设计",
+      "content": "FingerViP的三大核心组件：\\n1. **指尖微型相机系统**：在每个手指指尖集成微型视觉传感器，提供物体表面的近距离高分辨率观察，完全不受手指遮挡影响\\n2. **多视角融合策略学习**：将来自各指尖的局部视觉流与腕部全局视角在Transformer架构中融合，端到端训练操作策略\\n3. **遮挡感知注意力机制**：基于当前操作阶段自动判断各视角的信息价值，对被遮挡或低信息量的视角降权，将注意力集中在最有用的观测上"
+    },
+    {
+      "title": "实验结果",
+      "content": "在真实多指手平台上验证了多项灵巧操作任务：\\n- **手内旋转(In-hand Rotation)**：成功率从基线40%提升至82%\\n- **精密插入(Peg Insertion)**：成功率从35%提升至78%\\n- **工具使用**：利用指尖视觉精确定位工具与目标的接触点\\n\\n消融实验证明：指尖视觉的贡献主要集中在操作的'接触阶段'——即手指已经包裹物体、腕部相机被严重遮挡的时刻。"
+    },
+    {
+      "title": "意义与启示",
+      "content": "FingerViP证明了'给手指装眼睛'这一看似简单的思路，能从根本上解决灵巧操作中的感知瓶颈。这可能推动灵巧手硬件设计范式的转变——未来的灵巧手不仅需要力觉/触觉传感器，还需要分布式视觉传感器。同时，多视角融合与遮挡感知的方法论可以推广到其他多传感器机器人系统。"
+    }
+  ],
+  "methodology": "FingerViP在仿真中使用PPO算法训练操作策略，观察空间包含所有指尖相机图像（经ResNet编码）和腕部全局图像。多视角融合通过Cross-Attention实现，遮挡感知模块基于视角信息熵动态分配注意力权重。Sim-to-Real迁移采用Domain Randomization和视觉数据增强。",
+  "keyInsights": [
+    "指尖微型相机解决灵巧操作中的视觉遮挡瓶颈",
+    "多视角融合+遮挡感知注意力实现动态视角选择",
+    "部分任务成功率从40%提升至80%+",
+    "Sim-to-Real成功迁移到真实多指手平台"
+  ],
+  "impact": "开辟了'给手指装眼睛'的灵巧操作新研究方向，可能改变灵巧手硬件设计范式"
+}

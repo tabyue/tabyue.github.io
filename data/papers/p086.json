@@ -1,0 +1,23 @@
+{
+  "id": "p086",
+  "title": "UnifoLM-VLA-0: Unified Foundation Language Model for Vision-Language-Action in Humanoid Robots",
+  "authors": "Unitree Robotics / Multi-institution",
+  "venue": "arXiv 2604",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.unifolm",
+  "github": "https://github.com/unitreerobotics/UnifoLM-VLA",
+  "tags": ["人形机器人", "统一VLA", "单策略多任务", "宇树", "开源"],
+  "abstract": "We present UnifoLM-VLA-0, a unified vision-language-action foundation model designed specifically for humanoid robots. By mapping diverse manipulation tasks to a unified joint-space representation and conditioning on natural language instructions, UnifoLM-VLA-0 achieves whole-body coordinated control across 12 different manipulation tasks with a single policy. The model is fully open-sourced including weights and training code.",
+  "tldr": "宇树开源UnifoLM-VLA-0——专为人形机器人设计的统一VLA模型。统一关节空间表示+语言条件化全身控制+单策略12任务泛化，在H1平台上平均成功率超75%。",
+  "keyInsights": [
+    "统一关节空间表示解决人形机器人高维动作空间问题",
+    "语言条件化实现自然语言驱动全身协调",
+    "单策略覆盖12种操作任务无需单独微调",
+    "完全开源（权重+代码），基于宇树H1平台"
+  ],
+  "methodology": "UnifoLM-VLA-0基于预训练VLM，通过关节空间统一编码器将不同任务的动作映射到标准化表示。使用大规模多任务遥操作数据训练，结合Diffusion Policy生成全身关节轨迹。",
+  "experiments": "在宇树H1人形平台上测试12种任务（抓取、开门、搬运、整理等），单策略平均成功率75.3%，最佳任务达92%。",
+  "impact": "宇树首个开源人形VLA模型，推动人形机器人全身操作的开源生态",
+  "relatedWork": ["HEX (p079)", "GR00T N1.7"],
+  "addedDate": "2026-04-27"
+}

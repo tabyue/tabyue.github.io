@@ -1,0 +1,41 @@
+{
+  "id": "p091",
+  "title": "Evolvable Embodied Agent for Robotic Manipulation via Long Short-Term Reflection and Optimization",
+  "authors": "Multi-institution",
+  "venue": "arXiv 2604.13533",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.13533",
+  "github": "",
+  "tags": ["LLM Agent", "自我进化", "长短期反思", "机器人操作", "代码生成"],
+  "tldr": "传统机器人操作方法面临泛化差、需大量人工编程的限制。Evolvable Embodied Agent提出基于LLM的长短期反思与优化框架，使机器人能够通过执行反馈自主进化操作策略。",
+  "difficulty": "中级",
+  "addedDate": "2026-04-27",
+  "abstract": "Achieving general-purpose robotics requires empowering robots to adapt and evolve based on their environment and feedback. Traditional methods face limitations such as extensive data requirements and poor generalization. We present Evolvable Embodied Agent, a framework that leverages large language models with long short-term reflection and optimization for robotic manipulation. Our approach enables the agent to generate manipulation code, execute it in the real world, observe the outcomes through visual feedback, and iteratively refine its strategies. Short-term reflection addresses immediate task failures through rapid diagnosis and correction within a single episode. Long-term reflection accumulates experience across episodes, building a reusable knowledge base that transfers across tasks. Extensive experiments demonstrate significant improvements over direct LLM code generation and traditional planning approaches.",
+  "keyInsights": [
+    "提出长短期双层反思机制，模拟人类'边做边学+经验积累'的认知模式",
+    "短期反思实现单任务内的快速纠错，长期反思实现跨任务的知识迁移",
+    "基于视觉反馈的自我评估闭环，无需人工标注奖励信号",
+    "在多个操作基准上超越直接LLM生成和传统规划方法"
+  ],
+  "methodology": "框架包含三个核心模块：(1)代码生成模块——LLM根据任务描述和场景信息生成Python操作代码；(2)短期反思模块——单次执行后，LLM分析视觉观察，诊断失败原因（如抓取点偏移、力控不当），生成修正代码并重试；(3)长期反思模块——跨多个任务积累成功/失败经验，提取通用操作模式（如'圆柱体应从侧面抓取'），形成经验知识库，新任务时自动检索相关经验辅助代码生成。",
+  "impact": "为LLM驱动的机器人操作提供了可持续进化的框架范式",
+  "relatedWork": ["SayCan", "Code as Policies", "VoxPoser", "Inner Monologue"],
+  "sections": [
+    {
+      "title": "核心动机",
+      "content": "直接用LLM生成机器人操作代码（如Code as Policies）虽然灵活，但缺乏从执行失败中学习的能力——每次任务都从零开始，无法利用历史经验。人类操作员则天然具备'边做边学'和'经验积累'两种学习模式。本文将这两种模式形式化为短期反思和长期反思。"
+    },
+    {
+      "title": "短期反思(Short-Term Reflection)",
+      "content": "单次任务执行后，系统通过视觉观察评估结果。如果任务失败，LLM分析当前帧和执行轨迹，生成结构化的失败诊断（如'物体从指间滑落→抓取点过高→修正为重心以下10mm'），然后生成修正代码重试。短期反思通常在1-3次迭代内收敛。"
+    },
+    {
+      "title": "长期反思(Long-Term Reflection)",
+      "content": "每完成一个任务（无论成功或失败），系统将经验摘要写入知识库。长期反思模块定期对知识库进行整理和抽象，提取通用操作规则。新任务到来时，系统检索相关经验，将其作为上下文注入LLM的代码生成prompt中，实现经验迁移。"
+    },
+    {
+      "title": "实验结论",
+      "content": "在RLBench和真实机器人操作任务上评估。与直接LLM生成相比，短期反思提升成功率15-25%；加入长期反思后，在新任务上的零样本成功率额外提升10-15%，证明经验知识库的跨任务迁移效果。"
+    }
+  ]
+}

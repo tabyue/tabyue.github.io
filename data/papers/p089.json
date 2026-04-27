@@ -1,0 +1,40 @@
+{
+  "id": "p089",
+  "title": "ManipArena: Comprehensive Real-world Evaluation for General-Purpose Embodied Models",
+  "authors": "Sun Yat-sen University / X Square Robot / MBZUAI / Multi-institution",
+  "venue": "CVPR 2026",
+  "date": "2026-03",
+  "arxiv": "https://arxiv.org/abs/2603.28545",
+  "github": "https://github.com/maniparena/maniparena-repo",
+  "abstract": "Vision-Language-Action (VLA) models and world models have recently emerged as promising paradigms for general-purpose robotic intelligence, yet their progress is hindered by the lack of unified, real-robot evaluation protocols. We present ManipArena, the first comprehensive real-robot benchmark for evaluating general-purpose embodied models across 20 reasoning-intensive bimanual manipulation tasks, organized into semantic understanding, spatial reasoning, and long-horizon manipulation categories.",
+  "tldr": "ManipArena是首个面向通用具身模型的大规模真机操作基准——20项推理密集型双臂任务，统一评估VLA模型和世界模型两大范式。初步基准结果显示当前SOTA在推理密集型任务上成功率仅30-50%。",
+  "tags": ["真机评测", "双臂操作", "VLA基准", "CVPR 2026", "通用具身", "挑战赛"],
+  "difficulty": "中级",
+  "addedDate": "2026-04-27",
+  "sections": [
+    {
+      "title": "动机与问题",
+      "content": "VLA模型和世界模型在仿真环境中取得了令人瞩目的成绩，但存在两大痛点：(1)缺乏统一的真机评测标准，各团队自定义评测环境导致结果难以横向比较；(2)仿真表现与真实能力之间存在显著Gap，部分仿真中的高成功率在真机上大幅下降。ManipArena旨在填补这一空白。"
+    },
+    {
+      "title": "基准设计",
+      "content": "ManipArena的20项任务分为三大类别：\\n\\n**语义理解(7项)**：根据自然语言描述操作正确物体，如'把红色杯子放到盘子左边'——需要理解颜色、形状、空间关系等语义。\\n\\n**空间推理(7项)**：理解三维空间关系完成精确放置，如堆叠、对齐、插入等需要精确位姿估计的任务。\\n\\n**长程操作(6项)**：多步骤复合任务，如煮咖啡（取杯→接水→放咖啡粉→搅拌）、整理桌面（分类→收纳→摆放），需要任务规划和错误恢复能力。"
+    },
+    {
+      "title": "评测结果与发现",
+      "content": "初步基准测试中评估了多个代表性模型：\\n- 语义理解任务：VLA模型平均成功率约50%，世界模型约35%\\n- 空间推理任务：VLA模型约35%，世界模型约30%\\n- 长程操作任务：VLA模型约25%，世界模型约20%\\n\\n关键发现：(1)所有模型在推理密集型任务上远低于人类水平；(2)VLA模型在语义理解上优于世界模型，但空间推理差距较小；(3)长程操作是所有模型的共同短板，错误累积是主要失败原因。"
+    },
+    {
+      "title": "开放平台",
+      "content": "ManipArena设计为可持续扩展的开放平台：标准化硬件配置（双臂+多相机）、统一评测协议、在线提交排行榜。作为CVPR 2026 Embodied AI Workshop的官方竞赛，吸引了全球数十支团队参赛。"
+    }
+  ],
+  "methodology": "ManipArena采用标准化的双臂机器人平台（2台协作臂+灵巧手+多角度RGB-D相机），所有任务的初始状态经过随机化但固定种子确保可复现。评测指标包括：任务成功率、完成步骤数、执行时间、安全性（碰撞次数）。支持远程提交评测——参赛者上传模型，由组委会在标准硬件上统一运行。",
+  "keyInsights": [
+    "首个大规模真机操作评测基准，20项推理密集型双臂任务",
+    "统一评估VLA模型和世界模型两大范式",
+    "当前SOTA在推理密集型任务上成功率仅30-50%",
+    "开放平台设计，可持续扩展任务和评测机器人"
+  ],
+  "impact": "填补了通用具身模型真机评测的空白，为学术界和产业界提供统一基准"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "p087",
+  "title": "LightVLA: Efficient Vision-Language-Action Models via Differentiable Token Pruning",
+  "authors": "Li Auto / Multi-institution",
+  "venue": "ICRA 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2601.16664",
+  "github": "https://github.com/LiAutoAD/LightVLA",
+  "tags": ["VLA轻量化", "Token剪枝", "边缘部署", "推理加速", "ICRA 2026"],
+  "abstract": "Vision-Language-Action (VLA) models achieve impressive manipulation performance but their computational cost hinders real-time deployment on edge devices. We present LightVLA, a differentiable token pruning framework that learns to identify and remove unimportant visual and language tokens during inference. Through progressive pruning training and task-adaptive pruning rates, LightVLA maintains over 95% success rate while achieving 3-5x inference speedup and 60-80% FLOPs reduction on standard benchmarks.",
+  "tldr": "VLA模型在机器人操作中取得巨大进展，但动辄7B+参数使其难以在边缘设备实时部署。LightVLA提出可微分Token剪枝框架：学习式Token重要性评分+渐进式剪枝训练+任务自适应剪枝率，在保持95%+成功率的同时实现3-5x推理加速。",
+  "keyInsights": [
+    "可微分Token重要性评分实现端到端剪枝训练",
+    "渐进式训练策略保持性能平滑退化",
+    "任务自适应剪枝率兼顾简单和复杂操作",
+    "95%成功率下实现3-5x加速/60-80% FLOPs削减"
+  ],
+  "methodology": "LightVLA在VLA Transformer的每个注意力层后插入可微门控模块，为每个Token计算重要性分数。训练时使用Gumbel-Softmax实现可微剪枝决策。剪枝率通过课程学习从0逐步增加到目标值。推理时，Token重要性低于阈值的直接丢弃，减少后续层的计算量。",
+  "experiments": "在SimplerEnv（8个任务）和真机（UR5 + Franka）上验证。保留40% Token时成功率仅下降3-5%，推理速度提升3.2x（Jetson Orin）到4.8x（A100）。",
+  "impact": "VLA从实验室到产线的关键一步，让大模型在边缘设备实时推理成为可能",
+  "relatedWork": ["PokeVLA (p060)", "Speculative Decoding for VLA"],
+  "addedDate": "2026-04-27"
+}
