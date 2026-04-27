@@ -1,0 +1,29 @@
+{
+  "id": "p083",
+  "title": "The Developments and Challenges Toward Dexterous and Embodied Robotic Manipulation: A Survey",
+  "authors": "Multi-institution (IEEE RAM 2026)",
+  "venue": "IEEE Robotics & Automation Magazine 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2507.11840",
+  "github": "",
+  "tags": ["综述", "灵巧操作", "具身智能", "多指手", "从夹爪到灵巧手", "IEEE RAM"],
+  "abstract": "This article summarizes the evolution of robotic manipulation from mechanical programming to embodied intelligence, alongside the transition from simple grippers to multifingered dexterous hands. The survey categorizes manipulation techniques into non-learning control methods (force/impedance control, contact modeling) and learning-based approaches (imitation learning, RL, VLA, diffusion policies), systematically comparing representative works, strengths, limitations, and applicable scenarios. Special attention is given to the explosive progress of VLA models, diffusion policies, and tactile feedback integration from 2024-2026, as well as breakthroughs in dexterous manipulation tasks (screw tightening, cloth folding, cooking). The survey concludes that dexterity + embodiment = next-generation manipulation intelligence, pointing toward future directions including tactile-visual fusion, whole-body coordinated manipulation, and long-horizon multi-step task planning.",
+  "tldr": "IEEE Robotics & Automation Magazine 2026年4月刊发的重磅综述，系统梳理机器人操作从机械编程到具身智能的全景演进，以及从简单夹爪到多指灵巧手的硬件转型。论文将操作技术分为非学习控制方法和学习方法两大类进行系统对比，特别关注2024-2026年VLA模型、扩散策略、触觉反馈集成等前沿方向的爆发式进展。以'灵巧+具身=下一代操作智能'作为结论，指出未来方向包括触觉-视觉融合、全身协调操作、长程多步任务规划。",
+  "difficulty": "入门",
+  "addedDate": "2026-04-27",
+  "keyInsights": [
+    "系统梳理从机械编程到具身智能操作的全景演进",
+    "从简单夹爪到多指灵巧手的硬件转型趋势",
+    "非学习方法（力控/阻抗）vs 学习方法（IL/RL/VLA/Diffusion）系统对比",
+    "VLA/扩散策略/触觉集成2024-2026爆发式进展",
+    "灵巧+具身=下一代操作智能"
+  ],
+  "impact": "权威综述将操作领域碎片化的研究成果组织为系统知识图谱，是入门和全景了解该领域的最佳起点",
+  "relatedWork": [
+    "VLA模型系列（RT-2, OpenVLA, π0等）",
+    "扩散策略（Diffusion Policy, 3D Diffusion Policy等）",
+    "灵巧手操作（DAPG, DexGraspNet, DexVLA等）",
+    "触觉感知（TacTip, GelSight系列）"
+  ],
+  "methodology": "综述采用两维分类法：(1)按控制范式分为非学习方法和学习方法；(2)按末端执行器形态分为简单夹爪和多指灵巧手。在学习方法内部，进一步按照训练信号来源细分为模仿学习（行为克隆/DAgger/Diffusion）、强化学习（model-free/model-based/offline）、VLA（端到端视觉-语言-动作模型）和混合方法。每类方法都通过代表性工作、适用场景、优缺点三维对比进行分析。"
+}

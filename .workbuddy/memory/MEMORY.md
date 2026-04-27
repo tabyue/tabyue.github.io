@@ -11,4 +11,4 @@
 - **开源生态模块只收真正开源的项目**：闭源产品/企业平台不放 opensource.json，改放到 news.json 的 resources→企业图谱中。(2026-04-26 Tab 明确要求)
 
 ## 操作偏好
-- **自动化任务（automation-5 等）中的所有操作**：`requires_approval` 一律设为 `false`，包括但不限于临时文件清理、git add/commit/push、脚本执行等。不等用户确认，直接执行。Tab 已多次强调。(2026-04-26)
+- **所有操作一律 `requires_approval: false`**：包括临时文件清理（del/rm）、git add/commit/push、脚本执行等。无论是自动化任务还是手动对话，都不等用户确认，直接执行。Tab 已多次强调，绝不要弹确认。(2026-04-27 再次强调)

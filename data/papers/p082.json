@@ -1,0 +1,27 @@
+{
+  "id": "p082",
+  "title": "Mask World Model: Predicting What Matters for Robust Robot Policy Learning",
+  "authors": "Multi-institution",
+  "venue": "arXiv 2604.19683",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.19683",
+  "github": "",
+  "tags": ["世界模型", "语义掩码", "视频扩散", "策略学习", "鲁棒性", "Sim-to-Real"],
+  "abstract": "World models derived from large-scale video generative pre-training have emerged as a promising paradigm for generalist robot policy learning. However, standard approaches often focus on pixel-level RGB prediction, suffering from photometric mismatch — the predicted visual details do not align with control utility. To address this, we introduce the Mask World Model (MWM), which leverages video diffusion architectures to predict the evolution of semantic masks instead of pixels. This shift imposes a structural inductive bias that focuses predictions on task-relevant object categories and spatial layouts, filtering out control-irrelevant visual nuances. MWM achieves substantially higher robustness to lighting changes, texture perturbations, and background clutter compared to RGB-based world models, demonstrating consistent improvements across multiple manipulation benchmarks.",
+  "tldr": "大规模视频生成预训练的世界模型被认为是通用机器人策略学习的有前途范式，但标准方法聚焦于像素级预测（RGB），存在光照敏感的光度失配问题——预测的视觉细节与控制需求不对齐。MWM提出关键洞察：对机器人控制而言，重要的不是精确的像素颜色，而是物体的语义类别和空间分布。MWM利用视频扩散架构预测语义掩码（semantic mask）的时间演化而非像素，实现了「预测重要的东西」。通过掩码-中心的世界模型，机器人策略对光照变化、纹理干扰、背景杂乱等视觉扰动具有显著更高的鲁棒性，在多个操作基准上超越RGB世界模型。",
+  "difficulty": "中级",
+  "addedDate": "2026-04-27",
+  "keyInsights": [
+    "像素级预测中的光度细节对控制无用且有害，语义掩码是更好的预测目标",
+    "视频扩散架构可无缝迁移到掩码序列预测",
+    "掩码世界模型天然抗光照/纹理/背景扰动，大幅提升Sim-to-Real鲁棒性",
+    "该思路可推广到其他中间表示（深度、法线、光流）作为世界模型预测目标"
+  ],
+  "impact": "提出世界模型预测目标应从像素转向语义的范式转变，为鲁棒机器人策略学习开辟新方向",
+  "relatedWork": [
+    "视频生成预训练世界模型（如UniSim、Genie等）",
+    "语义分割与机器人操作（SemanticNeRF等）",
+    "中间表示用于策略学习（RoboInter等）"
+  ],
+  "methodology": "MWM在标准视频扩散世界模型的基础上做了一个看似简单但效果显著的修改：将预测目标从RGB像素替换为语义掩码序列。具体流程：(1)使用预训练的语义分割模型将观测帧转为语义掩码；(2)在掩码空间上训练视频扩散模型预测未来掩码序列；(3)基于预测的掩码序列进行策略优化。这种设计引入了结构化归纳偏置——预测自然聚焦于任务相关的物体类别和空间布局，过滤掉对控制无关的视觉细节（光照、纹理、反射等）。"
+}

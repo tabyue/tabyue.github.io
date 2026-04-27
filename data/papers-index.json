@@ -1,6 +1,47 @@
 {
-  "lastUpdated": "2026-04-26T21:59",
+  "lastUpdated": "2026-04-27T00:27",
   "papers": [
+    {
+      "id": "p082",
+      "title": "Mask World Model: Predicting What Matters for Robust Robot Policy Learning",
+      "authors": "Multi-institution",
+      "venue": "arXiv 2604.19683",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.19683",
+      "github": "",
+      "tags": ["世界模型", "语义掩码", "视频扩散", "策略学习", "鲁棒性", "Sim-to-Real"],
+      "tldr": "大规模视频生成预训练的世界模型被认为是通用机器人策略学习的有前途范式，但标准方法聚焦于像素级预测（RGB），存在光照敏感的光度失配问题——预测的视觉细节与控制需求不对齐。MWM提出关键洞察：对机器人控制而言，重要的不是精确的像素颜色，而是物体的语义类别和空间分布。MWM利用视频扩散架构预测语义掩码（semantic mask）的时间演化而非像素，实现了「预测重要的东西」。通过掩码-中心的世界模型，机器人策略对光照变化、纹理干扰、背景杂乱等视觉扰动具有显著更高的鲁棒性，在多个操作基准上超越RGB世界模型。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-27",
+      "keyInsights": [
+        "像素级预测中的光度细节对控制无用且有害，语义掩码是更好的预测目标",
+        "视频扩散架构可无缝迁移到掩码序列预测",
+        "掩码世界模型天然抗光照/纹理/背景扰动，大幅提升Sim-to-Real鲁棒性",
+        "该思路可推广到其他中间表示（深度、法线、光流）作为世界模型预测目标"
+      ],
+      "impact": "提出世界模型预测目标应从像素转向语义的范式转变，为鲁棒机器人策略学习开辟新方向"
+    },
+    {
+      "id": "p083",
+      "title": "The Developments and Challenges Toward Dexterous and Embodied Robotic Manipulation: A Survey",
+      "authors": "Multi-institution (IEEE RAM 2026)",
+      "venue": "IEEE Robotics & Automation Magazine 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2507.11840",
+      "github": "",
+      "tags": ["综述", "灵巧操作", "具身智能", "多指手", "从夹爪到灵巧手", "IEEE RAM"],
+      "tldr": "IEEE Robotics & Automation Magazine 2026年4月刊发的重磅综述，系统梳理机器人操作从机械编程到具身智能的全景演进，以及从简单夹爪到多指灵巧手的硬件转型。论文将操作技术分为非学习控制方法（力控/阻抗控制/接触建模）和学习方法（模仿学习/RL/VLA/扩散策略）两大类，对每类方法的代表工作、优缺点和适用场景进行了系统对比。特别关注了2024-2026年间VLA模型、扩散策略、触觉反馈集成等前沿方向的爆发式进展，以及多指灵巧手在精细操作（螺丝拧紧、布料折叠、烹饪等）中的突破。综述以'灵巧+具身=下一代操作智能'作为结论，指出未来方向包括触觉-视觉融合、全身协调操作、长程多步任务规划。",
+      "difficulty": "入门",
+      "addedDate": "2026-04-27",
+      "keyInsights": [
+        "系统梳理从机械编程到具身智能操作的全景演进",
+        "从简单夹爪到多指灵巧手的硬件转型趋势",
+        "VLA/扩散策略/触觉集成2024-2026爆发式进展",
+        "灵巧+具身=下一代操作智能",
+        "未来方向：触觉视觉融合、全身协调、长程规划"
+      ],
+      "impact": "权威综述将操作领域碎片化的研究成果组织为系统知识图谱，是入门和全景了解该领域的最佳起点"
+    },
     {
       "id": "p080",
       "title": "DAM-VLA: A Dynamic Action Model-Based Vision-Language-Action Framework for Robot Manipulation",
