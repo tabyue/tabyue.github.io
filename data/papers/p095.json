@@ -1,0 +1,33 @@
+{
+  "id": "p095",
+  "title": "Tactile-Driven Hierarchical Reinforcement Learning Framework for Dexterous Robotic Manipulation",
+  "authors": ["Multi-institution"],
+  "affiliations": ["Multi-institution"],
+  "venue": "arXiv 2604",
+  "date": "2026-04",
+  "arxiv": "https://www.researchgate.net/publication/404140183",
+  "github": "",
+  "tags": ["触觉驱动", "层次化RL", "灵巧操作", "分层策略", "力反馈", "接触丰富操作"],
+  "abstract": "To address the challenges of robotic dexterous manipulation in complex environments, this paper proposes a hierarchical reinforcement learning (HRL) framework driven by tactile sensing. The high-level policy selects manipulation sub-skills based on visual and language inputs, while the low-level policy executes fine-grained force control guided primarily by tactile feedback.",
+  "keyInsights": [
+    "触觉信号作为低层策略的主要感知模态，在接触丰富任务中显著优于纯视觉方案",
+    "层次化设计实现高层语义规划(what to do)与低层力控制(how to do)的关注点分离",
+    "触觉时空编码器将高维触觉阵列压缩为紧凑特征向量",
+    "在插拔、旋拧、柔性物体操作等接触丰富场景中验证有效性",
+    "为触觉传感器在实际操作中的系统化应用提供了训练范式"
+  ],
+  "methodology": "The framework consists of two levels: (1) High-level Policy: a VLM-based planner receives visual observation and language instruction, outputting a discrete sub-skill selection (grasp, rotate, insert, etc.); (2) Low-level Policy: a tactile-driven RL controller receives encoded tactile signals (spatial-temporal features from a tactile encoder) and executes precise force-position control. The tactile encoder uses a 1D-CNN + LSTM architecture to capture both spatial distribution and temporal dynamics of contact forces. Training uses a hierarchical curriculum where the low-level policy is first trained on individual sub-skills, then the high-level policy learns to compose them.",
+  "results": {
+    "benchmarks": [
+      {
+        "name": "接触丰富操作",
+        "metric": "成功率",
+        "value": "显著优于纯视觉策略",
+        "note": "插拔、旋拧、柔性物体"
+      }
+    ]
+  },
+  "difficulty": "高级",
+  "addedDate": "2026-04-28",
+  "impact": "为触觉传感器在灵巧操作中的应用提供了系统化的层次化RL训练框架"
+}

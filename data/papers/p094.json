@@ -1,0 +1,33 @@
+{
+  "id": "p094",
+  "title": "FastGrasp: Learning-based Whole-body Control Method for Fast Mobile Grasping",
+  "authors": ["Multi-institution"],
+  "affiliations": ["Multi-institution"],
+  "venue": "arXiv 2604.12879",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.12879",
+  "github": "",
+  "tags": ["FastGrasp", "全身抓取", "移动操作", "触觉反馈", "CVAE", "点云", "强化学习"],
+  "abstract": "We propose FastGrasp, a learning-based framework that integrates grasp guidance, whole-body control, and tactile feedback for mobile fast grasping. Our two-stage reinforcement learning strategy first generates diverse grasp candidates via conditional variational autoencoder conditioned on object point clouds, then executes coordinated whole-body motion to approach and grasp objects while in motion.",
+  "keyInsights": [
+    "首次将全身控制(底盘+手臂+手部)与移动抓取统一在一个端到端学习框架中",
+    "基于物体点云的CVAE生成多样化抓取候选姿态",
+    "触觉反馈闭环实现抓取力度的自适应调节",
+    "两阶段RL策略：先学抓取候选生成，再学协调执行",
+    "在快速移动场景中实现鲁棒抓取"
+  ],
+  "methodology": "FastGrasp consists of three modules: (1) Grasp Candidate Generation: a CVAE conditioned on object point clouds produces diverse 6-DoF grasp poses; (2) Whole-body Controller: a reinforcement learning policy coordinates base locomotion, arm trajectory, and hand preshaping to approach the target smoothly; (3) Tactile Feedback: tactile sensors on fingertips provide closed-loop force control during the final grasp phase. Training follows a two-stage curriculum: stage 1 trains the CVAE on a large dataset of grasp-object pairs; stage 2 trains the whole-body policy with the frozen CVAE providing grasp targets.",
+  "results": {
+    "benchmarks": [
+      {
+        "name": "移动抓取",
+        "metric": "成功率",
+        "value": "鲁棒抓取多种物体",
+        "note": "在快速移动中完成"
+      }
+    ]
+  },
+  "difficulty": "中级",
+  "addedDate": "2026-04-28",
+  "impact": "为移动操作机器人的快速抓取提供了端到端学习方案，触觉反馈闭环提升了实用性"
+}

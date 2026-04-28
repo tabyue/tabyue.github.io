@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-28T06:56",
+  "lastUpdated": "2026-04-28T12:08",
   "papers": [
+    {
+      "id": "p095",
+      "title": "Tactile-Driven Hierarchical Reinforcement Learning Framework for Dexterous Robotic Manipulation",
+      "authors": "Multi-institution",
+      "venue": "arXiv 2604",
+      "date": "2026-04",
+      "arxiv": "https://www.researchgate.net/publication/404140183",
+      "github": "",
+      "tags": ["触觉驱动", "层次化RL", "灵巧操作", "分层策略", "力反馈"],
+      "tldr": "灵巧操作是机器人走向通用智能的关键挑战之一。本文提出触觉驱动的层次化强化学习(HRL)框架：高层策略基于视觉和语言指令选择操作子技能(抓取/旋转/插入等)，低层策略基于触觉反馈进行精细力控制。核心创新：(1)触觉信号被编码为紧凑的空间-时间特征，作为低层策略的主要感知输入；(2)层次化设计使高层规划不需要理解触觉细节，低层执行不需要理解任务语义，实现关注点分离；(3)在接触丰富的操作任务（插拔、旋拧、柔性物体操作）中，触觉驱动的策略显著优于纯视觉策略。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-28",
+      "keyInsights": [
+        "触觉作为低层策略的主要感知模态，在接触丰富任务中优于纯视觉",
+        "层次化设计实现高层语义规划与低层力控制的关注点分离",
+        "触觉时空编码器将高维触觉信号压缩为紧凑特征表示",
+        "在插拔、旋拧、柔性物体操作等任务中验证有效性"
+      ],
+      "impact": "为触觉传感器在实际灵巧操作中的应用提供了系统化的RL训练框架"
+    },
+    {
+      "id": "p094",
+      "title": "FastGrasp: Learning-based Whole-body Control Method for Fast Mobile Grasping",
+      "authors": "Multi-institution",
+      "venue": "arXiv 2604.12879",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.12879",
+      "github": "",
+      "tags": ["FastGrasp", "全身抓取", "移动操作", "触觉反馈", "CVAE", "点云"],
+      "tldr": "移动机器人在快速移动中完成抓取任务需要协调底盘运动、手臂伸展和手部抓取三个子系统——现有方法通常将这三者割裂处理，导致移动-抓取衔接不流畅。FastGrasp提出一个学习框架，整合抓取引导、全身控制和触觉反馈三大模块：(1)基于物体点云的条件变分自编码器(CVAE)生成多样化抓取候选姿态；(2)全身控制器协调底盘导航与手臂运动，确保机器人在移动过程中平稳接近目标；(3)触觉反馈实现抓取力的闭环调节。两阶段强化学习策略先训练抓取候选生成，再训练协调执行，实现快速移动中的鲁棒抓取。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-28",
+      "keyInsights": [
+        "首次将全身控制与移动抓取统一在一个学习框架中",
+        "CVAE生成多样化抓取候选，适应不同物体形状和姿态",
+        "触觉反馈闭环确保抓取力度自适应调节",
+        "两阶段RL训练实现快速移动中的鲁棒抓取"
+      ],
+      "impact": "为移动操作机器人的快速抓取提供了端到端学习方案"
+    },
     {
       "id": "p093",
       "title": "Long-Horizon Manipulation via Trace-Conditioned VLA Planning",
