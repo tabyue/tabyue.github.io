@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-27T00:27",
+  "lastUpdated": "2026-04-28T06:56",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,32 @@
     }
   ],
   "projects": [
+    {
+      "id": "os057",
+      "name": "A1 (全透明高效VLA模型)",
+      "org": "Sun Yat-sen University / MBZUAI / Shanghai AI Lab",
+      "description": "全透明、全开源的高效VLA模型框架，CVPR 2026 Findings收录。基于Molmo VLM主干，引入预算感知型自适应推理和层间截断流匹配两项创新，在LIBERO等基准上达到与大模型可比的操作成功率，推理成本降低76%、吞吐量提升3.2倍。所有训练代码、数据管线、模型权重均已公开，是当前最透明的VLA基础设施之一。",
+      "url": "https://arxiv.org/abs/2604.05672",
+      "github": "https://github.com/ATeam-Research/A1",
+      "stars": "新发布",
+      "language": "Python",
+      "category": "ai-model",
+      "tags": ["VLA", "CVPR 2026", "高效推理", "自适应推理", "截断流匹配", "边缘部署", "全开源"],
+      "addedDate": "2026-04-28"
+    },
+    {
+      "id": "os056",
+      "name": "FluxVLA Engine (VLA标准化工程底座)",
+      "org": "LimX Dynamics (逐际动力)",
+      "description": "面向具身智能科研创新、应用开发与产业落地的标准化VLA工程底座。解决当前VLA研发中数据格式不统一、训练推理管线碎片化的核心痛点，提供统一的数据预处理、模型训练、推理部署和评估基准全流程工具链。支持主流VLA架构（RT-2、π0、OpenVLA、GR00T等）的即插即用接入，同步提供多个预训练模型权重和标准化数据集接口。标志着VLA从学术研究阶段走向标准化工程化的产业阶段。",
+      "url": "https://www.36kr.com/p/3769116154102279",
+      "github": "https://github.com/limxdynamics/FluxVLA-Engine",
+      "stars": "新发布",
+      "language": "Python",
+      "category": "framework",
+      "tags": ["VLA工程化", "标准化", "工具链", "多模型支持", "数据管线", "逐际动力"],
+      "addedDate": "2026-04-28"
+    },
     {
       "id": "os055",
       "name": "HEX (Humanoid-Aligned Experts)",

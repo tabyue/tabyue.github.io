@@ -1,0 +1,43 @@
+{
+  "id": "p093",
+  "title": "Long-Horizon Manipulation via Trace-Conditioned VLA Planning",
+  "authors": [
+    "Isabella Liu",
+    "An-Chieh Cheng",
+    "Rui Yan",
+    "Geng Chen",
+    "Ri-Zhao Qiu",
+    "Sha Yi",
+    "Hongxu Yin",
+    "Xiaolong Wang",
+    "Sifei Liu"
+  ],
+  "affiliations": ["NVIDIA Research", "UC San Diego"],
+  "venue": "arXiv 2604.21924",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.21924",
+  "github": "",
+  "tags": ["Trace-VLA", "长程操作", "轨迹条件化", "VLA规划", "分层架构", "NVIDIA"],
+  "abstract": "Existing Vision-Language-Action (VLA) models demonstrate impressive capabilities in single-step or short-horizon manipulation tasks but struggle with long-horizon tasks requiring multi-step planning. We propose Trace-Conditioned VLA Planning, a hierarchical framework where a high-level VLM first generates a complete manipulation trace as a sequence of 2D keypoints representing the expected end-effector trajectory, and a low-level VLA policy then executes actions conditioned on this trace. This 'plan-then-execute' design enables the VLA to maintain awareness of the global task structure while generating locally optimal actions. Our approach significantly improves success rates on 10+ step tabletop manipulation tasks compared to end-to-end VLA baselines.",
+  "keyInsights": [
+    "首次将2D轨迹规划(Trace)作为VLA的显式条件输入，桥接高层语义规划与低层动作执行",
+    "轨迹以2D关键点序列形式表达末端执行器的预期运动路径——可视化直观、易于人类校验和干预",
+    "分层设计让VLA能够'先规划后执行'，避免在长程任务的子任务衔接处失败",
+    "在10+步的长程桌面操作任务中相比端到端VLA基线成功率大幅提升",
+    "NVIDIA Research主导，与UC San Diego的Xiaolong Wang组合作"
+  ],
+  "methodology": "The framework consists of two stages: (1) Trace Generation - A VLM (e.g., GPT-4V or Gemini) takes the current visual observation and natural language instruction as input, and outputs a sequence of 2D keypoints representing the planned end-effector trajectory. This trace captures the global structure of the manipulation plan. (2) Trace-Conditioned Execution - A VLA policy receives the visual observation, language instruction, and the generated trace as inputs, and produces robot actions at each timestep. The trace provides a 'roadmap' that guides the policy through multi-step sequences. During execution, the trace can be re-planned if the VLM detects significant deviation from the expected trajectory.",
+  "results": {
+    "benchmarks": [
+      {
+        "name": "10+步长程操作",
+        "metric": "成功率提升",
+        "value": "显著超越端到端VLA基线",
+        "note": "桌面操作场景"
+      }
+    ]
+  },
+  "difficulty": "中级",
+  "addedDate": "2026-04-28",
+  "impact": "为VLA在长程复杂操作场景中的应用提供了可行的分层规划方案，轨迹条件化的设计思路可推广至导航等其他具身任务"
+}

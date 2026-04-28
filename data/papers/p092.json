@@ -1,0 +1,53 @@
+{
+  "id": "p092",
+  "title": "A1: A Fully Transparent Open-Source, Adaptive and Efficient Truncated Vision-Language-Action Model",
+  "authors": [
+    "Zhehao Zhang",
+    "Yao Zhang",
+    "Shenghai Yuan",
+    "Jiaming Han",
+    "Kaichen Zhou",
+    "Lu Sheng",
+    "Jifeng Dai"
+  ],
+  "affiliations": ["Sun Yat-sen University", "MBZUAI", "Shanghai AI Lab"],
+  "venue": "CVPR 2026 Findings",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.05672",
+  "github": "https://github.com/ATeam-Research/A1",
+  "tags": ["VLA", "开源", "高效推理", "自适应推理", "截断流匹配", "CVPR 2026", "边缘部署"],
+  "abstract": "Vision-Language-Action (VLA) models have emerged as a powerful paradigm for open-world robot manipulation, but their practical deployment is often constrained by cost: billion-scale parameters incur high inference latency, and serving many robots concurrently quickly becomes prohibitive. We present A1, a fully open-source and transparent VLA framework designed for low-cost, high-throughput inference without sacrificing manipulation success. A1 introduces two key innovations: (1) Budget-Aware Adaptive Inference that dynamically allocates compute per action based on task difficulty, skipping redundant layers for simple motions; (2) Inter-Layer Truncated Flow Matching that enables early-exit action prediction at intermediate Transformer layers via flow matching. Built on the Molmo VLM backbone, A1 achieves comparable success rates to much larger models on LIBERO and other benchmarks while reducing inference cost by 76% and improving throughput by 3.2x.",
+  "keyInsights": [
+    "首个全透明开源高效VLA框架——训练代码、数据管线、模型权重全部公开",
+    "预算感知型自适应推理：根据任务难度动态调整计算量，简单动作跳过冗余层",
+    "层间截断流匹配(Inter-Layer Truncated Flow Matching)：在Transformer中间层即可输出高质量动作",
+    "推理成本降低76%，吞吐量提升3.2倍，为边缘设备部署打开可能",
+    "基于Molmo VLM主干构建，在LIBERO等基准上达到与大模型可比的成功率"
+  ],
+  "methodology": "A1 architecture is built on the Molmo VLM backbone with two novel mechanisms. Budget-Aware Adaptive Inference uses a lightweight difficulty estimator to predict the compute budget needed for each action step. For easy actions (straight reaches, simple grasps), only a subset of Transformer layers is used; for complex actions (precise insertions, contact-rich manipulation), the full model is engaged. Inter-Layer Truncated Flow Matching trains intermediate Transformer layers to predict action distributions via flow matching, enabling early exit at any layer with minimal quality degradation. The training procedure uses a progressive layer-wise distillation scheme to ensure each layer learns to produce valid actions.",
+  "results": {
+    "benchmarks": [
+      {
+        "name": "LIBERO",
+        "metric": "操作成功率",
+        "value": "与RT-2等大模型可比",
+        "note": "推理成本仅为1/4"
+      },
+      {
+        "name": "推理效率",
+        "metric": "成本降低",
+        "value": "76%",
+        "note": "相比全量推理"
+      },
+      {
+        "name": "吞吐量",
+        "metric": "提升倍数",
+        "value": "3.2x",
+        "note": "支持更多并发机器人"
+      }
+    ]
+  },
+  "difficulty": "高级",
+  "addedDate": "2026-04-28",
+  "impact": "为VLA在资源受限平台（边缘设备、移动机器人）的部署提供了工程化解决方案，全开源特性加速社区复现和二次开发"
+}

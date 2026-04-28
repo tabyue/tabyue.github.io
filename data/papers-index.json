@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-27T23:30",
+  "lastUpdated": "2026-04-28T06:56",
   "papers": [
+    {
+      "id": "p093",
+      "title": "Long-Horizon Manipulation via Trace-Conditioned VLA Planning",
+      "authors": "Isabella Liu, An-Chieh Cheng, Rui Yan, Geng Chen, Ri-Zhao Qiu, Sha Yi, Hongxu Yin, Xiaolong Wang, Sifei Liu",
+      "venue": "arXiv 2604.21924",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.21924",
+      "github": "",
+      "tags": ["Trace-VLA", "长程操作", "轨迹条件化", "VLA规划", "多步推理"],
+      "tldr": "现有VLA模型擅长单步或短程操作任务，但在需要多步规划的长程操作(Long-Horizon Manipulation)场景中表现欠佳——缺乏对任务全局结构的理解，容易在子任务衔接处失败。Trace-VLA提出轨迹条件化规划(Trace-Conditioned Planning)范式：首先由高层VLM根据语言指令和视觉观察生成完整操作轨迹规划(Trace)，以2D关键点序列的形式表达末端执行器的预期运动路径；然后将该轨迹作为条件输入低层VLA策略，引导其在每个时间步生成符合全局规划的动作。这种分层设计使VLA能够'先规划后执行'，在10+步的长程桌面操作任务中成功率显著提升。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-28",
+      "keyInsights": [
+        "首次将2D轨迹规划作为VLA的显式条件输入，桥接高层语义规划与低层动作执行",
+        "高层规划以关键点序列表达，可视化直观、易于人类校验和干预",
+        "在10+步长程操作任务中相比端到端VLA成功率大幅提升",
+        "NVIDIA Research主导，与UC San Diego合作"
+      ],
+      "impact": "为VLA在长程复杂操作场景中的应用提供了可行的分层规划方案"
+    },
+    {
+      "id": "p092",
+      "title": "A1: A Fully Transparent Open-Source, Adaptive and Efficient Truncated Vision-Language-Action Model",
+      "authors": "Zhehao Zhang, Yao Zhang, Shenghai Yuan, Jiaming Han, Kaichen Zhou, Lu Sheng, Jifeng Dai",
+      "venue": "CVPR 2026 Findings",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.05672",
+      "github": "https://github.com/ATeam-Research/A1",
+      "tags": ["A1", "CVPR 2026", "开源VLA", "自适应推理", "截断流匹配", "高效推理"],
+      "tldr": "VLA模型的实际部署受限于十亿级参数带来的高昂推理成本。A1提出两项核心创新实现低成本高效推理：(1)预算感知型自适应推理——在推理时动态评估任务难度，为简单动作分配较少计算层，复杂操作使用完整模型容量；(2)层间截断流匹配(Inter-Layer Truncated Flow Matching)——在Transformer层间进行动作预测的提前退出，通过流匹配在中间层即可输出高质量动作。基于Molmo VLM主干构建，A1在LIBERO等基准上达到与大模型可比的操作成功率，推理成本降低76%、吞吐量提升3.2倍。所有训练代码、数据管线、模型权重均已开源。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-28",
+      "keyInsights": [
+        "首个全透明开源的高效VLA框架，代码/数据/权重完全公开",
+        "自适应推理机制根据任务难度动态分配计算资源",
+        "层间截断流匹配实现推理的提前退出，降低76%推理成本",
+        "CVPR 2026 Findings收录，中大×MBZUAI联合工作"
+      ],
+      "impact": "为VLA在资源受限平台（边缘设备、移动机器人）的部署提供了工程化解决方案"
+    },
     {
       "id": "p091",
       "title": "Evolvable Embodied Agent for Robotic Manipulation via Long Short-Term Reflection and Optimization",
