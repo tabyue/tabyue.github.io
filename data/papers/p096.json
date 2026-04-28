@@ -1,0 +1,25 @@
+{
+  "id": "p096",
+  "title": "ABot-M0: VLA Foundation Model for Robotic Manipulation with Unified Data Curation and Action Manifold Learning",
+  "authors": "Alibaba AMAP CV Lab",
+  "venue": "arXiv 2602.11236",
+  "date": "2026-02",
+  "arxiv": "https://arxiv.org/abs/2602.11236",
+  "github": "https://github.com/amap-cvlab/ABot-Manipulation",
+  "tags": [
+    "VLA基础模型",
+    "数据管线",
+    "动作流形学习",
+    "DiT",
+    "跨平台"
+  ],
+  "tldr": "构建通用具身智能Agent的核心挑战在于跨硬件平台的统一建模。ABot-M0提出系统性解决方案：(1)统一数据整理管线——标准化不同机器人平台（单臂/双臂/人形）的异构数据格式和动作空间；(2)Action Manifold Learning(AML)——使用DiT骨干网络直接预测干净的连续动作序列，将学习过程从去噪(denoising)转移到流形上的直接预测，避免Diffusion Policy的采样延迟；(3)联合优化模型架构与训练策略。ABot-M0在多个基准上展示了跨平台泛化能力——一个模型同时控制不同构型的机器人执行操作任务。",
+  "keyInsights": [
+    "统一数据管线标准化异构机器人数据",
+    "Action Manifold Learning替代扩散去噪范式",
+    "DiT骨干直接预测连续动作序列",
+    "跨平台单臂/双臂/人形统一建模"
+  ],
+  "impact": "为跨平台VLA基础模型提供了数据+模型的系统性框架",
+  "addedDate": "2026-04-28"
+}
