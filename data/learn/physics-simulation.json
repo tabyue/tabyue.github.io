@@ -1,7 +1,7 @@
 {
   "id": "physics-simulation",
   "name": "物理仿真引擎",
-  "lastUpdated": "2026-04-27T09:56",
+  "lastUpdated": "2026-04-28T19:38",
   "stage": "阶段五：仿真与 Sim-to-Real",
   "importance": "核心",
   "estimatedHours": 40,
@@ -11,6 +11,12 @@
     "机器人动力学"
   ],
   "sections": [
+    {
+      "title": "物理仿真基础：刚体动力学、碰撞检测与数值积分",
+      "difficulty": "入门",
+      "content": "## 物理仿真基础\n\n在使用 MuJoCo、Isaac Sim 之前，必须理解物理引擎内部的基本原理——刚体动力学方程如何求解、碰撞如何检测和处理、数值积分方法如何影响仿真精度。\n\n### 1. 牛顿-欧拉方程\n\n**单刚体动力学**：\n$$F = m a, \\quad \\tau = I \\alpha + \\omega \\times (I \\omega)$$\n\n其中 $I$ 是惯性张量、$\\alpha$ 是角加速度、$\\omega \\times (I\\omega)$ 是陀螺力矩项（在旋转参考系中出现）。\n\n**关节体系统**（机械臂）：\n$$M(q) \\ddot{q} + C(q, \\dot{q}) \\dot{q} + G(q) = \\tau + J^T F_{ext}$$\n\n物理引擎的核心工作就是高效求解这个方程。\n\n### 2. 碰撞检测\n\n**两阶段流水线**：\n\n| 阶段 | 算法 | 复杂度 | 功能 |\n|------|------|:------:|------|\n| 宽相（Broad Phase）| AABB 树 / 空间哈希 | $O(n \\log n)$ | 快速排除不可能碰撞的对 |\n| 窄相（Narrow Phase）| GJK / EPA / SAT | $O(1)$ per pair | 精确计算接触点和穿透深度 |\n\n**GJK 算法**（Gilbert-Johnson-Keerthi）：\n- 判断两个凸体的闵可夫斯基差是否包含原点\n- 如果包含→碰撞；不包含→计算最近距离\n- 非凸体先分解为凸体的并集\n\n**接触信息**：\n- 接触点位置 $p_c$\n- 接触法线 $n$\n- 穿透深度 $d$\n- 这些信息传给约束求解器\n\n### 3. 接触力求解\n\n**LCP（线性互补问题）方法**（MuJoCo / Bullet 使用）：\n\n接触约束：$f_n \\geq 0$，$d \\geq 0$，$f_n \\cdot d = 0$\n\n其中 $f_n$ 是法向接触力，$d$ 是间距。三个条件的含义：\n- 接触力不能是拉力（$f_n \\geq 0$）\n- 物体不能穿透（$d \\geq 0$）\n- 要么分开（$d > 0, f_n = 0$），要么接触（$d = 0, f_n > 0$）\n\n**摩擦模型**：\n- 库仑摩擦：$|f_t| \\leq \\mu f_n$（摩擦锥约束）\n- 粘性摩擦：$f_t = -b v_t$\n- MuJoCo 用锥约束的近似（金字塔/椭球）\n\n### 4. 数值积分方法\n\n| 方法 | 阶数 | 步骤/步 | 精度 | 稳定性 | 适用 |\n|------|:---:|:------:|:---:|:------:|------|\n| 欧拉前向 | 1 | 1 | $O(h)$ | 差 | 教学用 |\n| 半隐式欧拉 | 1 | 1 | $O(h)$ | 好 | 游戏物理 |\n| RK4 | 4 | 4 | $O(h^4)$ | 中 | 通用 |\n| 隐式欧拉 | 1 | 1(迭代) | $O(h)$ | 极好 | 刚性系统 |\n| Verlet | 2 | 1 | $O(h^2)$ | 好 | 分子动力学 |\n\n**半隐式欧拉**（Symplectic Euler）——物理引擎最常用：\n```python\n# Semi-implicit Euler (energy-conserving)\nv_new = v + a * dt       # Update velocity first\nx_new = x + v_new * dt   # Then update position with new velocity\n```\n\n**为什么不用 RK4？** 在有碰撞的系统中，RK4 的中间步可能产生不合理的穿透状态。半隐式欧拉虽然精度低，但能保持系统能量的长期稳定（辛结构）。\n\n```python\nimport numpy as np\n\ndef simulate_bouncing_ball(dt=0.001, T=5.0, restitution=0.8):\n    '''Simulate a bouncing ball with semi-implicit Euler.'''\n    g = -9.81\n    x, v = 2.0, 0.0  # initial height and velocity\n    \n    trajectory = []\n    for t in np.arange(0, T, dt):\n        # Semi-implicit Euler\n        v += g * dt\n        x += v * dt\n        \n        # Collision with ground\n        if x < 0:\n            x = 0\n            v = -restitution * v  # Coefficient of restitution\n        \n        trajectory.append((t, x, v))\n    \n    return np.array(trajectory)\n\ntraj = simulate_bouncing_ball()\nprint(f'Simulated {len(traj)} steps')\nprint(f'Final height: {traj[-1, 1]:.4f} m')\n```\n\n### 5. 仿真步长的选择\n\n| 场景 | 推荐步长 | 原因 |\n|------|:-------:|------|\n| 自由运动 | 1-5 ms | 精度足够 |\n| 接触/碰撞 | 0.1-1 ms | 碰撞持续时间短 |\n| 柔性体 | 0.01-0.1 ms | 高频模态 |\n| 控制仿真 | = 控制周期 | 保持一致 |\n\n**MuJoCo 默认**：`timestep=0.002`（2ms / 500Hz）——与大多数机器人控制频率匹配。\n\n### 6. 物理引擎内部循环\n\n```\nwhile running:\n    1. Forward dynamics: M(q)*a + C + G = tau + J'*f\n    2. Broad-phase collision detection (AABB tree)\n    3. Narrow-phase collision detection (GJK/EPA)\n    4. Contact constraint formulation (LCP)\n    5. Constraint solver (PGS / Newton / Direct)\n    6. Integration (Semi-implicit Euler / RK4)\n    7. Update state (q, v, sensor readings)\n```\n\n### 练习题\n\n1. **弹跳球仿真**：用前向欧拉和半隐式欧拉分别仿真弹跳球 10 秒，对比能量守恒情况。\n2. **双摆仿真**：用 RK4 仿真双摆（混沌系统），画出相空间轨迹。\n3. **碰撞检测**：实现 2D AABB 碰撞检测，对 1000 个随机矩形找出所有碰撞对。\n4. **步长实验**：在 MuJoCo 中用不同 timestep (0.1ms/1ms/5ms/10ms) 仿真同一个任务，对比轨迹差异和仿真速度。\n5. **摩擦实验**：在 MuJoCo 中改变物体摩擦系数 (0.1-2.0)，观察推物体的行为变化。",
+      "lastUpdated": "2026-04-28T19:38"
+    },
     {
       "title": "MuJoCo",
       "lastUpdated": "2026-04-19T22:16",
