@@ -1,0 +1,27 @@
+{
+  "id": "p100",
+  "title": "Agent-World: Scaling Real-World Environment Synthesis for Embodied Tool-Use Agent Training",
+  "authors": "ByteDance Seed × Renmin University of China",
+  "venue": "arXiv 2026",
+  "date": "2026-04-21",
+  "arxiv": "https://arxiv.org/abs/2604.18292",
+  "tags": [
+    "Agent",
+    "工具使用",
+    "环境合成",
+    "MCP",
+    "字节Seed",
+    "人大",
+    "具身训练"
+  ],
+  "tldr": "现有 LLM Agent 在真实复杂工具环境中泛化能力不足——训练场往往是手工构造的少量\"过家家\"环境。Agent-World 提出一套可扩展的真实环境合成管线：(1)从真实网络数据中自动挖掘 1978 个真实环境和 19822 个工具，覆盖办公/开发/生活服务/科研等多域；(2)基于 Model Context Protocol (MCP) 统一工具接口，将环境与 Agent 解耦；(3)环境反馈驱动的策略共同进化——Agent 在真实环境中暴露短板，训练场自动生成对应的挑战任务，形成\"Agent-Env\"共同演化闭环。实验显示，在 Agent-World 上训练的 Agent 在多步工具调用、长程任务分解、错误恢复三项能力上均显著超越现有方法，并具备对未见环境的零样本泛化能力。",
+  "difficulty": "中级",
+  "addedDate": "2026-04-29",
+  "keyInsights": [
+    "首个千级真实环境+万级工具的Agent训练平台",
+    "MCP统一接口使环境与Agent解耦可复用",
+    "Agent与环境共同进化范式突破手工构造瓶颈",
+    "具身Agent长程工具使用能力评估新基准"
+  ],
+  "impact": "为具身Agent从玩具场景走向真实世界提供基础设施"
+}

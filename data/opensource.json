@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-28T14:25",
+  "lastUpdated": "2026-04-28T20:50",
   "categories": [
     {
       "id": "all",
@@ -44,6 +44,27 @@
   ],
   "projects": [
     {
+      "id": "os059",
+      "name": "Agent-World (真实工具环境合成与Agent训练平台)",
+      "org": "ByteDance Seed / Renmin University of China",
+      "description": "面向具身Agent训练的大规模真实环境合成平台。通过自动挖掘真实网络数据构建了 1978 个真实环境和 19822 个工具，基于 Model Context Protocol (MCP) 统一工具调用接口，使环境与 Agent 策略完全解耦。核心创新是\"Agent-Env 共同进化\"：Agent 在环境中暴露短板→系统自动生成针对性挑战任务→ Agent 能力提升→环境再次进化。提供完整的环境合成管线、预置1978个训练场、Agent训练脚本、评估基准。显著提升 Agent 在长程工具调用、多步任务分解、错误恢复上的泛化能力，为具身智能体从仿真走向真实世界提供关键基础设施。",
+      "url": "https://arxiv.org/abs/2604.18292",
+      "github": "https://arxiv.org/abs/2604.18292",
+      "stars": "新发布",
+      "language": "Python",
+      "category": "framework",
+      "tags": [
+        "Agent训练",
+        "MCP",
+        "工具使用",
+        "环境合成",
+        "字节Seed",
+        "人大",
+        "共同进化"
+      ],
+      "addedDate": "2026-04-29"
+    },
+    {
       "id": "os058",
       "name": "ABot-M0 (通用机器人操作基座模型)",
       "org": "Alibaba AMAP CV Lab (高德视觉实验室)",
@@ -53,7 +74,15 @@
       "stars": "新发布",
       "language": "Python",
       "category": "ai-model",
-      "tags": ["VLA基座", "动作流形学习", "DiT", "跨本体", "统一数据", "高德", "一脑多形"],
+      "tags": [
+        "VLA基座",
+        "动作流形学习",
+        "DiT",
+        "跨本体",
+        "统一数据",
+        "高德",
+        "一脑多形"
+      ],
       "addedDate": "2026-04-28"
     },
     {
@@ -66,7 +95,15 @@
       "stars": "新发布",
       "language": "Python",
       "category": "ai-model",
-      "tags": ["VLA", "CVPR 2026", "高效推理", "自适应推理", "截断流匹配", "边缘部署", "全开源"],
+      "tags": [
+        "VLA",
+        "CVPR 2026",
+        "高效推理",
+        "自适应推理",
+        "截断流匹配",
+        "边缘部署",
+        "全开源"
+      ],
       "addedDate": "2026-04-28"
     },
     {
@@ -79,7 +116,14 @@
       "stars": "新发布",
       "language": "Python",
       "category": "framework",
-      "tags": ["VLA工程化", "标准化", "工具链", "多模型支持", "数据管线", "逐际动力"],
+      "tags": [
+        "VLA工程化",
+        "标准化",
+        "工具链",
+        "多模型支持",
+        "数据管线",
+        "逐际动力"
+      ],
       "addedDate": "2026-04-28"
     },
     {
