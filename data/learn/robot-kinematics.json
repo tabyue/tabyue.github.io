@@ -1,7 +1,7 @@
 {
   "id": "robot-kinematics",
   "name": "机器人运动学",
-  "lastUpdated": "2026-04-28T19:07",
+  "lastUpdated": "2026-04-29T15:05",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 60,
@@ -11,6 +11,12 @@
     "微积分"
   ],
   "sections": [
+    {
+      "title": "逆运动学求解的完整方法论",
+      "difficulty": "中级",
+      "content": "## 逆运动学求解方法论\n\n正运动学（FK）是唯一的、简单的；逆运动学（IK）可能有多解、无解或无穷多解——是运动学中最有挑战性的问题。\n\n### 1. IK 问题的数学本质\n\n给定目标位姿 $T_d \\in SE(3)$，求关节角 $q \\in \\mathbb{R}^n$ 使得 $FK(q) = T_d$。\n\n**解的存在性与唯一性**：\n| 条件 | $n < 6$ | $n = 6$ | $n > 6$ |\n|------|:-------:|:-------:|:-------:|\n| 名称 | 欠自由度 | 恰好 | 冗余 |\n| 可达位姿 | 子空间 | 离散集 | 连续集 |\n| 解的数量 | 0 或有限 | 0-16 | 0 或 $\\infty$ |\n| 额外约束 | 放松位姿要求 | — | 零空间优化 |\n\n### 2. 解析法详解\n\n**Pieper 定理**：当机器人最后三个旋转关节轴交于一点（球形手腕）时，6R 臂可以解析求解。\n\n**求解框架（位置-姿态解耦）**：\n\n1. **腕心位置**：$p_w = p_d - d_6 \\cdot R_d \\cdot z_6$\n2. **求 $\\theta_1, \\theta_2, \\theta_3$**（位置子问题）：由腕心几何关系\n3. **求 $\\theta_4, \\theta_5, \\theta_6$**（姿态子问题）：$R_3^6 = R_0^{3T} \\cdot R_d$\n\n**UR5 的解析 IK**（8 组解）：\n```python\ndef ur5_ik(T_target, params):\n    '''Analytical IK for UR5 (8 solutions).'''\n    d1, a2, a3, d4, d5, d6 = params\n    solutions = []\n    \n    # Step 1: theta1 (2 solutions)\n    p05 = T_target[:3, 3] - d6 * T_target[:3, 2]\n    psi = np.arctan2(p05[1], p05[0])\n    phi = np.arccos(d4 / np.sqrt(p05[0]**2 + p05[1]**2))\n    theta1_options = [psi + phi + np.pi/2, psi - phi + np.pi/2]\n    \n    for theta1 in theta1_options:\n        # Step 2: theta5 (2 solutions per theta1)\n        # ... (geometric derivation)\n        for theta5 in theta5_options:\n            # Step 3: theta6\n            # Step 4: theta2, theta3 (2 solutions)\n            # Step 5: theta4\n            # ... collect all valid solutions\n            pass\n    \n    return solutions  # Up to 8 solutions\n```\n\n### 3. 数值法详解\n\n#### Jacobian 转置法（最简单）\n$$\\Delta q = \\alpha J^T \\Delta x$$\n\n优点：不用求逆，不会在奇异点爆炸。缺点：收敛慢。\n\n#### Jacobian 伪逆法\n$$\\Delta q = J^\\dagger \\Delta x = J^T(JJ^T)^{-1} \\Delta x$$\n\n优点：收敛快。缺点：奇异点附近不稳定。\n\n#### 阻尼最小二乘（DLS / Levenberg-Marquardt）\n$$\\Delta q = J^T(JJ^T + \\lambda^2 I)^{-1} \\Delta x$$\n\n$\\lambda$ 在远离奇异时小（≈伪逆），在奇异附近自动增大（≈转置法）。\n\n**自适应阻尼**：\n$$\\lambda^2 = \\begin{cases} 0 & \\text{if } \\sigma_{min} > \\epsilon \\\\ \\lambda_{max}^2 (1 - (\\sigma_{min}/\\epsilon)^2) & \\text{otherwise} \\end{cases}$$\n\n### 4. 冗余臂的 IK：零空间利用\n\n对 7+ 关节的冗余臂，IK 有无穷多解。解可以分解为：\n$$\\dot{q} = J^\\dagger \\dot{x} + (I - J^\\dagger J) z$$\n\n第一项满足末端任务，第二项 $(I - J^\\dagger J)z$ 在零空间内投影——不影响末端位置但可以优化辅助目标。\n\n**典型辅助目标**：\n| 目标 | $z$ 的选择 |\n|------|----------|\n| 避关节极限 | $z = -\\nabla H_{limit}(q)$ |\n| 最大操作度 | $z = \\nabla w(q)$ |\n| 避障 | $z = -\\nabla d_{obs}(q)$ |\n| 舒适位型 | $z = -k(q - q_{comfort})$ |\n\n```python\ndef redundant_ik(J, x_dot, q, q_comfort, alpha=0.1):\n    '''IK for redundant robot with null-space optimization.'''\n    J_pinv = np.linalg.pinv(J)\n    N = np.eye(len(q)) - J_pinv @ J  # Null-space projector\n    z = -alpha * (q - q_comfort)  # Secondary: stay near comfort pose\n    dq = J_pinv @ x_dot + N @ z\n    return dq\n```\n\n### 5. IK 求解器对比\n\n| 求解器 | 类型 | 速度 | 鲁棒性 | 来源 |\n|--------|------|:---:|:------:|------|\n| KDL | 数值(NR) | 中 | 低（奇异问题）| ROS 默认 |\n| TRAC-IK | 混合(解析+数值) | 快 | 高 | MoveIt 推荐 |\n| IKFast | 解析(自动生成) | 极快 | 极高 | OpenRAVE |\n| Pinocchio | 数值(DLS) | 快 | 高 | 研究用 |\n| 自定义解析 | 解析 | 极快 | 极高 | 特定机器人 |\n\n### 练习题\n\n1. **多解可视化**：对 UR5，给定一个可达位姿，求出 8 组 IK 解，用 RViz 逐一可视化。\n2. **奇异回避**：实现自适应阻尼 DLS，对比固定阻尼在奇异附近的行为。\n3. **零空间利用**：对 7-DOF Franka Panda，实现末端轨迹跟踪 + 零空间避关节极限。\n4. **性能对比**：同一组 1000 个随机目标位姿，对比 KDL、TRAC-IK、IKFast 的求解成功率和平均时间。\n5. **IK 在轨迹中的应用**：对一条笛卡尔空间直线轨迹，逐点求 IK，处理解的连续性（避免解跳变）。",
+      "lastUpdated": "2026-04-29T15:05"
+    },
     {
       "title": "旋转表示的完整理论：欧拉角、四元数、旋转向量与李群",
       "difficulty": "入门",
