@@ -1,0 +1,26 @@
+{
+  "id": "p098",
+  "title": "A1: A Fully Transparent Open-Source, Adaptive and Efficient Truncated Vision-Language-Action Model",
+  "authors": "Sun Yat-sen University / MBZUAI / Spatialtemporal AI / ATeam",
+  "venue": "arXiv 2026",
+  "date": "2026-04-07",
+  "arxiv": "https://arxiv.org/abs/2604.05672",
+  "github": "https://github.com/ATeam-Research/A1",
+  "tags": [
+    "VLA",
+    "开源",
+    "截断式架构",
+    "预算感知推理",
+    "中山大学",
+    "MBZUAI"
+  ],
+  "tldr": "A1 提出一种全透明、全开源的截断式(Truncated) VLA 框架，针对主流 VLA 被'千亿级 VLM 骨干 + 迭代扩散/流匹配动作头'卡住推理成本的痛点，设计预算感知自适应推理(Budget-Aware Adaptive Inference)。核心是把 VLM 骨干按深度切分，根据任务难度动态决定推理深度——简单任务浅层出动作、复杂任务深层推理。在不牺牲操作成功率(LIBERO/RealWorld bench 对齐 π0 水平)的前提下显著降低延迟。完整释出代码、训练配置、Model Zoo 权重，配套 Deploy/Evaluation/Training 全套工具链。",
+  "keyInsights": [
+    "Truncated VLA 架构：按深度切分 VLM 骨干实现深度自适应",
+    "Budget-Aware 推理策略：按任务复杂度分配算力",
+    "Model Zoo 完整开源：训练配置+权重+部署工具链全透明",
+    "面向中小团队的低成本 VLA 基线"
+  ],
+  "impact": "填补学界'高透明度可复现 VLA 基线'空白，为硬件受限场景提供实用范本",
+  "addedDate": "2026-04-29"
+}

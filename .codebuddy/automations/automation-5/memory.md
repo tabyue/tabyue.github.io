@@ -1,5 +1,21 @@
 # Automation-5 Memory: 具身智能门户每6小时更新
 
+## 2026-04-29T04:08 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿（gh issue list 返回 []）
+- 新闻 +4（n184-n187）：A1全透明开源VLA(中大×MBZUAI×Spatialtemporal)、第三届产业大会海淀闭幕日(灵心巧手全球市占80%+/产业链工作组成立)、猎聘《2026机器人人才报告》(人形赛道+215.80%/平均年薪40.61万/供需比1:8)、教育部9所高校获批具身智能本科专业(北邮/上交/浙大/北航等首批)
+- 论文 +2（p098-p099）：A1 Truncated VLA(arXiv 2604.05672/Budget-Aware Adaptive Inference/全开源Model Zoo)、LoHo-Manip Trace-Conditioned VLA(arXiv 2604.21924/长程操作分层框架/Franka真机验证)
+- 开源 +0：A1已由并行实例添加为os057，本轮不重复
+- 招聘 +2（j090-j091）：9所高校具身智能专业教职招聘(青年教师/博士后/tenure-track)、灵心巧手Linker Hand全球扩招(机械/控制/量产工艺/触觉)
+- 学习模块深化 ×1：platform-engineering新增"Observability 可观测性：日志/指标/追踪三支柱 + 机器人数据回放"section（Monitoring vs Observability核心区别+三支柱标准范式+结构化JSON日志实现+高频遥测采样策略+OpenTelemetry跨进程Trace+机器人第四支柱MCAP/rosbag/Rerun回放+SLO/SLI/SLA Error Budget+智能根因分析+工程落地清单）。platform-engineering 从 52K/11 sec → 61K/12 sec
+- 清理临时文件：_batchA.json, _q.py
+
+**当前数据编号水位：** news→n187, papers→p099, opensource→os058, jobs→j091
+**Git:** 6c740bb → (待提交)
+
+
+
 ## 2026-04-28T14:41 执行记录
 
 **更新概要：**

@@ -1,0 +1,25 @@
+{
+  "id": "p099",
+  "title": "LoHo-Manip: Long-Horizon Manipulation via Trace-Conditioned VLA Planning",
+  "authors": "Isabella Liu et al. (10 authors)",
+  "venue": "arXiv 2026",
+  "date": "2026-04-24",
+  "arxiv": "https://arxiv.org/abs/2604.21924",
+  "tags": [
+    "长程操作",
+    "VLA",
+    "分层规划",
+    "Trace-Conditioning",
+    "Franka",
+    "累积误差"
+  ],
+  "tldr": "长程操作(如'把咖啡杯放进橱柜并关上门')一直是 VLA 策略的软肋——多步依赖、进度敏感、执行误差会累积爆炸。LoHo-Manip 提出 Trace-Conditioned 分层框架：(1)高层 VLM 规划器将长程任务分解为带时空轨迹提示(trace)的子任务序列；(2)Trace-Conditioned VLA 底层策略接受子任务描述+预期轨迹 trace 作为双条件输入；(3)trace 既做进度信号又做错误早停触发。实验覆盖具身规划、长程推理、轨迹预测及 Franka 真机端到端操作——在多步骤任务成功率、进度鲁棒性上显著超越端到端 VLA 基线。",
+  "keyInsights": [
+    "Trace-Conditioning：时空轨迹作为进度信号弥合规划-执行鸿沟",
+    "高层 VLM + 低层 Trace-Conditioned VLA 分层架构",
+    "仿真+Franka 真机验证长程操作成功率",
+    "对'累积执行误差'问题提供可落地方案"
+  ],
+  "impact": "为 VLA 解决长程操作累积误差问题提供可复现的分层方案",
+  "addedDate": "2026-04-29"
+}
