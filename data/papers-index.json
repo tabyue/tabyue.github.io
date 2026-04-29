@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-29T11:48",
+  "lastUpdated": "2026-04-29T12:00",
   "papers": [
+    {
+      "id": "p104",
+      "title": "Libra-VLA: Achieving Learning Equilibrium via Asynchronous Coarse-to-Fine Dual-System",
+      "authors": "Anonymous (Under Review)",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.24921",
+      "github": "",
+      "tags": ["VLA", "双系统", "粗细解耦", "异步训练", "认知科学", "训练均衡"],
+      "tldr": "提出Libra-VLA，一种新型粗细双系统VLA架构。将VLA学习复杂度显式解耦为粗-细层级：粗系统（Coarse System）负责高层语义理解和任务规划，类似认知科学中的System 2慢思考；细系统（Fine System）专注精细动作生成，类似System 1快反应。两者通过异步训练策略协同优化，避免语义理解与动作精度之间的学习干扰，实现训练均衡。在多个操作基准上显著提升性能。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-29",
+      "keyInsights": [
+        "粗细双系统设计：显式解耦高层语义规划与低层动作执行，各自独立优化",
+        "异步训练策略：两个系统以不同节奏和目标训练，避免梯度冲突",
+        "认知科学启发：借鉴Kahneman双系统理论，System 1（快速直觉）+ System 2（慢速推理）",
+        "训练均衡（Learning Equilibrium）：解决VLA训练中语言理解vs动作精度的跷跷板效应"
+      ],
+      "impact": "为VLA架构设计提供了新范式——双系统解耦，解决了当前VLA模型训练中普遍存在的学习不均衡问题，对提升VLA在复杂长程任务中的表现有重要参考"
+    },
+    {
+      "id": "p105",
+      "title": "M²-VLA: Boosting Vision-Language Models for Generalizable Manipulation via Layer Mixture and Meta-Skills",
+      "authors": "Siyao Xiao, Yuhong Zhang, Zhifang Liu, Zihan Gao, Jingye Zhang, Sinwai Choo et al.",
+      "venue": "arXiv 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.24182",
+      "github": "",
+      "tags": ["VLA", "Mixture of Layers", "Meta Skills", "泛化", "少样本", "操作"],
+      "tldr": "提出M²-VLA，通过两个关键技术提升VLA泛化操作能力：（1）Mixture of Layers (MoL)——从VLM多层密集语义特征中选择性提取任务关键信息，突破仅使用最后一层特征的信息瓶颈；（2）Meta Skill Module (MSM)——将操作轨迹分解为可复用的元技能原语（接近/对齐/抓取/放置等），在有限模型容量下高效学习轨迹。在SimplerEnv和真机实验中显著提升泛化性能。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-29",
+      "keyInsights": [
+        "Mixture of Layers：跨层特征聚合，解决VLM特征传递中的信息损失问题",
+        "Meta Skill Module：将复杂轨迹分解为可复用的元技能原语，提升学习效率",
+        "两个模块联合使用，在少样本新任务适应场景下优势显著",
+        "设计思路：用更聪明的信息提取+更高效的动作表示来弥补小模型的容量限制"
+      ],
+      "impact": "为提升VLA泛化能力提供了轻量级方案：不需要更大的模型或更多的数据，而是通过更好的特征利用和动作表示实现泛化突破"
+    },
     {
       "id": "p102",
       "title": "Foca-VLA: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation",

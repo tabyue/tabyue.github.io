@@ -1,0 +1,13 @@
+{
+  "id": "p105",
+  "title": "M²-VLA: Boosting Vision-Language Models for Generalizable Manipulation via Layer Mixture and Meta-Skills",
+  "authors": "Siyao Xiao, Yuhong Zhang, Zhifang Liu, Zihan Gao, Jingye Zhang, Sinwai Choo et al.",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.24182",
+  "github": "",
+  "problem": "VLA模型在操作泛化方面面临两大瓶颈：（1）VLM到VLA的特征传递中存在信息瓶颈——通常仅使用VLM最后一层特征，丢失了中间层的丰富语义信息；（2）有限模型容量下复杂轨迹的学习效率低——整条轨迹作为一个不可分的序列学习，忽略了操作任务中存在的可复用结构。",
+  "method": "提出M²-VLA，通过两个互补模块增强VLA泛化能力：\n\n1. **Mixture of Layers (MoL)**：从VLM的多层特征中选择性提取任务关键信息。不再仅依赖最后一层输出，而是通过可学习的注意力权重跨层聚合语义特征，让模型根据当前任务自适应地从不同抽象层级提取有用信息。\n\n2. **Meta Skill Module (MSM)**：将操作轨迹分解为可复用的元技能原语（如接近、对齐、抓取、搬运、放置等）。每个元技能是一个轻量级策略头，MSM通过识别当前阶段自动选择和切换元技能。这大幅降低了轨迹学习的复杂度——学习几个通用元技能比学习每条完整轨迹高效得多。",
+  "results": "- 在SimplerEnv和真实机器人实验中显著提升泛化性能\n- 在少样本新任务适应场景下优势尤为明显\n- MoL和MSM各自独立均有提升，联合使用效果最佳",
+  "significance": "提供了一种不依赖增大模型或增加数据的VLA泛化提升方案。MoL解决特征利用效率，MSM解决动作表示效率，两者联合为资源受限场景下的VLA部署提供了实用的泛化增强策略。"
+}
