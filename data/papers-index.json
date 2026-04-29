@@ -1,6 +1,60 @@
 {
-  "lastUpdated": "2026-04-28T20:50",
+  "lastUpdated": "2026-04-29T11:48",
   "papers": [
+    {
+      "id": "p102",
+      "title": "Foca-VLA: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation",
+      "authors": "CVPR 2026 Authors",
+      "venue": "CVPR 2026",
+      "date": "2026-06",
+      "arxiv": "https://cvpr.thecvf.com/virtual/2026/poster/38209",
+      "github": "",
+      "tags": [
+        "VLA",
+        "CVPR 2026",
+        "力位混合控制",
+        "力感知",
+        "接触丰富操作",
+        "端到端"
+      ],
+      "tldr": "Foca-VLA是CVPR 2026收录的端到端视觉-语言-动作框架，首次为VLA模型引入混合力-位置控制和显式力感知能力。针对接触丰富的操作任务（如装配、擦拭、插入等需要精确力控的场景），Foca-VLA将力传感器信息原生融入VLA架构，使模型不仅能看到和理解任务，还能'感受'接触力并做出力-位置联合决策。这填补了现有VLA方法在接触力控制方面的空白——大多数VLA只做位置控制，遇到需要力反馈的任务会失败。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-29",
+      "keyInsights": [
+        "首次将力传感器信息原生融入VLA端到端框架",
+        "混合力-位置控制：可同时输出位置目标和力约束",
+        "力感知模块使VLA能理解'该用多大力'，而非仅'该去哪'",
+        "在接触丰富任务（装配/擦拭/插入）上显著优于纯位置控制的VLA"
+      ],
+      "impact": "填补了VLA力控空白，CVPR 2026级别工作，推动VLA从纯视觉位置控制向力-视觉多模态控制演进"
+    },
+    {
+      "id": "p103",
+      "title": "MM-ACT: Unified Vision-Language-Action Model with Shared Token Space for Semantic Understanding, Environment Prediction and Interaction",
+      "authors": "CVPR 2026 Authors",
+      "venue": "CVPR 2026",
+      "date": "2026-06",
+      "arxiv": "https://github.com/IvanGuang/CVPR-2026-Robot",
+      "github": "",
+      "tags": [
+        "VLA",
+        "CVPR 2026",
+        "统一token空间",
+        "多模态",
+        "环境预测",
+        "语义理解"
+      ],
+      "tldr": "MM-ACT是CVPR 2026机器人方向论文，提出在共享token空间中统一文本、图像和动作三种模态的VLA模型。模型可从三种模态中生成兼具语义理解（理解任务指令）、环境预测（预测操作后的场景变化）和环境交互（输出机器人动作）三种能力的策略。区别于传统VLA将视觉-语言骨干冻结+仅训练动作头的方式，MM-ACT真正实现三模态端到端联合训练。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-29",
+      "keyInsights": [
+        "统一token空间：文本/图像/动作共享同一词表和Transformer",
+        "三合一能力：语义理解+环境预测+动作生成在单一模型中统一",
+        "端到端联合训练替代传统的冻结骨干+动作头微调范式",
+        "环境预测能力使模型具备隐式世界模型特性"
+      ],
+      "impact": "CVPR 2026代表性工作，展示了VLA从'感知-动作'二元模型向'理解-预测-交互'三元模型的演进方向"
+    },
     {
       "id": "p101",
       "title": "X2-N: A Transformable Wheel-legged Humanoid Robot with Dual-mode Locomotion and Full Upper-Body Manipulation",
