@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-04-29T12:00",
+  "lastUpdated": "2026-04-30T01:12",
   "papers": [
+    {
+      "id": "p107",
+      "title": "VLA-Forget: Vision-Language-Action Unlearning for Embodied Foundation Models",
+      "authors": "Ravi Ranjan, Agoritsa Polyzou",
+      "venue": "ACL 2026 KnowFM Workshop",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.03956",
+      "github": "",
+      "tags": ["VLA", "机器学习遗忘", "Unlearning", "安全", "合规", "量化鲁棒"],
+      "tldr": "首批把机器学习遗忘问题系统化迁移到VLA具身场景的工作。提出VLA-Forget混合框架：（1）比率感知选择性编辑——只对遗忘样本激活比率超阈值的神经元做定向编辑，保护感知能力；（2）层选择性推理/动作遗忘——定位语言主干中对目标行为贡献最大的层做针对性遗忘。相比强基线：遗忘效力+10%、感知特异性+22%、任务保留+9%、后量化恢复-55%。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-30",
+      "keyInsights": [
+        "VLA的不良知识分散在感知/对齐/推理/动作各层，单层遗忘不够彻底",
+        "比率感知选择性编辑：只动对遗忘样本激活显著的神经元，保护保留样本的特征",
+        "层选择性遗忘：通过层影响力分析定位关键Transformer层，仅在这些层做遗忘",
+        "特别关注量化鲁棒性——防止INT8量化后被擦除的行为\"复活\""
+      ],
+      "impact": "VLA量产部署后的安全召回机制——不用回厂重训就能局部修补危险行为，同时兼顾法规合规（AI Act）和边缘量化场景"
+    },
+    {
+      "id": "p106",
+      "title": "WholeBodyVLA: Towards Unified Latent VLA for Whole-Body Loco-Manipulation Control",
+      "authors": "OpenDriveLab (Shanghai AI Lab, Agibot)",
+      "venue": "ICLR 2026",
+      "date": "2025-12",
+      "arxiv": "https://arxiv.org/abs/2512.11047",
+      "github": "https://github.com/OpenDriveLab/WholebodyVLA",
+      "tags": ["人形", "VLA", "loco-manipulation", "统一隐空间", "RL精调", "ICLR 2026", "Agibot X2"],
+      "tldr": "首个端到端实现人形机器人大空间loco-manipulation的VLA框架。核心创新是统一隐空间动作——把异构演示压到同一低维动作流形，VLA只需预测流形上的z_t，共享解码器再展开为下肢步态+上肢末端+手指DoF。在模仿学习后用PPO+KL约束做面向loco-manipulation的RL精调。部署在智元Agibot X2平台上，首次完成走100+米跨多房间的端到端闭环任务。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-30",
+      "keyInsights": [
+        "统一隐空间动作：不堆大向量回归所有DoF，而是学紧凑行为流形",
+        "loco-manipulation联合奖励：速度跟踪+ZMP稳定+末端误差+接触力+KL约束",
+        "分层频率部署：视觉10Hz→VLA推理10Hz→解码器+PD环500Hz",
+        "相对模块化基线任务成功率42%→73%；相对多头VLA样本效率3.1倍"
+      ],
+      "impact": "给人形全身控制指出一条兼顾数据效率与稳定性的路线——先学行为流形再在流形上预测，替代硬切换的分层规划和暴力端到端回归"
+    },
     {
       "id": "p104",
       "title": "Libra-VLA: Achieving Learning Equilibrium via Asynchronous Coarse-to-Fine Dual-System",

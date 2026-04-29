@@ -1,0 +1,13 @@
+{
+  "id": "p106",
+  "title": "WholeBodyVLA: Towards Unified Latent VLA for Whole-Body Loco-Manipulation Control",
+  "authors": "OpenDriveLab Team (Shanghai AI Lab, Agibot)",
+  "venue": "ICLR 2026",
+  "date": "2025-12",
+  "arxiv": "https://arxiv.org/abs/2512.11047",
+  "github": "https://github.com/OpenDriveLab/WholebodyVLA",
+  "problem": "人形机器人在执行大空间任务（如走到远处桌前开抽屉取物再送回）时需要同时协调行走（locomotion）与操作（manipulation），即 loco-manipulation。传统方案分两条路线：（1）模块化——上层规划器分解为走+操作两阶段，靠硬切换衔接，整体不连贯且在接触扰动下脆弱；（2）端到端 VLA——把全身所有自由度（下肢步态 + 上肢操作 + 手指抓取）统一回归，动作空间维度过大导致训练效率低、接触阶段的采样效率差。如何在一个统一框架里既享受端到端的数据效率又保留分层控制的稳定性，是人形全身控制的核心难题。",
+  "method": "提出 WholeBodyVLA，一个面向人形大空间 loco-manipulation 的统一隐空间 VLA 框架，核心有三点：\n\n1. **Unified Latent Action Space（统一隐空间动作）**：不直接回归关节力矩或末端位姿，而是先用编码器把多源演示（遥操作、自采轨迹、仿真）压缩到一个低维隐动作空间 z_t，VLA 模型输出 z_t，再由一个共享解码器解码为下肢步态参数 + 上肢末端轨迹 + 手指 DoF。隐空间的优势：（a）维度压缩显著提升样本效率；（b）不同演示来源的行为被对齐到同一空间，缓解异构数据分布不一致；（c）为下游 RL 微调提供平滑的动作流形。\n\n2. **Loco-Manipulation-Oriented Reinforcement Learning（面向 loco-manipulation 的 RL 策略精调）**：在模仿学习得到的隐空间策略基础上，用 PPO 在仿真里做行为克隆正则 + 任务奖励的联合优化。奖励设计分解为 locomotion 奖励（速度跟踪、ZMP 稳定、足底摩擦锥）+ manipulation 奖励（末端误差、接触力约束、物体位姿），并加上 KL 约束避免远离 BC 分布。这种设计让策略在接触、拿重物、地形变化时保留恢复能力。\n\n3. **Closed-Loop Execution in Large Space**：部署在智元 Agibot X2 双足平台上，摄像头以 10Hz 刷新，VLA 推理以 10Hz 输出 z_t，解码器 + 低层 PD 环以 500Hz 闭环。对行走 100+ 米、跨越多个房间、执行多次拾取放置的真机场景首次实现端到端闭环完成。",
+  "results": "- 在 Agibot X2 人形平台上首次实现端到端的大空间 loco-manipulation 闭环：任务包括走到厨房取杯、走到卧室叠衣服等，单次任务时长 2-5 分钟，覆盖空间范围 >20 米。\n- 与模块化基线（行走规划 + 操作 VLA 串联）相比，任务成功率从 42% 提升至 73%。\n- 与纯端到端多头 VLA 基线相比，训练样本效率提升 3.1 倍（达到相同成功率所需演示数）。\n- 消融：去掉 RL 精调，开环执行在地面摩擦变化场景下成功率下降 28%；去掉统一隐空间改为多头独立回归，训练收敛速度下降 60%。\n- ICLR 2026 接收。",
+  "significance": "给人形全身控制提供了一条既有数据效率又有稳定性的路线图。统一隐空间动作是关键洞察——不是把所有自由度暴力堆成大向量去回归，而是先学一个紧凑的行为流形，让 VLA 在流形上预测。这与具身基础模型的\"预训练表示层 + 轻量策略头\"思路一脉相承，对开源的 Agibot X2 平台和 OpenDriveLab 的参考实现，将加速国内人形团队跳过分层控制的工程陷阱，直接在统一隐空间上迭代。"
+}
