@@ -1,7 +1,7 @@
 {
   "id": "physics-simulation",
   "name": "物理仿真引擎",
-  "lastUpdated": "2026-04-30T10:58",
+  "lastUpdated": "2026-04-30T11:33",
   "stage": "阶段五：仿真与 Sim-to-Real",
   "importance": "核心",
   "estimatedHours": 40,
@@ -11,6 +11,12 @@
     "机器人动力学"
   ],
   "sections": [
+    {
+      "title": "仿真基准与性能对比：MuJoCo vs Isaac vs Genesis",
+      "difficulty": "中级",
+      "content": "## 仿真器选型与性能对比\n\n机器人仿真器选择直接决定了项目效率——选错会导致数月延误。本节系统对比主流仿真器。\n\n### 1. 主流仿真器全景\n\n| 仿真器 | 公司/机构 | 物理引擎 | GPU | 开源 | 许可 |\n|--------|----------|:-------:|:---:|:---:|------|\n| **MuJoCo** | Google DeepMind | 自研 | MJX | ✓ | Apache 2.0 |\n| **Isaac Lab** | NVIDIA | PhysX 5 | 原生 | ✓ | Apache 2.0 |\n| **Genesis** | CMU 等 | 自研（可微）| ✓ | ✓ | Apache 2.0 |\n| **Drake** | TRI | 自研（刚体）| 部分 | ✓ | BSD |\n| **Gazebo Classic** | OSRF | ODE/Bullet | ✗ | ✓ | Apache 2.0 |\n| **Gazebo Harmonic** | OSRF | DART/Bullet | 部分 | ✓ | Apache 2.0 |\n| **PyBullet** | — | Bullet | ✗ | ✓ | Zlib |\n| **SAPIEN** | UCSD | PhysX | ✓ | ✓ | MIT |\n| **Webots** | Cyberbotics | ODE | ✗ | ✓ | Apache 2.0 |\n\n### 2. 性能对比（训练场景）\n\n**基准：四足机器人 PPO 训练**\n\n| 仿真器 | FPS (单环境) | FPS (4096 并行) | 硬件 |\n|--------|:-----------:|:--------------:|------|\n| MuJoCo (CPU) | 2000 | N/A | CPU |\n| MuJoCo + MJX | 不适合单 | 500K+ | 1x A100 |\n| Isaac Gym (旧) | N/A | 500K+ | 1x A100 |\n| Isaac Lab | N/A | 300-500K | 1x A100 |\n| Genesis | N/A | 1M+ | 1x A100 |\n| PyBullet | 500 | N/A | CPU |\n| Drake | 500 | N/A | CPU |\n\n**结论**：\n- **RL 大规模训练**：Genesis / Isaac Lab / MuJoCo MJX（GPU 并行）\n- **单环境调试**：MuJoCo CPU（启动快、稳定）\n- **学术研究**：Drake（严谨）\n- **教学**：PyBullet / Gazebo（生态大）\n\n### 3. MuJoCo 的优势\n\n| 特性 | 说明 |\n|------|------|\n| **精度** | 约束求解器精确 |\n| **速度** | CPU 单线程就很快 |\n| **可微（MJX）** | 支持梯度优化 |\n| **接触稳定性** | 软约束 + LCP |\n| **Python API** | 原生支持 |\n| **DeepMind 背书** | 持续投入 |\n\n**劣势**：\n- GPU 版（MJX）有 JAX 学习曲线\n- 可视化不如 Isaac\n\n### 4. Isaac Lab 的优势\n\n| 特性 | 说明 |\n|------|------|\n| **GPU 原生** | 数千并行环境 |\n| **视觉质量** | Isaac Sim（基于 OmniVerse）|\n| **Domain Randomization** | 内置强大 |\n| **机器人资产** | 大量预置（UR5/Franka/Anymal/H1）|\n| **生态** | NVIDIA 全力投入 |\n\n**劣势**：\n- 启动慢（分钟级）\n- Omniverse 依赖重（~20GB 安装）\n- 调试不如 MuJoCo 直观\n\n### 5. Genesis 的优势（2025 新秀）\n\n| 特性 | 说明 |\n|------|------|\n| **最快** | 比 Isaac 快 2-5x |\n| **可微分** | 原生支持梯度 |\n| **多物理** | 刚体 / 软体 / 流体 / MPM |\n| **资产丰富** | 内置 URDF 库 |\n| **Python 友好** | 简洁 API |\n\n**劣势**：\n- 新（2024 底发布），生态还在建设\n- 某些边界情况 bug 较多\n\n### 6. 选型决策树\n\n```\n你的场景？\n├── 大规模 RL 训练（4000+ 并行）？\n│   ├── 需要最快？ → Genesis\n│   ├── 需要最多机器人资产？ → Isaac Lab\n│   └── 需要可微分？ → Genesis / MuJoCo MJX\n├── 研究/论文？\n│   ├── 需要可微分？ → MuJoCo MJX / Genesis\n│   ├── 需要严谨性？ → Drake\n│   └── 通用？ → MuJoCo\n├── 学习/教学？\n│   ├── ROS2 集成？ → Gazebo Harmonic\n│   └── Python 简洁？ → PyBullet\n└── 工业部署验证？\n    ├── 真实物理？ → Drake\n    └── 视觉逼真？ → Isaac Sim\n```\n\n### 7. 迁移常见痛点\n\n**从 Gym 到 Isaac Lab**：\n- API 变化：`env.step(action)` → `env.step(action_batch)` (shape: (B, A))\n- 渲染不同：头less vs GUI\n- 时间概念：`dt` 可能不同\n\n**从 MuJoCo 到 Isaac**：\n- URDF/MJCF 双格式：需要转换（`mujoco` 命令行工具）\n- 物理参数重调：solver 不同 → 行为不同\n- 性能期待：Isaac 启动慢但批量快\n\n### 练习题\n\n1. **横向 benchmark**：在相同的 reaching 任务上对比 MuJoCo/PyBullet/Isaac 的 FPS。\n2. **资产迁移**：将一个 MJCF 机器人模型转换为 URDF，在 Isaac 中加载。\n3. **Genesis 入门**：安装 Genesis，跑一个内置示例，对比 MuJoCo 的速度。\n4. **MJX 并行**：用 MuJoCo MJX 并行仿真 1024 个倒立摆，测量吞吐量。\n5. **物理精度对比**：同一个碰撞场景（两球相撞）在四个仿真器中的行为差异。",
+      "lastUpdated": "2026-04-30T11:33"
+    },
     {
       "title": "MuJoCo 深入：从建模到高效仿真",
       "difficulty": "中级",

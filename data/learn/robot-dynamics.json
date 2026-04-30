@@ -1,7 +1,7 @@
 {
   "id": "robot-dynamics",
   "name": "机器人动力学",
-  "lastUpdated": "2026-04-30T10:58",
+  "lastUpdated": "2026-04-30T11:33",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 50,
@@ -12,6 +12,12 @@
     "机器人运动学"
   ],
   "sections": [
+    {
+      "title": "动力学在机器人控制中的应用实战",
+      "difficulty": "高级",
+      "content": "## 动力学在机器人控制中的应用\n\n有了完整的动力学理论和模型，本节展示这些理论如何直接应用到机器人控制的实战场景。\n\n### 1. 重力补偿：最基础的应用\n\n**问题**：无重力补偿时，关节必须持续输出力矩对抗重力——浪费能量 + 发热。\n\n**解决方案**：在关节力矩指令中加上 $G(q)$ 前馈项：\n$$\\tau = \\tau_{PD} + G(q)$$\n\n**效果**：机器人可以\"零力拖动\"——在任意位置悬停，人可以轻推调整。\n\n```python\nimport pinocchio as pin\nimport numpy as np\n\ndef gravity_compensation_control(model, data, q, q_desired, Kp, Kd):\n    '''PD + gravity compensation.'''\n    # Compute gravity term\n    tau_gravity = pin.computeGeneralizedGravity(model, data, q)\n    \n    # PD\n    e = q_desired - q\n    de = -pin.centerOfMass(model, data, q)  # Simplified\n    tau_pd = Kp * e + Kd * de\n    \n    return tau_pd + tau_gravity\n```\n\n### 2. 计算力矩控制（Computed Torque Control）\n\n**完整动力学反馈线性化**：\n$$\\tau = M(q)[\\ddot{q}_d + K_p e + K_d \\dot{e}] + C(q,\\dot{q})\\dot{q} + G(q)$$\n\n代入动力学方程后，闭环误差方程变为：\n$$\\ddot{e} + K_d \\dot{e} + K_p e = 0$$\n\n**优点**：线性二阶系统，容易调参。\n**缺点**：需要精确的 $M, C, G$ 模型。\n\n### 3. 阻抗控制（Impedance Control）\n\n**核心**：让末端表现得像一个弹簧-阻尼系统。\n\n$$\\tau = M(q)\\ddot{q} + h(q,\\dot{q}) - J^T (K_{cart}(x_d - x) - B_{cart}\\dot{x})$$\n\n**应用**：\n- **抛光/擦拭**：沿表面滑动，垂直方向保持 5N 接触力\n- **装配**：适应对齐误差\n- **人机协作**：人推机器人手，它柔顺移动\n\n### 4. 全身控制（Whole-Body Control）\n\n**适用**：人形机器人/四足机器人。\n\n**优化问题**：\n$$\\min_{\\ddot{q}, \\tau, F_c} \\quad \\sum_i w_i \\|\\ddot{x}_i - \\ddot{x}_i^{desired}\\|^2$$\n\n**约束**：\n- 动力学：$M\\ddot{q} + h = S^T \\tau + J_c^T F_c$\n- 接触：$F_c \\in$ 摩擦锥\n- 力矩极限：$\\tau_{min} \\leq \\tau \\leq \\tau_{max}$\n\n**本质**：二次规划（QP）问题，每毫秒求解一次。\n\n### 5. 轨迹优化\n\n给定起点、终点、时间，找到**最小力矩**的轨迹：\n\n$$\\min_{q(\\cdot)} \\int_0^T \\|\\tau(t)\\|^2 dt$$\n$$\\text{s.t.} \\quad \\text{dynamics, limits}$$\n\n用 iLQR/DDP/Casadi 求解。\n\n### 6. 外力估计（无力传感器的力感知）\n\n**问题**：测量到的关节力矩 $\\tau_{measured}$（由电机电流反算）包含 3 部分：\n$$\\tau_{measured} = \\tau_{dynamics} + \\tau_{friction} + \\tau_{external}$$\n\n**估计**：\n$$\\tau_{external} \\approx \\tau_{measured} - \\tau_{dynamics}(q,\\dot{q},\\ddot{q}) - \\hat{\\tau}_{friction}$$\n\n**末端外力**：\n$$F_{ext} = (J^T)^\\dagger \\tau_{external}$$\n\n**精度**：~1-5N（取决于摩擦建模准确性）。用于碰撞检测、协作、无传感器阻抗控制。\n\n### 7. 动力学在 RL 中的作用\n\n即使 RL 不显式用动力学方程，动力学知识也不可缺：\n- **仿真器**：MuJoCo/Isaac Gym 内部用的就是动力学\n- **域随机化**：随机化哪些参数？动力学告诉你\n- **Reward shaping**：什么是合理的能量惩罚？从动力学\n- **Sim-to-Real**：真实 vs 仿真的差距主要在动力学\n\n### 8. 实战工具对比\n\n| 工具 | 特点 | 速度 | 语言 |\n|------|------|:---:|:---:|\n| Pinocchio | C++/Python | 极快（超 MuJoCo 2x）| Python/C++ |\n| RBDL | C++ | 快 | C++ |\n| Drake | C++/Python | 中 | Python/C++ |\n| MuJoCo | C++/Python | 快 | Python/C++ |\n| ROS2 Robot Model | tf2 + KDL | 慢 | C++ |\n| Pybullet | Python | 中 | Python |\n\n**选择建议**：\n- 需要极速 + 动力学算法：Pinocchio\n- 需要仿真：MuJoCo\n- 教学演示：Pybullet\n\n### 练习题\n\n1. **重力补偿**：对你的机械臂（或仿真中），实现重力补偿，测试零力拖动效果。\n2. **计算力矩**：在 MuJoCo 中用 CTC 跟踪一条复杂轨迹，对比纯 PD 的效果。\n3. **阻抗控制**：实现末端 6D 阻抗控制，让机器人能\"推门\"而不破坏。\n4. **外力估计**：基于电流估计末端外力，精度对比力传感器。\n5. **轨迹优化**：用 Casadi + IPOPT 对 2-link 臂做最小能量轨迹优化。",
+      "lastUpdated": "2026-04-30T11:33"
+    },
     {
       "title": "摩擦、柔性与动力学建模的工程修正",
       "difficulty": "中级",
