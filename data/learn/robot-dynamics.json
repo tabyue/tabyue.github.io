@@ -1,7 +1,7 @@
 {
   "id": "robot-dynamics",
   "name": "机器人动力学",
-  "lastUpdated": "2026-04-29T15:05",
+  "lastUpdated": "2026-04-30T10:58",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 50,
@@ -12,6 +12,12 @@
     "机器人运动学"
   ],
   "sections": [
+    {
+      "title": "摩擦、柔性与动力学建模的工程修正",
+      "difficulty": "中级",
+      "content": "## 摩擦、柔性与动力学建模的工程修正\n\n标准动力学方程 $M(q)\\ddot{q} + C\\dot{q} + G = \\tau$ 假设机器人是理想的刚体。真实机器人远非如此——本节讲解如何把摩擦、柔性、间隙等工程效应加入模型。\n\n### 1. 关节摩擦模型\n\n**实际关节力矩平衡**：\n$$\\tau_{motor} = \\tau_{dyn} + \\tau_{friction}$$\n\n摩擦是 Sim-Real gap 的主要来源之一。\n\n#### 库仑 + 粘滞摩擦（经典模型）\n\n$$\\tau_f = F_c \\cdot \\text{sign}(\\dot{q}) + F_v \\cdot \\dot{q}$$\n\n- $F_c$：库仑摩擦系数（与速度方向有关，与大小无关）\n- $F_v$：粘滞摩擦系数（与速度成正比）\n\n```python\nimport numpy as np\n\ndef coulomb_viscous_friction(dq, Fc=0.5, Fv=0.1):\n    '''Coulomb + viscous friction model.'''\n    return Fc * np.sign(dq) + Fv * dq\n```\n\n**问题**：在 $\\dot{q} = 0$ 附近有不连续——仿真会抖动。\n\n#### Stribeck 摩擦（含静摩擦和负斜率段）\n\n$$\\tau_f = [F_c + (F_s - F_c) e^{-(\\dot{q}/v_s)^2}] \\cdot \\text{sign}(\\dot{q}) + F_v \\dot{q}$$\n\n- $F_s > F_c$：静摩擦大于动摩擦\n- $v_s$：Stribeck 速度（过渡区宽度）\n\n#### LuGre 摩擦（动态模型）\n\n引入内部状态变量 $z$（微观鬃毛变形）：\n$$\\dot{z} = \\dot{q} - \\sigma_0 \\frac{|\\dot{q}|}{g(\\dot{q})} z$$\n$$\\tau_f = \\sigma_0 z + \\sigma_1 \\dot{z} + F_v \\dot{q}$$\n\n优点：能描述 stick-slip、预滑动位移、摩擦滞后等现象。代价：状态维度+1。\n\n### 2. 齿轮传动的摩擦\n\n**减速器效率损失**：\n$$\\tau_{out} = \\eta \\cdot i \\cdot \\tau_{in}$$\n\n**反向效率**（输出驱动输入）：$\\eta_{back} < \\eta_{forward}$\n\n| 减速器 | 正效率 | 反效率 | 自锁 |\n|-------|:------:|:------:|:---:|\n| 行星 | 92-95% | 90-93% | 否 |\n| 谐波 | 80-85% | 70-80% | 否 |\n| RV | 85-90% | 80-85% | 否 |\n| 蜗轮蜗杆 | 40-70% | 常<50% | 常是 |\n\n### 3. 柔性关节建模\n\n**问题**：谐波减速器、同步带、弹性联轴器都不是刚性的——电机侧和负载侧有扭转变形。\n\n**双惯性模型**（Spong 模型）：\n- $\\theta_m$：电机侧角度\n- $\\theta_l$：负载侧角度\n- $\\Delta\\theta = \\theta_m/n - \\theta_l$：扭转变形（$n$ 是减速比）\n\n$$J_m \\ddot{\\theta}_m + B_m \\dot{\\theta}_m = \\tau_m - \\frac{1}{n}(K \\Delta\\theta + D \\Delta\\dot{\\theta})$$\n$$M(q_l) \\ddot{q}_l + C\\dot{q}_l + G = K \\Delta\\theta + D \\Delta\\dot{\\theta}$$\n\n$K$ 是关节刚度（$10^3$-$10^5$ Nm/rad），$D$ 是阻尼。\n\n**柔性的影响**：\n- 低频谐振（20-100 Hz）\n- 控制带宽受限（不能超过谐振频率的 1/3-1/5）\n- Sim-Real gap 显著增大\n\n### 4. 齿隙（Backlash）\n\n**齿轮啮合间隙**导致反向运动时有死区：\n$$\\tau_{gear}(\\Delta\\theta) = \\begin{cases} K(\\Delta\\theta - \\delta) & \\Delta\\theta > \\delta \\\\ 0 & |\\Delta\\theta| \\leq \\delta \\\\ K(\\Delta\\theta + \\delta) & \\Delta\\theta < -\\delta \\end{cases}$$\n\n**典型齿隙**：\n- 直齿轮：0.1°-1°\n- 谐波减速器：~0°（几乎零齿隙）\n- RV 减速器：0.02°-0.05°\n\n**影响**：降低重复精度，引起极限环振荡。解决：换零齿隙减速器 / 双电机预紧 / 软件补偿。\n\n### 5. 参数辨识的现代方法\n\n**挑战**：真实机器人的动力学参数（质量、惯量、摩擦系数）很难直接测量。\n\n**方法一：激励轨迹 + 最小二乘**\n1. 设计覆盖关节空间的激励轨迹（傅里叶级数）\n2. 采集 $q, \\dot{q}, \\ddot{q}, \\tau$ 数据\n3. 构造回归矩阵 $\\tau = Y(q,\\dot{q},\\ddot{q}) \\pi$\n4. $\\hat{\\pi} = Y^\\dagger \\tau$\n\n**方法二：神经网络残差学习**\n1. 用物理模型先算出 $\\hat{\\tau}_{phys}$\n2. 训练 NN 学习残差 $\\Delta\\tau(q, \\dot{q}, \\ddot{q}) = \\tau_{real} - \\hat{\\tau}_{phys}$\n3. 部署：$\\tau = \\hat{\\tau}_{phys} + \\Delta\\tau_{NN}$\n\n**方法三：可微分仿真 + 梯度**\n用可微分物理引擎（Genesis / Brax），直接对轨迹误差反向传播优化参数。\n\n### 6. 真实机器人建模的工程检查清单\n\n| 项目 | 检查 | 解决 |\n|------|------|------|\n| 关节极限 | 软件限位 < 硬件限位 | URDF 中标注 effort/velocity limits |\n| 重力补偿 | 悬停误差 | 准确测量 COM 位置 |\n| 摩擦 | 低速阶跃响应有死区 | 加 Stribeck 或 LuGre 模型 |\n| 柔性 | 末端振荡 | 加双惯性模型 |\n| 电机饱和 | 大力矩指令下实际输出受限 | 加力矩限幅 |\n| 传感器延迟 | 闭环控制不稳定 | 模型中加延迟补偿 |\n| 零点偏移 | 位置误差常数 | 每次上电重新标零 |\n\n### 练习题\n\n1. **摩擦模型对比**：在同一个单关节仿真中分别用库仑、Stribeck、LuGre 三种摩擦模型，对比阶跃响应。\n2. **柔性关节仿真**：用双惯性模型仿真关节，观察不同 $K$ 值下的谐振频率和阶跃响应。\n3. **齿隙死区**：仿真带齿隙的位置控制系统，画出反向运动时的位置-时间曲线。\n4. **参数辨识**：设计一条 5 项傅里叶激励轨迹，在 MuJoCo 中辨识虚拟机器人的惯性参数。\n5. **残差学习**：实现一个 3 层 MLP 学习动力学残差，对比加/不加残差补偿的跟踪精度。",
+      "lastUpdated": "2026-04-30T10:58"
+    },
     {
       "title": "动力学建模方法：拉格朗日与牛顿-欧拉",
       "difficulty": "入门",

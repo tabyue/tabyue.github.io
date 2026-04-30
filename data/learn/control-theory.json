@@ -4,13 +4,19 @@
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 60,
-  "lastUpdated": "2026-04-30T10:22",
+  "lastUpdated": "2026-04-30T10:58",
   "description": "让机器人稳定、精确地执行期望运动的核心理论。从PID到MPC，从线性到非线性，控制理论是机器人的灵魂。",
   "prerequisites": [
     "微积分与优化",
     "机器人动力学"
   ],
   "sections": [
+    {
+      "title": "最优控制理论：从 Pontryagin 到 DDP",
+      "difficulty": "高级",
+      "content": "## 最优控制理论\n\nLQR 是最优控制的一个特例——本节从最优控制的一般理论讲起，涵盖 Pontryagin 极大值原理、动态规划、DDP 等高级方法。\n\n### 1. 最优控制问题的形式化\n\n**连续时间最优控制**：\n$$\\min_{u(\\cdot)} J = \\phi(x(T)) + \\int_0^T L(x(t), u(t), t) dt$$\n$$\\text{s.t.} \\quad \\dot{x} = f(x, u, t), \\quad x(0) = x_0$$\n$$\\quad\\quad u(t) \\in U, \\quad x(t) \\in X$$\n\n- $L$：运行代价（running cost）\n- $\\phi$：终端代价（terminal cost）\n- $U$：控制空间\n- $X$：状态空间\n\n### 2. Pontryagin 极大值原理\n\n**核心思想**：引入**协态变量（costate）** $\\lambda(t) \\in \\mathbb{R}^n$，类似拉格朗日乘子。\n\n**Hamiltonian**：\n$$H(x, u, \\lambda, t) = L(x, u, t) + \\lambda^T f(x, u, t)$$\n\n**最优性必要条件**：\n1. 状态方程：$\\dot{x}^* = \\frac{\\partial H}{\\partial \\lambda} = f(x^*, u^*)$\n2. 协态方程：$\\dot{\\lambda}^* = -\\frac{\\partial H}{\\partial x}$\n3. 边界条件：$\\lambda(T) = \\frac{\\partial \\phi}{\\partial x}(x^*(T))$\n4. 极值条件：$u^* = \\arg\\min_u H(x^*, u, \\lambda^*, t)$\n\n**物理直觉**：协态 $\\lambda$ 是状态的\"价值\"——状态每改变一个单位，总代价会变化 $\\lambda$ 个单位。\n\n### 3. 动态规划与 HJB 方程\n\n**值函数**：$V(x, t) = \\min_{u(\\cdot)} J(x, t)$（从 $(x, t)$ 出发的最小代价）\n\n**Hamilton-Jacobi-Bellman 方程**：\n$$-\\frac{\\partial V}{\\partial t} = \\min_u \\left[ L(x, u, t) + \\frac{\\partial V}{\\partial x} f(x, u, t) \\right]$$\n\n**边界条件**：$V(x, T) = \\phi(x)$\n\n**求解难度**：HJB 是偏微分方程，高维下求解不现实（\"维度灾难\"）。\n\n### 4. LQR：最优控制的闭式解\n\n**线性二次调节**（Linear Quadratic Regulator）：\n$$\\dot{x} = Ax + Bu$$\n$$J = \\int_0^\\infty (x^T Q x + u^T R u) dt$$\n\n**最优控制**：$u^* = -Kx$，其中 $K = R^{-1} B^T P$\n\n**Riccati 方程**：\n$$A^T P + PA - PBR^{-1}B^T P + Q = 0$$\n\n```python\nfrom scipy.linalg import solve_continuous_are\n\n# Double integrator: \\ddot{x} = u\nA = np.array([[0, 1], [0, 0]])\nB = np.array([[0], [1]])\nQ = np.diag([10, 1])  # penalize position more than velocity\nR = np.array([[1]])\n\nP = solve_continuous_are(A, B, Q, R)\nK = np.linalg.inv(R) @ B.T @ P\nprint('Optimal gain K =', K)\n# Closed-loop A_cl = A - BK\nA_cl = A - B @ K\neig = np.linalg.eigvals(A_cl)\nprint('Closed-loop eigenvalues:', eig)  # should have negative real parts\n```\n\n### 5. 非线性最优控制：iLQR 与 DDP\n\n**iLQR**（迭代 LQR）：对非线性系统线性化后用 LQR。\n\n算法：\n1. 前向模拟：用当前控制序列 $\\{u_0, u_1, ..., u_{N-1}\\}$ 生成轨迹 $\\{x_0, ..., x_N\\}$\n2. 反向传播：从终端开始计算 $V_x, V_{xx}$\n3. 更新控制：$\\delta u_k = -K_k \\delta x_k + k_k$\n4. 线搜索：选合适的步长\n5. 迭代直到收敛\n\n**DDP**（Differential Dynamic Programming）：iLQR 的二阶版本，用 Hessian 信息。\n\n**优缺点**：\n- ✓ 收敛快（二次收敛）\n- ✓ 可处理非线性约束（通过 AL 或 penalty）\n- ✗ 局部最优\n- ✗ 需要动力学的梯度（现代用自动微分）\n\n### 6. 机器人中的应用\n\n| 场景 | 方法 | 工具 |\n|------|------|------|\n| 关节空间稳定 | LQR | scipy |\n| 轨迹跟踪 | iLQR/DDP | Crocoddyl |\n| 避障规划 | DDP + CHOMP cost | Drake |\n| 步态优化 | DDP | OCS2 |\n| 四旋翼 | iLQR/MPC | ACADO |\n\n### 练习题\n\n1. **Pontryagin 求解**：对最简单的线性问题 $\\dot{x} = u$，$J = \\int_0^1 (x^2 + u^2) dt$，用极大值原理手推最优解。\n2. **LQR 实现**：对倒立摆，设计 LQR 控制器，可视化闭环响应。\n3. **iLQR 编程**：用 JAX 实现 iLQR，对 cart-pole 做轨迹优化。\n4. **Crocoddyl 入门**：用 Crocoddyl 库对 UR5 做时间最优轨迹规划。\n5. **HJB 数值解**：在 2D 状态空间上用有限差分法数值求解 HJB 方程。",
+      "lastUpdated": "2026-04-30T10:58"
+    },
     {
       "title": "Lyapunov 稳定性理论与控制设计",
       "difficulty": "中级",

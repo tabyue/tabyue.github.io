@@ -1,7 +1,7 @@
 {
   "id": "training-inference-optimization",
   "name": "模型训练与推理优化",
-  "lastUpdated": "2026-04-30T10:22",
+  "lastUpdated": "2026-04-30T10:58",
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 50,
@@ -10,6 +10,12 @@
     "深度学习基础"
   ],
   "sections": [
+    {
+      "title": "LoRA 与 PEFT：大模型高效微调完整指南",
+      "difficulty": "中级",
+      "content": "## LoRA 与 PEFT 完整指南\n\n7B+ VLA 模型全参数微调需要几百 GB 显存——PEFT（Parameter-Efficient Fine-Tuning）技术让普通用户也能微调大模型。\n\n### 1. 为什么需要 PEFT？\n\n全参数微调 7B 模型的显存需求：\n- 参数（FP16）：14 GB\n- 梯度（FP16）：14 GB\n- Adam 状态（FP32）：56 GB\n- 激活值：~20 GB\n- **总计：~100 GB**（需要 2-3 张 A100 80GB）\n\n**PEFT 的核心思想**：冻结预训练参数，只训练少量\"适配器\"参数。\n\n### 2. LoRA（Low-Rank Adaptation）\n\n**核心方程**：对每个线性层 $W \\in \\mathbb{R}^{d \\times k}$，冻结原权重，加一个低秩分解的旁路：\n$$h = Wx + BAx$$\n\n其中 $B \\in \\mathbb{R}^{d \\times r}$、$A \\in \\mathbb{R}^{r \\times k}$，$r \\ll \\min(d, k)$（通常 $r = 4, 8, 16, 32$）。\n\n**参数量对比**（d=k=4096）：\n- 原始 $W$：16.7M 参数\n- LoRA ($r=8$)：$4096 \\times 8 \\times 2 = 65K$ 参数（0.4%）\n\n**关键超参数**：\n- `r`：秩（4-64），决定表达能力\n- `alpha`：缩放因子（$\\frac{\\alpha}{r}$ 作用在 $BAx$ 上），典型 $\\alpha = 2r$\n- `target_modules`：应用 LoRA 的层名（通常是 attention 的 q/k/v/o 投影）\n\n### 3. PEFT 方法家族\n\n| 方法 | 原理 | 可训练参数 | 推理开销 |\n|------|------|:---------:|:-------:|\n| LoRA | 低秩旁路 | 0.1-1% | 合并后无 |\n| QLoRA | 4-bit 量化 + LoRA | 同 LoRA | 量化推理 |\n| DoRA | 分解权重方向和大小 | 0.3-1% | 同 LoRA |\n| Prefix Tuning | 可学习前缀 token | 0.1% | 增加序列长度 |\n| Prompt Tuning | 可学习软提示 | <0.1% | 同 |\n| IA3 | 缩放向量 | <0.1% | 极小 |\n| BitFit | 只训 bias | ~0.1% | 无 |\n| Adapter | 插入瓶颈层 | 1-3% | 增加层 |\n\n### 4. HuggingFace PEFT 实战\n\n```python\nfrom peft import LoraConfig, get_peft_model, TaskType\nfrom transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments\n\n# Load base model\nmodel = AutoModelForCausalLM.from_pretrained(\n    'openvla/openvla-7b',\n    load_in_4bit=True,  # QLoRA: 4-bit quantization\n    device_map='auto'\n)\n\n# LoRA config\nlora_config = LoraConfig(\n    r=32,\n    lora_alpha=64,\n    target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj',\n                    'gate_proj', 'up_proj', 'down_proj'],\n    lora_dropout=0.05,\n    bias='none',\n    task_type=TaskType.CAUSAL_LM,\n)\n\nmodel = get_peft_model(model, lora_config)\nmodel.print_trainable_parameters()\n# Output: trainable params: 42M || all params: 7,242M || trainable%: 0.58\n\n# Train as usual\ntrainer = Trainer(model=model, args=training_args, train_dataset=ds)\ntrainer.train()\n\n# Save (only saves LoRA weights, few MB)\nmodel.save_pretrained('./openvla-lora-pick-place')\n```\n\n### 5. QLoRA：4-bit 量化 + LoRA\n\n**QLoRA 的三个创新**：\n1. **4-bit NormalFloat**（NF4）：信息论最优的 4-bit 数据类型\n2. **Double Quantization**：量化元数据也量化\n3. **Paged Optimizers**：用 CPU 内存换 GPU 显存\n\n```python\nfrom transformers import BitsAndBytesConfig\nimport torch\n\nbnb_config = BitsAndBytesConfig(\n    load_in_4bit=True,\n    bnb_4bit_quant_type='nf4',\n    bnb_4bit_compute_dtype=torch.bfloat16,\n    bnb_4bit_use_double_quant=True,\n)\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    'openvla/openvla-7b',\n    quantization_config=bnb_config,\n)\n```\n\n**显存需求**：7B QLoRA 只需 ~12 GB（可在 RTX 3090/4090 上微调！）\n\n### 6. VLA 专用的 PEFT 设计\n\n**OpenVLA 的 LoRA 建议**：\n- `r=32`（比 LLM 大，因为动作空间需要更多容量）\n- 只 LoRA 语言模型部分，视觉编码器全训\n- `lora_dropout=0.0`（轻微 dropout 对动作不利）\n- 学习率 `5e-4`（比 LLM 大 5-10 倍）\n\n**部署优化**：\n```python\n# Merge LoRA into base model for deployment\nmerged_model = model.merge_and_unload()\n\n# Now it's equivalent to full fine-tuned model, no LoRA overhead\nmerged_model.save_pretrained('./openvla-merged-for-deployment')\n```\n\n### 7. 超参数与性能对照\n\n| $r$ | 可训练参数(7B) | 性能相对于全参数 |\n|:---:|:-------------:|:----------------:|\n| 4 | 10M | 85% |\n| 8 | 21M | 92% |\n| 16 | 42M | 96% |\n| 32 | 84M | 98% |\n| 64 | 168M | 99% |\n\n**经验法则**：\n- 小数据集（<1K samples）：$r=4-8$\n- 中数据集（1K-10K）：$r=16-32$\n- 大数据集（>10K）：$r=32-64$ 或全参数微调\n\n### 练习题\n\n1. **LoRA 基本用法**：对一个 BERT 分类任务应用 LoRA (r=8)，对比全参数微调的性能。\n2. **QLoRA 7B**：在单张 RTX 4090 上用 QLoRA 微调 Llama-7B，测量显存占用。\n3. **目标模块消融**：只 LoRA 注意力 vs 只 LoRA FFN vs 全部，对比下游性能。\n4. **秩扫描**：固定其他超参，$r \\in \\{4, 8, 16, 32\\}$ 对比性能。\n5. **合并部署**：LoRA 训练完成后合并到基座模型，验证推理结果与分开时一致。",
+      "lastUpdated": "2026-04-30T10:58"
+    },
     {
       "title": "模型并行与流水线并行：突破单卡显存限制",
       "difficulty": "中级",
