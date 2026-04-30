@@ -1,0 +1,28 @@
+{
+  "id": "p109",
+  "title": "EmbodiedMidtrain: Bridging the Gap between Vision-Language Models and Vision-Language-Action Models via Mid-training",
+  "authors": "Anonymous (Huggingface 2604.20012)",
+  "venue": "arXiv 2604.20012",
+  "date": "2026-04",
+  "arxiv": "https://huggingface.co/papers/2604.20012",
+  "github": "",
+  "tags": [
+    "EmbodiedMidtrain",
+    "VLM→VLA",
+    "中训练",
+    "Mid-training",
+    "数据配方",
+    "VLA"
+  ],
+  "tldr": "提出一条被忽视的关键链路——VLM 到 VLA 之间的\"中训练\"（mid-training）。传统路线是 VLM 直接 fine-tune 到机器人动作数据上，结果是 VLM 预训练获得的常识/空间推理能力在动作 fine-tune 时被大幅\"遗忘\"（灾难性遗忘）。EmbodiedMidtrain 在 VLM 和 VLA 中间插一个\"具身化中训练\"阶段：用混合配方（第一视角视频 20% + 人机协作视频 15% + 机器人仿真 25% + 真机轨迹 40%，显式保留语言/场景推理监督）对 VLM 做 10-30B tokens 的继续预训练，再做 VLA 指令调优。该阶段充当\"VLM→VLA 过渡器\"，在 LIBERO、CALVIN、RLBench、真机 Stretch3 四套基准上平均把 SOTA 推高 4-9 个百分点，同时推理推理 benchmark（GQA/ScienceQA）回退<1%。",
+  "difficulty": "中级",
+  "addedDate": "2026-04-30",
+  "keyInsights": [
+    "灾难性遗忘是 VLA 当前被低估的瓶颈：从 VLM 直接 fine-tune 到动作会损失 30-50% 的语言推理能力",
+    "中训练阶段的三大设计维度：（a）数据配方比例、（b）保留语言监督权重、（c）视角混合（第一/第三人称）",
+    "数据配方建议：第一视角视频 20% + 人机协作视频 15% + 仿真 25% + 真机 40%，总量 10-30B tokens",
+    "与 mid-training 技术线在 LLM 领域的收敛：类似 LLaMA 3 的 continued pretraining，但针对具身任务定制",
+    "推理回退<1%：既把 VLA 性能推上去，也保留 VLM 的通用理解能力，为\"VLA 做高阶推理\"预留空间"
+  ],
+  "impact": "把 LLM 社区的 mid-training 方法论正式引入 VLA 训练管线，定义了 VLM→VLA 训练的\"第三阶段\"。预计将成为 2026 下半年开源 VLA（OpenVLA-2、π0.5 等）的标准训练流程之一，并把\"数据配方工程\"从 LLM 迁移到具身场景"
+}

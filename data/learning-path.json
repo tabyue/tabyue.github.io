@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-30T01:12",
+  "lastUpdated": "2026-04-30T07:30",
   "stages": [
     {
       "id": "foundation",
@@ -602,11 +602,13 @@
           "topics": [
             {
               "title": "RT-2 / VLA 范式",
-              "detail": "将机器人动作离散化为token，与语言token统一在VLM中解码。输入：[图像token]+[语言指令token] → 输出：[动作token]。网络知识可zero-shot迁移到机器人任务。定义了VLA这一研究方向。"
+              "detail": "将机器人动作离散化为token，与语言token统一在VLM中解码。输入：[图像token]+[语言指令token] → 输出：[动作token]。网络知识可zero-shot迁移到机器人任务。定义了VLA这一研究方向。",
+              "lastUpdated": "2026-04-30T07:30"
             },
             {
               "title": "OpenVLA (开源7B VLA)",
-              "detail": "Stanford/TRI开源的7B参数VLA，基于Prismatic VLM微调，在OXE 97万episodes上训练。支持LoRA高效微调到新机器人。当前最易获取的VLA模型，适合入门实验。"
+              "detail": "Stanford/TRI开源的7B参数VLA，基于Prismatic VLM微调，在OXE 97万episodes上训练。支持LoRA高效微调到新机器人。当前最易获取的VLA模型，适合入门实验。",
+              "lastUpdated": "2026-04-30T07:30"
             },
             {
               "title": "π₀ 与 Flow Matching",
@@ -624,7 +626,8 @@
             "FAST tokenizer代码"
           ],
           "howTo": "先精读RT-2论文理解VLA范式（动作token化+co-fine-tuning），再研究OpenVLA的开源实现（跑通推理→尝试微调），最后读π₀理解Flow Matching。",
-          "weeklyPlan": "第1周：RT-2论文精读+动作token化实现 | 第2-3周：OpenVLA源码分析+推理测试 | 第4周：π₀/FAST论文+Flow Matching理解"
+          "weeklyPlan": "第1周：RT-2论文精读+动作token化实现 | 第2-3周：OpenVLA源码分析+推理测试 | 第4周：π₀/FAST论文+Flow Matching理解",
+          "lastUpdated": "2026-04-30T07:30"
         },
         {
           "name": "世界模型与LLM+机器人",
@@ -954,7 +957,8 @@
             },
             {
               "title": "VLA模型部署",
-              "detail": "在人形机器人上部署VLA模型：视觉输入→语言指令→全身动作。NVIDIA GR00T N1专门为人形设计。挑战：实时性（全身控制需要500Hz+）、多模态输入（多相机+IMU+力传感器）、安全约束（防跌倒）。"
+              "detail": "在人形机器人上部署VLA模型：视觉输入→语言指令→全身动作。NVIDIA GR00T N1专门为人形设计。挑战：实时性（全身控制需要500Hz+）、多模态输入（多相机+IMU+力传感器）、安全约束（防跌倒）。",
+              "lastUpdated": "2026-04-30T07:30"
             }
           ],
           "resources": [

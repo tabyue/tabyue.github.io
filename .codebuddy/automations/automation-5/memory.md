@@ -1,5 +1,36 @@
 # Automation-5 Memory: 具身智能门户每6小时更新
 
+## 2026-04-30T07:30 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿（gh issue list 返回空数组）
+- 新闻 +4（n202-n205）：腾讯 HY-Embodied-0.5-X 开源（Robotics X×混元 MoT-2B 10评测7项端侧第一/电网场景）、星动纪元超2亿美元新一轮+无界动力天使+超2亿（3-4月密集融资兑现）、广东省AI对接大会（自变量WALL-B+华为昇腾+腾讯智能体，深圳/广州/佛山公共训练场）、arXiv GazeVLA（注视意图瓶颈/OOD +22%/数据效率×20）
+- 论文 +2（p108-p109）：GazeVLA(2604.22615 VLIA 四阶段跨本体不变量) + EmbodiedMidtrain(2604.20012 VLM→VLA 中训练配方/LIBERO +9%且GQA回退<1%)
+- 开源 +1（os061）：HY-Embodied-0.5-X（Tencent-Hunyuan GitHub / 端侧 2B MoT / Jetson Orin 18Hz INT4 量化）
+- 招聘 +2（j098-j099）：星动纪元融资后5方向扩招（50-100K×16薪+期权）、无界动力与ZF LIFETEC合作社招
+- 学习深化 ×1：`data/learn/vla-models.json` +1 sec「VLA 训练三阶段完整配方」(11.3K chars/10 小节)，把 HY-Embodied/GazeVLA/EmbodiedMidtrain 三个2026-04热点统一到"三阶段范式 vs 传统两阶段"主线，含数据配方表+完整训练代码骨架+ VLIA 四阶段扩展+选型决策树+5 大工程陷阱；vla-models.json 从 98K → 116K，FAIR→OK 水位
+- 3处 lastUpdated 同步：learn/vla-models.json 顶层 + 新 section 对象 + learning-path.json 4 个 VLA 相关节点
+- 清理临时脚本：_insert.js、_addsec.js、_learnstat.js、_ls.js、_val.js、_dbg.js
+
+**当前数据编号水位：** news→n205, papers→p109, opensource→os061, jobs→j099
+
+**踩坑教训：** 不要在独立 JSON 文件里手写 `\"..\"` 表示中文引用——会被 JSON.parse 当作字符串结束。应改用中文引号 `"..."`（项目规范），或把 content 放 JS 源文件用模板字符串注入。
+
+## 2026-04-30T01:12 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿（gh issue list 返回空）
+- 清理遗留：上轮未跟踪的 _batchB.json 已删除
+- 新闻 +4（n198-n201）：教育部发布2026本科专业目录新增具身智能专业/9所高校首批获批（北邮/上交/浙大等）、第三届中国具身智能与人形机器人产业大会北京开幕（中关村/千位嘉宾/万亿赛道/十五五）、它石智航4.55亿美元Pre-A融资（高瓴红杉联合领投/刷新中国具身智能单轮纪录/估值180亿）、WholeBodyVLA开源（ICLR 2026/智元Agibot X2/大空间loco-manipulation/端到端闭环）
+- 论文 +2（p106-p107）：p106 WholeBodyVLA（OpenDriveLab/统一隐空间动作/loco-manipulation RL精调/任务成功率42%→73%/样本效率3.1倍）、p107 VLA-Forget（ACL 2026 KnowFM/VLA机器学习遗忘首批系统工作/比率感知选择性编辑+层选择性遗忘/量化恢复-55%）
+- 开源 +1（os060）：WholeBodyVLA OpenDriveLab官方仓库（github.com/OpenDriveLab/WholebodyVLA）
+- 招聘 +1（j097）：它石智航融资后大规模扩招（校招+社招+期权/全身协同/VLA/仿真系统）
+- 学习模块深化 ×1：embodied-agent 新增第10个 section「整体式 VLA vs 分层 LLM+Skill：具身智能体架构选型与统一隐空间融合」（11.5K chars）——三条路线精确定义+12维决策表+路线A/B/C数学+代码骨架+融合架构+选型决策树+5大工程陷阱破解+练习题+延伸阅读，联动WholeBodyVLA/VLA-Forget/Libra-VLA/M²-VLA
+- 3处 lastUpdated 同步：learn/embodied-agent.json 顶层 + learning-path.json 顶层 + 新 section 对象 + learning-path 中"具身Agent实战项目"模块补 lastUpdated 字段
+
+**当前数据编号水位：** news→n201, papers→p107, opensource→os060, jobs→j097
+**Git:** d7d71ea→73c4897, pushed to main
+
 ## 2026-04-29T12:00 执行记录
 
 **更新概要：**
@@ -11,6 +42,7 @@
 
 **当前数据编号水位：** news→n197, papers→p105, opensource→os059, jobs→j096
 **Git:** 79403ee→034744c, pushed to main
+
 
 ## 2026-04-29T11:48 执行记录
 

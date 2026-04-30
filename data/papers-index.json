@@ -1,6 +1,63 @@
 {
-  "lastUpdated": "2026-04-30T01:12",
+  "lastUpdated": "2026-04-30T07:30",
   "papers": [
+    {
+      "id": "p108",
+      "title": "GazeVLA: Learning Human Intention for Robotic Manipulation",
+      "authors": "Liang Wang, et al.",
+      "venue": "arXiv 2604.22615",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.22615",
+      "github": "",
+      "tags": [
+        "GazeVLA",
+        "VLIA",
+        "人类注视",
+        "意图瓶颈",
+        "VLA",
+        "跨本体迁移",
+        "OOD泛化"
+      ],
+      "tldr": "提出 Vision-Language-Intention-Action（VLIA）两阶段框架：先用大规模第一视角视频+眼动数据训练 VLI（把\"注视点\"显式当作人类意图的瓶颈表征），再用少量机器人演示 fine-tune 为 VLIA。核心假设是\"意图\"跨本体不变——同一个\"拿杯子喝水\"的注视模式对人/Franka/UR5 都一致。实验上 OOD 任务相对提升 22%，真机用 1/20 机器人数据达到 OpenVLA 同等水平。把 VLA 的\"数据负担\"从昂贵的机器人遥操迁移到廉价的人类第一视角视频+眼动仪。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-30",
+      "keyInsights": [
+        "意图瓶颈：用注视点作为人类意图的显式低维表征，把 V-L 和 A 之间插一个可解释中间层",
+        "跨本体不变性：注视只依赖任务目标和人类自身，不依赖机器人形态，天然支持跨本体迁移",
+        "两阶段训练：VLI 阶段用廉价人类数据预训练，VLIA 阶段用少量机器人数据微调，训练预算倾向数据杠杆",
+        "数据经济性：只需 1/20 机器人演示即可达到 OpenVLA 同等水平，动摇了\"VLA = 大规模机器人演示\"范式",
+        "OOD 泛化提升 22%：意图层比纯视觉层更能滤除干扰物/背景分布偏移"
+      ],
+      "impact": "VLA 研究路线的一次\"数据源重构\"：大家都在卷机器人演示数据量，GazeVLA 反过来把矿挖到人类第一视角视频这条更大的通路上，也给戴眼动仪做 demo 的\"平民数采\"开了口子。对中小机器人公司是个福音——不必烧千万预算铺遥操产线"
+    },
+    {
+      "id": "p109",
+      "title": "EmbodiedMidtrain: Bridging the Gap between Vision-Language Models and Vision-Language-Action Models via Mid-training",
+      "authors": "Anonymous (Huggingface 2604.20012)",
+      "venue": "arXiv 2604.20012",
+      "date": "2026-04",
+      "arxiv": "https://huggingface.co/papers/2604.20012",
+      "github": "",
+      "tags": [
+        "EmbodiedMidtrain",
+        "VLM→VLA",
+        "中训练",
+        "Mid-training",
+        "数据配方",
+        "VLA"
+      ],
+      "tldr": "提出一条被忽视的关键链路——VLM 到 VLA 之间的\"中训练\"（mid-training）。传统路线是 VLM 直接 fine-tune 到机器人动作数据上，结果是 VLM 预训练获得的常识/空间推理能力在动作 fine-tune 时被大幅\"遗忘\"（灾难性遗忘）。EmbodiedMidtrain 在 VLM 和 VLA 中间插一个\"具身化中训练\"阶段：用混合配方（第一视角视频 20% + 人机协作视频 15% + 机器人仿真 25% + 真机轨迹 40%，显式保留语言/场景推理监督）对 VLM 做 10-30B tokens 的继续预训练，再做 VLA 指令调优。该阶段充当\"VLM→VLA 过渡器\"，在 LIBERO、CALVIN、RLBench、真机 Stretch3 四套基准上平均把 SOTA 推高 4-9 个百分点，同时推理推理 benchmark（GQA/ScienceQA）回退<1%。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-30",
+      "keyInsights": [
+        "灾难性遗忘是 VLA 当前被低估的瓶颈：从 VLM 直接 fine-tune 到动作会损失 30-50% 的语言推理能力",
+        "中训练阶段的三大设计维度：（a）数据配方比例、（b）保留语言监督权重、（c）视角混合（第一/第三人称）",
+        "数据配方建议：第一视角视频 20% + 人机协作视频 15% + 仿真 25% + 真机 40%，总量 10-30B tokens",
+        "与 mid-training 技术线在 LLM 领域的收敛：类似 LLaMA 3 的 continued pretraining，但针对具身任务定制",
+        "推理回退<1%：既把 VLA 性能推上去，也保留 VLM 的通用理解能力，为\"VLA 做高阶推理\"预留空间"
+      ],
+      "impact": "把 LLM 社区的 mid-training 方法论正式引入 VLA 训练管线，定义了 VLM→VLA 训练的\"第三阶段\"。预计将成为 2026 下半年开源 VLA（OpenVLA-2、π0.5 等）的标准训练流程之一，并把\"数据配方工程\"从 LLM 迁移到具身场景"
+    },
     {
       "id": "p107",
       "title": "VLA-Forget: Vision-Language-Action Unlearning for Embodied Foundation Models",
@@ -9,7 +66,14 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.03956",
       "github": "",
-      "tags": ["VLA", "机器学习遗忘", "Unlearning", "安全", "合规", "量化鲁棒"],
+      "tags": [
+        "VLA",
+        "机器学习遗忘",
+        "Unlearning",
+        "安全",
+        "合规",
+        "量化鲁棒"
+      ],
       "tldr": "首批把机器学习遗忘问题系统化迁移到VLA具身场景的工作。提出VLA-Forget混合框架：（1）比率感知选择性编辑——只对遗忘样本激活比率超阈值的神经元做定向编辑，保护感知能力；（2）层选择性推理/动作遗忘——定位语言主干中对目标行为贡献最大的层做针对性遗忘。相比强基线：遗忘效力+10%、感知特异性+22%、任务保留+9%、后量化恢复-55%。",
       "difficulty": "高级",
       "addedDate": "2026-04-30",
@@ -29,7 +93,15 @@
       "date": "2025-12",
       "arxiv": "https://arxiv.org/abs/2512.11047",
       "github": "https://github.com/OpenDriveLab/WholebodyVLA",
-      "tags": ["人形", "VLA", "loco-manipulation", "统一隐空间", "RL精调", "ICLR 2026", "Agibot X2"],
+      "tags": [
+        "人形",
+        "VLA",
+        "loco-manipulation",
+        "统一隐空间",
+        "RL精调",
+        "ICLR 2026",
+        "Agibot X2"
+      ],
       "tldr": "首个端到端实现人形机器人大空间loco-manipulation的VLA框架。核心创新是统一隐空间动作——把异构演示压到同一低维动作流形，VLA只需预测流形上的z_t，共享解码器再展开为下肢步态+上肢末端+手指DoF。在模仿学习后用PPO+KL约束做面向loco-manipulation的RL精调。部署在智元Agibot X2平台上，首次完成走100+米跨多房间的端到端闭环任务。",
       "difficulty": "高级",
       "addedDate": "2026-04-30",
@@ -49,7 +121,14 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.24921",
       "github": "",
-      "tags": ["VLA", "双系统", "粗细解耦", "异步训练", "认知科学", "训练均衡"],
+      "tags": [
+        "VLA",
+        "双系统",
+        "粗细解耦",
+        "异步训练",
+        "认知科学",
+        "训练均衡"
+      ],
       "tldr": "提出Libra-VLA，一种新型粗细双系统VLA架构。将VLA学习复杂度显式解耦为粗-细层级：粗系统（Coarse System）负责高层语义理解和任务规划，类似认知科学中的System 2慢思考；细系统（Fine System）专注精细动作生成，类似System 1快反应。两者通过异步训练策略协同优化，避免语义理解与动作精度之间的学习干扰，实现训练均衡。在多个操作基准上显著提升性能。",
       "difficulty": "高级",
       "addedDate": "2026-04-29",
@@ -69,7 +148,14 @@
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2604.24182",
       "github": "",
-      "tags": ["VLA", "Mixture of Layers", "Meta Skills", "泛化", "少样本", "操作"],
+      "tags": [
+        "VLA",
+        "Mixture of Layers",
+        "Meta Skills",
+        "泛化",
+        "少样本",
+        "操作"
+      ],
       "tldr": "提出M²-VLA，通过两个关键技术提升VLA泛化操作能力：（1）Mixture of Layers (MoL)——从VLM多层密集语义特征中选择性提取任务关键信息，突破仅使用最后一层特征的信息瓶颈；（2）Meta Skill Module (MSM)——将操作轨迹分解为可复用的元技能原语（接近/对齐/抓取/放置等），在有限模型容量下高效学习轨迹。在SimplerEnv和真机实验中显著提升泛化性能。",
       "difficulty": "高级",
       "addedDate": "2026-04-29",
