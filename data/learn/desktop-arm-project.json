@@ -1,7 +1,7 @@
 {
   "id": "desktop-arm-project",
   "name": "桌面级机械臂项目",
-  "lastUpdated": "2026-04-29T12:00",
+  "lastUpdated": "2026-04-30T10:22",
   "stage": "阶段六：项目实战",
   "importance": "入门实战",
   "estimatedHours": 40,
@@ -12,6 +12,12 @@
     "模仿学习"
   ],
   "sections": [
+    {
+      "title": "开源桌面臂硬件生态：从 ALOHA 到 SO-100",
+      "difficulty": "入门",
+      "content": "## 开源桌面臂硬件生态\n\n具身智能研究的入门门槛正在快速降低——开源桌面臂让个人研究者也能做真机实验。本节系统介绍主流开源桌面臂平台。\n\n### 1. 主流开源桌面臂对比\n\n| 平台 | 关节数 | 臂展 | 负载 | 成本 | 特点 |\n|------|:-----:|:---:|:---:|:----:|------|\n| SO-100 (UFACTORY) | 6 | 300mm | 500g | ~$300 | 最便宜的舵机臂 |\n| SO-ARM100 | 5+1 | 250mm | 200g | ~$150 | 超低成本教学 |\n| Koch v1.1 | 6 | 350mm | 700g | ~$500 | LeRobot 默认硬件 |\n| ALOHA (Trossen) | 6x2 | 450mm | 750g | ~$10K | 双臂 Leader-Follower |\n| Gello | 6 | — | — | ~$500 | 纯遥操作Leader臂 |\n| myCobot 280 | 6 | 280mm | 250g | ~$600 | 集成度高/Python API |\n| xArm Lite | 6 | 500mm | 1.5kg | ~$5K | 工业级精度 |\n| Franka Panda | 7 | 855mm | 3kg | ~$30K | 研究标杆 |\n\n### 2. LeRobot + SO-100 快速上手\n\n**LeRobot**：HuggingFace 开源的端到端机器人学习框架。\n\n```bash\n# Install LeRobot\ngit clone https://github.com/huggingface/lerobot.git\ncd lerobot && pip install -e .\n\n# Configure SO-100 arm\npython lerobot/scripts/configure_motor.py \\\n  --port /dev/ttyUSB0 \\\n  --brand feetech\n\n# Teleoperate and record\npython lerobot/scripts/control_robot.py \\\n  --robot.type=so100 \\\n  --control.type=teleoperate \\\n  --control.fps=30\n\n# Train ACT policy from demonstrations\npython lerobot/scripts/train.py \\\n  --policy.type=act \\\n  --dataset.repo_id=my_dataset \\\n  --training.num_epochs=100\n\n# Evaluate\npython lerobot/scripts/control_robot.py \\\n  --robot.type=so100 \\\n  --control.type=evaluate \\\n  --policy.path=outputs/act/checkpoints/last\n```\n\n### 3. 硬件改装与升级路线\n\n**Level 1（原装使用）**：\n- 舵机臂 + USB 相机 + 笔记本\n- 适合：学习框架、基础抓取\n\n**Level 2（感知升级）**：\n- + RealSense D435i 深度相机\n- + 手腕相机（eye-in-hand）\n- 适合：更复杂的 6D 抓取\n\n**Level 3（驱动升级）**：\n- 换无刷电机 + 编码器 + 驱动板\n- + 力/力矩传感器\n- 适合：力控、精细操作\n\n**Level 4（双臂系统）**：\n- 两臂 + 共同工作台\n- Leader-Follower 遥操作\n- 适合：双手协作任务\n\n### 4. 常见坑与解决方案\n\n| 问题 | 原因 | 解决 |\n|------|------|------|\n| 舵机抖动 | PID 参数不对/负载大 | 降 P 增 D / 减速 |\n| 串口通信断开 | USB 供电不足 | 用外接电源集线器 |\n| 夹爪抓不住 | 摩擦力不够 | 贴橡胶垫/换指尖 |\n| 重复精度差 | 舵机有回差 | 加编码器反馈/换步进 |\n| 轨迹不平滑 | 控制频率低 | 提高到 50Hz+ |\n| 关节过热 | 长时间堵转 | 加超时保护/降电流 |\n\n### 5. 从桌面臂到真实应用\n\n| 桌面臂可以做的 | 做不了的（需要更好硬件）|\n|---------------|----------------------|\n| 抓取/放置轻物 | 重载操作 (>1kg) |\n| 模仿学习训练验证 | 高精度装配 (<0.1mm) |\n| VLA 模型快速原型 | 高速运动 (>1m/s) |\n| 算法开发调试 | 长时间连续运行 |\n| 多任务数据采集 | 力控精细操作 |\n\n### 练习题\n\n1. **硬件搭建**：按 LeRobot 文档搭建 SO-100 双臂系统，完成运动范围测试。\n2. **遥操作采集**：用 Leader-Follower 模式采集 50 条\"抓取杯子\"的演示数据。\n3. **ACT 训练部署**：用采集的数据训练 ACT 策略并部署到真机，测量成功率。\n4. **感知升级**：加装 RealSense 相机，实现基于视觉的闭环抓取（不靠固定位置）。\n5. **Sim-Real 对比**：在 MuJoCo 中建模你的桌面臂，对比仿真和真机的轨迹跟踪精度。",
+      "lastUpdated": "2026-04-30T10:22"
+    },
     {
       "title": "机械臂数学基础：齐次变换与DH参数",
       "difficulty": "入门",
