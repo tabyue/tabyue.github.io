@@ -1,7 +1,7 @@
 {
   "id": "humanoid-fullstack",
   "name": "人形机器人全栈项目",
-  "lastUpdated": "2026-04-30T10:32",
+  "lastUpdated": "2026-04-30T11:07",
   "stage": "阶段六：项目实战",
   "importance": "高级实战",
   "estimatedHours": 100,
@@ -12,6 +12,12 @@
     "VLA 模型"
   ],
   "sections": [
+    {
+      "title": "人形机器人的运动学与逆运动学",
+      "difficulty": "高级",
+      "content": "## 人形机器人运动学\n\n人形机器人比普通机械臂复杂得多——浮基（floating base）、闭链、多末端、欠驱动——本节系统讲解人形运动学。\n\n### 1. 浮基系统\n\n**问题**：机械臂基座固定，但人形机器人的身体（基座）可以自由移动和旋转。\n\n**广义坐标**：\n$$q = [q_{base}; q_{joints}] \\in SE(3) \\times \\mathbb{R}^n$$\n\n- $q_{base} \\in SE(3)$：基座（躯干/髋）的 6D 位姿\n- $q_{joints} \\in \\mathbb{R}^n$：所有关节角（$n \\approx 24$）\n\n**总自由度**：$6 + n$\n\n### 2. 人形的正运动学\n\n**树形运动学**：从基座出发，沿着树的每一个分支递归计算：\n```\n              Torso (base)\n               /    |    \\\n           HeadL  ArmL   ArmR\n           /       |     |\n       (head)   HandL  HandR\n               \n    Torso → Pelvis → LegL/LegR → FootL/FootR\n```\n\n**每个末端的位姿**：\n$$T_{world \\to end} = T_{world \\to base} \\cdot T_{base \\to end}(q_{joints})$$\n\n**人形的\"末端\"有多个**：\n- 左手、右手（操作任务）\n- 左脚、右脚（支撑 / 跨步）\n- 头部（视觉注视）\n\n### 3. 接触点与闭链\n\n**双足站立**：双脚都接触地面 → 形成**闭链**。\n\n**约束方程**：$p_{foot\\_L}(q) = p_{contact\\_L}$（在支撑阶段为常数）\n\n**效果**：减少实际自由度。30 DOF 人形双脚站立时实际 DOF = 30 - 12 = 18（每只脚 6 个接触约束）。\n\n### 4. 人形 IK：多任务优先级\n\n**问题**：同时满足多个任务——手到目标位置 + 脚不动 + 质心在支撑多边形内。\n\n**任务堆叠**（Stack of Tasks, SoT）：\n```\nPriority 1: 双脚接触地面（约束）\nPriority 2: 质心位置（平衡）\nPriority 3: 末端（手）到目标\nPriority 4: 姿态（头朝前、躯干直立）\nPriority 5: 默认姿态（近似站立）\n```\n\n**数学形式**：\n$$\\dot{q}_i = J_i^\\dagger \\dot{x}_i^{task} + N_i \\dot{q}_{i-1}$$\n\n其中 $N_i = (I - J_i^\\dagger J_i) \\cdot N_{i-1}$ 是零空间投影（每个低优先级任务只能在不影响高优先级的前提下执行）。\n\n```python\ndef prioritized_ik(tasks, jacobians, q_current, dt=0.01):\n    '''Multi-priority IK for humanoid.\n    tasks: list of (task_error, jacobian) in decreasing priority\n    '''\n    n = len(q_current)\n    N = np.eye(n)  # Null-space projector (starts as identity)\n    dq = np.zeros(n)\n    \n    for task_error, J in tasks:\n        # Project Jacobian into current null-space\n        J_proj = J @ N\n        # Compute increment in null-space of higher tasks\n        dq_task = np.linalg.pinv(J_proj) @ (task_error - J @ dq)\n        dq += N @ dq_task\n        # Update null-space\n        N = N @ (np.eye(n) - np.linalg.pinv(J_proj) @ J_proj)\n    \n    return q_current + dq * dt\n```\n\n### 5. 质心（CoM）雅可比\n\n**为什么需要 CoM Jacobian**？平衡控制需要通过关节运动调整 CoM 位置。\n\n$$p_{CoM} = \\frac{\\sum_i m_i p_{c_i}(q)}{\\sum_i m_i}$$\n\n$$J_{CoM} = \\frac{\\sum_i m_i J_{c_i}(q)}{\\sum_i m_i}$$\n\n**应用**：MPC 控制中，用 $J_{CoM} \\dot{q}$ 直接控制 CoM 速度。\n\n### 6. 实用工具：Pinocchio\n\nINRIA 开源的高效机器人库，支持浮基系统、闭链、自动微分。\n\n```python\nimport pinocchio as pin\n\n# Load URDF (floating base)\nmodel = pin.buildModelFromUrdf('h1.urdf', pin.JointModelFreeFlyer())\ndata = model.createData()\n\n# Forward kinematics\nq = pin.randomConfiguration(model)\npin.forwardKinematics(model, data, q)\npin.updateFramePlacements(model, data)\n\n# Get frame pose (e.g., right hand)\nhand_id = model.getFrameId('right_hand')\nhand_pose = data.oMf[hand_id]  # SE(3)\n\n# Jacobian\nJ = pin.computeFrameJacobian(model, data, q, hand_id, \n                              pin.LOCAL_WORLD_ALIGNED)\n```\n\n### 练习题\n\n1. **浮基坐标**：对 Unitree H1 的 URDF（floating-base），计算质心在世界坐标系中的位置。\n2. **CoM Jacobian**：实现 CoM Jacobian 计算，用数值微分验证。\n3. **多任务 IK**：实现支撑脚不动 + 右手到目标的双任务 IK。\n4. **站立平衡**：实现基于 CoM 跟踪的简单站立平衡控制器。\n5. **Pinocchio 入门**：用 Pinocchio 加载 H1 URDF，完成正运动学和雅可比计算。",
+      "lastUpdated": "2026-04-30T11:07"
+    },
     {
       "title": "人形机器人系统架构：从设计到全栈集成",
       "difficulty": "入门",

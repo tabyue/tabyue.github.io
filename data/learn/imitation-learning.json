@@ -4,12 +4,18 @@
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 50,
-  "lastUpdated": "2026-04-30T10:32",
+  "lastUpdated": "2026-04-30T11:07",
   "description": "从人类演示中学习机器人技能。Diffusion Policy 和 ACT 是当前最实用的模仿学习算法。",
   "prerequisites": [
     "深度学习基础"
   ],
   "sections": [
+    {
+      "title": "Diffusion Policy：扩散模型在机器人中的崛起",
+      "difficulty": "高级",
+      "content": "## Diffusion Policy\n\n2023 年以来，Diffusion Policy 成为机器人操作领域的新范式——相比 BC 和 ACT，它能更好地处理多模态动作。\n\n### 1. 为什么动作预测需要扩散模型？\n\n**多模态问题**：同一个状态下可能有多个合理动作。\n- 例：杯子在中间，左手和右手都能抓\n- 简单 BC（MSE 损失）会输出两者的平均 → 失败\n\n**传统解决方案**：\n- 高斯混合模型（GMM）：显式建模多峰分布\n- 离散动作 + softmax：离散化精度有限\n- 自回归：累积误差\n\n**Diffusion Policy 的优势**：\n- 自然处理多模态（扩散过程天然如此）\n- 无需动作离散化\n- 训练稳定\n- 生成质量高\n\n### 2. 扩散模型回顾\n\n**前向过程**（加噪）：\n$$q(a_t | a_0) = \\mathcal{N}(a_t; \\sqrt{\\bar{\\alpha}_t} a_0, (1-\\bar{\\alpha}_t) I)$$\n\n**反向过程**（去噪）：\n$$p_\\theta(a_{t-1} | a_t, o) = \\mathcal{N}(a_{t-1}; \\mu_\\theta(a_t, t, o), \\Sigma_\\theta)$$\n\n**训练目标**：\n$$\\mathcal{L} = \\mathbb{E}_{a_0, \\epsilon, t} \\| \\epsilon - \\epsilon_\\theta(a_t, t, o) \\|^2$$\n\n### 3. Diffusion Policy 架构\n\n**关键设计**：\n- **输入**：过去 $T_{obs}$ 步观测（图像+状态）\n- **输出**：未来 $T_a$ 步动作序列（action chunk）\n- **网络**：U-Net 或 Transformer\n- **条件化**：观测作为 condition\n\n**CNN-Based Diffusion Policy**（原版）：\n```\n[Obs encoder (ResNet)] → [FiLM conditioning]\n                              ↓\n[Noisy action seq] → [1D U-Net] → [Predicted noise]\n```\n\n**Transformer-Based**（更好）：\n```\n[Obs tokens] → [Transformer encoder]\n                      ↓ (cross-attention)\n[Noisy action tokens] → [Transformer decoder] → [Denoised actions]\n```\n\n### 4. 采样策略\n\n**DDPM 采样**：50-1000 步，慢但质量高。\n\n**DDIM 采样**：10-50 步，质量略降但快很多。\n\n**训练-采样步数不一致**：训练 100 步，推理只用 10 步（DDIM）——推理实时性关键。\n\n```python\nimport torch\nfrom diffusers import DDPMScheduler, UNet1DModel\n\n# Define noise scheduler\nscheduler = DDPMScheduler(num_train_timesteps=100, \n                          beta_schedule='squaredcos_cap_v2')\n\n# Model: 1D U-Net for action prediction\nmodel = UNet1DModel(\n    sample_size=16,       # action chunk length\n    in_channels=7,        # action dim\n    out_channels=7,\n    layers_per_block=2,\n    block_out_channels=(128, 256, 512),\n)\n\n# Training step\ndef training_step(obs, action):\n    # Sample random timestep\n    t = torch.randint(0, scheduler.num_train_timesteps, (obs.shape[0],))\n    # Sample noise\n    noise = torch.randn_like(action)\n    # Add noise to action\n    noisy_action = scheduler.add_noise(action, noise, t)\n    # Predict noise\n    noise_pred = model(noisy_action, t, obs).sample\n    # Loss\n    return torch.nn.functional.mse_loss(noise_pred, noise)\n\n# Inference (DDIM, 10 steps)\ndef inference(obs):\n    action = torch.randn(obs.shape[0], 7, 16)  # Random noise\n    scheduler.set_timesteps(10)  # Only 10 steps\n    for t in scheduler.timesteps:\n        noise_pred = model(action, t, obs).sample\n        action = scheduler.step(noise_pred, t, action).prev_sample\n    return action  # Denoised action sequence\n```\n\n### 5. Action Chunking：关键创新\n\n**传统**：每一步预测一个动作 → 累积误差\n**Action Chunking**：一次预测未来 K 步 → 执行前 k 步 → 重新规划\n\n**效果**：\n- K=1：高频重规划，类似标准 BC\n- K=16：长时规划，减少误差累积\n- K=100：接近开环，对分布偏移敏感\n\n**经验值**：K = 8-32，执行 K/2 步后重规划。\n\n### 6. Diffusion Policy 的变体\n\n| 方法 | 创新点 |\n|------|-------|\n| Diffusion Policy (原版) | CNN 架构 |\n| 3D Diffusion Policy | 融合 3D 信息 |\n| Consistency Policy | 一步生成，快 50x |\n| Diffusion Transformer | Transformer 替代 CNN |\n| Flow Matching Policy | 更简单的训练目标 |\n\n### 练习题\n\n1. **玩具示例**：在 2D 中实现 Diffusion Policy，学习\"两个目标中任选一个\"的多模态行为。\n2. **PushT 复现**：用 Diffusion Policy 复现原论文的 PushT 任务（HuggingFace 有数据集）。\n3. **采样加速**：对比 DDPM 50 步和 DDIM 10 步的性能和延迟差异。\n4. **Action Chunk 消融**：固定其他超参，对比 K=1/4/8/16/32 的性能。\n5. **真机部署**：在你的桌面臂上部署 Diffusion Policy，与 ACT 对比成功率。",
+      "lastUpdated": "2026-04-30T11:07"
+    },
     {
       "title": "模仿学习基础：从行为克隆到 DAgger",
       "difficulty": "入门",

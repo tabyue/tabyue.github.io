@@ -4,13 +4,25 @@
   "stage": "阶段六：项目实战",
   "importance": "进阶实战",
   "estimatedHours": 50,
-  "lastUpdated": "2026-04-29T15:05",
+  "lastUpdated": "2026-04-30T11:07",
   "description": "构建一个能在室内自主导航的移动机器人。从 SLAM 建图到 Nav2 导航的完整实战。",
   "prerequisites": [
     "ROS2",
     "3D 视觉与点云"
   ],
   "sections": [
+    {
+      "title": "定位技术：从 AMCL 到视觉-惯性里程计",
+      "difficulty": "中级",
+      "content": "## 机器人定位技术\n\n导航的第一步是知道\"我在哪\"——定位（Localization）是所有后续决策的基础。本节系统讲解移动机器人定位技术。\n\n### 1. 定位问题分类\n\n| 类型 | 已知 | 求 | 难度 |\n|------|:---:|:---:|:---:|\n| 位姿跟踪 | 初始位姿 + 地图 | 实时位姿 | 容易 |\n| 全局定位 | 地图 | 初始位姿 | 中 |\n| 绑架问题 | 地图（运行中丢失）| 重定位 | 难 |\n| SLAM | 无 | 位姿 + 地图 | 最难 |\n\n### 2. AMCL（自适应蒙特卡洛定位）\n\n**粒子滤波 + 地图**：用一群粒子表示位姿概率分布。\n\n**核心循环**：\n```\n1. 运动更新：每个粒子按 odom 运动并加噪声\n2. 测量更新：用 LiDAR 扫描评估每个粒子的权重\n   w_i = p(z_t | x_i, map)\n3. 重采样：权重高的粒子多被复制，权重低的丢弃\n4. 输出：粒子加权平均作为位姿估计\n```\n\n**ROS2 Nav2 AMCL 使用**：\n```yaml\namcl:\n  ros__parameters:\n    alpha1: 0.2  # rotation noise from rotation\n    alpha2: 0.2  # rotation noise from translation\n    alpha3: 0.2  # translation noise from translation\n    alpha4: 0.2  # translation noise from rotation\n    max_particles: 2000\n    min_particles: 500\n    odom_frame_id: odom\n    base_frame_id: base_footprint\n    scan_topic: scan\n    global_frame_id: map\n```\n\n**AMCL 的问题**：\n- 无法处理大范围初始不确定性（需要全局定位补充）\n- 重采样贫化（resampling impoverishment）\n- 动态环境（家具移动）导致测量似然失真\n\n### 3. 视觉-惯性里程计（VIO）\n\n**原理**：融合 IMU（高频/有漂移）+ 相机（低频/精确）。\n\n**主流方案**：\n| 方案 | 特点 | 代码 |\n|------|------|------|\n| VINS-Mono | 单目 + IMU | 港科大开源 |\n| ORB-SLAM3 | 支持多传感器 | UZH |\n| Kimera | 实时 + 语义 | MIT |\n| OpenVINS | 轻量 MSCKF | UDEL |\n| OKVIS | 老牌可靠 | ETH |\n\n### 4. GPS/RTK + IMU（户外定位）\n\n**普通 GPS**：精度 ~5m\n**差分 GPS (DGPS)**：精度 ~1m\n**RTK-GPS**：精度 ~1cm（需要基站）\n**PPK**：后处理版 RTK，精度更高但非实时\n\n**融合方案**：RTK (绝对位置) + IMU (短期平滑) + 轮式里程计 (冗余) → EKF → 稳定定位\n\n### 5. 视觉定位与重定位\n\n**绑架问题的解决**：\n- **位置识别**（Place Recognition）：NetVLAD / ORB 词袋模型\n- **在数据库中匹配**：当前图像 vs 历史地图图像\n- **精细化**：PnP 求解精确位姿\n\n### 6. 多传感器融合架构\n\n```\n[IMU 200Hz] ──┐\n              │\n[Wheel Odom] ─┤\n              ├──→ [EKF] ──→ base_link in map\n[LiDAR 10Hz] ─┤\n              │\n[Camera 30Hz] ┘\n```\n\n### 练习题\n\n1. **AMCL 实战**：在 ROS2 Nav2 + turtlebot3 仿真中跑 AMCL，观察粒子云收敛。\n2. **VIO 部署**：在 Jetson 上运行 VINS-Fusion，测量定位精度和 CPU 占用。\n3. **重定位测试**：机器人运行中随机\"绑架\"到新位置，测试 AMCL 恢复时间。\n4. **EKF 融合**：用 robot_localization 包融合 IMU + Odom，对比单一传感器的精度。\n5. **精度评估**：用动捕系统作为真值，评估你的定位系统在不同场景下的误差。",
+      "lastUpdated": "2026-04-30T11:07"
+    },
+    {
+      "title": "多机器人协同导航：从分布式规划到蜂群",
+      "difficulty": "高级",
+      "content": "## 多机器人协同导航\n\n单个机器人是\"点\"，多机器人是\"系统\"——从 2 台到 100 台协同，面临着全新的挑战。\n\n### 1. 多机器人系统的层次\n\n| 层次 | 关注点 | 技术 |\n|------|--------|------|\n| 通信 | 如何交换信息 | Mesh 网络 / 5G / WiFi |\n| 定位 | 相对/绝对定位 | UWB / VIO / 协同 SLAM |\n| 规划 | 避免碰撞 | 优先级规划 / 中心化规划 |\n| 任务分配 | 谁做什么 | Hungarian / Auction |\n| 编队 | 保持形状 | Leader-Follower / Virtual Structure |\n\n### 2. 碰撞避免：RVO / ORCA\n\n**ORCA（Optimal Reciprocal Collision Avoidance）**：\n- 假设每个机器人都是\"理性\"的，会各让一半\n- 在速度空间中用半平面约束表达避碰条件\n- 在可行速度空间中选择离期望速度最近的\n\n```python\ndef orca_velocity(current_vel, desired_vel, neighbors, radius, dt):\n    '''Simplified ORCA: find safe velocity closest to desired.'''\n    half_planes = []\n    for neighbor in neighbors:\n        # Compute ORCA half-plane for this neighbor\n        relative_pos = neighbor['pos'] - self_pos\n        relative_vel = current_vel - neighbor['vel']\n        # ... (geometric computation)\n        half_planes.append(compute_orca_half_plane(relative_pos, relative_vel, radius))\n    \n    # Solve linear programming: find v closest to desired in feasible region\n    safe_vel = linear_program(desired_vel, half_planes)\n    return safe_vel\n```\n\n### 3. 分布式任务分配\n\n**拍卖算法（Market-based）**：\n1. 任务发布：中心发布 N 个任务\n2. 每个机器人对每个任务\"出价\"（=预期完成代价的负）\n3. 冲突解决：每个任务选最高出价者\n4. 未分配任务重新拍卖\n\n**Hungarian 算法**：中心化最优分配，$O(n^3)$ 复杂度。\n\n### 4. 编队控制\n\n**Leader-Follower**：\n- 每个 follower 跟随前面的机器人保持相对位姿\n- 简单但 leader 失效则编队散\n\n**Virtual Structure**：\n- 整个编队视为一个刚体（虚拟结构）\n- 每个机器人在虚拟结构中有预定位置\n- 鲁棒但不灵活\n\n**基于势场**：\n- 目标吸引力 + 邻居排斥力 + 编队形状力\n- 分布式，可扩展\n\n### 5. 蜂群智能\n\n**经典 Boids 模型**（Reynolds 1987）：\n- 分离：避免太近\n- 对齐：朝着邻居的平均方向\n- 聚合：朝着邻居的平均位置\n\n现代扩展：用神经网络学习蜂群策略（如 NeuralSwarm）。\n\n### 6. 协同 SLAM\n\n**挑战**：不同机器人看到的是不同视角，如何合并地图？\n\n**方案**：\n- **交汇点检测**：两台机器人看到同一场景 → 建立约束\n- **多机器人位姿图优化**：所有机器人的位姿联合优化\n- **代表**：CCM-SLAM, DOOR-SLAM, Kimera-Multi\n\n### 练习题\n\n1. **ORCA 仿真**：实现简化版 ORCA，让 10 个虚拟机器人在 2D 空间中穿越而不碰撞。\n2. **Hungarian 分配**：给 5 个机器人和 5 个任务（代价矩阵），用匈牙利算法求最优分配。\n3. **编队保持**：实现 Leader-Follower 编队，让 3 台机器人保持三角形编队。\n4. **Boids 可视化**：用 matplotlib 动画可视化 50 只\"鸟\"的蜂群行为。\n5. **ROS2 多机**：在 Gazebo 中同时启动 3 台 turtlebot3，各自独立导航 + 互相避碰。",
+      "lastUpdated": "2026-04-30T11:07"
+    },
     {
       "title": "地图表示与构建：从栅格地图到语义地图",
       "difficulty": "入门",
