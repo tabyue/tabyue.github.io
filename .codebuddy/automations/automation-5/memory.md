@@ -1,5 +1,25 @@
 # Automation-5 Memory: 具身智能门户每6小时更新
 
+## 2026-04-29T17:50 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿
+- 发现工作区有并行实例（另一个 automation-5，timestamp 标记为 2026-04-30T07:30）完成但**未提交**的大量改动（news +4/papers +2/opensource +1/jobs +2/vla-models +1 sec），本轮策略：**接手未提交改动 + 叠加自己的学习模块深化 + 合并一次性提交**，避免工作区残留。
+- 新闻/论文/开源/招聘：**本轮跳过**（并行实例已推进到 n205/p109/os061/j099，避免冲突）
+- 学习深化 ×2：
+  - `data/learn/sim-to-real.json` +1 sec「领域不变特征学习：让策略"看不见"仿真与真实的差别」(14.4K chars)——DANN/CORAL/对比式三范式对比+GRL数学原理+完整PyTorch DANN视觉策略代码+CORAL实现+Sim-to-Real三方法定量对比表(基线42%→DANN+DR 83%→真实微调89%)+DINOv2基础模型零样本对齐趋势+6道练习题。sim-to-real.json 95K→110K，9 sec
+  - `data/learn/world-models-llm.json` +1 sec「自回归视频世界模型：从 VideoGPT 到 V-JEPA 2 与 Cosmos」(12.6K chars)——VideoGPT→MAGVIT→Cosmos-1 技术脉络+LFQ Tokenizer 原理+完整 PyTorch 实现+Cosmos 14B 架构拆解+V-JEPA 2 对比式路线+World Model + MPC 闭环代码+三代对比表+2026 工程化建议+6道练习题。world-models-llm.json 108K→121K，9 sec
+- 3处 lastUpdated 同步：sim-to-real.json 顶层 + section + learning-path.json; world-models-llm.json 顶层 + section + learning-path.json
+- 清理临时脚本：_newsec.json、_apply.js、_inspect.js、_batchB.json（遗留）
+- **合并提交**：本轮 + 并行实例未提交改动统一 commit push
+
+**当前数据编号水位：** news→n205, papers→p109, opensource→os061, jobs→j099
+**Git:** 73c4897→（本轮待提交）, pushed to main
+
+**教训：**
+- PowerShell 下 `node -e "...&&..."` 里的 `&&` 和 `||` 会被解析为 token 分隔符导致语法错误。应该把脚本写到独立 `_xxx.js` 再 `node _xxx.js`，或在 node 脚本里用 `;`/if 替代逻辑运算符
+- 并行实例（两个 automation-5 几乎同时运行）留下 uncommitted 改动时，合并提交 > 放弃改动。判断依据：数据格式正确 + 内容独立于本轮产出 + 有对应的 memory/daily 记录佐证
+
 ## 2026-04-30T07:30 执行记录
 
 **更新概要：**
