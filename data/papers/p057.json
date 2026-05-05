@@ -1,0 +1,29 @@
+{
+  "id": "p057",
+  "title": "Interleave-VLA: Enhancing Robot Manipulation with Interleaved Image-Text Instructions",
+  "authors": "Junjie Fan, Wenke Jia, Yuxuan Fan et al.",
+  "venue": "ICLR 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2505.02152",
+  "github": "https://github.com/Interleave-VLA/Interleave-VLA",
+  "tags": [
+    "VLA",
+    "ICLR 2026",
+    "交错指令",
+    "图文多模态",
+    "泛化能力",
+    "数据合成",
+    "上海交大",
+    "UC Berkeley"
+  ],
+  "tldr": "提出Interleave-VLA，首个能理解交错图像-文本指令并直接生成连续动作序列的VLA框架。现有VLA仅支持纯文本指令，面对未见物体时泛化能力差。核心贡献：（1）定义了交错图文指令的VLA问题范式——用户可在指令中嵌入目标物体/位置的参考图像，大幅提升指令的精确性和灵活性；（2）提出基于2D扩散模型的大规模数据合成管线，自动为现有机器人轨迹数据生成交错图文标注，解决了缺乏大规模交错训练数据的根本问题；（3）在仿真和真实世界评测中，域外物体泛化能力相比纯文本指令方法提升2倍。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-23",
+  "keyInsights": [
+    "首次将交错图文指令从数字世界引入机器人操作——指令中可嵌入目标物体的参考图像",
+    "数据合成管线：2D扩散模型生成物体变体图像 + 自动构建交错图文标注，无需人工标注",
+    "域外泛化能力提升2倍：交错图文指令比纯文本提供更精确的视觉先验",
+    "ICLR 2026接收，代码完整开源，支持多种VLA骨干网"
+  ],
+  "impact": "开辟了VLA指令范式的新方向——从纯文本走向多模态交错指令，为实际部署中的灵活任务指定提供了新可能"
+}

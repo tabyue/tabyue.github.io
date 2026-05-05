@@ -1,0 +1,26 @@
+{
+  "id": "p044",
+  "title": "World-Value-Action Model: Implicit Planning for Vision-Language-Action Systems",
+  "authors": "Runze Li et al.",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.14732",
+  "github": "",
+  "tags": [
+    "世界模型",
+    "VLA",
+    "隐式规划",
+    "价值函数",
+    "长程操作"
+  ],
+  "tldr": "提出WAV（World-Value-Action）模型，将隐式规划能力融入VLA系统。核心思想：整合语言条件化视频生成（世界模型）和价值函数评估，让VLA系统能在不显式搜索的情况下推理长程轨迹并评估后果。解决了现有VLA方法直接预测动作、缺乏对长程轨迹推理和后果评估能力的问题，在复杂操作任务中表现优异。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-21",
+  "keyInsights": [
+    "统一世界模型（预测未来）+ 价值函数（评估后果）+ 动作生成（执行）三个组件",
+    "隐式规划：不需要显式的树搜索或规划算法，通过学到的价值函数隐式评估轨迹质量",
+    "语言条件化视频生成作为世界模型预测未来状态",
+    "在长程复杂操作任务中优于纯端到端VLA方法"
+  ],
+  "impact": "为VLA系统引入了有效的规划能力，填补了端到端VLA方法在长程推理上的空白"
+}

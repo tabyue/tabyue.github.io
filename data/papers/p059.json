@@ -1,0 +1,28 @@
+{
+  "id": "p059",
+  "title": "EmbodiedMidtrain: Bridging the Gap between Vision-Language Models and Vision-Language-Action Models via Mid-training",
+  "authors": "Yiyang Du, Zhanqiu Guo, Xin Ye, Liu Ren, Chenyan Xiong",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.20012",
+  "github": "",
+  "tags": [
+    "VLA",
+    "VLM",
+    "中间训练",
+    "数据选择",
+    "分布对齐",
+    "空间推理",
+    "CMU"
+  ],
+  "tldr": "提出EmbodiedMidtrain，首次系统刻画VLM与VLA之间的数据分布鸿沟，并通过轻量级可学习邻近度估计器从大规模VLM数据池中自动筛选最接近VLA分布的样本，在VLM→VLA微调之间插入'中间训练'阶段。该方法为VLA微调提供更优初始化，在3个机器人操作基准上跨多种VLM骨干一致提升性能。数据引擎能捕获数据集级和样本级的对齐信号，倾向选择空间推理任务而非以文本为中心的任务。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-23",
+  "keyInsights": [
+    "首次系统刻画VLM与VLA的数据分布差距：VLA数据占据紧凑区域，与VLM分布明显分离",
+    "轻量级可学习邻近度估计器自动从VLM数据池中选择最对齐VLA的样本",
+    "中间训练的性能提升从训练最初阶段即可显现，并持续扩大",
+    "数据引擎倾向选择空间推理任务，同时保持VLM数据多样性"
+  ],
+  "impact": "为VLM→VLA训练流程提供了低成本高回报的优化方案，中间训练范式可能成为VLA模型开发的标准步骤"
+}

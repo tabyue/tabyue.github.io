@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-30T07:30",
+  "lastUpdated": "2026-05-05T13:30",
   "stages": [
     {
       "id": "foundation",
@@ -189,7 +189,7 @@
         {
           "name": "机器人运动学",
           "importance": "核心",
-          "lastUpdated": "2026-04-23T09:03",
+          "lastUpdated": "2026-05-03T09:55",
           "description": "理解机器人如何描述和计算关节与末端执行器的位置、速度关系",
           "topics": [
             {
@@ -224,7 +224,7 @@
         {
           "name": "机器人动力学",
           "importance": "核心",
-          "lastUpdated": "2026-04-28T12:00",
+          "lastUpdated": "2026-05-04T00:28",
           "description": "理解力、力矩与运动的关系，是控制器设计的物理基础",
           "topics": [
             {
@@ -284,12 +284,13 @@
             "《Robotics: Modelling, Planning and Control》（机器人控制专著）"
           ],
           "howTo": "先做一个倒立摆PID控制（1周上手），再学LQR稳定倒立摆（感受最优控制的威力），然后学MPC（Drake库有现成示例），最后学阻抗控制（用MuJoCo仿真接触任务）。",
-          "weeklyPlan": "第1周：PID控制+倒立摆实验 | 第2周：状态空间法+能控性分析 | 第3周：LQR设计+Riccati方程 | 第4-5周：MPC原理与Drake实现 | 第6周：阻抗控制+接触任务仿真"
+          "weeklyPlan": "第1周：PID控制+倒立摆实验 | 第2周：状态空间法+能控性分析 | 第3周：LQR设计+Riccati方程 | 第4-5周：MPC原理与Drake实现 | 第6周：阻抗控制+接触任务仿真",
+          "lastUpdated": "2026-05-03T02:30"
         },
         {
           "name": "机械设计基础",
           "importance": "重要",
-          "lastUpdated": "2026-04-28T20:52",
+          "lastUpdated": "2026-05-01T13:15",
           "description": "了解机器人硬件构造，包括驱动器、传感器、结构设计",
           "topics": [
             {
@@ -320,7 +321,7 @@
         {
           "name": "传感器与硬件接口",
           "importance": "核心",
-          "lastUpdated": "2026-04-22T13:15",
+          "lastUpdated": "2026-05-04T15:20",
           "description": "系统学习激光雷达、IMU、触觉传感器、力传感器、编码器等核心传感器的原理、选型和编程接口",
           "topics": [
             {
@@ -503,7 +504,7 @@
         {
           "name": "深度学习基础",
           "importance": "核心",
-          "lastUpdated": "2026-04-29T11:48",
+          "lastUpdated": "2026-05-03T17:05",
           "description": "CNN、Transformer、注意力机制是所有现代具身智能算法的基石",
           "topics": [
             {
@@ -627,12 +628,12 @@
           ],
           "howTo": "先精读RT-2论文理解VLA范式（动作token化+co-fine-tuning），再研究OpenVLA的开源实现（跑通推理→尝试微调），最后读π₀理解Flow Matching。",
           "weeklyPlan": "第1周：RT-2论文精读+动作token化实现 | 第2-3周：OpenVLA源码分析+推理测试 | 第4周：π₀/FAST论文+Flow Matching理解",
-          "lastUpdated": "2026-04-30T07:30"
+          "lastUpdated": "2026-05-02T03:55"
         },
         {
           "name": "世界模型与LLM+机器人",
           "importance": "前沿",
-          "lastUpdated": "2026-04-29T17:50",
+          "lastUpdated": "2026-05-01T20:28",
           "description": "让机器人具备常识推理和物理世界理解能力",
           "topics": [
             {
@@ -668,7 +669,7 @@
         {
           "name": "物理仿真引擎",
           "importance": "核心",
-          "lastUpdated": "2026-04-27T09:56",
+          "lastUpdated": "2026-05-05T13:30",
           "description": "仿真环境是训练和验证具身智能算法的核心基础设施",
           "topics": [
             {
@@ -802,7 +803,7 @@
         {
           "name": "模型训练与推理优化",
           "importance": "核心",
-          "lastUpdated": "2026-04-23T09:03",
+          "lastUpdated": "2026-05-05T06:10",
           "description": "分布式训练、模型压缩量化、端侧推理部署，让大模型能跑在真实机器人上",
           "topics": [
             {
@@ -858,7 +859,7 @@
         {
           "name": "MLOps与持续交付",
           "importance": "重要",
-          "lastUpdated": "2026-04-29T04:20",
+          "lastUpdated": "2026-05-05T13:30",
           "description": "数据版本管理、实验追踪、自动化测试、容器化部署的全流程工程实践",
           "topics": [
             {
@@ -917,7 +918,7 @@
         {
           "name": "移动机器人导航项目",
           "importance": "进阶实战",
-          "lastUpdated": "2026-04-27T14:40",
+          "lastUpdated": "2026-05-03T09:45",
           "description": "构建一个能在室内自主导航的移动机器人",
           "topics": [
             {

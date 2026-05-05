@@ -1,0 +1,28 @@
+{
+  "id": "p047",
+  "title": "BeTTER: Unmasking the Illusion of Embodied Reasoning in Vision-Language-Action Models",
+  "authors": "Haiweng Xu, Sipeng Zheng, Hao Luo, Wanpeng Zhang, Ziheng Xi, Zongqing Lu",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.18000",
+  "github": "https://github.com/haiweng05/BeTTER",
+  "tags": [
+    "VLA",
+    "具身推理",
+    "评测基准",
+    "因果干预",
+    "表征退化",
+    "北大",
+    "清华"
+  ],
+  "tldr": "提出BeTTER(Benchmark for Testing True Embodied Reasoning)，通过因果干预揭示VLA模型的推理能力是'幻觉'。研究发现最先进的VLA模型在动态场景中灾难性失败，暴露了词汇-运动学捷径(Lexical-Kinematic Shortcuts)、行为惯性(Behavioral Inertia)和语义特征坍缩(Semantic Feature Collapse)三大缺陷，根源在于架构层面的容量压缩和短视下采样。真实世界机器人验证了这些问题的普遍性。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-21",
+  "keyInsights": [
+    "VLA模型在标准基准上的高成功率可能是因为优化过拟合了感知运动先验，而非真正的推理",
+    "因果干预（空间布局偏移、时间外推）是诊断推理能力的有效方法",
+    "三大病症（捷径/惯性/坍缩）可追溯到架构层面的容量压缩和短视下采样",
+    "未来VLA范式需解决高频控制与高层推理之间的结构性张力"
+  ],
+  "impact": "对当前VLA评估方法敲响警钟——标准基准可能系统性高估模型的推理能力，呼吁重新设计动态/因果性评测"
+}

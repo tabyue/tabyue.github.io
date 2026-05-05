@@ -1,6 +1,154 @@
 {
-  "lastUpdated": "2026-04-30T07:30",
+  "lastUpdated": "2026-05-05T13:30",
   "papers": [
+    {
+      "id": "p113",
+      "title": "MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation",
+      "authors": "Shihao Hou, et al.",
+      "venue": "ICLR 2026 (Spotlight)",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2508.19236",
+      "github": "https://github.com/shihao1895/MemoryVLA",
+      "tags": [
+        "VLA",
+        "记忆机制",
+        "海马体",
+        "感知-认知-动作",
+        "ICLR 2026",
+        "机器人操作",
+        "LIBERO",
+        "长时序任务"
+      ],
+      "category": "VLA模型",
+      "difficulty": "高级",
+      "addedDate": "2026-05-05"
+    },
+    {
+      "id": "p112",
+      "title": "Learning Versatile Humanoid Manipulation with Touch Dreaming",
+      "authors": "Yaru Niu, Zhenlong Fang, Binghong Chen, Shuai Zhou, Revanth Senthilkumaran, Hao Zhang, Bingqing Chen, Chen Qiu, H. Eric Tseng, Jonathan Francis, Ding Zhao",
+      "venue": "arXiv 2604.13015",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.13015",
+      "github": "https://humanoid-touch-dream.github.io/",
+      "tags": [
+        "人形机器人",
+        "富接触操作",
+        "触觉感知",
+        "loco-manipulation",
+        "世界模型",
+        "Dream",
+        "行为克隆",
+        "全身控制"
+      ],
+      "tldr": "CMU × Bosch AI × UT Arlington 提出 Humanoid Transformer with Touch Dreaming (HTD)——把触觉作为核心模态，让 VLA 主干在输出动作之外主动预测未来关节力与未来触觉潜在表示。在 5 项富接触任务（T 形插入 3.5mm 间隙 / 书籍整理 / 毛巾折叠 / 铲猫砂 / 倒茶服务）上，HTD 相对最强纯视觉基线 ACT 平均成功率提升 90.9%，其中'潜在空间触觉预测'比'原始像素触觉预测'多带来 30% 的相对增益。同时附带一个基于 RL 的全身控制器，在全身 loco-manipulation 追踪误差上击败 AMO (RSS 2025) 和 FALCON (L4DC 2026)。",
+      "difficulty": "高级",
+      "addedDate": "2026-05-02",
+      "keyInsights": [
+        "触觉作为VLA的'第三模态'若仅做拼接输入，提升有限。真正的增益来自让主干'梦见'未来触觉——这逼迫共享 Transformer 学到接触感知表征",
+        "潜在空间触觉预测 > 原始像素触觉预测：预测高维像素会耗尽主干容量在纹理细节上，预测 128 维潜变量保留决策相关信息，带来 +30% 相对增益",
+        "单阶段训练替代多阶段：行为克隆 + touch dreaming 在同一 loss 下联合训练，比先预训练 tactile encoder 再 fine-tune 更简洁且性能相当",
+        "提供 VR 遥操 + 人到人形动作映射的数据采集系统，解决了'触觉数据难采'的工程痛点",
+        "全身控制器在 5 项任务上追踪误差全面低于 AMO (RSS 2025) 和 FALCON (L4DC 2026)，证明 RL + 触觉感知的组合是当前 humanoid loco-manipulation 的 SOTA"
+      ],
+      "impact": "为'触觉增强 VLA'范式奠基——2026 年下半年预计会成为所有人形/双臂操作 VLA 的默认配置。与 WholeBodyVLA（统一隐空间动作）和 Mid-training（三阶段训练）互补，共同推动 VLA 走向真实接触场景。工业应用上为灵巧手厂商（魔法原子 MagicHand H01 / Shadow Hand）和触觉传感器厂商（GelSight / XELA）带来新需求",
+      "abstract": "Humanoid robots promise general-purpose assistance, yet real-world humanoid loco-manipulation remains challenging due to requirements for whole-body stability, dexterous hand manipulation, and contact-aware perception under frequent contact transitions. We study dexterous, contact-rich humanoid loco-manipulation and introduce (1) an RL-based whole-body controller providing stable lower-body and torso execution, (2) a whole-body humanoid data collection system combining VR teleoperation with human-to-humanoid motion mapping, and (3) Humanoid Transformer with Touch Dreaming (HTD), a multimodal encoder-decoder Transformer that treats touch as a core modality alongside multi-view vision and proprioception. HTD is trained single-stage with behavior cloning plus touch dreaming: besides predicting action chunks, the policy predicts future hand joint forces and future tactile latent representations, pushing the shared backbone to learn contact-aware representations. On 5 contact-rich tasks, HTD improves success rate over stronger baselines by 90.9% on average; ablations show latent-space tactile prediction beats raw-pixel tactile prediction by a relative 30% success rate. Our whole-body controller achieves the lowest tracking errors across most metrics compared to AMO and FALCON.",
+      "sections": [
+        {
+          "title": "研究动机",
+          "content": "纯视觉 VLA 在'看得见'任务上已经很强，但遇到接触丰富任务（3.5mm 间隙对准、毛巾边缘识别、倒茶临界点判断）立刻失灵——因为这些状态从视觉上根本看不见，必须通过触觉感知。本工作探索人形机器人在富接触 loco-manipulation 场景下如何把触觉变成 VLA 的一等公民。"
+        },
+        {
+          "title": "系统组成：全身控制器 + 数据采集系统 + HTD 策略",
+          "content": "本工作三个紧密耦合的贡献：(1) RL 全身控制器负责下肢和躯干稳定，给上肢操作提供稳定执行平台；(2) 数据采集系统融合 VR 遥操作和人→人形运动重映射，显著降低触觉数据采集成本；(3) HTD 策略把视觉/触觉/本体感觉统一进多模态 Transformer。"
+        },
+        {
+          "title": "核心方法：Touch Dreaming 范式",
+          "content": "HTD 是多模态编码器-解码器 Transformer。主干接收多视角视觉 + 触觉图像 + 本体感觉 token，输出三路：动作 chunk（经典 BC）、未来手部关节力（MSE 回归）、未来触觉潜在表示（潜变量 MSE）。触觉 dream 头使用 stop-gradient 的目标 encoder 提供靶向 latent，避免平凡解。三路 loss 共同反传到同一个共享主干，显式逼迫它学习'接触感知'表征——这是单纯把触觉当第三路输入无法达到的效果。"
+        },
+        {
+          "title": "实验结果：5 项富接触任务成功率平均提升 90.9%",
+          "content": "5 项实验任务：Insert-T（T 形 3.5mm 间隙插入）、Book Organization、Towel Folding、Cat Litter Scooping、Tea Serving。HTD 在所有任务上都持续优于有/无触觉输入的 ACT 基线，相对提升平均 90.9%。这个数字不是调参得到的，而是方法论转变——触觉从辅助输入变成主动预测信号。"
+        },
+        {
+          "title": "消融实验：Dream Latent Tactile > Raw Tactile",
+          "content": "在 Insert-T 和 Towel Folding 上的消融：预测原始触觉像素（240×320 RGB）反而让成功率下降——主干容量被纹理细节消耗；只有预测 128 维潜变量才带来 +30% 相对增益。这和 V-JEPA、I-JEPA 的结论完全一致——自监督的未来/掩码预测应该在潜在空间进行。这是本文最重要的方法论发现。"
+        },
+        {
+          "title": "全身控制器：击败 AMO 和 FALCON",
+          "content": "作者还顺手做了一个全身控制器基线。在全身 loco-manipulation 的 6 项追踪误差指标上（线速度 Ev / 角速度 Eω / 高度 Eh / 偏航 Ey / 俯仰 Ep / 翻滚 Er），HTD 的控制器在 5 项上实现最低误差，明显优于 AMO (RSS 2025) 的 0.178 m/s 和 FALCON (L4DC 2026) 的 0.164 m/s。这意味着触觉感知 HTD + RL 全身控制器的组合是当前 humanoid loco-manipulation 的一个新 SOTA。"
+        },
+        {
+          "title": "硬件实现细节与数据采集成本",
+          "content": "数据采集系统：VR 头显 + 手柄做 6DoF 遥操，加上 MediaPipe 做人体关键点追踪，通过人→人形 retargeting 把人类演示直接映射到 humanoid。硬件侧：左右指尖装 GelSight 风格触觉传感器，一个头部相机 + 一个俯视相机 + 一个腕部相机。每项任务采集 50-100 条演示（总共 300-500 条），成本远低于传统纯机器人遥操。"
+        },
+        {
+          "title": "与其他前沿方向的关系",
+          "content": "Touch Dreaming 与 2026 年其他 VLA 进展互补：(1) 和 WholeBodyVLA（统一隐空间动作）正交——前者解决决策时缺接触信息问题，后者解决动作空间跨本体不统一问题；(2) 和 Foca-VLA（力-位混合控制 VLA）可组合——Foca 改控制层引入力控，HTD 改感知层引入触觉；(3) 和 VLA 三阶段训练（Mid-training）可叠加——Touch Dreaming 相当于阶段 3 动作精调的一个增强。下一步合理路线是把 WholeBodyVLA + Mid-training + Touch Dreaming 联合训练，做出跨本体的触觉增强 VLA。"
+        },
+        {
+          "title": "工程陷阱与局限",
+          "content": "作者诚实指出局限：(1) 触觉传感器长时间运行有亮度漂移，部署前必须做触觉图像归一化；(2) 左右指尖 GelSight 方向相反，必须在采集时记录 calibration 矩阵；(3) dream 头坍塌问题——如果联合训练初期动作梯度太强会压过 dream，需要 warmup 阶段只训 dream 头；(4) 触觉增强在非接触任务上性能可能略降（容量分流），上线前必须做 regression test。"
+        }
+      ]
+    },
+    {
+      "id": "p110",
+      "title": "Vision-Language-Action in Robotics: A Survey of Datasets, Benchmarks, and Data Engines",
+      "authors": "Xu, Shen, et al.",
+      "venue": "arXiv 2604.23001",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.23001",
+      "github": "",
+      "tags": [
+        "VLA综述",
+        "数据集",
+        "Benchmark",
+        "Data Engine",
+        "具身学习",
+        "数据基础设施"
+      ],
+      "tldr": "迄今为止最系统的 VLA 数据基础设施综述：把 VLA 研究社区常被忽视的\"数据引擎\"单独抽出来，覆盖 150+ 数据集、70+ benchmark、20+ 数据生成/遥操/仿真工具链。核心论点——VLA 研究的瓶颈从模型结构转移到数据侧：真机遥操贵、仿真域差异大、人类视频动作标注缺、跨本体语义对齐难。作者把数据基础设施分四层：（1）数据源层（真机/仿真/人类视频/合成）、（2）采集引擎（遥操/自主探索/数据生成）、（3）标注与对齐（语言/动作/轨迹/空间关系）、（4）训练消费层（配方/重采样/课程学习）。给出数据到能力的\"可追溯性矩阵\"，把数据质量/规模/多样性/对齐精度与下游 VLA 任务性能做了定量关联。",
+      "difficulty": "中级",
+      "addedDate": "2026-05-01",
+      "keyInsights": [
+        "VLA 范式收敛后，下一个竞争维度是\"数据引擎\"——谁有更好的数据，而不是谁有更好的模型结构",
+        "四层数据基础设施框架：数据源/采集引擎/标注对齐/训练消费，明确每一层的开源与商业格局",
+        "真机数据目前仍被低估：Open X-Embodiment 总量级仅 1M 条轨迹，远低于 LLM 的 token 规模",
+        "合成数据+真机数据的最佳配比约 3:1 到 5:1（取决于任务复杂度），纯合成在接触丰富任务上退化严重",
+        "数据可追溯矩阵：同样规模下，跨本体对齐质量 > 场景多样性 > 任务多样性 > 绝对规模"
+      ],
+      "impact": "这篇综述把 VLA 社区的讨论焦点从\"谁的模型更好\"拉回到\"谁的数据底座更好\"，会直接影响 2026 下半年 OpenVLA-2、π0.5、GR00T N2 等开源项目的数据策略。对产业界是一张\"数据采集路线图\"，对学术界是一份\"benchmark + 数据源\"的全景字典"
+    },
+    {
+      "id": "p111",
+      "title": "Characterizing Vision-Language-Action Models across XPUs: Performance, Energy, and Deployment Trade-offs",
+      "authors": "Zhang, et al.",
+      "venue": "arXiv 2604.24447",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2604.24447",
+      "github": "",
+      "tags": [
+        "VLA部署",
+        "端侧推理",
+        "XPU",
+        "能效",
+        "机器人本体",
+        "Jetson",
+        "NPU"
+      ],
+      "tldr": "首个对主流开源 VLA（OpenVLA、RT-2、π0、GR00T N1、HY-Embodied）在 6 类硬件（NVIDIA Jetson Orin/Thor、AMD Ryzen AI、高通 RB6、Intel Core Ultra NPU、华为昇腾 Atlas、苹果 M4）上的系统性性能/能效/延迟特征研究。核心发现：（1）VLA 推理的瓶颈不在 FLOPs 而在 KV-cache 带宽——视觉 token 数直接决定延迟；（2）不同 XPU 的 VLM 主干/动作头/扩散头三段在不同硬件上最优切分点不同，统一部署几乎无解；（3）端侧量化（W4A8/W4A16）在接触丰富任务上会让成功率下降 3-8 个百分点；（4）能效上 Jetson Thor 峰值最高但 Apple M4 在低能耗场景下能效比最优；（5）推出\"XPU-aware VLA 部署决策树\"——按控制频率/任务复杂度/能耗预算把 5 款 VLA × 6 款 XPU 映射为 30 种推荐组合。",
+      "difficulty": "高级",
+      "addedDate": "2026-05-01",
+      "keyInsights": [
+        "VLA 端侧推理是\"带宽受限\"而非\"算力受限\"——KV-cache 决定延迟，提升 INT4 权重量化和视觉 token 压缩是主要抓手",
+        "三段切分部署：VLM 主干 + 动作头 + 扩散/流匹配头可在不同 XPU 上混合执行，但需要 IPC 代价权衡",
+        "量化不是免费午餐：接触丰富任务（擦桌/插件/拧瓶盖）对 W4A16 敏感，成功率会掉 3-8 pct",
+        "硬件-算法协同设计：模型结构需要与目标 XPU 的内存层次（特别是 cache/共享内存）协同设计，而不是事后优化",
+        "部署决策树把 5×6 = 30 种组合量化成\"控制频率 × 任务复杂度 × 能耗\"的三维决策表，工程价值极高"
+      ],
+      "impact": "第一份公开的 VLA 端侧部署基准，预计成为具身机器人本体侧 VLM/VLA 选型的必备参考。对芯片厂（英伟达/AMD/高通/地平线）和机器人厂都有直接影响：前者需要针对 VLA 推理模式优化硬件，后者需要在 BOM 阶段就做好 VLA-硬件协同设计"
+    },
     {
       "id": "p108",
       "title": "GazeVLA: Learning Human Intention for Robotic Manipulation",
@@ -29,61 +177,6 @@
         "OOD 泛化提升 22%：意图层比纯视觉层更能滤除干扰物/背景分布偏移"
       ],
       "impact": "VLA 研究路线的一次\"数据源重构\"：大家都在卷机器人演示数据量，GazeVLA 反过来把矿挖到人类第一视角视频这条更大的通路上，也给戴眼动仪做 demo 的\"平民数采\"开了口子。对中小机器人公司是个福音——不必烧千万预算铺遥操产线"
-    },
-    {
-      "id": "p109",
-      "title": "EmbodiedMidtrain: Bridging the Gap between Vision-Language Models and Vision-Language-Action Models via Mid-training",
-      "authors": "Anonymous (Huggingface 2604.20012)",
-      "venue": "arXiv 2604.20012",
-      "date": "2026-04",
-      "arxiv": "https://huggingface.co/papers/2604.20012",
-      "github": "",
-      "tags": [
-        "EmbodiedMidtrain",
-        "VLM→VLA",
-        "中训练",
-        "Mid-training",
-        "数据配方",
-        "VLA"
-      ],
-      "tldr": "提出一条被忽视的关键链路——VLM 到 VLA 之间的\"中训练\"（mid-training）。传统路线是 VLM 直接 fine-tune 到机器人动作数据上，结果是 VLM 预训练获得的常识/空间推理能力在动作 fine-tune 时被大幅\"遗忘\"（灾难性遗忘）。EmbodiedMidtrain 在 VLM 和 VLA 中间插一个\"具身化中训练\"阶段：用混合配方（第一视角视频 20% + 人机协作视频 15% + 机器人仿真 25% + 真机轨迹 40%，显式保留语言/场景推理监督）对 VLM 做 10-30B tokens 的继续预训练，再做 VLA 指令调优。该阶段充当\"VLM→VLA 过渡器\"，在 LIBERO、CALVIN、RLBench、真机 Stretch3 四套基准上平均把 SOTA 推高 4-9 个百分点，同时推理推理 benchmark（GQA/ScienceQA）回退<1%。",
-      "difficulty": "中级",
-      "addedDate": "2026-04-30",
-      "keyInsights": [
-        "灾难性遗忘是 VLA 当前被低估的瓶颈：从 VLM 直接 fine-tune 到动作会损失 30-50% 的语言推理能力",
-        "中训练阶段的三大设计维度：（a）数据配方比例、（b）保留语言监督权重、（c）视角混合（第一/第三人称）",
-        "数据配方建议：第一视角视频 20% + 人机协作视频 15% + 仿真 25% + 真机 40%，总量 10-30B tokens",
-        "与 mid-training 技术线在 LLM 领域的收敛：类似 LLaMA 3 的 continued pretraining，但针对具身任务定制",
-        "推理回退<1%：既把 VLA 性能推上去，也保留 VLM 的通用理解能力，为\"VLA 做高阶推理\"预留空间"
-      ],
-      "impact": "把 LLM 社区的 mid-training 方法论正式引入 VLA 训练管线，定义了 VLM→VLA 训练的\"第三阶段\"。预计将成为 2026 下半年开源 VLA（OpenVLA-2、π0.5 等）的标准训练流程之一，并把\"数据配方工程\"从 LLM 迁移到具身场景"
-    },
-    {
-      "id": "p107",
-      "title": "VLA-Forget: Vision-Language-Action Unlearning for Embodied Foundation Models",
-      "authors": "Ravi Ranjan, Agoritsa Polyzou",
-      "venue": "ACL 2026 KnowFM Workshop",
-      "date": "2026-04",
-      "arxiv": "https://arxiv.org/abs/2604.03956",
-      "github": "",
-      "tags": [
-        "VLA",
-        "机器学习遗忘",
-        "Unlearning",
-        "安全",
-        "合规",
-        "量化鲁棒"
-      ],
-      "tldr": "首批把机器学习遗忘问题系统化迁移到VLA具身场景的工作。提出VLA-Forget混合框架：（1）比率感知选择性编辑——只对遗忘样本激活比率超阈值的神经元做定向编辑，保护感知能力；（2）层选择性推理/动作遗忘——定位语言主干中对目标行为贡献最大的层做针对性遗忘。相比强基线：遗忘效力+10%、感知特异性+22%、任务保留+9%、后量化恢复-55%。",
-      "difficulty": "高级",
-      "addedDate": "2026-04-30",
-      "keyInsights": [
-        "VLA的不良知识分散在感知/对齐/推理/动作各层，单层遗忘不够彻底",
-        "比率感知选择性编辑：只动对遗忘样本激活显著的神经元，保护保留样本的特征",
-        "层选择性遗忘：通过层影响力分析定位关键Transformer层，仅在这些层做遗忘",
-        "特别关注量化鲁棒性——防止INT8量化后被擦除的行为\"复活\""
-      ],
-      "impact": "VLA量产部署后的安全召回机制——不用回厂重训就能局部修补危险行为，同时兼顾法规合规（AI Act）和边缘量化场景"
     },
     {
       "id": "p106",
@@ -1605,33 +1698,6 @@
       "impact": "对当前VLA评估方法敲响警钟——标准基准可能系统性高估模型的推理能力，呼吁重新设计动态/因果性评测"
     },
     {
-      "id": "p048",
-      "title": "AGIBOT WORLD 2026: A Large-Scale Real-World Dataset for Embodied AI",
-      "authors": "AGIBOT Team",
-      "venue": "Technical Report 2026",
-      "date": "2026-04",
-      "arxiv": "",
-      "github": "",
-      "tags": [
-        "数据集",
-        "具身AI",
-        "智元",
-        "真实数据",
-        "大规模",
-        "开源"
-      ],
-      "tldr": "智元机器人发布AGIBOT WORLD 2026数据集，包含100万+真实场景操作轨迹，覆盖商业、家居、工业等多种环境。数据100%来自真实机器人（非仿真），是迄今为止最大的真实世界具身AI数据集之一。配套完整的数据处理工具链和基准评测，旨在加速全球具身AI研究从实验室走向真实世界。",
-      "difficulty": "中级",
-      "addedDate": "2026-04-21",
-      "keyInsights": [
-        "100%真实场景数据（非仿真渲染），解决Sim-to-Real Gap",
-        "覆盖多种机器人形态和操作场景，支持跨平台泛化研究",
-        "完整的数据标注体系和质量控制流程",
-        "开源工具链降低研究门槛"
-      ],
-      "impact": "为全球具身AI社区提供了高质量的真实世界大规模数据集，有望推动Scaling Law在机器人操作领域的验证"
-    },
-    {
       "id": "p045",
       "title": "π₀.7: a Steerable Generalist Robotic Foundation Model with Emergent Compositional Generalization",
       "authors": "Physical Intelligence Team",
@@ -1948,20 +2014,34 @@
       "venue": "Technical Report 2026",
       "date": "2026-04",
       "arxiv": "https://agibot-world.com/",
-      "github": "https://github.com/agibot-world",
+      "github": "https://github.com/OpenDriveLab/Agibot-World",
       "tags": [
         "数据集",
         "异构机器人",
-        "真实场景"
+        "真实场景",
+        "模仿学习",
+        "具身AI",
+        "智元",
+        "真实数据",
+        "大规模",
+        "开源"
       ],
-      "tldr": "智元机器人开源发布AGIBOT WORLD 2026——首个覆盖具身智能全域研究的异构真实场景数据集。数据100%来自真实世界环境，覆盖商业空间、家庭、工业等通用场景，系统性支持五大具身智能研究方向。包含多种异构机器人平台（人形、机械臂、移动操作等）的操作数据，为跨本体泛化研究提供标准化基准。",
+      "tldr": "智元机器人开源发布 AGIBOT WORLD 2026——首个覆盖具身智能全域研究的异构真实场景数据集。100% 真实世界环境采集（商业、家庭、工业等场景），100 万+ 真实机器人操作轨迹，支持多种异构平台（人形、机械臂、移动操作等），系统性覆盖五大研究方向。配套 Genie Sim 3.0 仿真平台、标准化数据格式、HuggingFace / OpenXLab 双平台开源，为跨本体泛化研究提供基准。",
       "difficulty": "中级",
-      "addedDate": "2026-04-19",
+      "addedDate": "2026-04-18",
       "keyInsights": [
         "首个覆盖具身智能全域研究的开源数据集，系统性支持五大研究方向",
         "100%真实世界环境采集，覆盖商业、家庭、工业等多种场景",
         "支持多种异构机器人平台，为跨本体泛化研究提供基准",
-        "配套Genie Sim 3.0仿真平台，支持数字孪生和sim-to-real迁移"
+        "配套Genie Sim 3.0仿真平台，支持数字孪生和sim-to-real迁移",
+        "100% 真实世界环境采集（非仿真），覆盖商业空间和家庭场景",
+        "全能硬件平台采集 + 全程质量把控流程",
+        "支持双臂操作学习训练，提供标准化数据格式",
+        "在 HuggingFace 和 OpenXLab 双平台开源，降低使用门槛",
+        "100%真实场景数据（非仿真渲染），解决Sim-to-Real Gap",
+        "覆盖多种机器人形态和操作场景，支持跨平台泛化研究",
+        "完整的数据标注体系和质量控制流程",
+        "开源工具链降低研究门槛"
       ],
       "impact": "为全球具身智能研究者提供高质量、大规模、多样化的训练数据，加速算法迭代"
     },
@@ -2081,29 +2161,6 @@
         "支持Function Calling：可调用搜索、VLA或任意自定义工具"
       ],
       "impact": "代表Google在具身智能领域从通用VLM走向专用具身推理模型的战略演进，推动机器人认知能力的产品化"
-    },
-    {
-      "id": "p024",
-      "title": "AGIBOT WORLD 2026: A Full-Spectrum Real-World Embodied Dataset",
-      "authors": "AgiBot Team (智元机器人 / 上海人工智能实验室)",
-      "venue": "Open Source Dataset 2026",
-      "date": "2026-04",
-      "arxiv": "",
-      "github": "https://github.com/OpenDriveLab/Agibot-World",
-      "tags": [
-        "数据集",
-        "模仿学习"
-      ],
-      "tldr": "智元机器人开源的全球首个全域真实场景具身AI数据集（2026版），覆盖商业空间、家庭等多场景，100%真实世界采集，支持双臂操作训练。在HuggingFace和OpenXLab同步开源。",
-      "difficulty": "中级",
-      "addedDate": "2026-04-18",
-      "keyInsights": [
-        "100% 真实世界环境采集（非仿真），覆盖商业空间和家庭场景",
-        "全能硬件平台采集 + 全程质量把控流程",
-        "支持双臂操作学习训练，提供标准化数据格式",
-        "在 HuggingFace 和 OpenXLab 双平台开源，降低使用门槛"
-      ],
-      "impact": "中国具身智能领域最大规模的开源真实世界数据集，推动国内机器人学习研究的数据基础设施建设"
     },
     {
       "id": "p023",

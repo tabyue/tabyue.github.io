@@ -1,0 +1,26 @@
+{
+  "id": "p058",
+  "title": "VADF: Vision-Adaptive Diffusion Policy Framework for Efficient Robotic Manipulation",
+  "authors": "Xinglei Yu, Zhenyang Liu, Shufeng Nan, Simo Wu, Yanwei Fu",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.xxxxx",
+  "github": "",
+  "tags": [
+    "Diffusion Policy",
+    "视觉自适应",
+    "高效操作",
+    "VADF",
+    "VLA"
+  ],
+  "tldr": "提出VADF（Vision-Adaptive Diffusion Policy Framework），一种面向高效机器人操作的视觉自适应扩散策略框架。核心创新是根据视觉输入的复杂度动态调整扩散步数——简单场景用少量去噪步快速生成动作，复杂场景用更多步保证精度。这种自适应机制在保持操作成功率的同时，将平均推理延迟降低40-60%。在多个操作基准上验证了效率-精度的良好平衡。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-23",
+  "keyInsights": [
+    "视觉自适应扩散：根据场景复杂度动态调整去噪步数，简单场景3-5步，复杂场景10-20步",
+    "视觉复杂度估计器：轻量级网络评估当前观测的信息熵/不确定性",
+    "推理延迟降低40-60%同时保持操作成功率",
+    "可即插即用地应用于现有Diffusion Policy架构"
+  ],
+  "impact": "为Diffusion Policy的实时部署提供了实用的加速方案，解决了扩散策略推理慢的核心瓶颈"
+}

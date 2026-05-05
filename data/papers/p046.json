@@ -1,0 +1,26 @@
+{
+  "id": "p046",
+  "title": "VLA-Forget: Vision-Language-Action Unlearning for Embodied Foundation Models",
+  "authors": "Arnab Ranjan, Alice Polyzou et al.",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.03956",
+  "github": "",
+  "tags": [
+    "VLA",
+    "机器遗忘",
+    "安全",
+    "模型编辑",
+    "具身基础模型"
+  ],
+  "tldr": "提出VLA-Forget，首个针对具身基础模型(VLA)的机器遗忘框架。VLA模型在部署中可能学到不安全或有偏的行为，需要被安全移除。VLA-Forget采用混合遗忘策略：对感知层使用比率感知选择性编辑(ratio-aware selective editing)实现跨模态特异性，对推理/动作层使用层选择性遗忘。该方法能精准'忘记'指定行为而不影响其他已学能力，为VLA模型的安全部署和行为治理提供了关键工具。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-21",
+  "keyInsights": [
+    "首次系统性研究VLA模型的安全遗忘问题",
+    "分组件遗忘：视觉/语言/动作三个模态的遗忘策略不同",
+    "比率感知编辑：根据各层对目标行为的贡献程度决定遗忘强度",
+    "保留-遗忘平衡：精准移除危险行为同时保留正常能力"
+  ],
+  "impact": "为VLA模型的安全合规部署开辟了新方向——不只是学会做什么，还要能安全地'忘记'不该做的事"
+}

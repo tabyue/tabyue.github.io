@@ -1,0 +1,26 @@
+{
+  "id": "p043",
+  "title": "VGA: Robotic Manipulation is Vision-to-Geometry Mapping",
+  "authors": "Zijian Song, Qichang Li, Jiawei Zhou et al.",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.12908",
+  "github": "",
+  "tags": [
+    "VGA",
+    "3D视觉",
+    "几何映射",
+    "机器人操作",
+    "预训练骨干"
+  ],
+  "tldr": "提出VGA（Vision-Geometry-Action）模型，将机器人操作重新定义为视觉到几何的直接映射 f(v)→G。核心创新：用预训练3D世界模型骨干（native 3D表示）替代传统的语言/视频模型作为视觉编码器，建立从视觉观测到3D几何（位置+方向）的无缝映射。在LIBERO基准测试达到98.1%成功率，并增强真实世界泛化能力。论文挑战了VLA领域依赖语言模型的主流范式，认为机器人操作的本质是几何问题而非语言问题。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-21",
+  "keyInsights": [
+    "核心论点：机器人操作本质是视觉到几何的映射，物理动作由3D位置和空间方向等几何属性定义",
+    "用预训练3D视觉骨干（非语言/视频模型）直接条件化动作生成",
+    "LIBERO基准98.1%成功率，显著优于基于语言/视频模型的VLA方法",
+    "挑战主流VLA范式：几何表示 > 语言表示 用于机器人操作"
+  ],
+  "impact": "为VLA领域提出了根本性的范式反思——机器人操作可能不需要语言作为中间表示，直接的3D几何映射可能是更自然的路径"
+}

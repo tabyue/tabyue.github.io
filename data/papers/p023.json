@@ -1,0 +1,23 @@
+{
+  "id": "p023",
+  "title": "ROS-LLM: A ROS Framework for Embodied AI with Task Feedback and LLM Agents",
+  "authors": "Yuwei Zeng, Haoran Lu, et al. (Auromix / TU Darmstadt)",
+  "venue": "Nature Machine Intelligence 2026",
+  "date": "2026-03",
+  "arxiv": "https://arxiv.org/abs/2406.19741",
+  "github": "https://github.com/Auromix/ROS-LLM",
+  "tags": [
+    "世界模型",
+    "VLA"
+  ],
+  "tldr": "将LLM Agent与ROS2深度集成的具身智能框架，通过自然语言交互实现机器人编程和任务执行。LLM负责高层规划和代码生成，ROS2负责底层执行和环境反馈，形成闭环。发表于Nature Machine Intelligence。",
+  "difficulty": "中级",
+  "addedDate": "2026-04-18",
+  "keyInsights": [
+    "LLM Agent 通过 ROS2 接口获取实时环境反馈（传感器数据、任务状态），实现闭环控制",
+    "非专家可用自然语言指令编程机器人任务，降低机器人编程门槛",
+    "完整开源：ROS2框架 + LLM集成 + 示例任务 + 文档",
+    "发表在 Nature Machine Intelligence，代表学术界对 LLM+ROS 范式的认可"
+  ],
+  "impact": "首个发表在 Nature 子刊的 LLM+ROS 机器人框架，为具身智能的自然语言交互编程提供了标准化方案"
+}

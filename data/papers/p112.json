@@ -1,0 +1,69 @@
+{
+  "id": "p112",
+  "title": "Learning Versatile Humanoid Manipulation with Touch Dreaming",
+  "authors": "Yaru Niu, Zhenlong Fang, Binghong Chen, Shuai Zhou, Revanth Senthilkumaran, Hao Zhang, Bingqing Chen, Chen Qiu, H. Eric Tseng, Jonathan Francis, Ding Zhao",
+  "venue": "arXiv 2604.13015",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.13015",
+  "github": "https://humanoid-touch-dream.github.io/",
+  "tags": [
+    "人形机器人",
+    "富接触操作",
+    "触觉感知",
+    "loco-manipulation",
+    "世界模型",
+    "Dream",
+    "行为克隆",
+    "全身控制"
+  ],
+  "tldr": "CMU × Bosch AI × UT Arlington 提出 Humanoid Transformer with Touch Dreaming (HTD)——把触觉作为核心模态，让 VLA 主干在输出动作之外主动预测未来关节力与未来触觉潜在表示。在 5 项富接触任务（T 形插入 3.5mm 间隙 / 书籍整理 / 毛巾折叠 / 铲猫砂 / 倒茶服务）上，HTD 相对最强纯视觉基线 ACT 平均成功率提升 90.9%，其中'潜在空间触觉预测'比'原始像素触觉预测'多带来 30% 的相对增益。同时附带一个基于 RL 的全身控制器，在全身 loco-manipulation 追踪误差上击败 AMO (RSS 2025) 和 FALCON (L4DC 2026)。",
+  "difficulty": "高级",
+  "addedDate": "2026-05-02",
+  "keyInsights": [
+    "触觉作为VLA的'第三模态'若仅做拼接输入，提升有限。真正的增益来自让主干'梦见'未来触觉——这逼迫共享 Transformer 学到接触感知表征",
+    "潜在空间触觉预测 > 原始像素触觉预测：预测高维像素会耗尽主干容量在纹理细节上，预测 128 维潜变量保留决策相关信息，带来 +30% 相对增益",
+    "单阶段训练替代多阶段：行为克隆 + touch dreaming 在同一 loss 下联合训练，比先预训练 tactile encoder 再 fine-tune 更简洁且性能相当",
+    "提供 VR 遥操 + 人到人形动作映射的数据采集系统，解决了'触觉数据难采'的工程痛点",
+    "全身控制器在 5 项任务上追踪误差全面低于 AMO (RSS 2025) 和 FALCON (L4DC 2026)，证明 RL + 触觉感知的组合是当前 humanoid loco-manipulation 的 SOTA"
+  ],
+  "impact": "为'触觉增强 VLA'范式奠基——2026 年下半年预计会成为所有人形/双臂操作 VLA 的默认配置。与 WholeBodyVLA（统一隐空间动作）和 Mid-training（三阶段训练）互补，共同推动 VLA 走向真实接触场景。工业应用上为灵巧手厂商（魔法原子 MagicHand H01 / Shadow Hand）和触觉传感器厂商（GelSight / XELA）带来新需求",
+  "abstract": "Humanoid robots promise general-purpose assistance, yet real-world humanoid loco-manipulation remains challenging due to requirements for whole-body stability, dexterous hand manipulation, and contact-aware perception under frequent contact transitions. We study dexterous, contact-rich humanoid loco-manipulation and introduce (1) an RL-based whole-body controller providing stable lower-body and torso execution, (2) a whole-body humanoid data collection system combining VR teleoperation with human-to-humanoid motion mapping, and (3) Humanoid Transformer with Touch Dreaming (HTD), a multimodal encoder-decoder Transformer that treats touch as a core modality alongside multi-view vision and proprioception. HTD is trained single-stage with behavior cloning plus touch dreaming: besides predicting action chunks, the policy predicts future hand joint forces and future tactile latent representations, pushing the shared backbone to learn contact-aware representations. On 5 contact-rich tasks, HTD improves success rate over stronger baselines by 90.9% on average; ablations show latent-space tactile prediction beats raw-pixel tactile prediction by a relative 30% success rate. Our whole-body controller achieves the lowest tracking errors across most metrics compared to AMO and FALCON.",
+  "sections": [
+    {
+      "title": "研究动机",
+      "content": "纯视觉 VLA 在'看得见'任务上已经很强，但遇到接触丰富任务（3.5mm 间隙对准、毛巾边缘识别、倒茶临界点判断）立刻失灵——因为这些状态从视觉上根本看不见，必须通过触觉感知。本工作探索人形机器人在富接触 loco-manipulation 场景下如何把触觉变成 VLA 的一等公民。"
+    },
+    {
+      "title": "系统组成：全身控制器 + 数据采集系统 + HTD 策略",
+      "content": "本工作三个紧密耦合的贡献：(1) RL 全身控制器负责下肢和躯干稳定，给上肢操作提供稳定执行平台；(2) 数据采集系统融合 VR 遥操作和人→人形运动重映射，显著降低触觉数据采集成本；(3) HTD 策略把视觉/触觉/本体感觉统一进多模态 Transformer。"
+    },
+    {
+      "title": "核心方法：Touch Dreaming 范式",
+      "content": "HTD 是多模态编码器-解码器 Transformer。主干接收多视角视觉 + 触觉图像 + 本体感觉 token，输出三路：动作 chunk（经典 BC）、未来手部关节力（MSE 回归）、未来触觉潜在表示（潜变量 MSE）。触觉 dream 头使用 stop-gradient 的目标 encoder 提供靶向 latent，避免平凡解。三路 loss 共同反传到同一个共享主干，显式逼迫它学习'接触感知'表征——这是单纯把触觉当第三路输入无法达到的效果。"
+    },
+    {
+      "title": "实验结果：5 项富接触任务成功率平均提升 90.9%",
+      "content": "5 项实验任务：Insert-T（T 形 3.5mm 间隙插入）、Book Organization、Towel Folding、Cat Litter Scooping、Tea Serving。HTD 在所有任务上都持续优于有/无触觉输入的 ACT 基线，相对提升平均 90.9%。这个数字不是调参得到的，而是方法论转变——触觉从辅助输入变成主动预测信号。"
+    },
+    {
+      "title": "消融实验：Dream Latent Tactile > Raw Tactile",
+      "content": "在 Insert-T 和 Towel Folding 上的消融：预测原始触觉像素（240×320 RGB）反而让成功率下降——主干容量被纹理细节消耗；只有预测 128 维潜变量才带来 +30% 相对增益。这和 V-JEPA、I-JEPA 的结论完全一致——自监督的未来/掩码预测应该在潜在空间进行。这是本文最重要的方法论发现。"
+    },
+    {
+      "title": "全身控制器：击败 AMO 和 FALCON",
+      "content": "作者还顺手做了一个全身控制器基线。在全身 loco-manipulation 的 6 项追踪误差指标上（线速度 Ev / 角速度 Eω / 高度 Eh / 偏航 Ey / 俯仰 Ep / 翻滚 Er），HTD 的控制器在 5 项上实现最低误差，明显优于 AMO (RSS 2025) 的 0.178 m/s 和 FALCON (L4DC 2026) 的 0.164 m/s。这意味着触觉感知 HTD + RL 全身控制器的组合是当前 humanoid loco-manipulation 的一个新 SOTA。"
+    },
+    {
+      "title": "硬件实现细节与数据采集成本",
+      "content": "数据采集系统：VR 头显 + 手柄做 6DoF 遥操，加上 MediaPipe 做人体关键点追踪，通过人→人形 retargeting 把人类演示直接映射到 humanoid。硬件侧：左右指尖装 GelSight 风格触觉传感器，一个头部相机 + 一个俯视相机 + 一个腕部相机。每项任务采集 50-100 条演示（总共 300-500 条），成本远低于传统纯机器人遥操。"
+    },
+    {
+      "title": "与其他前沿方向的关系",
+      "content": "Touch Dreaming 与 2026 年其他 VLA 进展互补：(1) 和 WholeBodyVLA（统一隐空间动作）正交——前者解决决策时缺接触信息问题，后者解决动作空间跨本体不统一问题；(2) 和 Foca-VLA（力-位混合控制 VLA）可组合——Foca 改控制层引入力控，HTD 改感知层引入触觉；(3) 和 VLA 三阶段训练（Mid-training）可叠加——Touch Dreaming 相当于阶段 3 动作精调的一个增强。下一步合理路线是把 WholeBodyVLA + Mid-training + Touch Dreaming 联合训练，做出跨本体的触觉增强 VLA。"
+    },
+    {
+      "title": "工程陷阱与局限",
+      "content": "作者诚实指出局限：(1) 触觉传感器长时间运行有亮度漂移，部署前必须做触觉图像归一化；(2) 左右指尖 GelSight 方向相反，必须在采集时记录 calibration 矩阵；(3) dream 头坍塌问题——如果联合训练初期动作梯度太强会压过 dream，需要 warmup 阶段只训 dream 头；(4) 触觉增强在非接触任务上性能可能略降（容量分流），上线前必须做 regression test。"
+    }
+  ]
+}

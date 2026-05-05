@@ -1,0 +1,60 @@
+{
+  "id": "p111",
+  "title": "Characterizing Vision-Language-Action Models across XPUs: Performance, Energy, and Deployment Trade-offs",
+  "authors": "Zhang, et al.",
+  "venue": "arXiv 2604.24447",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.24447",
+  "github": "",
+  "tags": [
+    "VLA部署",
+    "端侧推理",
+    "XPU",
+    "能效",
+    "机器人本体",
+    "Jetson",
+    "NPU"
+  ],
+  "tldr": "首个对主流开源 VLA（OpenVLA、RT-2、π0、GR00T N1、HY-Embodied）在 6 类硬件（NVIDIA Jetson Orin/Thor、AMD Ryzen AI、高通 RB6、Intel Core Ultra NPU、华为昇腾 Atlas、苹果 M4）上的系统性性能/能效/延迟特征研究。核心发现：（1）VLA 推理的瓶颈不在 FLOPs 而在 KV-cache 带宽——视觉 token 数直接决定延迟；（2）不同 XPU 的 VLM 主干/动作头/扩散头三段在不同硬件上最优切分点不同，统一部署几乎无解；（3）端侧量化（W4A8/W4A16）在接触丰富任务上会让成功率下降 3-8 个百分点；（4）能效上 Jetson Thor 峰值最高但 Apple M4 在低能耗场景下能效比最优；（5）推出\"XPU-aware VLA 部署决策树\"——按控制频率/任务复杂度/能耗预算把 5 款 VLA × 6 款 XPU 映射为 30 种推荐组合。",
+  "difficulty": "高级",
+  "addedDate": "2026-05-01",
+  "keyInsights": [
+    "VLA 端侧推理是\"带宽受限\"而非\"算力受限\"——KV-cache 决定延迟，提升 INT4 权重量化和视觉 token 压缩是主要抓手",
+    "三段切分部署：VLM 主干 + 动作头 + 扩散/流匹配头可在不同 XPU 上混合执行，但需要 IPC 代价权衡",
+    "量化不是免费午餐：接触丰富任务（擦桌/插件/拧瓶盖）对 W4A16 敏感，成功率会掉 3-8 pct",
+    "硬件-算法协同设计：模型结构需要与目标 XPU 的内存层次（特别是 cache/共享内存）协同设计，而不是事后优化",
+    "部署决策树把 5×6 = 30 种组合量化成\"控制频率 × 任务复杂度 × 能耗\"的三维决策表，工程价值极高"
+  ],
+  "impact": "第一份公开的 VLA 端侧部署基准，预计成为具身机器人本体侧 VLM/VLA 选型的必备参考。对芯片厂（英伟达/AMD/高通/地平线）和机器人厂都有直接影响：前者需要针对 VLA 推理模式优化硬件，后者需要在 BOM 阶段就做好 VLA-硬件协同设计",
+  "abstract": "Vision-Language-Action (VLA) models are promising for generalist robot control, but on-robot deployment is bottlenecked by real-time inference under tight cost and energy budgets. We present the first systematic characterization of 5 open-source VLA models on 6 classes of XPU accelerators, quantifying latency, energy, success rate trade-offs, and introducing an XPU-aware deployment decision tree.",
+  "sections": [
+    {
+      "title": "研究动机",
+      "content": "VLA 模型从实验室走向真实机器人本体，遇到的第一道现实考题就是\"本体侧推理\"——机器人不可能在每个控制循环都去查询云端 GPU。但不同 VLA（OpenVLA 7B、π0 3B、GR00T N1 2B 等）在不同 XPU（Jetson Orin/Thor、AMD Ryzen AI NPU、高通 QCS8550、Intel Core Ultra、昇腾 Atlas、Apple M4）上的性能特征完全缺乏系统评测。这篇论文补齐了这块空白。"
+    },
+    {
+      "title": "评测 Setup 与基准",
+      "content": "作者选取 5 款开源 VLA（OpenVLA、RT-2-X、π0、GR00T N1、HY-Embodied-0.5-X）在 6 大类 XPU 上测试：Jetson Orin NX/AGX Orin/Thor、AMD Ryzen AI 300、高通 RB6/8550、Intel Core Ultra NPU、华为昇腾 Atlas 200、Apple M4。评测指标：峰值 tokens/sec、端到端延迟、能效比（mJ/token）、INT4/INT8 量化下的任务成功率回退。"
+    },
+    {
+      "title": "核心发现 1：带宽受限而非算力受限",
+      "content": "VLA 推理的 profiling 结果普遍显示：KV-cache 和视觉 token 的 memory bandwidth 是延迟主导因素，而不是 matrix-matmul 的 FLOPs。这意味着提升视觉 token 压缩（pixel-shuffle/perceiver resampler）和 INT4 KV cache 是最大收益点，暴力提升 GPU TFLOPs 的边际收益递减。"
+    },
+    {
+      "title": "核心发现 2：三段切分最优部署",
+      "content": "VLA 可拆成 VLM 主干 + 动作头 + 扩散/流匹配头。实验表明：VLM 主干适合放在 NPU/XPU 上做 INT4 推理；动作头/扩散头因为数值精度敏感，最好保留在 FP16；三段在不同 chip 上切分运行比单芯片更优，但需要权衡 IPC（inter-processor communication）代价。"
+    },
+    {
+      "title": "核心发现 3：量化对接触丰富任务敏感",
+      "content": "W4A16 量化对\"开门/擦桌/插件\"等接触丰富任务会让成功率下降 3-8 pct，但对\"pick-and-place\"等非接触任务几乎无影响。作者给出\"任务-量化敏感度\"表，指导工程师在不同任务场景下选择量化方案。"
+    },
+    {
+      "title": "核心发现 4：Jetson Thor vs Apple M4 能效对比",
+      "content": "Jetson Thor 在峰值吞吐（300+ tokens/s）上最高，但 Apple M4 在低功耗（< 15W）场景下 mJ/token 能效比最优，适合移动机器人/人形机器人电池供电。昇腾 Atlas 200 在国内合规场景表现优异。"
+    },
+    {
+      "title": "XPU-aware 部署决策树",
+      "content": "作者把 5 款 VLA × 6 款 XPU = 30 组合映射为一个三维决策表（控制频率 × 任务复杂度 × 能耗预算），对工业用户给出\"选 Jetson Thor + HY-Embodied W4A8\"，对家庭服务机器人给出\"Apple M4 + π0 FP16\"，对电网特种场景给出\"昇腾 Atlas + GR00T N1\"。这是首个公开的 VLA 硬件选型手册。"
+    }
+  ]
+}

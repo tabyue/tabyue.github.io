@@ -1,0 +1,27 @@
+{
+  "id": "p068",
+  "title": "ResVLA: From Noise to Intent — Anchoring Generative VLA Policies with Spectral Residual Guidance",
+  "authors": "Shanghai AI Lab, Fudan University, HKU",
+  "venue": "arXiv 2026",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.21391",
+  "github": "https://res-vla.github.io/ResVLA/",
+  "tags": [
+    "VLA",
+    "频域分析",
+    "意图锚定",
+    "残差扩散桥",
+    "Diffusion Policy",
+    "长程操作"
+  ],
+  "tldr": "提出ResVLA，将机器人运动通过频域（傅里叶/余弦变换）分解为低频全局意图和高频局部动态。核心创新：确定性网络预测低频意图锚（Intent Anchor），残差扩散桥（Residual Diffusion Bridge）仅对高频残差进行精细去噪——相当于给扩散过程一个'起点指南'，使模型聚焦于精调局部细节而非从零猜测全局方向。这种'意图条件化生成'显著降低了扩散策略的探索空间，在长程操作和精细装配任务中大幅提升成功率。频域分解还天然提供了可解释性——低频=做什么方向，高频=怎么精确做。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-25",
+  "keyInsights": [
+    "频域运动分解：低频=全局运动意图（移动方向/大轨迹），高频=局部运动动态（微调/力控/接触细节）",
+    "意图锚定：确定性网络直接预测低频锚，为扩散过程提供稳定起点，避免全局方向漂移",
+    "残差扩散桥：仅对高频残差去噪，搜索空间大幅缩小，去噪步数可减至5步左右",
+    "天然可解释：低频/高频分离提供了'做什么'和'怎么做'的结构化理解"
+  ],
+  "impact": "提出了VLA策略生成的新范式——将频域分析引入扩散策略，既提升性能又增强可解释性，为VLA的高效部署提供了理论和工程双重支撑"
+}

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-30T07:30",
+  "lastUpdated": "2026-05-05T13:30",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,65 @@
     }
   ],
   "projects": [
+    {
+      "id": "os081",
+      "name": "MemoryVLA (ICLR 2026 Spotlight)",
+      "organization": "CUHK × NUS × Shenzhen Lab",
+      "category": "VLA模型",
+      "description": "ICLR 2026 Spotlight 论文 MemoryVLA 官方开源仓库——首个为 VLA 引入分层记忆系统（感知记忆 + 认知记忆，灵感来自人脑海马体）的通用框架。在 LIBERO-Long 等长时序任务上把 OpenVLA 的 38% 提升到 76%，且推理延迟仅 +12%。仓库提供：完整训练代码（PyTorch + HuggingFace Transformers）；预训练权重（ViT-Base + LLaMA-3 8B）；LoRA-style adapter，可挂载到现有 OpenVLA / Pi0 / GR00T 主干上获得记忆能力，无需重训主干；13 任务真机数据集（5 个机器人本体：Franka / UR5 / Kinova / xArm / Panda），约 200K episode；SimplerEnv / LIBERO / Mikasa-Robo 全套评测脚本。MIT 许可证，已获 600+ Star。",
+      "language": "Python",
+      "stars": "600+",
+      "github": "https://github.com/shihao1895/MemoryVLA",
+      "tags": [
+        "MemoryVLA",
+        "VLA",
+        "记忆机制",
+        "ICLR 2026",
+        "海马体",
+        "LIBERO",
+        "长时序任务",
+        "LoRA Adapter"
+      ],
+      "addedDate": "2026-05-05"
+    },
+    {
+      "id": "os062",
+      "name": "Isaac GR00T N1.7",
+      "organization": "NVIDIA",
+      "category": "VLA模型",
+      "description": "NVIDIA Isaac GR00T 系列最新开源 Reasoning VLA 模型（Early Access），面向人形机器人灵巧操作与全身协同行走-操作（loco-manipulation）。首次在 VLA 中显式引入长链条思维链推理：VLM 主干做任务分解与空间约束，动作头生成 20-50Hz 关节指令。支持 Unitree G1/H1、Fourier GR-1、Booster T1、智元 X1、Apollo 等多种主流人形本体。权重以 NVIDIA Open Model License 发布，通过 NGC + Hugging Face 双通道分发，与 Isaac Lab/Sim/ROS 2 深度集成。",
+      "language": "Python",
+      "stars": "已开放 Early Access",
+      "github": "https://github.com/NVIDIA/Isaac-GR00T",
+      "tags": [
+        "NVIDIA",
+        "Isaac",
+        "GR00T",
+        "Reasoning VLA",
+        "人形机器人",
+        "loco-manipulation"
+      ],
+      "addedDate": "2026-05-01"
+    },
+    {
+      "id": "os063",
+      "name": "OpenArm",
+      "organization": "OpenArm Community",
+      "category": "开源硬件",
+      "description": "完全开源的 7-DOF 人形机械臂，面向物理 AI 研究与接触丰富场景部署。2026 年 4 月发布，所有硬件设计（CAD、BOM、PCB 原理图）与驱动固件（FOC、串联弹性关节控制）开源，同时附带 MuJoCo / Isaac Sim 仿真 URDF、RL 步态控制器示范代码与 ROS 2 接口。单臂总成本可控制在 2000 美元以下，针对高校实验室与独立开发者极度友好。可与 LeRobot、OpenVLA 等软件栈无缝衔接。",
+      "language": "Python + C++",
+      "stars": "官方站 openarm.io",
+      "github": "https://github.com/OpenArmProject",
+      "tags": [
+        "OpenArm",
+        "开源硬件",
+        "7DOF",
+        "机械臂",
+        "物理AI",
+        "接触丰富"
+      ],
+      "addedDate": "2026-05-01"
+    },
     {
       "id": "os061",
       "name": "HY-Embodied-0.5-X (腾讯 Robotics X × 混元 端侧具身多模态基座)",
@@ -416,27 +475,6 @@
       "addedDate": "2026-04-23"
     },
     {
-      "id": "os042",
-      "name": "NVIDIA Isaac GR00T N1.7 (开源推理VLA人形机器人模型)",
-      "org": "NVIDIA",
-      "description": "NVIDIA Isaac GR00T N1.7是面向通用人形机器人的开源推理VLA基础模型。N1.7相比N1.6的核心升级：VLM骨干网从Cosmos-2B切换为Cosmos-Reason2-2B（基于Qwen3微调），获得显式推理能力。3B参数量可在边缘设备运行，支持多模态输入（语言指令+视觉+本体感知），输出全身动作控制。支持商业授权，目标是推动人形机器人量产就绪部署。权重已上线HuggingFace (nvidia/GR00T-N1.7-3B)，代码在GitHub开源(NVIDIA/Isaac-GR00T)。",
-      "github": "https://github.com/NVIDIA/Isaac-GR00T",
-      "category": "ai-model",
-      "stars": "4.5k",
-      "tags": [
-        "VLA",
-        "推理模型",
-        "人形机器人",
-        "NVIDIA",
-        "GR00T",
-        "Cosmos-Reason",
-        "商业授权",
-        "开源权重"
-      ],
-      "highlight": "首个开源推理VLA人形机器人模型，支持商业授权+边缘部署",
-      "addedDate": "2026-04-23"
-    },
-    {
       "id": "os041",
       "name": "Gemini Robotics-ER 1.6 (DeepMind具身推理VLM)",
       "org": "Google DeepMind",
@@ -573,24 +611,6 @@
       "url": "https://arxiv.org/abs/2604.14125"
     },
     {
-      "name": "Embodied-R1 (强化具身推理)",
-      "org": "天津大学 / ICLR 2026",
-      "description": "Embodied-R1是一个3B参数的视觉语言模型，专为具身推理和机器人操作设计。核心创新是'Pointing'机制——将机器人动作统一表示为图像中的指点坐标，跨越不同硬件平台的动作空间差异。通过两阶段强化微调（RFT），解决具身指点的多解困境。在11个基准上取得SOTA，仅3B参数超越许多更大模型。ICLR 2026接收论文，完全开源。",
-      "github": "https://github.com/pickxiguapi/Embodied-R1",
-      "stars": "1.5k+",
-      "tags": [
-        "VLM",
-        "具身推理",
-        "Pointing",
-        "强化学习",
-        "ICLR 2026",
-        "开源"
-      ],
-      "category": "ai-model",
-      "addedDate": "2026-04-20",
-      "id": "os034"
-    },
-    {
       "name": "RUKA-v2 (开源腱驱动灵巧手)",
       "org": "RUKA Hand Project",
       "description": "RUKA-v2是完全开源的腱驱动五指灵巧手第二代，相比v1大幅提升灵活性和耐用性。采用腱驱动方案，16自由度，支持精密抓取和力反馈。提供完整的3D打印文件、BOM清单、装配指南和控制代码，总硬件成本约$2000。专为机器人灵巧操作研究设计，降低了灵巧手硬件门槛。",
@@ -606,22 +626,6 @@
       "category": "hardware",
       "addedDate": "2026-04-20",
       "id": "os033"
-    },
-    {
-      "name": "A1 VLA (开源高效VLA)",
-      "org": "ATeam Research",
-      "description": "完全透明开源的VLA框架，Inter-Layer Truncation技术智能跳过冗余Transformer层，推理成本降低40-60%。提供完整训练代码、预训练权重Model Zoo和部署脚本，是目前最易复现的VLA框架之一。",
-      "github": "https://github.com/ATeam-Research/A1",
-      "stars": "2.1k",
-      "tags": [
-        "VLA",
-        "开源",
-        "高效推理",
-        "截断架构",
-        "Model Zoo"
-      ],
-      "category": "ai-model",
-      "addedDate": "2026-04-20"
     },
     {
       "name": "CaP-X (Code-as-Policy X)",
@@ -672,7 +676,8 @@
         "桌面软件"
       ],
       "category": "framework",
-      "addedDate": "2026-04-20"
+      "addedDate": "2026-04-20",
+      "id": "os064"
     },
     {
       "name": "OpenCLI (万物皆可CLI)",
@@ -689,7 +694,8 @@
         "工具链"
       ],
       "category": "framework",
-      "addedDate": "2026-04-20"
+      "addedDate": "2026-04-20",
+      "id": "os065"
     },
     {
       "name": "ACoT-VLA (动作思维链VLA)",
@@ -705,7 +711,8 @@
         "智元"
       ],
       "category": "ai-model",
-      "addedDate": "2026-04-19"
+      "addedDate": "2026-04-19",
+      "id": "os066"
     },
     {
       "name": "Embodied-R1 (具身推理VLM)",
@@ -721,7 +728,8 @@
         "强化微调"
       ],
       "category": "ai-model",
-      "addedDate": "2026-04-19"
+      "addedDate": "2026-04-19",
+      "id": "os067"
     },
     {
       "name": "LingBot-Map (流式3D重建)",
@@ -737,7 +745,8 @@
         "基础模型"
       ],
       "category": "perception",
-      "addedDate": "2026-04-19"
+      "addedDate": "2026-04-19",
+      "id": "os068"
     },
     {
       "name": "LBM-DiT (多任务扩散策略)",
@@ -753,7 +762,8 @@
         "多任务"
       ],
       "category": "ai-model",
-      "addedDate": "2026-04-19"
+      "addedDate": "2026-04-19",
+      "id": "os069"
     },
     {
       "name": "RealMirror (VLA全栈平台)",
@@ -769,7 +779,8 @@
         "人形机器人"
       ],
       "category": "framework",
-      "addedDate": "2026-04-19"
+      "addedDate": "2026-04-19",
+      "id": "os070"
     },
     {
       "name": "HiVLA",
@@ -784,7 +795,8 @@
         "操作"
       ],
       "category": "ai-model",
-      "addedDate": "2026-04-19"
+      "addedDate": "2026-04-19",
+      "id": "os071"
     },
     {
       "name": "ROS-LLM (Nature)",
@@ -799,7 +811,8 @@
         "自然语言编程"
       ],
       "category": "framework",
-      "addedDate": "2026-04-19"
+      "addedDate": "2026-04-19",
+      "id": "os072"
     },
     {
       "name": "RoboClaw",
@@ -814,7 +827,8 @@
         "全流程"
       ],
       "category": "framework",
-      "addedDate": "2026-04-18"
+      "addedDate": "2026-04-18",
+      "id": "os073"
     },
     {
       "name": "Kairos 3.0-4B (世界模型)",
@@ -829,37 +843,8 @@
         "4B"
       ],
       "category": "ai-model",
-      "addedDate": "2026-04-18"
-    },
-    {
-      "name": "Embodied-R1",
-      "org": "Peking University / Tsinghua University",
-      "description": "面向通用机器人操作的具身推理VLM（3B参数）。核心创新是Pointing机制——模型通过在图像上指向目标位置来桥接视觉语言理解与机器人动作。使用两阶段强化微调（RFT），在Embodied-Points-200K数据集上训练，支持开放词汇操作任务。",
-      "github": "https://github.com/pickxiguapi/Embodied-R1",
-      "stars": "2.1k",
-      "tags": [
-        "VLA",
-        "具身推理",
-        "强化学习",
-        "3B模型"
-      ],
-      "category": "ai-model",
-      "addedDate": "2026-04-18"
-    },
-    {
-      "name": "WholeBodyVLA",
-      "org": "OpenDriveLab (智元) / Fudan / HKU",
-      "description": "面向人形机器人全身移动操作的统一VLA框架，ICLR 2026接收论文。提出分离的Locomotion/Manipulation潜在动作模型（LAM），可从无动作标签的第一视角视频中学习。在AgiBot X2人形机器人上实现大空间全身操作。",
-      "github": "https://github.com/OpenDriveLab/WholebodyVLA",
-      "stars": "1.8k",
-      "tags": [
-        "VLA",
-        "人形机器人",
-        "ICLR 2026",
-        "全身控制"
-      ],
-      "category": "ai-model",
-      "addedDate": "2026-04-18"
+      "addedDate": "2026-04-18",
+      "id": "os074"
     },
     {
       "name": "DORA-rs",
@@ -874,7 +859,8 @@
         "高性能"
       ],
       "category": "framework",
-      "addedDate": "2026-04-18"
+      "addedDate": "2026-04-18",
+      "id": "os077"
     },
     {
       "name": "ViVa (Video-generative Value Model)",
@@ -889,22 +875,8 @@
         "视频生成"
       ],
       "category": "ai-model",
-      "addedDate": "2026-04-18"
-    },
-    {
-      "name": "ROS-LLM",
-      "org": "Auromix / TU Darmstadt",
-      "description": "ROS2 + LLM Agent 具身智能框架，用自然语言编程机器人任务。发表于 Nature Machine Intelligence，提供完整的 ROS2 集成方案。",
-      "github": "https://github.com/huawei-noah/HEBO/tree/master/ROSLLM",
-      "stars": "3.2k",
-      "tags": [
-        "LLM",
-        "ROS2",
-        "Agent",
-        "具身智能"
-      ],
-      "category": "framework",
-      "addedDate": "2026-04-18"
+      "addedDate": "2026-04-18",
+      "id": "os078"
     },
     {
       "name": "AGIBOT WORLD 2026",
@@ -919,7 +891,8 @@
         "开源"
       ],
       "category": "data-tools",
-      "addedDate": "2026-04-18"
+      "addedDate": "2026-04-18",
+      "id": "os080"
     },
     {
       "id": "os001",
@@ -1074,28 +1047,6 @@
       "getStarted": "安装 Isaac Gym → Clone Legged Gym → 选择机器人 → 训练 PPO → 部署",
       "difficulty": "中高级",
       "category": "locomotion"
-    },
-    {
-      "id": "os008",
-      "name": "Isaac GR00T",
-      "org": "NVIDIA",
-      "github": "https://github.com/NVIDIA/Isaac-GR00T",
-      "stars": "3k+",
-      "tags": [
-        "人形机器人",
-        "基础模型",
-        "NVIDIA"
-      ],
-      "description": "NVIDIA的人形机器人基础模型框架。双系统架构(System 1快速反应+System 2慢思考)，Eagle-2视觉骨干+Diffusion动作头，支持跨本体迁移。",
-      "highlights": [
-        "人形机器人专用基础模型",
-        "跨本体预训练和迁移",
-        "与 Isaac Sim / Isaac Lab 深度集成",
-        "支持 Jetson Thor 边缘部署"
-      ],
-      "getStarted": "安装依赖 → 下载预训练模型 → 在 Isaac Sim 中评估 → 微调适配",
-      "difficulty": "高级",
-      "category": "ai-model"
     },
     {
       "id": "os009",

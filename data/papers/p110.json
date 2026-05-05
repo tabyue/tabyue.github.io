@@ -1,0 +1,59 @@
+{
+  "id": "p110",
+  "title": "Vision-Language-Action in Robotics: A Survey of Datasets, Benchmarks, and Data Engines",
+  "authors": "Xu, Shen, et al.",
+  "venue": "arXiv 2604.23001",
+  "date": "2026-04",
+  "arxiv": "https://arxiv.org/abs/2604.23001",
+  "github": "",
+  "tags": [
+    "VLA综述",
+    "数据集",
+    "Benchmark",
+    "Data Engine",
+    "具身学习",
+    "数据基础设施"
+  ],
+  "tldr": "迄今为止最系统的 VLA 数据基础设施综述：把 VLA 研究社区常被忽视的\"数据引擎\"单独抽出来，覆盖 150+ 数据集、70+ benchmark、20+ 数据生成/遥操/仿真工具链。核心论点——VLA 研究的瓶颈从模型结构转移到数据侧：真机遥操贵、仿真域差异大、人类视频动作标注缺、跨本体语义对齐难。作者把数据基础设施分四层：（1）数据源层（真机/仿真/人类视频/合成）、（2）采集引擎（遥操/自主探索/数据生成）、（3）标注与对齐（语言/动作/轨迹/空间关系）、（4）训练消费层（配方/重采样/课程学习）。给出数据到能力的\"可追溯性矩阵\"，把数据质量/规模/多样性/对齐精度与下游 VLA 任务性能做了定量关联。",
+  "difficulty": "中级",
+  "addedDate": "2026-05-01",
+  "keyInsights": [
+    "VLA 范式收敛后，下一个竞争维度是\"数据引擎\"——谁有更好的数据，而不是谁有更好的模型结构",
+    "四层数据基础设施框架：数据源/采集引擎/标注对齐/训练消费，明确每一层的开源与商业格局",
+    "真机数据目前仍被低估：Open X-Embodiment 总量级仅 1M 条轨迹，远低于 LLM 的 token 规模",
+    "合成数据+真机数据的最佳配比约 3:1 到 5:1（取决于任务复杂度），纯合成在接触丰富任务上退化严重",
+    "数据可追溯矩阵：同样规模下，跨本体对齐质量 > 场景多样性 > 任务多样性 > 绝对规模"
+  ],
+  "impact": "这篇综述把 VLA 社区的讨论焦点从\"谁的模型更好\"拉回到\"谁的数据底座更好\"，会直接影响 2026 下半年 OpenVLA-2、π0.5、GR00T N2 等开源项目的数据策略。对产业界是一张\"数据采集路线图\"，对学术界是一份\"benchmark + 数据源\"的全景字典",
+  "abstract": "Despite remarkable progress in Vision--Language--Action (VLA) models, a central bottleneck remains underexamined: the data infrastructure that underlies embodied learning. In this survey, we systematically review 150+ datasets, 70+ benchmarks, and 20+ data generation tools, and propose a four-layer framework spanning data sources, acquisition engines, annotation & alignment, and training-time consumption.",
+  "sections": [
+    {
+      "title": "背景与动机",
+      "content": "VLA 研究的模型创新节奏在 2024-2026 急剧加快，但模型性能逼近 benchmark 天花板的速度也在加快。作者指出，当前社区的下一瓶颈是\"数据基础设施\"——数据集规模、多样性、标注精度、跨本体对齐能力，而非新的网络结构。这篇综述把\"数据侧\"从各种 VLA 论文的边缘讨论正式提拔为研究客体。"
+    },
+    {
+      "title": "四层数据基础设施框架",
+      "content": "作者提出把数据基础设施拆分为四层：（1）数据源层，包含真机遥操、仿真（Isaac/MuJoCo/RoboCasa）、人类第一视角视频、合成数据；（2）采集引擎层，包含遥操平台、自主探索策略、过程数据生成（如 Scale-AI for robots）；（3）标注与对齐层，语言标注、动作标注、跨本体 URDF/MJCF 对齐；（4）训练消费层，数据配方、重采样、课程学习。每一层都有自己的开源/商业格局、技术路线分歧、与下游性能的因果关系。"
+    },
+    {
+      "title": "数据源对比与现状",
+      "content": "真机数据：Open X-Embodiment（160 万条轨迹）、LIBERO、RoboSet、DROID。仿真数据：RoboCasa、ManiSkill3、Isaac Sim 合成。人类视频：Ego4D、EPIC-Kitchens、Something-Something。合成数据：UniSim、Genesis。作者对规模、质量、多样性、成本、跨本体友好度做了五维雷达图对比，真机依然是最稀缺且最贵的资源。"
+    },
+    {
+      "title": "数据引擎与自动化采集",
+      "content": "对 20+ 个数据生成工具的分类：（1）遥操平台（ALOHA/Mobile ALOHA/GR-1/Apple Vision Pro teleop）；（2）自主探索策略（SOLD、Autonomous Exploration）；（3）过程数据合成（Diffusion World Model 生成、Video World Model 生成）；（4）异构数据迁移（Robot Learning from Human Videos）。每种引擎的单位时间采集成本、质量、任务覆盖度都被定量对比。"
+    },
+    {
+      "title": "跨本体对齐的难题与方案",
+      "content": "作者认为 2026 年 VLA 数据侧最卡脖子的问题是\"跨本体对齐\"：同一语义动作在不同机器人形态（双臂/人形/四足移动+单臂）上的关节空间/末端轨迹差异巨大，导致混合数据训练时存在严重的\"跨本体干扰\"。解决方案分两路：（A）结构级对齐（URDF 统一 + 运动重定向），（B）表征级对齐（latent action space / Body-Token）。"
+    },
+    {
+      "title": "数据可追溯矩阵：从数据特性到性能",
+      "content": "作者用 10+ 个开源 VLA 在相同模型结构下消融不同数据子集，得出关键结论：同样规模数据下，跨本体对齐质量 > 场景多样性 > 任务多样性 > 绝对规模。这说明数据质量远比数据量重要，数据中心主义（data-centric）思潮开始在 VLA 领域兴起。"
+    },
+    {
+      "title": "未来方向",
+      "content": "作者给出四大方向：（1）\"数据引擎即服务\"——数据生成/采集/标注向第三方云平台集中；（2）标注自动化——用 VLM 做预标注 + 人工核查；（3）世界模型数据生成——用视频世界模型合成近似真机质量的数据；（4）数据共享协议——解决跨公司真机数据共享的隐私/IP/标准化问题。"
+    }
+  ]
+}

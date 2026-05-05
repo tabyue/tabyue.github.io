@@ -1,0 +1,27 @@
+{
+  "id": "p102",
+  "title": "Foca-VLA: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation",
+  "authors": "CVPR 2026 Authors",
+  "venue": "CVPR 2026",
+  "date": "2026-06",
+  "arxiv": "https://cvpr.thecvf.com/virtual/2026/poster/38209",
+  "github": "",
+  "tags": [
+    "VLA",
+    "CVPR 2026",
+    "力位混合控制",
+    "力感知",
+    "接触丰富操作",
+    "端到端"
+  ],
+  "tldr": "Foca-VLA是CVPR 2026收录的端到端视觉-语言-动作框架，首次为VLA模型引入混合力-位置控制和显式力感知能力。针对接触丰富的操作任务（如装配、擦拭、插入等需要精确力控的场景），Foca-VLA将力传感器信息原生融入VLA架构，使模型不仅能看到和理解任务，还能'感受'接触力并做出力-位置联合决策。这填补了现有VLA方法在接触力控制方面的空白——大多数VLA只做位置控制，遇到需要力反馈的任务会失败。",
+  "difficulty": "高级",
+  "addedDate": "2026-04-29",
+  "keyInsights": [
+    "首次将力传感器信息原生融入VLA端到端框架",
+    "混合力-位置控制：可同时输出位置目标和力约束",
+    "力感知模块使VLA能理解'该用多大力'，而非仅'该去哪'",
+    "在接触丰富任务（装配/擦拭/插入）上显著优于纯位置控制的VLA"
+  ],
+  "impact": "填补了VLA力控空白，CVPR 2026级别工作，推动VLA从纯视觉位置控制向力-视觉多模态控制演进"
+}
