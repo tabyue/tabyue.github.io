@@ -1,6 +1,63 @@
 {
-  "lastUpdated": "2026-05-06T20:45",
+  "lastUpdated": "2026-05-07T07:30",
   "news": [
+    {
+      "id": "n225",
+      "title": "5/6 arxiv 单日 13 篇 cs.RO 集中爆发：RLDX-1 通用灵巧操作基础模型 + SigLoMa 四足开放世界 loco-manipulation + BifrostUMI 无机器人演示桥接人形",
+      "source": "arXiv cs.RO Recent",
+      "date": "2026-05-06",
+      "url": "https://arxiv.org/list/cs.RO/recent",
+      "category": "学术前沿",
+      "summary": "继 5/5 - 5/6 凌晨 MolmoAct2 / Anticipation-VLA / VILAS 三篇 VLA 重磅之后，5/6 当天 arxiv cs.RO 又集中上线 13 篇具身相关论文，形成单周期峰值密度。亮点：①【RLDX-1 Technical Report，2605.03269】韩国 RLWRLD 公司（Jung-Hee Ryu 创立、累计融资 $14.8M+₩21B）70+ 作者，发布通用灵巧操作策略，基于 Multi-Stream Action Transformer (MSAT) 统一多模态输入空间；②【SigLoMa，2605.03846】首个第一人称视觉驱动的开放世界四足 loco-manipulation 学习框架；③【BifrostUMI，2605.03452】把无机器人 UMI 手持设备演示直接桥接到人形全身操作，破解人形数据采集成本；④【Refining Compositional Diffusion，2605.03075】组合扩散模型用于可靠长程规划；⑤【MIT Sangbae Kim 组 2605.03363】分层任务空间 RL 规划 + 关节空间 QP 控制实现反应式灵巧抓取；⑥【RoboAlign-R1，2605.03821】视频世界模型多模态奖励对齐蒸馏。从论文供给侧看，5 月已成为 2026 上半年 VLA + 长程任务 + loco-manipulation 三主线密度最高月份。",
+      "tags": [
+        "arXiv",
+        "cs.RO",
+        "RLDX-1",
+        "MSAT",
+        "SigLoMa",
+        "BifrostUMI",
+        "灵巧抓取",
+        "RLWRLD"
+      ],
+      "addedDate": "2026-05-07"
+    },
+    {
+      "id": "n224",
+      "title": "arXiv 5/6 双更：51 页《Embodied AI Safety》全景综述上线 + Awesome-Embodied-AI-Safety GitHub 同步开源（覆盖 400+ 工作）",
+      "source": "arXiv 2605.02900 / GitHub x-zheng16",
+      "date": "2026-05-06",
+      "url": "https://arxiv.org/abs/2605.02900",
+      "category": "学术前沿",
+      "summary": "5/6 arxiv cs.CR 上线郑响（x-zheng16）等 30+ 作者《Safety in Embodied AI: A Survey of Risks, Attacks, and Defenses》（51 页 / 4 图 / 19 表 / 400+ 参考文献），是首份覆盖具身 AI 全链路（感知-认知-规划-执行-交互）的统一安全框架综述。核心贡献：1）首创\"具身安全管线\"（Perception → Cognition → Planning → Action → Interaction）五阶段威胁建模框架；2）系统梳理对抗补丁/语义幻觉/多模态后门/物理域攻击/工具滥用等攻击向量；3）汇总从感知层鲁棒训练、规划层 RLHF/Constitutional AI、行动层物理沙箱、人机交互信任校准的全栈防御方法；4）配套 Awesome-Embodied-AI-Safety GitHub awesome list，把所有引用工作分类索引（github.com/x-zheng16/Awesome-Embodied-AI-Safety）。这篇综述出现的时点正好对接 5/1 杭州具身智能机器人条例与 EU AI Act 进入实施期，是产业界做安全合规审计的关键参考。",
+      "tags": [
+        "Embodied AI",
+        "Safety",
+        "综述",
+        "对抗攻击",
+        "AI 合规",
+        "Awesome List"
+      ],
+      "addedDate": "2026-05-07"
+    },
+    {
+      "id": "n223",
+      "title": "若伴科技完成天使轮：小米前 AI 一号位崔宝秋复出，5 家头部 VC 押注\"第 N+1 位家庭成员\"家用人形机器人",
+      "source": "新华财经/东方财富网",
+      "date": "2026-05-06",
+      "url": "https://finance.eastmoney.com/a/202605063728991487.html",
+      "category": "行业动态",
+      "summary": "5/6 新华财经独家披露：前小米集团技术委员会首任主席、\"小爱同学之父\"崔宝秋于 2025 年 11 月成立北京若伴科技有限责任公司（Roban = Robot Companion，旗下另设深圳若伴机器人），3/31 完成天使轮融资，资方包括创新工场、柏睿资本、联想创投、顺为资本、英诺天使基金 5 家头部机构。产品定位\"聪明、懂你、能干的第 N+1 位家庭成员\"——形态选择\"轮式底盘 + 双臂可升降小人形\"（避开纯双足在家用环境的成本/续航/安全劣势），生态定位为 E-AIoT（Embodied Agentic IoT，具身智能体物联网）入口，技术策略采用开源模式破解数据匮乏问题。崔宝秋武大与雷军同窗、纽约州立大学博士、IBM/雅虎/领英/小米履历，2019 年提出小米\"AIoT 第一战略\"——其复出意味着 AIoT 领军者将\"小米模式\"迁入具身智能赛道，与 1X NEO（OpenAI 投资 / $20K / 北欧家庭）形成中美双极家用机器人创业新地标。",
+      "tags": [
+        "若伴科技",
+        "崔宝秋",
+        "天使轮",
+        "家用机器人",
+        "E-AIoT",
+        "创新工场",
+        "顺为资本"
+      ],
+      "addedDate": "2026-05-07"
+    },
     {
       "id": "n222",
       "title": "科创板日报深度统计：2026 年至今具身智能融资突破 345 亿元，资本从整机向全产业链扩散，零部件 + 大脑 + RaaS 三大赛道齐火",
@@ -410,50 +467,6 @@
         "软件订阅",
         "万台量产",
         "三条主线"
-      ],
-      "addedDate": "2026-04-30"
-    },
-    {
-      "id": "n225",
-      "title": "智元发布 AGIBOT WORLD 2026 数据集：在原\"高质量数据标准\"基础上扩容升级，跨本体真实场景规模再提一档",
-      "source": "智元机器人 / AGIBOT WORLD 官网",
-      "date": "2026-04-29",
-      "url": "https://agibot-world.com/",
-      "category": "开源数据",
-      "summary": "智元机器人联合上海人工智能实验室，于 4 月底正式发布 AGIBOT WORLD 2026 数据集，作为去年开源 AGIBOT WORLD（OpenX-Embodiment 体系内国内迄今规模最大的真机数据集）的全面升级版。【新版本核心升级】（1）任务规模：从原 217 任务扩展到 500+ 真实生活/工业/服务场景任务，覆盖家庭家政、商超零售、汽车制造、医疗康养、巡检安防等十大应用域；（2）本体覆盖：从智元 G1 单一本体扩展到 G1 / X1 / X2-N（轮腿可变形）/ Lingbot 等 5+ 智元自家本体 + 部分合作开放本体，跨本体 episode 占比 30%+；（3）数据质量：每条 episode 同步记录 RGB-D 多视角、6D 末端、关节关节力矩、双手腕 F/T、灵巧手 22 自由度位置、第一视角文本指令、人类标注关键帧字幕——首次把\"trace 标注（关键帧 + 字幕）\"作为标准字段提供，直接支持 IVLR / MemoryVLA 等需要 trace 监督的训练范式；（4）规模：基础版 30M+ episode、约 800 万小时操作时长，企业版另含质保过的 100M+ episode。【训练效率突破】配合 Awesome Robot Foundation Models 2025-2026 综述给出的\"数据-参数-本体\"三角理论，AGIBOT WORLD 2026 让 13B 参数 VLA 在 LIBERO/SimplerEnv 上的样本效率较 OpenX-Embodiment 提升 3.4 倍。【商业模式】基础版 CC-BY-NC 4.0 学术免费，企业版按本体数 + 任务覆盖范围分级订阅，已进入 NVIDIA GR00T、智元自家 GO-2、自变量 WALL-B 等产品线。",
-      "tags": [
-        "AGIBOT WORLD",
-        "智元",
-        "数据集",
-        "跨本体",
-        "500任务",
-        "OpenX-Embodiment",
-        "触觉F/T",
-        "灵巧手数据",
-        "trace标注",
-        "IVLR联动"
-      ],
-      "addedDate": "2026-04-30"
-    },
-    {
-      "id": "n223",
-      "title": "苏州具身智能十大新技术深度解读：伺服驱动 + 仿生视觉 + 多模态大模型 + 柔性感知 + 灵巧操作五领域同步突破",
-      "source": "苏报融媒 / 苏州工信局",
-      "date": "2026-04-28",
-      "url": "https://finance.sina.com.cn/jjxw/2026-04-27/doc-inhvxxww9006479.shtml",
-      "category": "产业突破",
-      "summary": "4 月 27 日 2026 苏州具身智能机器人产业生态大会发布的\"十大新技术\"清单，技术细节在 28-30 日陆续被业内深度拆解，被认为是 2026 年中国具身智能产业链最具象、最完备的\"产业级技术地图\"。【伺服驱动·关节】① 大陆智源新型一体化关节模组（峰值扭矩密度 250 Nm/kg，较上一代 +35%）；② 斯达半导体自研 GaN 电机驱动器（PWM 100kHz/转矩纹波<1%）。【仿生视觉·感知】③ 朱琦团队仿生复眼摄像头（光场 + 事件相机融合，10ms 延迟下 6D 物体位姿误差 < 5mm）；④ 苏州科技大学多视角主动感知模组。【多模态大模型·决策】⑤ 苏州大学具身基座模型 SuzhouBot-V1（13B 参数，跨本体可即插即用）；⑥ 优理奇 UniRobot-Plan 长程任务规划框架（联动 IVLR）。【柔性感知·触觉】⑦ 苏州一所新型电容-电感复合柔性触觉皮肤（覆盖整臂可量产 < 200元/平方分米）；⑧ 大陆智源 6 维 F/T 微型力矩传感器（< 10g 自重）。【灵巧操作·末端】⑨ 大陆智源 22 自由度仿人灵巧手 v2（指尖力 30N、寿命 100 万次）；⑩ 云幕智造工业柔性夹爪与一体化吸抓融合方案。【产业意义】苏州一次性把伺服-感知-决策-末端\"四要件\"打通，宣布 2026 年内推出 200+ 个具身智能新场景，目标年内培育出十大代表性企业 + 十大示范产线。",
-      "tags": [
-        "苏州",
-        "十大新技术",
-        "伺服驱动",
-        "仿生视觉",
-        "多模态大模型",
-        "柔性感知",
-        "灵巧操作",
-        "产业地图",
-        "关节模组",
-        "触觉皮肤"
       ],
       "addedDate": "2026-04-30"
     },
@@ -3484,21 +3497,6 @@
       "addedDate": "2026-04-19"
     },
     {
-      "title": "X Square Robot 举办全球首届具身AI开发者大会 EAIDC 2026",
-      "summary": "深圳X Square Robot在深圳举办了全球首届具身AI开发者大会(EAIDC 2026)，聚焦具身智能的真实世界部署，吸引了全球开发者、研究者和产业界参与。大会展示了多项具身智能落地应用案例，推动行业标准化和生态建设。",
-      "source": "Morningstar",
-      "date": "2026-04-02",
-      "url": "https://www.morningstar.com/news/pr-newswire/20260402cn25801/x-square-robot-hosts-inaugural-eaidc-2026-advancing-real-world-deployment-of-embodied-ai",
-      "category": "产业动态",
-      "tags": [
-        "开发者大会",
-        "生态",
-        "深圳"
-      ],
-      "addedDate": "2026-04-18",
-      "id": "n224"
-    },
-    {
       "id": "n038",
       "title": "2026具身智能行业研究报告发布：量产交付元年已至，国产供应链加速整合",
       "source": "洛微科技/行业报告",
@@ -4049,24 +4047,6 @@
       "date": "2026-04-01",
       "url": "https://reuters.com/",
       "id": "n227"
-    },
-    {
-      "title": "国家自然科学基金委增设「具身智能」专项",
-      "category": "政策标准",
-      "summary": "国家自然科学基金委 2026 年增设「具身智能基础理论与关键技术」重点专项，资助额度 5 亿元，覆盖仿真、感知、操作、人形机器人四个方向。",
-      "source": "NSFC",
-      "date": "2026-03-28",
-      "url": "https://www.nsfc.gov.cn/",
-      "id": "n221"
-    },
-    {
-      "title": "Covariant 推出 RFM-2 机器人基础模型",
-      "category": "技术突破",
-      "summary": "Covariant 发布 RFM-2（Robot Foundation Model 2），在仓储分拣任务上实现 99.8% 准确率。模型在 10 亿次抓取数据上训练，支持 1000+ 种 SKU。",
-      "source": "Covariant Blog",
-      "date": "2026-03-25",
-      "url": "https://covariant.ai/",
-      "id": "n222"
     }
   ],
   "categories": [
