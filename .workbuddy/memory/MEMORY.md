@@ -35,10 +35,12 @@
 - **数学模块（线性代数/微积分/概率）必须达到"替代一本教材"的水平**：不能只是"为什么重要→机器人应用→代码"，必须有数学本身的公理化定义、定理证明、数学史、学习误区、纯数学练习题。每个模块应在 15+ section / 100K+ chars 量级。(2026-04-28 Tab 明确要求；**三个数学模块都已完成第一阶段教材化改造，共 45 sec / 285K chars**)
 - **编程模块（Python/C++）同样需要从基础讲起**：不能一上来就是高级特性。必须先覆盖语言基础（类型/变量/控制流/函数/OOP/标准库/异常/内存管理），再接高级话题。(2026-04-28 Tab 明确要求；**Python +5 基础 sec, C++ +6 基础 sec 已完成**)
 
-## 学习中心当前水位（2026-05-06 更新）
-- **全 30 个学习模块全部达到 OK 水位（≥ 80K chars）** ✅：4-5 月分批次完成，最后两块 cpp-fundamentals (86.4K) 和 computer-vision (82.3K) 在 2026-05-06 automation 中完成
-- 当前体量分布：82K-183K，平均 ~95K chars，11-18 sections / 模块；最大 linear-algebra (183K)，最小 cv (82K)
-- 后续工作策略：单轮深化转为"主题广度+前沿热点联动"——优先以"配合本轮新论文/新闻"为主线追加 section，让前沿研究成果进入教学体系（例：cpp 联动 p111 VLA-XPU 论文、cv 联动 p110 VLA 数据基础设施综述）
+## 学习中心当前水位（2026-05-07 更新）
+- **全 30 个学习模块全部达到 OK 水位（≥ 80K chars）** ✅
+- 当前体量分布：87K-183K，平均 ~96K chars，11-18 sections / 模块
+- TOP 5 最大：linear-algebra (183K) / data-collection (118K) / vla-models (118K) / probability-statistics (117K) / calculus-optimization (109K)
+- BOTTOM 5 最小：mechanical-design (87K) / ros2 (88K) / control-theory (88K) / python-scientific-computing (88K) / **platform-engineering (98K, 5/7 升级)** + **humanoid-fullstack (99K, 5/7 升级)** 已脱离最薄区
+- 后续工作策略：单轮深化转为"主题广度+前沿热点联动"——优先以"配合本轮新论文/新闻"为主线追加 section，让前沿研究成果进入教学体系（例：cpp 联动 p111 VLA-XPU 论文、cv 联动 p110 VLA 数据基础设施、humanoid 联动 n223 若伴 Roban、platform 联动 p119 Embodied AI Safety Survey）
 
 ## 自动化跨实例协调（重要）
 - **automation-5 经常并行运行多实例**（同一 cron 在不同时间被多次调度），实例之间共享工作树。当前规则：

@@ -4,7 +4,34 @@
 > 1. 每次修改 `data/learn/<mod>.json`（追加/修改 sections）后，**必须** `python tools/sync_learn_split.py` 同步生成 `data/learn-split/<mod>/{_index.json, sec-NN.json}`。前端走 B 方案按需加载——若不同步，用户看到的章节内容会停在旧版本。脚本是幂等的，无变化时不会改任何文件。
 > 2. 学习模块结构发生变化（新增/删除模块、新增/删除 section）后，建议同时运行 `python tools/build_sitemap.py` 重新生成 `sitemap.xml`，让搜索引擎抓到新页面。
 
-## 2026-05-06T20:45 执行记录
+## 2026-05-07T07:30 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿（gh issue list --state open 返回 `[]`）
+- 新闻 +3（n223-n225）：n223 若伴科技完成天使轮（小米前 AI 一号位崔宝秋 / 创新工场+柏睿+联想+顺为+英诺 5 家头部 VC / "第N+1位家庭成员" / Roban = Robot Companion / 北京若伴科技+深圳若伴机器人 / 轮式底盘+双臂可升降小人形 / E-AIoT 入口生态 / 开源数据策略）+ n224 51页《Safety in Embodied AI》全景综述 + 配套 Awesome list（arXiv 2605.02900 / 30+ 作者 / 400+ 参考文献 / 五阶段威胁建模）+ n225 5/6 arXiv cs.RO 单日 13 篇集中爆发综述（RLDX-1 韩国 RLWRLD MSAT 通用灵巧操作 / SigLoMa 第一人称视觉四足 loco-manipulation / BifrostUMI 无机器人演示桥接人形 / MIT Sangbae Kim 组分层 RL+QP 灵巧抓取 / RoboAlign-R1 视频世界模型奖励对齐）
+- 论文 +1（p119）：Safety in Embodied AI Survey（arXiv 2605.02900 / 51 页 / 4 图 / 19 表 / 配 GitHub awesome list）
+- 开源 +1（os085）：Awesome-Embodied-AI-Safety（github.com/x-zheng16/Awesome-Embodied-AI-Safety / 五阶段 × 攻击/防御双维度分类 / 400+ 工作）
+- 招聘 +1（j107）：若伴科技全栈招聘（北京/深圳双总部 / 60-150K×16薪+期权 / 6 大方向 / 50 人核心团队）
+- 学习深化 ×2：
+  - **humanoid-fullstack** 89.6K → **99.4K**（+9.7K，14→15 sec），新增「家用人形机器人产品定义与架构选型：从 1X NEO 到若伴 Roban 的"第 N+1 位家庭成员"」联动 n223。家用 vs 工业场景差异表（10维）+ 形态选型表（4 形态 × 12 维）+ E-AIoT "3+1" 4 层架构图 + 任务路由器代码（隐私/延迟/成本三维路由）+ 升降-双臂联合 SLSQP 规划代码 + 隐私脱敏视觉处理（17 关键点替代 RGB）+ 商业模式 5 项收入拆解 + 5 大工程陷阱（工业 VLA 直搬掉 40pt / GDPR 罚单 / 转弯半径 0.6m 卡死小户型 / 升降稳定性 / 数据闭环缺失退化）+ 选型决策树 + 8 家行业标杆对照
+  - **platform-engineering** 88.4K → **98.3K**（+9.9K，16→17 sec），新增「具身 AI 安全工程：从感知到行动的全链路威胁建模与防御」联动 p119/n224。五阶段威胁建模框架（Perception/Cognition/Planning/Action/Interaction）每阶段攻击+防御代码 + SDL 7 步走 + 6 大合规标准对照（ISO 10218/13482/IEC 61508/EU AI Act/杭州条例 5/1/YD/T 6770-2026 6/1/GDPR）+ 端到端 EmbodiedSafetyStack 完整 5 层防御代码 + 红队 6 类攻击演练表 + 合规审计报告模板（v1.5.0 示例）
+- learning-path 同步 lastUpdated：MLOps与持续交付 + 人形机器人全栈项目 + 顶层
+- sync_learn_split.py：humanoid 15 sec / platform 17 sec / 4 文件更新
+- build_sitemap.py：10 sections + 30 modules + 404 chapters
+- 数据排序：news/papers/opensource/jobs 全部按 addedDate (fallback date/postedDate) + id 数字 secondary key 倒序重排
+- **意外发现 + 顺手清理**：news 数组里 n221/n222 各重复一次（疑似上轮残留）+ 本轮 _apply_update.py 第一次崩在 print emoji 后（write 已成功）我又跑一次导致 n223-n225 也各重复，统一去重 232→227 条
+- 临时清理：_apply_update.py 删除
+- 数据校验：147 JSON 全部 OK，news/papers/opensource/jobs id 无重复
+
+**当前数据编号水位：** news→n225 (227 条), papers→p119 (108 条), opensource→os085 (78 条), jobs→j107 (107 条)
+**Git:** 86ef0a2→25ed694 (15 files, +260/-106), pushed to main
+
+**踩坑教训：**
+- **Python print emoji 在 PowerShell GBK 编码下崩溃**：脚本最后想 `print(f"⚠️ ...")` 触发 `UnicodeEncodeError: 'gbk' codec can't encode character '\u26a0'`。但崩溃之前的 file write 全部成功——这是 `\u26a0\ufe0f` 复合表情符。**今后脚本里禁用 emoji 输出（用 `[WARN]` / `[OK]` 替代），或者在脚本顶部加 `import sys; sys.stdout.reconfigure(encoding='utf-8')`**。崩溃如果发生在 write 之前会更糟。
+- **崩溃后直接重跑 → 可能 id 二次插入**：第一次崩在最后 print 但所有 write 已成功，我直觉性又跑了一次。第二次的 title 防重逻辑确实生效了（dedup 后 n223-n225 各唯一），但我观察到 232 条数据里 n221/n222 也重复——这可能是上一轮就遗留的隐患（addedDate 排序后 n221/n222 顶部位置容易掩盖此问题）。**今后重跑前必须先 `git diff data/news.json | head` 看是否已有改动入文件**，或在脚本里加 `if first_run else` 守卫。
+- **PowerShell 不识别 `head`/`grep`**：管道符 `|` 后接的命令必须是 PowerShell cmdlet 或 Windows 内置命令。要么用 `Select-Object -First 30`，要么直接在 `python -c "..."` 里切片输出。
+
+
 
 **更新概要：**
 - 投稿箱：无新投稿（gh issue list --state open 返回空数组）
