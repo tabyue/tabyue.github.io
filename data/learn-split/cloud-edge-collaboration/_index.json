@@ -1,0 +1,114 @@
+{
+  "id": "cloud-edge-collaboration",
+  "name": "云边端协同",
+  "stage": "阶段五：仿真与 Sim-to-Real",
+  "importance": "重要",
+  "estimatedHours": 30,
+  "lastUpdated": "2026-04-28T12:08",
+  "description": "机器人系统中云端大模型、边缘计算和端侧控制的协同架构。让大脑在云端思考，小脑在本地反应。",
+  "prerequisites": [
+    "模型训练与推理优化",
+    "ROS2"
+  ],
+  "resources": [
+    {
+      "name": "JetPack SDK",
+      "url": "https://developer.nvidia.com/embedded/jetpack",
+      "type": "工具",
+      "description": "Jetson 开发套件，包含 CUDA/TensorRT/cuDNN/ROS2。"
+    },
+    {
+      "name": "ROS2 实时指南",
+      "url": "https://docs.ros.org/en/rolling/Tutorials/Demos/Real-Time.html",
+      "type": "教程",
+      "description": "ROS2 官方实时性配置指南。"
+    },
+    {
+      "name": "NVIDIA Isaac ROS",
+      "url": "https://nvidia-isaac-ros.github.io/",
+      "type": "框架",
+      "description": "GPU 加速的 ROS2 感知包，Jetson 优化。"
+    },
+    {
+      "name": "FastAPI",
+      "url": "https://fastapi.tiangolo.com/",
+      "type": "框架",
+      "description": "Python 高性能 API 框架，适合搭建云端推理服务。"
+    },
+    {
+      "name": "NVIDIA Jetson 开发入门",
+      "url": "https://www.youtube.com/results?search_query=nvidia+jetson+orin+getting+started",
+      "type": "视频",
+      "description": "Jetson Orin 开发板入门，JetPack 安装、CUDA 配置、TensorRT 部署。"
+    },
+    {
+      "name": "MCP 协议规范",
+      "url": "https://modelcontextprotocol.io/",
+      "type": "规范",
+      "description": "Model Context Protocol 官方规范，定义 LLM 与外部工具的标准化交互协议。"
+    },
+    {
+      "name": "MCP Python SDK",
+      "url": "https://github.com/modelcontextprotocol/python-sdk",
+      "type": "工具",
+      "description": "MCP 官方 Python SDK，用于快速实现 MCP Server 和 Client。"
+    }
+  ],
+  "weeklyPlan": "**第1-2周**：云边端架构设计 + Jetson 入门\n**第3周**：边缘 AI 部署（TensorRT + ROS2）\n**第4周**：实时性优化 + MCP 协议 + 断网容错",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "云边端三层架构",
+      "lastUpdated": "",
+      "chars": 20984
+    },
+    {
+      "id": "sec-02",
+      "title": "边缘AI与实时计算",
+      "lastUpdated": "",
+      "chars": 15542
+    },
+    {
+      "id": "sec-03",
+      "title": "模型压缩与边缘部署优化",
+      "lastUpdated": "",
+      "chars": 8934
+    },
+    {
+      "id": "sec-04",
+      "title": "5G/通信协议与机器人网络",
+      "lastUpdated": "",
+      "chars": 8779
+    },
+    {
+      "id": "sec-05",
+      "title": "分布式数据管理与OTA更新",
+      "lastUpdated": "",
+      "chars": 8123
+    },
+    {
+      "id": "sec-06",
+      "title": "MCP 协议：LLM 与机器人的标准化接口",
+      "lastUpdated": "2026-04-20T11:38",
+      "chars": 9747
+    },
+    {
+      "id": "sec-07",
+      "title": "数字孪生与实时同步：构建机器人的虚拟镜像",
+      "lastUpdated": "2026-04-27T00:42",
+      "chars": 3816
+    },
+    {
+      "id": "sec-08",
+      "title": "WebRTC远程遥操与低延迟视频传输",
+      "lastUpdated": "2026-04-27T14:43",
+      "chars": 3414
+    },
+    {
+      "id": "sec-09",
+      "title": "联邦学习与隐私保护：多机器人协同训练的数据治理",
+      "lastUpdated": "2026-04-28T12:08",
+      "chars": 9483
+    }
+  ]
+}

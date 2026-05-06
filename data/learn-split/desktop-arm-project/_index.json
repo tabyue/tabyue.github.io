@@ -1,0 +1,145 @@
+{
+  "id": "desktop-arm-project",
+  "name": "桌面级机械臂项目",
+  "lastUpdated": "2026-05-04T07:55",
+  "stage": "阶段六：项目实战",
+  "importance": "入门实战",
+  "estimatedHours": 40,
+  "description": "用低成本机械臂（如 SO-100/Koch v1.1）完成基本的抓取任务。从零到一的完整实战项目。",
+  "prerequisites": [
+    "机器人运动学",
+    "计算机视觉",
+    "模仿学习"
+  ],
+  "resources": [
+    {
+      "name": "SO-100 (LeRobot 文档)",
+      "url": "https://github.com/huggingface/lerobot/blob/main/examples/10_use_so100.md",
+      "type": "教程",
+      "description": "SO-100 机械臂完整使用指南。"
+    },
+    {
+      "name": "LeRobot Getting Started",
+      "url": "https://github.com/huggingface/lerobot#getting-started",
+      "type": "教程",
+      "description": "LeRobot 框架入门教程。"
+    },
+    {
+      "name": "Koch v1.1",
+      "url": "https://github.com/jess-moss/koch-v1-1",
+      "type": "项目",
+      "description": "开源机械臂设计，3D打印+舵机。"
+    },
+    {
+      "name": "LeRobot SO-100 组装到训练全流程",
+      "url": "https://www.youtube.com/results?search_query=lerobot+so100+setup+tutorial",
+      "type": "视频",
+      "description": "从 SO-100 机械臂组装、标定到用 ACT 训练抓取策略的完整视频教程。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：硬件组装+标定\n**第2周**：遥操作+数据采集\n**第3周**：ACT 训练+评估\n**第4周**：迭代改进+新任务",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "桌面机械臂策略评估与动态诊断：让你的模仿学习不在真机翻车",
+      "lastUpdated": "2026-05-04T07:55",
+      "chars": 11680
+    },
+    {
+      "id": "sec-02",
+      "title": "从单臂到双臂：ALOHA 与协同操作",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 2706
+    },
+    {
+      "id": "sec-03",
+      "title": "模仿学习到真机部署：完整 Pipeline 实战",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 4070
+    },
+    {
+      "id": "sec-04",
+      "title": "开源桌面臂硬件生态：从 ALOHA 到 SO-100",
+      "lastUpdated": "2026-04-30T10:22",
+      "chars": 2358
+    },
+    {
+      "id": "sec-05",
+      "title": "机械臂数学基础：齐次变换与DH参数",
+      "lastUpdated": "2026-04-28T18:57",
+      "chars": 4693
+    },
+    {
+      "id": "sec-06",
+      "title": "桌面机械臂运动学：正逆解与工作空间",
+      "lastUpdated": "2026-04-28T18:57",
+      "chars": 4447
+    },
+    {
+      "id": "sec-07",
+      "title": "桌面机械臂控制基础：PID、轨迹规划与力控入门",
+      "lastUpdated": "2026-04-28T18:57",
+      "chars": 4577
+    },
+    {
+      "id": "sec-08",
+      "title": "ROS2 与机械臂驱动：MoveIt2 实战",
+      "lastUpdated": "2026-04-28T18:57",
+      "chars": 5186
+    },
+    {
+      "id": "sec-09",
+      "title": "硬件选型与组装",
+      "lastUpdated": "",
+      "chars": 4607
+    },
+    {
+      "id": "sec-10",
+      "title": "视觉抓取 Pipeline",
+      "lastUpdated": "",
+      "chars": 6978
+    },
+    {
+      "id": "sec-11",
+      "title": "模仿学习训练部署",
+      "lastUpdated": "",
+      "chars": 5395
+    },
+    {
+      "id": "sec-12",
+      "title": "手眼标定与坐标变换实战",
+      "lastUpdated": "",
+      "chars": 6509
+    },
+    {
+      "id": "sec-13",
+      "title": "调试排错与性能优化",
+      "lastUpdated": "",
+      "chars": 5492
+    },
+    {
+      "id": "sec-14",
+      "title": "LeRobot端到端实战：从开箱到自主抓取",
+      "lastUpdated": "2026-04-26T22:21",
+      "chars": 1987
+    },
+    {
+      "id": "sec-15",
+      "title": "Sim-to-Real闭环：从仿真训练到真机部署全流程",
+      "lastUpdated": "2026-04-27T12:01",
+      "chars": 3348
+    },
+    {
+      "id": "sec-16",
+      "title": "抓取失败分析与自动重试策略",
+      "lastUpdated": "2026-04-28T12:03",
+      "chars": 3557
+    },
+    {
+      "id": "sec-17",
+      "title": "力控与柔顺操作：让桌面机械臂学会温柔",
+      "lastUpdated": "2026-04-29T12:00",
+      "chars": 4355
+    }
+  ]
+}

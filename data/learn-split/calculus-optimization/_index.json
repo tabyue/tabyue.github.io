@@ -1,0 +1,174 @@
+{
+  "id": "calculus-optimization",
+  "name": "微积分与优化",
+  "stage": "阶段一：数学与编程基础",
+  "importance": "核心",
+  "estimatedHours": 60,
+  "description": "梯度、Hessian 矩阵、拉格朗日乘子法是机器学习和控制优化的理论基础。机器人的每一个运动规划和控制决策本质上都是一个优化问题。",
+  "prerequisites": [
+    "线性代数",
+    "高中微积分"
+  ],
+  "resources": [
+    {
+      "name": "MIT 18.01/18.02 Single & Multivariable Calculus",
+      "url": "https://ocw.mit.edu/courses/18-02-multivariable-calculus-fall-2007/",
+      "type": "课程",
+      "description": "MIT 多元微积分公开课，快速复习偏导、梯度、Jacobian。"
+    },
+    {
+      "name": "Boyd《Convex Optimization》",
+      "url": "https://web.stanford.edu/~boyd/cvxbook/",
+      "type": "教材",
+      "description": "凸优化圣经，免费 PDF。前 5 章是机器人优化的必读内容。"
+    },
+    {
+      "name": "CVXPY 官方文档",
+      "url": "https://www.cvxpy.org/",
+      "type": "文档",
+      "description": "Python 凸优化建模库，支持 LP/QP/SDP/SOCP。机器人轨迹优化的利器。"
+    },
+    {
+      "name": "Nocedal《Numerical Optimization》",
+      "url": "https://link.springer.com/book/10.1007/978-0-387-40065-5",
+      "type": "教材",
+      "description": "数值优化经典工具书，梯度下降/牛顿法/拟牛顿法/信赖域方法的详细推导。"
+    },
+    {
+      "name": "CasADi",
+      "url": "https://web.casadi.org/",
+      "type": "工具",
+      "description": "符号计算+自动微分+非线性优化框架，机器人 MPC 和轨迹优化的工业级工具。"
+    },
+    {
+      "name": "Drake Tutorials",
+      "url": "https://drake.mit.edu/",
+      "type": "工具",
+      "description": "MIT 开发的机器人仿真+优化框架，内置 SNOPT/IPOPT 求解器。"
+    },
+    {
+      "name": "3Blue1Brown 微积分的本质",
+      "url": "https://www.3blue1brown.com/topics/calculus",
+      "type": "视频",
+      "description": "12集动画系列，从导数到积分的几何直觉。"
+    },
+    {
+      "name": "Boyd 凸优化 Stanford 公开课",
+      "url": "https://www.youtube.com/playlist?list=PL3940DD956CDF0622",
+      "type": "视频",
+      "description": "Stephen Boyd 亲自讲授凸优化，配合免费教材。"
+    }
+  ],
+  "weeklyPlan": "**第1-2周**：多元微积分复习，重做梯度和 Jacobian 练习题（MIT 18.02 讲义）\n**第3周**：凸集、凸函数、凸优化问题建模（Boyd Ch1-3）\n**第4周**：对偶理论、KKT 条件（Boyd Ch4-5）\n**第5周**：梯度下降、牛顿法、L-BFGS 实现与对比\n**第6周**：CVXPY 实践，解一个机器人轨迹优化问题",
+  "lastUpdated": "2026-04-28T17:22",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "微积分的数学基础：极限、连续、可微的本质",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 8751
+    },
+    {
+      "id": "sec-02",
+      "title": "实数的完备性与极限理论：数列、级数、函数空间",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 6217
+    },
+    {
+      "id": "sec-03",
+      "title": "一元微分学的完整理论：导数、微分法则、隐函数、高阶",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 7356
+    },
+    {
+      "id": "sec-04",
+      "title": "多元微积分的严格理论：偏导、Jacobian、Hessian、隐函数定理",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 7020
+    },
+    {
+      "id": "sec-05",
+      "title": "积分理论：Riemann 积分、重积分、换元、Fubini",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 6395
+    },
+    {
+      "id": "sec-06",
+      "title": "无约束优化的完整理论：最优性条件、下降方法、收敛性",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 7539
+    },
+    {
+      "id": "sec-07",
+      "title": "约束优化理论：KKT 条件、对偶理论、Slater 条件",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 5195
+    },
+    {
+      "id": "sec-08",
+      "title": "多元微积分",
+      "lastUpdated": "",
+      "chars": 7111
+    },
+    {
+      "id": "sec-09",
+      "title": "梯度与 Jacobian 矩阵",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 5380
+    },
+    {
+      "id": "sec-10",
+      "title": "凸优化基础",
+      "lastUpdated": "",
+      "chars": 7048
+    },
+    {
+      "id": "sec-11",
+      "title": "拉格朗日对偶与 KKT 条件",
+      "lastUpdated": "",
+      "chars": 6062
+    },
+    {
+      "id": "sec-12",
+      "title": "数值优化方法",
+      "lastUpdated": "",
+      "chars": 7543
+    },
+    {
+      "id": "sec-13",
+      "title": "机器人轨迹优化实战（CVXPY/CasADi）",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 3767
+    },
+    {
+      "id": "sec-14",
+      "title": "李群与李代数：SE(3)上的优化与插值",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 3243
+    },
+    {
+      "id": "sec-15",
+      "title": "二阶锥规划(SOCP)与机器人力分配",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 2826
+    },
+    {
+      "id": "sec-16",
+      "title": "变分法初步：泛函极值与最优轨迹",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 2543
+    },
+    {
+      "id": "sec-17",
+      "title": "动力系统与稳定性：从相图到 Lyapunov",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 2642
+    },
+    {
+      "id": "sec-18",
+      "title": "自动微分与随机优化：深度学习的数学引擎",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 3140
+    }
+  ]
+}

@@ -1,5 +1,35 @@
 # Automation-5 Memory: 具身智能门户每6小时更新
 
+> ⚠️ **强制规则（2026-05-06 起）**：每次修改 `data/learn/<mod>.json`（追加/修改 sections）后，**必须** 在提交前运行 `python tools/sync_learn_split.py` 同步生成 `data/learn-split/<mod>/{_index.json, sec-NN.json}`。前端走 B 方案按需加载——若不同步，用户看到的章节内容会停在旧版本。脚本是幂等的，无变化时不会改任何文件。
+
+## 2026-05-06T20:45 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿（gh issue list --state open 返回空数组）
+- **接手上轮残留**：上轮 4d35965 commit 后留下 3 个未跑完的临时文件（_apply.cjs / _check.cjs / _new_section.json），其中 _new_section.json 是为 embodied-agent.json 准备的高质量 11K chars section「VLA 长程任务推理范式：从 CoT 到 IVLR、Anticipation 与 Action Reasoning」（联动本站 p113-p116 四篇 5 月 VLA 论文），但因 content 内含 ASCII `"长程任务"` 双引号导致 JSON 解析失败，上轮中断
+- **修复 + 合并**：用 Python 脚本 unescape 容错解析→识别 2 处 raw ASCII 双引号→替换为中文引号 `"..."` → 重新生成 _new_section_fixed.json → 跑 _apply2.cjs 合入 → embodied-agent 81K → **91K（11 sec, 9441 chars 增量）**；3 处 lastUpdated 同步：embodied-agent.json 顶层+section + learning-path 中 stage7「具身Agent实战项目」节点
+- **重复 id 大修**：发现并修复 7 处 id 冲突：
+  - news n218×3 / n219×2 / n220×3（合并冲突遗留：5/6 上轮新增 + 4/30 上上轮新增 + 4/01/4/18 老条目同一 id）
+  - papers p115×2 (MolmoAct2 vs RoboWM-Bench)
+  - opensource os082×2 (MolmoAct2 vs AGIBOT WORLD 2026)
+  - 修复策略：保留 addedDate 最新的占用原 id，老的重命名为 max_id+i (n223-n227, p117, os083)
+- 新闻 +2（n221/n222）：临港双展首日 12 家企业签约入驻+具身智能产业联盟启动（中科院软件所+穿山甲机器人等 12 家联合）+ 科创板日报《2026 至今 345 亿融资全景》（资本从整机向零部件/具身大脑/RaaS 三方向扩散，4 月 12 家创业公司停止运营开启淘汰赛）
+- 论文 +1（p118）：VILAS 全开源低成本 VLA 平台（arXiv 2605.02037，5/4 上线）—— 单臂 BOM <$1500 + 3D 打印软体末端 + OpenVLA/Pi-0/GR00T 三大开放 VLA 微调脚本 + 70 任务 250 万帧数据集，OpenVLA-7B fine-tune 成功率 81.3% 与 ALOHA（10K USD）持平，推动 \"低成本 VLA 四件套\" 格局
+- 开源 +1（os084）：VILAS Platform GitHub 仓库（hardware 类，MIT）
+- 招聘 +1（j106）：上海临港具身智能产业联盟联合招聘（12 家入驻企业 + 中科院软件所，5 大方向 100+ 岗位）
+- 全数据排序：news/papers/opensource/jobs 按 `addedDate`（fallback `postedDate`/`date`）+ id 数字 secondary key 倒序重排，所有 2026-05-06 条目正确置顶
+- 临时清理：12 个本轮 _*.{cjs,py,json} 全部删除
+- 数据校验：147 JSON 全部 OK
+
+**当前数据编号水位：** news→n227 (229 条), papers→p118 (107 条), opensource→os084 (77 条), jobs→j106 (106 条)
+**Git:** 4d35965→f42a750, pushed to main (7 files +187/-15, 含新建 papers/p118.json)
+
+**踩坑教训：**
+- **JSON content 里 ASCII 双引号是头号陷阱**：上轮把 `"长程任务"` 写成 ASCII `"长程任务"`，整个 JSON 文件无法解析。必须用中文引号 `"..."` 或反斜杠转义 `\"...\"`（项目规范早有强调）。修复方式：unescape_lenient 函数容错解析→识别非合法 ASCII 引号位置→配对替换为左/右中文引号
+- **排序逻辑里 fallback 字段顺序很关键**：`d = x.get('addedDate') or x.get('date') or ''` 是正确的（短路求值，addedDate 优先）；如果写成 `for f in ['addedDate','date']: d = x.get(f) or d` 会被后面字段覆盖前面字段（papers p102/p103 的 addedDate=2026-04-29 但 date=2026-06，导致它们错误地排到顶部）
+- **跨实例 id 冲突自检**：每轮启动应跑一次 `Counter([x['id'] for x in items])` 检查重复，越是合并提交越容易留隐患。本轮发现 5/6 上轮 + 4/30 上上轮 + 更老条目共占用同一 id n218/n219/n220 三组重复，并不是单次合并失误而是多轮叠加
+- **memory.md 字段名记错代价大**：之前 memory 写"jobs schema 用 city/postDate/addedDate"，但实际字段是 `postedDate` 不是 `postDate`。新增 j106 前已对照 j105 完整 schema 校核避免再次出错。memory 文件本身的错误也要修
+
 ## 2026-05-06T20:16 执行记录
 
 **更新概要：**

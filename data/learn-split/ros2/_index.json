@@ -1,0 +1,126 @@
+{
+  "id": "ros2",
+  "name": "ROS2 机器人操作系统",
+  "stage": "阶段二：机器人学基础",
+  "importance": "必备",
+  "estimatedHours": 40,
+  "description": "ROS2 是机器人软件开发的事实标准框架。掌握其通信机制、坐标变换、URDF 建模和 Nav2/MoveIt2 是做真实机器人项目的前提。",
+  "prerequisites": [
+    "Python 编程",
+    "C++ 基础"
+  ],
+  "resources": [
+    {
+      "name": "ROS2 Humble 官方教程",
+      "url": "https://docs.ros.org/en/humble/Tutorials.html",
+      "type": "教程",
+      "description": "ROS2 官方 step-by-step 教程，从安装到高级功能。"
+    },
+    {
+      "name": "Nav2 官方文档",
+      "url": "https://navigation.ros.org/",
+      "type": "文档",
+      "description": "Nav2 导航框架完整文档，包含教程、配置指南和 API 参考。"
+    },
+    {
+      "name": "MoveIt2 Tutorials",
+      "url": "https://moveit.picknik.ai/main/index.html",
+      "type": "教程",
+      "description": "MoveIt2 运动规划框架教程，从 URDF 配置到 Python/C++ 编程。"
+    },
+    {
+      "name": "《A Gentle Introduction to ROS2》",
+      "url": "https://www.manning.com/books/a-gentle-introduction-to-ros2",
+      "type": "教材",
+      "description": "ROS2 入门书籍，适合从 ROS1 迁移或完全新手。"
+    },
+    {
+      "name": "ROS2 官方教程视频",
+      "url": "https://www.youtube.com/results?search_query=ros2+humble+tutorial+beginner",
+      "type": "视频",
+      "description": "ROS2 Humble 入门教程，Topic/Service/Action/TF2/URDF 全覆盖。"
+    },
+    {
+      "name": "Articulated Robotics ROS2系列",
+      "url": "https://www.youtube.com/c/ArticulatedRobotics",
+      "type": "视频",
+      "description": "从零搭建ROS2移动机器人，非常详细的实操教程，适合边看边做。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：安装配置 + 基础通信（topic/service/action）\n**第2周**：TF2 + URDF + RViz 可视化\n**第3周**：Nav2 导航或 MoveIt2 运动规划\n**第4周**：集成项目（自主导航小车 or 机械臂抓取）\n**第5周**：ros2_control 硬件抽象——编写自定义 HardwareInterface 连接真实电机",
+  "lastUpdated": "2026-04-30T11:33",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "ROS2 实战架构：从单机到 Fleet",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 4014
+    },
+    {
+      "id": "sec-02",
+      "title": "ROS2 高级主题：Action、Service 与 Executor",
+      "lastUpdated": "2026-04-30T11:07",
+      "chars": 5936
+    },
+    {
+      "id": "sec-03",
+      "title": "ROS2 通信机制深度解析：DDS、QoS 与生命周期",
+      "lastUpdated": "2026-04-30T10:32",
+      "chars": 3870
+    },
+    {
+      "id": "sec-04",
+      "title": "ROS2 Launch 系统与参数管理",
+      "lastUpdated": "2026-04-30T10:32",
+      "chars": 4128
+    },
+    {
+      "id": "sec-05",
+      "title": "核心通信机制",
+      "lastUpdated": "",
+      "chars": 9783
+    },
+    {
+      "id": "sec-06",
+      "title": "TF2 坐标变换",
+      "lastUpdated": "",
+      "chars": 10774
+    },
+    {
+      "id": "sec-07",
+      "title": "URDF 模型描述",
+      "lastUpdated": "",
+      "chars": 8604
+    },
+    {
+      "id": "sec-08",
+      "title": "Nav2 与 MoveIt2",
+      "lastUpdated": "",
+      "chars": 8978
+    },
+    {
+      "id": "sec-09",
+      "title": "ros2_control 与硬件抽象",
+      "lastUpdated": "2026-04-21T19:32",
+      "chars": 15200
+    },
+    {
+      "id": "sec-10",
+      "title": "Lifecycle节点与生产级ROS2系统设计",
+      "lastUpdated": "2026-04-26T22:21",
+      "chars": 3032
+    },
+    {
+      "id": "sec-11",
+      "title": "Launch文件与多机器人系统部署",
+      "lastUpdated": "2026-04-27T12:01",
+      "chars": 4113
+    },
+    {
+      "id": "sec-12",
+      "title": "DDS通信调优与QoS策略选择",
+      "lastUpdated": "2026-04-28T12:06",
+      "chars": 3209
+    }
+  ]
+}

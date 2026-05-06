@@ -1,0 +1,144 @@
+{
+  "id": "mobile-robot-navigation",
+  "name": "移动机器人导航项目",
+  "stage": "阶段六：项目实战",
+  "importance": "进阶实战",
+  "estimatedHours": 50,
+  "lastUpdated": "2026-05-03T09:45",
+  "description": "构建一个能在室内自主导航的移动机器人。从 SLAM 建图到 Nav2 导航的完整实战。",
+  "prerequisites": [
+    "ROS2",
+    "3D 视觉与点云"
+  ],
+  "resources": [
+    {
+      "name": "TurtleBot3 文档",
+      "url": "https://emanual.robotis.com/docs/en/platform/turtlebot3/overview/",
+      "type": "教程",
+      "description": "TurtleBot3 官方文档，从组装到导航。"
+    },
+    {
+      "name": "Nav2 文档",
+      "url": "https://navigation.ros.org/",
+      "type": "文档",
+      "description": "Nav2 导航框架完整文档。"
+    },
+    {
+      "name": "SLAM Toolbox",
+      "url": "https://github.com/SteveMacenski/slam_toolbox",
+      "type": "工具",
+      "description": "ROS2 SLAM 工具箱，2D 激光 SLAM。"
+    },
+    {
+      "name": "Nav2 导航教程",
+      "url": "https://www.youtube.com/results?search_query=ros2+nav2+navigation+tutorial",
+      "type": "视频",
+      "description": "ROS2 Nav2 从建图到导航的完整实操教程。"
+    },
+    {
+      "name": "RTAB-Map 官方文档",
+      "url": "https://github.com/introlab/rtabmap/wiki",
+      "type": "文档",
+      "description": "RTAB-Map 3D SLAM工具的Wiki文档，包含多种传感器配置指南。"
+    },
+    {
+      "name": "Nav2 Simple Commander API",
+      "url": "https://navigation.ros.org/commander_api/index.html",
+      "type": "文档",
+      "description": "Nav2的Python API文档，用代码控制导航的最简方式。"
+    },
+    {
+      "name": "Cartographer ROS",
+      "url": "https://google-cartographer-ros.readthedocs.io/en/latest/",
+      "type": "文档",
+      "description": "Google Cartographer的ROS集成，支持2D/3D激光SLAM。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：底盘搭建+传感器\n**第2-3周**：SLAM 建图\n**第4-5周**：Nav2 导航\n**第6周**：集成测试",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "状态估计与贝叶斯滤波：导航系统的“隐形大脑”",
+      "lastUpdated": "2026-05-03T09:45",
+      "chars": 13619
+    },
+    {
+      "id": "sec-02",
+      "title": "社交导航与动态环境避障",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 2907
+    },
+    {
+      "id": "sec-03",
+      "title": "定位技术：从 AMCL 到视觉-惯性里程计",
+      "lastUpdated": "2026-04-30T11:07",
+      "chars": 1966
+    },
+    {
+      "id": "sec-04",
+      "title": "多机器人协同导航：从分布式规划到蜂群",
+      "lastUpdated": "2026-04-30T11:07",
+      "chars": 2015
+    },
+    {
+      "id": "sec-05",
+      "title": "地图表示与构建：从栅格地图到语义地图",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 3672
+    },
+    {
+      "id": "sec-06",
+      "title": "全局与局部路径规划算法",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 3570
+    },
+    {
+      "id": "sec-07",
+      "title": "底盘搭建",
+      "lastUpdated": "",
+      "chars": 4739
+    },
+    {
+      "id": "sec-08",
+      "title": "SLAM 建图",
+      "lastUpdated": "",
+      "chars": 4417
+    },
+    {
+      "id": "sec-09",
+      "title": "Nav2 自主导航",
+      "lastUpdated": "",
+      "chars": 7288
+    },
+    {
+      "id": "sec-10",
+      "title": "路径规划算法详解",
+      "lastUpdated": "2026-04-19T16:45",
+      "chars": 14929
+    },
+    {
+      "id": "sec-11",
+      "title": "代价地图与动态避障",
+      "lastUpdated": "2026-04-19T16:45",
+      "chars": 7572
+    },
+    {
+      "id": "sec-12",
+      "title": "语义导航与视觉-语言导航（VLN）",
+      "lastUpdated": "2026-04-26T22:21",
+      "chars": 2791
+    },
+    {
+      "id": "sec-13",
+      "title": "多机器人协同SLAM与任务调度",
+      "lastUpdated": "2026-04-27T12:01",
+      "chars": 3834
+    },
+    {
+      "id": "sec-14",
+      "title": "MPPI控制器：从DWA到模型预测路径积分",
+      "lastUpdated": "2026-04-27T14:40",
+      "chars": 11157
+    }
+  ]
+}

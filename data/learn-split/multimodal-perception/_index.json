@@ -1,0 +1,96 @@
+{
+  "id": "multimodal-perception",
+  "name": "多模态感知",
+  "stage": "阶段三：感知与视觉",
+  "importance": "重要",
+  "estimatedHours": 30,
+  "description": "融合视觉、触觉、听觉等多种感知模态提升机器人理解能力。多模态感知是精细操作和安全交互的关键。",
+  "prerequisites": [
+    "计算机视觉基础",
+    "3D 视觉"
+  ],
+  "resources": [
+    {
+      "name": "DIGIT 项目 (Meta)",
+      "url": "https://digit.ml/",
+      "type": "项目",
+      "description": "Meta 开源的触觉传感器，硬件设计+软件接口+数据集全部开源。"
+    },
+    {
+      "name": "GelSight 项目",
+      "url": "https://gelsight.com/",
+      "type": "项目",
+      "description": "光学触觉传感器先驱，MIT 发明。商业产品+学术论文。"
+    },
+    {
+      "name": "多传感器融合综述",
+      "url": "https://arxiv.org/abs/2202.02703",
+      "type": "论文",
+      "description": "机器人多模态感知融合的最新综述，涵盖视觉-触觉-力觉-听觉融合。"
+    },
+    {
+      "name": "ATI F/T 传感器",
+      "url": "https://www.ati-ia.com/products/ft/ft_models.aspx",
+      "type": "硬件",
+      "description": "工业级 6 轴力/力矩传感器，机器人研究的标准配置。"
+    },
+    {
+      "name": "GelSight/DIGIT 触觉传感器演示",
+      "url": "https://www.youtube.com/results?search_query=gelsight+digit+tactile+sensor+demo",
+      "type": "视频",
+      "description": "光学触觉传感器的工作原理演示和实际应用案例。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：触觉传感器原理 + DIGIT 上手\n**第2周**：力传感器接口 + 阻抗控制\n**第3周**：深度相机选型 + RGBD 处理管线\n**第4周**：多传感器融合实验\n**第5周**：多模态表征学习 + 对比预训练",
+  "lastUpdated": "2026-04-28T12:06",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "触觉传感器",
+      "lastUpdated": "",
+      "chars": 9775
+    },
+    {
+      "id": "sec-02",
+      "title": "力/力矩传感器",
+      "lastUpdated": "",
+      "chars": 10588
+    },
+    {
+      "id": "sec-03",
+      "title": "多传感器融合",
+      "lastUpdated": "",
+      "chars": 10855
+    },
+    {
+      "id": "sec-04",
+      "title": "深度相机与 RGBD 感知",
+      "lastUpdated": "",
+      "chars": 20124
+    },
+    {
+      "id": "sec-05",
+      "title": "多模态表征学习",
+      "lastUpdated": "",
+      "chars": 20192
+    },
+    {
+      "id": "sec-06",
+      "title": "力感知VLA：从位置控制到混合力位控制",
+      "lastUpdated": "2026-04-24T20:33",
+      "chars": 16045
+    },
+    {
+      "id": "sec-07",
+      "title": "听觉感知与声源定位在机器人中的应用",
+      "lastUpdated": "2026-04-27T11:33",
+      "chars": 3298
+    },
+    {
+      "id": "sec-08",
+      "title": "触觉伺服：用触觉反馈引导精细操作",
+      "lastUpdated": "2026-04-28T12:06",
+      "chars": 2715
+    }
+  ]
+}

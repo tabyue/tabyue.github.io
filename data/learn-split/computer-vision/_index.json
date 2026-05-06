@@ -1,0 +1,132 @@
+{
+  "id": "computer-vision",
+  "name": "计算机视觉基础",
+  "stage": "阶段三：感知与视觉",
+  "importance": "核心",
+  "estimatedHours": 50,
+  "description": "图像处理、特征提取、目标检测是机器人感知环境的第一步。从 OpenCV 到 YOLO 到 SAM，构建完整的视觉感知能力。",
+  "prerequisites": [
+    "Python 编程",
+    "深度学习基础"
+  ],
+  "resources": [
+    {
+      "name": "CS231n (Stanford)",
+      "url": "https://cs231n.stanford.edu/",
+      "type": "课程",
+      "description": "计算机视觉经典课程，从图像分类到目标检测到分割。"
+    },
+    {
+      "name": "OpenCV 官方教程",
+      "url": "https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html",
+      "type": "教程",
+      "description": "OpenCV Python 教程，涵盖图像处理、特征匹配、相机标定。"
+    },
+    {
+      "name": "Ultralytics YOLOv8",
+      "url": "https://docs.ultralytics.com/",
+      "type": "文档",
+      "description": "YOLO 最新版本文档，支持检测/分割/跟踪/姿态估计。"
+    },
+    {
+      "name": "Segment Anything (SAM)",
+      "url": "https://segment-anything.com/",
+      "type": "项目",
+      "description": "Meta 的通用分割模型，zero-shot 分割任何物体。开源代码+demo。"
+    },
+    {
+      "name": "FoundationPose",
+      "url": "https://nvlabs.github.io/FoundationPose/",
+      "type": "项目",
+      "description": "NVIDIA 的 zero-shot 6DoF 位姿估计模型，给 CAD 或参考图即可。"
+    },
+    {
+      "name": "CS231n Stanford 计算机视觉",
+      "url": "https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv",
+      "type": "视频",
+      "description": "Stanford 经典 CV 课程，从图像分类到目标检测到分割，Fei-Fei Li/Karpathy 等主讲。"
+    },
+    {
+      "name": "YOLO 系列讲解 (AI葵)",
+      "url": "https://www.youtube.com/results?search_query=yolo+object+detection+explained",
+      "type": "视频",
+      "description": "从 YOLOv1 到 YOLOv8 的演进讲解，理解单阶段检测器的核心思想。"
+    }
+  ],
+  "weeklyPlan": "**第1-2周**：OpenCV 图像处理 + 相机标定\n**第3周**：YOLO 目标检测训练与部署\n**第4-5周**：SAM 分割 + 6DoF 位姿估计\n**第6周**：集成到机器人抓取 Pipeline",
+  "lastUpdated": "2026-05-01T05:50",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "视觉伺服与 6D 物体位姿估计",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 3422
+    },
+    {
+      "id": "sec-02",
+      "title": "3D 视觉与点云处理：从深度图到 SLAM",
+      "lastUpdated": "2026-04-30T11:07",
+      "chars": 3341
+    },
+    {
+      "id": "sec-03",
+      "title": "计算机视觉基础：从图像处理到深度学习检测",
+      "lastUpdated": "2026-04-30T10:32",
+      "chars": 3016
+    },
+    {
+      "id": "sec-04",
+      "title": "图像处理 (OpenCV)",
+      "lastUpdated": "",
+      "chars": 9364
+    },
+    {
+      "id": "sec-05",
+      "title": "目标检测 (YOLO/DETR)",
+      "lastUpdated": "",
+      "chars": 10158
+    },
+    {
+      "id": "sec-06",
+      "title": "姿态估计",
+      "lastUpdated": "",
+      "chars": 8051
+    },
+    {
+      "id": "sec-07",
+      "title": "图像分割与语义理解",
+      "lastUpdated": "",
+      "chars": 10084
+    },
+    {
+      "id": "sec-08",
+      "title": "视觉基础模型 (SAM2 / DINOv2)",
+      "lastUpdated": "",
+      "chars": 13766
+    },
+    {
+      "id": "sec-09",
+      "title": "事件相机（Event Camera）原理与机器人应用",
+      "lastUpdated": "2026-04-23T22:33",
+      "chars": 11316
+    },
+    {
+      "id": "sec-10",
+      "title": "视觉伺服与闭环抓取控制",
+      "lastUpdated": "2026-04-27T11:30",
+      "chars": 2804
+    },
+    {
+      "id": "sec-11",
+      "title": "开放词汇检测与Grounding：让机器人理解任意物体描述",
+      "lastUpdated": "2026-04-27T14:43",
+      "chars": 3128
+    },
+    {
+      "id": "sec-12",
+      "title": "VLA 时代的视觉数据引擎：数据配方、跨本体对齐与标注自动化",
+      "lastUpdated": "2026-05-01T05:50",
+      "chars": 3830
+    }
+  ]
+}

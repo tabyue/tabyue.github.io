@@ -1,0 +1,139 @@
+{
+  "id": "robot-dynamics",
+  "name": "机器人动力学",
+  "lastUpdated": "2026-05-04T00:28",
+  "stage": "阶段二：机器人学基础",
+  "importance": "核心",
+  "estimatedHours": 50,
+  "description": "理解力、力矩与运动的关系，是控制器设计的物理基础。动力学方程 M(q)q̈+C(q,q̇)q̇+G(q)=τ 是计算力矩控制的核心。",
+  "prerequisites": [
+    "线性代数",
+    "微积分与优化",
+    "机器人运动学"
+  ],
+  "resources": [
+    {
+      "name": "Featherstone《Rigid Body Dynamics Algorithms》",
+      "url": "https://link.springer.com/book/10.1007/978-1-4899-7560-7",
+      "type": "教材",
+      "description": "刚体动力学算法圣经，Newton-Euler 递推、RNEA、ABA 的权威参考。"
+    },
+    {
+      "name": "Modern Robotics Ch8 (Dynamics)",
+      "url": "http://hades.mech.northwestern.edu/images/7/7f/MR.pdf",
+      "type": "教材",
+      "description": "Modern Robotics 动力学章节，Lagrange 方法推导非常清晰。免费 PDF。"
+    },
+    {
+      "name": "MuJoCo 文档 (Contact Model)",
+      "url": "https://mujoco.readthedocs.io/en/stable/computation/index.html",
+      "type": "文档",
+      "description": "MuJoCo 的物理计算文档，详细解释接触模型和求解算法。"
+    },
+    {
+      "name": "Pinocchio 动力学库",
+      "url": "https://stack-of-tasks.github.io/pinocchio/",
+      "type": "工具",
+      "description": "高效的机器人动力学 C++/Python 库，支持 RNEA、ABA、CRBA 等算法。"
+    },
+    {
+      "name": "Featherstone 动力学算法讲座",
+      "url": "https://www.youtube.com/results?search_query=featherstone+rigid+body+dynamics+lecture",
+      "type": "视频",
+      "description": "刚体动力学算法权威讲解，Newton-Euler 递推和 ABA 算法。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：Lagrange 力学推导 2-link 动力学\n**第2周**：Newton-Euler 递推算法实现\n**第3周**：M/C/G 矩阵的物理意义和性质验证\n**第4周**：接触力学 + MuJoCo 仿真验证\n**第5周**：动力学参数辨识——从激励轨迹设计到最小二乘求解",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "动力学在机器人控制中的应用实战",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 2705
+    },
+    {
+      "id": "sec-02",
+      "title": "摩擦、柔性与动力学建模的工程修正",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 3124
+    },
+    {
+      "id": "sec-03",
+      "title": "动力学建模方法：拉格朗日与牛顿-欧拉",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 3151
+    },
+    {
+      "id": "sec-04",
+      "title": "动力学性质与控制中的应用",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 1994
+    },
+    {
+      "id": "sec-05",
+      "title": "Lagrange 力学",
+      "lastUpdated": "",
+      "chars": 7073
+    },
+    {
+      "id": "sec-06",
+      "title": "Newton-Euler 递推算法",
+      "lastUpdated": "",
+      "chars": 8024
+    },
+    {
+      "id": "sec-07",
+      "title": "动力学方程的性质",
+      "lastUpdated": "",
+      "chars": 7057
+    },
+    {
+      "id": "sec-08",
+      "title": "接触力学基础",
+      "lastUpdated": "",
+      "chars": 5185
+    },
+    {
+      "id": "sec-09",
+      "title": "动力学参数辨识",
+      "lastUpdated": "2026-04-21T19:32",
+      "chars": 14249
+    },
+    {
+      "id": "sec-10",
+      "title": "柔性关节与弹性驱动建模",
+      "lastUpdated": "2026-04-27T00:42",
+      "chars": 2454
+    },
+    {
+      "id": "sec-11",
+      "title": "计算力矩控制的MuJoCo仿真验证",
+      "lastUpdated": "2026-04-27T12:01",
+      "chars": 3171
+    },
+    {
+      "id": "sec-12",
+      "title": "浮基动力学与人形机器人全身动力学",
+      "lastUpdated": "2026-04-28T12:00",
+      "chars": 9608
+    },
+    {
+      "id": "sec-13",
+      "title": "接触动力学与可微仿真：LCP、梯度传播与接触感知策略",
+      "lastUpdated": "2026-05-02T11:20",
+      "chars": 7976
+    },
+    {
+      "id": "sec-14",
+      "title": "旋量理论与李群李代数：现代机器人动力学的数学基础",
+      "lastUpdated": "2026-05-02T18:45",
+      "chars": 11068
+    },
+    {
+      "id": "sec-15",
+      "title": "质心动力学与人形平衡控制：从 LIPM 到 SRBD + 全身 MPC",
+      "lastUpdated": "2026-05-04T00:28",
+      "chars": 11129
+    }
+  ]
+}

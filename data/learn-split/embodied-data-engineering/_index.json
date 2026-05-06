@@ -1,0 +1,151 @@
+{
+  "id": "embodied-data-engineering",
+  "name": "具身数据工程",
+  "stage": "阶段五：仿真与 Sim-to-Real",
+  "importance": "核心",
+  "estimatedHours": 45,
+  "description": "高质量数据是具身智能的燃料。本模块系统覆盖数据集全景、采集系统、质量工程、合成数据、格式标准与数据闭环，构建从 0 到 1 的完整数据管线。",
+  "prerequisites": [
+    "Python 编程与科学计算",
+    "模仿学习",
+    "物理仿真引擎"
+  ],
+  "resources": [
+    {
+      "name": "Open X-Embodiment",
+      "url": "https://robotics-transformer-x.github.io/",
+      "type": "数据集",
+      "description": "Google 牵头的大规模机器人数据集联盟，22个机构100万+轨迹。"
+    },
+    {
+      "name": "LeRobot (HuggingFace)",
+      "url": "https://github.com/huggingface/lerobot",
+      "type": "框架",
+      "description": "HuggingFace 开源机器人学习框架，含数据采集、训练、部署全流程。"
+    },
+    {
+      "name": "DROID 数据集",
+      "url": "https://droid-dataset.github.io/",
+      "type": "数据集",
+      "description": "76K 高质量 Franka 操作轨迹，多样化场景和任务。"
+    },
+    {
+      "name": "AGIBOT WORLD 2026",
+      "url": "https://agibot-world.com/",
+      "type": "数据集",
+      "description": "智元机器人开源，100%真实场景，覆盖商业/家居/工业等场景。"
+    },
+    {
+      "name": "Rerun.io",
+      "url": "https://rerun.io/",
+      "type": "工具",
+      "description": "机器人数据可视化神器，同时显示图像/3D/曲线/点云。"
+    },
+    {
+      "name": "DVC (Data Version Control)",
+      "url": "https://dvc.org/",
+      "type": "工具",
+      "description": "ML数据版本管理工具，Git for Data。"
+    },
+    {
+      "name": "Data Scaling Laws (RT论文系列)",
+      "url": "https://arxiv.org/abs/2407.18613",
+      "type": "论文",
+      "description": "机器人操作的数据Scaling Law研究，指导数据采集策略。"
+    },
+    {
+      "name": "ALOHA 2 项目",
+      "url": "https://aloha-2.github.io/",
+      "type": "项目",
+      "description": "Google/TRI 开源低成本双臂遥操作平台，数据采集标杆。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：数据集全景+格式标准\n**第2周**：数据采集系统搭建\n**第3周**：数据质量工程+清洗\n**第4周**：合成数据+增强\n**第5周**：数据闭环实战",
+  "lastUpdated": "2026-05-04T08:00",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "演示数据的分布覆盖分析与短板诊断：从 BeTTER 启示看数据质量",
+      "lastUpdated": "2026-05-04T08:00",
+      "chars": 10616
+    },
+    {
+      "id": "sec-02",
+      "title": "数据闭环与主动学习：从部署到持续改进",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 2780
+    },
+    {
+      "id": "sec-03",
+      "title": "数据集格式标准：LeRobot/RLDS/Open-X-Embodiment",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 4794
+    },
+    {
+      "id": "sec-04",
+      "title": "机器人演示数据的采集策略与遥操作系统",
+      "lastUpdated": "2026-04-30T10:22",
+      "chars": 4057
+    },
+    {
+      "id": "sec-05",
+      "title": "数据工程基础：从原始数据到可用数据集",
+      "lastUpdated": "2026-04-28T19:38",
+      "chars": 5740
+    },
+    {
+      "id": "sec-06",
+      "title": "数据标注与众包：构建高质量机器人数据集的方法论",
+      "lastUpdated": "2026-04-28T19:38",
+      "chars": 3228
+    },
+    {
+      "id": "sec-07",
+      "title": "具身数据集全景图",
+      "lastUpdated": "",
+      "chars": 9102
+    },
+    {
+      "id": "sec-08",
+      "title": "数据采集系统实战",
+      "lastUpdated": "",
+      "chars": 10823
+    },
+    {
+      "id": "sec-09",
+      "title": "数据质量工程",
+      "lastUpdated": "",
+      "chars": 9326
+    },
+    {
+      "id": "sec-10",
+      "title": "合成数据与数据增强",
+      "lastUpdated": "",
+      "chars": 6146
+    },
+    {
+      "id": "sec-11",
+      "title": "数据格式标准与工具链",
+      "lastUpdated": "",
+      "chars": 3612
+    },
+    {
+      "id": "sec-12",
+      "title": "数据闭环系统",
+      "lastUpdated": "",
+      "chars": 5939
+    },
+    {
+      "id": "sec-13",
+      "title": "数据安全、隐私与合成数据合规",
+      "lastUpdated": "2026-04-27T00:45",
+      "chars": 2375
+    },
+    {
+      "id": "sec-14",
+      "title": "大规模数据集版本管理与DVC实战",
+      "lastUpdated": "2026-04-27T14:46",
+      "chars": 3601
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "id": "data-collection",
+  "name": "数据采集与管理",
+  "stage": "阶段五：仿真与 Sim-to-Real",
+  "importance": "重要",
+  "estimatedHours": 30,
+  "description": "高质量的训练数据是具身智能成功的关键。从遥操作到数据格式到增强，构建完整的数据管道。",
+  "prerequisites": [
+    "Python 编程"
+  ],
+  "resources": [
+    {
+      "name": "ALOHA",
+      "url": "https://tonyzhaozh.github.io/aloha/",
+      "type": "项目",
+      "description": "低成本双臂遥操作，开源设计。"
+    },
+    {
+      "name": "UMI",
+      "url": "https://umi-gripper.github.io/",
+      "type": "项目",
+      "description": "Columbia 通用操作接口，便携式数据采集。"
+    },
+    {
+      "name": "LeRobot 数据 Hub",
+      "url": "https://huggingface.co/lerobot",
+      "type": "平台",
+      "description": "HuggingFace 上的机器人数据共享平台。"
+    },
+    {
+      "name": "Open X-Embodiment",
+      "url": "https://robotics-transformer-x.github.io/",
+      "type": "数据集",
+      "description": "Google 牵头的大规模机器人数据集联盟。"
+    },
+    {
+      "name": "ALOHA 遥操作演示",
+      "url": "https://www.youtube.com/results?search_query=aloha+teleoperation+bimanual+manipulation",
+      "type": "视频",
+      "description": "Stanford ALOHA 双臂遥操作系统的使用演示和数据采集过程。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：遥操作系统搭建 + 相机选型\n**第2周**：相机标定 + 手眼标定实战\n**第3周**：数据格式与标准 (RLDS/LeRobot)\n**第4周**：数据增强 + 自动化采集管线\n**第5周**：数据质量筛选 + DAgger 迭代采集",
+  "lastUpdated": "2026-04-27T11:30",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "遥操作系统",
+      "lastUpdated": "",
+      "chars": 15338
+    },
+    {
+      "id": "sec-02",
+      "title": "数据格式与标准",
+      "lastUpdated": "",
+      "chars": 9099
+    },
+    {
+      "id": "sec-03",
+      "title": "数据增强",
+      "lastUpdated": "",
+      "chars": 10857
+    },
+    {
+      "id": "sec-04",
+      "title": "大规模数据工程与自动标注",
+      "lastUpdated": "2026-04-20T20:46",
+      "chars": 21161
+    },
+    {
+      "id": "sec-05",
+      "title": "相机选型与标定",
+      "lastUpdated": "",
+      "chars": 19029
+    },
+    {
+      "id": "sec-06",
+      "title": "自动化数据采集与质量筛选",
+      "lastUpdated": "",
+      "chars": 20408
+    },
+    {
+      "id": "sec-07",
+      "title": "人体演示到机器人动作的Retargeting",
+      "lastUpdated": "2026-04-24T05:43",
+      "chars": 12552
+    },
+    {
+      "id": "sec-08",
+      "title": "众包数据采集与质量控制平台设计",
+      "lastUpdated": "2026-04-27T11:30",
+      "chars": 3682
+    }
+  ]
+}

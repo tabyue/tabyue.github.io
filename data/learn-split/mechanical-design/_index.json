@@ -1,0 +1,143 @@
+{
+  "id": "mechanical-design",
+  "name": "机械设计基础",
+  "lastUpdated": "2026-05-01T13:15",
+  "stage": "阶段二：机器人学基础",
+  "importance": "重要",
+  "estimatedHours": 30,
+  "description": "了解机器人硬件构造，包括驱动器、传感器、结构设计。软件工程师也需要理解硬件才能写出好的控制代码。",
+  "prerequisites": [
+    "基础物理"
+  ],
+  "resources": [
+    {
+      "name": "LEAP Hand 开源项目",
+      "url": "https://leaphand.com/",
+      "type": "项目",
+      "description": "16 DoF 灵巧手，全开源（机械设计+控制代码+URDF），可自行复制。"
+    },
+    {
+      "name": "ODrive 电机控制器",
+      "url": "https://odriverobotics.com/",
+      "type": "硬件",
+      "description": "开源 BLDC 电机控制器，支持 FOC 控制，适合机器人关节驱动。"
+    },
+    {
+      "name": "RealSense SDK",
+      "url": "https://github.com/IntelRealSense/librealsense",
+      "type": "工具",
+      "description": "Intel RealSense 深度相机的官方 SDK，支持 Python/C++。"
+    },
+    {
+      "name": "Niku《机器人学导论》",
+      "url": "https://www.wiley.com/en-us/Introduction+to+Robotics",
+      "type": "教材",
+      "description": "机器人机械设计基础教材，涵盖电机、减速器、传感器选型。"
+    },
+    {
+      "name": "电机选型与控制入门",
+      "url": "https://www.youtube.com/results?search_query=bldc+motor+foc+control+tutorial",
+      "type": "视频",
+      "description": "BLDC 电机 FOC 控制原理和实践，ODrive 使用教程。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：电机原理 + 选型计算\n**第2周**：减速器对比 + 传动设计\n**第3周**：传感器选型 + 接口调试\n**第4周**：搭建一个单关节伺服系统",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "机器人关节模组与驱动器选型",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 3022
+    },
+    {
+      "id": "sec-02",
+      "title": "机器人 CAD 设计流程：从概念到制造",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 2930
+    },
+    {
+      "id": "sec-03",
+      "title": "机械设计的工程基础：材料力学与强度设计",
+      "lastUpdated": "2026-04-28T19:01",
+      "chars": 3676
+    },
+    {
+      "id": "sec-04",
+      "title": "机构学基础：自由度、连杆机构与传动原理",
+      "lastUpdated": "2026-04-28T19:01",
+      "chars": 3496
+    },
+    {
+      "id": "sec-05",
+      "title": "公差与装配：尺寸链、配合与GD&T基础",
+      "lastUpdated": "2026-04-28T19:01",
+      "chars": 3040
+    },
+    {
+      "id": "sec-06",
+      "title": "热设计与散热：电机热管理与温控策略",
+      "lastUpdated": "2026-04-28T19:01",
+      "chars": 3879
+    },
+    {
+      "id": "sec-07",
+      "title": "电机类型与选型",
+      "lastUpdated": "",
+      "chars": 6652
+    },
+    {
+      "id": "sec-08",
+      "title": "减速器与传动",
+      "lastUpdated": "",
+      "chars": 6190
+    },
+    {
+      "id": "sec-09",
+      "title": "传感器",
+      "lastUpdated": "",
+      "chars": 5813
+    },
+    {
+      "id": "sec-10",
+      "title": "灵巧手设计",
+      "lastUpdated": "",
+      "chars": 5936
+    },
+    {
+      "id": "sec-11",
+      "title": "结构设计与快速原型",
+      "lastUpdated": "2026-04-21T18:42",
+      "chars": 5609
+    },
+    {
+      "id": "sec-12",
+      "title": "3D打印快速原型与结构仿真验证",
+      "lastUpdated": "2026-04-27T00:42",
+      "chars": 2291
+    },
+    {
+      "id": "sec-13",
+      "title": "线缆管理与机器人防护设计",
+      "lastUpdated": "2026-04-27T12:01",
+      "chars": 3012
+    },
+    {
+      "id": "sec-14",
+      "title": "关节模组选型与电机-减速器匹配计算",
+      "lastUpdated": "2026-04-28T12:03",
+      "chars": 3702
+    },
+    {
+      "id": "sec-15",
+      "title": "伺服驱动与关节模组：从电流环到力控的完整驱动链路",
+      "lastUpdated": "2026-04-28T20:52",
+      "chars": 8547
+    },
+    {
+      "id": "sec-16",
+      "title": "滚珠丝杠与直线传动：从选型计算到预紧调整的工程设计",
+      "lastUpdated": "2026-05-01T13:15",
+      "chars": 12719
+    }
+  ]
+}

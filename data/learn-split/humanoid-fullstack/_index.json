@@ -1,0 +1,139 @@
+{
+  "id": "humanoid-fullstack",
+  "name": "人形机器人全栈项目",
+  "lastUpdated": "2026-05-06T20:16",
+  "stage": "阶段六：项目实战",
+  "importance": "高级实战",
+  "estimatedHours": 100,
+  "description": "参与或构建一个人形机器人的完整软件栈。从步态控制到全身运动到 VLA 部署。",
+  "prerequisites": [
+    "控制理论",
+    "强化学习",
+    "VLA 模型"
+  ],
+  "resources": [
+    {
+      "name": "Humanoid Gym",
+      "url": "https://github.com/roboterax/humanoid-gym",
+      "type": "项目",
+      "description": "人形机器人 RL 训练框架。"
+    },
+    {
+      "name": "Unitree H1/G1 SDK",
+      "url": "https://github.com/unitreerobotics",
+      "type": "工具",
+      "description": "宇树人形机器人开源 SDK。"
+    },
+    {
+      "name": "GR00T",
+      "url": "https://developer.nvidia.com/groot",
+      "type": "工具",
+      "description": "NVIDIA 人形机器人基础模型。"
+    },
+    {
+      "name": "Legged Gym",
+      "url": "https://github.com/leggedrobotics/legged_gym",
+      "type": "项目",
+      "description": "足式机器人 RL 训练的标准框架。"
+    },
+    {
+      "name": "Legged Gym 训练教程",
+      "url": "https://www.youtube.com/results?search_query=legged+gym+humanoid+training+tutorial",
+      "type": "视频",
+      "description": "四足/人形机器人 RL 步态训练教程，Isaac Gym 环境配置和 PPO 训练。"
+    },
+    {
+      "name": "宇树 Unitree H1/G1 演示",
+      "url": "https://www.youtube.com/results?search_query=unitree+h1+g1+humanoid+demo",
+      "type": "视频",
+      "description": "宇树人形机器人的最新演示视频，展示步态控制和操作能力。"
+    }
+  ],
+  "weeklyPlan": "**第1-4周**：Humanoid Gym 步态训练\n**第5-8周**：全身运动控制\n**第9-12周**：VLA 集成",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "人形机器人产业生态：玩家、商业模式与技术路线",
+      "lastUpdated": "2026-05-06T20:16",
+      "chars": 2780
+    },
+    {
+      "id": "sec-02",
+      "title": "人形机器人的强化学习训练框架",
+      "lastUpdated": "2026-05-06T20:14",
+      "chars": 3505
+    },
+    {
+      "id": "sec-03",
+      "title": "人形机器人的感知-决策-执行一体化",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 4259
+    },
+    {
+      "id": "sec-04",
+      "title": "人形机器人的运动学与逆运动学",
+      "lastUpdated": "2026-04-30T11:07",
+      "chars": 3006
+    },
+    {
+      "id": "sec-05",
+      "title": "人形机器人系统架构：从设计到全栈集成",
+      "lastUpdated": "2026-04-30T10:32",
+      "chars": 2279
+    },
+    {
+      "id": "sec-06",
+      "title": "步态规划与控制",
+      "lastUpdated": "",
+      "chars": 8871
+    },
+    {
+      "id": "sec-07",
+      "title": "全身运动控制",
+      "lastUpdated": "",
+      "chars": 5610
+    },
+    {
+      "id": "sec-08",
+      "title": "VLA 模型部署",
+      "lastUpdated": "",
+      "chars": 7629
+    },
+    {
+      "id": "sec-09",
+      "title": "感知系统集成",
+      "lastUpdated": "2026-04-19T22:00",
+      "chars": 4208
+    },
+    {
+      "id": "sec-10",
+      "title": "Sim-to-Real 全流程",
+      "lastUpdated": "2026-04-19T22:00",
+      "chars": 4280
+    },
+    {
+      "id": "sec-11",
+      "title": "工业部署与量产：从Demo到规模化落地",
+      "lastUpdated": "2026-04-24T13:10",
+      "chars": 15582
+    },
+    {
+      "id": "sec-12",
+      "title": "灵巧手操作与指尖力控：让人形机器人拥有精细操作能力",
+      "lastUpdated": "2026-04-27T00:45",
+      "chars": 3253
+    },
+    {
+      "id": "sec-13",
+      "title": "人形机器人仿真环境搭建：Humanoid Gym实战",
+      "lastUpdated": "2026-04-27T14:46",
+      "chars": 4050
+    },
+    {
+      "id": "sec-14",
+      "title": "人形机器人电源系统与续航设计：从实验室到量产的能量工程",
+      "lastUpdated": "2026-04-28T06:56",
+      "chars": 13441
+    }
+  ]
+}

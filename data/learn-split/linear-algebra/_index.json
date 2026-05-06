@@ -1,0 +1,173 @@
+{
+  "id": "linear-algebra",
+  "name": "线性代数",
+  "lastUpdated": "2026-04-28T17:22",
+  "stage": "阶段一：数学与编程基础",
+  "importance": "核心",
+  "estimatedHours": 60,
+  "description": "矩阵运算、特征值分解、SVD 分解是理解机器人运动学和计算机视觉的基石。机器人的每一个关节旋转都是一次矩阵变换，理解线性代数就是理解机器人运动的语言。",
+  "prerequisites": [
+    "高中数学基础"
+  ],
+  "resources": [
+    {
+      "name": "MIT 18.06 线性代数 (Gilbert Strang)",
+      "url": "https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/",
+      "type": "课程",
+      "description": "MIT 开放课程，线性代数经典中的经典。全套视频+讲义+习题免费。"
+    },
+    {
+      "name": "3Blue1Brown《线性代数的本质》",
+      "url": "https://www.3blue1brown.com/topics/linear-algebra",
+      "type": "视频",
+      "description": "用精美动画建立线性代数的几何直觉，强烈推荐在学教材之前先看完这个系列。"
+    },
+    {
+      "name": "《Linear Algebra and Its Applications》(Strang)",
+      "url": "https://math.mit.edu/~gs/linearalgebra/",
+      "type": "教材",
+      "description": "Strang 的配套教材，习题丰富，有详细解答。"
+    },
+    {
+      "name": "NumPy Linear Algebra",
+      "url": "https://numpy.org/doc/stable/reference/routines.linalg.html",
+      "type": "文档",
+      "description": "NumPy 线性代数模块官方文档。np.linalg 是日常工具。"
+    },
+    {
+      "name": "scipy.spatial.transform.Rotation",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.transform.Rotation.html",
+      "type": "文档",
+      "description": "SciPy 旋转工具类，支持旋转矩阵/欧拉角/四元数/轴角互转。"
+    },
+    {
+      "name": "Modern Robotics (Lynch & Park) Ch3",
+      "url": "http://hades.mech.northwestern.edu/images/7/7f/MR.pdf",
+      "type": "教材",
+      "description": "Modern Robotics 第3章：刚体运动，SE(3)和旋转表示的详细推导。免费PDF。"
+    },
+    {
+      "name": "3Blue1Brown 线性代数的本质（全集）",
+      "url": "https://www.3blue1brown.com/topics/linear-algebra",
+      "type": "视频",
+      "description": "用精美动画建立线性代数几何直觉，16集，每集15分钟。强烈推荐在看教材之前先看完。"
+    },
+    {
+      "name": "MIT 18.06 线性代数 Gilbert Strang（全集）",
+      "url": "https://www.youtube.com/playlist?list=PLE7DDD91010BC51F8",
+      "type": "视频",
+      "description": "MIT 经典公开课，35讲完整录像。Strang 教授讲解清晰，是线性代数课程的黄金标准。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：向量空间、矩阵运算、行列式（MIT 18.06 Lec 1-6 + 3Blue1Brown Ep 1-5）\n**第2周**：线性方程组、高斯消元、LU分解（MIT 18.06 Lec 7-12）\n**第3周**：特征值、对角化、正定矩阵（MIT 18.06 Lec 13-18）\n**第4周**：SVD、最小二乘、伪逆（MIT 18.06 Lec 19-24）\n**第5-6周**：旋转矩阵、四元数、齐次变换（Modern Robotics Ch3 + 大量编程练习）",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "线性代数的数学基础：从向量空间到线性映射",
+      "lastUpdated": "2026-04-28T14:47",
+      "chars": 11343
+    },
+    {
+      "id": "sec-02",
+      "title": "矩阵运算的完整体系：分块、初等、LU 分解",
+      "lastUpdated": "2026-04-28T14:53",
+      "chars": 8808
+    },
+    {
+      "id": "sec-03",
+      "title": "线性方程组的完整理论：Gauss 消元、RREF 与解的结构",
+      "lastUpdated": "2026-04-28T14:53",
+      "chars": 7149
+    },
+    {
+      "id": "sec-04",
+      "title": "四个基本子空间：Strang 的灵魂章节",
+      "lastUpdated": "2026-04-28T14:53",
+      "chars": 6668
+    },
+    {
+      "id": "sec-05",
+      "title": "行列式完整理论：七条公理、Laplace 展开、Cramer 法则",
+      "lastUpdated": "2026-04-28T14:53",
+      "chars": 7138
+    },
+    {
+      "id": "sec-06",
+      "title": "正交性与 QR 分解：Gram-Schmidt、Householder 与投影",
+      "lastUpdated": "2026-04-28T14:53",
+      "chars": 8253
+    },
+    {
+      "id": "sec-07",
+      "title": "矩阵范数、条件数与数值稳定性：当浮点进入线性代数",
+      "lastUpdated": "2026-04-28T14:53",
+      "chars": 7767
+    },
+    {
+      "id": "sec-08",
+      "title": "向量运算的几何应用：点积、叉积、投影与机器人",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 3513
+    },
+    {
+      "id": "sec-09",
+      "title": "特征值与特征向量",
+      "lastUpdated": "2026-04-28T17:03",
+      "chars": 5145
+    },
+    {
+      "id": "sec-10",
+      "title": "SVD 分解",
+      "lastUpdated": "2026-04-28T17:03",
+      "chars": 5070
+    },
+    {
+      "id": "sec-11",
+      "title": "旋转表示与 SO(3)",
+      "lastUpdated": "",
+      "chars": 7285
+    },
+    {
+      "id": "sec-12",
+      "title": "齐次坐标与 SE(3)",
+      "lastUpdated": "",
+      "chars": 5779
+    },
+    {
+      "id": "sec-13",
+      "title": "线性方程组与最小二乘",
+      "lastUpdated": "2026-04-28T17:03",
+      "chars": 4144
+    },
+    {
+      "id": "sec-14",
+      "title": "正定矩阵与二次型",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 5519
+    },
+    {
+      "id": "sec-15",
+      "title": "张量分解与高维数据降维",
+      "lastUpdated": "2026-04-28T17:03",
+      "chars": 4331
+    },
+    {
+      "id": "sec-16",
+      "title": "Jordan 标准形：当矩阵不可对角化",
+      "lastUpdated": "2026-04-28T16:52",
+      "chars": 7397
+    },
+    {
+      "id": "sec-17",
+      "title": "二次型完整理论：惯性定理、Sylvester 判据、Cholesky",
+      "lastUpdated": "2026-04-28T16:52",
+      "chars": 6770
+    },
+    {
+      "id": "sec-18",
+      "title": "线性代数三大应用：差分方程、马尔可夫链、图拉普拉斯",
+      "lastUpdated": "2026-04-28T16:52",
+      "chars": 6961
+    }
+  ]
+}

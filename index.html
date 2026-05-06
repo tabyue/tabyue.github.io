@@ -688,14 +688,64 @@ function toggleTheme(){
     });
 })();
 
-// === NAV ===
-function go(id){
+// === NAV (hash router) ===
+const VALID_PAGES=['home','learn','papers','opensource','models','datasets','hardware','news','jobs','glossary'];
+let _routerSuppress=false;  // 防止 go() 触发 hashchange 又触发 go()
+function go(id, opts){
+    opts=opts||{};
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById('pg-'+id).classList.add('active');
+    const tgt=document.getElementById('pg-'+id);
+    if(!tgt){console.warn('go: unknown page',id);return;}
+    tgt.classList.add('active');
     document.querySelectorAll('.topbar-nav a').forEach(a=>a.classList.remove('active'));
     document.querySelector(`.topbar-nav a[onclick="go('${id}')"]`)?.classList.add('active');
     document.getElementById('nav').classList.remove('open');
-    window.scrollTo({top:0,behavior:'smooth'});
+    if(!opts.skipScroll)window.scrollTo({top:0,behavior:'smooth'});
+    // 同步 hash（避免循环）
+    if(!opts.fromRouter){
+        _routerSuppress=true;
+        const newHash='#/'+id;
+        if(location.hash!==newHash)location.hash=newHash;
+        setTimeout(()=>{_routerSuppress=false;},0);
+    }
+}
+
+// 解析 hash → 路由动作。支持：
+//   #/                       首页
+//   #/<page>                 切板块（home/learn/papers/...）
+//   #/learn/<modId>          打开某学习模块
+//   #/learn/<modId>/<secIdx> 打开某模块的第 N 节（1-based）
+//   #/papers/<paperId>       未来扩展
+async function applyRouteFromHash(){
+    const h=(location.hash||'').replace(/^#\/?/,'');
+    const parts=h.split('/').filter(Boolean);
+    if(parts.length===0){go('home',{fromRouter:true,skipScroll:true});return;}
+    const page=parts[0];
+    if(!VALID_PAGES.includes(page)){go('home',{fromRouter:true,skipScroll:true});return;}
+    go(page,{fromRouter:true,skipScroll:true});
+    // 学习模块深链接
+    if(page==='learn'&&parts.length>=2){
+        const modId=decodeURIComponent(parts[1]);
+        const secIdx=parts.length>=3?Math.max(0,parseInt(parts[2],10)-1)||0:0;
+        // 等数据加载完
+        await waitForLD();
+        await openLearnModule(modId,null,{fromRouter:true,initialSec:secIdx});
+    }
+}
+function waitForLD(){
+    return new Promise(res=>{
+        const tick=()=>{if(typeof LD!=='undefined'&&LD)res();else setTimeout(tick,80);};
+        tick();
+    });
+}
+window.addEventListener('hashchange',()=>{
+    if(_routerSuppress){return;}
+    applyRouteFromHash();
+});
+
+// 兼容老调用：glossary/recent updates 里用 selectLearnModule
+function selectLearnModule(modId){
+    location.hash='#/learn/'+encodeURIComponent(modId);
 }
 addEventListener('scroll',()=>document.getElementById('btt').classList.toggle('show',scrollY>400));
 
@@ -729,6 +779,9 @@ async function init(){
     renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();renderModels();renderDatasets();renderHardware();renderRecentUpdates();renderGlossary();
     // Sync inbox submission status from server-side processed records
     syncInboxStatus();
+    // 路由初始化：根据 URL hash 跳转到对应页面/模块
+    if(location.hash&&location.hash.length>1){applyRouteFromHash();}
+    else{go('home',{fromRouter:true,skipScroll:true});}
 }
 
 // === RENDER LEARN (Split Layout: sidebar + detail) ===
@@ -930,10 +983,24 @@ function getPrevModule(currentModId){
     const idx=all.findIndex(m=>m.id===currentModId);
     return idx>0?all[idx-1]:null;
 }
-async function openLearnModule(modId, el){
+async function openLearnModule(modId, el, opts){
+    opts=opts||{};
+    // 确保当前 page 切到 learn（从首页/术语表/资讯链接调入时必要）
+    const curPage=document.querySelector('.page.active');
+    if(!curPage||curPage.id!=='pg-learn'){
+        go('learn',{fromRouter:true,skipScroll:true});
+    }
     const body=document.getElementById('learnDetail');
     body.innerHTML='<div style="text-align:center;color:var(--t3);padding:60px">⏳ 加载学习内容...</div>';
-    
+
+    // 同步 hash（避免在 hashchange 路由调用时再次写回）
+    if(!opts.fromRouter){
+        _routerSuppress=true;
+        const newHash='#/learn/'+encodeURIComponent(modId);
+        if(location.hash!==newHash)location.hash=newHash;
+        setTimeout(()=>{_routerSuppress=false;},0);
+    }
+
     // Update sidebar active state
     _currentLearnMod=modId;
     document.querySelectorAll('.ls-mod').forEach(m=>m.classList.toggle('active',m.dataset.mod===modId));
@@ -941,11 +1008,27 @@ async function openLearnModule(modId, el){
     const activeMod=document.querySelector(`.ls-mod[data-mod="${modId}"]`);
     if(activeMod){const stage=activeMod.closest('.ls-stage');if(stage?.classList.contains('collapsed'))stage.classList.remove('collapsed')}
 
-    // Try to load detail JSON
+    // === 加载 _index.json（仅元信息，~4KB）===
     const fileId=learnFileMap[modId]||modId;
     if(!learnCache[modId]){
-        const data=await loadJ(`data/learn/${fileId}.json`);
-        if(data)learnCache[modId]=data;
+        // 优先尝试拆分版（学习中心 B 方案）
+        let idx=await loadJ(`data/learn-split/${fileId}/_index.json`);
+        if(idx){
+            // 注入 sections 占位（lazy load）
+            idx.sections=(idx.sectionsMeta||[]).map(m=>({
+                title:m.title,
+                lastUpdated:m.lastUpdated||'',
+                content:null,        // 占位：未加载
+                _secId:m.id,         // sec-01 ...
+                _modFileId:fileId,
+                _chars:m.chars||0
+            }));
+            learnCache[modId]=idx;
+        }else{
+            // 兼容旧整文件
+            const data=await loadJ(`data/learn/${fileId}.json`);
+            if(data)learnCache[modId]=data;
+        }
     }
     const d=learnCache[modId];
 
@@ -970,13 +1053,12 @@ async function openLearnModule(modId, el){
         return;
     }
 
-    // Render rich detail page
+    // === Render: 头部 + tabs + 空 panels（content 占位）===
     const modUpdated=d.lastUpdated&&(Date.now()-new Date(d.lastUpdated).getTime())<3*86400000;
-    let h=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><span class="tag tag-purple">${d.importance}</span>${modUpdated?'<span class="status-tag status-updated">🔥 最近更新</span>':''}<span style="font-size:.75rem;color:var(--t3)">${d.stage} · 预计 ${d.estimatedHours} 小时</span></div>`;
+    let h=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><span class="tag tag-purple">${d.importance||''}</span>${modUpdated?'<span class="status-tag status-updated">🔥 最近更新</span>':''}<span style="font-size:.75rem;color:var(--t3)">${d.stage||''} · 预计 ${d.estimatedHours||'?'} 小时</span></div>`;
     h+=`<h2 style="margin-bottom:6px">${d.name}</h2>`;
-    h+=`<p style="color:var(--t2);margin-bottom:24px;line-height:1.8">${d.description}</p>`;
+    h+=`<p style="color:var(--t2);margin-bottom:24px;line-height:1.8">${d.description||''}</p>`;
 
-    // Sections as tabs
     if(d.sections&&d.sections.length>0){
         const prog=getProgress()[modId];
         const visitedSecs=new Set(prog?.sections||[]);
@@ -984,15 +1066,15 @@ async function openLearnModule(modId, el){
         d.sections.forEach((sec,i)=>{
             const visited=visitedSecs.has(i)?'tab-visited':'';
             const secUpd=sec.lastUpdated&&(Date.now()-new Date(sec.lastUpdated).getTime())<3*86400000;
-            h+=`<div class="modal-tab${i===0?' active':''} ${visited}${secUpd?' tab-updated':''}" onclick="switchLearnTab(${i},'${modId}')">${sec.title}</div>`;
+            h+=`<div class="modal-tab${i===(opts.initialSec||0)?' active':''} ${visited}${secUpd?' tab-updated':''}" onclick="switchLearnTab(${i},'${modId}')">${sec.title}</div>`;
         });
         h+='</div>';
         const secLen=d.sections.length;
         const nextMod=getNextModule(modId);
         d.sections.forEach((sec,i)=>{
-            const secIsNew=sec.lastUpdated&&(Date.now()-new Date(sec.lastUpdated).getTime())<3*86400000;
-            const updBanner=secIsNew?`<div class="sec-update-banner">🔥 本章节已于 ${sec.lastUpdated.replace('T',' ')} 更新 — 新增/修改的内容已用左侧高亮条标记</div>`:'';
-            h+=`<div class="modal-panel learn-panel${i===0?' active':''}${secIsNew?' panel-updated':''}" data-lidx="${i}">${updBanner}<div class="md-content">${renderMd(sec.content)}</div><div class="read-sentinel" data-sec="${i}" style="height:1px"></div>`;
+            const isActive=i===(opts.initialSec||0);
+            // panel 为空，content 在 switchLearnTab 时按需 render
+            h+=`<div class="modal-panel learn-panel${isActive?' active':''}" data-lidx="${i}" data-rendered="0"><div class="md-content learn-md-slot"><div style="text-align:center;color:var(--t3);padding:30px">⏳ 加载章节内容...</div></div><div class="read-sentinel" data-sec="${i}" style="height:1px"></div>`;
             h+=`<div class="sec-nav">`;
             if(i>0){
                 h+=`<div class="sec-nav-btn" onclick="switchLearnTab(${i-1},'${modId}');document.getElementById('learnDetail').scrollTop=0"><span class="arrow-icon">←</span> ${d.sections[i-1].title}</div>`;
@@ -1036,18 +1118,55 @@ async function openLearnModule(modId, el){
     h+=`</div>`;
 
     body.innerHTML=h;
-    body.querySelectorAll('.modal-panel.active pre code').forEach(el=>hljs?.highlightElement(el));
-    if(d.sections?.length>0)switchLearnTab(0, modId);
-    // Scroll detail panel to top
+    // Render initial section（按需，仅当前 active）
+    if(d.sections?.length>0){
+        const initSec=opts.initialSec||0;
+        await ensureSectionRendered(modId, initSec);
+        switchLearnTab(initSec, modId, {fromRouter:opts.fromRouter});
+    }
     body.scrollTop=0;
+}
+
+// 按需加载并渲染某 section 内容（核心提速点）
+async function ensureSectionRendered(modId, idx){
+    const d=learnCache[modId];
+    if(!d||!d.sections||!d.sections[idx])return;
+    const sec=d.sections[idx];
+    const panel=document.querySelector(`.learn-panel[data-lidx="${idx}"]`);
+    if(!panel||panel.dataset.rendered==='1')return;
+    // 拉取 content（如未加载）
+    if(sec.content==null && sec._secId && sec._modFileId){
+        const sd=await loadJ(`data/learn-split/${sec._modFileId}/${sec._secId}.json`);
+        if(sd){sec.content=sd.content||'';sec.lastUpdated=sec.lastUpdated||sd.lastUpdated||'';}
+        else{sec.content='*章节内容加载失败*';}
+    }
+    const slot=panel.querySelector('.learn-md-slot');
+    if(slot){
+        const secIsNew=sec.lastUpdated&&(Date.now()-new Date(sec.lastUpdated).getTime())<3*86400000;
+        const updBanner=secIsNew?`<div class="sec-update-banner">🔥 本章节已于 ${String(sec.lastUpdated).replace('T',' ')} 更新</div>`:'';
+        slot.innerHTML=updBanner+renderMd(sec.content||'');
+    }
+    panel.dataset.rendered='1';
+    // 高亮代码
+    panel.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.hl){hljs?.highlightElement(el);el.dataset.hl='1'}});
 }
 let _readTimer=null;
 let _readObserver=null;
-function switchLearnTab(idx,modId){
+function switchLearnTab(idx,modId,opts){
+    opts=opts||{};
     document.querySelectorAll('#learn-tabs .modal-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
     document.querySelectorAll('.learn-panel').forEach(p=>p.classList.toggle('active',+p.dataset.lidx===idx));
     const detail=document.getElementById('learnDetail');
     if(detail)detail.scrollTop=0;
+    // 按需渲染当前 section（懒加载）
+    if(modId)ensureSectionRendered(modId, idx);
+    // 同步 hash（深链接）
+    if(modId&&!opts.fromRouter){
+        _routerSuppress=true;
+        const newHash='#/learn/'+encodeURIComponent(modId)+'/'+(idx+1);
+        if(location.hash!==newHash)location.hash=newHash;
+        setTimeout(()=>{_routerSuppress=false;},0);
+    }
     const active=document.querySelector('.learn-panel.active');
     if(active)active.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.hl){hljs?.highlightElement(el);el.dataset.hl='1'}});
     // 清理之前的检测

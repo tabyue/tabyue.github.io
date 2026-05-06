@@ -1,0 +1,155 @@
+{
+  "id": "training-inference-optimization",
+  "name": "模型训练与推理优化",
+  "lastUpdated": "2026-05-05T06:10",
+  "stage": "阶段四：AI 大脑",
+  "importance": "核心",
+  "estimatedHours": 50,
+  "description": "大模型训练和端侧部署的工程能力。从分布式训练到模型压缩到推理加速，让模型能跑在真实机器人上。",
+  "prerequisites": [
+    "深度学习基础"
+  ],
+  "resources": [
+    {
+      "name": "DeepSpeed 文档",
+      "url": "https://www.deepspeed.ai/",
+      "type": "框架",
+      "description": "微软的分布式训练框架，ZeRO 优化器的发明者。"
+    },
+    {
+      "name": "TensorRT 文档",
+      "url": "https://developer.nvidia.com/tensorrt",
+      "type": "工具",
+      "description": "NVIDIA 推理优化引擎，Jetson 部署必备。"
+    },
+    {
+      "name": "ONNX Runtime",
+      "url": "https://onnxruntime.ai/",
+      "type": "工具",
+      "description": "跨平台推理引擎，支持多种硬件后端。"
+    },
+    {
+      "name": "llama.cpp",
+      "url": "https://github.com/ggerganov/llama.cpp",
+      "type": "项目",
+      "description": "大模型量化+CPU推理，GGUF 格式的事实标准。"
+    },
+    {
+      "name": "HuggingFace Optimum",
+      "url": "https://huggingface.co/docs/optimum",
+      "type": "工具",
+      "description": "模型优化工具集，支持量化/剪枝/导出。"
+    },
+    {
+      "name": "DeepSpeed 微软官方教程",
+      "url": "https://www.youtube.com/results?search_query=deepspeed+tutorial+microsoft",
+      "type": "视频",
+      "description": "微软团队的 DeepSpeed 使用教程，ZeRO 优化器原理和配置方法。"
+    },
+    {
+      "name": "TensorRT 入门到精通",
+      "url": "https://www.youtube.com/results?search_query=tensorrt+tutorial+optimization",
+      "type": "视频",
+      "description": "TensorRT 模型优化和部署教程，从 ONNX 导出到 INT8 量化。"
+    },
+    {
+      "name": "AI推理加速全景：150+论文·10大方向·30篇精读",
+      "url": "https://mp.weixin.qq.com/s/AUUkIKqAA7EnirjA16MD_w",
+      "type": "综述",
+      "description": "机智流整理的AI推理加速领域全景综述，涵盖量化、蒸馏、剪枝、编译优化、硬件加速等10大方向，精选150+论文并深度解读30篇核心工作。非常适合系统了解推理优化领域全貌。"
+    }
+  ],
+  "weeklyPlan": "**第1-2周**：分布式训练（DDP → DeepSpeed ZeRO）\n**第3周**：模型压缩（量化 + 蒸馏）\n**第4-5周**：端侧部署（TensorRT + Jetson）\n**第6周**：Speculative Decoding + VLA推理加速前沿",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "实战：训练 VLA 模型的完整流程",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 4390
+    },
+    {
+      "id": "sec-02",
+      "title": "LoRA 与 PEFT：大模型高效微调完整指南",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 3646
+    },
+    {
+      "id": "sec-03",
+      "title": "模型并行与流水线并行：突破单卡显存限制",
+      "lastUpdated": "2026-04-30T10:22",
+      "chars": 2340
+    },
+    {
+      "id": "sec-04",
+      "title": "推理优化全景：从量化到 Serving",
+      "lastUpdated": "2026-04-30T10:22",
+      "chars": 2471
+    },
+    {
+      "id": "sec-05",
+      "title": "GPU 架构与 CUDA 编程入门",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 3773
+    },
+    {
+      "id": "sec-06",
+      "title": "深度学习训练基础：从反向传播到优化器",
+      "lastUpdated": "2026-04-28T19:38",
+      "chars": 3911
+    },
+    {
+      "id": "sec-07",
+      "title": "分布式训练",
+      "lastUpdated": "",
+      "chars": 7200
+    },
+    {
+      "id": "sec-08",
+      "title": "模型压缩与量化",
+      "lastUpdated": "",
+      "chars": 6013
+    },
+    {
+      "id": "sec-09",
+      "title": "端侧推理部署",
+      "lastUpdated": "",
+      "chars": 7122
+    },
+    {
+      "id": "sec-10",
+      "title": "LoRA/QLoRA 高效微调",
+      "lastUpdated": "2026-04-19T22:00",
+      "chars": 7070
+    },
+    {
+      "id": "sec-11",
+      "title": "Speculative Decoding 与 VLA 推理加速前沿",
+      "lastUpdated": "2026-04-23T02:53",
+      "chars": 11334
+    },
+    {
+      "id": "sec-12",
+      "title": "vLLM 与大模型高效推理",
+      "lastUpdated": "2026-04-19T22:00",
+      "chars": 5289
+    },
+    {
+      "id": "sec-13",
+      "title": "CUDA编程基础与自定义算子优化",
+      "lastUpdated": "2026-04-27T00:45",
+      "chars": 3149
+    },
+    {
+      "id": "sec-14",
+      "title": "模型蒸馏与VLA轻量化部署",
+      "lastUpdated": "2026-04-27T14:46",
+      "chars": 3951
+    },
+    {
+      "id": "sec-15",
+      "title": "VLA 实时推理工程化：FlashAttention、KV Cache、Async Chunked Action 与端到端延迟预算",
+      "lastUpdated": "2026-05-05T06:10",
+      "chars": 12837
+    }
+  ]
+}

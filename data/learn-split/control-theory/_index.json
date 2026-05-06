@@ -1,0 +1,138 @@
+{
+  "id": "control-theory",
+  "name": "控制理论",
+  "stage": "阶段二：机器人学基础",
+  "importance": "核心",
+  "estimatedHours": 60,
+  "lastUpdated": "2026-05-03T02:30",
+  "description": "让机器人稳定、精确地执行期望运动的核心理论。从PID到MPC，从线性到非线性，控制理论是机器人的灵魂。",
+  "prerequisites": [
+    "微积分与优化",
+    "机器人动力学"
+  ],
+  "resources": [
+    {
+      "name": "Ogata《Modern Control Engineering》",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/modern-control-engineering/P200000003481",
+      "type": "教材",
+      "description": "经典控制教材，PID/根轨迹/频域分析的标准参考。"
+    },
+    {
+      "name": "Tedrake《Underactuated Robotics》",
+      "url": "https://underactuated.csail.mit.edu/",
+      "type": "课程",
+      "description": "MIT 公开课，涵盖 LQR/MPC/轨迹优化。强推！免费在线教材+代码。"
+    },
+    {
+      "name": "Drake (MIT)",
+      "url": "https://drake.mit.edu/",
+      "type": "工具",
+      "description": "MIT 开发的机器人仿真+控制+优化框架，内置 LQR/MPC/逆运动学求解器。"
+    },
+    {
+      "name": "OSQP",
+      "url": "https://osqp.org/",
+      "type": "工具",
+      "description": "高效 QP 求解器，实时 MPC 的首选。支持热启动，毫秒级求解。"
+    },
+    {
+      "name": "Brian Douglas 控制系统讲座",
+      "url": "https://www.youtube.com/user/ControlLectures",
+      "type": "视频",
+      "description": "控制理论从入门到精通，PID/根轨迹/Bode图/状态空间全覆盖，讲解极其清晰。"
+    },
+    {
+      "name": "MIT 6.832 Underactuated Robotics (Russ Tedrake)",
+      "url": "https://underactuated.csail.mit.edu/",
+      "type": "视频",
+      "description": "MIT 公开课，LQR/MPC/轨迹优化/RL for Control。配套 Drake 代码和在线教材。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：PID 控制 + 倒立摆实验\n**第2周**：状态空间法 + 能控性分析\n**第3周**：LQR 设计 + Riccati 方程\n**第4-5周**：MPC 原理与实现\n**第6周**：阻抗控制 + 接触任务仿真\n**第7周**：自适应控制与鲁棒控制",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "模型预测控制（MPC）在机器人中的实现",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 3812
+    },
+    {
+      "id": "sec-02",
+      "title": "最优控制理论：从 Pontryagin 到 DDP",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 2734
+    },
+    {
+      "id": "sec-03",
+      "title": "Lyapunov 稳定性理论与控制设计",
+      "lastUpdated": "2026-04-30T10:22",
+      "chars": 2725
+    },
+    {
+      "id": "sec-04",
+      "title": "控制论基础：传递函数、稳定性与频域分析",
+      "lastUpdated": "2026-04-28T19:38",
+      "chars": 4154
+    },
+    {
+      "id": "sec-05",
+      "title": "状态估计基础：卡尔曼滤波从原理到实现",
+      "lastUpdated": "2026-04-28T19:38",
+      "chars": 3746
+    },
+    {
+      "id": "sec-06",
+      "title": "PID 控制",
+      "lastUpdated": "",
+      "chars": 12695
+    },
+    {
+      "id": "sec-07",
+      "title": "LQR 最优控制",
+      "lastUpdated": "",
+      "chars": 7943
+    },
+    {
+      "id": "sec-08",
+      "title": "模型预测控制 (MPC)",
+      "lastUpdated": "",
+      "chars": 7633
+    },
+    {
+      "id": "sec-09",
+      "title": "阻抗/导纳控制",
+      "lastUpdated": "",
+      "chars": 6067
+    },
+    {
+      "id": "sec-10",
+      "title": "自适应控制与鲁棒控制",
+      "lastUpdated": "2026-04-21T12:31",
+      "chars": 10077
+    },
+    {
+      "id": "sec-11",
+      "title": "计算力矩控制与全身力矩优化",
+      "lastUpdated": "2026-04-27T00:42",
+      "chars": 2816
+    },
+    {
+      "id": "sec-12",
+      "title": "滑模控制与干扰观测器",
+      "lastUpdated": "2026-04-27T12:01",
+      "chars": 2935
+    },
+    {
+      "id": "sec-13",
+      "title": "强化学习控制器与经典控制器的混合架构",
+      "lastUpdated": "2026-04-28T12:03",
+      "chars": 2561
+    },
+    {
+      "id": "sec-14",
+      "title": "VLA 时代的控制系统：从策略网络到力矩指令的安全闭环",
+      "lastUpdated": "2026-05-03T02:30",
+      "chars": 11655
+    }
+  ]
+}

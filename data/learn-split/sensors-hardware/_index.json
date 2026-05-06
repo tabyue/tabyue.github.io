@@ -1,0 +1,162 @@
+{
+  "id": "sensors-hardware",
+  "name": "传感器与硬件接口",
+  "lastUpdated": "2026-05-04T15:20",
+  "stage": "阶段二：机器人学基础",
+  "importance": "核心",
+  "estimatedHours": 40,
+  "description": "系统学习机器人常用传感器（激光雷达、IMU、触觉传感器、力传感器、编码器、视觉传感器）的工作原理、选型指南和编程接口。传感器是机器人感知物理世界的\"感官\"，理解传感器原理和数据特性是开发高质量感知算法的前提。",
+  "prerequisites": [
+    "基础物理",
+    "Python 编程"
+  ],
+  "resources": [
+    {
+      "name": "GelSight 项目",
+      "url": "https://www.gelsight.com/",
+      "type": "项目",
+      "description": "光学触觉传感器的开创者，提供 GelSight Mini 和 GelSight Mobile 产品"
+    },
+    {
+      "name": "DIGIT 触觉传感器 (Meta)",
+      "url": "https://digit.ml/",
+      "type": "硬件",
+      "description": "Meta 开源的紧凑型光学触觉传感器，适合灵巧手安装。设计文档和代码全开源。"
+    },
+    {
+      "name": "RPLiDAR SDK",
+      "url": "https://github.com/Slamtec/rplidar_sdk",
+      "type": "工具",
+      "description": "思岚科技 RPLiDAR 系列的官方 SDK，支持 A1/A2/S1/S2 等全系列产品"
+    },
+    {
+      "name": "Intel RealSense SDK",
+      "url": "https://github.com/IntelRealSense/librealsense",
+      "type": "工具",
+      "description": "Intel RealSense 深度相机全系列 SDK，支持 Python/C++/ROS2"
+    },
+    {
+      "name": "ATI F/T 传感器",
+      "url": "https://www.ati-ia.com/products/ft/ft_models.aspx",
+      "type": "硬件",
+      "description": "工业和研究领域最广泛使用的 6 轴力/力矩传感器"
+    },
+    {
+      "name": "Open3D 点云处理",
+      "url": "http://www.open3d.org/",
+      "type": "工具",
+      "description": "开源 3D 数据处理库，支持点云/网格/RGB-D/SLAM/可视化"
+    },
+    {
+      "name": "ROS2 sensor_msgs 文档",
+      "url": "https://docs.ros.org/en/humble/p/sensor_msgs/",
+      "type": "文档",
+      "description": "ROS2 传感器消息类型定义，包含 LaserScan/PointCloud2/Imu/Image 等"
+    },
+    {
+      "name": "Allan Variance 与 IMU 噪声分析",
+      "url": "https://github.com/ori-drs/allan_variance_ros",
+      "type": "工具",
+      "description": "ROS 下的 Allan 方差分析工具，用于 IMU 噪声参数标定"
+    }
+  ],
+  "weeklyPlan": "**第1周**：激光雷达原理 + RPLiDAR 数据采集与可视化\n**第2周**：IMU 噪声模型 + 互补滤波 + EKF 融合\n**第3周**：触觉传感器原理 + GelSight/FSR 数据处理\n**第4周**：F/T 传感器 + 力控基础实验\n**第5周**：编码器 + 电机闭环 PID 控制\n**第6周**：视觉传感器选型 + 深度图处理 + 综合传感器集成项目",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "LiDAR 技术深入：2D/3D LiDAR 与固态激光雷达",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 2851
+    },
+    {
+      "id": "sec-02",
+      "title": "相机系统设计：从图像传感器到计算摄影",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 3471
+    },
+    {
+      "id": "sec-03",
+      "title": "触觉与力传感器：机器人的\"皮肤\"",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 3165
+    },
+    {
+      "id": "sec-04",
+      "title": "传感器数据融合：从互补滤波到因子图",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 4327
+    },
+    {
+      "id": "sec-05",
+      "title": "电源系统设计：电池选型、电源管理与安全保护",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 2303
+    },
+    {
+      "id": "sec-06",
+      "title": "电子学基础：电路原理、信号调理与接口协议",
+      "lastUpdated": "2026-04-28T19:07",
+      "chars": 3312
+    },
+    {
+      "id": "sec-07",
+      "title": "传感器标定与误差分析：从原始数据到可靠测量",
+      "lastUpdated": "2026-04-28T19:07",
+      "chars": 4190
+    },
+    {
+      "id": "sec-08",
+      "title": "激光雷达 (LiDAR)",
+      "lastUpdated": "",
+      "chars": 6696
+    },
+    {
+      "id": "sec-09",
+      "title": "IMU 与惯性导航",
+      "lastUpdated": "",
+      "chars": 4452
+    },
+    {
+      "id": "sec-10",
+      "title": "触觉传感器",
+      "lastUpdated": "",
+      "chars": 4112
+    },
+    {
+      "id": "sec-11",
+      "title": "力/力矩传感器 (F/T Sensor)",
+      "lastUpdated": "",
+      "chars": 2424
+    },
+    {
+      "id": "sec-12",
+      "title": "编码器与电机反馈",
+      "lastUpdated": "",
+      "chars": 3496
+    },
+    {
+      "id": "sec-13",
+      "title": "视觉传感器选型指南",
+      "lastUpdated": "",
+      "chars": 2598
+    },
+    {
+      "id": "sec-14",
+      "title": "深度相机原理、标定与多相机融合",
+      "lastUpdated": "2026-04-22T13:15",
+      "chars": 19597
+    },
+    {
+      "id": "sec-15",
+      "title": "多传感器时间同步与硬件触发",
+      "lastUpdated": "2026-04-27T11:33",
+      "chars": 3797
+    },
+    {
+      "id": "sec-16",
+      "title": "IMU 姿态估计三大算法：互补滤波 / Madgwick / Extended Kalman Filter 完整实现",
+      "lastUpdated": "2026-05-04T15:20",
+      "chars": 17664
+    }
+  ]
+}

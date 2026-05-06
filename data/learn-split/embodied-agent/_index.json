@@ -1,0 +1,132 @@
+{
+  "id": "embodied-agent",
+  "name": "具身Agent系统",
+  "stage": "阶段四：AI 大脑",
+  "importance": "前沿",
+  "estimatedHours": 40,
+  "description": "将LLM/VLM作为机器人的认知大脑，结合感知、记忆、规划、执行构建完整的具身智能Agent。",
+  "prerequisites": [
+    "VLA 模型",
+    "世界模型与LLM+机器人"
+  ],
+  "resources": [
+    {
+      "name": "LangChain",
+      "url": "https://python.langchain.com/",
+      "type": "框架",
+      "description": "LLM Agent 开发框架，支持 Tool 调用和 ReAct 模式。"
+    },
+    {
+      "name": "SayCan",
+      "url": "https://say-can.github.io/",
+      "type": "论文",
+      "description": "Google 的 LLM+机器人经典工作。"
+    },
+    {
+      "name": "Voyager",
+      "url": "https://voyager.minedojo.org/",
+      "type": "论文",
+      "description": "持续学习的 LLM Agent，自动积累技能。"
+    },
+    {
+      "name": "ROS2 Multi-Robot",
+      "url": "https://docs.ros.org/en/humble/Tutorials/Advanced/Multi-Robot.html",
+      "type": "教程",
+      "description": "ROS2 多机器人系统教程。"
+    },
+    {
+      "name": "LangChain Agent 教程",
+      "url": "https://www.youtube.com/results?search_query=langchain+agent+tutorial+2024",
+      "type": "视频",
+      "description": "LangChain Agent 开发教程，从 Tool 定义到 ReAct 循环到多 Agent。"
+    },
+    {
+      "name": "ROS-LLM: LLM+ROS2具身智能框架",
+      "url": "https://github.com/Auromix/ROS-LLM",
+      "type": "项目",
+      "description": "发表于Nature Machine Intelligence的LLM与ROS2集成框架，通过自然语言交互编程机器人任务。"
+    },
+    {
+      "name": "Gemini Robotics-ER (具身推理模型)",
+      "url": "https://deepmind.google/blog/gemini-robotics-er-1-6/",
+      "type": "工具",
+      "description": "Google DeepMind的具身推理模型，支持空间推理、仪表读取和Function Calling。"
+    },
+    {
+      "name": "Multi-Agent Robotics综述",
+      "url": "https://arxiv.org/abs/2402.00000",
+      "type": "论文",
+      "description": "多机器人协作系统的最新综述，涵盖任务分配、通信和冲突解决。"
+    }
+  ],
+  "weeklyPlan": "**第1-2周**：Agent 架构设计 + ReAct 实现\n**第3周**：记忆系统 + 技能库\n**第4周**：多Agent协作",
+  "lastUpdated": "2026-05-06T20:40",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "Agent架构设计",
+      "lastUpdated": "",
+      "chars": 15781
+    },
+    {
+      "id": "sec-02",
+      "title": "多Agent协作",
+      "lastUpdated": "",
+      "chars": 12106
+    },
+    {
+      "id": "sec-03",
+      "title": "记忆系统设计",
+      "lastUpdated": "",
+      "chars": 8127
+    },
+    {
+      "id": "sec-04",
+      "title": "技能学习与积累",
+      "lastUpdated": "",
+      "chars": 8407
+    },
+    {
+      "id": "sec-05",
+      "title": "安全约束与人机交互",
+      "lastUpdated": "",
+      "chars": 6584
+    },
+    {
+      "id": "sec-06",
+      "title": "MCP协议与LLM工具调用：构建机器人能力接口",
+      "lastUpdated": "2026-04-26T22:21",
+      "chars": 3149
+    },
+    {
+      "id": "sec-07",
+      "title": "长期记忆与经验回放：让Agent积累知识",
+      "lastUpdated": "2026-04-27T12:01",
+      "chars": 4457
+    },
+    {
+      "id": "sec-08",
+      "title": "LLM驱动的自进化操作Agent：从Code-as-Policy到长短期反思",
+      "lastUpdated": "2026-04-27T23:30",
+      "chars": 8117
+    },
+    {
+      "id": "sec-09",
+      "title": "具身安全约束与人机安全交互协议",
+      "lastUpdated": "2026-04-28T12:03",
+      "chars": 3088
+    },
+    {
+      "id": "sec-10",
+      "title": "整体式 VLA vs 分层 LLM+Skill：具身智能体架构选型与统一隐空间融合",
+      "lastUpdated": "2026-04-30T01:12",
+      "chars": 11508
+    },
+    {
+      "id": "sec-11",
+      "title": "VLA 长程任务推理范式：从 CoT 到 IVLR、Anticipation 与 Action Reasoning",
+      "lastUpdated": "2026-05-06T20:40",
+      "chars": 9441
+    }
+  ]
+}

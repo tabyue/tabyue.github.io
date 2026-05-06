@@ -1,0 +1,120 @@
+{
+  "id": "3d-vision-pointcloud",
+  "name": "3D 视觉与点云",
+  "stage": "阶段三：感知与视觉",
+  "importance": "核心",
+  "estimatedHours": 50,
+  "description": "深度感知和 3D 理解是机器人在真实世界中操作的关键。从深度相机到点云处理到 SLAM，构建机器人的 3D 感知能力。",
+  "prerequisites": [
+    "计算机视觉基础",
+    "线性代数"
+  ],
+  "resources": [
+    {
+      "name": "Open3D 官方教程",
+      "url": "http://www.open3d.org/docs/release/",
+      "type": "教程",
+      "description": "Open3D 点云处理库完整教程，涵盖点云/网格/可视化/配准/重建。"
+    },
+    {
+      "name": "高翔《视觉SLAM十四讲》",
+      "url": "https://github.com/gaoxiang12/slambook2",
+      "type": "教材",
+      "description": "SLAM 入门必读。中文，配套代码，从数学基础到工程实践。"
+    },
+    {
+      "name": "ORB-SLAM3",
+      "url": "https://github.com/UZ-SLAMLab/ORB_SLAM3",
+      "type": "项目",
+      "description": "最经典的视觉 SLAM 系统，支持单目/双目/RGB-D/IMU。"
+    },
+    {
+      "name": "RealSense SDK",
+      "url": "https://github.com/IntelRealSense/librealsense",
+      "type": "工具",
+      "description": "RealSense 深度相机官方 SDK，Python/C++ 绑定。"
+    },
+    {
+      "name": "Cyrill Stachniss SLAM 讲座",
+      "url": "https://www.youtube.com/c/CyrillStachniss",
+      "type": "视频",
+      "description": "Bonn 大学教授的 SLAM 系列讲座，ORB-SLAM/图优化/回环检测等，非常系统。"
+    },
+    {
+      "name": "Open3D 官方教程视频",
+      "url": "https://www.youtube.com/results?search_query=open3d+tutorial+point+cloud",
+      "type": "视频",
+      "description": "Open3D 点云处理教程，从读取到分割到配准。"
+    },
+    {
+      "name": "Nerfstudio",
+      "url": "https://docs.nerf.studio/",
+      "type": "框架",
+      "description": "NeRF 训练和可视化的统一框架，支持 Instant-NGP/Nerfacto/Splatfacto(3DGS) 等多种方法，是入门 NeRF/3DGS 的最佳工具。"
+    },
+    {
+      "name": "3D Gaussian Splatting 原始论文与代码",
+      "url": "https://github.com/graphdeco-inria/gaussian-splatting",
+      "type": "项目",
+      "description": "3DGS 原始实现，SIGGRAPH 2023。CUDA 加速渲染，支持训练和实时查看器。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：RealSense 配置 + Open3D 点云处理\n**第2-3周**：点云分割/聚类/配准\n**第4-5周**：6DoF 位姿估计\n**第6周**：SLAM 入门 + RTAB-Map 实践\n**第7周**：NeRF/3DGS 原理与 Nerfstudio 实践",
+  "lastUpdated": "2026-04-27T16:05",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "深度相机与点云采集",
+      "lastUpdated": "",
+      "chars": 9273
+    },
+    {
+      "id": "sec-02",
+      "title": "点云处理 (Open3D)",
+      "lastUpdated": "",
+      "chars": 10579
+    },
+    {
+      "id": "sec-03",
+      "title": "SLAM 基础",
+      "lastUpdated": "",
+      "chars": 6857
+    },
+    {
+      "id": "sec-04",
+      "title": "6DoF 位姿估计与抓取规划",
+      "lastUpdated": "",
+      "chars": 15023
+    },
+    {
+      "id": "sec-05",
+      "title": "深度学习点云处理（PointNet 系列）",
+      "lastUpdated": "",
+      "chars": 20939
+    },
+    {
+      "id": "sec-06",
+      "title": "NeRF 与 3D Gaussian Splatting 在机器人中的应用",
+      "lastUpdated": "2026-04-22T19:28",
+      "chars": 12731
+    },
+    {
+      "id": "sec-07",
+      "title": "语言引导3D场景理解：3D-LLM与LEO",
+      "lastUpdated": "2026-04-27T00:45",
+      "chars": 4537
+    },
+    {
+      "id": "sec-08",
+      "title": "透明/反光物体的深度感知与补全",
+      "lastUpdated": "2026-04-27T14:43",
+      "chars": 2822
+    },
+    {
+      "id": "sec-09",
+      "title": "多视角视觉融合与主动感知（Active Perception）",
+      "lastUpdated": "2026-04-27T16:05",
+      "chars": 11073
+    }
+  ]
+}

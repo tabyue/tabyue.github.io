@@ -1,0 +1,109 @@
+{
+  "id": "deep-learning",
+  "name": "深度学习基础",
+  "stage": "阶段四：AI 大脑",
+  "importance": "核心",
+  "estimatedHours": 60,
+  "description": "CNN、Transformer、注意力机制是所有现代具身智能算法的基石。",
+  "lastUpdated": "2026-05-03T17:05",
+  "prerequisites": [
+    "Python 编程",
+    "线性代数",
+    "微积分"
+  ],
+  "resources": [
+    {
+      "name": "d2l.ai（李沐）",
+      "url": "https://d2l.ai/",
+      "type": "教材",
+      "description": "动手学深度学习，配 PyTorch 代码，中英文免费。"
+    },
+    {
+      "name": "PyTorch 教程",
+      "url": "https://pytorch.org/tutorials/",
+      "type": "教程",
+      "description": "PyTorch 官方教程，从入门到高级。"
+    },
+    {
+      "name": "HuggingFace PEFT",
+      "url": "https://huggingface.co/docs/peft",
+      "type": "工具",
+      "description": "LoRA/QLoRA 等参数高效微调库。"
+    },
+    {
+      "name": "李沐 动手学深度学习视频",
+      "url": "https://space.bilibili.com/1567748478/channel/seriesdetail?sid=358497",
+      "type": "视频",
+      "description": "中文！从零讲 CNN/RNN/Transformer/注意力机制，每集配 Jupyter 代码。B站播放量千万级。"
+    },
+    {
+      "name": "Andrej Karpathy Neural Networks: Zero to Hero",
+      "url": "https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ",
+      "type": "视频",
+      "description": "前 Tesla AI 总监亲自从零实现神经网络。从 micrograd 到 GPT，7集深度教程。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：反向传播与自动微分（从零实现 micrograd）\n**第2-3周**：CNN 架构 + 可视化特征图\n**第4-5周**：Transformer + 注意力机制\n**第6-7周**：训练技巧 + 微调（LoRA/EMA）\n**第8周**：生成模型（VAE/扩散模型/Diffusion Policy）\n**第9周**：GNN + 序列模型（图注意力/LSTM/Mamba）",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "反向传播与自动微分",
+      "lastUpdated": "2026-04-21T19:44",
+      "chars": 10907
+    },
+    {
+      "id": "sec-02",
+      "title": "CNN 架构",
+      "lastUpdated": "",
+      "chars": 11614
+    },
+    {
+      "id": "sec-03",
+      "title": "Transformer 与自注意力",
+      "lastUpdated": "",
+      "chars": 11675
+    },
+    {
+      "id": "sec-04",
+      "title": "训练技巧与微调",
+      "lastUpdated": "",
+      "chars": 8253
+    },
+    {
+      "id": "sec-05",
+      "title": "生成模型 (VAE / GAN / 扩散模型)",
+      "lastUpdated": "",
+      "chars": 13537
+    },
+    {
+      "id": "sec-06",
+      "title": "图神经网络与序列模型",
+      "lastUpdated": "",
+      "chars": 14440
+    },
+    {
+      "id": "sec-07",
+      "title": "接触丰富操作与力-位混合控制",
+      "lastUpdated": "2026-04-26T09:37",
+      "chars": 5356
+    },
+    {
+      "id": "sec-08",
+      "title": "神经网络可解释性与机器人安全决策",
+      "lastUpdated": "2026-04-27T11:33",
+      "chars": 3935
+    },
+    {
+      "id": "sec-09",
+      "title": "Flow Matching：从扩散模型到机器人策略生成的新范式",
+      "lastUpdated": "2026-04-29T11:48",
+      "chars": 7411
+    },
+    {
+      "id": "sec-10",
+      "title": "Mixture-of-Transformers (MoT) 与稀疏 MoE：端侧 VLA 的参数-算力解耦之路",
+      "lastUpdated": "2026-05-03T17:05",
+      "chars": 12353
+    }
+  ]
+}

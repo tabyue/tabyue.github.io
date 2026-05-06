@@ -1,0 +1,161 @@
+{
+  "id": "cpp-fundamentals",
+  "name": "C++ 编程基础",
+  "stage": "阶段一：数学与编程基础",
+  "importance": "重要",
+  "estimatedHours": 40,
+  "lastUpdated": "2026-05-01T05:50",
+  "description": "机器人底层控制、实时系统、ROS2 核心节点通常用 C++ 编写。不需要精通所有 C++ 特性，但智能指针、多线程和 CMake 是必须掌握的。",
+  "prerequisites": [
+    "基础编程经验"
+  ],
+  "resources": [
+    {
+      "name": "C++ Primer (Lippman)",
+      "url": "https://www.oreilly.com/library/view/c-primer-fifth/9780133053043/",
+      "type": "教材",
+      "description": "C++ 入门经典，第5版覆盖 C++11。适合系统学习。"
+    },
+    {
+      "name": "CppCon 演讲集",
+      "url": "https://www.youtube.com/user/CppCon",
+      "type": "视频",
+      "description": "C++ 顶级会议演讲，涵盖最新特性和最佳实践。选看感兴趣的主题即可。"
+    },
+    {
+      "name": "Eigen 官方文档",
+      "url": "https://eigen.tuxfamily.org/dox/",
+      "type": "文档",
+      "description": "Eigen 线性代数库官方教程和 API 文档。Getting Started 必读。"
+    },
+    {
+      "name": "ROS2 C++ Tutorials",
+      "url": "https://docs.ros.org/en/humble/Tutorials.html",
+      "type": "教程",
+      "description": "ROS2 官方 C++ 教程，边学 C++ 边学 ROS2。"
+    },
+    {
+      "name": "CMake Tutorial",
+      "url": "https://cmake.org/cmake/help/latest/guide/tutorial/index.html",
+      "type": "教程",
+      "description": "CMake 官方循序渐进教程，12 个步骤从入门到精通。"
+    },
+    {
+      "name": "cppreference.com",
+      "url": "https://en.cppreference.com/",
+      "type": "文档",
+      "description": "C++ 标准库完整参考，查 API 的首选。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：Modern C++ 语法、智能指针、lambda、optional\n**第2周**：多线程编程（mutex、atomic、condition_variable）\n**第3周**：CMake 构建系统 + Eigen 线性代数库\n**第4周**：写一个 ROS2 C++ 节点（订阅传感器 + 发布控制指令）",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "C++ 性能优化：从微基准到 SIMD",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 3757
+    },
+    {
+      "id": "sec-02",
+      "title": "C++ 并发编程：线程、锁与无锁数据结构",
+      "lastUpdated": "2026-04-30T11:07",
+      "chars": 4459
+    },
+    {
+      "id": "sec-03",
+      "title": "C++ 模板与泛型编程：类型安全的通用代码",
+      "lastUpdated": "2026-04-30T10:32",
+      "chars": 3934
+    },
+    {
+      "id": "sec-04",
+      "title": "C++ 语言基础：编译模型与类型系统",
+      "lastUpdated": "2026-04-28T17:11",
+      "chars": 4201
+    },
+    {
+      "id": "sec-05",
+      "title": "指针、引用与内存模型：C++ 的核心难点",
+      "lastUpdated": "2026-04-28T17:11",
+      "chars": 3426
+    },
+    {
+      "id": "sec-06",
+      "title": "函数与作用域：重载、内联、头文件、命名空间",
+      "lastUpdated": "2026-04-28T17:11",
+      "chars": 2908
+    },
+    {
+      "id": "sec-07",
+      "title": "面向对象编程：类、构造/析构、拷贝/移动、继承多态",
+      "lastUpdated": "2026-04-28T17:11",
+      "chars": 4926
+    },
+    {
+      "id": "sec-08",
+      "title": "STL 容器与算法：vector、map、迭代器、Lambda",
+      "lastUpdated": "2026-04-28T17:11",
+      "chars": 4941
+    },
+    {
+      "id": "sec-09",
+      "title": "智能指针与现代内存管理：告别 new/delete",
+      "lastUpdated": "2026-04-28T17:11",
+      "chars": 2814
+    },
+    {
+      "id": "sec-10",
+      "title": "Modern C++ (C++17/20)",
+      "lastUpdated": "",
+      "chars": 7223
+    },
+    {
+      "id": "sec-11",
+      "title": "RAII 与资源管理",
+      "lastUpdated": "2026-04-19T16:45",
+      "chars": 6170
+    },
+    {
+      "id": "sec-12",
+      "title": "多线程编程",
+      "lastUpdated": "",
+      "chars": 7047
+    },
+    {
+      "id": "sec-13",
+      "title": "CMake 构建系统",
+      "lastUpdated": "",
+      "chars": 4891
+    },
+    {
+      "id": "sec-14",
+      "title": "Eigen 线性代数库",
+      "lastUpdated": "",
+      "chars": 7167
+    },
+    {
+      "id": "sec-15",
+      "title": "模板与泛型编程",
+      "lastUpdated": "2026-04-19T16:45",
+      "chars": 6147
+    },
+    {
+      "id": "sec-16",
+      "title": "实时系统编程与RT-Linux配置",
+      "lastUpdated": "2026-04-27T11:30",
+      "chars": 2830
+    },
+    {
+      "id": "sec-17",
+      "title": "协程(Coroutines)与异步I/O在ROS2中的应用",
+      "lastUpdated": "2026-04-28T12:06",
+      "chars": 2542
+    },
+    {
+      "id": "sec-18",
+      "title": "C++ 端侧 ML 推理：把 VLA 模型塞进机器人本体",
+      "lastUpdated": "2026-05-01T05:50",
+      "chars": 7017
+    }
+  ]
+}

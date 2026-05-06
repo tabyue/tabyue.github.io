@@ -1,0 +1,120 @@
+{
+  "id": "sim-to-real",
+  "name": "Sim-to-Real 迁移",
+  "lastUpdated": "2026-04-30T15:00",
+  "stage": "阶段五：仿真与 Sim-to-Real",
+  "importance": "核心",
+  "estimatedHours": 40,
+  "description": "把仿真中训练好的策略成功部署到真实机器人上。Domain Randomization 和 Teacher-Student 是关键技术。",
+  "prerequisites": [
+    "物理仿真引擎",
+    "强化学习"
+  ],
+  "resources": [
+    {
+      "name": "OpenAI Rubik's Cube",
+      "url": "https://openai.com/research/solving-rubiks-cube",
+      "type": "论文",
+      "description": "Domain Randomization 的极致应用——灵巧手解魔方。"
+    },
+    {
+      "name": "Legged Gym",
+      "url": "https://github.com/leggedrobotics/legged_gym",
+      "type": "项目",
+      "description": "四足机器人 RL 训练框架，包含完整 Teacher-Student 流程。"
+    },
+    {
+      "name": "NVIDIA IsaacGymEnvs",
+      "url": "https://github.com/NVIDIA-Omniverse/IsaacGymEnvs",
+      "type": "工具",
+      "description": "GPU 加速 RL 训练环境，包含多种 Sim2Real 示例。"
+    },
+    {
+      "name": "Sim-to-Real Transfer 讲座",
+      "url": "https://www.youtube.com/results?search_query=sim+to+real+transfer+robotics+lecture",
+      "type": "视频",
+      "description": "Domain Randomization 和 Teacher-Student 蒸馏的详细讲解。"
+    },
+    {
+      "name": "NVIDIA Isaac Lab",
+      "url": "https://github.com/isaac-sim/IsaacLab",
+      "type": "工具",
+      "description": "NVIDIA新一代机器人学习框架，替代IsaacGymEnvs，支持更丰富的场景和传感器仿真。"
+    },
+    {
+      "name": "Josh Tobin - Domain Randomization and Sim2Real (CoRL Tutorial)",
+      "url": "https://www.youtube.com/watch?v=vEI5ZCsHELM",
+      "type": "视频",
+      "description": "OpenAI研究员关于Domain Randomization和Sim2Real的经典教程讲座。"
+    },
+    {
+      "name": "SimBenchmark (仿真器对比)",
+      "url": "https://github.com/leggedrobotics/SimBenchmark",
+      "type": "工具",
+      "description": "主流物理仿真器（MuJoCo/Isaac/Bullet/DART）在接触动力学精度上的系统对比。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：Domain Randomization\n**第2周**：System Identification\n**第3-4周**：Teacher-Student 蒸馏+迁移实验",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "Domain Randomization",
+      "lastUpdated": "",
+      "chars": 10089
+    },
+    {
+      "id": "sec-02",
+      "title": "System Identification",
+      "lastUpdated": "",
+      "chars": 8845
+    },
+    {
+      "id": "sec-03",
+      "title": "Teacher-Student 蒸馏",
+      "lastUpdated": "",
+      "chars": 8870
+    },
+    {
+      "id": "sec-04",
+      "title": "视觉域迁移 (Visual Domain Adaptation)",
+      "lastUpdated": "",
+      "chars": 9934
+    },
+    {
+      "id": "sec-05",
+      "title": "Real-to-Sim-to-Real 闭环",
+      "lastUpdated": "",
+      "chars": 12353
+    },
+    {
+      "id": "sec-06",
+      "title": "Sim-to-Real Gap 定量诊断与调优",
+      "lastUpdated": "2026-04-22T07:00",
+      "chars": 16660
+    },
+    {
+      "id": "sec-07",
+      "title": "Real-to-Sim自动化建模：从真实世界到仿真",
+      "lastUpdated": "2026-04-27T00:45",
+      "chars": 3251
+    },
+    {
+      "id": "sec-08",
+      "title": "自适应Domain Randomization：从固定随机化到学习随机化",
+      "lastUpdated": "2026-04-27T14:43",
+      "chars": 3036
+    },
+    {
+      "id": "sec-09",
+      "title": "领域不变特征学习：让策略\"看不见\"仿真与真实的差别",
+      "lastUpdated": "2026-04-29T17:50",
+      "chars": 10163
+    },
+    {
+      "id": "sec-10",
+      "title": "视频世界模型评测：RoboWM-Bench 范式与 Sim-to-Real 评测体系演进",
+      "lastUpdated": "2026-04-30T15:00",
+      "chars": 6746
+    }
+  ]
+}

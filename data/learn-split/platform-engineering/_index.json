@@ -1,0 +1,157 @@
+{
+  "id": "platform-engineering",
+  "name": "具身智能平台工程",
+  "lastUpdated": "2026-05-05T13:30",
+  "stage": "阶段六：项目实战",
+  "importance": "重要",
+  "estimatedHours": 40,
+  "description": "构建完整的具身智能开发平台：从数据管理、模型训练、仿真测试到部署运维的全流程工程化。",
+  "prerequisites": [
+    "ROS2",
+    "模型训练与推理优化",
+    "物理仿真引擎"
+  ],
+  "resources": [
+    {
+      "name": "Weights & Biases",
+      "url": "https://wandb.ai/",
+      "type": "平台",
+      "description": "ML 实验追踪和可视化平台，免费个人版。"
+    },
+    {
+      "name": "DVC",
+      "url": "https://dvc.org/",
+      "type": "工具",
+      "description": "数据版本管理工具，Git for Data。"
+    },
+    {
+      "name": "Rerun.io",
+      "url": "https://rerun.io/",
+      "type": "工具",
+      "description": "多模态数据可视化工具，支持3D点云/轨迹/图像时间线。"
+    },
+    {
+      "name": "Docker + ROS2",
+      "url": "https://docs.ros.org/en/humble/How-To-Guides/Run-2-nodes-in-single-or-separate-docker-containers.html",
+      "type": "教程",
+      "description": "ROS2 Docker 容器化官方指南。"
+    },
+    {
+      "name": "Prometheus + Grafana",
+      "url": "https://prometheus.io/docs/introduction/overview/",
+      "type": "文档",
+      "description": "开源监控系统 Prometheus 和可视化平台 Grafana，机器人运维标配。"
+    },
+    {
+      "name": "ISO 15066 协作机器人安全",
+      "url": "https://www.iso.org/standard/62996.html",
+      "type": "标准",
+      "description": "协作机器人安全标准，定义了力/压力限值和安全功能要求。"
+    },
+    {
+      "name": "ML 实验管理 W&B 教程",
+      "url": "https://www.youtube.com/results?search_query=weights+and+biases+tutorial+2024",
+      "type": "视频",
+      "description": "Weights & Biases 实验追踪平台的使用教程，从配置到团队协作。"
+    }
+  ],
+  "weeklyPlan": "**第1-2周**：MLOps 流程搭建（DVC + W&B + 数据Pipeline）\n**第3周**：CI/CD + 仿真自动化测试 + Docker容器化\n**第4周**：监控运维（Prometheus + Grafana）+ OTA更新\n**第5周**：性能基准测试 + A/B测试\n**第6周**：安全合规（安全过滤器 + 故障恢复 + 看门狗）",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "CI/CD 与机器人软件自动化部署",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 4251
+    },
+    {
+      "id": "sec-02",
+      "title": "可观测性（Observability）：日志、指标与追踪",
+      "lastUpdated": "2026-04-30T11:07",
+      "chars": 3626
+    },
+    {
+      "id": "sec-03",
+      "title": "微服务架构与 gRPC：机器人后端设计",
+      "lastUpdated": "2026-04-30T10:22",
+      "chars": 2710
+    },
+    {
+      "id": "sec-04",
+      "title": "Observability 可观测性：日志、指标、追踪三支柱与机器人数据回放",
+      "lastUpdated": "2026-04-29T04:20",
+      "chars": 8851
+    },
+    {
+      "id": "sec-05",
+      "title": "网络基础与分布式系统原理",
+      "lastUpdated": "2026-04-28T19:38",
+      "chars": 2852
+    },
+    {
+      "id": "sec-06",
+      "title": "Linux 基础与命令行：机器人工程师的必备技能",
+      "lastUpdated": "2026-04-28T19:07",
+      "chars": 2638
+    },
+    {
+      "id": "sec-07",
+      "title": "Docker 与容器化部署：机器人软件的标准化交付",
+      "lastUpdated": "2026-04-28T19:07",
+      "chars": 2899
+    },
+    {
+      "id": "sec-08",
+      "title": "Kubernetes 与机器人集群管理基础",
+      "lastUpdated": "2026-04-28T19:07",
+      "chars": 2332
+    },
+    {
+      "id": "sec-09",
+      "title": "MLOps与数据平台",
+      "lastUpdated": "",
+      "chars": 7585
+    },
+    {
+      "id": "sec-10",
+      "title": "CI/CD与自动化测试",
+      "lastUpdated": "",
+      "chars": 3710
+    },
+    {
+      "id": "sec-11",
+      "title": "监控运维与 OTA 更新",
+      "lastUpdated": "2026-04-19T22:00",
+      "chars": 8321
+    },
+    {
+      "id": "sec-12",
+      "title": "性能测试与基准",
+      "lastUpdated": "2026-04-19T22:00",
+      "chars": 6868
+    },
+    {
+      "id": "sec-13",
+      "title": "安全合规与故障恢复",
+      "lastUpdated": "2026-04-19T22:00",
+      "chars": 8831
+    },
+    {
+      "id": "sec-14",
+      "title": "功能安全与合规（ISO 13482/IEC 61508）",
+      "lastUpdated": "2026-04-26T22:21",
+      "chars": 2468
+    },
+    {
+      "id": "sec-15",
+      "title": "机器人Fleet管理与远程运维平台",
+      "lastUpdated": "2026-04-27T12:01",
+      "chars": 3941
+    },
+    {
+      "id": "sec-16",
+      "title": "边缘端推理服务化与机器人 OTA 灰度发布：把策略安全送进 1 万台机器人",
+      "lastUpdated": "2026-05-05T13:30",
+      "chars": 9223
+    }
+  ]
+}

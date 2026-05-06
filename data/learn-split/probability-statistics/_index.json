@@ -1,0 +1,174 @@
+{
+  "id": "probability-statistics",
+  "name": "概率与统计",
+  "stage": "阶段一：数学与编程基础",
+  "importance": "核心",
+  "estimatedHours": 50,
+  "description": "贝叶斯推断、高斯过程、蒙特卡洛方法是机器人感知和决策的数学语言。机器人在不确定的世界中行动，概率论提供了处理不确定性的严格框架。",
+  "prerequisites": [
+    "线性代数",
+    "微积分基础"
+  ],
+  "resources": [
+    {
+      "name": "MIT 6.041 Probabilistic Systems Analysis",
+      "url": "https://ocw.mit.edu/courses/6-041-probabilistic-systems-analysis-and-applied-probability-fall-2010/",
+      "type": "课程",
+      "description": "MIT 概率论公开课，从基础到贝叶斯推断，配套完整习题和解答。"
+    },
+    {
+      "name": "Bishop《Pattern Recognition and Machine Learning》",
+      "url": "https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/",
+      "type": "教材",
+      "description": "贝叶斯机器学习圣经，前 3 章必读。有免费 PDF。"
+    },
+    {
+      "name": "Thrun《Probabilistic Robotics》",
+      "url": "https://mitpress.mit.edu/9780262201629/probabilistic-robotics/",
+      "type": "教材",
+      "description": "机器人概率方法必读。卡尔曼滤波、粒子滤波、SLAM 的权威教材。"
+    },
+    {
+      "name": "FilterPy",
+      "url": "https://filterpy.readthedocs.io/",
+      "type": "库",
+      "description": "Python 卡尔曼滤波工具库，支持 KF/EKF/UKF/粒子滤波，有丰富教程。"
+    },
+    {
+      "name": "Think Bayes (Allen Downey)",
+      "url": "https://allendowney.github.io/ThinkBayes2/",
+      "type": "教材",
+      "description": "免费在线教材，用 Python 实践贝叶斯思维。代码驱动，非常适合入门。"
+    },
+    {
+      "name": "3Blue1Brown 贝叶斯定理",
+      "url": "https://www.3blue1brown.com/lessons/bayes-theorem",
+      "type": "视频",
+      "description": "用可视化动画直观解释贝叶斯定理，10 分钟建立直觉。"
+    },
+    {
+      "name": "StatQuest 统计学系列",
+      "url": "https://www.youtube.com/c/joshstarmer",
+      "type": "视频",
+      "description": "用简单动画解释复杂统计概念，贝叶斯/分布/假设检验等。风格轻松易懂。"
+    },
+    {
+      "name": "Probabilistic Robotics 课程视频",
+      "url": "https://www.youtube.com/results?search_query=probabilistic+robotics+lecture",
+      "type": "视频",
+      "description": "搜索 Cyrill Stachniss 的 Robot Mapping 系列，卡尔曼滤波/粒子滤波讲得非常好。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：概率基础、条件概率、贝叶斯定理（MIT 6.041 前 5 讲 + Think Bayes Ch1-3）\n**第2周**：高斯分布、MLE/MAP 估计、GMM（Bishop Ch2）\n**第3周**：卡尔曼滤波推导 + Python 实现（Probabilistic Robotics Ch3）\n**第4周**：粒子滤波 + 蒙特卡洛方法（Probabilistic Robotics Ch4 + 编程实践）",
+  "lastUpdated": "2026-04-28T17:22",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "概率论的数学基础：样本空间、σ-代数、Kolmogorov 公理",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 5895
+    },
+    {
+      "id": "sec-02",
+      "title": "随机变量与分布：离散、连续、常见分布家族",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 7675
+    },
+    {
+      "id": "sec-03",
+      "title": "期望、方差与矩：从积分到矩母函数",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 6129
+    },
+    {
+      "id": "sec-04",
+      "title": "大数定律与中心极限定理：概率论的两大支柱",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 6213
+    },
+    {
+      "id": "sec-05",
+      "title": "多维随机变量：联合分布、条件、协方差矩阵与多元高斯",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 5705
+    },
+    {
+      "id": "sec-06",
+      "title": "参数估计理论：矩估计、MLE、MAP 与 Fisher 信息",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 6265
+    },
+    {
+      "id": "sec-07",
+      "title": "假设检验与置信区间：Neyman-Pearson、t 检验、置信度",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 5191
+    },
+    {
+      "id": "sec-08",
+      "title": "贝叶斯定理与推断",
+      "lastUpdated": "",
+      "chars": 7899
+    },
+    {
+      "id": "sec-09",
+      "title": "高斯分布与 GMM",
+      "lastUpdated": "",
+      "chars": 7597
+    },
+    {
+      "id": "sec-10",
+      "title": "卡尔曼滤波",
+      "lastUpdated": "",
+      "chars": 10844
+    },
+    {
+      "id": "sec-11",
+      "title": "蒙特卡洛方法与粒子滤波",
+      "lastUpdated": "",
+      "chars": 10230
+    },
+    {
+      "id": "sec-12",
+      "title": "信息论基础",
+      "lastUpdated": "",
+      "chars": 7363
+    },
+    {
+      "id": "sec-13",
+      "title": "高斯过程回归（GPR）在机器人中的应用",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 4358
+    },
+    {
+      "id": "sec-14",
+      "title": "贝叶斯优化与超参数调优",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 4381
+    },
+    {
+      "id": "sec-15",
+      "title": "隐马尔可夫模型(HMM)与机器人行为识别",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 3538
+    },
+    {
+      "id": "sec-16",
+      "title": "随机过程初步：马尔可夫链、鞅与 Poisson 过程",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 2693
+    },
+    {
+      "id": "sec-17",
+      "title": "集中不等式：从 Chebyshev 到亚高斯尾界",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 2527
+    },
+    {
+      "id": "sec-18",
+      "title": "信息几何初步：Fisher 信息、KL 散度与自然梯度",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 2652
+    }
+  ]
+}

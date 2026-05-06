@@ -1,0 +1,138 @@
+{
+  "id": "physics-simulation",
+  "name": "物理仿真引擎",
+  "lastUpdated": "2026-05-06T20:14",
+  "stage": "阶段五：仿真与 Sim-to-Real",
+  "importance": "核心",
+  "estimatedHours": 40,
+  "description": "仿真环境是训练和验证具身智能算法的核心基础设施。MuJoCo 入门，Isaac Lab 大规模训练。",
+  "prerequisites": [
+    "Python 编程",
+    "机器人动力学"
+  ],
+  "resources": [
+    {
+      "name": "MuJoCo 文档",
+      "url": "https://mujoco.readthedocs.io/",
+      "type": "文档",
+      "description": "MuJoCo 官方文档，XML 格式+Python API。"
+    },
+    {
+      "name": "Isaac Lab",
+      "url": "https://isaac-sim.github.io/IsaacLab/",
+      "type": "工具",
+      "description": "NVIDIA GPU 加速仿真框架。"
+    },
+    {
+      "name": "Genesis",
+      "url": "https://genesis-world.readthedocs.io/",
+      "type": "项目",
+      "description": "可微分物理仿真引擎，GitHub 22k+ stars。"
+    },
+    {
+      "name": "dm_control",
+      "url": "https://github.com/google-deepmind/dm_control",
+      "type": "工具",
+      "description": "DeepMind 基于 MuJoCo 的 RL 环境套件。"
+    },
+    {
+      "name": "MuJoCo 官方教程",
+      "url": "https://www.youtube.com/results?search_query=mujoco+tutorial+deepmind",
+      "type": "视频",
+      "description": "DeepMind 团队的 MuJoCo 使用教程和 API 讲解。"
+    },
+    {
+      "name": "Isaac Sim/Lab NVIDIA GTC 演讲",
+      "url": "https://www.youtube.com/results?search_query=isaac+sim+nvidia+gtc+tutorial",
+      "type": "视频",
+      "description": "NVIDIA GTC 大会上的 Isaac Sim/Lab 教程和演示，包含 GPU 加速仿真的最新进展。"
+    }
+  ],
+  "weeklyPlan": "**第1-2周**：MuJoCo 入门\n**第3-4周**：Isaac Lab GPU 训练",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "可微分仿真：基于梯度的轨迹优化新范式",
+      "lastUpdated": "2026-05-06T20:14",
+      "chars": 3703
+    },
+    {
+      "id": "sec-02",
+      "title": "仿真基准与性能对比：MuJoCo vs Isaac vs Genesis",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 2848
+    },
+    {
+      "id": "sec-03",
+      "title": "MuJoCo 深入：从建模到高效仿真",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 4396
+    },
+    {
+      "id": "sec-04",
+      "title": "仿真环境设计：任务构建与域随机化",
+      "lastUpdated": "2026-04-30T10:22",
+      "chars": 3207
+    },
+    {
+      "id": "sec-05",
+      "title": "物理仿真基础：刚体动力学、碰撞检测与数值积分",
+      "lastUpdated": "2026-04-28T19:38",
+      "chars": 3215
+    },
+    {
+      "id": "sec-06",
+      "title": "MuJoCo",
+      "lastUpdated": "2026-04-19T22:16",
+      "chars": 12435
+    },
+    {
+      "id": "sec-07",
+      "title": "NVIDIA Isaac Lab",
+      "lastUpdated": "",
+      "chars": 4647
+    },
+    {
+      "id": "sec-08",
+      "title": "Genesis 与仿真器选型",
+      "lastUpdated": "",
+      "chars": 6197
+    },
+    {
+      "id": "sec-09",
+      "title": "Sim-to-Real 迁移技术",
+      "lastUpdated": "",
+      "chars": 4589
+    },
+    {
+      "id": "sec-10",
+      "title": "场景构建与资产管理",
+      "lastUpdated": "",
+      "chars": 5784
+    },
+    {
+      "id": "sec-11",
+      "title": "可微分仿真与基于梯度的轨迹优化",
+      "lastUpdated": "2026-04-26T22:21",
+      "chars": 2069
+    },
+    {
+      "id": "sec-12",
+      "title": "视频世界模型：从物理引擎到可学习仿真器",
+      "lastUpdated": "2026-04-27T00:27",
+      "chars": 10948
+    },
+    {
+      "id": "sec-13",
+      "title": "触觉仿真与软体物理：灵巧操作的隐藏维度",
+      "lastUpdated": "2026-04-27T09:56",
+      "chars": 10487
+    },
+    {
+      "id": "sec-14",
+      "title": "GPU 大规模并行仿真：从单环境到 Isaac Lab 4096 并行 PPO 工程实战",
+      "lastUpdated": "2026-05-05T13:30",
+      "chars": 8377
+    }
+  ]
+}

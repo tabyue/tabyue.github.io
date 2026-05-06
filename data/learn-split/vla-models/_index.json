@@ -1,0 +1,138 @@
+{
+  "id": "vla-models",
+  "name": "VLA 模型 (Vision-Language-Action)",
+  "stage": "阶段四：AI 大脑",
+  "importance": "前沿",
+  "estimatedHours": 40,
+  "lastUpdated": "2026-05-05T19:38",
+  "description": "结合视觉理解、语言指令和动作生成的端到端模型。VLA 是具身智能的前沿方向。",
+  "prerequisites": [
+    "深度学习基础",
+    "模仿学习"
+  ],
+  "resources": [
+    {
+      "name": "RT-2 论文",
+      "url": "https://arxiv.org/abs/2307.15818",
+      "type": "论文",
+      "description": "Google DeepMind 的 VLA 开山之作。"
+    },
+    {
+      "name": "OpenVLA",
+      "url": "https://github.com/openvla/openvla",
+      "type": "项目",
+      "description": "开源 7B VLA，Stanford/TRI。"
+    },
+    {
+      "name": "π₀ 论文",
+      "url": "https://www.physicalintelligence.company/blog/pi0",
+      "type": "论文",
+      "description": "Physical Intelligence 的 VLA，Flow Matching。"
+    },
+    {
+      "name": "FAST tokenizer",
+      "url": "https://www.physicalintelligence.company/blog/pi0-fast",
+      "type": "论文",
+      "description": "DCT-based 动作 tokenizer，5x 加速。"
+    },
+    {
+      "name": "RT-2 Google DeepMind 演示",
+      "url": "https://www.youtube.com/results?search_query=RT-2+google+deepmind+demo",
+      "type": "视频",
+      "description": "RT-2 的官方演示视频，展示 VLA 模型如何理解语言指令并执行机器人动作。"
+    },
+    {
+      "name": "OpenVLA 论文讲解",
+      "url": "https://www.youtube.com/results?search_query=openvla+paper+explained",
+      "type": "视频",
+      "description": "社区对 OpenVLA 论文的详细讲解，包括架构、训练和微调方法。"
+    },
+    {
+      "name": "Embodied-R1",
+      "url": "https://github.com/pickxiguapi/Embodied-R1",
+      "type": "项目",
+      "description": "3B具身推理VLM，通过Pointing机制桥接视觉理解与机器人动作，使用强化微调训练。"
+    },
+    {
+      "name": "WholeBodyVLA",
+      "url": "https://github.com/OpenDriveLab/WholebodyVLA",
+      "type": "项目",
+      "description": "ICLR 2026，面向人形机器人全身移动操作的统一VLA框架。"
+    },
+    {
+      "name": "NVIDIA GR00T N1",
+      "url": "https://developer.nvidia.com/gr00t",
+      "type": "项目",
+      "description": "NVIDIA的通用人形机器人基础模型，Eagle-2 VLM + Diffusion动作头。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：RT-2 论文精读\n**第2-3周**：OpenVLA 源码+推理\n**第4周**：π₀/FAST 论文",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "RT-2 / VLA 范式",
+      "lastUpdated": "",
+      "chars": 7601
+    },
+    {
+      "id": "sec-02",
+      "title": "OpenVLA 开源实践",
+      "lastUpdated": "",
+      "chars": 10558
+    },
+    {
+      "id": "sec-03",
+      "title": "π₀ 与 Flow Matching",
+      "lastUpdated": "",
+      "chars": 9919
+    },
+    {
+      "id": "sec-04",
+      "title": "VLA 微调实战",
+      "lastUpdated": "",
+      "chars": 14305
+    },
+    {
+      "id": "sec-05",
+      "title": "层次化 VLA 架构：从端到端到分层解耦",
+      "lastUpdated": "2026-04-21T00:17",
+      "chars": 11432
+    },
+    {
+      "id": "sec-06",
+      "title": "",
+      "lastUpdated": "",
+      "chars": 13536
+    },
+    {
+      "id": "sec-07",
+      "title": "GR00T N1与人形机器人VLA部署实战",
+      "lastUpdated": "2026-04-26T22:21",
+      "chars": 2620
+    },
+    {
+      "id": "sec-08",
+      "title": "VLA评估基准与系统性测试方法",
+      "lastUpdated": "2026-04-27T14:43",
+      "chars": 3555
+    },
+    {
+      "id": "sec-09",
+      "title": "VLA 训练三阶段完整配方：从 VLM 预训练到 Mid-training 到动作精调（2026-04 前沿实战）",
+      "lastUpdated": "2026-04-30T07:30",
+      "chars": 11343
+    },
+    {
+      "id": "sec-10",
+      "title": "触觉增强 VLA：从视觉-动作到视觉-触觉-动作（Touch-Augmented VLA, 2026-04 最新范式）",
+      "lastUpdated": "2026-05-02T03:55",
+      "chars": 12040
+    },
+    {
+      "id": "sec-11",
+      "title": "长程交错推理：从 IVLR 看 VLA 的\"先思后动\"范式（2026-05 最新突破）",
+      "lastUpdated": "2026-05-05T19:38",
+      "chars": 13860
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "id": "imitation-learning",
+  "name": "模仿学习",
+  "stage": "阶段四：AI 大脑",
+  "importance": "核心",
+  "estimatedHours": 50,
+  "lastUpdated": "2026-05-06T20:14",
+  "description": "从人类演示中学习机器人技能。Diffusion Policy 和 ACT 是当前最实用的模仿学习算法。",
+  "prerequisites": [
+    "深度学习基础"
+  ],
+  "resources": [
+    {
+      "name": "Diffusion Policy",
+      "url": "https://diffusion-policy.cs.columbia.edu/",
+      "type": "项目",
+      "description": "Columbia/Stanford 的 Diffusion Policy，论文+代码+demo。"
+    },
+    {
+      "name": "ACT 项目",
+      "url": "https://github.com/tonyzhaozh/act",
+      "type": "项目",
+      "description": "ACT 算法原始代码，配合 ALOHA 硬件使用。"
+    },
+    {
+      "name": "LeRobot",
+      "url": "https://github.com/huggingface/lerobot",
+      "type": "框架",
+      "description": "HuggingFace 的机器人学习框架，内置 ACT/Diffusion Policy/TDMPC。"
+    },
+    {
+      "name": "ALOHA 项目",
+      "url": "https://tonyzhaozh.github.io/aloha/",
+      "type": "项目",
+      "description": "Stanford 的低成本双臂遥操作系统，开源硬件+软件。"
+    },
+    {
+      "name": "Diffusion Policy 作者讲解",
+      "url": "https://www.youtube.com/results?search_query=diffusion+policy+cheng+chi+talk",
+      "type": "视频",
+      "description": "Cheng Chi (Columbia) 在多个会议上的 Diffusion Policy 报告，讲解原理和实验。"
+    },
+    {
+      "name": "LeRobot 官方教程视频",
+      "url": "https://www.youtube.com/results?search_query=lerobot+huggingface+tutorial",
+      "type": "视频",
+      "description": "HuggingFace 团队的 LeRobot 使用教程，从安装到训练 ACT 策略。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：BC 原理+DAgger\n**第2-3周**：Diffusion Policy 复现\n**第4-5周**：ACT+LeRobot\n**第6周**：真机数据采集+训练",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "模仿学习的失败模式与调试方法论",
+      "lastUpdated": "2026-05-06T20:14",
+      "chars": 5792
+    },
+    {
+      "id": "sec-02",
+      "title": "VLA 模型：语言驱动的模仿学习",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 3405
+    },
+    {
+      "id": "sec-03",
+      "title": "Diffusion Policy：扩散模型在机器人中的崛起",
+      "lastUpdated": "2026-04-30T11:07",
+      "chars": 3283
+    },
+    {
+      "id": "sec-04",
+      "title": "模仿学习基础：从行为克隆到 DAgger",
+      "lastUpdated": "2026-04-30T10:32",
+      "chars": 3191
+    },
+    {
+      "id": "sec-05",
+      "title": "行为克隆 (BC)",
+      "lastUpdated": "",
+      "chars": 5854
+    },
+    {
+      "id": "sec-06",
+      "title": "Diffusion Policy",
+      "lastUpdated": "",
+      "chars": 9430
+    },
+    {
+      "id": "sec-07",
+      "title": "ACT 与 LeRobot",
+      "lastUpdated": "",
+      "chars": 5503
+    },
+    {
+      "id": "sec-08",
+      "title": "逆强化学习 (IRL) 与 GAIL",
+      "lastUpdated": "2026-04-19T16:45",
+      "chars": 9600
+    },
+    {
+      "id": "sec-09",
+      "title": "演示数据工程",
+      "lastUpdated": "2026-04-19T16:45",
+      "chars": 11442
+    },
+    {
+      "id": "sec-10",
+      "title": "模仿学习前沿方法",
+      "lastUpdated": "2026-04-19T16:45",
+      "chars": 11392
+    },
+    {
+      "id": "sec-11",
+      "title": "全身协调模仿学习 (Whole-Body Imitation Learning)",
+      "lastUpdated": "2026-04-26T17:05",
+      "chars": 6212
+    },
+    {
+      "id": "sec-12",
+      "title": "跨本体模仿迁移（Cross-Embodiment Transfer）",
+      "lastUpdated": "2026-04-27T11:33",
+      "chars": 3313
+    },
+    {
+      "id": "sec-13",
+      "title": "Flow Matching策略：从Diffusion到更快的动作生成",
+      "lastUpdated": "2026-04-27T14:46",
+      "chars": 3564
+    }
+  ]
+}

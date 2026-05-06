@@ -1,0 +1,132 @@
+{
+  "id": "robot-kinematics",
+  "name": "机器人运动学",
+  "lastUpdated": "2026-05-03T09:55",
+  "stage": "阶段二：机器人学基础",
+  "importance": "核心",
+  "estimatedHours": 60,
+  "description": "理解机器人如何描述和计算关节与末端执行器的位置、速度关系。运动学是机器人学的基石。",
+  "prerequisites": [
+    "线性代数",
+    "微积分"
+  ],
+  "resources": [
+    {
+      "name": "Craig《Introduction to Robotics》",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/introduction-to-robotics/P200000003201",
+      "type": "教材",
+      "description": "DH 方法经典教材，前 5 章是运动学的标准参考。"
+    },
+    {
+      "name": "Lynch & Park《Modern Robotics》",
+      "url": "http://hades.mech.northwestern.edu/images/7/7f/MR.pdf",
+      "type": "教材",
+      "description": "PoE 方法，配套 Coursera 课程和 Python 代码。免费 PDF。"
+    },
+    {
+      "name": "Peter Corke Robotics Toolbox",
+      "url": "https://petercorke.github.io/robotics-toolbox-python/",
+      "type": "工具",
+      "description": "Python 机器人学工具箱，内置常见机器人模型，可快速验证运动学计算。"
+    },
+    {
+      "name": "Modern Robotics Coursera 课程",
+      "url": "https://www.coursera.org/specializations/modernrobotics",
+      "type": "课程",
+      "description": "Northwestern 大学的 Modern Robotics 课程，配套教材，有编程作业。"
+    },
+    {
+      "name": "Angela Sodemann 机器人学讲座",
+      "url": "https://www.youtube.com/c/pedestrianrobotics",
+      "type": "视频",
+      "description": "DH 参数法、正逆运动学的详细推导视频，适合跟着手推公式。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：刚体变换、齐次矩阵编程\n**第2周**：DH 参数法、正运动学实现\n**第3-4周**：逆运动学（解析法 + 数值法）\n**第5-6周**：Jacobian 计算、奇异分析、速度控制\n**第7周**：轨迹规划——多项式/梯形/笛卡尔直线 + 时间最优",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "奇异性分析与可操作性椭球：机械臂的“不可达禁区”",
+      "lastUpdated": "2026-05-03T09:55",
+      "chars": 11220
+    },
+    {
+      "id": "sec-02",
+      "title": "并联与冗余机器人运动学",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 3232
+    },
+    {
+      "id": "sec-03",
+      "title": "速度运动学：Jacobian 矩阵的推导与应用",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 2968
+    },
+    {
+      "id": "sec-04",
+      "title": "轨迹生成：从关节空间到笛卡尔空间的平滑运动",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 3532
+    },
+    {
+      "id": "sec-05",
+      "title": "逆运动学求解的完整方法论",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 3188
+    },
+    {
+      "id": "sec-06",
+      "title": "旋转表示的完整理论：欧拉角、四元数、旋转向量与李群",
+      "lastUpdated": "2026-04-28T19:07",
+      "chars": 4941
+    },
+    {
+      "id": "sec-07",
+      "title": "齐次变换与刚体运动：SE(3) 的完整数学",
+      "lastUpdated": "2026-04-28T19:07",
+      "chars": 4001
+    },
+    {
+      "id": "sec-08",
+      "title": "刚体变换与齐次矩阵",
+      "lastUpdated": "",
+      "chars": 3124
+    },
+    {
+      "id": "sec-09",
+      "title": "DH 参数法与正运动学",
+      "lastUpdated": "",
+      "chars": 6201
+    },
+    {
+      "id": "sec-10",
+      "title": "逆运动学",
+      "lastUpdated": "2026-04-19T22:16",
+      "chars": 6962
+    },
+    {
+      "id": "sec-11",
+      "title": "Jacobian 与速度/力分析",
+      "lastUpdated": "",
+      "chars": 5524
+    },
+    {
+      "id": "sec-12",
+      "title": "Product of Exponentials (PoE) 公式与螺旋运动理论",
+      "lastUpdated": "2026-04-23T09:03",
+      "chars": 9374
+    },
+    {
+      "id": "sec-13",
+      "title": "轨迹规划",
+      "lastUpdated": "2026-04-21T20:20",
+      "chars": 14378
+    },
+    {
+      "id": "sec-14",
+      "title": "冗余机器人运动规划与零空间控制",
+      "lastUpdated": "2026-04-27T11:30",
+      "chars": 2885
+    }
+  ]
+}

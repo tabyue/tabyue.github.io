@@ -1,0 +1,143 @@
+{
+  "id": "python-scientific-computing",
+  "name": "Python 编程与科学计算",
+  "stage": "阶段一：数学与编程基础",
+  "importance": "必备",
+  "estimatedHours": 40,
+  "description": "Python 是具身智能领域的通用语言，NumPy/PyTorch 是日常工具。不需要系统学 Python 语法，重要的是能用它高效解决机器人和 AI 问题。",
+  "prerequisites": [
+    "基础编程经验"
+  ],
+  "resources": [
+    {
+      "name": "Python 官方教程",
+      "url": "https://docs.python.org/zh-cn/3/tutorial/",
+      "type": "文档",
+      "description": "快速查漏补缺。重点看：数据结构、类、模块、异常处理。"
+    },
+    {
+      "name": "NumPy 官方文档 (Broadcasting)",
+      "url": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+      "type": "文档",
+      "description": "理解广播机制是写高效 NumPy 代码的关键。这篇文档必读。"
+    },
+    {
+      "name": "PyTorch 官方 60 分钟入门",
+      "url": "https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html",
+      "type": "教程",
+      "description": "PyTorch 官方入门教程，从 Tensor 到训练完整流程。"
+    },
+    {
+      "name": "Python Robotics",
+      "url": "https://github.com/AtsushiSakai/PythonRobotics",
+      "type": "项目",
+      "description": "用 Python 实现各种机器人算法的开源集合。边做边学的最佳资源。"
+    },
+    {
+      "name": "ROS2 Humble 官方教程",
+      "url": "https://docs.ros.org/en/humble/Tutorials.html",
+      "type": "教程",
+      "description": "ROS2 官方 step-by-step 教程，从安装到高级功能。"
+    },
+    {
+      "name": "Wandb 文档",
+      "url": "https://docs.wandb.ai/",
+      "type": "工具",
+      "description": "实验追踪和可视化平台。免费个人版。训练深度学习模型必备。"
+    },
+    {
+      "name": "PyTorch 官方教程视频",
+      "url": "https://www.youtube.com/playlist?list=PL_lsbAsL_o2CTlGHpif_VCnmo5YnlxF30",
+      "type": "视频",
+      "description": "PyTorch 团队录制的入门教程系列，从 Tensor 到训练循环。"
+    }
+  ],
+  "weeklyPlan": "**第1周**：NumPy 向量化运算 + Matplotlib 可视化，实现一个卡尔曼滤波器\n**第2周**：PyTorch 基础，训练一个 MNIST 分类器，学会用 Wandb 记录实验",
+  "lastUpdated": "2026-04-30T11:07",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "科学计算实战：从数据到可视化的完整工具链",
+      "lastUpdated": "2026-04-30T11:07",
+      "chars": 5094
+    },
+    {
+      "id": "sec-02",
+      "title": "Python 语言基础：变量、类型系统与动态特性",
+      "lastUpdated": "2026-04-28T17:11",
+      "chars": 5691
+    },
+    {
+      "id": "sec-03",
+      "title": "控制流与函数：从 if 到 lambda 的完整指南",
+      "lastUpdated": "2026-04-28T17:11",
+      "chars": 3911
+    },
+    {
+      "id": "sec-04",
+      "title": "面向对象编程：类、继承、多态与 Python 对象协议",
+      "lastUpdated": "2026-04-28T17:11",
+      "chars": 5353
+    },
+    {
+      "id": "sec-05",
+      "title": "模块、包与标准库：组织代码与高效复用",
+      "lastUpdated": "2026-04-28T17:11",
+      "chars": 3485
+    },
+    {
+      "id": "sec-06",
+      "title": "异常处理与文件 I/O：健壮的 Python 程序",
+      "lastUpdated": "2026-04-28T17:11",
+      "chars": 4435
+    },
+    {
+      "id": "sec-07",
+      "title": "Python 高级特性",
+      "lastUpdated": "",
+      "chars": 8906
+    },
+    {
+      "id": "sec-08",
+      "title": "NumPy 科学计算",
+      "lastUpdated": "",
+      "chars": 8364
+    },
+    {
+      "id": "sec-09",
+      "title": "PyTorch 深度学习",
+      "lastUpdated": "",
+      "chars": 10793
+    },
+    {
+      "id": "sec-10",
+      "title": "数据可视化",
+      "lastUpdated": "",
+      "chars": 7245
+    },
+    {
+      "id": "sec-11",
+      "title": "ROS2 Python 接口",
+      "lastUpdated": "",
+      "chars": 9410
+    },
+    {
+      "id": "sec-12",
+      "title": "asyncio异步编程与ROS2集成",
+      "lastUpdated": "2026-04-26T22:21",
+      "chars": 3718
+    },
+    {
+      "id": "sec-13",
+      "title": "Pydantic数据建模与机器人配置管理",
+      "lastUpdated": "2026-04-27T12:01",
+      "chars": 3132
+    },
+    {
+      "id": "sec-14",
+      "title": "并行计算：multiprocessing与Ray加速数据处理",
+      "lastUpdated": "2026-04-28T12:06",
+      "chars": 2171
+    }
+  ]
+}
