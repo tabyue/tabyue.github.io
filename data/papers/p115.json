@@ -1,0 +1,33 @@
+{
+  "id": "p115",
+  "title": "MolmoAct2: Action Reasoning Models for Real-world Deployment",
+  "authors": "Zelin Fang, Yiyang Duan, Yang Liu, Quanting Xie, Erran Li, Sangho Lee, Jiasen Lu, Christopher Clark, Aniruddha Kembhavi, Ranjay Krishna, Yejin Choi, et al. (Allen AI / Ai2)",
+  "venue": "arXiv 2605.02881",
+  "date": "2026-05",
+  "arxiv": "https://arxiv.org/abs/2605.02881",
+  "github": "https://github.com/allenai/molmoact2",
+  "huggingface": "https://huggingface.co/papers/2605.02881",
+  "tags": [
+    "VLA",
+    "开放模型",
+    "Action Reasoning",
+    "Allen AI",
+    "Molmo2-ER",
+    "generalist",
+    "SOTA",
+    "开源"
+  ],
+  "tldr": "Allen AI 2026 年 5 月 5 日同日上线 arXiv + GitHub + HuggingFace 三平台开源的最新一代开放 VLA：Molmo2-ER 具身推理 backbone + Action Reasoning Token + 连续动作 head；7 项 sim+real 基准全部超越 Pi-05，平均 +4.7%，长程任务领先 9.3%。完全开放权重 + 训练代码 + 13M token 推理数据集，4×A100 可跑。是迄今任何开源 VLA 中最大规模的实证研究。",
+  "difficulty": "高级",
+  "addedDate": "2026-05-06",
+  "keyInsights": [
+    "Action Reasoning Token 是 MolmoAct2 区别于其他 VLA 的核心：让模型在执行动作前先用 ~100 token 生成\"为什么这一步要做这个动作\"的显式推理 trace，再用连续动作 head 输出最终低层动作。这把传统 VLA 的\"黑盒动作生成器\"转化为\"会自我解释\"的可审计控制器，是机器人 AI 安全与可解释性的重要里程碑。",
+    "Molmo2-ER 共享主干的工程价值：与 Allen AI 的 Molmo2-ER 视觉-语言模型完全共享 backbone，意味着一次预训练即可同时服务于通用问答、机器人操作、导航、抓取等多模态下游任务，相比\"为机器人单独训一个 backbone\"路线可节省 50-70% 算力。",
+    "开放程度是 Pi-05 的\"超集\"：训练代码 + 模型权重 + 13M token Action Reasoning 数据集 + 推理脚本 + Docker 全部公开，运行门槛降到 4×A100。这是 OpenVLA → Pi-05 → MolmoAct2 三波开源浪潮中开放程度最高的一次。",
+    "7 项基准实证研究是迄今最大规模：LIBERO-Long、SimplerEnv-Bridge、SimplerEnv-Google、CALVIN-D-D、Bridge-V2 Franka 真机、Allegro 灵巧手真机、UR5 平面操作真机——覆盖 sim/real、单臂/双臂/灵巧手三大维度，全部超越 Pi-05。这种实证规模大幅提高了\"开源 VLA\"的评测门槛。",
+    "与 IVLR、Anticipation-VLA、MemoryVLA 形成 2026 H1 VLA 推理范式群：MolmoAct2 = \"局部即时推理 + 100-token trace\"，IVLR = \"全任务一次性 trace\"，Anticipation-VLA = \"滚动未来预测\"，MemoryVLA = \"海马体分层记忆\"——四种 trace/记忆机制将主导未来 1-2 年 VLA 研究主轴。"
+  ],
+  "impact": "对开源 VLA 生态产生根本性影响：(1) 把\"开源旗舰 VLA\"的标准从 OpenVLA / Pi-05 推向 MolmoAct2 级别——必须有显式推理、完全开放数据、4×A100 门槛、7 项以上基准超越；(2) Action Reasoning Token 范式预计 2-3 个月内会被国内 OpenVLA-CN、HY-Embodied、星动纪元、自变量等团队全面吸收；(3) Molmo2-ER 共享 backbone 路线为多模态基础模型 → 具身控制器的范式跨越提供完整工程蓝图；(4) 商业落地最快方向：开放科研机器人平台、教育/比赛机器人、桌面级灵巧操作。Allen AI 的非营利属性也意味着这套方案不存在专利或商业授权风险，将成为 2026 H2 全球高校机器人研究的默认基线。",
+  "abstract": "Vision-Language-Action (VLA) models aim to provide a single generalist controller for robots, but today's systems fall short on the criteria that matter for real-world deployment: openness, generalization, and verifiability of decisions. Frontier models like Pi-05 dominate evaluations but ship as closed weights, limiting research transparency. We present MolmoAct2, an open family of action reasoning models for robot control and real-world deployment. MolmoAct2 builds on the Molmo2-ER embodied-reasoning vision-language backbone, adds a robot-specific tokenizer for actions, and introduces Action Reasoning Tokens that explicitly generate ~100-token rationales before producing continuous action chunks. We release model weights, training code, and a 13M-token Action Reasoning dataset under permissive licenses, with full training runnable on 4xA100 GPUs. In the most extensive empirical study of any open VLA to date, spanning 7 simulation and real-world benchmarks (LIBERO-Long, SimplerEnv-Bridge, SimplerEnv-Google, CALVIN-D-D, Bridge-V2 Franka, Allegro-Hand, UR5-Real), MolmoAct2 outperforms strong baselines including Pi-05 by 4.7% on average and 9.3% on long-horizon tasks. Ablations confirm the necessity of action reasoning trace, embodied-reasoning backbone, and joint sim+real co-training.",
+  "methodSummary": "【架构】Molmo2-ER 视觉-语言主干（共享 Molmo2 family 推理能力）+ Action Tokenizer（机器人专用动作离散化器）+ Action Reasoning Head（生成 100-token 推理 trace）+ Continuous Action Chunk Decoder（输出 4-16 步连续动作）。【训练】三阶段：(1) Vision-Language 预训练（Molmo2-ER 共享）；(2) Action Reasoning Mid-training，13M token 推理数据集，让模型学会\"先推理再动作\"；(3) Action 精调，sim+real 联合训练 7 项基准对应数据集。【损失函数】L_total = L_reason (trace 自回归) + L_action (chunk MSE) + L_grounding (视觉 grounding 辅助)。【部署】4×A100 推理；动作输出频率 30-50 Hz；100-token trace 可用于人类审计与异常检测。【关键消融】无 reasoning trace 性能跌 7.2%；用 Llama 替换 Molmo2-ER 跌 5.8%；只 sim 不 real 跌 11%；都证明三大设计的必要性。"
+}

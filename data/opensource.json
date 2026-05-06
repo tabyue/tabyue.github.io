@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-05T13:30",
+  "lastUpdated": "2026-05-06T10:30",
   "categories": [
     {
       "id": "all",
@@ -44,6 +44,34 @@
   ],
   "projects": [
     {
+      "id": "os082",
+      "name": "MolmoAct2 (Allen AI 开放 VLA)",
+      "github": "https://github.com/allenai/molmoact2",
+      "organization": "Allen Institute for AI (Ai2)",
+      "category": "ai-model",
+      "description": "Allen AI 2026-05-05 同步 arXiv 论文（2605.02881）发布的最新一代开放 Vision-Language-Action 模型。基于 Molmo2-ER 具身推理 backbone，引入 Action Reasoning Token（执行动作前先生成 100-token 显式推理 trace），覆盖 7 项 sim+real 基准全面超越 Pi-05（平均 +4.7%，长程 +9.3%）。完整开放权重、训练代码与 13M token Action Reasoning 数据集，4×A100 即可训练，是 Pi-05 算力门槛的 1/3。是迄今任何开源 VLA 中最大规模实证研究。",
+      "language": "Python",
+      "license": "Apache 2.0",
+      "features": [
+        "Molmo2-ER 共享 backbone：与 Allen AI 视觉-语言模型完全共享，一次预训练即可服务通用问答+机器人控制+导航",
+        "Action Reasoning Token：执行动作前生成 ~100 token 显式推理 trace，从根本上把 VLA 从黑盒转化为\"会解释\"的可审计控制器",
+        "完整开放：模型权重 + 训练代码 + 13M token 推理数据集 + Docker 一键部署，4×A100 GPU 即可训练（Pi-05 需 12×A100）",
+        "7 项基准全面 SOTA：LIBERO-Long / SimplerEnv-Bridge / SimplerEnv-Google / CALVIN-D-D / Bridge-V2 Franka / Allegro-Hand / UR5 真机",
+        "推理动作频率 30-50 Hz，可在 2×A100 推理；100-token trace 自带人类可审计的失败诊断能力"
+      ],
+      "stars": "刚发布",
+      "tags": [
+        "VLA",
+        "开放模型",
+        "Action Reasoning",
+        "Allen AI",
+        "开源",
+        "基础模型",
+        "Pi-05替代"
+      ],
+      "addedDate": "2026-05-06"
+    },
+    {
       "id": "os081",
       "name": "MemoryVLA (ICLR 2026 Spotlight)",
       "organization": "CUHK × NUS × Shenzhen Lab",
@@ -65,6 +93,25 @@
       "addedDate": "2026-05-05"
     },
     {
+      "id": "os063",
+      "name": "OpenArm",
+      "organization": "OpenArm Community",
+      "category": "开源硬件",
+      "description": "完全开源的 7-DOF 人形机械臂，面向物理 AI 研究与接触丰富场景部署。2026 年 4 月发布，所有硬件设计（CAD、BOM、PCB 原理图）与驱动固件（FOC、串联弹性关节控制）开源，同时附带 MuJoCo / Isaac Sim 仿真 URDF、RL 步态控制器示范代码与 ROS 2 接口。单臂总成本可控制在 2000 美元以下，针对高校实验室与独立开发者极度友好。可与 LeRobot、OpenVLA 等软件栈无缝衔接。",
+      "language": "Python + C++",
+      "stars": "官方站 openarm.io",
+      "github": "https://github.com/OpenArmProject",
+      "tags": [
+        "OpenArm",
+        "开源硬件",
+        "7DOF",
+        "机械臂",
+        "物理AI",
+        "接触丰富"
+      ],
+      "addedDate": "2026-05-01"
+    },
+    {
       "id": "os062",
       "name": "Isaac GR00T N1.7",
       "organization": "NVIDIA",
@@ -84,23 +131,27 @@
       "addedDate": "2026-05-01"
     },
     {
-      "id": "os063",
-      "name": "OpenArm",
-      "organization": "OpenArm Community",
-      "category": "开源硬件",
-      "description": "完全开源的 7-DOF 人形机械臂，面向物理 AI 研究与接触丰富场景部署。2026 年 4 月发布，所有硬件设计（CAD、BOM、PCB 原理图）与驱动固件（FOC、串联弹性关节控制）开源，同时附带 MuJoCo / Isaac Sim 仿真 URDF、RL 步态控制器示范代码与 ROS 2 接口。单臂总成本可控制在 2000 美元以下，针对高校实验室与独立开发者极度友好。可与 LeRobot、OpenVLA 等软件栈无缝衔接。",
-      "language": "Python + C++",
-      "stars": "官方站 openarm.io",
-      "github": "https://github.com/OpenArmProject",
+      "id": "os082",
+      "name": "AGIBOT WORLD 2026",
+      "organization": "智元机器人 × 上海人工智能实验室",
+      "category": "数据集",
+      "description": "智元 AGIBOT WORLD 数据集 2026 年大版本升级：500+ 真实场景任务（家庭/工业/服务/医疗/巡检十大领域）、5+ 跨本体（G1/X1/X2-N/Lingbot 等）、30M+ episode（基础版）、800 万 + 小时操作时长。每条 episode 同步记录 RGB-D 多视角、6D 末端、关节力矩、双手腕 F/T、22 自由度灵巧手、第一视角文本指令、人类标注的 trace 关键帧+字幕——首次把 trace 标注作为标准字段，直接支持 IVLR / MemoryVLA 等需要 trace 监督的训练范式。基础版 CC-BY-NC 4.0 学术免费，企业版分级订阅。已被 NVIDIA GR00T、智元 GO-2、自变量 WALL-B 等产品线采用。配套 Hugging Face datasets 加载器和 LeRobot/RLDS 双格式工具链。",
+      "language": "Python / Parquet / RLDS",
+      "stars": "1.2k+",
+      "github": "https://github.com/OpenDriveLab/AgiBot-World",
       "tags": [
-        "OpenArm",
-        "开源硬件",
-        "7DOF",
-        "机械臂",
-        "物理AI",
-        "接触丰富"
+        "AGIBOT WORLD",
+        "智元",
+        "数据集",
+        "跨本体",
+        "500任务",
+        "OpenX-Embodiment",
+        "trace标注",
+        "LeRobot",
+        "RLDS",
+        "CC-BY-NC"
       ],
-      "addedDate": "2026-05-01"
+      "addedDate": "2026-04-30"
     },
     {
       "id": "os061",
@@ -611,6 +662,42 @@
       "url": "https://arxiv.org/abs/2604.14125"
     },
     {
+      "name": "OpenCLI (万物皆可CLI)",
+      "org": "jackwener",
+      "description": "通过Chrome浏览器将网站和Electron应用CLI化的开源工具。内置80+命令覆盖30+站点，支持B站、知乎、小红书、YouTube等平台操作。核心架构：CLI命令→本地Daemon→WebSocket→Chrome扩展→网页操作。提供explore/synthesize/cascade三个AI Agent专属命令，可自动发现API、生成CLI适配器、探测认证策略。为AI Agent提供确定性强的结构化软件控制接口。",
+      "github": "https://github.com/jackwener/opencli",
+      "stars": "2.3k",
+      "tags": [
+        "AI Agent",
+        "CLI",
+        "Chrome Extension",
+        "WebSocket",
+        "CDP",
+        "工具链"
+      ],
+      "category": "framework",
+      "addedDate": "2026-04-20",
+      "id": "os065"
+    },
+    {
+      "name": "CLI-Anything (源码级CLI化)",
+      "org": "HKUDS (香港大学)",
+      "description": "从源代码出发将开源桌面软件CLI化的框架。扫描源码将GUI映射到底层API，用Python Click框架自动生成CLI接口。支持GIMP、Blender、Audacity、LibreOffice等主流开源软件，为AI Agent操控3D建模、图像处理等工具提供程序化接口。与OpenCLI互补，合力覆盖几乎所有软件的CLI化需求。",
+      "github": "https://github.com/HKUDS/CLI-Anything",
+      "stars": "15k",
+      "tags": [
+        "AI Agent",
+        "CLI",
+        "Blender",
+        "源码分析",
+        "Python Click",
+        "桌面软件"
+      ],
+      "category": "framework",
+      "addedDate": "2026-04-20",
+      "id": "os064"
+    },
+    {
       "name": "RUKA-v2 (开源腱驱动灵巧手)",
       "org": "RUKA Hand Project",
       "description": "RUKA-v2是完全开源的腱驱动五指灵巧手第二代，相比v1大幅提升灵活性和耐用性。采用腱驱动方案，16自由度，支持精密抓取和力反馈。提供完整的3D打印文件、BOM清单、装配指南和控制代码，总硬件成本约$2000。专为机器人灵巧操作研究设计，降低了灵巧手硬件门槛。",
@@ -662,108 +749,36 @@
       "id": "os031"
     },
     {
-      "name": "CLI-Anything (源码级CLI化)",
-      "org": "HKUDS (香港大学)",
-      "description": "从源代码出发将开源桌面软件CLI化的框架。扫描源码将GUI映射到底层API，用Python Click框架自动生成CLI接口。支持GIMP、Blender、Audacity、LibreOffice等主流开源软件，为AI Agent操控3D建模、图像处理等工具提供程序化接口。与OpenCLI互补，合力覆盖几乎所有软件的CLI化需求。",
-      "github": "https://github.com/HKUDS/CLI-Anything",
-      "stars": "15k",
-      "tags": [
-        "AI Agent",
-        "CLI",
-        "Blender",
-        "源码分析",
-        "Python Click",
-        "桌面软件"
-      ],
-      "category": "framework",
-      "addedDate": "2026-04-20",
-      "id": "os064"
-    },
-    {
-      "name": "OpenCLI (万物皆可CLI)",
-      "org": "jackwener",
-      "description": "通过Chrome浏览器将网站和Electron应用CLI化的开源工具。内置80+命令覆盖30+站点，支持B站、知乎、小红书、YouTube等平台操作。核心架构：CLI命令→本地Daemon→WebSocket→Chrome扩展→网页操作。提供explore/synthesize/cascade三个AI Agent专属命令，可自动发现API、生成CLI适配器、探测认证策略。为AI Agent提供确定性强的结构化软件控制接口。",
-      "github": "https://github.com/jackwener/opencli",
-      "stars": "2.3k",
-      "tags": [
-        "AI Agent",
-        "CLI",
-        "Chrome Extension",
-        "WebSocket",
-        "CDP",
-        "工具链"
-      ],
-      "category": "framework",
-      "addedDate": "2026-04-20",
-      "id": "os065"
-    },
-    {
-      "name": "ACoT-VLA (动作思维链VLA)",
-      "org": "AGIBOT (智元机器人) / 北京航空航天大学",
-      "description": "CVPR 2026入选的VLA新范式。引入Action Chain-of-Thought，将推理过程形式化为粗粒度动作意图序列来引导最终策略，弥合语义理解与精确控制的鸿沟。提供完整的训练、推理代码和预训练权重。",
-      "github": "https://github.com/AgibotTech/ACoT-VLA",
-      "stars": "1.8k",
-      "tags": [
-        "VLA",
-        "CVPR 2026",
-        "动作推理",
-        "Chain-of-Thought",
-        "智元"
-      ],
-      "category": "ai-model",
-      "addedDate": "2026-04-19",
-      "id": "os066"
-    },
-    {
-      "name": "Embodied-R1 (具身推理VLM)",
-      "org": "天津大学",
-      "description": "3B参数的视觉语言模型(VLM)，通过创新的Pointing中间表征和强化微调(RFT)实现通用机器人操作。Pointing机制让同一模型无需重新训练即可适配不同机器人本体，在5种机械臂上验证了泛化能力。",
-      "github": "https://embodied-r1.github.io/",
-      "stars": "1.2k",
-      "tags": [
-        "VLM",
-        "3B",
-        "Pointing",
-        "本体无关",
-        "强化微调"
-      ],
-      "category": "ai-model",
-      "addedDate": "2026-04-19",
-      "id": "os067"
-    },
-    {
-      "name": "LingBot-Map (流式3D重建)",
-      "org": "蚂蚁灵波 / Robbyant / Ant Group",
-      "description": "前馈式3D基础模型，仅需普通RGB摄像头即可实现流式场景三维重建。核心创新：几何上下文Transformer统一坐标定位、稠密几何线索和长程漂移校正。摒弃传统SLAM/NeRF的迭代优化范式，采用纯自回归式建模。已在HuggingFace发布模型权重。",
-      "github": "https://github.com/robbyant/lingbot-map",
+      "name": "ROS-LLM (Nature)",
+      "org": "ETH Zurich / 多机构",
+      "description": "发表在Nature Machine Intelligence的LLM+ROS通用具身智能框架。使非专业用户可通过自然语言提示直观编程机器人，实现从自然语言指令到物理执行的完整闭环。框架利用ROS上下文信息（传感器数据、机器人状态等）增强LLM的理解能力，完整实现已开源。",
+      "github": "https://github.com/huawei-noah/HEBO/tree/master/ROSLLM",
       "stars": "3.5k",
       "tags": [
-        "3D重建",
-        "流式推理",
-        "几何Transformer",
-        "蚂蚁集团",
-        "基础模型"
+        "LLM",
+        "ROS",
+        "Nature",
+        "自然语言编程"
       ],
-      "category": "perception",
+      "category": "framework",
       "addedDate": "2026-04-19",
-      "id": "os068"
+      "id": "os072"
     },
     {
-      "name": "LBM-DiT (多任务扩散策略)",
-      "org": "Toyota Research Institute / Boston Dynamics",
-      "description": "登Science Robotics的大行为模型(LBM)开源实现。基于Diffusion Transformer(DiT)架构的多任务机器人操作策略，在大规模仿真+真实数据上预训练后，仅需5-10个demo即可适应新任务。已在Boston Dynamics Atlas人形机器人上验证。提供完整的训练、微调和推理代码。",
-      "github": "https://github.com/brysonjones/multitask_dit_policy",
-      "stars": "2.8k",
+      "name": "HiVLA",
+      "org": "Shanghai Jiao Tong University",
+      "description": "以视觉定位为中心的分层具身操作系统。HiVLA将高层语义规划与底层电机控制解耦——高层VLM通过Visual Grounding指向目标，底层动作模型负责精确控制。这种分层设计避免了端到端VLA在控制数据微调时的能力退化问题，在SimplerEnv基准和真实机器人实验中超越SOTA端到端方法。",
+      "github": "https://arxiv.org/abs/2604.14125",
+      "stars": "新发布",
       "tags": [
-        "LBM",
-        "Diffusion Policy",
-        "DiT",
-        "Science Robotics",
-        "多任务"
+        "VLA",
+        "分层架构",
+        "视觉定位",
+        "操作"
       ],
       "category": "ai-model",
       "addedDate": "2026-04-19",
-      "id": "os069"
+      "id": "os071"
     },
     {
       "name": "RealMirror (VLA全栈平台)",
@@ -783,100 +798,72 @@
       "id": "os070"
     },
     {
-      "name": "HiVLA",
-      "org": "Shanghai Jiao Tong University",
-      "description": "以视觉定位为中心的分层具身操作系统。HiVLA将高层语义规划与底层电机控制解耦——高层VLM通过Visual Grounding指向目标，底层动作模型负责精确控制。这种分层设计避免了端到端VLA在控制数据微调时的能力退化问题，在SimplerEnv基准和真实机器人实验中超越SOTA端到端方法。",
-      "github": "https://arxiv.org/abs/2604.14125",
-      "stars": "新发布",
+      "name": "LBM-DiT (多任务扩散策略)",
+      "org": "Toyota Research Institute / Boston Dynamics",
+      "description": "登Science Robotics的大行为模型(LBM)开源实现。基于Diffusion Transformer(DiT)架构的多任务机器人操作策略，在大规模仿真+真实数据上预训练后，仅需5-10个demo即可适应新任务。已在Boston Dynamics Atlas人形机器人上验证。提供完整的训练、微调和推理代码。",
+      "github": "https://github.com/brysonjones/multitask_dit_policy",
+      "stars": "2.8k",
       "tags": [
-        "VLA",
-        "分层架构",
-        "视觉定位",
-        "操作"
+        "LBM",
+        "Diffusion Policy",
+        "DiT",
+        "Science Robotics",
+        "多任务"
       ],
       "category": "ai-model",
       "addedDate": "2026-04-19",
-      "id": "os071"
+      "id": "os069"
     },
     {
-      "name": "ROS-LLM (Nature)",
-      "org": "ETH Zurich / 多机构",
-      "description": "发表在Nature Machine Intelligence的LLM+ROS通用具身智能框架。使非专业用户可通过自然语言提示直观编程机器人，实现从自然语言指令到物理执行的完整闭环。框架利用ROS上下文信息（传感器数据、机器人状态等）增强LLM的理解能力，完整实现已开源。",
-      "github": "https://github.com/huawei-noah/HEBO/tree/master/ROSLLM",
+      "name": "LingBot-Map (流式3D重建)",
+      "org": "蚂蚁灵波 / Robbyant / Ant Group",
+      "description": "前馈式3D基础模型，仅需普通RGB摄像头即可实现流式场景三维重建。核心创新：几何上下文Transformer统一坐标定位、稠密几何线索和长程漂移校正。摒弃传统SLAM/NeRF的迭代优化范式，采用纯自回归式建模。已在HuggingFace发布模型权重。",
+      "github": "https://github.com/robbyant/lingbot-map",
       "stars": "3.5k",
       "tags": [
-        "LLM",
-        "ROS",
-        "Nature",
-        "自然语言编程"
+        "3D重建",
+        "流式推理",
+        "几何Transformer",
+        "蚂蚁集团",
+        "基础模型"
       ],
-      "category": "framework",
+      "category": "perception",
       "addedDate": "2026-04-19",
-      "id": "os072"
+      "id": "os068"
     },
     {
-      "name": "RoboClaw",
-      "org": "MINT Lab / 上海交通大学",
-      "description": "首个面向具身智能的开源AI助手框架。RoboClaw通过对话式交互实现机械臂的设置、校准、遥操作、数据采集、训练和推理全流程。支持任意本体和任意环境，提供从自然语言指令到物理执行的完整管线。基于OpenClaw助手系统向真实世界延伸。",
-      "github": "https://github.com/MINT-SJTU/RoboClaw",
-      "stars": "1.5k",
+      "name": "Embodied-R1 (具身推理VLM)",
+      "org": "天津大学",
+      "description": "3B参数的视觉语言模型(VLM)，通过创新的Pointing中间表征和强化微调(RFT)实现通用机器人操作。Pointing机制让同一模型无需重新训练即可适配不同机器人本体，在5种机械臂上验证了泛化能力。",
+      "github": "https://embodied-r1.github.io/",
+      "stars": "1.2k",
       "tags": [
-        "AI助手",
-        "具身智能",
-        "对话式",
-        "全流程"
-      ],
-      "category": "framework",
-      "addedDate": "2026-04-18",
-      "id": "os073"
-    },
-    {
-      "name": "Kairos 3.0-4B (世界模型)",
-      "org": "大晓机器人 (ACE Robotics) / 商汤科技",
-      "description": "首个原生具身世界模型，4B参数。核心创新是混合线性注意力算子，将时序复杂度从O(n²)降至O(n)，支持7分钟长时连贯场景的动态交互预测。在物理一致性和跨本体泛化上达到SOTA，支持实时推理(>10FPS)。",
-      "github": "https://github.com/kairos-agi/kairos-sensenova",
-      "stars": "2.0k",
-      "tags": [
-        "世界模型",
-        "线性注意力",
-        "实时推理",
-        "4B"
+        "VLM",
+        "3B",
+        "Pointing",
+        "本体无关",
+        "强化微调"
       ],
       "category": "ai-model",
-      "addedDate": "2026-04-18",
-      "id": "os074"
+      "addedDate": "2026-04-19",
+      "id": "os067"
     },
     {
-      "name": "DORA-rs",
-      "org": "dora-rs Community",
-      "description": "基于Rust的新一代机器人数据流中间件（Dataflow Oriented Robotic Architecture），提供统一的数据流建模和低延迟通信。已发表于arXiv，在延迟和吞吐量上显著优于ROS2。支持Python/Rust/C++多语言，零拷贝传输，适合构建高性能具身AI应用。",
-      "github": "https://github.com/dora-rs/dora",
-      "stars": "3.5k",
-      "tags": [
-        "中间件",
-        "Rust",
-        "数据流",
-        "高性能"
-      ],
-      "category": "framework",
-      "addedDate": "2026-04-18",
-      "id": "os077"
-    },
-    {
-      "name": "ViVa (Video-generative Value Model)",
-      "org": "GigaAI / Tsinghua / Sichuan Univ.",
-      "description": "将预训练视频生成模型重新用作机器人强化学习的价值函数。通过预测未来视觉观察和本体感受状态来估计任务进展，无需人工设计奖励函数。在VLA模型的RL微调中提升35%+任务成功率。",
-      "github": "https://viva-value-model.github.io/",
-      "stars": "500+",
+      "name": "ACoT-VLA (动作思维链VLA)",
+      "org": "AGIBOT (智元机器人) / 北京航空航天大学",
+      "description": "CVPR 2026入选的VLA新范式。引入Action Chain-of-Thought，将推理过程形式化为粗粒度动作意图序列来引导最终策略，弥合语义理解与精确控制的鸿沟。提供完整的训练、推理代码和预训练权重。",
+      "github": "https://github.com/AgibotTech/ACoT-VLA",
+      "stars": "1.8k",
       "tags": [
         "VLA",
-        "强化学习",
-        "价值函数",
-        "视频生成"
+        "CVPR 2026",
+        "动作推理",
+        "Chain-of-Thought",
+        "智元"
       ],
       "category": "ai-model",
-      "addedDate": "2026-04-18",
-      "id": "os078"
+      "addedDate": "2026-04-19",
+      "id": "os066"
     },
     {
       "name": "AGIBOT WORLD 2026",
@@ -895,47 +882,479 @@
       "id": "os080"
     },
     {
-      "id": "os001",
-      "name": "LeRobot",
-      "org": "Hugging Face",
-      "github": "https://github.com/huggingface/lerobot",
-      "stars": "12.5k+",
+      "name": "ViVa (Video-generative Value Model)",
+      "org": "GigaAI / Tsinghua / Sichuan Univ.",
+      "description": "将预训练视频生成模型重新用作机器人强化学习的价值函数。通过预测未来视觉观察和本体感受状态来估计任务进展，无需人工设计奖励函数。在VLA模型的RL微调中提升35%+任务成功率。",
+      "github": "https://viva-value-model.github.io/",
+      "stars": "500+",
       "tags": [
-        "框架",
+        "VLA",
+        "强化学习",
+        "价值函数",
+        "视频生成"
+      ],
+      "category": "ai-model",
+      "addedDate": "2026-04-18",
+      "id": "os078"
+    },
+    {
+      "name": "DORA-rs",
+      "org": "dora-rs Community",
+      "description": "基于Rust的新一代机器人数据流中间件（Dataflow Oriented Robotic Architecture），提供统一的数据流建模和低延迟通信。已发表于arXiv，在延迟和吞吐量上显著优于ROS2。支持Python/Rust/C++多语言，零拷贝传输，适合构建高性能具身AI应用。",
+      "github": "https://github.com/dora-rs/dora",
+      "stars": "3.5k",
+      "tags": [
+        "中间件",
+        "Rust",
+        "数据流",
+        "高性能"
+      ],
+      "category": "framework",
+      "addedDate": "2026-04-18",
+      "id": "os077"
+    },
+    {
+      "name": "Kairos 3.0-4B (世界模型)",
+      "org": "大晓机器人 (ACE Robotics) / 商汤科技",
+      "description": "首个原生具身世界模型，4B参数。核心创新是混合线性注意力算子，将时序复杂度从O(n²)降至O(n)，支持7分钟长时连贯场景的动态交互预测。在物理一致性和跨本体泛化上达到SOTA，支持实时推理(>10FPS)。",
+      "github": "https://github.com/kairos-agi/kairos-sensenova",
+      "stars": "2.0k",
+      "tags": [
+        "世界模型",
+        "线性注意力",
+        "实时推理",
+        "4B"
+      ],
+      "category": "ai-model",
+      "addedDate": "2026-04-18",
+      "id": "os074"
+    },
+    {
+      "name": "RoboClaw",
+      "org": "MINT Lab / 上海交通大学",
+      "description": "首个面向具身智能的开源AI助手框架。RoboClaw通过对话式交互实现机械臂的设置、校准、遥操作、数据采集、训练和推理全流程。支持任意本体和任意环境，提供从自然语言指令到物理执行的完整管线。基于OpenClaw助手系统向真实世界延伸。",
+      "github": "https://github.com/MINT-SJTU/RoboClaw",
+      "stars": "1.5k",
+      "tags": [
+        "AI助手",
+        "具身智能",
+        "对话式",
+        "全流程"
+      ],
+      "category": "framework",
+      "addedDate": "2026-04-18",
+      "id": "os073"
+    },
+    {
+      "id": "os030",
+      "name": "DVC (Data Version Control)",
+      "org": "Iterative.ai",
+      "github": "https://github.com/iterative/dvc",
+      "stars": "14k+",
+      "tags": [
+        "MLOps",
+        "数据管理"
+      ],
+      "description": "数据版本管理工具(Git for Data)。用Git管理代码+DVC管理大型数据集，支持远程存储(S3/GCS)、数据Pipeline、实验复现。机器人数据集管理必备。",
+      "category": "data-tools"
+    },
+    {
+      "id": "os029",
+      "name": "Rerun",
+      "org": "Rerun.io",
+      "github": "https://github.com/rerun-io/rerun",
+      "stars": "7k+",
+      "tags": [
+        "可视化",
+        "工具"
+      ],
+      "description": "多模态数据可视化工具。支持3D点云、机器人轨迹、图像时间线、传感器数据同步展示。调试机器人系统必备。",
+      "category": "data-tools"
+    },
+    {
+      "id": "os028",
+      "name": "RoboCasa",
+      "org": "UT Austin / NVIDIA",
+      "github": "https://github.com/robocasa/robocasa",
+      "stars": "1k+",
+      "tags": [
+        "仿真",
+        "Benchmark"
+      ],
+      "description": "大规模厨房/家庭仿真平台。100+任务、数千种物体，AI生成多样化场景。具身智能的ImageNet级benchmark。",
+      "category": "simulation"
+    },
+    {
+      "id": "os027",
+      "name": "UMI (Universal Manipulation Interface)",
+      "org": "Columbia",
+      "github": "https://github.com/real-stanford/universal_manipulation_interface",
+      "stars": "1.5k+",
+      "tags": [
+        "数据采集",
+        "遥操作"
+      ],
+      "description": "Columbia大学的通用操作数据采集接口。低成本手持夹爪方案（~$300），无需leader机械臂就能采集高质量操作演示数据，降低数据采集门槛。",
+      "category": "hardware"
+    },
+    {
+      "id": "os026",
+      "name": "FoundationPose",
+      "org": "NVIDIA",
+      "github": "https://github.com/NVlabs/FoundationPose",
+      "stars": "2k+",
+      "tags": [
+        "视觉",
+        "位姿估计"
+      ],
+      "description": "NVIDIA的零样本6DoF物体位姿估计模型。给一个CAD模型或几张参考图就能估计任意物体的精确位姿。抓取规划的上游。",
+      "category": "perception"
+    },
+    {
+      "id": "os025",
+      "name": "Robotics Toolbox Python",
+      "org": "Peter Corke",
+      "github": "https://github.com/petercorke/robotics-toolbox-python",
+      "stars": "2k+",
+      "tags": [
+        "运动学",
+        "教育"
+      ],
+      "description": "Python机器人学工具箱。内置常见机器人模型(Panda/UR5等)，可视化正逆运动学、Jacobian、轨迹规划。教学和验证利器。",
+      "category": "data-tools"
+    },
+    {
+      "id": "os024",
+      "name": "LEAP Hand",
+      "org": "CMU",
+      "github": "https://github.com/leap-hand/LEAP_Hand_Sim",
+      "stars": "1k+",
+      "tags": [
+        "灵巧手",
+        "硬件"
+      ],
+      "description": "16自由度灵巧手，全开源（机械设计+控制代码+URDF+仿真环境）。可3D打印复制，用于灵巧操作研究。",
+      "category": "hardware"
+    },
+    {
+      "id": "os023",
+      "name": "PyBullet",
+      "org": "Erwin Coumans",
+      "github": "https://github.com/bulletphysics/bullet3",
+      "stars": "12k+",
+      "tags": [
+        "仿真",
+        "物理引擎"
+      ],
+      "description": "开源物理仿真引擎，Python接口友好。支持刚体/软体/机器人仿真，pybullet是RL入门最简单的仿真环境。",
+      "category": "simulation"
+    },
+    {
+      "id": "os022",
+      "name": "Humanoid Gym",
+      "org": "RobotEra",
+      "github": "https://github.com/roboterax/humanoid-gym",
+      "stars": "2k+",
+      "tags": [
+        "人形",
+        "强化学习"
+      ],
+      "description": "开源人形机器人RL训练框架。PPO+Domain Randomization+Teacher-Student蒸馏，在宇树H1等人形平台上实现零样本Sim2Real步态迁移。",
+      "category": "locomotion"
+    },
+    {
+      "id": "os021",
+      "name": "Nav2",
+      "org": "Open Navigation",
+      "github": "https://github.com/ros-navigation/navigation2",
+      "stars": "2.5k+",
+      "tags": [
+        "导航",
+        "ROS2"
+      ],
+      "description": "ROS2移动机器人导航框架。全局规划+局部避障+代价地图+恢复行为，TurtleBot3等平台的导航标准方案。",
+      "category": "locomotion"
+    },
+    {
+      "id": "os020",
+      "name": "MoveIt2",
+      "org": "PickNik Robotics",
+      "github": "https://github.com/moveit/moveit2",
+      "stars": "2.5k+",
+      "tags": [
+        "运动规划",
+        "ROS2"
+      ],
+      "description": "ROS2机械臂运动规划框架。基于OMPL采样规划器(RRT/PRM)，支持碰撞检测、轨迹优化、伺服控制。机械臂项目标配。",
+      "category": "locomotion"
+    },
+    {
+      "id": "os019",
+      "name": "Octo",
+      "org": "UC Berkeley / Stanford",
+      "github": "https://github.com/octo-models/octo",
+      "stars": "4k+",
+      "tags": [
+        "VLA",
+        "模仿学习"
+      ],
+      "description": "93M参数的开源通用机器人策略模型。Transformer骨干+Diffusion动作头，在OXE数据集上预训练，支持微调到新机器人。",
+      "category": "ai-model"
+    },
+    {
+      "id": "os018",
+      "name": "Grounding DINO",
+      "org": "IDEA Research",
+      "github": "https://github.com/IDEA-Research/GroundingDINO",
+      "stars": "7k+",
+      "tags": [
+        "视觉",
+        "检测"
+      ],
+      "description": "开放词汇目标检测。输入文字描述就能检测对应物体，不需要预定义类别。和SAM结合实现'说什么检测什么'。",
+      "category": "perception"
+    },
+    {
+      "id": "os017",
+      "name": "Segment Anything (SAM)",
+      "org": "Meta AI",
+      "github": "https://github.com/facebookresearch/segment-anything",
+      "stars": "48k+",
+      "tags": [
+        "视觉",
+        "分割"
+      ],
+      "description": "Meta的通用分割模型。给一个点/框提示就能分割任意物体，zero-shot泛化能力极强。机器人抓取Pipeline必备。",
+      "category": "perception"
+    },
+    {
+      "id": "os016",
+      "name": "Pinocchio",
+      "org": "LAAS-CNRS / INRIA",
+      "github": "https://github.com/stack-of-tasks/pinocchio",
+      "stars": "2k+",
+      "tags": [
+        "动力学",
+        "运动学",
+        "C++"
+      ],
+      "description": "高效的机器人刚体动力学C++库。支持RNEA/ABA/CRBA等算法，Python绑定完善，MoveIt2和机器人控制器的底层引擎。",
+      "category": "locomotion"
+    },
+    {
+      "id": "os015",
+      "name": "Drake",
+      "org": "MIT / Toyota Research",
+      "github": "https://github.com/RobotLocomotion/drake",
+      "stars": "3.5k+",
+      "tags": [
+        "仿真",
+        "优化",
+        "控制"
+      ],
+      "description": "MIT开发的机器人仿真+优化+控制框架。内置LQR/MPC/逆运动学/轨迹优化求解器，Underactuated Robotics课程标配。",
+      "category": "simulation"
+    },
+    {
+      "id": "os014",
+      "name": "ACT (Action Chunking with Transformers)",
+      "org": "Stanford",
+      "github": "https://github.com/tonyzhaozh/act",
+      "stars": "3k+",
+      "tags": [
         "模仿学习",
-        "全栈"
+        "Transformer"
       ],
-      "description": "Hugging Face 推出的端到端机器人学习框架，支持数据采集、训练、评估全流程。集成 Diffusion Policy、ACT 等主流算法，支持多种硬件平台。",
+      "description": "CVAE+Transformer架构的模仿学习算法，配合ALOHA硬件50个演示就能学会精细双臂操作。LeRobot内置。",
+      "category": "ai-model"
+    },
+    {
+      "id": "os013",
+      "name": "Diffusion Policy",
+      "org": "Columbia / Stanford",
+      "github": "https://github.com/real-stanford/diffusion_policy",
+      "stars": "5k+",
+      "tags": [
+        "模仿学习",
+        "扩散模型"
+      ],
+      "description": "基于扩散去噪的机器人策略学习框架。天然支持多模态动作分布，Push-T/抓取等任务SOTA。配套论文、代码和预训练模型。",
+      "category": "ai-model"
+    },
+    {
+      "id": "os012",
+      "name": "ROS2 (Robot Operating System 2)",
+      "org": "Open Robotics / OSRF",
+      "github": "https://github.com/ros2",
+      "stars": "N/A",
+      "tags": [
+        "中间件",
+        "通信框架",
+        "标准"
+      ],
+      "description": "机器人软件开发的事实标准框架。基于DDS的发布/订阅通信，支持实时、多机器人、跨平台。Nav2导航+MoveIt2规划+TF2坐标变换，生态最完善。",
       "highlights": [
-        "统一的数据格式和 Hub 生态",
-        "支持 SO-100、Koch v1.1 等多种低成本机械臂",
-        "内置 Diffusion Policy、ACT、TDMPC 等算法",
-        "完善的训练和评估 Pipeline"
+        "DDS 分布式通信，低延迟高可靠",
+        "丰富的工具链 (rviz2, rosbag2, tf2)",
+        "Nav2 导航 + MoveIt2 运动规划",
+        "支持实时系统和安全关键应用"
       ],
-      "getStarted": "pip install lerobot → 下载预训练模型 → 在仿真中评估 → 连接真实机械臂",
-      "difficulty": "入门友好",
+      "getStarted": "安装 ROS2 Humble → 完成 Tutorials → 编写第一个节点 → 集成仿真器",
+      "difficulty": "中级",
       "category": "framework"
     },
     {
-      "id": "os002",
-      "name": "MuJoCo",
-      "org": "Google DeepMind",
-      "github": "https://github.com/google-deepmind/mujoco",
-      "stars": "8.5k+",
+      "id": "os011",
+      "name": "ORB-SLAM3",
+      "org": "Universidad de Zaragoza",
+      "github": "https://github.com/UZ-SLAMLab/ORB_SLAM3",
+      "stars": "6.5k+",
       "tags": [
-        "仿真",
-        "物理引擎",
+        "SLAM",
+        "视觉定位",
         "C++"
       ],
-      "description": "Multi-Joint dynamics with Contact，业界最流行的机器人物理仿真引擎。以精确的接触动力学和高效的仿真速度著称。",
+      "description": "最经典的视觉SLAM系统。支持单目/双目/RGB-D/IMU多种传感器，特征点法+图优化后端+回环检测。精度高、鲁棒性好，SLAM研究的基准参考。",
       "highlights": [
-        "精确的刚体接触动力学",
-        "Python 绑定 (mujoco-py / dm_control)",
-        "极高的仿真效率，适合大规模 RL 训练",
-        "丰富的机器人模型库"
+        "支持单目/双目/RGB-D/IMU 多种配置",
+        "多地图系统，支持地图合并",
+        "实时重定位和回环检测",
+        "Atlas 多地图管理系统"
       ],
-      "getStarted": "pip install mujoco → 加载 MJCF 模型 → 运行仿真 → 渲染可视化",
+      "getStarted": "安装 OpenCV + Pangolin → 编译 ORB-SLAM3 → 运行 EuRoC/TUM 数据集 → 尝试实时 SLAM",
+      "difficulty": "中高级",
+      "category": "perception"
+    },
+    {
+      "id": "os010",
+      "name": "Open3D",
+      "org": "Intel ISL",
+      "github": "https://github.com/isl-org/Open3D",
+      "stars": "11k+",
+      "tags": [
+        "3D视觉",
+        "点云",
+        "重建"
+      ],
+      "description": "现代3D数据处理库(C++/Python)。支持点云读取/体素下采样/法线估计/RANSAC分割/DBSCAN聚类/ICP配准/3D可视化。机器人3D感知的瑞士军刀。",
+      "highlights": [
+        "点云处理全套工具（滤波/配准/分割）",
+        "RGBD 图像处理和 3D 重建",
+        "GPU 加速的张量操作",
+        "交互式 3D 可视化"
+      ],
+      "getStarted": "pip install open3d → 读取点云/RGBD → 预处理 → 配准/重建 → 可视化",
       "difficulty": "中级",
+      "category": "perception"
+    },
+    {
+      "id": "os009",
+      "name": "Stable Baselines3",
+      "org": "DLR-RM",
+      "github": "https://github.com/DLR-RM/stable-baselines3",
+      "stars": "9k+",
+      "tags": [
+        "RL",
+        "PyTorch",
+        "算法库"
+      ],
+      "description": "PyTorch实现的RL算法库，开箱即用。内置PPO/SAC/DQN/A2C/TD3等经典算法，API统一简洁，是RL入门和快速实验的首选工具。",
+      "highlights": [
+        "PyTorch 实现，代码清晰可读",
+        "PPO, SAC, TD3, A2C, DQN 等算法",
+        "与 Gym/Gymnasium 生态完美兼容",
+        "丰富的回调和日志功能"
+      ],
+      "getStarted": "pip install stable-baselines3 → 创建环境 → 选择算法 → model.learn() → 评估",
+      "difficulty": "入门友好",
+      "category": "ai-model"
+    },
+    {
+      "id": "os007",
+      "name": "Legged Gym",
+      "org": "ETH Zurich / NVIDIA",
+      "github": "https://github.com/leggedrobotics/legged_gym",
+      "stars": "3k+",
+      "tags": [
+        "四足机器人",
+        "RL",
+        "运动控制"
+      ],
+      "description": "ETH Zurich的足式机器人RL训练框架。基于Isaac Gym，包含完整的PPO训练+Domain Randomization+Teacher-Student蒸馏流程。四足/人形步态训练的社区标准。",
+      "highlights": [
+        "Isaac Gym GPU 并行仿真（4096 环境）",
+        "支持 ANYmal、A1 等多种四足平台",
+        "完整的 Sim2Real Pipeline",
+        "Teacher-Student 策略蒸馏"
+      ],
+      "getStarted": "安装 Isaac Gym → Clone Legged Gym → 选择机器人 → 训练 PPO → 部署",
+      "difficulty": "中高级",
+      "category": "locomotion"
+    },
+    {
+      "id": "os006",
+      "name": "ALOHA / Mobile ALOHA",
+      "org": "Stanford",
+      "github": "https://github.com/tonyzhaozh/aloha",
+      "stars": "4k+",
+      "tags": [
+        "遥操作",
+        "硬件",
+        "双臂"
+      ],
+      "description": "低成本双臂遥操作系统，配合 ACT 算法实现精细操作技能的模仿学习。Mobile ALOHA 版本增加移动底盘。",
+      "highlights": [
+        "硬件成本约 $20K，远低于工业级系统",
+        "支持 6DoF 双臂精细操作",
+        "完整的数据采集和训练 Pipeline",
+        "Mobile 版本支持移动操作任务"
+      ],
+      "getStarted": "购买/3D 打印硬件 → 组装标定 → 遥操作采集数据 → ACT 训练 → 自主执行",
+      "difficulty": "中级",
+      "category": "hardware"
+    },
+    {
+      "id": "os005",
+      "name": "OpenVLA",
+      "org": "Stanford / TRI",
+      "github": "https://github.com/openvla/openvla",
+      "stars": "2.5k+",
+      "tags": [
+        "VLA",
+        "大模型",
+        "机器人控制"
+      ],
+      "description": "开源的 Vision-Language-Action 模型，基于 Prismatic VLM 微调，支持直接输出机器人动作。",
+      "highlights": [
+        "7B 参数的开源 VLA 模型",
+        "在 Open X-Embodiment 数据集上训练",
+        "支持自然语言指令输入",
+        "可微调适配不同机器人平台"
+      ],
+      "getStarted": "下载预训练权重 → 准备少量目标数据 → LoRA 微调 → 部署推理",
+      "difficulty": "高级",
+      "category": "ai-model"
+    },
+    {
+      "id": "os004",
+      "name": "Genesis",
+      "org": "Genesis Embodied AI",
+      "github": "https://github.com/Genesis-Embodied-AI/Genesis",
+      "stars": "22k+",
+      "tags": [
+        "仿真",
+        "可微分",
+        "Python"
+      ],
+      "description": "新一代Python原生可微分物理仿真引擎，Taichi后端GPU加速，比MuJoCo快10-80x。支持刚体/软体/流体/布料多物理耦合，可微分特性允许基于梯度优化轨迹。",
+      "highlights": [
+        "纯 Python API，极低学习门槛",
+        "可微分物理引擎，支持基于梯度的优化",
+        "速度比 MuJoCo 快 10-80x（GPU 加速）",
+        "支持刚体、软体、流体、布料等多种物理"
+      ],
+      "getStarted": "pip install genesis-world → 创建场景 → 添加机器人 → 运行仿真",
+      "difficulty": "入门友好",
       "category": "simulation"
     },
     {
@@ -961,416 +1380,48 @@
       "category": "simulation"
     },
     {
-      "id": "os004",
-      "name": "Genesis",
-      "org": "Genesis Embodied AI",
-      "github": "https://github.com/Genesis-Embodied-AI/Genesis",
-      "stars": "22k+",
+      "id": "os002",
+      "name": "MuJoCo",
+      "org": "Google DeepMind",
+      "github": "https://github.com/google-deepmind/mujoco",
+      "stars": "8.5k+",
       "tags": [
         "仿真",
-        "可微分",
-        "Python"
+        "物理引擎",
+        "C++"
       ],
-      "description": "新一代Python原生可微分物理仿真引擎，Taichi后端GPU加速，比MuJoCo快10-80x。支持刚体/软体/流体/布料多物理耦合，可微分特性允许基于梯度优化轨迹。",
+      "description": "Multi-Joint dynamics with Contact，业界最流行的机器人物理仿真引擎。以精确的接触动力学和高效的仿真速度著称。",
       "highlights": [
-        "纯 Python API，极低学习门槛",
-        "可微分物理引擎，支持基于梯度的优化",
-        "速度比 MuJoCo 快 10-80x（GPU 加速）",
-        "支持刚体、软体、流体、布料等多种物理"
+        "精确的刚体接触动力学",
+        "Python 绑定 (mujoco-py / dm_control)",
+        "极高的仿真效率，适合大规模 RL 训练",
+        "丰富的机器人模型库"
       ],
-      "getStarted": "pip install genesis-world → 创建场景 → 添加机器人 → 运行仿真",
-      "difficulty": "入门友好",
+      "getStarted": "pip install mujoco → 加载 MJCF 模型 → 运行仿真 → 渲染可视化",
+      "difficulty": "中级",
       "category": "simulation"
     },
     {
-      "id": "os005",
-      "name": "OpenVLA",
-      "org": "Stanford / TRI",
-      "github": "https://github.com/openvla/openvla",
-      "stars": "2.5k+",
+      "id": "os001",
+      "name": "LeRobot",
+      "org": "Hugging Face",
+      "github": "https://github.com/huggingface/lerobot",
+      "stars": "12.5k+",
       "tags": [
-        "VLA",
-        "大模型",
-        "机器人控制"
+        "框架",
+        "模仿学习",
+        "全栈"
       ],
-      "description": "开源的 Vision-Language-Action 模型，基于 Prismatic VLM 微调，支持直接输出机器人动作。",
+      "description": "Hugging Face 推出的端到端机器人学习框架，支持数据采集、训练、评估全流程。集成 Diffusion Policy、ACT 等主流算法，支持多种硬件平台。",
       "highlights": [
-        "7B 参数的开源 VLA 模型",
-        "在 Open X-Embodiment 数据集上训练",
-        "支持自然语言指令输入",
-        "可微调适配不同机器人平台"
+        "统一的数据格式和 Hub 生态",
+        "支持 SO-100、Koch v1.1 等多种低成本机械臂",
+        "内置 Diffusion Policy、ACT、TDMPC 等算法",
+        "完善的训练和评估 Pipeline"
       ],
-      "getStarted": "下载预训练权重 → 准备少量目标数据 → LoRA 微调 → 部署推理",
-      "difficulty": "高级",
-      "category": "ai-model"
-    },
-    {
-      "id": "os006",
-      "name": "ALOHA / Mobile ALOHA",
-      "org": "Stanford",
-      "github": "https://github.com/tonyzhaozh/aloha",
-      "stars": "4k+",
-      "tags": [
-        "遥操作",
-        "硬件",
-        "双臂"
-      ],
-      "description": "低成本双臂遥操作系统，配合 ACT 算法实现精细操作技能的模仿学习。Mobile ALOHA 版本增加移动底盘。",
-      "highlights": [
-        "硬件成本约 $20K，远低于工业级系统",
-        "支持 6DoF 双臂精细操作",
-        "完整的数据采集和训练 Pipeline",
-        "Mobile 版本支持移动操作任务"
-      ],
-      "getStarted": "购买/3D 打印硬件 → 组装标定 → 遥操作采集数据 → ACT 训练 → 自主执行",
-      "difficulty": "中级",
-      "category": "hardware"
-    },
-    {
-      "id": "os007",
-      "name": "Legged Gym",
-      "org": "ETH Zurich / NVIDIA",
-      "github": "https://github.com/leggedrobotics/legged_gym",
-      "stars": "3k+",
-      "tags": [
-        "四足机器人",
-        "RL",
-        "运动控制"
-      ],
-      "description": "ETH Zurich的足式机器人RL训练框架。基于Isaac Gym，包含完整的PPO训练+Domain Randomization+Teacher-Student蒸馏流程。四足/人形步态训练的社区标准。",
-      "highlights": [
-        "Isaac Gym GPU 并行仿真（4096 环境）",
-        "支持 ANYmal、A1 等多种四足平台",
-        "完整的 Sim2Real Pipeline",
-        "Teacher-Student 策略蒸馏"
-      ],
-      "getStarted": "安装 Isaac Gym → Clone Legged Gym → 选择机器人 → 训练 PPO → 部署",
-      "difficulty": "中高级",
-      "category": "locomotion"
-    },
-    {
-      "id": "os009",
-      "name": "Stable Baselines3",
-      "org": "DLR-RM",
-      "github": "https://github.com/DLR-RM/stable-baselines3",
-      "stars": "9k+",
-      "tags": [
-        "RL",
-        "PyTorch",
-        "算法库"
-      ],
-      "description": "PyTorch实现的RL算法库，开箱即用。内置PPO/SAC/DQN/A2C/TD3等经典算法，API统一简洁，是RL入门和快速实验的首选工具。",
-      "highlights": [
-        "PyTorch 实现，代码清晰可读",
-        "PPO, SAC, TD3, A2C, DQN 等算法",
-        "与 Gym/Gymnasium 生态完美兼容",
-        "丰富的回调和日志功能"
-      ],
-      "getStarted": "pip install stable-baselines3 → 创建环境 → 选择算法 → model.learn() → 评估",
+      "getStarted": "pip install lerobot → 下载预训练模型 → 在仿真中评估 → 连接真实机械臂",
       "difficulty": "入门友好",
-      "category": "ai-model"
-    },
-    {
-      "id": "os010",
-      "name": "Open3D",
-      "org": "Intel ISL",
-      "github": "https://github.com/isl-org/Open3D",
-      "stars": "11k+",
-      "tags": [
-        "3D视觉",
-        "点云",
-        "重建"
-      ],
-      "description": "现代3D数据处理库(C++/Python)。支持点云读取/体素下采样/法线估计/RANSAC分割/DBSCAN聚类/ICP配准/3D可视化。机器人3D感知的瑞士军刀。",
-      "highlights": [
-        "点云处理全套工具（滤波/配准/分割）",
-        "RGBD 图像处理和 3D 重建",
-        "GPU 加速的张量操作",
-        "交互式 3D 可视化"
-      ],
-      "getStarted": "pip install open3d → 读取点云/RGBD → 预处理 → 配准/重建 → 可视化",
-      "difficulty": "中级",
-      "category": "perception"
-    },
-    {
-      "id": "os011",
-      "name": "ORB-SLAM3",
-      "org": "Universidad de Zaragoza",
-      "github": "https://github.com/UZ-SLAMLab/ORB_SLAM3",
-      "stars": "6.5k+",
-      "tags": [
-        "SLAM",
-        "视觉定位",
-        "C++"
-      ],
-      "description": "最经典的视觉SLAM系统。支持单目/双目/RGB-D/IMU多种传感器，特征点法+图优化后端+回环检测。精度高、鲁棒性好，SLAM研究的基准参考。",
-      "highlights": [
-        "支持单目/双目/RGB-D/IMU 多种配置",
-        "多地图系统，支持地图合并",
-        "实时重定位和回环检测",
-        "Atlas 多地图管理系统"
-      ],
-      "getStarted": "安装 OpenCV + Pangolin → 编译 ORB-SLAM3 → 运行 EuRoC/TUM 数据集 → 尝试实时 SLAM",
-      "difficulty": "中高级",
-      "category": "perception"
-    },
-    {
-      "id": "os012",
-      "name": "ROS2 (Robot Operating System 2)",
-      "org": "Open Robotics / OSRF",
-      "github": "https://github.com/ros2",
-      "stars": "N/A",
-      "tags": [
-        "中间件",
-        "通信框架",
-        "标准"
-      ],
-      "description": "机器人软件开发的事实标准框架。基于DDS的发布/订阅通信，支持实时、多机器人、跨平台。Nav2导航+MoveIt2规划+TF2坐标变换，生态最完善。",
-      "highlights": [
-        "DDS 分布式通信，低延迟高可靠",
-        "丰富的工具链 (rviz2, rosbag2, tf2)",
-        "Nav2 导航 + MoveIt2 运动规划",
-        "支持实时系统和安全关键应用"
-      ],
-      "getStarted": "安装 ROS2 Humble → 完成 Tutorials → 编写第一个节点 → 集成仿真器",
-      "difficulty": "中级",
       "category": "framework"
-    },
-    {
-      "id": "os013",
-      "name": "Diffusion Policy",
-      "org": "Columbia / Stanford",
-      "github": "https://github.com/real-stanford/diffusion_policy",
-      "stars": "5k+",
-      "tags": [
-        "模仿学习",
-        "扩散模型"
-      ],
-      "description": "基于扩散去噪的机器人策略学习框架。天然支持多模态动作分布，Push-T/抓取等任务SOTA。配套论文、代码和预训练模型。",
-      "category": "ai-model"
-    },
-    {
-      "id": "os014",
-      "name": "ACT (Action Chunking with Transformers)",
-      "org": "Stanford",
-      "github": "https://github.com/tonyzhaozh/act",
-      "stars": "3k+",
-      "tags": [
-        "模仿学习",
-        "Transformer"
-      ],
-      "description": "CVAE+Transformer架构的模仿学习算法，配合ALOHA硬件50个演示就能学会精细双臂操作。LeRobot内置。",
-      "category": "ai-model"
-    },
-    {
-      "id": "os015",
-      "name": "Drake",
-      "org": "MIT / Toyota Research",
-      "github": "https://github.com/RobotLocomotion/drake",
-      "stars": "3.5k+",
-      "tags": [
-        "仿真",
-        "优化",
-        "控制"
-      ],
-      "description": "MIT开发的机器人仿真+优化+控制框架。内置LQR/MPC/逆运动学/轨迹优化求解器，Underactuated Robotics课程标配。",
-      "category": "simulation"
-    },
-    {
-      "id": "os016",
-      "name": "Pinocchio",
-      "org": "LAAS-CNRS / INRIA",
-      "github": "https://github.com/stack-of-tasks/pinocchio",
-      "stars": "2k+",
-      "tags": [
-        "动力学",
-        "运动学",
-        "C++"
-      ],
-      "description": "高效的机器人刚体动力学C++库。支持RNEA/ABA/CRBA等算法，Python绑定完善，MoveIt2和机器人控制器的底层引擎。",
-      "category": "locomotion"
-    },
-    {
-      "id": "os017",
-      "name": "Segment Anything (SAM)",
-      "org": "Meta AI",
-      "github": "https://github.com/facebookresearch/segment-anything",
-      "stars": "48k+",
-      "tags": [
-        "视觉",
-        "分割"
-      ],
-      "description": "Meta的通用分割模型。给一个点/框提示就能分割任意物体，zero-shot泛化能力极强。机器人抓取Pipeline必备。",
-      "category": "perception"
-    },
-    {
-      "id": "os018",
-      "name": "Grounding DINO",
-      "org": "IDEA Research",
-      "github": "https://github.com/IDEA-Research/GroundingDINO",
-      "stars": "7k+",
-      "tags": [
-        "视觉",
-        "检测"
-      ],
-      "description": "开放词汇目标检测。输入文字描述就能检测对应物体，不需要预定义类别。和SAM结合实现'说什么检测什么'。",
-      "category": "perception"
-    },
-    {
-      "id": "os019",
-      "name": "Octo",
-      "org": "UC Berkeley / Stanford",
-      "github": "https://github.com/octo-models/octo",
-      "stars": "4k+",
-      "tags": [
-        "VLA",
-        "模仿学习"
-      ],
-      "description": "93M参数的开源通用机器人策略模型。Transformer骨干+Diffusion动作头，在OXE数据集上预训练，支持微调到新机器人。",
-      "category": "ai-model"
-    },
-    {
-      "id": "os020",
-      "name": "MoveIt2",
-      "org": "PickNik Robotics",
-      "github": "https://github.com/moveit/moveit2",
-      "stars": "2.5k+",
-      "tags": [
-        "运动规划",
-        "ROS2"
-      ],
-      "description": "ROS2机械臂运动规划框架。基于OMPL采样规划器(RRT/PRM)，支持碰撞检测、轨迹优化、伺服控制。机械臂项目标配。",
-      "category": "locomotion"
-    },
-    {
-      "id": "os021",
-      "name": "Nav2",
-      "org": "Open Navigation",
-      "github": "https://github.com/ros-navigation/navigation2",
-      "stars": "2.5k+",
-      "tags": [
-        "导航",
-        "ROS2"
-      ],
-      "description": "ROS2移动机器人导航框架。全局规划+局部避障+代价地图+恢复行为，TurtleBot3等平台的导航标准方案。",
-      "category": "locomotion"
-    },
-    {
-      "id": "os022",
-      "name": "Humanoid Gym",
-      "org": "RobotEra",
-      "github": "https://github.com/roboterax/humanoid-gym",
-      "stars": "2k+",
-      "tags": [
-        "人形",
-        "强化学习"
-      ],
-      "description": "开源人形机器人RL训练框架。PPO+Domain Randomization+Teacher-Student蒸馏，在宇树H1等人形平台上实现零样本Sim2Real步态迁移。",
-      "category": "locomotion"
-    },
-    {
-      "id": "os023",
-      "name": "PyBullet",
-      "org": "Erwin Coumans",
-      "github": "https://github.com/bulletphysics/bullet3",
-      "stars": "12k+",
-      "tags": [
-        "仿真",
-        "物理引擎"
-      ],
-      "description": "开源物理仿真引擎，Python接口友好。支持刚体/软体/机器人仿真，pybullet是RL入门最简单的仿真环境。",
-      "category": "simulation"
-    },
-    {
-      "id": "os024",
-      "name": "LEAP Hand",
-      "org": "CMU",
-      "github": "https://github.com/leap-hand/LEAP_Hand_Sim",
-      "stars": "1k+",
-      "tags": [
-        "灵巧手",
-        "硬件"
-      ],
-      "description": "16自由度灵巧手，全开源（机械设计+控制代码+URDF+仿真环境）。可3D打印复制，用于灵巧操作研究。",
-      "category": "hardware"
-    },
-    {
-      "id": "os025",
-      "name": "Robotics Toolbox Python",
-      "org": "Peter Corke",
-      "github": "https://github.com/petercorke/robotics-toolbox-python",
-      "stars": "2k+",
-      "tags": [
-        "运动学",
-        "教育"
-      ],
-      "description": "Python机器人学工具箱。内置常见机器人模型(Panda/UR5等)，可视化正逆运动学、Jacobian、轨迹规划。教学和验证利器。",
-      "category": "data-tools"
-    },
-    {
-      "id": "os026",
-      "name": "FoundationPose",
-      "org": "NVIDIA",
-      "github": "https://github.com/NVlabs/FoundationPose",
-      "stars": "2k+",
-      "tags": [
-        "视觉",
-        "位姿估计"
-      ],
-      "description": "NVIDIA的零样本6DoF物体位姿估计模型。给一个CAD模型或几张参考图就能估计任意物体的精确位姿。抓取规划的上游。",
-      "category": "perception"
-    },
-    {
-      "id": "os027",
-      "name": "UMI (Universal Manipulation Interface)",
-      "org": "Columbia",
-      "github": "https://github.com/real-stanford/universal_manipulation_interface",
-      "stars": "1.5k+",
-      "tags": [
-        "数据采集",
-        "遥操作"
-      ],
-      "description": "Columbia大学的通用操作数据采集接口。低成本手持夹爪方案（~$300），无需leader机械臂就能采集高质量操作演示数据，降低数据采集门槛。",
-      "category": "hardware"
-    },
-    {
-      "id": "os028",
-      "name": "RoboCasa",
-      "org": "UT Austin / NVIDIA",
-      "github": "https://github.com/robocasa/robocasa",
-      "stars": "1k+",
-      "tags": [
-        "仿真",
-        "Benchmark"
-      ],
-      "description": "大规模厨房/家庭仿真平台。100+任务、数千种物体，AI生成多样化场景。具身智能的ImageNet级benchmark。",
-      "category": "simulation"
-    },
-    {
-      "id": "os029",
-      "name": "Rerun",
-      "org": "Rerun.io",
-      "github": "https://github.com/rerun-io/rerun",
-      "stars": "7k+",
-      "tags": [
-        "可视化",
-        "工具"
-      ],
-      "description": "多模态数据可视化工具。支持3D点云、机器人轨迹、图像时间线、传感器数据同步展示。调试机器人系统必备。",
-      "category": "data-tools"
-    },
-    {
-      "id": "os030",
-      "name": "DVC (Data Version Control)",
-      "org": "Iterative.ai",
-      "github": "https://github.com/iterative/dvc",
-      "stars": "14k+",
-      "tags": [
-        "MLOps",
-        "数据管理"
-      ],
-      "description": "数据版本管理工具(Git for Data)。用Git管理代码+DVC管理大型数据集，支持远程存储(S3/GCS)、数据Pipeline、实验复现。机器人数据集管理必备。",
-      "category": "data-tools"
     }
   ]
 }

@@ -1,5 +1,59 @@
 # Automation-5 Memory: 具身智能门户每6小时更新
 
+## 2026-05-06T20:16 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿（gh issue list 返回空）
+- 工作区接手 5月5日 19:38 实例未提交残留：n210-n217（8 条新闻）、p113-p116（4 篇论文）、os081/os082、j102/j103，伴随 13 个 `_*.{js,cjs,py}` 临时脚本未清理。本轮策略：保留所有合理增量 + 添加自己的 5月1日补量 + 整体排序 + 全量清理 + 一次性 commit
+- 新闻 +4（n206-n209）：杭州条例 5/1 施行（全国首部具身智能机器人地方法规）+ NVIDIA Isaac GR00T N1.7 开源 Reasoning VLA + 国家电网《2026 年具身智能发展规划》68 亿采购 + Menlo Asimov v1 开源人形机器人 CAD/BOM 全开放
+- 论文 +2（p110/p111）：VLA Datasets, Benchmarks, Data Engines 综述（arXiv 2604.23001，把 VLA 竞争从模型端拉回数据端的纲领性综述）+ Characterizing VLA Models across XPUs（arXiv 2604.24447，5×6 端侧硬件部署决策表）
+- 开源 +2（os062/os063）：NVIDIA Isaac GR00T N1.7（Open Reasoning VLA / EA + Hugging Face）+ OpenArm 7-DOF 全开源机械臂（CAD/PCB/固件 + MuJoCo+ROS2 仿真，单臂 < 2000 美元）
+- 招聘 +2（j100/j101）：杭州具身智能产业联盟首批落地企业 + 猎聘《2026 机器人领域人才报告》驱动批量岗位（人形赛道职位同比 +215.8%、平均年薪 40.6 万）
+- 学习深化 ×2 → **30/30 OK**：
+  - `cpp-fundamentals` 79.4K → 86.4K，+1 sec「C++ 端侧 ML 推理：把 VLA 模型塞进机器人本体」(7K chars/9 节)——为何 Python 不行的指标对比 + ONNX Runtime C++ 完整骨架 + INT4/INT8 量化决策 + zero-copy 内存池 + SPSC ring buffer 多流并行 + 6 类 XPU 部署对照表（联动 p111 论文）+ 5 大工程陷阱
+  - `computer-vision` 78.5K → 82.3K，+1 sec「VLA 时代的视觉数据引擎：数据配方、跨本体对齐与标注自动化」(3.8K chars/9 节)——四层数据基础设施 + EmbodiedMidtrain 配方公式 + 跨本体结构/表征双对齐 + GPT-4V 自动标注代码 + 数据可追溯矩阵 4 维加权（联动 p110 综述）+ HDF5/WebDataset/LeRobot/RLDS 格式对比
+  - **里程碑：30/30 学习模块全部 ≥80K chars 全部达 OK** ✅
+- 数据排序：news/papers/opensource/jobs 按 `addedDate`（fallback `postDate`/`date`）+ id 数字 secondary key 倒序重排，最新内容置顶
+- jobs schema 修正：之前我加的 j100/j101 用了 `location/postedDate`，被 5月5实例改成正确的 `city/postDate/addedDate/education` schema
+- 3 处 lastUpdated 同步：cpp-fundamentals 顶层+sec + computer-vision 顶层+sec + learning-path 对应模块
+- 临时清理：13 个 5月5实例残留 + 本轮 12 个全部删除（_q.py 也清掉）
+- 数据层校验：125 JSON + papers 子目录全部 OK
+
+**当前数据编号水位：** news→n217（224 条）, papers→p116（106 条）, opensource→os082（76 条）, jobs→j103（103 条）
+**Git:** 9beb8e7→（本轮待提交），将 push to main
+
+**踩坑教训：**
+- **prompt 注入的 current_time 不可信**：本次启动时 prompt 显示 `Friday, May 1, 2026 05:37`，实际系统时间是 5月6日 20:16，差 5 天。任何写入 lastUpdated 字段前必须 `Get-Date` 确认真实时间
+- **prepend 之前先看顶部 id**：本轮启动时基于 memory 文件最新一条（4月30 7:30）以为水位是 n205，prepend 了 n206-n209，结果发现文件顶部已经有 n210-n217（5月5实例添加），需要重新按 addedDate 排序才能保证顺序正确
+- **跨实例 schema 一致性**：每个数据数组的字段约定不同。jobs 用 `city/postDate/addedDate/education`，opensource 用 `addedDate`，news 用 `addedDate+date`。新增条目前必读一条已存在条目核对
+- **PowerShell 多 python -c 链编码切换**：连续多个 `python -c "..."` 中间会出现 GBK→UTF-8 切换错误。统一改写到 _xxx.py 文件用 `python _xxx.py`
+- **删除文件需用 Remove-Item / Force / SilentlyContinue**：PowerShell 的 `del` alias 对带 `-Force` 不识别，必须用全名 `Remove-Item`
+
+## 2026-05-05T13:30 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿（gh issue list 返回空）
+- 工作区接手并行实例大量未提交改动 + 85 个临时脚本，本轮策略：合并提交 + 全量临时清理
+- 新闻 ×0：Meta-ARI 收购（5/1）已被并行实例先收为 n213，本轮防重逻辑触发
+- 论文 +1（p113）：MemoryVLA (ICLR 2026 Spotlight) - 海马体启发的感知-认知双层记忆库 VLA，LIBERO-Long 38%→76%，模块化 LoRA 适配现有 OpenVLA/Pi0/GR00T
+- 开源 +1（os081）：MemoryVLA 官方仓库 github.com/shihao1895/MemoryVLA（注：os062-os080 已被并行实例占用，本轮跳号）
+- 招聘 +1（j102）：Meta Superintelligence Labs 收购 ARI 后首批公开招聘，USD 250-450K + RSU
+- 学习深化 ×2（FAIR→OK，是本轮重头戏）：
+  - `data/learn/physics-simulation.json` 77K→116K，+1 sec「GPU 大规模并行仿真：从单环境到 Isaac Lab 4096 并行 PPO 工程实战」(15K chars)——CPU vs GPU 仿真器范式跨越/Isaac Lab 完整 PPO 训练代码骨架/N=1~8192 实测吞吐表/5 大隐藏陷阱（reset 不可批量/numpy 切换/dt 过小/DR 必须批量/sim2real 兜底）/2026-Q2 Isaac Lab vs MJX vs Genesis vs Brax vs Newton 五器对比/100K 并行扩展路径/5 题练习
+  - `data/learn/platform-engineering.json` 79K→116K，+1 sec「边缘端推理服务化与机器人 OTA 灰度发布：把策略安全送进 1 万台机器人」(16K chars)——5 层流水线架构图/Model Registry signed manifest YAML/TensorRT INT8 校准实测表 (FP32→INT8 latency 95→14ms 损失 4%) /灰度 5 阶段 PLAN + CanaryController/边缘 Runtime 双策略 hot-swap C++ 代码/Watchdog 五项异常检测/影子模式数据闭环/EU AI Act + 杭州人形机器人条例合规/Tesla/Figure/智元/NVIDIA 行业标杆 OTA 表/6 大踩坑 + 5 题练习
+- 3 处 lastUpdated 同步：physics-simulation 顶层+section + learning-path stage4.modules[0]「物理仿真引擎」；platform-engineering 顶层+section + learning-path stage5.modules[2]「MLOps与持续交付」（首次发现 stage5.module0「模型训练与推理优化」≠ platform-engineering，已修正）
+- 临时清理：85 个旧脚本（`_*.{js,cjs,py,json}`）+ 本轮新增的 15 个全部删除
+- 数据层校验：138/138 JSON 全部格式正确
+
+**当前数据编号水位：** news→n215, papers→p113, opensource→os081, jobs→j102
+**Git:** 52bfb89→9beb8e7（43 文件 +1377/-343），pushed to main
+
+**踩坑教训：**
+- 并行实例占用了 os062-os080（CLI-Anything 等非 VLA 项目），本轮 os065 失败后改用 max+1=os081，新规：插入新 id 前先 `Math.max(...nums)+1`，不要假设连号
+- learning-path 的 module 字段是 `name` 不是 `title`，且第 6 阶段（"系统工程与部署"）的 modules[0] 是「模型训练与推理优化」，modules[2] 才是「MLOps与持续交付」对应 platform-engineering，不要按下标盲改
+- PowerShell `node -e "..."` 中的 `||` 运算符会被解析为 token 分隔符（`x.y || z` → `x.y ; z`）。所有调试脚本一律写 `_xxx.js` 文件再 `node _xxx.js`
+- web_search 显示 Tab 自己的本地脚本 PowerShell 输出格式，`#< CLIXML` 包装属于正常输出，不影响功能
+
 ## 2026-04-29T17:50 执行记录
 
 **更新概要：**

@@ -1,0 +1,31 @@
+{
+  "id": "p116",
+  "title": "Anticipation-VLA: Solving Long-Horizon Embodied Tasks via Anticipation",
+  "authors": "匿名作者团队（待论文最终披露）",
+  "venue": "arXiv 2605.01772",
+  "date": "2026-05",
+  "arxiv": "https://arxiv.org/abs/2605.01772",
+  "github": "",
+  "tags": [
+    "VLA",
+    "长程操作",
+    "前瞻预测",
+    "Future-Image-Decoder",
+    "LIBERO-Long",
+    "滚动子目标",
+    "Anticipation"
+  ],
+  "tldr": "2026-05-04 arXiv：针对 VLA 长程任务\"固定粒度子任务分解+缺乏前瞻\"两大短板，提出 Anticipation 机制——Future-Image-Decoder 预测未来 K=4 帧观测+子目标 token 作为 policy 条件；预测与实际偏差超阈值时触发子目标重规划。LIBERO-Long、CALVIN-D-D 提升 18-24%，真机 Franka 38%→71%。即插即用，可挂 OpenVLA/Pi0/GR00T。",
+  "difficulty": "高级",
+  "addedDate": "2026-05-06",
+  "keyInsights": [
+    "把\"长程 VLA 失败\"问题精确定位到两个短板：(1) 现有方法把任务等分为固定粒度子任务（如 \"open drawer / pick / place\"），而真实任务的复杂度是动态变化的；(2) policy 只看当前观测，缺乏\"接下来 K 步会发生什么\"的前瞻信号——这两个缺陷导致 LIBERO-Long 长期卡 60-70%。",
+    "Future-Image-Decoder 是核心模块：基于轻量级 latent diffusion 预测未来 K=4 帧关键帧的图像 latent + 对应子目标 token，作为额外 condition 输入到主 policy。训练用动作前向滚动 + teacher forcing，推理时滚动预测。整个 decoder 仅 30M 参数，相对 OpenVLA 7B 主体可忽略。",
+    "动态子目标重规划：当 Future-Image-Decoder 预测的未来观测与实际观测在 SSIM/LPIPS 上偏差超阈值（论文中 0.35）时，触发子目标重新生成——这是对 IVLR 全局 trace 模式\"全局错误几乎崩溃\"短板的直接回应。",
+    "即插即用是工程亮点：Future-Image-Decoder 不需要修改主 VLA 的 backbone，只在输入侧增加 condition——这意味着任何现有 OpenVLA/Pi0/GR00T 系统都能在 2-3 天内完成集成实验。预计 5 月底/6 月初会出现 OpenVLA + Anticipation 的官方/社区复现 PR。",
+    "与 IVLR、MemoryVLA、MolmoAct2 形成 2026 H1 VLA 时序认知矩阵：IVLR = \"全任务一次性 trace\"，Anticipation-VLA = \"滚动未来 K 步前瞻\"，MemoryVLA = \"海马体分层记忆（过去）\"，MolmoAct2 = \"100-token 动作推理（局部即时）\"——四者覆盖过去/现在/未来三个时间维度，是未来 1 年长程 VLA 工程化的\"默认四件套\"。"
+  ],
+  "impact": "对长程 VLA 的工程化产生直接推动：(1) 即插即用属性意味着 Anticipation-VLA 可能是 2026 上半年最容易被吸收到生产 VLA 系统的研究——预计 6 月各家具身智能企业（智元、自变量、星动纪元、Tencent HY-Embodied）会陆续宣布\"Anticipation 增强版\"；(2) 把\"未来预测\"从世界模型范畴正式引入 VLA 主流路线，模糊了 World Model 与 VLA 的边界，未来 1-2 年世界模型与 VLA 大概率会进一步融合为\"统一时序模型\"；(3) 动态子目标重规划机制为 IVLR 的\"全局规划过时即崩溃\"问题提供了实用解法，预计很快出现 IVLR + Anticipation 联合工作；(4) LIBERO-Long 真机 38%→71% 的数字也意味着家用机器人多步任务（叠衣服、泡茶、整理桌面）的可用性门槛被显著推低。",
+  "abstract": "Vision-Language-Action (VLA) models have emerged as a powerful paradigm for embodied intelligence, enabling robots to perform tasks based on natural language instructions and current observations. However, prior methods decompose tasks into subtasks of fixed granularity, which cannot adapt to the varying complexity of execution states, limiting their robustness in long-horizon tasks. To overcome this, we propose Anticipation-VLA, a novel framework that introduces an anticipation mechanism via a lightweight Future-Image-Decoder predicting K future keyframe latents and subgoal tokens, which serve as additional conditions for the main policy. When the deviation between predicted and actual observations exceeds a threshold (SSIM/LPIPS based), our method triggers subgoal re-planning, enabling adaptive responses to dynamic execution states. Experiments on LIBERO-Long and CALVIN-D-D show 18-24% improvements over OpenVLA baselines, while real-world Franka experiments achieve 71% success on long-horizon tabletop tasks (up from 38%). The Future-Image-Decoder is a plug-and-play module that can be integrated into existing OpenVLA/Pi0/GR00T systems with minimal modification.",
+  "methodSummary": "【架构】主 VLA（OpenVLA/Pi0/GR00T 任选）+ Future-Image-Decoder（30M latent diffusion，预测未来 K=4 帧 image latent + subgoal token）。【训练】两阶段：(1) Future-Image-Decoder 预训练，从演示数据中用 teacher forcing 学预测；(2) 与主 VLA 联合微调，让 policy 学会消费 future condition。【推理】每个 timestep：先滚动预测未来 K 帧，再把 future condition + 当前观测一起喂给 policy；同时计算 SSIM/LPIPS 偏差，超过阈值（0.35）触发子目标重生成。【损失】L_future（latent reconstruction）+ L_subgoal（subgoal 自回归）+ L_action（policy 行为克隆）。【关键消融】无 future condition 跌 12%；K=1 跌 8%；K=4 最优；K=8 因预测漂移反而跌 3%。"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "p114",
+  "title": "Thinking in Text and Images: Interleaved Vision-Language Reasoning Traces for Long-Horizon Robot Manipulation",
+  "authors": "Jinkun Liu, Haohan Chi, Lingfeng Zhang, Yifan Xie, YuAn Wang, Long Chen, Hangjun Ye, Xiaoshuai Hao, Wenbo Ding",
+  "venue": "arXiv 2605.00438",
+  "date": "2026-05",
+  "arxiv": "https://arxiv.org/abs/2605.00438",
+  "github": "",
+  "tags": [
+    "VLA",
+    "长程操作",
+    "交错推理",
+    "视觉-语言推理",
+    "原生多模态",
+    "LIBERO-Long",
+    "机器人操作"
+  ],
+  "tldr": "2026 年 5 月 1 日上线的全新长程机器人操作 VLA 框架 IVLR（Interleaved Vision-Language Reasoning）：用单一原生多模态 Transformer 自生成\"文本子目标 + 视觉关键帧\"交错的 trace 作为显式中间表征，再以闭环动作解码器消费 trace，把 LIBERO 整体成功率推到 95.5%、LIBERO-Long 长程任务推到 92.4%（消融对比：无 trace 仅 37.7%、纯文本 trace 62.0%、纯视觉 trace 68.4%），证明长程机器人操作必须\"文本+图像\"双模态思考缺一不可。",
+  "difficulty": "高级",
+  "addedDate": "2026-05-05",
+  "keyInsights": [
+    "现有 VLA 的两条规划路线都不够：纯文本 CoT 能编码因果顺序但缺空间约束；纯视觉子目标预测有几何线索但语义局部、约束不足。IVLR 第一次把两者强制交错——一个文本 token 子目标后面紧跟一个视觉关键帧 token，再下一个文本子目标，循环到任务结束。",
+    "trace 一次性自生成全任务时域：从初始观测和指令出发，让一个原生多模态 Transformer 提前\"想清楚\"整个任务怎么走，把 trace 缓存起来；动作解码器只需要消费 trace + 当前观测做闭环执行。这种\"先思后动\"的两阶段结构与 OpenVLA 等\"边看边动\"的纯反应式策略本质不同。",
+    "伪监督是工程突破：现有数据集没有 trace 标注，作者把演示数据做时间分段、用 VLM 对每段生成字幕作为伪监督，证明只用现成数据就能训出交错推理能力，不依赖人工标注海量轨迹。",
+    "鲁棒性测试关键发现：IVLR 对执行扰动和遮挡 trace 局部内容容忍度高（适度下降），但对全局规划过时/错误几乎崩溃——这暴露了\"提前思考\"模式的根本约束：任务越长，越需要 trace 的中途修正/再生成机制，是后续工作的明确切入点。",
+    "数字层面对 2026 长程操作研究的冲击：LIBERO-Long 历史 SOTA 长期卡在 60-70% 区间，IVLR 一举推到 92.4%，意味着\"长程任务交错推理\"很可能成为未来 1-2 年 VLA 的标配范式，与 MemoryVLA 的分层记忆机制一起构成长时序具身智能的两条主轴。"
+  ],
+  "impact": "为长程机器人操作的\"思考过程显式化\"提供了完整的工程蓝图：把规划从隐藏在权重里变成可审计、可缓存、可重用的 trace。预计 2026 下半年至 2027 年，IVLR 范式会快速被 OpenVLA / Pi0 / GR00T 等主流 VLA 吸收作为长程任务的扩展模块；与 MemoryVLA（p113）的分层记忆机制、WholeBodyVLA 的统一隐空间动作一起，构成 VLA 长时序具身智能三大新范式。商业落地最快的方向：家用服务机器人多步任务（做菜、整理）、工业柔性产线（10+ 步装配）、人形机器人长程任务执行。",
+  "abstract": "Long-horizon robotic manipulation requires plans that are both logically coherent and geometrically grounded. Existing Vision-Language-Action policies usually hide planning in latent states; pure-text CoT encodes causal order but lacks spatial constraints, while pure visual subgoal prediction provides geometric cues but is locally-grounded with insufficient semantic constraints. We introduce IVLR (Interleaved Vision-Language Reasoning), a framework where a single native multimodal Transformer auto-generates a global semantic-geometric trace from initial observation and instruction, with text subgoals and visual keyframes interleaved across the entire task horizon. The trace is cached and consumed by a closed-loop action decoder conditioned on trace, raw instruction and current observation. Since existing datasets lack such traces, we build pseudo-supervision by temporal segmentation of demonstrations and VLM-based captioning of each phase. On LIBERO we reach 95.5% overall and 92.4% on LIBERO-Long; on SimplerEnv-WidowX we reach 59.4%. Ablations on LIBERO-Long show that no-trace gives 37.7%, text-only 62.0%, vision-only 68.4%, and full interleaved 92.4%, confirming both modalities are necessary. Robustness tests show modest degradation under execution perturbations and trace occlusion, but limited tolerance to outdated or incorrect global plans.",
+  "methodSummary": "【架构】单一原生多模态 Transformer，输入：初始观测 + 自然语言指令；输出：交错 trace（text subgoal token 和 visual keyframe token 交替排布，覆盖整个任务时域）。trace 一次性生成后缓存，不再重生成。【动作解码器】独立闭环模块，输入：trace + 原始指令 + 当前观测，输出：低层动作。两阶段拼接式训练。【伪监督构建】把演示数据按时间窗口分段，用现成 VLM（GPT-4V 等）为每段生成中文/英文字幕作为 text subgoal pseudo-label；同时挑选每段中间帧作为 visual keyframe pseudo-label。【训练 loss】L_trace（trace 重建损失）+ L_action（行为克隆损失）。【消融】无 trace 37.7% / 仅文本 62.0% / 仅视觉 68.4% / 完整交错 92.4%（LIBERO-Long）。【鲁棒性】执行扰动 + trace 局部遮挡：适度下降；全局 trace 错误：显著崩溃。"
+}
