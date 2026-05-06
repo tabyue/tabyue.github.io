@@ -1,6 +1,29 @@
 {
-  "lastUpdated": "2026-05-06T10:30",
+  "lastUpdated": "2026-05-06T20:45",
   "papers": [
+    {
+      "id": "p118",
+      "title": "VILAS: A VLA-Integrated Low-cost Architecture with Soft 3D-Printed End-Effector for End-to-End Manipulation",
+      "authors": "VILAS 项目组（论文匿名 + 多机构）",
+      "venue": "arXiv 2605.02037",
+      "date": "2026-05",
+      "arxiv": "https://arxiv.org/abs/2605.02037",
+      "github": "https://github.com/vilas-platform/vilas",
+      "tags": [
+        "VLA",
+        "低成本平台",
+        "软体末端",
+        "3D 打印",
+        "端到端",
+        "教学型机器人",
+        "open-source robot",
+        "VLA 工作流"
+      ],
+      "tldr": "2026 年 5 月 4 日 arXiv 上线（编号 2605.02037）：首个完全开源、模块化、低于 1500 美元的 VLA 学习与部署一体化平台。覆盖完整 VLA 工作流——遥操作数据采集 + 策略微调 + 真机部署。【硬件】单臂 6-DOF + 3D 打印软体末端 + 双腕摄像头 + 单顶视摄像头，全部 BOM < 1500 USD（对比 Franka FR3 的 35K USD）。【软件】兼容 OpenVLA / π0 / GR00T 微调；提供完整 ROS 2 + Pinocchio 控制栈。【实验】在自采 70 任务桌面操作数据集上 fine-tune OpenVLA-7B 后，平均成功率 81.3%，与 ALOHA 平台（10K USD）持平。【意义】把高质量 VLA 学习从\"实验室级硬件\"降至\"消费级硬件\"，在大学/教学/小型团队场景具有显著推广价值，与 LeRobot SO-100、UMI、Stanford Open-X 形成开源平台\"低成本 VLA 四件套\"。",
+      "category": "VLA模型",
+      "difficulty": "中级",
+      "addedDate": "2026-05-06"
+    },
     {
       "id": "p116",
       "title": "Anticipation-VLA: Solving Long-Horizon Embodied Tasks via Anticipation",
@@ -218,7 +241,7 @@
       "impact": "这篇综述把 VLA 社区的讨论焦点从\"谁的模型更好\"拉回到\"谁的数据底座更好\"，会直接影响 2026 下半年 OpenVLA-2、π0.5、GR00T N2 等开源项目的数据策略。对产业界是一张\"数据采集路线图\"，对学术界是一份\"benchmark + 数据源\"的全景字典"
     },
     {
-      "id": "p115",
+      "id": "p117",
       "title": "RoboWM-Bench: A Benchmark for Evaluating World Models in Robotic Manipulation",
       "authors": "Anonymous (under review)",
       "venue": "arXiv 2604.19092",

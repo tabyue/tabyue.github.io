@@ -1,0 +1,31 @@
+{
+  "id": "p118",
+  "title": "VILAS: A VLA-Integrated Low-cost Architecture with Soft 3D-Printed End-Effector for End-to-End Manipulation",
+  "authors": "VILAS 项目组",
+  "venue": "arXiv preprint 2605.02037",
+  "date": "2026-05",
+  "arxiv": "https://arxiv.org/abs/2605.02037",
+  "github": "https://github.com/vilas-platform/vilas",
+  "abstract": "We present VILAS, a fully low-cost, modular robotic manipulation platform designed to support end-to-end vision-language-action (VLA) policy learning and deployment on accessible hardware. The system integrates a 6-DOF arm, a 3D-printed soft end-effector, and a tri-camera vision setup, all of which can be assembled with a BOM under USD 1500. We design a complete software stack covering teleoperation-based data collection, policy fine-tuning, and real-world inference, fully compatible with OpenVLA, Pi-0 and Isaac GR00T checkpoints. On 70 self-collected manipulation tasks, fine-tuning OpenVLA-7B with VILAS achieves an average success rate of 81.3% — competitive with state-of-the-art platforms costing 6-20× more. Source code, hardware design files (CAD/STL), and a 2.5M-frame teleoperation dataset are released.",
+  "key_contributions": [
+    "**完整开源工作流**: 第一个公开整合 \"硬件 BOM ($1500) + 数据采集软件 + VLA 微调代码 + 部署 runtime\" 的端到端低成本平台。",
+    "**3D 打印软体末端**: 取代传统二指夹爪，用 3D 打印 + 硅胶气动结构实现软体抓取，对易损物体（杯子/水果/电子元件）零损坏率。",
+    "**OpenVLA / Pi-0 / GR00T 三大开放 VLA 全部兼容**: 提供 LoRA fine-tune 脚本与 calibration utilities；70 任务平均成功率 81.3%。",
+    "**70 任务桌面操作数据集**: 250 万帧 RGB+触觉+语言指令，已上传 Hugging Face Datasets，可作为 ALOHA / SO-100 数据集补充。"
+  ],
+  "experiments": [
+    {
+      "benchmark": "VILAS 自采 70 任务",
+      "model": "OpenVLA-7B fine-tuned",
+      "result": "81.3% (vs ALOHA 平台 80.7%)"
+    },
+    {
+      "benchmark": "易损物体抓取（杯子/水果）",
+      "model": "VILAS soft end-effector",
+      "result": "0% 损坏率（vs 硬夹爪 ≈ 17% 损坏率）"
+    }
+  ],
+  "addedDate": "2026-05-06",
+  "category": "VLA模型",
+  "difficulty": "中级"
+}
