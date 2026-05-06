@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>具身智能知识门户 | Embodied AI Hub</title>
-    <meta name="description" content="具身智能从业与研究人员的一站式知识门户">
+    <meta name="description" content="具身智能从业与研究人员的一站式知识门户：6 阶段学习路径、30+ 模块教材级内容、最新论文/开源/招聘/资讯动态。">
+    <meta name="keywords" content="具身智能, Embodied AI, 人形机器人, VLA, Vision-Language-Action, 机器人学习, 模仿学习, 强化学习, 世界模型, 仿真到现实, 机器人操作, ROS2, MuJoCo, Isaac">
+    <meta name="author" content="tabyue">
+    <link rel="canonical" href="https://www.tabyue.com/" id="canonical-link">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="具身智能知识门户 | Embodied AI Hub" id="og-title">
+    <meta property="og:description" content="具身智能从业与研究人员的一站式知识门户：6 阶段学习路径、30+ 模块教材级内容、最新论文/开源/招聘/资讯动态。" id="og-description">
+    <meta property="og:url" content="https://www.tabyue.com/" id="og-url">
+    <meta property="og:site_name" content="具身智能知识门户">
+    <meta property="og:locale" content="zh_CN">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="具身智能知识门户 | Embodied AI Hub" id="tw-title">
+    <meta name="twitter:description" content="具身智能从业与研究人员的一站式知识门户" id="tw-description">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light" disabled>
@@ -438,6 +452,26 @@ body{font-family:'Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-serif;back
 </head>
 <body>
 
+<noscript>
+<div style="max-width:900px;margin:40px auto;padding:24px;font-family:system-ui;color:#333;line-height:1.7">
+<h1>具身智能知识门户 | Embodied AI Hub</h1>
+<p>本站是一个交互式 SPA，需开启 JavaScript 才能正常浏览全部内容。以下是站点主要板块的入口：</p>
+<ul>
+<li><a href="/">首页</a></li>
+<li><a href="/learn">学习中心</a> · <a href="/learn/linear-algebra">线性代数</a> · <a href="/learn/vla-models">VLA 模型</a> · <a href="/learn/world-models-llm">世界模型与LLM+机器人</a> · <a href="/learn/sim-to-real">仿真到现实</a></li>
+<li><a href="/papers">论文库</a></li>
+<li><a href="/opensource">开源生态</a></li>
+<li><a href="/news">行业资讯</a></li>
+<li><a href="/jobs">人才生态</a></li>
+<li><a href="/models">模型库</a></li>
+<li><a href="/datasets">数据集</a></li>
+<li><a href="/hardware">硬件图鉴</a></li>
+<li><a href="/glossary">术语表</a></li>
+</ul>
+<p>完整 URL 索引见 <a href="/sitemap.xml">sitemap.xml</a>。</p>
+</div>
+</noscript>
+
 <div class="topbar">
     <span class="topbar-logo">Embodied AI Hub</span>
     <span class="topbar-badge">PORTAL</span>
@@ -688,9 +722,76 @@ function toggleTheme(){
     });
 })();
 
-// === NAV (hash router) ===
+// === ROUTER (History API + 404 bridge + hash fallback) ===
 const VALID_PAGES=['home','learn','papers','opensource','models','datasets','hardware','news','jobs','glossary'];
-let _routerSuppress=false;  // 防止 go() 触发 hashchange 又触发 go()
+const SITE_BASE='/';  // GitHub Pages 部署在根目录（用户域名 www.tabyue.com）
+let _routerSuppress=false;
+
+// 每板块 SEO 元信息（动态写到 title/description/og）
+const PAGE_META={
+  home:{title:'具身智能知识门户 | Embodied AI Hub',desc:'具身智能从业与研究人员的一站式知识门户：6 阶段学习路径、30+ 模块教材级内容、最新论文/开源/招聘/资讯动态。'},
+  learn:{title:'学习中心 - 具身智能 6 阶段学习路径 | 具身智能知识门户',desc:'30 个模块覆盖数学基础、深度学习、机器人学、模仿学习、强化学习、VLA、世界模型、仿真到现实，每个模块教材级深度（≥80K 字符）。'},
+  papers:{title:'论文库 - 具身智能与人形机器人前沿论文 | 具身智能知识门户',desc:'最新 VLA、世界模型、模仿学习、强化学习等具身智能论文深度解读，含方法论、实验数据、代码复现。'},
+  opensource:{title:'开源生态 - 具身智能开源项目精选 | 具身智能知识门户',desc:'LeRobot、MuJoCo、Genesis、OpenVLA、Isaac GR00T 等具身智能核心开源项目入门教程与导航。'},
+  models:{title:'模型库 - VLA / VLM / 视觉语音模型 | 具身智能知识门户',desc:'VLA、VLM、ASR、TTS、视觉、声纹模型一站式索引。'},
+  datasets:{title:'数据集 - 操作/导航/仿真数据集全景 | 具身智能知识门户',desc:'OXE、DROID、AGIBOT WORLD 等具身智能机器人操作与导航数据集全景。'},
+  hardware:{title:'硬件图鉴 - 机器人 BOM 拆解与传感器选型 | 具身智能知识门户',desc:'机器人 BOM 拆解、传感器选型、电机参数、购买链接一站式参考。'},
+  news:{title:'行业资讯 - 具身智能融资/技术/政策 | 具身智能知识门户',desc:'具身智能与人形机器人最新融资动态、技术突破、政策标准、企业图谱。'},
+  jobs:{title:'人才生态 - 具身智能社招/校招/实习 | 具身智能知识门户',desc:'具身智能行业社招、校招、实习岗位全景，覆盖 VLA、机器人控制、灵巧手、世界模型等方向。'},
+  glossary:{title:'术语表 - 具身智能核心概念速查 | 具身智能知识门户',desc:'VLA、IL、RL、SLAM、SE3 等具身智能核心术语含义速查与详解。'}
+};
+
+function _setMeta(title, desc, urlPath){
+  document.title=title;
+  const setAttr=(sel,attr,val)=>{const el=document.querySelector(sel);if(el)el.setAttribute(attr,val);};
+  setAttr('meta[name="description"]','content',desc);
+  setAttr('#og-title','content',title);
+  setAttr('#og-description','content',desc);
+  setAttr('#og-url','content','https://www.tabyue.com'+urlPath);
+  setAttr('#tw-title','content',title);
+  setAttr('#tw-description','content',desc);
+  setAttr('#canonical-link','href','https://www.tabyue.com'+urlPath);
+}
+
+// 根据当前 page + (可选) modId / secIdx 计算并写入 meta
+function updatePageMeta(page, modId, secIdx){
+  let meta=PAGE_META[page]||PAGE_META.home;
+  let title=meta.title, desc=meta.desc;
+  let path='/'+(page==='home'?'':page);
+  if(page==='learn'&&modId){
+    path='/learn/'+encodeURIComponent(modId);
+    // 从 learnCache / LD 反查模块名
+    const cached=learnCache&&learnCache[modId];
+    let modName=modId;
+    if(cached&&cached.name)modName=cached.name;
+    else if(typeof LD!=='undefined'&&LD&&LD.stages){
+      LD.stages.forEach(s=>(s.modules||[]).forEach(m=>{
+        const mid=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
+        if(mid===modId)modName=m.name||modId;
+      }));
+    }
+    title=modName+' - 学习中心 | 具身智能知识门户';
+    desc=modName+' 模块完整内容：包含核心知识点、可运行代码示例、学习计划与推荐资源。';
+    if(typeof secIdx==='number'&&secIdx>=0){
+      path+='/'+(secIdx+1);
+      if(cached&&cached.sections&&cached.sections[secIdx]&&cached.sections[secIdx].title){
+        const secTitle=cached.sections[secIdx].title;
+        title=secTitle+' - '+modName+' | 具身智能知识门户';
+        desc=modName+' 章节："'+secTitle+'"——'+desc;
+      }
+    }
+  }
+  _setMeta(title, desc, path);
+}
+
+// 把当前路由状态压栈 / 替换栈顶
+function _pushOrReplaceState(path, replace){
+  if(_routerSuppress)return;
+  if(location.pathname+location.search===path)return;
+  if(replace)history.replaceState({},'',path);
+  else history.pushState({},'',path);
+}
+
 function go(id, opts){
     opts=opts||{};
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -701,57 +802,110 @@ function go(id, opts){
     document.querySelector(`.topbar-nav a[onclick="go('${id}')"]`)?.classList.add('active');
     document.getElementById('nav').classList.remove('open');
     if(!opts.skipScroll)window.scrollTo({top:0,behavior:'smooth'});
-    // 同步 hash（避免循环）
     if(!opts.fromRouter){
-        _routerSuppress=true;
-        const newHash='#/'+id;
-        if(location.hash!==newHash)location.hash=newHash;
-        setTimeout(()=>{_routerSuppress=false;},0);
+        const newPath=id==='home'?'/':'/'+id;
+        _pushOrReplaceState(newPath, !!opts.replace);
+    }
+    // 更新 SEO meta
+    updatePageMeta(id);
+}
+
+// 解析任意 URL（path 或 hash）→ 返回 {page, modId, secIdx}
+function parseRoute(input){
+    let raw=input||'';
+    // 兼容老 hash 链接 #/learn/...
+    if(raw.startsWith('#'))raw=raw.replace(/^#\/?/,'');
+    else{
+        // path 形式：去掉 site base 和 index.html
+        raw=raw.replace(/^\/+/,'').replace(/^index\.html\/?/,'');
+        // 去掉 query
+        const qi=raw.indexOf('?');if(qi>=0)raw=raw.slice(0,qi);
+        // 去掉末尾斜杠
+        raw=raw.replace(/\/+$/,'');
+    }
+    const parts=raw.split('/').filter(Boolean).map(p=>{try{return decodeURIComponent(p)}catch(e){return p}});
+    if(parts.length===0)return {page:'home'};
+    const page=parts[0];
+    if(!VALID_PAGES.includes(page))return {page:'home'};
+    const r={page};
+    if(page==='learn'&&parts.length>=2){
+        r.modId=parts[1];
+        if(parts.length>=3){
+            const n=parseInt(parts[2],10);
+            r.secIdx=isNaN(n)?0:Math.max(0,n-1);
+        }
+    }
+    return r;
+}
+
+async function applyRoute(routeInput, opts){
+    opts=opts||{};
+    const r=parseRoute(routeInput);
+    _routerSuppress=true;
+    try{
+        // 切板块（不写历史栈，由路由调用方决定）
+        document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+        const tgt=document.getElementById('pg-'+r.page);
+        if(tgt)tgt.classList.add('active');
+        document.querySelectorAll('.topbar-nav a').forEach(a=>a.classList.remove('active'));
+        document.querySelector(`.topbar-nav a[onclick="go('${r.page}')"]`)?.classList.add('active');
+        document.getElementById('nav').classList.remove('open');
+        if(!opts.skipScroll)window.scrollTo({top:0,behavior:'instant'});
+        updatePageMeta(r.page, r.modId, r.secIdx);
+        // 学习模块深链接
+        if(r.page==='learn'&&r.modId){
+            await waitForLD();
+            await openLearnModule(r.modId, null, {fromRouter:true, initialSec:r.secIdx||0});
+        }
+    }finally{
+        _routerSuppress=false;
     }
 }
 
-// 解析 hash → 路由动作。支持：
-//   #/                       首页
-//   #/<page>                 切板块（home/learn/papers/...）
-//   #/learn/<modId>          打开某学习模块
-//   #/learn/<modId>/<secIdx> 打开某模块的第 N 节（1-based）
-//   #/papers/<paperId>       未来扩展
-async function applyRouteFromHash(){
-    const h=(location.hash||'').replace(/^#\/?/,'');
-    const parts=h.split('/').filter(Boolean);
-    if(parts.length===0){go('home',{fromRouter:true,skipScroll:true});return;}
-    const page=parts[0];
-    if(!VALID_PAGES.includes(page)){go('home',{fromRouter:true,skipScroll:true});return;}
-    go(page,{fromRouter:true,skipScroll:true});
-    // 学习模块深链接
-    if(page==='learn'&&parts.length>=2){
-        const modId=decodeURIComponent(parts[1]);
-        const secIdx=parts.length>=3?Math.max(0,parseInt(parts[2],10)-1)||0:0;
-        // 等数据加载完
-        await waitForLD();
-        await openLearnModule(modId,null,{fromRouter:true,initialSec:secIdx});
-    }
-}
 function waitForLD(){
     return new Promise(res=>{
         const tick=()=>{if(typeof LD!=='undefined'&&LD)res();else setTimeout(tick,80);};
         tick();
     });
 }
+
+// 浏览器前进/后退
+window.addEventListener('popstate',()=>{
+    applyRoute(location.pathname);
+});
+
+// 兼容老 hash 链接：访问 #/learn/... 时立刻升级到真路径
 window.addEventListener('hashchange',()=>{
-    if(_routerSuppress){return;}
-    applyRouteFromHash();
+    if(_routerSuppress)return;
+    if(location.hash){
+        const r=parseRoute(location.hash);
+        let newPath='/'+(r.page==='home'?'':r.page);
+        if(r.modId)newPath+='/'+encodeURIComponent(r.modId);
+        if(typeof r.secIdx==='number')newPath+='/'+(r.secIdx+1);
+        history.replaceState({},'',newPath);
+        applyRoute(newPath);
+    }
 });
 
 // 兼容老调用：glossary/recent updates 里用 selectLearnModule
 function selectLearnModule(modId){
-    location.hash='#/learn/'+encodeURIComponent(modId);
+    const path='/learn/'+encodeURIComponent(modId);
+    history.pushState({},'',path);
+    applyRoute(path);
 }
 addEventListener('scroll',()=>document.getElementById('btt').classList.toggle('show',scrollY>400));
 
 // === DATA ===
 let LD,PD,OD,ND,JD,MD,HD,DS,GD;
-async function loadJ(u){try{const r=await fetch(u+'?t='+Date.now());return r.ok?await r.json():null}catch(e){return null}}
+// 把以 data/ 开头的相对路径升级为根绝对路径，避免在 /learn/<mod>/<sec> 等深路径下解析错位
+function _normUrl(u){
+    if(typeof u!=='string')return u;
+    if(/^https?:\/\//.test(u))return u;
+    if(u.startsWith('/'))return u;
+    if(u.startsWith('data/')||u.startsWith('tools/'))return '/'+u;
+    return u;
+}
+async function loadJ(u){try{const r=await fetch(_normUrl(u)+'?t='+Date.now());return r.ok?await r.json():null}catch(e){return null}}
 
 async function init(){
     [LD,PD,OD,ND,JD,MD,HD,DS,GD]=await Promise.all([loadJ('data/learning-path.json'),loadJ('data/papers-index.json'),loadJ('data/opensource.json'),loadJ('data/news.json'),loadJ('data/jobs.json'),loadJ('data/models.json'),loadJ('data/hardware.json'),loadJ('data/datasets.json'),loadJ('data/glossary.json')]);
@@ -779,9 +933,29 @@ async function init(){
     renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();renderModels();renderDatasets();renderHardware();renderRecentUpdates();renderGlossary();
     // Sync inbox submission status from server-side processed records
     syncInboxStatus();
-    // 路由初始化：根据 URL hash 跳转到对应页面/模块
-    if(location.hash&&location.hash.length>1){applyRouteFromHash();}
-    else{go('home',{fromRouter:true,skipScroll:true});}
+    // === 路由初始化（History API + 404 桥接 + hash 回退）===
+    let initRoute=null;
+    // 1) 来自 404.html 桥接的深路径（GitHub Pages SPA 标准做法）
+    try{
+        const bridged=sessionStorage.getItem('_spaPath');
+        if(bridged){
+            sessionStorage.removeItem('_spaPath');
+            history.replaceState({},'',bridged);
+            initRoute=bridged;
+        }
+    }catch(e){}
+    // 2) 老 hash 链接（向前兼容）
+    if(!initRoute&&location.hash&&location.hash.length>1){
+        const r=parseRoute(location.hash);
+        let p='/'+(r.page==='home'?'':r.page);
+        if(r.modId)p+='/'+encodeURIComponent(r.modId);
+        if(typeof r.secIdx==='number')p+='/'+(r.secIdx+1);
+        history.replaceState({},'',p);
+        initRoute=p;
+    }
+    // 3) 普通 path 直接刷新
+    if(!initRoute)initRoute=location.pathname;
+    applyRoute(initRoute,{skipScroll:true});
 }
 
 // === RENDER LEARN (Split Layout: sidebar + detail) ===
@@ -993,13 +1167,13 @@ async function openLearnModule(modId, el, opts){
     const body=document.getElementById('learnDetail');
     body.innerHTML='<div style="text-align:center;color:var(--t3);padding:60px">⏳ 加载学习内容...</div>';
 
-    // 同步 hash（避免在 hashchange 路由调用时再次写回）
+    // 同步 URL（push 一条新 history）
     if(!opts.fromRouter){
-        _routerSuppress=true;
-        const newHash='#/learn/'+encodeURIComponent(modId);
-        if(location.hash!==newHash)location.hash=newHash;
-        setTimeout(()=>{_routerSuppress=false;},0);
+        const newPath='/learn/'+encodeURIComponent(modId);
+        _pushOrReplaceState(newPath, false);
     }
+    // SEO meta（先用模块 id 作为占位，后面拿到 d.name 后再更新一次）
+    updatePageMeta('learn', modId, opts.initialSec);
 
     // Update sidebar active state
     _currentLearnMod=modId;
@@ -1118,6 +1292,8 @@ async function openLearnModule(modId, el, opts){
     h+=`</div>`;
 
     body.innerHTML=h;
+    // 模块数据就绪，更新一次 SEO meta（含真实模块名 + section title）
+    updatePageMeta('learn', modId, opts.initialSec);
     // Render initial section（按需，仅当前 active）
     if(d.sections?.length>0){
         const initSec=opts.initialSec||0;
@@ -1160,12 +1336,11 @@ function switchLearnTab(idx,modId,opts){
     if(detail)detail.scrollTop=0;
     // 按需渲染当前 section（懒加载）
     if(modId)ensureSectionRendered(modId, idx);
-    // 同步 hash（深链接）
+    // 同步 URL（深链接到具体节）
     if(modId&&!opts.fromRouter){
-        _routerSuppress=true;
-        const newHash='#/learn/'+encodeURIComponent(modId)+'/'+(idx+1);
-        if(location.hash!==newHash)location.hash=newHash;
-        setTimeout(()=>{_routerSuppress=false;},0);
+        const newPath='/learn/'+encodeURIComponent(modId)+'/'+(idx+1);
+        _pushOrReplaceState(newPath, !!opts.replace);
+        updatePageMeta('learn', modId, idx);
     }
     const active=document.querySelector('.learn-panel.active');
     if(active)active.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.hl){hljs?.highlightElement(el);el.dataset.hl='1'}});
@@ -2004,7 +2179,7 @@ function openHWDetail(id){
 // === INBOX STATUS SYNC ===
 async function syncInboxStatus(){
     try{
-        const resp=await fetch('data/inbox.json?t='+Date.now());
+        const resp=await fetch('/data/inbox.json?t='+Date.now());
         if(!resp.ok)return;
         const data=await resp.json();
         if(!data.processedItems||!data.processedItems.length)return;

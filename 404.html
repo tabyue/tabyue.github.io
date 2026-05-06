@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>跳转中... | 具身智能知识门户</title>
+<meta name="robots" content="noindex,follow">
+<style>
+body{margin:0;background:#0b0f1a;color:#94a3b8;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh}
+.box{text-align:center;padding:24px}
+.box h1{font-size:1.2rem;margin:0 0 8px;color:#f1f5f9;font-weight:500}
+.box p{margin:0;font-size:.9rem}
+.box a{color:#818cf8;text-decoration:none}
+</style>
+<script>
+// SPA on GitHub Pages：捕获 404 路径并桥接到 index.html
+// 来源思路: https://github.com/rafgraph/spa-github-pages
+(function(){
+  try{
+    var p = window.location.pathname + window.location.search + window.location.hash;
+    // 防止从 index.html 之类的 root 路径误进入循环
+    if(p === '/' || p === '/index.html'){
+      window.location.replace('/');
+      return;
+    }
+    sessionStorage.setItem('_spaPath', p);
+  }catch(e){}
+  // 跳到根；index.html 启动后会读 sessionStorage._spaPath 还原 URL
+  window.location.replace('/');
+})();
+</script>
+</head>
+<body>
+<div class="box">
+<h1>正在跳转...</h1>
+<p>如果页面没有自动跳转，请 <a href="/">点击这里返回首页</a>。</p>
+</div>
+</body>
+</html>

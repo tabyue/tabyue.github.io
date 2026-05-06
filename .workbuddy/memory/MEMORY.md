@@ -6,14 +6,24 @@
 - DNS配置: 2条A记录(@→185.199.108/109.153) + 1条CNAME(www→tabyue.github.io)
 - 部署: GitHub Pages, main 分支, 仓库 tabyue/tabyue.github.io
 
-## 站点架构（2026-05-06 升级到 B 方案）
-- **Hash Router**：URL 支持 `#/<page>`（home/learn/papers/opensource/news/jobs/...）和 `#/learn/<modId>/<secIdx>` 深链接到具体章节。`go(id)` 切板块、`openLearnModule(mod)` 进模块、`switchLearnTab(idx,mod)` 切节都会自动同步 hash；浏览器前进/后退原生支持
-- **学习模块按需加载**：
+## 站点架构（2026-05-06 升级到 B 方案 + 路径路由）
+- **History API 路由**（2026-05-06 21:30 升级）：URL 是真实路径 `/learn/vla-models/3` 而非 `#/...`
+  - 直接刷新深路径靠 `404.html` 桥接（GitHub Pages SPA 标准做法，sessionStorage 保存原 path → index 启动时还原）
+  - 老 hash 链接 `#/learn/...` 会被 `hashchange` handler 自动迁移到对应 path（向前兼容用户已分享的链接）
+  - 浏览器前进/后退原生支持（`popstate` → `applyRoute(location.pathname)`）
+  - **fetch 路径必须用绝对路径** `/data/...`，否则在深路径下浏览器会按相对路径解析成 `/learn/<mod>/data/...` 从而 404；`loadJ` 内部已加 `_normUrl` 自动把 `data/...`/`tools/...` 转成 `/data/.../`/`tools/...`
+- **每板块 + 每模块 + 每章节独立 SEO meta**：title / description / og:url / twitter / canonical 全部由 `updatePageMeta(page, modId, secIdx)` 动态更新；模块/章节 title 从 learnCache 反查真实名（如"π₀ 与 Flow Matching - VLA 模型..."）
+- **学习模块按需加载**（不变）：
   - 单一真相源：`data/learn/<mod>.json`（automation-5 写入目标，整文件 100-180KB）
   - 派生产物：`data/learn-split/<mod>/{_index.json (~4KB), sec-NN.json (7-15KB)}`，前端只读这套
   - 同步脚本：`tools/sync_learn_split.py`（幂等，无变化 0 写入）
   - **automation-5 修改 learn/*.json 后必须运行 `python tools/sync_learn_split.py` 再提交**，否则前端展示旧内容
   - 前端首次进模块只下载 _index.json 显示骨架；切 tab 到第 N 节时才 fetch sec-NN.json 并 renderMd
+- **SEO 基础设施**：
+  - `sitemap.xml`（10 板块 + 30 模块 + 402 章节 = 442 URL，由 `tools/build_sitemap.py` 生成）
+  - `robots.txt` 指向 sitemap，禁止爬取 `/data/`、`/tools/`、`/404.html`
+  - `<noscript>` 大纲块包含主板块和热门模块的 `<a>` 链接，给不执行 JS 的爬虫
+  - 修改学习内容后建议同时跑 `python tools/build_sitemap.py` 让 sitemap 跟上
 - **数据规模参考**：30 模块 / 402 sections / 271 万字符 / 旧总 3.6MB JSON / 拆分后 index 总 130KB
 
 ## 数据规范

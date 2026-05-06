@@ -1,6 +1,8 @@
 # Automation-5 Memory: 具身智能门户每6小时更新
 
-> ⚠️ **强制规则（2026-05-06 起）**：每次修改 `data/learn/<mod>.json`（追加/修改 sections）后，**必须** 在提交前运行 `python tools/sync_learn_split.py` 同步生成 `data/learn-split/<mod>/{_index.json, sec-NN.json}`。前端走 B 方案按需加载——若不同步，用户看到的章节内容会停在旧版本。脚本是幂等的，无变化时不会改任何文件。
+> ⚠️ **强制规则（2026-05-06 起）**：
+> 1. 每次修改 `data/learn/<mod>.json`（追加/修改 sections）后，**必须** `python tools/sync_learn_split.py` 同步生成 `data/learn-split/<mod>/{_index.json, sec-NN.json}`。前端走 B 方案按需加载——若不同步，用户看到的章节内容会停在旧版本。脚本是幂等的，无变化时不会改任何文件。
+> 2. 学习模块结构发生变化（新增/删除模块、新增/删除 section）后，建议同时运行 `python tools/build_sitemap.py` 重新生成 `sitemap.xml`，让搜索引擎抓到新页面。
 
 ## 2026-05-06T20:45 执行记录
 
