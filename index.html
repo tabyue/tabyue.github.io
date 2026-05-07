@@ -595,13 +595,14 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
 
 <!-- LEARN -->
 <div class="page" id="pg-learn">
-    <div style="max-width:1200px;margin:0 auto;padding:20px 24px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
-        <div style="display:flex;align-items:center;gap:10px"><span style="font-size:1.4rem">📚</span><span style="font-size:1.1rem;font-weight:700">学习中心</span><span style="font-size:.78rem;color:var(--t3);margin-left:4px">从零基础到具身智能项目实战</span></div>
-        <div style="display:flex;gap:6px;flex-shrink:0">
-            <button class="card-btn" onclick="exportProgress()" title="导出进度码">📤 导出</button>
-            <button class="card-btn" onclick="importProgress()" title="粘贴进度码恢复">📥 导入</button>
-            <button class="card-btn" onclick="resetProgress()" title="清除学习记录" style="color:var(--t3)">🗑️</button>
-        </div>
+    <div class="page-header" style="padding-bottom:24px">
+        <h1 class="page-title"><span class="icon">📚</span> 学习中心</h1>
+        <p class="page-sub">从零基础到具身智能项目实战 · 6 阶段 30+ 模块教材级内容</p>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px 16px;display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap">
+        <button class="card-btn" onclick="exportProgress()" title="导出进度码">📤 导出</button>
+        <button class="card-btn" onclick="importProgress()" title="粘贴进度码恢复">📥 导入</button>
+        <button class="card-btn" onclick="resetProgress()" title="清除学习记录" style="color:var(--t3)">🗑️</button>
     </div>
     <div class="learn-layout">
         <div class="learn-sidebar" id="learnSidebar"><div style="color:var(--t3);text-align:center;padding:40px;font-size:.85rem">加载中...</div></div>
