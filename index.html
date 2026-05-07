@@ -168,6 +168,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 .card-btn:hover{color:var(--t1);border-color:var(--bd2);transform:translateY(-1px)}
 .card-btn.primary{background:var(--p);border-color:var(--p);color:#fff;font-weight:600}
 .card-btn.primary:hover{background:var(--pl);border-color:var(--pl);box-shadow:0 4px 16px rgba(41,151,255,.3)}
+.card-btn.disabled,.card-btn[disabled]{cursor:not-allowed;color:var(--t3);background:var(--bg3);border-color:var(--bd);border-style:dashed;font-weight:500;opacity:.65}
+.card-btn.disabled:hover,.card-btn[disabled]:hover{transform:none;color:var(--t3);border-color:var(--bd)}
 
 /* === PAPER TAG COLORS === */
 .ptag-模仿学习{background:rgba(48,209,88,.1);color:var(--sl)}
@@ -1494,7 +1496,9 @@ function renderPapers(){
         h+=`<div class="tl-group-label" id="paper-${ym}" style="grid-column:1/-1">📅 ${y} 年 ${monthNames[parseInt(m)]||m}</div>`;
         groups[ym].forEach(({p,i})=>{
             const pNew=p.addedDate&&(Date.now()-new Date(p.addedDate).getTime())<3*86400000;
-            h+=`<div class="card" style="cursor:pointer" onclick="openPaper(${i})"><div class="card-tags">${p.tags.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('')}${pNew?'<span class="status-tag status-new">NEW</span>':''}<span class="tag tag-purple" style="margin-left:auto">${p.difficulty}</span></div><div class="card-title">${p.title}</div><div class="card-meta">${p.authors} · ${p.venue} · ${p.date}</div><div class="card-desc"><strong>TL;DR:</strong> ${p.tldr}</div><div class="card-footer">${p.arxiv?`<a href="${p.arxiv}" target="_blank" class="card-btn" onclick="event.stopPropagation()">📄 arXiv</a>`:''} ${p.github?`<a href="${p.github}" target="_blank" class="card-btn" onclick="event.stopPropagation()">💻 Code</a>`:''}<span class="card-btn primary">📚 深度解读 →</span></div></div>`;
+            const arxivBtn=p.arxiv?`<a href="${p.arxiv}" target="_blank" class="card-btn" onclick="event.stopPropagation()" title="查看 arXiv 原文">📄 arXiv</a>`:`<span class="card-btn disabled" onclick="event.stopPropagation()" title="暂未提供 arXiv 链接">📄 arXiv</span>`;
+            const codeBtn=p.github?`<a href="${p.github}" target="_blank" class="card-btn" onclick="event.stopPropagation()" title="查看代码仓库">💻 Code</a>`:`<span class="card-btn disabled" onclick="event.stopPropagation()" title="暂未开源代码">💻 Code</span>`;
+            h+=`<div class="card" style="cursor:pointer" onclick="openPaper(${i})"><div class="card-tags">${p.tags.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('')}${pNew?'<span class="status-tag status-new">NEW</span>':''}<span class="tag tag-purple" style="margin-left:auto">${p.difficulty}</span></div><div class="card-title">${p.title}</div><div class="card-meta">${p.authors} · ${p.venue} · ${p.date}</div><div class="card-desc"><strong>TL;DR:</strong> ${p.tldr}</div><div class="card-footer">${arxivBtn} ${codeBtn} <span class="card-btn primary">📚 深度解读 →</span></div></div>`;
         });
     });
     document.getElementById('papersGrid').innerHTML=h;
