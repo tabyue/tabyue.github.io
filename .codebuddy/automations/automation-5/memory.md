@@ -4,6 +4,33 @@
 > 1. 每次修改 `data/learn/<mod>.json`（追加/修改 sections）后，**必须** `python tools/sync_learn_split.py` 同步生成 `data/learn-split/<mod>/{_index.json, sec-NN.json}`。前端走 B 方案按需加载——若不同步，用户看到的章节内容会停在旧版本。脚本是幂等的，无变化时不会改任何文件。
 > 2. 学习模块结构发生变化（新增/删除模块、新增/删除 section）后，建议同时运行 `python tools/build_sitemap.py` 重新生成 `sitemap.xml`，让搜索引擎抓到新页面。
 
+## 2026-05-07T16:55 执行记录
+
+**更新概要：**
+- 投稿箱：无新投稿（gh issue list --state open 返回 `[]`）
+- 新闻 +3（n228-n230）：
+  - n228 RoboScience 机器科学 10 亿元 A 轮（5/6）— 苹果前技术负责人田野（"苹果的 PyTorch 与 CUDA"基础设施缔造者）+ 邵林（NUS 助理教授 / UniGrasp 数据驱动灵巧抓取基准方法作者）联合创立 / 2024-12 成立 / 累计融资 13 亿+ / VLOA 大模型（具身世界模型 + 具身操作大模型，物理引擎-仿真数据-端到端训练闭环 + 10B 操作仿真轨迹）/ 直接对标 PI π0 / BOSS 直聘 48+ 岗位
+  - n229 众擎机器人 B+ 轮（5/6 蓝鲸独家）— 4 月 9 日 2 亿美元 B 轮估值破百亿后再加注 / 河南投资集团汇融基金 + 立讯精密领投 / 阿联酋外籍代表 REDA NIDHAKOU 退出董事 / 27 天连两轮 / 资金从整机向上游零部件 + 中游具身大脑 + 下游 RaaS 三方向扩散 / 头部企业淘汰赛
+  - n230 5/7 arxiv ConsisVLA-4D（2605.05126）— 把"时空一致性"当 first-class citizen 的新 VLA：3D 提升模块 + cross-frame spatiotemporal consistency loss / 与 RLDX-1 / MolmoAct2 / IVLR / Anticipation-VLA 形成 5 月"VLA + 推理"集群高峰
+- 论文 +1（p120）：ConsisVLA-4D（arXiv 2605.05126 / VLA 操作 / 3D 感知效率 + 4D 推理 / 含独立 papers/p120.json）
+- 招聘 +1（j108）：RoboScience 机器科学全栈招聘（北京 / 60-150K × 16 薪 + 期权 / 8 大方向，覆盖移动操作运控 / 多模态物理引擎 / VLA 大模型 / 跨实体训练 pipeline / 端侧推理 / 灵巧手硬件 / BOSS 48+ 在线）
+- 学习深化 ×1：**ros2** 102.5K → **118.6KB**（93577 chars，12→13 sec，stage1 最旧 lastUpdated 模块从 4/21 升到 5/7）。新增「ROS2 在 VLA 时代的角色：把通用具身大模型嵌入 ros2_control 与 micro-ROS 闭环」section（约 9.5K chars / 10 小节）：①为什么 VLA 时代 ROS2 更重要（策略层 vs 系统层 / 多策略协同 / 法规可追溯）+ ②VLA Action Server 完整 IDL 与 Python 节点骨架（MultiThreadedExecutor + ReentrantCallbackGroup + sensor_data QoS）+ ③ros2_control "VLA + Smoother + Safety Gate" 控制器链 + Safety Gate C++ 代码（限位 / 速度裁剪 / 碰撞冻结）+ ④micro-ROS firmware 把 VLA 命令送到灵巧手 MCU（STM32H7 + DDS-XRCE + < 1ms ISR）+ ⑤多策略 QoS 矩阵（cam/joint/vla/walking/safety/teleop 6 通道）+ Lifecycle 节点 OTA 灰度 + ⑥生产级 launch.py + YAML 配置 + ⑦rosbag2 + 策略指纹（model_hash + version）满足杭州条例 / EU AI Act 全链路可追溯 + ⑧8 大工程陷阱 + 5 题练习。强联动 humanoid-fullstack / platform-engineering / vla-models / p110 / n206 / n224
+- 3 处 lastUpdated 同步：ros2.json 顶层 + 新 section + learning-path stage1.modules[5]「ROS2 机器人操作系统」 + 顶层
+- sync_learn_split.py：13 sections / 2 文件更新（_index.json 与新增 sec-13.json）
+- build_sitemap.py：10 sections + 30 modules + 405 chapters（比上轮 +3，含本轮 ros2 新章节）
+- 数据排序：news/papers/jobs 按 addedDate (fallback date/postedDate) + id 数字 secondary key 倒序重排
+- 数据校验：584 JSON 全部 OK，news 230 / papers 109 / opensource 78 / jobs 108 全部 id 无重复
+- 临时清理：_apply_update.py + _chk.py 全部删除
+
+**当前数据编号水位：** news→n230 (230 条), papers→p120 (109 条), opensource→os085 (78 条), jobs→j108 (108 条)
+**学习中心 ros2 状态：** 13 sec / 118.6KB JSON / 93.6K chars，从 stage1 最薄升到 stage1 中位
+**Git:** 待提交，将 push to main
+
+**踩坑教训：**
+- **Python walrus 运算符 `:=` 不能用在 dict 字面量中**：写 `"content": placeholder := """..."""` 会报 `SyntaxError: invalid syntax`。walrus 仅在表达式上下文里合法，dict 字面量的 value 位置不允许。今后写大段长字符串时先在外部赋值再放进 dict
+- **PowerShell 不允许 `&` HTML 实体**：把 `2>&1` 写成 `2>&amp;1` 会触发 `所在位置 行:1 字符: 465 + ... 2>&amp;1 ; ... 重定向运算符后面缺少文件规范 + 不允许使用与号(&)。& 运算符是为将来使用而保留的`，因为 codebuddy_tool 自动把 `&` HTML 编码了。今后涉及 stderr 重定向直接把 Python 校验脚本写成 _chk.py 文件用 `python _chk.py` 跑，避免 PowerShell 一行式
+- **ros2 文件大小数字解读**：之前 102.5KB 是 JSON 体积（含 indent + 转义），content 总字符约 89K；新增 9.5K chars 后 JSON 体积升到 118.6KB，content 总字符 93.6K。报告"模块体量"统一用 chars 维度而不是文件 KB 维度，避免重复计入 indent
+
 ## 2026-05-07T07:30 执行记录
 
 **更新概要：**

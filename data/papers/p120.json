@@ -1,0 +1,22 @@
+{
+  "id": "p120",
+  "title": "ConsisVLA-4D: Advancing Spatiotemporal Consistency in Efficient 3D-Perception and 4D-Reasoning for Robotic Manipulation",
+  "authors": [
+    "匿名审稿（arXiv 预印本）"
+  ],
+  "venue": "arXiv 2605.05126",
+  "date": "2026-05-07",
+  "arxiv": "https://arxiv.org/abs/2605.05126",
+  "github": "",
+  "tldr": "把\"时空一致性\"当 first-class citizen 嵌入 VLA 训练目标的新工作。在视觉编码后加轻量 3D 提升模块让 token 携带几何先验；在解码端引入跨帧 spatiotemporal consistency loss，使上一时刻物体位姿成为下一时刻的训练锚。在不显著增加推理代价的前提下提升长程操作的稳定性。与 5/5-5/6 RLDX-1 / MolmoAct2 / IVLR / Anticipation-VLA 形成 5 月\"VLA + 推理\"集群。",
+  "category": "VLA/操作",
+  "difficulty": "中级",
+  "tags": [
+    "VLA",
+    "4D推理",
+    "时空一致性",
+    "3D感知",
+    "Manipulation"
+  ],
+  "addedDate": "2026-05-07"
+}
