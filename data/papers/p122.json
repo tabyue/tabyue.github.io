@@ -1,0 +1,41 @@
+{
+  "id": "p122",
+  "title": "STARRY: Spatial-Temporal Action-Centric World Modeling for Robotic Manipulation",
+  "authors": [
+    "Yuxuan Tian",
+    "Yurun Jin",
+    "Bin Yu",
+    "Yukun Shi",
+    "Hao Wu",
+    "Chi Harold Liu",
+    "Kai Chen",
+    "Cong Huang"
+  ],
+  "venue": "arXiv 2604.26848",
+  "date": "2026-04-29",
+  "arxiv": "https://arxiv.org/abs/2604.26848",
+  "github": "",
+  "tldr": "VLA 长期存在\"预测式视觉表征与动作执行之间耦合不紧\"的痛点。STARRY 用统一扩散过程同时对未来时空潜在表示与动作做联合去噪——预测和动作不再两阶段，而是同步生成。配套 GASAM 模块把预测的深度与末端执行器几何转成 token 对齐权重，对动作 attention 做选择性调制。",
+  "category": "VLA/操作",
+  "difficulty": "进阶",
+  "tags": [
+    "World Model",
+    "VLA",
+    "Diffusion",
+    "时空建模",
+    "Manipulation",
+    "GASAM"
+  ],
+  "addedDate": "2026-05-07",
+  "keyInsights": [
+    "💡 **联合扩散去噪**：把\"预测未来时空潜在表示\"和\"生成动作\"放进同一个扩散过程同步去噪。这与 PI π0、OpenVLA 等\"先预测再决策\"的两阶段方案截然不同——两阶段的代价是中间表示与动作之间存在信息瓶颈，联合去噪天然消除这个瓶颈",
+    "💡 **GASAM（Geometry-Aware Selective Attention Modulation）**：把扩散过程预测的深度图、末端执行器几何，转换成 token 对齐的权重，注入到动作 attention 上。等于在 attention 层注入了显式的几何先验，避免靠纯数据驱动学几何关系",
+    "💡 **空间-时间统一表示**：未来 N 步的视觉 token 与动作 token 拼接为一个长序列，由共享 transformer 同步生成；这种结构天然适合长程任务（long-horizon manipulation）",
+    "💡 多机构联合（北理工 + 中关村学院 + 中科大 + 哈工大 + 华东师大 + DeepCybo）的工作，反映出\"world model + VLA\"路线在国内已经形成多团队协作研究网",
+    "💡 与同窗 5 月工作 ConsisVLA-4D（时空一致性）/ MolmoAct2（动作推理）/ Anticipation-VLA（前瞻预测） 形成\"VLA + 时空推理\"集群，技术路线收敛信号明显"
+  ],
+  "impact": "影响力评级：⭐⭐⭐⭐。STARRY 代表了 VLA + World Model 路线的新范式：①把世界模型从\"评估代理 / 数据增广工具\"提升为\"动作生成的内生组件\"，让预测与决策共享去噪过程；②GASAM 提供了一种把几何信息显式注入 attention 的优雅方式，启发后续 VLA 设计；③与 ConsisVLA-4D / Anticipation-VLA 形成的\"5 月时空推理 VLA 集群\"，预示下半年 VLA 主流路线将向\"内嵌世界模型\"演进。",
+  "methodology": "**1. 联合扩散过程**\n- 输入：当前视觉观测 $o_t$、语言指令 $l$、历史动作 $a_{1:t-1}$\n- 目标：未来 N 步的潜在视觉表征 $\\{z_{t+1},\\ldots,z_{t+N}\\}$ 与动作序列 $\\{a_{t+1},\\ldots,a_{t+N}\\}$\n- 扩散调度：标准 DDPM 调度，对潜在视觉与动作两路 token 共享时间步 $t_d$\n- 去噪网络：transformer，视觉 token 与动作 token 走同一注意力栈\n\n**2. GASAM 模块**\n- 在去噪过程中实时预测深度 $D_t$ 和末端执行器位置 $p_t^{ee}$\n- 计算 token 几何权重：$w_i = f(D_t[\\text{token}_i], p_t^{ee})$\n- 对动作 token 的 self-attention 做权重调制：$A'_{ij} = w_i \\cdot A_{ij}$\n- 几何上接近末端执行器的视觉 token 获得更高 attention 权重\n\n**3. 训练目标**\n- 视觉重建损失（潜在空间 MSE）+ 动作扩散损失 + 深度预测辅助损失\n- 端到端联合优化",
+  "experiments": "**基准**：LIBERO-Goal / LIBERO-Spatial / LIBERO-Object / RLBench / 真机操作。\n\n**对比**：\n- vs OpenVLA / RT-2 / π0：在长程任务（>5 步）上提升 8-15 个点\n- vs DiT-Policy（纯扩散动作）：联合扩散提升 5-10 个点，证明视觉预测对动作有正向影响\n- vs 两阶段（先预测视觉，再生成动作）：联合扩散提升 3-7 个点\n\n**消融**：\n- 去掉 GASAM：精度下降 4-6 个点，证明显式几何注入有效\n- 去掉视觉预测分支：退化为纯 DiT-Policy，长程任务下降明显\n- 仅保留 1 步预测：长程稳定性下降，N=4 步预测最佳",
+  "reproduction": "代码暂未公开（截至 2026-05-07）。复现关键：\n1. 准备视觉编码器（DINOv2 / SigLIP 提取潜在 token）\n2. 实现联合扩散调度器（视觉 + 动作共享时间步）\n3. GASAM 需要可微深度估计模块，可基于 ZoeDepth 或自训练\n4. 训练数据：LIBERO + 自采操作数据，建议 >100k 轨迹"
+}

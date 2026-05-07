@@ -1,6 +1,123 @@
 {
-  "lastUpdated": "2026-05-07T16:55",
+  "lastUpdated": "2026-05-07T20:05",
   "papers": [
+    {
+      "id": "p123",
+      "title": "dWorldEval: Scalable Robotic Policy Evaluation via Discrete Diffusion World Model",
+      "authors": [
+        "Yaxuan Li",
+        "Zhongyi Zhou",
+        "Yefei Chen",
+        "Yaokai Xue",
+        "Yichen Zhu"
+      ],
+      "venue": "arXiv 2604.22152",
+      "date": "2026-04-24",
+      "arxiv": "https://arxiv.org/abs/2604.22152",
+      "github": "",
+      "tldr": "把\"在数千环境 × 数千任务上评估机器人策略\"这个原本不可行的问题，用一个离散扩散世界模型作为可扩展评估代理来解决。把视觉 / 语言 / 机器人动作映射到统一 token 空间；用单个 transformer 去噪网络建模；引入稀疏关键帧记忆维持时空一致性，并用一个 progress token 自动判断任务是否完成（progress=1）。相比 WorldEval / Ctrl-World / WorldGym，在 LIBERO / RoboTwin / 真机任务上评估精度更高、吞吐更大。",
+      "category": "评测/世界模型",
+      "difficulty": "进阶",
+      "tags": [
+        "World Model",
+        "Discrete Diffusion",
+        "Policy Eval",
+        "LIBERO",
+        "RoboTwin"
+      ],
+      "addedDate": "2026-05-07",
+      "keyInsights": [
+        "💡 离散扩散 + 统一 token 空间，让评估代理同时建模感知 / 决策 / 反馈",
+        "💡 稀疏关键帧记忆约束长序列时空一致性，避免漂移",
+        "💡 Progress token 让\"是否成功\"判断任务无关，无需人工脚本",
+        "💡 把评估代价降到前向推理量级，加速比 >500×"
+      ],
+      "impact": "把\"机器人 policy 千环境 × 千任务评估\"从不可行变可行，统一 token + progress token 设计简洁优雅。"
+    },
+    {
+      "id": "p122",
+      "title": "STARRY: Spatial-Temporal Action-Centric World Modeling for Robotic Manipulation",
+      "authors": [
+        "Yuxuan Tian",
+        "Yurun Jin",
+        "Bin Yu",
+        "Yukun Shi",
+        "Hao Wu",
+        "Chi Harold Liu",
+        "Kai Chen",
+        "Cong Huang"
+      ],
+      "venue": "arXiv 2604.26848",
+      "date": "2026-04-29",
+      "arxiv": "https://arxiv.org/abs/2604.26848",
+      "github": "",
+      "tldr": "VLA 长期存在\"预测式视觉表征与动作执行之间耦合不紧\"的问题。STARRY 提出统一扩散过程同时对未来时空潜在表示与动作做联合去噪——预测和动作不再两阶段，而是同步生成。配套 GASAM 模块（Geometry-Aware Selective Attention Modulation），把预测的深度与末端执行器几何转成 token 对齐权重，对动作 attention 做选择性调制。在多个精细操作任务上（要求时空协调）超过纯 VLA 与解耦预测策略。机构：北理工 / 中关村学院 / 中科大 / 哈工大 / 华东师大 / DeepCybo。",
+      "category": "VLA/操作",
+      "difficulty": "进阶",
+      "tags": [
+        "World Model",
+        "VLA",
+        "Diffusion",
+        "时空建模",
+        "Manipulation",
+        "GASAM"
+      ],
+      "addedDate": "2026-05-07",
+      "keyInsights": [
+        "💡 联合扩散去噪：未来视觉表征与动作同步生成，消除两阶段信息瓶颈",
+        "💡 GASAM 把深度 / 末端执行器几何转成 attention 权重，注入显式几何先验",
+        "💡 时空 token 统一序列建模，长程任务（>5 步）显著提升 8-15 个点",
+        "💡 与 ConsisVLA-4D / Anticipation-VLA 形成 5 月\"VLA + 时空推理\"集群"
+      ],
+      "impact": "代表 VLA + World Model 路线的新范式：世界模型从外部代理变为动作生成的内生组件。"
+    },
+    {
+      "id": "p121",
+      "title": "GS-Playground: A High-Throughput Photorealistic Simulator for Vision-Informed Robot Learning",
+      "authors": [
+        "Yufei Jia",
+        "Heng Zhang",
+        "Ziheng Zhang",
+        "Junzhe Wu",
+        "Mingrui Yu",
+        "Zifan Wang",
+        "Dixuan Jiang",
+        "Zheng Li",
+        "Chenyu Cao",
+        "Zhuoyuan Yu",
+        "Tianle Liu",
+        "Yusen Qin",
+        "Ruqi Huang",
+        "Lei Han",
+        "Tiancai Wang",
+        "Guyue Zhou",
+        "等共 42 位作者（清华 AIR / 谋先飞 / 原力灵机 / 求之科技 / 地瓜机器人）"
+      ],
+      "venue": "RSS 2026 / arXiv 2604.25459",
+      "date": "2026-04-28",
+      "arxiv": "https://arxiv.org/abs/2604.25459",
+      "github": "https://github.com/discoverse-dev/gs_playground",
+      "tldr": "新一代高通量照片级仿真器，把 3DGS 渲染与高性能并行物理引擎 MotrixSim 深度融合，单 GPU 万帧 FPS（640×480 RGB）首次让视觉中心 RL 达到此前只有 proprioceptive RL 才能实现的训练规模。物理引擎采用广义坐标速度-脉冲动力学 + MCP 接触摩擦建模 + 投影高斯-赛德尔（PGS）求解器，强调静摩擦保持、高刚度约束与大时间步稳定，API 兼容 MuJoCo MJCF。配套自动 Real2Sim 管线（分割 + 补绘 + 3DGS / mesh 重建 + 6D 位姿 + 相机标定）和 Bridge-GS 数据集。Sim2Real 战绩：四足 / 人形运动零样本部署、视觉导航零样本部署、机械臂抓取零微调真机成功率 90%。已被 RSS 2026 录用，全栈开源。",
+      "category": "仿真/Sim2Real",
+      "difficulty": "中级",
+      "tags": [
+        "3DGS",
+        "Photorealistic Sim",
+        "MotrixSim",
+        "RSS 2026",
+        "Sim2Real",
+        "并行物理引擎"
+      ],
+      "addedDate": "2026-05-07",
+      "keyInsights": [
+        "💡 单 GPU >10000 FPS 高保真渲染，视觉 RL 首次达到 proprioceptive 训练规模",
+        "💡 自研 MotrixSim 并行物理引擎：MCP + PGS，高刚度大时间步稳定",
+        "💡 API 完全兼容 MuJoCo MJCF，开源生态零摩擦迁移",
+        "💡 自动 Real2Sim 管线打通\"重建即训练 / 训练即部署\"全链路",
+        "💡 Sim2Real 实战：四足 / 人形零样本部署、抓取零微调真机 90%"
+      ],
+      "impact": "2026 年具身智能仿真基础设施标志性突破，全栈国产化（清华 AIR + 谋先飞 + 原力灵机 + 求之科技 + 地瓜机器人）+ RSS 顶会 + 全栈开源，后续 VLA / 视觉 RL 训练新基础设施候选。"
+    },
     {
       "id": "p120",
       "title": "ConsisVLA-4D: Advancing Spatiotemporal Consistency in Efficient 3D-Perception and 4D-Reasoning for Robotic Manipulation",

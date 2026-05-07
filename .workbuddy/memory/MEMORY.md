@@ -52,7 +52,7 @@
 - **跨实例 id 冲突自检**：每轮启动应跑一次 `Counter([x['id'] for x in items])` 核查；多轮合并提交越久越容易留隐患，2026-05-06 一次发现 7 处 id 重复（news 5 + papers 1 + os 1）。修复策略：保留 addedDate 最新的占用原 id，老的重命名为 max+i
 - **跨实例 schema 一致性**：每个数据数组的字段约定不同——
   - **news**: id / title / source / date(原文日期) / url / category / summary / tags / addedDate(收录)
-  - **papers (papers-index.json)**: id / title / authors / venue / date / arxiv / github / tags / tldr / category / difficulty / addedDate
+  - **papers (papers-index.json)**: id / title / authors / venue / date / arxiv / github / tags / tldr / category / difficulty / addedDate **+ keyInsights[]（💡 列表）+ impact（影响力描述）**——前端会读 keyInsights 判断"有无深度解读"，缺这两个字段会被打上「📚 暂无解读」disabled 标识，整卡也变不可点。新增论文必须同时配 `data/papers/pXXX.json` detail 文件（含 methodology / experiments / reproduction / mathDetails 中至少一项），否则点击会显示「📭 本篇深度解读尚未发布」
   - **opensource**: id / name / github / organization / category / description / language / license / features / stars / tags / addedDate
   - **jobs**: id / title / company / city(不是 location!) / type / category / salary / education / experience / tags / description / **postedDate**(注意是 postedDate 不是 postDate) / addedDate
   - 新增条目前先 `python -c "print(json.dumps(items[0], ensure_ascii=False, indent=2))"` 实读一条核对，不要靠记忆
@@ -63,3 +63,12 @@
 
 ## 操作偏好
 - **所有操作一律 `requires_approval: false`**：包括临时文件清理（del/rm）、git add/commit/push、脚本执行等。无论是自动化任务还是手动对话，都不等用户确认，直接执行。Tab 已多次强调，绝不要弹确认。(2026-04-27 再次强调)
+
+## UI / 视觉规范（2026-05-07 19:22 确立）
+- **默认主题：深色**。`<html data-theme="dark">` 预设 + head inline 脚本读 localStorage 同步，避免 FOUC。不再使用 `prefers-color-scheme` 自动跟随系统；仅当用户主动切到浅色保存 `localStorage.eai_theme=light` 时才显示浅色
+- **深色色号**（避免纯黑 OLED 死压）：`--bg #0a0a0c / --bg2 #16161a / --bg3 #1f1f24 / --bg4 #2c2c33`；主色 `--p #3aa3ff` 紫 `--v #bf83f8` 绿 `--gn #32d96b`
+- **浅色色号**（避免纯白刺眼）：`--bg #fbfbfd / --bg2 #ffffff / --bg3 #f3f4f7`；文字 `--t1 #101114 / --t2 #4a5160`；主色 `--p #1f6feb` 绿 `--gn #0a8754`
+- **字体栈**：`'Inter','Noto Sans SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif`；等宽 `'JetBrains Mono','SF Mono','Cascadia Code','Fira Code',Consolas,monospace`；body 启用 `font-feature-settings:"cv11","ss01","ss03","tnum","kern"`
+- **按钮约定**：主要 CTA（glow-btn / sec-nav-btn primary / btt）一律 135° `linear-gradient(p 0%, pd 100%)` + 发光 box-shadow，不写纯色填充
+- **写 hover/底色不要写死 `rgba(255,255,255,.x)`**——浅色下完全失效。统一用 `var(--bg3)` 或 `var(--accent-subtle)` 让两套主题都生效
+- **可访问性**：`@media (prefers-reduced-motion:reduce)` 全局降级动画为 .01ms

@@ -1,0 +1,51 @@
+{
+  "id": "p121",
+  "title": "GS-Playground: A High-Throughput Photorealistic Simulator for Vision-Informed Robot Learning",
+  "authors": [
+    "Yufei Jia",
+    "Heng Zhang",
+    "Ziheng Zhang",
+    "Junzhe Wu",
+    "Mingrui Yu",
+    "Zifan Wang",
+    "Dixuan Jiang",
+    "Zheng Li",
+    "Chenyu Cao",
+    "Zhuoyuan Yu",
+    "Tianle Liu",
+    "Yusen Qin",
+    "Ruqi Huang",
+    "Lei Han",
+    "Tiancai Wang",
+    "Guyue Zhou",
+    "等共 42 位作者（清华 AIR / 谋先飞 / 原力灵机 / 求之科技 / 地瓜机器人）"
+  ],
+  "venue": "RSS 2026 / arXiv 2604.25459",
+  "date": "2026-04-28",
+  "arxiv": "https://arxiv.org/abs/2604.25459",
+  "github": "https://github.com/discoverse-dev/gs_playground",
+  "tldr": "新一代高通量照片级仿真器，把 3DGS 渲染与自研并行物理引擎 MotrixSim 深度融合：单 GPU >10000 FPS（640×480 RGB）首次让视觉中心 RL 达到 proprioceptive 量级训练规模；MJCF 兼容、Sim2Real 全链路打通。已被 RSS 2026 录用并全栈开源。",
+  "category": "仿真/Sim2Real",
+  "difficulty": "中级",
+  "tags": [
+    "3DGS",
+    "Photorealistic Sim",
+    "MotrixSim",
+    "RSS 2026",
+    "Sim2Real",
+    "并行物理引擎"
+  ],
+  "addedDate": "2026-05-07",
+  "keyInsights": [
+    "💡 把高保真照片级渲染从\"研究级 demo\"推进到\"工业级训练吞吐\"——单 GPU >10000 FPS（640×480 RGB），首次让视觉 RL 达到此前只有 proprioceptive RL 才能实现的并行规模",
+    "💡 自研并行物理引擎 MotrixSim：广义坐标速度-脉冲动力学、混合互补问题（MCP）建模接触摩擦、投影高斯-赛德尔（PGS）求解器；强调静摩擦保持、高刚度约束与大时间步稳定性，特别适合足式 / 灵巧抓取 / 多体接触类高动态任务",
+    "💡 API 完全兼容 MuJoCo MJCF：现有 MuJoCo 项目可零摩擦迁移，把开源生态成本降到最低——这是国产仿真器路径上一个非常聪明的兼容选择",
+    "💡 自动 Real2Sim 管线打通：目标分割 + 背景补绘 + 3DGS / mesh 重建 + 6D 位姿 + 相机标定，配合 Bridge-GS 数据集（在 BridgeV2 基础上补齐 3DGS / 网格 / 位姿 / 标定），把\"重建即训练 / 训练即部署\"做成端到端工作流",
+    "💡 Sim2Real 战绩硬：四足 / 人形运动策略 zero-shot 部署、视觉导航 zero-shot 部署、机械臂抓取零微调真机成功率 90%——证明 3DGS 渲染的物理一致性已足以支持复杂操作任务的迁移"
+  ],
+  "impact": "影响力评级：⭐⭐⭐⭐⭐。这是 2026 年具身智能仿真基础设施的标志性突破：①打破了\"高保真渲染 vs 训练吞吐量\"的二元对立，让视觉 RL 与 VLA 训练首次进入工业级量级；②全栈国产化（清华 AIR + 谋先飞 + 原力灵机 + 求之科技 + 地瓜机器人）+ RSS 顶会录用 + 全栈开源（github.com/discoverse-dev/gs_playground），社区可立即上手；③与今年下半年大规模 VLA 训练 / 视频世界模型评测 / Sim2Real 闭环形成互补——可作为 RoboCasa / Isaac Lab / RoboTwin 之后视觉中心训练的新基础设施候选。学习模块 sim-to-real / physics-simulation 已联动新增专题章节。",
+  "methodology": "**1. 高性能并行物理引擎 MotrixSim**\n- 求解器：广义坐标下的速度-脉冲（velocity-impulse）动力学公式\n- 接触建模：接触与摩擦统一为混合互补问题（MCP, Mixed Complementarity Problem）\n- 求解：投影高斯-赛德尔（PGS, Projected Gauss-Seidel）迭代\n- 设计取向：静摩擦保持 / 高刚度约束 / 大时间步稳定，适合足式与灵巧操作\n- API：兼容 MuJoCo MJCF\n\n**2. 批量化 3DGS 渲染管线**\n- 在物理引擎结果上挂载 3D Gaussian Splatting，对刚性连杆做运动学适配\n- 剪枝优化（pruning）减少冗余高斯点，让 batch 渲染达到万帧吞吐\n- 集成传感器仿真：RGB / 深度 / LiDAR\n\n**3. Real2Sim 自动化管线**\n- RGB 输入 → 目标分割（SAM 类模型） → 背景补绘（inpainting） → 3DGS 场景重建 + mesh 重建\n- 输出：场景 3DGS / 物体 mesh / 6D 位姿 / 相机标定参数\n- 形成 Bridge-GS 数据集（在 BridgeV2 基础上补全可仿真所需全套元数据）\n\n**4. 大规模并行训练流水线**\n- CPU/GPU 双后端物理仿真\n- 数千并行环境同时运行\n- 与现有 RL 框架（IsaacGym 风格 API）打通",
+  "experiments": "**仿真吞吐基准**：单 GPU 上 640×480 RGB 渲染 + 物理仿真 >10⁴ FPS，是 RoboCasa / IsaacLab 等同等设置下的 5-20×。\n\n**Sim2Real 实验**：\n- **四足运动**：仅在 GS-Playground 训练的策略，零样本部署到真机，稳定运行\n- **人形行走**：同样零样本部署，无需 Domain Adaptation\n- **视觉导航**：在 InteriorGS 数据集上训练，真机零样本部署\n- **机械臂抓取**：Bridge-GS 训练，零微调真机成功率 90%\n\n**对比基线**：相比 IsaacLab + 标准网格渲染，视觉迁移 gap 显著缩小；相比 RoboCasa 的离线预渲染方案，训练时延更低。\n\n**消融**：3DGS 剪枝优化对吞吐贡献最大；MotrixSim 的静摩擦保持对足式任务稳定性至关重要。",
+  "reproduction": "**仓库**：https://github.com/discoverse-dev/gs_playground\n**主页**：https://gsplayground.github.io\n**论文**：https://arxiv.org/abs/2604.25459\n\n**快速上手**：\n1. clone 仓库 → 安装 Python 依赖与 CUDA 11.8+ 环境\n2. 下载 Bridge-GS / InteriorGS 数据集\n3. 跑 examples/ 下的四足 / 操作 / 导航示例\n4. 用 MJCF 描述自己的机器人，加载到 MotrixSim\n5. 调用 Real2Sim 管线，从手机 / RGB 视频构建自己的 3DGS 场景\n\n**硬件门槛**：单卡 RTX 4090 / A6000 起步可跑全部 demo；视觉 RL 训练推荐 8×A100 集群。",
+  "mathDetails": "**广义坐标动力学**：$M(q)\\dot v + C(q,v)v + g(q) = J^T \\lambda + \\tau$，其中 $\\lambda$ 为接触脉冲。\n\n**接触 MCP**：约束 $0 \\le \\lambda \\perp \\phi(q) \\ge 0$（互补条件），其中 $\\phi(q)$ 为接触距离函数。\n\n**PGS 求解**：迭代公式 $\\lambda_i^{k+1} = \\max(0, \\lambda_i^k - \\frac{r_i^k}{D_{ii}})$，其中 $r_i^k$ 为第 $i$ 个约束的残差，$D_{ii}$ 为对角阻尼项。\n\n**3DGS 渲染**：高斯函数 $G(\\mathbf{x}) = \\exp(-\\frac{1}{2}(\\mathbf{x}-\\mu)^T \\Sigma^{-1}(\\mathbf{x}-\\mu))$ alpha-blending 投影到 2D 图像平面。"
+}

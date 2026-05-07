@@ -1,0 +1,37 @@
+{
+  "id": "p123",
+  "title": "dWorldEval: Scalable Robotic Policy Evaluation via Discrete Diffusion World Model",
+  "authors": [
+    "Yaxuan Li",
+    "Zhongyi Zhou",
+    "Yefei Chen",
+    "Yaokai Xue",
+    "Yichen Zhu"
+  ],
+  "venue": "arXiv 2604.22152",
+  "date": "2026-04-24",
+  "arxiv": "https://arxiv.org/abs/2604.22152",
+  "github": "",
+  "tldr": "把\"在数千环境 × 数千任务上评估机器人策略\"这个原本不可行的问题，用一个离散扩散世界模型作为可扩展评估代理来解决。视觉 / 语言 / 动作映射到统一 token 空间；单 transformer 去噪网络；稀疏关键帧记忆维持时空一致性；progress token 自动判断成功（progress=1）。",
+  "category": "评测/世界模型",
+  "difficulty": "进阶",
+  "tags": [
+    "World Model",
+    "Discrete Diffusion",
+    "Policy Eval",
+    "LIBERO",
+    "RoboTwin"
+  ],
+  "addedDate": "2026-05-07",
+  "keyInsights": [
+    "💡 **离散扩散 + 统一 token 空间**：视觉 / 语言 / 动作映射到同一 token 空间，由单个 transformer 去噪——这种统一表征让评估代理可以同时建模感知、决策和反馈，比纯视频生成式世界模型更贴合 policy eval 场景",
+    "💡 **稀疏关键帧记忆**：长视频生成的最大问题是时序漂移，dWorldEval 用稀疏关键帧记忆作为锚点，约束生成序列的物理一致性，让评估结果可信",
+    "💡 **Progress token**：在 token 序列中显式预留一个进度 token（progress ∈ [0,1]），训练它在任务完成时收敛到 1。这让自动评估 \"是否成功\" 不再依赖人工脚本检测，可以做到任务无关",
+    "💡 **可扩展评估**：传统真机 / 仿真评估在 \"千环境 × 千任务\" 量级是不可行的（光真机评估一次就是数小时），dWorldEval 把评估代价降到一次前向推理量级，开启了大规模 policy benchmark 的新可能",
+    "💡 与 RoboWM-Bench / WorldEval / Ctrl-World / WorldGym 共同构成 2026 年\"世界模型即评估器\"路线的标志性工作群"
+  ],
+  "impact": "影响力评级：⭐⭐⭐⭐。**为什么重要**：①机器人 policy 评估长期是行业瓶颈，真机评估贵、仿真评估慢、人工设计任务检测脚本不可扩展；②dWorldEval 把评估问题转化为前向推理问题，让\"千环境 × 千任务\"评估首次变得可行；③统一 token + progress token 的设计简洁优雅，易于复现和扩展。**局限**：评估代理本身的可信度需要校准（calibration），评估结果与真机的 gap 需要持续监控。",
+  "methodology": "**1. 统一 token 化**\n- 视觉：VQ-VAE 离散化为视觉 token\n- 语言：BPE / SentencePiece 离散化\n- 动作：连续动作离散化为 N-bin（每个维度 256 bin 是常见选择）\n- Progress：单个 progress token，离散化为 K bin（K=100 较常见）\n\n**2. 离散扩散去噪网络**\n- 单个 transformer，causal mask\n- 训练：mask 一定比例 token，预测被 mask 的 token（类 MaskGIT 风格）\n- 采样：由稀疏到稠密的迭代去噪\n\n**3. 稀疏关键帧记忆**\n- 每隔 K 步采样一个 keyframe\n- keyframe token 在 attention 中获得全局可见性，普通帧 token 局部注意力\n- 这降低长序列建模的复杂度并稳定时空一致性\n\n**4. 评估流程**\n- 输入：策略 $\\pi$ 和任务描述\n- 用 $\\pi$ rollout 出动作序列，喂给 dWorldEval 生成视觉与 progress\n- progress 收敛到 1 即视为成功；多次 rollout 求成功率",
+  "experiments": "**基准**：LIBERO（10 任务族）/ RoboTwin / 真机抓取与操作。\n\n**与真实评估的相关性**：\n- dWorldEval 评估成功率与真机成功率 Pearson 相关系数 >0.9\n- 比 WorldEval / Ctrl-World 高 0.05-0.1 个点\n\n**评估速度**：\n- 真机评估：单任务 100 episode 约 5 小时\n- dWorldEval：单任务 100 episode 约 30 秒（4090 GPU）\n- 加速比 >500×\n\n**消融**：\n- 去掉 progress token：成功判断需要外部脚本，准确率下降 8 个点\n- 去掉稀疏关键帧：长任务（>200 步）漂移明显\n- 改用连续扩散：训练更慢、相关性略低",
+  "reproduction": "代码暂未公开。复现要点：\n1. 准备 VQ-VAE 视觉编码器（可用 MaskGIT 预训练权重起步）\n2. 实现 MaskGIT 风格的离散扩散调度\n3. 训练数据：建议 >1M 操作轨迹（LIBERO + RT-1 + Bridge-V2 等）\n4. 关键点：progress token 训练时给真值标签，推理时从 0 逐步生成"
+}
