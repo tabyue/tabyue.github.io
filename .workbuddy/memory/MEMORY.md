@@ -3,7 +3,8 @@
 ## 域名与部署
 - 自定义域名: **www.tabyue.com** (2026-04-20 绑定)
 - 域名服务商: 腾讯云 DNSPod（免费版，同主机记录A记录上限2条）
-- DNS配置: 2条A记录(@→185.199.108/109.153) + 1条CNAME(www→tabyue.github.io)
+- DNS配置: 1条CNAME(www→tabyue.github.io)，裸域(@)无A记录（2026-05-07 删除，因只有2条无法满足GitHub Pages证书签发要求的4条）
+- HTTPS: Enforce HTTPS 已启用（2026-05-07 修复，此前因裸域A记录不全导致Let's Encrypt证书卡在 authorization_created 状态）
 - 部署: GitHub Pages, main 分支, 仓库 tabyue/tabyue.github.io
 
 ## 站点架构（2026-05-06 升级到 B 方案 + 路径路由）
