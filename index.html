@@ -1498,7 +1498,11 @@ function renderPapers(){
             const pNew=p.addedDate&&(Date.now()-new Date(p.addedDate).getTime())<3*86400000;
             const arxivBtn=p.arxiv?`<a href="${p.arxiv}" target="_blank" class="card-btn" onclick="event.stopPropagation()" title="查看 arXiv 原文">📄 arXiv</a>`:`<span class="card-btn disabled" onclick="event.stopPropagation()" title="暂未提供 arXiv 链接">📄 arXiv</span>`;
             const codeBtn=p.github?`<a href="${p.github}" target="_blank" class="card-btn" onclick="event.stopPropagation()" title="查看代码仓库">💻 Code</a>`:`<span class="card-btn disabled" onclick="event.stopPropagation()" title="暂未开源代码">💻 Code</span>`;
-            h+=`<div class="card" style="cursor:pointer" onclick="openPaper(${i})"><div class="card-tags">${p.tags.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('')}${pNew?'<span class="status-tag status-new">NEW</span>':''}<span class="tag tag-purple" style="margin-left:auto">${p.difficulty}</span></div><div class="card-title">${p.title}</div><div class="card-meta">${p.authors} · ${p.venue} · ${p.date}</div><div class="card-desc"><strong>TL;DR:</strong> ${p.tldr}</div><div class="card-footer">${arxivBtn} ${codeBtn} <span class="card-btn primary">📚 深度解读 →</span></div></div>`;
+            const hasDeep=!!(p.keyInsights&&p.keyInsights.length);
+            const deepBtn=hasDeep?`<span class="card-btn primary">📚 深度解读 →</span>`:`<span class="card-btn disabled" onclick="event.stopPropagation()" title="本篇暂未提供深度解读，可先看 TL;DR 与原文">📚 暂无解读</span>`;
+            const cardClick=hasDeep?`onclick="openPaper(${i})"`:'';
+            const cardCursor=hasDeep?'cursor:pointer':'cursor:default';
+            h+=`<div class="card" style="${cardCursor}" ${cardClick}><div class="card-tags">${p.tags.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('')}${pNew?'<span class="status-tag status-new">NEW</span>':''}<span class="tag tag-purple" style="margin-left:auto">${p.difficulty}</span></div><div class="card-title">${p.title}</div><div class="card-meta">${p.authors} · ${p.venue} · ${p.date}</div><div class="card-desc"><strong>TL;DR:</strong> ${p.tldr}</div><div class="card-footer">${arxivBtn} ${codeBtn} ${deepBtn}</div></div>`;
         });
     });
     document.getElementById('papersGrid').innerHTML=h;
@@ -1522,8 +1526,10 @@ async function openPaper(idx){
     const body=document.getElementById('paperModalBody');
     // Show basic info first
     let h=`<div class="card-tags" style="margin-bottom:12px">${p.tags.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('')}</div><h2>${p.title}</h2><div class="meta">${p.authors}</div><div class="venue">${p.venue} · ${p.date}</div><div class="tldr"><strong>TL;DR:</strong> ${p.tldr}</div>`;
-    h+=`<div style="margin-bottom:16px">${p.keyInsights.map(i=>`<div style="font-size:.84rem;color:var(--t2);padding:4px 0 4px 20px;position:relative;line-height:1.7"><span style="position:absolute;left:0">💡</span>${i}</div>`).join('')}</div>`;
-    h+=`<div class="impact-box"><strong>影响力：</strong>${p.impact}</div>`;
+    if(p.keyInsights&&p.keyInsights.length){
+      h+=`<div style="margin-bottom:16px">${p.keyInsights.map(i=>`<div style="font-size:.84rem;color:var(--t2);padding:4px 0 4px 20px;position:relative;line-height:1.7"><span style="position:absolute;left:0">💡</span>${i}</div>`).join('')}</div>`;
+    }
+    if(p.impact){h+=`<div class="impact-box"><strong>影响力：</strong>${p.impact}</div>`;}
     h+=`<div style="display:flex;gap:8px;margin-bottom:20px">${p.arxiv?`<a href="${p.arxiv}" target="_blank" class="card-btn">📄 arXiv</a>`:''} ${p.github?`<a href="${p.github}" target="_blank" class="card-btn">💻 GitHub</a>`:''}</div>`;
     h+=`<div id="paperDeepContent" style="text-align:center;color:var(--t3);padding:20px">⏳ 加载深度内容...</div>`;
     body.innerHTML=h;
@@ -1533,13 +1539,13 @@ async function openPaper(idx){
     // Lazy load detail
     const deepEl=document.getElementById('paperDeepContent');
     const detail=await loadJ(`data/papers/${p.id}.json`);
-    if(!detail){deepEl.innerHTML='<p style="color:var(--t3)">暂无深度内容</p>';return}
+    if(!detail){deepEl.innerHTML='<div style="padding:32px 20px;text-align:center;color:var(--t3);background:var(--bg3);border-radius:12px;border:1px dashed var(--bd)">📭 本篇深度解读尚未发布<br/><span style="font-size:.78rem;color:var(--t3)">可先点击上方 arXiv / Code 查看原始资料</span></div>';return}
     const tabs=[];const panels=[];
     if(detail.methodology){tabs.push('📐 方法论');panels.push(detail.methodology)}
     if(detail.experiments){tabs.push('📊 实验');panels.push(detail.experiments)}
     if(detail.reproduction){tabs.push('💻 代码');panels.push(detail.reproduction)}
     if(detail.mathDetails){tabs.push('🔢 数学');panels.push(detail.mathDetails)}
-    if(tabs.length===0){deepEl.innerHTML='';return}
+    if(tabs.length===0){deepEl.innerHTML='<div style="padding:32px 20px;text-align:center;color:var(--t3);background:var(--bg3);border-radius:12px;border:1px dashed var(--bd)">📝 本篇尚无方法论 / 实验 / 代码 / 数学等深度章节</div>';return}
     let dh=`<div class="modal-tabs">${tabs.map((t,i)=>`<div class="modal-tab${i===0?' active':''}" onclick="switchModalTab(this,${i})">${t}</div>`).join('')}</div>`;
     dh+=panels.map((c,i)=>`<div class="modal-panel${i===0?' active':''}" data-idx="${i}"><div class="md-content">${renderMd(c)}</div></div>`).join('');
     deepEl.outerHTML=dh;
