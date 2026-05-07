@@ -150,7 +150,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 
 /* === CARDS (shared) === */
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
-.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--r);padding:24px;transition:transform .35s cubic-bezier(.25,.1,.25,1),border-color .25s,box-shadow .35s;position:relative;overflow:hidden}
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--r);padding:24px;transition:transform .35s cubic-bezier(.25,.1,.25,1),border-color .25s,box-shadow .35s;position:relative;overflow:hidden;display:flex;flex-direction:column}
 .card:hover{border-color:var(--card-hover-border);transform:translateY(-3px);box-shadow:var(--card-shadow)}
 .card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .tag{font-size:.65rem;font-weight:600;padding:3px 10px;border-radius:50px;letter-spacing:.02em;font-feature-settings:"tnum"}
@@ -163,7 +163,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 .card-title{font-size:1rem;font-weight:600;margin-bottom:6px;line-height:1.5}
 .card-meta{font-size:.74rem;color:var(--t3);margin-bottom:10px}
 .card-desc{font-size:.86rem;color:var(--t2);line-height:1.8;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.card-footer{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.card-footer{display:flex;gap:8px;margin-top:auto;padding-top:14px;flex-wrap:wrap}
 .card-btn{font-size:.74rem;padding:7px 16px;border-radius:50px;border:1px solid var(--bd);color:var(--t2);text-decoration:none;transition:all .25s;cursor:pointer;background:none;font-weight:500}
 .card-btn:hover{color:var(--t1);border-color:var(--bd2);transform:translateY(-1px)}
 .card-btn.primary{background:var(--p);border-color:var(--p);color:#fff;font-weight:600}
