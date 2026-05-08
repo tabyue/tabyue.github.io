@@ -1015,17 +1015,34 @@ async function init(){
 let _currentLearnMod=null;
 // 当前 active 模块的章节列表是否被用户主动收起（默认 false=展开）
 let _modSecsCollapsed=false;
-// 点击模块标题：active 模块再点 = toggle 章节列表收起/展开；非 active = 打开它
+// 点击模块标题（不点箭头）：active 已展开 = 切到第 1 节并展开；active 已收起 = 仅展开；非 active = 打开它
 function clickLearnMod(modId){
     if(_currentLearnMod===modId){
-        // 已是 active：toggle 当前模块的章节列表
-        _modSecsCollapsed=!_modSecsCollapsed;
-        renderLearn();
+        // 已 active：若被收起则展开，否则不动（不要 toggle 收起，避免误操作）
+        if(_modSecsCollapsed){
+            _modSecsCollapsed=false;
+            renderLearn();
+        }
     }else{
-        // 切到新模块：默认展开章节列表
         _modSecsCollapsed=false;
         openLearnModule(modId);
     }
+}
+// 点击 active 模块标题右侧的 ▾/▸ 箭头：仅 toggle 章节列表收起/展开（不切换模块）
+function toggleModSecs(ev,modId){
+    ev.stopPropagation();
+    if(_currentLearnMod!==modId){
+        // 用户在非 active 模块的箭头上误触：直接打开它
+        _modSecsCollapsed=false;
+        openLearnModule(modId);
+        return;
+    }
+    _modSecsCollapsed=!_modSecsCollapsed;
+    // 保留 sidebar 滚动位置（避免视觉跳动）
+    const sb=document.getElementById('learnSidebar');
+    const scrollY=sb?sb.scrollTop:0;
+    renderLearn();
+    if(sb)sb.scrollTop=scrollY;
 }
 // 记录每个 stage 当前的展开/收起状态：true=collapsed, false=expanded
 // 默认全部阶段展开（两级目录默认全展开）；用户主动点击收起后状态保留
@@ -1054,9 +1071,11 @@ function renderLearn(){
             const isUpdated=m.lastUpdated&&(Date.now()-new Date(m.lastUpdated).getTime())<3*86400000;
             const progCls=st.pct>=100?'done':(st.pct>0?'partial':'');
             const activeCls=_currentLearnMod===modId?' active':'';
-            const arrowCh=(_currentLearnMod===modId && !_modSecsCollapsed)?'▾':'▸';
-            const arrowSpan=_currentLearnMod===modId
-                ? `<span class="ls-mod-arrow" style="margin-left:auto;color:var(--t3);font-size:.65rem;transition:transform .2s">${arrowCh}</span>`
+            const isActive=_currentLearnMod===modId;
+            const arrowCh=(isActive && !_modSecsCollapsed)?'▾':'▸';
+            // active 模块才显示箭头，箭头独立可点击（toggle 章节列表）
+            const arrowSpan=isActive
+                ? `<span class="ls-mod-arrow" onclick="toggleModSecs(event,'${modId}')" title="${_modSecsCollapsed?'展开章节':'收起章节'}" style="margin-left:auto;color:var(--t3);font-size:.75rem;padding:2px 8px;cursor:pointer;border-radius:4px;transition:background .15s" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='transparent'">${arrowCh}</span>`
                 : '';
             sb+=`<div class="ls-mod${activeCls}" data-mod="${modId}" onclick="clickLearnMod('${modId}')">`;
             sb+=`<span class="ls-prog ${progCls}"></span>`;
