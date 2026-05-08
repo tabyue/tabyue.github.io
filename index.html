@@ -1014,11 +1014,11 @@ async function init(){
 // === RENDER LEARN (Split Layout: sidebar + detail) ===
 let _currentLearnMod=null;
 // 记录每个 stage 当前的展开/收起状态：true=collapsed, false=expanded
-// 默认前 4 个阶段展开（si<=3），第 5/6/7 个阶段收起（si>3）
+// 默认全部阶段展开（两级目录默认全展开）；用户主动点击收起后状态保留
 const _stageCollapsed={};
 function _isStageCollapsed(si){
     if(_stageCollapsed.hasOwnProperty(si))return _stageCollapsed[si];
-    return si>3;
+    return false;
 }
 function toggleStage(si,el){
     const next=!_isStageCollapsed(si);
@@ -1361,6 +1361,10 @@ async function _renderCurrentSection(modId, secIdx, d, opts){
 
     body.innerHTML=h;
     body.scrollTop=0;
+    // 切章节后把窗口滚到内容容器顶部（跳过粘性导航条），避免视觉上"原地不动"
+    const _topNavH=48;
+    const _detailTop=body.getBoundingClientRect().top + window.scrollY - _topNavH - 8;
+    window.scrollTo({top: Math.max(0, _detailTop), behavior:'smooth'});
     // 高亮代码
     body.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.hl){hljs?.highlightElement(el);el.dataset.hl='1'}});
     // 追踪阅读
