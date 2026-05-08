@@ -1013,6 +1013,20 @@ async function init(){
 
 // === RENDER LEARN (Split Layout: sidebar + detail) ===
 let _currentLearnMod=null;
+// 当前 active 模块的章节列表是否被用户主动收起（默认 false=展开）
+let _modSecsCollapsed=false;
+// 点击模块标题：active 模块再点 = toggle 章节列表收起/展开；非 active = 打开它
+function clickLearnMod(modId){
+    if(_currentLearnMod===modId){
+        // 已是 active：toggle 当前模块的章节列表
+        _modSecsCollapsed=!_modSecsCollapsed;
+        renderLearn();
+    }else{
+        // 切到新模块：默认展开章节列表
+        _modSecsCollapsed=false;
+        openLearnModule(modId);
+    }
+}
 // 记录每个 stage 当前的展开/收起状态：true=collapsed, false=expanded
 // 默认全部阶段展开（两级目录默认全展开）；用户主动点击收起后状态保留
 const _stageCollapsed={};
@@ -1040,13 +1054,18 @@ function renderLearn(){
             const isUpdated=m.lastUpdated&&(Date.now()-new Date(m.lastUpdated).getTime())<3*86400000;
             const progCls=st.pct>=100?'done':(st.pct>0?'partial':'');
             const activeCls=_currentLearnMod===modId?' active':'';
-            sb+=`<div class="ls-mod${activeCls}" data-mod="${modId}" onclick="openLearnModule('${modId}')">`;
+            const arrowCh=(_currentLearnMod===modId && !_modSecsCollapsed)?'▾':'▸';
+            const arrowSpan=_currentLearnMod===modId
+                ? `<span class="ls-mod-arrow" style="margin-left:auto;color:var(--t3);font-size:.65rem;transition:transform .2s">${arrowCh}</span>`
+                : '';
+            sb+=`<div class="ls-mod${activeCls}" data-mod="${modId}" onclick="clickLearnMod('${modId}')">`;
             sb+=`<span class="ls-prog ${progCls}"></span>`;
             sb+=`<span class="ls-name">${m.name}</span>`;
             if(isUpdated)sb+=`<span class="ls-updated"></span>`;
+            sb+=arrowSpan;
             sb+=`</div>`;
-            // 展开当前模块的章节列表
-            if(_currentLearnMod===modId && learnCache[modId] && learnCache[modId].sections){
+            // 展开当前模块的章节列表（且未被用户收起）
+            if(_currentLearnMod===modId && !_modSecsCollapsed && learnCache[modId] && learnCache[modId].sections){
                 sb+=`<div class="ls-sections">`;
                 learnCache[modId].sections.forEach((sec,i)=>{
                     const secActive=_currentLearnSec===i?' active':'';
@@ -1234,6 +1253,8 @@ function getPrevModule(currentModId){
 }
 async function openLearnModule(modId, el, opts){
     opts=opts||{};
+    // 切换到新模块（包括深链接 / 路由调入）时默认展开章节列表
+    if(_currentLearnMod!==modId)_modSecsCollapsed=false;
     // 确保当前 page 切到 learn（从首页/术语表/资讯链接调入时必要）
     const curPage=document.querySelector('.page.active');
     if(!curPage||curPage.id!=='pg-learn'){
