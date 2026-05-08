@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-08T17:20",
+  "lastUpdated": "2026-05-08T20:13",
   "stages": [
     {
       "id": "foundation",
@@ -177,6 +177,57 @@
           ],
           "howTo": "不需要精通所有C++特性，够用即可。重点：智能指针（避免内存泄漏）、多线程（机器人必需）、CMake（编译必需）。用ROS2 C++ tutorial作为学习载体。",
           "weeklyPlan": "第1周：Modern C++语法、智能指针、lambda | 第2周：多线程、CMake | 第3周：写一个ROS2 C++节点"
+        },
+        {
+          "name": "AI 与机器人学术英语",
+          "importance": "工具",
+          "lastUpdated": "2026-05-08T20:13",
+          "description": "面向 AI / 机器人方向的工程英语：读 arXiv、写 paper、跟会议报告、过英文面试、术语精读。不教通用英语，只补具身智能领域日常用得上的能力。",
+          "topics": [
+            {
+              "title": "arXiv 论文读法（10 分钟读懂一篇）",
+              "detail": "abstract → contributions list → figure 1 → 实验表 → conclusion 顺序读；常见 hedging 表达（we hypothesize / suggest / observe）的真实分量；Related Work 段如何快速跳过；摘要里关键比较词（significantly outperforms / on par with / competitive with）的差别。"
+            },
+            {
+              "title": "会议口语：ICRA / RSS / NeurIPS 现场",
+              "detail": "Q&A 黄金句（\"Could you elaborate on...\"，\"In our setup, we found...\"）；展板 5 分钟 elevator pitch 模板；poster session 礼仪；如何用 follow-up question 让对方多说 30 秒；提问环节如何不被其他听众抢去。"
+            },
+            {
+              "title": "面试英语：研究 / 算法岗 onsite",
+              "detail": "STAR 法做项目讲述；coding 时同步 narrate（\"I'll first... then...\"）；行为题高频提问（greatest weakness / conflict resolution）；研究岗经典提问（research vision / what's an underrated paper）；reverse interview 必问 3 题（team org / metrics / next 6 months）。"
+            },
+            {
+              "title": "技术写作：第一篇 paper 的写法",
+              "detail": "Abstract 四段式（context-gap-method-results）；intro 不超过 1.2 页，第一段就给 contribution bullet；method 用现在时；experiments 用过去时；如何写 limitations 段（既不黑自己也不藏雷）；常见审稿意见模板回复（\"We thank R2 for the insightful comment...\"）。"
+            },
+            {
+              "title": "术语精读：50 个具身智能高频词",
+              "detail": "embodiment / proprioception / dexterous manipulation / loco-manipulation / chunking / tokenizer / mid-training / flow matching / diffusion policy / co-training / domain randomization / Sim2Real gap / inverse dynamics / waypoint / teleoperation / policy distillation 等——每个词查中英定义 + 在 paper 上下文中的典型用法。"
+            },
+            {
+              "title": "邮件 / GitHub Issue / PR 沟通",
+              "detail": "cold email 给作者询问代码 / 数据的模板（不超过 100 字）；GitHub issue 提 bug 三段法（context / steps to reproduce / expected vs actual）；PR description 用 \"What / Why / How tested\" 框架；reviewer comment 的礼貌反驳（\"I see your point, however...\"）。"
+            },
+            {
+              "title": "论文听力：YouTube + 会议录像",
+              "detail": "推荐频道：Yannic Kilcher（论文解读）/ Two Minute Papers / Welch Labs；ICRA / NeurIPS / CoRL 官方录像；倍速训练（先 0.75 听清，再 1.0 跟读，再 1.25 提速）；用作者本人的 keynote 训练耳朵——非英语母语作者的口音是真实工作场景的典型样本。"
+            },
+            {
+              "title": "学术词汇与句式：去 Chinglish 化",
+              "detail": "中式英语典型陷阱：\"realize\" ≠ 实现（用 implement）；\"propose\" 不是越多越好（一篇 paper 通常只 propose 一次）；\"will\" 在 abstract 是大忌（用一般现在时）；高分句式：\"To this end, we...\" / \"Empirically, we observe that...\" / \"In contrast to prior work, our approach...\""
+            }
+          ],
+          "resources": [
+            "《The Elements of Style》Strunk & White（学术写作圣经，免费 PDF）",
+            "Kilcher YouTube 频道（最新 arXiv 论文解读）",
+            "《English for Writing Research Papers》Adrian Wallwork（非母语者必读）",
+            "ICRA / RSS / NeurIPS 官方录像（YouTube 全免费）",
+            "Anki 牌组：Embodied AI Glossary 50 词（门户术语模块同步）",
+            "Grammarly Premium（论文 / 邮件润色）",
+            "OpenReview 公开审稿意见档案（学习 reviewer 怎么写意见）"
+          ],
+          "howTo": "①每天读 1 篇 arXiv abstract + figure 1（5 分钟即可，重点是连续 30 天）；②每周看 1 个 ICRA / NeurIPS oral 录像（无字幕练耳朵）；③每月写 1 个项目 README in English（或者把本周读过的 paper 写一篇 200 字 summary）；④术语用 Anki 卡片每天 10 分钟。把英语从「学习任务」变成「日常工作流」是关键。",
+          "weeklyPlan": "第1周：术语精读 50 词 + arXiv abstract 读法 | 第2周：ICRA 5 分钟 elevator pitch 自录练习 | 第3周：第一篇 paper draft 的 abstract + intro 写作 | 第4周：模拟面试英语 + GitHub issue/PR 沟通规范"
         }
       ]
     },
