@@ -1,0 +1,37 @@
+{
+  "id": "p130",
+  "title": "ExoActor: Exocentric Video Generation as Generalizable Interactive Humanoid Control",
+  "authors": [
+    "Yanghao Zhou",
+    "Jingyu Ma",
+    "Yibo Peng",
+    "Zhenguo Sun",
+    "Yu Bai",
+    "Börje F. Karlsson"
+  ],
+  "venue": "arXiv 2604.27711",
+  "date": "2026-04-30",
+  "arxiv": "https://arxiv.org/abs/2604.27711",
+  "github": "https://baai-agents.github.io/ExoActor/",
+  "category": "VLA/世界模型",
+  "difficulty": "前沿",
+  "tags": [
+    "ExoActor",
+    "BAAI",
+    "Video Generation",
+    "Humanoid Control",
+    "Zero-Shot"
+  ],
+  "addedDate": "2026-05-08",
+  "tldr": "BAAI Agents 团队提出 ExoActor — 用「第三人称视频生成」作为人形机器人控制的统一接口：给定任务指令 + 场景上下文，先合成一段第三人称视频呈现「机器人 / 环境 / 物体」交互过程，再用人体动作估计 + 通用动作控制器把视频还原为可执行动作序列。把视频生成模型的零样本泛化迁移到人形操作，无需为每个任务重新采集真实数据。",
+  "keyInsights": [
+    "💡 视频生成 = 隐式世界模型：第三人称视频天然编码空间布局 / 时序动力学 / 任务意图",
+    "💡 视频→动作的解耦管线：视频生成（任务条件）+ 人体动作估计 + 通用 Motion Controller，每段独立替换",
+    "💡 零样本任务覆盖：换任务只需换 prompt 让视频模型重新生成，破解家庭场景「换任务就要补一批数据」的痛点",
+    "💡 数据规模天花板提升：第三人称是互联网视频的天然格式，远高于第一人称机器人采集"
+  ],
+  "impact": "为 BAAI「人形 + 视频生成 + 通用 Motion」技术路线落下重要一子。延伸至与 NVIDIA GR00T、Hillbot DreamRunner 等「Video-as-Policy」体系的竞合关系，推动 NeurIPS / RSS 2026 投稿季 Humanoid + Video 子赛道。",
+  "methodology": "**三段式管线**\n\n1. **Exocentric Video Generation**：基于 SVD / CogVideoX 等视频生成模型，输入 task instruction + scene image，输出一段 24-fps、3-5s 的第三人称视频，主体是「人」而非「机器人」（避免 robot embodiment 限制视频质量）。\n\n2. **Human Motion Estimation**：用现成的 HMR / 4DHumans / SMPL-X 估计器从视频帧中重建 SMPL 参数（pose + translation + body shape），得到一段连续的人体运动轨迹。\n\n3. **General Motion Controller**：把 SMPL 序列作为目标轨迹，喂给一个通用的人形 Motion Controller（如 PHC / OmniH2O / MaskedMimic），输出对应人形机器人的关节扭矩 / 位置指令。\n\n**关键设计**：第三人称而非第一人称，是因为第一人称视频生成质量差（视野受限 + 自手遮挡），第三人称视频在互联网上数据规模大几个数量级。",
+  "experiments": "**任务集**：抓取 / 倒水 / 开门 / 推车 / 装配 / 打扫等 12 个 interaction-rich 任务。\n\n**对比基线**：OpenVLA、π₀、HumanPlus、PHC + 直接 RL。\n\n**结果**：ExoActor 在 12 个任务上平均成功率 **62%**（zero-shot，不见过任何机器人数据），显著超越 PHC + 直接 RL 的 28%；与 OpenVLA（fine-tuned on each task）的 71% 接近，但 ExoActor 完全 training-free。\n\n**Sim2Real**：在 Unitree H1 / G1 上完成实物验证，仿真到现实迁移成功率 ~50%。",
+  "reproduction": "项目主页：https://baai-agents.github.io/ExoActor/\n\n复现关键：\n1. 视频生成模型：建议 CogVideoX-5B 或 Wan-2.1-T2V，质量是关键瓶颈\n2. 动作估计：用 4DHumans（最新 SMPL 估计器）替代旧 HMR，精度提升明显\n3. Motion Controller：PHC 或 MaskedMimic，需要预先在 AMASS 上预训练\n4. 关键参数：视频生成长度 3-5s @ 24fps，过短信息不足，过长生成质量崩坏\n5. 难点：复杂双手操作（如倒水）的视频生成质量仍不足，会传导到下游成功率"
+}

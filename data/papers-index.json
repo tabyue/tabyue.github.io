@@ -1,6 +1,82 @@
 {
-  "lastUpdated": "2026-05-08T17:20",
+  "lastUpdated": "2026-05-08T23:30",
   "papers": [
+    {
+      "id": "p130",
+      "title": "ExoActor: Exocentric Video Generation as Generalizable Interactive Humanoid Control",
+      "authors": [
+        "Yanghao Zhou",
+        "Jingyu Ma",
+        "Yibo Peng",
+        "Zhenguo Sun",
+        "Yu Bai",
+        "Börje F. Karlsson"
+      ],
+      "venue": "arXiv 2604.27711",
+      "date": "2026-04-30",
+      "arxiv": "https://arxiv.org/abs/2604.27711",
+      "github": "https://baai-agents.github.io/ExoActor/",
+      "tldr": "BAAI Agents 提出 ExoActor — 用「第三人称视频生成」作为人形机器人控制的统一接口：给定任务指令 + 场景上下文，先合成一段「机器人 / 环境 / 物体」交互的第三人称视频，再用人体动作估计 + 通用动作控制器把视频还原成可执行的动作序列。意义：把视频生成模型的零样本泛化迁移到人形操作，无需为每个任务重新采集真实数据，大幅压低家庭 / 复杂场景的数据成本。",
+      "category": "VLA/世界模型",
+      "difficulty": "前沿",
+      "tags": [
+        "ExoActor",
+        "BAAI",
+        "Video Generation",
+        "Humanoid Control",
+        "Zero-Shot"
+      ],
+      "addedDate": "2026-05-08",
+      "keyInsights": [
+        "💡 视频生成 = 隐式世界模型：第三人称视频天然编码空间布局 / 时序动力学 / 任务意图，比单独训三个模块更紧凑",
+        "💡 视频→动作的解耦管线：视频生成（任务条件） + 人体动作估计（视频→关节） + 通用 Motion Controller（关节→机器人），每段都可以独立替换",
+        "💡 零样本任务覆盖：换任务只需换 prompt 让视频模型重新生成，不需要重新采集真实机器人数据，破解家庭场景「换一个任务就要补一批数据」的难题",
+        "💡 与 ExoCentric 数据集同构：第三人称是互联网视频的天然格式（Bilibili、YouTube、影视），数据规模天花板远高于第一人称机器人采集"
+      ],
+      "impact": "为 BAAI 主推的「人形 + 视频生成 + 通用 Motion」技术路线在 2026 年 4 月底落下重要一子。延伸到与 NVIDIA GR00T、Hillbot DreamRunner 等「Video-as-Policy」体系的竞合关系，并把 NeurIPS / RSS 2026 投稿季的 Humanoid + Video 子赛道再次推向高潮。"
+    },
+    {
+      "id": "p129",
+      "title": "MMaDA-VLA: Large Diffusion Vision-Language-Action Model with Unified Multi-Modal Instruction and Generation",
+      "authors": [
+        "Yang Liu",
+        "Pengxiang Ding",
+        "Tengyue Jiang",
+        "Xudong Wang",
+        "Wenxuan Song",
+        "Minghui Lin",
+        "Han Zhao",
+        "Hongyin Zhang",
+        "Zifeng Zhuang",
+        "Wei Zhao",
+        "Siteng Huang",
+        "Jinkui Shi",
+        "Donglin Wang"
+      ],
+      "venue": "arXiv 2603.25406",
+      "date": "2026-03-26",
+      "arxiv": "https://arxiv.org/abs/2603.25406",
+      "github": "",
+      "tldr": "西湖大学领衔（联合浙大 / 华理 / 华为）提出 MMaDA-VLA — 全球首个原生预训练「大规模离散扩散 VLA」：把语言 / 图像 / 连续动作统一映射到一个离散 token 空间，用 masked token denoising 在同一个 backbone 上「同时生成未来目标观测 + 动作 chunk」。LIBERO 平均成功率 98.0%、CALVIN 平均长度 4.78 — 双榜 SOTA。",
+      "category": "VLA/扩散",
+      "difficulty": "前沿",
+      "tags": [
+        "MMaDA-VLA",
+        "Diffusion VLA",
+        "Discrete Token",
+        "LIBERO",
+        "CALVIN",
+        "西湖大学"
+      ],
+      "addedDate": "2026-05-08",
+      "keyInsights": [
+        "💡 一个 backbone、一个 token 空间：把图像 / 语言 / 连续动作统一离散化，告别「视觉编码器 + 语言模型 + 动作专家」的分模块管线，参数共享 + 联合优化",
+        "💡 联合生成 = 自带世界模型：mask 掉 future obs + action chunk 一起去噪，未来视觉成为动作生成的天然 grounding，省去 auxiliary world model",
+        "💡 全局 / 无序 refinement：扩散去噪本身允许跨时间窗的动作互相校正，长程任务（10+ 步）的累积误差显著下降",
+        "💡 LIBERO 98.0% / CALVIN 4.78：在两个 VLA 标准基准上一次性双 SOTA，验证「Native Diffusion」在 VLA 领域的可行性"
+      ],
+      "impact": "为 2026 年 VLA 领域开启「Native Discrete Diffusion」新流派，挑战 OpenVLA / RT-2 / π₀ 体系的「自回归 + 流匹配」主导地位。LIBERO 98% 接近天花板，预计将带动一批从 RoboFlow 到 Embodied-Reasoner 的策略向 Diffusion VLA 切换。"
+    },
     {
       "id": "p128",
       "title": "AnchorVLA: Anchored Diffusion for Efficient End-to-End Mobile Manipulation",

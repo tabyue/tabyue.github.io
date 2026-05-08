@@ -1,0 +1,45 @@
+{
+  "id": "p129",
+  "title": "MMaDA-VLA: Large Diffusion Vision-Language-Action Model with Unified Multi-Modal Instruction and Generation",
+  "authors": [
+    "Yang Liu",
+    "Pengxiang Ding",
+    "Tengyue Jiang",
+    "Xudong Wang",
+    "Wenxuan Song",
+    "Minghui Lin",
+    "Han Zhao",
+    "Hongyin Zhang",
+    "Zifeng Zhuang",
+    "Wei Zhao",
+    "Siteng Huang",
+    "Jinkui Shi",
+    "Donglin Wang"
+  ],
+  "venue": "arXiv 2603.25406",
+  "date": "2026-03-26",
+  "arxiv": "https://arxiv.org/abs/2603.25406",
+  "github": "",
+  "category": "VLA/扩散",
+  "difficulty": "前沿",
+  "tags": [
+    "MMaDA-VLA",
+    "Diffusion VLA",
+    "Discrete Token",
+    "LIBERO",
+    "CALVIN",
+    "西湖大学"
+  ],
+  "addedDate": "2026-05-08",
+  "tldr": "西湖大学（王东林组）联合浙大 / 华理 / 华为发布 MMaDA-VLA — 首个原生预训练的「大规模离散扩散 VLA」。把语言、图像、连续机器人控制统一映射到同一个离散 token 空间，用 masked token denoising 在单 backbone 上同时生成「未来目标观测 + 动作 chunk」。LIBERO 平均 98.0% / CALVIN 平均长度 4.78，双榜 SOTA。",
+  "keyInsights": [
+    "💡 一个 backbone、一个 token 空间：把图像 / 语言 / 连续动作统一离散化，告别「视觉编码器 + 语言模型 + 动作专家」的分模块管线，参数共享 + 联合优化",
+    "💡 联合生成 = 自带世界模型：mask 掉 future obs + action chunk 一起去噪，未来视觉成为动作生成的天然 grounding，省去 auxiliary world model",
+    "💡 全局 / 无序 refinement：扩散去噪允许跨时间窗动作互相校正，长程任务（10+ 步）累积误差显著下降",
+    "💡 LIBERO 98.0% / CALVIN 4.78：在两个 VLA 标准基准上一次性双 SOTA"
+  ],
+  "impact": "开启「Native Discrete Diffusion」新流派，挑战 OpenVLA / RT-2 / π₀ 体系的「自回归 + 流匹配」主导地位。LIBERO 98% 接近天花板，预计带动一批从 RoboFlow 到 Embodied-Reasoner 的策略向 Diffusion VLA 切换。",
+  "methodology": "**核心架构**\n\nMMaDA-VLA 是一个 **Native Pre-trained Large Diffusion VLA**，三大设计：\n\n1. **统一 token 空间**：图像 patch、语言 token、连续控制（position / velocity / gripper）经过各自 tokenizer（VQGAN-style for images、BPE for text、residual VQ for actions）映射到同一离散 vocab，backbone 是一个标准的 MMaDA Transformer（Multi-Modal Diffusion Architecture）。\n\n2. **Masked Token Denoising 训练目标**：随机 mask 一部分 future observation tokens 和 action chunk tokens，让模型在「过去观测 + 语言指令 + 部分 mask」条件下重建完整序列。\n\n3. **联合生成**：推理时同时输出未来目标观测 + 动作 chunk，Iterative denoising 让两者互相 grounding（动作要符合物理动力学才能产生合理的未来视觉）。\n\n**为什么不用 autoregressive？**\n\n自回归 VLA 在长程任务上累积误差严重；扩散允许「全局 refinement」+「order-free」，多步去噪过程中可以反复校正前面的动作。",
+  "experiments": "**LIBERO**: 平均 success rate **98.0%**（vs OpenVLA-OFT 95.x%、π₀ 96.x%），LIBERO-Long 子集尤为突出。\n\n**CALVIN ABCD→D**: 平均长度 **4.78 / 5**（连续完成 5 个任务），创下 CALVIN 长程基准新纪录。\n\n**Real-world**: 在 Franka Panda 实物上测试 pick-and-place / pour / press button / sort 等 8 个任务，成功率比基线 OpenVLA 提升 12-25%。\n\n**消融**: 去掉 future observation 联合生成 → CALVIN 长度从 4.78 降到 4.12，证明 future obs 是关键 grounding 信号。",
+  "reproduction": "代码与权重尚未完全开源（截至 2026-05-08）。建议关注：\n\n- 项目主页：https://huggingface.co/MMaDA-VLA（待发布）\n- 复现要点：\n  1. 准备多模态 tokenizer（图像 VQGAN，可复用 LlamaGen / MAR）\n  2. 动作 residual VQ：codebook size 1024，4 层残差量化，覆盖连续 7-DoF\n  3. backbone：MMaDA-7B，初始化可用 LlamaGen 7B + LIBERO/OXE 联合预训练\n  4. mask ratio: 0.5-0.9 cosine schedule，迭代去噪 25 步"
+}
