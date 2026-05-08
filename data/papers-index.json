@@ -1,6 +1,85 @@
 {
-  "lastUpdated": "2026-05-07T20:05",
+  "lastUpdated": "2026-05-08T08:30",
   "papers": [
+    {
+      "id": "p126",
+      "title": "BifrostUMI: Bridging Robot-Free Demonstrations and Humanoid Whole-Body Manipulation",
+      "authors": [
+        "Chenhao Yu",
+        "Hongwu Wang",
+        "Youhao Hu",
+        "Jiachen Zhang",
+        "Yuanyuan Li",
+        "Shaqi Luo"
+      ],
+      "venue": "arXiv 2605.03452",
+      "date": "2026-05-05",
+      "arxiv": "https://arxiv.org/abs/2605.03452",
+      "github": "",
+      "tldr": "提出 BifrostUMI — 便携式高效的「无机器人」数据采集框架，专为人形机器人设计。流程：①轻量 VR 设备捕捉人类演示，记录稀疏关键点轨迹 + 腕部挂载视觉；②高级策略网络从视觉特征预测未来关键点轨迹；③鲁棒关键点重定向管道把轨迹精确映射到人形机器人，并由全身控制器执行。把「自然人类演示 → 人形多样化敏捷行为」无缝转移，避开真机遥操作的高成本与本体限制。",
+      "category": "数据采集 / 模仿学习",
+      "difficulty": "进阶",
+      "tags": [
+        "BifrostUMI",
+        "Robot-Free",
+        "VR Demonstration",
+        "Humanoid",
+        "Whole-Body",
+        "UMI"
+      ],
+      "addedDate": "2026-05-08",
+      "keyInsights": [
+        "💡 VR + 稀疏关键点：把人类演示压成可学习信号，省去真机遥操作",
+        "💡 关键点重定向管道：用形态匹配解决「人 → 人形」运动学差异",
+        "💡 高级策略只预测关键点轨迹，留给全身控制器解决细粒度动力学",
+        "💡 UMI 范式向人形全身扩展，开拓「无机器人」数据规模化路径"
+      ],
+      "impact": "把 UMI / Bridge-style 数据流推到全身人形场景，是「人类视频 → 人形 VLA」数据飞轮的关键基础设施。"
+    },
+    {
+      "id": "p125",
+      "title": "Latent Bridge: Feature Delta Prediction for Efficient Dual-System Vision-Language-Action Model Inference",
+      "authors": [
+        "Yudong Liu",
+        "Yuan Li",
+        "Zijia Tang",
+        "Yuxi Zheng",
+        "Yueqian Lin",
+        "Qinsi Wang",
+        "Yi Li",
+        "Shuangjun Liu",
+        "Shuai Zhang",
+        "Taotao Jing",
+        "Dashan Gao",
+        "Ning Bi",
+        "Jingwei Sun",
+        "Yiran Chen",
+        "Hai Li"
+      ],
+      "venue": "arXiv 2605.02739",
+      "date": "2026-05-04",
+      "arxiv": "https://arxiv.org/abs/2605.02739",
+      "github": "",
+      "tldr": "针对双系统 VLA（GR00T-N1.6 / π0.5）每步必须跑 VLM 骨干、特征时序冗余的瓶颈，提出 Latent Bridge — 一个轻量模型预测 VLM 输出的 delta（增量），让动作头在预测特征上运行、昂贵的 VLM 仅周期性激活。在 LIBERO 4 套件 / RoboCasa 24 厨房任务 / ALOHA cube 任务上：性能保留 95-100%，VLM 调用减少 50-75%，单 episode 加速 1.65-1.73×。架构通用：支持特征空间桥接（GR00T）和 KV 缓存桥接（π0.5）两种方式。",
+      "category": "推理优化 / VLA",
+      "difficulty": "进阶",
+      "tags": [
+        "Latent Bridge",
+        "Dual-System VLA",
+        "Inference Acceleration",
+        "GR00T",
+        "pi0.5",
+        "KV Cache"
+      ],
+      "addedDate": "2026-05-08",
+      "keyInsights": [
+        "💡 时序冗余视角：相邻控制步 VLM 特征高度相似，可由轻量 delta 预测器代替",
+        "💡 跨架构通用：特征桥接（GR00T-N1.6）+ KV 缓存桥接（π0.5）双方案",
+        "💡 任务无关 DAgger 训练管道：免微调即可跨基准迁移",
+        "💡 50-75% VLM 调用削减下仍保留 95-100% 任务成功率"
+      ],
+      "impact": "把双系统 VLA 推理成本砍到边端可承受范围，是 VLA 走向真机高频控制（30-50 Hz）必经的工程范式。"
+    },
     {
       "id": "p123",
       "title": "dWorldEval: Scalable Robotic Policy Evaluation via Discrete Diffusion World Model",

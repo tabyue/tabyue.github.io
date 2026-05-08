@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-07T20:05",
+  "lastUpdated": "2026-05-08T08:30",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,59 @@
     }
   ],
   "projects": [
+    {
+      "id": "os088",
+      "name": "DOMINO + PUMA (动态环境下可泛化机器人操作)",
+      "github": "https://github.com/H-EmbodVis/DOMINO",
+      "organization": "H-EmbodVis Lab",
+      "category": "benchmark-policy",
+      "description": "面向「动态环境下可泛化机器人操作」的开源基准 + 策略框架。DOMINO 是基准：覆盖运动物体跟随、环境扰动下抓取、不可预测变化下任务完成等场景，弥补现有 VLA 都基于静态单帧观测、缺乏时空动态的盲区。PUMA 是配套预测式策略架构：耦合历史运动线索 + 未来状态预测，让策略真正具备反应式具身智能能力。两者一起回答「如何让 VLA 在动态而非静态台面任务中工作」这个长期被搁置的问题。",
+      "language": "Python / PyTorch",
+      "license": "MIT（待确认）",
+      "features": [
+        "DOMINO 基准：动态操控场景（运动物体 / 环境扰动）",
+        "PUMA 策略：历史运动 + 未来预测耦合",
+        "弥补静态 VLA 在动态环境下的失效",
+        "支持多 VLA baseline 对比评测",
+        "面向反应式具身智能"
+      ],
+      "stars": "新发布",
+      "tags": [
+        "DOMINO",
+        "PUMA",
+        "Dynamic Manipulation",
+        "Benchmark",
+        "Reactive VLA"
+      ],
+      "addedDate": "2026-05-08"
+    },
+    {
+      "id": "os087",
+      "name": "HY-Embodied-0.5 (腾讯 Hunyuan 具身基础模型)",
+      "github": "https://github.com/Tencent-Hunyuan/HY-Embodied",
+      "organization": "Tencent Robotics X × Hunyuan Vision Team",
+      "category": "foundation-model",
+      "description": "腾讯混元开源的具身基础模型家族，技术报告 arXiv 2604.07430。核心架构 Mixture-of-Transformers（MoT），通过潜在 token 进行模态特定计算，强化细粒度感知。两个变体：①MoT-2B（4B 总参 / 2.2B 激活，速度等同 2B 密集模型，已开源 Hugging Face 权重 + 推理代码）；②32B 大模型（前沿性能，对标 Gemini 3.0 Pro）。训练数据 1 亿+ 具身专属数据点 + 2000 亿+ Token（覆盖 3D 空间 / 物理对象交互 / 代理动力学）。是国内大厂首个真正开源权重 + 推理代码的具身基础模型，可直接作为 VLA 微调起点。",
+      "language": "Python / PyTorch",
+      "license": "Apache-2.0（参考 Hunyuan 历史发布）",
+      "features": [
+        "MoT 混合专家架构 + 潜在 token 模态路由",
+        "2B 激活 / 4B 总参，边缘部署友好",
+        "1 亿+ 具身数据点 + 2000 亿 Token 训练",
+        "Hugging Face 权重 + 官方推理代码",
+        "对标 Gemini 3.0 Pro 的 32B 版本"
+      ],
+      "stars": "新发布（2026-04-09）",
+      "tags": [
+        "腾讯Hunyuan",
+        "MoT",
+        "具身基础模型",
+        "VLA",
+        "开源权重",
+        "边缘部署"
+      ],
+      "addedDate": "2026-05-08"
+    },
     {
       "id": "os086",
       "name": "GS-Playground / MotrixSim (清华 AIR + 谋先飞 全栈仿真器)",

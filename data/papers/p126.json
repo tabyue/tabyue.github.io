@@ -1,0 +1,38 @@
+{
+  "id": "p126",
+  "title": "BifrostUMI: Bridging Robot-Free Demonstrations and Humanoid Whole-Body Manipulation",
+  "authors": [
+    "Chenhao Yu",
+    "Hongwu Wang",
+    "Youhao Hu",
+    "Jiachen Zhang",
+    "Yuanyuan Li",
+    "Shaqi Luo"
+  ],
+  "venue": "arXiv 2605.03452",
+  "date": "2026-05-05",
+  "arxiv": "https://arxiv.org/abs/2605.03452",
+  "github": "",
+  "tldr": "提出 BifrostUMI — 便携式高效的「无机器人」数据采集框架，专为人形机器人设计。流程：①轻量 VR 设备捕捉人类演示，记录稀疏关键点轨迹 + 腕部挂载视觉；②高级策略网络从视觉特征预测未来关键点轨迹；③鲁棒关键点重定向管道把轨迹精确映射到人形机器人，并由全身控制器执行。",
+  "category": "数据采集 / 模仿学习",
+  "difficulty": "进阶",
+  "tags": [
+    "BifrostUMI",
+    "Robot-Free",
+    "VR Demonstration",
+    "Humanoid",
+    "Whole-Body",
+    "UMI"
+  ],
+  "addedDate": "2026-05-08",
+  "keyInsights": [
+    "💡 VR + 稀疏关键点：把人类演示压成可学习信号，省去真机遥操作",
+    "💡 关键点重定向管道：用形态匹配解决「人 → 人形」运动学差异",
+    "💡 高级策略只预测关键点轨迹，留给全身控制器解决细粒度动力学",
+    "💡 UMI 范式向人形全身扩展，开拓「无机器人」数据规模化路径"
+  ],
+  "impact": "把 UMI / Bridge-style 数据流推到全身人形场景，是「人类视频 → 人形 VLA」数据飞轮的关键基础设施。",
+  "methodology": "**问题诊断**：人形机器人遥操作成本极高（VR 头显 + 双臂 master + 腿部 EXO + 真机调试），UMI 等便携数采框架虽然解决了上肢精细操作，但在全身（含下肢平衡 + 躯干转动）任务上仍依赖真机。\n\n**BifrostUMI 框架**：\n1. **数据采集端**：轻量 VR 设备（Quest 3 级别）捕捉操作者全身动作 → 记录为稀疏关键点（约 20 个，覆盖手腕 / 肘 / 肩 / 腰 / 膝 / 脚踝）+ 腕部 GoPro 视觉；\n2. **策略学习**：训练高级策略网络 — 输入腕部视觉 + 当前关键点状态，预测未来 K 帧关键点轨迹；\n3. **执行端**：关键点重定向管道（IK + 形态约束）把人体关键点轨迹映射到人形机器人 URDF；\n4. **底层控制器**：用预训练全身控制器（基于 RL 或 MPC）执行重定向后的关键点参考。\n\n**关键创新**：策略层只学「人类自然行为分布下的关键点轨迹」，物理可行性留给底层控制器解决，从而极大缓解人 / 人形动力学差异问题。",
+  "experiments": "**任务集**：开门 + 取物 + 跨步搬运 + 双臂托举 + 动态人机交接。\n\n**对比**：纯 VR 遥操（gold standard）/ UMI 上肢-only / RoboPianist 等关键点风格基线。\n\n**结果**：BifrostUMI 在跨步搬运、双臂托举上接近 VR 遥操（差距 < 10%），在数据采集速度上是 VR 遥操的 5-8×（不需要真机和操作员同步）。\n\n**消融**：①关键点稀疏度 vs 致密 mesh，稀疏更好（避免过拟合人体细节）；②策略预测窗口 K=10-20 最优；③重定向管道中加入「人形质心约束」对站立任务关键。",
+  "reproduction": "**硬件清单**：Quest 3 + GoPro Hero 12 + 全身可穿戴 IMU（可选）。\n**软件**：基于 LeRobot 数据格式，自定义 keypoint extractor 用 MediaPipe Holistic，IK 用 Pinocchio。\n**数据规模**：每个任务建议采集 50-100 episodes，每 episode 30-60 秒。\n**底层控制器**：可用 H1 / G1 公开的 RL 全身控制器（如 H1 Locomotion 或 GMR）；先用 MoCap 数据微调一遍再接入 BifrostUMI 关键点参考。"
+}

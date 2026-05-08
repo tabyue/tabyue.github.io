@@ -1,0 +1,47 @@
+{
+  "id": "p125",
+  "title": "Latent Bridge: Feature Delta Prediction for Efficient Dual-System Vision-Language-Action Model Inference",
+  "authors": [
+    "Yudong Liu",
+    "Yuan Li",
+    "Zijia Tang",
+    "Yuxi Zheng",
+    "Yueqian Lin",
+    "Qinsi Wang",
+    "Yi Li",
+    "Shuangjun Liu",
+    "Shuai Zhang",
+    "Taotao Jing",
+    "Dashan Gao",
+    "Ning Bi",
+    "Jingwei Sun",
+    "Yiran Chen",
+    "Hai Li"
+  ],
+  "venue": "arXiv 2605.02739",
+  "date": "2026-05-04",
+  "arxiv": "https://arxiv.org/abs/2605.02739",
+  "github": "",
+  "tldr": "针对双系统 VLA（GR00T-N1.6 / π0.5）每步必须跑 VLM 骨干、特征时序冗余的瓶颈，提出 Latent Bridge — 一个轻量模型预测 VLM 输出的 delta（增量），让动作头在预测特征上运行、昂贵的 VLM 仅周期性激活。在 LIBERO 4 套件 / RoboCasa 24 厨房任务 / ALOHA cube 任务上：性能保留 95-100%，VLM 调用减少 50-75%，单 episode 加速 1.65-1.73×。",
+  "category": "推理优化 / VLA",
+  "difficulty": "进阶",
+  "tags": [
+    "Latent Bridge",
+    "Dual-System VLA",
+    "Inference Acceleration",
+    "GR00T",
+    "pi0.5",
+    "KV Cache"
+  ],
+  "addedDate": "2026-05-08",
+  "keyInsights": [
+    "💡 时序冗余视角：相邻控制步 VLM 特征高度相似，可由轻量 delta 预测器代替",
+    "💡 跨架构通用：特征桥接（GR00T-N1.6）+ KV 缓存桥接（π0.5）双方案",
+    "💡 任务无关 DAgger 训练管道：免微调即可跨基准迁移",
+    "💡 50-75% VLM 调用削减下仍保留 95-100% 任务成功率"
+  ],
+  "impact": "把双系统 VLA 推理成本砍到边端可承受范围，是 VLA 走向真机高频控制（30-50 Hz）必经的工程范式。",
+  "methodology": "**问题诊断**：双系统 VLA（System 1 = 慢 VLM 推理 + System 2 = 快动作头）面临两难——VLM 必须每个控制步执行一次（30 Hz 控制 → 30 Hz VLM 推理），但实际上相邻步的 VLM 特征几乎不变（相机帧间差异小、语言指令不变）。\n\n**Latent Bridge 设计**：把 VLM 替换成「轻量 delta 预测器」，仅输入「上一步 VLM 特征 + 当前观测增量」就能预测当前步特征的 delta，让动作头直接在预测特征上推理。VLM 骨干以低频（5-10 Hz）周期性激活刷新真值。两种实现：\n- **特征空间桥接**（GR00T-N1.6）：直接预测最后一层 hidden state delta\n- **KV 缓存桥接**（π0.5）：预测注意力 KV 缓存的 delta，避免特征空间重对齐\n\n**训练**：任务无关 DAgger — 用 VLM 真值作为监督，让 Latent Bridge 在所有控制步都能拟合 delta；无需任务标注、无需重新微调原 VLA。",
+  "experiments": "**评测套件**：LIBERO 4 套件（goal/object/spatial/long） + RoboCasa 24 厨房任务 + ALOHA 模拟转立方体。\n\n**结果**：\n- 性能保留 **95-100%**（与全调用 VLM 基线对比）\n- VLM 调用减少 **50-75%**\n- 单 episode 加速 **1.65×（GR00T-N1.6） / 1.73×（π0.5）**\n\n**消融**：①delta 预测窗口越长越省算力但越容易漂移，最佳 4-6 步；②特征 vs KV 桥接在不同架构下各有优势；③task-agnostic 训练比 task-specific 在迁移性上更好。",
+  "reproduction": "**核心代码逻辑**（伪代码）：\n```python\n# 控制循环\nif step % refresh_period == 0:\n    feat = vlm.forward(obs, lang)  # 真实 VLM 推理\nelse:\n    delta = bridge(prev_feat, obs_diff)  # 轻量 delta 预测器\n    feat = prev_feat + delta\naction = action_head(feat, proprio)\n```\n**训练**：bridge 模型用 4 层 transformer encoder（约 50M 参数），用 VLA 训练数据收集 (prev_feat, current_feat) 对作监督。\n**实测建议**：先在 LIBERO 上跑 GR00T-N1.6 baseline，再加桥接对比加速比。"
+}

@@ -1,6 +1,86 @@
 {
-  "lastUpdated": "2026-05-07T20:05",
+  "lastUpdated": "2026-05-08T08:30",
   "news": [
+    {
+      "id": "n237",
+      "title": "腾讯 Hunyuan 开源 HY-Embodied-0.5：MoT 混合专家架构具身基础模型，2B 激活 / 32B 总参，1 亿 + 具身数据点 + 2000 亿 Token 训练",
+      "source": "Hugging Face / Tencent Hunyuan GitHub",
+      "date": "2026-04-09",
+      "url": "https://github.com/Tencent-Hunyuan/HY-Embodied",
+      "category": "开源生态",
+      "summary": "腾讯 Robotics X × Hunyuan Vision Team 联合发布并开源 HY-Embodied-0.5 具身基础模型家族，目前已上线 Hugging Face 的 MoT-2B 权重 + 推理代码（GitHub: Tencent-Hunyuan/HY-Embodied，技术报告 arXiv 2604.07430）。架构亮点：①Mixture-of-Transformers（MoT）混合专家结构 — 通过潜在 token 进行模态特定计算，显著增强细粒度感知；②两个变体：MoT-2B（4B 总参 / 2.2B 激活，边缘部署友好；推理速度等同 2B 密集模型）+ 32B 大模型（前沿性能，对标 Gemini 3.0 Pro）；③训练数据：1 亿+ 具身和空间专属数据点 + 2000 亿+ Token（覆盖 3D 空间 / 物理对象交互 / 代理动力学）。是国内大厂首个真正开源权重 + 推理代码的具身基础模型。意义：①把「VLA 基础大模型」竞争从美系（pi0/π0.5/RT-2/HEX）带到中国大厂正面战场；②MoT 模态化路由把 VLM-VLA 计算瓶颈用专家化方式解开；③Edge-2B 路线让国产边端机器人有了本地候选大脑。",
+      "tags": [
+        "HY-Embodied-0.5",
+        "腾讯",
+        "Hunyuan",
+        "MoT",
+        "具身基础模型",
+        "VLA",
+        "开源",
+        "Hugging Face"
+      ],
+      "addedDate": "2026-05-08"
+    },
+    {
+      "id": "n236",
+      "title": "浙江人形机器人创新中心 + 港中文 + 浙大联合提出 RAM 三维空间理解与操作模型，登上《Science Robotics》——为机器人配备可查询的外部三维知识库",
+      "source": "科技日报 / 新华社 / 浙江人形机器人创新中心",
+      "date": "2026-05-05",
+      "url": "https://www.stdaily.com/web/gdxw/2026-05/05/content_511913.html",
+      "category": "学术成果",
+      "summary": "浙江人形机器人创新中心（许学成 CTO 牵头）联合香港中文大学、浙江大学等团队提出名为 RAM（Retrieval-Augmented Manipulation 思路）的三维空间理解与操作模型，相关成果近日发表于国际学术期刊《Science·Robotics》。核心思想：借鉴检索增强生成（RAG）思路，为视觉-语言大模型配备可查询的外部三维知识库，机器人执行任务时可按需检索物体类别、几何属性、功能平面、抓取点等先验知识，弥补现有大模型「依赖二维图文训练、缺乏物理世界经验」导致的空间推理失误。团队同时构建了面向机器人操作场景的空间理解问答评测集，在多类空间推理任务上 RAM 整体优于多种代表性 VLM 基线，展现一定通用性与扩展性。意义：①打通「语义理解 → 三维空间推理 → 物理执行」链路，为长程复杂任务提供可验证、可迁移的空间知识；②是国产研究团队首次以「三维知识检索增强」范式登上 Science Robotics；③与同期 ZJU + 浙江中心其他工作（如 RoboGene、HEX）形成「中国具身智能学术带」雏形。",
+      "tags": [
+        "RAM",
+        "Science Robotics",
+        "三维空间推理",
+        "RAG",
+        "浙江人形机器人创新中心",
+        "港中文",
+        "浙大",
+        "许学成"
+      ],
+      "addedDate": "2026-05-08"
+    },
+    {
+      "id": "n235",
+      "title": "Meta 完成对物理 AI 初创 Assured Robot Intelligence (ARI) 收购：王晓龙 + Lerrel Pinto 整团队加入超级智能实验室，专攻全身人形机器人控制",
+      "source": "TechCrunch / 彭博社 / 腾讯新闻",
+      "date": "2026-05-01",
+      "url": "https://techcrunch.com/2026/05/01/meta-buys-robotics-startup-to-bolster-its-humanoid-ai-ambitions/",
+      "category": "国际动态",
+      "summary": "Meta 于 5 月 1 日完成对物理 AI 模型初创公司 Assured Robot Intelligence (ARI) 的收购（金额未披露），ARI 团队整体并入 Meta Superintelligence Labs 研究部门，与 2025 年成立的 Meta Robotics Studio 在人形机器人底层技术研发上紧密协作。ARI 由王晓龙（Xiaolong Wang，UCSD 副教授 / 前 NVIDIA 研究员）与 Lerrel Pinto（NYU 教授 / 曾联合创立儿童尺寸人形 Fauna Robotics）于一年前共同创立，核心方向是为通用人形机器人构建基础模型，使其能在复杂动态环境中理解、预测并适应人类行为，目标是让机器人完成各类体力劳动包括家务。Meta 发言人称 ARI 团队带来在「模型设计 + 机器人控制 + 自主学习前沿技术」方面的深厚专业知识，将应用于全身人形机器人控制（whole-body humanoid control）。这是继亚马逊 3 月收购 Fauna Robotics 之后，又一家硅谷巨头通过并购抢滩具身智能。意义：①标志着 Meta 正式加入特斯拉、谷歌（含 DeepMind）、OpenAI、亚马逊的人形机器人战团；②学术派（CMU / NYU / UCSD 系）顶级研究者直接进入工业巨头平台；③具身智能从「学院派创业 → 巨头并购整合」周期开始。",
+      "tags": [
+        "Meta",
+        "ARI",
+        "Assured Robot Intelligence",
+        "王晓龙",
+        "Lerrel Pinto",
+        "并购",
+        "全身人形控制",
+        "Superintelligence Labs"
+      ],
+      "addedDate": "2026-05-08"
+    },
+    {
+      "id": "n234",
+      "title": "超维动力 Kinetix AI 发布全球最高自由度人形机器人 KAI：115 个全身自由度 + 单手 36 自由度灵巧手 + 18000 触觉点全身皮肤，由两台 KAI 自主主持发布会",
+      "source": "中国日报科技 / 新浪财经 / 证券时报",
+      "date": "2026-04-26",
+      "url": "https://tech.chinadaily.com.cn/a/202604/27/WS69eefc42a310942cc49a97d7.html",
+      "category": "产品发布",
+      "summary": "深圳具身智能公司超维动力（Kinetix AI）4 月 26 日举办「降临 GIFTED」发布会，正式推出首款全尺寸人形机器人 KAI。核心数据：身高 173 cm / 体重 70 kg / 头身比 1:8.5（接近模特比例），115 个全身自由度（公开信息中全球最高）、单手 36 个自由度灵巧手（22 主控 + 14 柔顺），全身覆盖 18000 个触觉传感点（可感知 0.1 N 轻微触碰），1.7 kWh 半固态电池支持双臂连续作业 3 小时、双臂负载近 20 kg。技术三大支柱对应「理解世界 / 学习世界 / 与世界交互」：①KAI World Model 物理世界模型（动作 + 评估闭环）；②自研轻量化头戴式数采终端 KAI Halo（第一人称视角）；③KaiBot 高拟人本体。三阶段训练：预训练（互联网 + 仿真 + 第一人称数据）→ 桥接训练（UMI + 数采手套补足精细手部 + 物理接触）→ 后训练（真机遥操与本体对齐）。形式上发布会 20 分钟内完全无人类工程师上台，由两台 KAI 以对谈形态自我介绍，是行业首次完全由人形机器人主持的产品发布会。意义：将「拟人」推到工程极限（体型 / 体格 / 体能 / 感知四层拟人），用全身高自由度 + 触觉网络重新定义本体规格，直接对标 Tesla Optimus / Figure 02 / 智元远征 A2 等头部产品。",
+      "tags": [
+        "超维动力",
+        "Kinetix AI",
+        "KAI",
+        "115自由度",
+        "灵巧手",
+        "全身触觉",
+        "KAI World Model",
+        "人形机器人发布会"
+      ],
+      "addedDate": "2026-05-08"
+    },
     {
       "id": "n233",
       "title": "国家电网 68 亿元采购 8500 台具身智能设备规划落地：深谋科技\"伏安\"人形带电作业机器人即将交付国网电力 — 电力场景成具身智能 B 端规模化首站",
