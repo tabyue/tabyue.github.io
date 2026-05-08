@@ -1,0 +1,42 @@
+{
+  "id": "p127",
+  "title": "OA-WAM: Object-Addressable World Action Model for Robust Robot Manipulation",
+  "authors": [
+    "Yushan Liu",
+    "Peibo Sun",
+    "Shoujie Li",
+    "Yifan Xie",
+    "Lingfeng Zhang",
+    "Xintao Chao",
+    "Shiyuan Dong",
+    "Fang Chen",
+    "Xiao-Ping Zhang",
+    "Wenbo Ding"
+  ],
+  "venue": "arXiv 2605.06481",
+  "date": "2026-05-07",
+  "arxiv": "https://arxiv.org/abs/2605.06481",
+  "github": "",
+  "tldr": "对场景做 object-centric slot 分解（N+1 slot），每个 slot 含持久地址 + 时变内容；世界头预测下一帧 slot 状态，flow-matching 动作头同步输出 16 步连续动作。LIBERO 97.8% / SimplerEnv 79.3%，slot intervention swap-binding 0.87 远超 holistic baseline 的 0.09。",
+  "category": "VLA / 世界模型",
+  "difficulty": "进阶",
+  "tags": [
+    "OA-WAM",
+    "Object-Addressable",
+    "World Action Model",
+    "Slot Attention",
+    "LIBERO",
+    "SimplerEnv"
+  ],
+  "addedDate": "2026-05-08",
+  "keyInsights": [
+    "💡 Slot 化场景表示：每物体一个 slot，避免 holistic 表征里身份-上下文纠缠",
+    "💡 持久地址 + 时变内容双向量：行业首次在 WAM 中明确分离「指向谁」与「现在长什么样」",
+    "💡 cross-slot attention 通过 address-only keys 路由，每层 reset address slice",
+    "💡 在 LIBERO-Plus 几何扰动轴上达到 SOTA，证明 object-centric 是 WAM 的鲁棒性钥匙"
+  ],
+  "impact": "把 slot-attention 风格的 object-centric 表示正式嫁接到 WAM/VLA 的工业级训练框架，为 dual-system VLA 的「下半身」提供了一条可复用的鲁棒性强化范式。",
+  "methodology": "**问题诊断**：现有 World Action Model（WAM）通常把预测的「未来世界」表示成整体图像、视频 token 流或全局潜变量，导致动作解码器在「指令指向某个特定物体」时难以稳定定位 — 当场景发生新颖位移、被指物体仍可见但被周围上下文带偏时尤其明显。\n\n**OA-WAM 架构**：\n1. **Slot 分解**：每帧分解为 N+1 个 slot 状态（1 个机器人 slot + N 个物体 slot）；每个 slot 包含两个向量：持久地址向量（identity，时间不变）+ 时变内容向量（appearance / pose）。\n2. **多模态融合**：把 slot 与 text / image / proprioception / past-action token 打包成块状因果序列，送入 transformer 主干。\n3. **双头解码**：世界头预测下一帧 slot 状态（identity 不动，appearance 演化）；flow-matching 动作头在同一前向中解码 16 步连续动作 chunk。\n4. **注意力路由**：cross-slot attention 仅以 address-only keys 路由，每层 transformer 重置 address slice，保证 identity 不会随训练「漂移」。",
+  "experiments": "**基准**：LIBERO（4 套件）/ SimplerEnv / LIBERO-Plus。\n\n**结果**：LIBERO 97.8%，SimplerEnv 79.3%，LIBERO-Plus 几何轴 SOTA，七轴聚合得分高度竞争力。\n\n**鲁棒性测试**：causal slot intervention — 把场景中两个物体 swap 后做 binding cosine 测试。OA-WAM 得 0.87（接近 1 即完美），holistic baseline 上限仅 0.09。证明 OA-WAM 真的把「指向谁」从「现在长什么样」分离开了。\n\n**消融**：①去掉 address-only routing → swap-binding 掉到 0.41；②去掉 layer-wise address reset → 长 episode 漂移加剧；③把 N 从 8 减到 4 → LIBERO-90 掉 8 个百分点。",
+  "reproduction": "**实现要点**：\n- 物体 slot 数建议 N=8（与 LIBERO / SimplerEnv 任务复杂度匹配）。\n- 每层 reset address slice 的实现：把 slot 的 [0:d_addr] 维度在每层 attention 输出后用残差重置回输入版本。\n- flow-matching 动作头建议用 4 步 ODE（Euler）解码 16 步动作 chunk，单步 compute < 5ms（A100）。\n- 训练数据：LIBERO + RT-X 子集 + Bridge-V2，共约 200 万条轨迹。\n- 与 GR00T-N1.6 / π0.5 兼容：可作为 dual-system VLA 的「世界 + 动作」共用主干替代品。"
+}

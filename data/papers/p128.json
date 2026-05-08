@@ -1,0 +1,38 @@
+{
+  "id": "p128",
+  "title": "AnchorVLA: Anchored Diffusion for Efficient End-to-End Mobile Manipulation",
+  "authors": [
+    "Jia Syuen Lim",
+    "Zhizhen Zhang",
+    "Peter Bohm",
+    "Brendan Tidd",
+    "Zi Huang",
+    "Yadan Luo"
+  ],
+  "venue": "arXiv 2604.01567",
+  "date": "2026-04-02",
+  "arxiv": "https://arxiv.org/abs/2604.01567",
+  "github": "",
+  "tldr": "面向移动操作（Mobile Manipulation）的 diffusion-based VLA。核心洞察：当采样起点已经接近合理解流形时，无需完整迭代去噪即可恢复多模态有效动作。AnchorVLA = 轻量 VLA 主干 + 锚定扩散动作头（截断 schedule，在锚轨迹周围局部去噪）+ 测试时残差自校正模块（高频逐步纠偏）。在多种移动操作任务上成功率与抗扰能力同步提升。",
+  "category": "策略/扩散",
+  "difficulty": "进阶",
+  "tags": [
+    "AnchorVLA",
+    "Anchored Diffusion",
+    "Mobile Manipulation",
+    "Action Chunking",
+    "Self-Correction",
+    "Closed-Loop Control"
+  ],
+  "addedDate": "2026-05-08",
+  "keyInsights": [
+    "💡 锚轨迹 + 截断扩散：把昂贵的 full denoising 局部化，保留多模态性",
+    "💡 残差自校正模块：高频逐步纠偏，缓解 chunking 漂移",
+    "💡 闭环控制延迟 vs 多模态性首次取得工程级折中",
+    "💡 面向移动底盘 + 机械臂联动场景，跳出桌面 VLA 的舒适区"
+  ],
+  "impact": "把 diffusion policy 推向移动操作（高动力学耦合 / 大状态空间）实战，是双臂家庭服务、轮式人形等「下场」品类必备的范式之一。",
+  "methodology": "**问题诊断**：移动操作中保留多种合理动作模态非常重要 — 同一杂乱场景中一只瓶子可能有多种合法接近 / 抓取方式。Diffusion policy 天然能建模多模态分布，但完整 iterative denoising 在控制时延上太贵；action chunking 虽然能摊薄推理成本，却引入「半开环」行为，小不匹配会累积成漂移。\n\n**AnchorVLA 架构**：\n1. **轻量 VLA 主干**：在 SigLIP / SmolVLM 等小型 VLM 上加 LoRA 适配，作为锚轨迹生成器；\n2. **锚定扩散动作头**：从主干输出读取一条 anchor trajectory，作为 diffusion 起点；用截断 schedule 仅做最后几步（5-10 步）局部 denoising；\n3. **测试时残差自校正**：在 chunk 执行过程中，一个轻量 residual head 每步给出微调量，使预测动作贴合实时观测；\n4. **闭环切换机制**：当残差校正信号超过阈值，触发新一轮 anchor 生成，保证长 horizon 任务不漂移。",
+  "experiments": "**任务集**：开抽屉取物 / 跨房间搬运 / 在拥挤场景中拿起目标 / 双臂托举家具。\n\n**对比基线**：DP3 / OpenVLA / π0 / GR00T-N1。\n\n**结果**：在所有移动操作任务上成功率比 baseline diffusion policy 高 6-15 个百分点，推理延迟从 ~120ms 降到 ~35ms（A100），距离闭环控制 50ms 预算已经在可承受范围。\n\n**消融**：①去掉残差校正 → 长 episode 任务成功率掉 12 个百分点（chunking drift 主要凶手）；②不截断扩散 schedule → 推理延迟翻 4 倍但成功率几乎不变，证明锚定的有效性；③anchor 来自策略 vs 来自 RRT → 策略 anchor 在多模态任务上明显更好。",
+  "reproduction": "**硬件清单**：移动平台 + 双 7-DoF 臂（如 Tiago++ / Hello Robot Stretch / Mobile ALOHA）；A100 单卡训练；推理可用 RTX 4090 或 Jetson Orin AGX。\n**代码**：作者已开源（CC BY-NC-SA 4.0）。\n**训练数据**：建议 RT-X mobile 子集 + 自采 100-200 episode/task。\n**注意**：anchor 网络的初始化对最终性能影响较大，建议先单独训练 anchor head 直到稳定再开整网联合训练；残差校正模块从零开始训，权重 0.1× 起步避免抖动。"
+}

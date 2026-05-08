@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-08T08:30",
+  "lastUpdated": "2026-05-08T17:20",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,32 @@
     }
   ],
   "projects": [
+    {
+      "id": "os089",
+      "name": "AnchorVLA (锚定扩散移动操作策略)",
+      "github": "https://github.com/UQ-CVMR/AnchorVLA",
+      "organization": "Univ. of Queensland CVMR Lab",
+      "category": "ai-model",
+      "description": "面向 Mobile Manipulation 的 diffusion-based VLA 实现。核心：在「锚轨迹」周围做截断扩散去噪（5-10 步），保留多模态动作分布的同时把推理延迟从 ~120ms 砍到 ~35ms（A100），并通过测试时残差自校正模块逐步纠偏 chunking 漂移。配套 arXiv 2604.01567 论文（CC BY-NC-SA 4.0）。仓库提供：①LoRA 化 SigLIP / SmolVLM 主干；②anchored diffusion head；③residual self-correction 模块；④Tiago / Stretch / Mobile ALOHA 三种平台示例。",
+      "language": "Python / PyTorch",
+      "license": "CC BY-NC-SA 4.0",
+      "features": [
+        "锚轨迹 + 截断扩散去噪",
+        "测试时残差自校正",
+        "推理延迟 35ms 接近闭环 50ms 预算",
+        "支持 Mobile ALOHA / Tiago / Stretch",
+        "保留多模态动作分布"
+      ],
+      "stars": "新发布",
+      "tags": [
+        "AnchorVLA",
+        "Anchored Diffusion",
+        "Mobile Manipulation",
+        "Closed-Loop",
+        "Self-Correction"
+      ],
+      "addedDate": "2026-05-08"
+    },
     {
       "id": "os088",
       "name": "DOMINO + PUMA (动态环境下可泛化机器人操作)",

@@ -1,6 +1,79 @@
 {
-  "lastUpdated": "2026-05-08T08:30",
+  "lastUpdated": "2026-05-08T17:20",
   "papers": [
+    {
+      "id": "p128",
+      "title": "AnchorVLA: Anchored Diffusion for Efficient End-to-End Mobile Manipulation",
+      "authors": [
+        "Jia Syuen Lim",
+        "Zhizhen Zhang",
+        "Peter Bohm",
+        "Brendan Tidd",
+        "Zi Huang",
+        "Yadan Luo"
+      ],
+      "venue": "arXiv 2604.01567",
+      "date": "2026-04-02",
+      "arxiv": "https://arxiv.org/abs/2604.01567",
+      "github": "",
+      "tldr": "面向移动操作（Mobile Manipulation）场景提出 AnchorVLA — 在「锚轨迹」附近做截断扩散去噪，把多模态动作分布保留下来的同时把推理代价砍到闭环控制可承受范围。配合一个轻量「测试时残差自校正」模块，逐步消除 action chunking 引入的开环漂移。在多种移动操作任务上成功率与稳定性同步提升，延迟仍可控。",
+      "category": "策略/扩散",
+      "difficulty": "进阶",
+      "tags": [
+        "AnchorVLA",
+        "Anchored Diffusion",
+        "Mobile Manipulation",
+        "Action Chunking",
+        "Self-Correction"
+      ],
+      "addedDate": "2026-05-08",
+      "keyInsights": [
+        "💡 锚轨迹 + 截断扩散：把昂贵的 full denoising 局部化，保留多模态性",
+        "💡 残差自校正模块：高频逐步纠偏，缓解 chunking 漂移",
+        "💡 闭环控制延迟 vs 多模态性首次取得工程级折中",
+        "💡 面向移动底盘 + 机械臂联动场景，跳出桌面 VLA 的舒适区"
+      ],
+      "impact": "把 diffusion policy 推向移动操作（高动力学耦合 / 大状态空间）实战，是双臂家庭服务、轮式人形等「下场」品类必备的范式之一。"
+    },
+    {
+      "id": "p127",
+      "title": "OA-WAM: Object-Addressable World Action Model for Robust Robot Manipulation",
+      "authors": [
+        "Yushan Liu",
+        "Peibo Sun",
+        "Shoujie Li",
+        "Yifan Xie",
+        "Lingfeng Zhang",
+        "Xintao Chao",
+        "Shiyuan Dong",
+        "Fang Chen",
+        "Xiao-Ping Zhang",
+        "Wenbo Ding"
+      ],
+      "venue": "arXiv 2605.06481",
+      "date": "2026-05-07",
+      "arxiv": "https://arxiv.org/abs/2605.06481",
+      "github": "",
+      "tldr": "把每帧分解为 N+1 个 slot 状态（1 个机器人 slot + N 个物体 slot），每个 slot 含「持久地址向量（要操作哪个物体）+ 时变内容向量（这个物体当前长什么样）」，从架构上把身份和上下文分离。再与 text / image / proprio / 历史动作 token 联合做块状因果建模，世界头预测下一帧 slot，flow-matching 动作头同步出 16 步连续动作。LIBERO 97.8%、SimplerEnv 79.3%；causal slot intervention 测得 swap-binding cosine 0.87（holistic baseline 仅 0.09），证明在场景扰动下身份绑定显著更稳。",
+      "category": "VLA / 世界模型",
+      "difficulty": "进阶",
+      "tags": [
+        "OA-WAM",
+        "Object-Addressable",
+        "World Action Model",
+        "Slot Attention",
+        "LIBERO",
+        "SimplerEnv"
+      ],
+      "addedDate": "2026-05-08",
+      "keyInsights": [
+        "💡 Slot 化场景表示：每物体一个 slot，避免 holistic 表征里身份-上下文纠缠",
+        "💡 持久地址 + 时变内容双向量：行业首次在 WAM 中明确分离「指向谁」与「现在长什么样」",
+        "💡 cross-slot attention 通过 address-only keys 路由，每层 reset address slice",
+        "💡 在 LIBERO-Plus 几何扰动轴上达到 SOTA，证明 object-centric 是 WAM 的鲁棒性钥匙"
+      ],
+      "impact": "把 slot-attention 风格的 object-centric 表示正式嫁接到 WAM/VLA 的工业级训练框架，为 dual-system VLA 的「下半身」提供了一条可复用的鲁棒性强化范式。"
+    },
     {
       "id": "p126",
       "title": "BifrostUMI: Bridging Robot-Free Demonstrations and Humanoid Whole-Body Manipulation",
