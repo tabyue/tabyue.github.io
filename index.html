@@ -147,6 +147,24 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 /* Latest news on home */
 .home-latest{max-width:1400px;margin:0 auto;padding:60px 32px}
 .home-latest-title{font-size:1.3rem;font-weight:700;margin-bottom:24px;letter-spacing:-.01em}
+.home-latest-sub{font-size:.86rem;color:var(--t3);font-weight:400;margin-left:8px}
+
+/* Daily English on home */
+.de-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
+.de-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--r);padding:22px 24px;transition:transform .3s,border-color .3s;position:relative;overflow:hidden}
+.de-card:hover{transform:translateY(-2px);border-color:var(--p)}
+.de-card .de-tag{display:inline-block;font-size:.7rem;font-weight:600;color:var(--p);background:var(--accent-subtle);padding:3px 10px;border-radius:50px;margin-bottom:12px;letter-spacing:.04em}
+.de-card .de-tag.news{color:var(--gn);background:rgba(50,217,107,.1)}
+.de-card .de-tag.paper{color:var(--v);background:rgba(191,131,248,.1)}
+.de-card h3{font-size:1.05rem;font-weight:600;line-height:1.5;margin:0 0 10px;color:var(--t1)}
+.de-card .de-en{font-size:.92rem;line-height:1.75;color:var(--t1);margin-bottom:14px;font-family:Georgia,'Times New Roman',serif}
+.de-card .de-en mark.de-vocab{background:linear-gradient(180deg,transparent 60%,rgba(58,163,255,.25) 60%);color:inherit;padding:0 2px;cursor:help;border-radius:2px;font-weight:500}
+.de-card .de-vocab-list{font-size:.78rem;color:var(--t2);line-height:1.7;background:var(--bg3);padding:10px 14px;border-radius:8px;margin-bottom:12px}
+.de-card .de-vocab-list b{color:var(--p);font-weight:600;font-family:var(--font-mono)}
+.de-card .de-cn{font-size:.82rem;color:var(--t2);line-height:1.7;border-left:3px solid var(--p);padding-left:12px;margin-bottom:14px}
+.de-card .de-meta{display:flex;justify-content:space-between;align-items:center;font-size:.74rem;color:var(--t3);padding-top:10px;border-top:1px solid var(--bd)}
+.de-card .de-meta a{color:var(--p);text-decoration:none}
+.de-card .de-meta a:hover{text-decoration:underline}
 
 /* === CARDS (shared) === */
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
@@ -584,6 +602,10 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
         <div class="home-latest-title">🔥 最新动态</div>
         <div class="card-grid" id="homeLatest"></div>
     </div>
+    <div class="home-latest" id="dailyEnglishWrap" style="display:none">
+        <div class="home-latest-title">📰 每日英文 <span class="home-latest-sub">每天 3 篇精选 · 学一点术语 · 累积成习惯</span></div>
+        <div class="de-grid" id="dailyEnglish"></div>
+    </div>
     <div class="recent-updates" id="recentUpdates" style="display:none">
         <div class="ru-header" onclick="this.parentElement.classList.toggle('ru-open')">
             <span style="font-size:1rem">📋</span>
@@ -983,7 +1005,7 @@ async function init(){
             heroEl.textContent=diffH<1?'刚刚更新':diffH<24?diffH+'小时前更新':dateStr+' 更新';
         }
     }
-    renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();renderModels();renderDatasets();renderHardware();renderRecentUpdates();renderGlossary();
+    renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();renderModels();renderDatasets();renderHardware();renderRecentUpdates();renderGlossary();renderDailyEnglish();
     // Sync inbox submission status from server-side processed records
     syncInboxStatus();
     // === 路由初始化（History API + 404 桥接 + hash 回退）===
@@ -2034,6 +2056,48 @@ function renderHomeLatest(){
     if(!ND)return;
     const latest=ND.news.slice(0,6);
     document.getElementById('homeLatest').innerHTML=latest.map(n=>`<a href="${n.url}" target="_blank" class="card" style="text-decoration:none;color:inherit"><span class="news-cat ncat-${n.category}">${n.category}</span><div class="card-title">${n.title}</div><div class="card-desc">${n.summary}</div><div class="card-meta" style="margin-top:10px">${n.source} · ${n.date}</div></a>`).join('');
+}
+
+// === Daily English ===
+let DED=null;
+async function renderDailyEnglish(){
+    if(!DED){
+        DED=await loadJ('/data/daily-english.json');
+        if(!DED||!DED.items||!DED.items.length)return;
+    }
+    const wrap=document.getElementById('dailyEnglishWrap');
+    const grid=document.getElementById('dailyEnglish');
+    if(!wrap||!grid)return;
+    wrap.style.display='block';
+    // 高亮 vocab 词
+    const renderEn=(text,vocab)=>{
+        if(!vocab||!vocab.length)return text;
+        let html=text;
+        // 按词长降序，避免 "VLA" 把 "VLA-XPU" 切错
+        const sorted=[...vocab].sort((a,b)=>b.term.length-a.term.length);
+        sorted.forEach(v=>{
+            const safe=v.term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+            const re=new RegExp('\\b('+safe+')\\b','gi');
+            html=html.replace(re,'<mark class="de-vocab" title="'+v.cn.replace(/"/g,'&quot;')+'">$1</mark>');
+        });
+        return html;
+    };
+    grid.innerHTML=DED.items.slice(0,3).map(item=>{
+        const cls=item.type==='news'?'news':(item.type==='paper'?'paper':'');
+        const tagText=item.type==='news'?'NEWS':(item.type==='paper'?'PAPER':'TIP');
+        const vocabRows=(item.vocab||[]).map(v=>`<b>${v.term}</b> ${v.cn}`).join('  ·  ');
+        return `<div class="de-card">
+            <span class="de-tag ${cls}">${tagText}</span>
+            <h3>${item.title||''}</h3>
+            <div class="de-en">${renderEn(item.en,item.vocab||[])}</div>
+            ${vocabRows?`<div class="de-vocab-list">📚 ${vocabRows}</div>`:''}
+            ${item.cn?`<div class="de-cn">💡 ${item.cn}</div>`:''}
+            <div class="de-meta">
+                <span>${item.source||''} · ${item.date||DED.date||''}</span>
+                ${item.url?`<a href="${item.url}" target="_blank">原文 →</a>`:''}
+            </div>
+        </div>`;
+    }).join('');
 }
 
 // === RENDER JOBS ===
