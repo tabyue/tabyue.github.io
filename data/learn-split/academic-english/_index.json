@@ -3,132 +3,179 @@
   "name": "AI 与机器人学术英语",
   "stage": "🏗️ 阶段一：数学与编程基础",
   "importance": "工具",
-  "estimatedHours": 40,
-  "lastUpdated": "2026-05-08T20:13",
-  "description": "面向 AI / 机器人方向的工程英语：读 arXiv、写 paper、跟会议报告、过英文面试、术语精读。",
+  "estimatedHours": 90,
+  "lastUpdated": "2026-05-08T20:25",
+  "description": "面向 AI / 机器人方向的工程英语：读 arXiv、写 paper、跟会议报告、过英文面试、术语精读。不教通用英语，只补具身智能领域日常用得上的能力。配 90 天系统提升计划。",
   "prerequisites": [
     "高中或大学英语基础（CET-4 水平起步）",
-    "对具身智能 / 机器人 / AI 至少有一个方向的入门兴趣"
+    "对具身智能 / 机器人 / AI 至少有一个方向的入门兴趣",
+    "每天能稳定投入 30-60 分钟"
   ],
   "resources": [
     {
-      "type": "books",
-      "title": "学术写作经典",
-      "items": [
-        {
-          "name": "The Elements of Style",
-          "author": "Strunk & White",
-          "note": "学术写作圣经，免费 PDF 网上随处可找"
-        },
-        {
-          "name": "English for Writing Research Papers",
-          "author": "Adrian Wallwork",
-          "note": "非英语母语作者必读"
-        },
-        {
-          "name": "Style: Lessons in Clarity and Grace",
-          "author": "Joseph Williams",
-          "note": "进阶写作修炼"
-        }
-      ]
+      "name": "The Elements of Style (Strunk & White)",
+      "url": "https://www.bartleby.com/141/",
+      "type": "教材",
+      "description": "学术写作圣经，免费在线全文，70 页读完一辈子受用"
     },
     {
-      "type": "videos",
-      "title": "听力 / 演讲素材",
-      "items": [
-        {
-          "name": "Yannic Kilcher",
-          "url": "https://youtube.com/@YannicKilcher",
-          "note": "每周 arXiv paper 解读"
-        },
-        {
-          "name": "Two Minute Papers",
-          "url": "https://youtube.com/@TwoMinutePapers",
-          "note": "入门级，画面丰富"
-        },
-        {
-          "name": "ICRA / RSS / NeurIPS Official",
-          "note": "所有 oral 录像 YouTube 免费"
-        }
-      ]
+      "name": "English for Writing Research Papers (Adrian Wallwork)",
+      "url": "https://link.springer.com/book/10.1007/978-3-319-26094-5",
+      "type": "教材",
+      "description": "非英语母语者必读，覆盖 abstract / intro / method 各部分写作技巧"
     },
     {
-      "type": "tools",
-      "title": "辅助工具",
-      "items": [
-        {
-          "name": "Grammarly Premium",
-          "note": "30 USD/月，学术写作收益巨大"
-        },
-        {
-          "name": "DeepL Write",
-          "note": "免费，长句重写"
-        },
-        {
-          "name": "Anki",
-          "note": "术语 flashcard，每天 10 分钟"
-        },
-        {
-          "name": "Claude / GPT-4",
-          "note": "让它批评你写的，不是让它写"
-        }
-      ]
+      "name": "Yannic Kilcher YouTube",
+      "url": "https://youtube.com/@YannicKilcher",
+      "type": "视频",
+      "description": "每周深读 1 篇 arXiv 论文，听力训练首选频道，瑞士口音清晰"
+    },
+    {
+      "name": "Two Minute Papers",
+      "url": "https://youtube.com/@TwoMinutePapers",
+      "type": "视频",
+      "description": "入门级听力素材，每集 2-5 分钟，画面丰富"
+    },
+    {
+      "name": "ICRA / NeurIPS / RSS Official Channels",
+      "url": "https://www.youtube.com/@icra_conference",
+      "type": "视频",
+      "description": "顶会 oral 录像 YouTube 全免费，多口音多场景"
+    },
+    {
+      "name": "Anki SRS",
+      "url": "https://apps.ankiweb.net/",
+      "type": "工具",
+      "description": "免费间隔重复系统，用于 100 个具身术语 flashcard"
+    },
+    {
+      "name": "Grammarly Premium",
+      "url": "https://www.grammarly.com/premium",
+      "type": "工具",
+      "description": "30 USD/月，对学术写作收益巨大，第一遍语法过滤"
+    },
+    {
+      "name": "DeepL Write",
+      "url": "https://www.deepl.com/write",
+      "type": "工具",
+      "description": "免费，长句重写比 Grammarly 强"
+    },
+    {
+      "name": "Overleaf",
+      "url": "https://www.overleaf.com/",
+      "type": "工具",
+      "description": "协作 LaTeX，免费版够用"
+    },
+    {
+      "name": "Pramp",
+      "url": "https://www.pramp.com/",
+      "type": "工具",
+      "description": "免费 mock interview 平台，找全球 peer 互相面试"
+    },
+    {
+      "name": "Interviewing.io",
+      "url": "https://interviewing.io/",
+      "type": "工具",
+      "description": "付费但极佳的英文 mock interview 平台，面试官来自 FAANG"
+    },
+    {
+      "name": "Connected Papers",
+      "url": "https://www.connectedpapers.com/",
+      "type": "工具",
+      "description": "paper 关联图谱，5 秒看懂一篇论文在领域里的位置"
+    },
+    {
+      "name": "OpenReview",
+      "url": "https://openreview.net/",
+      "type": "工具",
+      "description": "NeurIPS / ICLR 公开审稿档案，看 reviewer 怎么写意见"
     }
   ],
+  "weeklyPlan": "Week 1-4 基础重塑：发音 + 50 词术语 + 10 分钟读法 + Two Minute Papers shadowing | Week 5-8 输入加速：每日 200 字 English + NeurIPS oral 关字幕跟听 + 第一份 abstract draft | Week 9-12 实战冲刺：完整 paper draft + mock interview × 5 + 30 分钟 keynote 录视频自评",
   "sectionsMeta": [
     {
       "id": "sec-01",
-      "title": "01 为什么单独做一个英语模块——以及不做什么",
-      "lastUpdated": "2026-05-08T20:13",
-      "chars": 1439
+      "title": "01 引言：为什么具身智能从业者必须把英语当作工程能力",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 2838
     },
     {
       "id": "sec-02",
-      "title": "02 arXiv 论文 10 分钟读法",
-      "lastUpdated": "2026-05-08T20:13",
-      "chars": 2671
+      "title": "02 阅读篇：arXiv 论文 10 分钟读法 + 工程化技巧",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 4698
     },
     {
       "id": "sec-03",
-      "title": "03 ICRA / RSS / NeurIPS 现场口语生存",
-      "lastUpdated": "2026-05-08T20:13",
-      "chars": 2209
+      "title": "03 听力篇：YouTube / 会议录像 + Shadowing 训练法",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 3087
     },
     {
       "id": "sec-04",
-      "title": "04 英文面试：研究 / 算法岗 onsite 全流程",
-      "lastUpdated": "2026-05-08T20:13",
-      "chars": 3081
+      "title": "04 写作篇（上）：Title / Abstract / Introduction 模板",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 6315
     },
     {
       "id": "sec-05",
-      "title": "05 第一篇 paper 的写作模板",
-      "lastUpdated": "2026-05-08T20:13",
-      "chars": 3678
+      "title": "05 写作篇（中）：Method / Experiments / Conclusion / Limitations",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 6636
     },
     {
       "id": "sec-06",
-      "title": "06 具身智能 50 个高频术语精读",
-      "lastUpdated": "2026-05-08T20:13",
-      "chars": 3291
+      "title": "06 写作篇（下）：Rebuttal 与 Reviewer Response",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 6605
     },
     {
       "id": "sec-07",
-      "title": "07 邮件 / GitHub Issue / PR 沟通",
-      "lastUpdated": "2026-05-08T20:13",
-      "chars": 3430
+      "title": "07 演讲篇（上）：ICRA Poster + Elevator Pitch",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 5809
     },
     {
       "id": "sec-08",
-      "title": "08 论文听力：YouTube + 会议录像",
-      "lastUpdated": "2026-05-08T20:13",
-      "chars": 1937
+      "title": "08 演讲篇（下）：30 分钟 Keynote / 实验室 Talk 讲法",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 5154
     },
     {
       "id": "sec-09",
-      "title": "09 学术词汇与句式：去 Chinglish 化",
-      "lastUpdated": "2026-05-08T20:13",
-      "chars": 3945
+      "title": "09 面试篇（上）：Behavioral / Coding / System Design",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 8582
+    },
+    {
+      "id": "sec-10",
+      "title": "10 面试篇（下）：Research Deep Dive + Reverse Interview",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 6151
+    },
+    {
+      "id": "sec-11",
+      "title": "11 术语篇：100 个具身智能高频英文术语精读",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 6667
+    },
+    {
+      "id": "sec-12",
+      "title": "12 沟通篇：邮件 / GitHub Issue / PR / Slack 全场景",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 8909
+    },
+    {
+      "id": "sec-13",
+      "title": "13 风格篇：100 句学术句式 + 去 Chinglish 化",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 8522
+    },
+    {
+      "id": "sec-14",
+      "title": "14 实战篇：90 天系统提升计划 + 真题练习库",
+      "lastUpdated": "2026-05-08T20:25",
+      "chars": 5939
     }
   ]
 }
