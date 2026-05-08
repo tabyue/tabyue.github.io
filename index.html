@@ -1013,12 +1013,25 @@ async function init(){
 
 // === RENDER LEARN (Split Layout: sidebar + detail) ===
 let _currentLearnMod=null;
+// 记录每个 stage 当前的展开/收起状态：true=collapsed, false=expanded
+// 默认前 4 个阶段展开（si<=3），第 5/6/7 个阶段收起（si>3）
+const _stageCollapsed={};
+function _isStageCollapsed(si){
+    if(_stageCollapsed.hasOwnProperty(si))return _stageCollapsed[si];
+    return si>3;
+}
+function toggleStage(si,el){
+    const next=!_isStageCollapsed(si);
+    _stageCollapsed[si]=next;
+    el.classList.toggle('collapsed',next);
+}
 function renderLearn(){
     if(!LD)return;
     let sb='';
     LD.stages.forEach((s,si)=>{
-        sb+=`<div class="ls-stage${si>3?' collapsed':''}">`;
-        sb+=`<div class="ls-stage-head" onclick="this.parentElement.classList.toggle('collapsed')"><span>${s.title}</span><span class="ls-arrow">▼</span></div>`;
+        const isCol=_isStageCollapsed(si);
+        sb+=`<div class="ls-stage${isCol?' collapsed':''}">`;
+        sb+=`<div class="ls-stage-head" onclick="toggleStage(${si},this.parentElement)"><span>${s.title}</span><span class="ls-arrow">▼</span></div>`;
         sb+=`<div class="ls-mods">`;
         s.modules.forEach(m=>{
             const modId=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
@@ -1241,7 +1254,16 @@ async function openLearnModule(modId, el, opts){
     document.querySelectorAll('.ls-mod').forEach(m=>m.classList.toggle('active',m.dataset.mod===modId));
     // Expand parent stage if collapsed
     const activeMod=document.querySelector(`.ls-mod[data-mod="${modId}"]`);
-    if(activeMod){const stage=activeMod.closest('.ls-stage');if(stage?.classList.contains('collapsed'))stage.classList.remove('collapsed')}
+    if(activeMod){
+        const stage=activeMod.closest('.ls-stage');
+        if(stage?.classList.contains('collapsed')){
+            stage.classList.remove('collapsed');
+            // 同步状态记录，避免下次 renderLearn 时被打回 collapsed
+            const stages=Array.from(document.querySelectorAll('.ls-stage'));
+            const si=stages.indexOf(stage);
+            if(si>=0)_stageCollapsed[si]=false;
+        }
+    }
 
     // === 加载 _index.json（仅元信息，~4KB）===
     const fileId=learnFileMap[modId]||modId;
