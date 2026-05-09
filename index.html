@@ -164,8 +164,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 .de-card .de-en{font-size:.92rem;line-height:1.75;color:var(--t1);margin-bottom:14px;font-family:Georgia,'Times New Roman',serif}
 .de-card .de-en mark.de-vocab{background:linear-gradient(180deg,transparent 60%,rgba(58,163,255,.25) 60%);color:inherit;padding:0 2px;cursor:pointer;border-radius:2px;font-weight:500;transition:background-color .15s}
 .de-card .de-en mark.de-vocab:hover{background:linear-gradient(180deg,transparent 50%,rgba(58,163,255,.4) 50%)}
-.de-card .de-en .de-w{cursor:pointer;border-bottom:1px dotted transparent;transition:border-color .12s,color .12s;padding:0 1px}
-.de-card .de-en .de-w:hover{border-bottom-color:var(--p);color:var(--p)}
+.de-card .de-en .de-w,.de-card h3 .de-w{cursor:pointer;border-bottom:1px dotted transparent;transition:border-color .12s,color .12s;padding:0 1px}
+.de-card .de-en .de-w:hover,.de-card h3 .de-w:hover{border-bottom-color:var(--p);color:var(--p)}
+.de-card h3 .de-vocab{background:linear-gradient(180deg,transparent 70%,rgba(58,163,255,.2) 70%);cursor:pointer;border-radius:2px;padding:0 2px}
+.de-card h3 .de-vocab:hover{background:linear-gradient(180deg,transparent 60%,rgba(58,163,255,.35) 60%)}
 .de-card .de-vocab-list{font-size:.78rem;color:var(--t2);line-height:1.9;background:var(--bg3);padding:10px 14px;border-radius:8px;margin-bottom:12px}
 .de-card .de-vocab-list b{color:var(--p);font-weight:600;font-family:var(--font-mono);cursor:pointer;text-decoration:underline;text-decoration-color:rgba(58,163,255,.3);text-decoration-thickness:1px;text-underline-offset:3px}
 .de-card .de-vocab-list b:hover{text-decoration-color:var(--p)}
@@ -2194,6 +2196,12 @@ function _renderDeCard(item, dateFallback){
     const vocabRows=(item.vocab||[]).map(v=>`<b onclick="showIpaPopover(event,'${escAttr(v.term)}','${escAttr(v.cn)}')">${v.term}</b> ${v.cn}`).join('  ·  ');
     const lvlSpan=item.level?`<span class="de-level">${item.level}</span>`:'';
     const regSpan=item.register?`<span class="de-level" style="background:rgba(58,163,255,.08);color:var(--p)">${item.register}</span>`:'';
+    // 把英文单词（≥3 字母）包成可点击 span，过滤掉冒号 / 数字 / 特殊符号
+    const wrapWords=(text)=>{
+        return text.replace(/\b([A-Za-z][A-Za-z'-]{2,})\b/g,(m)=>{
+            return '<span class="de-w" onclick="showIpaPopover(event,\''+m.replace(/'/g,"\\'")+'\','+'\'\')">'+m+'</span>';
+        });
+    };
     // 渲染英文段落：先标 vocab 高亮，再把剩下的所有英文单词包成可点击 span（任意单词都能查音标）
     const renderEn=(text,vocab)=>{
         // Step 1: 占位符替换 vocab，避免 wrap 时切错
@@ -2214,20 +2222,23 @@ function _renderDeCard(item, dateFallback){
                 });
             });
         }
-        // Step 2: 把剩余英文单词（≥3 字母）包成可点击 span
-        html=html.replace(/\b([A-Za-z][A-Za-z'-]{2,})\b/g,(m)=>{
-            return '<span class="de-w" onclick="showIpaPopover(event,\''+m.replace(/'/g,"\\'")+'\','+'\'\')">'+m+'</span>';
-        });
+        // Step 2: 把剩余英文单词包成可点击 span
+        html=wrapWords(html);
         // Step 3: 把占位符还原为 mark
         html=html.replace(/\x01(\d+)\x02/g,(_,i)=>placeholders[+i]);
         return html;
+    };
+    // 标题也支持点击查音标（会先把 vocab 出现在标题里的也替换为 mark）
+    const renderTitle=(text)=>{
+        if(!text)return '';
+        return renderEn(text, item.vocab||[]);
     };
     return `<div class="de-card" data-de-id="${item.id||''}">
         <div class="de-meta-top">
             <span class="de-tag ${cls}">${tagText}</span>
             ${lvlSpan}${regSpan}
         </div>
-        <h3>${item.title||''}</h3>
+        <h3>${renderTitle(item.title||'')}</h3>
         <div class="de-en">${renderEn(item.en,item.vocab||[])}</div>
         ${vocabRows?`<div class="de-vocab-list">📚 ${vocabRows}</div>`:''}
         ${item.cn?`<div class="de-cn">💡 ${item.cn}</div>`:''}
