@@ -51,6 +51,7 @@
   - 排序优先 `addedDate`（fallback `date` / `postedDate`），id 数字作为 secondary key，reverse=True；**正确写法 `d = x.get('addedDate') or x.get('date') or ''`（短路求值），不要写 `for f in fields: d = x.get(f) or d`（后者会被后字段覆盖前字段）**
   - 真实当前时间用 `Get-Date` 获取，**不要相信 prompt 注入的 current_time**（可能是缓存值）
 - **跨实例 id 冲突自检**：每轮启动应跑一次 `Counter([x['id'] for x in items])` 核查；多轮合并提交越久越容易留隐患，2026-05-06 一次发现 7 处 id 重复（news 5 + papers 1 + os 1）。修复策略：保留 addedDate 最新的占用原 id，老的重命名为 max+i
+- **严格查重四要素（2026-05-09 升级）**：每次新增条目前必须**串行**执行以下四级检查：① **URL 严格匹配**（news/jobs/opensource 同 url 直接判重）；② **github 仓库路径匹配**（opensource 用 `owner/repo` 小写比对，避免 fork 同项目重复）；③ **标题前缀 12 字符匹配**（同事件不同次报道）；④ **arXiv id 匹配**（papers 用 `arxiv` 字段提取 ID 比对，同 ID 必为同一论文）。任何一级命中就**取消新增**或**合并到已有**条目。**惩罚**：一次错过查重产生 1 条重复条目，前端用户立刻能看到，UI 会被截图反馈——比工作量代价高得多。**反例存档**：2026-05-09 一次审计发现累计 46 条重复（news 28 + papers 6 + os 4 + jobs 8），主因是过去几周只查了 id 没查内容。
 - **跨实例 schema 一致性**：每个数据数组的字段约定不同——
   - **news**: id / title / source / date(原文日期) / url / category / summary / tags / addedDate(收录)
   - **papers (papers-index.json)**: id / title / authors / venue / date / arxiv / github / tags / tldr / category / difficulty / addedDate **+ keyInsights[]（💡 列表）+ impact（影响力描述）**——前端会读 keyInsights 判断"有无深度解读"，缺这两个字段会被打上「📚 暂无解读」disabled 标识，整卡也变不可点。新增论文必须同时配 `data/papers/pXXX.json` detail 文件（含 methodology / experiments / reproduction / mathDetails 中至少一项），否则点击会显示「📭 本篇深度解读尚未发布」
