@@ -164,6 +164,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 .de-card .de-en{font-size:.92rem;line-height:1.75;color:var(--t1);margin-bottom:14px;font-family:Georgia,'Times New Roman',serif}
 .de-card .de-en mark.de-vocab{background:linear-gradient(180deg,transparent 60%,rgba(58,163,255,.25) 60%);color:inherit;padding:0 2px;cursor:pointer;border-radius:2px;font-weight:500;transition:background-color .15s}
 .de-card .de-en mark.de-vocab:hover{background:linear-gradient(180deg,transparent 50%,rgba(58,163,255,.4) 50%)}
+.de-card .de-en .de-w{cursor:pointer;border-bottom:1px dotted transparent;transition:border-color .12s,color .12s;padding:0 1px}
+.de-card .de-en .de-w:hover{border-bottom-color:var(--p);color:var(--p)}
 .de-card .de-vocab-list{font-size:.78rem;color:var(--t2);line-height:1.9;background:var(--bg3);padding:10px 14px;border-radius:8px;margin-bottom:12px}
 .de-card .de-vocab-list b{color:var(--p);font-weight:600;font-family:var(--font-mono);cursor:pointer;text-decoration:underline;text-decoration-color:rgba(58,163,255,.3);text-decoration-thickness:1px;text-underline-offset:3px}
 .de-card .de-vocab-list b:hover{text-decoration-color:var(--p)}
@@ -632,7 +634,7 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
         <div class="card-grid" id="homeLatest"></div>
     </div>
     <div class="home-latest" id="dailyEnglishWrap" style="display:none">
-        <div class="home-latest-title">📰 每日英文 <span class="home-latest-sub">权威资讯 · 标注 CEFR 等级 · 点击生词查音标 🔊</span></div>
+        <div class="home-latest-title">📰 每日英文 <span class="home-latest-sub">权威资讯 · 标注 CEFR 等级 · 点击任意单词查音标 🔊</span></div>
         <div class="de-grid" id="dailyEnglish"></div>
         <div id="dailyEnglishArchiveWrap" style="margin-top:24px;display:none">
             <div class="de-archive-toggle" onclick="toggleDeArchive(this)">
@@ -2177,9 +2179,12 @@ function closeIpaPopover(){
 // 点击 popover 外面关闭
 document.addEventListener('click',(e)=>{
     const pop=document.getElementById('ipaPop');
-    if(pop&&!pop.contains(e.target)&&!e.target.classList.contains('de-vocab')&&!(e.target.tagName==='B'&&e.target.parentElement?.classList?.contains('de-vocab-list'))){
-        closeIpaPopover();
-    }
+    if(!pop)return;
+    if(pop.contains(e.target))return;
+    const cls=e.target.classList;
+    if(cls&&(cls.contains('de-vocab')||cls.contains('de-w')))return;
+    if(e.target.tagName==='B'&&e.target.parentElement?.classList?.contains('de-vocab-list'))return;
+    closeIpaPopover();
 });
 
 function _renderDeCard(item, dateFallback){
@@ -2189,18 +2194,32 @@ function _renderDeCard(item, dateFallback){
     const vocabRows=(item.vocab||[]).map(v=>`<b onclick="showIpaPopover(event,'${escAttr(v.term)}','${escAttr(v.cn)}')">${v.term}</b> ${v.cn}`).join('  ·  ');
     const lvlSpan=item.level?`<span class="de-level">${item.level}</span>`:'';
     const regSpan=item.register?`<span class="de-level" style="background:rgba(58,163,255,.08);color:var(--p)">${item.register}</span>`:'';
-    // 高亮 vocab 词（mark 元素同样支持点击查音标）
+    // 渲染英文段落：先标 vocab 高亮，再把剩下的所有英文单词包成可点击 span（任意单词都能查音标）
     const renderEn=(text,vocab)=>{
-        if(!vocab||!vocab.length)return text;
+        // Step 1: 占位符替换 vocab，避免 wrap 时切错
+        const placeholders=[];
         let html=text;
-        const sorted=[...vocab].sort((a,b)=>b.term.length-a.term.length);
-        sorted.forEach(v=>{
-            const safe=v.term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-            const re=new RegExp('\\b('+safe+')\\b','gi');
-            const tEsc=(v.term||'').replace(/'/g,"\\'");
-            const cEsc=(v.cn||'').replace(/"/g,'&quot;').replace(/'/g,"\\'");
-            html=html.replace(re,'<mark class="de-vocab" title="'+v.cn.replace(/"/g,'&quot;')+'（点击查音标）" onclick="showIpaPopover(event,\''+tEsc+'\',\''+cEsc+'\')">$1</mark>');
+        if(vocab&&vocab.length){
+            const sorted=[...vocab].sort((a,b)=>b.term.length-a.term.length);
+            sorted.forEach(v=>{
+                const safe=v.term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+                const re=new RegExp('\\b('+safe+')\\b','gi');
+                html=html.replace(re,(m)=>{
+                    const tEsc=(v.term||'').replace(/'/g,"\\'");
+                    const cEsc=(v.cn||'').replace(/"/g,'&quot;').replace(/'/g,"\\'");
+                    const tip=v.cn.replace(/"/g,'&quot;')+'（点击查音标）';
+                    const idx=placeholders.length;
+                    placeholders.push('<mark class="de-vocab" title="'+tip+'" onclick="showIpaPopover(event,\''+tEsc+'\',\''+cEsc+'\')">'+m+'</mark>');
+                    return '\x01'+idx+'\x02';
+                });
+            });
+        }
+        // Step 2: 把剩余英文单词（≥3 字母）包成可点击 span
+        html=html.replace(/\b([A-Za-z][A-Za-z'-]{2,})\b/g,(m)=>{
+            return '<span class="de-w" onclick="showIpaPopover(event,\''+m.replace(/'/g,"\\'")+'\','+'\'\')">'+m+'</span>';
         });
+        // Step 3: 把占位符还原为 mark
+        html=html.replace(/\x01(\d+)\x02/g,(_,i)=>placeholders[+i]);
         return html;
     };
     return `<div class="de-card" data-de-id="${item.id||''}">
