@@ -1,6 +1,41 @@
 {
-  "lastUpdated": "2026-05-09T11:03",
+  "lastUpdated": "2026-05-09T13:30",
   "papers": [
+    {
+      "id": "p133",
+      "title": "Thinking in Text and Images: Interleaved Vision-Language Reasoning Traces for Long-Horizon Robot Manipulation",
+      "authors": [
+        "Jinkun Liu",
+        "Haohan Chi",
+        "Lingfeng Zhang",
+        "Yifan Xie",
+        "YuAn Wang",
+        "Long Chen"
+      ],
+      "venue": "arXiv 2605.00438 (Tsinghua / BIT / Xiaomi)",
+      "date": "2026-05-04",
+      "arxiv": "https://arxiv.org/abs/2605.00438",
+      "github": "",
+      "tldr": "IVLR (Interleaved Vision-Language Reasoning) — 清华 + 北理工 + 小米提出长程操作的「文-图交错推理轨迹」框架。VLA 测试时单一原生多模态 Transformer 自生成「文本子目标 ↔ 视觉关键帧」交错轨迹，用伪监督把标准机器人数据集自动构建出推理轨迹标签。LIBERO 平均 95.5% / LIBERO-Long 92.4% / SimplerEnv-WidowX 总体 59.4%，远超纯文本 CoT (62%) 与纯视觉预测 (68.4%)。",
+      "category": "VLA/世界模型",
+      "difficulty": "前沿",
+      "tags": [
+        "IVLR",
+        "Long-Horizon",
+        "Multimodal Reasoning",
+        "LIBERO",
+        "Tsinghua",
+        "Xiaomi"
+      ],
+      "addedDate": "2026-05-09",
+      "keyInsights": [
+        "💡 「思维链 + 视觉关键帧」交错：文本编码因果顺序，视觉关键帧补充几何 / 空间约束，两种模态缺一不可",
+        "💡 测试时单 Transformer 自生成全局语义-几何轨迹，缓存后让闭环动作解码器 condition 在轨迹 + 当前观测",
+        "💡 伪监督自动化：把 demo 按时间分段，用 VLM 给每段配文字标签，零额外人工标注扩出推理轨迹",
+        "💡 LIBERO-Long 92.4% 大幅领先纯文本 (62%) 与纯视觉 (68.4%)，证明双模态 reasoning 比单模态强很多"
+      ],
+      "impact": "这是 2026 年「思维链 → 多模态推理」在长程机器人操作的关键落地。VLA 路线在 LIBERO 长程任务终于跨越 90% 门槛，与 Thinker-WM、MMaDA-VLA 形成「世界模型 + 推理轨迹 + 离散扩散」三大破长程范式。代码暂未开源但仿真数据可直接复现。"
+    },
     {
       "id": "p132",
       "title": "RoboOS-NeXT: A Unified Memory-based Framework for Lifelong, Scalable, and Robust Multi-Robot Collaboration",

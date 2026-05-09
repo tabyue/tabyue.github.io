@@ -1,0 +1,39 @@
+{
+  "id": "p133",
+  "title": "Thinking in Text and Images: Interleaved Vision-Language Reasoning Traces for Long-Horizon Robot Manipulation",
+  "authors": [
+    "Jinkun Liu",
+    "Haohan Chi",
+    "Lingfeng Zhang",
+    "Yifan Xie",
+    "YuAn Wang",
+    "Long Chen"
+  ],
+  "venue": "arXiv 2605.00438 (Tsinghua / BIT / Xiaomi)",
+  "date": "2026-05-04",
+  "arxiv": "https://arxiv.org/abs/2605.00438",
+  "github": "",
+  "tldr": "IVLR (Interleaved Vision-Language Reasoning) — 清华 + 北理工 + 小米提出长程操作的「文-图交错推理轨迹」框架。VLA 测试时单一原生多模态 Transformer 自生成「文本子目标 ↔ 视觉关键帧」交错轨迹，用伪监督把标准机器人数据集自动构建出推理轨迹标签。LIBERO 平均 95.5% / LIBERO-Long 92.4% / SimplerEnv-WidowX 总体 59.4%，远超纯文本 CoT (62%) 与纯视觉预测 (68.4%)。",
+  "category": "VLA/世界模型",
+  "difficulty": "前沿",
+  "tags": [
+    "IVLR",
+    "Long-Horizon",
+    "Multimodal Reasoning",
+    "LIBERO",
+    "Tsinghua",
+    "Xiaomi"
+  ],
+  "addedDate": "2026-05-09",
+  "keyInsights": [
+    "💡 「思维链 + 视觉关键帧」交错：文本编码因果顺序，视觉关键帧补充几何 / 空间约束，两种模态缺一不可",
+    "💡 测试时单 Transformer 自生成全局语义-几何轨迹，缓存后让闭环动作解码器 condition 在轨迹 + 当前观测",
+    "💡 伪监督自动化：把 demo 按时间分段，用 VLM 给每段配文字标签，零额外人工标注扩出推理轨迹",
+    "💡 LIBERO-Long 92.4% 大幅领先纯文本 (62%) 与纯视觉 (68.4%)，证明双模态 reasoning 比单模态强很多"
+  ],
+  "impact": "这是 2026 年「思维链 → 多模态推理」在长程机器人操作的关键落地。VLA 路线在 LIBERO 长程任务终于跨越 90% 门槛，与 Thinker-WM、MMaDA-VLA 形成「世界模型 + 推理轨迹 + 离散扩散」三大破长程范式。代码暂未开源但仿真数据可直接复现。",
+  "methodology": "**核心：交错推理轨迹（Interleaved Reasoning Trace）**\n\n给定指令 instruction 和初始观测 obs_0，IVLR 让一个原生多模态 Transformer (MMT) 自动生成全局推理轨迹：\n\n$$\\tau = \\big[ (\\text{text}_1, \\text{img}_1), (\\text{text}_2, \\text{img}_2), \\dots, (\\text{text}_T, \\text{img}_T) \\big]$$\n\n其中 text_t 是子目标文字（如 「pick up the red cup」），img_t 是该子目标完成时的视觉关键帧预测。\n\n**两阶段训练管线**：\n\n1. **伪监督构造**\n   - 对一段 demo (o_0, a_0, o_1, ..., o_N)，用基于光流 + 物体跟踪的分段算法把序列切成 K 个语义段\n   - 对每段中点关键帧 o_{m_k} 用 VLM (Qwen2.5-VL-7B) 描述 → 自动生成文字 caption\n   - 配对 (text_k, o_{m_k}) 作为该段的伪监督\n\n2. **联合训练**\n   - MMT backbone（基于 Pi-0 或 OpenVLA）同时预测 text/img token 和动作 token\n   - Loss = $\\lambda_1 \\cdot L_{\\text{trace}} + \\lambda_2 \\cdot L_{\\text{action}}$\n   - 推理时先生成完整轨迹 → 缓存 → 闭环解码动作（condition 在轨迹 + 当前观测）",
+  "experiments": "**主要实验（LIBERO 系列）**\n\n| 方法 | LIBERO-Spatial | LIBERO-Object | LIBERO-Goal | LIBERO-Long | 平均 |\n|------|:---:|:---:|:---:|:---:|:---:|\n| OpenVLA | 88.4 | 92.5 | 87.6 | 76.5 | 86.3 |\n| π₀ | 92.6 | 94.8 | 91.3 | 80.2 | 89.7 |\n| ECoT (text-only) | 89.2 | 93.1 | 88.5 | 62.0 | 83.2 |\n| VPP (vision-only) | 91.5 | 94.2 | 90.8 | 68.4 | 86.2 |\n| **IVLR (本文)** | **96.8** | **97.2** | **95.6** | **92.4** | **95.5** |\n\n**SimplerEnv-WidowX 真机仿真**\n\n- 总体成功率：IVLR 59.4% vs π₀ 47.2% vs OpenVLA 38.1%\n- 长程任务（>5 子目标）IVLR 提升最显著\n\n**消融**\n\n- 去掉 text 轨迹（只保留 img）→ LIBERO-Long 68.4%（−24%）\n- 去掉 img 轨迹（只保留 text）→ LIBERO-Long 62.0%（−30%）\n- 完全去掉轨迹 → LIBERO-Long 37.7%（−54.7%，灾难性下降）\n- 用 GT 轨迹替换自生成 → LIBERO-Long 94.1%（仅 +1.7%，证明自生成轨迹质量已足够好）",
+  "reproduction": "**实施门槛**：🟡 中等\n\n- 代码：暂未开源；论文中描述的伪监督脚本可在 1 周内自行实现（核心是 Qwen2.5-VL-7B 自动 caption 工具链）\n- 数据：LIBERO 公开 + 自动伪监督扩展为推理轨迹版本\n- 算力：8× A100 训练 ~3 天；推理 RTX 4090 即可\n- 评测：LIBERO benchmark 公开，复现门槛低\n\n**社区注意**：截止 2026-05-09，作者尚未公布代码与预训练 checkpoint，但 LIBERO benchmark 公开 + 思路清晰使社区已有非官方复现版本（GitHub 搜 「IVLR LIBERO」）。",
+  "mathDetails": "**轨迹生成的因果约束**\n\n生成 (text_t, img_t) 时，MMT 必须满足因果性：\n\n$$P(\\tau \\mid \\text{instr}, o_0) = \\prod_{t=1}^{T} P(text_t, img_t \\mid \\text{instr}, o_0, \\tau_{<t})$$\n\n训练时用 teacher forcing + autoregressive，避免 exposure bias。\n\n**动作解码的轨迹条件化**\n\n动作策略 $\\pi_\\theta$ 的输入显式包含轨迹 $\\tau$：\n\n$$a_t = \\pi_\\theta(o_t, \\text{instr}, \\tau)$$\n\n实现上：把 $\\tau$ 经过 cross-attention 注入到 action transformer 的每一层，类似 RT-2 把语义条件注入动作头的方式。\n\n**为什么交错有效（理论分析）**\n\n论文给出了一个简单的信息论解释：长程任务的最优 plan $\\tau^*$ 同时需要因果信息（哪个先做）+ 几何信息（在哪做、怎么动），两者都不能缺。论文证明对于含 K 个子目标的 plan，单模态 (text-only) 的覆盖率上限是 $1 - e^{-\\alpha K}$（其中 $\\alpha$ 是文字单模态的语义密度），而双模态可达 $1 - e^{-(\\alpha+\\beta) K}$，差距随 K 指数级放大 — 这解释了为什么 LIBERO-Long 上 IVLR 拉开最大差距。"
+}
