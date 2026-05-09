@@ -162,9 +162,28 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 .de-card .de-level{font-size:.66rem;font-weight:600;padding:2px 8px;border-radius:50px;background:var(--bg3);color:var(--t2);font-family:var(--font-mono)}
 .de-card h3{font-size:1.05rem;font-weight:600;line-height:1.5;margin:0 0 10px;color:var(--t1)}
 .de-card .de-en{font-size:.92rem;line-height:1.75;color:var(--t1);margin-bottom:14px;font-family:Georgia,'Times New Roman',serif}
-.de-card .de-en mark.de-vocab{background:linear-gradient(180deg,transparent 60%,rgba(58,163,255,.25) 60%);color:inherit;padding:0 2px;cursor:help;border-radius:2px;font-weight:500}
-.de-card .de-vocab-list{font-size:.78rem;color:var(--t2);line-height:1.7;background:var(--bg3);padding:10px 14px;border-radius:8px;margin-bottom:12px}
-.de-card .de-vocab-list b{color:var(--p);font-weight:600;font-family:var(--font-mono)}
+.de-card .de-en mark.de-vocab{background:linear-gradient(180deg,transparent 60%,rgba(58,163,255,.25) 60%);color:inherit;padding:0 2px;cursor:pointer;border-radius:2px;font-weight:500;transition:background-color .15s}
+.de-card .de-en mark.de-vocab:hover{background:linear-gradient(180deg,transparent 50%,rgba(58,163,255,.4) 50%)}
+.de-card .de-vocab-list{font-size:.78rem;color:var(--t2);line-height:1.9;background:var(--bg3);padding:10px 14px;border-radius:8px;margin-bottom:12px}
+.de-card .de-vocab-list b{color:var(--p);font-weight:600;font-family:var(--font-mono);cursor:pointer;text-decoration:underline;text-decoration-color:rgba(58,163,255,.3);text-decoration-thickness:1px;text-underline-offset:3px}
+.de-card .de-vocab-list b:hover{text-decoration-color:var(--p)}
+
+/* IPA / Pronunciation popover */
+.ipa-pop{position:fixed;z-index:9999;background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.18);padding:14px 18px;min-width:240px;max-width:340px;font-size:.86rem;line-height:1.6;animation:ipaIn .15s ease-out}
+@keyframes ipaIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.ipa-pop .ipa-word{font-size:1.05rem;font-weight:700;color:var(--t1);margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ipa-pop .ipa-phon{font-family:'Doulos SIL','Charis SIL',Georgia,serif;color:var(--p);font-size:1rem;font-weight:500}
+.ipa-pop .ipa-play{cursor:pointer;background:var(--accent-subtle);border:1px solid var(--bd);width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.9rem;transition:transform .2s,background .2s;user-select:none}
+.ipa-pop .ipa-play:hover{transform:scale(1.1);background:var(--p);color:#fff}
+.ipa-pop .ipa-play:active{transform:scale(.95)}
+.ipa-pop .ipa-cn{color:var(--t2);font-size:.85rem;padding:8px 0;border-top:1px solid var(--bd);margin-top:6px}
+.ipa-pop .ipa-def{color:var(--t2);font-size:.78rem;line-height:1.6;padding-top:8px;border-top:1px solid var(--bd);margin-top:6px;font-style:italic}
+.ipa-pop .ipa-links{display:flex;gap:6px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--bd);margin-top:8px}
+.ipa-pop .ipa-links a{font-size:.72rem;padding:3px 8px;background:var(--bg3);color:var(--t2);text-decoration:none;border-radius:4px;border:1px solid var(--bd);transition:background .2s,color .2s}
+.ipa-pop .ipa-links a:hover{background:var(--p);color:#fff;border-color:var(--p)}
+.ipa-pop .ipa-loading{color:var(--t3);font-size:.78rem;padding:4px 0}
+.ipa-pop-close{position:absolute;top:6px;right:8px;cursor:pointer;color:var(--t3);font-size:.95rem;line-height:1;padding:4px;user-select:none}
+.ipa-pop-close:hover{color:var(--t1)}
 .de-card .de-cn{font-size:.82rem;color:var(--t2);line-height:1.7;border-left:3px solid var(--p);padding-left:12px;margin-bottom:14px}
 .de-card .de-meta{display:flex;justify-content:space-between;align-items:center;font-size:.74rem;color:var(--t3);padding-top:10px;border-top:1px solid var(--bd)}
 .de-card .de-meta a{color:var(--p);text-decoration:none}
@@ -613,7 +632,7 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
         <div class="card-grid" id="homeLatest"></div>
     </div>
     <div class="home-latest" id="dailyEnglishWrap" style="display:none">
-        <div class="home-latest-title">📰 每日英文 <span class="home-latest-sub">权威资讯 · arXiv · 技术博客 · 写作 tip · 标注 CEFR 等级</span></div>
+        <div class="home-latest-title">📰 每日英文 <span class="home-latest-sub">权威资讯 · 标注 CEFR 等级 · 点击生词查音标 🔊</span></div>
         <div class="de-grid" id="dailyEnglish"></div>
         <div id="dailyEnglishArchiveWrap" style="margin-top:24px;display:none">
             <div class="de-archive-toggle" onclick="toggleDeArchive(this)">
@@ -2078,13 +2097,99 @@ function renderHomeLatest(){
 
 // === Daily English ===
 let DED=null;
+const _ipaCache={};
+
+// 显示音标 popover（点击 vocab 词触发）
+async function showIpaPopover(ev, term, cn){
+    ev.stopPropagation();
+    closeIpaPopover();
+    const word=(term||'').trim();
+    if(!word)return;
+    const pop=document.createElement('div');
+    pop.className='ipa-pop';
+    pop.id='ipaPop';
+    pop.innerHTML=`<span class="ipa-pop-close" onclick="closeIpaPopover()">✕</span>
+        <div class="ipa-word">${word}</div>
+        <div class="ipa-loading">⏳ 查询音标中...</div>`;
+    document.body.appendChild(pop);
+    // 定位到点击位置附近
+    const rect=ev.target.getBoundingClientRect();
+    let top=rect.bottom+8;
+    let left=rect.left;
+    pop.style.top=top+'px';
+    pop.style.left=left+'px';
+    // 边界修正
+    requestAnimationFrame(()=>{
+        const pr=pop.getBoundingClientRect();
+        if(pr.right>window.innerWidth-12)pop.style.left=Math.max(12,window.innerWidth-pr.width-12)+'px';
+        if(pr.bottom>window.innerHeight-12)pop.style.top=Math.max(12,rect.top-pr.height-8)+'px';
+    });
+
+    // 先查缓存
+    let data=_ipaCache[word.toLowerCase()];
+    if(!data){
+        // 取首词单词形式（去掉空格的多词词组只查第一个词；带连字符的取首段）
+        const lookup=word.split(/[\s\-]+/)[0].toLowerCase().replace(/[^a-z']/g,'');
+        try{
+            const resp=await fetch('https://api.dictionaryapi.dev/api/v2/entries/en/'+encodeURIComponent(lookup));
+            if(resp.ok){
+                const arr=await resp.json();
+                const entry=Array.isArray(arr)?arr[0]:null;
+                if(entry){
+                    const phon=entry.phonetic||(entry.phonetics&&entry.phonetics.find(p=>p.text)?.text)||'';
+                    const audio=(entry.phonetics||[]).find(p=>p.audio)?.audio||'';
+                    const def=(entry.meanings&&entry.meanings[0]&&entry.meanings[0].definitions&&entry.meanings[0].definitions[0]&&entry.meanings[0].definitions[0].definition)||'';
+                    data={phon,audio,def};
+                    _ipaCache[word.toLowerCase()]=data;
+                }
+            }
+        }catch(e){data=null}
+    }
+
+    if(!data||(!data.phon&&!data.audio)){
+        // 词典 API 没结果（缩写 / 词组），fallback 到外链
+        pop.innerHTML=`<span class="ipa-pop-close" onclick="closeIpaPopover()">✕</span>
+            <div class="ipa-word">${word}</div>
+            ${cn?`<div class="ipa-cn">📘 ${cn}</div>`:''}
+            <div class="ipa-def" style="font-size:.76rem;color:var(--t3);font-style:normal;border-top:none;padding-top:4px">未在通用词典找到音标（可能是缩写或专业术语），尝试外部词典：</div>
+            <div class="ipa-links">
+                <a href="https://dictionary.cambridge.org/dictionary/english-chinese-simplified/${encodeURIComponent(word)}" target="_blank" rel="noopener">剑桥</a>
+                <a href="https://www.youdao.com/result?word=${encodeURIComponent(word)}&lang=en" target="_blank" rel="noopener">有道</a>
+                <a href="https://en.wiktionary.org/wiki/${encodeURIComponent(word)}" target="_blank" rel="noopener">Wiktionary</a>
+            </div>`;
+        return;
+    }
+    const playBtn=data.audio?`<span class="ipa-play" title="播放发音" onclick="(new Audio('${data.audio}')).play()">🔊</span>`:'';
+    pop.innerHTML=`<span class="ipa-pop-close" onclick="closeIpaPopover()">✕</span>
+        <div class="ipa-word">${word} ${data.phon?`<span class="ipa-phon">${data.phon}</span>`:''}${playBtn}</div>
+        ${cn?`<div class="ipa-cn">📘 ${cn}</div>`:''}
+        ${data.def?`<div class="ipa-def">${data.def.length>120?data.def.slice(0,120)+'...':data.def}</div>`:''}
+        <div class="ipa-links">
+            <a href="https://dictionary.cambridge.org/dictionary/english-chinese-simplified/${encodeURIComponent(word)}" target="_blank" rel="noopener">剑桥</a>
+            <a href="https://www.youdao.com/result?word=${encodeURIComponent(word)}&lang=en" target="_blank" rel="noopener">有道</a>
+            <a href="https://www.merriam-webster.com/dictionary/${encodeURIComponent(word)}" target="_blank" rel="noopener">韦氏</a>
+        </div>`;
+}
+function closeIpaPopover(){
+    const old=document.getElementById('ipaPop');
+    if(old)old.remove();
+}
+// 点击 popover 外面关闭
+document.addEventListener('click',(e)=>{
+    const pop=document.getElementById('ipaPop');
+    if(pop&&!pop.contains(e.target)&&!e.target.classList.contains('de-vocab')&&!(e.target.tagName==='B'&&e.target.parentElement?.classList?.contains('de-vocab-list'))){
+        closeIpaPopover();
+    }
+});
+
 function _renderDeCard(item, dateFallback){
     const cls=item.type==='news'?'news':(item.type==='paper'?'paper':(item.type==='blog'?'blog':'tip'));
     const tagText=item.type==='news'?'NEWS':(item.type==='paper'?'PAPER':(item.type==='blog'?'BLOG':'TIP'));
-    const vocabRows=(item.vocab||[]).map(v=>`<b>${v.term}</b> ${v.cn}`).join('  ·  ');
+    const escAttr=s=>(s||'').replace(/"/g,'&quot;').replace(/'/g,"\\'");
+    const vocabRows=(item.vocab||[]).map(v=>`<b onclick="showIpaPopover(event,'${escAttr(v.term)}','${escAttr(v.cn)}')">${v.term}</b> ${v.cn}`).join('  ·  ');
     const lvlSpan=item.level?`<span class="de-level">${item.level}</span>`:'';
     const regSpan=item.register?`<span class="de-level" style="background:rgba(58,163,255,.08);color:var(--p)">${item.register}</span>`:'';
-    // 高亮 vocab 词
+    // 高亮 vocab 词（mark 元素同样支持点击查音标）
     const renderEn=(text,vocab)=>{
         if(!vocab||!vocab.length)return text;
         let html=text;
@@ -2092,7 +2197,9 @@ function _renderDeCard(item, dateFallback){
         sorted.forEach(v=>{
             const safe=v.term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
             const re=new RegExp('\\b('+safe+')\\b','gi');
-            html=html.replace(re,'<mark class="de-vocab" title="'+v.cn.replace(/"/g,'&quot;')+'">$1</mark>');
+            const tEsc=(v.term||'').replace(/'/g,"\\'");
+            const cEsc=(v.cn||'').replace(/"/g,'&quot;').replace(/'/g,"\\'");
+            html=html.replace(re,'<mark class="de-vocab" title="'+v.cn.replace(/"/g,'&quot;')+'（点击查音标）" onclick="showIpaPopover(event,\''+tEsc+'\',\''+cEsc+'\')">$1</mark>');
         });
         return html;
     };
