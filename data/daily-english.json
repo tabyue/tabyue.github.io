@@ -1,8 +1,102 @@
 {
-  "lastUpdated": "2026-05-09T10:38",
+  "lastUpdated": "2026-05-10T02:25",
   "date": "2026-05-09",
   "description": "每日 6 条精选英文素材：权威资讯（IEEE Spectrum / MIT Tech Review / Nature 等）+ arXiv 论文摘要 + 行业博客 + 写作 tip。每条标注 CEFR 等级（A2/B1/B2/C1）和文体（学术/资讯/技术博客）。",
   "items": [
+    {
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "Rhythm: Learning Interactive Whole-Body Control for Dual Humanoids (arXiv 2603.02856 v2)",
+      "source": "arXiv (Fudan / SJTU / Tsinghua / Tars Robotics)",
+      "date": "2026-05-02",
+      "url": "https://arxiv.org/abs/2603.02856",
+      "en": "Realizing interactive whole-body control for multi-humanoid systems is critical for unlocking complex collaborative capabilities in shared environments. Although recent advancements have significantly enhanced the agility of individual robots, bridging the gap to physically coupled multi-humanoid interaction remains challenging, primarily due to severe kinematic mismatches and complex contact dynamics. To address this, we introduce Rhythm, the first unified framework enabling real-world deployment of dual-humanoid systems for complex, physically plausible interactions. The framework integrates three core components: an Interaction-Aware Motion Retargeting (IAMR) module that generates feasible humanoid interaction references from human data, an Interaction-Guided Reinforcement Learning (IGRL) policy that masters coupled dynamics via graph-based rewards, and a real-world deployment system. Extensive experiments on physical Unitree G1 robots demonstrate successful transfer of diverse behaviors such as hugging and dancing from simulation to reality.",
+      "vocab": [
+        {
+          "term": "whole-body control",
+          "cn": "全身控制（不只是末端执行器）"
+        },
+        {
+          "term": "physically coupled",
+          "cn": "物理耦合（两机器人有接触）"
+        },
+        {
+          "term": "kinematic mismatches",
+          "cn": "运动学不匹配（人和机器人关节差异）"
+        },
+        {
+          "term": "contact dynamics",
+          "cn": "接触动力学"
+        },
+        {
+          "term": "unified framework",
+          "cn": "统一框架"
+        },
+        {
+          "term": "retargeting",
+          "cn": "动作重定向（人类→机器人映射）"
+        },
+        {
+          "term": "graph-based rewards",
+          "cn": "基于图的奖励（节点是关节/接触）"
+        },
+        {
+          "term": "sim-to-real",
+          "cn": "仿真到真机的迁移"
+        }
+      ],
+      "cn": "继 Figure Helix-02 5/8 演示双人形铺床（无显式通信）后，Rhythm 给出第二条多人形协作技术路线：显式建模物理接触 + 用图奖励学习耦合动力学。三大组件分别解决「人类双人数据→机器人双人参考」「双策略协调学习」「真机 sim-to-real」。在两台 Unitree G1 上完成拥抱、跳舞、推/拉手等 8 类高接触式协作。读这篇能理解 2026 年「分布式协作（Helix-02）vs 接触式协作（Rhythm）」的两套路线分野。",
+      "firstShown": "2026-05-10",
+      "id": "de-67da7c30d9"
+    },
+    {
+      "type": "news",
+      "level": "B2",
+      "register": "tech-news",
+      "title": "Genesis AI unveils GENE-26.5, the first robotic brain to enable human-level physical manipulation (TechCrunch)",
+      "source": "TechCrunch",
+      "date": "2026-05-06",
+      "url": "https://techcrunch.com/2026/05/06/khosla-backed-robotics-startup-genesis-ai-has-gone-full-stack-demo-shows",
+      "en": "Genesis AI, the Khosla-backed startup that raised a record $105 million seed round, has gone full stack with GENE-26.5 — its first robotic foundation model — paired with a self-developed 20-DoF dexterous hand built in partnership with Wuji Tech. In demo footage, the system autonomously cracks eggs, slices tomatoes, makes smoothies, threads pipettes, untangles wire harnesses, plays piano, and solves a Rubik's cube — all at 1× real time using a single model, hardware platform, data strategy, and control stack. Co-founder Xian Zhou, the original creator of the open-source Genesis physics engine, told TechCrunch that the team \"realized doing the model alone wouldn't cut it — we had to own the hardware. So we went full stack.\" The proprietary control middleware reportedly slashes 15-cm circular trajectory tracking error from ~20mm to ~2mm and end-to-end latency from ~80ms to as low as 3ms.",
+      "vocab": [
+        {
+          "term": "foundation model",
+          "cn": "基础模型 / 通用底座大模型"
+        },
+        {
+          "term": "full stack",
+          "cn": "全栈（自研所有层级）"
+        },
+        {
+          "term": "dexterous",
+          "cn": "灵巧的（手部精细操作能力）"
+        },
+        {
+          "term": "autonomously",
+          "cn": "自主地（无人为干预）"
+        },
+        {
+          "term": "tracking error",
+          "cn": "跟踪误差（控制系统精度指标）"
+        },
+        {
+          "term": "end-to-end latency",
+          "cn": "端到端延迟"
+        },
+        {
+          "term": "middleware",
+          "cn": "中间件（连接模型和硬件的软件层）"
+        },
+        {
+          "term": "wouldn't cut it",
+          "cn": "不够 / 行不通（口语表达）"
+        }
+      ],
+      "cn": "Genesis AI 在 2025 年 7 月以 1.05 亿美元种子轮（硅谷具身智能赛道纪录）亮相，5 月 6 日发布首个全栈机器人基础模型 GENE-26.5。关键看点：①一个模型 + 一套硬件 + 一套数据策略，1× 真实速度完成「打蛋、切番茄、做奶昔、移液、整理线束、弹钢琴、解魔方」7 类家务级灵巧操作；②自研 20 自由度灵巧手 Genesis Hand 1.0；③控制中间件把端到端延迟从 80ms 砍到 3ms。创始人周衔（原 Genesis 物理引擎作者）原话「只做模型不行，必须掌握硬件，所以我们走全栈路线」是 2026 年具身智能赛道一句标志性宣言。",
+      "firstShown": "2026-05-10",
+      "id": "de-fa56586082"
+    },
     {
       "type": "news",
       "level": "C1",
@@ -197,104 +291,6 @@
       ],
       "cn": "VLA 推理瓶颈不是「算得慢」，而是「每步都重复算」。Latent Bridge 用轻量 delta predictor 减少 VLM 调用 50-75%，性能几乎不掉。学习重点：cut X by Y% while preserving Z% 这种主张句式是写 paper 必备。",
       "id": "de-a9892e0303",
-      "firstShown": "2026-05-09"
-    },
-    {
-      "type": "tip",
-      "level": "B1",
-      "register": "Writing Tip",
-      "title": "Hedging Words: Reading Between the Lines",
-      "source": "Academic English · 模块第 02 节",
-      "date": "2026-05-08",
-      "url": "/learn/ai-与机器人学术英语/2",
-      "en": "ML papers are full of hedging — soft phrases that avoid strong commitment. \"We hypothesize that X enables Y\" really means \"we guessed and tried\". \"Empirically, X seems to work\" means \"the experiments worked but we don't fully understand why\". When you read, recognize hedging so you don't overestimate claims. When you write, hedge appropriately to avoid being attacked by reviewers — but don't hedge so much that your contribution sounds unimpressive.",
-      "vocab": [
-        {
-          "term": "hedging",
-          "cn": "弱断言、不下死结论的措辞"
-        },
-        {
-          "term": "commitment",
-          "cn": "承诺、确定性"
-        },
-        {
-          "term": "hypothesize",
-          "cn": "假设；动词，名词 hypothesis"
-        },
-        {
-          "term": "empirically",
-          "cn": "经验性地、实验上"
-        },
-        {
-          "term": "overestimate",
-          "cn": "高估"
-        },
-        {
-          "term": "appropriately",
-          "cn": "恰当地"
-        },
-        {
-          "term": "contribution",
-          "cn": "（论文）贡献"
-        },
-        {
-          "term": "unimpressive",
-          "cn": "不出彩的、平庸的"
-        }
-      ],
-      "cn": "读 paper：识别 hedging 词（we hypothesize / empirically / it seems）能避免被作者忽悠。写 paper：自己也要适度 hedge — 完全不 hedge 会被 reviewer 抓硬伤；hedge 太多 contribution 听起来又虚。",
-      "id": "de-a0e37eb882",
-      "firstShown": "2026-05-09"
-    },
-    {
-      "type": "news",
-      "level": "B2",
-      "register": "Industry News",
-      "title": "MIT Tech Review: Hidden Human Labor Behind Humanoid Robot Demos",
-      "source": "MIT Technology Review (via DigiconAsia)",
-      "date": "2026-02-23",
-      "url": "https://digiconasia.net/news/academic-report-reveals-hidden-human-labor-in-humanoid-robot-demos",
-      "en": "The emerging humanoid robot industry is far more dependent on hidden human labor than glossy demos suggest, according to a new MIT Technology Review investigation. The report describes how robots that appear autonomous onstage or in marketing videos are frequently steered in real time by remote human operators, while others depend on large, low-wage workforces to collect the training data they need. This scrutiny comes just as firms such as 1X Technologies and Tesla race to commercialize humanoids for homes and factories, buoyed by billions of dollars in investment and claims that the machines can perform everyday tasks with little human help.",
-      "vocab": [
-        {
-          "term": "emerging",
-          "cn": "新兴的（领域 / 行业）"
-        },
-        {
-          "term": "glossy demos",
-          "cn": "精美包装过的演示视频"
-        },
-        {
-          "term": "autonomous",
-          "cn": "自主的（不需人工干预）"
-        },
-        {
-          "term": "steered",
-          "cn": "（远程）操控；动词 steer"
-        },
-        {
-          "term": "remote human operators",
-          "cn": "远程人工操作员"
-        },
-        {
-          "term": "low-wage workforces",
-          "cn": "低薪劳动力大军"
-        },
-        {
-          "term": "scrutiny",
-          "cn": "审视、监督关注"
-        },
-        {
-          "term": "commercialize",
-          "cn": "商业化；推向市场"
-        },
-        {
-          "term": "buoyed by",
-          "cn": "受...支撑、推动；动词 buoy"
-        }
-      ],
-      "cn": "MIT Technology Review 调查揭示：很多看起来「自主」的人形机器人 demo 实际上由远程操作员实时控制，训练数据也由大量低薪数据工人采集。本文是英文行业新闻的标准范文——句式 emerging X is more dependent on Y than Z suggests / according to a new investigation / This scrutiny comes just as ... 都值得反复读。",
-      "id": "de-420b1f07a9",
       "firstShown": "2026-05-09"
     }
   ],
@@ -312,6 +308,147 @@
   ],
   "archive": [
     {
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "Rhythm: Learning Interactive Whole-Body Control for Dual Humanoids (arXiv 2603.02856 v2)",
+      "source": "arXiv (Fudan / SJTU / Tsinghua / Tars Robotics)",
+      "date": "2026-05-02",
+      "url": "https://arxiv.org/abs/2603.02856",
+      "en": "Realizing interactive whole-body control for multi-humanoid systems is critical for unlocking complex collaborative capabilities in shared environments. Although recent advancements have significantly enhanced the agility of individual robots, bridging the gap to physically coupled multi-humanoid interaction remains challenging, primarily due to severe kinematic mismatches and complex contact dynamics. To address this, we introduce Rhythm, the first unified framework enabling real-world deployment of dual-humanoid systems for complex, physically plausible interactions. The framework integrates three core components: an Interaction-Aware Motion Retargeting (IAMR) module that generates feasible humanoid interaction references from human data, an Interaction-Guided Reinforcement Learning (IGRL) policy that masters coupled dynamics via graph-based rewards, and a real-world deployment system. Extensive experiments on physical Unitree G1 robots demonstrate successful transfer of diverse behaviors such as hugging and dancing from simulation to reality.",
+      "vocab": [
+        {
+          "term": "whole-body control",
+          "cn": "全身控制（不只是末端执行器）"
+        },
+        {
+          "term": "physically coupled",
+          "cn": "物理耦合（两机器人有接触）"
+        },
+        {
+          "term": "kinematic mismatches",
+          "cn": "运动学不匹配（人和机器人关节差异）"
+        },
+        {
+          "term": "contact dynamics",
+          "cn": "接触动力学"
+        },
+        {
+          "term": "unified framework",
+          "cn": "统一框架"
+        },
+        {
+          "term": "retargeting",
+          "cn": "动作重定向（人类→机器人映射）"
+        },
+        {
+          "term": "graph-based rewards",
+          "cn": "基于图的奖励（节点是关节/接触）"
+        },
+        {
+          "term": "sim-to-real",
+          "cn": "仿真到真机的迁移"
+        }
+      ],
+      "cn": "继 Figure Helix-02 5/8 演示双人形铺床（无显式通信）后，Rhythm 给出第二条多人形协作技术路线：显式建模物理接触 + 用图奖励学习耦合动力学。三大组件分别解决「人类双人数据→机器人双人参考」「双策略协调学习」「真机 sim-to-real」。在两台 Unitree G1 上完成拥抱、跳舞、推/拉手等 8 类高接触式协作。读这篇能理解 2026 年「分布式协作（Helix-02）vs 接触式协作（Rhythm）」的两套路线分野。",
+      "firstShown": "2026-05-10",
+      "id": "de-67da7c30d9"
+    },
+    {
+      "type": "tip",
+      "level": "B1",
+      "register": "Writing Tip",
+      "title": "Hedging Words: Reading Between the Lines",
+      "source": "Academic English · 模块第 02 节",
+      "date": "2026-05-08",
+      "url": "/learn/ai-与机器人学术英语/2",
+      "en": "ML papers are full of hedging — soft phrases that avoid strong commitment. \"We hypothesize that X enables Y\" really means \"we guessed and tried\". \"Empirically, X seems to work\" means \"the experiments worked but we don't fully understand why\". When you read, recognize hedging so you don't overestimate claims. When you write, hedge appropriately to avoid being attacked by reviewers — but don't hedge so much that your contribution sounds unimpressive.",
+      "vocab": [
+        {
+          "term": "hedging",
+          "cn": "弱断言、不下死结论的措辞"
+        },
+        {
+          "term": "commitment",
+          "cn": "承诺、确定性"
+        },
+        {
+          "term": "hypothesize",
+          "cn": "假设；动词，名词 hypothesis"
+        },
+        {
+          "term": "empirically",
+          "cn": "经验性地、实验上"
+        },
+        {
+          "term": "overestimate",
+          "cn": "高估"
+        },
+        {
+          "term": "appropriately",
+          "cn": "恰当地"
+        },
+        {
+          "term": "contribution",
+          "cn": "（论文）贡献"
+        },
+        {
+          "term": "unimpressive",
+          "cn": "不出彩的、平庸的"
+        }
+      ],
+      "cn": "读 paper：识别 hedging 词（we hypothesize / empirically / it seems）能避免被作者忽悠。写 paper：自己也要适度 hedge — 完全不 hedge 会被 reviewer 抓硬伤；hedge 太多 contribution 听起来又虚。",
+      "id": "de-a0e37eb882",
+      "firstShown": "2026-05-09"
+    },
+    {
+      "type": "news",
+      "level": "B2",
+      "register": "tech-news",
+      "title": "Genesis AI unveils GENE-26.5, the first robotic brain to enable human-level physical manipulation (TechCrunch)",
+      "source": "TechCrunch",
+      "date": "2026-05-06",
+      "url": "https://techcrunch.com/2026/05/06/khosla-backed-robotics-startup-genesis-ai-has-gone-full-stack-demo-shows",
+      "en": "Genesis AI, the Khosla-backed startup that raised a record $105 million seed round, has gone full stack with GENE-26.5 — its first robotic foundation model — paired with a self-developed 20-DoF dexterous hand built in partnership with Wuji Tech. In demo footage, the system autonomously cracks eggs, slices tomatoes, makes smoothies, threads pipettes, untangles wire harnesses, plays piano, and solves a Rubik's cube — all at 1× real time using a single model, hardware platform, data strategy, and control stack. Co-founder Xian Zhou, the original creator of the open-source Genesis physics engine, told TechCrunch that the team \"realized doing the model alone wouldn't cut it — we had to own the hardware. So we went full stack.\" The proprietary control middleware reportedly slashes 15-cm circular trajectory tracking error from ~20mm to ~2mm and end-to-end latency from ~80ms to as low as 3ms.",
+      "vocab": [
+        {
+          "term": "foundation model",
+          "cn": "基础模型 / 通用底座大模型"
+        },
+        {
+          "term": "full stack",
+          "cn": "全栈（自研所有层级）"
+        },
+        {
+          "term": "dexterous",
+          "cn": "灵巧的（手部精细操作能力）"
+        },
+        {
+          "term": "autonomously",
+          "cn": "自主地（无人为干预）"
+        },
+        {
+          "term": "tracking error",
+          "cn": "跟踪误差（控制系统精度指标）"
+        },
+        {
+          "term": "end-to-end latency",
+          "cn": "端到端延迟"
+        },
+        {
+          "term": "middleware",
+          "cn": "中间件（连接模型和硬件的软件层）"
+        },
+        {
+          "term": "wouldn't cut it",
+          "cn": "不够 / 行不通（口语表达）"
+        }
+      ],
+      "cn": "Genesis AI 在 2025 年 7 月以 1.05 亿美元种子轮（硅谷具身智能赛道纪录）亮相，5 月 6 日发布首个全栈机器人基础模型 GENE-26.5。关键看点：①一个模型 + 一套硬件 + 一套数据策略，1× 真实速度完成「打蛋、切番茄、做奶昔、移液、整理线束、弹钢琴、解魔方」7 类家务级灵巧操作；②自研 20 自由度灵巧手 Genesis Hand 1.0；③控制中间件把端到端延迟从 80ms 砍到 3ms。创始人周衔（原 Genesis 物理引擎作者）原话「只做模型不行，必须掌握硬件，所以我们走全栈路线」是 2026 年具身智能赛道一句标志性宣言。",
+      "firstShown": "2026-05-10",
+      "id": "de-fa56586082"
+    },
+    {
       "type": "news",
       "level": "B2",
       "register": "Industry News",
@@ -556,53 +693,6 @@
       ],
       "cn": "VLA 推理瓶颈不是「算得慢」，而是「每步都重复算」。Latent Bridge 用轻量 delta predictor 减少 VLM 调用 50-75%，性能几乎不掉。学习重点：cut X by Y% while preserving Z% 这种主张句式是写 paper 必备。",
       "id": "de-a9892e0303",
-      "firstShown": "2026-05-09"
-    },
-    {
-      "type": "tip",
-      "level": "B1",
-      "register": "Writing Tip",
-      "title": "Hedging Words: Reading Between the Lines",
-      "source": "Academic English · 模块第 02 节",
-      "date": "2026-05-08",
-      "url": "/learn/ai-与机器人学术英语/2",
-      "en": "ML papers are full of hedging — soft phrases that avoid strong commitment. \"We hypothesize that X enables Y\" really means \"we guessed and tried\". \"Empirically, X seems to work\" means \"the experiments worked but we don't fully understand why\". When you read, recognize hedging so you don't overestimate claims. When you write, hedge appropriately to avoid being attacked by reviewers — but don't hedge so much that your contribution sounds unimpressive.",
-      "vocab": [
-        {
-          "term": "hedging",
-          "cn": "弱断言、不下死结论的措辞"
-        },
-        {
-          "term": "commitment",
-          "cn": "承诺、确定性"
-        },
-        {
-          "term": "hypothesize",
-          "cn": "假设；动词，名词 hypothesis"
-        },
-        {
-          "term": "empirically",
-          "cn": "经验性地、实验上"
-        },
-        {
-          "term": "overestimate",
-          "cn": "高估"
-        },
-        {
-          "term": "appropriately",
-          "cn": "恰当地"
-        },
-        {
-          "term": "contribution",
-          "cn": "（论文）贡献"
-        },
-        {
-          "term": "unimpressive",
-          "cn": "不出彩的、平庸的"
-        }
-      ],
-      "cn": "读 paper：识别 hedging 词（we hypothesize / empirically / it seems）能避免被作者忽悠。写 paper：自己也要适度 hedge — 完全不 hedge 会被 reviewer 抓硬伤；hedge 太多 contribution 听起来又虚。",
-      "id": "de-a0e37eb882",
       "firstShown": "2026-05-09"
     }
   ]

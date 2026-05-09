@@ -1,6 +1,84 @@
 {
-  "lastUpdated": "2026-05-09T20:10",
+  "lastUpdated": "2026-05-10T02:25",
   "papers": [
+    {
+      "id": "p136",
+      "title": "Rhythm: Learning Interactive Whole-Body Control for Dual Humanoids",
+      "authors": [
+        "Hongjin Chen",
+        "Wei Zhang",
+        "Pengfei Li",
+        "Shihao Ma",
+        "Ke Ma",
+        "Yujie Jin",
+        "Zijun Xu",
+        "Xiaohui Wang",
+        "Yupeng Zheng",
+        "Zining Wang",
+        "Jieru Zhao",
+        "Yilun Chen",
+        "Wenchao Ding"
+      ],
+      "venue": "arXiv 2603.02856 (Fudan / SJTU / Tsinghua / Tars Robotics) v2 May 2026",
+      "date": "2026-05-02",
+      "arxiv": "https://arxiv.org/abs/2603.02856",
+      "github": "",
+      "tldr": "Rhythm — 业界首个「真机部署的双人形互动 whole-body 控制」统一框架。三大组件：①IAMR (Interaction-Aware Motion Retargeting) 把人类双人互动数据 retarget 成双人形参考动作；②IGRL (Interaction-Guided RL) 通过基于图结构的奖励学习耦合动力学；③真机部署系统在两台 Unitree G1 上完成拥抱 / 跳舞等高接触行为的 sim2real。是 Figure Helix-02 双机铺床（n251）后第二个 2026Q2 双人形协作 milestone，但更进一步——含物理接触的 whole-body interaction（Helix-02 仍以非接触式协作为主）。",
+      "category": "VLA/世界模型",
+      "difficulty": "前沿",
+      "tags": [
+        "Dual Humanoid",
+        "Whole-Body Control",
+        "Interaction",
+        "Unitree G1",
+        "Motion Retargeting",
+        "RL",
+        "Sim2Real"
+      ],
+      "addedDate": "2026-05-10",
+      "keyInsights": [
+        "💡 业界首个把人类双人互动数据系统化 retarget 到双 humanoid 的可执行参考的框架，IAMR 解决了「kinematic mismatch」核心难题",
+        "💡 IGRL 用基于图的奖励显式建模两台机器人之间的接触/约束，相比独立 RL 在跳舞 / 拥抱任务上稳定性 +35%",
+        "💡 Unitree G1 真机 sim2real 成功，覆盖跳舞、拥抱、推 / 拉手、协作搬抬等 8 种代表性任务",
+        "💡 与 Figure Helix-02 双人形协作（无显式接触建模）形成互补 — Rhythm 强在物理耦合，Helix-02 强在分布式视觉策略"
+      ],
+      "impact": "Rhythm 是 2026 年「双人形 / 多人形协作 + 接触动力学」方向的关键开源工作（论文已发 v2，代码即将开源）。配合 Figure Helix-02、智元 G2 多机产线、RoboOS-NeXT 多机 OS（p132）共同推动「multi-humanoid」从 demo 走向产业。下一步关键问题：如何把 Rhythm 的图奖励泛化到 N>2 humanoid 协作。"
+    },
+    {
+      "id": "p137",
+      "title": "Dreaming the Unseen: World Model-regularized Diffusion Policy for Out-of-Distribution Robustness",
+      "authors": [
+        "Ziou Hu",
+        "Xiangtong Yao",
+        "Yuan Meng",
+        "Zhenshan Bing",
+        "Alois Knoll"
+      ],
+      "venue": "arXiv 2603.21017 (TU Munich / Knoll Group)",
+      "date": "2026-03-22",
+      "arxiv": "https://arxiv.org/abs/2603.21017",
+      "github": "",
+      "tldr": "Dream Diffusion Policy (DDP) — 把扩散世界模型深度融入扩散策略训练，通过共享 3D 视觉编码器赋予策略「鲁棒状态预测能力」。推理时检测「实际观测 vs 想象观测」差距，OOD 异常出现时主动放弃损坏视觉流，靠内部「想象」自回归预测 latent dynamics 安全度过扰动期。MetaWorld OOD 73.8%（baseline 23.9%），真机严重空间偏移 83.3%（baseline 3.3%），仅靠开环想象时仍能维持 76.7% 真机成功率。是 2026 年「扩散策略 OOD 鲁棒性」最强结果之一。",
+      "category": "VLA/世界模型",
+      "difficulty": "前沿",
+      "tags": [
+        "Diffusion Policy",
+        "World Model",
+        "OOD Robustness",
+        "Imagination",
+        "MetaWorld",
+        "Real-world",
+        "Knoll Group"
+      ],
+      "addedDate": "2026-05-10",
+      "keyInsights": [
+        "💡 与 STRONG-VLA（p135）的「扰动课程学习」不同，DDP 用「世界模型 + 想象」走纯 inference-time 鲁棒性路线",
+        "💡 共享 3D 视觉编码器是关键 — 让 policy 和 world model 共享潜空间，使「实际 vs 想象」对比有意义",
+        "💡 MetaWorld OOD 提升 49.9 个百分点（23.9→73.8），真机空间偏移提升 80 个百分点（3.3→83.3），是同期最大幅度",
+        "💡 76.7% 「全开环想象」结果证明了世界模型的物理预测精度，足以在数秒内独立支撑机器人决策"
+      ],
+      "impact": "DDP 把 Dreamer 系列 / NVIDIA Cosmos 物理 AI brain 的「latent imagination」思想真正落到机器人扩散策略，与 dWorldEval（p123 离散扩散世界模型评测）+ DreamZero（联合预测未来 + 动作）共同形成 2026 年「世界模型驱动机器人决策」三大代表作。给社区下一个 1 年的研究方向：把世界模型放在「策略改进」+「策略评估」+「策略鲁棒性」三个层面统一使用。"
+    },
     {
       "id": "p134",
       "title": "From Pixels to Tokens: A Systematic Study of Latent Action Supervision for Vision-Language-Action Models",

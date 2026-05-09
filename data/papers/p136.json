@@ -1,0 +1,25 @@
+{
+  "id": "p136",
+  "title": "Rhythm: Learning Interactive Whole-Body Control for Dual Humanoids",
+  "authors": ["Hongjin Chen", "Wei Zhang", "Pengfei Li", "Shihao Ma", "Ke Ma", "Yujie Jin", "Zijun Xu", "Xiaohui Wang", "Yupeng Zheng", "Zining Wang", "Jieru Zhao", "Yilun Chen", "Wenchao Ding"],
+  "venue": "arXiv 2603.02856 (Fudan / SJTU / Tsinghua / Tars Robotics) v2",
+  "date": "2026-05-02",
+  "arxiv": "https://arxiv.org/abs/2603.02856",
+  "github": "",
+  "tldr": "Rhythm — 业界首个真机部署的双人形互动 whole-body 控制框架。三大组件：交互感知运动 retargeting (IAMR) + 交互引导 RL (IGRL) + 真机部署系统。在两台 Unitree G1 上成功完成拥抱、跳舞等高接触式协作，是 Figure Helix-02 之后第二个双人形协作 milestone，但更进一步覆盖物理耦合接触。",
+  "category": "VLA/世界模型",
+  "difficulty": "前沿",
+  "tags": ["Dual Humanoid", "Whole-Body Control", "Interaction", "Unitree G1", "Motion Retargeting", "RL", "Sim2Real"],
+  "addedDate": "2026-05-10",
+  "keyInsights": [
+    "💡 业界首个把人类双人互动数据系统化 retarget 到双 humanoid 的可执行参考",
+    "💡 IGRL 用基于图的奖励显式建模两台机器人之间的接触/约束，相比独立 RL 稳定性 +35%",
+    "💡 Unitree G1 真机 sim2real 覆盖跳舞、拥抱、推/拉手、协作搬抬等 8 种代表性任务",
+    "💡 与 Figure Helix-02（无显式接触建模）形成互补 — Rhythm 强在物理耦合"
+  ],
+  "impact": "Rhythm 是 2026 年「双人形 / 多人形协作 + 接触动力学」方向的关键开源工作。配合 Figure Helix-02、智元 G2 多机产线、RoboOS-NeXT 多机 OS（p132）共同推动「multi-humanoid」从 demo 走向产业。",
+  "methodology": "**整体架构：双层 sim2real 闭环**\n\nRhythm 把双人形互动建模成「人类双人参考 → 双 humanoid 动作」的两阶段映射 + 一个可在真机部署的 RL policy。\n\n**Stage 1 — IAMR (Interaction-Aware Motion Retargeting)**\n\n输入：人类双人互动数据（AMASS / 自采，含手部接触、躯干姿态）\n输出：双 humanoid 关节空间的可执行参考运动 + 共享接触图\n\n核心创新：retargeting 时同时优化两个 agent 的运动（不是独立 retargeting 两次），使物理接触位置在双方参考帧上保持几何一致。优化目标：\n\n$$\\min \\sum_t \\| q_t - \\text{IK}(p_t^{\\text{human}}) \\|^2 + \\lambda \\cdot \\| C^{\\text{robot}}_t - C^{\\text{human}}_t \\|_F^2$$\n\n其中 $C_t$ 是双人接触图（contact graph），约束机器人在每个时间步的关节接触状态与人类参考一致。\n\n**Stage 2 — IGRL (Interaction-Guided RL)**\n\n两个 humanoid 各自的策略 $\\pi_1, \\pi_2$ 共享同一个奖励生成器，但接收私有观察。奖励基于「图结构」表示双人当前接触关系：\n\n- 节点：双人各 30+ 关节\n- 边：当前帧的接触/约束（手-手、躯干-躯干、双手抓同一物等）\n\n奖励函数：\n\n$$r_t = w_1 r^{\\text{traj}}_t + w_2 r^{\\text{contact}}_t + w_3 r^{\\text{stable}}_t - w_4 r^{\\text{collision}}_t$$\n\n图奖励 $r^{\\text{contact}}_t$ 用图同构度量比较当前 contact graph 与参考 graph 的差距。\n\n**Stage 3 — 真机部署系统**\n\n两台 Unitree G1 各搭一台 Jetson Orin，通过 5G 时间同步（< 1ms）共享接触 ground truth（来自双人腕部 IMU + 视觉）。控制频率：50Hz policy + 1kHz low-level torque control。",
+  "experiments": "**仿真基准（IsaacGym 双 G1 环境）**\n\n| 任务 | 独立 RL | IGRL (Rhythm) | 提升 |\n|------|:---:|:---:|:---:|\n| Hug（拥抱） | 42% | 78% | +36% |\n| Dance（跳舞） | 51% | 84% | +33% |\n| Push-Pull Hands | 55% | 88% | +33% |\n| Co-carry box | 38% | 72% | +34% |\n| **8 任务平均** | **47%** | **80%** | **+33%** |\n\n**真机部署（两台 Unitree G1）**\n\n- 6 任务真机评测，每任务 20 trials\n- Hug 18/20 / Dance 16/20 / Push-Pull 17/20 / Co-carry 14/20 / Hand-Shake 19/20 / Lift-Together 13/20\n- 总体真机成功率 79%（仿真 80%），sim2real gap < 1%\n\n**消融**\n\n- 不用 IAMR（独立 retargeting）：仿真平均 58%（-22%）\n- 不用 graph reward（用 L2 距离代替）：仿真平均 65%（-15%）\n- 不用 5G 同步（异步通信）：真机成功率 47%（-32%）",
+  "reproduction": "**实施门槛**：🟡 中-高（代码即将开源）\n\n- 代码：截至 2026-05-09 论文 v2 修订完成，作者已宣布即将开源（预计 5 月底）\n- 硬件：双台 Unitree G1（约 18 万）+ Jetson Orin × 2 + 5G 同步模块\n- 仿真：IsaacGym + Mujoco 双引擎\n- 算力：8× A100 训练 ~7 天\n\n**社区可行路径**：\n\n1. 先在 IsaacGym 单 G1 上跑 Stage 1 retargeting（约 2 天，AMASS 公开数据集）\n2. 升级到双 G1 + IGRL（约 5 天）\n3. 真机部署：从最简单的 Hand-Shake 开始（最易 sim2real）\n4. 注意：双机时间同步是真机阶段最大坑，建议直接用论文提供的 5G 模块",
+  "mathDetails": "**接触图同构度量**\n\nRhythm 的核心创新是用图同构度量比较「机器人接触图」与「参考接触图」：\n\n$$d(G^{\\text{robot}}, G^{\\text{ref}}) = \\sum_{e \\in E^{\\text{ref}}} w_e \\cdot \\mathbb{1}[e \\notin E^{\\text{robot}}] + \\sum_{e' \\in E^{\\text{robot}}} \\mathbb{1}[e' \\notin E^{\\text{ref}}]$$\n\n这是一个图编辑距离的简化版本（边相关，节点固定为关节）。$w_e$ 根据接触类型加权：手-手接触权重 1.0，手-躯干 0.8，躯干-躯干 0.5。\n\n**为什么图奖励比 L2 强？**\n\n如果用 L2 距离比较关节位置，机器人可能为了「位置接近」而违反接触约束（比如手穿过对方躯干）。图奖励显式约束接触关系，避免这类物理违规。\n\n论文 Fig 5 给出了消融对比：图奖励下「物理违规率」< 2%，L2 奖励下高达 28%。"
+}

@@ -1,0 +1,25 @@
+{
+  "id": "p137",
+  "title": "Dreaming the Unseen: World Model-regularized Diffusion Policy for Out-of-Distribution Robustness",
+  "authors": ["Ziou Hu", "Xiangtong Yao", "Yuan Meng", "Zhenshan Bing", "Alois Knoll"],
+  "venue": "arXiv 2603.21017 (TU Munich / Knoll Group)",
+  "date": "2026-03-22",
+  "arxiv": "https://arxiv.org/abs/2603.21017",
+  "github": "",
+  "tldr": "Dream Diffusion Policy (DDP) — 把扩散世界模型深度融入扩散策略训练。推理时检测「实际观测 vs 想象观测」差距，OOD 异常出现时主动放弃损坏视觉流，靠内部「想象」自回归预测 latent dynamics 安全度过扰动期。MetaWorld OOD 73.8%（baseline 23.9%），真机严重空间偏移 83.3%（baseline 3.3%），是 2026 年「扩散策略 OOD 鲁棒性」最强结果之一。",
+  "category": "VLA/世界模型",
+  "difficulty": "前沿",
+  "tags": ["Diffusion Policy", "World Model", "OOD Robustness", "Imagination", "MetaWorld", "Real-world", "Knoll Group"],
+  "addedDate": "2026-05-10",
+  "keyInsights": [
+    "💡 与 STRONG-VLA（p135）的「扰动课程学习」不同，DDP 用「世界模型 + 想象」走纯 inference-time 鲁棒性路线",
+    "💡 共享 3D 视觉编码器是关键 — 让 policy 和 world model 共享潜空间",
+    "💡 MetaWorld OOD 提升 49.9 个百分点（23.9→73.8），真机空间偏移提升 80 个百分点（3.3→83.3）",
+    "💡 76.7% 「全开环想象」结果证明了世界模型物理预测精度足以支撑机器人决策"
+  ],
+  "impact": "DDP 把 Dreamer 系列 / NVIDIA Cosmos 的「latent imagination」思想真正落到机器人扩散策略，与 dWorldEval（p123）+ DreamZero 共同形成 2026 年「世界模型驱动机器人决策」三大代表作。",
+  "methodology": "**核心：共享 3D 视觉编码器 + 想象切换**\n\nDDP 的关键架构：策略网络 $\\pi$ 和扩散世界模型 $W$ 共享同一个 3D 视觉编码器 $E$。这个共享是「深度训练对齐」 - 不是简单复用 pretrained encoder，而是在训练阶段联合优化两者的目标，使 $E$ 同时擅长「策略所需的状态表征」和「世界模型所需的可预测表征」。\n\n**训练阶段（联合优化）**\n\n$$L = L_{\\text{policy}} + \\lambda_1 L_{\\text{wm-rec}} + \\lambda_2 L_{\\text{wm-pred}}$$\n\n- $L_{\\text{policy}}$：扩散策略 score matching\n- $L_{\\text{wm-rec}}$：世界模型对当前观测的重构\n- $L_{\\text{wm-pred}}$：世界模型对未来 H 步的预测\n\n论文用 $\\lambda_1 = 0.5, \\lambda_2 = 1.0$，发现 $\\lambda_2$ 必须 > $\\lambda_1$，否则模型只学会「重构当下」不会「想象未来」。\n\n**推理阶段（OOD 检测 + 想象切换）**\n\n```\nfor t in steps:\n    z_real = E(o_t)  # 实际观测的 latent\n    z_imag = W.predict(z_{t-1}, a_{t-1})  # 想象的 latent\n    discrepancy = ||z_real - z_imag||\n    if discrepancy > threshold:\n        z_t = z_imag  # OOD 检测到，切换到想象\n    else:\n        z_t = z_real  # 正常使用观测\n    a_t = π(z_t)\n```\n\nthreshold 用滑动窗口动态估计（前 100 步的 90% 分位数）。\n\n**3D 视觉编码器**\n\n用 PointNeXt 处理 RGB-D 转换的点云，输出 384 维 latent。论文证明 3D > 2D：在严重视觉偏移下，3D latent 对几何不变量更鲁棒（旋转/平移不敏感）。",
+  "experiments": "**MetaWorld 鲁棒性测试**\n\n| 设置 | Diffusion Policy | DDP | 提升 |\n|------|:---:|:---:|:---:|\n| In-Distribution | 89.2% | 88.7% | -0.5% |\n| OOD 物体偏移 | 23.9% | 73.8% | +49.9% |\n| OOD 颜色干扰 | 31.5% | 71.2% | +39.7% |\n| OOD 视角变化 | 18.3% | 68.5% | +50.2% |\n\n**真机测试（Franka + RGB-D）**\n\n- 5 任务（push-block / pick-place / open-drawer / wipe / pour）\n- 严重空间偏移：物体位置随机在 ±15cm 范围\n- baseline 3.3% → DDP 83.3%（+80%）\n\n**极限测试 - 全开环想象**\n\n- 初始化时给一帧观测，之后完全靠想象（关闭相机）\n- DDP 真机仍 76.7% 成功率\n- 证明了世界模型预测精度足以支撑短时序决策（< 5 秒任务）\n\n**消融**\n\n- 不共享 encoder（独立训）：OOD 38%（vs 73.8%，下降一半）\n- 不做想象切换（只用世界模型预训）：OOD 41%\n- 用 2D 编码器替换 3D：OOD 51%（仍优于 baseline 但弱于 3D 版）",
+  "reproduction": "**实施门槛**：🟢 中（架构清晰，依赖标准库）\n\n- 代码：论文未明确开源，但架构基于 PointNeXt + Diffusion Policy 公开实现\n- 硬件：Franka + Realsense RGB-D 即可\n- 算力：4× A100 训练 ~3 天\n\n**社区可行路径**：\n\n1. 先在 MetaWorld 上复现 OOD 提升（约 1 周）\n2. 升级到真机：注意 RGB-D 标定精度 < 2cm 是 3D encoder 工作前提\n3. 调 threshold 是关键：建议在校准集上扫 0.5/0.7/0.9 三档分位数",
+  "mathDetails": "**为什么共享编码器有效？**\n\n设策略目标 $L_{\\pi}$ 和世界模型目标 $L_W$ 在参数空间形成两个 loss landscape。如果用独立 encoder：\n\n- 策略 encoder $E_\\pi$ 优化「保留与动作相关的特征」\n- 世界模型 encoder $E_W$ 优化「保留可预测的物理动力学特征」\n\n两者的优化目标不冲突但侧重不同。当面对 OOD 输入时，$E_\\pi$ 可能因为 OOD 的「动作相关特征」错误而失效，而 $E_W$ 仍能保持物理预测能力 — 但因为编码器不一致，无法用 $E_W$ 替补 $E_\\pi$。\n\n共享 encoder 强制两个目标在同一表征上达成平衡：\n\n$$\\min_E \\max(L_\\pi(E), L_W(E))$$\n\n这是一个「双目标 minimax」，找到的 $E^*$ 使得策略和世界模型在同一表征空间下都性能可接受。当 OOD 来临，$E^*(o_{\\text{ood}})$ 与 $W.predict(z_{t-1}, a_{t-1})$ 的差距是 OOD 信号，因为两者本应在 $E^*$ 下重合。\n\n**想象误差的累积分析**\n\n世界模型预测误差随步数 $H$ 累积：$\\epsilon_H \\sim O(H^2)$（论文 Lemma 4.1）。但真机实验显示 5 秒（约 100 步）内仍 76.7% 成功率，表明：\n\n- 短时序内 $\\epsilon_H$ 远小于策略可容忍的状态扰动\n- 共享 encoder 训练强制 $W$ 在策略相关流形上预测准确（牺牲了无关流形的精度），实际累积误差远小于理论 bound"
+}
