@@ -303,6 +303,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 .mod-expand:hover{color:var(--pl)}
 .mod-detail{display:none;margin-top:14px}.mod.open .mod-detail{display:block}
 .md-section{margin-bottom:16px}
+.mod-resources{margin:32px 0 24px;padding:14px 18px;background:var(--bg2);border:1px solid var(--bd);border-radius:10px}
+.mod-resources>summary{cursor:pointer;font-weight:600;color:var(--t1);font-size:.95rem;list-style:none;display:flex;align-items:center;gap:8px;user-select:none}
+.mod-resources>summary::-webkit-details-marker{display:none}
+.mod-resources>summary::before{content:'▸';color:var(--p);transition:transform .2s;display:inline-block;font-size:.85rem}
+.mod-resources[open]>summary::before{transform:rotate(90deg)}
+.mod-resources ul{margin:0;padding-left:22px;line-height:1.85}
+.mod-resources ul li{margin-bottom:6px;color:var(--t2);font-size:.86rem}
+.mod-resources ul li a{color:var(--p);text-decoration:none;border-bottom:1px dotted var(--p);transition:opacity .2s}
+.mod-resources ul li a:hover{opacity:.75}
 .md-label{font-size:.72rem;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
 .md-list{list-style:none}
 .md-list li{font-size:.86rem;color:var(--t2);padding:8px 0 8px 16px;position:relative;line-height:1.8;border-bottom:1px solid var(--bd)}
@@ -1449,6 +1458,29 @@ async function _renderCurrentSection(modId, secIdx, d, opts){
     if(secIsNew) h+=`<div class="sec-update-banner">🔥 本章节已于 ${String(sec.lastUpdated).replace('T',' ')} 更新</div>`;
     // 正文
     h+=`<div class="md-content" style="font-size:.9rem;line-height:2">${renderMd(sec.content||'')}</div>`;
+    // 模块推荐资源（从 learning-path.json 反查；首章默认展开，其他章节默认折叠）
+    let modMeta=null;
+    LD?.stages?.forEach(s=>s.modules.forEach(m=>{
+        const mid=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
+        if(mid===modId)modMeta=m;
+    }));
+    if(modMeta&&Array.isArray(modMeta.resources)&&modMeta.resources.length){
+        const openByDefault=secIdx===0;
+        const resHtml=modMeta.resources.map(r=>{
+            // 兼容字符串 / 对象 {name,url,description}
+            if(typeof r==='string'){
+                // 自动把 r 里的 URL 转成可点链接
+                const linked=r.replace(/(https?:\/\/[^\s)】]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>');
+                return `<li>${linked}</li>`;
+            }
+            const link=r.url?` <a href="${r.url}" target="_blank" rel="noopener">${r.url.length>40?r.url.slice(0,40)+'...':r.url}</a>`:'';
+            return `<li><strong>${r.name||r.title||''}</strong>${link}${r.description?'<br><span style="color:var(--t2);font-size:.85em">'+r.description+'</span>':''}</li>`;
+        }).join('');
+        h+=`<details class="mod-resources"${openByDefault?' open':''}>
+            <summary>📖 本模块推荐学习资源（${modMeta.resources.length} 项）</summary>
+            <ul class="md-list" style="margin-top:8px">${resHtml}</ul>
+        </details>`;
+    }
     // 底部翻页
     h+=`<div class="sec-nav">`;
     if(secIdx>0){
