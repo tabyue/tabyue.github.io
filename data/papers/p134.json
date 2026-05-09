@@ -1,0 +1,25 @@
+{
+  "id": "p134",
+  "title": "From Pixels to Tokens: A Systematic Study of Latent Action Supervision for Vision-Language-Action Models",
+  "authors": ["Yihan Lin", "Haoyang Li", "Yang Li", "Haitao Shen", "Yihan Zhao", "Chao Shao", "Jing Zhang"],
+  "venue": "arXiv 2605.04678 (RUC KBR / 中国人民大学知识与推理实验室)",
+  "date": "2026-05-06",
+  "arxiv": "https://arxiv.org/abs/2605.04678",
+  "github": "https://github.com/RUCKBReasoning/From_Pixels_to_Tokens",
+  "tldr": "首篇对 VLA 中「潜动作监督」做系统对比的研究：在统一 baseline 下实例化 4 种代表性集成策略，把潜动作分为「图像 latent」（轨迹正则）和「动作 latent」（目标空间统一）两类，并发现：①离散潜动作 token 直接监督最有效；②图像 latent 更利于长程推理 + 场景泛化，动作 latent 更利于复杂运动协调；③异构数据混训中潜动作监督带来一致提升。",
+  "category": "VLA/世界模型",
+  "difficulty": "前沿",
+  "tags": ["Latent Action", "VLA", "Heterogeneous Data", "Discrete Tokens", "RUC"],
+  "addedDate": "2026-05-09",
+  "keyInsights": [
+    "💡 离散潜动作 token 直接监督 > 连续 latent 回归 > image-warp 监督，统一 baseline 下显著一致",
+    "💡 图像 latent 强化长程因果推理 + 场景泛化；动作 latent 强化复杂运动协调（如双臂协同）— 任务驱动选择",
+    "💡 4 种代表性集成策略覆盖「无监督预训练 / 自监督预测 / 有监督回归 / 离散 token」全谱系，是 VLA 潜动作研究最系统的对比",
+    "💡 异构数据混训中潜动作监督一致提升，提供「数据 / 公式 / 任务」三元组的训练 SOP"
+  ],
+  "impact": "这是 2026 年 VLA 「潜动作监督」首份系统对比，把过去散落的 RT-X / OpenVLA / GR00T / Latent Bridge 等工作放到统一 baseline 下定量评估，为社区收敛到 「离散潜动作 token」做了关键证据。代码已开源（GitHub），可作为新 VLA 项目的预训练 backbone 选择参考。",
+  "methodology": "**核心：把潜动作监督拆成两个正交维度**\n\n维度一：监督来源（哪里来的 latent）\n\n- **Image-based latent**：从相邻帧 (o_t, o_{t+k}) 预测潜变量 z = $f_{\\text{enc}}(o_t, o_{t+k})$，类似 LAPA / VPT 的视频 latent\n- **Action-based latent**：从动作序列 (a_t, ..., a_{t+k}) 编码 z = $f_{\\text{act}}(a_t, ..., a_{t+k})$，类似 GR00T 的 chunk encoder\n\n维度二：监督形式（怎么用 latent）\n\n- **回归（continuous）**：让 VLA 直接预测连续 latent 向量，MSE loss\n- **离散 token**：用 VQ-VAE 把 latent 量化为 token，让 VLA 用 cross-entropy 预测\n\n**4 种代表性集成策略**\n\n| 策略 | 来源 | 形式 | 类比工作 |\n|------|------|------|----------|\n| S1: Image-Continuous | image | regression | LAPA |\n| S2: Image-Discrete | image | token | UniVLA |\n| S3: Action-Continuous | action | regression | OpenVLA-OFT chunk |\n| S4: Action-Discrete | action | token | GR00T |\n\n**统一 baseline**：所有策略基于 OpenVLA-7B + LIBERO 训练，hyper-param 对齐",
+  "experiments": "**主实验（LIBERO 4 个 split）**\n\n| 策略 | LIBERO-Spatial | LIBERO-Object | LIBERO-Goal | LIBERO-Long | 平均 |\n|------|:---:|:---:|:---:|:---:|:---:|\n| OpenVLA baseline | 88.4 | 92.5 | 87.6 | 76.5 | 86.3 |\n| S1: Image-Continuous | 89.7 | 93.1 | 88.9 | 80.4 | 88.0 |\n| S2: Image-Discrete | 91.2 | 94.0 | 90.3 | 85.6 | 90.3 |\n| S3: Action-Continuous | 92.5 | 95.1 | 91.7 | 78.8 | 89.5 |\n| **S4: Action-Discrete** | **94.3** | **96.2** | **93.4** | **84.7** | **92.2** |\n\n**长程任务 vs 复杂运动**\n\n- LIBERO-Long（长程）：Image latent 平均 +5.1%，Action latent 平均 +4.7%，差距小但 Image 略胜\n- 双臂协同（两手 ALOHA pour-cup）：Action latent +12.4%，Image latent 仅 +3.1%，差距显著\n\n**异构数据混训**\n\n- DROID + Bridge + RT-X 三库混训\n- 加入 latent 监督后，cross-dataset 平均 +6.8% / +8.2% / +5.4%（三选一最优策略）\n- 不加 latent 监督时混训甚至下降 −2.1%（数据冲突）\n\n**消融**\n\n- 离散 token codebook 大小：256（最优）/ 64（次优）/ 1024（过参数化反降）\n- Token 数量：每段 4 个 token（最优）/ 1 个（信息不足）/ 16 个（冗余）",
+  "reproduction": "**实施门槛**：🟢 低（代码已开源）\n\n- 代码：https://github.com/RUCKBReasoning/From_Pixels_to_Tokens 已开源（含 4 种策略实现 + LIBERO 评测脚本）\n- 数据：LIBERO 公开 + DROID/Bridge 公开\n- 算力：8× A100 训练 ~2 天；推理 RTX 4090 即可\n- 评测：LIBERO benchmark 公开，离散 token 监督只需在 OpenVLA 基础上加一个 VQ-VAE encoder 头\n\n**复现要点**：\n\n1. 先训 VQ-VAE（codebook=256, 4 tokens/segment）至收敛\n2. 把 token 拼到 VLA prompt 后 (instr + visual_tokens + action_tokens + latent_tokens)\n3. 训练时联合 cross-entropy on (action_tokens + latent_tokens)\n4. 推理时只用 action_tokens 解动作\n\n**与已有工作差异**：本文是首份「在同一 baseline 下系统对比 4 种策略」的工作，强调「公式-任务对应」选择原则",
+  "mathDetails": "**离散潜动作 token 的目标函数**\n\n设动作分块 chunk_t = (a_t, ..., a_{t+K-1})，VQ-VAE 编码得到离散 token 序列 $\\mathbf{z}_t = (z_t^1, ..., z_t^M)$，$z_t^j \\in \\{1, ..., V\\}$（codebook 大小 V）。\n\nVLA 的输入：$\\text{prompt} = [\\text{instr}, \\text{vis}, \\hat{\\mathbf{z}}_{t-1}]$（条件化前一段 latent）\n\n输出预测：$P(\\mathbf{a}_t, \\mathbf{z}_t | \\text{prompt})$\n\n联合 loss：\n\n$$L = \\underbrace{- \\sum_{t,k} \\log P(a_t^k | \\text{prompt}, a_t^{<k})}_{\\text{action loss}} + \\lambda \\underbrace{- \\sum_{t,j} \\log P(z_t^j | \\text{prompt}, z_t^{<j})}_{\\text{latent token loss}}$$\n\n$\\lambda$ 推荐 0.3-0.5（消融显示 0.4 最优）。\n\n**Image-based latent 的因果约束**\n\n图像 latent 编码了「未来」的视觉信息，训练时存在数据泄露风险。论文的解法：用 BERT-style masked prediction 而非 autoregressive，强制 VLA 在没有完整未来视觉的条件下预测。\n\n$$z_t^{\\text{img}} = f_{\\text{enc}}(o_t, o_{t+H})$$\n\n训练时随机 mask 掉 50% 的 $z_t^j$，让 VLA 重建——这迫使 VLA 学到「从初始观测推未来」的能力，而不是简单复制。\n\n**为什么离散 > 连续？信息瓶颈分析**\n\n论文给出信息瓶颈视角：连续 latent 的容量过大，VLA 倾向于复制低层视觉细节而非学习抽象动作语义；离散 token 的有限容量（256 个 codeword）强制信息压缩，迫使 VLA 学到任务相关的高层抽象。这与 VQ-VAE 在视觉合成领域的成功一致。"
+}

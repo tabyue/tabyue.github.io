@@ -1,0 +1,25 @@
+{
+  "id": "p135",
+  "title": "STRONG-VLA: Decoupled Robustness Learning for Vision-Language-Action Models under Multimodal Perturbations",
+  "authors": ["Yuhan Xie", "Yuping Yan", "Yunqi Zhao", "Handing Wang", "Yaochu Jin"],
+  "venue": "arXiv 2604.10055 (Westlake / Surrey / Bielefeld)",
+  "date": "2026-04-11",
+  "arxiv": "https://arxiv.org/abs/2604.10055",
+  "github": "",
+  "tldr": "STRONG-VLA — 提出 VLA 鲁棒性的「解耦微调」框架：第一阶段课程学习覆盖 28 种多模态扰动（视觉腐蚀 + 语言噪声），第二阶段任务再对齐恢复执行精度。在 OpenVLA / OpenVLA-OFT / π₀ 三大架构上同时跑：seen 扰动平均 +14.5%，unseen 扰动 +9.0%。LIBERO 基准 + 真机 AIRBOT 双重验证。建立首个 28 类视觉/语言扰动的标准 benchmark。",
+  "category": "VLA/世界模型",
+  "difficulty": "前沿",
+  "tags": ["STRONG-VLA", "Robustness", "Multimodal Perturbation", "LIBERO", "AIRBOT", "Curriculum"],
+  "addedDate": "2026-05-09",
+  "keyInsights": [
+    "💡 鲁棒性 + 任务精度的「冲突优化」是 VLA 微调长期痛点，本文用两阶段「先稳健后再对齐」解耦",
+    "💡 28 类扰动覆盖传感器噪声 / 遮挡 / 模糊 / 指令污染 / 同义词替换等真实部署场景",
+    "💡 OpenVLA-OFT 上提升最大（seen +14.5% / unseen +13.8%），证明已优化的 baseline 仍有显著鲁棒性余量",
+    "💡 真机 AIRBOT 上的扰动测试一致提升，证明仿真→真机迁移可行"
+  ],
+  "impact": "STRONG-VLA 是 2026 年 VLA 鲁棒性方向的关键工作，与 OA-WAM（结构化场景 + 锚定）+ AnchorVLA（移动操作锚定扩散）共同形成「VLA 鲁棒性 = 解耦微调 + 锚定 + 物体级 WAM」三套范式。28 类扰动 benchmark 可作为社区新标准。代码暂未开源但工程量较低，建议关注预发布。",
+  "methodology": "**核心：解耦的两阶段微调**\n\n传统鲁棒训练同时优化任务 loss 和扰动 loss，导致目标冲突——任务精度被扰动 noise 拉低，鲁棒性被任务 fitting 削弱。STRONG-VLA 把两者解耦：\n\n**Stage I — 鲁棒性获取（Curriculum Robustness Training）**\n\n用纯扰动数据训 VLA，只优化「在扰动下保持嵌入空间稳定」目标：\n\n$$L_{\\text{rob}} = \\| f(o_t^{\\text{clean}}, l) - f(o_t^{\\text{perturbed}}, l^{\\text{perturbed}}) \\|_2^2$$\n\n课程学习：扰动强度从弱到强递增，让模型平稳学到稳健的视觉/语言嵌入。\n\n**Stage II — 任务再对齐（Task Re-alignment）**\n\n冻结视觉/语言编码器，只 fine-tune 动作头：\n\n$$L_{\\text{task}} = -\\sum_t \\log P(a_t | f(o_t, l))$$\n\n这一阶段的扰动数据比例降为 30%（从 100% 降下来），让模型重新对齐到「在干净数据上的高精度」目标。\n\n**28 类多模态扰动 benchmark**\n\n视觉（14 类）：高斯噪声 / 椒盐 / 散粒 / 高斯模糊 / 散焦模糊 / 雾化 / 对比度调整 / 亮度调整 / 弹性变形 / 像素化 / JPEG 压缩 / 遮挡 / 颜色偏移 / 镜头畸变\n\n语言（14 类）：同义词替换 / 拼写错误 / 语序颠倒 / 句法噪声 / 多余单词 / 缺失单词 / 大小写翻转 / 标点污染 / 数字替换 / 颜色描述错误 / 物体描述错误 / 位置描述错误 / 动词替换 / 多语言混合",
+  "experiments": "**主实验（LIBERO 鲁棒性测试）**\n\n| 模型 | Seen 扰动 | Unseen 扰动 |\n|------|:---:|:---:|\n| OpenVLA baseline | 67.3% | 72.1% |\n| OpenVLA + STRONG-VLA | 79.9% (+12.6%) | 79.9% (+7.8%) |\n| OpenVLA-OFT baseline | 73.5% | 76.4% |\n| OpenVLA-OFT + STRONG-VLA | 88.0% (+14.5%) | 90.2% (+13.8%) |\n| π₀ baseline | 79.2% | 82.6% |\n| π₀ + STRONG-VLA | 95.7% (+16.5%) | 88.2% (+5.6%) |\n\n**真机 AIRBOT 测试**\n\n- 在 AIRBOT 单臂机器人上评测 5 个家庭任务（pick-cup / fold-towel / open-drawer / pour-water / wipe-table）\n- 加入 5 种真实扰动（光照变化 / 桌面纹理 / 多语言指令 / 物体遮挡 / 摄像头抖动）\n- 平均成功率：baseline 38.7% → STRONG-VLA 62.4%（+23.7%）\n\n**消融**\n\n- 不解耦（同时优化）：seen +6.2%，unseen +3.4% — 显著低于解耦版\n- 不用课程学习（一次性最强扰动）：训练不收敛或精度大跌\n- Stage II 扰动比例：0%（任务精度高但鲁棒性失），30%（最优），100%（任务精度跌回 baseline）",
+  "reproduction": "**实施门槛**：🟡 中（代码暂未开源）\n\n- 代码：截至 2026-05-09 代码暂未公开发布，但论文给出完整伪代码 + 28 类扰动 augmentation 实现细节\n- 数据：LIBERO 公开 + AIRBOT 真机数据需自采（论文提供采集脚本）\n- 算力：8× A100 训练 ~5 天（两阶段串行）；推理 RTX 4090 即可\n- 28 类扰动可基于 imagecorruptions 库 + nlpaug 库快速实现\n\n**社区可行路径**：\n\n1. 先在 OpenVLA-OFT 上跑 Stage I（纯扰动 + curriculum，约 2 天）\n2. 冻结 encoder，跑 Stage II（30% 扰动比例，约 2 天）\n3. 评测 LIBERO 默认 + 28 类扰动版本\n4. 真机 AIRBOT 复现需采集 ~50 条 demo / 任务\n\n**预期效果**：在 OpenVLA-OFT 上至少能复现 +10% 的鲁棒性提升（论文是 +14.5%）",
+  "mathDetails": "**鲁棒性的信息几何视角**\n\n设 clean 输入 $x = (o, l)$，扰动版本 $\\tilde{x}$，VLA 嵌入 $z = f(x)$。鲁棒性目标本质上是让 $f$ 在扰动空间中是「平滑函数」：\n\n$$\\| f(x) - f(\\tilde{x}) \\|_2 \\leq L \\cdot d(x, \\tilde{x})$$\n\n其中 $L$ 是 Lipschitz 常数，$d(\\cdot, \\cdot)$ 是扰动度量。Stage I 的 $L_{\\text{rob}}$ 直接最小化 $L$，等价于约束嵌入函数的局部 Lipschitz 性。\n\n**为什么解耦有效？凸优化视角**\n\n联合优化目标 $L = L_{\\text{task}} + \\lambda L_{\\text{rob}}$ 在参数空间中可能形成多个局部最优盆地，且 task 和 rob 的梯度方向常常对抗（论文 Fig 4 给出经验证据：梯度 cosine 相似度 −0.3 ~ 0.1）。\n\n解耦优化：\n\n- Stage I 找到鲁棒嵌入 $f^*_{\\text{rob}}$\n- Stage II 在 $f^*_{\\text{rob}}$ 周围的小邻域内做任务对齐\n\n这等价于「先粗调到鲁棒盆地中心，再细调任务精度」，避免了对抗梯度的干扰。\n\n**课程学习的理论合理性**\n\n论文引用了 weak-to-strong 训练理论：从弱扰动开始让模型学到「平滑的局部嵌入」，再渐进引入强扰动让模型把局部嵌入合并成全局鲁棒结构。这与 self-paced learning / curriculum learning 的经典理论一致。"
+}
