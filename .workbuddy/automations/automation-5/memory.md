@@ -1,5 +1,16 @@
 # automation-5 执行历史
 
+## 2026-05-09 20:10（晚间轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 新闻 +3 (n251-n253)：Figure Helix-02 双机铺床「单一神经网络多人形协作」全球首个 / 腾讯云 OpenClaw 落地家庭具身（乐享 Zeroth M1 首款接入）/ 浙江人形 + 杰克 2000 台服装柔性智造订单
+- 论文 +2 (p134-p135)：From Pixels to Tokens (RUC) 4 种潜动作监督策略统一对比 + STRONG-VLA 28 类多模态扰动 benchmark 解耦微调；含 keyInsights+impact+detail（methodology/experiments/reproduction/mathDetails）
+- 开源 +1 (os093)：RUCKBReasoning/From_Pixels_to_Tokens (Apache-2.0)
+- 招聘 +1 (j116)：浙江人形 2000 台订单核心团队 5 大方向扩招（整机 / VLA / 仿真 / 服装智造 / 生态）
+- 学习 +1 sec：ros2 +sec-1「多机协作 ROS2 范式：从 DDS Discovery Server 到 Helix-02 单一神经网络多人形协作前沿落地」（联动 n251 Figure Helix-02），模块 99K → 109K chars
+- 0 dups（news 225 / papers 117 / os 82 / jobs 108）
+- sync_learn_split (15 files updated) + build_sitemap (426 chapters) 已跑
+- commit 0d15f3f 已 push origin/main
+
 ## 2026-05-09 13:30（中午轮）
 - 投稿箱：无开放 Issue（gh issue list 返回 []）
 - 新闻 +3 (n248-n250)：Figure 03 BotQ 时产 1 台（24x 提速 + S0 视觉融合楼梯零样本）/ 优必选 Thinker-WM 登顶 Libero 长程 / 蓝点触控年销 10 万套关节扭矩 + 6 维力 80% 国内市占率
