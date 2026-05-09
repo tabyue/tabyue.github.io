@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-09T11:03",
+  "lastUpdated": "2026-05-09T11:43",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,38 @@
     }
   ],
   "projects": [
+    {
+      "id": "os092",
+      "name": "Microsoft Agent Framework (AutoGen + Semantic Kernel 统一框架)",
+      "github": "https://github.com/microsoft/agent-framework",
+      "organization": "Microsoft",
+      "category": "framework",
+      "description": "微软 2026-04-03 发布的生产级 AI Agent 编排开源框架，是 AutoGen（50K+ Star，多 Agent 对话）与 Semantic Kernel（26K+ Star，企业编排）的正式合并产物。Python + C#/.NET 双语支持，跨语言 API 一致。核心：①基于 graph 的 workflow 引擎支持 Sequential / Concurrent / Handoff / Group Chat / Magentic-One 五种编排模式；②MCP（Model Context Protocol）完整集成做动态工具发现；③对接 Microsoft Foundry / Azure OpenAI / OpenAI / Anthropic / Amazon Bedrock / Google Gemini 等多家 LLM 供应商；④YAML 声明式 Agent 定义；⑤三层 middleware（请求/响应/自定义流水线）+ OpenTelemetry 内置可观测性；⑥checkpointing / streaming / human-in-the-loop / time-travel 高级特性；⑦DevUI 交互式调试面板；⑧Foundry hosted agents 一键云部署。10.3K Star / 1.7K Fork（开源 1 个月内即破万）。具身智能场景：VLA 的高层任务规划与多 Agent 协作（Brain-Cerebellum 双脑架构）可基于此框架做编排层。",
+      "language": "Python / C# / TypeScript",
+      "license": "MIT",
+      "features": [
+        "graph workflow 引擎（5 种编排模式）",
+        "MCP 完整集成",
+        "Python + .NET 双语 API 一致",
+        "6 大 LLM 供应商对接",
+        "YAML 声明式 Agent 定义",
+        "三层 middleware + OpenTelemetry",
+        "checkpointing / streaming / HITL / time-travel",
+        "DevUI 交互式调试"
+      ],
+      "stars": "10.3K (4 月发布即破万)",
+      "tags": [
+        "Microsoft",
+        "Agent Framework",
+        "AutoGen",
+        "Semantic Kernel",
+        "MCP",
+        "Multi-Agent",
+        "Magentic-One",
+        "Enterprise"
+      ],
+      "addedDate": "2026-05-09"
+    },
     {
       "id": "os091",
       "name": "LingBot-World (蚂蚁灵波)",
