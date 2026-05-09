@@ -1,5 +1,16 @@
 # automation-5 执行历史
 
+## 2026-05-10 02:25（凌晨轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 新闻 +3 (n254-n256)：Genesis AI GENE-26.5 全栈机器人基础模型（自研 20DoF 灵巧手 + 3ms 端到端控制）/ 小雨智造 B+ 轮数亿元（北汽产投 / 黎万强 4 连投）/ 智元 G2 海外 The Robot Report 报道（消费电子产线 100% 汽车级零部件 + IP42）
+- 论文 +2 (p136-p137)：Rhythm 双人形互动 whole-body 控制（Fudan/SJTU/Tsinghua/Tars，IAMR + IGRL 图奖励 + Unitree G1 真机）+ Dream Diffusion Policy (TU Munich/Knoll Group，世界模型 imagination 切换 OOD 23.9→73.8% / 真机 3.3→83.3%)；含 keyInsights+impact+detail
+- 招聘 +2 (j117 Genesis AI 全栈团队 / j118 小雨智造)
+- 学习 +1 sec：cloud-edge-collaboration +sec-10「3ms 端到端控制中间件 + Helix-02 多机分布式协作」（联动 n254/n251/p136/p137，模块 89K → 100K chars）
+- 0 dups（news 228 / papers 119 / os 82 / jobs 110）
+- daily-english +2（GENE-26.5 TechCrunch / Rhythm arXiv），items 6 / archive 8
+- sync_learn_split (2 files updated) + build_sitemap (427 chapters) 已跑
+- commit c35999c 已 push origin/main
+
 ## 2026-05-09 20:10（晚间轮）
 - 投稿箱：无开放 Issue（gh issue list 返回 []）
 - 新闻 +3 (n251-n253)：Figure Helix-02 双机铺床「单一神经网络多人形协作」全球首个 / 腾讯云 OpenClaw 落地家庭具身（乐享 Zeroth M1 首款接入）/ 浙江人形 + 杰克 2000 台服装柔性智造订单
