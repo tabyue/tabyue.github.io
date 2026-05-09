@@ -1,52 +1,8 @@
 {
-  "lastUpdated": "2026-05-09T10:24",
+  "lastUpdated": "2026-05-09T10:38",
   "date": "2026-05-09",
   "description": "每日 6 条精选英文素材：权威资讯（IEEE Spectrum / MIT Tech Review / Nature 等）+ arXiv 论文摘要 + 行业博客 + 写作 tip。每条标注 CEFR 等级（A2/B1/B2/C1）和文体（学术/资讯/技术博客）。",
   "items": [
-    {
-      "type": "news",
-      "level": "B2",
-      "register": "Industry News",
-      "title": "MIT Tech Review: Hidden Human Labor Behind Humanoid Robot Demos",
-      "source": "MIT Technology Review (via DigiconAsia)",
-      "date": "2026-02-23",
-      "url": "https://digiconasia.net/news/academic-report-reveals-hidden-human-labor-in-humanoid-robot-demos",
-      "en": "The emerging humanoid robot industry is far more dependent on hidden human labor than glossy demos suggest, according to a new MIT Technology Review investigation. The report describes how robots that appear autonomous onstage or in marketing videos are frequently steered in real time by remote human operators, while others depend on large, low-wage workforces to collect the training data they need. This scrutiny comes just as firms such as 1X Technologies and Tesla race to commercialize humanoids for homes and factories, buoyed by billions of dollars in investment and claims that the machines can perform everyday tasks with little human help.",
-      "vocab": [
-        {"term": "emerging", "cn": "新兴的（领域 / 行业）"},
-        {"term": "glossy demos", "cn": "精美包装过的演示视频"},
-        {"term": "autonomous", "cn": "自主的（不需人工干预）"},
-        {"term": "steered", "cn": "（远程）操控；动词 steer"},
-        {"term": "remote human operators", "cn": "远程人工操作员"},
-        {"term": "low-wage workforces", "cn": "低薪劳动力大军"},
-        {"term": "scrutiny", "cn": "审视、监督关注"},
-        {"term": "commercialize", "cn": "商业化；推向市场"},
-        {"term": "buoyed by", "cn": "受...支撑、推动；动词 buoy"}
-      ],
-      "cn": "MIT Technology Review 调查揭示：很多看起来「自主」的人形机器人 demo 实际上由远程操作员实时控制，训练数据也由大量低薪数据工人采集。本文是英文行业新闻的标准范文——句式 emerging X is more dependent on Y than Z suggests / according to a new investigation / This scrutiny comes just as ... 都值得反复读。"
-    },
-    {
-      "type": "blog",
-      "level": "B2",
-      "register": "Tech Blog",
-      "title": "NVIDIA on Generalist-Specialist Robots",
-      "source": "NVIDIA Developer Blog · Isaac GR00T",
-      "date": "2026-03-18",
-      "url": "https://developer.nvidia.com/isaac/GR00t",
-      "en": "The next generation of robots will be generalist-specialists — capable of understanding instructions, learning general skills, and being trained for specific tasks. Building such robots requires an integrated workflow from cloud to robot, ensuring that data collection and generation, training and evaluation of control policies, and safe deployment to physical devices all flow seamlessly. These generalist-specialist systems rely on Vision-Language-Action (VLA) models for intelligent perception, understanding, and execution of diverse tasks. To accelerate this transformation, the NVIDIA Isaac open platform provides robot developers with a complete toolchain — including models, data pipelines, simulation frameworks, and runtime libraries — built around NVIDIA's three-computer solution.",
-      "vocab": [
-        {"term": "generalist-specialist", "cn": "通才-专才（既能广博又能专精）"},
-        {"term": "integrated workflow", "cn": "一体化工作流"},
-        {"term": "data pipelines", "cn": "数据管线"},
-        {"term": "deployment", "cn": "部署"},
-        {"term": "seamlessly", "cn": "无缝地"},
-        {"term": "perception", "cn": "感知"},
-        {"term": "execution", "cn": "执行"},
-        {"term": "transformation", "cn": "转型、变革"},
-        {"term": "toolchain", "cn": "工具链"}
-      ],
-      "cn": "NVIDIA 官方博客的写法是 \"产品 marketing + 工程语言\" 的标准范本——长句但结构清晰，每句都有具体名词支撑。学这种英文你能学会怎么写自己 GitHub README 的 \"motivation\" 段。重点：generalist-specialist 是 NVIDIA 推动的术语，2026 年开始进入主流。"
-    },
     {
       "type": "news",
       "level": "C1",
@@ -57,18 +13,50 @@
       "url": "https://thehumanoidrace.com/news/who-owns-the-humanoid-stack-hardware-software-and-integration-strategies-shaping-mnii10f2",
       "en": "The humanoid-robot market in 2025-26 is being shaped less by a single technical breakthrough than by strategic choices: who owns the stack, which hardware tradeoffs are prioritized, and how open the software and developer ecosystems will be. Companies taking divergent paths — Tesla's end-to-end silicon and vision-AI play, Figure AI's data-centric enterprise fleet approach, Apptronik's compliant-actuator and certification focus, and Unitree/1X's cost-led hardware strategies — are crystallizing distinct value propositions for customers in logistics, manufacturing, retail and field inspection.",
       "vocab": [
-        {"term": "shaped less by ... than by ...", "cn": "与其说是 X 决定的不如说是 Y（高级对比句式）"},
-        {"term": "stack", "cn": "技术栈"},
-        {"term": "tradeoffs", "cn": "权衡、取舍"},
-        {"term": "prioritized", "cn": "（被）优先；动词 prioritize"},
-        {"term": "divergent paths", "cn": "分化的路径"},
-        {"term": "end-to-end", "cn": "端到端的"},
-        {"term": "data-centric", "cn": "以数据为中心的"},
-        {"term": "fleet approach", "cn": "（企业级）机队部署模式"},
-        {"term": "crystallizing", "cn": "正在结晶（这里指逐渐成形）"},
-        {"term": "value propositions", "cn": "价值主张（商业术语）"}
+        {
+          "term": "shaped less by ... than by ...",
+          "cn": "与其说是 X 决定的不如说是 Y（高级对比句式）"
+        },
+        {
+          "term": "stack",
+          "cn": "技术栈"
+        },
+        {
+          "term": "tradeoffs",
+          "cn": "权衡、取舍"
+        },
+        {
+          "term": "prioritized",
+          "cn": "（被）优先；动词 prioritize"
+        },
+        {
+          "term": "divergent paths",
+          "cn": "分化的路径"
+        },
+        {
+          "term": "end-to-end",
+          "cn": "端到端的"
+        },
+        {
+          "term": "data-centric",
+          "cn": "以数据为中心的"
+        },
+        {
+          "term": "fleet approach",
+          "cn": "（企业级）机队部署模式"
+        },
+        {
+          "term": "crystallizing",
+          "cn": "正在结晶（这里指逐渐成形）"
+        },
+        {
+          "term": "value propositions",
+          "cn": "价值主张（商业术语）"
+        }
       ],
-      "cn": "IEEE Spectrum 是机器人 / 电子工程领域最权威的英文行业刊物，行文风格偏 C1（高级英语）。这段把 2025-26 人形机器人市场拆成 4 大流派（Tesla / Figure / Apptronik / Unitree+1X），用 \"shaped less by A than by B\" 这种典型对比句式。读熟这段，你的英文 industry analysis 写作直接上一个台阶。"
+      "cn": "IEEE Spectrum 是机器人 / 电子工程领域最权威的英文行业刊物，行文风格偏 C1（高级英语）。这段把 2025-26 人形机器人市场拆成 4 大流派（Tesla / Figure / Apptronik / Unitree+1X），用 \"shaped less by A than by B\" 这种典型对比句式。读熟这段，你的英文 industry analysis 写作直接上一个台阶。",
+      "id": "de-fc91b506d2",
+      "firstShown": "2026-05-09"
     },
     {
       "type": "paper",
@@ -80,15 +68,89 @@
       "url": "https://arxiv.org/abs/2605.06481",
       "en": "World Action Models (WAMs) enhance VLA policies by jointly predicting scene evolution and robot actions, but most existing methods represent the predicted world as holistic images or global latents — making it hard for the action decoder to address a specific target object. We propose OA-WAM, which decomposes each frame into N+1 slot states. Each slot maintains a persistent address vector and a time-varying content vector, separating object identity from appearance.",
       "vocab": [
-        {"term": "WAM", "cn": "World Action Model 世界动作模型"},
-        {"term": "holistic", "cn": "整体的；这里指未分解的、混合表示"},
-        {"term": "decomposes", "cn": "分解；动词原形 decompose"},
-        {"term": "slot", "cn": "槽（位）；这里指 object-centric 表示中的一个物体单元"},
-        {"term": "persistent", "cn": "持久的、不变的"},
-        {"term": "address", "cn": "（这里）寻址向量，identity 标识"},
-        {"term": "appearance", "cn": "外观；与 identity 对立的概念"}
+        {
+          "term": "WAM",
+          "cn": "World Action Model 世界动作模型"
+        },
+        {
+          "term": "holistic",
+          "cn": "整体的；这里指未分解的、混合表示"
+        },
+        {
+          "term": "decomposes",
+          "cn": "分解；动词原形 decompose"
+        },
+        {
+          "term": "slot",
+          "cn": "槽（位）；这里指 object-centric 表示中的一个物体单元"
+        },
+        {
+          "term": "persistent",
+          "cn": "持久的、不变的"
+        },
+        {
+          "term": "address",
+          "cn": "（这里）寻址向量，identity 标识"
+        },
+        {
+          "term": "appearance",
+          "cn": "外观；与 identity 对立的概念"
+        }
       ],
-      "cn": "arXiv abstract 的标准结构：[Context: WAMs 已有的但...] + [Gap: holistic 表示有问题] + [Method: We propose X, which Y] + [Insight: 把 identity 和 appearance 解耦]。读 1000 篇 abstract 你就能写 abstract 了。"
+      "cn": "arXiv abstract 的标准结构：[Context: WAMs 已有的但...] + [Gap: holistic 表示有问题] + [Method: We propose X, which Y] + [Insight: 把 identity 和 appearance 解耦]。读 1000 篇 abstract 你就能写 abstract 了。",
+      "id": "de-ece077ce58",
+      "firstShown": "2026-05-09"
+    },
+    {
+      "type": "blog",
+      "level": "B2",
+      "register": "Tech Blog",
+      "title": "NVIDIA on Generalist-Specialist Robots",
+      "source": "NVIDIA Developer Blog · Isaac GR00T",
+      "date": "2026-03-18",
+      "url": "https://developer.nvidia.com/isaac/GR00t",
+      "en": "The next generation of robots will be generalist-specialists — capable of understanding instructions, learning general skills, and being trained for specific tasks. Building such robots requires an integrated workflow from cloud to robot, ensuring that data collection and generation, training and evaluation of control policies, and safe deployment to physical devices all flow seamlessly. These generalist-specialist systems rely on Vision-Language-Action (VLA) models for intelligent perception, understanding, and execution of diverse tasks. To accelerate this transformation, the NVIDIA Isaac open platform provides robot developers with a complete toolchain — including models, data pipelines, simulation frameworks, and runtime libraries — built around NVIDIA's three-computer solution.",
+      "vocab": [
+        {
+          "term": "generalist-specialist",
+          "cn": "通才-专才（既能广博又能专精）"
+        },
+        {
+          "term": "integrated workflow",
+          "cn": "一体化工作流"
+        },
+        {
+          "term": "data pipelines",
+          "cn": "数据管线"
+        },
+        {
+          "term": "deployment",
+          "cn": "部署"
+        },
+        {
+          "term": "seamlessly",
+          "cn": "无缝地"
+        },
+        {
+          "term": "perception",
+          "cn": "感知"
+        },
+        {
+          "term": "execution",
+          "cn": "执行"
+        },
+        {
+          "term": "transformation",
+          "cn": "转型、变革"
+        },
+        {
+          "term": "toolchain",
+          "cn": "工具链"
+        }
+      ],
+      "cn": "NVIDIA 官方博客的写法是 \"产品 marketing + 工程语言\" 的标准范本——长句但结构清晰，每句都有具体名词支撑。学这种英文你能学会怎么写自己 GitHub README 的 \"motivation\" 段。重点：generalist-specialist 是 NVIDIA 推动的术语，2026 年开始进入主流。",
+      "id": "de-d6c35f86d5",
+      "firstShown": "2026-05-09"
     },
     {
       "type": "paper",
@@ -100,16 +162,42 @@
       "url": "https://arxiv.org/abs/2605.02739",
       "en": "Dual-system VLAs such as GR00T-N1.6 and π0.5 invoke a heavy VLM backbone at every control step, creating a serious latency bottleneck. We observe that VLM features at adjacent steps are highly redundant. Latent Bridge introduces a lightweight delta predictor that estimates the feature change between consecutive steps, allowing the VLM to be invoked only periodically. Across LIBERO, RoboCasa and ALOHA, we cut VLM calls by 50–75% while preserving 95–100% of task success.",
       "vocab": [
-        {"term": "dual-system", "cn": "双系统（VLM 大脑 + 动作头）"},
-        {"term": "backbone", "cn": "主干网络"},
-        {"term": "latency", "cn": "（推理）延迟"},
-        {"term": "bottleneck", "cn": "瓶颈"},
-        {"term": "redundant", "cn": "冗余的"},
-        {"term": "delta", "cn": "增量、差分；希腊字母 Δ"},
-        {"term": "consecutive", "cn": "相邻的、连续的"},
-        {"term": "preserving", "cn": "保留；动词原形 preserve"}
+        {
+          "term": "dual-system",
+          "cn": "双系统（VLM 大脑 + 动作头）"
+        },
+        {
+          "term": "backbone",
+          "cn": "主干网络"
+        },
+        {
+          "term": "latency",
+          "cn": "（推理）延迟"
+        },
+        {
+          "term": "bottleneck",
+          "cn": "瓶颈"
+        },
+        {
+          "term": "redundant",
+          "cn": "冗余的"
+        },
+        {
+          "term": "delta",
+          "cn": "增量、差分；希腊字母 Δ"
+        },
+        {
+          "term": "consecutive",
+          "cn": "相邻的、连续的"
+        },
+        {
+          "term": "preserving",
+          "cn": "保留；动词原形 preserve"
+        }
       ],
-      "cn": "VLA 推理瓶颈不是「算得慢」，而是「每步都重复算」。Latent Bridge 用轻量 delta predictor 减少 VLM 调用 50-75%，性能几乎不掉。学习重点：cut X by Y% while preserving Z% 这种主张句式是写 paper 必备。"
+      "cn": "VLA 推理瓶颈不是「算得慢」，而是「每步都重复算」。Latent Bridge 用轻量 delta predictor 减少 VLM 调用 50-75%，性能几乎不掉。学习重点：cut X by Y% while preserving Z% 这种主张句式是写 paper 必备。",
+      "id": "de-a9892e0303",
+      "firstShown": "2026-05-09"
     },
     {
       "type": "tip",
@@ -121,16 +209,93 @@
       "url": "/learn/ai-与机器人学术英语/2",
       "en": "ML papers are full of hedging — soft phrases that avoid strong commitment. \"We hypothesize that X enables Y\" really means \"we guessed and tried\". \"Empirically, X seems to work\" means \"the experiments worked but we don't fully understand why\". When you read, recognize hedging so you don't overestimate claims. When you write, hedge appropriately to avoid being attacked by reviewers — but don't hedge so much that your contribution sounds unimpressive.",
       "vocab": [
-        {"term": "hedging", "cn": "弱断言、不下死结论的措辞"},
-        {"term": "commitment", "cn": "承诺、确定性"},
-        {"term": "hypothesize", "cn": "假设；动词，名词 hypothesis"},
-        {"term": "empirically", "cn": "经验性地、实验上"},
-        {"term": "overestimate", "cn": "高估"},
-        {"term": "appropriately", "cn": "恰当地"},
-        {"term": "contribution", "cn": "（论文）贡献"},
-        {"term": "unimpressive", "cn": "不出彩的、平庸的"}
+        {
+          "term": "hedging",
+          "cn": "弱断言、不下死结论的措辞"
+        },
+        {
+          "term": "commitment",
+          "cn": "承诺、确定性"
+        },
+        {
+          "term": "hypothesize",
+          "cn": "假设；动词，名词 hypothesis"
+        },
+        {
+          "term": "empirically",
+          "cn": "经验性地、实验上"
+        },
+        {
+          "term": "overestimate",
+          "cn": "高估"
+        },
+        {
+          "term": "appropriately",
+          "cn": "恰当地"
+        },
+        {
+          "term": "contribution",
+          "cn": "（论文）贡献"
+        },
+        {
+          "term": "unimpressive",
+          "cn": "不出彩的、平庸的"
+        }
       ],
-      "cn": "读 paper：识别 hedging 词（we hypothesize / empirically / it seems）能避免被作者忽悠。写 paper：自己也要适度 hedge — 完全不 hedge 会被 reviewer 抓硬伤；hedge 太多 contribution 听起来又虚。"
+      "cn": "读 paper：识别 hedging 词（we hypothesize / empirically / it seems）能避免被作者忽悠。写 paper：自己也要适度 hedge — 完全不 hedge 会被 reviewer 抓硬伤；hedge 太多 contribution 听起来又虚。",
+      "id": "de-a0e37eb882",
+      "firstShown": "2026-05-09"
+    },
+    {
+      "type": "news",
+      "level": "B2",
+      "register": "Industry News",
+      "title": "MIT Tech Review: Hidden Human Labor Behind Humanoid Robot Demos",
+      "source": "MIT Technology Review (via DigiconAsia)",
+      "date": "2026-02-23",
+      "url": "https://digiconasia.net/news/academic-report-reveals-hidden-human-labor-in-humanoid-robot-demos",
+      "en": "The emerging humanoid robot industry is far more dependent on hidden human labor than glossy demos suggest, according to a new MIT Technology Review investigation. The report describes how robots that appear autonomous onstage or in marketing videos are frequently steered in real time by remote human operators, while others depend on large, low-wage workforces to collect the training data they need. This scrutiny comes just as firms such as 1X Technologies and Tesla race to commercialize humanoids for homes and factories, buoyed by billions of dollars in investment and claims that the machines can perform everyday tasks with little human help.",
+      "vocab": [
+        {
+          "term": "emerging",
+          "cn": "新兴的（领域 / 行业）"
+        },
+        {
+          "term": "glossy demos",
+          "cn": "精美包装过的演示视频"
+        },
+        {
+          "term": "autonomous",
+          "cn": "自主的（不需人工干预）"
+        },
+        {
+          "term": "steered",
+          "cn": "（远程）操控；动词 steer"
+        },
+        {
+          "term": "remote human operators",
+          "cn": "远程人工操作员"
+        },
+        {
+          "term": "low-wage workforces",
+          "cn": "低薪劳动力大军"
+        },
+        {
+          "term": "scrutiny",
+          "cn": "审视、监督关注"
+        },
+        {
+          "term": "commercialize",
+          "cn": "商业化；推向市场"
+        },
+        {
+          "term": "buoyed by",
+          "cn": "受...支撑、推动；动词 buoy"
+        }
+      ],
+      "cn": "MIT Technology Review 调查揭示：很多看起来「自主」的人形机器人 demo 实际上由远程操作员实时控制，训练数据也由大量低薪数据工人采集。本文是英文行业新闻的标准范文——句式 emerging X is more dependent on Y than Z suggests / according to a new investigation / This scrutiny comes just as ... 都值得反复读。",
+      "id": "de-420b1f07a9",
+      "firstShown": "2026-05-09"
     }
   ],
   "sources": [
@@ -144,5 +309,301 @@
     "arXiv (arxiv.org)",
     "The Robot Report (therobotreport.com)",
     "TechCrunch Robotics (techcrunch.com/category/robotics)"
+  ],
+  "archive": [
+    {
+      "type": "news",
+      "level": "B2",
+      "register": "Industry News",
+      "title": "MIT Tech Review: Hidden Human Labor Behind Humanoid Robot Demos",
+      "source": "MIT Technology Review (via DigiconAsia)",
+      "date": "2026-02-23",
+      "url": "https://digiconasia.net/news/academic-report-reveals-hidden-human-labor-in-humanoid-robot-demos",
+      "en": "The emerging humanoid robot industry is far more dependent on hidden human labor than glossy demos suggest, according to a new MIT Technology Review investigation. The report describes how robots that appear autonomous onstage or in marketing videos are frequently steered in real time by remote human operators, while others depend on large, low-wage workforces to collect the training data they need. This scrutiny comes just as firms such as 1X Technologies and Tesla race to commercialize humanoids for homes and factories, buoyed by billions of dollars in investment and claims that the machines can perform everyday tasks with little human help.",
+      "vocab": [
+        {
+          "term": "emerging",
+          "cn": "新兴的（领域 / 行业）"
+        },
+        {
+          "term": "glossy demos",
+          "cn": "精美包装过的演示视频"
+        },
+        {
+          "term": "autonomous",
+          "cn": "自主的（不需人工干预）"
+        },
+        {
+          "term": "steered",
+          "cn": "（远程）操控；动词 steer"
+        },
+        {
+          "term": "remote human operators",
+          "cn": "远程人工操作员"
+        },
+        {
+          "term": "low-wage workforces",
+          "cn": "低薪劳动力大军"
+        },
+        {
+          "term": "scrutiny",
+          "cn": "审视、监督关注"
+        },
+        {
+          "term": "commercialize",
+          "cn": "商业化；推向市场"
+        },
+        {
+          "term": "buoyed by",
+          "cn": "受...支撑、推动；动词 buoy"
+        }
+      ],
+      "cn": "MIT Technology Review 调查揭示：很多看起来「自主」的人形机器人 demo 实际上由远程操作员实时控制，训练数据也由大量低薪数据工人采集。本文是英文行业新闻的标准范文——句式 emerging X is more dependent on Y than Z suggests / according to a new investigation / This scrutiny comes just as ... 都值得反复读。",
+      "id": "de-420b1f07a9",
+      "firstShown": "2026-05-09"
+    },
+    {
+      "type": "blog",
+      "level": "B2",
+      "register": "Tech Blog",
+      "title": "NVIDIA on Generalist-Specialist Robots",
+      "source": "NVIDIA Developer Blog · Isaac GR00T",
+      "date": "2026-03-18",
+      "url": "https://developer.nvidia.com/isaac/GR00t",
+      "en": "The next generation of robots will be generalist-specialists — capable of understanding instructions, learning general skills, and being trained for specific tasks. Building such robots requires an integrated workflow from cloud to robot, ensuring that data collection and generation, training and evaluation of control policies, and safe deployment to physical devices all flow seamlessly. These generalist-specialist systems rely on Vision-Language-Action (VLA) models for intelligent perception, understanding, and execution of diverse tasks. To accelerate this transformation, the NVIDIA Isaac open platform provides robot developers with a complete toolchain — including models, data pipelines, simulation frameworks, and runtime libraries — built around NVIDIA's three-computer solution.",
+      "vocab": [
+        {
+          "term": "generalist-specialist",
+          "cn": "通才-专才（既能广博又能专精）"
+        },
+        {
+          "term": "integrated workflow",
+          "cn": "一体化工作流"
+        },
+        {
+          "term": "data pipelines",
+          "cn": "数据管线"
+        },
+        {
+          "term": "deployment",
+          "cn": "部署"
+        },
+        {
+          "term": "seamlessly",
+          "cn": "无缝地"
+        },
+        {
+          "term": "perception",
+          "cn": "感知"
+        },
+        {
+          "term": "execution",
+          "cn": "执行"
+        },
+        {
+          "term": "transformation",
+          "cn": "转型、变革"
+        },
+        {
+          "term": "toolchain",
+          "cn": "工具链"
+        }
+      ],
+      "cn": "NVIDIA 官方博客的写法是 \"产品 marketing + 工程语言\" 的标准范本——长句但结构清晰，每句都有具体名词支撑。学这种英文你能学会怎么写自己 GitHub README 的 \"motivation\" 段。重点：generalist-specialist 是 NVIDIA 推动的术语，2026 年开始进入主流。",
+      "id": "de-d6c35f86d5",
+      "firstShown": "2026-05-09"
+    },
+    {
+      "type": "news",
+      "level": "C1",
+      "register": "IEEE Spectrum",
+      "title": "Who Owns the Humanoid Stack? (IEEE Spectrum)",
+      "source": "IEEE Spectrum / The Humanoid Race",
+      "date": "2026-04-03",
+      "url": "https://thehumanoidrace.com/news/who-owns-the-humanoid-stack-hardware-software-and-integration-strategies-shaping-mnii10f2",
+      "en": "The humanoid-robot market in 2025-26 is being shaped less by a single technical breakthrough than by strategic choices: who owns the stack, which hardware tradeoffs are prioritized, and how open the software and developer ecosystems will be. Companies taking divergent paths — Tesla's end-to-end silicon and vision-AI play, Figure AI's data-centric enterprise fleet approach, Apptronik's compliant-actuator and certification focus, and Unitree/1X's cost-led hardware strategies — are crystallizing distinct value propositions for customers in logistics, manufacturing, retail and field inspection.",
+      "vocab": [
+        {
+          "term": "shaped less by ... than by ...",
+          "cn": "与其说是 X 决定的不如说是 Y（高级对比句式）"
+        },
+        {
+          "term": "stack",
+          "cn": "技术栈"
+        },
+        {
+          "term": "tradeoffs",
+          "cn": "权衡、取舍"
+        },
+        {
+          "term": "prioritized",
+          "cn": "（被）优先；动词 prioritize"
+        },
+        {
+          "term": "divergent paths",
+          "cn": "分化的路径"
+        },
+        {
+          "term": "end-to-end",
+          "cn": "端到端的"
+        },
+        {
+          "term": "data-centric",
+          "cn": "以数据为中心的"
+        },
+        {
+          "term": "fleet approach",
+          "cn": "（企业级）机队部署模式"
+        },
+        {
+          "term": "crystallizing",
+          "cn": "正在结晶（这里指逐渐成形）"
+        },
+        {
+          "term": "value propositions",
+          "cn": "价值主张（商业术语）"
+        }
+      ],
+      "cn": "IEEE Spectrum 是机器人 / 电子工程领域最权威的英文行业刊物，行文风格偏 C1（高级英语）。这段把 2025-26 人形机器人市场拆成 4 大流派（Tesla / Figure / Apptronik / Unitree+1X），用 \"shaped less by A than by B\" 这种典型对比句式。读熟这段，你的英文 industry analysis 写作直接上一个台阶。",
+      "id": "de-fc91b506d2",
+      "firstShown": "2026-05-09"
+    },
+    {
+      "type": "paper",
+      "level": "C1",
+      "register": "arXiv Abstract",
+      "title": "OA-WAM: Object-Addressable World Action Model",
+      "source": "arXiv 2605.06481",
+      "date": "2026-05-07",
+      "url": "https://arxiv.org/abs/2605.06481",
+      "en": "World Action Models (WAMs) enhance VLA policies by jointly predicting scene evolution and robot actions, but most existing methods represent the predicted world as holistic images or global latents — making it hard for the action decoder to address a specific target object. We propose OA-WAM, which decomposes each frame into N+1 slot states. Each slot maintains a persistent address vector and a time-varying content vector, separating object identity from appearance.",
+      "vocab": [
+        {
+          "term": "WAM",
+          "cn": "World Action Model 世界动作模型"
+        },
+        {
+          "term": "holistic",
+          "cn": "整体的；这里指未分解的、混合表示"
+        },
+        {
+          "term": "decomposes",
+          "cn": "分解；动词原形 decompose"
+        },
+        {
+          "term": "slot",
+          "cn": "槽（位）；这里指 object-centric 表示中的一个物体单元"
+        },
+        {
+          "term": "persistent",
+          "cn": "持久的、不变的"
+        },
+        {
+          "term": "address",
+          "cn": "（这里）寻址向量，identity 标识"
+        },
+        {
+          "term": "appearance",
+          "cn": "外观；与 identity 对立的概念"
+        }
+      ],
+      "cn": "arXiv abstract 的标准结构：[Context: WAMs 已有的但...] + [Gap: holistic 表示有问题] + [Method: We propose X, which Y] + [Insight: 把 identity 和 appearance 解耦]。读 1000 篇 abstract 你就能写 abstract 了。",
+      "id": "de-ece077ce58",
+      "firstShown": "2026-05-09"
+    },
+    {
+      "type": "paper",
+      "level": "C1",
+      "register": "arXiv Abstract",
+      "title": "Latent Bridge: Feature Delta for Dual-System VLA",
+      "source": "arXiv 2605.02739",
+      "date": "2026-05-04",
+      "url": "https://arxiv.org/abs/2605.02739",
+      "en": "Dual-system VLAs such as GR00T-N1.6 and π0.5 invoke a heavy VLM backbone at every control step, creating a serious latency bottleneck. We observe that VLM features at adjacent steps are highly redundant. Latent Bridge introduces a lightweight delta predictor that estimates the feature change between consecutive steps, allowing the VLM to be invoked only periodically. Across LIBERO, RoboCasa and ALOHA, we cut VLM calls by 50–75% while preserving 95–100% of task success.",
+      "vocab": [
+        {
+          "term": "dual-system",
+          "cn": "双系统（VLM 大脑 + 动作头）"
+        },
+        {
+          "term": "backbone",
+          "cn": "主干网络"
+        },
+        {
+          "term": "latency",
+          "cn": "（推理）延迟"
+        },
+        {
+          "term": "bottleneck",
+          "cn": "瓶颈"
+        },
+        {
+          "term": "redundant",
+          "cn": "冗余的"
+        },
+        {
+          "term": "delta",
+          "cn": "增量、差分；希腊字母 Δ"
+        },
+        {
+          "term": "consecutive",
+          "cn": "相邻的、连续的"
+        },
+        {
+          "term": "preserving",
+          "cn": "保留；动词原形 preserve"
+        }
+      ],
+      "cn": "VLA 推理瓶颈不是「算得慢」，而是「每步都重复算」。Latent Bridge 用轻量 delta predictor 减少 VLM 调用 50-75%，性能几乎不掉。学习重点：cut X by Y% while preserving Z% 这种主张句式是写 paper 必备。",
+      "id": "de-a9892e0303",
+      "firstShown": "2026-05-09"
+    },
+    {
+      "type": "tip",
+      "level": "B1",
+      "register": "Writing Tip",
+      "title": "Hedging Words: Reading Between the Lines",
+      "source": "Academic English · 模块第 02 节",
+      "date": "2026-05-08",
+      "url": "/learn/ai-与机器人学术英语/2",
+      "en": "ML papers are full of hedging — soft phrases that avoid strong commitment. \"We hypothesize that X enables Y\" really means \"we guessed and tried\". \"Empirically, X seems to work\" means \"the experiments worked but we don't fully understand why\". When you read, recognize hedging so you don't overestimate claims. When you write, hedge appropriately to avoid being attacked by reviewers — but don't hedge so much that your contribution sounds unimpressive.",
+      "vocab": [
+        {
+          "term": "hedging",
+          "cn": "弱断言、不下死结论的措辞"
+        },
+        {
+          "term": "commitment",
+          "cn": "承诺、确定性"
+        },
+        {
+          "term": "hypothesize",
+          "cn": "假设；动词，名词 hypothesis"
+        },
+        {
+          "term": "empirically",
+          "cn": "经验性地、实验上"
+        },
+        {
+          "term": "overestimate",
+          "cn": "高估"
+        },
+        {
+          "term": "appropriately",
+          "cn": "恰当地"
+        },
+        {
+          "term": "contribution",
+          "cn": "（论文）贡献"
+        },
+        {
+          "term": "unimpressive",
+          "cn": "不出彩的、平庸的"
+        }
+      ],
+      "cn": "读 paper：识别 hedging 词（we hypothesize / empirically / it seems）能避免被作者忽悠。写 paper：自己也要适度 hedge — 完全不 hedge 会被 reviewer 抓硬伤；hedge 太多 contribution 听起来又虚。",
+      "id": "de-a0e37eb882",
+      "firstShown": "2026-05-09"
+    }
   ]
 }

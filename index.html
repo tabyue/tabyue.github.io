@@ -169,6 +169,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 .de-card .de-meta{display:flex;justify-content:space-between;align-items:center;font-size:.74rem;color:var(--t3);padding-top:10px;border-top:1px solid var(--bd)}
 .de-card .de-meta a{color:var(--p);text-decoration:none}
 .de-card .de-meta a:hover{text-decoration:underline}
+.de-archive-toggle{display:inline-flex;align-items:center;gap:8px;font-size:.86rem;font-weight:600;color:var(--t2);padding:10px 16px;background:var(--bg3);border:1px solid var(--bd);border-radius:8px;cursor:pointer;transition:background .2s,border-color .2s,color .2s;user-select:none}
+.de-archive-toggle:hover{background:var(--accent-subtle);border-color:var(--p);color:var(--t1)}
+.de-archive-toggle .de-arch-arrow{font-size:.7rem;color:var(--t3);transition:transform .2s}
+.de-archive-toggle.open .de-arch-arrow{transform:rotate(90deg)}
+.de-archive-toggle .de-arch-count{font-size:.72rem;font-family:var(--font-mono);background:var(--bg);color:var(--t3);padding:2px 8px;border-radius:50px;border:1px solid var(--bd)}
+.de-archive-grid .de-card{opacity:.92}
 
 /* === CARDS (shared) === */
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
@@ -609,6 +615,14 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
     <div class="home-latest" id="dailyEnglishWrap" style="display:none">
         <div class="home-latest-title">📰 每日英文 <span class="home-latest-sub">权威资讯 · arXiv · 技术博客 · 写作 tip · 标注 CEFR 等级</span></div>
         <div class="de-grid" id="dailyEnglish"></div>
+        <div id="dailyEnglishArchiveWrap" style="margin-top:24px;display:none">
+            <div class="de-archive-toggle" onclick="toggleDeArchive(this)">
+                <span class="de-arch-arrow">▸</span>
+                <span>📚 往期回顾</span>
+                <span class="de-arch-count" id="deArchCount">0</span>
+            </div>
+            <div class="de-grid de-archive-grid" id="dailyEnglishArchive" style="display:none;margin-top:16px"></div>
+        </div>
     </div>
     <div class="recent-updates" id="recentUpdates" style="display:none">
         <div class="ru-header" onclick="this.parentElement.classList.toggle('ru-open')">
@@ -2064,6 +2078,39 @@ function renderHomeLatest(){
 
 // === Daily English ===
 let DED=null;
+function _renderDeCard(item, dateFallback){
+    const cls=item.type==='news'?'news':(item.type==='paper'?'paper':(item.type==='blog'?'blog':'tip'));
+    const tagText=item.type==='news'?'NEWS':(item.type==='paper'?'PAPER':(item.type==='blog'?'BLOG':'TIP'));
+    const vocabRows=(item.vocab||[]).map(v=>`<b>${v.term}</b> ${v.cn}`).join('  ·  ');
+    const lvlSpan=item.level?`<span class="de-level">${item.level}</span>`:'';
+    const regSpan=item.register?`<span class="de-level" style="background:rgba(58,163,255,.08);color:var(--p)">${item.register}</span>`:'';
+    // 高亮 vocab 词
+    const renderEn=(text,vocab)=>{
+        if(!vocab||!vocab.length)return text;
+        let html=text;
+        const sorted=[...vocab].sort((a,b)=>b.term.length-a.term.length);
+        sorted.forEach(v=>{
+            const safe=v.term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+            const re=new RegExp('\\b('+safe+')\\b','gi');
+            html=html.replace(re,'<mark class="de-vocab" title="'+v.cn.replace(/"/g,'&quot;')+'">$1</mark>');
+        });
+        return html;
+    };
+    return `<div class="de-card" data-de-id="${item.id||''}">
+        <div class="de-meta-top">
+            <span class="de-tag ${cls}">${tagText}</span>
+            ${lvlSpan}${regSpan}
+        </div>
+        <h3>${item.title||''}</h3>
+        <div class="de-en">${renderEn(item.en,item.vocab||[])}</div>
+        ${vocabRows?`<div class="de-vocab-list">📚 ${vocabRows}</div>`:''}
+        ${item.cn?`<div class="de-cn">💡 ${item.cn}</div>`:''}
+        <div class="de-meta">
+            <span>${item.source||''} · ${item.date||dateFallback||''}</span>
+            ${item.url?`<a href="${item.url}" target="_blank">原文 →</a>`:''}
+        </div>
+    </div>`;
+}
 async function renderDailyEnglish(){
     if(!DED){
         DED=await loadJ('/data/daily-english.json');
@@ -2073,40 +2120,30 @@ async function renderDailyEnglish(){
     const grid=document.getElementById('dailyEnglish');
     if(!wrap||!grid)return;
     wrap.style.display='block';
-    // 高亮 vocab 词
-    const renderEn=(text,vocab)=>{
-        if(!vocab||!vocab.length)return text;
-        let html=text;
-        // 按词长降序，避免 "VLA" 把 "VLA-XPU" 切错
-        const sorted=[...vocab].sort((a,b)=>b.term.length-a.term.length);
-        sorted.forEach(v=>{
-            const safe=v.term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-            const re=new RegExp('\\b('+safe+')\\b','gi');
-            html=html.replace(re,'<mark class="de-vocab" title="'+v.cn.replace(/"/g,'&quot;')+'">$1</mark>');
-        });
-        return html;
-    };
-    grid.innerHTML=DED.items.slice(0,6).map(item=>{
-        const cls=item.type==='news'?'news':(item.type==='paper'?'paper':(item.type==='blog'?'blog':'tip'));
-        const tagText=item.type==='news'?'NEWS':(item.type==='paper'?'PAPER':(item.type==='blog'?'BLOG':'TIP'));
-        const vocabRows=(item.vocab||[]).map(v=>`<b>${v.term}</b> ${v.cn}`).join('  ·  ');
-        const lvlSpan=item.level?`<span class="de-level">${item.level}</span>`:'';
-        const regSpan=item.register?`<span class="de-level" style="background:rgba(58,163,255,.08);color:var(--p)">${item.register}</span>`:'';
-        return `<div class="de-card">
-            <div class="de-meta-top">
-                <span class="de-tag ${cls}">${tagText}</span>
-                ${lvlSpan}${regSpan}
-            </div>
-            <h3>${item.title||''}</h3>
-            <div class="de-en">${renderEn(item.en,item.vocab||[])}</div>
-            ${vocabRows?`<div class="de-vocab-list">📚 ${vocabRows}</div>`:''}
-            ${item.cn?`<div class="de-cn">💡 ${item.cn}</div>`:''}
-            <div class="de-meta">
-                <span>${item.source||''} · ${item.date||DED.date||''}</span>
-                ${item.url?`<a href="${item.url}" target="_blank">原文 →</a>`:''}
-            </div>
-        </div>`;
-    }).join('');
+    grid.innerHTML=DED.items.slice(0,6).map(it=>_renderDeCard(it,DED.date)).join('');
+    // 归档区：所有曾经出现过的 item，去重后按 firstShown 倒序
+    const archive=DED.archive||[];
+    const currentIds=new Set(DED.items.slice(0,6).map(it=>it.id));
+    const past=archive.filter(it=>!currentIds.has(it.id));
+    const archWrap=document.getElementById('dailyEnglishArchiveWrap');
+    const archGrid=document.getElementById('dailyEnglishArchive');
+    const archCount=document.getElementById('deArchCount');
+    if(past.length>0 && archWrap && archGrid){
+        archWrap.style.display='block';
+        if(archCount)archCount.textContent=past.length;
+        // 排序：firstShown 倒序
+        past.sort((a,b)=>(b.firstShown||'').localeCompare(a.firstShown||''));
+        archGrid.innerHTML=past.map(it=>_renderDeCard(it,it.firstShown||DED.date)).join('');
+    }else if(archWrap){
+        archWrap.style.display='none';
+    }
+}
+function toggleDeArchive(el){
+    const grid=document.getElementById('dailyEnglishArchive');
+    if(!grid)return;
+    const isOpen=grid.style.display!=='none';
+    grid.style.display=isOpen?'none':'grid';
+    el.classList.toggle('open',!isOpen);
 }
 
 // === RENDER JOBS ===
