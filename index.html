@@ -180,6 +180,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 .ipa-pop .ipa-play:active{transform:scale(.95)}
 .ipa-pop .ipa-cn{color:var(--t2);font-size:.85rem;padding:8px 0;border-top:1px solid var(--bd);margin-top:6px}
 .ipa-pop .ipa-def{color:var(--t2);font-size:.78rem;line-height:1.6;padding-top:8px;border-top:1px solid var(--bd);margin-top:6px;font-style:italic}
+.ipa-pop .ipa-def-zh{color:var(--t1);font-size:.82rem;line-height:1.7;margin-top:6px;font-style:normal;padding-top:6px;border-top:1px dashed var(--bd)}
 .ipa-pop .ipa-links{display:flex;gap:6px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--bd);margin-top:8px}
 .ipa-pop .ipa-links a{font-size:.72rem;padding:3px 8px;background:var(--bg3);color:var(--t2);text-decoration:none;border-radius:4px;border:1px solid var(--bd);transition:background .2s,color .2s}
 .ipa-pop .ipa-links a:hover{background:var(--p);color:#fff;border-color:var(--p)}
@@ -2102,21 +2103,42 @@ let DED=null;
 const _ipaCache={};
 const _zhCache={};
 
-// 拿单词的中文释义（先查缓存 → MyMemory 免费翻译 API → 失败返回空字符串）
+// 拿单词的中文释义（多源 fallback：Google → MyMemory → Lingva 镜像；任何一个成功就返回）
 async function fetchZhTranslation(word){
-    const k=word.toLowerCase();
+    const k=word.toLowerCase().trim();
     if(_zhCache[k]!==undefined)return _zhCache[k];
-    try{
-        const resp=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(word)+'&langpair=en|zh-CN');
-        if(resp.ok){
-            const d=await resp.json();
-            const zh=(d&&d.responseData&&d.responseData.translatedText)||'';
-            // 过滤掉 MyMemory 的错误回退（常出现 "PLEASE SELECT TWO DISTINCT LANGUAGES" 等）
-            const ok=zh && !/please|invalid|error/i.test(zh) && zh.toLowerCase()!==word.toLowerCase();
-            _zhCache[k]=ok?zh:'';
-            return _zhCache[k];
-        }
-    }catch(e){}
+    const isInvalid=(zh)=>!zh||!zh.trim()||/please select|invalid|^error|404 not|mymemory warning/i.test(zh)||zh.toLowerCase().trim()===k;
+
+    // 1) Google Translate 公开端点（CORS 允许，gtx 无需 key）
+    const tryGoogle=async()=>{
+        const r=await fetch('https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=t&q='+encodeURIComponent(word));
+        if(!r.ok)return '';
+        const j=await r.json();
+        return (j&&j[0]&&j[0].map(seg=>seg&&seg[0]).filter(Boolean).join(''))||'';
+    };
+    // 2) MyMemory
+    const tryMyMemory=async()=>{
+        const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(word)+'&langpair=en|zh-CN');
+        if(!r.ok)return '';
+        const j=await r.json();
+        return (j&&j.responseData&&j.responseData.translatedText)||'';
+    };
+    // 3) Lingva Translate（开源 Google 镜像）多个公共实例
+    const lingvaHosts=['https://lingva.ml','https://translate.plausibility.cloud','https://lingva.lunar.icu'];
+    const tryLingva=async(h)=>{
+        const r=await fetch(h+'/api/v1/en/zh/'+encodeURIComponent(word));
+        if(!r.ok)return '';
+        const j=await r.json();
+        return (j&&j.translation)||'';
+    };
+
+    const attempts=[tryGoogle, tryMyMemory, ...lingvaHosts.map(h=>(()=>tryLingva(h)))];
+    for(const fn of attempts){
+        try{
+            const zh=await fn();
+            if(!isInvalid(zh)){_zhCache[k]=zh.trim();return _zhCache[k];}
+        }catch(e){/* try next endpoint */}
+    }
     _zhCache[k]='';
     return '';
 }
@@ -2168,10 +2190,16 @@ async function showIpaPopover(ev, term, cn){
         }catch(e){data=null}
     }
 
-    // 并行拿中文翻译（vocab 自带 cn 时优先用 cn，否则去 MyMemory）
+    // 并行拿中文翻译（vocab 自带 cn 时优先用 cn，否则去翻译 API）
     let cnText=cn||'';
     if(!cnText){
         cnText=await fetchZhTranslation(word);
+    }
+    // 把英文 def 也译成中文（如果有 def 且没有手工 cn）
+    let defZh='';
+    if(data&&data.def&&!cn){
+        const defShort=data.def.length>120?data.def.slice(0,120)+'...':data.def;
+        defZh=await fetchZhTranslation(defShort);
     }
 
     if(!data||(!data.phon&&!data.audio)){
@@ -2191,7 +2219,7 @@ async function showIpaPopover(ev, term, cn){
     pop.innerHTML=`<span class="ipa-pop-close" onclick="closeIpaPopover()">✕</span>
         <div class="ipa-word">${word} ${data.phon?`<span class="ipa-phon">${data.phon}</span>`:''}${playBtn}</div>
         ${cnText?`<div class="ipa-cn">📘 ${cnText}</div>`:''}
-        ${data.def?`<div class="ipa-def">${data.def.length>120?data.def.slice(0,120)+'...':data.def}</div>`:''}
+        ${data.def?`<div class="ipa-def">${data.def.length>120?data.def.slice(0,120)+'...':data.def}${defZh?`<div class="ipa-def-zh">🇨🇳 ${defZh}</div>`:''}</div>`:''}
         <div class="ipa-links">
             <a href="https://dictionary.cambridge.org/dictionary/english-chinese-simplified/${encodeURIComponent(word)}" target="_blank" rel="noopener">剑桥</a>
             <a href="https://www.youdao.com/result?word=${encodeURIComponent(word)}&lang=en" target="_blank" rel="noopener">有道</a>
