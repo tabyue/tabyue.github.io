@@ -41,3 +41,13 @@
 - 学习 +1 sec：sim-to-real 模块新增 sec-11「3DGS 高吞吐量仿真：GS-Playground 范式」
 - 全部 JSON 校验通过，无 id 重复
 - sync_learn_split + build_sitemap 跑过
+
+## 2026-05-09 05:50（凌晨轮）
+- 投稿箱：无开放 Issue
+- 新闻 +3 (n244-n246)：RoboOS-NeXT + LingBot-World 开源 + 北京科博会
+- 论文 +2 (p131-p132)：VILAS（低成本 VLA + kirigami 软夹爪）+ RoboOS-NeXT（STEM 多机器人 OS）
+- 开源 +1 (os091)：robbyant/lingbot-world
+- 招聘 +1 (j114)：蚂蚁灵波 26 社招 + 校招
+- 学习 +1 sec：control-theory +sec-15 RoboOS-NeXT 多机协作控制范式（81K→90K chars）
+- 0 dups（news 246/papers 120/os 84/jobs 114）
+- sync_learn_split + build_sitemap（424 chapters）已跑
