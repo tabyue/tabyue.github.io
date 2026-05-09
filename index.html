@@ -1460,9 +1460,15 @@ async function _renderCurrentSection(modId, secIdx, d, opts){
     h+=`<div class="md-content" style="font-size:.9rem;line-height:2">${renderMd(sec.content||'')}</div>`;
     // 模块推荐资源（从 learning-path.json 反查；首章默认展开，其他章节默认折叠）
     let modMeta=null;
+    // 兼容三种 modId：① 中文（learning-path.json 的 name 转义） ② 英文（learnFileMap 的 value） ③ d.id / d.name
+    const tryMids=new Set([modId, d&&d.id, d&&d.name?(d.name).replace(/[\s\/()]/g,'-').toLowerCase():'']);
+    // 反查 learnFileMap（英文 → 中文 key），把英文 modId 映射回中文 key
+    Object.keys(learnFileMap||{}).forEach(zh=>{
+        if(learnFileMap[zh]===modId)tryMids.add(zh);
+    });
     LD?.stages?.forEach(s=>s.modules.forEach(m=>{
         const mid=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
-        if(mid===modId)modMeta=m;
+        if(tryMids.has(mid)||(d&&m.name===d.name))modMeta=m;
     }));
     if(modMeta&&Array.isArray(modMeta.resources)&&modMeta.resources.length){
         const openByDefault=secIdx===0;
