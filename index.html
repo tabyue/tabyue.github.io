@@ -166,8 +166,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 .de-card .de-en mark.de-vocab:hover{background:linear-gradient(180deg,transparent 50%,rgba(58,163,255,.4) 50%)}
 .de-card .de-en .de-w,.de-card h3 .de-w{cursor:pointer;border-bottom:1px dotted transparent;transition:border-color .12s,color .12s;padding:0 1px}
 .de-card .de-en .de-w:hover,.de-card h3 .de-w:hover{border-bottom-color:var(--p);color:var(--p)}
-.de-card h3 .de-vocab{background:linear-gradient(180deg,transparent 70%,rgba(58,163,255,.2) 70%);cursor:pointer;border-radius:2px;padding:0 2px}
-.de-card h3 .de-vocab:hover{background:linear-gradient(180deg,transparent 60%,rgba(58,163,255,.35) 60%)}
 .de-card .de-vocab-list{font-size:.78rem;color:var(--t2);line-height:1.9;background:var(--bg3);padding:10px 14px;border-radius:8px;margin-bottom:12px}
 .de-card .de-vocab-list b{color:var(--p);font-weight:600;font-family:var(--font-mono);cursor:pointer;text-decoration:underline;text-decoration-color:rgba(58,163,255,.3);text-decoration-thickness:1px;text-underline-offset:3px}
 .de-card .de-vocab-list b:hover{text-decoration-color:var(--p)}
@@ -2228,10 +2226,10 @@ function _renderDeCard(item, dateFallback){
         html=html.replace(/\x01(\d+)\x02/g,(_,i)=>placeholders[+i]);
         return html;
     };
-    // 标题也支持点击查音标（会先把 vocab 出现在标题里的也替换为 mark）
+    // 标题：只让单词可点查音标，**不**叠加 vocab 蓝底高亮（高亮+大标题视觉太重）
     const renderTitle=(text)=>{
         if(!text)return '';
-        return renderEn(text, item.vocab||[]);
+        return wrapWords(text);
     };
     return `<div class="de-card" data-de-id="${item.id||''}">
         <div class="de-meta-top">
