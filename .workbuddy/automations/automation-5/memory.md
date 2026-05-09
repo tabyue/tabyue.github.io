@@ -1,5 +1,15 @@
 # automation-5 执行历史
 
+## 2026-05-09 13:30（中午轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 新闻 +3 (n248-n250)：Figure 03 BotQ 时产 1 台（24x 提速 + S0 视觉融合楼梯零样本）/ 优必选 Thinker-WM 登顶 Libero 长程 / 蓝点触控年销 10 万套关节扭矩 + 6 维力 80% 国内市占率
+- 论文 +1 (p133)：IVLR (Tsinghua/BIT/Xiaomi)「文图交错推理轨迹」LIBERO-Long 92.4% SOTA；含 keyInsights + impact + 完整 detail
+- 招聘 +1 (j115)：蓝点触控 — 算法 / 嵌入式 / 工艺工程 / 客户接入 / 航天民用化五方向（C+ 轮 / 红杉中国领投）
+- 学习 +1 sec：robot-kinematics +sec-1「全身运动学：从机械臂到 30+ DOF 人形机器人」（联动 Figure S0 / Optimus V3 量产 / KAI 115 DOF），模块 81K → 89K chars 脱离最薄区
+- 0 dups（news 222 / papers 115 / os 81 / jobs 107）
+- sync_learn_split + build_sitemap（425 chapters）已跑
+- commit 7175c11 已 push origin/main
+
 ## 2026-05-08 23:30（晚间轮）
 - 投稿箱：无开放 Issue（gh issue list 返回 []）
 - 新闻 +3 (n241-n243)：自变量 WALL-B 5/25 入户倒计时 + 智元 A2 登 Met Gala 时尚秀 + Tesla Optimus V3 7-8 月 Fremont 量产路线图

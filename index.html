@@ -2100,6 +2100,26 @@ function renderHomeLatest(){
 // === Daily English ===
 let DED=null;
 const _ipaCache={};
+const _zhCache={};
+
+// 拿单词的中文释义（先查缓存 → MyMemory 免费翻译 API → 失败返回空字符串）
+async function fetchZhTranslation(word){
+    const k=word.toLowerCase();
+    if(_zhCache[k]!==undefined)return _zhCache[k];
+    try{
+        const resp=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(word)+'&langpair=en|zh-CN');
+        if(resp.ok){
+            const d=await resp.json();
+            const zh=(d&&d.responseData&&d.responseData.translatedText)||'';
+            // 过滤掉 MyMemory 的错误回退（常出现 "PLEASE SELECT TWO DISTINCT LANGUAGES" 等）
+            const ok=zh && !/please|invalid|error/i.test(zh) && zh.toLowerCase()!==word.toLowerCase();
+            _zhCache[k]=ok?zh:'';
+            return _zhCache[k];
+        }
+    }catch(e){}
+    _zhCache[k]='';
+    return '';
+}
 
 // 显示音标 popover（点击 vocab 词触发）
 async function showIpaPopover(ev, term, cn){
@@ -2112,7 +2132,7 @@ async function showIpaPopover(ev, term, cn){
     pop.id='ipaPop';
     pop.innerHTML=`<span class="ipa-pop-close" onclick="closeIpaPopover()">✕</span>
         <div class="ipa-word">${word}</div>
-        <div class="ipa-loading">⏳ 查询音标中...</div>`;
+        <div class="ipa-loading">⏳ 查询音标 + 中文释义...</div>`;
     document.body.appendChild(pop);
     // 定位到点击位置附近
     const rect=ev.target.getBoundingClientRect();
@@ -2148,11 +2168,17 @@ async function showIpaPopover(ev, term, cn){
         }catch(e){data=null}
     }
 
+    // 并行拿中文翻译（vocab 自带 cn 时优先用 cn，否则去 MyMemory）
+    let cnText=cn||'';
+    if(!cnText){
+        cnText=await fetchZhTranslation(word);
+    }
+
     if(!data||(!data.phon&&!data.audio)){
         // 词典 API 没结果（缩写 / 词组），fallback 到外链
         pop.innerHTML=`<span class="ipa-pop-close" onclick="closeIpaPopover()">✕</span>
             <div class="ipa-word">${word}</div>
-            ${cn?`<div class="ipa-cn">📘 ${cn}</div>`:''}
+            ${cnText?`<div class="ipa-cn">📘 ${cnText}</div>`:''}
             <div class="ipa-def" style="font-size:.76rem;color:var(--t3);font-style:normal;border-top:none;padding-top:4px">未在通用词典找到音标（可能是缩写或专业术语），尝试外部词典：</div>
             <div class="ipa-links">
                 <a href="https://dictionary.cambridge.org/dictionary/english-chinese-simplified/${encodeURIComponent(word)}" target="_blank" rel="noopener">剑桥</a>
@@ -2164,7 +2190,7 @@ async function showIpaPopover(ev, term, cn){
     const playBtn=data.audio?`<span class="ipa-play" title="播放发音" onclick="(new Audio('${data.audio}')).play()">🔊</span>`:'';
     pop.innerHTML=`<span class="ipa-pop-close" onclick="closeIpaPopover()">✕</span>
         <div class="ipa-word">${word} ${data.phon?`<span class="ipa-phon">${data.phon}</span>`:''}${playBtn}</div>
-        ${cn?`<div class="ipa-cn">📘 ${cn}</div>`:''}
+        ${cnText?`<div class="ipa-cn">📘 ${cnText}</div>`:''}
         ${data.def?`<div class="ipa-def">${data.def.length>120?data.def.slice(0,120)+'...':data.def}</div>`:''}
         <div class="ipa-links">
             <a href="https://dictionary.cambridge.org/dictionary/english-chinese-simplified/${encodeURIComponent(word)}" target="_blank" rel="noopener">剑桥</a>
