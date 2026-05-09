@@ -1,5 +1,16 @@
 # automation-5 执行历史
 
+## 2026-05-08 23:30（晚间轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 新闻 +3 (n241-n243)：自变量 WALL-B 5/25 入户倒计时 + 智元 A2 登 Met Gala 时尚秀 + Tesla Optimus V3 7-8 月 Fremont 量产路线图
+- 论文 +2 (p129-p130)：MMaDA-VLA（西湖 / 浙大 / 华为，离散扩散 LIBERO 98%）+ ExoActor（BAAI Agents 第三人称视频生成 → 人形控制 zero-shot）；含 keyInsights+impact+detail
+- 开源 +1 (os090)：ExoActor (BAAI Agents)
+- 招聘 +1 (j113)：小鹏 IRON / R02 26 届校招（操作 / 运动控制 / 导航三大方向）
+- 学习 +1 sec：humanoid-fullstack +sec-16「视频生成 × 离散扩散：2026 年人形 VLA 两条最新路线」(ExoActor + MMaDA-VLA 案例精读，模块 92K → 97K chars)
+- 全部 JSON OK 无 id 重复（news 243 / papers 118 / os 83 / jobs 113）
+- sync_learn_split + build_sitemap（423 chapters）已跑
+- commit c5a5c44 已 push origin/main
+
 ## 2026-05-08 17:20（下午轮）
 - 投稿箱：无开放 Issue（gh issue list 返回 []）
 - 新闻 +3 (n238-n240)：智元 G2 龙旗工厂 99.5% 产线落地 + 蚂蚁完成大晓机器人战投工商落地 + Realbotix 北美 19 台 Q2 交付

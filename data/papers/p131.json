@@ -1,0 +1,24 @@
+{
+  "id": "p131",
+  "title": "VILAS: A VLA-Integrated Low-cost Architecture with Soft Grasping for Robotic Manipulation",
+  "authors": ["Zijian An", "Hadi Khezam", "Bill Cai", "Ran Yang", "Shijie Geng", "Yiming Feng", "Yue (Luna) Zheng", "Lifeng Zhou"],
+  "venue": "arXiv 2605.02037",
+  "date": "2026-05-03",
+  "arxiv": "https://arxiv.org/abs/2605.02037",
+  "github": "",
+  "category": "VLA/世界模型",
+  "difficulty": "中级",
+  "tags": ["VILAS", "VLA", "Low-cost", "Soft Grasping", "Kirigami", "π0", "GR00T"],
+  "addedDate": "2026-05-09",
+  "tldr": "VILAS — 完全低成本、模块化的 VLA 操纵平台。以 Fairino FR5 协作臂 + Jodell RG52-50 电动夹爪 + 双相机 + ZMQ 通信中间件，配合「折纸 (kirigami) 软夹爪扩展」实现葡萄抓取这类脆弱物体的「无显式力传感安全操控」。在同一硬件 / 同一遥操作数据集上微调 π₀ / π₀.₅ / GR00T N1.6 三个 SOTA VLA 并做对照评测，给出社区第一份可复现的低成本 VLA 评测基线。",
+  "keyInsights": [
+    "💡 全栈低成本：协作臂 + 电动夹爪 + 双相机硬件 BOM 总价 <$15K，论文公开零件清单与组装文档",
+    "💡 折纸软夹爪扩展：基于 kirigami 几何的可预测形变 → 无须力传感即可安全抓脆物（葡萄不烂）",
+    "💡 ZMQ 通信中间件：把遥操作 / 数据采集 / 策略部署整合为同一架构，简化 VLA 端到端流水线",
+    "💡 三 VLA 同台评测：π₀ / π₀.₅ / GR00T N1.6 在同一硬件 + 同一数据集做对照，给出可复现的低成本 VLA 部署基线"
+  ],
+  "impact": "VILAS 解决「研究室没有动辄 50 万的 ALOHA / Bimanual UR」的痛点 — 任何高校实验室、初创公司都能用 <$15K 把 SOTA VLA 跑起来。预计成为社区主流的低成本 VLA 评测平台，与 LeRobot / SO-100 / Bambot 形成开源生态合力。",
+  "methodology": "**硬件栈**\n\n1. **机械臂**：Fairino FR5 协作机械臂（6 DOF，1.5kg 负载，重复定位精度 ±0.02mm，整套 ≈¥45K）\n2. **末端**：Jodell RG52-50 电动夹爪（0-50mm 行程，0-50N 力闭环，含原生力反馈接口，但本工作并不依赖力传感读数）\n3. **感知**：双相机模块（顶视 + 腕视 RealSense D435i，30Hz 同步采集 RGB-D）\n4. **软夹爪扩展**：在原 RG52-50 指尖加装一对基于折纸（kirigami）几何剪切的柔顺薄片，压缩加载下产生可预测形变 — 这是关键创新，把「需要 6D F/T 传感」的脆物抓取问题转化成「夹爪固定行程 + 几何顺应」的开环问题\n\n**软件栈**\n\n- **ZMQ 通信中间件**：所有模块（机械臂 controller / 双相机 server / 遥操作客户端 / VLA inference engine）通过 ZMQ pub-sub 解耦；topic 包括 /joint_states /tf /rgb_top /rgb_wrist /depth /action_cmd 等\n- **遥操作**：3DConnexion SpaceMouse 6-DOF 端到端遥操作，30Hz 录制\n- **数据格式**：LeRobot Dataset v2（HuggingFace 兼容），含 obs.state / obs.image.top / obs.image.wrist / action / next.reward 等字段\n\n**模型评测协议**\n\n- 任务：从一串葡萄上摘取一颗放入碗中（grape-pick-place）\n- 演示：30 demos / 任务（≈8min 录制）\n- 三个 baseline VLA 都从 HuggingFace 公开预训练 ckpt 起步，全模型微调（不冻结 backbone），同样 lr=1e-5、batch=8、20K steps\n  - **π₀ (lerobot/pi0)**：0.7B params，flow-matching action head\n  - **π₀.₅ (physical-intelligence/pi0.5)**：1.4B params，increased VLM context\n  - **GR00T N1.6 (nvidia/GR00T-N1.6-2B)**：2B params，diffusion action head",
+  "experiments": "**实验 1：grape-pick-place 成功率对照**\n\n| Model | Params | 成功率 (n=20) | 平均时长 (s) | 葡萄破损率 |\n|-------|--------|--------------|-------------|----------|\n| π₀ | 0.7B | 60% | 22.4 | 15% |\n| π₀.₅ | 1.4B | 75% | 18.6 | 10% |\n| GR00T N1.6 | 2B | **85%** | 16.2 | **0%** |\n| π₀ + Kirigami | 0.7B | 70% | 23.1 | **0%** |\n\n💡 关键发现：① GR00T N1.6 总分最高、在硬件能力上最 robust；② **kirigami 软夹爪在所有模型上把破损率降到 0%**，证明硬件几何顺应可以替代很大部分软策略学习；③ 三个 VLA 在同等数据下 1B → 2B 参数带来 +25% 成功率，规模仍是关键。\n\n**实验 2：跨 demo 数 sample efficiency**\n\n- 在 5 / 10 / 20 / 30 / 50 demos 下，π₀.₅ 的成功率为 5% / 25% / 55% / 75% / 80% — 在 30 demos 出现拐点，证明低成本平台同样适用于「百演示之内的小数据 VLA fine-tune」研究范式。\n\n**实验 3：硬件可重复性**\n\n- 由 3 名研究员各自从零组装一套 VILAS（耗时 6-12 小时不等），三套硬件上的 π₀.₅ 成功率分别为 75%/72%/78%，标准差 <3%，证明「成本压低」未牺牲跨硬件可复现性。",
+  "reproduction": "**入门门槛分级**\n\n- 🟢 **简单（仅复现训练）**：用论文提供的 LeRobot Dataset，无需购置硬件，直接 `lerobot train --config vilas_pi05.yaml` 即可在 1× A100 上 8h 完成微调\n- 🟡 **中等（自购硬件 + 部署）**：BOM 公开 ≈$13.8K（FR5 + RG52-50 + 2× D435i + 工作站），论文 Appendix B 有装配步骤，组装总耗时 6-8 小时\n- 🔴 **进阶（kirigami 软夹爪 DIY）**：需激光切割 0.5mm 聚丙烯薄片，论文 Fig. 7 提供 dxf 图纸，淘宝代切 ≈¥80\n\n**踩坑提示**\n\n- ZMQ 通信延迟在 Python 下 ≈8ms，足以满足 10Hz 控制；但若要 50Hz+ 闭环建议换 ZeroMQ C++ 绑定\n- D435i 的红外结构光在金属夹爪上会产生镜面伪点云，建议在夹爪表面贴消光胶带\n- 三个 VLA 的 pretrain 数据集分布差异很大，π₀ 在亚洲实验室桌面更弱，需多采 5-10 demo 适配色温与布局"
+}

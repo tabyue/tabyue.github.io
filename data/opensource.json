@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-08T23:30",
+  "lastUpdated": "2026-05-09T05:50",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,33 @@
     }
   ],
   "projects": [
+    {
+      "id": "os091",
+      "name": "LingBot-World (蚂蚁灵波)",
+      "github": "https://github.com/robbyant/lingbot-world",
+      "organization": "Robbyant / Ant Group",
+      "category": "world-model",
+      "description": "蚂蚁集团 Robbyant 团队开源的交互式世界模型。核心特性：①分钟级（约 10 分钟）连续稳定生成，长时一致性 / 物体恒存性 SOTA；②16 FPS 生成吞吐 + <1s 端到端延迟，支持键盘 / 鼠标 / 文本实时操控；③Zero-shot 单图入世，覆盖写实 / 科幻 / 卡通 / 游戏多风格场景；④统一的可扩展数据引擎，混合数据采集 + 分层标注。仓库提供：模型权重（HuggingFace 上 LingBot-World / LingBot-World-Fast 双版本）、推理代码、ZMQ 实时交互 server、Gradio Demo、Benchmark Suite（含与 Genie3 / Cosmos / WHAM 的对比）。蚂蚁灵光 App 已接入移动端版本（百毫秒级响应、最长 60s 探索）。",
+      "language": "Python / PyTorch / CUDA",
+      "license": "Apache-2.0",
+      "features": [
+        "分钟级长时生成",
+        "16 FPS 实时",
+        "Zero-shot 单图入世",
+        "移动端可用",
+        "机器人 / 自驾 / 游戏三场景"
+      ],
+      "stars": "6.8k+",
+      "tags": [
+        "蚂蚁灵波",
+        "Robbyant",
+        "World Model",
+        "Real-time",
+        "Open Source",
+        "Embodied AI"
+      ],
+      "addedDate": "2026-05-09"
+    },
     {
       "id": "os090",
       "name": "ExoActor (BAAI Agents)",

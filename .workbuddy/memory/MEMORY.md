@@ -31,7 +31,7 @@
 - **新闻 date 字段**：必须以文章原始发布日期为准，不能用收录日期。addedDate 是收录日期，date 是文章本身的日期。(2026-04-20 Tab 明确要求)
 - **开源生态模块只收真正开源的项目**：闭源产品/企业平台不放 opensource.json，改放到 news.json 的 resources→企业图谱中。(2026-04-26 Tab 明确要求)
 - **学习模块 content 字段中禁止使用 ASCII 双引号做中文引用**：必须用中文引号 `"..."` 或 Markdown 加粗。ASCII `"` 在 JSON 编码后变成 `\"`，前端会直接显示反斜杠。代码块内的 `"` 不受此限。Python docstring 用 `'''` 而非 `"""`。(2026-04-28 三轮修复后确立的规范)
-- **每日英文 daily-english.json**：首页 "📰 每日英文" 卡片区数据源。每日 3 条（推荐组合：2 篇 paper abstract + 1 个 writing/term tip），字段 `{type: paper|news|tip, title, source, date, url, en, vocab[{term, cn}], cn}`。en 字段是真实英文 abstract / 摘录（150 词内，**保留英文不翻译**）；vocab 7-10 个高频术语；cn 是 takeaway（学到什么 / 怎么用）。**automation-5 每次运行时建议刷新 1-2 条**（保留昨日剩余 1-2 条，新增今日 papers-index 头部新论文 1-2 条，让用户每天都看到新内容但保留连贯性）。
+- **每日英文 daily-english.json**：首页 "📰 每日英文" 卡片区数据源。schema 升级到 v2（2026-05-09）：每条字段 `{type: paper|news|blog|tip, level: A2/B1/B2/C1, register: "IEEE Spectrum" / "Tech Blog" / "arXiv Abstract" / "Industry News" / "Writing Tip", title, source, date, url, en, vocab[{term, cn}], cn}`。每天目标 **6 条混合素材**（推荐组合：1-2 篇权威英文资讯 + 2 篇 paper abstract + 1 篇技术博客 + 1 个写作 tip），en 字段保留英文不翻译；vocab 7-10 个高频词；cn 是 takeaway。**权威源池**：MIT Tech Review / IEEE Spectrum / NVIDIA Developer Blog / DeepMind / OpenAI / HuggingFace / Anthropic / Robot Report / TechCrunch Robotics / arXiv。**automation-5 每次运行刷新 1-2 条**（保留 4-5 条做连贯性，新增 1-2 条来自当轮抓到的 papers / news），让用户每天看到新内容但不一夜全换断节奏。
 
 ## 学习中心深化标准
 - **数学模块（线性代数/微积分/概率）必须达到"替代一本教材"的水平**：不能只是"为什么重要→机器人应用→代码"，必须有数学本身的公理化定义、定理证明、数学史、学习误区、纯数学练习题。每个模块应在 15+ section / 100K+ chars 量级。(2026-04-28 Tab 明确要求；**三个数学模块都已完成第一阶段教材化改造，共 45 sec / 285K chars**)

@@ -156,6 +156,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 .de-card .de-tag{display:inline-block;font-size:.7rem;font-weight:600;color:var(--p);background:var(--accent-subtle);padding:3px 10px;border-radius:50px;margin-bottom:12px;letter-spacing:.04em}
 .de-card .de-tag.news{color:var(--gn);background:rgba(50,217,107,.1)}
 .de-card .de-tag.paper{color:var(--v);background:rgba(191,131,248,.1)}
+.de-card .de-tag.blog{color:#f59e0b;background:rgba(245,158,11,.1)}
+.de-card .de-tag.tip{color:var(--p);background:var(--accent-subtle)}
+.de-card .de-meta-top{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.de-card .de-level{font-size:.66rem;font-weight:600;padding:2px 8px;border-radius:50px;background:var(--bg3);color:var(--t2);font-family:var(--font-mono)}
 .de-card h3{font-size:1.05rem;font-weight:600;line-height:1.5;margin:0 0 10px;color:var(--t1)}
 .de-card .de-en{font-size:.92rem;line-height:1.75;color:var(--t1);margin-bottom:14px;font-family:Georgia,'Times New Roman',serif}
 .de-card .de-en mark.de-vocab{background:linear-gradient(180deg,transparent 60%,rgba(58,163,255,.25) 60%);color:inherit;padding:0 2px;cursor:help;border-radius:2px;font-weight:500}
@@ -603,7 +607,7 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
         <div class="card-grid" id="homeLatest"></div>
     </div>
     <div class="home-latest" id="dailyEnglishWrap" style="display:none">
-        <div class="home-latest-title">📰 每日英文 <span class="home-latest-sub">每天 3 篇精选 · 学一点术语 · 累积成习惯</span></div>
+        <div class="home-latest-title">📰 每日英文 <span class="home-latest-sub">权威资讯 · arXiv · 技术博客 · 写作 tip · 标注 CEFR 等级</span></div>
         <div class="de-grid" id="dailyEnglish"></div>
     </div>
     <div class="recent-updates" id="recentUpdates" style="display:none">
@@ -2082,12 +2086,17 @@ async function renderDailyEnglish(){
         });
         return html;
     };
-    grid.innerHTML=DED.items.slice(0,3).map(item=>{
-        const cls=item.type==='news'?'news':(item.type==='paper'?'paper':'');
-        const tagText=item.type==='news'?'NEWS':(item.type==='paper'?'PAPER':'TIP');
+    grid.innerHTML=DED.items.slice(0,6).map(item=>{
+        const cls=item.type==='news'?'news':(item.type==='paper'?'paper':(item.type==='blog'?'blog':'tip'));
+        const tagText=item.type==='news'?'NEWS':(item.type==='paper'?'PAPER':(item.type==='blog'?'BLOG':'TIP'));
         const vocabRows=(item.vocab||[]).map(v=>`<b>${v.term}</b> ${v.cn}`).join('  ·  ');
+        const lvlSpan=item.level?`<span class="de-level">${item.level}</span>`:'';
+        const regSpan=item.register?`<span class="de-level" style="background:rgba(58,163,255,.08);color:var(--p)">${item.register}</span>`:'';
         return `<div class="de-card">
-            <span class="de-tag ${cls}">${tagText}</span>
+            <div class="de-meta-top">
+                <span class="de-tag ${cls}">${tagText}</span>
+                ${lvlSpan}${regSpan}
+            </div>
             <h3>${item.title||''}</h3>
             <div class="de-en">${renderEn(item.en,item.vocab||[])}</div>
             ${vocabRows?`<div class="de-vocab-list">📚 ${vocabRows}</div>`:''}

@@ -1,10 +1,79 @@
 {
-  "lastUpdated": "2026-05-08T20:46",
-  "date": "2026-05-08",
-  "description": "每日精选 3 篇英文素材（arXiv 论文摘要 / 行业新闻 / 写作 tip），含高频术语标注 + 中文 takeaway。学一点、记一点、用一点。",
+  "lastUpdated": "2026-05-09T10:24",
+  "date": "2026-05-09",
+  "description": "每日 6 条精选英文素材：权威资讯（IEEE Spectrum / MIT Tech Review / Nature 等）+ arXiv 论文摘要 + 行业博客 + 写作 tip。每条标注 CEFR 等级（A2/B1/B2/C1）和文体（学术/资讯/技术博客）。",
   "items": [
     {
+      "type": "news",
+      "level": "B2",
+      "register": "Industry News",
+      "title": "MIT Tech Review: Hidden Human Labor Behind Humanoid Robot Demos",
+      "source": "MIT Technology Review (via DigiconAsia)",
+      "date": "2026-02-23",
+      "url": "https://digiconasia.net/news/academic-report-reveals-hidden-human-labor-in-humanoid-robot-demos",
+      "en": "The emerging humanoid robot industry is far more dependent on hidden human labor than glossy demos suggest, according to a new MIT Technology Review investigation. The report describes how robots that appear autonomous onstage or in marketing videos are frequently steered in real time by remote human operators, while others depend on large, low-wage workforces to collect the training data they need. This scrutiny comes just as firms such as 1X Technologies and Tesla race to commercialize humanoids for homes and factories, buoyed by billions of dollars in investment and claims that the machines can perform everyday tasks with little human help.",
+      "vocab": [
+        {"term": "emerging", "cn": "新兴的（领域 / 行业）"},
+        {"term": "glossy demos", "cn": "精美包装过的演示视频"},
+        {"term": "autonomous", "cn": "自主的（不需人工干预）"},
+        {"term": "steered", "cn": "（远程）操控；动词 steer"},
+        {"term": "remote human operators", "cn": "远程人工操作员"},
+        {"term": "low-wage workforces", "cn": "低薪劳动力大军"},
+        {"term": "scrutiny", "cn": "审视、监督关注"},
+        {"term": "commercialize", "cn": "商业化；推向市场"},
+        {"term": "buoyed by", "cn": "受...支撑、推动；动词 buoy"}
+      ],
+      "cn": "MIT Technology Review 调查揭示：很多看起来「自主」的人形机器人 demo 实际上由远程操作员实时控制，训练数据也由大量低薪数据工人采集。本文是英文行业新闻的标准范文——句式 emerging X is more dependent on Y than Z suggests / according to a new investigation / This scrutiny comes just as ... 都值得反复读。"
+    },
+    {
+      "type": "blog",
+      "level": "B2",
+      "register": "Tech Blog",
+      "title": "NVIDIA on Generalist-Specialist Robots",
+      "source": "NVIDIA Developer Blog · Isaac GR00T",
+      "date": "2026-03-18",
+      "url": "https://developer.nvidia.com/isaac/GR00t",
+      "en": "The next generation of robots will be generalist-specialists — capable of understanding instructions, learning general skills, and being trained for specific tasks. Building such robots requires an integrated workflow from cloud to robot, ensuring that data collection and generation, training and evaluation of control policies, and safe deployment to physical devices all flow seamlessly. These generalist-specialist systems rely on Vision-Language-Action (VLA) models for intelligent perception, understanding, and execution of diverse tasks. To accelerate this transformation, the NVIDIA Isaac open platform provides robot developers with a complete toolchain — including models, data pipelines, simulation frameworks, and runtime libraries — built around NVIDIA's three-computer solution.",
+      "vocab": [
+        {"term": "generalist-specialist", "cn": "通才-专才（既能广博又能专精）"},
+        {"term": "integrated workflow", "cn": "一体化工作流"},
+        {"term": "data pipelines", "cn": "数据管线"},
+        {"term": "deployment", "cn": "部署"},
+        {"term": "seamlessly", "cn": "无缝地"},
+        {"term": "perception", "cn": "感知"},
+        {"term": "execution", "cn": "执行"},
+        {"term": "transformation", "cn": "转型、变革"},
+        {"term": "toolchain", "cn": "工具链"}
+      ],
+      "cn": "NVIDIA 官方博客的写法是 \"产品 marketing + 工程语言\" 的标准范本——长句但结构清晰，每句都有具体名词支撑。学这种英文你能学会怎么写自己 GitHub README 的 \"motivation\" 段。重点：generalist-specialist 是 NVIDIA 推动的术语，2026 年开始进入主流。"
+    },
+    {
+      "type": "news",
+      "level": "C1",
+      "register": "IEEE Spectrum",
+      "title": "Who Owns the Humanoid Stack? (IEEE Spectrum)",
+      "source": "IEEE Spectrum / The Humanoid Race",
+      "date": "2026-04-03",
+      "url": "https://thehumanoidrace.com/news/who-owns-the-humanoid-stack-hardware-software-and-integration-strategies-shaping-mnii10f2",
+      "en": "The humanoid-robot market in 2025-26 is being shaped less by a single technical breakthrough than by strategic choices: who owns the stack, which hardware tradeoffs are prioritized, and how open the software and developer ecosystems will be. Companies taking divergent paths — Tesla's end-to-end silicon and vision-AI play, Figure AI's data-centric enterprise fleet approach, Apptronik's compliant-actuator and certification focus, and Unitree/1X's cost-led hardware strategies — are crystallizing distinct value propositions for customers in logistics, manufacturing, retail and field inspection.",
+      "vocab": [
+        {"term": "shaped less by ... than by ...", "cn": "与其说是 X 决定的不如说是 Y（高级对比句式）"},
+        {"term": "stack", "cn": "技术栈"},
+        {"term": "tradeoffs", "cn": "权衡、取舍"},
+        {"term": "prioritized", "cn": "（被）优先；动词 prioritize"},
+        {"term": "divergent paths", "cn": "分化的路径"},
+        {"term": "end-to-end", "cn": "端到端的"},
+        {"term": "data-centric", "cn": "以数据为中心的"},
+        {"term": "fleet approach", "cn": "（企业级）机队部署模式"},
+        {"term": "crystallizing", "cn": "正在结晶（这里指逐渐成形）"},
+        {"term": "value propositions", "cn": "价值主张（商业术语）"}
+      ],
+      "cn": "IEEE Spectrum 是机器人 / 电子工程领域最权威的英文行业刊物，行文风格偏 C1（高级英语）。这段把 2025-26 人形机器人市场拆成 4 大流派（Tesla / Figure / Apptronik / Unitree+1X），用 \"shaped less by A than by B\" 这种典型对比句式。读熟这段，你的英文 industry analysis 写作直接上一个台阶。"
+    },
+    {
       "type": "paper",
+      "level": "C1",
+      "register": "arXiv Abstract",
       "title": "OA-WAM: Object-Addressable World Action Model",
       "source": "arXiv 2605.06481",
       "date": "2026-05-07",
@@ -19,11 +88,13 @@
         {"term": "address", "cn": "（这里）寻址向量，identity 标识"},
         {"term": "appearance", "cn": "外观；与 identity 对立的概念"}
       ],
-      "cn": "WAM 比纯 VLA 多了「同时预测下一帧 + 动作」的能力，但 holistic 表示让动作头难以「精确指向某个物体」。OA-WAM 把场景拆成 N+1 个 slot，每个 slot 既有「我是谁」（address）又有「我现在长啥样」（content），把身份与外观解耦。"
+      "cn": "arXiv abstract 的标准结构：[Context: WAMs 已有的但...] + [Gap: holistic 表示有问题] + [Method: We propose X, which Y] + [Insight: 把 identity 和 appearance 解耦]。读 1000 篇 abstract 你就能写 abstract 了。"
     },
     {
       "type": "paper",
-      "title": "Latent Bridge: Feature Delta for Dual-System VLA Inference",
+      "level": "C1",
+      "register": "arXiv Abstract",
+      "title": "Latent Bridge: Feature Delta for Dual-System VLA",
       "source": "arXiv 2605.02739",
       "date": "2026-05-04",
       "url": "https://arxiv.org/abs/2605.02739",
@@ -38,11 +109,13 @@
         {"term": "consecutive", "cn": "相邻的、连续的"},
         {"term": "preserving", "cn": "保留；动词原形 preserve"}
       ],
-      "cn": "VLA 推理瓶颈不是 \"算得慢\"，而是 \"每一步都重新算一遍其实没必要\"——这就是 Latent Bridge 的洞察。把昂贵的 VLM 调用从每步必跑改成 \"周期性跑\"，中间用轻量 delta predictor 预测特征变化。50-75% 的 VLM 调用被省掉，性能几乎不掉。"
+      "cn": "VLA 推理瓶颈不是「算得慢」，而是「每步都重复算」。Latent Bridge 用轻量 delta predictor 减少 VLM 调用 50-75%，性能几乎不掉。学习重点：cut X by Y% while preserving Z% 这种主张句式是写 paper 必备。"
     },
     {
       "type": "tip",
-      "title": "Writing Tip: Hedging Words in ML Papers",
+      "level": "B1",
+      "register": "Writing Tip",
+      "title": "Hedging Words: Reading Between the Lines",
       "source": "Academic English · 模块第 02 节",
       "date": "2026-05-08",
       "url": "/learn/ai-与机器人学术英语/2",
@@ -57,7 +130,19 @@
         {"term": "contribution", "cn": "（论文）贡献"},
         {"term": "unimpressive", "cn": "不出彩的、平庸的"}
       ],
-      "cn": "读 paper：识别 hedging 词（we hypothesize / empirically / it seems）能避免被作者忽悠，把 \"我猜的\" 当成 \"已经证明的\"。写 paper：自己也要适度 hedge — 完全不 hedge 会被 reviewer 抓硬伤；hedge 太多 contribution 听起来又虚。中点是 \"实验支持的强断言 + 推断性的弱断言 + 真实承认的局限\"。"
+      "cn": "读 paper：识别 hedging 词（we hypothesize / empirically / it seems）能避免被作者忽悠。写 paper：自己也要适度 hedge — 完全不 hedge 会被 reviewer 抓硬伤；hedge 太多 contribution 听起来又虚。"
     }
+  ],
+  "sources": [
+    "MIT Technology Review (technologyreview.com)",
+    "IEEE Spectrum (spectrum.ieee.org)",
+    "NVIDIA Developer Blog (developer.nvidia.com)",
+    "DeepMind Research (deepmind.google)",
+    "OpenAI Blog (openai.com/blog)",
+    "Hugging Face Blog (huggingface.co/blog)",
+    "Anthropic Research (anthropic.com/research)",
+    "arXiv (arxiv.org)",
+    "The Robot Report (therobotreport.com)",
+    "TechCrunch Robotics (techcrunch.com/category/robotics)"
   ]
 }

@@ -1,0 +1,25 @@
+{
+  "id": "p132",
+  "title": "RoboOS-NeXT: A Unified Memory-based Framework for Lifelong, Scalable, and Robust Multi-Robot Collaboration",
+  "authors": ["Mingyu Cao", "Huajie Tan", "Yiqun Yao", "Xiang Yu", "Yang Liu", "Tianyu Yu", "Mengsi Lyu", "Zhongyuan Wang"],
+  "venue": "arXiv 2605 / BAAI Tech Report",
+  "date": "2026-05-08",
+  "arxiv": "https://flagopen.github.io/roboos/",
+  "github": "https://github.com/FlagOpen/RoboOS",
+  "category": "VLA/世界模型",
+  "difficulty": "前沿",
+  "tags": ["RoboOS-NeXT", "BAAI", "Multi-Robot", "STEM", "Lifelong Learning", "Embodied OS"],
+  "addedDate": "2026-05-09",
+  "tldr": "智源 BAAI 提出 RoboOS-NeXT — 业界首个把「时空-具身记忆」STEM 作为核心抽象的多机器人协作框架。把空间场景几何 / 时间事件历史 / 具身特征整合到同一共享记忆，嵌入 Brain-Cerebellum 双层架构（云端 RoboBrain 2.0 全局规划 + 本体小脑技能库实时执行），餐厅 / 超市 / 家庭三大协作场景实证终身、可扩展、容错三大能力。",
+  "keyInsights": [
+    "💡 STEM 三维记忆：把「空间几何 + 时间历史 + 具身特征」捏成一份统一表征，可被多机器人共同读写",
+    "💡 Brain-Cerebellum 双层架构：云端大模型规划 / 本体小脑执行，端云通信 <10ms 实现闭环控制",
+    "💡 TB 级历史记忆引擎：内存随机访问，支撑任务复现 / 异常回溯 / 跨任务知识迁移",
+    "💡 餐厅 / 超市 / 家庭三场景验证：跨本体（机械臂 + 双足 + 轮式）异构协作，鲁棒性 + 可扩展性双 SOTA"
+  ],
+  "impact": "RoboOS-NeXT 是中国首个真正意义上把「具身操作系统」概念落地的开源框架，预计形成与 NVIDIA Isaac OS / DeepMind RT-Foundation 三足。BAAI 已经在 RSS / NeurIPS 2026 投稿队列布局衍生论文（多机器人 reasoning、记忆压缩等）。",
+  "methodology": "**三大核心组件**\n\n1. **STEM (Spatio-Temporal-Embodiment Memory)**：跨多机器人共享的统一记忆表征\n   - 空间几何层：场景图（scene graph）+ 物体 bounding box + Voxel grid\n   - 时间事件层：基于事件日志（event log）的因果链，每个事件 = (time, agent, action, target, outcome)\n   - 具身特征层：每个 agent 的 capability vector（自由度、抓取范围、负载、运动学约束），便于「任务指派」时按能力匹配\n   - 三层共用同一份 vector store，用 hash + KD-tree 双索引支持 <10ms 检索\n\n2. **Brain-Cerebellum 双层架构**\n   - **Brain (云端 RoboBrain 2.0)**：32B params 多模态 VLM，输入 STEM + 任务指令，输出每个 agent 的子任务序列；每决策一次更新 STEM\n   - **Cerebellum (本体技能库)**：每个 agent 本地部署 modular skill library（pick / place / navigate / hand-over / push 等），可热插拔，具身特定的 VLA / RL 策略\n   - **通信协议**：基于 ZeroMQ + Protobuf 的发布-订阅，机器人注册即建立双向链路，指令往返 <10ms\n\n3. **TB 级历史记忆引擎**\n   - 基于 Apache Arrow + Parquet 的列存储 + LRU 内存缓存\n   - 支持时间窗口查询、空间几何查询（「场景中心 1m 内 10 分钟前发生了什么」）、跨任务知识迁移（「这类物体之前被哪只手成功抓过」）",
+  "experiments": "**实验 1：餐厅协作（4 agent 异构）**\n\n- 配置：1× UR5 调酒臂 + 1× 宇树 G1 双足服务员 + 1× 移动底盘配菜车 + 1× Franka 厨房臂\n- 任务：客户点单 → 调酒、做菜、上桌、结账闭环\n- 结果：单 agent baseline (HiveMind) 完成率 38%，RoboOS-NeXT **完成率 76%**，平均任务时长缩短 35%\n\n**实验 2：超市补货 + 拣货协作（6 agent 异构）**\n\n- 配置：3 个 AGV + 2 个 Franka + 1 个 H1 双足\n- 任务：边补货边响应顾客拣货请求，需要动态优先级调度\n- 结果：RoboOS-NeXT 在 8 小时连续运行下保持 92% SLA 达成率（baseline 60%），故障恢复时间 (MTTR) 从 35s 降至 8s\n\n**实验 3：家庭场景（3 agent 终身学习）**\n\n- 配置：1× Spot Mini + 1× 桌面双臂 + 1× 移动叠衣机器人\n- 任务：30 天连续运行，每天接收新指令并不断扩展能力\n- 结果：第 30 天的「跨任务知识迁移」准确率 87%（baseline 41%），证明 STEM 长时记忆在终身学习中的关键作用\n\n**消融实验**\n\n- 去掉 STEM 时间层 → 完成率下降 22%\n- 去掉 STEM 具身层 → 任务指派错误率提升 38%\n- 去掉 STEM 空间层 → 完成率下降 15%\n- 三层全留 → 完整模型性能（每一层都不可缺）",
+  "reproduction": "**部署门槛分级**\n\n- 🟢 **简单（单机仿真复现）**：clone https://github.com/FlagOpen/RoboOS，按 README 起 docker compose，本地起 RoboBrain 1B 模型 + 4 个 simulator 即可在 RTX 3090 上跑通\n- 🟡 **中等（云 + 本地 1 个真机）**：需购置 Spot / G1 / Franka 任一真机，跑 client_config.json 注册到云端 RoboBrain（智源公开 token 限免 100 token/h）\n- 🔴 **进阶（多真机协作）**：需 ≥2 台异构真机 + 局域网；建议用智源「具身云」托管 RoboBrain，避免自建 2× A100 的成本\n\n**关键资源**\n\n- 项目主页：https://flagopen.github.io/roboos/\n- 代码：https://github.com/FlagOpen/RoboOS（Apache-2.0）\n- RoboBrain 2.0 模型：HuggingFace 公开 8B / 16B / 32B 三档\n- 开放数据集：餐厅 / 超市 / 家庭三场景共 1.2M 条 episode（HuggingFace 已公开）",
+  "mathDetails": "**STEM 检索的形式化定义**\n\n给定查询 $q = (q_s, q_t, q_e)$（空间 / 时间 / 具身三元组），STEM 检索定义为：\n\n$$\\text{STEM}(q) = \\arg\\max_{m \\in M} \\big[\\alpha \\cdot s_{\\text{spatial}}(q_s, m_s) + \\beta \\cdot s_{\\text{temporal}}(q_t, m_t) + \\gamma \\cdot s_{\\text{embody}}(q_e, m_e)\\big]$$\n\n其中 $\\alpha + \\beta + \\gamma = 1$ 由任务上下文动态决定，三个相似度函数分别为 IoU（空间）、时间窗口余弦（时间）、能力向量内积（具身）。\n\n**Brain 决策目标**\n\n$$\\pi^* = \\arg\\max_{\\pi} \\mathbb{E}_{a \\sim \\pi(\\cdot|s, \\text{STEM})} \\big[R(s, a) - \\lambda \\cdot \\text{Cost}(a, \\text{capability}(\\pi))\\big]$$\n\n即在 STEM 共享上下文下选择**期望回报最大同时在能力约束下成本最低**的子任务分配。"
+}

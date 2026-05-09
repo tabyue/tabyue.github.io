@@ -1,6 +1,81 @@
 {
-  "lastUpdated": "2026-05-08T23:30",
+  "lastUpdated": "2026-05-09T05:50",
   "papers": [
+    {
+      "id": "p132",
+      "title": "RoboOS-NeXT: A Unified Memory-based Framework for Lifelong, Scalable, and Robust Multi-Robot Collaboration",
+      "authors": [
+        "Mingyu Cao",
+        "Huajie Tan",
+        "Yiqun Yao",
+        "Xiang Yu",
+        "Yang Liu",
+        "Tianyu Yu",
+        "Mengsi Lyu",
+        "Zhongyuan Wang"
+      ],
+      "venue": "arXiv 2605 / BAAI Tech Report",
+      "date": "2026-05-08",
+      "arxiv": "https://flagopen.github.io/roboos/",
+      "github": "https://github.com/FlagOpen/RoboOS",
+      "tldr": "智源 BAAI 提出 RoboOS-NeXT — 业界首个把「时空-具身记忆」STEM 作为核心抽象的多机器人协作框架。把空间场景几何 / 时间事件历史 / 具身特征整合到同一共享记忆，嵌入 Brain-Cerebellum 双层架构（云端 RoboBrain 2.0 全局规划 + 本体小脑技能库实时执行），餐厅 / 超市 / 家庭三大协作场景实证终身、可扩展、容错三大能力。",
+      "category": "VLA/世界模型",
+      "difficulty": "前沿",
+      "tags": [
+        "RoboOS-NeXT",
+        "BAAI",
+        "Multi-Robot",
+        "STEM",
+        "Lifelong Learning",
+        "Embodied OS"
+      ],
+      "addedDate": "2026-05-09",
+      "keyInsights": [
+        "💡 STEM 三维记忆：把「空间几何 + 时间历史 + 具身特征」捏成一份统一表征，可被多机器人共同读写",
+        "💡 Brain-Cerebellum 双层架构：云端大模型规划 / 本体小脑执行，端云通信 <10ms 实现闭环控制",
+        "💡 TB 级历史记忆引擎：内存随机访问，支撑任务复现 / 异常回溯 / 跨任务知识迁移",
+        "💡 餐厅 / 超市 / 家庭三场景验证：跨本体（机械臂 + 双足 + 轮式）异构协作，鲁棒性 + 可扩展性双 SOTA"
+      ],
+      "impact": "RoboOS-NeXT 是中国首个真正意义上把「具身操作系统」概念落地的开源框架，预计形成与 NVIDIA Isaac OS / DeepMind RT-Foundation 三足。BAAI 已经在 RSS / NeurIPS 2026 投稿队列布局衍生论文（多机器人 reasoning、记忆压缩等）。"
+    },
+    {
+      "id": "p131",
+      "title": "VILAS: A VLA-Integrated Low-cost Architecture with Soft Grasping for Robotic Manipulation",
+      "authors": [
+        "Zijian An",
+        "Hadi Khezam",
+        "Bill Cai",
+        "Ran Yang",
+        "Shijie Geng",
+        "Yiming Feng",
+        "Yue (Luna) Zheng",
+        "Lifeng Zhou"
+      ],
+      "venue": "arXiv 2605.02037",
+      "date": "2026-05-03",
+      "arxiv": "https://arxiv.org/abs/2605.02037",
+      "github": "",
+      "tldr": "VILAS — 完全低成本、模块化的 VLA 操纵平台。Fairino FR5 协作臂 + Jodell RG52-50 夹爪 + 双相机 + ZMQ 通信中间件 + 折纸软夹爪扩展，实现葡萄抓取这类脆弱物体的「无显式力传感安全操控」。在同一硬件上微调 π₀ / π₀.₅ / GR00T N1.6 三个 SOTA VLA，给出可复现的低成本 VLA 评测基线。",
+      "category": "VLA/世界模型",
+      "difficulty": "中级",
+      "tags": [
+        "VILAS",
+        "VLA",
+        "Low-cost",
+        "Soft Grasping",
+        "Kirigami",
+        "π0",
+        "GR00T"
+      ],
+      "addedDate": "2026-05-09",
+      "keyInsights": [
+        "💡 全栈低成本：协作臂 + 电动夹爪 + 双相机硬件总价 <$15K，整套 BOM 公开可复刻",
+        "💡 折纸软夹爪扩展：基于 kirigami 几何的可预测形变 → 无须力传感即可安全抓脆物（葡萄不烂）",
+        "💡 ZMQ 通信中间件：把遥操作 / 数据采集 / 策略部署整合为同一架构，简化 VLA 端到端流水线",
+        "💡 三 VLA 同台评测：π₀ / π₀.₅ / GR00T N1.6 在同一硬件 + 同一数据集做对照，给出可复现的低成本 VLA 部署基线"
+      ],
+      "impact": "VILAS 解决「研究室没有动辄 50 万的 ALOHA / Bimanual UR」的痛点 — 任何高校实验室、初创公司都能用 <$15K 把 SOTA VLA 跑起来。预计成为社区主流的低成本 VLA 评测平台，与 LeRobot / SO-100 / Bambot 形成开源生态合力。"
+    },
     {
       "id": "p130",
       "title": "ExoActor: Exocentric Video Generation as Generalizable Interactive Humanoid Control",
