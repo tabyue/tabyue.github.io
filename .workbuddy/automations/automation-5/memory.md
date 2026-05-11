@@ -1,5 +1,17 @@
 # automation-5 执行历史
 
+## 2026-05-11 07:05（凌晨轮）
+- 投稿箱：无开放 Issue
+- 新闻 +3 (n265-n267)：港科大 StarVLA 乐高式 VLA 底座开源（GitHub 2.3k star，VLA 的 PyTorch 时刻）/ 波士顿动力 Atlas 量产版体操 demo（手撑倒立 + L-sit + 56 DoF / 50kg 单臂 / 2028 现代工厂商用）/ 拓斯达「小拓」获评全国工人先锋号（国内首台注塑产线落地人形 + ±0.05mm + 21 DoF + GLM-4.5 + 3352 TOPS）
+- 论文 +2 (p143-p144)：StarVLA 港科大开源底座（HKUST 社区）+ Q2RL = Q-Estimation + Q-Gating（Brown/Northeastern/TRI 真机 1-2h 学到 100% pipe assembly + kitting，单调改进定理 V_gate ≥ max(V_BC, V_RL)）；全 keyInsights+impact+detail
+- 开源 +2：os097 starVLA/starVLA (MIT, 2.3k star) + os098 NVlabs/GR00T-WholeBodyControl (Apache-2.0 + NVIDIA OML, 1.9k star, GEAR-SONIC + Decoupled WBC + MotionBricks)
+- 招聘 +1：j122 吉翼智能 7-DoF 冗余机械臂运动控制 / 力控 / 物理仿真校招（北上深 base）
+- 学习深化：reinforcement-learning +sec-15「Q2RL：从行为克隆里提取 Q-函数 — On-Robot RL 的 1 小时基线（2026-05 最新）」（联动 p144，82K → 89K chars）
+- daily-english +2：StarVLA arXiv abstract（C1 学术）+ Atlas Hyundai handstand（B2 资讯）—— items 6 / archive 9
+- 工作树状态：所有变更已被并行实例 commit 472c3b7（5/10 早间轮 PUSH 时间 2026-05-11 09:33）一起捎上 push 到 origin/main，0 id dups（news 239 / papers 126 / os 87 / jobs 114）
+- sync_learn_split (2 files updated) + build_sitemap (430 chapters) 已跑
+- 总 commit 状态：HEAD = b86ae16（已 up-to-date origin/main）
+
 ## 2026-05-10 16:15（下午轮）
 - 投稿箱：无开放 Issue
 - 接手并行实例已合并到 origin/main（HEAD = 0a79d03，时间戳 2026-05-11 09:30 早间轮 commit 472c3b7）的 n260-n267 / p140-p144 / os096-os098 / control-theory sec-16 / humanoid-fullstack sec-17 / rl sec-15 / vla-models sec-13 等成果。我自己写入的部分（n260 卓誉科技 / n261 阶跃星辰 / p140 KC-VLA / os096 KC-VLA / humanoid-fullstack sec-17 长时程 VLA 三路线）已合并入 commit
