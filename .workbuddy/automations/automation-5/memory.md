@@ -1,5 +1,14 @@
 # automation-5 执行历史
 
+## 2026-05-10 16:15（下午轮）
+- 投稿箱：无开放 Issue
+- 接手并行实例已合并到 origin/main（HEAD = 0a79d03，时间戳 2026-05-11 09:30 早间轮 commit 472c3b7）的 n260-n267 / p140-p144 / os096-os098 / control-theory sec-16 / humanoid-fullstack sec-17 / rl sec-15 / vla-models sec-13 等成果。我自己写入的部分（n260 卓誉科技 / n261 阶跃星辰 / p140 KC-VLA / os096 KC-VLA / humanoid-fullstack sec-17 长时程 VLA 三路线）已合并入 commit
+- 新内容净增汇总：news 239 / papers 126 / os 87 / jobs 122，0 id dups
+- 学习模块：humanoid-fullstack 17 sec / 103K chars（联动 KC-VLA p140 + Helix-02 + π0.5）
+- daily-english items 6 / archive 9
+- sync_learn_split + build_sitemap（429 chapters）已跑
+- 状态：clean working tree，无需自己 commit/push
+
 ## 2026-05-10 02:25（凌晨轮）
 - 投稿箱：无开放 Issue（gh issue list 返回 []）
 - 新闻 +3 (n254-n256)：Genesis AI GENE-26.5 全栈机器人基础模型（自研 20DoF 灵巧手 + 3ms 端到端控制）/ 小雨智造 B+ 轮数亿元（北汽产投 / 黎万强 4 连投）/ 智元 G2 海外 The Robot Report 报道（消费电子产线 100% 汽车级零部件 + IP42）
