@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-11T18:10",
+  "lastUpdated": "2026-05-11T20:00",
   "categories": [
     {
       "id": "all",
@@ -35,6 +35,11 @@
       "id": "sensor",
       "name": "传感器模组",
       "icon": "📡"
+    },
+    {
+      "id": "chip",
+      "name": "算力芯片",
+      "icon": "⚡"
     }
   ],
   "robots": [
@@ -2757,6 +2762,532 @@
         {
           "name": "Fastumi 真机数据采集深度报道",
           "url": "https://finance.sina.cn/stock/jdts/2026-01-13/detail-inhheixp9091798.d.html"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "nvidia-h100",
+      "name": "NVIDIA H100 SXM5 80GB",
+      "manufacturer": "NVIDIA",
+      "category": "chip",
+      "tags": [
+        "数据中心 GPU",
+        "Hopper",
+        "FP8",
+        "训练旗舰",
+        "VLA 训练标配"
+      ],
+      "price": "$30,000+ / 卡（中国市场出口管制）",
+      "overview": "**Hopper 架构数据中心 GPU**——VLA 大模型训练的事实标配。FP8 引擎 + Transformer Engine 让 7B-70B 模型分布式训练效率比 A100 提升 4-9×。**关键参数**：FP16/BF16 算力 ~989 TFLOPS（含 Transformer Engine） / FP8 ~1979 TFLOPS / **HBM3 80GB 显存 + 3.35 TB/s 带宽** / NVLink 4.0 900 GB/s 跨卡互联 / 700W TDP。**国内现状**：受美国出口管制，2023/10 后无法采购 H100，市场流通主要是 H100 SXM5 + H800（NVLink 阉割版）。具身 AI 训练 VLA 的金标基线（DeepSpeed / FSDP / Megatron 都基于 H100 集群优化）。",
+      "specs": {
+        "架构": "Hopper",
+        "工艺": "TSMC 4N",
+        "FP16/BF16 算力": "989 TFLOPS（含 Transformer Engine）",
+        "FP8 算力": "1979 TFLOPS",
+        "TF32 算力": "989 TFLOPS",
+        "FP64 算力": "67 TFLOPS",
+        "显存": "HBM3 80GB / 3.35 TB/s 带宽",
+        "互联": "NVLink 4.0 900 GB/s + PCIe 5.0",
+        "TDP": "700 W",
+        "形态": "SXM5 / PCIe（PCIe 版降频）",
+        "出口管制": "中国大陆 2023/10 起禁运"
+      },
+      "bom": [
+        {
+          "part": "H100 SXM5 整卡",
+          "model": "NVIDIA H100 80GB SXM5",
+          "specs": "989 TFLOPS BF16 / 80GB HBM3",
+          "qty": "1",
+          "price": "$30,000+",
+          "link": "https://www.nvidia.com/en-us/data-center/h100/",
+          "driver": "CUDA 12+, cuDNN 9+, NCCL 2.x"
+        },
+        {
+          "part": "训练栈",
+          "model": "PyTorch 2.5+ / DeepSpeed / Megatron-LM / FSDP",
+          "specs": "VLA 7B-70B 主流分布式训练",
+          "qty": "—",
+          "price": "开源",
+          "link": "",
+          "driver": "—"
+        },
+        {
+          "part": "推理栈",
+          "model": "TensorRT-LLM / vLLM / SGLang",
+          "specs": "FP8 / Transformer Engine 优化",
+          "qty": "—",
+          "price": "开源",
+          "link": "",
+          "driver": "—"
+        }
+      ],
+      "docs": [
+        {
+          "name": "NVIDIA H100 官方页",
+          "url": "https://www.nvidia.com/en-us/data-center/h100/"
+        },
+        {
+          "name": "Hopper White Paper",
+          "url": "https://resources.nvidia.com/en-us-tensor-core/gtc22-whitepaper-hopper"
+        },
+        {
+          "name": "TensorRT-LLM",
+          "url": "https://github.com/NVIDIA/TensorRT-LLM"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "nvidia-jetson-thor",
+      "name": "NVIDIA Jetson AGX Thor 64GB",
+      "manufacturer": "NVIDIA",
+      "category": "chip",
+      "tags": [
+        "边缘控制器",
+        "Blackwell",
+        "FP4",
+        "Robotics 旗舰",
+        "人形主控"
+      ],
+      "price": "~$3,500 / 模组（开发套件 ~$5K）",
+      "overview": "**Blackwell 架构边缘机器人专用 SoC** —— 32 台具身机器人中**至少 6 家把 Thor 作为旗舰主控**（智元 / 众擎 T800 / 北京具身天工 3.0 等）。**核心参数**：**2070 TFLOPS FP4** / 1035 TFLOPS FP8 / 128 GB LPDDR5X 显存（开发版 64GB）/ 130W TDP。集成 Orin 同代 ARM CPU + Tensor Core + Optical Flow + Multimedia DLA。**优势**：① 一颗 SoC 同时跑 VLA 推理 + ROS2 + 视觉感知；② 5G + WiFi 7 + 千兆以太多模通信；③ 与云端 H100 训练栈完美对齐。**对位**：Orin 64GB（275 TOPS）的 ~ 7.5× 升级版。",
+      "specs": {
+        "架构": "Blackwell GPU + ARM Neoverse",
+        "FP4 算力": "2070 TFLOPS",
+        "FP8 算力": "1035 TFLOPS",
+        "FP16 算力": "517 TFLOPS",
+        "显存": "LPDDR5X 64-128 GB",
+        "TDP": "60-130 W",
+        "AI 加速器": "Tensor Core + DLA",
+        "通信": "10G 以太 + 5G modem 接口 + WiFi 7",
+        "适用层级": "边缘控制器（机器人附近）+ 端侧主控"
+      },
+      "bom": [
+        {
+          "part": "Jetson Thor 模组",
+          "model": "NVIDIA Jetson AGX Thor 64GB",
+          "specs": "2070 TFLOPS FP4 / 64GB LPDDR5X / 130W",
+          "qty": "1",
+          "price": "~$3,500",
+          "link": "https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/",
+          "driver": "JetPack 7.x + CUDA + TensorRT-LLM"
+        },
+        {
+          "part": "开发套件",
+          "model": "Jetson AGX Thor Developer Kit",
+          "specs": "套件含载板 + 散热 + 电源",
+          "qty": "1",
+          "price": "~$5,000",
+          "link": "",
+          "driver": "JetPack 7.x"
+        }
+      ],
+      "docs": [
+        {
+          "name": "Jetson Thor 官方页",
+          "url": "https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/"
+        },
+        {
+          "name": "Isaac ROS for Thor",
+          "url": "https://nvidia-isaac-ros.github.io/"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "huawei-ascend-910b",
+      "name": "华为昇腾 910B",
+      "manufacturer": "华为海思 / Huawei HiSilicon",
+      "category": "chip",
+      "tags": [
+        "国产替代旗舰",
+        "全栈自主",
+        "达芬奇架构",
+        "信创首选",
+        "对标 A100"
+      ],
+      "price": "整机集群 / 不单卖（市场价 ~ $20-25K 等价）",
+      "overview": "**国产替代旗舰** —— 全栈自主达芬奇架构，**对标 NVIDIA A100**。910B 是 910 系列的工程量产版，分 B1/B2/B3/B4 四档。**核心参数**：FP16 算力 **376-414 TFLOPS** / INT8 ~828 TOPS / **HBM2e 64GB** / NPU 直连 HCCS。**关键里程碑**：① 华为云 384 颗昇腾构建的 **CM384 集群可达 300 PFLOPS BF16**（接近 NVIDIA GB200 NVL72 的两倍）；② 已是国产信创智算中心首选；③ 软件栈：CANN（对标 CUDA）+ MindSpore（对标 PyTorch）+ ModelArts。**未来路线**：910C 对标 H100；2026 年发布 950PR/DT（FP8 算力达 1P）；2028Q4 上市 970（FP4 达 8P）。**实测**：与 A100 算力差距 ≤ 4.3%（性价比优势显著）。",
+      "specs": {
+        "架构": "达芬奇（DaVinci）3.0",
+        "工艺": "中芯 7nm 等效",
+        "FP16 算力": "376-414 TFLOPS（B1-B4 分档）",
+        "INT8 算力": "752-828 TOPS",
+        "显存": "HBM2e 64GB",
+        "互联": "HCCS（自研 NVLink 类）",
+        "TDP": "~ 350 W",
+        "对标": "NVIDIA A100",
+        "软件栈": "CANN + MindSpore + ModelArts",
+        "信创": "首选国产旗舰",
+        "集群": "CM384 = 384 卡 / 300 PFLOPS BF16"
+      },
+      "bom": [
+        {
+          "part": "昇腾 910B 加速卡",
+          "model": "华为 Ascend 910B (B1/B2/B3/B4)",
+          "specs": "376-414 TFLOPS FP16 / 64GB HBM2e",
+          "qty": "1",
+          "price": "整机不单卖",
+          "link": "https://www.hiascend.com/",
+          "driver": "CANN 7.x + MindSpore 2.x"
+        },
+        {
+          "part": "软件栈",
+          "model": "华为 CANN + MindSpore + ModelArts",
+          "specs": "对标 CUDA + PyTorch + 训练平台",
+          "qty": "—",
+          "price": "开源 / 自带",
+          "link": "https://www.hiascend.com/zh/software/cann",
+          "driver": "—"
+        },
+        {
+          "part": "PyTorch 适配",
+          "model": "torch_npu 插件",
+          "specs": "PyTorch 代码 0 改 → CANN runtime",
+          "qty": "—",
+          "price": "开源",
+          "link": "https://gitee.com/ascend/pytorch",
+          "driver": "—"
+        }
+      ],
+      "docs": [
+        {
+          "name": "昇腾官方文档",
+          "url": "https://www.hiascend.com/"
+        },
+        {
+          "name": "MindSpore",
+          "url": "https://www.mindspore.cn/"
+        },
+        {
+          "name": "910B 选型对比",
+          "url": "https://yun.ucache.cn/enterprise/new/318.html"
+        },
+        {
+          "name": "昇腾 vs 寒武纪 vs 海光对比",
+          "url": "https://blog.csdn.net/wayle123/article/details/159414922"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "hygon-dcu-k100",
+      "name": "海光 DCU K100-AI / 深算二号",
+      "manufacturer": "海光信息 (Hygon)",
+      "category": "chip",
+      "tags": [
+        "国产 GPGPU",
+        "ROCm 兼容",
+        "CUDA 迁移",
+        "信创",
+        "上交所 688041"
+      ],
+      "price": "整机集群（不单卖单卡）",
+      "overview": "**基于 AMD ROCm 生态的国产通用 GPU** —— 海光 DCU（Deep Computing Unit）系列**最大优势是 ROCm 兼容 → CUDA 代码迁移成本最低**（行业普遍认为 30% 改动可跑）。**产品矩阵**：① DCU Z100（HPC 通用 / 32GB HBM2 / 250W）；② **DCU K100-AI**（大模型训练 / 7nm 工艺 / **256 TOPS FP16 / 512 TOPS INT8** / 64GB HBM 显存）；③ DCU 8100（旗舰，对标 A100）。**核心场景**：高校 + 政企信创 + 国产大模型训练（已支持 Qwen / DeepSeek / Llama 全家族）。**软件栈**：DTK（对标 ROCm）+ HygonRT 推理引擎，PyTorch / TensorFlow 原生支持。",
+      "specs": {
+        "架构": "GPGPU（基于 AMD ROCm 生态）",
+        "工艺": "中芯 7nm（K100-AI）",
+        "FP16 算力": "256 TFLOPS（K100-AI）",
+        "INT8 算力": "512 TOPS",
+        "显存": "HBM2/HBM2e 32-64GB",
+        "互联": "Infinity Fabric 类",
+        "TDP": "300-350 W",
+        "迁移成本": "ROCm 兼容 → CUDA 代码 ~30% 改动可跑",
+        "应用": "大模型训练 + 推理 + HPC",
+        "信创": "上交所 688041 / 政企首选 GPGPU"
+      },
+      "bom": [
+        {
+          "part": "DCU K100-AI 加速卡",
+          "model": "海光 DCU K100-AI",
+          "specs": "256 TFLOPS FP16 / 64GB HBM",
+          "qty": "1",
+          "price": "整机不单卖",
+          "link": "https://www.hygon.cn/",
+          "driver": "DTK 24.x + HygonRT"
+        },
+        {
+          "part": "软件栈",
+          "model": "DTK (Deep Toolkit) + HygonRT",
+          "specs": "对标 ROCm + TensorRT",
+          "qty": "—",
+          "price": "随卡",
+          "link": "https://developer.hpccube.com/",
+          "driver": "—"
+        },
+        {
+          "part": "PyTorch 适配",
+          "model": "torch_dcu 插件",
+          "specs": "PyTorch 原生兼容",
+          "qty": "—",
+          "price": "开源",
+          "link": "",
+          "driver": "—"
+        }
+      ],
+      "docs": [
+        {
+          "name": "海光官网",
+          "url": "https://www.hygon.cn/"
+        },
+        {
+          "name": "海光开发者社区",
+          "url": "https://developer.hpccube.com/"
+        },
+        {
+          "name": "海光 DCU 部署 Qwen3-8B 实战",
+          "url": "https://blog.csdn.net/qq_23625847/article/details/159507206"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "cambricon-mlu-590",
+      "name": "寒武纪思元 590",
+      "manufacturer": "寒武纪 (Cambricon, 上交所 688256)",
+      "category": "chip",
+      "tags": [
+        "专注云端 AI",
+        "MLU 架构",
+        "HBM2e 96GB",
+        "对标 A100",
+        "5 月 4 日股价高"
+      ],
+      "price": "整机集群（不单卖）",
+      "overview": "**专注云端 AI 训推一体** —— 寒武纪自研 MLU 架构（第五代）。**核心参数**：**FP16 算力 345 TFLOPS** / **HBM2e 96GB（业界领先）** / 互联 MLU-Link。**关键定位**：性能接近 NVIDIA A100，是国产芯片中显存最大的之一（96GB > 910B 的 64GB > A100 的 80GB）。**前代**：思元 370（国内首款同时支持 HBM3e + LPDDR5）。**未来**：思元 690 性能预计翻倍。**软件栈**：Cambricon Neuware（对标 CUDA）+ PyTorch / TensorFlow 适配。**资本面**：2025 年股价位列国产 AI 芯片 TOP，2026 年推理需求爆发受益最大。",
+      "specs": {
+        "架构": "MLU 架构（第五代）",
+        "工艺": "中芯 7nm",
+        "FP16 算力": "345 TFLOPS",
+        "INT8 算力": "690 TOPS",
+        "显存": "HBM2e 96GB（最大）",
+        "互联": "MLU-Link",
+        "TDP": "350 W",
+        "对标": "NVIDIA A100",
+        "软件栈": "Cambricon Neuware"
+      },
+      "bom": [
+        {
+          "part": "思元 590 加速卡",
+          "model": "Cambricon MLU 590",
+          "specs": "345 TFLOPS FP16 / 96GB HBM2e（业界最大）",
+          "qty": "1",
+          "price": "整机不单卖",
+          "link": "https://www.cambricon.com/",
+          "driver": "Neuware 8.x"
+        },
+        {
+          "part": "软件栈",
+          "model": "Cambricon Neuware + 自研 BANG C 编程",
+          "specs": "对标 CUDA + 自研编程语言",
+          "qty": "—",
+          "price": "随卡",
+          "link": "https://developer.cambricon.com/",
+          "driver": "—"
+        },
+        {
+          "part": "PyTorch 适配",
+          "model": "torch_mlu 插件",
+          "specs": "PyTorch 兼容",
+          "qty": "—",
+          "price": "开源",
+          "link": "",
+          "driver": "—"
+        }
+      ],
+      "docs": [
+        {
+          "name": "寒武纪官网",
+          "url": "https://www.cambricon.com/"
+        },
+        {
+          "name": "寒武纪开发者社区",
+          "url": "https://developer.cambricon.com/"
+        },
+        {
+          "name": "推理算力红利分析",
+          "url": "https://news.qq.com/rain/a/20260310A06D2X00"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "moore-mtt-s4000",
+      "name": "摩尔线程 MTT S4000",
+      "manufacturer": "摩尔线程 (Moore Threads)",
+      "category": "chip",
+      "tags": [
+        "全功能 GPU",
+        "MUSA 架构",
+        "国产 GPU 第一股",
+        "夸娥万卡",
+        "AI + 图形"
+      ],
+      "price": "¥86,389（京东自营 48GB 工包）",
+      "overview": "**国产 GPU 第一股** —— 摩尔线程 MTT 系列采用自研 **MUSA**（Meta-computing Unified System Architecture）统一架构。**S4000 核心参数**：**FP16 算力 100 TFLOPS** / FP32 14.4 TFLOPS / 48GB 显存 / 2048 MUSA 核心 / 150W TDP。**特色**：**全功能 GPU**——同时支持 AI 智算 + 专业图形 + 桌面图形（覆盖训推 + 渲染 + 游戏）。**演进**：① S5000 训推一体对标 H100；② 2025/12 发布全功能 GPU 架构「花港」+ 专注 AI 训推的「华山 AI」芯片；③ 「夸娥万卡智算集群」支撑万亿参数模型训练。**资本面**：2026 年 IPO 申报提速，国产 GPU 头雁。",
+      "specs": {
+        "架构": "MUSA（Meta-computing Unified System Architecture）",
+        "工艺": "14nm（S4000） / 3D 封装",
+        "FP16 算力": "100 TFLOPS（S4000）",
+        "FP32 算力": "14.4 TFLOPS",
+        "显存": "48GB（S4000）",
+        "MUSA 核心": "2048",
+        "TDP": "150 W",
+        "特色": "全功能 GPU（AI + 图形）",
+        "集群": "夸娥万卡（万亿参数训练）",
+        "软件栈": "MUSA 工具链 + sGPU/vGPU 容器化"
+      },
+      "bom": [
+        {
+          "part": "MTT S4000 加速卡",
+          "model": "Moore Threads MTT S4000 48GB",
+          "specs": "100 TFLOPS FP16 / 48GB / 2048 MUSA 核",
+          "qty": "1",
+          "price": "¥86,389",
+          "link": "https://www.mthreads.com/",
+          "driver": "MUSA 工具链"
+        },
+        {
+          "part": "MUSA SDK",
+          "model": "MUSA Toolkit",
+          "specs": "对标 CUDA + 容器化 sGPU/vGPU",
+          "qty": "—",
+          "price": "开源",
+          "link": "https://developer.mthreads.com/",
+          "driver": "—"
+        }
+      ],
+      "docs": [
+        {
+          "name": "摩尔线程官网",
+          "url": "https://www.mthreads.com/"
+        },
+        {
+          "name": "MUSA 开发者",
+          "url": "https://developer.mthreads.com/"
+        },
+        {
+          "name": "MTT S4000 京东",
+          "url": "https://item.jd.com/100075886499.html"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "metax-c500",
+      "name": "沐曦曦云 C500 (Metax MXC)",
+      "manufacturer": "沐曦 (Metax)",
+      "category": "chip",
+      "tags": [
+        "FP8",
+        "千卡集群",
+        "MXMACA",
+        "CUDA 兼容 6000+ 应用",
+        "拟上市"
+      ],
+      "price": "整机集群（不单卖）",
+      "overview": "**沐曦曦云 C 系列** —— 强调 **FP8 精度训练 + 千卡集群能力**，**MXMACA 软件栈**在 API 层对 CUDA 高度兼容（已支持超过 6000 个 CUDA 应用，迁移成本最低之一）。**核心参数**：FP32 算力 220 TFLOPS / FP8 强项 / 大容量显存（C500 旗舰）。**未来**：MXC2000（7nm 工艺，2026 年流片），单芯片算力 100 TFLOPS（接近 H100 80%）。**软件栈**：MXMACA（兼容 CUDA + ROCm 双生态，独家技术路线）。**应用**：千卡集群训练已支持 LLaMA 70B 类模型训练。",
+      "specs": {
+        "架构": "沐曦自研 GPU 架构",
+        "工艺": "7nm（C500）/ 7nm（N260）",
+        "FP32 算力": "220 TFLOPS（C500）",
+        "FP8 算力": "强项支持",
+        "兼容生态": "MXMACA 软件栈兼容 6000+ CUDA 应用（API 层）",
+        "互联": "MetaXLink",
+        "对标": "AMD MI300X",
+        "未来路线": "MXC2000 - 7nm - 100 TFLOPS（≈ H100 80%）"
+      },
+      "bom": [
+        {
+          "part": "曦云 C500 加速卡",
+          "model": "Metax MXC C500",
+          "specs": "220 TFLOPS FP32 / FP8 强项",
+          "qty": "1",
+          "price": "整机不单卖",
+          "link": "https://www.metax-tech.com/",
+          "driver": "MXMACA SDK"
+        },
+        {
+          "part": "MXMACA 软件栈",
+          "model": "Metax MXMACA",
+          "specs": "API 层兼容 6000+ CUDA 应用",
+          "qty": "—",
+          "price": "开源",
+          "link": "",
+          "driver": "—"
+        }
+      ],
+      "docs": [
+        {
+          "name": "沐曦官网",
+          "url": "https://www.metax-tech.com/"
+        },
+        {
+          "name": "沐曦开发者",
+          "url": "https://developer.metax-tech.com/"
+        },
+        {
+          "name": "国产 GPU 性能对标分析",
+          "url": "https://www.starverse-ai.com/guide/archives/5365"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "horizon-j6",
+      "name": "地平线 Horizon J6 / Sunrise 9",
+      "manufacturer": "地平线机器人 (Horizon Robotics)",
+      "category": "chip",
+      "tags": [
+        "端侧 NPU",
+        "汽车 + 机器人",
+        "300+ TOPS",
+        "Vbot 维他动力 128 TOPS"
+      ],
+      "price": "B 端定制（按 SoC 整方案）",
+      "overview": "**地平线征程 J 系列 + 旭日 Sunrise 系列** —— 国内端侧 NPU 龙头，原本主攻自动驾驶，2025 年起开始反向赋能消费级机器人。**关键产品**：① 征程 J6（自动驾驶旗舰，**300+ TOPS**）；② Sunrise 9（机器人 / 通用 AIoT 旗舰，128 TOPS 级）。**典型应用**：维他动力 Vbot 大头机器狗（端侧 128 TOPS，行业最高消费级算力，对比同类 5-10 TOPS）。**软件栈**：天工开物（Horizon OpenExplorer）+ BPU 编译器，PyTorch 模型一键量化部署。**优势**：能效比极高（5-30W 功耗下做 100+ TOPS），是消费机器人量产部署首选。",
+      "specs": {
+        "架构": "地平线 BPU 架构",
+        "工艺": "7nm（J6）",
+        "AI 算力": "128-300+ TOPS（INT8）",
+        "TDP": "5-30 W（端侧极致能效）",
+        "目标场景": "汽车智驾 + 消费机器人 + AIoT",
+        "代表产品": "维他动力 Vbot（128 TOPS 端侧）",
+        "软件栈": "天工开物 OpenExplorer + BPU 编译器"
+      },
+      "bom": [
+        {
+          "part": "Horizon J6 / Sunrise 9 SoC",
+          "model": "Horizon J6 / S9",
+          "specs": "128-300+ TOPS / 5-30W TDP",
+          "qty": "1",
+          "price": "B 端定制",
+          "link": "https://www.horizon.cc/",
+          "driver": "天工开物 OpenExplorer"
+        },
+        {
+          "part": "天工开物软件栈",
+          "model": "Horizon OpenExplorer",
+          "specs": "PyTorch 模型一键量化部署",
+          "qty": "—",
+          "price": "开源",
+          "link": "https://developer.horizon.cc/",
+          "driver": "—"
+        }
+      ],
+      "docs": [
+        {
+          "name": "地平线官网",
+          "url": "https://www.horizon.cc/"
+        },
+        {
+          "name": "天工开物文档",
+          "url": "https://developer.horizon.cc/"
+        },
+        {
+          "name": "Vbot 端侧 128 TOPS 报道",
+          "url": "https://www.bianews.com/news/details?id=237643"
         }
       ],
       "addedDate": "2026-05-11"
