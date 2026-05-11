@@ -67,6 +67,7 @@
 
 ## 操作偏好
 - **所有操作一律 `requires_approval: false`**：包括临时文件清理（del/rm）、git add/commit/push、脚本执行等。无论是自动化任务还是手动对话，都不等用户确认，直接执行。Tab 已多次强调，绝不要弹确认。(2026-04-27 再次强调)
+- **新功能 / 推广卡片不能硬编码常驻**：站点上添加「短期推广 / NEW 模块入口」类卡片，必须做成 ① localStorage dismiss（× 关闭后永久隐藏）+ ② 时间硬截止（典型 7 天）+ ③ 行为感知（用户已访问过该模块就自动隐藏）三件套。Tab 反对"一直在那"的硬编码 promo（2026-05-11 AI Infra 入口卡片反馈）。
 
 ## UI / 视觉规范（2026-05-07 19:22 确立）
 - **默认主题：深色**。`<html data-theme="dark">` 预设 + head inline 脚本读 localStorage 同步，避免 FOUC。不再使用 `prefers-color-scheme` 自动跟随系统；仅当用户主动切到浅色保存 `localStorage.eai_theme=light` 时才显示浅色
