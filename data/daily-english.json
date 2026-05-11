@@ -1,8 +1,228 @@
 {
-  "lastUpdated": "2026-05-10T02:25",
-  "date": "2026-05-09",
+  "lastUpdated": "2026-05-11T07:05",
+  "date": "2026-05-11",
   "description": "每日 6 条精选英文素材：权威资讯（IEEE Spectrum / MIT Tech Review / Nature 等）+ arXiv 论文摘要 + 行业博客 + 写作 tip。每条标注 CEFR 等级（A2/B1/B2/C1）和文体（学术/资讯/技术博客）。",
   "items": [
+    {
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "StarVLA: A Lego-like Codebase for Vision-Language-Action Model Developing",
+      "source": "arXiv (cs.RO)",
+      "date": "2026-04-06",
+      "url": "https://arxiv.org/abs/2604.05014",
+      "en": "Vision-language-action (VLA) research is fragmented across incompatible action-decoding paradigms, training pipelines, and benchmarks. We introduce StarVLA, a modular open-source codebase that unifies VLM-based and world-model-based VLAs under a single policy-centric formulation L_total = L_action + lambda * L_aux. The framework supports independent backbone-action-head swapping across QwenVL, LLaVA, Cosmos and Gemma backbones with FAST, OFT, Flow-Matching pi, and GR00T dual-system action heads. A unified evaluation interface integrates LIBERO, SimplerEnv, RoboTwin 2.0, RoboCasa-GR1, and BEHAVIOR-1K benchmarks. Reproducible training recipes match or surpass prior methods on both VLM and world-model backbones with minimal data engineering, marking what we call the PyTorch moment of VLA.",
+      "vocab": [
+        {
+          "term": "fragmented",
+          "cn": "碎片化的（adj），分散且彼此不兼容"
+        },
+        {
+          "term": "incompatible",
+          "cn": "不兼容的（adj），无法协同工作"
+        },
+        {
+          "term": "action-decoding paradigms",
+          "cn": "动作解码范式（n），把模型输出变成机器人动作的方式"
+        },
+        {
+          "term": "policy-centric formulation",
+          "cn": "策略中心公式（n），把所有变体抽象成同一策略形式"
+        },
+        {
+          "term": "backbone-action-head swapping",
+          "cn": "主干-动作头互换（n），独立替换组件能力"
+        },
+        {
+          "term": "Flow-Matching",
+          "cn": "流匹配（n），扩散模型的连续-时间变体"
+        },
+        {
+          "term": "dual-system",
+          "cn": "双系统（adj），快慢两层级联架构"
+        },
+        {
+          "term": "unified evaluation",
+          "cn": "统一评估（n），所有方法在同一接口下对比"
+        },
+        {
+          "term": "reproducible",
+          "cn": "可复现的（adj），别人能复跑出同样结果"
+        },
+        {
+          "term": "PyTorch moment",
+          "cn": "PyTorch 时刻（n），借喻 PyTorch 让 DL 走向工程化的转折点"
+        }
+      ],
+      "cn": "VLA 研究因动作解码范式 / 训练管线 / 评估基准的不兼容而严重碎片化。StarVLA 用一个统一的「策略中心公式」L_total = L_action + λ·L_aux 把 VLM-based 与 World-Model-based 两大范式纳入同一框架。模块化的 backbone-action-head 互换支持 QwenVL/LLaVA/Cosmos/Gemma 主干 + FAST/OFT/π Flow-Matching/GR00T 双系统动作头。LIBERO/SimplerEnv/RoboTwin 2.0/RoboCasa-GR1/BEHAVIOR-1K 五大基准统一评估接口。可复现训练 recipe 在 VLM 与 world-model 主干下均匹配或超越原方法——这是 VLA 的 PyTorch 时刻。",
+      "id": "de-ed7453fc84",
+      "firstShown": "2026-05-11"
+    },
+    {
+      "type": "news",
+      "level": "B2",
+      "register": "journalistic",
+      "title": "Hyundai-owned Boston Dynamics Atlas performs handstand and L-sit, signaling production-ready maturity",
+      "source": "The Straits Times",
+      "date": "2026-05-06",
+      "url": "https://www.straitstimes.com/world/hyundai-robot-performs-handstand-complex-gymnastics-moves",
+      "en": "Hyundai Motors' robotics unit released a video showing its production-ready Atlas humanoid robot performing complex gymnastics, marking a first-of-its-kind live demonstration that could signal the machine is nearing commercialisation. The robot performed a full handstand, then transitioned into an L-sit position while supporting its entire body weight on its hands. Atlas features human-scale hands with tactile sensing and fully rotational joints. It can lift up to 50kg, operates between minus 20 deg C and 40 deg C, and Hyundai plans to deploy it commercially across its plants from 2028.",
+      "vocab": [
+        {
+          "term": "production-ready",
+          "cn": "可量产的（adj），已具备规模化生产水平"
+        },
+        {
+          "term": "humanoid robot",
+          "cn": "人形机器人（n），与人体形态相似的机器人"
+        },
+        {
+          "term": "first-of-its-kind",
+          "cn": "首创（adj），同类首次"
+        },
+        {
+          "term": "commercialisation",
+          "cn": "商业化（n），从研发走向市场量产"
+        },
+        {
+          "term": "handstand",
+          "cn": "倒立（n），手撑地面、身体倒立的动作"
+        },
+        {
+          "term": "L-sit",
+          "cn": "L 形支撑（n），手撑地、身体呈 L 形的体操动作"
+        },
+        {
+          "term": "tactile sensing",
+          "cn": "触觉感知（n），通过传感器感知力 / 接触"
+        },
+        {
+          "term": "fully rotational joints",
+          "cn": "全旋关节（n），可 360° 转动的关节"
+        },
+        {
+          "term": "deploy",
+          "cn": "部署（v），把机器人放到生产场景使用"
+        },
+        {
+          "term": "plants",
+          "cn": "工厂（n），制造产线所在地"
+        }
+      ],
+      "cn": "现代汽车旗下波士顿动力公开「量产版 Atlas」执行复杂体操动作的视频——机器人完成完整倒立后转入 L-sit（双手撑地、L 形坐姿），同类首演。Atlas 配备人体尺度灵巧手 + 触觉感知 + 全旋关节，最大单臂负载 50 kg，工作温度 -20°C 至 40°C，现代计划 2028 年起在自家工厂大规模商用。",
+      "id": "de-c8c82f3913",
+      "firstShown": "2026-05-11"
+    },
+    {
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "Learning while Deploying: Fleet-Scale RL for Generalist Robot Policies",
+      "source": "arXiv (cs.RO)",
+      "date": "2026-05-01",
+      "url": "https://arxiv.org/abs/2605.00416",
+      "en": "Although generalist robot policies benefit from large-scale pretraining, offline data alone is insufficient for robust real-world deployment. Deployed robots encounter distribution shift, long-tail failures, and human correction opportunities that fixed demonstration datasets cannot fully capture. We present Learning While Deploying (LWD), a fleet-scale offline-to-online reinforcement learning framework. Combining DIVL for robust value estimation and QAM for policy extraction in flow-based VLA generators, a single policy attains 95% average success across 8 tasks on a fleet of 16 dual-arm robots, with the largest gains on 3-5 minute long-horizon tasks.",
+      "vocab": [
+        {
+          "term": "fleet-scale",
+          "cn": "舰队规模（adj），覆盖多台机器人协同的部署体量"
+        },
+        {
+          "term": "pretraining",
+          "cn": "预训练（n），在大规模数据上先训出通用模型"
+        },
+        {
+          "term": "offline data",
+          "cn": "离线数据（n），从预先收集好的 demonstration 中学习"
+        },
+        {
+          "term": "deployment",
+          "cn": "部署（n），把模型放进真实世界落地运行"
+        },
+        {
+          "term": "distribution shift",
+          "cn": "分布偏移（n），训练分布与部署分布不一致"
+        },
+        {
+          "term": "long-tail failures",
+          "cn": "长尾失败（n），罕见但累计起来重要的失败案例"
+        },
+        {
+          "term": "demonstration",
+          "cn": "示教（n），人工演示给机器人学习的数据"
+        },
+        {
+          "term": "offline-to-online",
+          "cn": "离线到在线（adj），先用离线数据预训再用在线数据微调的范式"
+        },
+        {
+          "term": "long-horizon",
+          "cn": "长程（adj），需要执行多步、跨较长时间的任务"
+        },
+        {
+          "term": "robust",
+          "cn": "鲁棒的（adj），在扰动和不确定下仍稳健"
+        }
+      ],
+      "cn": "通用机器人策略受益于大规模预训练，但仅靠离线数据不够鲁棒。已部署机器人会遇到分布偏移、长尾故障与人工纠正机会，固定 demonstration 数据集捕捉不到。LWD 提出舰队级 offline-to-online RL 框架，DIVL 做稳健价值估计 + QAM 在 flow-based VLA 中做策略提取，16 台双臂机器人 8 任务下平均成功率 95%，长程任务（3-5 分钟）收益最大。",
+      "id": "de-e2693c7304",
+      "firstShown": "2026-05-10"
+    },
+    {
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "TriRelVLA: Triadic Relational Structure for Generalizable Embodied Manipulation",
+      "source": "arXiv (cs.CV/cs.RO)",
+      "date": "2026-05-07",
+      "url": "https://arxiv.org/abs/2605.05714",
+      "en": "Vision-language-action (VLA) models perform well on training-seen robotic tasks but struggle to generalize to unseen scenes and objects. A key limitation lies in their implicit visual representations, which entangle object appearance, background, and scene layout. We propose TriRelVLA, which constructs an explicit object-arm-task triadic relational structure as the first-class reasoning primitive. A relation-aware graph transformer models inter-node interactions and a bottleneck projects the relation graph into the LLM action head, substantially improving generalization across novel scenes, objects, and task compositions.",
+      "vocab": [
+        {
+          "term": "vision-language-action (VLA)",
+          "cn": "视觉-语言-动作模型，把感知/语言/动作端到端学到一个网络的范式"
+        },
+        {
+          "term": "generalize",
+          "cn": "泛化（v），从训练分布迁移到未见过的新数据/任务"
+        },
+        {
+          "term": "implicit",
+          "cn": "隐式的（adj），不显式标注/分离的"
+        },
+        {
+          "term": "entangle",
+          "cn": "纠缠（v），多个语义信息混杂在一个表示里"
+        },
+        {
+          "term": "triadic",
+          "cn": "三元的（adj），由三个元素组成的"
+        },
+        {
+          "term": "relational structure",
+          "cn": "关系结构（n），用图/三元组等显式建模实体之间关系"
+        },
+        {
+          "term": "primitive",
+          "cn": "原语（n），系统的最小基本单元"
+        },
+        {
+          "term": "graph transformer",
+          "cn": "图变换器，把图结构与 attention 结合的网络"
+        },
+        {
+          "term": "bottleneck",
+          "cn": "瓶颈（n），刻意压缩信息维度强制模型抓取核心特征"
+        },
+        {
+          "term": "compositions",
+          "cn": "组合（n），多个元素结合形成新的整体"
+        }
+      ],
+      "cn": "VLA 模型在见过的任务上表现好但难以泛化。核心瓶颈是隐式视觉表示把物体外观、背景、场景布局纠缠在一起。TriRelVLA 显式构建「物体-手臂-任务」三元关系结构作为推理原语，用 relation-aware Graph Transformer 建模节点交互，再 bottleneck 投影到 LLM action head，跨新场景 / 新物体 / 新任务组合的泛化都大幅提升。",
+      "id": "de-a214b0674e",
+      "firstShown": "2026-05-10"
+    },
     {
       "type": "paper",
       "level": "C1",
@@ -96,202 +316,6 @@
       "cn": "Genesis AI 在 2025 年 7 月以 1.05 亿美元种子轮（硅谷具身智能赛道纪录）亮相，5 月 6 日发布首个全栈机器人基础模型 GENE-26.5。关键看点：①一个模型 + 一套硬件 + 一套数据策略，1× 真实速度完成「打蛋、切番茄、做奶昔、移液、整理线束、弹钢琴、解魔方」7 类家务级灵巧操作；②自研 20 自由度灵巧手 Genesis Hand 1.0；③控制中间件把端到端延迟从 80ms 砍到 3ms。创始人周衔（原 Genesis 物理引擎作者）原话「只做模型不行，必须掌握硬件，所以我们走全栈路线」是 2026 年具身智能赛道一句标志性宣言。",
       "firstShown": "2026-05-10",
       "id": "de-fa56586082"
-    },
-    {
-      "type": "news",
-      "level": "C1",
-      "register": "IEEE Spectrum",
-      "title": "Who Owns the Humanoid Stack? (IEEE Spectrum)",
-      "source": "IEEE Spectrum / The Humanoid Race",
-      "date": "2026-04-03",
-      "url": "https://thehumanoidrace.com/news/who-owns-the-humanoid-stack-hardware-software-and-integration-strategies-shaping-mnii10f2",
-      "en": "The humanoid-robot market in 2025-26 is being shaped less by a single technical breakthrough than by strategic choices: who owns the stack, which hardware tradeoffs are prioritized, and how open the software and developer ecosystems will be. Companies taking divergent paths — Tesla's end-to-end silicon and vision-AI play, Figure AI's data-centric enterprise fleet approach, Apptronik's compliant-actuator and certification focus, and Unitree/1X's cost-led hardware strategies — are crystallizing distinct value propositions for customers in logistics, manufacturing, retail and field inspection.",
-      "vocab": [
-        {
-          "term": "shaped less by ... than by ...",
-          "cn": "与其说是 X 决定的不如说是 Y（高级对比句式）"
-        },
-        {
-          "term": "stack",
-          "cn": "技术栈"
-        },
-        {
-          "term": "tradeoffs",
-          "cn": "权衡、取舍"
-        },
-        {
-          "term": "prioritized",
-          "cn": "（被）优先；动词 prioritize"
-        },
-        {
-          "term": "divergent paths",
-          "cn": "分化的路径"
-        },
-        {
-          "term": "end-to-end",
-          "cn": "端到端的"
-        },
-        {
-          "term": "data-centric",
-          "cn": "以数据为中心的"
-        },
-        {
-          "term": "fleet approach",
-          "cn": "（企业级）机队部署模式"
-        },
-        {
-          "term": "crystallizing",
-          "cn": "正在结晶（这里指逐渐成形）"
-        },
-        {
-          "term": "value propositions",
-          "cn": "价值主张（商业术语）"
-        }
-      ],
-      "cn": "IEEE Spectrum 是机器人 / 电子工程领域最权威的英文行业刊物，行文风格偏 C1（高级英语）。这段把 2025-26 人形机器人市场拆成 4 大流派（Tesla / Figure / Apptronik / Unitree+1X），用 \"shaped less by A than by B\" 这种典型对比句式。读熟这段，你的英文 industry analysis 写作直接上一个台阶。",
-      "id": "de-fc91b506d2",
-      "firstShown": "2026-05-09"
-    },
-    {
-      "type": "paper",
-      "level": "C1",
-      "register": "arXiv Abstract",
-      "title": "OA-WAM: Object-Addressable World Action Model",
-      "source": "arXiv 2605.06481",
-      "date": "2026-05-07",
-      "url": "https://arxiv.org/abs/2605.06481",
-      "en": "World Action Models (WAMs) enhance VLA policies by jointly predicting scene evolution and robot actions, but most existing methods represent the predicted world as holistic images or global latents — making it hard for the action decoder to address a specific target object. We propose OA-WAM, which decomposes each frame into N+1 slot states. Each slot maintains a persistent address vector and a time-varying content vector, separating object identity from appearance.",
-      "vocab": [
-        {
-          "term": "WAM",
-          "cn": "World Action Model 世界动作模型"
-        },
-        {
-          "term": "holistic",
-          "cn": "整体的；这里指未分解的、混合表示"
-        },
-        {
-          "term": "decomposes",
-          "cn": "分解；动词原形 decompose"
-        },
-        {
-          "term": "slot",
-          "cn": "槽（位）；这里指 object-centric 表示中的一个物体单元"
-        },
-        {
-          "term": "persistent",
-          "cn": "持久的、不变的"
-        },
-        {
-          "term": "address",
-          "cn": "（这里）寻址向量，identity 标识"
-        },
-        {
-          "term": "appearance",
-          "cn": "外观；与 identity 对立的概念"
-        }
-      ],
-      "cn": "arXiv abstract 的标准结构：[Context: WAMs 已有的但...] + [Gap: holistic 表示有问题] + [Method: We propose X, which Y] + [Insight: 把 identity 和 appearance 解耦]。读 1000 篇 abstract 你就能写 abstract 了。",
-      "id": "de-ece077ce58",
-      "firstShown": "2026-05-09"
-    },
-    {
-      "type": "blog",
-      "level": "B2",
-      "register": "Tech Blog",
-      "title": "NVIDIA on Generalist-Specialist Robots",
-      "source": "NVIDIA Developer Blog · Isaac GR00T",
-      "date": "2026-03-18",
-      "url": "https://developer.nvidia.com/isaac/GR00t",
-      "en": "The next generation of robots will be generalist-specialists — capable of understanding instructions, learning general skills, and being trained for specific tasks. Building such robots requires an integrated workflow from cloud to robot, ensuring that data collection and generation, training and evaluation of control policies, and safe deployment to physical devices all flow seamlessly. These generalist-specialist systems rely on Vision-Language-Action (VLA) models for intelligent perception, understanding, and execution of diverse tasks. To accelerate this transformation, the NVIDIA Isaac open platform provides robot developers with a complete toolchain — including models, data pipelines, simulation frameworks, and runtime libraries — built around NVIDIA's three-computer solution.",
-      "vocab": [
-        {
-          "term": "generalist-specialist",
-          "cn": "通才-专才（既能广博又能专精）"
-        },
-        {
-          "term": "integrated workflow",
-          "cn": "一体化工作流"
-        },
-        {
-          "term": "data pipelines",
-          "cn": "数据管线"
-        },
-        {
-          "term": "deployment",
-          "cn": "部署"
-        },
-        {
-          "term": "seamlessly",
-          "cn": "无缝地"
-        },
-        {
-          "term": "perception",
-          "cn": "感知"
-        },
-        {
-          "term": "execution",
-          "cn": "执行"
-        },
-        {
-          "term": "transformation",
-          "cn": "转型、变革"
-        },
-        {
-          "term": "toolchain",
-          "cn": "工具链"
-        }
-      ],
-      "cn": "NVIDIA 官方博客的写法是 \"产品 marketing + 工程语言\" 的标准范本——长句但结构清晰，每句都有具体名词支撑。学这种英文你能学会怎么写自己 GitHub README 的 \"motivation\" 段。重点：generalist-specialist 是 NVIDIA 推动的术语，2026 年开始进入主流。",
-      "id": "de-d6c35f86d5",
-      "firstShown": "2026-05-09"
-    },
-    {
-      "type": "paper",
-      "level": "C1",
-      "register": "arXiv Abstract",
-      "title": "Latent Bridge: Feature Delta for Dual-System VLA",
-      "source": "arXiv 2605.02739",
-      "date": "2026-05-04",
-      "url": "https://arxiv.org/abs/2605.02739",
-      "en": "Dual-system VLAs such as GR00T-N1.6 and π0.5 invoke a heavy VLM backbone at every control step, creating a serious latency bottleneck. We observe that VLM features at adjacent steps are highly redundant. Latent Bridge introduces a lightweight delta predictor that estimates the feature change between consecutive steps, allowing the VLM to be invoked only periodically. Across LIBERO, RoboCasa and ALOHA, we cut VLM calls by 50–75% while preserving 95–100% of task success.",
-      "vocab": [
-        {
-          "term": "dual-system",
-          "cn": "双系统（VLM 大脑 + 动作头）"
-        },
-        {
-          "term": "backbone",
-          "cn": "主干网络"
-        },
-        {
-          "term": "latency",
-          "cn": "（推理）延迟"
-        },
-        {
-          "term": "bottleneck",
-          "cn": "瓶颈"
-        },
-        {
-          "term": "redundant",
-          "cn": "冗余的"
-        },
-        {
-          "term": "delta",
-          "cn": "增量、差分；希腊字母 Δ"
-        },
-        {
-          "term": "consecutive",
-          "cn": "相邻的、连续的"
-        },
-        {
-          "term": "preserving",
-          "cn": "保留；动词原形 preserve"
-        }
-      ],
-      "cn": "VLA 推理瓶颈不是「算得慢」，而是「每步都重复算」。Latent Bridge 用轻量 delta predictor 减少 VLM 调用 50-75%，性能几乎不掉。学习重点：cut X by Y% while preserving Z% 这种主张句式是写 paper 必备。",
-      "id": "de-a9892e0303",
-      "firstShown": "2026-05-09"
     }
   ],
   "sources": [
@@ -694,6 +718,53 @@
       "cn": "VLA 推理瓶颈不是「算得慢」，而是「每步都重复算」。Latent Bridge 用轻量 delta predictor 减少 VLM 调用 50-75%，性能几乎不掉。学习重点：cut X by Y% while preserving Z% 这种主张句式是写 paper 必备。",
       "id": "de-a9892e0303",
       "firstShown": "2026-05-09"
+    },
+    {
+      "id": "de-0ab6c6b713",
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "Keyframe Chaining VLA solves non-Markovian long-horizon tasks (arXiv 2603.01465)",
+      "source": "arXiv",
+      "date": "2026-03-02",
+      "url": "https://arxiv.org/abs/2603.01465",
+      "en": "Existing vision-language-action (VLA) models often struggle to generalize to long-horizon tasks due to their heavy reliance on immediate observations. KC-VLA introduces a Task-modulated Keyframe Sampler that extracts event-driven keyframes to efficiently ground long-horizon dependencies, achieving a 92.0% success rate on a non-Markovian ManiSkill benchmark and robust real-world performance.",
+      "vocab": [
+        {
+          "term": "vision-language-action (VLA)",
+          "cn": "视觉-语言-动作模型"
+        },
+        {
+          "term": "long-horizon task",
+          "cn": "长时程任务"
+        },
+        {
+          "term": "non-Markovian dependency",
+          "cn": "非马尔可夫依赖（动作依赖远距离历史而非当前观测）"
+        },
+        {
+          "term": "keyframe sampler",
+          "cn": "关键帧采样器"
+        },
+        {
+          "term": "task-modulated",
+          "cn": "任务调制的"
+        },
+        {
+          "term": "ground",
+          "cn": "（动词）锚定 / 落实到"
+        },
+        {
+          "term": "benchmark",
+          "cn": "基准测试"
+        },
+        {
+          "term": "robust",
+          "cn": "鲁棒的"
+        }
+      ],
+      "cn": "KC-VLA 用「任务调制关键帧采样器」把 VLA 长时程任务从「依赖当前观测」升级到「依赖语义关键帧链」，把非马尔可夫依赖问题转化为稀疏历史 prompt 问题。在自建 4 任务非马尔可夫基准上从 57% 跃升至 92%。这条路与「暴力扩展 context window」相比更 token-efficient，是 VLA 走向真实生活长流程任务（铺床、烹饪）的关键一步。",
+      "firstShown": "2026-05-10"
     }
   ]
 }

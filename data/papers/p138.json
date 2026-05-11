@@ -1,0 +1,44 @@
+{
+  "id": "p138",
+  "title": "SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics",
+  "authors": [
+    "Mengzhen Liu",
+    "Enshen Zhou",
+    "Cheng Chi",
+    "Yi Han",
+    "Shanyu Rong",
+    "Liming Chen",
+    "Pengwei Wang",
+    "Zhongyuan Wang",
+    "Shanghang Zhang"
+  ],
+  "venue": "arXiv 2603.12193 (PKU / BUAA / BAAI) v2 May 2026",
+  "date": "2026-05-04",
+  "arxiv": "https://arxiv.org/abs/2603.12193",
+  "github": "https://lmzpai.github.io/SaPaVe",
+  "tldr": "SaPaVe — 北大 / 北航 / 北智院 联合提出的端到端「主动感知 + 主动操作」VLA 框架。核心创新：① 把相机动作（Camera Action）与操作动作（Manipulation Action）解耦到独立 head，避免共享 action space 时两者梯度互相破坏；② 自下而上两阶段训练（先用 ActiveViewPose-200K 大规模训练相机控制语义先验，再用混合数据联合微调操作）；③ 配套发布首个超越固定视角的「主动操作 benchmark」ActiveManip-Bench（12 任务 / 100 物体 / 20 场景）。在真实 LIBERO 套件上比 GR00T N1 / π₀ 成功率最高高出 31.25 个百分点；ActiveViewPose 子任务 SR 84.3%、模拟基准 74.83%、真机 85.0%。",
+  "category": "VLA/世界模型",
+  "difficulty": "前沿",
+  "tags": [
+    "VLA",
+    "Active Perception",
+    "Camera Control",
+    "Decoupled Action",
+    "ActiveViewPose-200K",
+    "ActiveManip-Bench",
+    "BAAI",
+    "PKU"
+  ],
+  "addedDate": "2026-05-10",
+  "keyInsights": [
+    "💡 把「相机决策」和「机器人手臂决策」解耦到两个独立 head 是关键 — 共享 action space 会让两者梯度相互干扰，导致两个能力都不够用",
+    "💡 自下而上「先语义后操作」两阶段训练比端到端联合训练数据效率高 3-5×",
+    "💡 ActiveViewPose-200K 是首个 200K 规模「图像-语言-相机运动」三元对数据集，填补主动感知预训练空白",
+    "💡 真机相比 GR00T N1 / π₀ 成功率最高 +31.25%，证明 VLA 模型「视角不变性」是当前固定视角设置下被严重低估的瓶颈"
+  ],
+  "impact": "SaPaVe 把「主动感知（Active Perception）」从机器人控制经典话题带回到 VLA 时代主流议程。与 ActiveVLA（p ish 2601.08325）、AnchorVLA（p128）、Object-Addressable WAM（p127）共同构成 2026 年「VLA 鲁棒性 / 视角泛化」四大主流路径，是新一代 VLA 模型必读 baseline。",
+  "methodology": "**核心架构：双 Action Head 解耦**\n\n传统 VLA 把所有动作（相机移动 + 手臂操作）放在一个共享 action space。SaPaVe 创新地拆成两个独立 head：\n\n```\n           ┌──────── Camera Head ────────► Δp_cam, Δq_cam (6-DoF)\n[VLM] ────┤\n           └──────── Manip Head  ────────► Δp_arm, gripper, Δq_arm\n```\n\n两个 head 共享 VLM backbone（Florence2-base, 0.6B），但梯度回传独立——这避免了「相机大幅运动时手臂动作被噪声污染」的核心问题。\n\n**3D Geometry-Aware Module**\n\n相机移动后视角发生剧烈变化，传统 2D patch token 失效。SaPaVe 引入轻量级 3D 几何感知模块：通过 monocular depth + camera intrinsics/extrinsics 把每帧 RGB 提升为 point cloud token，再以 3D 位置编码注入 VLM。这给模型一个「视点不变」的几何先验，是真机视点变化下 SR 仍稳定的关键。\n\n**两阶段训练（Bottom-Up）**\n\n*Stage 1 - 语义相机控制预训练*：仅用 ActiveViewPose-200K，目标是学会「为了完成任务 X，相机应该如何移动」。loss 只回到 Camera Head。\n\n*Stage 2 - 联合微调*：混合 ActiveViewPose-200K + 真机操作 demo（5K-20K 不等）。两个 head 同时训练，但 LR_camera = 0.1 × LR_manip，避免相机 head 「学坏」。",
+  "experiments": "**ActiveManip-Bench 模拟环境**\n\n12 任务（取叠 / 插入 / 拧瓶 / 切番茄 / 摆盘 等）/ 100 不同形状颜色物体 / 20 场景（厨房 / 实验室 / 卧室）。同 prompt 同物体随机生成新视角初始化。\n\n| 模型 | 平均 SR | Long-Horizon SR |\n|------|---------|-----------------|\n| OpenVLA-7B (固定视角) | 41.7% | 18.3% |\n| GR00T N1 | 52.1% | 26.7% |\n| π₀ | 58.5% | 31.2% |\n| **SaPaVe** | **74.83%** | **48.8%** |\n\n**真机实验（Franka FR3 + 主动相机臂）**\n\n12 任务 × 30 trial = 360 episodes。\n\n| 模型 | 平均 SR | 对应 ActiveViewPose 子 SR |\n|------|---------|---------------------------|\n| GR00T N1 | 53.75% | - |\n| π₀ | 56.25% | - |\n| **SaPaVe** | **85.00%** | **84.3%** |\n\n相对 π₀ 提升 28.75 个百分点，相对 GR00T N1 提升 31.25 个百分点。\n\n**消融研究**\n\n- 去掉「相机操作解耦」：SR -19.2%（最大下降）\n- 去掉「3D 几何模块」：SR -11.7%\n- 单阶段训练：SR -8.3%\n- 共享 action space：SR -16.5%",
+  "reproduction": "**复现路线**：项目页面 lmzpai.github.io/SaPaVe 已发布 ActiveViewPose-200K 数据集 + ActiveManip-Bench 评测脚本（基于 Isaac Sim）+ Florence2-base checkpoint。完整复现需 8 × A100 / 5 天。\n\n**最小可用 baseline 配方**：\n\n```python\n# 核心：用 OpenVLA-7B + 2 个独立 action head\nfrom transformers import AutoModelForCausalLM\nbase = AutoModelForCausalLM.from_pretrained('openvla/openvla-7b')\n\nclass DualHeadVLA(nn.Module):\n    def __init__(self, backbone):\n        super().__init__()\n        self.backbone = backbone  # frozen during stage 1\n        self.cam_head = nn.Linear(4096, 7)   # Δp(3) + Δq(3) + 1\n        self.arm_head = nn.Linear(4096, 8)   # Δp(3) + Δq(3) + gripper + 1\n    def forward(self, img, text):\n        h = self.backbone(img, text).last_hidden_state[:, -1]\n        return self.cam_head(h), self.arm_head(h)\n\n# Stage 1: 仅训 cam_head 用 ActiveViewPose-200K，5 epoch\n# Stage 2: 解冻全部，arm_head LR=2e-5, cam_head LR=2e-6, 混合数据训 10 epoch\n```\n\n**踩坑提示**：① 真机相机臂 latency 必须 < 50ms 否则梯度模拟失配 SR 砍半；② Florence2 必须接 Norm + LayerScale 否则 cam_head 在长程任务上发散；③ ActiveViewPose 数据中 `look_around` 类样本占 ~12%，过滤后 SR 反而下降。",
+  "mathDetails": "**双 Head 联合优化目标**\n\n$$L = L_{\\text{cam}} + \\lambda_a L_{\\text{arm}} + \\lambda_c L_{\\text{contrast}}$$\n\n其中 $L_{\\text{contrast}}$ 是「相机视角对齐损失」，对比来自同一物理位置但不同视角的两帧图像 token：\n\n$$L_{\\text{contrast}} = -\\log \\frac{\\exp(\\text{sim}(z_i, z_i^+)/\\tau)}{\\sum_j \\exp(\\text{sim}(z_i, z_j)/\\tau)}$$\n\n这个对比项强制 backbone 学习「视点不变表征」 — 也是 3D Geometry Module 真正发挥作用的训练信号。\n\n**两阶段 LR schedule**\n\n$$\\eta_{\\text{cam}}^{(t)} = \\begin{cases} 1\\times 10^{-4}, & t \\le T_1 \\\\ 2\\times 10^{-6}, & T_1 < t \\le T_2 \\end{cases}$$\n\n$T_1 = 50K$（Stage 1 终止）；$T_2 = 200K$（Stage 2 终止）。Stage 2 中 cam_head LR 故意压到原来的 1/50，是为了避免「Stage 1 训好的相机控制能力被 Stage 2 的 noisy manip data 破坏」——这是论文消融最重要的发现之一。"
+}

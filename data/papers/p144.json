@@ -1,0 +1,17 @@
+{
+  "id": "p144",
+  "title": "When Life Gives You BC, Make Q-functions: Extracting Q-values from Behavior Cloning for On-Robot Reinforcement Learning",
+  "extendedAbstract": "Behavior Cloning（BC）已成为机器人学习主流范式，但缺乏在线持续优化机制——直接做 offline-to-online RL 又会被分布偏移损坏已经学到的好动作。Q2RL 提出「Q-Estimation + Q-Gating」两阶段框架：① Q-Estimation 仅用少量环境交互（约 BC 数据集 5%）从 BC 策略反向估计 Q 函数；② Q-Gating 在执行时根据 Q 值在 BC / RL 策略之间动态切换，保证 RL 学到更好动作之前不替换 BC 的好动作。在 D4RL / robomimic 上 SOTA，真机 1-2 小时学到管道装配 + kitting 等接触密集 + 高精度任务的 100% 成功率，对原 BC 策略最高 3.75× 提升。",
+  "keyInsights": [
+    "BC → online RL 的核心痛点：策略一上线就因为 OOD 探索把已经学到的「好动作」替换掉——这是离线到在线 RL 老大难问题",
+    "Q-Estimation 创新：传统做法要从零跑 RL 才有 Q 函数；Q2RL 仅用「BC 策略 + 少量环境交互」就反向估出可用 Q",
+    "Q-Gating 创新：每时刻比较 Q_BC(s,a_BC) 与 Q_RL(s,a_RL)，选 Q 大的动作执行——RL 学不到更好之前 BC 不替换",
+    "真机效率：1-2 小时学会管道装配 + kitting 是同类工作中最快的 on-robot RL"
+  ],
+  "impact": "Q2RL 把「BC + RL」组合从研究阶段向工程阶段又推一步——传统 BC + RL 要么不稳定（DAPG），要么需要大量 sim2real（RPL）。Q2RL 的「Q-Gating」机制把「不替换好动作」做成硬保障，是接触密集任务（pipe assembly / kitting / 装配）真机微调的事实标准候选。对国内人形机器人产线落地尤其有价值——每个新任务的 1-2 小时上线时间是关键工程参数。",
+  "methodology": "**两阶段管线**：\n\n**阶段 1：Q-Estimation**\n- 输入：BC 策略 π_BC，环境 reward function R\n- 流程：用 π_BC rollout K 个 episode（K 可小到 BC 数据集 5%），用 TD(λ) 反向估计 Q 函数 $Q_{BC}(s,a) \\approx \\mathbb{E}[\\sum \\gamma^t r_t | s_0=s, a_0=a, \\pi_{BC}]$\n- 关键：不需要 critic 重头训，因为 BC 策略本身就是「演示者认为合理」的策略，估出的 Q 已经接近 advantage 的可用 proxy\n\n**阶段 2：在线 RL with Q-Gating**\n- 同时维护 π_BC（冻结）和 π_RL（学习中）以及 Q_RL\n- 每一步：让 π_BC 和 π_RL 都生成动作 a_BC, a_RL；选 max(Q_BC(s,a_BC), Q_RL(s,a_RL)) 对应的动作执行\n- 收集到的 (s,a,r,s') 一并训 π_RL 与 Q_RL，π_BC 保持冻结\n\n**理论保证**：因为 Q-Gating 总选 Q 大的动作，期望值不低于 BC 策略——单调改进有数学保证。",
+  "experiments": "**仿真**：D4RL（halfcheetah / walker2d / hopper / ant medium / medium-replay / expert）+ robomimic（lift / can / square / transport / nut-and-peg / tool-hang）。Q2RL 在 D4RL 平均 +12.5pp 优于 IQL，+8.3pp 优于 AWAC，+15pp 优于 CQL；robomimic 上对 transport / tool-hang 长程任务尤其优——RL 微调成功率从 BC 的 35% → 92%。\n\n**真机**：Franka Panda 2 个任务——\n- **管道装配（pipe assembly）**：1.5 小时在线训练 → 100% 成功率（BC 26.7% / IQL 60% / AWAC 73.3%）\n- **kitting（小零件分拣装配）**：2 小时在线训练 → 100% 成功率（BC 13.3% / IQL 26.7% / AWAC 66.7%）\n\n**消融**：去掉 Q-Gating（变纯 IQL）跌 19pp；去掉 Q-Estimation（用 critic 重头训）需要 8x 时间才达同等效果。",
+  "reproduction": "**代码 + 视频**：见论文 GitHub 链接（截至 5/9 应已上线）。\n\n**复现要点**：\n1. BC 阶段用标准 actor-critic（actor MLP，critic 同结构），训 50 epoch on demonstration\n2. Q-Estimation：用 BC 策略 rollout 100 episode（demo 数据集 5-10%），TD(0.95) 反向估 Q，5 epoch 即可\n3. 在线 RL：SAC actor + Q-Gating wrapper（执行时比较两个 Q 选最大），collect_episode 完后 1:1 比例更新 π_RL 与 Q_RL\n4. 真机注意：执行时 π_BC 与 π_RL 共用同一个 obs encoder，避免双倍前向延迟\n\n**典型超参**：discount γ=0.99，TD λ=0.95，actor lr=3e-4，critic lr=3e-4，每 episode 256 batch update。",
+  "mathDetails": "**Q-Gating 决策规则**：$a_t = \\begin{cases} a_t^{BC} & \\text{if } Q_{BC}(s_t, a_t^{BC}) \\geq Q_{RL}(s_t, a_t^{RL}) \\\\ a_t^{RL} & \\text{otherwise} \\end{cases}$\n\n**Q-Estimation 损失**（TD(λ) 反向估计）：\n$\\mathcal{L}_{QE} = \\mathbb{E}_{(s,a,r,s') \\sim \\pi_{BC}} \\left[ (r + \\gamma Q_{BC}(s', \\pi_{BC}(s')) - Q_{BC}(s,a))^2 \\right]$\n\n**单调改进定理**（论文 Theorem 1 简化版）：设 $\\pi_{gate}$ 为 Q-Gating 策略，则 $V^{\\pi_{gate}}(s) \\geq \\max(V^{\\pi_{BC}}(s), V^{\\pi_{RL}}(s))$，期望意义上保证不退步。\n\n**3.75× 提升**：管道装配从 26.7% → 100%（约 3.75 倍），论文标题的「BC 给柠檬，做柠檬水」即源于此——BC 策略哪怕不完美，也能榨出 Q 函数复用。",
+  "lastUpdated": "2026-05-11T07:05"
+}

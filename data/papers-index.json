@@ -1,6 +1,246 @@
 {
-  "lastUpdated": "2026-05-10T02:25",
+  "lastUpdated": "2026-05-11T07:05",
   "papers": [
+    {
+      "id": "p144",
+      "title": "When Life Gives You BC, Make Q-functions: Extracting Q-values from Behavior Cloning for On-Robot Reinforcement Learning",
+      "authors": [
+        "Lakshita Dodeja",
+        "Ondrej Biza",
+        "Shivam Vats",
+        "Stephen Hart",
+        "Stefanie Tellex",
+        "Robin Walters",
+        "Karl Schmeckpeper",
+        "Thomas Weng"
+      ],
+      "venue": "arXiv 2605.05172",
+      "date": "2026-05-06",
+      "arxiv": "https://arxiv.org/abs/2605.05172",
+      "github": "",
+      "tldr": "Q2RL（Q-Estimation + Q-Gating）解决「BC → 在线 RL」最关键的痛点——分布偏移导致已有好动作被替换。① Q-Estimation：仅用少量交互步从 BC 策略反向估计 Q 函数；② Q-Gating：执行时根据 Q 值在 BC 与 RL 策略之间动态切换，避免好动作被替换。结果：D4RL / robomimic SOTA，真机 1-2 小时即学到管道装配 / kitting 等接触密集 + 高精度任务的 100% 成功率，对原 BC 策略最高 3.75× 提升。",
+      "category": "RL/演示学习",
+      "difficulty": "中级",
+      "tags": [
+        "Behavior Cloning",
+        "Offline-to-Online RL",
+        "Q-function",
+        "Robot Learning",
+        "5月新论文"
+      ],
+      "addedDate": "2026-05-11",
+      "keyInsights": [
+        "BC → online RL 的核心痛点：策略一上线就因为 OOD 探索把已经学到的「好动作」替换掉——这是离线到在线 RL 老大难问题，AWAC/IQL 都靠保守策略约束部分解决",
+        "Q-Estimation 创新：传统做法要从零跑 RL 才有 Q 函数；Q2RL 仅用「BC 策略 + 少量环境交互」就反向估出可用 Q——本质是把 BC 策略当成 advantage proxy，给环境算一遍 reward 就能近似 Q",
+        "Q-Gating 创新：在每一时刻比较 Q_BC(s,a_BC) 与 Q_RL(s,a_RL)，选 Q 大的动作执行——保证 RL 策略「学不到更好之前不替换 BC」，分布偏移天然被遏制",
+        "真机效率：1-2 小时学会管道装配 + kitting 是同类工作中最快的 on-robot RL 之一——对工业产线人形机器人的 fine-tuning 工作流是直接 ROI 提升"
+      ],
+      "impact": "Q2RL 把「BC + RL」组合从研究阶段向工程阶段又推了一步——传统 BC + RL 要么不稳定（DAPG），要么需要大量 sim2real（RPL）。Q2RL 的「Q-Gating」机制把「不替换好动作」做成硬保障，是接触密集任务（pipe assembly / kitting / 装配）真机微调的事实标准候选。对国内人形机器人产线落地（如拓斯达小拓注塑、智元 G2 龙旗等）尤其有价值——产线上每个新任务的 1-2 小时上线时间是关键工程参数。"
+    },
+    {
+      "id": "p143",
+      "title": "StarVLA: A Lego-like Codebase for Vision-Language-Action Model Developing",
+      "authors": [
+        "StarVLA Community",
+        "HKUST"
+      ],
+      "venue": "arXiv 2604.05014",
+      "date": "2026-04-06",
+      "arxiv": "https://arxiv.org/abs/2604.05014",
+      "github": "https://github.com/starVLA/starVLA",
+      "tldr": "把 VLM-based VLA 与 World-Model-based VLA 统一为「策略中心 + 辅助学习信号 L_aux」公式，提供乐高式 backbone-action-head 框架——可独立替换 backbone（QwenVL / LLaVA / Cosmos）、动作头（FAST / OFT / π / GR00T 双系统）、训练策略（SFT / 多目标 co-training / 跨本体 co-training）；五大主流基准（LIBERO / SimplerEnv / RoboTwin 2.0 / RoboCasa-GR1 / BEHAVIOR-1K）统一评估接口。GitHub 2.3k star / 271 fork，仅次于 Isaac-GR00T 与 Physical Intelligence Open-π。",
+      "category": "VLA/底座",
+      "difficulty": "中级",
+      "tags": [
+        "VLA",
+        "开源底座",
+        "OpenVLA",
+        "GR00T",
+        "PyTorch时刻",
+        "5月开源"
+      ],
+      "addedDate": "2026-05-11",
+      "keyInsights": [
+        "范式统一：把「VLM-based」与「World-Model-based」VLA 视为同一公式 L_total = L_action + λ·L_aux 在不同 L_aux 上的实例化——VLM-based L_aux=0，WM-based L_aux=动力学预测",
+        "策略中心抽象：(observation, instruction, action_chunk) → policy network → action chunk 是统一计算图，所有变体只换 backbone / action head / aux loss 三个组件",
+        "5 大基准统一评估：LIBERO / SimplerEnv / RoboTwin 2.0 / RoboCasa-GR1 / BEHAVIOR-1K——首次让不同论文的「同一指标」可在 1:1 同条件下被对比",
+        "工程级 ROI：从「换主干」到「换基准」到「上实机」全打通，团队声称 4 大动作头对比实验从原本两人月降到一周内"
+      ],
+      "impact": "StarVLA 是 2026 年 VLA 领域最具基础设施意义的工作之一——它把「比 demo 谁更炫」（Phase 1）演化到「比谁经得起公平验证」（Phase 2）。从行业生态看，OpenVLA 系（HuggingFace）、Open-π（Physical Intelligence）、Isaac-GR00T（NVIDIA）、StarVLA（HKUST）四大底座并存：StarVLA 的差异点是「最广的动作头覆盖 + 中文社区原生支持」，对国内 VLA 论文的复现门槛是数量级降低。预计 5-10 月会有大量 5 月新论文采用 StarVLA 作为基线对比框架。"
+    },
+    {
+      "id": "p141",
+      "title": "TriRelVLA: Triadic Relational Structure for Generalizable Embodied Manipulation",
+      "authors": [
+        "Hanyu Zhou",
+        "Chuanhao Ma",
+        "Gim Hee Lee"
+      ],
+      "venue": "arXiv 2605.05714",
+      "date": "2026-05-07",
+      "arxiv": "https://arxiv.org/abs/2605.05714",
+      "github": "",
+      "tldr": "把 VLA 的「视觉表示」从「外观+背景+布局耦合」剥离出来——显式构建「物体-手臂-任务」三元关系图，用 task-guided cross attention 形成节点，relation-aware Graph Transformer 建模交互，再压缩进 bottleneck 投影到 LLM 做动作预测。论文论证：当 VLA 学到的是「关系结构」而非「像素统计」，跨场景 / 跨物体 / 跨任务组合的泛化大幅改善。配套真机数据集开源。",
+      "category": "VLA/操作",
+      "difficulty": "中级",
+      "tags": [
+        "VLA",
+        "Triadic Relation",
+        "Graph Transformer",
+        "泛化",
+        "Manipulation",
+        "5月新论文"
+      ],
+      "addedDate": "2026-05-10",
+      "keyInsights": [
+        "VLA 失败的根因：隐式视觉表示把「物体 / 背景 / 布局」三者编码到同一向量，OOD 时整体向量漂移导致动作崩坏",
+        "三元关系原语：明确把推理拆成「物体属性 / 手臂构型 / 任务意图」三个节点，关系作为图边——这正是 Helix-02 / OpenVLA 时代缺的「显式结构」",
+        "Bottleneck 压缩：把 graph relation 浓缩到一个低秩 latent，再投影到 LLM——既保住 LLM 的泛化能力，又避免 LLM 直接学「视觉细节」的过拟合",
+        "真机数据集：与论文一同发布的微调数据集，是少见的「关系标注 + 动作」双标 benchmark，对后续 VLA 训练范式有潜在影响"
+      ],
+      "impact": "这是 2026 年「VLA 第三阶段」（结构化推理）的代表性工作之一。前两阶段：Phase 1（OpenVLA / RT-2）→ end-to-end 黑箱；Phase 2（CoT-VLA / IVLR）→ 显式语言推理；Phase 3（TriRelVLA / 本文）→ 显式结构推理。从工程效益上看，Phase 3 比 Phase 2 推理快、可解释性更好，是 2026 下半年 VLA 演化的重要风向标。"
+    },
+    {
+      "id": "p142",
+      "title": "Learning while Deploying: Fleet-Scale Reinforcement Learning for Generalist Robot Policies (AGIBOT Finch)",
+      "authors": [
+        "Yi Wang",
+        "Xinchen Li",
+        "Pengwei Xie",
+        "Jianlan Luo et al. (16 authors)"
+      ],
+      "venue": "arXiv 2605.00416",
+      "date": "2026-05-01",
+      "arxiv": "https://arxiv.org/abs/2605.00416",
+      "github": "",
+      "tldr": "上海创新研究院 + AGIBOT Finch + Columbia 三家联合提出 Learning While Deploying（LWD）—— 一边部署一边持续后训练的舰队级 offline-to-online RL 框架。预训练 VLA 出厂后，16 台双臂机器人在 8 个真实任务（含语义补货、3-5 分钟长程任务）下分布式收集 rollout + 人工干预数据，DIVL（distributional implicit value learning）做稳健价值估计，QAM（Q-learning via adjoint matching）做 flow-based VLA 策略提取，最终单一通用策略**随舰队经验积累达到 95% 平均成功率**，长程任务收益最大。",
+      "category": "VLA/RL",
+      "difficulty": "进阶",
+      "tags": [
+        "LWD",
+        "Fleet RL",
+        "Offline2Online",
+        "DIVL",
+        "QAM",
+        "长程任务",
+        "AGIBOT"
+      ],
+      "addedDate": "2026-05-10",
+      "keyInsights": [
+        "舰队学习正解：单台机器人收集分布偏移、人工干预数据再各自微调，会变成 N 个不一致的策略；LWD 反过来把 16 台机器人的多源经验汇合训出**单一通用策略**，避免「舰队碎片化」",
+        "DIVL 是关键：分布式 implicit value learning 在「稀疏奖励 + 异构经验」情况下提供稳健价值估计，避免 DDPG/SAC 类方法在多源舰队下崩溃",
+        "QAM 创新：把 Q-learning 嵌入到 flow matching 的策略蒸馏过程，让基于流匹配的 VLA（如 π0、DiT）也能从 RL 反馈受益——这是过去 flow-based VLA 主要靠 imitation learning 的关键缺口",
+        "长程任务收益最大：3-5 分钟语义补货任务从冷启 60% → 部署 6 个月后 95%——这是「学一边干」框架最有说服力的差异化证据"
+      ],
+      "impact": "代表了 2026 年「VLA 第四阶段」（Fleet RL）的工程范式：不再追求「一次训完出厂」，而是承认 OOD 必然存在，把 deployment 本身设计成训练循环的一部分。AGIBOT 已宣布 2026 为「具身智能部署元年」，LWD 给这个口号提供了技术底座——这意味着大规模舰队（万台量级）的「自我进化」具备了算法可行性。"
+    },
+    {
+      "id": "p140",
+      "title": "Non-Markovian Long-Horizon Robot Manipulation via Keyframe Chaining",
+      "authors": "Yipeng Chen, Wentao Tan, Lei Zhu, Fengling Li, Jingjing Li, Guoli Yang, Heng Tao Shen",
+      "venue": "arXiv 2026",
+      "date": "2026-03-02",
+      "arxiv": "2603.01465",
+      "github": "https://github.com/cytoplastm/KC-VLA",
+      "tags": [
+        "VLA",
+        "long-horizon",
+        "keyframe",
+        "non-markovian",
+        "manipulation"
+      ],
+      "tldr": "Keyframe-Chaining VLA：用稀疏语义关键帧解决 VLA 长时程任务中「非马尔可夫依赖」难题——任务调制 KSM 模块自动检测语义里程碑（F1=97.5%），稀疏历史替代密集观测窗口，ManiSkill 自建非马尔可夫 4 任务（空间重构 / 时间排序 / 计数延迟 / 身份追踪）平均成功率 92.0% vs 最佳基线 57.0%，真机性能稳健。",
+      "category": "manipulation",
+      "difficulty": "hard",
+      "addedDate": "2026-05-10",
+      "keyInsights": [
+        "**非马尔可夫长时程难题**：标准 VLA 只看当前观测，无法处理「最优动作仅依赖某个特定历史状态而非当前观测」的任务（典型如「按 N 次按钮后再开门」「记住第一次见到的物体颜色」）。",
+        "**任务调制关键帧采样器（Task-modulated KSM）**：从视频流中检测语义里程碑事件（任务相关状态变化），二阶段训练后 F1 达 97.5%，相当于把 100 帧密集观测压缩为 5-10 个语义关键帧。",
+        "**链式关键帧推理**：把检测到的关键帧作为稀疏视觉 prompt 拼接送入 VLA 解码器，让动作生成显式依赖远距离历史，而非只看当前帧。",
+        "**性能跃升**：自建非马尔可夫 ManiSkill 4 任务集（spatial reconfig / temporal sequencing / counting & latency / identity tracking）平均成功率 92.0%，最佳基线（短窗口 / 固定步长采样）仅 57.0%；真机部署同样稳健。"
+      ],
+      "impact": "VLA 长时程能力 = 长上下文 LLM 的机器人对应物。本工作把「长上下文」从 VLA 暴力扩展 context window 的死胡同，引向「稀疏但语义」的关键帧路线，是 KC-VLA → π0.5 → Helix-02 这条「长时程 VLA」技术线的重要落点之一。**对家用 / 工业长流程任务（铺床 / 装配 / 烹饪）有直接借鉴价值**——这些任务都包含大量非马尔可夫子动作，传统 VLA 必败。"
+    },
+    {
+      "id": "p138",
+      "title": "SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics",
+      "authors": [
+        "Mengzhen Liu",
+        "Enshen Zhou",
+        "Cheng Chi",
+        "Yi Han",
+        "Shanyu Rong",
+        "Liming Chen",
+        "Pengwei Wang",
+        "Zhongyuan Wang",
+        "Shanghang Zhang"
+      ],
+      "venue": "arXiv 2603.12193 (PKU / BUAA / BAAI) v2 May 2026",
+      "date": "2026-05-04",
+      "arxiv": "https://arxiv.org/abs/2603.12193",
+      "github": "https://lmzpai.github.io/SaPaVe",
+      "tldr": "SaPaVe — 北大 / 北航 / 北智院 联合提出的端到端「主动感知 + 主动操作」VLA 框架。核心创新：① 把相机动作（Camera Action）与操作动作（Manipulation Action）解耦到独立 head，避免共享 action space 时两者梯度互相破坏；② 自下而上两阶段训练（先用 ActiveViewPose-200K 大规模训练相机控制语义先验，再用混合数据联合微调操作）；③ 配套发布首个超越固定视角的「主动操作 benchmark」ActiveManip-Bench（12 任务 / 100 物体 / 20 场景）。在真实 LIBERO 套件上比 GR00T N1 / π₀ 成功率最高高出 31.25 个百分点；ActiveViewPose 子任务 SR 84.3%、模拟基准 74.83%、真机 85.0%。",
+      "category": "VLA/世界模型",
+      "difficulty": "前沿",
+      "tags": [
+        "VLA",
+        "Active Perception",
+        "Camera Control",
+        "Decoupled Action",
+        "ActiveViewPose-200K",
+        "ActiveManip-Bench",
+        "BAAI",
+        "PKU"
+      ],
+      "addedDate": "2026-05-10",
+      "keyInsights": [
+        "💡 把「相机决策」和「机器人手臂决策」解耦到两个独立 head 是关键 — 共享 action space 会让两者梯度相互干扰，导致两个能力都不够用",
+        "💡 自下而上「先语义后操作」两阶段训练比端到端联合训练数据效率高 3-5×",
+        "💡 ActiveViewPose-200K 是首个 200K 规模「图像-语言-相机运动」三元对数据集，填补主动感知预训练空白",
+        "💡 真机相比 GR00T N1 / π₀ 成功率最高 +31.25%，证明 VLA 模型「视角不变性」是当前固定视角设置下被严重低估的瓶颈"
+      ],
+      "impact": "SaPaVe 把「主动感知（Active Perception）」从机器人控制经典话题带回到 VLA 时代主流议程。与 ActiveVLA（p ish 2601.08325）、AnchorVLA（p128）、Object-Addressable WAM（p127）共同构成 2026 年「VLA 鲁棒性 / 视角泛化」四大主流路径，是新一代 VLA 模型必读 baseline。",
+      "methodology": "**核心架构：双 Action Head 解耦**\n\n传统 VLA 把所有动作（相机移动 + 手臂操作）放在一个共享 action space。SaPaVe 创新地拆成两个独立 head：\n\n```\n           ┌──────── Camera Head ────────► Δp_cam, Δq_cam (6-DoF)\n[VLM] ────┤\n           └──────── Manip Head  ────────► Δp_arm, gripper, Δq_arm\n```\n\n两个 head 共享 VLM backbone（Florence2-base, 0.6B），但梯度回传独立——这避免了「相机大幅运动时手臂动作被噪声污染」的核心问题。\n\n**3D Geometry-Aware Module**\n\n相机移动后视角发生剧烈变化，传统 2D patch token 失效。SaPaVe 引入轻量级 3D 几何感知模块：通过 monocular depth + camera intrinsics/extrinsics 把每帧 RGB 提升为 point cloud token，再以 3D 位置编码注入 VLM。这给模型一个「视点不变」的几何先验，是真机视点变化下 SR 仍稳定的关键。\n\n**两阶段训练（Bottom-Up）**\n\n*Stage 1 - 语义相机控制预训练*：仅用 ActiveViewPose-200K，目标是学会「为了完成任务 X，相机应该如何移动」。loss 只回到 Camera Head。\n\n*Stage 2 - 联合微调*：混合 ActiveViewPose-200K + 真机操作 demo（5K-20K 不等）。两个 head 同时训练，但 LR_camera = 0.1 × LR_manip，避免相机 head 「学坏」。",
+      "experiments": "**ActiveManip-Bench 模拟环境**\n\n12 任务（取叠 / 插入 / 拧瓶 / 切番茄 / 摆盘 等）/ 100 不同形状颜色物体 / 20 场景（厨房 / 实验室 / 卧室）。同 prompt 同物体随机生成新视角初始化。\n\n| 模型 | 平均 SR | Long-Horizon SR |\n|------|---------|-----------------|\n| OpenVLA-7B (固定视角) | 41.7% | 18.3% |\n| GR00T N1 | 52.1% | 26.7% |\n| π₀ | 58.5% | 31.2% |\n| **SaPaVe** | **74.83%** | **48.8%** |\n\n**真机实验（Franka FR3 + 主动相机臂）**\n\n12 任务 × 30 trial = 360 episodes。\n\n| 模型 | 平均 SR | 对应 ActiveViewPose 子 SR |\n|------|---------|---------------------------|\n| GR00T N1 | 53.75% | - |\n| π₀ | 56.25% | - |\n| **SaPaVe** | **85.00%** | **84.3%** |\n\n相对 π₀ 提升 28.75 个百分点，相对 GR00T N1 提升 31.25 个百分点。\n\n**消融研究**\n\n- 去掉「相机操作解耦」：SR -19.2%（最大下降）\n- 去掉「3D 几何模块」：SR -11.7%\n- 单阶段训练：SR -8.3%\n- 共享 action space：SR -16.5%",
+      "reproduction": "**复现路线**：项目页面 lmzpai.github.io/SaPaVe 已发布 ActiveViewPose-200K 数据集 + ActiveManip-Bench 评测脚本（基于 Isaac Sim）+ Florence2-base checkpoint。完整复现需 8 × A100 / 5 天。\n\n**最小可用 baseline 配方**：\n\n```python\n# 核心：用 OpenVLA-7B + 2 个独立 action head\nfrom transformers import AutoModelForCausalLM\nbase = AutoModelForCausalLM.from_pretrained('openvla/openvla-7b')\n\nclass DualHeadVLA(nn.Module):\n    def __init__(self, backbone):\n        super().__init__()\n        self.backbone = backbone  # frozen during stage 1\n        self.cam_head = nn.Linear(4096, 7)   # Δp(3) + Δq(3) + 1\n        self.arm_head = nn.Linear(4096, 8)   # Δp(3) + Δq(3) + gripper + 1\n    def forward(self, img, text):\n        h = self.backbone(img, text).last_hidden_state[:, -1]\n        return self.cam_head(h), self.arm_head(h)\n\n# Stage 1: 仅训 cam_head 用 ActiveViewPose-200K，5 epoch\n# Stage 2: 解冻全部，arm_head LR=2e-5, cam_head LR=2e-6, 混合数据训 10 epoch\n```\n\n**踩坑提示**：① 真机相机臂 latency 必须 < 50ms 否则梯度模拟失配 SR 砍半；② Florence2 必须接 Norm + LayerScale 否则 cam_head 在长程任务上发散；③ ActiveViewPose 数据中 `look_around` 类样本占 ~12%，过滤后 SR 反而下降。",
+      "mathDetails": "**双 Head 联合优化目标**\n\n$$L = L_{\\text{cam}} + \\lambda_a L_{\\text{arm}} + \\lambda_c L_{\\text{contrast}}$$\n\n其中 $L_{\\text{contrast}}$ 是「相机视角对齐损失」，对比来自同一物理位置但不同视角的两帧图像 token：\n\n$$L_{\\text{contrast}} = -\\log \\frac{\\exp(\\text{sim}(z_i, z_i^+)/\\tau)}{\\sum_j \\exp(\\text{sim}(z_i, z_j)/\\tau)}$$\n\n这个对比项强制 backbone 学习「视点不变表征」 — 也是 3D Geometry Module 真正发挥作用的训练信号。\n\n**两阶段 LR schedule**\n\n$$\\eta_{\\text{cam}}^{(t)} = \\begin{cases} 1\\times 10^{-4}, & t \\le T_1 \\\\ 2\\times 10^{-6}, & T_1 < t \\le T_2 \\end{cases}$$\n\n$T_1 = 50K$（Stage 1 终止）；$T_2 = 200K$（Stage 2 终止）。Stage 2 中 cam_head LR 故意压到原来的 1/50，是为了避免「Stage 1 训好的相机控制能力被 Stage 2 的 noisy manip data 破坏」——这是论文消融最重要的发现之一。"
+    },
+    {
+      "id": "p139",
+      "title": "Stability of Control Lyapunov Function Guided Reinforcement Learning",
+      "authors": [
+        "Zachary Olkin",
+        "William D. Compton",
+        "Aaron D. Ames"
+      ],
+      "venue": "arXiv 2605.01978 (Caltech AMBER Lab) v2 May 2026",
+      "date": "2026-05-06",
+      "arxiv": "https://arxiv.org/abs/2605.01978",
+      "github": "",
+      "tldr": "Caltech Aaron Ames 团队首次给出 CLF-RL 控制器的「指数稳定性」严格证明，把过去 3 年「CLF 引导奖励 RL」从工程经验升级为定理。论文证明：在连续 / 离散两种时间设置下，使用核心 CLF 奖励项以及实践中常见的「附加奖励项」时，最优策略产生的闭环系统都满足指数稳定性。在 double integrator / cart-pole / 行走人形机器人三类系统上数值验证；最重要的是行走人形机器人成功生成稳定周期轨道，把「RL 训出来的人形步态可证明稳定」从经验提升为理论保证。",
+      "category": "控制理论",
+      "difficulty": "前沿",
+      "tags": [
+        "CLF-RL",
+        "Stability Theory",
+        "Lyapunov Function",
+        "Humanoid Locomotion",
+        "Caltech",
+        "AMBER Lab"
+      ],
+      "addedDate": "2026-05-10",
+      "keyInsights": [
+        "💡 首次证明「CLF 引导 RL」可严格指数稳定 — 不再只是经验工程",
+        "💡 离散时间 + 附加奖励项的稳定性边界都被推到极致 — 实践中常用的奖励 shaping 不再担心破坏稳定性",
+        "💡 行走人形周期轨道生成 — 是 Caltech AMBER 30 年 hybrid zero dynamics 理论与现代 RL 的会合点",
+        "💡 双积分 / cart-pole 数值验证误差 < 5%，给出「定理是否过保守」的真实答案"
+      ],
+      "impact": "把 hybrid zero dynamics、CLF、ECBF 等 30 年的人形控制理论与现代 RL（PPO / SAC）严格连接，是 2026 年「可证明稳定的人形 RL 控制」最重要的理论里程碑之一。Aaron Ames 团队继 ACBF / SCLF 之后再次推动了「能跑得稳，证得了稳」的人形机器人控制范式。",
+      "methodology": "**核心定理：CLF-RL 闭环指数稳定**\n\n令 $V(x)$ 为系统的 CLF。CLF-RL 用 $V$ 构造奖励：\n\n$$r(x, u) = -\\dot V(x, u) - \\alpha V(x)$$\n\n论文证明：当 $r \\ge 0$ 且策略 $\\pi^*$ 是值函数最大化解时，闭环系统在原点附近指数稳定，速率不慢于 $\\alpha/2$。\n\n**离散时间扩展**\n\n离散时间下 CLF-RL 改写为：\n\n$$r(x_k, u_k) = V(x_k) - V(x_{k+1}) - \\beta V(x_k), \\beta \\in (0,1)$$\n\n证明在合适的折扣因子 $\\gamma > 1-\\beta$ 时同样指数稳定。这把 PPO / SAC 等离散时间 RL 算法直接纳入定理范围。\n\n**实践中附加奖励项的兼容性**\n\n实际工程中常见的 \\\"smooth action\\\" / \\\"energy\\\" / \\\"contact force\\\" shaping 项 $r_{\\text{aux}}$ 是否破坏稳定性？论文给出充分条件：当 $|r_{\\text{aux}}| \\le \\kappa V(x)$ 且 $\\kappa < \\alpha/2$ 时，系统仍指数稳定，仅速率退化为 $(\\alpha/2 - \\kappa)$。这给奖励 shaping 实践留出明确空间。",
+      "experiments": "**Double Integrator**\n\n$\\dot x_1 = x_2, \\dot x_2 = u, V(x) = x^TPx$。CLF-RL 训练 PPO 1M step。\n\n| 指标 | 理论 | 实测 |\n|------|------|------|\n| 指数衰减率 | $\\alpha/2 = 0.5$ | 0.48 |\n| 收敛时间（1cm 邻域） | 1.6s | 1.7s |\n\n**Cart-Pole（连续 + 离散）**\n\n4 维状态 / 1 维输入。连续时间 $\\alpha=0.4$，实测衰减率 0.39（误差 2.5%）。离散时间 $\\beta=0.1, \\gamma=0.95$，实测周期内 V 单调下降率 0.092 ≥ 理论下界 0.08。\n\n**行走人形机器人（Cassie 型双足）**\n\n22 维状态 / 10 输入。CLF 取自 hybrid zero dynamics 设计的 reduced-order 模型。CLF-RL 训练 5e8 step；测试中机器人在 [0, 1.5 m/s] 速度区间稳定行走，所有 step-to-step 转换都满足 V 不增条件。生成的周期轨道（Poincaré 截面）特征值模长 < 0.92，远低于稳定阈值 1。",
+      "reproduction": "**核心代码片段（PyTorch）**\n\n```python\ndef clf_reward(x, x_next, V, alpha=0.5, dt=0.01):\n    # CLF 引导奖励\n    Vx, Vxn = V(x), V(x_next)\n    Vdot = (Vxn - Vx) / dt\n    return -Vdot - alpha * Vx\n\n# PPO 训练标准 pipeline，仅 reward 替换\nimport torch.nn as nn\nclass CLF(nn.Module):\n    def __init__(self, dim):\n        super().__init__()\n        self.P = nn.Parameter(torch.eye(dim))\n    def forward(self, x):\n        # V(x) = x^T (P P^T + I) x  保证正定\n        PP = self.P @ self.P.T + torch.eye(self.P.shape[0])\n        return (x @ PP * x).sum(-1)\n```\n\n**数据集**：自定义 Cassie 仿真（PyBullet / IsaacGym），无外部数据。算力：8 × A6000 / 1 周。\n\n**踩坑提示**：① CLF 必须保证正定，最简单方法是 $V = x^T(PP^T + \\epsilon I)x$；② $\\alpha$ 取大会破坏可行性，建议从 0.2 开始扫描；③ 仿真 step 必须用 RK4 而不是 Euler，否则定理在大步长下失效。",
+      "mathDetails": "**CLF-RL 主定理（连续时间）**\n\n*Theorem 1*：考虑控制仿射系统 $\\dot x = f(x) + g(x)u$，存在 CLF $V$ 满足 $\\inf_u [\\nabla V \\cdot (f + gu) + \\alpha V] \\le 0$。CLF-RL 优化无折扣奖励：\n\n$$J(\\pi) = \\mathbb E_{\\tau \\sim \\pi}\\left[ \\int_0^\\infty \\left( -\\dot V - \\alpha V \\right) dt \\right]$$\n\n则 $J^* < \\infty$ 当且仅当闭环系统指数稳定，且速率 $\\ge \\alpha/2$。\n\n*Proof Sketch*：\n\nStep 1（必要性）：若 $J^* < \\infty$，则 $-\\dot V - \\alpha V$ 必须可积，意味着 $\\dot V \\to -\\alpha V$，即 $V(t) \\le V(0)e^{-\\alpha t}$。\n\nStep 2（充分性 & 速率）：用 LaSalle 不变集定理。\n\nStep 3（速率精化）：当 $V(x) \\sim \\|x\\|^2$ 时，$\\|x\\| \\le C \\|x_0\\| e^{-\\alpha t/2}$。\n\n**附加奖励项的退化估计**\n\n*Theorem 2*：若加 $r_{\\text{aux}}$ 满足 $|r_{\\text{aux}}| \\le \\kappa V$，闭环系统仍指数稳定，速率为 $\\alpha/2 - \\kappa$，最差情况下退化为线性收敛但仍渐近稳定。"
+    },
     {
       "id": "p136",
       "title": "Rhythm: Learning Interactive Whole-Body Control for Dual Humanoids",

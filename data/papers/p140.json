@@ -1,0 +1,15 @@
+{
+  "id": "p140",
+  "title": "Non-Markovian Long-Horizon Robot Manipulation via Keyframe Chaining",
+  "authors": "Yipeng Chen, Wentao Tan, Lei Zhu, Fengling Li, Jingjing Li, Guoli Yang, Heng Tao Shen",
+  "venue": "arXiv 2026 (2603.01465)",
+  "date": "2026-03-02",
+  "arxiv": "2603.01465",
+  "github": "https://github.com/cytoplastm/KC-VLA",
+  "tldr": "KC-VLA 用任务调制 KSM 提取语义关键帧，把 VLA 长时程任务的「非马尔可夫依赖」显式建模到稀疏历史 prompt 中，自建 4 任务测试集平均 92% vs 基线 57%。",
+  "methodology": "**核心思想**：传统 VLA 只看当前观测帧，对「最优动作依赖远距离历史状态而非当前帧」的非马尔可夫长时程任务束手无策。KC-VLA 提出「关键帧链」（Keyframe Chaining）：从原始视频流中检测语义里程碑事件 → 把这些关键帧拼成稀疏历史 prompt → VLA 解码器据此生成动作。\n\n**架构组件**：\n1. **Task-modulated Key-frame Sampler (KSM)**：以任务文本指令为条件的可学习关键帧检测器。输入连续帧序列 + 任务 prompt，输出每帧的「是否关键帧」概率。两阶段训练（先无监督预训练对比 frame embedding，再有监督 fine-tune 标注关键帧），F1 = 97.5%。\n2. **稀疏历史链 (Keyframe Chain)**：从 t=0 到当前 t，KSM 检测到 K 个关键帧 {f_{t1}, ..., f_{tK}}（典型 K=5-10），与当前观测 f_t 拼接送入 VLA 视觉编码器。\n3. **VLA 解码器**：标准 OpenVLA / π0 风格自回归解码，输入 = 任务 prompt + 关键帧链 + 当前帧 → 输出动作 chunk。",
+  "experiments": "**Benchmark**：自建 NonMarkov-ManiSkill 4 任务套件 —— Spatial Reconfiguration（按之前观察到的物体排列还原）/ Temporal Sequencing（按特定顺序操作）/ Counting & Latency（数 N 次后才执行）/ Identity Tracking（在多个相似物体中追踪特定一个）。\n\n**核心结果**：\n- 4 任务平均成功率：**92.0%**（KC-VLA） vs 57.0%（最佳基线 LongVLA-128）\n- KSM F1 score：**97.5%**（关键帧检测准确率）\n- 真机 Franka Panda 长时程装配任务：8/10 成功 vs 基线 3/10\n\n**消融**：\n- 去掉 KSM 改用固定步长采样（每 10 帧一帧）：92% → 71%（关键帧选择质量决定上限）\n- 去掉历史链直接看当前帧：92% → 31%（验证非马尔可夫依赖确实存在）\n- KSM 单独 + Markov 任务：性能持平基线（不增加额外开销，证明无副作用）",
+  "reproduction": "**仓库**：https://github.com/cytoplastm/KC-VLA\n\n**环境**：Conda env file 已提供，主要依赖 PyTorch 2.3 / transformers 4.38 / mani-skill2 0.6 / OpenVLA backbone。GPU 单卡 A100 40GB 即可推理，训练需 4-8 卡 A100。\n\n**关键脚本**：`train_ksm.py`（先训关键帧检测器）→ `train_vla.py`（用 KSM 提取的关键帧链 finetune VLA）→ `eval_nm_maniskill.py`（4 任务评测）。\n\n**注意点**：\n- KSM 标注成本不可忽视（需要人工或半自动标注关键帧），建议复现时先在 ManiSkill2 模拟器中用 ground-truth 状态变化作为关键帧 oracle 训 KSM；\n- 关键帧链长度 K 建议 5-10，太少丢信息，太多 VLA 上下文爆炸。",
+  "category": "manipulation",
+  "difficulty": "hard"
+}

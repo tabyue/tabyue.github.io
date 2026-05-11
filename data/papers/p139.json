@@ -1,0 +1,36 @@
+{
+  "id": "p139",
+  "title": "Stability of Control Lyapunov Function Guided Reinforcement Learning",
+  "authors": [
+    "Zachary Olkin",
+    "William D. Compton",
+    "Aaron D. Ames"
+  ],
+  "venue": "arXiv 2605.01978 (Caltech AMBER Lab) v2 May 2026",
+  "date": "2026-05-06",
+  "arxiv": "https://arxiv.org/abs/2605.01978",
+  "github": "",
+  "tldr": "Caltech Aaron Ames 团队首次给出 CLF-RL 控制器的「指数稳定性」严格证明，把过去 3 年「CLF 引导奖励 RL」从工程经验升级为定理。论文证明：在连续 / 离散两种时间设置下，使用核心 CLF 奖励项以及实践中常见的「附加奖励项」时，最优策略产生的闭环系统都满足指数稳定性。在 double integrator / cart-pole / 行走人形机器人三类系统上数值验证；最重要的是行走人形机器人成功生成稳定周期轨道，把「RL 训出来的人形步态可证明稳定」从经验提升为理论保证。",
+  "category": "控制理论",
+  "difficulty": "前沿",
+  "tags": [
+    "CLF-RL",
+    "Stability Theory",
+    "Lyapunov Function",
+    "Humanoid Locomotion",
+    "Caltech",
+    "AMBER Lab"
+  ],
+  "addedDate": "2026-05-10",
+  "keyInsights": [
+    "💡 首次证明「CLF 引导 RL」可严格指数稳定 — 不再只是经验工程",
+    "💡 离散时间 + 附加奖励项的稳定性边界都被推到极致 — 实践中常用的奖励 shaping 不再担心破坏稳定性",
+    "💡 行走人形周期轨道生成 — 是 Caltech AMBER 30 年 hybrid zero dynamics 理论与现代 RL 的会合点",
+    "💡 双积分 / cart-pole 数值验证误差 < 5%，给出「定理是否过保守」的真实答案"
+  ],
+  "impact": "把 hybrid zero dynamics、CLF、ECBF 等 30 年的人形控制理论与现代 RL（PPO / SAC）严格连接，是 2026 年「可证明稳定的人形 RL 控制」最重要的理论里程碑之一。Aaron Ames 团队继 ACBF / SCLF 之后再次推动了「能跑得稳，证得了稳」的人形机器人控制范式。",
+  "methodology": "**核心定理：CLF-RL 闭环指数稳定**\n\n令 $V(x)$ 为系统的 CLF。CLF-RL 用 $V$ 构造奖励：\n\n$$r(x, u) = -\\dot V(x, u) - \\alpha V(x)$$\n\n论文证明：当 $r \\ge 0$ 且策略 $\\pi^*$ 是值函数最大化解时，闭环系统在原点附近指数稳定，速率不慢于 $\\alpha/2$。\n\n**离散时间扩展**\n\n离散时间下 CLF-RL 改写为：\n\n$$r(x_k, u_k) = V(x_k) - V(x_{k+1}) - \\beta V(x_k), \\beta \\in (0,1)$$\n\n证明在合适的折扣因子 $\\gamma > 1-\\beta$ 时同样指数稳定。这把 PPO / SAC 等离散时间 RL 算法直接纳入定理范围。\n\n**实践中附加奖励项的兼容性**\n\n实际工程中常见的 \\\"smooth action\\\" / \\\"energy\\\" / \\\"contact force\\\" shaping 项 $r_{\\text{aux}}$ 是否破坏稳定性？论文给出充分条件：当 $|r_{\\text{aux}}| \\le \\kappa V(x)$ 且 $\\kappa < \\alpha/2$ 时，系统仍指数稳定，仅速率退化为 $(\\alpha/2 - \\kappa)$。这给奖励 shaping 实践留出明确空间。",
+  "experiments": "**Double Integrator**\n\n$\\dot x_1 = x_2, \\dot x_2 = u, V(x) = x^TPx$。CLF-RL 训练 PPO 1M step。\n\n| 指标 | 理论 | 实测 |\n|------|------|------|\n| 指数衰减率 | $\\alpha/2 = 0.5$ | 0.48 |\n| 收敛时间（1cm 邻域） | 1.6s | 1.7s |\n\n**Cart-Pole（连续 + 离散）**\n\n4 维状态 / 1 维输入。连续时间 $\\alpha=0.4$，实测衰减率 0.39（误差 2.5%）。离散时间 $\\beta=0.1, \\gamma=0.95$，实测周期内 V 单调下降率 0.092 ≥ 理论下界 0.08。\n\n**行走人形机器人（Cassie 型双足）**\n\n22 维状态 / 10 输入。CLF 取自 hybrid zero dynamics 设计的 reduced-order 模型。CLF-RL 训练 5e8 step；测试中机器人在 [0, 1.5 m/s] 速度区间稳定行走，所有 step-to-step 转换都满足 V 不增条件。生成的周期轨道（Poincaré 截面）特征值模长 < 0.92，远低于稳定阈值 1。",
+  "reproduction": "**核心代码片段（PyTorch）**\n\n```python\ndef clf_reward(x, x_next, V, alpha=0.5, dt=0.01):\n    # CLF 引导奖励\n    Vx, Vxn = V(x), V(x_next)\n    Vdot = (Vxn - Vx) / dt\n    return -Vdot - alpha * Vx\n\n# PPO 训练标准 pipeline，仅 reward 替换\nimport torch.nn as nn\nclass CLF(nn.Module):\n    def __init__(self, dim):\n        super().__init__()\n        self.P = nn.Parameter(torch.eye(dim))\n    def forward(self, x):\n        # V(x) = x^T (P P^T + I) x  保证正定\n        PP = self.P @ self.P.T + torch.eye(self.P.shape[0])\n        return (x @ PP * x).sum(-1)\n```\n\n**数据集**：自定义 Cassie 仿真（PyBullet / IsaacGym），无外部数据。算力：8 × A6000 / 1 周。\n\n**踩坑提示**：① CLF 必须保证正定，最简单方法是 $V = x^T(PP^T + \\epsilon I)x$；② $\\alpha$ 取大会破坏可行性，建议从 0.2 开始扫描；③ 仿真 step 必须用 RK4 而不是 Euler，否则定理在大步长下失效。",
+  "mathDetails": "**CLF-RL 主定理（连续时间）**\n\n*Theorem 1*：考虑控制仿射系统 $\\dot x = f(x) + g(x)u$，存在 CLF $V$ 满足 $\\inf_u [\\nabla V \\cdot (f + gu) + \\alpha V] \\le 0$。CLF-RL 优化无折扣奖励：\n\n$$J(\\pi) = \\mathbb E_{\\tau \\sim \\pi}\\left[ \\int_0^\\infty \\left( -\\dot V - \\alpha V \\right) dt \\right]$$\n\n则 $J^* < \\infty$ 当且仅当闭环系统指数稳定，且速率 $\\ge \\alpha/2$。\n\n*Proof Sketch*：\n\nStep 1（必要性）：若 $J^* < \\infty$，则 $-\\dot V - \\alpha V$ 必须可积，意味着 $\\dot V \\to -\\alpha V$，即 $V(t) \\le V(0)e^{-\\alpha t}$。\n\nStep 2（充分性 & 速率）：用 LaSalle 不变集定理。\n\nStep 3（速率精化）：当 $V(x) \\sim \\|x\\|^2$ 时，$\\|x\\| \\le C \\|x_0\\| e^{-\\alpha t/2}$。\n\n**附加奖励项的退化估计**\n\n*Theorem 2*：若加 $r_{\\text{aux}}$ 满足 $|r_{\\text{aux}}| \\le \\kappa V$，闭环系统仍指数稳定，速率为 $\\alpha/2 - \\kappa$，最差情况下退化为线性收敛但仍渐近稳定。"
+}

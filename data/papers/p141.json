@@ -1,0 +1,17 @@
+{
+  "id": "p141",
+  "title": "TriRelVLA: Triadic Relational Structure for Generalizable Embodied Manipulation",
+  "extendedAbstract": "TriRelVLA 把 VLA 的视觉表示从「外观+背景+布局耦合」中剥离，提出「物体-手臂-任务」三元关系结构作为 first-class 推理原语：① 多模态输入分别提取三个原语；② Task-guided cross-attention 把任务文本作为 query，从视觉 token 中筛选与任务相关的物体属性 / 手臂构型；③ Relation-aware Graph Transformer 建模三元关系节点之间的交互；④ Bottleneck 把图压缩到低秩潜空间，投影到 LLM 完成动作预测。配套发布真机数据集。",
+  "keyInsights": [
+    "VLA 失败的根因：隐式视觉表示把「物体 / 背景 / 布局」三者编码到同一向量，OOD 时整体向量漂移导致动作崩坏",
+    "三元关系原语：明确把推理拆成「物体属性 / 手臂构型 / 任务意图」三个节点，关系作为图边——这正是 Helix-02 / OpenVLA 时代缺的「显式结构」",
+    "Bottleneck 压缩：把 graph relation 浓缩到一个低秩 latent，再投影到 LLM——既保住 LLM 的泛化能力，又避免 LLM 直接学「视觉细节」的过拟合",
+    "真机数据集：与论文一同发布的微调数据集，是少见的「关系标注 + 动作」双标 benchmark，对后续 VLA 训练范式有潜在影响"
+  ],
+  "impact": "这是 2026 年「VLA 第三阶段」（结构化推理）的代表性工作之一。前两阶段：Phase 1（OpenVLA / RT-2）→ end-to-end 黑箱；Phase 2（CoT-VLA / IVLR）→ 显式语言推理；Phase 3（TriRelVLA / 本文）→ 显式结构推理。从工程效益上看，Phase 3 比 Phase 2 推理快、可解释性更好，是 2026 下半年 VLA 演化的重要风向标。",
+  "methodology": "**3 步管线**：1️⃣ 关系原语提取——用预训练视觉编码器（DINO-v2 + SAM）拆分场景为物体级 token，用 proprioception encoder 编码手臂构型，task instruction 进 LLM 编码任务意图。2️⃣ 任务引导关系图——以 task token 为查询，对物体 token 跨注意力筛选「与任务相关的对象」；以筛选后的对象 token 为节点，构建 task → object → arm 三元 fully-connected graph，关系作为 edge feature。3️⃣ 关系感知 GT——3-layer relation-aware Graph Transformer 迭代消息传递，把节点 hidden 提炼成 relation-aware embedding。4️⃣ Bottleneck 压缩——把 N 个节点 hidden 通过 MLP 压缩到固定维度的 1 个 latent vector，再 projection 到 LLM 输入空间，与 LLM 的语言 token 拼接，autoregressive 出 action chunk。",
+  "experiments": "**评测**：① LIBERO 4 任务族（Spatial / Object / Goal / Long）；② 真机数据集（论文一同发布）含跨场景 / 跨物体 / 跨任务三种泛化划分。**关键结果**：1）LIBERO-Long 较 OpenVLA + 7.2pp，与 Anticipation-VLA 持平；2）跨场景泛化（同物体不同背景）OpenVLA 60.3% → TriRelVLA 78.1%；3）跨物体泛化（同任务不同 instance）50.4% → 71.6%；4）跨任务组合（同对象不同任务序列）45.2% → 68.9%；5）消融：去掉 task-guided attention 跌 8.7pp，去掉 relation graph 跌 12.4pp，去掉 bottleneck 跌 4.1pp。",
+  "reproduction": "**代码**：截至 5/7 论文未附 GitHub，仅放出 PDF + HTML。**复现要点**：① 视觉编码器用 DINO-v2-base + SAM-h 即可；② Graph Transformer 推荐 3 层 + 8 head，节点数固定 K=12；③ Bottleneck 维度 d=128 → LLM input dim（LLaMA-2-7B 是 4096）；④ 训练分两阶段：先 LIBERO 上 100 epoch IL，再真机数据集 fine-tune 50 epoch；⑤ 真机数据集需要按 obj-arm-task 三元标注，工作量约为标准 IL 数据集的 1.6×。",
+  "mathDetails": "**Triadic Relation Loss**：除标准 IL action MSE 外，添加 graph consistency loss：$L_{rel}=\\sum_{i\\ne j} ||r_{ij} - g(h_i, h_j)||_2^2$，其中 $r_{ij}$ 是预定义的 relation embedding，$h_i, h_j$ 是节点 hidden。这鼓励 GT 学到的 edge 与人工标注的 relation 一致。**Bottleneck 压缩**：MLP 把 $K\\times d_{node}$ 节点矩阵压成 $1\\times d_{latent}$，公式 $z = \\text{MLP}(\\text{Concat}(h_1,...,h_K))$，避免 LLM 看到完整的 visual feature pyramid。",
+  "lastUpdated": "2026-05-10T23:35"
+}

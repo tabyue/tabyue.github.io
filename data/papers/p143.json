@@ -1,0 +1,17 @@
+{
+  "id": "p143",
+  "title": "StarVLA: A Lego-like Codebase for Vision-Language-Action Model Developing",
+  "extendedAbstract": "StarVLA 提出一个统一的策略中心公式 L_total = L_action + λ·L_aux，把 VLM-based VLA 与 World-Model-based VLA 视为同一框架的不同 L_aux 实例化（VLM-based L_aux=0，World-Model-based L_aux=动力学/未来帧预测）。在此抽象下，模块化 backbone-action-head 框架支持独立替换 backbone（QwenVL / LLaVA / Cosmos / Gemma）、动作头（FAST autoregressive / OFT MLP-parallel / π Flow-Matching / GR00T 双系统）、训练范式（SFT / 多目标 co-training / 跨本体 co-training / RL adaptation）。统一评估接口覆盖 5 大主流基准（LIBERO / SimplerEnv / RoboTwin 2.0 / RoboCasa-GR1 / BEHAVIOR-1K），从训练到 sim 到实机一站打通。",
+  "keyInsights": [
+    "范式统一：所有 VLA 都是 L_total = L_action + λ·L_aux 的实例化——这个观察让对比公平且可复现",
+    "策略中心抽象：(observation, instruction, action_chunk) → policy → action 是统一计算图，三个组件分别可换",
+    "动作头四件套：StarVLA-FAST（autoregressive 离散 token）/ -OFT（连续并行 MLP）/ -PI（Flow-Matching 扩散）/ -GR00T（双系统 VLM+FM）覆盖现有所有主流",
+    "工程 ROI：从「换主干」到「换基准」到「上实机」打通，4 大动作头对比从原本两人月降到一周内"
+  ],
+  "impact": "StarVLA 是 VLA 领域基础设施级的工作，对应 PyTorch（深度学习领域）/ Hugging Face Transformers（NLP 领域）的角色。在 OpenVLA 系（HuggingFace）、Open-π（Physical Intelligence）、Isaac-GR00T（NVIDIA）四大底座中，StarVLA 的差异点是「最广的动作头覆盖 + 中文原生支持」。预计 5-10 月有大量论文以 StarVLA 为基线对比框架。",
+  "methodology": "**策略中心公式**：L_total = L_action(π_θ(o,l), a*) + λ·L_aux\n\n- VLM-based VLA：L_aux = 0（只学动作）\n- World-Model-based VLA：L_aux = MSE(predicted_future_frame, actual_future_frame) 或 dynamics 预测\n\n**乐高式架构**：\n1. **Backbone Swap**：QwenVL-7B / QwenVL-2.5-3B / LLaVA-NeXT / Cosmos-1.0-7B / Gemma-3-4B 等可一行 config 切换\n2. **Action Head Swap**：FAST / OFT / Flow-Matching π / GR00T 双系统四种动作头共享 (visual_features, language_features, prev_action) 接口\n3. **Training Strategy Swap**：SFT 单任务 / Multi-Modal Multi-Objectives Co-Training / Cross-Embodiment Co-Training / RL Adaptation\n\n**评估抽象**：每个 benchmark 实现 `def rollout(policy, env, n_episodes)` 单一函数，5 大基准 1:1 同条件对比成为可能。",
+  "experiments": "**支持基准**：LIBERO（4 任务族）/ SimplerEnv（cross-embodiment）/ RoboTwin 2.0（双臂协作）/ RoboCasa-GR1（厨房长程）/ BEHAVIOR-1K（500+ 家庭任务）。\n\n**关键 baseline 复现**：\n- StarVLA-FAST 在 LIBERO 90+ % 与原 OpenVLA 持平\n- StarVLA-π 用相同数据复现 Flow-Matching π 论文报告值（误差 < 1pp）\n- StarVLA-GR00T 在 RoboCasa-GR1 上接近 Isaac-GR00T N1.7 报告值（误差 < 2pp）\n\n**结论**：所有动作头在统一框架下复现的结果与原论文吻合，证明框架 + 训练 recipe 的工程实现是正确的；这一「统一可复现」是 VLA 领域第一次。",
+  "reproduction": "**代码**：https://github.com/starVLA/starVLA（MIT 许可证，2.3k star，271 fork）\n\n**复现门槛**：\n- 单 GPU（A100/H100）就能跑 LIBERO 完整训练（约 24 小时）\n- 配置文件 + smoke test：每个 backbone 的小规模 sanity check 1 小时跑通\n- 跨基准统一接口：`python scripts/eval.py --backbone qwenvl-7b --action_head fast --bench libero` 一行命令切换\n\n**典型工作流**：\n1. fork 仓库 → 写自己的 action head（继承 BaseActionHead）→ 1 行 config 注册 → 跑 LIBERO 验证\n2. 想换数据集？继承 BaseDataset，与现有 dataloader 共享接口\n3. 想跑实机？仓库提供 Franka / G1 / SO-100 适配层模板",
+  "mathDetails": "**统一损失**：$\\mathcal{L}_{total} = \\mathcal{L}_{action}(\\pi_\\theta(o,l), a^*) + \\lambda \\cdot \\mathcal{L}_{aux}$\n\n其中 $\\mathcal{L}_{action}$ 因动作头不同而异：\n- FAST：cross-entropy on tokenized actions, $-\\sum_t \\log p_\\theta(\\tilde a_t | \\tilde a_{<t}, o, l)$\n- OFT：MSE on continuous chunk, $\\| \\pi_\\theta(o,l) - a^* \\|_2^2$\n- π：Flow-Matching loss, $\\mathbb{E}_{t,\\epsilon}[\\| v_\\theta(o,l,a_t,t) - (a^* - \\epsilon) \\|_2^2]$，$a_t = ta^* + (1-t)\\epsilon$\n- GR00T：双系统级联 = 上层 VLM 出 latent z + 下层 FM head $v_\\theta(o,l,z,a_t,t)$",
+  "lastUpdated": "2026-05-11T07:05"
+}

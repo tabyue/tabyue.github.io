@@ -1,0 +1,17 @@
+{
+  "id": "p142",
+  "title": "Learning while Deploying: Fleet-Scale Reinforcement Learning for Generalist Robot Policies",
+  "extendedAbstract": "LWD（Learning While Deploying）是上海创新研究院 + AGIBOT Finch + Columbia 联合提出的舰队级 offline-to-online RL 框架。已部署的 16 台双臂机器人在 8 个真实任务（语义补货 + 3-5 分钟长程任务）下分布式收集 rollout + 人类纠正数据；DIVL（distributional implicit value learning）做稳健价值估计；QAM（Q-learning via adjoint matching）把 RL 反馈嵌入 flow-based VLA 策略蒸馏；最终单一通用策略平均成功率 95%，长程任务收益最大。",
+  "keyInsights": [
+    "舰队学习正解：单台机器人收集分布偏移、人工干预数据再各自微调，会变成 N 个不一致的策略；LWD 反过来把 16 台机器人的多源经验汇合训出**单一通用策略**，避免「舰队碎片化」",
+    "DIVL 是关键：分布式 implicit value learning 在「稀疏奖励 + 异构经验」情况下提供稳健价值估计，避免 DDPG/SAC 类方法在多源舰队下崩溃",
+    "QAM 创新：把 Q-learning 嵌入到 flow matching 的策略蒸馏过程，让基于流匹配的 VLA（如 π0、DiT）也能从 RL 反馈受益——这是过去 flow-based VLA 主要靠 imitation learning 的关键缺口",
+    "长程任务收益最大：3-5 分钟语义补货任务从冷启 60% → 部署 6 个月后 95%——这是「学一边干」框架最有说服力的差异化证据"
+  ],
+  "impact": "代表了 2026 年「VLA 第四阶段」（Fleet RL）的工程范式：不再追求「一次训完出厂」，而是承认 OOD 必然存在，把 deployment 本身设计成训练循环的一部分。AGIBOT 已宣布 2026 为「具身智能部署元年」，LWD 给这个口号提供了技术底座——这意味着大规模舰队（万台量级）的「自我进化」具备了算法可行性。",
+  "methodology": "**LWD 闭环 5 步**：1️⃣ 出厂——预训练 VLA（π0 / OpenVLA）给所有舰队机器人。2️⃣ 自主 rollout——机器人用当前策略尝试任务，记录 (obs, action, reward, next_obs)。3️⃣ 人类干预——失败/接近失败时，远程操作员接管，干预轨迹标记为 high-priority data。4️⃣ DIVL 价值估计——把所有 rollout + intervention 喂给 distributional Q 网络，估出 state-action 的分布式 value（不只是 mean，还有 variance），稀疏奖励下不会崩。5️⃣ QAM 策略提取——把 Q 函数作为 adjoint，反向传播到 flow-matching 的 velocity field，更新 VLA 的 flow head 参数；与 imitation loss 加权混合。每周完成一次「数据收集 → 训练 → 重新部署」循环。",
+  "experiments": "**舰队规模**：16 台双臂机器人（AGIBOT 整机平台）。**任务**：8 个真实操作任务（含 3-5 分钟超长程的「语义杂货补货」：识别商品 → 定位货架 → 抓取 → 摆放 → 调整 → 重复）。**结果**：① 冷启动（仅离线预训练）平均成功率 60%；② 部署 1 个月（约 2k 次 rollout / 机器人）→ 78%；③ 6 个月（约 12k rollouts / 机器人）→ 95%；④ 长程任务（>3 分钟）的提升幅度最大（54% → 91%），短程（<30 秒）只从 82% → 96%——LWD 真正补足的是「VLA 长程能力」的短板；⑤ 消融：去掉 DIVL 用普通 Q-learning，10 周后平均掉到 73%（稀疏奖励崩溃）；去掉 QAM 直接用 BC，长程任务回落到 70%。",
+  "reproduction": "**代码 / 数据**：论文未公开舰队数据，但 DIVL + QAM 在标准 RL benchmark 上有公开 reference 实现。**最小可复现配置**：① 单机 4 台 Franka，预训练 OpenVLA-7B；② 4 个任务的离线 demo 数据（约 200 traj）；③ DIVL 用 distributional MSE + 100 quantile；④ QAM 配合 π0 的 flow head 训练 10 epoch；⑤ 每 100 rollout 触发一次重新训练，迭代 10 周；⑥ 关键：必须有「远程接管」的人类纠正流程——这是无法用纯模拟器替代的部分。",
+  "mathDetails": "**DIVL**：传统 Q-learning 的目标是 $Q(s,a)\\to \\mathbb{E}[r + \\gamma \\max Q(s',a')]$，DIVL 改为预测 quantile distribution $\\{Q_\\tau\\}_{\\tau\\in[0,1]}$，目标 $L_{DIVL}=\\sum_\\tau (q_\\tau \\cdot \\rho^+ + (1-q_\\tau)\\cdot \\rho^-)$（pinball loss），稀疏奖励下分布尾部依然有梯度信号。**QAM**：flow matching 的策略 $\\pi$ 由 velocity field $v_\\theta(x_t,t)$ 定义，QAM 把 Q 当 reward shaping，损失 $L_{QAM}=\\mathbb{E}[||v_\\theta(x_t,t) - (v^\\star + \\beta \\nabla Q)||_2^2]$，其中 $v^\\star$ 是 imitation 目标 velocity，$\\beta$ 是 RL 权重——本质是把 flow matching 的 imitation 目标朝着 Q 高值方向偏移。",
+  "lastUpdated": "2026-05-10T23:35"
+}

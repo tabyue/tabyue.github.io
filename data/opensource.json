@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-10T02:25",
+  "lastUpdated": "2026-05-11T07:05",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,147 @@
     }
   ],
   "projects": [
+    {
+      "id": "os098",
+      "name": "GR00T-WholeBodyControl (NVIDIA 全身控制平台)",
+      "github": "https://github.com/NVlabs/GR00T-WholeBodyControl",
+      "organization": "NVIDIA Labs (GEAR 团队)",
+      "category": "人形机器人 / 全身控制",
+      "description": "NVIDIA GEAR 团队为 Unitree G1 等人形机器人提供端到端开源全栈：① **GEAR-SONIC**——大规模人体动作数据训练的统一全身策略（行走 / 爬行 / 双臂操作 / 遥操作 / 多模态控制）；② **Decoupled WBC**——下半身 RL + 上半身 IK 的解耦控制器（GR00T N1.5 / N1.6 同款）；③ **MotionBricks**——15000 FPS 实时潜在生成动作合成模型；④ 配套 Isaac-GR00T N1.7 VLA 微调流程 + VR 遥操作数据采集（PICO 头显） + C++ 推理栈 + BONES-SEED 数据集（142K 人体动作 / 288 小时 G1 MuJoCo 轨迹）。",
+      "language": "Python + C++",
+      "license": "Apache-2.0 (代码) + NVIDIA Open Model License (权重)",
+      "features": [
+        "GEAR-SONIC 统一全身策略",
+        "Decoupled WBC（GR00T N1.5/N1.6 同款）",
+        "MotionBricks 15000 FPS 动作合成",
+        "Unitree G1 端到端 VLA 工作流",
+        "VR 遥操作数据采集（PICO）",
+        "BONES-SEED 142K 动作数据集",
+        "Isaac Lab + PPO 训练 + C++ 推理栈"
+      ],
+      "stars": "1.9k",
+      "tags": [
+        "NVIDIA",
+        "GR00T",
+        "Unitree G1",
+        "全身控制",
+        "WBC",
+        "Isaac Lab"
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "os097",
+      "name": "StarVLA (港科大乐高式 VLA 底座)",
+      "github": "https://github.com/starVLA/starVLA",
+      "organization": "HKUST + Open-Source Community",
+      "category": "VLA / 训练评估底座",
+      "description": "VLA 的「PyTorch 时刻」——把 OpenVLA / π 系列 / GR00T / OFT 四大主流动作头与 QwenVL / LLaVA / Cosmos / Gemma 等 backbone 统一在乐高式接口下；统一 5 大基准（LIBERO / SimplerEnv / RoboTwin 2.0 / RoboCasa-GR1 / BEHAVIOR-1K）评估。模块化 + 配置文件 + smoke test，单 GPU 就能跑全流程。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "Lego-like backbone-action-head 解耦",
+        "支持 4 大主流动作头（FAST/OFT/π/GR00T）",
+        "5 大基准统一评估（LIBERO/SimplerEnv/RoboTwin 2.0/RoboCasa-GR1/BEHAVIOR-1K）",
+        "三种训练范式（SFT / 多目标 co-training / 跨本体 co-training / RL adaptation）",
+        "中文社区原生支持"
+      ],
+      "stars": "2.3k",
+      "tags": [
+        "VLA",
+        "训练框架",
+        "评估基准",
+        "开源底座",
+        "PyTorch时刻"
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "os096",
+      "name": "KC-VLA (Keyframe Chaining VLA)",
+      "github": "https://github.com/cytoplastm/KC-VLA",
+      "organization": "Yipeng Chen et al. (UESTC + 多机构)",
+      "category": "VLA / 长时程操作",
+      "description": "KC-VLA 官方实现：用任务调制 KSM 检测语义关键帧 → 关键帧链 prompt 替代密集观测窗口 → VLA 解码生成动作。自建 NonMarkov-ManiSkill 4 任务集平均 92% vs 基线 57%。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "Task-modulated KSM",
+        "Keyframe Chain prompt",
+        "OpenVLA backbone",
+        "ManiSkill2 兼容",
+        "真机 Franka Panda 验证"
+      ],
+      "stars": "~120",
+      "tags": [
+        "VLA",
+        "long-horizon",
+        "non-markovian",
+        "keyframe",
+        "manipulation"
+      ],
+      "addedDate": "2026-05-10"
+    },
+    {
+      "id": "os094",
+      "name": "Hubei Humanoid Action Foundation Model (MotionMaster + UniAct)",
+      "github": "https://news.hubeidaily.net/pc/c_5487272.html",
+      "organization": "湖北人形机器人创新中心 / 北武院（北京大学武汉人工智能研究院） / 北京虚拟动点科技",
+      "category": "humanoid-foundation",
+      "description": "业内首个开源跨品牌「人形机器人动作大模型」（5 月 9 日武汉光谷发布）。两大核心模块：① **MotionMaster 虚拟动作生成器**（高阶语义 / 文本 / 视频 / 音频 / 动捕多模态输入 → 虚拟动作序列）；② **UniAct 真机执行引擎**（虚拟动作 → 多品牌、多机型机器人可执行硬件指令）。全行业开源，已生态合作宇树、乐聚、潜空间等。生态首款应用产品「潜擎」动创平台（潜空间）即将公测，文本生动作开发周期从 2-3 周/动作压缩到 30 分钟。意义：解决了「各品牌动作数据互不兼容」最大痛点，定位为人形机器人「小脑」基础设施级开源项目，与 Genesis GENE-26.5 / Helix-02 形成「大脑 + 小脑」分层范式互补。",
+      "language": "Python (PyTorch)",
+      "license": "Apache-2.0（待 GitHub 同步）",
+      "features": [
+        "MotionMaster 多模态语义生动作（文本 / 视频 / 音频 / 动捕）",
+        "UniAct 真机执行引擎跨品牌机器人通用",
+        "动作成功率 / 泛化能力 / 执行效率行业领先",
+        "生态合作伙伴宇树 / 乐聚 / 潜空间 / 飞阔 / 青瞳",
+        "潜擎动创平台首款应用即将公测",
+        "面向全行业开源共享"
+      ],
+      "stars": "刚开源",
+      "tags": [
+        "MotionMaster",
+        "UniAct",
+        "动作大模型",
+        "人形机器人",
+        "北武院",
+        "湖北人形机器人创新中心",
+        "潜擎",
+        "虚拟动点"
+      ],
+      "addedDate": "2026-05-10"
+    },
+    {
+      "id": "os095",
+      "name": "SaPaVe (Active Perception VLA)",
+      "github": "https://lmzpai.github.io/SaPaVe",
+      "organization": "Peking University × Beihang × BAAI",
+      "category": "vla-research",
+      "description": "北大 / 北航 / 北智院联合发布的端到端「主动感知 + 主动操作」VLA 框架（论文 arXiv 2603.12193）。核心创新：① 双 Action Head 解耦（相机 head 与操作 head 独立梯度）；② 自下而上两阶段训练；③ 配套 ActiveViewPose-200K 主动相机运动数据集 + ActiveManip-Bench 12 任务基准。在真实 Franka FR3 + 主动相机臂实验中比 GR00T N1 / π₀ 平均 SR 高 28-31 个百分点。Repo 提供：模型权重 / ActiveViewPose-200K 数据集 / ActiveManip-Bench 评测脚本 / 训练 pipeline / 复现指南。",
+      "language": "Python (PyTorch)",
+      "license": "Apache-2.0",
+      "features": [
+        "双 Action Head 解耦架构（Camera + Manip）",
+        "ActiveViewPose-200K 大规模主动感知数据集",
+        "ActiveManip-Bench 首个超越固定视角的 VLA 基准",
+        "Florence2-base + 3D Geometry Module",
+        "完整两阶段训练 pipeline（PPO / 模仿学习）",
+        "Isaac Sim 仿真评测脚本"
+      ],
+      "stars": "刚开源",
+      "tags": [
+        "SaPaVe",
+        "VLA",
+        "Active Perception",
+        "ActiveViewPose-200K",
+        "ActiveManip-Bench",
+        "BAAI",
+        "PKU",
+        "Beihang"
+      ],
+      "addedDate": "2026-05-10"
+    },
     {
       "id": "os093",
       "name": "From Pixels to Tokens (RUC KBR)",
