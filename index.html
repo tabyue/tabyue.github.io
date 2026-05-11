@@ -682,19 +682,22 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
         <button class="card-btn" onclick="importProgress()" title="粘贴进度码恢复">📥 导入</button>
         <button class="card-btn" onclick="resetProgress()" title="清除学习记录" style="color:var(--t3)">🗑️</button>
     </div>
-    <div style="max-width:1200px;margin:0 auto 18px;padding:0 24px">
-        <a href="/learn/ai-infra" data-spa="1" style="display:flex;align-items:center;gap:14px;padding:14px 18px;border:1px solid var(--bd);border-radius:14px;background:linear-gradient(135deg,rgba(58,163,255,.08),rgba(191,131,248,.08));text-decoration:none;color:inherit;cursor:pointer;transition:transform .15s,border-color .15s">
-            <span style="font-size:1.6rem;flex-shrink:0">🛠️</span>
-            <div style="flex:1;min-width:0">
-                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-                    <span style="font-weight:500;font-size:1rem">AI Infra · 具身基础设施</span>
-                    <span style="font-size:.7rem;padding:2px 7px;border-radius:5px;background:var(--p);color:#fff;font-weight:500">NEW</span>
-                    <span style="font-size:.7rem;padding:2px 7px;border-radius:5px;background:var(--bg3);color:var(--t2)">第 31 个模块</span>
+    <div id="aiInfraPromo" style="max-width:1200px;margin:0 auto 18px;padding:0 24px;display:none">
+        <div style="position:relative;display:flex;align-items:center;gap:14px;padding:14px 44px 14px 18px;border:1px solid var(--bd);border-radius:14px;background:linear-gradient(135deg,rgba(58,163,255,.08),rgba(191,131,248,.08))">
+            <a href="/learn/ai-infra" data-spa="1" style="display:flex;align-items:center;gap:14px;flex:1;text-decoration:none;color:inherit;cursor:pointer;min-width:0">
+                <span style="font-size:1.6rem;flex-shrink:0">🛠️</span>
+                <div style="flex:1;min-width:0">
+                    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                        <span style="font-weight:500;font-size:1rem">AI Infra · 具身基础设施</span>
+                        <span style="font-size:.7rem;padding:2px 7px;border-radius:5px;background:var(--p);color:#fff;font-weight:500">NEW</span>
+                        <span style="font-size:.7rem;padding:2px 7px;border-radius:5px;background:var(--bg3);color:var(--t2)">第 31 个模块</span>
+                    </div>
+                    <div style="font-size:.82rem;color:var(--t2);margin-top:4px;line-height:1.5">把分散在「训练优化 / 平台工程 / 云边端 / 数据工程」四个模块的核心章节串成完整学习地图，附 vLLM 适配 / Chunk Batching / 多机器人 Serving / 端到端实战 5 个独家章节</div>
                 </div>
-                <div style="font-size:.82rem;color:var(--t2);margin-top:4px;line-height:1.5">把分散在「训练优化 / 平台工程 / 云边端 / 数据工程」四个模块的核心章节串成完整学习地图，附 vLLM 适配 / Chunk Batching / 多机器人 Serving / 端到端实战 5 个独家章节</div>
-            </div>
-            <span style="color:var(--t3);font-size:.85rem;flex-shrink:0">进入 →</span>
-        </a>
+                <span style="color:var(--t3);font-size:.85rem;flex-shrink:0">进入 →</span>
+            </a>
+            <button onclick="dismissAiInfraPromo(event)" title="关闭推荐" style="position:absolute;top:8px;right:8px;width:24px;height:24px;border:none;background:transparent;color:var(--t3);cursor:pointer;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='transparent'">✕</button>
+        </div>
     </div>
     <div class="learn-layout">
         <div class="learn-sidebar" id="learnSidebar"><div style="color:var(--t3);text-align:center;padding:40px;font-size:.85rem">加载中...</div></div>
@@ -951,6 +954,8 @@ function go(id, opts){
     }
     // 更新 SEO meta
     updatePageMeta(id);
+    // 刷新 AI Infra 推荐卡片（用户访问 ai-infra 后自动隐藏）
+    if(typeof refreshAiInfraPromo==='function')refreshAiInfraPromo();
 }
 
 // 解析任意 URL（path 或 hash）→ 返回 {page, modId, secIdx}
@@ -1029,6 +1034,34 @@ document.addEventListener('click',(e)=>{
     applyRoute(href);
     window.scrollTo({top:0,behavior:'smooth'});
 });
+
+// === AI Infra 推荐卡片（限时显示 + 可关闭）===
+// 规则：① 用户主动关闭后永久隐藏；② 距首次进入学习中心 7 天后自动隐藏；
+//      ③ 已访问过 ai-infra 模块后自动隐藏（不再需要推荐）
+const AI_INFRA_PROMO_DEADLINE='2026-05-18';   // 7 天硬截止
+function shouldShowAiInfraPromo(){
+    try{
+        if(localStorage.getItem('eai_promo_aiinfra_dismissed')==='1')return false;
+        // 已访问过 ai-infra 模块：不再推荐
+        const prog=JSON.parse(localStorage.getItem('eai_learn_progress')||'{}');
+        if(prog['ai-infra-具身基础设施']||prog['ai-infra'])return false;
+        // 时间硬截止
+        if(new Date()>new Date(AI_INFRA_PROMO_DEADLINE+'T23:59:59'))return false;
+    }catch(e){return true}
+    return true;
+}
+function refreshAiInfraPromo(){
+    const el=document.getElementById('aiInfraPromo');
+    if(!el)return;
+    el.style.display=shouldShowAiInfraPromo()?'block':'none';
+}
+function dismissAiInfraPromo(e){
+    if(e){e.preventDefault();e.stopPropagation()}
+    try{localStorage.setItem('eai_promo_aiinfra_dismissed','1')}catch(_){}
+    refreshAiInfraPromo();
+}
+// 进入学习中心时刷新一次
+document.addEventListener('DOMContentLoaded',refreshAiInfraPromo);
 
 // 兼容老 hash 链接：访问 #/learn/... 时立刻升级到真路径
 window.addEventListener('hashchange',()=>{
