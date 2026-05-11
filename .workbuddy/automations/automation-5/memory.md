@@ -83,3 +83,15 @@
 - 学习 +1 sec：control-theory +sec-15 RoboOS-NeXT 多机协作控制范式（81K→90K chars）
 - 0 dups（news 246/papers 120/os 84/jobs 114）
 - sync_learn_split + build_sitemap（424 chapters）已跑
+
+## 2026-05-10 08:35（早间轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 新闻 +3 (n257-n259)：北武院/湖北人形开源「人形机器人动作大模型」MotionMaster+UniAct / 戴盟机器人 × 上声电子（A 股 688533）触觉感知工业战略合作 / 无界动力（地平线孵化）北京 AI 产业基金战略融资落地
+- 论文 +2 (p138-p139)：SaPaVe（PKU/北航/北智院 双 Action Head 解耦 ActiveViewPose-200K + ActiveManip-Bench，比 GR00T N1/π₀ +28-31%）/ Caltech AMBER (Aaron Ames 团队) CLF-RL 指数稳定性主定理（首次给 RL 训人形步态可证明稳定）；含 keyInsights+impact+detail
+- 开源 +2 (os094 北武院动作大模型 / os095 SaPaVe)
+- 招聘 +2 (j119 戴盟机器人 80+ 岗位 / j120 北武院 + 虚拟动点 + 潜空间生态招募)
+- 学习 +1 sec：control-theory +sec-16「CLF-RL：让 RL 训出来的人形步态可证明稳定（Caltech AMBER 2026 最新成果）」（含 5 大节 / 8000 字深度，模块 90K → 98K chars）
+- 接手并行实例已写但未提交的工作：p140-144 / j121-122 / n263-267 / os096-098 / 4 个 learn-split sec / daily-english 等
+- 0 dups（news 239 / papers 126 / os 87 / jobs 114）
+- sync_learn_split (2 files updated) + build_sitemap (428 chapters) 已跑
+- commit 472c3b7 已 push origin/main
