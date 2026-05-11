@@ -1,0 +1,6 @@
+{
+  "title": "实战：搭一套最小化具身 AI Infra（端到端 demo）",
+  "difficulty": "高级",
+  "content": "## ✨ AI Infra 独家章节：最小化具身 AI Infra 端到端 demo\n\n把前面 14 节的知识点拼成一套**可运行的最小化具身 AI Infra**——目标是让一个 Franka Panda + Realsense D435 的 VLA 部署达到「90%+ 真机成功率 + 30Hz 实时控制 + 自动数据闭环」三大指标。本节是 AI Infra 学习路径的「毕业项目」，给出从 0 到 1 的完整 stack 选型与代码模板。\n\n## 🚧 完整正文将在 Phase 2 补齐\n\n这是 AI Infra 模块的「独家内容」——其他模块尚未覆盖的具身 AI 基础设施前沿主题。本轮（2026-05-11）发布框架与调研要点，详尽正文（含代码示例 + 工程决策表 + 实测数据）将在本周内逐步补齐。\n\n## 本节将深入讲解\n\n- **硬件选型**：Franka Panda + Realsense D435 + Jetson Thor 64GB + 1 台 8 卡 H100 训练机\n- **软件 stack**：PyTorch 2.5 + DeepSpeed ZeRO-3 (训练) / TensorRT-LLM + Custom Plugin (推理) / Ray Serve (multi-robot serving) / LeRobot (数据)\n- **训练流水线**：8×H100 训 LaST-R1 → LIBERO 99% → LoRA 微调到真机 demo 数据 → DeepSpeed checkpoint 上传 S3\n- **推理部署**：ONNX 导出 → TensorRT 编译 → AAC 自适应 chunk wrapper → 30Hz 控制循环\n- **数据闭环**：每条 rollout 上传到 S3 → 失败 case 自动检测 → DVC 版本管理 → 下次训练自动包含\n- **可观测性**：Prometheus + Loki + 视频回放仪表盘 / Grafana / P99 推理延迟告警\n- **OTA 灰度**：新模型先在 1 台机器人跑 24h → 通过 → 推到 10 台 → 通过 → 全量 → kill switch 永远在\n- **成本预算**：训练 ~$10K / 推理 ~$0.5/台/天 / 数据存储 ~$100/台/月 — 实际产线预算分配方法\n\n## 你能从本节学到\n\n1. 该方向的核心问题与挑战\n2. 主流方案对比与选型建议\n3. 真实代码示例与配置模板\n4. 与现有 4 个相关模块（训练优化 / 平台工程 / 云边端 / 数据工程）的接口关系",
+  "lastUpdated": "2026-05-11T15:30"
+}

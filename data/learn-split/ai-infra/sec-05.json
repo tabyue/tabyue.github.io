@@ -1,0 +1,6 @@
+{
+  "title": "🔗 模型量化与压缩：从 FP16 到 INT4 的工程取舍",
+  "difficulty": "中级",
+  "content": "## 🔗 本节内容已在其他模块详细讲解\n\n把 VLA 部署到 Jetson Thor / RK3588 上必须量化——FP16 → INT8 显存减半、INT8 → INT4 再减半，但精度损失要小心。**核心要点**：① 静态量化（PTQ）够大多数场景，AWQ/GPTQ 是主流；② 量化感知训练（QAT）只在精度卡死时上；③ 动作头维度通常保留 FP16，避免抖动；④ 视觉编码器对量化最敏感，建议用更高精度。\n\n## 跳转入口\n\n- 📍 [→ 模型压缩与量化（训练优化 sec-7）](/learn/training-inference-optimization/7)\n  - PTQ vs QAT 对比 + AWQ/GPTQ/SmoothQuant 三种主流方案实战\n- 📍 [→ 模型蒸馏与 VLA 轻量化部署（训练优化 sec-13）](/learn/training-inference-optimization/13)\n  - 知识蒸馏让大模型能力压到小模型\n- 📍 [→ 模型压缩与边缘部署优化（云边端 sec-2）](/learn/cloud-edge-collaboration/2)\n  - 边缘端的特殊量化策略\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+  "lastUpdated": "2026-05-11T15:30"
+}

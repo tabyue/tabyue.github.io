@@ -1,0 +1,6 @@
+{
+  "title": "🔗 云边端协同与 OTA：把模型安全送进 10000 台机器人",
+  "difficulty": "高级",
+  "content": "## 🔗 本节内容已在其他模块详细讲解\n\n10000 台机器人的产线 OTA 比 SaaS 灰度发布严格 100×——一个 bug 上线可能造成实际人身伤害。**核心要点**：① 灰度策略要按地理 / 设备型号 / 任务场景分桶；② 必须有「金丝雀机器人」（10 台先跑 24h）；③ 云端 + 边缘 + 端侧三级回滚机制；④ 紧急 kill switch 不能依赖网络；⑤ MCP 协议是 LLM 与机器人之间的标准化接口。\n\n## 跳转入口\n\n- 📍 [→ 云边端三层架构（云边端 sec-0）](/learn/cloud-edge-collaboration/0)\n- 📍 [→ 5G / 通信协议（云边端 sec-3）](/learn/cloud-edge-collaboration/3)\n- 📍 [→ 分布式数据管理与 OTA 更新（云边端 sec-4）](/learn/cloud-edge-collaboration/4)\n- 📍 [→ MCP 协议（云边端 sec-5）](/learn/cloud-edge-collaboration/5)\n- 📍 [→ 边缘端推理服务化与 OTA 灰度发布（平台工程 sec-15）](/learn/platform-engineering/15)\n  - 万台机器人 OTA 工程实战\n- 📍 [→ 全栈机器人控制中间件 3ms 端到端（云边端 sec-9）](/learn/cloud-edge-collaboration/9)\n  - GENE-26.5 / Helix-02 范式\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+  "lastUpdated": "2026-05-11T15:30"
+}

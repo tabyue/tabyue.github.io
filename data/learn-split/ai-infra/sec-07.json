@@ -1,0 +1,6 @@
+{
+  "title": "KV-Cache + 动作 Chunk Batching：VLA 推理的特殊优化",
+  "difficulty": "高级",
+  "content": "## ✨ AI Infra 独家章节：VLA 推理的两大核心优化\n\nVLA 推理要在 30Hz 的硬实时约束下完成——这意味着每次推理预算只有 33ms。要榨出极致性能，**KV Cache 复用** 与 **动作 Chunk Batching** 是两个最关键的优化点。本节联动今天最新的论文 AAC（推理时自适应分块）和 Latent Bridge（双系统 VLA 加速 1.65×），讲清楚 VLA 推理时间预算分配的工程实战。\n\n## 🚧 完整正文将在 Phase 2 补齐\n\n这是 AI Infra 模块的「独家内容」——其他模块尚未覆盖的具身 AI 基础设施前沿主题。本轮（2026-05-11）发布框架与调研要点，详尽正文（含代码示例 + 工程决策表 + 实测数据）将在本周内逐步补齐。\n\n## 本节将深入讲解\n\n- **KV Cache 在 VLA 中的特殊性**：视觉 token 数量大且变化少（同一相机的连续帧），可以做帧间 KV 复用，减少 30-40% 重复计算\n- **Async Chunked Action 异步分块**：下一 chunk 在执行当前 chunk 时并行预测，pipeline 化把端到端延迟降到 chunk_size×exec_time\n- **AAC 自适应 chunk size**：联动论文 p146（NUS+SZTU 2026-04），用动作熵动态决定 chunk 大小，真机 +15pp\n- **Latent Bridge 双系统加速**：联动论文 p125，把 VLM backbone 推理频率降到 1/N，仅在关键帧更新，端到端 1.65×\n- **FlashAttention v3 + 算子融合**：Hopper 架构上 FlashAttn-3 比标准 attention 快 2×，对 VLA 端到端延迟至关重要\n- **工程模板：从 ONNX 导出到 30Hz 闭环**：完整代码模板：PyTorch → ONNX → TensorRT → 实时控制循环\n\n## 你能从本节学到\n\n1. 该方向的核心问题与挑战\n2. 主流方案对比与选型建议\n3. 真实代码示例与配置模板\n4. 与现有 4 个相关模块（训练优化 / 平台工程 / 云边端 / 数据工程）的接口关系",
+  "lastUpdated": "2026-05-11T15:30"
+}

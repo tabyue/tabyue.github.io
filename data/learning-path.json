@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-11T14:35",
+  "lastUpdated": "2026-05-11T15:30",
   "stages": [
     {
       "id": "foundation",
@@ -851,6 +851,43 @@
       "subtitle": "从实验室到产品 · 预计 2-3 个月",
       "level": "高级",
       "modules": [
+        {
+          "name": "AI Infra 具身基础设施",
+          "importance": "核心",
+          "lastUpdated": "2026-05-11T15:30",
+          "description": "把分散在「训练优化 / 平台工程 / 云边端 / 数据工程」四个模块的核心章节串成完整学习地图，并补充具身领域专属的前沿主题（vLLM/SGLang 适配、动作 chunk batching、多机器人 model serving）",
+          "topics": [
+            {
+              "title": "GPU 算力栈整合",
+              "detail": "云端 H100 → 边缘 Jetson Thor → 端侧 NPU 的完整算力路径串讲"
+            },
+            {
+              "title": "推理引擎栈（独家）",
+              "detail": "vLLM / SGLang / Triton / TensorRT-LLM 在 VLA 场景的特殊适配"
+            },
+            {
+              "title": "动作 Chunk Batching（独家）",
+              "detail": "联动 AAC（p146）+ Latent Bridge（p125）的 VLA 推理特殊优化"
+            },
+            {
+              "title": "多机器人 Model Serving（独家）",
+              "detail": "Ray Serve / KServe / Helix-02 类自研中间件对比"
+            },
+            {
+              "title": "数据流水线全景整合",
+              "detail": "从遥操采集到训练就绪的端到端管道串讲"
+            },
+            {
+              "title": "平台工程基础整合",
+              "detail": "K8s + Docker + CI/CD + 可观测性 + OTA 灰度发布"
+            },
+            {
+              "title": "最小化端到端实战",
+              "detail": "Franka Panda + Jetson Thor + 云端 H100 的最小化具身 AI Infra"
+            }
+          ],
+          "weeklyPlan": "第 1-2 周：算力栈 + 训练优化模块联动 | 第 3-4 周：推理引擎栈 + chunk batching | 第 5-6 周：model serving + 平台工程 | 第 7 周：数据流水线 | 第 8 周：综合实战"
+        },
         {
           "name": "模型训练与推理优化",
           "importance": "核心",

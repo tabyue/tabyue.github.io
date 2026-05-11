@@ -1,0 +1,163 @@
+{
+  "id": "ai-infra",
+  "name": "AI Infra 具身基础设施",
+  "lastUpdated": "2026-05-11T15:30",
+  "stage": "阶段六：系统工程与部署",
+  "importance": "核心",
+  "estimatedHours": 30,
+  "description": "面向具身 AI 工程师的基础设施全景路径——把分散在「训练优化 / 平台工程 / 云边端 / 数据工程」四个模块的核心章节串成完整学习地图，并补充具身领域专属的前沿主题（vLLM/SGLang 适配、动作 chunk batching、多机器人 model serving、最小化端到端 demo）。三类章节：🔗 跳转章节 / ⚙️ 整合章节 / ✨ 独家章节。",
+  "prerequisites": [
+    "深度学习基础",
+    "Python 编程与科学计算",
+    "Linux 命令行"
+  ],
+  "sections": [
+    {
+      "title": "AI Infra 全景：具身领域为什么需要专属基础设施？",
+      "difficulty": "入门",
+      "content": "## ✨ AI Infra 独家章节：AI Infra 全景：具身领域为什么需要专属基础设施？\n\n**AI Infra（人工智能基础设施）** 涵盖从算力栈、训练框架、推理引擎、数据流水线、平台运维到云边端协同的全部底层能力。在 LLM 时代，AI Infra 的主流玩法相对清晰——大显存 GPU 集群 + 分布式训练 + vLLM/Triton 推理服务。但具身智能的 AI Infra **天然是异构的**：模型要在云端训练（H100 集群）、在边缘推理（Jetson Orin / Thor）、在端侧实时控制（30Hz 闭环）——任何一环卡顿都会让机器人摔倒、抓不到物体、错过任务窗口。这就是为什么「具身 AI Infra」不是 LLM Infra 的子集，而是一个独立的工程学科。\n\n## 🚧 完整正文将在 Phase 2 补齐\n\n这是 AI Infra 模块的「独家内容」——其他模块尚未覆盖的具身 AI 基础设施前沿主题。本轮（2026-05-11）发布框架与调研要点，详尽正文（含代码示例 + 工程决策表 + 实测数据）将在本周内逐步补齐。\n\n## 本节将深入讲解\n\n- **异构算力栈**：云端 H100 + 边缘 Jetson Thor + 端侧 RK3588 / Horizon Sunrise，每层算力差 100-1000 倍\n- **实时性约束**：VLA 推理必须 < 33ms（30Hz 控制），传统 LLM 推理框架默认优化吞吐而非延迟\n- **数据闭环**：机器人产生的数据是「视频 + 动作 + 力觉」多模态，比 LLM 文本数据复杂 10×\n- **可观测性的特殊性**：除了日志/指标/追踪，还要做动作回放 + 视频回放 + 状态追踪「四联」\n- **OTA 与安全**：机器人是物理设备，bug 上线可能伤人——比 LLM 服务的灰度发布严格 100×\n\n## 你能从本节学到\n\n1. 该方向的核心问题与挑战\n2. 主流方案对比与选型建议\n3. 真实代码示例与配置模板\n4. 与现有 4 个相关模块（训练优化 / 平台工程 / 云边端 / 数据工程）的接口关系",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "GPU 算力栈：从数据中心到机器人本体的端到端路径",
+      "difficulty": "中级",
+      "content": "## ⚙️ 整合章节：GPU 算力栈：从数据中心到机器人本体\n\n理解具身 AI 的算力栈，要从云端训练集群（H100/H800）→ 边缘服务器（A100 4 卡 / DGX Spark）→ 边缘控制器（Jetson Thor / Orin）→ 端侧 NPU（RK3588 / Horizon J6）一路走到底。本节是 AI Infra 的「算力总览图」——把 4 个相关模块的算力相关章节串成一条故事线。\n\n## 🚧 完整正文计划本周内补齐\n\n本节是 AI Infra 模块的「整合章节」——目标是把分散在多个模块的知识点串成完整的工程视角，而非简单复制原模块内容。本轮（2026-05-11）先发布章节框架与跳转入口；正文将在 Phase 2 补齐。\n\n## 关联章节（强烈推荐先读）\n\n- [GPU 架构与 CUDA 编程入门（训练优化 sec-4）](/learn/training-inference-optimization/4)\n- [端侧推理部署（训练优化 sec-8）](/learn/training-inference-optimization/8)\n- [边缘 AI 与实时计算（云边端 sec-1）](/learn/cloud-edge-collaboration/1)\n- [云边端三层架构（云边端 sec-0）](/learn/cloud-edge-collaboration/0)\n\n## 本节最终将覆盖（Phase 2）\n\n1. 各模块关键知识点的「二阶导」整合——为什么这些散点连起来才是完整工程视角\n2. 真实产线场景的端到端示例（如：智元 G2 / 鹿明 / 拓斯达 的全栈 Infra 路径）\n3. 工程决策树：什么场景该用什么栈\n4. 与最新论文（如 LaST-R1 / AAC / Helix-02）联动的实战实例",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "🔗 分布式训练（DDP / FSDP / DeepSpeed ZeRO）",
+      "difficulty": "中级",
+      "content": "## 🔗 本节内容已在其他模块详细讲解\n\n分布式训练是 VLA 这类 1B-10B 参数模型必经之路——单卡训不下，必须用数据并行（DDP）+ 模型并行（TP/PP）+ 优化器分片（ZeRO）组合拳。**核心要点**：① DDP 是基线，模型能塞进单卡时优先；② 模型超过单卡显存时引入 ZeRO Stage 2/3；③ 模型超过单节点时上 Tensor Parallel + Pipeline Parallel；④ DeepSpeed 与 FSDP 是两大主流栈，前者更成熟，后者更原生（PyTorch 自带）。\n\n## 跳转入口\n\n- 📍 [→ 分布式训练（DDP/FSDP/DeepSpeed ZeRO 全解析）](/learn/training-inference-optimization/6)\n  - 完整正文：含 ZeRO-1/2/3 显存对比 + 通信开销分析 + 真实 8 卡 H100 微调 π₀ 配置\n- 📍 [→ 模型并行与流水线并行](/learn/training-inference-optimization/2)\n  - TP/PP 切分策略 + Megatron-LM/DeepSpeed 实战\n- 📍 [→ 实战：训练 VLA 模型的完整流程](/learn/training-inference-optimization/0)\n  - 从数据准备到训练监控的端到端 case\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "🔗 LoRA 与 PEFT：参数高效微调",
+      "difficulty": "中级",
+      "content": "## 🔗 本节内容已在其他模块详细讲解\n\n对 7B-30B 的 VLA 模型做下游任务微调，LoRA / QLoRA 把可训练参数压到 1-5%，单卡 24GB 就能训。**核心要点**：① rank=16 是工业界默认起点；② 注意 LoRA 是否注入到 attention 的 q/k/v/o 全部矩阵；③ QLoRA 用 4-bit NF4 量化基座 + 16-bit LoRA 适配器，内存进一步压 4×。\n\n## 跳转入口\n\n- 📍 [→ LoRA 与 PEFT 完整指南（训练优化 sec-1）](/learn/training-inference-optimization/1)\n  - 含数学原理 + Hugging Face PEFT 库实战 + LoRA 参数选择决策表\n- 📍 [→ LoRA / QLoRA 高效微调（训练优化 sec-9）](/learn/training-inference-optimization/9)\n  - QLoRA 4-bit 量化深度解析\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "🔗 模型量化与压缩：从 FP16 到 INT4 的工程取舍",
+      "difficulty": "中级",
+      "content": "## 🔗 本节内容已在其他模块详细讲解\n\n把 VLA 部署到 Jetson Thor / RK3588 上必须量化——FP16 → INT8 显存减半、INT8 → INT4 再减半，但精度损失要小心。**核心要点**：① 静态量化（PTQ）够大多数场景，AWQ/GPTQ 是主流；② 量化感知训练（QAT）只在精度卡死时上；③ 动作头维度通常保留 FP16，避免抖动；④ 视觉编码器对量化最敏感，建议用更高精度。\n\n## 跳转入口\n\n- 📍 [→ 模型压缩与量化（训练优化 sec-7）](/learn/training-inference-optimization/7)\n  - PTQ vs QAT 对比 + AWQ/GPTQ/SmoothQuant 三种主流方案实战\n- 📍 [→ 模型蒸馏与 VLA 轻量化部署（训练优化 sec-13）](/learn/training-inference-optimization/13)\n  - 知识蒸馏让大模型能力压到小模型\n- 📍 [→ 模型压缩与边缘部署优化（云边端 sec-2）](/learn/cloud-edge-collaboration/2)\n  - 边缘端的特殊量化策略\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "推理引擎栈：vLLM / SGLang / Triton 在具身场景的特殊适配",
+      "difficulty": "高级",
+      "content": "## ✨ AI Infra 独家章节：推理引擎栈在具身场景的适配\n\n**vLLM、SGLang、Triton Inference Server** 是 LLM 圈的三大推理引擎，但直接拿来跑 VLA 会遇到三个坑：① VLA 的 batch 不像 LLM 那样有大量 prefill，更多是 30Hz 高频小 batch；② 视觉 token 数量远多于文本 token，KV Cache 设计要重写；③ 动作输出是连续维度，不能用文本解码器的 sampling 路径。本节系统讲解三大引擎在具身场景的适配方法。\n\n## 🚧 完整正文将在 Phase 2 补齐\n\n这是 AI Infra 模块的「独家内容」——其他模块尚未覆盖的具身 AI 基础设施前沿主题。本轮（2026-05-11）发布框架与调研要点，详尽正文（含代码示例 + 工程决策表 + 实测数据）将在本周内逐步补齐。\n\n## 本节将深入讲解\n\n- **vLLM PagedAttention 在 VLA 上的局限**：VLA 的 chunk 输出 vs LLM 的 token 流式有本质差异，PagedAttention 优化点不同\n- **SGLang 的结构化解码用于动作头**：可以把动作 chunk 解码做成结构化 generation，比纯 sampling 更稳\n- **Triton Inference Server 的多模型 ensemble**：VLA 通常是 视觉编码器 + LLM backbone + 动作头三段，用 Triton ensemble 能优化端到端延迟\n- **TensorRT-LLM + Custom Plugin**：极致性能场景：把动作头写成 TensorRT plugin，端到端延迟可压到 12ms\n- **选型决策树**：何时用 vLLM / 何时用 SGLang / 何时用 Triton / 何时直接 PyTorch + torch.compile\n\n## 你能从本节学到\n\n1. 该方向的核心问题与挑战\n2. 主流方案对比与选型建议\n3. 真实代码示例与配置模板\n4. 与现有 4 个相关模块（训练优化 / 平台工程 / 云边端 / 数据工程）的接口关系",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "KV-Cache + 动作 Chunk Batching：VLA 推理的特殊优化",
+      "difficulty": "高级",
+      "content": "## ✨ AI Infra 独家章节：VLA 推理的两大核心优化\n\nVLA 推理要在 30Hz 的硬实时约束下完成——这意味着每次推理预算只有 33ms。要榨出极致性能，**KV Cache 复用** 与 **动作 Chunk Batching** 是两个最关键的优化点。本节联动今天最新的论文 AAC（推理时自适应分块）和 Latent Bridge（双系统 VLA 加速 1.65×），讲清楚 VLA 推理时间预算分配的工程实战。\n\n## 🚧 完整正文将在 Phase 2 补齐\n\n这是 AI Infra 模块的「独家内容」——其他模块尚未覆盖的具身 AI 基础设施前沿主题。本轮（2026-05-11）发布框架与调研要点，详尽正文（含代码示例 + 工程决策表 + 实测数据）将在本周内逐步补齐。\n\n## 本节将深入讲解\n\n- **KV Cache 在 VLA 中的特殊性**：视觉 token 数量大且变化少（同一相机的连续帧），可以做帧间 KV 复用，减少 30-40% 重复计算\n- **Async Chunked Action 异步分块**：下一 chunk 在执行当前 chunk 时并行预测，pipeline 化把端到端延迟降到 chunk_size×exec_time\n- **AAC 自适应 chunk size**：联动论文 p146（NUS+SZTU 2026-04），用动作熵动态决定 chunk 大小，真机 +15pp\n- **Latent Bridge 双系统加速**：联动论文 p125，把 VLM backbone 推理频率降到 1/N，仅在关键帧更新，端到端 1.65×\n- **FlashAttention v3 + 算子融合**：Hopper 架构上 FlashAttn-3 比标准 attention 快 2×，对 VLA 端到端延迟至关重要\n- **工程模板：从 ONNX 导出到 30Hz 闭环**：完整代码模板：PyTorch → ONNX → TensorRT → 实时控制循环\n\n## 你能从本节学到\n\n1. 该方向的核心问题与挑战\n2. 主流方案对比与选型建议\n3. 真实代码示例与配置模板\n4. 与现有 4 个相关模块（训练优化 / 平台工程 / 云边端 / 数据工程）的接口关系",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "多机器人 Model Serving：Ray Serve / KServe / 自研中间件对比",
+      "difficulty": "高级",
+      "content": "## ✨ AI Infra 独家章节：多机器人模型服务化\n\n当你管理的不是 1 台而是 100 台、1000 台机器人时，问题就从「单机推理优化」变成「分布式 model serving」。**Ray Serve** / **KServe** / **自研中间件**（如 Helix-02 的多机协作栈）各有优势。本节联动论文 p138（SaPaVe）+ n251（Figure Helix-02）+ os098（GR00T-WBC），讲清楚从「单机器人 demo」到「万台机器人产线」的演进路径。\n\n## 🚧 完整正文将在 Phase 2 补齐\n\n这是 AI Infra 模块的「独家内容」——其他模块尚未覆盖的具身 AI 基础设施前沿主题。本轮（2026-05-11）发布框架与调研要点，详尽正文（含代码示例 + 工程决策表 + 实测数据）将在本周内逐步补齐。\n\n## 本节将深入讲解\n\n- **Ray Serve 优势：动态批处理 + 多模型路由**：适合云端集中推理 + 边缘机器人调用的架构，自动按 latency SLA 分发\n- **KServe（Kubernetes 原生）**：适合已经全 K8s 化的产线，配合 Knative 做弹性伸缩\n- **Helix-02 / GENE-26.5 类自研中间件**：联动 n251/n254 — 3ms 端到端控制中间件，多机协作的关键基础设施\n- **多机器人 fleet 编排**：联动 platform-engineering sec-14，机器人 fleet 管理的核心设计模式\n- **OTA 灰度发布**：联动 platform-engineering sec-15，把策略安全送进 1 万台机器人的工程实践\n- **性能预算分配**：云端推理（100ms+）vs 边缘推理（30ms）vs 端侧推理（10ms）— 何时该选哪个层级\n\n## 你能从本节学到\n\n1. 该方向的核心问题与挑战\n2. 主流方案对比与选型建议\n3. 真实代码示例与配置模板\n4. 与现有 4 个相关模块（训练优化 / 平台工程 / 云边端 / 数据工程）的接口关系",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "数据流水线全景：从遥操采集到训练就绪的端到端管道",
+      "difficulty": "中级",
+      "content": "## ⚙️ 整合章节：数据流水线全景\n\n具身 AI 的数据流水线远比 LLM 复杂——视频流 + 关节角 + 力觉 + 语音 + 任务标签同步存储，要做时间对齐、压缩、版本化、质量筛选、到训练数据集的转换。本节把 2 个数据相关模块（具身数据工程 / 数据采集与管理）的核心章节串成完整工程视角。\n\n## 🚧 完整正文计划本周内补齐\n\n本节是 AI Infra 模块的「整合章节」——目标是把分散在多个模块的知识点串成完整的工程视角，而非简单复制原模块内容。本轮（2026-05-11）先发布章节框架与跳转入口；正文将在 Phase 2 补齐。\n\n## 关联章节（强烈推荐先读）\n\n- [数据集格式标准（具身数据工程 sec-2）](/learn/embodied-data-engineering/2)\n  - LeRobot / RLDS / Open-X-Embodiment 三大格式选型\n- [数据闭环与主动学习（具身数据工程 sec-1）](/learn/embodied-data-engineering/1)\n  - 从部署到持续改进的工程闭环\n- [数据质量工程（具身数据工程 sec-8）](/learn/embodied-data-engineering/8)\n- [大规模数据工程与自动标注（数据采集 sec-3）](/learn/data-collection/3)\n- [DVC 数据集版本管理（具身数据工程 sec-13）](/learn/embodied-data-engineering/13)\n\n## 本节最终将覆盖（Phase 2）\n\n1. 各模块关键知识点的「二阶导」整合——为什么这些散点连起来才是完整工程视角\n2. 真实产线场景的端到端示例（如：智元 G2 / 鹿明 / 拓斯达 的全栈 Infra 路径）\n3. 工程决策树：什么场景该用什么栈\n4. 与最新论文（如 LaST-R1 / AAC / Helix-02）联动的实战实例",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "🔗 数据集格式标准（LeRobot / RLDS / Open-X-Embodiment）",
+      "difficulty": "中级",
+      "content": "## 🔗 本节内容已在其他模块详细讲解\n\n工业级具身数据集的三大主流格式：LeRobot（Hugging Face 推动，前端友好）、RLDS（Google DeepMind，TFDS 体系）、Open-X-Embodiment（Stanford / Google 联合，多机器人统一格式）。**核心要点**：① 新项目优先 LeRobot（生态最活跃）；② 已经在 TF 体系内用 RLDS；③ 跨机器人迁移用 OXE；④ 三者本质都是「视频帧 + 关节状态 + 元数据」的不同包装。\n\n## 跳转入口\n\n- 📍 [→ 数据集格式标准完整解析（具身数据工程 sec-2）](/learn/embodied-data-engineering/2)\n  - 三大格式对比 + 真实代码示例 + 转换工具链\n- 📍 [→ 数据格式与标准（数据采集 sec-1）](/learn/data-collection/1)\n  - 更基础的数据格式入门\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "🔗 数据闭环与主动学习",
+      "difficulty": "中级",
+      "content": "## 🔗 本节内容已在其他模块详细讲解\n\n数据闭环是具身 AI 落地的核心方法论——从机器人部署 → 失败 case 上传 → 标注 / 仿真扩充 → 重新训练 → 重新部署形成闭环。**核心要点**：① 失败 case 自动检测（动作熵 + 任务失败 reward）；② 主动学习采样未覆盖的状态空间；③ 增量训练避免灾难性遗忘；④ A/B 测试验证新模型再全量推送。\n\n## 跳转入口\n\n- 📍 [→ 数据闭环与主动学习（具身数据工程 sec-1）](/learn/embodied-data-engineering/1)\n  - 完整工程闭环 + 案例：智元 / 鹿明数据闭环实践\n- 📍 [→ 数据闭环系统（具身数据工程 sec-11）](/learn/embodied-data-engineering/11)\n- 📍 [→ 演示数据分布覆盖分析与短板诊断（具身数据工程 sec-0）](/learn/embodied-data-engineering/0)\n  - BeTTER 启示 — 数据质量诊断方法论\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "平台工程基础：从单机器人到 fleet 管理的工程演进",
+      "difficulty": "中级",
+      "content": "## ⚙️ 整合章节：平台工程基础\n\n平台工程（Platform Engineering）是把多个工具链整合为「内部产品」的工程学科——CI/CD、容器化、可观测性、服务网格在具身领域有特殊适配。本节联动 platform-engineering 模块的核心章节，给出「从 1 台 demo → 100 台试运行 → 10000 台量产」的完整工程演进路径。\n\n## 🚧 完整正文计划本周内补齐\n\n本节是 AI Infra 模块的「整合章节」——目标是把分散在多个模块的知识点串成完整的工程视角，而非简单复制原模块内容。本轮（2026-05-11）先发布章节框架与跳转入口；正文将在 Phase 2 补齐。\n\n## 关联章节（强烈推荐先读）\n\n- [Linux 基础与命令行（平台工程 sec-5）](/learn/platform-engineering/5)\n- [Docker 容器化部署（平台工程 sec-6）](/learn/platform-engineering/6)\n- [Kubernetes 集群管理（平台工程 sec-7）](/learn/platform-engineering/7)\n- [微服务架构与 gRPC（平台工程 sec-2）](/learn/platform-engineering/2)\n- [机器人 Fleet 管理与远程运维平台（平台工程 sec-14）](/learn/platform-engineering/14)\n  - 万台级机器人编排的核心设计\n\n## 本节最终将覆盖（Phase 2）\n\n1. 各模块关键知识点的「二阶导」整合——为什么这些散点连起来才是完整工程视角\n2. 真实产线场景的端到端示例（如：智元 G2 / 鹿明 / 拓斯达 的全栈 Infra 路径）\n3. 工程决策树：什么场景该用什么栈\n4. 与最新论文（如 LaST-R1 / AAC / Helix-02）联动的实战实例",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "🔗 K8s / Docker / CI/CD 三件套",
+      "difficulty": "中级",
+      "content": "## 🔗 本节内容已在其他模块详细讲解\n\nDocker + Kubernetes + CI/CD 是云原生时代的「水电煤」，机器人后端不例外。**核心要点**：① 单镜像规则——同一镜像跑云端推理 + 边缘部署，避免环境差异；② 用 Helm/Kustomize 管理配置；③ CI 必须包含真实硬件测试 stage（不能只跑单元测试）；④ ArgoCD 做 GitOps 部署是产线主流。\n\n## 跳转入口\n\n- 📍 [→ Docker 容器化部署完整指南（平台工程 sec-6）](/learn/platform-engineering/6)\n  - 镜像优化 + 多阶段构建 + ROS2 容器化最佳实践\n- 📍 [→ Kubernetes 集群管理基础（平台工程 sec-7）](/learn/platform-engineering/7)\n- 📍 [→ CI/CD 与机器人软件自动化部署（平台工程 sec-0）](/learn/platform-engineering/0)\n- 📍 [→ CI/CD 与自动化测试（平台工程 sec-9）](/learn/platform-engineering/9)\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "🔗 可观测性：日志 / 指标 / 追踪 + 机器人特有的视频回放",
+      "difficulty": "中级",
+      "content": "## 🔗 本节内容已在其他模块详细讲解\n\n传统可观测性三支柱（日志 / 指标 / 追踪）在机器人场景要扩展为「四联」——加上视频回放 + 动作回放。**核心要点**：① Prometheus + Loki + Tempo 是云原生标配；② 机器人侧用 rosbag2 / MCAP 做高频数据存储；③ 失败 case 必须能 1 分钟内重现（视频 + 状态 + 动作三联回放）；④ 性能 SLO 监控 P99 推理延迟最关键。\n\n## 跳转入口\n\n- 📍 [→ 可观测性完整指南（平台工程 sec-1）](/learn/platform-engineering/1)\n- 📍 [→ 可观测性三支柱与机器人数据回放（平台工程 sec-3）](/learn/platform-engineering/3)\n  - 机器人特有的回放方法论\n- 📍 [→ 监控运维与 OTA 更新（平台工程 sec-10）](/learn/platform-engineering/10)\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "🔗 云边端协同与 OTA：把模型安全送进 10000 台机器人",
+      "difficulty": "高级",
+      "content": "## 🔗 本节内容已在其他模块详细讲解\n\n10000 台机器人的产线 OTA 比 SaaS 灰度发布严格 100×——一个 bug 上线可能造成实际人身伤害。**核心要点**：① 灰度策略要按地理 / 设备型号 / 任务场景分桶；② 必须有「金丝雀机器人」（10 台先跑 24h）；③ 云端 + 边缘 + 端侧三级回滚机制；④ 紧急 kill switch 不能依赖网络；⑤ MCP 协议是 LLM 与机器人之间的标准化接口。\n\n## 跳转入口\n\n- 📍 [→ 云边端三层架构（云边端 sec-0）](/learn/cloud-edge-collaboration/0)\n- 📍 [→ 5G / 通信协议（云边端 sec-3）](/learn/cloud-edge-collaboration/3)\n- 📍 [→ 分布式数据管理与 OTA 更新（云边端 sec-4）](/learn/cloud-edge-collaboration/4)\n- 📍 [→ MCP 协议（云边端 sec-5）](/learn/cloud-edge-collaboration/5)\n- 📍 [→ 边缘端推理服务化与 OTA 灰度发布（平台工程 sec-15）](/learn/platform-engineering/15)\n  - 万台机器人 OTA 工程实战\n- 📍 [→ 全栈机器人控制中间件 3ms 端到端（云边端 sec-9）](/learn/cloud-edge-collaboration/9)\n  - GENE-26.5 / Helix-02 范式\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+      "lastUpdated": "2026-05-11T15:30"
+    },
+    {
+      "title": "实战：搭一套最小化具身 AI Infra（端到端 demo）",
+      "difficulty": "高级",
+      "content": "## ✨ AI Infra 独家章节：最小化具身 AI Infra 端到端 demo\n\n把前面 14 节的知识点拼成一套**可运行的最小化具身 AI Infra**——目标是让一个 Franka Panda + Realsense D435 的 VLA 部署达到「90%+ 真机成功率 + 30Hz 实时控制 + 自动数据闭环」三大指标。本节是 AI Infra 学习路径的「毕业项目」，给出从 0 到 1 的完整 stack 选型与代码模板。\n\n## 🚧 完整正文将在 Phase 2 补齐\n\n这是 AI Infra 模块的「独家内容」——其他模块尚未覆盖的具身 AI 基础设施前沿主题。本轮（2026-05-11）发布框架与调研要点，详尽正文（含代码示例 + 工程决策表 + 实测数据）将在本周内逐步补齐。\n\n## 本节将深入讲解\n\n- **硬件选型**：Franka Panda + Realsense D435 + Jetson Thor 64GB + 1 台 8 卡 H100 训练机\n- **软件 stack**：PyTorch 2.5 + DeepSpeed ZeRO-3 (训练) / TensorRT-LLM + Custom Plugin (推理) / Ray Serve (multi-robot serving) / LeRobot (数据)\n- **训练流水线**：8×H100 训 LaST-R1 → LIBERO 99% → LoRA 微调到真机 demo 数据 → DeepSpeed checkpoint 上传 S3\n- **推理部署**：ONNX 导出 → TensorRT 编译 → AAC 自适应 chunk wrapper → 30Hz 控制循环\n- **数据闭环**：每条 rollout 上传到 S3 → 失败 case 自动检测 → DVC 版本管理 → 下次训练自动包含\n- **可观测性**：Prometheus + Loki + 视频回放仪表盘 / Grafana / P99 推理延迟告警\n- **OTA 灰度**：新模型先在 1 台机器人跑 24h → 通过 → 推到 10 台 → 通过 → 全量 → kill switch 永远在\n- **成本预算**：训练 ~$10K / 推理 ~$0.5/台/天 / 数据存储 ~$100/台/月 — 实际产线预算分配方法\n\n## 你能从本节学到\n\n1. 该方向的核心问题与挑战\n2. 主流方案对比与选型建议\n3. 真实代码示例与配置模板\n4. 与现有 4 个相关模块（训练优化 / 平台工程 / 云边端 / 数据工程）的接口关系",
+      "lastUpdated": "2026-05-11T15:30"
+    }
+  ],
+  "resources": [
+    {
+      "name": "vLLM 文档",
+      "url": "https://docs.vllm.ai/",
+      "type": "框架",
+      "description": "高吞吐 LLM 推理引擎，VLA 适配的主流选型之一"
+    },
+    {
+      "name": "SGLang",
+      "url": "https://github.com/sgl-project/sglang",
+      "type": "框架",
+      "description": "Stanford / xAI 的结构化生成推理引擎，适合 VLA 动作头解码"
+    },
+    {
+      "name": "TensorRT-LLM",
+      "url": "https://github.com/NVIDIA/TensorRT-LLM",
+      "type": "框架",
+      "description": "NVIDIA 极致推理性能引擎，支持 Custom Plugin"
+    },
+    {
+      "name": "Ray Serve",
+      "url": "https://docs.ray.io/en/latest/serve/index.html",
+      "type": "框架",
+      "description": "多模型多副本动态路由，机器人 fleet model serving 主流方案"
+    },
+    {
+      "name": "KServe",
+      "url": "https://kserve.github.io/",
+      "type": "框架",
+      "description": "Kubernetes 原生模型服务化，配合 Knative 弹性伸缩"
+    },
+    {
+      "name": "LeRobot",
+      "url": "https://github.com/huggingface/lerobot",
+      "type": "框架",
+      "description": "Hugging Face 具身数据格式与训练框架，社区最活跃"
+    },
+    {
+      "name": "veRL（DeepSeek 同款 RL 训练栈）",
+      "url": "https://github.com/volcengine/verl",
+      "type": "框架",
+      "description": "字节跳动开源 RL 训练框架，LaST-R1 用它做 VLA 后训练"
+    },
+    {
+      "name": "MCAP（机器人数据存储）",
+      "url": "https://mcap.dev/",
+      "type": "格式",
+      "description": "Foxglove 推动的机器人多模态数据存储格式"
+    }
+  ],
+  "weeklyPlan": "**第 1-2 周**：sec-0/1（全景 + 算力栈）+ 跳转读训练优化模块的 4-7\n**第 3-4 周**：sec-5/6（推理引擎 + chunk batching）+ 跳转读云边端模块\n**第 5-6 周**：sec-7（model serving）+ 跳转读平台工程模块\n**第 7 周**：sec-8/9/10（数据流水线）+ 跳转读数据工程模块\n**第 8 周**：sec-15 综合实战项目"
+}

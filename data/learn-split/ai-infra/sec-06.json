@@ -1,0 +1,6 @@
+{
+  "title": "推理引擎栈：vLLM / SGLang / Triton 在具身场景的特殊适配",
+  "difficulty": "高级",
+  "content": "## ✨ AI Infra 独家章节：推理引擎栈在具身场景的适配\n\n**vLLM、SGLang、Triton Inference Server** 是 LLM 圈的三大推理引擎，但直接拿来跑 VLA 会遇到三个坑：① VLA 的 batch 不像 LLM 那样有大量 prefill，更多是 30Hz 高频小 batch；② 视觉 token 数量远多于文本 token，KV Cache 设计要重写；③ 动作输出是连续维度，不能用文本解码器的 sampling 路径。本节系统讲解三大引擎在具身场景的适配方法。\n\n## 🚧 完整正文将在 Phase 2 补齐\n\n这是 AI Infra 模块的「独家内容」——其他模块尚未覆盖的具身 AI 基础设施前沿主题。本轮（2026-05-11）发布框架与调研要点，详尽正文（含代码示例 + 工程决策表 + 实测数据）将在本周内逐步补齐。\n\n## 本节将深入讲解\n\n- **vLLM PagedAttention 在 VLA 上的局限**：VLA 的 chunk 输出 vs LLM 的 token 流式有本质差异，PagedAttention 优化点不同\n- **SGLang 的结构化解码用于动作头**：可以把动作 chunk 解码做成结构化 generation，比纯 sampling 更稳\n- **Triton Inference Server 的多模型 ensemble**：VLA 通常是 视觉编码器 + LLM backbone + 动作头三段，用 Triton ensemble 能优化端到端延迟\n- **TensorRT-LLM + Custom Plugin**：极致性能场景：把动作头写成 TensorRT plugin，端到端延迟可压到 12ms\n- **选型决策树**：何时用 vLLM / 何时用 SGLang / 何时用 Triton / 何时直接 PyTorch + torch.compile\n\n## 你能从本节学到\n\n1. 该方向的核心问题与挑战\n2. 主流方案对比与选型建议\n3. 真实代码示例与配置模板\n4. 与现有 4 个相关模块（训练优化 / 平台工程 / 云边端 / 数据工程）的接口关系",
+  "lastUpdated": "2026-05-11T15:30"
+}

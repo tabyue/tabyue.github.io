@@ -1,0 +1,6 @@
+{
+  "title": "🔗 数据集格式标准（LeRobot / RLDS / Open-X-Embodiment）",
+  "difficulty": "中级",
+  "content": "## 🔗 本节内容已在其他模块详细讲解\n\n工业级具身数据集的三大主流格式：LeRobot（Hugging Face 推动，前端友好）、RLDS（Google DeepMind，TFDS 体系）、Open-X-Embodiment（Stanford / Google 联合，多机器人统一格式）。**核心要点**：① 新项目优先 LeRobot（生态最活跃）；② 已经在 TF 体系内用 RLDS；③ 跨机器人迁移用 OXE；④ 三者本质都是「视频帧 + 关节状态 + 元数据」的不同包装。\n\n## 跳转入口\n\n- 📍 [→ 数据集格式标准完整解析（具身数据工程 sec-2）](/learn/embodied-data-engineering/2)\n  - 三大格式对比 + 真实代码示例 + 转换工具链\n- 📍 [→ 数据格式与标准（数据采集 sec-1）](/learn/data-collection/1)\n  - 更基础的数据格式入门\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+  "lastUpdated": "2026-05-11T15:30"
+}

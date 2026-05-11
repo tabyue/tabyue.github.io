@@ -1,0 +1,6 @@
+{
+  "title": "🔗 分布式训练（DDP / FSDP / DeepSpeed ZeRO）",
+  "difficulty": "中级",
+  "content": "## 🔗 本节内容已在其他模块详细讲解\n\n分布式训练是 VLA 这类 1B-10B 参数模型必经之路——单卡训不下，必须用数据并行（DDP）+ 模型并行（TP/PP）+ 优化器分片（ZeRO）组合拳。**核心要点**：① DDP 是基线，模型能塞进单卡时优先；② 模型超过单卡显存时引入 ZeRO Stage 2/3；③ 模型超过单节点时上 Tensor Parallel + Pipeline Parallel；④ DeepSpeed 与 FSDP 是两大主流栈，前者更成熟，后者更原生（PyTorch 自带）。\n\n## 跳转入口\n\n- 📍 [→ 分布式训练（DDP/FSDP/DeepSpeed ZeRO 全解析）](/learn/training-inference-optimization/6)\n  - 完整正文：含 ZeRO-1/2/3 显存对比 + 通信开销分析 + 真实 8 卡 H100 微调 π₀ 配置\n- 📍 [→ 模型并行与流水线并行](/learn/training-inference-optimization/2)\n  - TP/PP 切分策略 + Megatron-LM/DeepSpeed 实战\n- 📍 [→ 实战：训练 VLA 模型的完整流程](/learn/training-inference-optimization/0)\n  - 从数据准备到训练监控的端到端 case\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+  "lastUpdated": "2026-05-11T15:30"
+}

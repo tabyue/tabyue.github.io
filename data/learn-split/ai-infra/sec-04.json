@@ -1,0 +1,6 @@
+{
+  "title": "🔗 LoRA 与 PEFT：参数高效微调",
+  "difficulty": "中级",
+  "content": "## 🔗 本节内容已在其他模块详细讲解\n\n对 7B-30B 的 VLA 模型做下游任务微调，LoRA / QLoRA 把可训练参数压到 1-5%，单卡 24GB 就能训。**核心要点**：① rank=16 是工业界默认起点；② 注意 LoRA 是否注入到 attention 的 q/k/v/o 全部矩阵；③ QLoRA 用 4-bit NF4 量化基座 + 16-bit LoRA 适配器，内存进一步压 4×。\n\n## 跳转入口\n\n- 📍 [→ LoRA 与 PEFT 完整指南（训练优化 sec-1）](/learn/training-inference-optimization/1)\n  - 含数学原理 + Hugging Face PEFT 库实战 + LoRA 参数选择决策表\n- 📍 [→ LoRA / QLoRA 高效微调（训练优化 sec-9）](/learn/training-inference-optimization/9)\n  - QLoRA 4-bit 量化深度解析\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+  "lastUpdated": "2026-05-11T15:30"
+}

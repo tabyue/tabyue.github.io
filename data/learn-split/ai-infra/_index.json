@@ -1,0 +1,163 @@
+{
+  "id": "ai-infra",
+  "name": "AI Infra 具身基础设施",
+  "lastUpdated": "2026-05-11T15:30",
+  "stage": "阶段六：系统工程与部署",
+  "importance": "核心",
+  "estimatedHours": 30,
+  "description": "面向具身 AI 工程师的基础设施全景路径——把分散在「训练优化 / 平台工程 / 云边端 / 数据工程」四个模块的核心章节串成完整学习地图，并补充具身领域专属的前沿主题（vLLM/SGLang 适配、动作 chunk batching、多机器人 model serving、最小化端到端 demo）。三类章节：🔗 跳转章节 / ⚙️ 整合章节 / ✨ 独家章节。",
+  "prerequisites": [
+    "深度学习基础",
+    "Python 编程与科学计算",
+    "Linux 命令行"
+  ],
+  "resources": [
+    {
+      "name": "vLLM 文档",
+      "url": "https://docs.vllm.ai/",
+      "type": "框架",
+      "description": "高吞吐 LLM 推理引擎，VLA 适配的主流选型之一"
+    },
+    {
+      "name": "SGLang",
+      "url": "https://github.com/sgl-project/sglang",
+      "type": "框架",
+      "description": "Stanford / xAI 的结构化生成推理引擎，适合 VLA 动作头解码"
+    },
+    {
+      "name": "TensorRT-LLM",
+      "url": "https://github.com/NVIDIA/TensorRT-LLM",
+      "type": "框架",
+      "description": "NVIDIA 极致推理性能引擎，支持 Custom Plugin"
+    },
+    {
+      "name": "Ray Serve",
+      "url": "https://docs.ray.io/en/latest/serve/index.html",
+      "type": "框架",
+      "description": "多模型多副本动态路由，机器人 fleet model serving 主流方案"
+    },
+    {
+      "name": "KServe",
+      "url": "https://kserve.github.io/",
+      "type": "框架",
+      "description": "Kubernetes 原生模型服务化，配合 Knative 弹性伸缩"
+    },
+    {
+      "name": "LeRobot",
+      "url": "https://github.com/huggingface/lerobot",
+      "type": "框架",
+      "description": "Hugging Face 具身数据格式与训练框架，社区最活跃"
+    },
+    {
+      "name": "veRL（DeepSeek 同款 RL 训练栈）",
+      "url": "https://github.com/volcengine/verl",
+      "type": "框架",
+      "description": "字节跳动开源 RL 训练框架，LaST-R1 用它做 VLA 后训练"
+    },
+    {
+      "name": "MCAP（机器人数据存储）",
+      "url": "https://mcap.dev/",
+      "type": "格式",
+      "description": "Foxglove 推动的机器人多模态数据存储格式"
+    }
+  ],
+  "weeklyPlan": "**第 1-2 周**：sec-0/1（全景 + 算力栈）+ 跳转读训练优化模块的 4-7\n**第 3-4 周**：sec-5/6（推理引擎 + chunk batching）+ 跳转读云边端模块\n**第 5-6 周**：sec-7（model serving）+ 跳转读平台工程模块\n**第 7 周**：sec-8/9/10（数据流水线）+ 跳转读数据工程模块\n**第 8 周**：sec-15 综合实战项目",
+  "sectionsMeta": [
+    {
+      "id": "sec-01",
+      "title": "AI Infra 全景：具身领域为什么需要专属基础设施？",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 901
+    },
+    {
+      "id": "sec-02",
+      "title": "GPU 算力栈：从数据中心到机器人本体的端到端路径",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 779
+    },
+    {
+      "id": "sec-03",
+      "title": "🔗 分布式训练（DDP / FSDP / DeepSpeed ZeRO）",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 731
+    },
+    {
+      "id": "sec-04",
+      "title": "🔗 LoRA 与 PEFT：参数高效微调",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 573
+    },
+    {
+      "id": "sec-05",
+      "title": "🔗 模型量化与压缩：从 FP16 到 INT4 的工程取舍",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 643
+    },
+    {
+      "id": "sec-06",
+      "title": "推理引擎栈：vLLM / SGLang / Triton 在具身场景的特殊适配",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 938
+    },
+    {
+      "id": "sec-07",
+      "title": "KV-Cache + 动作 Chunk Batching：VLA 推理的特殊优化",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 968
+    },
+    {
+      "id": "sec-08",
+      "title": "多机器人 Model Serving：Ray Serve / KServe / 自研中间件对比",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 907
+    },
+    {
+      "id": "sec-09",
+      "title": "数据流水线全景：从遥操采集到训练就绪的端到端管道",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 838
+    },
+    {
+      "id": "sec-10",
+      "title": "🔗 数据集格式标准（LeRobot / RLDS / Open-X-Embodiment）",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 545
+    },
+    {
+      "id": "sec-11",
+      "title": "🔗 数据闭环与主动学习",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 585
+    },
+    {
+      "id": "sec-12",
+      "title": "平台工程基础：从单机器人到 fleet 管理的工程演进",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 824
+    },
+    {
+      "id": "sec-13",
+      "title": "🔗 K8s / Docker / CI/CD 三件套",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 632
+    },
+    {
+      "id": "sec-14",
+      "title": "🔗 可观测性：日志 / 指标 / 追踪 + 机器人特有的视频回放",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 557
+    },
+    {
+      "id": "sec-15",
+      "title": "🔗 云边端协同与 OTA：把模型安全送进 10000 台机器人",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 797
+    },
+    {
+      "id": "sec-16",
+      "title": "实战：搭一套最小化具身 AI Infra（端到端 demo）",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 1115
+    }
+  ]
+}

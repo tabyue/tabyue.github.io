@@ -1,0 +1,6 @@
+{
+  "title": "🔗 K8s / Docker / CI/CD 三件套",
+  "difficulty": "中级",
+  "content": "## 🔗 本节内容已在其他模块详细讲解\n\nDocker + Kubernetes + CI/CD 是云原生时代的「水电煤」，机器人后端不例外。**核心要点**：① 单镜像规则——同一镜像跑云端推理 + 边缘部署，避免环境差异；② 用 Helm/Kustomize 管理配置；③ CI 必须包含真实硬件测试 stage（不能只跑单元测试）；④ ArgoCD 做 GitOps 部署是产线主流。\n\n## 跳转入口\n\n- 📍 [→ Docker 容器化部署完整指南（平台工程 sec-6）](/learn/platform-engineering/6)\n  - 镜像优化 + 多阶段构建 + ROS2 容器化最佳实践\n- 📍 [→ Kubernetes 集群管理基础（平台工程 sec-7）](/learn/platform-engineering/7)\n- 📍 [→ CI/CD 与机器人软件自动化部署（平台工程 sec-0）](/learn/platform-engineering/0)\n- 📍 [→ CI/CD 与自动化测试（平台工程 sec-9）](/learn/platform-engineering/9)\n\n## 为什么放在 AI Infra 模块？\n\n本节是 AI Infra 学习路径的关键一环——把基础设施工程师所需的知识从分散的模块里串起来。\n如果你已经读过原模块，可以跳过；如果是从这里入门，建议先读跳转目标章节，再回到本模块继续后续 sec。",
+  "lastUpdated": "2026-05-11T15:30"
+}
