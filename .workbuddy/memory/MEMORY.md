@@ -40,8 +40,8 @@
 
 ## 学习中心当前水位（2026-05-11 更新）
 - **30 个原有学习模块全部达到 OK 水位（≥ 80K chars）** ✅
-- **2026-05-11 新增第 31 个模块「AI Infra 具身基础设施」**——三类章节设计：A 跳转 8 sec / B 整合 3 sec / C 独家 5 sec，共 16 sec / 12K chars 骨架。Phase 1 仅发布章节框架（A 类已完整可读，仅含 200 字简介 + 深链跳转，0 内容重复），C/B 类正文将在 Phase 2 补齐。模块 id `ai-infra`，挂在 engineering 阶段第一位。前端 `learnFileMap` 已加映射 `ai-infra-具身基础设施 → ai-infra`。设计原则：**0 内容重复**——A 类章节仅放简介 + 深链跳到原模块；B 类整合跨模块知识点的二阶导；C 类是其他模块没覆盖的具身 infra 前沿（vLLM/SGLang 适配 / chunk batching / 多机器人 model serving / 综合实战）。**模块命名要求 ASCII 友好**：避免 emoji / 中文括号导致前端 modId 包含奇怪字符（已踩坑：原名「🛠️ AI Infra（具身基础设施）」生成 modId `🛠️-ai-infra（具身基础设施）` 不友好，最终改为「AI Infra 具身基础设施」）
-- 当前体量分布：87K-183K，平均 ~96K chars，11-18 sections / 模块（30 个原模块）
+- **2026-05-11 新增第 31 个模块「AI Infra 具身基础设施」(id=ai-infra)**——三类章节设计：A 跳转 8 sec / B 整合 3 sec / C 独家 5 sec，共 16 sec / **最终体量 49K chars**（C 类独家 22K + B 类整合 19K + A 类跳转 5K + 概览 4K）。挂在 engineering 阶段第一位。前端 `learnFileMap` 已加映射 `ai-infra-具身基础设施 → ai-infra`。设计原则：**0 内容重复**——A 类章节仅放简介 + 深链跳到原模块；B 类整合跨模块知识点的二阶导；C 类是其他模块没覆盖的具身 infra 前沿（vLLM/SGLang 适配 / chunk batching / 多机器人 model serving / 综合实战）。**模块命名要求 ASCII 友好**：避免 emoji / 中文括号导致前端 modId 包含奇怪字符（已踩坑：原名「🛠️ AI Infra（具身基础设施）」生成 modId `🛠️-ai-infra（具身基础设施）` 不友好，最终改为「AI Infra 具身基础设施」）
+- 当前体量分布：87K-183K，平均 ~96K chars，11-18 sections / 模块（30 个原模块）；ai-infra 49K（混合型模块，跳转章节天然短）
 - TOP 5 最大：linear-algebra (183K) / data-collection (118K) / vla-models (118K) / probability-statistics (117K) / calculus-optimization (109K)
 - BOTTOM 5 最小：mechanical-design (87K) / ros2 (88K) / control-theory (88K) / python-scientific-computing (88K) / **platform-engineering (98K, 5/7 升级)** + **humanoid-fullstack (99K, 5/7 升级)** 已脱离最薄区
 - 后续工作策略：单轮深化转为"主题广度+前沿热点联动"——优先以"配合本轮新论文/新闻"为主线追加 section，让前沿研究成果进入教学体系
