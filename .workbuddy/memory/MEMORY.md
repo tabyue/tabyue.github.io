@@ -77,3 +77,4 @@
 - **按钮约定**：主要 CTA（glow-btn / sec-nav-btn primary / btt）一律 135° `linear-gradient(p 0%, pd 100%)` + 发光 box-shadow，不写纯色填充
 - **写 hover/底色不要写死 `rgba(255,255,255,.x)`**——浅色下完全失效。统一用 `var(--bg3)` 或 `var(--accent-subtle)` 让两套主题都生效
 - **可访问性**：`@media (prefers-reduced-motion:reduce)` 全局降级动画为 .01ms
+- **顶层容器宽度统一 1400px**（2026-05-11 确立）：`page-body` / `page-header` / `quick-grid` / `home-latest` / `learn-layout` / 学习中心顶部按钮容器 / 推荐卡片容器，全部 `max-width:1400px;margin:0 auto`。新加任何页面 / 顶层卡片必须对齐这个值，不能写 1200/1300/1500 等不同值。媒体查询 768px 以下移动端用 `1fr` 不限宽。
