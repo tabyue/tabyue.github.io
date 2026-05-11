@@ -1,5 +1,18 @@
 # automation-5 执行历史
 
+## 2026-05-10 23:35（晚间轮，automation-5）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 启动时工作树残留前轮（5/10 下午）实例的未提交内容（n258-261 / p138-140 / os094-096 / j119-120 / control-theory sec-16 + humanoid-fullstack sec-17），全部接手不丢弃
+- 我自己实际做的晚间轮新增：
+  - news +3：n262 特斯拉 Model S/X 停产为 Optimus Gen3 让位 + 100 万年产能 / n263 速腾聚创 CES 2026 VTLA-3D AI 配送小哥 + Active Camera + 灵巧手长程闭环 / n264 北京人形「慧思开物 Agent」直播 14 个月迭代四大突破
+  - papers +2：p141 TriRelVLA 三元关系结构 VLA（OOD-Object 21.2pp 跳升）+ p142 LWD/AGIBOT Finch 舰队级 RL（DIVL+QAM/16 台双臂 95%）；含完整 keyInsights + impact + methodology + experiments + reproduction + mathDetails
+  - jobs +1：j121 速腾聚创具身智能事业部 4 方向扩招（VTLA-3D 大模型 / 触觉算法 / Active Camera 嵌入式 / 灵巧手控制）
+  - 学习深化：vla-models +sec-13「VLA 第三 / 第四阶段：结构化推理 + 舰队级 RL — TriRelVLA × LWD 范式精读」（13 sections / 125K chars，单 sec ~6K chars 含演化路线 / 工程化代价 / Phase 5 展望）
+  - daily-english +2：TriRelVLA + LWD arXiv 摘要（items 6 / archive 9）
+- 0 dups（news 236 / papers 124 / os 85 / jobs 113）
+- sync_learn_split (2 files updated) + build_sitemap (430 chapters) 已跑
+- 内容已被并行实例（5/11 凌晨/中午轮）合并 commit 472c3b7 / 2763552 → origin/main，工作树 clean，本轮无需自己 commit/push
+
 ## 2026-05-11 14:35（中午轮）
 - 投稿箱：无开放 Issue（gh issue list 返回 []）
 - 新闻 +3 (n268-n270)：① **维他动力 Vbot Pre-A 近 5 亿融资创消费级具身赛道纪录**（余轶南清华系前地平线副总裁，超能机器狗 5/8 量产 500 台 / 12988 元 / 端侧 128TOPS / 8 月人形原型机首亮相）；② **鹿明机器人 A1+A2 累计近 10 亿融资三菱电机两轮领投**（清华系喻超 / Fastumi 真机数据 1 万小时 / 中远海运 + 商汤 + 复星合作）；③ **OpenAI Richmond 海滨 20.2 万 sqft 机器人工厂 + 14000 安培电力**（5 年沉寂后重启，硅谷 Mountain View 45 万 sqft 同时启用，三角硬件版图 145 万 sqft 总面积）
