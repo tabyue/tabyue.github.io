@@ -700,7 +700,16 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
         </div>
     </div>
     <div class="learn-layout">
-        <div class="learn-sidebar" id="learnSidebar"><div style="color:var(--t3);text-align:center;padding:40px;font-size:.85rem">加载中...</div></div>
+        <div class="learn-sidebar" id="learnSidebar">
+            <div style="position:sticky;top:0;z-index:10;padding:10px 10px 8px;background:var(--bg2);border-bottom:1px solid var(--bd)">
+                <div style="position:relative">
+                    <input type="text" id="learnSearch" placeholder="🔍 搜模块 / 章节 / 关键词..." oninput="learnSearchFilter()" onfocus="learnSearchFilter()" onblur="setTimeout(()=>{const r=document.getElementById('learnSearchResults');if(r)r.style.display='none'},200)" style="width:100%;padding:8px 30px 8px 12px;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--t1);font-size:.85rem;outline:none;box-sizing:border-box" />
+                    <span id="learnSearchClear" onclick="learnSearchClear()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--t3);cursor:pointer;font-size:.85rem;display:none;padding:2px 6px">✕</span>
+                </div>
+                <div id="learnSearchResults" style="display:none;max-height:360px;overflow-y:auto;margin-top:6px;border:1px solid var(--bd);border-radius:8px;background:var(--bg2)"></div>
+            </div>
+            <div id="learnSidebarBody"><div style="color:var(--t3);text-align:center;padding:40px;font-size:.85rem">加载中...</div></div>
+        </div>
         <div class="learn-detail" id="learnDetail">
             <div class="learn-detail-empty"><span class="hint-icon">📖</span><div>从左侧选择一个模块开始学习</div><div style="font-size:.78rem;color:var(--t3)">点击模块名称展开详细内容</div></div>
         </div>
@@ -1192,6 +1201,105 @@ function toggleStage(si,el){
     _stageCollapsed[si]=next;
     el.classList.toggle('collapsed',next);
 }
+
+// === 学习中心搜索 ===
+let _learnSearchIndex=null;       // 章节级索引（异步加载）
+let _learnSearchIndexLoading=false;
+async function buildLearnSearchIndex(){
+    if(_learnSearchIndex||_learnSearchIndexLoading)return;
+    _learnSearchIndexLoading=true;
+    if(!LD)return;
+    const idx=[];
+    // 模块级（同步可得）
+    LD.stages.forEach(s=>(s.modules||[]).forEach(m=>{
+        const modId=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
+        const fileId=learnFileMap[modId]||modId;
+        idx.push({type:'module',name:m.name,modId,fileId,desc:m.description||'',stage:s.title,topics:(m.topics||[]).map(t=>t.title).join(' ')});
+    }));
+    // 章节级（异步加载所有 _index.json）
+    const seen=new Set();
+    const tasks=[];
+    LD.stages.forEach(s=>(s.modules||[]).forEach(m=>{
+        const modId=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
+        const fileId=learnFileMap[modId]||modId;
+        if(seen.has(fileId))return; seen.add(fileId);
+        tasks.push((async()=>{
+            try{
+                const ix=await loadJ(`data/learn-split/${fileId}/_index.json`);
+                if(!ix)return;
+                (ix.sectionsMeta||[]).forEach((sm,i)=>{
+                    idx.push({type:'section',title:sm.title||'',modId,fileId,modName:m.name,secIdx:i,stage:s.title});
+                });
+            }catch(e){/* ignore */}
+        })());
+    }));
+    await Promise.all(tasks);
+    _learnSearchIndex=idx;
+    _learnSearchIndexLoading=false;
+    // 索引建好后若搜索框有内容，立刻刷新结果
+    const ipt=document.getElementById('learnSearch');
+    if(ipt&&ipt.value.trim())learnSearchFilter();
+}
+function learnSearchFilter(){
+    const ipt=document.getElementById('learnSearch');
+    const box=document.getElementById('learnSearchResults');
+    const clr=document.getElementById('learnSearchClear');
+    if(!ipt||!box)return;
+    const q=(ipt.value||'').trim().toLowerCase();
+    if(clr)clr.style.display=q?'block':'none';
+    if(!q){box.style.display='none';box.innerHTML='';return;}
+    // 后台异步建索引
+    if(!_learnSearchIndex)buildLearnSearchIndex();
+    const data=_learnSearchIndex||[];
+    if(data.length===0){
+        box.style.display='block';
+        box.innerHTML='<div style="padding:14px;color:var(--t3);font-size:.78rem;text-align:center">索引加载中...</div>';
+        return;
+    }
+    // 简单匹配：标题 / 模块名 / 描述 / topics
+    const hits=[];
+    for(const r of data){
+        if(hits.length>=20)break;
+        const hay=(r.type==='module'?(r.name+' '+r.desc+' '+r.topics+' '+r.stage):(r.title+' '+r.modName+' '+r.stage)).toLowerCase();
+        if(hay.includes(q)){hits.push(r)}
+    }
+    if(hits.length===0){
+        box.style.display='block';
+        box.innerHTML=`<div style="padding:14px;color:var(--t3);font-size:.78rem;text-align:center">未找到「${q}」相关内容</div>`;
+        return;
+    }
+    let html='';
+    hits.forEach(r=>{
+        if(r.type==='module'){
+            const stageShort=(r.stage||'').replace(/^[^：]*：/,'').slice(0,12);
+            html+=`<div onclick="learnSearchPick('${r.modId}')" style="padding:8px 12px;border-bottom:1px solid var(--bd);cursor:pointer;font-size:.82rem" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='transparent'">
+                <div style="display:flex;align-items:center;gap:6px"><span style="font-size:.7rem;padding:1px 6px;border-radius:4px;background:var(--p);color:#fff">模块</span><span style="font-weight:500">${r.name}</span></div>
+                <div style="font-size:.72rem;color:var(--t3);margin-top:2px">${stageShort}</div></div>`;
+        }else{
+            const stageShort=(r.stage||'').replace(/^[^：]*：/,'').slice(0,12);
+            html+=`<div onclick="learnSearchPick('${r.modId}',${r.secIdx})" style="padding:8px 12px;border-bottom:1px solid var(--bd);cursor:pointer;font-size:.82rem" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='transparent'">
+                <div style="display:flex;align-items:center;gap:6px"><span style="font-size:.7rem;padding:1px 6px;border-radius:4px;background:var(--bg3);color:var(--t2)">章节</span><span>${r.title}</span></div>
+                <div style="font-size:.72rem;color:var(--t3);margin-top:2px">${r.modName} · ${stageShort}</div></div>`;
+        }
+    });
+    box.style.display='block';
+    box.innerHTML=html;
+}
+function learnSearchPick(modId,secIdx){
+    const path=secIdx===undefined?'/learn/'+encodeURIComponent(modId):'/learn/'+encodeURIComponent(modId)+'/'+(secIdx+1);
+    history.pushState({},'',path);
+    applyRoute(path);
+    learnSearchClear();
+}
+function learnSearchClear(){
+    const ipt=document.getElementById('learnSearch');
+    const box=document.getElementById('learnSearchResults');
+    const clr=document.getElementById('learnSearchClear');
+    if(ipt)ipt.value='';
+    if(box){box.style.display='none';box.innerHTML='';}
+    if(clr)clr.style.display='none';
+}
+
 function renderLearn(){
     if(!LD)return;
     let sb='';
@@ -1231,7 +1339,7 @@ function renderLearn(){
         });
         sb+=`</div></div>`;
     });
-    document.getElementById('learnSidebar').innerHTML=sb;
+    document.getElementById('learnSidebarBody').innerHTML=sb;
 }
 let _currentLearnSec=0;
 
@@ -1417,6 +1525,8 @@ async function openLearnModule(modId, el, opts){
     if(!curPage||curPage.id!=='pg-learn'){
         go('learn',{fromRouter:true,skipScroll:true});
     }
+    // 后台静默预热搜索索引（异步，不阻塞渲染）
+    if(typeof buildLearnSearchIndex==='function')setTimeout(buildLearnSearchIndex,200);
     const body=document.getElementById('learnDetail');
     body.innerHTML='<div style="text-align:center;color:var(--t3);padding:60px">⏳ 加载学习内容...</div>';
 
