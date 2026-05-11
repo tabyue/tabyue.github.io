@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-18T13:28",
+  "lastUpdated": "2026-05-11T16:55",
   "categories": [
     {
       "id": "all",
@@ -1025,6 +1025,702 @@
         }
       ],
       "addedDate": "2026-04-18"
+    },
+    {
+      "id": "agibot-a2",
+      "name": "远征 A2 旗舰版",
+      "manufacturer": "智元机器人",
+      "category": "humanoid",
+      "tags": [
+        "人形",
+        "全尺寸",
+        "百公里行走",
+        "千台量产",
+        "AGIBOT WORLD"
+      ],
+      "price": "¥168,000 起 (青春版) / ¥??? (旗舰版)",
+      "overview": "智元 2025 年 8 月发布的第二代具身智能交互服务机器人，旗舰版身高 169cm / 体重 69kg / 40 主动自由度。**关键里程碑**：① 2025/11 完成全球首次人形机器人跨省行走（苏州 → 上海 106.286 公里），获吉尼斯纪录；② 2025/3 千台量产 + 2026/3 累计下线 10000 台；③ 已落地汽车制造（上海车展销售顾问）+ 消费电子 + 进博会迎宾 + 文旅 + 工业（富临精工首单工业签单）；④ 模块化设计、关键部件国产化率 95%+；⑤ 配套 GO-2 基座大模型 + AGIBOT WORLD 2026 数据集开源。**A2 青春版**：23 主动自由度 / 简化版本 / 文旅场景。",
+      "specs": {
+        "身高": "169 cm",
+        "体重": "69 kg (旗舰版) / 63 kg (青春版)",
+        "自由度": "40 DoF (旗舰：颈 2 + 腰 + 单臂 7 + 单腿 6 + 灵巧手 6) / 23 DoF (青春版)",
+        "步行速度": "≥ 1.5 m/s (实测 106 km 长距离稳定)",
+        "续航": "约 4-6 小时 (长程行走验证)",
+        "算力平台": "智元自研 + Jetson 系列"
+      },
+      "bom": [
+        {
+          "part": "整机",
+          "model": "远征 A2 旗舰版",
+          "specs": "1.69m / 69kg / 40 DoF",
+          "qty": "1",
+          "price": "约 50w 起估",
+          "link": "https://www.zhiyuan-robot.com/article/188/detail/107.html",
+          "driver": "智元 AIMA 平台"
+        },
+        {
+          "part": "AI 平台",
+          "model": "智元灵渠 Link-U OS + GO-2 基座大模型",
+          "specs": "L3 级具身智能 + 大小脑协同 + AGIBOT WORLD 2026",
+          "qty": "1",
+          "price": "整机内置",
+          "link": "http://www.zhiyuan-robot.com/",
+          "driver": "Genie Studio Agent"
+        },
+        {
+          "part": "关节电机",
+          "model": "智元自研 + 蓝点触控关节力传感器",
+          "specs": "六维力 80% 国内市占率配套",
+          "qty": "40",
+          "price": "非零售",
+          "link": "",
+          "driver": "智元 SDK"
+        },
+        {
+          "part": "主控计算机",
+          "model": "NVIDIA Jetson AGX Orin 64GB / 自研版",
+          "specs": "275 TOPS INT8",
+          "qty": "1",
+          "price": "~¥12,000",
+          "link": "",
+          "driver": "JetPack 6.x"
+        },
+        {
+          "part": "深度相机",
+          "model": "RealSense D435 双目 + 鱼眼广角",
+          "specs": "全向感知",
+          "qty": "3-4",
+          "price": "~¥2,000 each",
+          "link": "",
+          "driver": "librealsense2"
+        },
+        {
+          "part": "灵巧手",
+          "model": "智元 OmniHand Pro (选配)",
+          "specs": "6 DoF 单手",
+          "qty": "2",
+          "price": "选配",
+          "link": "http://www.zhiyuan-robot.com/",
+          "driver": "智元 SDK"
+        }
+      ],
+      "docs": [
+        {
+          "name": "智元官网",
+          "url": "http://www.zhiyuan-robot.com/"
+        },
+        {
+          "name": "远征 A2 详情页",
+          "url": "https://www.zhiyuan-robot.com/article/188/detail/107.html"
+        },
+        {
+          "name": "AGIBOT WORLD 2026 数据集",
+          "url": "https://github.com/AgibotTech/agibot_world"
+        },
+        {
+          "name": "Genie Sim 3.0 仿真平台",
+          "url": "http://www.zhiyuan-robot.com/"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "agibot-x2",
+      "name": "灵犀 X2",
+      "manufacturer": "智元机器人 (X-Lab)",
+      "category": "humanoid",
+      "tags": [
+        "人形",
+        "灵动小型",
+        "Met Gala",
+        "5000 台量产",
+        "X-Lab"
+      ],
+      "price": "¥98,000 起 (青春版)",
+      "overview": "智元 X-Lab 实验室开发的灵动型人形机器人，**身高 131-135cm / 体重 33.8kg / 28 全身自由度**（青春版 27 DoF）。**关键节点**：① 2025/12 第 5000 台量产下线（紧随宇树、银河通用、优必选位居全球前列）；② 2026/3 上海临港 500 台陈列；③ 2026/5 智元 A2 + X2 一同登 Met Gala 时尚秀（上海展示）。**核心特色**：小脑控制器 + 域控制器 + 智能电源 + 核心关节模组**全线自研**；首台真正具备复杂交互能力的灵动机器人，毫秒级交互反应 + 视觉理解世界；柔性材料 + 手机联动；主打文旅 / 主题乐园 / 博物馆等服务场景。",
+      "specs": {
+        "身高": "131-135 cm",
+        "体重": "33.8 kg",
+        "自由度": "28 DoF (头 2 + 腰 3 + 单臂 7+ 等)",
+        "步行速度": "1.5 m/s",
+        "续航": "约 2-3 小时",
+        "算力平台": "Jetson Orin NX + 智元自研域控制器"
+      },
+      "bom": [
+        {
+          "part": "整机",
+          "model": "灵犀 X2 青春版",
+          "specs": "131cm / 33.8kg / 27-28 DoF",
+          "qty": "1",
+          "price": "¥98,000+",
+          "link": "https://news.qq.com/rain/a/20251208A06AYH00",
+          "driver": "智元 AIMA"
+        },
+        {
+          "part": "全身关节模组",
+          "model": "智元 X-Lab 自研",
+          "specs": "全自研模组 + 仿生足弓",
+          "qty": "28",
+          "price": "非零售",
+          "link": "",
+          "driver": "智元 SDK"
+        },
+        {
+          "part": "灵巧手",
+          "model": "智元自研灵巧手 (OmniHand 系列)",
+          "specs": "高频低延迟 + 视触集成",
+          "qty": "2",
+          "price": "选配",
+          "link": "",
+          "driver": "智元 SDK"
+        },
+        {
+          "part": "主控计算机",
+          "model": "NVIDIA Jetson Orin NX + 自研域控",
+          "specs": "100 TOPS + 关节高频通信",
+          "qty": "1",
+          "price": "~¥3,500",
+          "link": "",
+          "driver": "JetPack 6.x"
+        },
+        {
+          "part": "传感器套件",
+          "model": "多目相机 + IMU + 麦克风阵列",
+          "specs": "多模态交互",
+          "qty": "1",
+          "price": "整机集成",
+          "link": "",
+          "driver": "智元 SDK"
+        }
+      ],
+      "docs": [
+        {
+          "name": "智元官网",
+          "url": "http://www.zhiyuan-robot.com/"
+        },
+        {
+          "name": "5000 台量产下线报道",
+          "url": "https://news.qq.com/rain/a/20251208A06AYH00"
+        },
+        {
+          "name": "X2 青春版预售",
+          "url": "https://t.cj.sina.com.cn/articles/view/7857201856/1d45362c001902eldk"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "agibot-g2",
+      "name": "精灵 G2 / G2 Air / G2 Max",
+      "manufacturer": "智元机器人",
+      "category": "humanoid",
+      "tags": [
+        "移动操作",
+        "工业产线",
+        "龙旗 99.5%",
+        "G2 系列"
+      ],
+      "price": "面向 B 端工业",
+      "overview": "智元面向工业作业的移动操作平台。**核心数据**：① 2026/5 龙旗工厂 99.5% 产线落地（连续 8 小时直播 3C 产线作业）；② 2026/4 智元第 10000 台通用具身机器人量产下线（精灵 G2 系列贡献主要份额）；③ G2 海外被 The Robot Report 报道入消费电子产线（100% 汽车级零部件 + IP42）；④ 智元仿真平台 Genie Sim 3.0 配套，自然语言生成 3D 世界。G2 Air 是流动操作臂，G2 Max 是高端版（APC 2026 集中发布）。",
+      "specs": {
+        "结构": "轮式移动底盘 + 双臂操作",
+        "防护等级": "IP42",
+        "算力平台": "Jetson AGX Orin 64GB",
+        "OS": "智元灵渠 Link-U OS",
+        "应用场景": "3C 产线 / 汽车产线 / 物流分拣",
+        "量产节奏": "2026 部署元年 + 5000 台 + 5000 台"
+      },
+      "bom": [
+        {
+          "part": "整机平台",
+          "model": "精灵 G2 / G2 Air / G2 Max",
+          "specs": "轮式移动 + 双臂操作",
+          "qty": "1",
+          "price": "B 端定制",
+          "link": "http://www.zhiyuan-robot.com/",
+          "driver": "智元 AIMA + GO-2"
+        },
+        {
+          "part": "AI 大脑",
+          "model": "GO-2 基座大模型 + AGIBOT WORLD 2026 数据",
+          "specs": "VLA + 长程任务",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "Genie Studio"
+        },
+        {
+          "part": "移动底盘",
+          "model": "智元自研轮式底盘",
+          "specs": "工业级稳定性 + 自主导航",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "智元 ROS2 stack"
+        },
+        {
+          "part": "双臂操作",
+          "model": "智元自研 7 DoF 单臂",
+          "specs": "高精度 + 力控",
+          "qty": "2",
+          "price": "随整机",
+          "link": "",
+          "driver": "智元 SDK"
+        },
+        {
+          "part": "灵巧手",
+          "model": "OmniHand Pro 选配",
+          "specs": "精细操作",
+          "qty": "2",
+          "price": "选配",
+          "link": "",
+          "driver": "智元 SDK"
+        }
+      ],
+      "docs": [
+        {
+          "name": "智元官网",
+          "url": "http://www.zhiyuan-robot.com/"
+        },
+        {
+          "name": "智元 APC 2026 大会",
+          "url": "https://news.qq.com/rain/a/20260417A082LF00"
+        },
+        {
+          "name": "Genie Sim 3.0 仿真平台",
+          "url": "http://www.zhiyuan-robot.com/"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "engineai-pm01",
+      "name": "众擎 PM01",
+      "manufacturer": "众擎机器人 (EngineAI)",
+      "category": "humanoid",
+      "tags": [
+        "人形",
+        "轻量级",
+        "高动态",
+        "全开放",
+        "前空翻"
+      ],
+      "price": "B 端起售",
+      "overview": "众擎机器人 2024/12 发布的轻量级、高动态、全开放具身智能体。**核心规格**：身高 138cm / 体重 ~40kg / 24 全身自由度 / 移动速度 2 m/s / 腰部 320° 自由旋转电机 / 130 Nm/kg 峰值扭矩密度（行业领先）。**特点**：① 机械式步态 + 类人自然步态双切换；② 高强度金属 + 抗摔结构 + 可前空翻；③ X86 + Jetson Orin 高算力模组；④ 2025/2 升级后瞬时速度 3.3 m/s（快速奔跑 / 走跑切换）；⑤ 端到端神经网络 + 光学动捕 + 强化 + 模仿学习路线。**资本动态**：2026/4 完成 B 轮 2 亿美元（估值破 100 亿）+ 2026/5 完成 B+ 轮（立讯精密 + 河南投资集团领投），跻身国内人形第一梯队。",
+      "specs": {
+        "身高": "138 cm",
+        "体重": "~40 kg",
+        "自由度": "24 DoF (含腰部 320° 旋转)",
+        "步行速度": "2 m/s (常态) / 3.3 m/s (瞬时)",
+        "扭矩密度": "130 Nm/kg (业界领先)",
+        "算力平台": "X86 + NVIDIA Jetson Orin"
+      },
+      "bom": [
+        {
+          "part": "整机",
+          "model": "众擎 PM01",
+          "specs": "138cm / 40kg / 24 DoF / 130 Nm/kg",
+          "qty": "1",
+          "price": "B 端",
+          "link": "https://www.engineai.com.cn/",
+          "driver": "众擎自研运控 + 大脑 + 端到端神经网络"
+        },
+        {
+          "part": "腰部旋转电机",
+          "model": "众擎自研行星准直驱关节",
+          "specs": "320° 自由旋转 + 高扭矩密度",
+          "qty": "1",
+          "price": "非零售",
+          "link": "",
+          "driver": "众擎 SDK"
+        },
+        {
+          "part": "全身关节",
+          "model": "众擎自研 (3 大技术路线之一)",
+          "specs": "行星准直驱 + 谐波力控 + 滚珠丝杠",
+          "qty": "24",
+          "price": "非零售",
+          "link": "",
+          "driver": "众擎 SDK"
+        },
+        {
+          "part": "主控计算机",
+          "model": "X86 + NVIDIA Jetson Orin",
+          "specs": "高算力模组",
+          "qty": "1",
+          "price": "~¥10,000",
+          "link": "",
+          "driver": "JetPack"
+        },
+        {
+          "part": "光学动捕集成接口",
+          "model": "支持 OptiTrack / Vicon",
+          "specs": "强化 + 模仿学习数据采集",
+          "qty": "1",
+          "price": "外接",
+          "link": "",
+          "driver": "众擎 SDK"
+        }
+      ],
+      "docs": [
+        {
+          "name": "众擎官网",
+          "url": "https://www.engineai.com.cn/"
+        },
+        {
+          "name": "PM01 百度百科",
+          "url": "https://baike.baidu.com/item/PM01/65246710"
+        },
+        {
+          "name": "众擎 B+ 轮融资报道",
+          "url": "https://www.lanjingzhitong.com/"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "engineai-se01",
+      "name": "众擎 SE01",
+      "manufacturer": "众擎机器人 (EngineAI)",
+      "category": "humanoid",
+      "tags": [
+        "人形",
+        "拟人步态",
+        "工业人形",
+        "全尺寸"
+      ],
+      "price": "B 端定制",
+      "overview": "众擎首款实现拟人自然步态的通用人形机器人。**核心规格**：身高 170cm / 32 全身自由度 / 常态步速 2 m/s。定位工业人形智能体，配合 PM01（轻量灵活）形成「轻 + 重」双产品矩阵。",
+      "specs": {
+        "身高": "170 cm",
+        "自由度": "32 DoF",
+        "步行速度": "2 m/s (常态)",
+        "特色": "拟人自然步态（业界首款）",
+        "算力平台": "Jetson Orin"
+      },
+      "bom": [
+        {
+          "part": "整机",
+          "model": "众擎 SE01",
+          "specs": "170cm / 32 DoF / 拟人步态",
+          "qty": "1",
+          "price": "B 端",
+          "link": "https://www.engineai.com.cn/",
+          "driver": "众擎自研运控"
+        },
+        {
+          "part": "全身关节",
+          "model": "众擎自研三技术路线",
+          "specs": "行星准直驱 + 谐波力控 + 滚珠丝杠",
+          "qty": "32",
+          "price": "非零售",
+          "link": "",
+          "driver": "众擎 SDK"
+        },
+        {
+          "part": "主控计算机",
+          "model": "NVIDIA Jetson Orin AGX 64GB",
+          "specs": "275 TOPS",
+          "qty": "1",
+          "price": "~¥12,000",
+          "link": "",
+          "driver": "JetPack 6.x"
+        }
+      ],
+      "docs": [
+        {
+          "name": "众擎官网",
+          "url": "https://www.engineai.com.cn/"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "engineai-t800",
+      "name": "众擎 T800",
+      "manufacturer": "众擎机器人 (EngineAI)",
+      "category": "humanoid",
+      "tags": [
+        "人形",
+        "旗舰",
+        "全尺寸",
+        "固态电池",
+        "拟人自然步态"
+      ],
+      "price": "¥180,000 起 (基础版)",
+      "overview": "众擎旗舰全尺寸高动态通用人形机器人。**核心规格**：身高 173cm / 体重 75kg / 41 全身自由度 / 关节峰值扭矩 450 Nm / 固态电池续航 4-5 小时。**特点**：全球首个拟人自然步态 + 动态平衡强 + 可负重精细操作；提供基础 / 开源 / Pro / Max 四版本（18-100 万元）。**资本背景**：众擎跟特斯拉 / Figure / 1X 是全球少数掌握行星准直驱 + 谐波力控 + 滚珠丝杠三大关节技术路线的企业。",
+      "specs": {
+        "身高": "173 cm",
+        "体重": "75 kg",
+        "自由度": "41 DoF (不含灵巧手 29 DoF + 灵巧手)",
+        "步行速度": "≥ 2 m/s",
+        "关节峰值扭矩": "450 Nm",
+        "电池": "固态电池, 续航 4-5h",
+        "算力平台": "X86 + Jetson Orin AGX"
+      },
+      "bom": [
+        {
+          "part": "整机",
+          "model": "众擎 T800",
+          "specs": "173cm / 75kg / 41 DoF / 450 Nm",
+          "qty": "1",
+          "price": "¥180,000+ (基础) / ¥??? (Max)",
+          "link": "https://www.engineai.com.cn/",
+          "driver": "众擎自研全栈"
+        },
+        {
+          "part": "髋关节大扭矩电机",
+          "model": "众擎行星准直驱",
+          "specs": "峰值 450 Nm",
+          "qty": "6",
+          "price": "非零售",
+          "link": "",
+          "driver": "众擎 SDK"
+        },
+        {
+          "part": "踝关节力控",
+          "model": "众擎谐波力控关节",
+          "specs": "六维力反馈",
+          "qty": "2",
+          "price": "非零售",
+          "link": "",
+          "driver": "众擎 SDK"
+        },
+        {
+          "part": "膝关节直线驱动",
+          "model": "众擎滚珠丝杠直线",
+          "specs": "高功率密度",
+          "qty": "2",
+          "price": "非零售",
+          "link": "",
+          "driver": "众擎 SDK"
+        },
+        {
+          "part": "固态电池组",
+          "model": "众擎定制固态电池",
+          "specs": "4-5h 续航",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "BMS 集成"
+        },
+        {
+          "part": "主控计算机",
+          "model": "X86 + Jetson AGX Orin 64GB",
+          "specs": "275 TOPS",
+          "qty": "1",
+          "price": "~¥15,000",
+          "link": "",
+          "driver": "JetPack 6.x"
+        }
+      ],
+      "docs": [
+        {
+          "name": "众擎官网",
+          "url": "https://www.engineai.com.cn/"
+        },
+        {
+          "name": "众擎产品矩阵雪球分析",
+          "url": "https://xueqiu.com/6899105006/384510215"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "leju-kuavo5",
+      "name": "乐聚 KUAVO 5 (夸父 5)",
+      "manufacturer": "乐聚智能 (Leju)",
+      "category": "humanoid",
+      "tags": [
+        "人形",
+        "工业规模化",
+        "鸿蒙OS",
+        "盘古具身",
+        "国产化 90%"
+      ],
+      "price": "B 端 (千台级出货)",
+      "overview": "乐聚 2025/10 发布的面向工业规模化的具身机器人。**核心规格**：身高 1.73m / 体重 63.5kg / 41 全身自由度 / 全身最大负载 20kg / 奔跑速度 7 km/h / 可连续跳跃。**核心技术**：① **国内首款搭载开源鸿蒙 OS（KaihongOS）+ 接入华为云盘古具身大模型 5.0** —— 全链路技术自主可控；② 模块化设计支持整手 / 整腿快速拆卸；③ 关节通信频率翻倍，上肢高频率低延迟控制；④ 核心零部件国产化率 > 90%；⑤ 动力学全身动量控制算法（行业首创）；⑥ 累计 120 件发明专利。**产业地位**：2025 年夸父出货约 500 台，全球第四（仅次于宇树 / 银河通用 / 优必选）；2025/10 完成近 15 亿元 Pre-IPO 轮融资（深投控 + 龙华资本 + 前海等）；4/12 深圳龙华人形机器人中试产线启用（深圳首条），打通万台量产。",
+      "specs": {
+        "身高": "1.73 m",
+        "体重": "63.5 kg",
+        "自由度": "41 DoF",
+        "步行速度": "7 km/h (奔跑)",
+        "全身最大负载": "20 kg",
+        "OS": "开源鸿蒙 KaihongOS (国内首家)",
+        "AI 大脑": "华为云盘古具身大模型 5.0",
+        "国产化率": "> 90%"
+      },
+      "bom": [
+        {
+          "part": "整机",
+          "model": "乐聚 KUAVO 5 (夸父 5)",
+          "specs": "1.73m / 63.5kg / 41 DoF / 20kg 负载",
+          "qty": "1",
+          "price": "B 端定制",
+          "link": "https://www.lejurobot.com/",
+          "driver": "鸿蒙 KaihongOS"
+        },
+        {
+          "part": "AI 大脑",
+          "model": "华为云盘古具身大模型 5.0",
+          "specs": "VLA + 闭环学习",
+          "qty": "1",
+          "price": "云端 API",
+          "link": "https://www.huaweicloud.com/",
+          "driver": "华为云 SDK"
+        },
+        {
+          "part": "操作系统",
+          "model": "OpenHarmony / KaihongOS",
+          "specs": "国内首款搭载开源鸿蒙的人形",
+          "qty": "1",
+          "price": "开源",
+          "link": "https://www.openharmony.cn/",
+          "driver": "OpenHarmony SDK"
+        },
+        {
+          "part": "全身模块化关节",
+          "model": "乐聚自研模组",
+          "specs": "整手 / 整腿快拆",
+          "qty": "41",
+          "price": "非零售",
+          "link": "",
+          "driver": "乐聚 SDK"
+        },
+        {
+          "part": "全身动量控制算法",
+          "model": "乐聚自研 (行业首创)",
+          "specs": "动态平衡核心",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "乐聚 SDK"
+        },
+        {
+          "part": "主控计算机",
+          "model": "NVIDIA Jetson AGX Orin 64GB",
+          "specs": "275 TOPS",
+          "qty": "1",
+          "price": "~¥12,000",
+          "link": "",
+          "driver": "JetPack 6.x"
+        }
+      ],
+      "docs": [
+        {
+          "name": "乐聚官网",
+          "url": "https://www.lejurobot.com/"
+        },
+        {
+          "name": "KUAVO 5 发布详情",
+          "url": "https://news.qq.com/rain/a/20260318A081YT00"
+        },
+        {
+          "name": "乐聚 IPO + 15 亿融资报道",
+          "url": "https://new.qq.com/rain/a/20251022A069CV00"
+        },
+        {
+          "name": "乐聚百度百科",
+          "url": "https://baike.baidu.com/item/%E4%B9%90%E8%81%9A%E6%9C%BA%E5%99%A8%E4%BA%BA/67641392"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "robotera-star1",
+      "name": "星动 STAR1",
+      "manufacturer": "星动纪元 (Robotera)",
+      "category": "humanoid",
+      "tags": [
+        "人形",
+        "55 DoF",
+        "全球最快",
+        "戈壁奔跑",
+        "ERA-42"
+      ],
+      "price": "面向科研 + 工业",
+      "overview": "星动纪元（清华陈建宇教授孵化）第六代旗舰人形机器人。**核心规格**：身高 1.71m / 全身 **55 自由度**（业界最高之一）/ 关节峰值扭矩 400 Nm / 关节转速 25 rad/s / 室外奔跑 3.6 m/s（**全球人形跑步速度纪录**）/ 负重 160kg / 适应山地戈壁等复杂地形。**配套灵巧手 XHand 1**：12 全主动直驱自由度（国内首创）/ 单手最大抓握力 80N / 可提 25kg 重物 / 响应每秒 10 次鼠标点击 / 指端高分辨率触觉。**核心技术**：原生机器人大模型 **ERA-42** + 去噪世界模型，融合视觉 / 听觉 / 触觉多模态。**产业里程碑**：① 2024/10 河西走廊丹霞地貌完成全球首次人形机器人户外奔跑；② 2025 年完成近 5 亿 A 轮 + 交付 200+ 台；③ 全球仅特斯拉 / Figure / 1X / 星动纪元做到「一个大模型控制全身灵巧操作」；④ CES 2026 入选英伟达全球 14 强 + 摩根士丹利全球 16 强人形。",
+      "specs": {
+        "身高": "1.71 m",
+        "自由度": "55 DoF (含 XHand 1 双手 24 DoF)",
+        "奔跑速度": "3.6 m/s (室外, 全球纪录)",
+        "关节峰值扭矩": "400 Nm",
+        "关节最高转速": "25 rad/s",
+        "负重": "160 kg",
+        "灵巧手": "XHand 1 — 12 DoF 全直驱 / 80N 抓握 / 25kg 单手提",
+        "AI 大脑": "原生机器人大模型 ERA-42 + 去噪世界模型"
+      },
+      "bom": [
+        {
+          "part": "整机",
+          "model": "星动 STAR1",
+          "specs": "1.71m / 55 DoF / 3.6 m/s 奔跑",
+          "qty": "1",
+          "price": "B 端",
+          "link": "https://www.robotera.com/",
+          "driver": "星动纪元自研运控"
+        },
+        {
+          "part": "AI 大脑",
+          "model": "ERA-42 原生机器人大模型 + 去噪世界模型",
+          "specs": "多模态闭环 + 自主决策",
+          "qty": "1",
+          "price": "随整机",
+          "link": "https://www.robotera.com/",
+          "driver": "星动 SDK"
+        },
+        {
+          "part": "灵巧手",
+          "model": "星动 XHand 1",
+          "specs": "12 全直驱 DoF / 80N 抓握 / 触觉指端 >100",
+          "qty": "2",
+          "price": "可单卖科研",
+          "link": "https://www.robotera.com/",
+          "driver": "星动 SDK"
+        },
+        {
+          "part": "主控计算机",
+          "model": "NVIDIA Jetson AGX Orin 64GB",
+          "specs": "275 TOPS",
+          "qty": "1",
+          "price": "~¥12,000",
+          "link": "",
+          "driver": "JetPack 6.x"
+        },
+        {
+          "part": "多目相机系统",
+          "model": "星动定制视觉模组",
+          "specs": "多模态感知",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "星动 SDK"
+        },
+        {
+          "part": "高扭矩关节电机",
+          "model": "星动自研",
+          "specs": "400 Nm 峰值 / 25 rad/s",
+          "qty": "55",
+          "price": "非零售",
+          "link": "",
+          "driver": "星动 SDK"
+        }
+      ],
+      "docs": [
+        {
+          "name": "星动纪元官网",
+          "url": "https://www.robotera.com/"
+        },
+        {
+          "name": "STAR1 百度百科",
+          "url": "http://baike.baidu.com/item/%E6%98%9F%E5%8A%A8STAR1/65514315"
+        },
+        {
+          "name": "CES 2026 海外业务报道",
+          "url": "http://www.cnr.cn/tech/techph/20260113/t20260113_527492161.shtml"
+        }
+      ],
+      "addedDate": "2026-05-11"
     }
   ]
 }
