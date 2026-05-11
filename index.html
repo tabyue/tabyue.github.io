@@ -1003,6 +1003,19 @@ window.addEventListener('popstate',()=>{
     applyRoute(location.pathname);
 });
 
+// SPA 内部链接拦截：md-content 里的 [txt](/learn/...) 走 applyRoute 不重载页面
+document.addEventListener('click',(e)=>{
+    const a=e.target.closest&&e.target.closest('a[data-spa="1"]');
+    if(!a)return;
+    const href=a.getAttribute('href')||'';
+    if(!href.startsWith('/'))return;
+    if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button!==0)return;
+    e.preventDefault();
+    history.pushState({},'',href);
+    applyRoute(href);
+    window.scrollTo({top:0,behavior:'smooth'});
+});
+
 // 兼容老 hash 链接：访问 #/learn/... 时立刻升级到真路径
 window.addEventListener('hashchange',()=>{
     if(_routerSuppress)return;
@@ -1816,6 +1829,12 @@ function renderMd(t){
     h=h.replace(/^## (.+)$/gm,'<h3>$1</h3>');
     // 6. 粗体
     h=h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+    // 6.5 Markdown 链接 [txt](url) — 内部 /xxx 走 SPA 路由，外部 http(s) target=_blank
+    h=h.replace(/\[([^\]]+)\]\((\/[^)\s]+|https?:\/\/[^)\s]+|mailto:[^)\s]+)\)/g,(_,txt,url)=>{
+        const isExternal=/^https?:\/\//.test(url)||url.startsWith('mailto:');
+        if(isExternal)return '<a href="'+url+'" target="_blank" rel="noopener noreferrer">'+txt+'</a>';
+        return '<a href="'+url+'" data-spa="1">'+txt+'</a>';
+    });
     // 7. 表格
     h=h.replace(/^\|(.+)\|$/gm,l=>{const c=l.split('|').filter(x=>x.trim());if(c.every(x=>/^[\s:-]+$/.test(x)))return'';return'<tr>'+c.map(x=>'<td>'+x.trim()+'</td>').join('')+'</tr>'});
     h=h.replace(/((?:<tr>.*<\/tr>\s*)+)/g,'<table>$1</table>');
