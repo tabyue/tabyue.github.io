@@ -20,6 +20,7 @@
   - 同步脚本：`tools/sync_learn_split.py`（幂等，无变化 0 写入）
   - **automation-5 修改 learn/*.json 后必须运行 `python tools/sync_learn_split.py` 再提交**，否则前端展示旧内容
   - 前端首次进模块只下载 _index.json 显示骨架；切 tab 到第 N 节时才 fetch sec-NN.json 并 renderMd
+  - **renderMd Markdown 链接 + SPA 跳转**（2026-05-11 修复）：renderMd 中 step 6.5 处理 `[txt](url)`——内部 `/xxx` 路径转为 `<a href="..." data-spa="1">` 走 applyRoute；外部 `http(s)://` / `mailto:` 转为 `<a target="_blank">`。全局 document click 拦截器在 popstate 注册附近（line ~1006），捕获 `a[data-spa="1"]` 调用 `history.pushState` + `applyRoute(href)` 不重载页面。**之前修复前 markdown 链接全部点不动**，凡是想做模块间跳转都要用这套语法。
 - **SEO 基础设施**：
   - `sitemap.xml`（10 板块 + 30 模块 + 402 章节 = 442 URL，由 `tools/build_sitemap.py` 生成）
   - `robots.txt` 指向 sitemap，禁止爬取 `/data/`、`/tools/`、`/404.html`
