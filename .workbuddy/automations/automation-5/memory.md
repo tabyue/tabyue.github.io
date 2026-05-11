@@ -1,5 +1,16 @@
 # automation-5 执行历史
 
+## 2026-05-11 14:35（中午轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 新闻 +3 (n268-n270)：① **维他动力 Vbot Pre-A 近 5 亿融资创消费级具身赛道纪录**（余轶南清华系前地平线副总裁，超能机器狗 5/8 量产 500 台 / 12988 元 / 端侧 128TOPS / 8 月人形原型机首亮相）；② **鹿明机器人 A1+A2 累计近 10 亿融资三菱电机两轮领投**（清华系喻超 / Fastumi 真机数据 1 万小时 / 中远海运 + 商汤 + 复星合作）；③ **OpenAI Richmond 海滨 20.2 万 sqft 机器人工厂 + 14000 安培电力**（5 年沉寂后重启，硅谷 Mountain View 45 万 sqft 同时启用，三角硬件版图 145 万 sqft 总面积）
+- 论文 +2 (p145-p146)：**LaST-R1（CUHK + 北大 + 至简动力）**机器人模型「R1 时刻」LAPO 端到端 RL + 自适应潜在 CoT，LIBERO 99.9% SOTA / 真机 +41pp；**AAC（NUS + SZTU）**推理时动作熵自适应 chunk size，真机 +15pp，覆盖 GR00T N1.5 / π₀ / SmolVLA；全 keyInsights+impact+detail 配套
+- 开源 +1 (os099)：CHEN-H01/LaST-R1 (MIT, 37 stars) — 首个国产 veRL 框架上跑通的 VLA + 长链推理 + RL 后训练开源项目
+- 招聘 +2 (j123 鹿明机器人 6 大方向 / j124 维他动力 6 大方向)
+- 学习深化：imitation-learning +sec-13「模仿学习的 R1 时刻：从纯 BC 到 RL 后训练 + 自适应推理（LaST-R1 + Q2RL + AAC 三件套深度精读）」（含 LAPO 三阶段 / Q-Gating 单调改进定理 / AAC 决策规则代码 / 三件套部署路径，模块从 82K → 92K chars 脱离最薄区）
+- 0 dups（news 242 / papers 128 / os 88 / jobs 116），所有 JSON 校验通过
+- sync_learn_split (2 files updated) + build_sitemap (432 chapters) 已跑
+- commit 2763552 已 push origin/main（push 在响应末尾）
+
 ## 2026-05-11 07:05（凌晨轮）
 - 投稿箱：无开放 Issue
 - 新闻 +3 (n265-n267)：港科大 StarVLA 乐高式 VLA 底座开源（GitHub 2.3k star，VLA 的 PyTorch 时刻）/ 波士顿动力 Atlas 量产版体操 demo（手撑倒立 + L-sit + 56 DoF / 50kg 单臂 / 2028 现代工厂商用）/ 拓斯达「小拓」获评全国工人先锋号（国内首台注塑产线落地人形 + ±0.05mm + 21 DoF + GLM-4.5 + 3352 TOPS）
