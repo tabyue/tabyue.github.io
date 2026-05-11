@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-11T16:55",
+  "lastUpdated": "2026-05-11T17:25",
   "categories": [
     {
       "id": "all",
@@ -1718,6 +1718,476 @@
         {
           "name": "CES 2026 海外业务报道",
           "url": "http://www.cnr.cn/tech/techph/20260113/t20260113_527492161.shtml"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "galbot-g1",
+      "name": "Galbot G1",
+      "manufacturer": "银河通用 (Galbot)",
+      "category": "humanoid",
+      "tags": [
+        "轮式双臂",
+        "GraspVLA",
+        "药店首单",
+        "零售落地",
+        "可折叠"
+      ],
+      "price": "B 端 / 已落地全国 100+ 药店",
+      "overview": "银河通用 2024/6 推出的首代具身大模型机器人，**世界领先的轮式双臂机器人**。**核心规格**：身高 1.45-1.73m（**6 档可调，0.8-2.4m 工作空间**）/ 臂展 160-190cm / 体重 80-85kg / 单臂负载 5kg / 双臂合计 10kg / **续航 10 小时** / IP54 工业防护 / 自主返回充电。**两大杀手级落地**：① **2026/3 全国首个人形机器人药品零售场景**——海淀智慧药房获得药品经营许可证；② 北京 / 多省零售商超 / 便利店 / 制造业部署。**核心 VLA**：自研 GraspVLA 大模型（2025/1 发布），十亿级操作数据预训练，Open6DOR 仿真平台 2500 项任务检测，**六自由度操作精度 < 0.5mm**。**关键设计**：轮式底盘 + 双臂 + 可折叠躯体（高度从 173cm 降到 108cm，解决货架间作业）。",
+      "specs": {
+        "高度档位": "145 / 150 / 155 / 173 / 173 / 173 cm（可折叠 0.8-2.4m）",
+        "臂展": "160 / 170 / 180 / 190 / 190 / 190 cm",
+        "体重": "80-85 kg",
+        "底盘": "360° 全向轮式",
+        "负载": "单臂 5kg / 双臂 10kg",
+        "续航": "10 小时",
+        "防护": "IP54",
+        "操作精度": "< 0.5 mm（六自由度）",
+        "VLA": "GraspVLA + 十亿级具身大模型"
+      },
+      "bom": [
+        {
+          "part": "整机",
+          "model": "Galbot G1",
+          "specs": "轮式双臂可折叠 / IP54",
+          "qty": "1",
+          "price": "B 端",
+          "link": "https://www.galbot.com/",
+          "driver": "银河通用 SDK"
+        },
+        {
+          "part": "AI 大脑",
+          "model": "GraspVLA + 端到端具身大模型",
+          "specs": "Open6DOR 2500 任务训练",
+          "qty": "1",
+          "price": "随整机",
+          "link": "https://www.galbot.com/",
+          "driver": "银河通用 SDK"
+        },
+        {
+          "part": "左臂末端",
+          "model": "吸盘模块",
+          "specs": "适合软包装 / 不规则物体",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "银河 SDK"
+        },
+        {
+          "part": "右臂末端",
+          "model": "自适应夹爪",
+          "specs": "硬物 + 易碎品",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "银河 SDK"
+        },
+        {
+          "part": "感知系统",
+          "model": "头双目 + 腕深度 + 躯干 RGB + 3D LiDAR + 超声 + 六维力 + IMU",
+          "specs": "多模态感知融合",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "银河 SDK"
+        },
+        {
+          "part": "底盘",
+          "model": "360° 全向轮式",
+          "specs": "平面高速移动 + 自主导航",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "银河 ROS2 stack"
+        }
+      ],
+      "docs": [
+        {
+          "name": "Galbot 官网",
+          "url": "https://www.galbot.com/"
+        },
+        {
+          "name": "Galbot G1 百度百科",
+          "url": "https://baike.baidu.com/item/%E9%93%B6%E6%B2%B3%E9%80%9A%E7%94%A8%E6%9C%BA%E5%99%A8%E4%BA%BAGalbot%20G1/67640771"
+        },
+        {
+          "name": "Galbot G1 商业化分析",
+          "url": "https://www.botxun.com/nd.jsp?id=76"
+        },
+        {
+          "name": "Galbot G1 快速使用手册",
+          "url": "https://robotsj.cn/shiyongshouce/1654.html"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "tien-kung-3",
+      "name": "具身天工 3.0",
+      "manufacturer": "北京人形机器人创新中心 (X-Humanoid)",
+      "category": "humanoid",
+      "tags": [
+        "国家队",
+        "全开源",
+        "慧思开物",
+        "触物交互",
+        "毫米精度"
+      ],
+      "price": "小批量交付 + 行业开源",
+      "overview": "北京人形机器人创新中心 2026/2/10 发布的新一代通用机器人平台。**核心规格**：身高 169cm / 体重 62kg / **43 全身自由度** / 业内首个**触物交互式全身高动态运动控制**全尺寸人形 / 毫米级操作精度。**核心配套**：自研**慧思开物（Wise KaiWu）通用具身智能平台**——大脑（世界模型 + VLM 决策）+ 小脑（VLA + 全自主导航执行）协同。**开源大杀器**：① 整机 URDF + 软件开发文档 + 结构设计文档**全部开源**；② 运控框架开源；③ VLA 彩训部署框架开源 → 是「人形机器人界的 PyTorch」。**亮相**：2026/3 巴塞罗那 MWC 首度参展、2026/4 亦庄勇士挑战赛冠军、2026/4 领益智造北京亦庄超级工厂量产下线。**算力**：x86 + NVIDIA Thor（选配）。**演进**：天工 1.0 LITE（2024/4，全球首个纯电驱拟人奔跑全尺寸） → 1.1 PRO/1.2 MAX（42 DoF） → 2.0（首个复杂地形自适应行走中国机器人） → **3.0（业内首个触物交互全身高动态控制）**。",
+      "specs": {
+        "身高": "169 cm",
+        "体重": "62 kg",
+        "自由度": "43 DoF",
+        "操作精度": "毫米级",
+        "算力平台": "x86 + NVIDIA Thor (选配)",
+        "AI 平台": "慧思开物（Wise KaiWu）",
+        "开放度": "整机 URDF + SDK + 运控框架 + VLA 部署全部开源",
+        "兼容协议": "ROS2 + MQTT + 端云协议"
+      },
+      "bom": [
+        {
+          "part": "整机",
+          "model": "具身天工 3.0",
+          "specs": "169cm / 62kg / 43 DoF",
+          "qty": "1",
+          "price": "小批量交付",
+          "link": "https://kfqgw.beijing.gov.cn/cxyzkfq/yzal/202602/t20260212_4511409.html",
+          "driver": "慧思开物平台 + 开源 SDK"
+        },
+        {
+          "part": "AI 大脑",
+          "model": "慧思开物（Wise KaiWu）通用具身智能平台",
+          "specs": "世界模型 + VLM 决策 + VLA 执行",
+          "qty": "1",
+          "price": "开源",
+          "link": "",
+          "driver": "开物平台 SDK"
+        },
+        {
+          "part": "高扭矩一体化关节",
+          "model": "北京具身自研一体化关节",
+          "specs": "崎岖地形稳定性 + 强爆发力",
+          "qty": "43",
+          "price": "非零售",
+          "link": "",
+          "driver": "开物平台 SDK"
+        },
+        {
+          "part": "主控计算机",
+          "model": "x86 PC + NVIDIA Jetson Thor 64GB（选配）",
+          "specs": "2070 TFLOPS FP4",
+          "qty": "1",
+          "price": "~¥3,500-12,000",
+          "link": "https://www.nvidia.com/",
+          "driver": "JetPack 7.x"
+        },
+        {
+          "part": "灵巧手",
+          "model": "多种型号选配可换",
+          "specs": "多种灵巧手选配",
+          "qty": "2",
+          "price": "选配",
+          "link": "",
+          "driver": "开物 SDK"
+        },
+        {
+          "part": "深度相机 + LiDAR + IMU",
+          "model": "丰富外部传感器（OCC 环视感知支持）",
+          "specs": "未来支持户外导航背包扩展",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "开物 SDK"
+        }
+      ],
+      "docs": [
+        {
+          "name": "北京具身官方发布稿",
+          "url": "https://kfqgw.beijing.gov.cn/cxyzkfq/yzal/202602/t20260212_4511409.html"
+        },
+        {
+          "name": "天工 3.0 百度百科",
+          "url": "https://baike.baidu.com/item/%E5%85%B7%E8%BA%AB%E5%A4%A9%E5%B7%A53.0/67369231"
+        },
+        {
+          "name": "天工 3.0 RobotHub",
+          "url": "https://www.robothub.app/zh/robots/tien-kung-30"
+        },
+        {
+          "name": "21CSP 中国基座深度报道",
+          "url": "https://News.21csp.com.cn/c3/202603/11429361.html"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "vbot-dog",
+      "name": "Vbot 大头超能机器狗",
+      "manufacturer": "维他动力 (Vbot)",
+      "category": "quadruped",
+      "tags": [
+        "消费级",
+        "12988 元",
+        "128 TOPS",
+        "5/8 量产",
+        "极简传感器"
+      ],
+      "price": "¥12,988",
+      "overview": "维他动力 2026/5/8 量产首发的消费级机器狗，是国内消费级具身赛道现象级产品。**核心规格**：定价 12,988 元 / 端侧 **128 TOPS AI 算力**（行业最高，对比同类 5-10 TOPS）/ 极简传感器（双目深度 + 1 激光雷达 + 4 麦克风）/ **594Wh 高能量密度电池续航 4-5h**（行业最高水平）。**量产节奏**：5/8 首批 500 台量产 → 5 月底 1500 台 → 6 月 2500 台/月。**资本背景**：2026/5/11 完成 Pre-A 轮**近 5 亿元**——消费级具身赛道历史最大单笔融资（东方嘉富 / 华泰紫金 / 复星锐正领投，今日资本徐新 + BV 百度风投继续加注）。**渠道**：上海长宁来福士 + 北京蓝色港湾直营体验店 + 京东 Mall + 山姆会员店 + 微信小程序 + 京东。**团队**：CEO 余轶南（前地平线副总裁）+ 首席结构 宋巍（前地平线软件平台总架构师）+ CMO 赵哲伦（前理想智驾产品总监）。**下一步**：8 月首次亮相全尺寸人形机器人原型机。",
+      "specs": {
+        "形态": "四足机器狗",
+        "定价": "¥12,988",
+        "AI 算力": "端侧 128 TOPS（行业最高）",
+        "续航": "4-5 小时（594Wh 电池）",
+        "传感器": "双目深度相机 + 1× 激光雷达 + 4× 麦克风",
+        "量产节奏": "500 台 (5/8) → 1500 (5/31) → 2500/月 (6 月)"
+      },
+      "bom": [
+        {
+          "part": "整机",
+          "model": "Vbot 大头超能机器狗",
+          "specs": "四足 + 极简传感器 + 128 TOPS",
+          "qty": "1",
+          "price": "¥12,988",
+          "link": "https://www.bianews.com/news/details?id=237643",
+          "driver": "Vbot SDK + 微信小程序"
+        },
+        {
+          "part": "端侧 AI 算力",
+          "model": "Horizon J6 / Thor 类高算力 NPU",
+          "specs": "128 TOPS（行业最高量产）",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "维他自研推理栈"
+        },
+        {
+          "part": "深度相机",
+          "model": "双目深度",
+          "specs": "极简方案，第一性原理设计",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "Vbot SDK"
+        },
+        {
+          "part": "激光雷达",
+          "model": "单线/多线 LiDAR",
+          "specs": "辅助 SLAM",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "Vbot SDK"
+        },
+        {
+          "part": "麦克风阵列",
+          "model": "4 麦阵列",
+          "specs": "语音交互 + 声源定位",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "Vbot SDK"
+        },
+        {
+          "part": "电池",
+          "model": "594Wh 高能量密度锂电池",
+          "specs": "续航 4-5h（行业最高）",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "BMS 集成"
+        }
+      ],
+      "docs": [
+        {
+          "name": "维他动力 Pre-A 5 亿融资报道",
+          "url": "https://www.stcn.com/article/detail/3902691.html"
+        },
+        {
+          "name": "余轶南专访（量产 5 个月路径）",
+          "url": "https://news.qq.com/rain/a/20260511A03ARY00?adChannelId=tech"
+        },
+        {
+          "name": "凤凰网 5/11 深度采访",
+          "url": "https://www.bianews.com/news/details?id=237643"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "figure-03",
+      "name": "Figure 03",
+      "manufacturer": "Figure AI",
+      "category": "humanoid",
+      "tags": [
+        "海外旗舰",
+        "BotQ 工厂",
+        "Helix-02",
+        "时产 1 台",
+        "S0 视觉"
+      ],
+      "price": "B 端商业部署",
+      "overview": "Figure AI 第三代人形机器人，2026 年量产里程碑产品。**关键节点**：① 2026/3 BotQ 智造工厂启用——**时产 1 台（24× 提速）+ S0 视觉融合楼梯零样本**；② 2026/5 **Helix-02 全球首个「单一神经网络多人形协作」**——双机器人铺床 demo 震撼业界；③ 工业产线 + 家居场景双线推进。**核心特点**：① 优雅的工业设计（铝合金外壳 + 全身一体化）；② Helix VLA 大模型自研 + 单网络控多机；③ 独立电池快换设计；④ Brett Adcock CEO 路线图：2-3 年部署 10 万台。**对标**：与 Atlas / Optimus 形成北美三强。",
+      "specs": {
+        "身高": "约 1.7 m",
+        "体重": "约 60 kg",
+        "AI 大脑": "Helix VLA + Helix-02 多人形协同",
+        "量产工厂": "BotQ（时产 1 台）",
+        "对标": "Atlas / Optimus / 1X NEO"
+      },
+      "bom": [
+        {
+          "part": "整机",
+          "model": "Figure 03",
+          "specs": "全尺寸双足 + 工业设计",
+          "qty": "1",
+          "price": "B 端",
+          "link": "https://www.figure.ai/",
+          "driver": "Figure 自研全栈"
+        },
+        {
+          "part": "AI 大脑",
+          "model": "Helix VLA + Helix-02 多人形协作",
+          "specs": "单一神经网络控多机",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "Figure SDK"
+        },
+        {
+          "part": "S0 视觉系统",
+          "model": "Figure 自研 S0",
+          "specs": "楼梯 / 复杂地形零样本通过",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "Figure SDK"
+        },
+        {
+          "part": "全身关节模组",
+          "model": "Figure 自研 + BotQ 工厂量产",
+          "specs": "时产 1 台量产体系",
+          "qty": "30+",
+          "price": "非零售",
+          "link": "",
+          "driver": "Figure SDK"
+        },
+        {
+          "part": "可换电池",
+          "model": "Figure 独立电池",
+          "specs": "快换设计",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "Figure 充电桩"
+        }
+      ],
+      "docs": [
+        {
+          "name": "Figure AI 官网",
+          "url": "https://www.figure.ai/"
+        },
+        {
+          "name": "Helix-02 多人形协作发布",
+          "url": "https://www.figure.ai/news/helix-02"
+        },
+        {
+          "name": "BotQ 工厂量产报道",
+          "url": "https://www.figure.ai/news/botq"
+        }
+      ],
+      "addedDate": "2026-05-11"
+    },
+    {
+      "id": "atlas-prod",
+      "name": "Atlas 全电动量产版",
+      "manufacturer": "Boston Dynamics + Hyundai",
+      "category": "humanoid",
+      "tags": [
+        "56 DoF",
+        "工业级",
+        "IP67",
+        "DeepMind 合作",
+        "现代汽车"
+      ],
+      "price": "$30 万 / 台 (规模化目标 2030 年)",
+      "overview": "波士顿动力 + 现代汽车 + 谷歌 DeepMind 联合打造的工业级人形机器人量产版。**核心规格**：身高 **1.9m** / 臂展 **2.3m** / **56 DoF**（大部分关节支持 360° 旋转）/ 最大负载 **50 kg** / **IP67 防水防尘** / 工作温度 -20℃ ~ 40℃ / 双电池热插拔续航 4h（3 分钟换电）。**关键里程碑**：① 2026/1 CES 正式宣布量产；② 首批交付现代汽车（机器人元工厂）+ 谷歌 DeepMind；③ 2028 进驻现代佐治亚 Metaplant 工厂做零部件排序；④ 2030 扩展到复杂组装，年产 3 万台、单台成本 80 万 → 30 万美元；⑤ 2026/5 **Hyundai 量产版体操 demo**（手撑倒立 + L-sit + 56 DoF / 50kg 单臂 / 2028 现代工厂商用）。**两大杀器**：① 全电动驱动（摒弃液压）+ 铝钛合金；② 与 Google DeepMind 合作把 AI 基础模型与新一代机器人结合。",
+      "specs": {
+        "身高": "1.9 m",
+        "臂展": "2.3 m",
+        "自由度": "56 DoF（大部分支持 360° 旋转）",
+        "最大负载": "50 kg",
+        "防护等级": "IP67",
+        "工作温度": "-20℃ ~ 40℃",
+        "电池": "双电池热插拔，3 分钟换电，续航 4h",
+        "AI 合作": "Google DeepMind"
+      },
+      "bom": [
+        {
+          "part": "整机",
+          "model": "Atlas 全电动量产版",
+          "specs": "1.9m / 56 DoF / IP67 / 50kg 负载",
+          "qty": "1",
+          "price": "目标 $30 万 (2030)",
+          "link": "https://bostondynamics.com/atlas/",
+          "driver": "BD 自研 + DeepMind AI 模型"
+        },
+        {
+          "part": "AI 大脑",
+          "model": "Boston Dynamics + Google DeepMind 联合 AI 基础模型",
+          "specs": "下一代机器人基础模型",
+          "qty": "1",
+          "price": "随整机",
+          "link": "https://deepmind.google/",
+          "driver": "BD/DeepMind SDK"
+        },
+        {
+          "part": "全身电动关节",
+          "model": "BD 全电动驱动 (摒弃液压)",
+          "specs": "铝钛合金 + 360° 旋转",
+          "qty": "56",
+          "price": "非零售",
+          "link": "",
+          "driver": "BD SDK"
+        },
+        {
+          "part": "热插拔电池",
+          "model": "BD 双电池系统",
+          "specs": "3 分钟换电 + 4h 续航",
+          "qty": "2",
+          "price": "随整机",
+          "link": "",
+          "driver": "BD 充电系统"
+        },
+        {
+          "part": "工业防护壳",
+          "model": "IP67 工业级",
+          "specs": "可冲洗 / 喷涂 / -20℃-40℃",
+          "qty": "1",
+          "price": "随整机",
+          "link": "",
+          "driver": "标准工业接口"
+        }
+      ],
+      "docs": [
+        {
+          "name": "Boston Dynamics Atlas 官页",
+          "url": "https://bostondynamics.com/atlas/"
+        },
+        {
+          "name": "OSChina Atlas 量产报道",
+          "url": "https://www.oschina.net/news/394533"
+        },
+        {
+          "name": "Atlas vs Optimus 对决分析",
+          "url": "https://makerpro.cc/?p=1563423"
+        },
+        {
+          "name": "美国人形机器人产业分析",
+          "url": "https://news.qq.com/rain/a/20260330A04HB100"
         }
       ],
       "addedDate": "2026-05-11"
