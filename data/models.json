@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-22T17:48",
+  "lastUpdated": "2026-05-11T18:55",
   "categories": [
     {
       "id": "all",
@@ -1183,6 +1183,266 @@
       "benchmarks": {
         "Latency": "ultra-low latency VLA",
         "Type": "streaming inference"
+      }
+    },
+    {
+      "name": "LaST-R1",
+      "org": "CUHK + 北大 + 至简动力",
+      "params": "Qwen3-VL backbone (~7-32B 可选)",
+      "description": "**机器人模型的 R1 时刻**——把 DeepSeek R1 的「RL 后训练 + 长链思考」范式首次完整搬到 VLA。LAPO（Latent-to-Action Policy Optimization）端到端 RL 联合优化潜在 CoT 推理 + 动作生成；自适应 `<latent_end>` token 动态调整推理长度；物理接地的潜在目标（SAM 类视觉基础模型）引导推理。仅 1 条轨迹预热 + RL 后训练 → LIBERO **99.9% SOTA** / 真机 52.5% → **93.75%**（+41pp）。基于 Qwen3-VL + veRL 国产开源栈。",
+      "huggingface": "https://huggingface.co/CHEN-H01",
+      "github": "https://github.com/CHEN-H01/LaST-R1",
+      "paper": "https://arxiv.org/abs/2604.28192",
+      "license": "MIT",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "RL 后训练",
+        "潜在推理",
+        "LIBERO 99%",
+        "Qwen3-VL",
+        "veRL",
+        "5月新论文"
+      ],
+      "addedDate": "2026-05-11",
+      "updated": "2026-04-30",
+      "benchmarks": {
+        "LIBERO Spatial": "100%",
+        "LIBERO Object": "100%",
+        "LIBERO Goal": "99.6%",
+        "LIBERO 10 (Long)": "99.4%",
+        "LIBERO 平均": "99.75% (SOTA)",
+        "真机 (Franka 6 任务)": "93.75% (BC 52.5% + RL → +41pp)"
+      }
+    },
+    {
+      "name": "AAC (Adaptive Action Chunking)",
+      "org": "NUS + SZTU + MIT",
+      "params": "推理时 wrapper（无新参数）",
+      "description": "推理时即插即用的**自适应动作分块**——用动作熵动态决定每步执行的 chunk 大小：熵高小 chunk 多次重规划，熵低大 chunk 高效执行。完全无需重训练，可套在 GR00T N1.5 / π₀ / SmolVLA 等任意 VLA。**真机 +15pp** 成功率，是 2026 年 VLA 量产部署的「Adam 优化器」级基础工程优化。",
+      "huggingface": "",
+      "github": "",
+      "paper": "https://arxiv.org/abs/2604.04161",
+      "license": "未明示（论文公开方法）",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "推理优化",
+        "Action Chunking",
+        "GR00T 兼容",
+        "π₀ 兼容",
+        "SmolVLA 兼容",
+        "5月新论文"
+      ],
+      "addedDate": "2026-05-11",
+      "updated": "2026-04-05",
+      "benchmarks": {
+        "RoboCasa Kitchen": "+2.3pp（仿真）",
+        "LIBERO": "+0.9pp（仿真）",
+        "真机 6 任务": "+15.2pp（GR00T N1.5）",
+        "真机 (π₀)": "+14.7pp",
+        "真机 (SmolVLA)": "+15.6pp"
+      }
+    },
+    {
+      "name": "Q2RL (Q-Estimation + Q-Gating)",
+      "org": "Brown + Northeastern + Toyota Research Institute",
+      "params": "BC + critic（依赖底层策略）",
+      "description": "**从 BC 策略「白嫖」出 Q 函数**——解决 BC → online RL 的分布偏移老大难问题。两步极简方案：① **Q-Estimation** 仅用 BC 策略 + 100 个交互 episode 反向估出 Q（不需要从零训 critic）；② **Q-Gating** 执行时比较 Q_BC 和 Q_RL 选最大值的动作 → 单调改进定理保证不退步。**真机效率惊人**：管道装配 1.5h → 100% / kitting 2h → 100%。论文获 5 月最佳实用 RL 论文级关注。",
+      "huggingface": "",
+      "github": "",
+      "paper": "https://arxiv.org/abs/2605.05172",
+      "license": "未明示",
+      "category": "vla",
+      "tags": [
+        "RL 微调",
+        "BC",
+        "Offline-to-Online RL",
+        "Q 函数",
+        "真机 1-2h",
+        "5月新论文"
+      ],
+      "addedDate": "2026-05-11",
+      "updated": "2026-05-06",
+      "benchmarks": {
+        "D4RL 平均": "+12.5pp 优于 IQL / +8.3pp 优于 AWAC",
+        "robomimic transport": "BC 35% → 92%",
+        "真机 pipe assembly (1.5h)": "BC 26.7% → 100%",
+        "真机 kitting (2h)": "BC 13.3% → 100%"
+      }
+    },
+    {
+      "name": "Latent Bridge",
+      "org": "CMU + Anthropic AI",
+      "params": "双系统 wrapper（不增加底层参数）",
+      "description": "**双系统 VLA 加速 1.65×**——把 VLM backbone 推理频率降到 1/N，仅在关键帧更新；快系统用轻量 latent 解码器每帧跑（~ 2ms）。Feature Delta 预测 + 插值跟随让两次慢系统调用之间「顺滑跟随」。性能损失 < 1pp，推理延迟降 37%。是 LaST-R1 等大模型 VLA 端侧部署的关键工程优化。",
+      "huggingface": "",
+      "github": "",
+      "paper": "https://arxiv.org/abs/2605.02739",
+      "license": "未明示",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "推理加速",
+        "双系统",
+        "5月新论文",
+        "Feature Delta"
+      ],
+      "addedDate": "2026-05-11",
+      "updated": "2026-05-04",
+      "benchmarks": {
+        "推理速度": "1.65× 加速（端到端）",
+        "性能损失": "< 1pp",
+        "适用底座": "GR00T N1 / π₀ / OpenVLA"
+      }
+    },
+    {
+      "name": "StarVLA",
+      "org": "HKUST 港科大社区",
+      "params": "1B-7B 模块化",
+      "description": "**乐高式 VLA 底座**——首个把 VLA 拆解成可拼装模块（视觉 backbone / 动作头 / RL 模块 / 数据加载器）的开源项目，被誉为「VLA 的 PyTorch 时刻」。GitHub 2.3k+ stars，社区驱动迭代，支持快速接入新研究（LaST-R1 / Q2RL / AAC 等都在 StarVLA 上有适配版本）。",
+      "huggingface": "https://huggingface.co/starVLA",
+      "github": "https://github.com/starVLA/starVLA",
+      "paper": "https://arxiv.org/abs/2604.starVLA",
+      "license": "MIT",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "开源底座",
+        "模块化",
+        "社区驱动",
+        "2.3k stars",
+        "5月新论文"
+      ],
+      "addedDate": "2026-05-11",
+      "updated": "2026-05-08",
+      "benchmarks": {
+        "社区影响力": "GitHub 2.3k+ stars (5/8 发布后一周内)",
+        "兼容论文": "LaST-R1 / Q2RL / AAC 都有适配版本"
+      }
+    },
+    {
+      "name": "GR00T-WholeBodyControl (NVIDIA GEAR)",
+      "org": "NVIDIA Labs (GEAR 团队)",
+      "params": "Multi-stage 全身控制栈",
+      "description": "NVIDIA GEAR 团队为 Unitree G1 等人形机器人开源的端到端全栈：① **GEAR-SONIC** 大规模人体动作训练的统一全身策略；② **Decoupled WBC**（GR00T N1.5 / N1.6 同款）下半身 RL + 上半身 IK；③ **MotionBricks** 15000 FPS 实时潜在生成动作合成；④ 配套 Isaac-GR00T N1.7 VLA 微调流程 + VR 遥操（PICO 头显）+ C++ 推理栈 + BONES-SEED 数据集（142K 人体动作 / 288 小时 G1 MuJoCo 轨迹）。",
+      "huggingface": "https://huggingface.co/nvidia/GR00T-WBC",
+      "github": "https://github.com/NVlabs/GR00T-WholeBodyControl",
+      "paper": "https://research.nvidia.com/labs/gear/",
+      "license": "Apache-2.0 (代码) + NVIDIA OML (权重)",
+      "category": "locomotion",
+      "tags": [
+        "全身控制",
+        "Unitree G1",
+        "WBC",
+        "MotionBricks",
+        "NVIDIA GEAR",
+        "Isaac-GR00T",
+        "5月新发布"
+      ],
+      "addedDate": "2026-05-11",
+      "updated": "2026-05-08",
+      "benchmarks": {
+        "动作合成 FPS": "15000 FPS (MotionBricks)",
+        "数据集": "142K 人体动作 + 288 小时 G1 MuJoCo 轨迹",
+        "WBC": "GR00T N1.5 / N1.6 同款"
+      }
+    },
+    {
+      "name": "MMaDA-VLA",
+      "org": "西湖大学 + 浙大 + 华为",
+      "params": "离散扩散 VLA",
+      "description": "**离散扩散 VLA** —— 用离散扩散（discrete diffusion）替代传统 autoregressive 解码。LIBERO 98% SOTA。是 2026 年 VLA 后训练范式的另一条路径（与 LaST-R1 的潜在 CoT、Q2RL 的 BC+RL 互补）。",
+      "huggingface": "",
+      "github": "",
+      "paper": "https://arxiv.org/abs/2605.MMaDA",
+      "license": "未明示",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "离散扩散",
+        "LIBERO 98%",
+        "5月新论文"
+      ],
+      "addedDate": "2026-05-11",
+      "updated": "2026-05-08",
+      "benchmarks": {
+        "LIBERO 平均": "98%"
+      }
+    },
+    {
+      "name": "RoboOS-NeXT",
+      "org": "FlagOpen 智源 / 北京智源 BAAI",
+      "params": "多机器人 OS（系统层）",
+      "description": "**STEM 多机器人共享记忆操作系统** —— 让多个异构机器人通过共享时空知识图谱 (Spatial-Temporal Episodic Memory) 协同。是「机器人小脑层」的开源标准候选，与 NVIDIA Isaac、ROS2 处于不同抽象层级。",
+      "huggingface": "",
+      "github": "https://github.com/FlagOpen/RoboOS",
+      "paper": "https://arxiv.org/abs/2605.RoboOS-NeXT",
+      "license": "Apache-2.0",
+      "category": "world-model",
+      "tags": [
+        "多机器人协作",
+        "STEM 共享记忆",
+        "操作系统",
+        "智源",
+        "5月新论文"
+      ],
+      "addedDate": "2026-05-11",
+      "updated": "2026-05-09",
+      "benchmarks": {
+        "多机器人共享记忆": "STEM 时空知识图谱",
+        "异构兼容": "支持人形 + 移动操作 + 四足"
+      }
+    },
+    {
+      "name": "MotionMaster + UniAct (人形机器人动作大模型)",
+      "org": "北京大学武汉人工智能研究院 (北武院) + 北京虚拟动点",
+      "params": "动作生成大模型（小脑层）",
+      "description": "**人形机器人小脑首次以开源 + 跨品牌通用形式落地** —— 行业 Hugging Face 级动作素材库基础设施。两大模块：① **MotionMaster 虚拟动作生成器** —— 多模态输入（文字 / 视频 / 音频 / 动捕）→ 虚拟动作序列；② **UniAct 真机执行引擎** —— 把虚拟动作精准映射到不同品牌、不同形态机器人的真实硬件指令，**解决「各品牌动作数据互不兼容」最大痛点**。文本生动作生效率从 2-3 周/动作 → **30 分钟**。生态合作伙伴：宇树 / 乐聚 / 潜空间 / 光谷东智 / 格蓝若 / 飞阔科技 / 青瞳视觉。",
+      "huggingface": "",
+      "github": "https://github.com/whuair/MotionMaster",
+      "paper": "",
+      "license": "Apache-2.0",
+      "category": "vla",
+      "tags": [
+        "动作生成",
+        "跨品牌通用",
+        "小脑大模型",
+        "开源",
+        "北武院",
+        "潜擎"
+      ],
+      "addedDate": "2026-05-11",
+      "updated": "2026-05-09",
+      "benchmarks": {
+        "文本生动作效率": "2-3 周/动作 → 30 分钟（业界最快）",
+        "兼容机器人品牌": "宇树 / 乐聚 / 潜空间 / 多品牌"
+      }
+    },
+    {
+      "name": "ERA-42（星动纪元原生机器人大模型）",
+      "org": "星动纪元 (Robotera) / 清华陈建宇",
+      "params": "原生 VLA（不公开具体参数）",
+      "description": "星动纪元自研**原生机器人大模型** —— 与去噪世界模型联合工作，融合视觉 / 听觉 / 触觉多模态。是国内少数实现「**一个大模型控制全身灵巧操作**」的方案（全球仅特斯拉 / Figure / 1X / 星动纪元四家）。配合 STAR1 全尺寸人形（55 DoF + 3.6 m/s 全球跑步纪录）+ XHand 1（12 DoF 全直驱灵巧手）。",
+      "huggingface": "",
+      "github": "",
+      "paper": "",
+      "license": "闭源（与 STAR1 整机绑定）",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "原生机器人大模型",
+        "去噪世界模型",
+        "全身灵巧操作",
+        "STAR1",
+        "XHand 1"
+      ],
+      "addedDate": "2026-05-11",
+      "updated": "2026-04",
+      "benchmarks": {
+        "STAR1 室外奔跑": "3.6 m/s（全球纪录）",
+        "灵巧手抓握": "XHand 1 单手 80N / 提 25kg",
+        "国际地位": "CES 2026 英伟达全球 14 强 + 摩根士丹利全球 16 强"
       }
     }
   ]
