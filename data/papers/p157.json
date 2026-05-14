@@ -1,0 +1,42 @@
+{
+  "id": "p157",
+  "title": "OneWM-VLA: One Token Per Frame — Reconsidering Visual Bandwidth in World Models for VLA Policy",
+  "extendedAbstract": "VLA 模型 (Vision-Language-Action) 越来越依赖辅助世界模块来在长程任务上做规划。但「世界模型应该如何在已预训练的 VLA 上参数化」始终是开放问题。当前世界模型增强 VLA 的设计普遍把每帧视觉流以「高视觉带宽」（数百 patch tokens）传给世界模块，并把世界模型的 rollout 当作动作预测的副产品；在「冻结主干 + 受限适配预算」的工程约束下，这两个选择都未被充分考察：每帧表示是否过度冗余？latent 与 action 的耦合是否过度松散？OneWM-VLA 提出：(1) 用 Adaptive Attention Pooling 把每个视角压缩成「**每帧 1 个语义 token**」——任务条件 query 决定该 token 的语义焦点；(2) 用**单一 flow matching 目标**联合产生「latent 视觉流 + 动作轨迹」——彻底取消独立的 world-model decoder，把世界建模变成动作预测的「同一序列」一起做 denoising。实证：(a) MetaWorld MT50 47.9% → 61.3%；(b) LIBERO-Long 85.2% (π₀) → 95.6%；(c) 真机 Piper 单臂可形变长程任务 Fold Cloth 20% → 60%。所有结果均在 π₀ 2B backbone 冻结、仅训练 14.71M LoRA 参数的设定下取得，证明「单 token 世界模型 + LoRA 紧凑适配」的范式在算力受限场景具有 dominating 优势。",
+  "keyInsights": [
+    "**视觉带宽不是上限**：单 token vs 数百 patch token 在长程任务无明显差距，反而单 token 减少了「视觉幻觉」噪声。低带宽强制模型学到任务相关的紧凑语义",
+    "**Adaptive Attention Pooling**：每帧的语义 token 由 task-conditioned query 经 attention 在 patch grid 上加权得到——同一帧在「拿杯子」vs「叠衣服」任务下聚焦区域完全不同，远比固定 CLS token 灵活",
+    "**单一 flow matching 目标**：把 latent 视觉序列 + 动作 trajectory concatenate 成统一 token 流，用一个 velocity field 网络做 denoising——参数量减半，端到端梯度更稳",
+    "**LoRA-only 适配**：π₀ 2B 主干完全冻结，仅在 attention 投影矩阵 W_q/W_v 和 FFN 上插 rank=8 LoRA → 14.71M 可训练参数（0.7% of 2B）",
+    "**真机 deformable 任务 +200%**：折叠衣物等需要预测物体状态的任务，单 token 反而稳定——因为高带宽时世界模型容易跟踪冗余像素细节，而低带宽强制学到语义级动力学"
+  ],
+  "impact": "OneWM-VLA 是 2026 年 VLA 世界模型工程领域最具反直觉的论文：把视觉带宽降到 1/256 仍保 SOTA，意味着「视觉细节」不是 VLA 长程能力的瓶颈，「时序-动作耦合」才是。其 LoRA 14.71M 适配 π₀ 2B 主干的工程范式，对国内中小机器人厂商意义巨大——不需要重训大型 VLA，2-3 张 4090 就能让 π₀ 在私有任务上能力翻 3 倍。预计 6-8 月会出现一批基于 π₀/π0.5 + 单 token 世界模型 + 任务专属 LoRA 的开源项目。",
+  "methodology": {
+    "overview": "OneWM-VLA = π₀ 2B 冻结主干 + 每帧单视觉 token + 单一 flow matching 联合目标 + LoRA 适配",
+    "components": [
+      "Adaptive Attention Pooling：q_t = MLP(task_emb_t)，z_t = Σ_i softmax(q_t·k_i) v_i —— 每帧输出 1 个 768d 语义 token",
+      "Latent Action Sequence：把 [z_1, z_2, ..., z_T, a_1, a_2, ..., a_H] concat 成统一 token 流，长度从原来 (T*256+H) 变成 (T+H)",
+      "Flow Matching 训练：用 velocity field v_θ(x_t, t) 学 token 流的 noise→data 映射，loss = E[||v_θ(x_t,t) - (x_1-x_0)||²]",
+      "LoRA 适配：在 π₀ 主干 attention W_q, W_v 与 FFN 上插 rank=8 LoRA → 14.71M 可训练参数；其余 2B 主干完全冻结",
+      "推理：从 N(0,1) 噪声出发，欧拉积分 50 步还原 latent 流 + action chunk，去除 latent 部分输出动作"
+    ]
+  },
+  "experiments": {
+    "benchmarks": [
+      "MetaWorld MT50（50 任务平均成功率）：π₀ 47.9% → OneWM-VLA 61.3% (+13.4pp)",
+      "LIBERO-Long（10 任务长程套件）：π₀ 85.2% → OneWM-VLA 95.6% (+10.4pp) — 接近 LIBERO-Spatial 的简单任务上限",
+      "真机 Piper 单臂 Fold Cloth：π₀ 20% → OneWM-VLA 60% (+200%)",
+      "训练成本：14.71M trainable params, 4×A100-80G, 24h 收敛，预算约 ¥800"
+    ],
+    "ablations": [
+      "Token 数 1 vs 4 vs 16 vs 256：1 token 95.6% / 4 token 95.4% / 16 token 95.0% / 256 token 94.5%（LIBERO-Long）— 单 token 反而更优",
+      "Pooling 方式：Adaptive Attention 95.6% / Mean Pooling 89.1% / CLS Token 91.3% / Max Pooling 87.4% — task-conditioned 必要",
+      "联合 vs 分离：单一 flow matching 95.6% / 双 decoder 91.2% — 联合训练 +4.4pp",
+      "LoRA rank：r=4 93.2% / r=8 95.6% / r=16 95.4% — r=8 是最优甜点"
+    ]
+  },
+  "reproduction": {
+    "data": "LIBERO-Long 公开数据集 + 自采 Fold Cloth 50 demo（每条 30s）",
+    "compute": "4×A100-80G, 24h 训练；推理在 1×4090 即可 30Hz 实时",
+    "code": "作者承诺 6 月开源 PyTorch 实现；目前 arxiv:2605.07931 已挂出 v2 版本，附伪代码"
+  }
+}

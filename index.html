@@ -193,6 +193,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 .de-card .de-meta a:hover{text-decoration:underline}
 .de-archive-toggle{display:inline-flex;align-items:center;gap:8px;font-size:.86rem;font-weight:600;color:var(--t2);padding:10px 16px;background:var(--bg3);border:1px solid var(--bd);border-radius:8px;cursor:pointer;transition:background .2s,border-color .2s,color .2s;user-select:none}
 .de-archive-toggle:hover{background:var(--accent-subtle);border-color:var(--p);color:var(--t1)}
+.de-archive-link{text-decoration:none}
+.de-archive-link:hover .de-arch-count{background:var(--p);color:#fff;border-color:var(--p)}
 .de-archive-toggle .de-arch-arrow{font-size:.7rem;color:var(--t3);transition:transform .2s}
 .de-archive-toggle.open .de-arch-arrow{transform:rotate(90deg)}
 .de-archive-toggle .de-arch-count{font-size:.72rem;font-family:var(--font-mono);background:var(--bg);color:var(--t3);padding:2px 8px;border-radius:50px;border:1px solid var(--bd)}
@@ -1028,6 +1030,10 @@ async function applyRoute(routeInput, opts){
         if(r.page==='learn'&&r.modId){
             await waitForLD();
             await openLearnModule(r.modId, null, {fromRouter:true, initialSec:r.secIdx||0});
+        }
+        // 每日英文归档独立页面
+        if(r.page==='daily-english'){
+            try{await renderDailyEnglishArchivePage()}catch(e){console.warn('de-arch render failed',e)}
         }
     }finally{
         _routerSuppress=false;
@@ -2571,7 +2577,6 @@ async function renderDailyEnglish(){
     const currentIds=new Set(DED.items.slice(0,6).map(it=>it.id));
     const past=archive.filter(it=>!currentIds.has(it.id));
     const archWrap=document.getElementById('dailyEnglishArchiveWrap');
-    const archGrid=document.getElementById('dailyEnglishArchive');
     const archCount=document.getElementById('deArchCount');
     if(past.length>0 && archWrap){
         archWrap.style.display='block';

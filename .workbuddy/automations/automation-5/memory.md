@@ -1,5 +1,17 @@
 # automation-5 执行历史
 
+## 2026-05-14 01:40（凌晨轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 启动时工作树有 5/13 03:18 并行实例残留（vla-models sec-15 OneWM-VLA / j136 智元香港 / daily-english + OneWM-VLA 条目 + index.html 每日英文归档页 / learning-path 同步），全部接手不丢弃
+- 我自己本轮新增：
+  - news +2 (n293-n294)：n293 英国 Humanoid 公司 2030 美股 IPO（CEO Artem Sokolov / 3.4 万台 HMND 01 Alpha 预订 / $24 亿营收 / 首个欧洲人形美股玩家）+ n294 港大+南科大+星尘机器人 FFDC 论文中文报道（科技行者 / 腾讯新闻）
+  - papers +1 (p155)：FFDC「When to Trust Imagination: Adaptive Action Execution for World Action Models」(HKU + SUSTech + Astribot 星尘机器人，arxiv:2605.06222 v2 / 5-7 投稿 / 5-9 v2)，自适应 chunk + future-reality verifier，RoboTwin 困难任务 +22.2pp / WAM 调用量 -69.1% / Astribot S1 真机 +35pp，含完整 keyInsights+impact+detail
+  - 修复历史重复：删除 p112（与 p154 / Touch Dreaming HTD 同 arxiv 2604.13015）
+- 严格四要素查重通过（FFDC arxiv 不与 p107 / p129 重复）
+- 0 dups（news 266 / papers 135 / os 89 / jobs 128），全部 JSON OK
+- sync_learn_split (1 file updated) + build_sitemap (456 chapters) 已跑
+- commit 2f2d52e 已 push origin/main
+
 ## 2026-05-14 22:17（晚间轮）
 - 投稿箱：无开放 Issue（gh issue list 返回 []）
 - prompt 注入的 current_time 是 5/12，但 `date` 显示真实时间 2026-05-14 22:17 GMT+8（缓存偏差）

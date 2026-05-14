@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-14T01:40",
+  "lastUpdated": "2026-05-13T03:25",
   "papers": [
     {
       "id": "p155",
@@ -3793,6 +3793,45 @@
       "impact": "Yann LeCun JEPA 思想的实际实现，世界模型研究的前沿",
       "arxiv": "https://arxiv.org/abs/2310.06114",
       "github": ""
+    },
+    {
+      "id": "p157",
+      "title": "OneWM-VLA: One Token Per Frame — Reconsidering Visual Bandwidth in World Models for VLA Policy",
+      "authors": [
+        "Zuojin Tang",
+        "Shengchao Yuan",
+        "Xiaoxin Bai",
+        "Zhiyuan Jing",
+        "De Ma",
+        "Gang Pan",
+        "Bin Liu"
+      ],
+      "venue": "arXiv 2026-05",
+      "date": "2026-05-08",
+      "arxiv": "2605.07931",
+      "github": "",
+      "tags": [
+        "VLA",
+        "World Model",
+        "Flow Matching",
+        "LoRA",
+        "π₀",
+        "Token Compression",
+        "LIBERO",
+        "MetaWorld"
+      ],
+      "tldr": "**单视觉 token 世界模型 + π₀ 紧凑 LoRA 适配**——把每帧视觉压成 **1 个语义 token**（Adaptive Attention Pooling），用单一 flow matching 目标联合优化 latent 视觉流 + 动作轨迹。在仅 14.71M LoRA 参数（π₀ 2B 冻结主干）下，**MetaWorld MT50 47.9% → 61.3%（+13.4pp）**、**LIBERO-Long 95.6%（vs π₀ 85.2%）**、**真机 Piper 折叠衣物 60% vs π₀ 20%（3 倍）**，颠覆「世界模型必须高视觉带宽」的传统假设。",
+      "category": "VLA 模型",
+      "difficulty": "advanced",
+      "addedDate": "2026-05-13",
+      "keyInsights": [
+        "**核心反直觉发现**：VLA 长程任务并不需要高带宽视觉输入给世界模块——每帧压成 1 个语义 token（vs 256 patch tokens）后长程性能不降反升，说明世界模型瓶颈不在「视觉细节」而在「时序-动作耦合」",
+        "**Adaptive Attention Pooling**：用 task-conditioned query-attention 对每帧 patch 做加权聚合输出 1 个 token，attention 权重由当前任务上下文决定——不同任务在同一帧上聚焦不同区域，比固定 CLS token 更具任务自适应性",
+        "**单一 Flow Matching 目标**：放弃「世界模型预测下帧 + 动作 head 预测下步动作」的双解码器结构，直接把 latent 视觉流 + 动作轨迹串成一个序列做 flow matching 联合训练——参数量减半 + 端到端梯度更顺",
+        "**LoRA 冻结主干高效适配**：π₀ 2B backbone 完全冻结，仅训练 14.71M LoRA 参数（占主干 0.7%）即取得 SOTA——为「大型 VLA 基础模型 + 轻量下游适配」的工程范式提供新模板",
+        "**真机 +200% 增益**：Fold Cloth（可形变长程任务）20%→60%——单 token 世界模型对「物体状态预测」反而比高带宽更稳，因为低带宽强制学到任务相关的语义压缩"
+      ],
+      "impact": "OneWM-VLA 把 VLA 世界模型的视觉带宽从「每帧数百 token」降到「每帧 1 token」仍保持 SOTA，颠覆了「视觉带宽决定上限」的设计直觉。其 **LoRA 14.71M 参数 + π₀ 2B 冻结**的范式直接对标 LLM 时代的 PEFT，意味着未来 VLA 基础模型可像 LLM 一样「一次预训练，无数次轻量适配」——这对国内中小机器人厂商意义巨大：不需要重训 2B+ VLA，只要 200 行训练代码就能让 π₀ 长程任务能力翻 3 倍。"
     }
   ],
   "totalItems": 117
