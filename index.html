@@ -652,12 +652,11 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
         <div class="home-latest-title">📰 每日英文 <span class="home-latest-sub">权威资讯 · 标注 CEFR 等级 · 点击任意单词查音标 🔊</span></div>
         <div class="de-grid" id="dailyEnglish"></div>
         <div id="dailyEnglishArchiveWrap" style="margin-top:24px;display:none">
-            <div class="de-archive-toggle" onclick="toggleDeArchive(this)">
-                <span class="de-arch-arrow">▸</span>
+            <a class="de-archive-toggle de-archive-link" onclick="event.preventDefault();selectDailyEnglish()" href="/daily-english" style="text-decoration:none">
                 <span>📚 往期回顾</span>
                 <span class="de-arch-count" id="deArchCount">0</span>
-            </div>
-            <div class="de-grid de-archive-grid" id="dailyEnglishArchive" style="display:none;margin-top:16px"></div>
+                <span style="font-size:.78rem;color:var(--t3);font-weight:500">按月分类浏览 →</span>
+            </a>
         </div>
     </div>
     <div class="recent-updates" id="recentUpdates" style="display:none">
@@ -829,6 +828,21 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
     </div>
 </div>
 
+<!-- DAILY ENGLISH ARCHIVE -->
+<div class="page" id="pg-daily-english">
+    <div class="page-header">
+        <h1 class="page-title"><span class="icon">📰</span> 每日英文归档 <span style="font-family:'JetBrains Mono';font-size:.7rem;color:var(--t3);font-weight:400" id="deArchPageCount"></span></h1>
+        <p class="page-sub">所有曾经在首页出现过的英文素材都会沉淀在此 — 按月归档、CEFR 标注、点击任意单词查音标 🔊</p>
+    </div>
+    <div class="page-body">
+        <div style="margin-bottom:18px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <input type="text" id="deArchSearch" placeholder="🔍 搜索标题 / 关键词..." style="flex:1;min-width:240px;padding:10px 16px;border-radius:10px;border:1px solid var(--bd);background:var(--bg2);color:var(--t1);font-size:.95rem;outline:none" oninput="filterDeArchive()">
+            <div class="filters" id="deArchTypeFilters"></div>
+        </div>
+        <div class="tl-wrap"><div class="tl-sidebar" id="deArchTimeline"></div><div class="tl-main"><div id="deArchGroups"></div></div></div>
+    </div>
+</div>
+
 <!-- GLOSSARY -->
 <div class="page" id="pg-glossary">
     <div class="page-header">
@@ -878,7 +892,7 @@ function toggleTheme(){
 })();
 
 // === ROUTER (History API + 404 bridge + hash fallback) ===
-const VALID_PAGES=['home','learn','papers','opensource','models','datasets','hardware','news','jobs','glossary'];
+const VALID_PAGES=['home','learn','papers','opensource','models','datasets','hardware','news','jobs','glossary','daily-english'];
 const SITE_BASE='/';  // GitHub Pages 部署在根目录（用户域名 www.tabyue.com）
 let _routerSuppress=false;
 
@@ -893,7 +907,8 @@ const PAGE_META={
   hardware:{title:'硬件图鉴 - 机器人 BOM 拆解与传感器选型 | 具身智能知识门户',desc:'机器人 BOM 拆解、传感器选型、电机参数、购买链接一站式参考。'},
   news:{title:'行业资讯 - 具身智能融资/技术/政策 | 具身智能知识门户',desc:'具身智能与人形机器人最新融资动态、技术突破、政策标准、企业图谱。'},
   jobs:{title:'人才生态 - 具身智能社招/校招/实习 | 具身智能知识门户',desc:'具身智能行业社招、校招、实习岗位全景，覆盖 VLA、机器人控制、灵巧手、世界模型等方向。'},
-  glossary:{title:'术语表 - 具身智能核心概念速查 | 具身智能知识门户',desc:'VLA、IL、RL、SLAM、SE3 等具身智能核心术语含义速查与详解。'}
+  glossary:{title:'术语表 - 具身智能核心概念速查 | 具身智能知识门户',desc:'VLA、IL、RL、SLAM、SE3 等具身智能核心术语含义速查与详解。'},
+  'daily-english':{title:'每日英文归档 - 具身智能英文阅读资料库 | 具身智能知识门户',desc:'按月归档的具身智能权威英文资讯、论文摘要、技术博客与写作 tips，标注 CEFR 等级，点击单词查音标。'}
 };
 
 function _setMeta(title, desc, urlPath){
@@ -2558,22 +2573,128 @@ async function renderDailyEnglish(){
     const archWrap=document.getElementById('dailyEnglishArchiveWrap');
     const archGrid=document.getElementById('dailyEnglishArchive');
     const archCount=document.getElementById('deArchCount');
-    if(past.length>0 && archWrap && archGrid){
+    if(past.length>0 && archWrap){
         archWrap.style.display='block';
         if(archCount)archCount.textContent=past.length;
-        // 排序：firstShown 倒序
-        past.sort((a,b)=>(b.firstShown||'').localeCompare(a.firstShown||''));
-        archGrid.innerHTML=past.map(it=>_renderDeCard(it,it.firstShown||DED.date)).join('');
     }else if(archWrap){
         archWrap.style.display='none';
     }
 }
-function toggleDeArchive(el){
-    const grid=document.getElementById('dailyEnglishArchive');
-    if(!grid)return;
-    const isOpen=grid.style.display!=='none';
-    grid.style.display=isOpen?'none':'grid';
-    el.classList.toggle('open',!isOpen);
+// 跳转到独立的「每日英文归档」页面
+function selectDailyEnglish(){
+    const path='/daily-english';
+    history.pushState({},'',path);
+    applyRoute(path);
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+// === 渲染独立的「每日英文归档」页面（按月分组 + timeline 侧栏 + 类型筛选 + 搜索）===
+let _deArchFilter={type:'全部',q:''};
+async function renderDailyEnglishArchivePage(){
+    if(!DED){
+        DED=await loadJ('/data/daily-english.json');
+        if(!DED)return;
+    }
+    const items=(DED.items||[]).slice();
+    const archive=(DED.archive||[]).slice();
+    // 合并去重：archive 优先（含 firstShown），items 缺时补
+    const seen=new Set();
+    const all=[];
+    [...archive,...items].forEach(it=>{
+        const id=it.id||(it.title+'|'+(it.source||''));
+        if(seen.has(id))return;
+        seen.add(id);
+        all.push(it);
+    });
+    // 按 firstShown / date 倒序
+    all.sort((a,b)=>{
+        const da=a.firstShown||a.date||'';
+        const db=b.firstShown||b.date||'';
+        return db.localeCompare(da);
+    });
+    document.getElementById('deArchPageCount').textContent=all.length+' 项';
+    // 类型统计
+    const typeCount={};
+    all.forEach(it=>{const t=it.type||'tip';typeCount[t]=(typeCount[t]||0)+1});
+    const types=['全部','news','paper','blog','tip'];
+    const typeLabels={'全部':'全部','news':'NEWS','paper':'PAPER','blog':'BLOG','tip':'TIP'};
+    document.getElementById('deArchTypeFilters').innerHTML=types.map((t,i)=>{
+        const cnt=t==='全部'?all.length:(typeCount[t]||0);
+        return `<button class="fbtn${i===0?' active':''}" onclick="filterDeArchByType(this,'${t}')">${typeLabels[t]} <span style="opacity:.5;font-size:.68rem">${cnt}</span></button>`;
+    }).join('');
+    // 缓存到全局供搜索使用
+    window._deArchAll=all;
+    _deArchFilter={type:'全部',q:''};
+    _renderDeArchGroups();
+}
+function _renderDeArchGroups(){
+    const all=window._deArchAll||[];
+    const f=_deArchFilter;
+    const filtered=all.filter(it=>{
+        if(f.type!=='全部'&&(it.type||'tip')!==f.type)return false;
+        if(f.q){
+            const q=f.q.toLowerCase();
+            const hay=((it.title||'')+' '+(it.source||'')+' '+(it.cn||'')+' '+(it.en||'')).toLowerCase();
+            if(!hay.includes(q))return false;
+        }
+        return true;
+    });
+    // 按月分组
+    const groups={};
+    filtered.forEach(it=>{
+        const d=it.firstShown||it.date||'';
+        const ym=d.slice(0,7)||'未知';
+        (groups[ym]=groups[ym]||[]).push(it);
+    });
+    const yms=Object.keys(groups).sort().reverse();
+    const monthNames={1:'1 月',2:'2 月',3:'3 月',4:'4 月',5:'5 月',6:'6 月',7:'7 月',8:'8 月',9:'9 月',10:'10 月',11:'11 月',12:'12 月'};
+    // 时间轴侧栏
+    let tlH='';
+    let lastY='';
+    yms.forEach(ym=>{
+        const [y,m]=ym.split('-');
+        if(y!==lastY){tlH+=`<div class="tl-year">${y}</div>`;lastY=y;}
+        tlH+=`<div class="tl-month" onclick="scrollToDeGroup('${ym}')" data-ym="${ym}"><span>${monthNames[parseInt(m)]||m}</span><span class="tl-count">${groups[ym].length}</span></div>`;
+    });
+    document.getElementById('deArchTimeline').innerHTML=tlH||'<div style="color:var(--t3);font-size:.78rem;padding:12px">无匹配项</div>';
+    // 主区按月分组渲染
+    const dateFb=DED?.date||'';
+    let bodyH='';
+    if(filtered.length===0){
+        bodyH=`<div style="text-align:center;color:var(--t3);padding:60px 20px">📭 没有匹配的英文素材</div>`;
+    }else{
+        yms.forEach(ym=>{
+            const [y,m]=ym.split('-');
+            const label=`${y} 年 ${monthNames[parseInt(m)]||m}`;
+            bodyH+=`<div class="tl-group" id="de-${ym}" style="margin-bottom:32px">
+                <div class="tl-group-title" style="font-size:1.05rem;font-weight:600;color:var(--t1);padding:10px 0 14px;border-bottom:2px solid var(--bd);margin-bottom:18px;display:flex;align-items:center;gap:10px">
+                    <span>${label}</span><span style="font-family:var(--font-mono);font-size:.72rem;color:var(--t3);font-weight:400">${groups[ym].length} 项</span>
+                </div>
+                <div class="de-grid">${groups[ym].map(it=>_renderDeCard(it,it.firstShown||it.date||dateFb)).join('')}</div>
+            </div>`;
+        });
+    }
+    document.getElementById('deArchGroups').innerHTML=bodyH;
+}
+function filterDeArchive(){
+    const inp=document.getElementById('deArchSearch');
+    if(!inp)return;
+    _deArchFilter.q=inp.value.trim();
+    _renderDeArchGroups();
+}
+function filterDeArchByType(btn,type){
+    btn.parentElement.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    _deArchFilter.type=type;
+    _renderDeArchGroups();
+}
+function scrollToDeGroup(ym){
+    const el=document.getElementById('de-'+ym);
+    if(el){
+        el.scrollIntoView({behavior:'smooth',block:'start'});
+        document.querySelectorAll('#deArchTimeline .tl-month').forEach(m=>m.classList.remove('active'));
+        const active=document.querySelector('#deArchTimeline .tl-month[data-ym="'+ym+'"]');
+        if(active)active.classList.add('active');
+    }
 }
 
 // === RENDER JOBS ===
