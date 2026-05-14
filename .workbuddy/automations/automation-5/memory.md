@@ -1,5 +1,20 @@
 # automation-5 执行历史
 
+## 2026-05-14 16:35（下午轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 启动时工作树残留前轮（5/12-5/14 多个并行实例）大量未提交：jobs / news / papers-index / 4 个 learn 模块 + 各自 _index + p147-p153 detail / 学习模块新增 sec-14/15/17/18 等 — 全部接手不丢弃
+- 我自己实际本轮新增：
+  - news +4 (n289-n292)：n289 CMU Touch Dreaming HTD 中文媒体集中报道 + n290 乐聚机器人 A 股 IPO 辅导验收（东方证券 5/13 验收 / 蔚来 + 一汽工厂量产 / 哈工大冷晓琨）+ n291 眸深智能 3 亿 Pre-A（复旦 95 后穆泽林创立 / MotionChain 对话式运动 / 与宇树小米战略合作）+ n292 Zenbot（真保科技）近亿元天使轮（长盈精密 + 科达利 + 肇民科技联合 / 海归博士贾振中 / 大小脑融合架构）
+  - papers +1 (p154)：CMU + Ford「Touch Dreaming（HTD）」arxiv:2604.13015 — 多模态 Transformer + EMA Target Encoder + 触觉 latent 预测 + VR 数采 + RL 下肢稳定，5 项真机任务平均 +90.9%，含完整 keyInsights+impact+methodology+experiments+reproduction+mathDetails
+  - opensource +1 (os100)：USC PSI Lab HumDex（arxiv:2603.12260）—— VR retargeting 全身灵巧操作低成本数采，兼容 G1/H1/Apollo/Optimus
+  - jobs +3 (j133-j135)：乐聚 IPO 冲刺扩招 + 眸深智能机器人大脑精英扩招（不到 20 人精英编制） + Zenbot 具身基础设施大规模扩招
+  - 学习深化：ai-infra +sec-19「✨ 触觉感知基础设施：从硬件到 Touch Dreaming 的全栈工程」（联动 p154 / KAI / 戴盟 / HumDex，含触觉传感器四流派选型决策表 + 数据流水线 + EMA Target Encoder 实现 + HTD 工程精读 + 真机 Pipeline 延迟预算 + 中美产业互补）；模块 18 → 19 sec
+  - learning-path 同步加 "触觉感知基础设施（独家）" topic
+- 严格查重命中：n289 (HTD 论文) 用 arxiv URL 与 p154 论文 URL 重复，被自动 skip → 改用腾讯新闻中文报道 URL 写入
+- 0 dups（news 264 / papers 136 / os 89 / jobs 127），全部 JSON 校验通过
+- sync_learn_split (2 files updated) + build_sitemap (455 chapters) 已跑
+- commit 4d58c17 已 push origin/main
+
 ## 2026-05-10 23:35（晚间轮，automation-5）
 - 投稿箱：无开放 Issue（gh issue list 返回 []）
 - 启动时工作树残留前轮（5/10 下午）实例的未提交内容（n258-261 / p138-140 / os094-096 / j119-120 / control-theory sec-16 + humanoid-fullstack sec-17），全部接手不丢弃
@@ -140,3 +155,16 @@
 - 0 dups（news 239 / papers 126 / os 87 / jobs 114）
 - sync_learn_split (2 files updated) + build_sitemap (428 chapters) 已跑
 - commit 472c3b7 已 push origin/main
+
+## 2026-05-14 09:00（早间轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 启动时工作树残留前轮成果（n278-285 / p147-152 / j123-130 / 4 个 learn-split sec），接手不丢弃
+- 我自己实际做的早间轮新增：
+  - news +3：n286 商汤 SenseMartGo 烧卖购上海三店常态化（日均 400 单 / 15 秒 / 99% 运营时间 / 30 万 2D + 10 万 3D 商品资产 + 150 万订单/日 数据飞轮）+ n287 方石机器人近 1 亿元 A 轮（建筑大模型 + 阿尔戈斯系统 1.2cm 精度 + 1500 万㎡ 施工 + 80 城 100+ 客户）+ n288 芯驰科技近 1 亿美元 C 轮（智驾 + 跨界具身 / D9-Max + E3-Genesis / 银河通用合作 / 100 亿估值 / 1200 万颗芯片）
+  - papers +1：p153 SA-VLA（NTU + A*STAR + 北航 流匹配 VLA RL 微调三层对齐 + SCAN，π₀ OOD +36pp / SmolVLA +33pp）含完整 keyInsights + impact + methodology + experiments + reproduction + mathDetails
+  - jobs +2：j131 方石机器人 8 方向 + j132 芯驰科技具身芯片 + 智驾双线
+  - 学习深化：vla-models +sec-15「VLA 双系统三件套：从 Libra-VLA 异步双系统到 SA-VLA 流匹配 RL」（8000 字深度，联动 p104 + p153 + p152 + p145 + p144，模块 14 secs/134K → 15 secs/142K chars）
+- 0 dups（news 264 / papers 136 / os 88 / jobs 127）
+- sync_learn_split (1 file updated) + build_sitemap (454 chapters) 已跑
+- p154（Libra-VLA）发现已存在为 p104，避免重复添加
+- 内容已被并行实例 commit 4d58c17 合并 push 到 origin/main，工作树 clean，本轮无需自己 commit/push
