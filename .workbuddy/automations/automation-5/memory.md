@@ -1,5 +1,20 @@
 # automation-5 执行历史
 
+## 2026-05-13 03:30（深夜轮 — 真实时间 5/13 凌晨 02:59）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 启动时工作树有大量并行实例遗留（modified 12 文件 + 5 untracked），全部接手不丢弃；ID 唯一性 + papers detail 完备性校验通过；清理临时脚本（_round*.py）
+- 接手 commit e78eaf4 已 push（papers p144-p151 / news 28 / jobs 9 / learn 3 模块新 sec / 删除重复 p133）
+- 我自己本轮新增（多数被另一并行实例同时写入 + push 到 origin/main）：
+  - **news +1 n295**：智元远征 A3 文娱舞台机器人发布（173cm/55kg/12kW 瞬时 + 双电池热插拔 24h + 外壳/配色/性格三定制）
+  - **papers +1 p157 OneWM-VLA**（arxiv 2605.07931）：单视觉 token 世界模型 + π₀ 2B 冻结 + 14.71M LoRA → MetaWorld MT50 47.9→61.3% / LIBERO-Long 95.6% / 真机 Fold Cloth 60% (vs π₀ 20%) — 含完整 keyInsights+impact+detail
+  - **vla-models +sec-15**「VLA 世界模型工程范式跃迁：单 token 视觉带宽 × LoRA 紧凑适配（OneWM-VLA 2026-05 反直觉精读）」 ~7K chars，含 Adaptive Attention Pooling / 单一 Flow Matching / LoRA 工程代码 / 真机 +200% 解释 / 联动门户已有内容 / 课后思考题
+  - **jobs +1 j136**：智元香港 + 远征 A3 文娱团队 12 大方向招聘
+  - **daily-english +1 de-7db94418ea**：OneWM-VLA paper（C1 / academic / 10 vocab / cn takeaway）
+- 0 dups（news 267 / papers 136 / jobs 128），全部 JSON OK，p117 历史遗留缺 detail 不影响
+- sync_learn_split + build_sitemap (456 chapters) 已跑
+- 工作树最终 clean，本实例工作内容已被并行实例 push（commit 78ebddd + 2f2d52e）
+- 经验：① 并行实例 id 冲突要及时切换（p156 被占用 → 切到 p157）；② 提交后被覆盖的写入要重做并修复内容里的链接（n295 远征 A3 第一次写入丢失，重做后修复 sec-15 内的引用）；③ Python heredoc 嵌入代码时避免外层 \"\"\" 与内嵌 docstring 冲突——用注释代替 docstring
+
 ## 2026-05-14 01:40（凌晨轮）
 - 投稿箱：无开放 Issue（gh issue list 返回 []）
 - 启动时工作树有 5/13 03:18 并行实例残留（vla-models sec-15 OneWM-VLA / j136 智元香港 / daily-english + OneWM-VLA 条目 + index.html 每日英文归档页 / learning-path 同步），全部接手不丢弃
