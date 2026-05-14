@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-11T14:35",
+  "lastUpdated": "2026-05-14T16:35",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,38 @@
     }
   ],
   "projects": [
+    {
+      "id": "os100",
+      "name": "HumDex (USC PSI Lab — 人形全身灵巧操作低成本数据系统)",
+      "github": "https://github.com/physical-superintelligence-lab/humdex",
+      "organization": "USC Physical Superintelligence (PSI) Lab",
+      "category": "数据采集 / 灵巧操作",
+      "description": "**HumDex（Humanoid Dexterous Manipulation Made Easy）** — USC PSI Lab 5/14 集中报道的开源**全身灵巧操作低成本数据系统**。核心：① **轻量级 VR 套装**取代昂贵动捕方案，单人单工位即可采集；② **统一 retargeting**——把人体动作通过 SE(3) 优化映射到 humanoid 灵巧手关节，解决「人 → 机器人形态映射」问题；③ **WorldEnv 仿真**适配多种主流人形（Unitree G1/H1、Apptronik Apollo、Tesla Optimus）；④ **完整训练 baseline**——基于 ACT / DP / VLA 三套基线策略 fine-tune 适配。论文 arXiv:2603.12260（v2），项目主页 [physical-superintelligence-lab/humdex](https://github.com/physical-superintelligence-lab/humdex)。低门槛 + 全栈开源，把人形数采从 \"百万级动捕室\" 拉低到 \"消费级 VR + 普通工位\" 量级。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "轻量级 VR 套装数采（HTC Vive Tracker × 6）",
+        "SE(3) 优化 retargeting（人 → humanoid 形态映射）",
+        "兼容 Unitree G1/H1 / Apollo / Optimus",
+        "WorldEnv 仿真适配多构型人形",
+        "ACT / DP / VLA 三套训练 baseline",
+        "单人单工位 1 小时采 200 trajectories",
+        "完整端到端 pipeline（采集 → 训练 → 部署）",
+        "MIT 协议"
+      ],
+      "stars": 850,
+      "tags": [
+        "HumDex",
+        "USC PSI",
+        "数据采集",
+        "VR retargeting",
+        "humanoid",
+        "灵巧操作",
+        "ACT",
+        "DP"
+      ],
+      "addedDate": "2026-05-14"
+    },
     {
       "id": "os099",
       "name": "LaST-R1 (CUHK + 北大 + 至简动力 — 物理潜在推理 VLA)",
@@ -157,36 +189,6 @@
       "addedDate": "2026-05-10"
     },
     {
-      "id": "os094",
-      "name": "Hubei Humanoid Action Foundation Model (MotionMaster + UniAct)",
-      "github": "https://news.hubeidaily.net/pc/c_5487272.html",
-      "organization": "湖北人形机器人创新中心 / 北武院（北京大学武汉人工智能研究院） / 北京虚拟动点科技",
-      "category": "humanoid-foundation",
-      "description": "业内首个开源跨品牌「人形机器人动作大模型」（5 月 9 日武汉光谷发布）。两大核心模块：① **MotionMaster 虚拟动作生成器**（高阶语义 / 文本 / 视频 / 音频 / 动捕多模态输入 → 虚拟动作序列）；② **UniAct 真机执行引擎**（虚拟动作 → 多品牌、多机型机器人可执行硬件指令）。全行业开源，已生态合作宇树、乐聚、潜空间等。生态首款应用产品「潜擎」动创平台（潜空间）即将公测，文本生动作开发周期从 2-3 周/动作压缩到 30 分钟。意义：解决了「各品牌动作数据互不兼容」最大痛点，定位为人形机器人「小脑」基础设施级开源项目，与 Genesis GENE-26.5 / Helix-02 形成「大脑 + 小脑」分层范式互补。",
-      "language": "Python (PyTorch)",
-      "license": "Apache-2.0（待 GitHub 同步）",
-      "features": [
-        "MotionMaster 多模态语义生动作（文本 / 视频 / 音频 / 动捕）",
-        "UniAct 真机执行引擎跨品牌机器人通用",
-        "动作成功率 / 泛化能力 / 执行效率行业领先",
-        "生态合作伙伴宇树 / 乐聚 / 潜空间 / 飞阔 / 青瞳",
-        "潜擎动创平台首款应用即将公测",
-        "面向全行业开源共享"
-      ],
-      "stars": "刚开源",
-      "tags": [
-        "MotionMaster",
-        "UniAct",
-        "动作大模型",
-        "人形机器人",
-        "北武院",
-        "湖北人形机器人创新中心",
-        "潜擎",
-        "虚拟动点"
-      ],
-      "addedDate": "2026-05-10"
-    },
-    {
       "id": "os095",
       "name": "SaPaVe (Active Perception VLA)",
       "github": "https://lmzpai.github.io/SaPaVe",
@@ -213,6 +215,36 @@
         "BAAI",
         "PKU",
         "Beihang"
+      ],
+      "addedDate": "2026-05-10"
+    },
+    {
+      "id": "os094",
+      "name": "Hubei Humanoid Action Foundation Model (MotionMaster + UniAct)",
+      "github": "https://news.hubeidaily.net/pc/c_5487272.html",
+      "organization": "湖北人形机器人创新中心 / 北武院（北京大学武汉人工智能研究院） / 北京虚拟动点科技",
+      "category": "humanoid-foundation",
+      "description": "业内首个开源跨品牌「人形机器人动作大模型」（5 月 9 日武汉光谷发布）。两大核心模块：① **MotionMaster 虚拟动作生成器**（高阶语义 / 文本 / 视频 / 音频 / 动捕多模态输入 → 虚拟动作序列）；② **UniAct 真机执行引擎**（虚拟动作 → 多品牌、多机型机器人可执行硬件指令）。全行业开源，已生态合作宇树、乐聚、潜空间等。生态首款应用产品「潜擎」动创平台（潜空间）即将公测，文本生动作开发周期从 2-3 周/动作压缩到 30 分钟。意义：解决了「各品牌动作数据互不兼容」最大痛点，定位为人形机器人「小脑」基础设施级开源项目，与 Genesis GENE-26.5 / Helix-02 形成「大脑 + 小脑」分层范式互补。",
+      "language": "Python (PyTorch)",
+      "license": "Apache-2.0（待 GitHub 同步）",
+      "features": [
+        "MotionMaster 多模态语义生动作（文本 / 视频 / 音频 / 动捕）",
+        "UniAct 真机执行引擎跨品牌机器人通用",
+        "动作成功率 / 泛化能力 / 执行效率行业领先",
+        "生态合作伙伴宇树 / 乐聚 / 潜空间 / 飞阔 / 青瞳",
+        "潜擎动创平台首款应用即将公测",
+        "面向全行业开源共享"
+      ],
+      "stars": "刚开源",
+      "tags": [
+        "MotionMaster",
+        "UniAct",
+        "动作大模型",
+        "人形机器人",
+        "北武院",
+        "湖北人形机器人创新中心",
+        "潜擎",
+        "虚拟动点"
       ],
       "addedDate": "2026-05-10"
     },

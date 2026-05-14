@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-11T15:30",
+  "lastUpdated": "2026-05-14T16:35",
   "stages": [
     {
       "id": "foundation",
@@ -650,6 +650,7 @@
         {
           "name": "VLA 模型 (Vision-Language-Action)",
           "importance": "前沿",
+          "lastUpdated": "2026-05-11T20:58",
           "description": "结合视觉理解、语言指令和动作生成的端到端模型",
           "topics": [
             {
@@ -678,8 +679,7 @@
             "FAST tokenizer代码"
           ],
           "howTo": "先精读RT-2论文理解VLA范式（动作token化+co-fine-tuning），再研究OpenVLA的开源实现（跑通推理→尝试微调），最后读π₀理解Flow Matching。",
-          "weeklyPlan": "第1周：RT-2论文精读+动作token化实现 | 第2-3周：OpenVLA源码分析+推理测试 | 第4周：π₀/FAST论文+Flow Matching理解",
-          "lastUpdated": "2026-05-08T17:20"
+          "weeklyPlan": "第1周：RT-2论文精读+动作token化实现 | 第2-3周：OpenVLA源码分析+推理测试 | 第4周：π₀/FAST论文+Flow Matching理解"
         },
         {
           "name": "世界模型与LLM+机器人",
@@ -813,7 +813,8 @@
             "DVC+Rerun工具链"
           ],
           "howTo": "从下载Open X-Embodiment子集开始,分析数据分布;搭建UMI/Gello采集系统;实现清洗Pipeline;用MuJoCo生成合成数据;最后跑一轮完整的数据闭环实验。",
-          "weeklyPlan": "第1周：数据集全景+格式标准 | 第2周：采集系统搭建 | 第3周：质量工程+清洗 | 第4周：合成数据+增强 | 第5周：数据闭环实战"
+          "weeklyPlan": "第1周：数据集全景+格式标准 | 第2周：采集系统搭建 | 第3周：质量工程+清洗 | 第4周：合成数据+增强 | 第5周：数据闭环实战",
+          "lastUpdated": "2026-05-12T00:30"
         },
         {
           "name": "数据采集与管理",
@@ -854,7 +855,7 @@
         {
           "name": "AI Infra 具身基础设施",
           "importance": "核心",
-          "lastUpdated": "2026-05-11T15:30",
+          "lastUpdated": "2026-05-14T16:35",
           "description": "把分散在「训练优化 / 平台工程 / 云边端 / 数据工程」四个模块的核心章节串成完整学习地图，并补充具身领域专属的前沿主题（vLLM/SGLang 适配、动作 chunk batching、多机器人 model serving）",
           "topics": [
             {
@@ -884,6 +885,10 @@
             {
               "title": "最小化端到端实战",
               "detail": "Franka Panda + Jetson Thor + 云端 H100 的最小化具身 AI Infra"
+            },
+            {
+              "title": "触觉感知基础设施（独家）",
+              "detail": "联动 HTD（CMU 5/13）+ KAI / 戴盟 / 蓝点国产硬件，触觉传感器选型 + 数据流水线 + EMA Target Encoder + Touch Dreaming 实战"
             }
           ],
           "weeklyPlan": "第 1-2 周：算力栈 + 训练优化模块联动 | 第 3-4 周：推理引擎栈 + chunk batching | 第 5-6 周：model serving + 平台工程 | 第 7 周：数据流水线 | 第 8 周：综合实战"
@@ -1033,7 +1038,7 @@
         {
           "name": "人形机器人全栈项目",
           "importance": "高级实战",
-          "lastUpdated": "2026-05-08T23:30",
+          "lastUpdated": "2026-05-12T19:30",
           "description": "参与或构建一个人形机器人的完整软件栈",
           "topics": [
             {

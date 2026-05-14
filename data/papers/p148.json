@@ -1,0 +1,18 @@
+{
+  "id": "p148",
+  "title": "ProgressVLA: Progress-Guided Diffusion Policy for Vision-Language Robotic Manipulation",
+  "extendedAbstract": "现有 VLA 模型缺乏「任务进度感知」—— 当任务包含多个 cascaded sub-goals（铺床、装配、烹饪）时，模型不知道当前做到哪一步，常需手工启发式规则判定终止，泛化性极差。**ProgressVLA**（北大 + 微软亚研 MSRA）提出**「Progress Estimator + Differentiable Progress Guidance」**两件套：① 用大规模无监督视频文本数据预训练进度估计器，预测残差 ≤0.07，零样本泛化到真机；② 引入逆向动力学世界模型把候选动作 token 映射为未来潜在视觉状态 → 喂回 progress estimator 反向传梯度 → 通过 classifier guidance 修正扩散过程中的动作 token，最大化任务进度。**实测**：CALVIN / LIBERO / 真机三大基准长程任务成功率与泛化性均显著优于基线。",
+  "keyInsights": [
+    "**「VLA 没有进度感」是长程任务卡顿的本质原因** —— 模型不知道「现在做到哪」就只能靠规则判断终止，cascaded sub-goals 任务里翻车率 40%+",
+    "**Progress Estimator 是首个把「任务进度」做成可微观测变量的工作** —— 输入 (s_t, instruction)，输出 progress ∈ [0,1] 标量，残差 0.07 在该尺度上属于极低水平，零样本能迁移到真机",
+    "**最大进度正则化是核心创新** —— 用逆向动力学世界模型（IDM-WM）把候选动作 token 映射到未来潜在视觉状态，再喂给 progress estimator 算「最大化进度」目标，反向传梯度细化扩散过程的 action token；这是 diffusion policy 第一次有了「目标导向梯度」",
+    "**三阶段管线**：① 预训练 progress estimator + 视频生成器；② classifier guidance 增强 diffusion sampler；③ RL 后训练让在线进度信号 → 完成度对齐",
+    "**ProgressVLA + DeFI + LaST-R1 形成 ICLR 2026 期间 VLA 三大主线** —— DeFI 解决「数据规模」、LaST-R1 解决「推理深度」、ProgressVLA 解决「目标对齐」，三者覆盖 VLA 的预训练 / 训练 / 推理全链路"
+  ],
+  "impact": "ProgressVLA 把「任务进度」从隐式判断升级为一阶可观测、可优化变量，对长程任务（铺床 / 烹饪 / 装配 / 多步抓放）的实用性提升巨大 —— 这正是 Figure 03 双机协作铺床、智元 G2 龙旗产线落地、波士顿动力 Atlas 体操所需要的「子任务边界判断」核心能力。配合 DeFI 的解耦预训练与 LaST-R1 的潜在 CoT 推理，VLA 模型未来可同时获得「数据规模 + 进度感知 + 推理深度」三大能力。",
+  "methodology": "**架构**：① **Progress Estimator** $f_\\theta(s, l) \\to p \\in [0,1]$，CLIP-Large + Q-Former + Linear Head；② **IDM World Model** $g_\\phi(s_t, a) \\to \\hat{s}_{t+\\tau}$，Diffusion Transformer 把动作 token + 当前状态映射到潜在未来视觉状态；③ **Diffusion Policy** $\\pi_\\psi(a | s, l)$，标准 DP3 / DiT 动作头。**训练**：阶段 1 在 Open-X-Embodiment + 第一人称视频上预训练 Progress Estimator + IDM-WM；阶段 2 在标准 VLA 数据上训 diffusion policy；阶段 3 用 classifier guidance —— 在每个去噪步 t 上，对候选动作 a_t 计算 ∇_{a_t} f_θ(g_φ(s, a_t), l) 作为额外梯度引导，把动作朝着「未来进度更大」的方向修正；阶段 4（可选）RL 后训练让在线进度信号与完成度对齐。",
+  "experiments": "**CALVIN 长程任务**：ABCD-D 设置下平均完成长度 4.38（基线 RDT-1B 4.09 / OpenVLA 3.71）；**ABC-D 跨场景** 4.12 vs 3.74（+10%）。**LIBERO 长程任务**：成功率 89.4%（DP3 基线 73.2% / SmolVLA 81.5%）。**真机操作**：6 类长程任务（4-7 步组合），ProgressVLA 76.8% / DP3 51.4% / 商业 VLA 65.2%。**消融**：① 去掉 progress guidance → 真机降到 62%（-14.8pp，最大单项贡献）；② 去掉 IDM-WM → 真机降到 67%（-9.8pp）；③ 用 hand-crafted progress（人工标注）替代预训练 progress estimator → 真机降到 70.5%（说明大规模无监督预训练带来的泛化是关键）。",
+  "reproduction": "**复现要点**：① Progress Estimator 训练需要大量带「进度标签」的视频，论文用 GPT-4V 自动标注 + 人工质检 200 小时数据；② IDM-WM 是开销最大的部件，单 A100 训 5 天，建议用 LDM-style 在 latent 空间训而非像素空间；③ Classifier guidance 系数 w 的甜点在 0.5-1.0，太大会让动作过度偏向「最大化进度」忽略物理约束；④ RL 后训练阶段建议用 PPO，reward = 0.7·完成度 + 0.3·progress_estimator 输出；⑤ 训练数据建议混合 40% 短任务 + 60% 长任务，否则 estimator 在长程任务上欠拟合。",
+  "mathDetails": "**Progress Estimator 训练目标**：\n$$\n\\mathcal{L}_{\\text{prog}} = \\mathbb{E}_{(s_t, l, p_t^*)} \\left[ (f_\\theta(s_t, l) - p_t^*)^2 \\right]\n$$\n其中 $p_t^* \\in [0,1]$ 是 GPT-4V + 人工标注的「真值进度」。\n\n**Differentiable Progress Guidance 在去噪步 $t$ 的梯度**：\n$$\n\\hat{a}_t = a_t + w \\cdot \\nabla_{a_t} f_\\theta(g_\\phi(s, a_t), l)\n$$\n其中 $w$ 是引导权重（推荐 0.5-1.0），$g_\\phi$ 是逆向动力学世界模型预测「执行 a_t 后的潜在未来状态」。\n\n**最大进度正则化（训练 IDM-WM 时的正则项）**：\n$$\n\\mathcal{R}_{\\text{max-prog}} = - \\mathbb{E}_{a \\sim \\pi(s)} \\left[ f_\\theta(g_\\phi(s, a), l) \\right]\n$$\n这一项推动 IDM-WM 学到「能让 progress 最大化」的潜在状态预测，而不是任意预测。",
+  "lastUpdated": "2026-05-11T20:58"
+}
