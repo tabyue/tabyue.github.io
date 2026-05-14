@@ -1,5 +1,20 @@
 # automation-5 执行历史
 
+## 2026-05-14 22:17（晚间轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- prompt 注入的 current_time 是 5/12，但 `date` 显示真实时间 2026-05-14 22:17 GMT+8（缓存偏差）
+- 启动状态：工作树残留前轮 7 modified + 5 untracked（n271-273 / p147-148 / j124-125 / vla-models sec-14 / learning-path），全部接手不丢弃
+- 我自己实际本轮新增：
+  - **news +6 (n274-n279)**：n274 ROBOTERA 星动纪元 5/8 PRNewswire 2 亿美元新轮 + 顺丰领投（半年累计 50 亿）/ n275 无界动力（地平线孵化）天使++ + 远景 5 亿元出海订单 — 中国具身首个亿元级海外订单 / n276 西湖机器人 Pre-A+ 王东林 + 杜海涛 / n277 1X × EQT 战略合作 — 2026-2030 万台 NEO 部署 / n278 银河通用 LDA-1B 跨本体「隐式世界-动作基础模型」开源（清华+北大+英伟达 + EI-30K + DINO 隐空间）/ n279 UniX AI Panther 第三代真实家庭部署完成
+  - **papers +1 (p149)**：LDA-1B (arxiv 2604.21566) 含完整 keyInsights+impact+methodology+experiments+reproduction+mathDetails；p150 写后发现已被并行实例占用，自动跳过
+  - **jobs +2 (j126-j127)**：无界动力 + 西湖机器人
+  - **学习深化：embodied-data-engineering +sec-15**「异构数据摄取与具身 Common Crawl：从 EI-30K + LDA-1B 看 Scaling Law 跑通的工程实操」（DINO vs VAE 消融 / 三层数据角色 / 工程代码 + Scaling Law 公式 + 三道练习题，模块 82K → 88K chars / 14→15 sec）
+  - learning-path：vla-models + embodied-data-engineering 两个模块 lastUpdated 已刷新
+- 0 dups（news 264 / papers 136 / os 89 / jobs 127 — 数字大于我本轮直写入条数，因并行实例已合入 n255-n292 / p147-p154 / j112-j135 / os090-100）
+- sync_learn_split + build_sitemap 已跑
+- 工作树状态：本轮所有内容已被并行实例 commit 4d58c17 + e78eaf4 + e3c76d4（含清理重复 p133）三连 push 到 origin/main，工作树 clean，本轮无需自己 commit/push
+- 经验：① 并行实例已先把内容同步进 commit 后，本实例不必重复 commit；② 时间戳偏差风险——prompt 注入的 current_time 可能是缓存，下轮启动应优先用 `date +%Y-%m-%dT%H:%M` 校准；③ 当 paper id 在我写入后被其他实例占用，应自动跳过避免覆盖（p150 即此例）
+
 ## 2026-05-13 10:30（早间轮）
 - 投稿箱：无开放 Issue（gh issue list 返回 []）
 - 启动时工作树残留多个并行实例的大量未提交内容：news 28 条（n255-n282）+ papers 18 条（p134-p151，含 p133 删除）+ jobs 8 条（j113-j128）+ os 4 条 + 4 个 learn 模块新 sec — 全部接手不丢弃
