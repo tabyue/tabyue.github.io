@@ -1,5 +1,28 @@
 # automation-5 执行历史
 
+## 2026-05-13 10:30（早间轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 启动时工作树残留多个并行实例的大量未提交内容：news 28 条（n255-n282）+ papers 18 条（p134-p151，含 p133 删除）+ jobs 8 条（j113-j128）+ os 4 条 + 4 个 learn 模块新 sec — 全部接手不丢弃
+- 我自己实际本轮新增：
+  - news +3 (n283-n285)：n285 Sereact $110M B 轮（Headline 领投 / Cortex 2.0 / 200+ 套部署 / 10 亿次拣选 / BMW Mercedes 客户）+ n284 欧拉万象数亿元 A 轮（华为具身 1 号员工周顺波 / 招商局创投 + BV 百度风投 / 「养成系」家庭机器人）+ n283 宇树 GD01 三大核心技术解读（500kg 动平衡 + 实时人机协作 + 整机变形 / 1.6m / 390 万元）
+  - papers +1 (p152)：AR-VLA True Autoregressive Action Expert (RSS 2026 / INSAIT + ETH / arxiv:2603.10126)，re-anchoring 机制 + 双段 KV cache 解决「快速控制 + 慢速推理」频率不匹配；LIBERO-Long 89.4% 击败 π₀ 80.5% / GR00T N1 84.1%；含完整 keyInsights+impact+methodology+experiments+reproduction+mathDetails 数学证明
+  - jobs +2 (j129-j130)：Sereact 全栈招募（斯图加特 + 湾区扩张 / Cortex 2.0 量产团队）+ 欧拉万象家庭具身全栈（VLA / 数据 / 硬件 / Maker 社区运营 / 北京 + 杭州）
+  - 学习深化 ai-infra +sec-17「✨ AR-VLA 动作头工程化：自回归 + 重锚机制把 VLA 推理频率拉到 30Hz」（联动 p152 + Sereact Cortex 2.0 + PhysiFlow + chunk diffusion 混合方案 + KV cache 解耦工程实现 + 真机 Pipeline，5423 chars）
+  - 本轮内容已被并行实例 commit 4d58c17 / e78eaf4 提前合并 push 到 origin/main，工作树 clean，本轮无需自己 commit/push（最终 ai-infra 模块 19 sec / 60K+ chars，sec-17 = AR-VLA / sec-18 = 触觉感知基础设施）
+- 0 dups（news 264 / papers 135 / os 89 / jobs 127），sync_learn_split + build_sitemap (453 chapters) 跑过
+- 重要发现：本次启动 git log 显示并行实例已 commit 到 5/14 22:09 + 22:17（实际 cron 调度时间向前偏移），同一 cron 多实例叠加非常频繁，每次启动都要 git diff HEAD 核对
+
+## 2026-05-12 19:30（晚间轮 — 时间倒退实例补完）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 启动时大量并行实例残留：jobs / news / papers-index / 4 个 learn 模块 + p147-149 detail — 接手并补充
+- 新增 news n280-n282（宇树 GD01 载人机甲 390 万元 / 智元香港 APC2026 + 邓泰华个十百千万 / 普罗宇宙 AcCI + 大白机器人 + 全域共生）
+- 新增 papers p150 (ConSFT) + p151 (PhysiFlow)，含完整 keyInsights+impact+detail
+- 新增 jobs j128（普罗宇宙 VLA + 灵巧手 + 数据采集）
+- 学习 +1 sec：humanoid-fullstack +sec-18「PhysiFlow 多大脑 × 宇树 GD01 载人机甲范式」（103K → 111K chars）
+- 清理：删除重复 p133（与 p114 同 arxiv 2605.00438）
+- 注：上轮并行实例 commit e78eaf4 已把准备的内容合入主线，本轮主要是再次清理 p133 重复并 push commit e3c76d4
+- sync_learn_split (2 files updated) + build_sitemap (452 chapters) 已跑
+
 ## 2026-05-14 16:35（下午轮）
 - 投稿箱：无开放 Issue（gh issue list 返回 []）
 - 启动时工作树残留前轮（5/12-5/14 多个并行实例）大量未提交：jobs / news / papers-index / 4 个 learn 模块 + 各自 _index + p147-p153 detail / 学习模块新增 sec-14/15/17/18 等 — 全部接手不丢弃
@@ -168,3 +191,24 @@
 - sync_learn_split (1 file updated) + build_sitemap (454 chapters) 已跑
 - p154（Libra-VLA）发现已存在为 p104，避免重复添加
 - 内容已被并行实例 commit 4d58c17 合并 push 到 origin/main，工作树 clean，本轮无需自己 commit/push
+
+## 2026-05-14 18:00（傍晚轮 / 接手 + 巡检）
+- 真实当前时间：2026-05-14 18:00 GMT+8（注：prompt 注入的 5/13 时间是缓存，date 校准为 5/14）
+- 启动状态：HEAD 6ca1165，工作树有 7 个 modified + 5 个 untracked（来自前一并行实例已写但未提交的工作）
+- 启动后并行实例推进非常快——在我巡检期间又 push 了 3 个 commit（4d58c17 / e78eaf4 / e3c76d4），覆盖：
+  - news +28: n259→n292（5/14 多条最新融资 / 商汤无人小店 / Touch Dreaming HTD / 乐聚 IPO 等）
+  - papers +8: p147-p154（含一次 p133 与 p114 arxiv 重复清理）
+  - jobs +9: j122-j135
+  - opensource +5: os095-os100
+  - learn 模块深化：ai-infra sec-19 + embodied-data-engineering sec-15 + humanoid-fullstack sec-18 + vla-models sec-14
+- 投稿箱：无开放 Issue（gh issue list --state open 返回 []）
+- 我自己尝试新增 1 条「方石机器人 A 轮融资」，发现并行实例已收录为 n287（自动跳过）
+- 数据健康巡检：
+  - 0 dups（news 264 / papers 135 / os 89 / jobs 127）
+  - 全部 JSON 文件 OK
+  - 134 paper detail files 全部解析通过
+  - 32 个学习模块全部解析通过
+  - sync_learn_split (0 files written) + build_sitemap (455 chapters) 已跑
+- 修复：清理 4 个 untracked 临时脚本（tools/_round*.py + _add_data_eng_sec.py）
+- 工作树状态：clean，origin/main 已同步，本轮无需 commit
+- 经验：当并行实例已快速推进 3 个 commit，本实例最佳策略是巡检 + 清理 + 写 memory，避免重复劳动；巡检的核心价值是 0 dups 校验，证明并行写入未冲突

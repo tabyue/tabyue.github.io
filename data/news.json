@@ -1,6 +1,45 @@
 {
-  "lastUpdated": "2026-05-14T16:38",
+  "lastUpdated": "2026-05-14T01:40",
   "news": [
+    {
+      "id": "n294",
+      "title": "港大 + 南科大 + 星尘机器人联合发布 FFDC「自适应执行」论文（arxiv:2605.06222）：让机器人随时质疑自己的判断 — Real Robot 成功率 +35% / WAM 推理调用量降 69.1%",
+      "source": "腾讯新闻 / 科技行者 / arXiv",
+      "date": "2026-05-13",
+      "url": "https://news.qq.com/rain/a/20260513A04VYB00",
+      "category": "前沿研究",
+      "summary": "**香港大学 + 南方科技大学 + 深圳星尘机器人**联合发布**FFDC（Future-Forward Dynamics Causal Attention）**论文（arxiv:2605.06222 / 第二版 5/9）。**论文标题**：*When to Trust Imagination: Adaptive Action Execution for World Action Models*。**核心问题**：当前**世界行动模型（World Action Model, WAM）**通常每次推理后**固定执行 N 步**预测动作——但机器人无法判断「想象的未来」是否仍与「物理执行」对齐。**FFDC 解法**：把 WAM 的执行表述为**「未来-现实验证问题」**——一个轻量级 causal attention verifier 联合推理「预测未来动作 + 预测视觉动态 + 真实观察 + 语言指令」，输出 0-1 信心分数：>0.5 继续，<0.5 立即重新规划；动作 chunk 大小**自适应**——任务好执行时拉长动作序列，contact-rich 阶段就缩短。**关键实验**：① **RoboTwin 仿真**（50 任务）困难任务成功率 54.2%→76.4%（+22.2pp），简单任务时间 23.5s→15.7s（-33.2%），WAM 前向调用量 -69.1%；② **真机 Astribot S1**（星尘提供平台）平均成功率 45%→80%（+35pp），香蕉抓取 50%→80%，胡萝卜 40%→80%。**意义**：① **FFDC 是「想象 + 验证」范式的工程化典范**——把 LLM 时代的「self-correction」搬到具身领域，机器人首次能在执行中「质疑自己」；② **港校 + A 股公司「研究 + 落地」联动样板**：星尘 Astribot S1 既是数据采集平台又是真机验证平台，论文把「学术 SOTA」直接对接「商业化机器人」；③ **Mixture-of-Horizon Training** 训练 trick 解决 WAM 长视野泛化——可直接迁移到 GR00T / π₀ 等大型 VLA。",
+      "tags": [
+        "FFDC",
+        "港大",
+        "南科大",
+        "星尘机器人",
+        "Astribot S1",
+        "WAM",
+        "Adaptive Execution",
+        "arXiv 2605.06222"
+      ],
+      "addedDate": "2026-05-14"
+    },
+    {
+      "id": "n293",
+      "title": "英国 Humanoid 公司宣布 2030 年前美股 IPO 计划：CEO Artem Sokolov — 累计 3.4 万台 HMND 01 Alpha 订单 / 三年内交付 / 预期年营收 $24 亿 — 首个明确瞄准美股的欧洲人形机器人公司",
+      "source": "Reuters / Yahoo Finance / 新浪财经 / 环球市场播报",
+      "date": "2026-05-13",
+      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-05-13/doc-inhxufvi4492591.shtml",
+      "category": "投融资",
+      "summary": "**英国 Humanoid Inc.**（创始人兼 CEO **Artem Sokolov / 阿尔捷姆·索科洛夫**）首次公开宣布**美股 IPO 计划**——目标 **2029-2030 年**在美国资本市场上市，成为**首个明确瞄准美股的欧洲人形机器人公司**。**核心数据**：① **预购订单**累计 **3.4 万台 HMND 01 Alpha**（公司 2025 年 9 月发布的工业人形机器人，研发周期仅 1 年）；② **交付周期**未来 3 年内完成；③ **预期年营收 $24 亿美元**（Annual Recurring Revenue，按订单完成节奏）；④ **市场选择**：CEO 明确表示**管理层更倾向美国资本市场**——欧洲二级市场流动性 + 估值天花板被认为不足以支撑「全球工业人形机器人独角兽」估值。**HMND 01 Alpha 产品定位**：**高密度工业人形机器人**——身高 1.75m / 自重 70kg / 22 自由度 / 5kg 双臂负载，专为「窄通道仓储 + 制造业流水线」设计，对标 Figure 02 + Apptronik Apollo + Agility Digit。**意义**：① **欧洲人形机器人首次正面进入资本市场叙事**——此前欧美阵营被 Figure / Apptronik / Tesla Optimus 主导，英国 Humanoid 首次给出「美股上市 + 24 亿营收」具象目标；② **「研发 1 年 + 美股 5 年」节奏**对中国玩家形成压力——中国玩家普遍 IPO 时间表 2027-2028（智元 / 宇树 / 优必选），欧洲玩家用「美股 + 工业聚焦」错位竞争；③ **3.4 万台预订单**是个非常高的数字——若按 $7 万/台 ASP 计算约合 $24 亿美元营收，但当前公司**实际交付能力 + 工厂产能**未公开披露，需观察 2027 年量产爬坡是否兑现。",
+      "tags": [
+        "Humanoid",
+        "英国",
+        "美股 IPO",
+        "HMND 01 Alpha",
+        "Artem Sokolov",
+        "工业人形",
+        "欧洲"
+      ],
+      "addedDate": "2026-05-14"
+    },
     {
       "id": "n292",
       "title": "Zenbot（真保科技）完成近亿元天使轮融资：长盈精密 + 科达利 + 肇民科技联合投资 — 海归博士贾振中创立 / 具身智能基础设施供应商 / 大小脑融合架构 + 国产精密制造产业资本入局",
