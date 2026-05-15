@@ -1,6 +1,46 @@
 {
-  "lastUpdated": "2026-05-13T03:25",
+  "lastUpdated": "2026-05-15T08:10",
   "papers": [
+    {
+      "id": "p156",
+      "title": "MoDE-VLA: Towards Human-Like Manipulation through RL-Augmented Teleoperation and Mixture-of-Dexterous-Experts VLA",
+      "authors": [
+        "Tutian Tang",
+        "Xingyu Ji",
+        "Wanli Xing",
+        "Ce Hao",
+        "Wenqiang Xu",
+        "Lin Shao",
+        "Cewu Lu",
+        "Qiaojun Yu",
+        "Jiangmiao Pang",
+        "Kaifeng Zhang"
+      ],
+      "venue": "arXiv 2026",
+      "date": "2026-05-13",
+      "arxiv": "2605.09011",
+      "github": "",
+      "tags": [
+        "VLA",
+        "灵巧手",
+        "强化学习增强示教",
+        "MoE",
+        "残差注入",
+        "Shadow Hand"
+      ],
+      "tldr": "MoDE-VLA 提出「RL 增强遥操 + 灵巧专家混合 VLA」双轮驱动方案：① IMCopilot 用 RL 预训练原子级灵巧技能模块，作为遥操作共享自主控制助手把数据采集效率提升 3.7×；② MoDE-VLA 在冻结预训练 VLA 主干上用残差注入轻量融合力觉/触觉模态——4 个递进式手内灵巧任务（旋转/翻转/滑动/多指重定向）成功率比基线 VLA 提升 2 倍，Shadow Hand + Franka 双臂真机部署验证。",
+      "category": "VLA / 灵巧操作",
+      "difficulty": "进阶",
+      "addedDate": "2026-05-15",
+      "keyInsights": [
+        "**RL 增强遥操**：IMCopilot 把灵巧操作原子技能（指尖滑移/翻转/旋转）做成 RL 预训练模块，作为「共享自主」辅助操作员采数——3.7× 数据效率提升来自这一层",
+        "**MoE × 残差注入**：在冻结 VLA 主干上仅给力/触觉模态加 MoE 残差路径，避免灾难性遗忘的同时获得接触感知——这是 VLA 加多模态的「轻量插拔」范式样本",
+        "**Shadow Hand + Franka 真机部署**：4 个手内灵巧任务（rotation/flipping/sliding/multi-finger reorient）成功率提升 2×，是少见的「真实双臂灵巧手 + 接触密集」VLA 成果",
+        "**双层 RL → VLA 通路**：底层 RL 原子技能做执行原语，上层 VLA 做决策路由——这是「分层 VLA」（参考 sec-5）的最新工业化实现",
+        "**触觉/力觉 VLA 升级**：MoDE-VLA 与 Touch-VLA（sec-10）路线呼应，但聚焦灵巧手而非通用夹爪，是 2026-05 最新 in-hand manipulation VLA 标杆"
+      ],
+      "impact": "把 VLA 从「单手抓取放置」推向「双手人类水平灵巧操作」的关键论文——3.7× 数据采集效率 + 2× 成功率 + 真机 Shadow Hand 验证三条线齐全，对所有「VLA + 灵巧手」线团队都是必读对照基线。"
+    },
     {
       "id": "p155",
       "title": "When to Trust Imagination: Adaptive Action Execution for World Action Models (FFDC)",

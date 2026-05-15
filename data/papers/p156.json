@@ -1,0 +1,32 @@
+{
+  "id": "p156",
+  "title": "MoDE-VLA: Towards Human-Like Manipulation through RL-Augmented Teleoperation and Mixture-of-Dexterous-Experts VLA",
+  "authors": [
+    "Tutian Tang",
+    "Xingyu Ji",
+    "Wanli Xing",
+    "Ce Hao",
+    "Wenqiang Xu",
+    "Lin Shao",
+    "Cewu Lu",
+    "Qiaojun Yu",
+    "Jiangmiao Pang",
+    "Kaifeng Zhang"
+  ],
+  "venue": "arXiv 2026",
+  "date": "2026-05-13",
+  "arxiv": "2605.09011",
+  "tldr": "MoDE-VLA 提出「RL 增强遥操 + 灵巧专家混合 VLA」双轮驱动方案：① IMCopilot 用 RL 预训练原子级灵巧技能模块，作为遥操作共享自主控制助手把数据采集效率提升 3.7×；② MoDE-VLA 在冻结预训练 VLA 主干上用残差注入轻量融合力觉/触觉模态——4 个递进式手内灵巧任务（旋转/翻转/滑动/多指重定向）成功率比基线 VLA 提升 2 倍，Shadow Hand + Franka 双臂真机部署验证。",
+  "keyInsights": [
+    "**RL 增强遥操**：IMCopilot 把灵巧操作原子技能（指尖滑移/翻转/旋转）做成 RL 预训练模块，作为「共享自主」辅助操作员采数——3.7× 数据效率提升来自这一层",
+    "**MoE × 残差注入**：在冻结 VLA 主干上仅给力/触觉模态加 MoE 残差路径，避免灾难性遗忘的同时获得接触感知——这是 VLA 加多模态的「轻量插拔」范式样本",
+    "**Shadow Hand + Franka 真机部署**：4 个手内灵巧任务（rotation/flipping/sliding/multi-finger reorient）成功率提升 2×，是少见的「真实双臂灵巧手 + 接触密集」VLA 成果",
+    "**双层 RL → VLA 通路**：底层 RL 原子技能做执行原语，上层 VLA 做决策路由——这是「分层 VLA」（参考 sec-5）的最新工业化实现",
+    "**触觉/力觉 VLA 升级**：MoDE-VLA 与 Touch-VLA（sec-10）路线呼应，但聚焦灵巧手而非通用夹爪，是 2026-05 最新 in-hand manipulation VLA 标杆"
+  ],
+  "impact": "把 VLA 从「单手抓取放置」推向「双手人类水平灵巧操作」的关键论文——3.7× 数据采集效率 + 2× 成功率 + 真机 Shadow Hand 验证三条线齐全，对所有「VLA + 灵巧手」线团队都是必读对照基线。",
+  "methodology": "MoDE-VLA 由两个独立但深度联动的子系统组成。**第一子系统 IMCopilot** 是 RL 预训练的灵巧手原子技能库——以 Shadow Hand 为本体，在 IsaacLab 仿真中针对 7 个原子级技能（in-hand rotation / flipping / sliding / regrasping / pinch / power-grasp / multi-finger reorient）做 PPO + DDPG 混合训练；每个技能独立达到 90%+ 成功率后冻结权重。IMCopilot 在线运行时作为「共享自主」中间件：操作员通过 VR 遥操作主导任务规划与轨迹大方向，IMCopilot 自动接管手指级精细动作（防滑/防脱落/接触维持），让一个普通采数员的有效采集吞吐提升到原来的 3.7 倍。**第二子系统 MoDE-VLA** 在 OpenVLA-7B 冻结主干上挂三条残差专家：视觉专家（继承原 SigLIP 编码）/ 力觉专家（接收 6D F/T 数据）/ 触觉专家（接收 GelSight 触点云）。每个专家用 LoRA-rank-32 适配，输出在 action token 之前通过 gating-MoE 做 token-wise routing。训练阶段：① 用 IMCopilot 采集 12,000 条手内灵巧操作 demos；② 冻结 OpenVLA 主干，只训 LoRA + gating；③ 用 BC + DAgger 联合损失。",
+  "experiments": "**主实验** — 4 个手内灵巧任务（in-hand rotation / object flipping / multi-finger sliding / multi-finger reorient），每个任务 50 次真机 rollout：MoDE-VLA 平均成功率 **64.5%**，OpenVLA 基线 **31.0%**（提升 2.08×）；π₀-base 基线 **42.0%**（提升 1.54×）。**消融** — 去掉 IMCopilot 的数据采集只用 VR 单人遥操：demo 数从 12,000 降到 3,200（同样 30 天采集时间），最终成功率从 64.5% 跌到 38.0%——验证 RL 增强遥操对 in-hand 数据获取的不可替代性。**残差专家消融** — 只用视觉残差（无力/触觉）成功率仅 41%，加力觉到 53%，加触觉到 64.5%——说明触觉对接触密集任务贡献最大。**硬件**：Shadow Dexterous Hand 双臂 + Franka Emika Panda 双臂 + 4× RealSense D435 + GelSight Mini 6 颗 + ATI Mini40 F/T 传感器。",
+  "reproduction": "复现需要 Shadow Hand × 2（每只 ≈ $50K）+ GelSight × 6 + Franka × 2，硬件门槛极高（总成本 ≈ $200K）；纯仿真复现可行：① 用 IsaacLab 跑 IMCopilot 训练（推荐 4× A100，3 天）；② 用作者放出的 12K demos 训 MoDE-VLA（4× H100，5 天 LoRA-finetune）；③ 仿真评测（成功率会比真机高 5-10pp，因为接触动力学更理想化）。预期发布 IMCopilot 技能库 + MoDE-VLA 微调代码（截至 5/15 GitHub 仓库未公开）。",
+  "mathDetails": "**残差注入数学**：a_t = OpenVLA(o_t, g) + sum_k alpha_k * Expert_k(o_t, g, m_k)，其中 alpha_k = softmax(W_g · [o_t, m_k])_k 是 token-wise gating 权重，m_k 是第 k 个模态的特征（k ∈ {vision, force, tactile}）。**LoRA 参数量**：每个专家 rank=32，约 12M 参数，3 个专家共 36M（相比 OpenVLA-7B 主干仅 0.5%）。**RL 增强遥操目标**：J(π_co) = E[sum_t (r_task(s_t, a_t^op) + lambda * r_grip(s_t, a_t^co))]，其中 a_t^op 是操作员动作，a_t^co 是 IMCopilot 自动补充动作，lambda=0.3 平衡操作员意图保留 vs 自动接管。"
+}
