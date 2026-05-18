@@ -277,3 +277,16 @@
 - 0 dups（news 273 / papers 138 / os 89 / jobs 130），671 JSON 文件全部 OK
 - sync_learn_split (2 files updated) + build_sitemap (458 chapters) 已跑
 - commit 待 push origin/main
+
+## 2026-05-17 08:00（早间轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 启动状态：HEAD 9236bde，工作树残留前一并行实例已写但未提交的 5/16 早间轮工作（n299-301 + p158 HarmoWAM + j138 + sec-18 WAM v2 三件套），接手并补全 lastUpdated（vla-models 主文件 sec-18 + split sec-18 + learning-path），跑 sync_learn_split (1 file updated) + build_sitemap (458 chapters)，清理临时脚本 _round_5_16.py + _round_5_16_learn.py，并行实例自动 commit 0dcc00e push origin/main
+- 自己 5/17 早间轮新增：
+  - news +1 (n302)：北京人形 Pelican-Unify 1.0 全球首个理解·推理·想象·行动「大一统」具身基座模型 — WorldArena 双冠 / 4B VLM 第一 / RoboTwin VLA 前列（arxiv:2605.15153）
+  - papers +2：
+    - p159: Pelican-Unify 1.0 (UEI) — 紧耦合 VLM + 生成头双组件 + 三大统一原则（架构 / 输入 / 训练）+ 8 阶段训练课程；含完整 keyInsights + impact + methodology + experiments + reproduction
+    - p160: VLAs-as-Tools — 上海交大 + 北航 Siheng Chen 团队，VLM Agent + VLA 工具族两层架构 + TAPT (Tool-Aligned Post-Training) + 工具族残差适配器，长程任务 +25-40pp，恢复任务 +35pp 最大；含完整 detail
+- 0 dups（news 274 / papers 140 / os 89 / jobs 130）
+- sync_learn_split + build_sitemap (458 chapters) 已跑两次（5/16 接手 + 5/17 自加）
+- commit 5d42e08 已 push origin/main
+- 经验：HEREDOC 写 Python 脚本时如果 string 含未转义的内嵌 ASCII 单引号 '...'（含中文字符的 f-string 与中文引号嵌套）会触发 bash unexpected EOF 报错；改用 Write 工具直接写 .py 文件再 python 执行更稳，避免 shell escaping 陷阱
