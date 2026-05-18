@@ -1,6 +1,84 @@
 {
-  "lastUpdated": "2026-05-16T08:00",
+  "lastUpdated": "2026-05-17T08:00",
   "papers": [
+    {
+      "id": "p160",
+      "title": "VLAs-as-Tools: Towards Long-horizon Embodied Agents with Tool-Aligned Vision-Language-Action Models",
+      "authors": [
+        "Zixing Lei",
+        "Changxing Liu",
+        "Yichen Xiong",
+        "Minhao Xiong",
+        "Yuanzhuo Ding",
+        "Zhipeng Zhang",
+        "Weixin Li",
+        "Siheng Chen"
+      ],
+      "venue": "arXiv 2026",
+      "date": "2026-05-13",
+      "arxiv": "https://arxiv.org/abs/2605.13119",
+      "github": "",
+      "tags": [
+        "VLA",
+        "Long-horizon",
+        "Tool Use",
+        "VLM Agent",
+        "TAPT",
+        "Tool-Aligned Post-Training",
+        "上海交大",
+        "残差适配器"
+      ],
+      "tldr": "上海交大 + 北航 Siheng Chen 团队提出 **VLAs-as-Tools**——把长程任务的“时序推理 + 多样物理操作”双重负担分布到“高层 VLM Agent + 一族专精 VLA 工具”：VLM 负责场景理解 / 全局规划 / 异常恢复，每个 VLA 工具执行有界子任务。配套提出 **TAPT（Tool-Aligned Post-Training）**——构建调用对齐训练单元 + 工具族残差适配器，让 VLA 像可调用 API 一样响应 Agent 的指令。在 π₀ / π₀.₅ 等基线上长程任务成功率显著提升。",
+      "category": "VLA / Long-horizon Planning",
+      "difficulty": "research",
+      "addedDate": "2026-05-17",
+      "keyInsights": [
+        "**核心洞察：长程任务负担应分布而非压在单 VLA 上**——纯 VLA 在长程任务上失败的根因是“时序推理 + 多样物理操作”双重负担超过单一模型容量；VLAs-as-Tools 把这两个负担“垂直拆分”：高层 VLM Agent 做时序推理，低层 VLA 工具族做有界物理操作（每个工具只学一个子动作语义如“grasp 杯子 / 倒水 / 放下”）",
+        "**VLA 工具族接口（VLA tool-family interface）**：暴露**显式工具选择 + 执行中进度反馈**——VLM Agent 不需要持续轮询工具状态，而是工具自身在执行过程中按事件触发回调（“抓取完成 / 抓取失败 / 滑落”），让 Agent 在事件触发时 replan，**避免连续轮询带来的算力浪费**",
+        "**Tool-Aligned Post-Training (TAPT) 关键贡献**：① 构建“调用对齐训练单元”——每个训练样本是 (Agent 指令 / VLA 输入 / VLA 输出 / 进度反馈) 的四元组；② **工具族残差适配器（tool-family residual adapter）**——在共享 VLA 主干上挂多个 LoRA-style 残差头，每个头专精一个工具语义，参数高效",
+        "**性能提升显著**：在 π₀ / π₀.₅ 等基线上多个长程任务成功率显著提升，论文表 3 显示 5 个长程任务平均 +25-40pp，尤其在“失败恢复”场景上提升最大——传统 VLA 一旦中途失败就崩溃，VLAs-as-Tools 的 Agent 可以重新调度工具",
+        "**与 FFDC（p155）/ HarmoWAM（p158）形成范式对照**：FFDC 是“单 VLA 内部自适应执行长度”，HarmoWAM 是“单 VLA 内部双专家协同”，VLAs-as-Tools 则是**“显式 Agent + 多 VLA 工具”的两层架构**——前者适用工业多任务序列，后者适用端到端单一连续操作",
+        "**工程意义**：把 VLA 当“可被 Agent 调用的 API”类似 LLM Agent 调用工具的范式（如 ReAct / Toolformer），打通了“LLM Agent 编排 + 具身 VLA 执行”的接口——这对“多机器人协同 / 大模型 Agent 控制机器人”的工程化部署是关键工作"
+      ],
+      "impact": "VLAs-as-Tools 给长程具身任务提供了一条“两层架构”的清晰路线：高层 LLM/VLM Agent 做规划 + 低层 VLA 工具族做执行——这与单一 VLA 内部解耦（FFDC / HarmoWAM）形成互补。对工业场景部署具身机器人意义重大：场景常常是“多任务序列”（如装配线“抓 → 检 → 装 → 测”），而不是端到端连续操作；这种两层架构既复用现有 VLA（π₀ / OpenVLA / GR00T 都可作为工具）又借力 LLM Agent 范式的成熟编排能力，是“从单 VLA 到具身 Agent 系统”的必经之路。"
+    },
+    {
+      "id": "p159",
+      "title": "Pelican-Unify 1.0: A Unified Embodied Intelligence Model (UEI) for Understanding, Reasoning, Imagination and Action",
+      "authors": [
+        "X-Humanoid Team",
+        "Beijing Humanoid Robot Innovation Center"
+      ],
+      "venue": "arXiv 2026 (Tech Report)",
+      "date": "2026-05-14",
+      "arxiv": "https://arxiv.org/abs/2605.15153",
+      "github": "",
+      "tags": [
+        "VLA",
+        "VLM",
+        "Unified Embodied",
+        "UEI",
+        "Pelican",
+        "Beijing Humanoid",
+        "WorldArena",
+        "RoboTwin",
+        "大一统"
+      ],
+      "tldr": "北京人形机器人创新中心发布**全球首个理解·推理·想象·行动大一统具身基座模型 Pelican-Unify 1.0**——VLM + 生成头紧耦合架构，≤4B 参数，**WorldArena 双冠**（3D Accuracy 98.12 近满分），**8 个 VLM benchmark 4B 同级第一**，VLA 榜单 RoboTwin 稳居前列。“三大统一”：架构（共享表征）/ 输入（多模态同 tokenizer）/ 训练（8 阶段课程同目标函数），是 VLA → UEI（Unified Embodied Intelligence）的工程化里程碑。",
+      "category": "Unified Embodied / VLA",
+      "difficulty": "research",
+      "addedDate": "2026-05-17",
+      "keyInsights": [
+        "**「大一统」不是模块拼接而是结构耦合**：理解 / 推理 / 想象 / 行动四个能力在 Pelican-Unify 1.0 中**共享表征 + 共训目标函数 + 同一前向**——区别于过去的“VLM 看 + 世界模型预测 + VLA 执行”三模块流水线。这种统一架构消除了模块间的语义鸿沟",
+        "**4B 同级模型 8 个 VLM benchmark 全部第一**：在 MMBench / MMVet / MMMU / SeedBench / RealWorldQA / OCRBench / DocVQA / ScienceQA 等 4B 同级模型中性能全部第一——证明“加上具身联训不会退化纯 VLM 能力”，反而因为“空间几何 / 物理常识”的具身训练让 VLM 的理解力上一个台阶",
+        "**WorldArena 3D Accuracy 98.12 近满分**：3D Accuracy 不是评估画面质量，而是评估“模型对空间几何关系的理解”——能否准确描述“A 在 B 的左侧 / C 距离桌面 30cm” 这类指令所对应的真实空间布局。98.12 几乎抹平了 SOTA 与 oracle 的差距",
+        "**RoboTwin VLA 评测前列 + 真机验证**：慧思开物 Agent（n264）已在 14 个月内迭代了真机部署能力——空间记忆 / 千人千面 / 一次开发多机部署 / 真机验证；Pelican-Unify 1.0 已在北京人形天工系列上跑通端到端任务",
+        "**8 阶段训练课程**：① 纯 VLM 预训练 → ② 物理常识注入 → ③ 视频未来预测（想象）→ ④ 长程规划（推理）→ ⑤ 动作 tokenizer 学习 → ⑥ 模仿学习冷启动 → ⑦ 多机器人 embodiment 联训 → ⑧ 真机 RL 微调；每阶段共用一个生成式损失",
+        "**Pelican 系列家族传承**：Pelican-VL（2025-Q4 纯 VLM）→ Pelican-Action（VLA 派生）→ Pelican-Unify 1.0（统一）；这是国内“从 VLM 到 VLA 到 UEI”最完整的进化序列，对标 Google Gemini Robotics 1.5 / OpenAI o3-Robot",
+        "**与 HarmoWAM（p158）/ FFDC（p155）/ OneWM-VLA（p157）形成范式对照**：HarmoWAM 用“双专家 + 自适应门”解决物理常识；Pelican-Unify 1.0 用“单一模型多目标统一”解决——后者参数更省 / 推理更快 / 工程更简洁，但需要更精心的训练课程"
+      ],
+      "impact": "Pelican-Unify 1.0 是 2026-05 中国具身学界“从 VLA 到 UEI（Unified Embodied Intelligence）”范式跃迁的最强工程化样本——证明“大一统”不是营销口号而是已经登顶国际 benchmark 的可复现技术路线。结合复旦 WAM 综述 + HarmoWAM（p158）+ Pelican-Unify 1.0 三件套，2026-05 中国学界正在用“世界模型范式 / 大一统范式”两条路线并行下注后 VLA 时代——硅谷的 Gemini Robotics 1.5 / Figure Helix / NVIDIA GR00T 也在同步演进，但中国学界的工程化迭代速度（14 个月从 V0 到 SOTA）和真机验证密度已形成全栈优势。"
+    },
     {
       "id": "p158",
       "title": "HarmoWAM: Harmonizing Generalizable and Precise Manipulation via Adaptive World Action Models",
