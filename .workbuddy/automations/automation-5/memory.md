@@ -254,3 +254,26 @@
 - 修复：清理 4 个 untracked 临时脚本（tools/_round*.py + _add_data_eng_sec.py）
 - 工作树状态：clean，origin/main 已同步，本轮无需 commit
 - 经验：当并行实例已快速推进 3 个 commit，本实例最佳策略是巡检 + 清理 + 写 memory，避免重复劳动；巡检的核心价值是 0 dups 校验，证明并行写入未冲突
+
+## 2026-05-15 08:30（早间轮）
+- 投稿箱：无开放 Issue
+- 新闻 +3 (n296-n298)：灵御智能天使+轮近亿（清华系一身多脑 + 京东七鲜 + 英特尔）/ 字节+上汽入股自变量科技 / JAL 羽田机场宇树 G1 + 优必选 Walker E 中国双机首登日本国际机场地服
+- 论文 +1 (p156)：MoDE-VLA — RL 增强遥操作 + 灵巧专家混合 VLA（Shadow Hand 双臂 4 任务 2× / 采数 3.7×）含完整 detail
+- 招聘 +1 (j137)：灵御智能 6 方向（修正 j136 冲突）
+- 学习 +1 sec：vla-models +sec-16「灵巧手 VLA：MoE 残差注入 × RL 增强遥操作」7498 chars，模块 149K → 156K
+- 跳过：SONIC 开源（os098 已有 GR00T-WholeBodyControl）
+- 0 dups（news 270 / papers 137 / os 89 / jobs 129）
+- sync_learn_split + build_sitemap (457 chapters) 已跑
+- commit 9236bde 已 push origin/main
+
+
+## 2026-05-16 08:00（早间轮）
+- 投稿箱：无开放 Issue（gh issue list --state open 返回 []）
+- 新闻 +3 (n299-n301)：博银合创近 3 亿元 Pre-A（博世 + 银河通用合资 / 苏州 10 亿基地 / 数亿美元 + 2000 台订单）/ 深度机智超亿元（陈凯中科大少年班 + 第一视角学习路线 + 晶科 CVC）/ 成都人形机器人创新中心蜀道集团战略融资 + 发布中国首个 MTPR-WM 流形拓扑保持世界模型
+- 论文 +1 (p158)：HarmoWAM PKU + 港中大 + 简极机器人 — 双专家 + 过程自适应门控 + 共享世界模型 latent 的 WAM v2 标杆，6 真机任务 OOD 平均 +33% vs π₀.₅；含完整 keyInsights + impact + methodology + experiments + reproduction + mathDetails
+- 招聘 +1 (j138)：博银合创 7 大方向（工业 VLA + 数据采集 + 双臂本体 + 工艺 + 量产 + 客户）
+- 学习深化：vla-models +sec-18 World Action Model v2 三件套（HarmoWAM × FFDC × OneWM-VLA）7473 chars——VLA 三短板 / WAM 两流派 / 三标杆精读 / 落地决策树，模块 17→18 sec
+- 跳过：复旦 WAM 综述 arxiv:2605.12090（已在 sec-18 作延伸阅读引用，不单独建 paper detail）；MotuBrain（已超 24h 时窗）
+- 0 dups（news 273 / papers 138 / os 89 / jobs 130），671 JSON 文件全部 OK
+- sync_learn_split (2 files updated) + build_sitemap (458 chapters) 已跑
+- commit 待 push origin/main
