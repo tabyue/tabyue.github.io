@@ -1,6 +1,45 @@
 {
-  "lastUpdated": "2026-05-17T08:00",
+  "lastUpdated": "2026-05-19T08:00",
   "papers": [
+    {
+      "id": "p161",
+      "title": "Hand-in-the-Loop: Improving Dexterous VLA via Seamless Interventional Correction",
+      "authors": [
+        "Zhuohang Li",
+        "Liqun Huang",
+        "Wei Xu",
+        "Zhengming Zhu",
+        "Nie Lin",
+        "Xiao Ma",
+        "Xinjun Sheng",
+        "Ruoshi Wen"
+      ],
+      "venue": "arXiv 2026 (preprint)",
+      "date": "2026-05-14",
+      "arxiv": "https://arxiv.org/abs/2605.15157",
+      "github": "",
+      "tags": [
+        "VLA",
+        "Dexterous Manipulation",
+        "Interactive Imitation Learning",
+        "Human-in-the-Loop",
+        "Bimanual",
+        "Long-horizon",
+        "Compounding Error"
+      ],
+      "tldr": "针对灵巧 VLA 在长程双手操作中**复合误差累积** + 人类介入时**「手势跳变」（gesture jumps）** 两大痛点，提出 HandITL — 在人类示教与自主策略之间做无缝混合的交互式模仿学习方法：takeover 抖动减 99.8% / 抓取失败减 87.5% / 完成时间减 19.1%；用 HandITL 采集的介入数据再训练，三个长程灵巧任务平均成功率较普通遥操数据 +19%。",
+      "category": "操作",
+      "difficulty": "advanced",
+      "addedDate": "2026-05-19",
+      "keyInsights": [
+        "💡 **VLA 长程灵巧操作两大致命瓶颈被首次量化**：① 高维动作空间（双手 ≥30 DoF）+ 接触富集动力学 → 任意小策略偏差在长程 rollout 中以指数速率放大（compounding error）；② 现有 IIL 方法直接「人接管」会因为「人手当前姿态」 vs 「策略当前预测姿态」差距过大产生瞬时 gesture jump，硬件冲击 + 数据污染同时发生 — HandITL 把抖动直接打到 0.2%（减 99.8%）",
+        "💡 **「Seamless Blend」核心机制**：takeover 时不直接切换控制权，而是在 N 步内对人手 / 策略两路目标做凸组合 α(t)·human + (1-α(t))·policy，α(t) 按 sigmoid 平滑爬升 — 用控制论术语就是把「step 输入」改成「ramp 输入」，从根上消除高频动作震荡",
+        "💡 **真机验证规模罕见**：5 个 bimanual 任务 + 工具使用 + fine-grained 长程操作（最长单 episode > 2 分钟），takeover 数据用作策略 refinement 后三任务平均 +19% — 证明 IIL 在双手灵巧场景的可行性边界从此前的「单手 6 DoF demo」推到「双手 30+ DoF 长程」",
+        "💡 **抓取失败 -87.5% 的工程意义**：双手灵巧任务在没有 HandITL 时，95% 失败发生在「人接管瞬间手指构型骤变 → 物体掉落」 — 把这一类「半失败」从数据集中剔除后，IIL 数据质量本身比纯遥操数据高 19%，揭示「数据清洁度 > 数据规模」",
+        "💡 **指向 VLA 部署的核心 missing piece**：现有所有 VLA（π₀ / RDT / GR00T N1.5 / SmolVLA）都假设「策略全程自主」 — HandITL 把「人 + 策略联合控制」当成一等公民来设计，是 VLA 走出实验室进入真实家庭 / 工厂的必要中间形态"
+      ],
+      "impact": "这篇论文给出了「VLA + 人类介入」标准范式的工程实现 — 直接对接 5/14 字节 + 上汽入股的自变量 WALL-B 入户量产计划（n297）、6/25 自变量首批家庭部署（n241）、Figure 03 BotQ 量产（n248）、自变量 + 5/18 小米战投 B 轮（最新报道）这些「真家庭 / 真工厂部署」场景。在 VLA 失败时让人短暂介入并把介入数据回流再训练，是当前所有量产具身方案（Figure / Tesla Optimus / 自变量 / 银河通用 / 智元 / 优必选）唯一能持续提升能力的飞轮方案。HandITL 的代码 / 抖动公式 / takeover 控制律预计将被广泛复用为「人机协同 IIL」事实标准 — 类似 RT-1 之于 VLA、Diffusion Policy 之于 imitation。"
+    },
     {
       "id": "p160",
       "title": "VLAs-as-Tools: Towards Long-horizon Embodied Agents with Tool-Aligned Vision-Language-Action Models",
