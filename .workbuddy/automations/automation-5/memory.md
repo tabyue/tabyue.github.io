@@ -290,3 +290,15 @@
 - sync_learn_split + build_sitemap (458 chapters) 已跑两次（5/16 接手 + 5/17 自加）
 - commit 5d42e08 已 push origin/main
 - 经验：HEREDOC 写 Python 脚本时如果 string 含未转义的内嵌 ASCII 单引号 '...'（含中文字符的 f-string 与中文引号嵌套）会触发 bash unexpected EOF 报错；改用 Write 工具直接写 .py 文件再 python 执行更稳，避免 shell escaping 陷阱
+
+## 2026-05-19 08:00（早间轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 新闻 +3 (n303-n305)：① 云深处科创板 IPO 受理（25.03 亿募资 / 2025 营收 3.4 亿扭亏为盈 / 研发占比 31.52% / 朱秋国浙大绝影持股 16.39% / 山猫 M20S + DR01 全天候人形）；② 矩阵超智 MATRIX-3 张江发布（张海星特斯拉中国前创始领导 / WAVE 物理基座模型 / 直线关节并联硬件自主可控 / 27 维灵巧手微米级 / 5000 台年内 + 2027H1 10 万台量产）；③ 蔚蓝科技 BabyAlpha A3（6 颗国产芯片协同 / 22 核 CPU / 70 亿参数本地大模型 280 TPS / 1-10 成本对标 Jetson Thor / 万元级 Q3 上市）
+- 论文 +1 (p161)：HandITL（CMU + 上海交大 5/14, arxiv:2605.15157）双手灵巧 VLA 人机共控 — Sigmoid Ramp Blending takeover jitter -99.8% / grasp failure -87.5% / 三长程任务 +19%；含完整 keyInsights + impact + methodology + experiments + reproduction + mathDetails
+- 招聘 +2 (j139 云深处 IPO 后 5 大方向 / j140 矩阵超智 MATRIX-3 6 大量产岗位扩招)
+- 学习深化：ai-infra +sec-20「Hand-in-the-Loop 工程化：VLA 量产部署的人机共控基础设施」7K chars，模块 19→20 sec / 68K → 75K（脱离最薄区第一名）；联动 p161 + WALL-B + Figure 03 BotQ + 5/14 双手灵巧 VLA 论文阵
+- 自变量 5/18 小米战投 B 轮（披露发生在 5/18，但 4/21 已宣布融资 — 信息陈旧，跳过避免与 n091/n149/n241/n279/n284/n297 重复）；FF（Faraday Future）转型具身（n125 已收录，跳过）；机智赛博天使轮（n300 同公司主体「深度机智」已覆盖陈凯团队，跳过）
+- 0 dups（news 277 / papers 141 / os 89 / jobs 132），全部 JSON 文件 OK
+- sync_learn_split (2 files updated) + build_sitemap (459 chapters) 已跑
+- commit 734c85a 已 push origin/main
+- 经验：Edit JSON 大文件时直接用 Edit + Read 校核 + python json.load 验证三件套，比 HEREDOC 写脚本更稳；新增 paper detail 配套要先读邻居（如 p160）的 schema 再写，保持字段一致（methodology/experiments/reproduction/mathDetails）
