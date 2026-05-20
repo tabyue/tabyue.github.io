@@ -1,6 +1,59 @@
 {
-  "lastUpdated": "2026-05-19T08:00",
+  "lastUpdated": "2026-05-20T08:00",
   "papers": [
+    {
+      "id": "p162",
+      "title": "Dexora: Open-source VLA for High-DoF Bimanual Dexterity",
+      "authors": [
+        "Zongzheng Zhang",
+        "Jingrui Pang",
+        "Zhuo Yang",
+        "Kun Li",
+        "Minwen Liao",
+        "Saining Zhang",
+        "Modi Shi",
+        "Yao Mu",
+        "Jiayuan Gu",
+        "Hao Dong",
+        "Huazhe Xu",
+        "Li Yi",
+        "Yixin Zhu",
+        "Hang Zhao",
+        "Pengwei Wang",
+        "Shanghang Zhang",
+        "Jianyu Chen",
+        "Hongyang Li",
+        "Hao Zhao"
+      ],
+      "venue": "ICRA 2026 (accepted)",
+      "date": "2026-05-18",
+      "arxiv": "https://arxiv.org/abs/2605.18722",
+      "github": "",
+      "tags": [
+        "VLA",
+        "Bimanual",
+        "Dual-Hand",
+        "High-DoF",
+        "Diffusion Transformer",
+        "Open-Source",
+        "Apple Vision Pro",
+        "Exoskeleton Teleop",
+        "MuJoCo Digital Twin",
+        "Data Quality"
+      ],
+      "tldr": "**首个原生面向「双臂 + 双手 / 高 DoF」的开源 VLA 系统**：自研外骨骼背包捕粗臂运动 + Apple Vision Pro 无标记追手指 → 同时驱动真机 + MuJoCo 数字孪生；100K 仿真轨迹（6.5M 帧）+ 10K 真机 episode（2.92M 帧）双库；离线 discriminator 给 clip 级权重做 Diffusion-Transformer 训练降权噪声示教；灵巧手平均成功率 **66.7% vs 51.7% baseline / 基础任务 90%**，强 OOD + 跨具身泛化 — 把双手灵巧 VLA 从「论文 demo」推进到「可复用 ICRA 标杆」。",
+      "category": "操作",
+      "difficulty": "advanced",
+      "addedDate": "2026-05-20",
+      "keyInsights": [
+        "💡 **「为什么双手 + 双灵巧手不能直接用 ALOHA / RDT 的双夹爪范式」第一次被系统拆开**：低维夹爪控制（每只手 1-7 DoF）允许大量「手工启发式 + 端到端」混搭，但 ≥ 30 DoF 的双手灵巧操作里端到端 VLA 反而是必选项 — 因为接触 / 关节耦合的高维流形无法用规则覆盖；论文给出从「双夹爪 6+6 DoF → 双手 30+30 DoF」的范式跃迁正式定义",
+        "💡 **混合遥操作硬件设计「外骨骼 + Vision Pro」是反直觉但优解**：粗臂 IK 用外骨骼背包（机械直读关节角，免标定 / 免漂移），精细手指用 Apple Vision Pro 的无标记 hand tracking（消费级 / 易复制）— 这种「硬件 + 视觉」分层捕捉绕开了「全身 IMU 服 + Mocap 校准」万元级成本，把双手灵巧采数门槛拉到几千美元",
+        "💡 **数字孪生 1:1 对齐让 100K 仿真轨迹真正能用**：MuJoCo 数字孪生与物理双手平台共用同一遥操作接口 — 操作者一次示教同时输出真机 + 仿真轨迹，**避免传统 sim-to-real 中「仿真模型偏置」**；6.5M 仿真帧 + 2.92M 真机帧的 22:10 配比是论文核心 takeaway — 仿真做基础策略训练，真机做最终 alignment",
+        "💡 **数据质量感知训练 = 离线判别器自动降权噪声示教**：用一个 discriminator 学「该 clip 是否在轨迹流形上」给 clip 级权重 w∈[0,1]，乘进 Diffusion-Transformer 的 loss — ablation 显示**没有 discriminator 时灵巧成功率从 66.7% 跌到 ≈ 53%**（约 -14pp），证明「双手遥操作示教中 30-50% 是噪声 / 半失败」是普遍现象而非个案",
+        "💡 **66.7% vs 51.7% baseline 灵巧成功率 = +15pp 绝对**，比同期单手灵巧 SOTA 高 5-10pp；OOD + 跨具身泛化是从「VLA 是 demo」走向「VLA 是 product」的关键 — 直接对接智元 / 临界点 / Sharpa（夏普）/ 因时机器人 / 灵心巧手 等中国灵巧手厂商的量产计划"
+      ],
+      "impact": "Dexora 给「双手 + 双灵巧手 VLA」开源生态定标 — 在临界点（5/19 估值破 10 亿美元独角兽 / n306）/ 智元 / 帕西尼 / 银河通用等中国灵巧手厂商的产品矩阵爆发期发布，恰好补上「硬件已就绪 + 算法范式空缺」的工程断层。论文方法（外骨骼 + Vision Pro 遥操作 / MuJoCo 数字孪生 / discriminator 数据降权）会被快速复现进 GR00T N2 / π₀ Pro / RDT-2 等下一代基座 VLA；MoDE-VLA（p156）/ HandITL（p161）/ Dexora（本论文）三件套构成 2026-05 「灵巧手 VLA 量产范式」三大支柱。预计 6 月 ICRA 现场会触发头部厂商集体宣布 Dexora 兼容版本，类似当年 OpenVLA 引爆 VLA 开源生态。"
+    },
     {
       "id": "p161",
       "title": "Hand-in-the-Loop: Improving Dexterous VLA via Seamless Interventional Correction",
