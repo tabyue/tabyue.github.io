@@ -302,3 +302,14 @@
 - sync_learn_split (2 files updated) + build_sitemap (459 chapters) 已跑
 - commit 734c85a 已 push origin/main
 - 经验：Edit JSON 大文件时直接用 Edit + Read 校核 + python json.load 验证三件套，比 HEREDOC 写脚本更稳；新增 paper detail 配套要先读邻居（如 p160）的 schema 再写，保持字段一致（methodology/experiments/reproduction/mathDetails）
+
+## 2026-05-20 08:00（早间轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 新闻 +3 (n306-n308)：① 临界点（AGILINK）智元拆分子公司 4 个月跻身 10 亿美元独角兽（n306 / 累计交付灵巧手 8000 余台 + 夹爪逾万 / 高瓴蓝驰腾讯股东 / ICRA 2026 旗舰直驱发布）；② 乐聚智能创业板 IPO 受理 26 亿募资（n307 / 创业板首家第四套标准 / 2025 全球出货第四 / 三年 CAGR 118.68% / Kuavo 577 台 1.77 亿）；③ 杭州柯林 3 亿收购开普勒机器人 41.57%（n308 / A 股上市公司直接收购具身整机控制权第一单 / 总持股 51%）
+- 论文 +1 (p162)：Dexora（ICRA 2026 / arxiv:2605.18722） — 首个原生面向「双臂+双手 / 高 DoF」的开源 VLA / 外骨骼背包+Vision Pro 混合遥操作 / 100K 仿真+10K 真机双库 / 离线 discriminator 数据质量加权 / Diffusion-Transformer 350M / 灵巧成功率 66.7% vs baseline 51.7% / OOD +20pp / 跨具身 +22pp；含完整 keyInsights+impact+methodology+experiments+reproduction+mathDetails
+- 招聘 +1 (j141)：临界点独角兽全岗位扩招 6 大方向（VLA 大模型 / 直驱关节 / 触觉感知 / 开源数据集 / 量产工艺 / 应用场景拓展）
+- 学习深化：vla-models +sec-19「双手 + 双灵巧手 VLA 工程化范式：从 Dexora 看高 DoF 灵巧 VLA 的硬件 + 数据 + 算法三件套」9K chars，模块 18→19 sec / 164K → 173K；联动 p156 MoDE-VLA × p161 HandITL × p162 Dexora 三件套对比与协同 / 部署 checklist / 路径决策树
+- 0 dups（news 280 / papers 142 / opensource 89 / jobs 133）
+- sync_learn_split (2 files updated) + build_sitemap (459 chapters) 已跑
+- commit 00ef0fc 已 push origin/main
+- 经验：用 Write 工具写独立 Python 脚本（_add_*_sec.py）执行 + 立即删除，比 HEREDOC 嵌入 bash 稳定，避免 shell quote escape 陷阱
