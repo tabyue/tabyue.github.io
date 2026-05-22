@@ -1,6 +1,43 @@
 {
-  "lastUpdated": "2026-05-20T08:00",
+  "lastUpdated": "2026-05-22T08:00",
   "papers": [
+    {
+      "id": "p163",
+      "title": "PointACT: Vision-Language-Action Models with Multi-Scale Point-Action Interaction",
+      "authors": [
+        "Shizhe Chen",
+        "Paul Pacaud",
+        "Cordelia Schmid"
+      ],
+      "venue": "arXiv 2026 (Inria)",
+      "date": "2026-05-20",
+      "arxiv": "https://arxiv.org/abs/2605.21414",
+      "github": "https://cshizhe.github.io/projects/pointact.html",
+      "tags": [
+        "VLA",
+        "Point Cloud",
+        "PTv3",
+        "Dual-System",
+        "3D-Aware",
+        "Bottleneck Window Attention",
+        "Multi-Scale",
+        "Inria",
+        "LIBERO",
+        "RLBench"
+      ],
+      "tldr": "**Inria（Shizhe Chen / Cordelia Schmid 团队）** 提出 PointACT — 双系统 3D-aware VLA 把分层点云直接接进动作解码：冻结 Qwen2.5-VL 3B 骨干 + ~300M 可训练「点-动作专家」；多尺度点-动作交互 + 瓶颈窗口自注意力让 evolving action token 对局部几何 + 全局结构同时密集 attend。**LIBERO 平均 96.0%（vs OpenVLA-OFT 7B 的 97.1%、π0 3B 的 94.2%；参数量减 60%）**；**RLBench-10 任务 82.3% — 比 EO1 +9.1pp / HybridVLA +8.3pp / π0 +27.3pp**；首次系统证明「单体 VLA 注入点云会让 RLBench 跌至 18.6%，必须双系统」+「简单多尺度拼接无效，必须精细化点-动作交互」。",
+      "category": "操作",
+      "difficulty": "advanced",
+      "addedDate": "2026-05-22",
+      "keyInsights": [
+        "💡 **3D-aware VLA 第一篇系统揭示「单体 vs 双系统」分水岭**：把点云注入 VLM 骨干（单体）→ RLBench 从 73.2% 暴跌至 **18.6%**（−54.6pp）；改双系统（VLM 冻结 + 点云专家）→ 反而 +9.1pp。这是首次量化证明「3D 必须放在 action expert，不能放在 VLM」",
+        "💡 **多尺度交互 vs 多尺度拼接的重要差异**：把 PTv3 5 个 stage 的特征简单 concat → RLBench 65.6%（比 last-layer 的 69.7% 还差 4pp）；用 PointACT 的瓶颈窗口自注意力 + 动作令牌作 query → 82.3%（+12.7pp 绝对）。「多尺度」≠「特征堆叠」，必须设计精细化交互",
+        "💡 **瓶颈窗口自注意力 = 几何复杂度线性化**：把点云分成 K 个不相交空间窗口，action token 作 query 进每个窗口 → 自注意力 + 跨窗聚合。计算复杂度从 O(N_p^2) 降到 O(K · (N_p/K + |a|)^2) ≈ 线性 — 让 4096 点 + 100 动作令牌的训练在 8× H100 仅 5×10⁻⁵ lr / 50K steps 收敛",
+        "💡 **小模型逆袭大模型 = 几何先验 > 暴力参数**：PointACT 总可训练 ~300M（含 PTv3-Large encoder），LIBERO 平均比 OpenVLA-OFT 7B 仅低 1.1pp（96.0 vs 97.1），而 RLBench-10 反超 25+pp — 几何 + 双系统 + 多尺度交互的工程组合击败「全量微调 7B 模型」的传统范式",
+        "💡 **3D 预训练效果与模型规模强相关**：Small 59M 参数 → PTv3 预训练收益有限；Large 314M 参数 → 显著收益（克服域间隙）。这给「在小机器人上也能用 3D-aware VLA」泼了冷水 — 必须 ≥ 167M（Base）才发挥 3D 预训练价值"
+      ],
+      "impact": "PointACT 给「3D 几何 + VLA」明确画线：① 必须双系统而非单体；② 必须精细化交互而非简单拼接；③ 模型规模 ≥ 167M 才解锁 3D 预训练价值。在 5/21 卧安 OneModel 1.7（n310 LIBERO 99.0%）/ 5/16 PKU+港中大 HarmoWAM（p158）/ 4/26 港科 StarVLA（开源 2.2k★）等中国 VLA 系矩阵爆发期发布，正好补上「3D 是不是 VLA 必备能力」的方法论争论。预计 6 月 ICRA 现场会触发头部厂商（GR00T N2 / π₀.₅ / RDT-2）集体推出 3D 注入版本；同时 Inria 团队（Cordelia Schmid 学派）的开源传统会让 PointACT 成为继 OpenVLA / Octo / RDT 之后的下一个 3D-aware 基线 — 「拿 PointACT 起步对比」会变成 ICRA / RSS / NeurIPS 标配。"
+    },
     {
       "id": "p162",
       "title": "Dexora: Open-source VLA for High-DoF Bimanual Dexterity",
