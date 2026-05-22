@@ -1,5 +1,17 @@
 # automation-5 执行历史
 
+## 2026-05-22 08:00（早间轮）
+- 投稿箱：无开放 Issue（gh issue list --state open 返回 []）
+- 新闻 +3 (n309-n311)：① OriginFlow（渊澈太初）5/21 公开 5 亿元多轮融资 — 00 后清华博士秦深涛创立 / sEMG 肌电信号采集千元级套件 / NeuroScale 全栈 / 蓝驰 + Monolith 砺思领投；② 卧安机器人（OneRobotics 6600.HK）OneModel 1.7 FrontoStria-RL — 自研「世界动作模型」LIBERO 99.0% 平均成功率 / RL-LWAM 双层架构 / MCF-Proto 动作参数化 / 乒乓球对打 91.2%；③ 灵初智能 SynData 数据集 5/13 登 HuggingFace Trending 全球第一 — 1000 小时人类灵巧操作 / 多模态数据手套自研 / 亚毫米级 / 2026 目标百万小时
+- 论文 +1 (p163)：PointACT — Inria（Shizhe Chen / Cordelia Schmid）双系统 3D-aware VLA / PTv3 + 多尺度点-动作交互 + 瓶颈窗口自注意力 / LIBERO 96.0%（300M 训练参数追平 OpenVLA-OFT 7B）/ RLBench-10 82.3% 比 EO1 +9.1pp / **首次系统证明「单体 VLA 注入点云会让 RLBench 跌至 18.6%，必须双系统」**+「简单多尺度拼接无效，必须精细化交互」；含完整 keyInsights + impact + methodology + experiments + reproduction + mathDetails
+- 招聘 +1 (j142)：OriginFlow（渊澈太初）5 亿融资后 6 大方向扩招（sEMG 算法 / PULSE 基础模型 / NeuroScale 全栈 / 数据采集硬件 / 工业 + 家庭场景落地）
+- 学习深化：ai-infra +sec-21「3D-aware VLA 工程化：从 PointACT 双系统到 RGB-D 数据流水线（30Hz 实时部署 Infra）」7178 chars 七大节，模块 20→21 sec / 75K → 82K（脱离最薄区第一名）；联动 p163 PointACT × p158 HarmoWAM × n310 OneModel 1.7
+- 跳过：贝塔无限种子+轮（信息陈旧）
+- 0 dups（news 283 / papers 143 / opensource 89 / jobs 134）
+- sync_learn_split (2 files updated) + build_sitemap (461 chapters) 已跑
+- commit 7095ac6 已 push origin/main
+- 经验：3D-aware VLA 是 2026 下半年 Infra 必修课的论断由 PointACT + OneModel 1.7 + HarmoWAM 三件事共同确立；ai-infra 模块联动新论文做工程化深化的策略非常高效（3 个数据点 → 一节专题）
+
 ## 2026-05-13 03:30（深夜轮 — 真实时间 5/13 凌晨 02:59）
 - 投稿箱：无开放 Issue（gh issue list 返回 []）
 - 启动时工作树有大量并行实例遗留（modified 12 文件 + 5 untracked），全部接手不丢弃；ID 唯一性 + papers detail 完备性校验通过；清理临时脚本（_round*.py）
