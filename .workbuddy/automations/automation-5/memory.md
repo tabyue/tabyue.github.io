@@ -1,5 +1,19 @@
 # automation-5 执行历史
 
+## 2026-05-24 08:00（早间轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 启动状态：HEAD 12668fc（5/22），工作树残留前轮 5/23 实例已写未提交工作（n312-314 / p164-165 / j143-144 / vla-models sec-20 _round_5_23 脚本）—— 接手不丢弃
+- 自己 5/24 早间轮新增：
+  - news +3 (n315-n317)：智元 B 轮新增京东 + 上海具身智能基金（n315 / 京东首笔切入具身 / 上海具身基金首笔投资 / 红杉上汽 TCL 追投 / 累计 9 轮 150 亿估值）+ FF（FFAI）EAI 战略股东大会全提案通过（n316 / 1500 台目标 / 6 月新品 / 7000 万美元 / 美国首家人形 + 仿生双线）+ 全国首个《人形机器人全生命周期管理规范》标准 + 管理服务平台（n317 / 2.8 万台领「身份证」/ 29 位 4 段编码 / A20 + 30 余家头部签约）
+  - papers +1 (p166)：EvoScene-VLA（ANU 澳国立 + 北航 + UNSW / arxiv:2605.21862 / 2026-05-21）首次显式维护跨 chunk 场景信念的 chunked VLA — 双输出 Action Decoder + recurrent scene prefix + Scene Predictor / Geometric Anchor 训练教师监督，RoboTwin 31 任务固定 87.2 → 89.1% / 随机化 86.1 → 88.5% / Galaxea R1-Lite 真机超越所有 baseline；含完整 keyInsights + impact + methodology + experiments + reproduction + mathDetails
+  - jobs +2 (j145-j146)：智元 B 轮 150 亿估值 + 京东战投后 6 大方向扩招 + 上海具身智能基金生态被投企业全栈扩招
+  - 学习深化：ai-infra +sec-22「Chunked VLA 推理基础设施：从 chunk size 取舍到 EvoScene-VLA 跨 chunk 场景先验流水线」7732 chars 八大节，模块 21→22 sec / 82K → 90K chars；联动 p166 EvoScene-VLA × p163 PointACT × SpatialMemory4VLA「2026-05 chunked VLA 三件套」对比 + chunk size 工程取舍表 + 7 项部署 checklist
+- 0 dups（news 289 / papers 146 / opensource 89 / jobs 138），684 JSON 文件全部 OK
+- sync_learn_split (2 files updated) + build_sitemap (463 chapters) 已跑
+- 我的 5/24 工作 + 5/23 残留被并行实例合并提交为 commit 0a4b2d3，已 push origin/main
+- 启动后又有并行实例开始写 5/25 早间轮（n318-320 / p167 π_0-EqM / j147 天机智能 / humanoid-fullstack sec-19），工作树有 7 modified + 4 untracked 残留——本实例策略：**只 push 已 commit 内容，不干扰 5/25 实例正在进行中的工作**
+- 经验：当工作树同时存在多个时间窗（5/23 + 5/24 + 5/25）的写入时，通过 `git log` + 对比 lastUpdated 时间戳与文件 mtime 即可分辨「已 commit / 残留运行中」；干扰其他实例正在写的临时脚本是大忌，应只提交已 commit 部分
+
 ## 2026-05-22 08:00（早间轮）
 - 投稿箱：无开放 Issue（gh issue list --state open 返回 []）
 - 新闻 +3 (n309-n311)：① OriginFlow（渊澈太初）5/21 公开 5 亿元多轮融资 — 00 后清华博士秦深涛创立 / sEMG 肌电信号采集千元级套件 / NeuroScale 全栈 / 蓝驰 + Monolith 砺思领投；② 卧安机器人（OneRobotics 6600.HK）OneModel 1.7 FrontoStria-RL — 自研「世界动作模型」LIBERO 99.0% 平均成功率 / RL-LWAM 双层架构 / MCF-Proto 动作参数化 / 乒乓球对打 91.2%；③ 灵初智能 SynData 数据集 5/13 登 HuggingFace Trending 全球第一 — 1000 小时人类灵巧操作 / 多模态数据手套自研 / 亚毫米级 / 2026 目标百万小时
