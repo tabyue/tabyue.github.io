@@ -1,5 +1,5 @@
 {
-  "lastProcessed": "2026-05-09T11:43",
+  "lastProcessed": "2026-05-23T08:05",
   "description": "用户通过门户投稿箱提交的素材。AI编辑在自动化更新时处理。投稿通过GitHub Issues提交(label: inbox)。processedItems 数组会同步到用户的本地投稿状态。",
   "processedItemsFormat": "每个条目: {url, status(processed/rejected), result(简短说明), processedAt(ISO时间)}",
   "processedItems": [
@@ -32,6 +32,12 @@
       "status": "processed",
       "result": "已融入开源生态 — Microsoft Agent Framework（os092），与 n247 互相引用",
       "processedAt": "2026-05-09T11:43"
+    },
+    {
+      "url": "https://github.com/debpalash/OmniVoice-Studio",
+      "status": "rejected",
+      "result": "与具身智能/机器人主题无关 — 该项目为开源 ElevenLabs 替代品（语音克隆/视频配音/TTS 桌面 App），属于音频生成领域，未涉及具身智能、机器人控制、VLA 或机器人感知。建议投稿至 AI 音频/多模态生成方向的导航站。",
+      "processedAt": "2026-05-23T08:05"
     }
   ]
 }

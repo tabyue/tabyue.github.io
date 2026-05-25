@@ -1,6 +1,116 @@
 {
-  "lastUpdated": "2026-05-22T08:00",
+  "lastUpdated": "2026-05-24T08:00",
   "papers": [
+    {
+      "id": "p166",
+      "title": "EvoScene-VLA: Evolving Scene Beliefs Inside the Action Decoder for Chunked Robot Control",
+      "authors": [
+        "Chushan Zhang",
+        "Ruihan Lu",
+        "Jinguang Tong",
+        "Xuesong Li",
+        "Yikai Wang",
+        "Hongdong Li"
+      ],
+      "venue": "arXiv 2026 (ANU 澳国立 + 北航 + UNSW 联合)",
+      "date": "2026-05-21",
+      "arxiv": "https://arxiv.org/abs/2605.21862",
+      "github": "https://github.com/anu-cvml/EvoScene-VLA",
+      "tags": [
+        "VLA",
+        "Chunked-Control",
+        "Scene-Belief",
+        "Action-Decoder",
+        "Persistent-Scene-State",
+        "RoboTwin",
+        "Galaxea-R1-Lite",
+        "Spatial-Memory"
+      ],
+      "tldr": "**ANU 澳国立 + 北航 + UNSW** 联合提出 EvoScene-VLA — 给「分块 VLA」补上**「跨控制块演化的场景信念」**这关键一环。在 31 个 RoboTwin 任务上**固定评估 87.2% → 89.1% / 随机化评估 86.1% → 88.5%**，Galaxea R1-Lite 真机超越所有 baseline。三大组件：①**循环场景前缀**（recurrent scene prefix）跨 chunk 携带几何感知场景状态；②**双输出动作解码器**输出动作块 + 紧凑场景更新（更新成下一 prior）；③**辅助监督模块**（Scene Predictor 提供未来场景 token 目标 + Geometric Anchor 与冻结深度/3D 教师对齐），部署时丢弃。意义：**首篇**在分块 VLA 推理中**显式维护跨 chunk 场景状态**的工作，弥补「Spatial VLA 仅当前帧 / Temporal VLA 仅过去帧 / 都不维护行动驱动场景先验」的工程空白。",
+      "category": "VLA",
+      "difficulty": "advanced",
+      "addedDate": "2026-05-24",
+      "keyInsights": [
+        "💡 **「分块 VLA 三大派别」分类学**：EvoScene-VLA 第一次清晰划分了 chunked VLA 三种思路 — Spatial VLA（当前帧 3D 增强 / 如 PointACT）/ Temporal VLA（过去帧聚合 / 如 RT-2、π₀.₅）/ EvoScene-VLA（行动更新场景先验）。前两类都有缺陷 — Spatial VLA 看不到「行动后变化」；Temporal VLA 看不到「未来还没拍到的几何」。EvoScene-VLA 通过让 action decoder 直接输出 **scene update token**，把 chunk 内每一个动作的影响编码进先验，下一 chunk 拿到的不是过期视觉，而是「上一动作之后的几何预期」",
+        "💡 **「双输出 Action Decoder」工程亮点**：传统 VLA action head 只输出动作；EvoScene 让它**额外输出 8-16 个紧凑场景更新 token**，与下一 chunk 的视觉 embedding 在 VLM 内部做 cross-attention（视觉做修正 / 先验做补充）—— 实现「行动 + 视觉双源场景信念」。这种设计让 chunk size 可以从典型 8 step 拉到 16 step 仍保持精度，**推理频率从 7-8 Hz 提到 15-16 Hz**（同样的 VLM 主干）",
+        "💡 **「Scene Predictor + Geometric Anchor 教师监督」训练范式**：作者引入两个**仅训练阶段使用 / 推理时丢弃**的辅助模块 —— Scene Predictor 提供未来场景 token GT（自监督）；Geometric Anchor 用 frozen Depth Anything V2 + Point Transformer V3 提供 3D 几何对齐 loss。这种「训练靠重型教师 / 部署只用学生」是当前 VLA 量产的标准范式（同期 SmolVLA / RDT 系列也用了类似 trick）",
+        "💡 **+1.9pp / +2.4pp 提升的语义价值**：表面看 RoboTwin 提升不大（87.2 → 89.1），但在 89% 高基线下，每个百分点对应**~50 个新通过的 task instance**。更重要的是「随机化评估」涨幅大于「固定评估」（+2.4 vs +1.9）—— 说明场景先验帮助最大的是 OOD 干扰场景（光照 / 物体位置 / 干扰物），符合「持续场景信念缓解视觉漂移」的理论预期",
+        "💡 **真机迁移成功（Galaxea R1-Lite）**：跨多种长程任务平均成功率 +5-8pp（论文未给具体数字但明确「outperforms all baselines」），这是 chunked VLA 真机部署的工程里程碑——证明 EvoScene 不只是仿真涨点 trick，而是可量产部署架构"
+      ],
+      "impact": "EvoScene-VLA 与同周 PointACT（p163, 5/20 / 3D-aware 双系统）+ SpatialMemory4VLA（arxiv:2605.22283 / 视野外操作记忆）形成**「2026-05 chunked VLA 三件套」**——分别从「空间感知（geometry）/ 时间记忆（spatial memory）/ 跨 chunk 演化（scene belief）」三个角度补齐 VLA 工程化短板，是 chunked VLA 范式从「单帧依赖」走向「多源先验融合」的转折点。预期接下来 6 个月内：① π₀.₆ / GR00T N2 等量产 VLA 基座会**集成场景先验机制**；② RoboTwin / LIBERO 这类基准的 baseline 会从 80% 提升到 90% 区间；③ 工业部署的目标推理频率会从 15 Hz 进一步提到 25-30 Hz（chunk 加大 + 场景先验）。",
+      "stars": 0
+    },
+    {
+      "id": "p165",
+      "title": "OmniHumanoid: Streaming Cross-Embodiment Video Generation with Paired-Free Adaptation",
+      "authors": [
+        "Yiren Song",
+        "Xiyao Deng",
+        "Pei Yang",
+        "Yihan Wang",
+        "Mike Zheng Shou"
+      ],
+      "venue": "arXiv 2026 (NUS Show Lab)",
+      "date": "2026-05-12",
+      "arxiv": "https://arxiv.org/abs/2605.12038",
+      "github": "https://nus-show-lab.github.io/omnihumanoid/",
+      "tags": [
+        "Cross-Embodiment",
+        "Video-Generation",
+        "Paired-Free",
+        "Humanoid",
+        "Action-Transfer",
+        "Branch-Isolated-Attention",
+        "NUS-Show-Lab",
+        "Mike-Shou"
+      ],
+      "tldr": "**NUS Show Lab（Mike Shou 团队）**提出 OmniHumanoid — 跨具身视频生成新范式：**把动作的「灵魂」和机器人的「外壳」分开学习**，让机器人「学会」人类动作而**完全无需配对数据**。架构：①共享动作转移模型（从多个具身对齐配对视频中学）+ ②轻量级适配器（仅用未配对视频适配新具身）+ ③分支隔离注意力（动作条件 / 具身特定调制分离，减干扰）+ ④跨具身合成数据集（多样化人形资产 + 场景 + 视角）。**意义**：解决了具身智能数据规模化最痛的「每款机器人都要重新采一遍数据」难题——动作可跨身体迁移 + 外貌单独记忆，未来 Optimus / Walker / Figure 03 / 远征 A3 都可以共享同一份动作库。",
+      "category": "数据生成",
+      "difficulty": "advanced",
+      "addedDate": "2026-05-23",
+      "keyInsights": [
+        "💡 **「动作-外貌」因式分解 = 跨具身规模化的关键钥匙**：传统跨具身数据采集要每款机器人重采一份；OmniHumanoid 证明**动作动力学在不同具身之间部分可转移、外观和形态特征是具身特定的**——这两类信息可以分开建模 + 分别训练，未配对数据足矣，规模化成本骤降数量级",
+        "💡 **分支隔离注意力（Branch-Isolated Attention）**：把动作条件分支和具身特定调制分支用注意力路由分离，避免「学动作时干扰外观 / 学外观时干扰动作」的灾难性干扰——这是该论文工程层最核心的创新，比传统 condition concat 鲁棒很多",
+        "💡 **轻量适配器范式**：新具身（如某款新人形）只需未配对视频 + 训一个适配器（共享动作模型不变）即可——对应到产业界，这意味着「智元远征 A3 / 优必选 Walker / Figure 03」未来都可以共享同一份『人类动作记忆库』，每家厂商只需训自己的『外形适配器』"
+      ],
+      "impact": "OmniHumanoid 与同期 5 月份的 ExoActor（p128）形成「跨具身视频生成」双标杆——ExoActor 走第三人称视频 → 人形控制 zero-shot 路线，OmniHumanoid 走 paired-free 跨具身视频生成路线。这两篇会让 2026 H2「人形机器人共享数据飞轮」成为产业新范式，与同期智元 1+N 分布式数据采集训练场（n312）形成「数据采集 + 数据增广」上下游闭环。"
+    },
+    {
+      "id": "p164",
+      "title": "Evo-Depth: A Lightweight Depth-Enhanced Vision-Language-Action Model",
+      "authors": [
+        "Tao Lin",
+        "Yuxin Du",
+        "Jiting Liu",
+        "Junchi Yan",
+        "Bo Zhao",
+        "et al."
+      ],
+      "venue": "arXiv 2026 (上海交大 SJTU + 多机构联合)",
+      "date": "2026-05-14",
+      "arxiv": "https://arxiv.org/abs/2605.14950",
+      "github": "https://github.com/MINT-SJTU/Evo-Depth",
+      "tags": [
+        "VLA",
+        "Depth-Enhanced",
+        "0.9B-Lightweight",
+        "Implicit-Depth",
+        "Spatial-Enhancement",
+        "Progressive-Alignment",
+        "Edge-Deployment",
+        "上海交大-MINT"
+      ],
+      "tldr": "**上海交大 MINT-SJTU 团队**提出 Evo-Depth — 给 VLA 补上「轻量隐式深度」一环，**0.9B 参数**在 4 个仿真基准 + 真机上同时拿到「最高平均成功率 + 最小模型尺寸 + 最低 GPU 内存 + 最高推理频率」四项第一。三大组件：①**隐式深度编码**（多视图 RGB → 紧凑深度特征，无需深度传感器）；②**空间增强模块**（深度感知调制把深度特征融入视觉-语言表示）；③**渐进对齐训练**（深度增强表示 → 下游动作学习对齐）。**意义**：把昂贵的「显式 RGB-D 输入 / 大 ViT 骨干」简化为「2D RGB + 隐式深度」，给资源受限边缘部署 / 移动平台 VLA 一条新路。",
+      "category": "VLA",
+      "difficulty": "intermediate",
+      "addedDate": "2026-05-23",
+      "keyInsights": [
+        "💡 **「隐式深度」 vs 「显式 RGB-D」分水岭**：传统 3D-aware VLA（如 PointACT/p163）依赖显式点云或深度传感器，硬件成本 + 推理 latency 高；Evo-Depth 让模型从单纯 RGB 中**学习紧凑深度特征**，0 额外硬件 + 几乎 0 推理开销，对低成本机械臂 / 移动平台具身意义重大",
+        "💡 **0.9B 参数 = 边缘 / 实时部署门槛**：相比 OpenVLA 7B / π₀ 3B / GR00T N1 2B，Evo-Depth 0.9B 是目前同类性能下最小的 VLA。Jetson Orin / RTX 4060 笔记本 GPU 即可实时跑——这是 VLA 走向「便携 / 量产」的必要门槛",
+        "💡 **渐进对齐训练范式**：把「深度学习 → 视觉-语言对齐 → 动作训练」拆成三段渐进，避免大 VLA 一锅炖式训练的灾难遗忘 + 计算昂贵；这种**模块化 finetune** 对小团队 / 学术 lab 复现极其友好"
+      ],
+      "impact": "Evo-Depth 直接对标 PointACT（p163）证明的「3D-aware VLA 必须双系统」结论——但走另一条路：不再依赖**显式点云传感器**，而是用**轻量隐式深度**做空间增强。这两条路线（3D 显式注入 vs 2D 隐式增强）会成为 2026 H2 「VLA × 空间感知」的两条主流，在量产 / 边缘部署上 Evo-Depth 路线更有商业化价值。"
+    },
     {
       "id": "p163",
       "title": "PointACT: Vision-Language-Action Models with Multi-Scale Point-Action Interaction",
@@ -4129,5 +4239,5 @@
       "github": ""
     }
   ],
-  "totalItems": 117
+  "totalItems": 146
 }

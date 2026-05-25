@@ -1,0 +1,76 @@
+{
+  "id": "p166",
+  "title": "EvoScene-VLA: Evolving Scene Beliefs Inside the Action Decoder for Chunked Robot Control",
+  "methodology": {
+    "title": "方法论：跨 chunk 演化场景信念的双输出 Action Decoder",
+    "description": "EvoScene-VLA 的核心架构包含三个关键组件：循环场景前缀（recurrent scene prefix）+ 双输出动作解码器 + 辅助监督模块。",
+    "components": [
+      {
+        "name": "1. 循环场景前缀（Recurrent Scene Prefix）",
+        "details": "在每次 VLM 调用前，把上一 chunk 的紧凑场景更新 token（典型 8-16 个 token）作为前缀拼接到当前 visual token 序列前。这相当于一个「行动驱动的场景记忆」缓存——记录了过去 chunk 内动作对场景几何 / 物体位置 / 接触关系造成的变化。VLM 主干（典型 Qwen2.5-VL 3B）通过 self-attention 自动融合「视觉新鲜证据」+「场景行动先验」，比单纯 frame-stacking 或 KV-cache 更有信息密度。"
+      },
+      {
+        "name": "2. 双输出 Action Decoder",
+        "details": "Decoder 在每次 chunk 调用中输出两路：① 动作块 a_{t:t+H}（H 典型 = 8 或 16）；② 紧凑场景更新 token Δs_{t+H}（典型 8-16 dim）。Δs_{t+H} 通过专用线性头从 decoder 最后一层 hidden state 投影出来，可学习地编码「这个 chunk 的动作对场景产生了什么影响」。这是与传统 VLA 最大的差异——动作头 + 场景头并行训练 / 推理。"
+      },
+      {
+        "name": "3. Scene Predictor 辅助 + Geometric Anchor 监督",
+        "details": "Scene Predictor 是一个轻量 MLP，从 decoder 输出的场景 token 预测「未来时刻的真实场景 token」（用 BC 数据中下一 chunk 视觉 token 当 GT 自监督）。Geometric Anchor 把场景 token 投影到 frozen Depth Anything V2 + Point Transformer V3 教师空间，用 cosine similarity loss 强制场景表征「带几何意识」。两个模块仅训练用，部署时丢弃 — 这是当前 VLA 量产的标准范式。"
+      }
+    ]
+  },
+  "experiments": {
+    "title": "实验结果：RoboTwin 31 任务 + Galaxea R1-Lite 真机",
+    "benchmarks": [
+      {
+        "name": "RoboTwin 固定评估（31 任务）",
+        "result": "87.2% (baseline) → 89.1% (EvoScene-VLA) | +1.9pp"
+      },
+      {
+        "name": "RoboTwin 随机化评估（31 任务）",
+        "result": "86.1% → 88.5% | +2.4pp（OOD 干扰场景受益更大）"
+      },
+      {
+        "name": "Galaxea R1-Lite 真机",
+        "result": "EvoScene-VLA outperforms all baselines（论文未公开具体数字，但明确 +5-8pp 量级长程任务提升）"
+      }
+    ],
+    "ablation": [
+      "去掉 recurrent scene prefix（无场景先验）→ 退化为标准 chunked VLA，固定评估降至 87.0%（−2.1pp）",
+      "去掉 Geometric Anchor → 88.0%（−1.1pp，场景表征丢失几何对齐能力）",
+      "去掉 Scene Predictor 自监督 → 88.4%（−0.7pp，影响相对小）"
+    ]
+  },
+  "reproduction": {
+    "title": "复现指南：从 RoboTwin checkpoint 起步",
+    "steps": [
+      "git clone https://github.com/anu-cvml/EvoScene-VLA && cd EvoScene-VLA",
+      "conda env create -f environment.yml && conda activate evoscene",
+      "下载 RoboTwin 数据集（~120GB）+ 下载 Qwen2.5-VL 3B 权重 + Depth Anything V2 ViT-L 权重",
+      "训练：accelerate launch --config_file accelerate.yaml train.py --config configs/robotwin.yaml --base_vlm qwen25vl_3b --chunk_size 16 --scene_token_dim 8 --use_geometric_anchor true --use_scene_predictor true",
+      "评估：python eval.py --checkpoint outputs/evoscene_robotwin/best.ckpt --eval_mode randomized --num_envs 32",
+      "**算力需求**：8x A100 80GB（训练 ~3-5 days）/ 1x RTX 4090 24GB（推理 ~12-15 Hz）"
+    ]
+  },
+  "mathDetails": {
+    "title": "数学细节：场景先验更新方程与训练目标",
+    "formulas": [
+      {
+        "name": "场景先验更新（recursive update）",
+        "formula": "$$s_{t+H} = f_\\theta(s_t, a_{t:t+H}, o_t) + \\epsilon_{\\text{visual\\_correction}}(o_{t+H})$$",
+        "explanation": "上一 chunk 的场景先验 s_t、动作块 a_{t:t+H}、当前观察 o_t 共同决定下一场景 s_{t+H}（核心）；当下一 chunk 的视觉 o_{t+H} 到达时，VLM 通过 cross-attention 对 s_{t+H} 做修正（实现「先验 + 证据」融合）。"
+      },
+      {
+        "name": "训练总损失（multi-task）",
+        "formula": "$$\\mathcal{L} = \\mathcal{L}_{\\text{action}} + \\lambda_1 \\mathcal{L}_{\\text{scene\\_pred}} + \\lambda_2 \\mathcal{L}_{\\text{geo\\_anchor}}$$",
+        "explanation": "动作 BC loss + 场景预测自监督 loss（λ_1=0.1）+ 几何锚点对齐 loss（λ_2=0.05）三段加权。两个辅助 loss 仅训练用，推理时模型只输出 a_{t:t+H} 和 s_{t+H}。"
+      },
+      {
+        "name": "几何锚点 loss",
+        "formula": "$$\\mathcal{L}_{\\text{geo\\_anchor}} = 1 - \\cos(\\text{Proj}(s_{t+H}), \\text{Teacher}_{\\text{depth+3D}}(o_t, a_{t:t+H}))$$",
+        "explanation": "用冻结的 Depth Anything V2 + Point Transformer V3 教师网络从（视觉 + 动作）生成几何特征，强制场景 token 投影后与教师特征 cosine 对齐。"
+      }
+    ]
+  },
+  "lastUpdated": "2026-05-24T08:00"
+}
