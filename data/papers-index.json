@@ -1,6 +1,103 @@
 {
-  "lastUpdated": "2026-05-24T08:00",
+  "lastUpdated": "2026-05-26T08:00",
   "papers": [
+    {
+      "id": "p169",
+      "title": "Cosmos Policy: Fine-Tuning Video Models for Visuomotor Control and Planning",
+      "authors": "Moo Jin Kim, Yihuai Gao, Tsung-Yi Lin, Yen-Chen Lin, Yunhao Ge, Grace Lam, Percy Liang, Shuran Song, Ming-Yu Liu, Chelsea Finn, Jinwei Gu",
+      "venue": "ICLR 2026 (Top 2% by avg score) / arXiv 2026-01",
+      "date": "2026-01-22",
+      "arxiv": "https://arxiv.org/abs/2601.16163",
+      "github": "https://research.nvidia.com/labs/dir/cosmos-policy/",
+      "tags": [
+        "NVIDIA",
+        "Stanford",
+        "Cosmos-Predict2",
+        "视频基模",
+        "VisuomotorControl",
+        "ICLR2026",
+        "LIBERO",
+        "RoboCasa",
+        "OpenVLA",
+        "ModelBasedPlanning"
+      ],
+      "tldr": "**Cosmos Policy** 是 NVIDIA + Stanford（Moo Jin Kim 团队，OpenVLA 同一血脉）首次把 NVIDIA Cosmos-Predict2-2B 视频基础模型**单阶段后训练**直接变机器人策略——**没有任何架构修改，没有动作 head，没有多阶段训练**。机器人动作以**潜在帧**形式编码进 video diffusion 的 latent 流，与未来状态预测和价值估计在同一个目标下联合训练。LIBERO 平均成功率 **98.5%**（SOTA）/ RoboCasa **67.1%**（SOTA）/ 真实双臂任务超越 π0 / Diffusion Policy / OpenVLA-OFT 等所有强基线。",
+      "category": "vla",
+      "difficulty": "中",
+      "addedDate": "2026-05-26",
+      "keyInsights": [
+        "💡 **架构 0 改动**：把 robot action / future state / value 全部编码成「潜在帧」插入到 video diffusion 的 latent 序列里，沿用原 video model 的核心训练目标。这是「**最少假设、最大复用**」的极致——颠覆了「VLA 必须有专门 action expert」的固有思维。",
+        "💡 **单阶段后训练**：与此前视频→动作工作（如 GR00T-N1, UniSim 等）需要「先微调视觉、再训练动作头、再蒸馏推理」三段式不同，Cosmos Policy **只需要一次后训练**，工程上对齐 OpenVLA-OFT 的简化思路并更进一步。",
+        "💡 **测试时模型基础规划 (test-time MBP)**：模型同步预测「未来状态 + 价值」，可在推理时用 beam search / MCTS 在 latent 空间挑选最优动作 trajectory——把 model-based planning 真正纳入 VLA 推理循环。",
+        "💡 **Self-improving from rollout data**：给定策略 rollout 数据，模型可以**继续微调自己的世界模型和价值函数**，在挑战性任务上进一步提升成功率——这是把 RL 自举思路嵌入视频基模的开端。",
+        "💡 **开源生态**：30K+ HuggingFace 下载 / 753 stars，完整 code + models + training data 已发布，Stanford 研究生 Moo Jin Kim 继 OpenVLA / OpenVLA-OFT 后第三次贡献机器人基础模型开源标杆。"
+      ],
+      "impact": "**Cosmos Policy 是 2026 年「视频基模 = 机器人策略」路线的旗舰工作**，与 LingBot-VA（p168）形成「美国学派 + 中国学派」双标杆：\n\n① **范式简化**：「视频基模 + 单阶段后训练」彻底简化了 VLA 训练流水线，对工程团队意味着可以**直接基于 NVIDIA Cosmos-Predict2 / Wan / HunyuanVideo 等开源视频基模**起步做机器人策略，门槛大幅降低；② **测试时规划**：在 LIBERO 上 **98.5%** / RoboCasa **67.1%** 均为目前公开 SOTA（截至 2026-05），对 OpenVLA / OpenVLA-OFT / π0 / Diffusion Policy 形成全面超越；③ **闭环 self-improving**：从 rollout 数据继续学习世界模型 + 价值函数，开启「机器人策略自举」新阶段，是 video model 比 VLM 在 robot policy 上的根本优势——它有「想象未来」的能力，能从经验中提炼世界规律；④ **ICLR 2026 Top 2%**：学术影响力顶级，未来 1 年 NVIDIA 全栈（Cosmos-Predict2 + Isaac Sim + GR00T）将以 Cosmos Policy 作为核心 VLA 标杆。\n\n**对中国具身从业者的提示**：与 LingBot-VA 路线交叉验证，「**视频基模 + 单阶段后训练**」已成为 2026 年具身基础模型最有性价比的起点——比从头训 VLA 快 5-10 倍且效果更好。"
+    },
+    {
+      "id": "p168",
+      "title": "LingBot-VA: Causal World Modeling for Robot Control",
+      "authors": "Lin Li, Qihang Zhang, Yiming Luo, Shuai Yang, Ruilin Wang, Fei Han, Mingrui Yu, Zelin Gao, Nan Xue, Xing Zhu, Yujun Shen, Yinghao Xu",
+      "venue": "RSS 2026 / arXiv 2026-01 (v2: 2026-03)",
+      "date": "2026-03-22",
+      "arxiv": "https://arxiv.org/abs/2601.21998",
+      "github": "https://github.com/robbyant/lingbot-va",
+      "tags": [
+        "蚂蚁灵动",
+        "HKUST",
+        "因果世界模型",
+        "RSS2026",
+        "MoT",
+        "自回归扩散",
+        "视频动作联合",
+        "闭环回滚",
+        "异步推理",
+        "WorldModel"
+      ],
+      "tldr": "蚂蚁灵动 + 港科大首次把「**视频帧预测 + 动作策略**」放进同一个自回归扩散框架，提出 **LingBot-VA**：基于 Mixture-of-Transformers (MoT) 的共享潜在空间 + 闭环回滚 + 异步推理三件套，使机器人在「观察 → 预测 → 行动」三步上达到准人类的同步性。在长视野操纵任务、后训练数据效率、新配置泛化三个维度同步超越 OpenVLA / π0 / Diffusion Policy 等基线，是全球首个开源的「视频-动作世界模型」。论文获 RSS 2026 接收。",
+      "category": "vla",
+      "difficulty": "高",
+      "addedDate": "2026-05-26",
+      "keyInsights": [
+        "💡 **MoT 共享潜在空间**：用 Mixture-of-Transformers 把「视觉 token」和「动作 token」放进同一个潜在空间联合优化，区别于此前 VLA「视觉编码 → 语言中间层 → 动作解码」的三段式串联——共享空间天然对齐物理约束。",
+        "💡 **闭环回滚 (closed-loop rollout)**：训练时不仅监督单步动作，更监督「在新观测下重新预测」的能力，让模型在部署时面对干扰能自动回滚到下一步而非中断；这与 EquilibriumMatching (p167) 的能量自适应思路异曲同工但更系统。",
+        "💡 **异步推理管道**：动作生成和电机执行解耦并行，避免 VLA 部署中常见的 chunk-stall（等下一段 chunk 算完才执行）问题——直接降低控制延迟到 < 50ms 量级。",
+        "💡 **自回归扩散统一帧预测 + 动作策略**：视频未来帧和动作序列在同一个扩散过程中生成，相当于把「想象未来」与「采取行动」做成同步任务——为「想象-行动」一体化具身大脑路线提供首个开源系统。",
+        "💡 **数据效率显著优于 VLA 路线**：同等真机数据量下，LingBot-VA 在长视野操纵任务上的成功率比 π0 / OpenVLA 提升明显，原因在于视频预训练已经内置了大量物理常识——这是「视频基模做机器人」路线的根本优势。"
+      ],
+      "impact": "**LingBot-VA 是 2026 年「视频基模 → 机器人策略」路线的标杆开源工作**，它与 NVIDIA Cosmos Policy（p169）一起，标志着 VLA 主线之外另一条「视频生成 + 后训练 = 机器人策略」主流技术路径正式确立。\n\n① **学术接受**：RSS 2026（机器人领域三大顶会之一）接收，相当于把这条路线写进教科书，对此后 1-2 年的研究范式有直接引导作用；② **开源生态**：完整的代码、模型、训练数据已在 https://technology.robbyant.com/lingbot-va 公开，蚂蚁灵动继 LingBot-VLA（n251 / 5-13）后再次贡献开源生态，**阿里 / 蚂蚁系正在成为中国具身基础模型层最大的开源贡献者**；③ **工程对齐**：异步推理管道直接对标 Cosmos Policy 的 single-stage post-training，两者在工程实践上互通，意味着这条路线的工具链可以快速跨厂商迁移；④ **对 VLA 主线的冲击**：当 video model 直接当 robot policy 的成功率开始追平甚至超越 VLA 时，「**预训练 + 后训练**」的金科玉律可能让位于「**视频基模 + 单阶段微调**」——这是 OpenVLA-OFT (p131) 之后又一次范式简化。"
+    },
+    {
+      "id": "p167",
+      "title": "π_0-EqM: Equilibrium Matching for Closed-Loop Vision-Language-Action Control",
+      "authors": "Huanming Liu, Congsheng Xu, Jianmin Ji, Yao Mu",
+      "venue": "arXiv 2026-05",
+      "date": "2026-05-22",
+      "arxiv": "https://arxiv.org/abs/2605.23128",
+      "github": "",
+      "tags": [
+        "VLA",
+        "Equilibrium Matching",
+        "FlowMatching",
+        "ClosedLoop",
+        "RoboTwin",
+        "LIBERO",
+        "π0",
+        "推理优化"
+      ],
+      "tldr": "用「平衡匹配 (Equilibrium Matching, EqM)」解码器替换 π0 流匹配（Flow Matching）专家，在保持上游 VLA 主干不变的前提下，把 VLA 控制循环里固定步数的去噪采样升级为「能量驱动 + 残差稳态判据」的状态自适应推理。在 300 步 budget 下，RoboTwin 19 任务平均成功率 40.4% → 50.2%（+9.8pp），LIBERO-10 上 87.0%；首次系统揭示「stationarity-executability gap」——残差越小未必越好执行，存在任务依赖的非单调关系。把 VLA 的「推理深度」首次明确成为策略设计的一部分。",
+      "category": "vla",
+      "difficulty": "高",
+      "addedDate": "2026-05-25",
+      "keyInsights": [
+        "💡 把 VLA 的去噪采样器从「固定步数 Flow Matching」升级为「能量梯度驱动 + 稳态判据 Equilibrium Matching」——根据当前残差自适应决定终止步数，是首个面向 VLA 闭环控制的能量视角解码器。",
+        "💡 实证发现「stationarity-executability gap」：把残差降到最小（更稳态）反而可能让动作不可执行，存在任务依赖的非单调关系，颠覆传统「迭代越多越好」直觉。",
+        "💡 在不改 π0 上游主干的情况下仅替换专家，RoboTwin 19 任务平均 +9.8pp（40.4 → 50.2），表明 VLA 性能提升的下一波主战场不在数据、不在 backbone，而在解码器/采样器设计。",
+        "💡 引入 energy-based VLA 视角，为「跨任务、跨具身可组合的动作生成」提供新的理论框架——解码器=能量函数+收敛准则，下游任务可定制能量地形。",
+        "💡 LIBERO-10 长程任务上 87% SOTA-级表现，说明能量法在长时序累积误差上比固定 Flow Matching 更鲁棒——配合此前 HiF-VLA（n101/p056）、HarmoWAM（p158）的「世界动作模型」思潮，VLA 长程问题已从「记忆增强」转向「采样器内功」。"
+      ],
+      "impact": "π0 系发表以来事实成为开源 VLA 标准基座之一（与 OpenVLA 并列）。π0-EqM 把它的「推理引擎」单独抽离作为可替换、可优化模块——这种「解码器即第一公民」的解构思路对工业部署影响巨大：① 新算法不需要重新预训练昂贵的 VLA 主干，仅替换专家即可获得 +10pp 增益，相当于把 VLA 优化的「最后一公里」标准化；② 能量视角天然适配硬件加速（残差判据可作为 early-exit 信号），有望直接降低 VLA 推理 latency 30-50%（论文未直接验证，但理论上可推）；③ 与 ai-infra 模块 sec-22 的 chunked VLA 推理基础设施（5/24 EvoScene-VLA）形成协同——chunk 决定时间粒度、EqM 决定每个 chunk 内部的步数自适应，两者解耦后可独立演化。"
+    },
     {
       "id": "p166",
       "title": "EvoScene-VLA: Evolving Scene Beliefs Inside the Action Decoder for Chunked Robot Control",
