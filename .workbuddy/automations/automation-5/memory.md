@@ -339,3 +339,22 @@
 - sync_learn_split (2 files updated) + build_sitemap (459 chapters) 已跑
 - commit 00ef0fc 已 push origin/main
 - 经验：用 Write 工具写独立 Python 脚本（_add_*_sec.py）执行 + 立即删除，比 HEREDOC 嵌入 bash 稳定，避免 shell quote escape 陷阱
+
+## 2026-05-26 08:00（早间轮）
+- 投稿箱：无开放 Issue（gh issue list 返回 []）
+- 启动状态：HEAD 918de7d，工作树残留 5/25 早间轮已写但未提交的内容（n318-320 + p167 + j147 + humanoid-fullstack sec-19），接手并把 lastUpdated 从 5/25 推到 5/26（addedDate 保留 5/25 不变）
+- 5/25 残留接手内容：
+  - news n318 天机智能 10 亿 B+B+ 轮（高瓴美团领投，腾讯 / 高榕 / 光合 / 纪源跟投，估值近百亿独角兽，2025 4 个月交付 2,000+ 力控人形双臂，2026 Q1 在手订单 10,000+ 台）
+  - news n319 现代汽车 25,000 台 Atlas 全球工厂部署（摩根大通投资者会议披露，2028 年综合产能 30,000 台，BD 量产 Order Book）
+  - news n320 具脑磐石（华为「具身大脑一号位」朱森华）亿元融资（类脑智能 + 认知世界模型 CWM 路线，第三种主流大脑路径）
+  - papers p167 π0-EqM Equilibrium Matching VLA 解码器（RoboTwin +9.8pp / LIBERO-10 87% / 揭示 stationarity-executability gap）
+  - jobs j147 天机智能独角兽全栈扩招（力控双臂量产 / 运动控制 / MEMS / 北美本地化 / 整机品牌孵化）
+  - humanoid-fullstack sec-19 9407 chars（2026 万台元年三组数字 + Hyundai 25K / 天机 10K + VLA × 力控本体 × OEM 协议三件套部署 checklist），模块 18→19 sec
+- 5/26 自加内容：
+  - news +2：n321 宇树 WVLA2.0（世界模型 + VLA 深度融合 / 一镜到底 G1 会议室整理 / 抗推搡 / 10-20 步物理预判）+ 6/1 科创板 IPO 上会 A 股具身第一股 + 羽田机场商用落地；n322 蚂蚁灵动 LingBot-VA 论文获 RSS 2026 接收（全球首个开源视频-动作自回归扩散世界模型 / MoT + 闭环回滚 + 异步推理）
+  - papers +2：p168 LingBot-VA（蚂蚁灵动 + HKUST，RSS 2026，arxiv:2601.21998）+ p169 Cosmos Policy（NVIDIA + Stanford Moo Jin Kim 团队，ICLR 2026 Top 2%，arxiv:2601.16163，LIBERO 98.5% / RoboCasa 67.1% SOTA / 单阶段后训练 / 视频基模 0 改动当机器人策略）；都配齐完整 keyInsights + impact + methodology + experiments + reproduction + mathDetails
+  - 学习深化：vla-models +sec-21「VideoModel-as-Policy 新主线」8012 chars，模块 20→21 sec / 173K → 181K；系统对比 VLA vs VideoModel-as-Policy 两条路线 + 关键技术拆解（共享潜在 / 闭环回滚 / 单阶段后训练 / 测试时规划 / self-improvement）+ SOTA 数字对比 + 工程决策树 + 落地 checklist + 与本节其他范式（sec-15/17/18/19/20）的关系；联动 p167（π0-EqM 解码器）/ p168 LingBot-VA / p169 Cosmos Policy 三件套
+- 0 dups（news 294 / papers 149 / opensource 89 / jobs 139），689 JSON 文件全部 OK
+- sync_learn_split (2 files updated) + build_sitemap (465 chapters) 已跑
+- commit 14f7d22 已 push origin/main
+- 经验：跨日接手时直接把 lastUpdated 顶层一次性 bump 而不修改内层 section 的 lastUpdated（保留作者原始时间戳更准）；视频基模 / VLA 这种范式级对比章节是「联动今日新论文 + 教学价值」的最佳载体，比追单篇论文细节更有高 leverage

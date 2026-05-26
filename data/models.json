@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-11T18:55",
+  "lastUpdated": "2026-05-26T11:00",
   "categories": [
     {
       "id": "all",
@@ -78,6 +78,192 @@
     }
   ],
   "models": [
+    {
+      "name": "Psi-Zero",
+      "org": "USC Physical Superintelligence Lab",
+      "params": "未公开（端到端 Transformer）",
+      "description": "「硬件无关」的人形机器人 VLA 基础模型，2026-05-05 开源首日 2,500+ stars。端到端 Transformer 同时处理视觉 token (ViT) + 语言指令 (T5/LLaMA 变体) + 动作 token，**自回归动作生成**（区别于 π0 diffusion 路线）。混合 MuJoCo / Isaac Gym 仿真 + 真机遥操作训练。⚠️ 当前缺乏标准基准评测，社区正在复现验证。",
+      "huggingface": "https://huggingface.co/physical-superintelligence-lab/psi-zero",
+      "github": "https://github.com/physical-superintelligence-lab/psi-zero",
+      "paper": "",
+      "license": "MIT",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "人形",
+        "PSI",
+        "USC",
+        "硬件无关",
+        "自回归"
+      ],
+      "addedDate": "2026-05-26",
+      "updated": "2026-05",
+      "benchmarks": {
+        "标准基准": "⚠️ 暂无公布",
+        "社区评估": "复现进行中",
+        "首日热度": "2.5K stars / 5.4K stars 当前"
+      }
+    },
+    {
+      "name": "FRAPPE",
+      "org": "浙江大学 / 西湖大学 / 港科广",
+      "params": "未公开",
+      "description": "多未来表征对齐 + 并行渐进扩展 — 把世界建模高效注入 VLA。摆脱像素重建陷阱：对齐多个视觉基座模型 (DINO/CLIP/SAM) 的未来表征，避免单一表征偏置；并行渐进扩展避免推理误差累积；可用无动作标注人类视频低成本提升泛化。RoboTwin 仿真 + 真机 ALOHA (COBOT MAGIC) 双 SOTA。",
+      "huggingface": "",
+      "github": "https://github.com/h-zhao1997/frappe",
+      "paper": "https://arxiv.org/abs/2602.17259",
+      "license": "Apache 2.0",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "世界模型",
+        "多表征对齐",
+        "浙大",
+        "西湖",
+        "港科广",
+        "ALOHA"
+      ],
+      "addedDate": "2026-05-26",
+      "updated": "2026-05",
+      "benchmarks": {
+        "RoboTwin": "SOTA",
+        "ALOHA 真机": "全面超越 baseline",
+        "人类视频泛化": "无动作标签即可提升"
+      }
+    },
+    {
+      "name": "SSM-VLA",
+      "org": "清华大学深圳国际研究生院 / 阿里巴巴 高德",
+      "params": "未公开",
+      "description": "ICRA 2026 — 几何感知 + 远视潜动作 VLA。三件套：① Farsighted-LAM (DINOv2 + RGB-D 联合监督 + 多帧时序)；② 视觉思维链 (Visual CoT) 先想象 RGB+深度再行动；③ 多模态协同注意力三阶段渐进推理。CALVIN ABC-D 平均 4.38 任务完成长度（SOTA），零样本泛化能力突出。",
+      "huggingface": "",
+      "github": "https://github.com/Tsinghua-MARS-Lab/SSM-VLA",
+      "paper": "https://arxiv.org/abs/2509.26251",
+      "license": "Apache 2.0",
+      "category": "vla",
+      "tags": [
+        "ICRA2026",
+        "VLA",
+        "DINOv2",
+        "RGB-D",
+        "VisualCoT",
+        "清华",
+        "高德"
+      ],
+      "addedDate": "2026-05-26",
+      "updated": "2026-05",
+      "benchmarks": {
+        "CALVIN ABC-D": "4.38 平均任务完成长度 (SOTA)",
+        "零样本泛化": "在未见过的 D 环境完成 1000 条指令链",
+        "视觉 CoT": "可解释中间表征 (RGB+深度想象图)"
+      }
+    },
+    {
+      "name": "FASTER (Fast Action Sampling)",
+      "org": "香港大学 / 大晓机器人",
+      "params": "插件（无独立参数）",
+      "description": "首个面向流匹配 VLA 模型的「**即时动作单步采样**」方法。把 Action Chunking 起步阶段的多步采样压缩至单步完成，显著降低反应延迟。**即插即用** — 无需改架构、无需重训练。可直接套到 π0.5 / X-VLA / OpenPI 等流匹配 VLA 上。与 π0-EqM 互补：EqM 控自适应步数，FASTER 控初始单步快出。",
+      "huggingface": "",
+      "github": "https://github.com/innovator-zero/FASTER",
+      "paper": "https://arxiv.org/abs/2603.19199",
+      "license": "Apache 2.0",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "FlowMatching",
+        "FastSampling",
+        "港大",
+        "大晓机器人",
+        "推理优化"
+      ],
+      "addedDate": "2026-05-26",
+      "updated": "2026-05",
+      "benchmarks": {
+        "反应延迟": "Δ 显著降低（vs 多步 Action Chunking）",
+        "兼容性": "π0.5 / X-VLA / OpenPI 即插即用",
+        "训练成本": "0（无需重训）"
+      }
+    },
+    {
+      "name": "Generalist-IDM-1B (D2E)",
+      "org": "MAUM.AI / Seoul National University / Stanford",
+      "params": "1B",
+      "description": "ICLR 2026 — 桌面游戏数据预训练 → 机器人迁移。基于 NEP-τ (Next-Event Prediction with Temporal Offset) 在 1.3K+ 小时桌面数据（259h 人工 + 1K+ h 伪标 YouTube）上预训练，迁移到 LIBERO 96.6% + CANVAS 83.3%，**匹配或超越 π0 (3.3B) / OpenVLA (7B) 等 7× 大模型**。核心证据：桌面交互 (D2E) 中的 sensorimotor primitives 与物理机器人任务存在足够不变性。",
+      "huggingface": "https://huggingface.co/open-world-agents/Generalist-IDM-1B",
+      "github": "https://github.com/worv-ai/D2E",
+      "paper": "https://iclr.cc/virtual/2026/poster/10009311",
+      "license": "Apache 2.0",
+      "category": "vla",
+      "tags": [
+        "ICLR2026",
+        "VLA",
+        "桌面预训练",
+        "D2E",
+        "NEP-τ",
+        "1B"
+      ],
+      "addedDate": "2026-05-26",
+      "updated": "2026-05",
+      "benchmarks": {
+        "LIBERO": "96.6% (1B params)",
+        "CANVAS Navigation": "83.3%",
+        "效率对比": "≥ π0(3.3B) / OpenVLA(7B)"
+      }
+    },
+    {
+      "name": "Motus",
+      "org": "生数科技 / 清华大学",
+      "params": "未公开（视频基座）",
+      "description": "「**统一世界模型**」— 视频大模型为基础架构，**统一 VLA / 世界模型 / 视频生成 / 仿真 / 导航**五大范式。50 任务数据扩展测试中比 π0.5 +35.1pp 成功率，数据效率 13.55×。跨本体（机器人 + 仿真 + 人类视频）共享动作空间，可直接物理机器人执行。",
+      "huggingface": "https://huggingface.co/Shengshu-AI/Motus",
+      "github": "https://github.com/Shengshu-AI/Motus",
+      "paper": "",
+      "license": "Apache 2.0",
+      "category": "world-model",
+      "tags": [
+        "世界模型",
+        "VLA",
+        "视频基座",
+        "生数科技",
+        "清华",
+        "统一框架"
+      ],
+      "addedDate": "2026-05-26",
+      "updated": "2026-05",
+      "benchmarks": {
+        "VS π0.5 (50 tasks)": "+35.1pp 成功率",
+        "数据效率": "13.55× vs π0.5",
+        "跨本体迁移": "机器人/仿真/人类视频共训"
+      }
+    },
+    {
+      "name": "ABot-M0",
+      "org": "阿里巴巴 / 高德 AMAP CV Lab",
+      "params": "约 3B",
+      "description": "全球首个「统一架构」机器人基础模型，基于动作流形学习 (AML) — 在 600 万+ 轨迹 / 20+ 机器人形态 / 9500+ 小时统一数据集 (UniACT) 上预训练。统一动作表示 + 坐标系 + 控制频率，支持完全公开数据可复现。LIBERO-Plus 80.5%（比 π0 +30%） / LIBERO 98.6% / RoboCasa SOTA。配套 3D 感知模块增强空间语义。",
+      "huggingface": "https://huggingface.co/amap-cvlab/ABot-M0",
+      "github": "https://github.com/amap-cvlab/ABot-Manipulation",
+      "paper": "https://arxiv.org/abs/2602.11236",
+      "license": "Apache 2.0",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "动作流形",
+        "AML",
+        "高德",
+        "600万轨迹",
+        "UniACT",
+        "统一架构"
+      ],
+      "addedDate": "2026-05-26",
+      "updated": "2026-04",
+      "benchmarks": {
+        "LIBERO": "98.6% (avg 4 suites)",
+        "LIBERO-Plus": "80.5% (vs π0 ~50%)",
+        "RoboCasa": "SOTA",
+        "RoboTwin 2.0": "竞争力前列"
+      }
+    },
     {
       "name": "OpenVLA",
       "org": "Stanford / TRI",
