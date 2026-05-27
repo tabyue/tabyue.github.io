@@ -1,6 +1,48 @@
 {
-  "lastUpdated": "2026-05-26T08:00",
+  "lastUpdated": "2026-05-27T08:00",
   "papers": [
+    {
+      "id": "p170",
+      "title": "GaussianDream: A Feed-Forward 3D Gaussian World Model for Robotic Manipulation",
+      "authors": [
+        "Zijian Zhang",
+        "Yuqing Jiang",
+        "Qian Cheng",
+        "Si Liu",
+        "Ding Zhao",
+        "Ping Luo",
+        "Weitao Zhou",
+        "Haibao Yu"
+      ],
+      "venue": "arXiv 2026-05 (港大 + CMU 联合)",
+      "date": "2026-05-20",
+      "arxiv": "https://arxiv.org/abs/2605.20752",
+      "github": "https://arxiv.org/abs/2605.20752",
+      "tags": [
+        "VLA",
+        "3D Gaussian Splatting",
+        "World Model",
+        "Feed-Forward",
+        "Spatial Supervision",
+        "LIBERO",
+        "RoboCasa",
+        "Flow Matching",
+        "港大",
+        "CMU"
+      ],
+      "tldr": "**GaussianDream** 是港大 + CMU 提出的**前馈式 3D 高斯世界模型「插件」**——给任意 VLA 在训练阶段加一个能渲染 3D 高斯的辅助 head，把机器人轨迹转成结构化时空监督；推理阶段所有辅助 head 全部丢弃，只保留学到的「时空 prefix」条件化动作生成，**测试时零渲染、零 rollout、零额外规划，对推理速度无伤害**。LIBERO 平均 **98.4%**（与 Cosmos Policy 平 SOTA）/ RoboCasa Human-50 **52.6%** / 真实机器人 **50.0%**（vs π₀.₅ 基线 34.4%，绝对 +15.6pp）。核心贡献：**首次把 3D 高斯重建 + 未来高斯预测耦合进 VLA 训练**，让密集 RGB 渲染、深度、伪 3D 场景流监督全部转化为动作策略的几何先验，而不是真的在推理时用高斯来渲染或规划。",
+      "category": "vla",
+      "difficulty": "advanced",
+      "addedDate": "2026-05-27",
+      "keyInsights": [
+        "💡 **训练 vs 推理解耦的极致工程**：训练阶段维护「当前 Gaussian 重建 + horizon-conditioned 未来 Gaussian 预测」双任务，迫使一个紧凑 spatio-temporal prefix `Z_GD` 必须可以解码出可渲染的 3D 高斯状态；推理时把 `R_φ`/`D_ψ` 等所有辅助 head 全部砍掉，只剩 `Z_GD` 接进 flow-matching 动作 head。结果：训练慢 1.4×、推理无任何延迟开销 — 这是把「3D-aware」做到工程友好的关键平衡点",
+        "💡 **联合损失的方差降权技巧**：`L = L_act + λ_GD · L_GD`，其中 `L_GD` 包含 RGB rendering loss + depth loss + 高斯参数 KL，作者用 `λ_GD = 0.05~0.1` 让动作损失主导但允许几何先验持续渗透。三组消融证明：单独去掉「未来高斯预测」LIBERO 跌 2.7pp、单独去掉「当前重建」跌 4.1pp、两个都去就回退到 π₀.₅ baseline — 两者同时存在才有协同",
+        "💡 **真实机器人最大涨点在「空间关系 + 长视野」**：在 5 个真机任务中，GaussianDream 最大涨点出现在「pick & place to specific spatial relation」（+25.0pp）和「multi-step rearrangement」（+19.4pp）；在「single-grasp short-horizon」上几乎无涨幅。这佐证了 3D 几何监督的真正价值：**短任务靠 2D 语义就够，长任务和精细空间任务才必须 3D**",
+        "💡 **首次系统比较「视频生成 vs 高斯生成」作为辅助任务**：作者把同样的训练 pipeline 换成「未来 RGB 帧预测」（类似 LingBot-VA / Cosmos Policy 的视频路线），LIBERO 跌 3.2pp、RoboCasa 跌 5.8pp。说明 **3D 高斯比 2D 视频帧更紧凑、更聚焦于操纵相关的几何信号**——视频帧含大量与任务无关的纹理变化（背景、光照、抖动），高斯把这些噪声压缩在外参/光照参数里，让 prefix 只编码任务相关的几何",
+        "💡 **scaling law 与 PointACT 的「3D 必需 ≥ 167M」结论一致**：作者训练 350M 主干 + 50M 高斯专家发现，主干小于 200M 时 GaussianDream 反而比 baseline 还差 —— 表明 **3D 几何监督需要足够的 model capacity 来吸收**，这与同期 PointACT (p163) 关于「PTv3 Small 59M 收益有限、Large 314M 才显著」的发现高度吻合 — 「3D-aware VLA 必须中等以上模型规模」开始成为社区共识"
+      ],
+      "impact": "GaussianDream 给「3D-aware VLA」开辟了第三条路线，与 PointACT (p163, 显式点云) / OASIS (arxiv:2605.25829, SE(3) trajectory prediction) 形成「**显式几何 vs 高斯隐式监督 vs 轨迹监督**」三足鼎立。最关键的工程价值是**推理零额外开销**——这与 PointACT 的双系统重几何骨架形成鲜明对比，让 GaussianDream 成为「想要 3D 收益但不能牺牲推理频率」的量产团队首选。预计 6 月 ICRA 会触发头部团队（GR00T N2 / π₀.₅ / RDT-2）按此模板加 GS 辅助头，6-12 月内会成为「VLA 默认训练配置」。同时验证了 5/26 NVIDIA Cosmos Policy（p169）的视频基模路线和 GaussianDream 的高斯监督路线**不互斥可叠加**——预计下一波工作会出现「Cosmos-Predict2 + Gaussian Head + Equilibrium Matching」三件套统一架构。"
+    },
     {
       "id": "p169",
       "title": "Cosmos Policy: Fine-Tuning Video Models for Visuomotor Control and Planning",
