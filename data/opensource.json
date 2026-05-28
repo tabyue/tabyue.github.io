@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-28T15:00",
+  "lastUpdated": "2026-05-28T15:25",
   "categories": [
     {
       "id": "all",
@@ -48,6 +48,40 @@
     }
   ],
   "projects": [
+    {
+      "id": "os115",
+      "name": "RLinf (清华 — 具身/智能体 AI 强化学习后训练基础设施)",
+      "github": "https://github.com/RLinf/RLinf",
+      "organization": "清华大学 (Chao Yu + Yu Wang)",
+      "category": "framework",
+      "description": "**RLinf** — 清华大学开源的**具身/智能体 AI 强化学习基础设施**（GitHub 3.6k stars / Apache-2.0）。名称中 inf = Infrastructure + Infinite。**核心定位**：为 VLA / VLM / 世界模型的**强化学习后训练（Post-Training RL）**提供统一、可扩展、分布式的训练 pipeline——是当前具身智能「**SFT → RL**」二阶段训练范式的工程化标杆。\n\n**支持的 RL 算法**：PPO / Async PPO / GRPO / DAPO / Reinforce++ / SAC / CrossQ / RLPD / SAC-Flow / DSRL / IQL / RECAP / DAgger / HG-DAgger（共 12+ 算法）。\n\n**支持的 VLA 模型（开箱即用 RL 微调）**：π₀ / π₀.₅ / OpenVLA / OpenVLA-OFT / GR00T / LingBot-VLA / StarVLA / Dexbotic — 覆盖 2026 年主流 VLA 模型。\n\n**支持的仿真器**：ManiSkill / LIBERO / RoboTwin / RoboVerse / BEHAVIOR / MetaWorld / IsaacLab / CALVIN / RoboCasa / EmbodiChain / Franka-Sim — 12+ 环境。\n\n**支持的世界模型 RL 微调**：Wan / OpenSora / DreamZero — 可对世界模型做 RL 后训练。\n\n**真机 RL 支持**：Franka Arm / XSquare Turtle2 / Dual-Franka / Dexmal DOS-W1 / GimArm + 灵巧手 / Intel RealSense / ZED / Robotiq / GELLO / SpaceMouse / PICO VR。\n\n**关键技术论文**：① RLinf-USER（arxiv:2602.07837）— 首个真机在线学习统一系统；② WoVR — 基于世界模型的 VLA RL 后训练（关键帧初始化 + PACE 共进化抗幻觉）。\n\n**性能**：混合执行模式吞吐量达现有框架 **2.434×**；DreamZero SFT 吞吐量 4× 提升。\n\n**产业采用**：智元 AgiBot / X Square Robot / PsiBot / Dexmal / 摩尔线程 / 地平线 / DexForce / GigaAi 等 10+ 企业/初创已接入。\n\n**为什么重要**：当 VLA 模型（π₀ / GR00T 等）从 SFT 走向 RL 后训练时，**RLinf 是目前唯一覆盖「仿真 RL + 真机 RL + 世界模型 RL」三条路线的统一基础设施**——它之于具身 RL，类似 vLLM 之于 LLM 推理。",
+      "language": "Python (98%)",
+      "license": "Apache-2.0",
+      "features": [
+        "🌟 具身/智能体 AI RL 后训练统一基础设施（清华大学出品）",
+        "🤖 VLA 模型开箱即用 RL 微调 — π₀ / GR00T / OpenVLA / LingBot-VLA / StarVLA",
+        "⚡ 12+ RL 算法 — PPO / GRPO / SAC / DSRL / RLPD / DAgger / HG-DAgger",
+        "🎮 12+ 仿真器 — ManiSkill / LIBERO / RoboTwin / IsaacLab / CALVIN / RoboCasa",
+        "🌍 世界模型 RL — Wan / OpenSora / DreamZero + WoVR 抗幻觉框架",
+        "🦾 真机 RL — Franka / XSquare / Dexmal / GimArm + 灵巧手 + ZED / RealSense",
+        "📈 2.434× 吞吐量提升 — 混合执行模式 vs 现有框架",
+        "🏢 10+ 企业采用 — 智元 AgiBot / 摩尔线程 / 地平线 / Dexmal / GigaAi"
+      ],
+      "stars": "3.6k",
+      "tags": [
+        "RL",
+        "强化学习",
+        "VLA微调",
+        "后训练",
+        "清华",
+        "π₀",
+        "GR00T",
+        "真机RL",
+        "Apache-2.0",
+        "RLinf"
+      ],
+      "addedDate": "2026-05-28"
+    },
     {
       "id": "os113",
       "name": "OpenClaw (全球第一 AI Agent 框架 — 369k stars / MIT / 50+ 消息通道)",
