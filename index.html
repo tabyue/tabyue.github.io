@@ -731,11 +731,16 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
 
 <!-- OPENSOURCE -->
 <div class="page" id="pg-opensource">
-    <div class="page-header"><h1 class="page-title"><span class="icon">💻</span> 开源生态 <span style="font-family:'JetBrains Mono';font-size:.7rem;color:var(--t3);font-weight:400" id="osCount"></span></h1><p class="page-sub">具身智能核心开源项目导航，按分类快速定位你需要的工具。</p></div>
+    <div class="page-header"><h1 class="page-title"><span class="icon">💻</span> 开源生态 <span style="font-family:'JetBrains Mono';font-size:.7rem;color:var(--t3);font-weight:400" id="osCount"></span></h1><p class="page-sub">具身智能核心开源项目导航，按分类快速定位你需要的工具。点击卡片查看详细分析报告。</p></div>
     <div class="page-body">
         <div class="filters" id="osFilters"></div>
         <div id="osGrouped"></div>
     </div>
+</div>
+
+<!-- OS Detail Modal -->
+<div class="modal-overlay" id="osModal" onclick="if(event.target===this){this.classList.remove('open');document.body.style.overflow=''}">
+    <div class="modal" style="max-width:900px"><div class="modal-close"><button class="modal-close-btn" onclick="document.getElementById('osModal').classList.remove('open');document.body.style.overflow=''">✕</button></div><div class="modal-body" id="osModalBody" style="max-height:80vh;overflow-y:auto"></div></div>
 </div>
 
 <!-- NEWS -->
@@ -2249,7 +2254,7 @@ function renderOSGrouped(catFilter){
         html+=`<div class="card-grid">`;
         projs.forEach(p=>{
             const osNew=p.addedDate&&(Date.now()-new Date(p.addedDate).getTime())<3*86400000;
-            html+=`<div class="card" data-cat="${p.category}"><div class="card-tags"><span class="os-stars">⭐ ${p.stars}</span><span class="os-cat-badge os-cat-${p.category}">${cat.name}</span>${osNew?'<span class="status-tag status-new">NEW</span>':''}${(p.tags||[]).map(t=>`<span class="tag tag-purple">${t}</span>`).join('')}</div><div class="card-title">${p.name} <span style="font-size:.78rem;color:var(--t3);font-weight:400">${p.org}</span></div><div class="card-desc">${p.description}</div>${p.difficulty?`<div style="font-size:.72rem;color:var(--t3);margin-top:6px">📊 难度: ${p.difficulty}</div>`:''}<div class="card-footer"><a href="${p.github}" target="_blank" class="card-btn primary">💻 GitHub</a></div></div>`;
+            html+=`<div class="card" data-cat="${p.category}" onclick="openOsDetail('${p.id}')" style="cursor:pointer"><div class="card-tags"><span class="os-stars">⭐ ${p.stars}</span><span class="os-cat-badge os-cat-${p.category}">${cat.name}</span>${osNew?'<span class="status-tag status-new">NEW</span>':''}${(p.tags||[]).slice(0,4).map(t=>`<span class="tag tag-purple">${t}</span>`).join('')}</div><div class="card-title">${p.name} <span style="font-size:.78rem;color:var(--t3);font-weight:400">${p.org}</span></div><div class="card-desc">${p.description}</div>${p.difficulty?`<div style="font-size:.72rem;color:var(--t3);margin-top:6px">📊 难度: ${p.difficulty}</div>`:''}<div class="card-footer"><a href="${p.github}" target="_blank" class="card-btn primary" onclick="event.stopPropagation()">💻 GitHub</a></div></div>`;
         });
         html+=`</div></div>`;
     });
@@ -2272,6 +2277,34 @@ function filterOS(el,cat){
     document.querySelectorAll('#osGrouped .os-group').forEach(g=>{
         g.style.display=(cat==='all'||g.dataset.cat===cat)?'':'none';
     });
+}
+
+async function openOsDetail(id){
+    const modal=document.getElementById('osModal');
+    const body=document.getElementById('osModalBody');
+    body.innerHTML='<div style="text-align:center;padding:40px;color:var(--t3)">加载中...</div>';
+    modal.classList.add('open');document.body.style.overflow='hidden';
+    // 尝试加载详情文件
+    const detail=await loadJ(`data/opensource/${id}.json`);
+    if(!detail){
+        // 无详情文件，显示基础信息
+        const p=OD.projects.find(x=>x.id===id);
+        if(!p){body.innerHTML='<p>未找到项目</p>';return;}
+        body.innerHTML=`<h2 style="margin-bottom:12px">${p.name}</h2><div style="margin-bottom:12px"><a href="${p.github}" target="_blank" class="card-btn primary">💻 GitHub</a> <span class="os-stars" style="margin-left:8px">⭐ ${p.stars}</span></div><div class="md-body">${renderMd(p.description)}</div><div style="margin-top:16px;font-size:.8rem;color:var(--t3)">📄 License: ${p.license||'未知'} · 📅 收录: ${p.addedDate||''}</div><p style="margin-top:20px;color:var(--t3);font-size:.85rem">详细分析报告即将上线，敬请期待 🚧</p>`;
+        return;
+    }
+    // 有详情文件，渲染完整报告
+    const p=OD.projects.find(x=>x.id===id)||{};
+    let h=`<h2 style="margin-bottom:8px">${p.name||detail.id}</h2>`;
+    h+=`<div style="margin-bottom:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><a href="${p.github||''}" target="_blank" class="card-btn primary">💻 GitHub</a><span class="os-stars">⭐ ${p.stars||''}</span><span style="font-size:.8rem;color:var(--t3)">📄 ${p.license||''} · 📅 收录 ${p.addedDate||''}</span></div>`;
+    // 渲染各个 section
+    const sections=['overview','architecture','algorithms','models','environments','codeWalkthrough','keyPapers','quickStart','performance','industryAdoption','comparison','teamAndCommunity'];
+    sections.forEach(key=>{
+        if(detail[key]){
+            h+=`<div class="os-detail-section md-body">${renderMd(detail[key])}</div>`;
+        }
+    });
+    body.innerHTML=h;
 }
 
 // === RENDER NEWS ===
