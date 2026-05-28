@@ -2293,17 +2293,13 @@ async function openOsDetail(id){
         body.innerHTML=`<h2 style="margin-bottom:12px">${p.name}</h2><div style="margin-bottom:12px"><a href="${p.github}" target="_blank" class="card-btn primary">💻 GitHub</a> <span class="os-stars" style="margin-left:8px">⭐ ${p.stars}</span></div><div class="md-body">${renderMd(p.description)}</div><div style="margin-top:16px;font-size:.8rem;color:var(--t3)">📄 License: ${p.license||'未知'} · 📅 收录: ${p.addedDate||''}</div><p style="margin-top:20px;padding:16px;background:var(--bg3);border-radius:8px;color:var(--t2);font-size:.85rem">📋 该项目的详细分析报告正在撰写中，将包含：架构解读 / 代码走查 / 算法详解 / 性能基准 / 产业采用 / 快速开始指南等。敬请期待。</p>`;
         return;
     }
-    // 有详情文件，渲染完整报告
+    // 有详情文件，渲染简介 + 报告按钮（不渲染完整内容，完整内容在独立报告页）
     const p=OD.projects.find(x=>x.id===id)||{};
     let h=`<h2 style="margin-bottom:8px">${p.name||detail.id}</h2>`;
     h+=`<div style="margin-bottom:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><a href="${p.github||''}" target="_blank" class="card-btn primary">💻 GitHub</a><a href="/data/opensource/reports/${id}.html" target="_blank" class="card-btn primary" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">📄 查看完整报告</a><span class="os-stars">⭐ ${p.stars||''}</span><span style="font-size:.8rem;color:var(--t3)">📄 ${p.license||''} · 📅 收录 ${p.addedDate||''}</span></div>`;
-    // 渲染各个 section
-    const sections=['overview','architecture','algorithms','models','environments','codeWalkthrough','keyPapers','quickStart','performance','industryAdoption','comparison','teamAndCommunity'];
-    sections.forEach(key=>{
-        if(detail[key]){
-            h+=`<div class="os-detail-section md-body">${renderMd(detail[key])}</div>`;
-        }
-    });
+    h+=`<div class="md-body">${renderMd(p.description||'')}</div>`;
+    if(p.features&&p.features.length){h+=`<div style="margin-top:12px">`;p.features.forEach(f=>{h+=`<div style="margin:4px 0;font-size:.85rem">${f}</div>`});h+=`</div>`}
+    h+=`<div style="margin-top:20px;padding:14px;background:var(--bg3);border-radius:8px;text-align:center"><a href="/data/opensource/reports/${id}.html" target="_blank" style="color:var(--p);font-weight:600;font-size:.95rem">👉 点击查看完整深度分析报告（架构 / 代码解读 / 性能基准 / 快速开始）</a></div>`;
     body.innerHTML=h;
 }
 
