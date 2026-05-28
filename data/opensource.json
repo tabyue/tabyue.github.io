@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-28T14:30",
+  "lastUpdated": "2026-05-28T15:00",
   "categories": [
     {
       "id": "all",
@@ -40,9 +40,77 @@
       "id": "data-tools",
       "name": "数据与工具",
       "icon": "📊"
+    },
+    {
+      "id": "ai-agent-framework",
+      "name": "AI Agent 框架",
+      "icon": "🧠"
     }
   ],
   "projects": [
+    {
+      "id": "os113",
+      "name": "OpenClaw (全球第一 AI Agent 框架 — 369k stars / MIT / 50+ 消息通道)",
+      "github": "https://github.com/openclaws/openclaw",
+      "organization": "OpenClaw Foundation (创始人 Peter Steinberger → OpenAI Personal Agents 负责人)",
+      "category": "ai-agent-framework",
+      "description": "**OpenClaw** — 全球 GitHub Stars 第一的 AI Agent 框架（**369k+ stars**，2026 年 3 月超越 React / Linux 登顶）。MIT 协议 + TypeScript 主体 + Swift（iOS/macOS）。核心能力：① **任何 LLM 路由**（Claude / GPT / Gemini / DeepSeek / Kimi / 本地 Ollama）；② **50+ 消息通道**（WhatsApp / Telegram / Slack / Discord / 企业微信 / 飞书 / 钉钉）；③ **13,700+ ClawHub Skills 生态**（2026-05）；④ **自主规划 + 连贯执行复杂任务**（从对话交互工具升级为「数字替身」）。**创始人 Peter Steinberger 2026-02-14 加入 OpenAI 主管 Personal Agents 部门**，项目移交独立开源基金会管理（OpenAI 资金支持 + MIT 不变）。**与具身智能的关系**：① 可作为机器人的上层 Agent 调度层（语音 / 消息 → Agent → VLA / Nav 执行）；② hermes-embodied 等项目已在 OpenClaw 生态之上构建机器人技能闭环；③ 我们的 embodied-agent 学习模块（sec-0 到 sec-N）的参考实现。**中国生态**：阿里云 / 腾讯云 / 火山引擎均有一键部署服务；百度优选电商 Skill 上架 ClawHub。",
+      "language": "TypeScript (主体) + Swift (iOS/macOS)",
+      "license": "MIT",
+      "features": [
+        "🌟 GitHub 369k+ stars — 全球开源项目第一（超 React + Linux）",
+        "🤖 任意 LLM 路由 — Claude / GPT / Gemini / DeepSeek / Kimi / Ollama",
+        "📱 50+ 消息通道 — WhatsApp/Telegram/Slack/企微/飞书/钉钉",
+        "🧩 13,700+ ClawHub Skills — 可扩展技能市场",
+        "🔐 MIT 协议 — 完全开源、可自托管",
+        "🏢 OpenAI 资金支持 + 独立基金会管理",
+        "🇨🇳 阿里云/腾讯云/火山引擎一键部署"
+      ],
+      "stars": "369k+",
+      "tags": [
+        "AI Agent",
+        "OpenClaw",
+        "GitHub第一",
+        "MIT",
+        "TypeScript",
+        "50+通道",
+        "ClawHub",
+        "数字替身"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os114",
+      "name": "Hermes Agent (Nous Research — 自进化 AI Agent + hermes-embodied 具身扩展)",
+      "github": "https://github.com/NousResearch/hermes-agent",
+      "organization": "Nous Research (去中心化 AI 研究实验室)",
+      "category": "ai-agent-framework",
+      "description": "**Hermes Agent** — Nous Research 开源的**自进化 AI Agent 框架**（GitHub **100k+ stars**，2026-02 发布以来增长最快的 Agent 项目之一）。MIT 协议。**核心差异化 — 「越用越强」的学习闭环**：① **持久记忆系统**（长效语义记忆 + 工作记忆 + 情景日志 / FTS5 全文搜索 + LLM 摘要 / Honcho 用户建模）；② **自主技能生成**（复杂任务完成后自动抽象为 Skill，下次直接调用 + 持续优化）；③ **轨迹生成 + Atropos RL 环境**（可导出训练数据反哺模型微调）。**六种部署后端**：本地 / Docker / SSH / Daytona / Singularity / Modal（serverless）——$5 VPS 到 GPU 集群全覆盖。**多平台通道**：Telegram / Discord / Slack / WhatsApp / Signal / CLI。**hermes-embodied 具身扩展**（专为机器人设计）：① vast-gpu Skill（自然语言云端 GPU 调度）；② vla-trainer Skill（SmolVLA / GR00T 自动微调）；③ robot-loop Skill（部署模型 → 收集轨迹 → 自动重训 + promote）—— 用户只需自然语言对话，无需 ML 专业知识就能完成 VLA 模型的自动优化循环。**与 OpenClaw 互补**：OpenClaw = 连接广度（50+ 通道）/ Hermes = 进化深度（学习闭环）；两者共享 agentskills.io 技能标准，可组合使用（Hermes 做规划器 + OpenClaw 做执行器）；`hermes claw migrate` 一键迁移。",
+      "language": "Python (主体 + uv 包管理)",
+      "license": "MIT",
+      "features": [
+        "🧠 自进化学习闭环 — 记忆 + 自主技能生成 + RL 轨迹反哺",
+        "🤖 hermes-embodied 具身扩展 — VLA 自动微调 + MuJoCo 仿真闭环",
+        "💾 持久记忆 — FTS5 全文搜索 + LLM 摘要 + Honcho 用户建模",
+        "🌐 6 种后端 — 本地/Docker/SSH/Daytona/Singularity/Modal",
+        "🔄 hermes claw migrate — 一键从 OpenClaw 迁移",
+        "🎯 200+ 模型支持 — OpenRouter / Nous Portal / OpenAI / 国内模型",
+        "🔬 Atropos RL + 轨迹压缩 — 研究级 Agent 训练基础设施",
+        "📱 Telegram/Discord/Slack/WhatsApp/Signal 全平台"
+      ],
+      "stars": "100k+",
+      "tags": [
+        "AI Agent",
+        "Hermes",
+        "Nous Research",
+        "自进化",
+        "hermes-embodied",
+        "VLA微调",
+        "学习闭环",
+        "MIT"
+      ],
+      "addedDate": "2026-05-28"
+    },
     {
       "id": "os108",
       "name": "FAST-LIVO2 (港大 MaRS — 室外多传感器融合 SOTA SLAM)",
