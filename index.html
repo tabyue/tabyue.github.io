@@ -254,6 +254,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 .ls-mod .ls-prog.partial{border-color:var(--p);box-shadow:0 0 4px rgba(41,151,255,.3)}
 .ls-mod .ls-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ls-mod .ls-updated{width:6px;height:6px;background:var(--pk);border-radius:50%;flex-shrink:0;animation:pulse 2s infinite}
+.ls-mat{font-size:.7rem;flex-shrink:0;margin-left:2px;opacity:.85}
 /* Sidebar section sub-items (章节列表折叠在模块下) */
 .ls-sections{padding:4px 0 8px 38px;display:none}
 .ls-mod.active+.ls-sections,.ls-mod.expanded+.ls-sections{display:block}
@@ -1346,6 +1347,9 @@ function renderLearn(){
             sb+=`<span class="ls-prog ${progCls}"></span>`;
             sb+=`<span class="ls-name">${m.name}</span>`;
             if(isUpdated)sb+=`<span class="ls-updated"></span>`;
+            const _mat=learnCache[modId]&&learnCache[modId].maturity;
+            if(_mat==='comprehensive')sb+=`<span class="ls-mat ls-mat-c" title="教材级完整">✅</span>`;
+            else if(_mat==='foundation')sb+=`<span class="ls-mat ls-mat-f" title="基础搭建中">🌱</span>`;
             sb+=arrowSpan;
             sb+=`</div>`;
             // 展开当前模块的章节列表（且未被用户收起）
