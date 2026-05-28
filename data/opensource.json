@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-26T11:00",
+  "lastUpdated": "2026-05-28T14:30",
   "categories": [
     {
       "id": "all",
@@ -43,6 +43,164 @@
     }
   ],
   "projects": [
+    {
+      "id": "os108",
+      "name": "FAST-LIVO2 (港大 MaRS — 室外多传感器融合 SOTA SLAM)",
+      "github": "https://github.com/hku-mars/FAST-LIVO2",
+      "organization": "香港大学 MaRS Lab (张富团队)",
+      "category": "outdoor-navigation",
+      "description": "**FAST-LIVO2** — 香港大学 MaRS Lab 张富团队 2025-01-23 开源，**目前最 SOTA 的 LiDAR-惯性-视觉融合 SLAM 框架**（IEEE T-RO 2024 收录）。核心采用**误差状态迭代卡尔曼滤波器（ESIKF）+ 顺序更新策略**，先处理 LiDAR 数据再处理视觉数据，解决了不同传感器数据维度不匹配的问题。**直接法融合**——抛弃繁琐特征提取，LiDAR 直接对原始点云配准，视觉直接最小化光度误差。**关键创新**：① **统一体素地图（Unified Voxel Map）**——每个体素同时存储几何（概率平面）+ 视觉（图像补丁）；② **LiDAR 平面不确定性作为视觉光度误差几何先验**，跨模态自适应权重；③ **逆曝光时间 τ 作为状态分量**——支持光照剧烈变化场景（夜间、逆光）；④ **按需体素射线投射**——LiDAR 近距盲区也能稳定。第一作者郑纯然博士入选华为「天才少年」。**适用场景**：无人机自主飞行（70+ km/h 高速避障）、室外移动机器人、自动驾驶、退化场景（隧道、林地、高架桥下）。**配套**：MARS-LVIG 数据集 + LIV_handhold 硬件设备 + FAST-Calib 标定工具一键开源。",
+      "language": "C++ (ROS1) + ROS2 移植版",
+      "license": "GPLv2",
+      "features": [
+        "🌟 IEEE T-RO 2024 + 港大火星实验室 — LiDAR-惯性-视觉融合 SOTA",
+        "🔥 ESIKF 顺序更新 + 直接法 — 抛弃特征提取，光度误差直接对齐",
+        "🌐 统一体素地图 — 几何+视觉双信息共享",
+        "🌙 逆曝光时间状态分量 — 夜间/逆光场景鲁棒",
+        "🚁 室外/野外/隧道/退化场景 SLAM 首选 — 70+ km/h 无人机高速验证",
+        "📦 MARS-LVIG 数据集 + LIV_handhold 硬件 + FAST-Calib 标定全栈开源",
+        "⚙️ ROS2 Humble 移植版（VIS4ROB-lab）"
+      ],
+      "stars": "3.8k+",
+      "tags": [
+        "SLAM",
+        "LiDAR-Inertial-Visual",
+        "室外导航",
+        "退化场景",
+        "ESIKF",
+        "港大MaRS",
+        "IEEE T-RO",
+        "无人机"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os109",
+      "name": "Autoware (autonomousfoundation — 全球开源 L2-L4 自动驾驶标杆)",
+      "github": "https://github.com/autowarefoundation/autoware",
+      "organization": "Autoware Foundation (东京大学发起 / 全球社区)",
+      "category": "outdoor-navigation",
+      "description": "**Autoware** — 由日本东京大学发起、Autoware Foundation 全球社区维护的**全栈式自动驾驶框架**，是开源自动驾驶的「**事实标准**」。主打**「低成本、易部署、跨平台」**，支持 L2~L4 级自动驾驶，覆盖城市道路、高速、园区等场景。**核心模块**：感知（多传感器融合 / LiDAR 检测 / 摄像头融合）+ 定位（NDT / EKF / GNSS 融合）+ 规划（Lanelet2 道路网络 + 行为规划 + 运动规划）+ 控制（横向 + 纵向）。**两大版本**：① **Autoware.Universe** — 当前主推版本，基于 ROS 2 Humble；② **Autoware.Auto** — Apex.OS 版本，更注重产品级稳定性。**部署平台**：X86 + ARM (Jetson 系列) + 瑞芯微 + 百度昆仑芯。**典型用例**：园区无人车 / 配送机器人 / 矿区自动驾驶 / 末端物流 / 学术研究。**Autoware 与 Apollo 对比**：Autoware = 学术开源标杆 + 跨平台 + 易扩展；Apollo = 工业级 + 量产部署 + 中国生态深耕。**配套**：完整高精度地图工具链（PCD 点云图 + Lanelet2 矢量图 + OSM 语义图）+ AWSIM 仿真器 + Open Autonomous Driving Dataset。",
+      "language": "C++ (核心) + Python (工具/仿真) + Rust (高性能模块)",
+      "license": "Apache-2.0",
+      "features": [
+        "🌍 全球开源自动驾驶标杆 — 东京大学发起 / Autoware Foundation 治理",
+        "🛣️ L2-L4 全场景 — 城市/高速/园区 / 配送 / 矿区",
+        "🤖 ROS 2 Humble 原生 — 与 ROS 生态深度集成",
+        "🔌 跨平台 — X86 + Jetson + 瑞芯微 + 百度昆仑芯",
+        "🗺️ Lanelet2 高精地图工具链 — PCD + 矢量 + 语义",
+        "🎯 与 Apollo 互补 — Autoware 偏研究/低成本 / Apollo 偏量产/中国生态",
+        "📚 AWSIM 仿真器 + 完整培训资料"
+      ],
+      "stars": "10.3k+",
+      "tags": [
+        "自动驾驶",
+        "Autoware",
+        "ROS2",
+        "Lanelet2",
+        "园区无人车",
+        "L4",
+        "Universe",
+        "全栈"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os110",
+      "name": "FunASR (Alibaba DAMO — 工业级 ASR 全套工具包)",
+      "github": "https://github.com/modelscope/FunASR",
+      "organization": "阿里达摩院语音实验室 / FunAudioLLM",
+      "category": "speech-asr",
+      "description": "**FunASR** — 阿里达摩院开源的**工业级语音识别工具包**，GitHub 15.2k+ stars。**核心定位**：① 提供基于工业语料训练的 SOTA 预训练模型；② 打通训练到部署全链路（训练 + 微调 + Docker 服务部署 + ONNX 导出）。**统一 AutoModel 接口** — 几行代码完成 VAD + ASR + 标点 + 说话人分离 + 情感识别全流水线。**自研模型**：Paraformer 系列（INTERSPEECH 2022/2023，单步非自回归 NAR，比自回归快 12×，AISHELL-1 CER 1.95%）+ fsmn-vad + ct-punc + emotion2vec。**集成模型**：SenseVoiceSmall（多语种 + 情感 + 事件，10 秒音频 70ms 处理）+ Fun-ASR-Nano（800M / 7 方言 / 26 口音 / 歌词识别）+ Whisper Large V3 + Qwen-Audio。**性能**：GPU 离线转录 RTF=0.0076，多线程加速比 1200+；CPU INT8 量化 RTF=0.0446，CER 无损失。**社区生态**：Triton GPU 部署 + sherpa-onnx 跨平台 + SenseVoice.cpp（GGML / 3-8 bit 量化）+ FastAPI 服务。**机器人应用场景**：会议记录 / 语音控制 / 人机对话 / 实时字幕 / 客服质检。",
+      "language": "Python (PyTorch)",
+      "license": "MIT (代码) + Model License Agreement (模型)",
+      "features": [
+        "🌟 GitHub 15.2k+ stars — 工业级 ASR 标杆",
+        "⚡ 170× realtime — Whisper 13× / 云 API 1× 全部碾压",
+        "🎯 统一 AutoModel — VAD + ASR + 标点 + 说话人分离 + 情感识别一行代码",
+        "🇨🇳 Paraformer + SenseVoice + Fun-ASR-Nano 中文 SOTA — AISHELL-1 CER 1.95%",
+        "🌍 50+ 语言支持 + 7 中文方言 + 26 口音",
+        "🚀 vLLM 加速 2-3× / Triton 部署 / sherpa-onnx 端侧",
+        "🤝 OpenAI API 兼容 + MCP Server (Claude/Cursor)",
+        "📦 ONNX 导出 + Docker + ARM64 + Windows SDK"
+      ],
+      "stars": "15.2k+",
+      "tags": [
+        "ASR",
+        "语音识别",
+        "Paraformer",
+        "SenseVoice",
+        "Fun-ASR-Nano",
+        "阿里达摩院",
+        "工业级",
+        "中文SOTA"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os111",
+      "name": "sherpa-onnx (k2-fsa — 跨平台离线语音部署框架)",
+      "github": "https://github.com/k2-fsa/sherpa-onnx",
+      "organization": "k2-fsa (Next-gen Kaldi 团队)",
+      "category": "speech-deployment",
+      "description": "**sherpa-onnx** — Next-gen Kaldi 团队开源的**跨平台离线语音部署框架**，GitHub 10.9k+ stars。**核心定位**：把多种语音模型（Whisper / SenseVoice / Paraformer / Moonshine / FireRedASR / FunASR-Nano）**统一转成 ONNX 格式**，部署到从服务器到嵌入式的各类平台，**完全离线运行**。**12 项语音功能**：ASR（流式 + 非流式）+ TTS + 说话人分离 + 说话人识别 + 说话人验证 + 语种识别 + VAD（silero-vad）+ 关键词检测 + 音频标签 + 标点恢复 + 语音增强（gtcrn / DPDFNet）+ 音源分离（spleeter / UVR）。**多平台覆盖**：Android / iOS / Windows / macOS / Linux / HarmonyOS（鸿蒙）+ WebAssembly（浏览器）+ WearOS + openKylin + NVIDIA Jetson + Raspberry Pi + RISC-V + RK NPU + Axera NPU + Ascend NPU。**12 种编程语言**：C++/C/Python/JavaScript/Java/C#/Kotlin/Swift/Go/Dart/Rust/Pascal。**机器人应用场景**：本体端语音交互（无需上云）/ 边缘计算 / 离线机器人 / 隐私敏感场景 / 低延迟唤醒。",
+      "language": "C++ (核心) + 多语言绑定",
+      "license": "Apache-2.0",
+      "features": [
+        "🚀 GitHub 10.9k+ stars — Next-gen Kaldi 旗舰部署框架",
+        "🎯 12 项语音功能（不只 ASR）— TTS + VAD + 说话人 + 增强 + 分离全套",
+        "📱 多平台：Android / iOS / Windows / macOS / Linux / 鸿蒙 / WebAssembly",
+        "🌐 12 种编程语言绑定 — C/C++/Python/Rust/Dart 等全覆盖",
+        "🔧 NPU 加速：RK NPU / Axera NPU / 昇腾 NPU / NVIDIA Jetson",
+        "💾 Raspberry Pi / RISC-V / WearOS — 嵌入式深度支持",
+        "🔌 Whisper / SenseVoice / Paraformer / FunASR-Nano / Moonshine / FireRedASR 全集成",
+        "🤖 完全离线 — 机器人本体语音交互首选"
+      ],
+      "stars": "10.9k+",
+      "tags": [
+        "ASR",
+        "TTS",
+        "ONNX",
+        "跨平台",
+        "嵌入式",
+        "Next-gen Kaldi",
+        "鸿蒙",
+        "离线部署"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os112",
+      "name": "GPT-SoVITS (RVC-Boss — 5 秒语音克隆开源神器)",
+      "github": "https://github.com/RVC-Boss/GPT-SoVITS",
+      "organization": "RVC-Boss (个人 + 社区维护)",
+      "category": "speech-tts",
+      "description": "**GPT-SoVITS** — RVC 变声器创始人开源的**5 秒语音克隆 TTS 神器**，GitHub **55.6k+ stars**（TTS 开源项目第一）。**核心创新**：融合 GPT 架构理解文本语义 + SoVITS 声码器生成自然语音，**仅需 5 秒参考音频即可克隆声线**——业内最低门槛。**两种使用模式**：① **零样本克隆**：5 秒音频立即克隆；② **少样本微调**：1 分钟训练数据，相似度 / 真实感大幅提升（10 epoch / GPU 6GB+ 显存）。**多语言支持**：中 / 英 / 日 / 韩 / 粤，**跨语言保持音色**——用中文样本读英文/日文/韩文都能保持原说话人音色。**WebUI 全流程**：人声分离（bs_roformer / mel_band_roformer / mdxnet）+ 音频切片 + ASR 标注（自动）+ 模型训练 + 推理合成 + 实时预览。**部署**：Windows 双击启动 / Linux Docker / 7860 端口 Web 服务。**机器人应用场景**：定制化语音助手 / 个性化对话机器人 / 多角色配音 / 有声书 / 视频配音。**注意**：Apache-2.0 + 模型协议，商用前需检查授权。",
+      "language": "Python (PyTorch + GPT + SoVITS 混合架构)",
+      "license": "Apache-2.0 (代码) + 模型协议",
+      "features": [
+        "🌟 GitHub 55.6k+ stars — TTS 开源项目第一",
+        "⚡ 5 秒克隆 / 1 分钟微调 — 业内最低门槛",
+        "🌐 中 / 英 / 日 / 韩 / 粤 跨语言保持音色",
+        "🎨 完整 WebUI — 人声分离 + 切片 + ASR + 训练 + 推理",
+        "🐳 Windows 双击启动 / Linux Docker 一键部署",
+        "🤖 定制化机器人语音助手 / 个性化对话首选",
+        "💎 GPT + SoVITS 双架构 — 文本语义理解 + 声学特征生成",
+        "👨‍💻 RVC 变声器作者出品 — 经验丰富 + 社区活跃"
+      ],
+      "stars": "55.6k+",
+      "tags": [
+        "TTS",
+        "语音克隆",
+        "GPT-SoVITS",
+        "5秒克隆",
+        "跨语言",
+        "WebUI",
+        "RVC-Boss",
+        "Stars第一"
+      ],
+      "addedDate": "2026-05-28"
+    },
     {
       "id": "os107",
       "name": "Psi-Zero (USC PSI Lab — 通用人形机器人 VLA 基座)",

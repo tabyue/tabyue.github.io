@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-26T11:00",
+  "lastUpdated": "2026-05-28T14:30",
   "categories": [
     {
       "id": "all",
@@ -78,6 +78,183 @@
     }
   ],
   "models": [
+    {
+      "name": "FireRedASR2",
+      "org": "小红书 FireRed AI Lab",
+      "params": "7.8B (LLM) / AED (轻量)",
+      "description": "小红书开源的**中文 ASR 新 SOTA**——AISHELL-1 CER **0.57%**（FireRedASR2-AED）/ 0.64%（FireRedASR2-LLM），全面超越 Paraformer (1.95%) / Whisper / 阿里通义 Fun-ASR。**两个版本**：① **AED (Attention-Encoder-Decoder)**：轻量级，纯 ASR；② **LLM**：基于大模型，效果更强但慢。**优势**：① 普通话平均 CER 2.89-3.05%（vs Fun-ASR 4.16% / Qwen3-ASR-1.7B 3.76%）；② **WenetSpeech net 4.44%**（远低于其他模型）；③ **WenetSpeech meeting 4.32%**（会议场景 SOTA）；④ 支持时间戳。**机器人应用**：高精度需求 / 中文场景 / 会议记录场景的最佳选择。",
+      "huggingface": "https://huggingface.co/FireRedTeam/FireRedASR2-LLM",
+      "github": "https://github.com/FireRedTeam/FireRedASR2",
+      "paper": "",
+      "license": "Apache-2.0 (代码) + 模型协议",
+      "category": "asr",
+      "tags": [
+        "ASR",
+        "中文SOTA",
+        "FireRed",
+        "小红书",
+        "AISHELL-1",
+        "WenetSpeech",
+        "LLM-ASR"
+      ],
+      "addedDate": "2026-05-28",
+      "updated": "2026-04",
+      "benchmarks": {
+        "AISHELL-1 CER": "0.57% (AED) / 0.64% (LLM)",
+        "AISHELL-2 CER": "2.51% (AED) / 2.15% (LLM)",
+        "WenetSpeech net": "4.44%",
+        "WenetSpeech meeting": "4.32%",
+        "普通话平均": "2.89-3.05%"
+      }
+    },
+    {
+      "name": "Fun-ASR-Nano",
+      "org": "通义实验室 / FunAudioLLM",
+      "params": "800M",
+      "description": "通义实验室开源的**中文 ASR 轻量旗舰**（开源版本，原 Fun-ASR 7.7B 未开源）。**数千万小时数据训练**，支持**中/英/日 7 种方言 + 26 种地方口音**，包括广东话、闽南话、四川话、东北话、上海话等。**独特优势**：① **歌词与说唱识别**——其他模型几乎都不支持；② **方言无切换**——同一模型自动检测方言；③ **800M 端侧友好**——可跑在 Jetson / 4090 上。**FunASR 工具包内置**——`from funasr import AutoModel; model=AutoModel(model='FunAudioLLM/Fun-ASR-Nano-2512')`。**机器人应用**：方言识别需求 / 多元口音用户场景 / 创意产品（歌词识别）。",
+      "huggingface": "https://huggingface.co/FunAudioLLM/Fun-ASR-Nano-2512",
+      "github": "https://github.com/FunAudioLLM/Fun-ASR",
+      "paper": "",
+      "license": "Apache-2.0 (代码) + 模型协议",
+      "category": "asr",
+      "tags": [
+        "ASR",
+        "Fun-ASR-Nano",
+        "通义",
+        "方言",
+        "口音",
+        "歌词识别",
+        "800M",
+        "中英日"
+      ],
+      "addedDate": "2026-05-28",
+      "updated": "2025-12",
+      "benchmarks": {
+        "普通话平均 CER": "4.16%",
+        "AISHELL-1 CER": "1.64%",
+        "方言数": "7 种",
+        "口音数": "26 种",
+        "歌词识别": "支持"
+      }
+    },
+    {
+      "name": "Moonshine",
+      "org": "Useful Sensors",
+      "params": "27M (Tiny) / 61M (Base)",
+      "description": "Useful Sensors 开源的**端侧低延迟英文 ASR 模型**——专为 Raspberry Pi / 嵌入式设备设计。**核心优势**：① **比 Whisper 快 5×**（同等精度下）；② **27M 参数**（Tiny 版）— Raspberry Pi 4 实时运行；③ **流式 + 非流式**双模式；④ **针对短音频（< 30s）优化**——比 Whisper 长音频假设更适合实时场景。**已被 sherpa-onnx 集成**——可部署到 Android / iOS / 鸿蒙 / WearOS / RISC-V。**机器人应用**：本体端低成本 ASR / 智能音箱 / 嵌入式语音交互 / 低算力场景。**限制**：当前仅英文，中文需要等社区适配。",
+      "huggingface": "https://huggingface.co/UsefulSensors/moonshine",
+      "github": "https://github.com/usefulsensors/moonshine",
+      "paper": "https://arxiv.org/abs/2410.15608",
+      "license": "MIT",
+      "category": "asr",
+      "tags": [
+        "ASR",
+        "Moonshine",
+        "端侧",
+        "Raspberry Pi",
+        "嵌入式",
+        "低延迟",
+        "27M",
+        "英文"
+      ],
+      "addedDate": "2026-05-28",
+      "updated": "2025-10",
+      "benchmarks": {
+        "速度": "5× faster than Whisper",
+        "Tiny 参数": "27M",
+        "Base 参数": "61M",
+        "Raspberry Pi 4": "实时运行",
+        "短音频优化": "< 30s 场景"
+      }
+    },
+    {
+      "name": "GPT-SoVITS",
+      "org": "RVC-Boss",
+      "params": "未公开（GPT + SoVITS 混合）",
+      "description": "**TTS 开源项目第一**——GitHub **55.6k+ stars**。**5 秒语音克隆**业内最低门槛，1 分钟微调可达高拟真度。**多语言**：中/英/日/韩/粤跨语言保持音色（用中文样本读英文不变声）。**完整 WebUI 工具链**：人声分离 + ASR 标注 + 模型训练 + 推理合成。**机器人应用**：定制化语音助手、个性化对话机器人、多角色配音、有声书。**部署门槛低**：Windows 双击启动 / Linux Docker / 6GB+ 显存即可训练。",
+      "huggingface": "https://huggingface.co/lj1995/GPT-SoVITS",
+      "github": "https://github.com/RVC-Boss/GPT-SoVITS",
+      "paper": "",
+      "license": "Apache-2.0",
+      "category": "tts",
+      "tags": [
+        "TTS",
+        "GPT-SoVITS",
+        "语音克隆",
+        "55.6k stars",
+        "中英日韩粤",
+        "WebUI",
+        "5秒克隆"
+      ],
+      "addedDate": "2026-05-28",
+      "updated": "2026-04",
+      "benchmarks": {
+        "克隆门槛": "5 秒音频",
+        "微调门槛": "1 分钟数据",
+        "GitHub stars": "55.6k+",
+        "跨语言": "保持音色",
+        "训练显存": "6GB+"
+      }
+    },
+    {
+      "name": "F5-TTS",
+      "org": "上海交大 X-LANCE Lab",
+      "params": "335M",
+      "description": "上海交大 X-LANCE Lab 开源的**Flow Matching TTS 模型**（NeurIPS 2024）——**首次将 Flow Matching 用于 TTS**。**核心优势**：① **零样本克隆 + 流匹配生成**——比 Diffusion 快、比 GAN 稳定；② **MOS 4.5/5**（接近 ChatTTS / GPT-SoVITS）；③ **335M 参数**——比 GPT-SoVITS 轻量；④ **训练数据公开**——LibriHeavy + Emilia 等公共语料。**与 GPT-SoVITS 对比**：F5-TTS 偏研究友好（Flow Matching 数学清晰）/ GPT-SoVITS 偏工程友好（WebUI 完善）。**机器人应用**：研究型项目 / 需要可解释生成路径 / Flow Matching 范式工程化。",
+      "huggingface": "https://huggingface.co/SWivid/F5-TTS",
+      "github": "https://github.com/SWivid/F5-TTS",
+      "paper": "https://arxiv.org/abs/2410.06885",
+      "license": "MIT",
+      "category": "tts",
+      "tags": [
+        "TTS",
+        "F5-TTS",
+        "Flow Matching",
+        "上海交大",
+        "X-LANCE",
+        "NeurIPS 2024",
+        "零样本克隆",
+        "335M"
+      ],
+      "addedDate": "2026-05-28",
+      "updated": "2025-09",
+      "benchmarks": {
+        "MOS": "4.5/5",
+        "参数": "335M",
+        "克隆": "零样本",
+        "范式": "Flow Matching",
+        "训练数据": "LibriHeavy + Emilia"
+      }
+    },
+    {
+      "name": "OpenVoice V2",
+      "org": "MyShell AI",
+      "params": "未公开",
+      "description": "MyShell AI 开源的**极速语音克隆 TTS**——GitHub 36k+ stars，**仅需 3 秒参考音频即可克隆**。**核心优势**：① **MIT 协议完全开源** — 可商用；② **多语言**：中/英/日/韩/法/西无缝切换；③ **音色 + 风格分离** — 可独立控制；④ **MyShell 平台已商业化部署**，工程稳定性强。**与 GPT-SoVITS 对比**：OpenVoice V2 = MIT 完全免费商用 + 3 秒克隆 / GPT-SoVITS = Apache + 5 秒克隆 + 更高自然度。**机器人应用**：商业化产品（无授权风险）/ 多语言交互 / 极速克隆需求。",
+      "huggingface": "https://huggingface.co/myshell-ai/OpenVoiceV2",
+      "github": "https://github.com/myshell-ai/OpenVoice",
+      "paper": "https://arxiv.org/abs/2312.01479",
+      "license": "MIT",
+      "category": "tts",
+      "tags": [
+        "TTS",
+        "OpenVoice",
+        "MyShell",
+        "3秒克隆",
+        "MIT商用",
+        "多语言",
+        "36k stars"
+      ],
+      "addedDate": "2026-05-28",
+      "updated": "2025-08",
+      "benchmarks": {
+        "克隆门槛": "3 秒音频",
+        "GitHub stars": "36k+",
+        "授权": "MIT 完全可商用",
+        "多语言": "中英日韩法西",
+        "风格控制": "音色+风格分离"
+      }
+    },
     {
       "name": "Psi-Zero",
       "org": "USC Physical Superintelligence Lab",
