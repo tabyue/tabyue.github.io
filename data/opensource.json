@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-28T15:25",
+  "lastUpdated": "2026-05-28T15:40",
   "categories": [
     {
       "id": "all",
@@ -48,6 +48,240 @@
     }
   ],
   "projects": [
+    {
+      "id": "os116",
+      "name": "Gymnasium (Farama — RL 环境标准 API，Gym 继承者)",
+      "github": "https://github.com/Farama-Foundation/Gymnasium",
+      "organization": "Farama Foundation",
+      "category": "framework",
+      "description": "**Gymnasium** — OpenAI Gym 的官方继承者，由 Farama Foundation 维护（GitHub **11.2k stars**）。**RL 环境的事实标准 API** — 所有主流 RL 框架（Stable Baselines3 / CleanRL / RLinf / TorchRL）都以 Gymnasium 为环境接口标准。提供统一的 `env.reset() / env.step(action)` API + 类型安全 + 向量化环境 + 录像录制。**具身智能关联**：ManiSkill / LIBERO / RoboTwin / IsaacLab 等仿真器全部实现 Gymnasium 接口；RLinf 的所有仿真环境也通过 Gymnasium wrapper 接入。如果你做 RL，这是**必须知道的第一个库**。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "🌟 11.2k stars — RL 环境事实标准 API",
+        "🔄 OpenAI Gym 官方继承者",
+        "🤖 ManiSkill/LIBERO/IsaacLab 全部兼容",
+        "📦 向量化环境 + 录像录制 + 类型安全"
+      ],
+      "stars": "11.2k",
+      "tags": [
+        "RL",
+        "Gymnasium",
+        "Gym",
+        "环境API",
+        "Farama",
+        "标准"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os117",
+      "name": "dm_control (DeepMind — MuJoCo 官方 RL 控制套件)",
+      "github": "https://github.com/google-deepmind/dm_control",
+      "organization": "Google DeepMind",
+      "category": "simulation",
+      "description": "**dm_control** — DeepMind 基于 MuJoCo 的官方 RL 控制套件（GitHub **4.4k stars**）。包含 **标准化控制任务**（Walker / Humanoid / Manipulator / Swimmer 等 30+ 任务）+ **MuJoCo Python 绑定** + **Composer** 框架（动态创建复杂场景）。是 RL 论文中最常用的连续控制基准之一。**与 Gymnasium 兼容**——可通过 shimmy 包转为 Gymnasium API。**具身关联**：人形机器人运动控制 / 操作任务 / 多关节连续控制的标准评测环境。",
+      "language": "Python",
+      "license": "Apache-2.0",
+      "features": [
+        "🌟 4.4k stars — DeepMind 官方 MuJoCo 控制套件",
+        "🏃 30+ 标准控制任务",
+        "🧩 Composer 框架动态场景创建",
+        "🔌 Gymnasium 兼容（via shimmy）"
+      ],
+      "stars": "4.4k",
+      "tags": [
+        "MuJoCo",
+        "RL",
+        "控制",
+        "DeepMind",
+        "连续控制",
+        "基准"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os118",
+      "name": "MuJoCo Playground (DeepMind — GPU 加速 RL + Sim-to-Real)",
+      "github": "https://github.com/google-deepmind/mujoco_playground",
+      "organization": "Google DeepMind",
+      "category": "simulation",
+      "description": "**MuJoCo Playground** — DeepMind 2025 年底开源的 **GPU 加速机器人学习 + Sim-to-Real** 库（GitHub **1.7k stars**）。基于 MuJoCo XLA / MuJoCo Warp，实现**数千环境并行**（Isaac Gym 级别的 GPU 并行 + MuJoCo 的精确物理）。包含预训练 locomotion 策略 + manipulation 任务 + sim-to-real 迁移 pipeline。**定位**：dm_control 的 GPU 加速升级版——保持 MuJoCo 物理精度的同时获得 Isaac Gym 级别的训练速度。",
+      "language": "Python (JAX + MuJoCo XLA)",
+      "license": "Apache-2.0",
+      "features": [
+        "🚀 GPU 加速 MuJoCo — 数千环境并行",
+        "🦿 locomotion + manipulation 预训练策略",
+        "🔄 内置 Sim-to-Real 迁移 pipeline",
+        "⚡ JAX + MuJoCo XLA — Isaac Gym 级速度"
+      ],
+      "stars": "1.7k",
+      "tags": [
+        "MuJoCo",
+        "GPU并行",
+        "Sim-to-Real",
+        "JAX",
+        "DeepMind",
+        "locomotion"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os119",
+      "name": "XLeRobot (双臂移动机器人全栈方案 — $660 成本)",
+      "github": "https://github.com/Vector-Wangel/XLeRobot",
+      "organization": "Vector-Wangel 社区",
+      "category": "hardware",
+      "description": "**XLeRobot** — 社区驱动的**双臂移动家庭机器人全栈开源方案**（GitHub **4.6k stars**）。**总成本仅 $660**——目前最低成本的双臂移动操作平台。基于 LeRobot 框架，支持 ACT / Diffusion / SmolVLA 等策略。**硬件**：SO100 双臂 + 差速底盘 + RealSense 相机。**软件**：LeRobot 数据采集 + 训练 + 部署完整 pipeline。**具身关联**：极低门槛让个人开发者 / 高校实验室也能做双臂移动操作研究——从「看论文」到「自己做」的关键跳板。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "💰 $660 全成本 — 最低价双臂移动机器人",
+        "🤗 基于 LeRobot 框架",
+        "🦾 SO100 双臂 + 差速底盘 + RealSense",
+        "📦 ACT / Diffusion / SmolVLA 策略支持"
+      ],
+      "stars": "4.6k",
+      "tags": [
+        "双臂",
+        "移动操作",
+        "低成本",
+        "LeRobot",
+        "SO100",
+        "开源硬件"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os120",
+      "name": "robosuite (ARISE — 机器人操作仿真基准框架)",
+      "github": "https://github.com/ARISE-Initiative/robosuite",
+      "organization": "ARISE Initiative (Stanford / UT Austin / NVIDIA)",
+      "category": "simulation",
+      "description": "**robosuite** — ARISE Initiative 开源的**机器人操作仿真基准框架**（GitHub **1.7k stars**）。基于 MuJoCo，提供**标准化操作任务**（Pick-Place / Stack / Peg-in-Hole / Nut Assembly / Door Opening 等）+ **多机器人形态**（Panda / Sawyer / IIWA / Jaco / Kinova）+ **渲染器** + **控制器接口**。**与 Robomimic 配套**——robosuite 提供仿真环境，Robomimic 提供基于演示数据的学习框架。VLA 论文中最常用的操作评测环境之一。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "🤖 标准化操作任务基准 — Pick/Stack/Peg-in-Hole/Door",
+        "🦾 多机器人形态 — Panda/Sawyer/IIWA/Jaco",
+        "🔧 MuJoCo 后端 + 渲染器 + 控制器",
+        "📊 与 Robomimic 配套 — 评测+学习一体"
+      ],
+      "stars": "1.7k",
+      "tags": [
+        "仿真",
+        "操作",
+        "基准",
+        "MuJoCo",
+        "robosuite",
+        "ARISE"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os121",
+      "name": "Robomimic (ARISE — 基于演示的机器人学习框架)",
+      "github": "https://github.com/ARISE-Initiative/robomimic",
+      "organization": "ARISE Initiative (Stanford / UT Austin / NVIDIA)",
+      "category": "framework",
+      "description": "**Robomimic** — ARISE Initiative 开源的**基于演示数据的机器人学习框架**（GitHub **1.0k stars**，CoRL 2021 Best Paper 获奖工作）。提供**算法库**（BC / BC-RNN / HBC / IRIS / Diffusion Policy / ACT）+ **标准数据集**（多质量等级演示数据）+ **评测流水线**。**核心贡献**：首次系统研究「**演示数据质量 vs 学习算法性能**」的关系——发现数据质量对性能影响远大于算法选择。**与 robosuite 配套**。**具身关联**：所有做模仿学习的人必须读的框架——理解 BC / Diffusion Policy / ACT 的标准评测方法。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "🏆 CoRL 2021 Best Paper",
+        "📊 演示数据质量 vs 算法性能系统研究",
+        "🤖 BC / BC-RNN / Diffusion Policy / ACT 算法库",
+        "📦 标准数据集 + 评测流水线"
+      ],
+      "stars": "1.0k",
+      "tags": [
+        "模仿学习",
+        "演示数据",
+        "BC",
+        "Diffusion Policy",
+        "CoRL",
+        "ARISE"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os122",
+      "name": "MuJoCo Menagerie (DeepMind — 机器人 MJCF 模型库)",
+      "github": "https://github.com/google-deepmind/mujoco_menagerie",
+      "organization": "Google DeepMind",
+      "category": "hardware",
+      "description": "**MuJoCo Menagerie** — DeepMind 维护的**高质量机器人 MJCF 模型集合**（GitHub **2.2k stars**）。包含 **50+ 机器人模型**：Franka Panda / UR5e / ALOHA / Unitree Go2 / Unitree G1 / Shadow Hand / Allegro / ANYmal / Spot / Atlas 等——每个模型都经过**物理参数校准 + 碰撞几何优化**。**为什么重要**：做仿真 RL / 模仿学习时，一个好的 MJCF 模型是起点——Menagerie 省去了从零建模的巨大工作量。**与 MuJoCo / dm_control / MuJoCo Playground / IsaacLab 全部兼容**。",
+      "language": "MJCF (XML) + Python (工具)",
+      "license": "Apache-2.0",
+      "features": [
+        "📦 50+ 高质量机器人 MJCF 模型",
+        "🔬 物理参数校准 + 碰撞几何优化",
+        "🦾 Franka/UR5e/ALOHA/Unitree/Shadow Hand/Atlas",
+        "🔌 与 MuJoCo/dm_control/IsaacLab 兼容"
+      ],
+      "stars": "2.2k",
+      "tags": [
+        "MJCF",
+        "模型库",
+        "MuJoCo",
+        "Franka",
+        "Unitree",
+        "DeepMind"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os123",
+      "name": "pyroki (模块化机器人运动学优化工具包)",
+      "github": "https://github.com/chungmin99/pyroki",
+      "organization": "chungmin99 (独立开发者)",
+      "category": "framework",
+      "description": "**pyroki** — 模块化的机器人**运动学优化工具包**（GitHub **1.4k stars**）。基于 JAX，提供**可微分正/逆运动学** + **约束优化** + **轨迹优化**。**核心优势**：① JAX 自动微分——天然支持梯度优化而非传统数值方法；② 模块化设计——URDF 解析 + FK/IK + 碰撞检测可独立使用；③ **GPU 加速批量 IK**——比 PyBullet / Pinocchio 快 10-100×（JAX vmap）。**具身关联**：VLA 模型输出末端位姿后需要 IK 转关节角——pyroki 是当前最快的可微分 IK 方案。",
+      "language": "Python (JAX)",
+      "license": "MIT",
+      "features": [
+        "⚡ JAX 可微分运动学 — GPU 批量 IK 10-100× 加速",
+        "🔧 URDF 解析 + FK/IK + 碰撞检测模块化",
+        "📐 约束优化 + 轨迹优化",
+        "🤖 VLA 输出转关节角的最快方案"
+      ],
+      "stars": "1.4k",
+      "tags": [
+        "运动学",
+        "IK",
+        "JAX",
+        "可微分",
+        "优化",
+        "URDF"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os124",
+      "name": "RynnVLA-002 (达摩院 — 统一 VLA + 世界模型 Action World Model)",
+      "github": "https://github.com/alibaba-damo-academy/RynnVLA-002",
+      "organization": "阿里巴巴达摩院",
+      "category": "ai-model",
+      "description": "**RynnVLA-002** — 阿里达摩院 2025-11 开源的**统一 VLA + 世界模型（Action World Model）**（GitHub **829 stars**）。**核心创新**：图像、文本、动作共享统一词表，在单一 LLM 架构中**统一理解 & 生成多模态**。世界模型用「动作+视觉」预测未来图像状态，学习环境物理规律，反向增强动作规划——实现 VLA 与世界模型「**双向增强**」。**性能**：LIBERO 零预训练 **97.4%** 成功率 / 真实 LeRobot 任务成功率提升 **50%+**。**三阶段训练**：① 自我视角视频生成预训练；② 关键点轨迹预测增强动作意识；③ 转化为 VLA + 世界模型联合训练。**配套**：RynnRCP（机器人上下文协议）+ RynnVLA-001（基础版）+ RynnEC（具身认知）。",
+      "language": "Python (PyTorch)",
+      "license": "Apache-2.0 (代码) + 模型协议",
+      "features": [
+        "🧠 统一 VLA + 世界模型 — Action World Model",
+        "📊 LIBERO 97.4% / 真机 +50%",
+        "🔄 VLA ↔ 世界模型双向增强",
+        "📦 配套 RynnRCP + RynnEC + RynnVLA-001"
+      ],
+      "stars": "829",
+      "tags": [
+        "VLA",
+        "世界模型",
+        "达摩院",
+        "Action World Model",
+        "LIBERO",
+        "统一架构"
+      ],
+      "addedDate": "2026-05-28"
+    },
     {
       "id": "os115",
       "name": "RLinf (清华 — 具身/智能体 AI 强化学习后训练基础设施)",
