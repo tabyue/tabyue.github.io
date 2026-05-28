@@ -1,261 +1,1550 @@
 {
-  "lastUpdated": "2026-04-23T14:33",
+  "lastUpdated": "2026-05-28T15:10",
   "description": "具身智能领域中英专业术语对照表。按学科领域分类，每个术语含英文原文、中文翻译、缩写（若有）、简要释义、深度解释和关联学习模块。",
   "categories": [
     {
       "id": "robot-kinematics-dynamics",
       "name": "🦾 机器人运动学与动力学",
       "terms": [
-        { "en": "Forward Kinematics", "zh": "正运动学", "abbr": "FK", "def": "已知关节角度，求末端执行器位姿。通过 DH 参数连乘齐次变换矩阵实现。", "detail": "对于一个 n 关节机械臂，正运动学是从关节空间 q∈ℝⁿ 到末端位姿 T∈SE(3) 的映射：T₀ₙ = T₀₁(q₁)·T₁₂(q₂)·…·Tₙ₋₁ₙ(qₙ)，其中每个 Tᵢ 由 DH 参数决定。正运动学总有唯一解，计算复杂度 O(n)。工业应用中是机器人控制的基础——你给关节角度，它告诉你末端在哪。", "module": "robot-kinematics" },
-        { "en": "Inverse Kinematics", "zh": "逆运动学", "abbr": "IK", "def": "已知期望末端位姿，求关节角度。通常有多解或无解，常用数值迭代法。", "detail": "IK 是 FK 的反问题：给定目标位姿 T_target，求 q 使 FK(q) = T_target。6DOF 机械臂通常有多组解（如肘上/肘下），冗余机械臂(>6DOF)有无穷多解。求解方法：① 解析法（特定构型有闭式解，如球腕结构）② 数值法（Jacobian 伪逆迭代 Δq = J⁺·Δx）③ 优化法（目标函数含碰撞避免/关节限位等约束）。实际工程中 IKFast、TracIK 是常用求解器。", "module": "robot-kinematics" },
-        { "en": "Denavit-Hartenberg Parameters", "zh": "DH 参数", "abbr": "DH", "def": "用 4 个参数(α, a, d, θ)描述相邻关节变换的标准方法。", "detail": "DH 约定将相邻连杆之间的空间关系分解为 4 个参数：α(连杆扭角)、a(连杆长度)、d(连杆偏距)、θ(关节角)。对旋转关节 θ 是变量，对移动关节 d 是变量。标准 DH 和改进 DH(Craig 版本)的区别在于坐标系建立在关节前端还是后端。所有工业机器人的 datasheet 都会给出 DH 参数表。", "module": "robot-kinematics" },
-        { "en": "Jacobian Matrix", "zh": "雅可比矩阵", "abbr": "", "def": "关节速度到末端速度的映射矩阵 v = J(q)·dq/dt。奇异位形时 Jacobian 秩亏。", "detail": "Jacobian 是正运动学的一阶导数 J = ∂FK/∂q，维度为 6×n（6维末端速度 × n个关节）。它在机器人学中无处不在：① 速度映射 ẋ = J(q)·q̇ ② 力映射 τ = Jᵀ·F（末端力→关节力矩）③ 数值 IK：Δq = J⁺·Δx ④ 操作性分析：det(JJᵀ) 衡量操作灵巧度。Jacobian 秩亏时称为奇异位形，末端在某方向丧失运动能力（如机械臂完全伸直）。", "module": "robot-kinematics" },
-        { "en": "Singularity", "zh": "奇异位形/奇异点", "abbr": "", "def": "Jacobian 矩阵秩亏的构型，此时末端在某些方向丧失运动自由度。", "module": "robot-kinematics" },
-        { "en": "Workspace", "zh": "工作空间", "abbr": "", "def": "末端执行器可达到的所有位置的集合。分可达工作空间和灵巧工作空间。", "detail": "可达工作空间(Reachable Workspace)：末端至少能以一种姿态到达的位置集合。灵巧工作空间(Dexterous Workspace)：末端能以任意姿态到达的位置子集，通常远小于可达空间。工作空间的形状由连杆长度和关节限位决定，是机器人选型的核心参数。", "module": "robot-kinematics" },
-        { "en": "Degrees of Freedom", "zh": "自由度", "abbr": "DOF", "def": "描述机构独立运动参数的数目。6DOF 机械臂可在三维空间任意位姿。", "detail": "三维空间中完整描述一个刚体需要 6 个参数（3平移+3旋转），所以 6DOF 是操作任务的最低要求。<6DOF 为欠驱动（末端不能到达所有位姿），>6DOF 为冗余（同一位姿有无穷多关节构型，可用来避障/优化能耗）。人类手臂有 7DOF（肩3+肘1+腕3），多出的1个冗余度让我们能绕开障碍物。", "module": "robot-kinematics" },
-        { "en": "End Effector", "zh": "末端执行器", "abbr": "EE", "def": "机械臂末端的执行工具，如夹爪、吸盘、喷枪等。", "module": "robot-kinematics" },
-        { "en": "Homogeneous Transformation Matrix", "zh": "齐次变换矩阵", "abbr": "", "def": "4×4 矩阵 T=[R t; 0 1]，统一表示旋转和平移，属于 SE(3) 群。", "detail": "齐次变换将旋转矩阵 R∈SO(3) 和平移向量 t∈ℝ³ 合并到一个 4×4 矩阵中，使得连续变换可以通过矩阵乘法实现：T₀₂ = T₀₁·T₁₂。逆变换 T⁻¹ = [Rᵀ, -Rᵀt; 0, 1]。这是整个机器人正运动学的数学基础。", "module": "linear-algebra" },
-        { "en": "Quaternion", "zh": "四元数", "abbr": "", "def": "q = w + xi + yj + zk，表示 3D 旋转的无万向锁方法，插值(Slerp)性质好。", "detail": "四元数是 4 维超复数，单位四元数 |q|=1 可表示任意 3D 旋转。相比欧拉角无万向锁，相比旋转矩阵更紧凑(4个数 vs 9个数)且数值稳定。关键操作：旋转组合 q₁₂ = q₁·q₂，向量旋转 v' = q·v·q*，球面线性插值 Slerp(q₁,q₂,t) 实现平滑的姿态过渡。机器人学和游戏引擎中的标准姿态表示。", "module": "linear-algebra" },
-        { "en": "Euler Angles", "zh": "欧拉角", "abbr": "", "def": "用三个旋转角(Roll/Pitch/Yaw)表示姿态，直观但存在万向锁(Gimbal Lock)。", "detail": "Roll(绕X轴)、Pitch(绕Y轴)、Yaw(绕Z轴)三个角度直观易懂，但有致命缺陷——万向锁：当 Pitch=±90° 时 Roll 和 Yaw 退化为绕同一轴旋转，丢失一个自由度。不同领域的旋转顺序约定不同(ZYX/ZXZ等)，读论文时务必确认。", "module": "linear-algebra" },
-        { "en": "Lagrangian Dynamics", "zh": "拉格朗日动力学", "abbr": "", "def": "通过 L = T - V（动能减势能）推导运动方程，适合多刚体系统。", "detail": "拉格朗日方程 d/dt(∂L/∂q̇) - ∂L/∂q = τ，其中 L=T-V。对 n-DOF 机器人得到 M(q)q̈ + C(q,q̇)q̇ + g(q) = τ，M 是惯性矩阵，C 包含科氏力/离心力，g 是重力项。相比牛顿法更系统化，但计算复杂度 O(n³)。适合推导分析解和控制器设计。", "module": "robot-dynamics" },
-        { "en": "Newton-Euler Method", "zh": "牛顿-欧拉法", "abbr": "", "def": "递推地计算各连杆的力和力矩，计算效率高于拉格朗日法。", "module": "robot-dynamics" },
-        { "en": "Recursive Newton-Euler Algorithm", "zh": "递归牛顿-欧拉算法", "abbr": "RNEA", "def": "前向递推速度/加速度 + 后向递推力/力矩，O(n) 复杂度的逆动力学。", "detail": "RNEA 分两趟扫描：① 前向(基座→末端)：递推计算各连杆的速度和加速度 ② 后向(末端→基座)：递推计算各关节的力和力矩。时间复杂度 O(n) 远优于拉格朗日法的 O(n³)，是实时控制中计算力矩的首选算法。", "module": "robot-dynamics" },
-        { "en": "Inertia Matrix/Tensor", "zh": "惯性矩阵/惯量张量", "abbr": "", "def": "描述刚体旋转惯性的 3×3 对称正定矩阵 I。出现在动力学方程 τ = M(q)q̈ + C(q,q̇)q̇ + g(q)。", "module": "robot-dynamics" },
-        { "en": "Trajectory Planning", "zh": "轨迹规划", "abbr": "", "def": "为机器人生成从起点到终点的平滑运动路径（含时间参数化）。", "detail": "轨迹规划 = 路径(几何形状) + 时间律(速度分配)。常用方法：三次/五次多项式(保证速度/加速度连续)、梯形速度曲线(工业标配)、B样条(平滑多路点)。关节空间规划简单但不保证笛卡尔直线，笛卡尔空间规划直观但需要在线 IK。", "module": "robot-kinematics" },
-        { "en": "Motion Planning", "zh": "运动规划", "abbr": "", "def": "在考虑障碍物的情况下规划无碰撞路径。包括 RRT、PRM 等采样算法。", "detail": "运动规划在配置空间(C-space)中搜索起点到终点的无碰撞路径。经典算法：RRT(快速随机树，概率完备)、RRT*(渐近最优)、PRM(概率路图，适合多次查询)。现代趋势：学习型规划(MPNet)、优化型(CHOMP/TrajOpt)、结合大模型的语义规划。MoveIt 是 ROS 中最常用的运动规划框架。", "module": "robot-kinematics" },
-        { "en": "Configuration Space", "zh": "配置空间/构型空间", "abbr": "C-space", "def": "机器人所有可能关节状态的集合。n-DOF 机器人的 C-space 是 n 维空间，障碍物映射为 C-space 中的禁区。", "detail": "配置空间是运动规划的数学基础。将物理空间的障碍物映射到 C-space 后，机器人变成一个点，碰撞检测变成点是否在禁区内的判定。n-DOF 机器人的 C-space 是 n 维流形，高维空间的搜索是运动规划计算困难的根本原因（维度灾难）。", "module": "robot-kinematics" },
-        { "en": "Grasping / Grasp Planning", "zh": "抓取/抓取规划", "abbr": "", "def": "计算夹爪接触物体的最优位置和力，使抓取稳定（力封闭/形封闭）。", "detail": "力封闭(Force Closure)：接触力能平衡任意外力/外矩。形封闭(Form Closure)：几何约束使物体无法运动。抓取规划需考虑：接触点选择、抓取姿态、接近方向、碰撞避免。深度学习方法(GraspNet/AnyGrasp)直接从点云预测抓取位姿，已广泛应用。", "module": "robot-kinematics" },
-        { "en": "Product of Exponentials", "zh": "指数积公式", "abbr": "PoE", "def": "用矩阵指数连乘描述正运动学 T=e^{S1θ1}·...·e^{Snθn}·M，Modern Robotics 的核心方法。", "detail": "PoE 公式基于李群 SE(3) 和螺旋运动理论。每个关节用 6 维螺旋轴 S=(ω,v) 描述，运动量为 θ。相比 DH 参数法：不需要严格的坐标系建立规则，螺旋轴物理含义清晰，Jacobian 形式在 Adjoint 表示下更优雅统一，可自然扩展到树形和闭链结构。Pinocchio/MoveIt2 的底层数学框架。", "module": "robot-kinematics" },
-        { "en": "Screw Axis", "zh": "螺旋轴", "abbr": "", "def": "6 维向量 S=(ω,v) 描述关节的旋转方向和位置，是 PoE 公式的基本单元。", "detail": "Chasles 定理：任何刚体运动都可分解为绕某条轴的旋转+沿该轴的平移（螺旋运动）。对旋转关节：ω 是轴方向（单位向量），v=q×ω（q 是轴上一点）。对移动关节：ω=0，v 是移动方向。螺旋轴在物理上唯一确定，不存在 DH 参数的版本混淆问题。", "module": "robot-kinematics" },
-        { "en": "Adjoint Representation", "zh": "伴随表示", "abbr": "Ad", "def": "6×6 矩阵 Ad_T=[R,0;[p]R,R]，将螺旋轴从一个参考系变换到另一个参考系。", "detail": "PoE 空间 Jacobian 的核心工具。第 i 列 = Ad_{T1...Ti-1}·Si，表示前 i-1 个关节运动后关节 i 的螺旋轴在空间坐标系下的表达。Adjoint 表示使 Jacobian 计算形式统一优雅，是 Modern Robotics 相比 DH 方法在微分运动学上的核心优势。", "module": "robot-kinematics" },
-        { "en": "Lie Group / Lie Algebra", "zh": "李群/李代数", "abbr": "SE(3)/se(3)", "def": "SE(3) 是刚体运动的李群（4×4 矩阵群），se(3) 是其李代数（对应的切空间/螺旋轴空间）。", "detail": "SE(3)={T=[R,p;0,1] | R∈SO(3)}，群运算为矩阵乘法。se(3) 是 4×4 矩阵的 6 维空间，通过指数映射 exp: se(3)→SE(3) 和对数映射 log: SE(3)→se(3) 连接。PoE 公式本质是在 SE(3) 李群上做运算。理解李群/李代数是掌握 Modern Robotics 的数学基础。", "module": "linear-algebra" },
-        { "en": "Rodrigues' Formula", "zh": "罗德里格斯公式", "abbr": "", "def": "旋转轴 ω + 角度 θ → 旋转矩阵的封闭解：R=I+sinθ[ω]+(1-cosθ)[ω]²。", "detail": "比通用矩阵指数 expm 快 10 倍以上且数值更精确，是 PoE 正运动学实时计算的核心。[ω] 是 ω 的 3×3 反对称矩阵。推广到 SE(3) 时还需计算平移部分 p=(Iθ+(1-cosθ)[ω]+(θ-sinθ)[ω]²)v。", "module": "robot-kinematics" },
-        { "en": "Manipulability", "zh": "操纵度/灵巧度", "abbr": "", "def": "w=√det(JJ^T)，衡量机器人在当前构型下各方向运动能力的均匀程度。w→0 为奇异。", "detail": "操纵度椭球：对 J 做 SVD，奇异值 σi 是椭球各主轴长度。σ 均匀→接近球形→各方向运动能力均衡。σ 差异大→扁椭球→某些方向运动受限。操纵度是轨迹规划和冗余分辨中的重要优化指标。", "module": "robot-kinematics" }
+        {
+          "en": "Forward Kinematics",
+          "zh": "正运动学",
+          "abbr": "FK",
+          "def": "已知关节角度，求末端执行器位姿。通过 DH 参数连乘齐次变换矩阵实现。",
+          "detail": "对于一个 n 关节机械臂，正运动学是从关节空间 q∈ℝⁿ 到末端位姿 T∈SE(3) 的映射：T₀ₙ = T₀₁(q₁)·T₁₂(q₂)·…·Tₙ₋₁ₙ(qₙ)，其中每个 Tᵢ 由 DH 参数决定。正运动学总有唯一解，计算复杂度 O(n)。工业应用中是机器人控制的基础——你给关节角度，它告诉你末端在哪。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Inverse Kinematics",
+          "zh": "逆运动学",
+          "abbr": "IK",
+          "def": "已知期望末端位姿，求关节角度。通常有多解或无解，常用数值迭代法。",
+          "detail": "IK 是 FK 的反问题：给定目标位姿 T_target，求 q 使 FK(q) = T_target。6DOF 机械臂通常有多组解（如肘上/肘下），冗余机械臂(>6DOF)有无穷多解。求解方法：① 解析法（特定构型有闭式解，如球腕结构）② 数值法（Jacobian 伪逆迭代 Δq = J⁺·Δx）③ 优化法（目标函数含碰撞避免/关节限位等约束）。实际工程中 IKFast、TracIK 是常用求解器。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Denavit-Hartenberg Parameters",
+          "zh": "DH 参数",
+          "abbr": "DH",
+          "def": "用 4 个参数(α, a, d, θ)描述相邻关节变换的标准方法。",
+          "detail": "DH 约定将相邻连杆之间的空间关系分解为 4 个参数：α(连杆扭角)、a(连杆长度)、d(连杆偏距)、θ(关节角)。对旋转关节 θ 是变量，对移动关节 d 是变量。标准 DH 和改进 DH(Craig 版本)的区别在于坐标系建立在关节前端还是后端。所有工业机器人的 datasheet 都会给出 DH 参数表。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Jacobian Matrix",
+          "zh": "雅可比矩阵",
+          "abbr": "",
+          "def": "关节速度到末端速度的映射矩阵 v = J(q)·dq/dt。奇异位形时 Jacobian 秩亏。",
+          "detail": "Jacobian 是正运动学的一阶导数 J = ∂FK/∂q，维度为 6×n（6维末端速度 × n个关节）。它在机器人学中无处不在：① 速度映射 ẋ = J(q)·q̇ ② 力映射 τ = Jᵀ·F（末端力→关节力矩）③ 数值 IK：Δq = J⁺·Δx ④ 操作性分析：det(JJᵀ) 衡量操作灵巧度。Jacobian 秩亏时称为奇异位形，末端在某方向丧失运动能力（如机械臂完全伸直）。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Singularity",
+          "zh": "奇异位形/奇异点",
+          "abbr": "",
+          "def": "Jacobian 矩阵秩亏的构型，此时末端在某些方向丧失运动自由度。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Workspace",
+          "zh": "工作空间",
+          "abbr": "",
+          "def": "末端执行器可达到的所有位置的集合。分可达工作空间和灵巧工作空间。",
+          "detail": "可达工作空间(Reachable Workspace)：末端至少能以一种姿态到达的位置集合。灵巧工作空间(Dexterous Workspace)：末端能以任意姿态到达的位置子集，通常远小于可达空间。工作空间的形状由连杆长度和关节限位决定，是机器人选型的核心参数。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Degrees of Freedom",
+          "zh": "自由度",
+          "abbr": "DOF",
+          "def": "描述机构独立运动参数的数目。6DOF 机械臂可在三维空间任意位姿。",
+          "detail": "三维空间中完整描述一个刚体需要 6 个参数（3平移+3旋转），所以 6DOF 是操作任务的最低要求。<6DOF 为欠驱动（末端不能到达所有位姿），>6DOF 为冗余（同一位姿有无穷多关节构型，可用来避障/优化能耗）。人类手臂有 7DOF（肩3+肘1+腕3），多出的1个冗余度让我们能绕开障碍物。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "End Effector",
+          "zh": "末端执行器",
+          "abbr": "EE",
+          "def": "机械臂末端的执行工具，如夹爪、吸盘、喷枪等。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Homogeneous Transformation Matrix",
+          "zh": "齐次变换矩阵",
+          "abbr": "",
+          "def": "4×4 矩阵 T=[R t; 0 1]，统一表示旋转和平移，属于 SE(3) 群。",
+          "detail": "齐次变换将旋转矩阵 R∈SO(3) 和平移向量 t∈ℝ³ 合并到一个 4×4 矩阵中，使得连续变换可以通过矩阵乘法实现：T₀₂ = T₀₁·T₁₂。逆变换 T⁻¹ = [Rᵀ, -Rᵀt; 0, 1]。这是整个机器人正运动学的数学基础。",
+          "module": "linear-algebra"
+        },
+        {
+          "en": "Quaternion",
+          "zh": "四元数",
+          "abbr": "",
+          "def": "q = w + xi + yj + zk，表示 3D 旋转的无万向锁方法，插值(Slerp)性质好。",
+          "detail": "四元数是 4 维超复数，单位四元数 |q|=1 可表示任意 3D 旋转。相比欧拉角无万向锁，相比旋转矩阵更紧凑(4个数 vs 9个数)且数值稳定。关键操作：旋转组合 q₁₂ = q₁·q₂，向量旋转 v' = q·v·q*，球面线性插值 Slerp(q₁,q₂,t) 实现平滑的姿态过渡。机器人学和游戏引擎中的标准姿态表示。",
+          "module": "linear-algebra"
+        },
+        {
+          "en": "Euler Angles",
+          "zh": "欧拉角",
+          "abbr": "",
+          "def": "用三个旋转角(Roll/Pitch/Yaw)表示姿态，直观但存在万向锁(Gimbal Lock)。",
+          "detail": "Roll(绕X轴)、Pitch(绕Y轴)、Yaw(绕Z轴)三个角度直观易懂，但有致命缺陷——万向锁：当 Pitch=±90° 时 Roll 和 Yaw 退化为绕同一轴旋转，丢失一个自由度。不同领域的旋转顺序约定不同(ZYX/ZXZ等)，读论文时务必确认。",
+          "module": "linear-algebra"
+        },
+        {
+          "en": "Lagrangian Dynamics",
+          "zh": "拉格朗日动力学",
+          "abbr": "",
+          "def": "通过 L = T - V（动能减势能）推导运动方程，适合多刚体系统。",
+          "detail": "拉格朗日方程 d/dt(∂L/∂q̇) - ∂L/∂q = τ，其中 L=T-V。对 n-DOF 机器人得到 M(q)q̈ + C(q,q̇)q̇ + g(q) = τ，M 是惯性矩阵，C 包含科氏力/离心力，g 是重力项。相比牛顿法更系统化，但计算复杂度 O(n³)。适合推导分析解和控制器设计。",
+          "module": "robot-dynamics"
+        },
+        {
+          "en": "Newton-Euler Method",
+          "zh": "牛顿-欧拉法",
+          "abbr": "",
+          "def": "递推地计算各连杆的力和力矩，计算效率高于拉格朗日法。",
+          "module": "robot-dynamics"
+        },
+        {
+          "en": "Recursive Newton-Euler Algorithm",
+          "zh": "递归牛顿-欧拉算法",
+          "abbr": "RNEA",
+          "def": "前向递推速度/加速度 + 后向递推力/力矩，O(n) 复杂度的逆动力学。",
+          "detail": "RNEA 分两趟扫描：① 前向(基座→末端)：递推计算各连杆的速度和加速度 ② 后向(末端→基座)：递推计算各关节的力和力矩。时间复杂度 O(n) 远优于拉格朗日法的 O(n³)，是实时控制中计算力矩的首选算法。",
+          "module": "robot-dynamics"
+        },
+        {
+          "en": "Inertia Matrix/Tensor",
+          "zh": "惯性矩阵/惯量张量",
+          "abbr": "",
+          "def": "描述刚体旋转惯性的 3×3 对称正定矩阵 I。出现在动力学方程 τ = M(q)q̈ + C(q,q̇)q̇ + g(q)。",
+          "module": "robot-dynamics"
+        },
+        {
+          "en": "Trajectory Planning",
+          "zh": "轨迹规划",
+          "abbr": "",
+          "def": "为机器人生成从起点到终点的平滑运动路径（含时间参数化）。",
+          "detail": "轨迹规划 = 路径(几何形状) + 时间律(速度分配)。常用方法：三次/五次多项式(保证速度/加速度连续)、梯形速度曲线(工业标配)、B样条(平滑多路点)。关节空间规划简单但不保证笛卡尔直线，笛卡尔空间规划直观但需要在线 IK。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Motion Planning",
+          "zh": "运动规划",
+          "abbr": "",
+          "def": "在考虑障碍物的情况下规划无碰撞路径。包括 RRT、PRM 等采样算法。",
+          "detail": "运动规划在配置空间(C-space)中搜索起点到终点的无碰撞路径。经典算法：RRT(快速随机树，概率完备)、RRT*(渐近最优)、PRM(概率路图，适合多次查询)。现代趋势：学习型规划(MPNet)、优化型(CHOMP/TrajOpt)、结合大模型的语义规划。MoveIt 是 ROS 中最常用的运动规划框架。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Configuration Space",
+          "zh": "配置空间/构型空间",
+          "abbr": "C-space",
+          "def": "机器人所有可能关节状态的集合。n-DOF 机器人的 C-space 是 n 维空间，障碍物映射为 C-space 中的禁区。",
+          "detail": "配置空间是运动规划的数学基础。将物理空间的障碍物映射到 C-space 后，机器人变成一个点，碰撞检测变成点是否在禁区内的判定。n-DOF 机器人的 C-space 是 n 维流形，高维空间的搜索是运动规划计算困难的根本原因（维度灾难）。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Grasping / Grasp Planning",
+          "zh": "抓取/抓取规划",
+          "abbr": "",
+          "def": "计算夹爪接触物体的最优位置和力，使抓取稳定（力封闭/形封闭）。",
+          "detail": "力封闭(Force Closure)：接触力能平衡任意外力/外矩。形封闭(Form Closure)：几何约束使物体无法运动。抓取规划需考虑：接触点选择、抓取姿态、接近方向、碰撞避免。深度学习方法(GraspNet/AnyGrasp)直接从点云预测抓取位姿，已广泛应用。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Product of Exponentials",
+          "zh": "指数积公式",
+          "abbr": "PoE",
+          "def": "用矩阵指数连乘描述正运动学 T=e^{S1θ1}·...·e^{Snθn}·M，Modern Robotics 的核心方法。",
+          "detail": "PoE 公式基于李群 SE(3) 和螺旋运动理论。每个关节用 6 维螺旋轴 S=(ω,v) 描述，运动量为 θ。相比 DH 参数法：不需要严格的坐标系建立规则，螺旋轴物理含义清晰，Jacobian 形式在 Adjoint 表示下更优雅统一，可自然扩展到树形和闭链结构。Pinocchio/MoveIt2 的底层数学框架。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Screw Axis",
+          "zh": "螺旋轴",
+          "abbr": "",
+          "def": "6 维向量 S=(ω,v) 描述关节的旋转方向和位置，是 PoE 公式的基本单元。",
+          "detail": "Chasles 定理：任何刚体运动都可分解为绕某条轴的旋转+沿该轴的平移（螺旋运动）。对旋转关节：ω 是轴方向（单位向量），v=q×ω（q 是轴上一点）。对移动关节：ω=0，v 是移动方向。螺旋轴在物理上唯一确定，不存在 DH 参数的版本混淆问题。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Adjoint Representation",
+          "zh": "伴随表示",
+          "abbr": "Ad",
+          "def": "6×6 矩阵 Ad_T=[R,0;[p]R,R]，将螺旋轴从一个参考系变换到另一个参考系。",
+          "detail": "PoE 空间 Jacobian 的核心工具。第 i 列 = Ad_{T1...Ti-1}·Si，表示前 i-1 个关节运动后关节 i 的螺旋轴在空间坐标系下的表达。Adjoint 表示使 Jacobian 计算形式统一优雅，是 Modern Robotics 相比 DH 方法在微分运动学上的核心优势。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Lie Group / Lie Algebra",
+          "zh": "李群/李代数",
+          "abbr": "SE(3)/se(3)",
+          "def": "SE(3) 是刚体运动的李群（4×4 矩阵群），se(3) 是其李代数（对应的切空间/螺旋轴空间）。",
+          "detail": "SE(3)={T=[R,p;0,1] | R∈SO(3)}，群运算为矩阵乘法。se(3) 是 4×4 矩阵的 6 维空间，通过指数映射 exp: se(3)→SE(3) 和对数映射 log: SE(3)→se(3) 连接。PoE 公式本质是在 SE(3) 李群上做运算。理解李群/李代数是掌握 Modern Robotics 的数学基础。",
+          "module": "linear-algebra"
+        },
+        {
+          "en": "Rodrigues' Formula",
+          "zh": "罗德里格斯公式",
+          "abbr": "",
+          "def": "旋转轴 ω + 角度 θ → 旋转矩阵的封闭解：R=I+sinθ[ω]+(1-cosθ)[ω]²。",
+          "detail": "比通用矩阵指数 expm 快 10 倍以上且数值更精确，是 PoE 正运动学实时计算的核心。[ω] 是 ω 的 3×3 反对称矩阵。推广到 SE(3) 时还需计算平移部分 p=(Iθ+(1-cosθ)[ω]+(θ-sinθ)[ω]²)v。",
+          "module": "robot-kinematics"
+        },
+        {
+          "en": "Manipulability",
+          "zh": "操纵度/灵巧度",
+          "abbr": "",
+          "def": "w=√det(JJ^T)，衡量机器人在当前构型下各方向运动能力的均匀程度。w→0 为奇异。",
+          "detail": "操纵度椭球：对 J 做 SVD，奇异值 σi 是椭球各主轴长度。σ 均匀→接近球形→各方向运动能力均衡。σ 差异大→扁椭球→某些方向运动受限。操纵度是轨迹规划和冗余分辨中的重要优化指标。",
+          "module": "robot-kinematics"
+        }
       ]
     },
     {
       "id": "control",
       "name": "🎛️ 控制理论",
       "terms": [
-        { "en": "PID Controller", "zh": "PID 控制器", "abbr": "PID", "def": "比例-积分-微分控制器。工业界最常用的反馈控制方案，简单有效。", "detail": "u(t) = Kp·e(t) + Ki·∫e(t)dt + Kd·de/dt。P(比例)：误差越大控制越强，但有稳态误差。I(积分)：消除稳态误差，但可能振荡。D(微分)：抑制振荡，但放大噪声。调参经验：先调 Kp 到临界振荡，再加 Ki 消除稳态误差，最后加 Kd 抑制超调。工业界 80%+ 的控制回路都是 PID。", "module": "control-theory" },
-        { "en": "Model Predictive Control", "zh": "模型预测控制", "abbr": "MPC", "def": "在每个时间步求解有限时域最优控制问题，实现前瞻性控制。", "detail": "MPC 在每个时间步 t 求解：min Σ(cost) s.t. 动力学约束+状态/输入约束，预测未来 N 步，但只执行第一步，然后重新规划（滚动时域）。优势：天然处理约束、多变量耦合、前瞻优化。代价：每步需求解优化问题，对计算资源要求高。线性 MPC 可实时(kHz级)，非线性 MPC 较慢但更精确。四足机器人步态控制、自动驾驶中广泛使用。", "module": "control-theory" },
-        { "en": "Linear Quadratic Regulator", "zh": "线性二次型调节器", "abbr": "LQR", "def": "线性系统在二次代价函数下的最优反馈控制律 u = -Kx。", "detail": "对线性系统 ẋ = Ax + Bu，最小化 J = ∫(xᵀQx + uᵀRu)dt，最优解为 u = -Kx，其中 K = R⁻¹BᵀP，P 由 Riccati 方程求解。Q 矩阵权衡状态偏差代价，R 矩阵权衡控制能耗。LQR 是最优控制的入门基石，也是许多高级控制器的内核。", "module": "control-theory" },
-        { "en": "Impedance Control", "zh": "阻抗控制", "abbr": "", "def": "控制机器人与环境交互时的等效阻抗（质量-阻尼-刚度），实现柔顺运动。", "detail": "将机器人-环境交互建模为：M_d·ẍ + B_d·ẋ + K_d·x = F_ext，通过调整虚拟质量 M_d、阻尼 B_d、刚度 K_d 控制机器人对外力的响应行为。高刚度→位置精确(像刚性机械臂)，低刚度→柔顺(像人手擦桌子)。是力控操作(装配/抛光/人机交互)的核心技术。", "module": "control-theory" },
-        { "en": "Admittance Control", "zh": "导纳控制", "abbr": "", "def": "阻抗控制的对偶：测量外力，输出期望位置/速度。适用于刚性位置控制的系统。", "module": "control-theory" },
-        { "en": "Computed Torque Control", "zh": "计算力矩控制", "abbr": "", "def": "利用动力学模型精确补偿非线性项，实现线性化解耦控制。", "detail": "τ = M(q)·(q̈_d + Kd·ė + Kp·e) + C(q,q̇)q̇ + g(q)。通过精确补偿惯性/科氏力/重力项，将非线性多关节耦合系统变为 n 个独立的线性二阶系统 ë + Kd·ė + Kp·e = 0。前提是动力学模型要准确，否则性能下降——这就是为什么需要系统辨识。", "module": "control-theory" },
-        { "en": "Sliding Mode Control", "zh": "滑模控制", "abbr": "SMC", "def": "一种鲁棒控制方法，将系统状态驱动到滑模面上，对模型不确定性鲁棒。", "module": "control-theory" },
-        { "en": "Adaptive Control", "zh": "自适应控制", "abbr": "", "def": "控制器参数在线调整以适应未知或变化的系统参数（如 MRAC）。", "module": "control-theory" },
-        { "en": "Whole-Body Control", "zh": "全身控制", "abbr": "WBC", "def": "人形机器人同时协调全身关节完成多优先级任务的控制框架。", "detail": "WBC 将多个任务(行走、保持平衡、手部操作、视线跟踪)按优先级排列，在关节力矩/关节速度空间中同时求解。核心算法：任务优先级逆运动学(Task-Priority IK)、二次规划(QP)、层次化优化。高优先级任务(如不摔倒)优先满足，低优先级任务在剩余自由度中尽量满足。是人形机器人的核心控制架构。", "module": "humanoid-fullstack" },
-        { "en": "Operational Space Control", "zh": "操作空间控制", "abbr": "OSC", "def": "直接在末端执行器的笛卡尔空间设计控制律，通过 Jacobian 映射到关节空间。", "module": "control-theory" },
-        { "en": "Feedback / Feedforward Control", "zh": "反馈/前馈控制", "abbr": "", "def": "反馈：根据误差调整输入。前馈：根据期望轨迹提前计算输入。实际中两者结合使用。", "detail": "纯反馈控制有延迟——必须等误差产生才响应。前馈通过动力学模型预测所需力矩 τ_ff = M(q)q̈_d + C·q̇_d + g，提前'喂'给电机，再用反馈修正残余误差。好比开车：前馈是看到弯道提前打方向盘，反馈是发现偏离车道后修正。", "module": "control-theory" },
-        { "en": "Stability / Lyapunov Stability", "zh": "稳定性/李雅普诺夫稳定", "abbr": "", "def": "系统在扰动后能否回到平衡点。李雅普诺夫方法通过构造能量函数证明稳定性，无需求解微分方程。", "detail": "李雅普诺夫定理：若存在正定函数 V(x)>0 且 V̇(x)≤0，则系统稳定；若 V̇(x)<0，则渐近稳定。直觉：V 类似'能量'，如果能量单调递减，系统一定收敛。控制器设计中常先假设 V 的形式，再反推控制律使 V̇<0（控制李雅普诺夫函数方法/CLF）。", "module": "control-theory" }
+        {
+          "en": "PID Controller",
+          "zh": "PID 控制器",
+          "abbr": "PID",
+          "def": "比例-积分-微分控制器。工业界最常用的反馈控制方案，简单有效。",
+          "detail": "u(t) = Kp·e(t) + Ki·∫e(t)dt + Kd·de/dt。P(比例)：误差越大控制越强，但有稳态误差。I(积分)：消除稳态误差，但可能振荡。D(微分)：抑制振荡，但放大噪声。调参经验：先调 Kp 到临界振荡，再加 Ki 消除稳态误差，最后加 Kd 抑制超调。工业界 80%+ 的控制回路都是 PID。",
+          "module": "control-theory"
+        },
+        {
+          "en": "Model Predictive Control",
+          "zh": "模型预测控制",
+          "abbr": "MPC",
+          "def": "在每个时间步求解有限时域最优控制问题，实现前瞻性控制。",
+          "detail": "MPC 在每个时间步 t 求解：min Σ(cost) s.t. 动力学约束+状态/输入约束，预测未来 N 步，但只执行第一步，然后重新规划（滚动时域）。优势：天然处理约束、多变量耦合、前瞻优化。代价：每步需求解优化问题，对计算资源要求高。线性 MPC 可实时(kHz级)，非线性 MPC 较慢但更精确。四足机器人步态控制、自动驾驶中广泛使用。",
+          "module": "control-theory"
+        },
+        {
+          "en": "Linear Quadratic Regulator",
+          "zh": "线性二次型调节器",
+          "abbr": "LQR",
+          "def": "线性系统在二次代价函数下的最优反馈控制律 u = -Kx。",
+          "detail": "对线性系统 ẋ = Ax + Bu，最小化 J = ∫(xᵀQx + uᵀRu)dt，最优解为 u = -Kx，其中 K = R⁻¹BᵀP，P 由 Riccati 方程求解。Q 矩阵权衡状态偏差代价，R 矩阵权衡控制能耗。LQR 是最优控制的入门基石，也是许多高级控制器的内核。",
+          "module": "control-theory"
+        },
+        {
+          "en": "Impedance Control",
+          "zh": "阻抗控制",
+          "abbr": "",
+          "def": "控制机器人与环境交互时的等效阻抗（质量-阻尼-刚度），实现柔顺运动。",
+          "detail": "将机器人-环境交互建模为：M_d·ẍ + B_d·ẋ + K_d·x = F_ext，通过调整虚拟质量 M_d、阻尼 B_d、刚度 K_d 控制机器人对外力的响应行为。高刚度→位置精确(像刚性机械臂)，低刚度→柔顺(像人手擦桌子)。是力控操作(装配/抛光/人机交互)的核心技术。",
+          "module": "control-theory"
+        },
+        {
+          "en": "Admittance Control",
+          "zh": "导纳控制",
+          "abbr": "",
+          "def": "阻抗控制的对偶：测量外力，输出期望位置/速度。适用于刚性位置控制的系统。",
+          "module": "control-theory"
+        },
+        {
+          "en": "Computed Torque Control",
+          "zh": "计算力矩控制",
+          "abbr": "",
+          "def": "利用动力学模型精确补偿非线性项，实现线性化解耦控制。",
+          "detail": "τ = M(q)·(q̈_d + Kd·ė + Kp·e) + C(q,q̇)q̇ + g(q)。通过精确补偿惯性/科氏力/重力项，将非线性多关节耦合系统变为 n 个独立的线性二阶系统 ë + Kd·ė + Kp·e = 0。前提是动力学模型要准确，否则性能下降——这就是为什么需要系统辨识。",
+          "module": "control-theory"
+        },
+        {
+          "en": "Sliding Mode Control",
+          "zh": "滑模控制",
+          "abbr": "SMC",
+          "def": "一种鲁棒控制方法，将系统状态驱动到滑模面上，对模型不确定性鲁棒。",
+          "module": "control-theory"
+        },
+        {
+          "en": "Adaptive Control",
+          "zh": "自适应控制",
+          "abbr": "",
+          "def": "控制器参数在线调整以适应未知或变化的系统参数（如 MRAC）。",
+          "module": "control-theory"
+        },
+        {
+          "en": "Whole-Body Control",
+          "zh": "全身控制",
+          "abbr": "WBC",
+          "def": "人形机器人同时协调全身关节完成多优先级任务的控制框架。",
+          "detail": "WBC 将多个任务(行走、保持平衡、手部操作、视线跟踪)按优先级排列，在关节力矩/关节速度空间中同时求解。核心算法：任务优先级逆运动学(Task-Priority IK)、二次规划(QP)、层次化优化。高优先级任务(如不摔倒)优先满足，低优先级任务在剩余自由度中尽量满足。是人形机器人的核心控制架构。",
+          "module": "humanoid-fullstack"
+        },
+        {
+          "en": "Operational Space Control",
+          "zh": "操作空间控制",
+          "abbr": "OSC",
+          "def": "直接在末端执行器的笛卡尔空间设计控制律，通过 Jacobian 映射到关节空间。",
+          "module": "control-theory"
+        },
+        {
+          "en": "Feedback / Feedforward Control",
+          "zh": "反馈/前馈控制",
+          "abbr": "",
+          "def": "反馈：根据误差调整输入。前馈：根据期望轨迹提前计算输入。实际中两者结合使用。",
+          "detail": "纯反馈控制有延迟——必须等误差产生才响应。前馈通过动力学模型预测所需力矩 τ_ff = M(q)q̈_d + C·q̇_d + g，提前'喂'给电机，再用反馈修正残余误差。好比开车：前馈是看到弯道提前打方向盘，反馈是发现偏离车道后修正。",
+          "module": "control-theory"
+        },
+        {
+          "en": "Stability / Lyapunov Stability",
+          "zh": "稳定性/李雅普诺夫稳定",
+          "abbr": "",
+          "def": "系统在扰动后能否回到平衡点。李雅普诺夫方法通过构造能量函数证明稳定性，无需求解微分方程。",
+          "detail": "李雅普诺夫定理：若存在正定函数 V(x)>0 且 V̇(x)≤0，则系统稳定；若 V̇(x)<0，则渐近稳定。直觉：V 类似'能量'，如果能量单调递减，系统一定收敛。控制器设计中常先假设 V 的形式，再反推控制律使 V̇<0（控制李雅普诺夫函数方法/CLF）。",
+          "module": "control-theory"
+        }
       ]
     },
     {
       "id": "deep-learning",
       "name": "🧠 深度学习基础",
       "terms": [
-        { "en": "Convolutional Neural Network", "zh": "卷积神经网络", "abbr": "CNN", "def": "利用局部感受野和权重共享提取空间特征的网络结构。", "detail": "核心操作：卷积核在输入上滑动做内积，提取局部特征（边缘→纹理→部件→物体）。关键概念：感受野(卷积核覆盖的区域)、步长(stride)、填充(padding)、特征图(feature map)。经典架构演化：LeNet→AlexNet→VGG→ResNet→ConvNeXt。在机器人视觉中用于图像分类、目标检测、深度估计等。", "module": "deep-learning" },
-        { "en": "Transformer", "zh": "Transformer", "abbr": "", "def": "基于自注意力(Self-Attention)机制的序列建模架构，已成为多模态AI的通用骨架。", "detail": "2017年 'Attention Is All You Need' 提出。核心：Multi-Head Self-Attention 让每个 token 关注序列中所有其他 token，捕捉长程依赖。优势：① 并行计算(vs RNN 必须顺序) ② 全局感受野 ③ 灵活适配多种模态。已统治 NLP(GPT/BERT)、CV(ViT)、多模态(CLIP)和机器人(VLA)。", "module": "deep-learning" },
-        { "en": "Self-Attention", "zh": "自注意力", "abbr": "", "def": "序列中每个 token 对所有 token 计算加权注意力 Softmax(QK^T/√d)V。", "detail": "输入 X 分别线性变换为 Query(Q)、Key(K)、Value(V)。注意力权重 A = Softmax(QKᵀ/√d_k)，输出 = A·V。Multi-Head：并行运行 h 组不同的 Q/K/V 变换，拼接后再投影，让模型同时关注不同类型的关系（如位置、语义、语法）。复杂度 O(n²d)，n 是序列长度。", "module": "deep-learning" },
-        { "en": "Backpropagation", "zh": "反向传播", "abbr": "BP", "def": "通过链式法则逐层计算梯度的算法，是神经网络训练的核心。", "detail": "前向传播计算输出和损失 L，反向传播从输出层到输入层逐层计算 ∂L/∂w（链式法则）。每个节点只需知道上游梯度和本地导数。自动微分(autograd)框架让开发者只需定义前向计算，梯度自动计算。梯度消失/爆炸是深层网络的主要挑战，ResNet 的跳跃连接是最成功的解法。", "module": "deep-learning" },
-        { "en": "Gradient Descent", "zh": "梯度下降", "abbr": "GD", "def": "沿损失函数负梯度方向更新参数的优化算法。SGD/Adam 是常见变体。", "detail": "θ_{t+1} = θ_t - η·∇L(θ_t)。SGD(随机梯度下降)：每次用一个 mini-batch 估计梯度，引入噪声但加速训练。Momentum：积累历史梯度方向，加速收敛。Adam：自适应学习率，结合一阶动量和二阶动量估计，是当前最常用的优化器。学习率 η 是最重要的超参数。", "module": "calculus-optimization" },
-        { "en": "Batch Normalization", "zh": "批归一化", "abbr": "BN", "def": "对每个 mini-batch 的激活值归一化，加速训练并稳定梯度。", "module": "deep-learning" },
-        { "en": "Dropout", "zh": "随机失活", "abbr": "", "def": "训练时随机置零部分神经元输出，防止过拟合的正则化技术。", "module": "deep-learning" },
-        { "en": "Transfer Learning", "zh": "迁移学习", "abbr": "", "def": "将预训练模型的知识迁移到目标任务，通常冻结骨干只微调末层。", "module": "deep-learning" },
-        { "en": "Fine-Tuning", "zh": "微调", "abbr": "FT", "def": "在预训练模型基础上，用目标任务数据继续训练部分或全部参数。", "module": "training-inference-optimization" },
-        { "en": "LoRA (Low-Rank Adaptation)", "zh": "低秩适配", "abbr": "LoRA", "def": "用低秩矩阵分解近似微调权重变化 ΔW = AB，大幅减少可训参数。", "detail": "预训练权重 W₀ 冻结，只训练 A∈ℝ^(d×r) 和 B∈ℝ^(r×d)，r 远小于 d。推理时合并 W = W₀ + AB，无额外延迟。例如 r=8 时可训参数量减少 99%+，但性能接近全量微调。VLA 模型的适配和个性化常用 LoRA。", "module": "training-inference-optimization" },
-        { "en": "Diffusion Model", "zh": "扩散模型", "abbr": "", "def": "通过逐步去噪过程从高斯噪声生成样本的生成模型。", "detail": "前向过程：逐步给数据加噪声直到变成纯高斯噪声 x_T ~ N(0,I)。反向过程：学一个去噪网络 ε_θ(x_t, t)，从噪声逐步恢复数据。在机器人中用作策略：Diffusion Policy 将动作分布建模为去噪过程 p(a|o)，天然支持多模态动作（同一观测下多种合理行为），是 2024-2026 年操作策略的主流方法。", "module": "deep-learning" },
-        { "en": "Flow Matching", "zh": "流匹配", "abbr": "", "def": "学习概率流 ODE 将噪声分布映射到数据分布的生成方法，训练更稳定。", "detail": "与 Diffusion 的离散去噪步骤不同，Flow Matching 学习一个连续向量场 v_θ(x_t, t)，沿着此场积分即可从噪声变换到数据。训练目标简单：回归条件向量场。推理时用 ODE solver 积分，步数可调(质量-速度权衡)。π₀/π₀.5 的动作头就用 Flow Matching。", "module": "deep-learning" },
-        { "en": "Variational Autoencoder", "zh": "变分自编码器", "abbr": "VAE", "def": "通过编码器-解码器结构学习数据的隐变量分布 p(z|x)。", "module": "deep-learning" },
-        { "en": "Knowledge Distillation", "zh": "知识蒸馏", "abbr": "KD", "def": "用大模型(Teacher)的软标签指导小模型(Student)训练。", "detail": "核心思想：Teacher 的软概率分布(如[0.7, 0.2, 0.1])比硬标签(如[1, 0, 0])包含更多'暗知识'——类别之间的相似度关系。Student 同时学习硬标签(真实label)和软标签(Teacher输出)，通常能达到 Teacher 90-95% 的性能但推理快数倍。在 Sim-to-Real 的 Teacher-Student 框架中广泛使用。", "module": "training-inference-optimization" },
-        { "en": "Tokenization", "zh": "分词/Token化", "abbr": "", "def": "将原始输入(文本/图像/动作)切分为离散 token 序列，供 Transformer 处理。", "detail": "文本：BPE/SentencePiece 将文本切为子词 token。图像：ViT 将图像切为 16×16 patch 再线性投影。动作：VLA 中将连续动作离散化为 token（如 256 bin 量化），或用 learnable action tokenizer 学习连续→离散映射。Token 化是多模态统一建模的关键。", "module": "deep-learning" },
-        { "en": "Embedding", "zh": "嵌入/向量化", "abbr": "", "def": "将离散符号(词/类别/位置)映射到连续向量空间的可学习查找表。", "detail": "每个 token ID 对应一个 d 维向量，通过训练学习语义关系——语义相近的 token 在向量空间中距离也近。位置编码(Positional Encoding)也是一种嵌入，为 Transformer 提供序列顺序信息。机器人学中，关节角度/力矩也常先 embedding 再输入网络。", "module": "deep-learning" }
+        {
+          "en": "Convolutional Neural Network",
+          "zh": "卷积神经网络",
+          "abbr": "CNN",
+          "def": "利用局部感受野和权重共享提取空间特征的网络结构。",
+          "detail": "核心操作：卷积核在输入上滑动做内积，提取局部特征（边缘→纹理→部件→物体）。关键概念：感受野(卷积核覆盖的区域)、步长(stride)、填充(padding)、特征图(feature map)。经典架构演化：LeNet→AlexNet→VGG→ResNet→ConvNeXt。在机器人视觉中用于图像分类、目标检测、深度估计等。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Transformer",
+          "zh": "Transformer",
+          "abbr": "",
+          "def": "基于自注意力(Self-Attention)机制的序列建模架构，已成为多模态AI的通用骨架。",
+          "detail": "2017年 'Attention Is All You Need' 提出。核心：Multi-Head Self-Attention 让每个 token 关注序列中所有其他 token，捕捉长程依赖。优势：① 并行计算(vs RNN 必须顺序) ② 全局感受野 ③ 灵活适配多种模态。已统治 NLP(GPT/BERT)、CV(ViT)、多模态(CLIP)和机器人(VLA)。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Self-Attention",
+          "zh": "自注意力",
+          "abbr": "",
+          "def": "序列中每个 token 对所有 token 计算加权注意力 Softmax(QK^T/√d)V。",
+          "detail": "输入 X 分别线性变换为 Query(Q)、Key(K)、Value(V)。注意力权重 A = Softmax(QKᵀ/√d_k)，输出 = A·V。Multi-Head：并行运行 h 组不同的 Q/K/V 变换，拼接后再投影，让模型同时关注不同类型的关系（如位置、语义、语法）。复杂度 O(n²d)，n 是序列长度。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Backpropagation",
+          "zh": "反向传播",
+          "abbr": "BP",
+          "def": "通过链式法则逐层计算梯度的算法，是神经网络训练的核心。",
+          "detail": "前向传播计算输出和损失 L，反向传播从输出层到输入层逐层计算 ∂L/∂w（链式法则）。每个节点只需知道上游梯度和本地导数。自动微分(autograd)框架让开发者只需定义前向计算，梯度自动计算。梯度消失/爆炸是深层网络的主要挑战，ResNet 的跳跃连接是最成功的解法。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Gradient Descent",
+          "zh": "梯度下降",
+          "abbr": "GD",
+          "def": "沿损失函数负梯度方向更新参数的优化算法。SGD/Adam 是常见变体。",
+          "detail": "θ_{t+1} = θ_t - η·∇L(θ_t)。SGD(随机梯度下降)：每次用一个 mini-batch 估计梯度，引入噪声但加速训练。Momentum：积累历史梯度方向，加速收敛。Adam：自适应学习率，结合一阶动量和二阶动量估计，是当前最常用的优化器。学习率 η 是最重要的超参数。",
+          "module": "calculus-optimization"
+        },
+        {
+          "en": "Batch Normalization",
+          "zh": "批归一化",
+          "abbr": "BN",
+          "def": "对每个 mini-batch 的激活值归一化，加速训练并稳定梯度。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Dropout",
+          "zh": "随机失活",
+          "abbr": "",
+          "def": "训练时随机置零部分神经元输出，防止过拟合的正则化技术。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Transfer Learning",
+          "zh": "迁移学习",
+          "abbr": "",
+          "def": "将预训练模型的知识迁移到目标任务，通常冻结骨干只微调末层。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Fine-Tuning",
+          "zh": "微调",
+          "abbr": "FT",
+          "def": "在预训练模型基础上，用目标任务数据继续训练部分或全部参数。",
+          "module": "training-inference-optimization"
+        },
+        {
+          "en": "LoRA (Low-Rank Adaptation)",
+          "zh": "低秩适配",
+          "abbr": "LoRA",
+          "def": "用低秩矩阵分解近似微调权重变化 ΔW = AB，大幅减少可训参数。",
+          "detail": "预训练权重 W₀ 冻结，只训练 A∈ℝ^(d×r) 和 B∈ℝ^(r×d)，r 远小于 d。推理时合并 W = W₀ + AB，无额外延迟。例如 r=8 时可训参数量减少 99%+，但性能接近全量微调。VLA 模型的适配和个性化常用 LoRA。",
+          "module": "training-inference-optimization"
+        },
+        {
+          "en": "Diffusion Model",
+          "zh": "扩散模型",
+          "abbr": "",
+          "def": "通过逐步去噪过程从高斯噪声生成样本的生成模型。",
+          "detail": "前向过程：逐步给数据加噪声直到变成纯高斯噪声 x_T ~ N(0,I)。反向过程：学一个去噪网络 ε_θ(x_t, t)，从噪声逐步恢复数据。在机器人中用作策略：Diffusion Policy 将动作分布建模为去噪过程 p(a|o)，天然支持多模态动作（同一观测下多种合理行为），是 2024-2026 年操作策略的主流方法。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Flow Matching",
+          "zh": "流匹配",
+          "abbr": "",
+          "def": "学习概率流 ODE 将噪声分布映射到数据分布的生成方法，训练更稳定。",
+          "detail": "与 Diffusion 的离散去噪步骤不同，Flow Matching 学习一个连续向量场 v_θ(x_t, t)，沿着此场积分即可从噪声变换到数据。训练目标简单：回归条件向量场。推理时用 ODE solver 积分，步数可调(质量-速度权衡)。π₀/π₀.5 的动作头就用 Flow Matching。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Variational Autoencoder",
+          "zh": "变分自编码器",
+          "abbr": "VAE",
+          "def": "通过编码器-解码器结构学习数据的隐变量分布 p(z|x)。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Knowledge Distillation",
+          "zh": "知识蒸馏",
+          "abbr": "KD",
+          "def": "用大模型(Teacher)的软标签指导小模型(Student)训练。",
+          "detail": "核心思想：Teacher 的软概率分布(如[0.7, 0.2, 0.1])比硬标签(如[1, 0, 0])包含更多'暗知识'——类别之间的相似度关系。Student 同时学习硬标签(真实label)和软标签(Teacher输出)，通常能达到 Teacher 90-95% 的性能但推理快数倍。在 Sim-to-Real 的 Teacher-Student 框架中广泛使用。",
+          "module": "training-inference-optimization"
+        },
+        {
+          "en": "Tokenization",
+          "zh": "分词/Token化",
+          "abbr": "",
+          "def": "将原始输入(文本/图像/动作)切分为离散 token 序列，供 Transformer 处理。",
+          "detail": "文本：BPE/SentencePiece 将文本切为子词 token。图像：ViT 将图像切为 16×16 patch 再线性投影。动作：VLA 中将连续动作离散化为 token（如 256 bin 量化），或用 learnable action tokenizer 学习连续→离散映射。Token 化是多模态统一建模的关键。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Embedding",
+          "zh": "嵌入/向量化",
+          "abbr": "",
+          "def": "将离散符号(词/类别/位置)映射到连续向量空间的可学习查找表。",
+          "detail": "每个 token ID 对应一个 d 维向量，通过训练学习语义关系——语义相近的 token 在向量空间中距离也近。位置编码(Positional Encoding)也是一种嵌入，为 Transformer 提供序列顺序信息。机器人学中，关节角度/力矩也常先 embedding 再输入网络。",
+          "module": "deep-learning"
+        }
       ]
     },
     {
       "id": "reinforcement-learning",
       "name": "🎮 强化学习",
       "terms": [
-        { "en": "Markov Decision Process", "zh": "马尔可夫决策过程", "abbr": "MDP", "def": "强化学习的数学框架 (S, A, P, R, γ)：状态、动作、转移概率、奖励、折扣因子。", "detail": "马尔可夫性质：下一状态只取决于当前状态和动作，与历史无关 P(s'|s,a)。五元组：S(状态空间)、A(动作空间)、P(转移概率)、R(奖励函数)、γ∈(0,1](折扣因子，控制短视/远视程度)。POMDP(部分可观MDP)是更贴近现实的扩展——机器人通常无法完整观测环境状态。", "module": "reinforcement-learning" },
-        { "en": "Policy", "zh": "策略", "abbr": "π", "def": "状态到动作的映射 π(a|s)，可以是确定性或随机性的。", "detail": "确定性策略 a = π(s)：给定状态输出唯一动作。随机策略 π(a|s)：输出动作的概率分布，有利于探索。参数化策略 π_θ(a|s)：用神经网络参数化，通过梯度更新优化。策略梯度定理 ∇J = E[∇logπ_θ(a|s)·Q(s,a)] 是 PPO/SAC 等算法的理论基础。", "module": "reinforcement-learning" },
-        { "en": "Value Function", "zh": "价值函数", "abbr": "V(s)", "def": "从状态 s 出发，遵循策略 π 的期望累积回报。", "module": "reinforcement-learning" },
-        { "en": "Q-Function / Action-Value Function", "zh": "动作价值函数", "abbr": "Q(s,a)", "def": "在状态 s 执行动作 a 后遵循策略 π 的期望累积回报。", "detail": "Q(s,a) = E[R_t + γR_{t+1} + γ²R_{t+2} + ... | s_t=s, a_t=a, π]。Q-Learning 直接学习最优 Q*，再用贪心策略 a* = argmax Q*(s,a)。深度Q网络(DQN)用神经网络近似 Q 函数，开创了深度强化学习时代。连续动作空间中用 SAC/TD3 替代 DQN。", "module": "reinforcement-learning" },
-        { "en": "Bellman Equation", "zh": "贝尔曼方程", "abbr": "", "def": "V(s) = R + γΣP·V(s')，将价值函数分解为即时奖励和未来价值之和。", "module": "reinforcement-learning" },
-        { "en": "Proximal Policy Optimization", "zh": "近端策略优化", "abbr": "PPO", "def": "通过裁剪目标函数限制策略更新幅度的 on-policy 算法。具身智能最常用的 RL 算法。", "detail": "PPO 的核心是裁剪目标：L = min(r_t·A_t, clip(r_t, 1-ε, 1+ε)·A_t)，其中 r_t = π_new/π_old 是概率比，A_t 是优势函数，ε≈0.2 是裁剪范围。这限制了策略每次更新的幅度，避免灾难性的大步更新。简单、稳定、并行度高，是 Isaac Gym/Lab 中训练四足/人形步态的标准算法。", "module": "reinforcement-learning" },
-        { "en": "Soft Actor-Critic", "zh": "柔性演员-评论家", "abbr": "SAC", "def": "最大化奖励+熵的 off-policy 算法，探索性好，适合连续动作空间。", "detail": "SAC 优化目标 J = E[Σγᵗ(R_t + α·H(π))]，额外的熵项 H(π) 鼓励策略保持随机性→更好的探索。α(温度系数)自动调整。off-policy 意味着可以重用历史经验(replay buffer)，数据效率高于 PPO。适合真实机器人上的在线学习（数据宝贵不能浪费）。", "module": "reinforcement-learning" },
-        { "en": "Reward Shaping", "zh": "奖励塑形", "abbr": "", "def": "在稀疏奖励中添加辅助奖励信号，引导策略更快收敛。需避免 reward hacking。", "detail": "稀疏奖励(只在成功时+1)让 RL 极难学习。奖励塑形添加中间信号：如到达目标距离越近奖励越高、保持平衡+小奖励、碰撞-惩罚等。但要小心 reward hacking——智能体可能找到获取高奖励但不完成任务的'捷径'（如原地抖动积累存活奖励）。", "module": "reinforcement-learning" },
-        { "en": "Curriculum Learning", "zh": "课程学习", "abbr": "", "def": "从简单任务逐步过渡到困难任务的训练策略，加速学习并提高最终性能。", "module": "reinforcement-learning" },
-        { "en": "Sim-to-Real Transfer", "zh": "仿真到真实迁移", "abbr": "Sim2Real", "def": "将仿真中训练的策略部署到真实机器人上的技术流程。", "module": "sim-to-real" },
-        { "en": "Domain Randomization", "zh": "域随机化", "abbr": "DR", "def": "在仿真中随机化物理/视觉参数，使策略对真实世界参数变化鲁棒。", "module": "sim-to-real" },
-        { "en": "RLHF (RL from Human Feedback)", "zh": "基于人类反馈的强化学习", "abbr": "RLHF", "def": "用人类偏好数据训练奖励模型，再用 RL 优化策略。", "detail": "步骤：① 收集人类对两个输出的偏好 A>B ② 训练 Bradley-Terry 奖励模型 R(x) ③ 用 PPO 优化策略使 R 最大化。RLHF 让 ChatGPT 对齐人类意图。在机器人中的变体 RLEF(RL from Environment Feedback)用环境成功/失败信号替代人工偏好。", "module": "reinforcement-learning" },
-        { "en": "On-Policy / Off-Policy", "zh": "同策略/异策略", "abbr": "", "def": "On-policy：用当前策略采集的数据训练(如PPO)。Off-policy：可以用历史数据训练(如SAC/DQN)，数据效率更高。", "detail": "On-policy 算法每次更新后必须丢弃旧数据重新采集——数据效率低但训练稳定。Off-policy 算法使用 Replay Buffer 存储历史经验反复利用——数据效率高但可能不稳定。具身智能中：仿真训练(数据便宜)常用 on-policy PPO，真机训练(数据宝贵)倾向 off-policy SAC。", "module": "reinforcement-learning" },
-        { "en": "Exploration vs Exploitation", "zh": "探索与利用", "abbr": "", "def": "RL 的核心困境：探索未知区域获取新信息 vs 利用已知信息最大化奖励。", "detail": "纯利用会陷入局部最优（只去已知好的餐厅），纯探索浪费资源（每天随机选餐厅）。解决方法：ε-贪心(以ε概率随机)、UCB(上置信界)、熵正则化(SAC)、好奇心驱动(ICM)、后验采样(Thompson Sampling)。", "module": "reinforcement-learning" }
+        {
+          "en": "Markov Decision Process",
+          "zh": "马尔可夫决策过程",
+          "abbr": "MDP",
+          "def": "强化学习的数学框架 (S, A, P, R, γ)：状态、动作、转移概率、奖励、折扣因子。",
+          "detail": "马尔可夫性质：下一状态只取决于当前状态和动作，与历史无关 P(s'|s,a)。五元组：S(状态空间)、A(动作空间)、P(转移概率)、R(奖励函数)、γ∈(0,1](折扣因子，控制短视/远视程度)。POMDP(部分可观MDP)是更贴近现实的扩展——机器人通常无法完整观测环境状态。",
+          "module": "reinforcement-learning"
+        },
+        {
+          "en": "Policy",
+          "zh": "策略",
+          "abbr": "π",
+          "def": "状态到动作的映射 π(a|s)，可以是确定性或随机性的。",
+          "detail": "确定性策略 a = π(s)：给定状态输出唯一动作。随机策略 π(a|s)：输出动作的概率分布，有利于探索。参数化策略 π_θ(a|s)：用神经网络参数化，通过梯度更新优化。策略梯度定理 ∇J = E[∇logπ_θ(a|s)·Q(s,a)] 是 PPO/SAC 等算法的理论基础。",
+          "module": "reinforcement-learning"
+        },
+        {
+          "en": "Value Function",
+          "zh": "价值函数",
+          "abbr": "V(s)",
+          "def": "从状态 s 出发，遵循策略 π 的期望累积回报。",
+          "module": "reinforcement-learning"
+        },
+        {
+          "en": "Q-Function / Action-Value Function",
+          "zh": "动作价值函数",
+          "abbr": "Q(s,a)",
+          "def": "在状态 s 执行动作 a 后遵循策略 π 的期望累积回报。",
+          "detail": "Q(s,a) = E[R_t + γR_{t+1} + γ²R_{t+2} + ... | s_t=s, a_t=a, π]。Q-Learning 直接学习最优 Q*，再用贪心策略 a* = argmax Q*(s,a)。深度Q网络(DQN)用神经网络近似 Q 函数，开创了深度强化学习时代。连续动作空间中用 SAC/TD3 替代 DQN。",
+          "module": "reinforcement-learning"
+        },
+        {
+          "en": "Bellman Equation",
+          "zh": "贝尔曼方程",
+          "abbr": "",
+          "def": "V(s) = R + γΣP·V(s')，将价值函数分解为即时奖励和未来价值之和。",
+          "module": "reinforcement-learning"
+        },
+        {
+          "en": "Proximal Policy Optimization",
+          "zh": "近端策略优化",
+          "abbr": "PPO",
+          "def": "通过裁剪目标函数限制策略更新幅度的 on-policy 算法。具身智能最常用的 RL 算法。",
+          "detail": "PPO 的核心是裁剪目标：L = min(r_t·A_t, clip(r_t, 1-ε, 1+ε)·A_t)，其中 r_t = π_new/π_old 是概率比，A_t 是优势函数，ε≈0.2 是裁剪范围。这限制了策略每次更新的幅度，避免灾难性的大步更新。简单、稳定、并行度高，是 Isaac Gym/Lab 中训练四足/人形步态的标准算法。",
+          "module": "reinforcement-learning"
+        },
+        {
+          "en": "Soft Actor-Critic",
+          "zh": "柔性演员-评论家",
+          "abbr": "SAC",
+          "def": "最大化奖励+熵的 off-policy 算法，探索性好，适合连续动作空间。",
+          "detail": "SAC 优化目标 J = E[Σγᵗ(R_t + α·H(π))]，额外的熵项 H(π) 鼓励策略保持随机性→更好的探索。α(温度系数)自动调整。off-policy 意味着可以重用历史经验(replay buffer)，数据效率高于 PPO。适合真实机器人上的在线学习（数据宝贵不能浪费）。",
+          "module": "reinforcement-learning"
+        },
+        {
+          "en": "Reward Shaping",
+          "zh": "奖励塑形",
+          "abbr": "",
+          "def": "在稀疏奖励中添加辅助奖励信号，引导策略更快收敛。需避免 reward hacking。",
+          "detail": "稀疏奖励(只在成功时+1)让 RL 极难学习。奖励塑形添加中间信号：如到达目标距离越近奖励越高、保持平衡+小奖励、碰撞-惩罚等。但要小心 reward hacking——智能体可能找到获取高奖励但不完成任务的'捷径'（如原地抖动积累存活奖励）。",
+          "module": "reinforcement-learning"
+        },
+        {
+          "en": "Curriculum Learning",
+          "zh": "课程学习",
+          "abbr": "",
+          "def": "从简单任务逐步过渡到困难任务的训练策略，加速学习并提高最终性能。",
+          "module": "reinforcement-learning"
+        },
+        {
+          "en": "Sim-to-Real Transfer",
+          "zh": "仿真到真实迁移",
+          "abbr": "Sim2Real",
+          "def": "将仿真中训练的策略部署到真实机器人上的技术流程。",
+          "module": "sim-to-real"
+        },
+        {
+          "en": "Domain Randomization",
+          "zh": "域随机化",
+          "abbr": "DR",
+          "def": "在仿真中随机化物理/视觉参数，使策略对真实世界参数变化鲁棒。",
+          "module": "sim-to-real"
+        },
+        {
+          "en": "RLHF (RL from Human Feedback)",
+          "zh": "基于人类反馈的强化学习",
+          "abbr": "RLHF",
+          "def": "用人类偏好数据训练奖励模型，再用 RL 优化策略。",
+          "detail": "步骤：① 收集人类对两个输出的偏好 A>B ② 训练 Bradley-Terry 奖励模型 R(x) ③ 用 PPO 优化策略使 R 最大化。RLHF 让 ChatGPT 对齐人类意图。在机器人中的变体 RLEF(RL from Environment Feedback)用环境成功/失败信号替代人工偏好。",
+          "module": "reinforcement-learning"
+        },
+        {
+          "en": "On-Policy / Off-Policy",
+          "zh": "同策略/异策略",
+          "abbr": "",
+          "def": "On-policy：用当前策略采集的数据训练(如PPO)。Off-policy：可以用历史数据训练(如SAC/DQN)，数据效率更高。",
+          "detail": "On-policy 算法每次更新后必须丢弃旧数据重新采集——数据效率低但训练稳定。Off-policy 算法使用 Replay Buffer 存储历史经验反复利用——数据效率高但可能不稳定。具身智能中：仿真训练(数据便宜)常用 on-policy PPO，真机训练(数据宝贵)倾向 off-policy SAC。",
+          "module": "reinforcement-learning"
+        },
+        {
+          "en": "Exploration vs Exploitation",
+          "zh": "探索与利用",
+          "abbr": "",
+          "def": "RL 的核心困境：探索未知区域获取新信息 vs 利用已知信息最大化奖励。",
+          "detail": "纯利用会陷入局部最优（只去已知好的餐厅），纯探索浪费资源（每天随机选餐厅）。解决方法：ε-贪心(以ε概率随机)、UCB(上置信界)、熵正则化(SAC)、好奇心驱动(ICM)、后验采样(Thompson Sampling)。",
+          "module": "reinforcement-learning"
+        }
       ]
     },
     {
       "id": "imitation-learning",
       "name": "🎭 模仿学习",
       "terms": [
-        { "en": "Behavior Cloning", "zh": "行为克隆", "abbr": "BC", "def": "直接用监督学习拟合专家演示 (obs, action) 对，简单但有 covariate shift 问题。", "detail": "把 RL 问题降级为监督学习：收集专家数据 D = {(o_i, a_i)}，训练 π_θ(a|o) 最小化 L = Σ||π_θ(o_i) - a_i||²。优势：简单直接，不需要奖励函数。致命弱点：covariate shift——训练时 o_i 全是专家轨迹上的状态，部署时一旦偏离专家轨迹就进入从未见过的状态分布，误差雪崩。Action Chunking(一次预测多步)和 Diffusion Policy(多模态动作)是缓解方法。", "module": "imitation-learning" },
-        { "en": "DAgger (Dataset Aggregation)", "zh": "数据聚合", "abbr": "DAgger", "def": "迭代地用学习策略采集数据并请专家标注，缓解 covariate shift。", "module": "imitation-learning" },
-        { "en": "Inverse Reinforcement Learning", "zh": "逆强化学习", "abbr": "IRL", "def": "从专家演示中推断奖励函数，再用 RL 训练策略。", "detail": "BC 直接复制动作，IRL 更深一层——学习专家的'意图'(奖励函数)，然后用 RL 找到实现该意图的最优策略。优势：学到的奖励函数可迁移到不同环境/机器人。劣势：计算昂贵(内循环需要跑 RL)，实际应用中 BC+Diffusion Policy 更主流。", "module": "imitation-learning" },
-        { "en": "Diffusion Policy", "zh": "扩散策略", "abbr": "", "def": "用扩散模型建模动作分布 p(a|o)，天然支持多模态动作，是 2024-2026 主流方法。", "detail": "核心优势：真实世界中同一观测可能对应多种合理动作（如绕杯子左边或右边抓），传统 BC 用 MSE 回归会输出平均动作（从中间穿过去），Diffusion Policy 能保持所有模态。训练：在动作空间做扩散/去噪。推理：从噪声出发去噪采样动作。通常预测未来 8-16 步动作(Action Chunk)，执行前几步后重规划。", "module": "imitation-learning" },
-        { "en": "Action Chunking", "zh": "动作分块", "abbr": "", "def": "一次预测未来多步动作序列再逐步执行，减少 compounding error。ACT 首提。", "detail": "传统 BC 每步预测一个动作，误差逐步累积(compounding error)。Action Chunking 一次预测未来 k 步动作 [a_t, a_{t+1}, ..., a_{t+k-1}]，执行前几步后重新预测。效果类似 MPC 的滚动时域。ACT(Action Chunking with Transformers)是开创性工作，后被 Diffusion Policy 继承。", "module": "imitation-learning" },
-        { "en": "Teleoperation", "zh": "遥操作", "abbr": "Teleop", "def": "人类操作员远程控制机器人执行任务，常用于收集演示数据。", "detail": "常见设备：VR 手柄(Meta Quest)、SpaceMouse(六维输入)、主从臂(ALOHA/Gello)、手套/手势追踪。数据质量直接决定 BC 策略上限——好的遥操作设备应延迟低、直觉映射、操作自然。ALOHA 双臂遥操系统是当前学术界标杆。", "module": "data-collection" },
-        { "en": "Demonstration", "zh": "演示/示教", "abbr": "Demo", "def": "专家执行任务的状态-动作轨迹，是模仿学习的训练数据。", "module": "imitation-learning" },
-        { "en": "Covariate Shift", "zh": "协变量偏移", "abbr": "", "def": "训练与测试时输入分布不一致的问题。行为克隆中小误差会积累导致严重偏移。", "module": "imitation-learning" }
+        {
+          "en": "Behavior Cloning",
+          "zh": "行为克隆",
+          "abbr": "BC",
+          "def": "直接用监督学习拟合专家演示 (obs, action) 对，简单但有 covariate shift 问题。",
+          "detail": "把 RL 问题降级为监督学习：收集专家数据 D = {(o_i, a_i)}，训练 π_θ(a|o) 最小化 L = Σ||π_θ(o_i) - a_i||²。优势：简单直接，不需要奖励函数。致命弱点：covariate shift——训练时 o_i 全是专家轨迹上的状态，部署时一旦偏离专家轨迹就进入从未见过的状态分布，误差雪崩。Action Chunking(一次预测多步)和 Diffusion Policy(多模态动作)是缓解方法。",
+          "module": "imitation-learning"
+        },
+        {
+          "en": "DAgger (Dataset Aggregation)",
+          "zh": "数据聚合",
+          "abbr": "DAgger",
+          "def": "迭代地用学习策略采集数据并请专家标注，缓解 covariate shift。",
+          "module": "imitation-learning"
+        },
+        {
+          "en": "Inverse Reinforcement Learning",
+          "zh": "逆强化学习",
+          "abbr": "IRL",
+          "def": "从专家演示中推断奖励函数，再用 RL 训练策略。",
+          "detail": "BC 直接复制动作，IRL 更深一层——学习专家的'意图'(奖励函数)，然后用 RL 找到实现该意图的最优策略。优势：学到的奖励函数可迁移到不同环境/机器人。劣势：计算昂贵(内循环需要跑 RL)，实际应用中 BC+Diffusion Policy 更主流。",
+          "module": "imitation-learning"
+        },
+        {
+          "en": "Diffusion Policy",
+          "zh": "扩散策略",
+          "abbr": "",
+          "def": "用扩散模型建模动作分布 p(a|o)，天然支持多模态动作，是 2024-2026 主流方法。",
+          "detail": "核心优势：真实世界中同一观测可能对应多种合理动作（如绕杯子左边或右边抓），传统 BC 用 MSE 回归会输出平均动作（从中间穿过去），Diffusion Policy 能保持所有模态。训练：在动作空间做扩散/去噪。推理：从噪声出发去噪采样动作。通常预测未来 8-16 步动作(Action Chunk)，执行前几步后重规划。",
+          "module": "imitation-learning"
+        },
+        {
+          "en": "Action Chunking",
+          "zh": "动作分块",
+          "abbr": "",
+          "def": "一次预测未来多步动作序列再逐步执行，减少 compounding error。ACT 首提。",
+          "detail": "传统 BC 每步预测一个动作，误差逐步累积(compounding error)。Action Chunking 一次预测未来 k 步动作 [a_t, a_{t+1}, ..., a_{t+k-1}]，执行前几步后重新预测。效果类似 MPC 的滚动时域。ACT(Action Chunking with Transformers)是开创性工作，后被 Diffusion Policy 继承。",
+          "module": "imitation-learning"
+        },
+        {
+          "en": "Teleoperation",
+          "zh": "遥操作",
+          "abbr": "Teleop",
+          "def": "人类操作员远程控制机器人执行任务，常用于收集演示数据。",
+          "detail": "常见设备：VR 手柄(Meta Quest)、SpaceMouse(六维输入)、主从臂(ALOHA/Gello)、手套/手势追踪。数据质量直接决定 BC 策略上限——好的遥操作设备应延迟低、直觉映射、操作自然。ALOHA 双臂遥操系统是当前学术界标杆。",
+          "module": "data-collection"
+        },
+        {
+          "en": "Demonstration",
+          "zh": "演示/示教",
+          "abbr": "Demo",
+          "def": "专家执行任务的状态-动作轨迹，是模仿学习的训练数据。",
+          "module": "imitation-learning"
+        },
+        {
+          "en": "Covariate Shift",
+          "zh": "协变量偏移",
+          "abbr": "",
+          "def": "训练与测试时输入分布不一致的问题。行为克隆中小误差会积累导致严重偏移。",
+          "module": "imitation-learning"
+        }
       ]
     },
     {
       "id": "vla-models",
       "name": "🤖 VLA 模型与具身AI",
       "terms": [
-        { "en": "Vision-Language-Action Model", "zh": "视觉-语言-动作模型", "abbr": "VLA", "def": "将视觉感知、语言理解和动作生成统一到一个模型中的端到端架构。", "detail": "VLA 是 VLM(视觉语言模型)向物理世界的延伸：输入图像+语言指令，输出机器人动作。典型架构：视觉编码器(ViT/SigLIP) + 语言模型(LLM) + 动作头(MLP/Diffusion/Flow Matching)。代表模型：RT-2、OpenVLA、π₀、Octo。2024年后迅速成为具身智能的主流范式。", "module": "vla-models" },
-        { "en": "Vision-Language Model", "zh": "视觉-语言模型", "abbr": "VLM", "def": "同时理解图像和文本的多模态模型，如 GPT-4V、PaliGemma。", "detail": "VLM 将视觉和语言在同一个 Transformer 中联合建模。在机器人中的角色：① 作为 VLA 的感知-理解骨干 ② 作为任务规划器(将自然语言拆解为子任务) ③ 作为场景理解器(识别物体、空间关系、异常)。PaliGemma、InternVL、Qwen-VL 是当前常用的开源 VLM。", "module": "vla-models" },
-        { "en": "Large Language Model", "zh": "大语言模型", "abbr": "LLM", "def": "大规模预训练的自回归语言模型，用于文本理解和生成。", "module": "world-models-llm" },
-        { "en": "End-to-End Learning", "zh": "端到端学习", "abbr": "E2E", "def": "直接从原始输入（图像+语言）到低级动作的学习，省去中间人工设计环节。", "detail": "传统流水线：感知→状态估计→规划→控制，每个环节人工设计接口。端到端：一个模型直接从像素到力矩/速度。优势：避免信息损失、自动发现最优中间表示。劣势：需要大量数据、可解释性差、调试困难。RoboInter(ICLR 2026)的中间表示方案是对纯端到端的反思——'先思考后执行'。", "module": "vla-models" },
-        { "en": "Action Tokenization", "zh": "动作 Token 化", "abbr": "", "def": "将连续动作离散化为 token 序列，使 VLA 可用自回归方式生成动作。", "detail": "方法：① 均匀量化(每个维度分256 bin) ② 学习型 tokenizer(VQ-VAE将动作chunk编码为离散码本) ③ FASTer(ICLR 2026)的可学习动作 tokenizer。离散化使 VLA 能复用 LLM 的自回归生成框架，但精度受 bin 数限制。Flow Matching/Diffusion 动作头是保持连续精度的替代方案。", "module": "vla-models" },
-        { "en": "Embodied Agent", "zh": "具身智能体", "abbr": "", "def": "具有物理身体、能在真实/仿真环境中感知和行动的 AI 系统。", "detail": "与纯数字 AI(聊天机器人/图像生成)的根本区别：具身智能体必须应对物理世界的约束——重力、摩擦、碰撞、不可逆性。'具身'假说认为真正的智能必须建立在与物理世界的交互之上，而非仅仅处理符号/图像。这是具身智能领域的哲学基础。", "module": "embodied-agent" },
-        { "en": "Affordance", "zh": "可供性/功能可见性", "abbr": "", "def": "环境中物体对动作的支持关系。如杯把手的可供性是'可抓取'。", "detail": "由心理学家 Gibson 1979 年提出。在机器人中，affordance 感知意味着看到一个物体就能推断出可以对它做什么：杯子→可抓/可倒水，按钮→可按，抽屉→可拉。Affordance 预测(从图像预测可操作区域和接触点)是连接视觉感知和操作规划的桥梁。", "module": "embodied-agent" },
-        { "en": "Grounding", "zh": "接地/语义落地", "abbr": "", "def": "将语言描述与真实物理世界的对象和动作建立对应关系。", "detail": "例如'把红色杯子放到盘子左边'需要：① 将'红色杯子'对应到场景中的特定物体 ② 将'盘子左边'解析为具体的 3D 坐标 ③ 将'放到'映射为抓取→移动→放置的动作序列。Grounding 是 LLM/VLM 从数字世界走向物理世界的关键挑战，也叫 symbol grounding problem。", "module": "vla-models" },
-        { "en": "World Model", "zh": "世界模型", "abbr": "", "def": "学习环境动态的内部模型 s_{t+1} = f(s_t, a_t)，用于规划和想象。", "detail": "世界模型让智能体能在'脑内'模拟未来：预测执行某个动作后世界会变成什么样，从而在真正执行前评估多种方案。类比人类下棋时的心理推演。Dreamer 系列用世界模型在隐空间做规划，NVIDIA Cosmos 用视频生成作为世界模型。与 model-free RL 的区别：model-free 直接学 s→a 映射，world model 先学 s→s' 再在模型中规划。", "module": "world-models-llm" },
-        { "en": "Scaling Law", "zh": "缩放定律", "abbr": "", "def": "模型性能随数据量/参数量/算力幂律增长的规律。具身AI正在验证自己的Scaling Law。", "module": "vla-models" },
-        { "en": "Emergent Ability", "zh": "涌现能力", "abbr": "", "def": "模型规模突破阈值后突然出现的新能力（如组合泛化），无法从小模型外推。", "module": "vla-models" },
-        { "en": "Compositional Generalization", "zh": "组合泛化", "abbr": "", "def": "对从未见过的指令组合能正确执行的能力。π0.7 首次在机器人领域观察到。", "module": "vla-models" },
-        { "en": "In-Context Learning", "zh": "上下文学习", "abbr": "ICL", "def": "模型通过输入中的示例（而非梯度更新）学会新任务的能力。", "module": "world-models-llm" },
-        { "en": "Zero-Shot / Few-Shot", "zh": "零样本/少样本", "abbr": "", "def": "不提供或只提供极少示例即可完成新任务。衡量模型泛化能力的标准。", "module": "vla-models" },
-        { "en": "Cross-Embodiment", "zh": "跨具身/跨本体", "abbr": "", "def": "同一个策略/模型能在不同形态的机器人上工作（如从双臂迁移到单臂）。", "detail": "不同机器人有不同的关节数、感知配置和动力学特性，跨具身的目标是学习与具体硬件无关的通用操作知识。Open X-Embodiment 数据集跨 22 种机器人形态，Octo/RT-X 是跨具身模型的代表。关键挑战：如何统一不同机器人的动作空间和观测空间。", "module": "vla-models" },
-        { "en": "Interleaved Image-Text Instructions", "zh": "交错图文指令", "abbr": "", "def": "在指令中交替嵌入文本和参考图像（如'把这个[图A]放到[图B]旁边'），比纯文本指令更精确。", "detail": "Interleave-VLA(ICLR 2026)首次将此范式引入机器人操作。纯文本指令无法精确描述目标物体外观，交错图文允许用户嵌入参考图片消除歧义。域外物体泛化能力提升 2 倍。数据合成管线用 2D 扩散模型自动生成物体变体图像+交错标注，无需人工标注。", "module": "vla-models" },
-        { "en": "Mixture of Transformers", "zh": "混合Transformer", "abbr": "MoT", "def": "在共享 Transformer 中通过模态特定参数路由实现视觉/语言/动作的高效融合。腾讯 HY-Embodied 首提。", "detail": "区别于 MoE(混合专家，路由不同 token 到不同 FFN)，MoT 为不同模态设置独立的 QKV 投影和 FFN 参数，但共享注意力计算。OmniVLA-RL 进一步将 MoT 中的专家分为推理/空间/动作三类。MoT 兼顾跨模态融合与模态独立性，避免了简单拼接导致的模态干扰。", "module": "vla-models" },
-        { "en": "Speculative Decoding", "zh": "推测解码", "abbr": "", "def": "用小模型快速生成草稿 token，大模型并行验证并接受/拒绝，加速自回归推理 2-4 倍。", "detail": "核心思想：大模型验证一批 token 的计算量与生成一个 token 相当（并行 attention），所以'生成多个→验证一次'比'逐个生成'更高效。接受率取决于小模型与大模型分布的一致性。在 VLA 推理中，Action Chunking 后动作 token 间相关性高，小模型猜对率高，加速效果显著。", "module": "training-inference-optimization" },
-        { "en": "Token Economy", "zh": "Token 经济", "abbr": "", "def": "智元 CTO 彭志辉提出：AI 时代 Token 是基础货币，具身智能体可能成为最大 Token 消费者。", "detail": "机器人在感知(视觉 token)、推理(语言 token)、决策(中间表示 token)和控制(动作 token)每一步都消耗 Token。单个人形机器人每天可能消耗数十亿 Token。这意味着具身智能将成为 AI 算力需求的最大增长极，也将深刻影响芯片、云服务和能源产业。", "module": "vla-models" }
+        {
+          "en": "Vision-Language-Action Model",
+          "zh": "视觉-语言-动作模型",
+          "abbr": "VLA",
+          "def": "将视觉感知、语言理解和动作生成统一到一个模型中的端到端架构。",
+          "detail": "VLA 是 VLM(视觉语言模型)向物理世界的延伸：输入图像+语言指令，输出机器人动作。典型架构：视觉编码器(ViT/SigLIP) + 语言模型(LLM) + 动作头(MLP/Diffusion/Flow Matching)。代表模型：RT-2、OpenVLA、π₀、Octo。2024年后迅速成为具身智能的主流范式。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Vision-Language Model",
+          "zh": "视觉-语言模型",
+          "abbr": "VLM",
+          "def": "同时理解图像和文本的多模态模型，如 GPT-4V、PaliGemma。",
+          "detail": "VLM 将视觉和语言在同一个 Transformer 中联合建模。在机器人中的角色：① 作为 VLA 的感知-理解骨干 ② 作为任务规划器(将自然语言拆解为子任务) ③ 作为场景理解器(识别物体、空间关系、异常)。PaliGemma、InternVL、Qwen-VL 是当前常用的开源 VLM。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Large Language Model",
+          "zh": "大语言模型",
+          "abbr": "LLM",
+          "def": "大规模预训练的自回归语言模型，用于文本理解和生成。",
+          "module": "world-models-llm"
+        },
+        {
+          "en": "End-to-End Learning",
+          "zh": "端到端学习",
+          "abbr": "E2E",
+          "def": "直接从原始输入（图像+语言）到低级动作的学习，省去中间人工设计环节。",
+          "detail": "传统流水线：感知→状态估计→规划→控制，每个环节人工设计接口。端到端：一个模型直接从像素到力矩/速度。优势：避免信息损失、自动发现最优中间表示。劣势：需要大量数据、可解释性差、调试困难。RoboInter(ICLR 2026)的中间表示方案是对纯端到端的反思——'先思考后执行'。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Action Tokenization",
+          "zh": "动作 Token 化",
+          "abbr": "",
+          "def": "将连续动作离散化为 token 序列，使 VLA 可用自回归方式生成动作。",
+          "detail": "方法：① 均匀量化(每个维度分256 bin) ② 学习型 tokenizer(VQ-VAE将动作chunk编码为离散码本) ③ FASTer(ICLR 2026)的可学习动作 tokenizer。离散化使 VLA 能复用 LLM 的自回归生成框架，但精度受 bin 数限制。Flow Matching/Diffusion 动作头是保持连续精度的替代方案。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Embodied Agent",
+          "zh": "具身智能体",
+          "abbr": "",
+          "def": "具有物理身体、能在真实/仿真环境中感知和行动的 AI 系统。",
+          "detail": "与纯数字 AI(聊天机器人/图像生成)的根本区别：具身智能体必须应对物理世界的约束——重力、摩擦、碰撞、不可逆性。'具身'假说认为真正的智能必须建立在与物理世界的交互之上，而非仅仅处理符号/图像。这是具身智能领域的哲学基础。",
+          "module": "embodied-agent"
+        },
+        {
+          "en": "Affordance",
+          "zh": "可供性/功能可见性",
+          "abbr": "",
+          "def": "环境中物体对动作的支持关系。如杯把手的可供性是'可抓取'。",
+          "detail": "由心理学家 Gibson 1979 年提出。在机器人中，affordance 感知意味着看到一个物体就能推断出可以对它做什么：杯子→可抓/可倒水，按钮→可按，抽屉→可拉。Affordance 预测(从图像预测可操作区域和接触点)是连接视觉感知和操作规划的桥梁。",
+          "module": "embodied-agent"
+        },
+        {
+          "en": "Grounding",
+          "zh": "接地/语义落地",
+          "abbr": "",
+          "def": "将语言描述与真实物理世界的对象和动作建立对应关系。",
+          "detail": "例如'把红色杯子放到盘子左边'需要：① 将'红色杯子'对应到场景中的特定物体 ② 将'盘子左边'解析为具体的 3D 坐标 ③ 将'放到'映射为抓取→移动→放置的动作序列。Grounding 是 LLM/VLM 从数字世界走向物理世界的关键挑战，也叫 symbol grounding problem。",
+          "module": "vla-models"
+        },
+        {
+          "en": "World Model",
+          "zh": "世界模型",
+          "abbr": "",
+          "def": "学习环境动态的内部模型 s_{t+1} = f(s_t, a_t)，用于规划和想象。",
+          "detail": "世界模型让智能体能在'脑内'模拟未来：预测执行某个动作后世界会变成什么样，从而在真正执行前评估多种方案。类比人类下棋时的心理推演。Dreamer 系列用世界模型在隐空间做规划，NVIDIA Cosmos 用视频生成作为世界模型。与 model-free RL 的区别：model-free 直接学 s→a 映射，world model 先学 s→s' 再在模型中规划。",
+          "module": "world-models-llm"
+        },
+        {
+          "en": "Scaling Law",
+          "zh": "缩放定律",
+          "abbr": "",
+          "def": "模型性能随数据量/参数量/算力幂律增长的规律。具身AI正在验证自己的Scaling Law。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Emergent Ability",
+          "zh": "涌现能力",
+          "abbr": "",
+          "def": "模型规模突破阈值后突然出现的新能力（如组合泛化），无法从小模型外推。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Compositional Generalization",
+          "zh": "组合泛化",
+          "abbr": "",
+          "def": "对从未见过的指令组合能正确执行的能力。π0.7 首次在机器人领域观察到。",
+          "module": "vla-models"
+        },
+        {
+          "en": "In-Context Learning",
+          "zh": "上下文学习",
+          "abbr": "ICL",
+          "def": "模型通过输入中的示例（而非梯度更新）学会新任务的能力。",
+          "module": "world-models-llm"
+        },
+        {
+          "en": "Zero-Shot / Few-Shot",
+          "zh": "零样本/少样本",
+          "abbr": "",
+          "def": "不提供或只提供极少示例即可完成新任务。衡量模型泛化能力的标准。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Cross-Embodiment",
+          "zh": "跨具身/跨本体",
+          "abbr": "",
+          "def": "同一个策略/模型能在不同形态的机器人上工作（如从双臂迁移到单臂）。",
+          "detail": "不同机器人有不同的关节数、感知配置和动力学特性，跨具身的目标是学习与具体硬件无关的通用操作知识。Open X-Embodiment 数据集跨 22 种机器人形态，Octo/RT-X 是跨具身模型的代表。关键挑战：如何统一不同机器人的动作空间和观测空间。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Interleaved Image-Text Instructions",
+          "zh": "交错图文指令",
+          "abbr": "",
+          "def": "在指令中交替嵌入文本和参考图像（如'把这个[图A]放到[图B]旁边'），比纯文本指令更精确。",
+          "detail": "Interleave-VLA(ICLR 2026)首次将此范式引入机器人操作。纯文本指令无法精确描述目标物体外观，交错图文允许用户嵌入参考图片消除歧义。域外物体泛化能力提升 2 倍。数据合成管线用 2D 扩散模型自动生成物体变体图像+交错标注，无需人工标注。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Mixture of Transformers",
+          "zh": "混合Transformer",
+          "abbr": "MoT",
+          "def": "在共享 Transformer 中通过模态特定参数路由实现视觉/语言/动作的高效融合。腾讯 HY-Embodied 首提。",
+          "detail": "区别于 MoE(混合专家，路由不同 token 到不同 FFN)，MoT 为不同模态设置独立的 QKV 投影和 FFN 参数，但共享注意力计算。OmniVLA-RL 进一步将 MoT 中的专家分为推理/空间/动作三类。MoT 兼顾跨模态融合与模态独立性，避免了简单拼接导致的模态干扰。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Speculative Decoding",
+          "zh": "推测解码",
+          "abbr": "",
+          "def": "用小模型快速生成草稿 token，大模型并行验证并接受/拒绝，加速自回归推理 2-4 倍。",
+          "detail": "核心思想：大模型验证一批 token 的计算量与生成一个 token 相当（并行 attention），所以'生成多个→验证一次'比'逐个生成'更高效。接受率取决于小模型与大模型分布的一致性。在 VLA 推理中，Action Chunking 后动作 token 间相关性高，小模型猜对率高，加速效果显著。",
+          "module": "training-inference-optimization"
+        },
+        {
+          "en": "Token Economy",
+          "zh": "Token 经济",
+          "abbr": "",
+          "def": "智元 CTO 彭志辉提出：AI 时代 Token 是基础货币，具身智能体可能成为最大 Token 消费者。",
+          "detail": "机器人在感知(视觉 token)、推理(语言 token)、决策(中间表示 token)和控制(动作 token)每一步都消耗 Token。单个人形机器人每天可能消耗数十亿 Token。这意味着具身智能将成为 AI 算力需求的最大增长极，也将深刻影响芯片、云服务和能源产业。",
+          "module": "vla-models"
+        }
       ]
     },
     {
       "id": "perception",
       "name": "👁️ 感知与视觉",
       "terms": [
-        { "en": "Point Cloud", "zh": "点云", "abbr": "", "def": "三维空间中的离散点集合，通常由 LiDAR 或深度相机生成。", "detail": "每个点包含 (x,y,z) 坐标，可选 RGB 颜色/法线/强度。处理方法：① 传统(体素化/投影到2D) ② PointNet(直接处理无序点集) ③ 基于 Transformer 的点云网络。点云是 3D 感知的原始数据，抓取规划(如 AnyGrasp)和 SLAM 的输入。", "module": "3d-vision-pointcloud" },
-        { "en": "Depth Camera / RGB-D Camera", "zh": "深度相机", "abbr": "", "def": "同时输出 RGB 图像和深度图的相机。常用技术：结构光、ToF、主动双目。", "detail": "三种技术路线：① 结构光(投射红外图案，适合室内近距，如早期 Kinect) ② ToF(测量光飞行时间，中距精度好) ③ 主动双目(投射红外纹理+双目匹配，如 RealSense D400 系列，综合性能最均衡)。选型关键：精度、距离、帧率、室内/室外、价格。桌面操作首选 D405/D435。", "module": "sensors-hardware" },
-        { "en": "LiDAR", "zh": "激光雷达", "abbr": "LiDAR", "def": "Light Detection And Ranging，通过激光测距获取环境 3D 信息。", "module": "sensors-hardware" },
-        { "en": "IMU (Inertial Measurement Unit)", "zh": "惯性测量单元", "abbr": "IMU", "def": "包含加速度计和陀螺仪，测量线加速度和角速度。", "detail": "加速度计测线加速度(含重力)，陀螺仪测角速度(积分得角度但有漂移)。6轴 IMU = 3轴加速度计 + 3轴陀螺仪。9轴额外加磁力计(提供航向参考)。IMU 是机器人状态估计的基础传感器，通常与视觉/GPS 融合使用(如 VIO = Visual-Inertial Odometry)。", "module": "sensors-hardware" },
-        { "en": "SLAM", "zh": "同步定位与建图", "abbr": "SLAM", "def": "Simultaneous Localization and Mapping，边运动边构建环境地图并定位自身。", "detail": "鸡生蛋问题：定位需要地图，建图需要位姿——SLAM 同时解决两者。按传感器分：Visual SLAM(ORB-SLAM/VINS)、LiDAR SLAM(Cartographer/LOAM)。按表示分：稀疏(关键点)、稠密(点云/网格)、隐式(NeRF/3DGS)。前端做帧间匹配，后端做全局优化(位姿图优化/Bundle Adjustment)，回环检测修正累积漂移。", "module": "3d-vision-pointcloud" },
-        { "en": "Object Detection", "zh": "目标检测", "abbr": "", "def": "从图像中定位和分类物体，输出边界框。代表模型：YOLO、DETR。", "module": "computer-vision" },
-        { "en": "Semantic Segmentation", "zh": "语义分割", "abbr": "", "def": "对图像每个像素分配类别标签。", "module": "computer-vision" },
-        { "en": "Instance Segmentation", "zh": "实例分割", "abbr": "", "def": "在语义分割基础上区分同类别的不同个体（第1个杯子 vs 第2个杯子）。", "detail": "语义分割只区分类别(杯子/盘子)，实例分割进一步区分个体。SAM(Segment Anything Model)可以零样本分割任何物体，是机器人视觉预处理的利器。结合 Grounding DINO 可实现开放词汇的实例分割(输入文本描述即可定位目标)。", "module": "computer-vision" },
-        { "en": "6D Pose Estimation", "zh": "6D 位姿估计", "abbr": "", "def": "估计物体在三维空间中的位置(3D)和朝向(3D)，共 6 自由度。", "detail": "输入 RGB 或 RGB-D 图像，输出物体的旋转 R∈SO(3) 和平移 t∈ℝ³。方法：① 基于关键点(检测2D关键点+PnP求解) ② 直接回归(网络直接输出 R,t) ③ 基于模板匹配(与CAD模型对比)。是抓取规划的上游：知道物体精确位姿才能规划接近方向和抓取姿态。FoundationPose 支持零样本的新物体位姿估计。", "module": "3d-vision-pointcloud" },
-        { "en": "Tactile Sensing", "zh": "触觉感知", "abbr": "", "def": "通过触觉传感器（光学/压阻/电容）获取接触力、滑动、纹理等信息。", "module": "sensors-hardware" },
-        { "en": "Sensor Fusion", "zh": "传感器融合", "abbr": "", "def": "综合多种传感器数据（视觉+IMU+LiDAR）获得更准确的状态估计。", "detail": "核心框架：卡尔曼滤波/扩展卡尔曼滤波(EKF)、因子图优化。每种传感器有互补的优缺点：IMU 高频低漂移但累积误差，视觉中频但受光照影响，GPS 低频全局但精度有限——融合后取长补短。VIO(Visual-Inertial Odometry)是最常见的融合方案。", "module": "multimodal-perception" },
-        { "en": "Extrinsic/Intrinsic Calibration", "zh": "外参/内参标定", "abbr": "", "def": "内参：焦距/主点/畸变。外参：相机在世界/机器人坐标系中的位姿。", "module": "sensors-hardware" },
-        { "en": "Hand-Eye Calibration", "zh": "手眼标定", "abbr": "", "def": "求解相机与机器人末端（或基座）之间固定变换关系 AX=XB。", "detail": "Eye-in-Hand(相机装在末端)：多次移动机器人拍摄标定板，求解 AX=XB。Eye-to-Hand(相机固定在外部)：求解 AX=ZB。至少需要2个不同位姿，实际中采集10+个位姿取平均以提高精度。这是视觉引导操作的前置步骤——不标定就不知道相机看到的3D点在机器人坐标系下的位置。", "module": "sensors-hardware" }
+        {
+          "en": "Point Cloud",
+          "zh": "点云",
+          "abbr": "",
+          "def": "三维空间中的离散点集合，通常由 LiDAR 或深度相机生成。",
+          "detail": "每个点包含 (x,y,z) 坐标，可选 RGB 颜色/法线/强度。处理方法：① 传统(体素化/投影到2D) ② PointNet(直接处理无序点集) ③ 基于 Transformer 的点云网络。点云是 3D 感知的原始数据，抓取规划(如 AnyGrasp)和 SLAM 的输入。",
+          "module": "3d-vision-pointcloud"
+        },
+        {
+          "en": "Depth Camera / RGB-D Camera",
+          "zh": "深度相机",
+          "abbr": "",
+          "def": "同时输出 RGB 图像和深度图的相机。常用技术：结构光、ToF、主动双目。",
+          "detail": "三种技术路线：① 结构光(投射红外图案，适合室内近距，如早期 Kinect) ② ToF(测量光飞行时间，中距精度好) ③ 主动双目(投射红外纹理+双目匹配，如 RealSense D400 系列，综合性能最均衡)。选型关键：精度、距离、帧率、室内/室外、价格。桌面操作首选 D405/D435。",
+          "module": "sensors-hardware"
+        },
+        {
+          "en": "LiDAR",
+          "zh": "激光雷达",
+          "abbr": "LiDAR",
+          "def": "Light Detection And Ranging，通过激光测距获取环境 3D 信息。",
+          "module": "sensors-hardware"
+        },
+        {
+          "en": "IMU (Inertial Measurement Unit)",
+          "zh": "惯性测量单元",
+          "abbr": "IMU",
+          "def": "包含加速度计和陀螺仪，测量线加速度和角速度。",
+          "detail": "加速度计测线加速度(含重力)，陀螺仪测角速度(积分得角度但有漂移)。6轴 IMU = 3轴加速度计 + 3轴陀螺仪。9轴额外加磁力计(提供航向参考)。IMU 是机器人状态估计的基础传感器，通常与视觉/GPS 融合使用(如 VIO = Visual-Inertial Odometry)。",
+          "module": "sensors-hardware"
+        },
+        {
+          "en": "SLAM",
+          "zh": "同步定位与建图",
+          "abbr": "SLAM",
+          "def": "Simultaneous Localization and Mapping，边运动边构建环境地图并定位自身。",
+          "detail": "鸡生蛋问题：定位需要地图，建图需要位姿——SLAM 同时解决两者。按传感器分：Visual SLAM(ORB-SLAM/VINS)、LiDAR SLAM(Cartographer/LOAM)。按表示分：稀疏(关键点)、稠密(点云/网格)、隐式(NeRF/3DGS)。前端做帧间匹配，后端做全局优化(位姿图优化/Bundle Adjustment)，回环检测修正累积漂移。",
+          "module": "3d-vision-pointcloud"
+        },
+        {
+          "en": "Object Detection",
+          "zh": "目标检测",
+          "abbr": "",
+          "def": "从图像中定位和分类物体，输出边界框。代表模型：YOLO、DETR。",
+          "module": "computer-vision"
+        },
+        {
+          "en": "Semantic Segmentation",
+          "zh": "语义分割",
+          "abbr": "",
+          "def": "对图像每个像素分配类别标签。",
+          "module": "computer-vision"
+        },
+        {
+          "en": "Instance Segmentation",
+          "zh": "实例分割",
+          "abbr": "",
+          "def": "在语义分割基础上区分同类别的不同个体（第1个杯子 vs 第2个杯子）。",
+          "detail": "语义分割只区分类别(杯子/盘子)，实例分割进一步区分个体。SAM(Segment Anything Model)可以零样本分割任何物体，是机器人视觉预处理的利器。结合 Grounding DINO 可实现开放词汇的实例分割(输入文本描述即可定位目标)。",
+          "module": "computer-vision"
+        },
+        {
+          "en": "6D Pose Estimation",
+          "zh": "6D 位姿估计",
+          "abbr": "",
+          "def": "估计物体在三维空间中的位置(3D)和朝向(3D)，共 6 自由度。",
+          "detail": "输入 RGB 或 RGB-D 图像，输出物体的旋转 R∈SO(3) 和平移 t∈ℝ³。方法：① 基于关键点(检测2D关键点+PnP求解) ② 直接回归(网络直接输出 R,t) ③ 基于模板匹配(与CAD模型对比)。是抓取规划的上游：知道物体精确位姿才能规划接近方向和抓取姿态。FoundationPose 支持零样本的新物体位姿估计。",
+          "module": "3d-vision-pointcloud"
+        },
+        {
+          "en": "Tactile Sensing",
+          "zh": "触觉感知",
+          "abbr": "",
+          "def": "通过触觉传感器（光学/压阻/电容）获取接触力、滑动、纹理等信息。",
+          "module": "sensors-hardware"
+        },
+        {
+          "en": "Sensor Fusion",
+          "zh": "传感器融合",
+          "abbr": "",
+          "def": "综合多种传感器数据（视觉+IMU+LiDAR）获得更准确的状态估计。",
+          "detail": "核心框架：卡尔曼滤波/扩展卡尔曼滤波(EKF)、因子图优化。每种传感器有互补的优缺点：IMU 高频低漂移但累积误差，视觉中频但受光照影响，GPS 低频全局但精度有限——融合后取长补短。VIO(Visual-Inertial Odometry)是最常见的融合方案。",
+          "module": "multimodal-perception"
+        },
+        {
+          "en": "Extrinsic/Intrinsic Calibration",
+          "zh": "外参/内参标定",
+          "abbr": "",
+          "def": "内参：焦距/主点/畸变。外参：相机在世界/机器人坐标系中的位姿。",
+          "module": "sensors-hardware"
+        },
+        {
+          "en": "Hand-Eye Calibration",
+          "zh": "手眼标定",
+          "abbr": "",
+          "def": "求解相机与机器人末端（或基座）之间固定变换关系 AX=XB。",
+          "detail": "Eye-in-Hand(相机装在末端)：多次移动机器人拍摄标定板，求解 AX=XB。Eye-to-Hand(相机固定在外部)：求解 AX=ZB。至少需要2个不同位姿，实际中采集10+个位姿取平均以提高精度。这是视觉引导操作的前置步骤——不标定就不知道相机看到的3D点在机器人坐标系下的位置。",
+          "module": "sensors-hardware"
+        }
       ]
     },
     {
       "id": "sim-to-real",
       "name": "🎮 仿真与 Sim-to-Real",
       "terms": [
-        { "en": "Sim-to-Real Gap", "zh": "仿真到真实差距", "abbr": "", "def": "仿真环境与真实世界之间的系统性差异，是策略迁移失败的主要原因。", "module": "sim-to-real" },
-        { "en": "Domain Randomization", "zh": "域随机化", "abbr": "DR", "def": "训练时随机化仿真参数使策略对参数变化鲁棒，让真实世界成为变体之一。", "module": "sim-to-real" },
-        { "en": "System Identification", "zh": "系统辨识", "abbr": "SysID", "def": "测量真实系统物理参数（摩擦/质量/阻尼），让仿真精确匹配。", "module": "sim-to-real" },
-        { "en": "Teacher-Student Distillation", "zh": "教师-学生蒸馏", "abbr": "", "def": "Teacher 用完美信息训练，Student 只用真实传感器信息模仿 Teacher。", "detail": "仿真中 Teacher 策略可以访问'上帝视角'信息(地形高度图/精确物体位姿/接触力)，部署时 Student 只有传感器数据(关节角/IMU/相机)。Student 通过监督学习模仿 Teacher 的输出，学会从有限信息中推断特权信息。Legged Gym/Humanoid Gym 的标准训练范式。", "module": "sim-to-real" },
-        { "en": "Privileged Information", "zh": "特权信息", "abbr": "", "def": "仿真中可获取但真实中不可用的完美观测（地形图/精确位姿/接触力）。", "module": "sim-to-real" },
-        { "en": "Real-to-Sim-to-Real", "zh": "真实→仿真→真实闭环", "abbr": "R2S2R", "def": "重建真实场景到仿真 → 训练策略 → 部署真机 → 反馈更新仿真的闭环流程。", "module": "sim-to-real" },
-        { "en": "Physics Engine", "zh": "物理引擎", "abbr": "", "def": "模拟刚体碰撞、摩擦、关节约束等物理行为的软件。如 MuJoCo、Isaac Sim。", "module": "physics-simulation" },
-        { "en": "Rigid Body Dynamics", "zh": "刚体动力学", "abbr": "", "def": "假设物体不变形的力学模型，是机器人仿真的基础。", "module": "physics-simulation" },
-        { "en": "Contact Dynamics", "zh": "接触动力学", "abbr": "", "def": "处理物体碰撞、摩擦、弹性变形等接触行为的物理模型。", "module": "physics-simulation" },
-        { "en": "NeRF (Neural Radiance Fields)", "zh": "神经辐射场", "abbr": "NeRF", "def": "用 MLP 表示场景的隐式 3D 表示，可从多视角照片合成新视角。", "module": "sim-to-real" },
-        { "en": "3D Gaussian Splatting", "zh": "3D 高斯散布", "abbr": "3DGS", "def": "用 3D 高斯椭球集合表示场景，训练快且可实时渲染，2024+ 年 Real2Sim 主流方法。", "module": "sim-to-real" },
-        { "en": "Differentiable Simulation", "zh": "可微仿真", "abbr": "", "def": "仿真器支持梯度反传，使物理参数/控制策略可以通过梯度优化而非 RL 试错学习。", "detail": "传统仿真是黑盒——只能用 RL(无梯度)优化策略。可微仿真将物理引擎变成可微函数，允许 ∂loss/∂(物理参数) 和 ∂loss/∂(策略参数) 的计算。代表：DiffTaichi、Brax、Dojo。应用：系统辨识(梯度优化参数匹配真实)、轨迹优化、材料属性学习。", "module": "physics-simulation" }
+        {
+          "en": "Sim-to-Real Gap",
+          "zh": "仿真到真实差距",
+          "abbr": "",
+          "def": "仿真环境与真实世界之间的系统性差异，是策略迁移失败的主要原因。",
+          "module": "sim-to-real"
+        },
+        {
+          "en": "Domain Randomization",
+          "zh": "域随机化",
+          "abbr": "DR",
+          "def": "训练时随机化仿真参数使策略对参数变化鲁棒，让真实世界成为变体之一。",
+          "module": "sim-to-real"
+        },
+        {
+          "en": "System Identification",
+          "zh": "系统辨识",
+          "abbr": "SysID",
+          "def": "测量真实系统物理参数（摩擦/质量/阻尼），让仿真精确匹配。",
+          "module": "sim-to-real"
+        },
+        {
+          "en": "Teacher-Student Distillation",
+          "zh": "教师-学生蒸馏",
+          "abbr": "",
+          "def": "Teacher 用完美信息训练，Student 只用真实传感器信息模仿 Teacher。",
+          "detail": "仿真中 Teacher 策略可以访问'上帝视角'信息(地形高度图/精确物体位姿/接触力)，部署时 Student 只有传感器数据(关节角/IMU/相机)。Student 通过监督学习模仿 Teacher 的输出，学会从有限信息中推断特权信息。Legged Gym/Humanoid Gym 的标准训练范式。",
+          "module": "sim-to-real"
+        },
+        {
+          "en": "Privileged Information",
+          "zh": "特权信息",
+          "abbr": "",
+          "def": "仿真中可获取但真实中不可用的完美观测（地形图/精确位姿/接触力）。",
+          "module": "sim-to-real"
+        },
+        {
+          "en": "Real-to-Sim-to-Real",
+          "zh": "真实→仿真→真实闭环",
+          "abbr": "R2S2R",
+          "def": "重建真实场景到仿真 → 训练策略 → 部署真机 → 反馈更新仿真的闭环流程。",
+          "module": "sim-to-real"
+        },
+        {
+          "en": "Physics Engine",
+          "zh": "物理引擎",
+          "abbr": "",
+          "def": "模拟刚体碰撞、摩擦、关节约束等物理行为的软件。如 MuJoCo、Isaac Sim。",
+          "module": "physics-simulation"
+        },
+        {
+          "en": "Rigid Body Dynamics",
+          "zh": "刚体动力学",
+          "abbr": "",
+          "def": "假设物体不变形的力学模型，是机器人仿真的基础。",
+          "module": "physics-simulation"
+        },
+        {
+          "en": "Contact Dynamics",
+          "zh": "接触动力学",
+          "abbr": "",
+          "def": "处理物体碰撞、摩擦、弹性变形等接触行为的物理模型。",
+          "module": "physics-simulation"
+        },
+        {
+          "en": "NeRF (Neural Radiance Fields)",
+          "zh": "神经辐射场",
+          "abbr": "NeRF",
+          "def": "用 MLP 表示场景的隐式 3D 表示，可从多视角照片合成新视角。",
+          "module": "sim-to-real"
+        },
+        {
+          "en": "3D Gaussian Splatting",
+          "zh": "3D 高斯散布",
+          "abbr": "3DGS",
+          "def": "用 3D 高斯椭球集合表示场景，训练快且可实时渲染，2024+ 年 Real2Sim 主流方法。",
+          "module": "sim-to-real"
+        },
+        {
+          "en": "Differentiable Simulation",
+          "zh": "可微仿真",
+          "abbr": "",
+          "def": "仿真器支持梯度反传，使物理参数/控制策略可以通过梯度优化而非 RL 试错学习。",
+          "detail": "传统仿真是黑盒——只能用 RL(无梯度)优化策略。可微仿真将物理引擎变成可微函数，允许 ∂loss/∂(物理参数) 和 ∂loss/∂(策略参数) 的计算。代表：DiffTaichi、Brax、Dojo。应用：系统辨识(梯度优化参数匹配真实)、轨迹优化、材料属性学习。",
+          "module": "physics-simulation"
+        }
       ]
     },
     {
       "id": "hardware",
       "name": "🔧 硬件与执行器",
       "terms": [
-        { "en": "Actuator", "zh": "执行器/驱动器", "abbr": "", "def": "将控制信号转换为物理运动的装置，如电机、液压缸、气动肌肉。", "module": "mechanical-design" },
-        { "en": "Servo Motor", "zh": "伺服电机", "abbr": "", "def": "带反馈的精密电机，可精确控制位置/速度/力矩。", "module": "mechanical-design" },
-        { "en": "Brushless DC Motor", "zh": "无刷直流电机", "abbr": "BLDC", "def": "用电子换向替代电刷的高效电机，机器人关节常用。", "detail": "相比有刷电机：寿命长(无电刷磨损)、效率高(>90%)、力矩密度大。通过 FOC(磁场定向控制)驱动，实现精确的力矩/速度控制。BLDC + 减速器 + 编码器 = 机器人关节模组的标准配置。", "module": "mechanical-design" },
-        { "en": "Harmonic Drive", "zh": "谐波减速器", "abbr": "", "def": "高减速比(>50:1)、零齿隙的精密减速器。协作臂标配但贵。", "detail": "三个部件：波发生器(椭圆凸轮)、柔轮(薄壁齿轮，可变形)、刚轮(固定齿轮)。优势：单级减速比高(30:1~320:1)、零齿隙、高精度(弧秒级)。劣势：贵(单个数千元)、承载能力受柔轮限制、高速时效率下降。Harmonic Drive 是日本 HD Systems 的注册商标。", "module": "mechanical-design" },
-        { "en": "Planetary Gearbox", "zh": "行星减速器", "abbr": "", "def": "高承载、紧凑结构的减速器。工业机器人常用。", "module": "mechanical-design" },
-        { "en": "Encoder", "zh": "编码器", "abbr": "", "def": "测量旋转角度/位置的传感器。分增量式（AB相脉冲）和绝对式（输出角度值）。", "module": "sensors-hardware" },
-        { "en": "Gripper", "zh": "夹爪/抓手", "abbr": "", "def": "机器人末端抓取工具。分二指平行/三指自适应/吸盘/软体夹爪。", "module": "mechanical-design" },
-        { "en": "Dexterous Hand", "zh": "灵巧手", "abbr": "", "def": "具有多指多关节的仿人机器手，可执行精细操作。", "detail": "通常 4-5 指、12-20+ 关节。难点：高维控制(关节数多)、欠驱动(肌腱驱动时自由度<关节数)、触觉集成、尺寸限制。代表：Shadow Hand(肌腱驱动/20DOF)、Allegro Hand(直驱/16DOF)、LEAP Hand(低成本开源)。2025-2026 年灵巧操作成为具身智能热门方向。", "module": "mechanical-design" },
-        { "en": "URDF", "zh": "统一机器人描述格式", "abbr": "URDF", "def": "Unified Robot Description Format，XML 格式的机器人模型描述（连杆+关节+几何+惯性）。", "detail": "URDF 定义机器人的运动学(连杆长度/关节类型/关节限位)和动力学(质量/惯量/碰撞几何)信息。ROS/MoveIt 的标准格式。局限：只支持树形结构(不支持闭链/并联机构)，不支持变形/柔性。MJCF(MuJoCo格式)和 SDF 是更强大的替代。", "module": "ros2" },
-        { "en": "Torque Control / Position Control", "zh": "力矩控制/位置控制", "abbr": "", "def": "力矩控制直接控制关节力矩(柔顺)，位置控制追踪目标角度(刚性)。力矩控制是力控操作的基础。", "detail": "位置控制模式：给定目标角度，内部 PID 驱动电机到达目标。简单但刚性高，不适合接触操作。力矩控制模式：直接设定关节力矩输出，搭配外部阻抗/导纳控制实现柔顺交互。人形机器人和协作臂多采用力矩控制(或至少支持力矩模式)。", "module": "mechanical-design" }
+        {
+          "en": "Actuator",
+          "zh": "执行器/驱动器",
+          "abbr": "",
+          "def": "将控制信号转换为物理运动的装置，如电机、液压缸、气动肌肉。",
+          "module": "mechanical-design"
+        },
+        {
+          "en": "Servo Motor",
+          "zh": "伺服电机",
+          "abbr": "",
+          "def": "带反馈的精密电机，可精确控制位置/速度/力矩。",
+          "module": "mechanical-design"
+        },
+        {
+          "en": "Brushless DC Motor",
+          "zh": "无刷直流电机",
+          "abbr": "BLDC",
+          "def": "用电子换向替代电刷的高效电机，机器人关节常用。",
+          "detail": "相比有刷电机：寿命长(无电刷磨损)、效率高(>90%)、力矩密度大。通过 FOC(磁场定向控制)驱动，实现精确的力矩/速度控制。BLDC + 减速器 + 编码器 = 机器人关节模组的标准配置。",
+          "module": "mechanical-design"
+        },
+        {
+          "en": "Harmonic Drive",
+          "zh": "谐波减速器",
+          "abbr": "",
+          "def": "高减速比(>50:1)、零齿隙的精密减速器。协作臂标配但贵。",
+          "detail": "三个部件：波发生器(椭圆凸轮)、柔轮(薄壁齿轮，可变形)、刚轮(固定齿轮)。优势：单级减速比高(30:1~320:1)、零齿隙、高精度(弧秒级)。劣势：贵(单个数千元)、承载能力受柔轮限制、高速时效率下降。Harmonic Drive 是日本 HD Systems 的注册商标。",
+          "module": "mechanical-design"
+        },
+        {
+          "en": "Planetary Gearbox",
+          "zh": "行星减速器",
+          "abbr": "",
+          "def": "高承载、紧凑结构的减速器。工业机器人常用。",
+          "module": "mechanical-design"
+        },
+        {
+          "en": "Encoder",
+          "zh": "编码器",
+          "abbr": "",
+          "def": "测量旋转角度/位置的传感器。分增量式（AB相脉冲）和绝对式（输出角度值）。",
+          "module": "sensors-hardware"
+        },
+        {
+          "en": "Gripper",
+          "zh": "夹爪/抓手",
+          "abbr": "",
+          "def": "机器人末端抓取工具。分二指平行/三指自适应/吸盘/软体夹爪。",
+          "module": "mechanical-design"
+        },
+        {
+          "en": "Dexterous Hand",
+          "zh": "灵巧手",
+          "abbr": "",
+          "def": "具有多指多关节的仿人机器手，可执行精细操作。",
+          "detail": "通常 4-5 指、12-20+ 关节。难点：高维控制(关节数多)、欠驱动(肌腱驱动时自由度<关节数)、触觉集成、尺寸限制。代表：Shadow Hand(肌腱驱动/20DOF)、Allegro Hand(直驱/16DOF)、LEAP Hand(低成本开源)。2025-2026 年灵巧操作成为具身智能热门方向。",
+          "module": "mechanical-design"
+        },
+        {
+          "en": "URDF",
+          "zh": "统一机器人描述格式",
+          "abbr": "URDF",
+          "def": "Unified Robot Description Format，XML 格式的机器人模型描述（连杆+关节+几何+惯性）。",
+          "detail": "URDF 定义机器人的运动学(连杆长度/关节类型/关节限位)和动力学(质量/惯量/碰撞几何)信息。ROS/MoveIt 的标准格式。局限：只支持树形结构(不支持闭链/并联机构)，不支持变形/柔性。MJCF(MuJoCo格式)和 SDF 是更强大的替代。",
+          "module": "ros2"
+        },
+        {
+          "en": "Torque Control / Position Control",
+          "zh": "力矩控制/位置控制",
+          "abbr": "",
+          "def": "力矩控制直接控制关节力矩(柔顺)，位置控制追踪目标角度(刚性)。力矩控制是力控操作的基础。",
+          "detail": "位置控制模式：给定目标角度，内部 PID 驱动电机到达目标。简单但刚性高，不适合接触操作。力矩控制模式：直接设定关节力矩输出，搭配外部阻抗/导纳控制实现柔顺交互。人形机器人和协作臂多采用力矩控制(或至少支持力矩模式)。",
+          "module": "mechanical-design"
+        }
       ]
     },
     {
       "id": "data-engineering",
       "name": "📊 数据工程与工具链",
       "terms": [
-        { "en": "ROS 2 (Robot Operating System)", "zh": "机器人操作系统 2", "abbr": "ROS2", "def": "机器人软件开发的中间件框架，提供话题/服务/动作通信机制。", "detail": "ROS2 不是操作系统而是通信中间件框架。核心功能：① 话题(Topic)异步发布/订阅通信 ② 服务(Service)同步请求/响应 ③ 动作(Action)长时间异步任务+反馈 ④ TF2 坐标变换管理 ⑤ Launch 系统多节点启动。相比 ROS1：支持实时性(DDS通信)、多平台(Linux/Windows/macOS)、无 master 节点。", "module": "ros2" },
-        { "en": "Topic / Publisher / Subscriber", "zh": "话题/发布者/订阅者", "abbr": "Pub/Sub", "def": "ROS2 异步通信模型：Publisher 发布消息到 Topic，Subscriber 订阅接收。", "module": "ros2" },
-        { "en": "TF / TF2", "zh": "坐标变换", "abbr": "TF", "def": "ROS2 中管理多坐标系之间变换关系的库，维护 TF 树。", "detail": "机器人系统有大量坐标系(base_link, camera, lidar, map, odom...)，TF 库实时维护所有坐标系之间的变换关系(位移+旋转)，任意两个坐标系之间可即时查询变换。没有 TF 树的机器人系统寸步难行——传感器数据需要变换到统一坐标系才能使用。", "module": "ros2" },
-        { "en": "MuJoCo", "zh": "MuJoCo 物理引擎", "abbr": "MuJoCo", "def": "Multi-Joint dynamics with Contact。Google DeepMind 维护的高精度机器人仿真器。", "detail": "特点：接触动力学精度高、求解速度快(隐式积分/凸优化)、2021年开源后成为学术界标准仿真器。原生 Python 接口(mujoco包)，一行代码加载 MJCF 模型。GPU 并行版 MuJoCo MJX 用 JAX 实现，支持数千环境并行。与 Isaac Gym 相比精度更高但并行规模较小。", "module": "physics-simulation" },
-        { "en": "Isaac Sim / Isaac Lab", "zh": "Isaac 仿真平台", "abbr": "", "def": "NVIDIA 基于 Omniverse 的 GPU 加速机器人仿真平台，支持大规模并行训练。", "detail": "Isaac Gym(已被 Isaac Lab 取代)：纯 GPU 物理仿真+渲染，数千环境并行。Isaac Sim：基于 Omniverse 的高保真仿真器，光线追踪渲染、合成数据生成。Isaac Lab：最新的模块化 RL 训练框架。优势：渲染逼真(有利 visual sim2real)、并行规模大(万级环境)。劣势：需要 NVIDIA GPU、学习曲线较陡。", "module": "physics-simulation" },
-        { "en": "LeRobot", "zh": "LeRobot 框架", "abbr": "", "def": "HuggingFace 开源的模仿学习/强化学习机器人框架，支持数据采集和策略训练。", "detail": "一站式框架：数据采集(支持多种遥操设备) → 数据管理(HuggingFace Hub) → 训练(Diffusion Policy/ACT/TDMPC) → 评估 → 部署。代码简洁 Pythonic，对新手友好。支持 ALOHA、Koch v1.1 等多种机械臂平台。是入门模仿学习的推荐起点。", "module": "imitation-learning" },
-        { "en": "Open X-Embodiment", "zh": "开放跨具身数据集", "abbr": "OXE", "def": "Google 联合多家机构发布的大规模跨机器人操作数据集。", "detail": "汇集 22 个机器人形态、21 个机构的操作数据，包含数十万条轨迹。统一为 RLDS 格式。目标：通过大规模多样化数据训练出跨具身的通用操作策略(如 RT-X、Octo)。数据涵盖桌面操作、移动操作等多场景，是具身 AI Scaling Law 验证的关键资源。", "module": "embodied-data-engineering" },
-        { "en": "RLDS (Reinforcement Learning Datasets)", "zh": "强化学习数据集格式", "abbr": "RLDS", "def": "Google 定义的机器人轨迹数据标准格式(TFRecord)，OXE 采用。", "module": "embodied-data-engineering" }
+        {
+          "en": "ROS 2 (Robot Operating System)",
+          "zh": "机器人操作系统 2",
+          "abbr": "ROS2",
+          "def": "机器人软件开发的中间件框架，提供话题/服务/动作通信机制。",
+          "detail": "ROS2 不是操作系统而是通信中间件框架。核心功能：① 话题(Topic)异步发布/订阅通信 ② 服务(Service)同步请求/响应 ③ 动作(Action)长时间异步任务+反馈 ④ TF2 坐标变换管理 ⑤ Launch 系统多节点启动。相比 ROS1：支持实时性(DDS通信)、多平台(Linux/Windows/macOS)、无 master 节点。",
+          "module": "ros2"
+        },
+        {
+          "en": "Topic / Publisher / Subscriber",
+          "zh": "话题/发布者/订阅者",
+          "abbr": "Pub/Sub",
+          "def": "ROS2 异步通信模型：Publisher 发布消息到 Topic，Subscriber 订阅接收。",
+          "module": "ros2"
+        },
+        {
+          "en": "TF / TF2",
+          "zh": "坐标变换",
+          "abbr": "TF",
+          "def": "ROS2 中管理多坐标系之间变换关系的库，维护 TF 树。",
+          "detail": "机器人系统有大量坐标系(base_link, camera, lidar, map, odom...)，TF 库实时维护所有坐标系之间的变换关系(位移+旋转)，任意两个坐标系之间可即时查询变换。没有 TF 树的机器人系统寸步难行——传感器数据需要变换到统一坐标系才能使用。",
+          "module": "ros2"
+        },
+        {
+          "en": "MuJoCo",
+          "zh": "MuJoCo 物理引擎",
+          "abbr": "MuJoCo",
+          "def": "Multi-Joint dynamics with Contact。Google DeepMind 维护的高精度机器人仿真器。",
+          "detail": "特点：接触动力学精度高、求解速度快(隐式积分/凸优化)、2021年开源后成为学术界标准仿真器。原生 Python 接口(mujoco包)，一行代码加载 MJCF 模型。GPU 并行版 MuJoCo MJX 用 JAX 实现，支持数千环境并行。与 Isaac Gym 相比精度更高但并行规模较小。",
+          "module": "physics-simulation"
+        },
+        {
+          "en": "Isaac Sim / Isaac Lab",
+          "zh": "Isaac 仿真平台",
+          "abbr": "",
+          "def": "NVIDIA 基于 Omniverse 的 GPU 加速机器人仿真平台，支持大规模并行训练。",
+          "detail": "Isaac Gym(已被 Isaac Lab 取代)：纯 GPU 物理仿真+渲染，数千环境并行。Isaac Sim：基于 Omniverse 的高保真仿真器，光线追踪渲染、合成数据生成。Isaac Lab：最新的模块化 RL 训练框架。优势：渲染逼真(有利 visual sim2real)、并行规模大(万级环境)。劣势：需要 NVIDIA GPU、学习曲线较陡。",
+          "module": "physics-simulation"
+        },
+        {
+          "en": "LeRobot",
+          "zh": "LeRobot 框架",
+          "abbr": "",
+          "def": "HuggingFace 开源的模仿学习/强化学习机器人框架，支持数据采集和策略训练。",
+          "detail": "一站式框架：数据采集(支持多种遥操设备) → 数据管理(HuggingFace Hub) → 训练(Diffusion Policy/ACT/TDMPC) → 评估 → 部署。代码简洁 Pythonic，对新手友好。支持 ALOHA、Koch v1.1 等多种机械臂平台。是入门模仿学习的推荐起点。",
+          "module": "imitation-learning"
+        },
+        {
+          "en": "Open X-Embodiment",
+          "zh": "开放跨具身数据集",
+          "abbr": "OXE",
+          "def": "Google 联合多家机构发布的大规模跨机器人操作数据集。",
+          "detail": "汇集 22 个机器人形态、21 个机构的操作数据，包含数十万条轨迹。统一为 RLDS 格式。目标：通过大规模多样化数据训练出跨具身的通用操作策略(如 RT-X、Octo)。数据涵盖桌面操作、移动操作等多场景，是具身 AI Scaling Law 验证的关键资源。",
+          "module": "embodied-data-engineering"
+        },
+        {
+          "en": "RLDS (Reinforcement Learning Datasets)",
+          "zh": "强化学习数据集格式",
+          "abbr": "RLDS",
+          "def": "Google 定义的机器人轨迹数据标准格式(TFRecord)，OXE 采用。",
+          "module": "embodied-data-engineering"
+        }
       ]
     },
     {
       "id": "math-foundations",
       "name": "📐 数学基础",
       "terms": [
-        { "en": "Singular Value Decomposition", "zh": "奇异值分解", "abbr": "SVD", "def": "任意矩阵分解 A=UΣV^T。应用：伪逆、降维、最小二乘。", "detail": "U 的列是 AAᵀ 的特征向量(左奇异向量)，V 的列是 AᵀA 的特征向量(右奇异向量)，Σ 对角线是奇异值(按降序)。机器人学应用：① 伪逆 A⁺=VΣ⁺Uᵀ 解欠定/超定方程 ② 截断 SVD 做低秩近似(数据降维) ③ 从变形的旋转矩阵中提取最近正交矩阵。", "module": "linear-algebra" },
-        { "en": "Eigenvalue / Eigenvector", "zh": "特征值/特征向量", "abbr": "", "def": "Av=λv，变换中方向不变的向量和缩放系数。", "detail": "特征向量是线性变换 A 作用后方向不变(只缩放)的特殊向量。物理意义：惯性矩阵的特征向量=主惯性轴，特征值=主惯量。协方差矩阵的特征向量=数据主方向(PCA)。对称矩阵的特征值全为实数，正定矩阵的特征值全为正。", "module": "linear-algebra" },
-        { "en": "Positive Definite Matrix", "zh": "正定矩阵", "abbr": "PD", "def": "所有特征值 > 0 的对称矩阵。质量矩阵和协方差矩阵都是正定的。", "module": "linear-algebra" },
-        { "en": "Convex Optimization", "zh": "凸优化", "abbr": "", "def": "目标函数和约束集都是凸的优化问题。局部最优即全局最优。", "detail": "凸集：任意两点连线上的点仍在集合内。凸函数：弦在曲线上方。凸优化的核心优势：不存在局部最优陷阱，高效求解器(CVXPY/Gurobi)可在毫秒级求解中等规模问题。MPC、轨迹优化、全身控制中的 QP(二次规划)都是凸优化问题。", "module": "calculus-optimization" },
-        { "en": "KKT Conditions", "zh": "KKT 条件", "abbr": "KKT", "def": "Karush-Kuhn-Tucker 条件，约束优化问题最优解的必要条件。", "module": "calculus-optimization" },
-        { "en": "Bayesian Inference", "zh": "贝叶斯推断", "abbr": "", "def": "P(A|B)∝P(B|A)P(A)。后验 ∝ 似然 × 先验。机器人 SLAM/滤波的基础。", "detail": "贝叶斯思维：用概率表示不确定性，观测到新数据后更新信念。先验 P(θ) 是事先对参数的认知，似然 P(D|θ) 是模型对数据的解释力，后验 P(θ|D) 是更新后的认知。机器人的卡尔曼滤波、粒子滤波、SLAM 都是贝叶斯推断的具体实现。", "module": "probability-statistics" },
-        { "en": "Kalman Filter", "zh": "卡尔曼滤波", "abbr": "KF", "def": "线性高斯系统的最优状态估计器。预测-更新两步递推。", "detail": "预测步：x̂⁻ = Ax̂ + Bu, P⁻ = APAᵀ + Q。更新步：K = P⁻Hᵀ(HP⁻Hᵀ+R)⁻¹, x̂ = x̂⁻ + K(z-Hx̂⁻), P = (I-KH)P⁻。其中 Q 是过程噪声、R 是观测噪声协方差。EKF(扩展卡尔曼)通过线性化处理非线性系统。UKF(无迹卡尔曼)用 sigma 点避免求 Jacobian。IMU+GPS 融合定位的标准算法。", "module": "probability-statistics" },
-        { "en": "Particle Filter", "zh": "粒子滤波", "abbr": "PF", "def": "用随机粒子集近似后验分布的非参数滤波。AMCL 定位的核心。", "detail": "用 N 个带权重的'粒子'(假说)近似后验分布 p(x|z)。每个粒子是一个可能的状态。步骤：① 传播(对每个粒子应用运动模型+噪声) ② 更新(用观测给每个粒子打分) ③ 重采样(复制高权重粒子、丢弃低权重粒子)。不要求线性/高斯假设，可处理多峰分布（如全局定位中的多个可能位置）。ROS 中的 AMCL 节点就是粒子滤波。", "module": "probability-statistics" },
-        { "en": "Monte Carlo Method", "zh": "蒙特卡洛方法", "abbr": "MC", "def": "通过随机采样估计期望值或求解积分的数值方法。", "module": "probability-statistics" },
-        { "en": "Gradient / Hessian Matrix", "zh": "梯度/海森矩阵", "abbr": "", "def": "梯度 ∇f 是一阶导数(指向最陡上升方向)，Hessian H 是二阶导数矩阵(描述曲率)。", "detail": "梯度 ∇f ∈ ℝⁿ 每个分量是偏导数 ∂f/∂xᵢ，方向是函数增长最快的方向。Hessian Hᵢⱼ = ∂²f/∂xᵢ∂xⱼ，是 n×n 对称矩阵，正定说明是局部最小值。牛顿法用 Hessian 信息二阶优化 Δx = -H⁻¹∇f，收敛比梯度下降快很多但计算贵。", "module": "calculus-optimization" }
+        {
+          "en": "Singular Value Decomposition",
+          "zh": "奇异值分解",
+          "abbr": "SVD",
+          "def": "任意矩阵分解 A=UΣV^T。应用：伪逆、降维、最小二乘。",
+          "detail": "U 的列是 AAᵀ 的特征向量(左奇异向量)，V 的列是 AᵀA 的特征向量(右奇异向量)，Σ 对角线是奇异值(按降序)。机器人学应用：① 伪逆 A⁺=VΣ⁺Uᵀ 解欠定/超定方程 ② 截断 SVD 做低秩近似(数据降维) ③ 从变形的旋转矩阵中提取最近正交矩阵。",
+          "module": "linear-algebra"
+        },
+        {
+          "en": "Eigenvalue / Eigenvector",
+          "zh": "特征值/特征向量",
+          "abbr": "",
+          "def": "Av=λv，变换中方向不变的向量和缩放系数。",
+          "detail": "特征向量是线性变换 A 作用后方向不变(只缩放)的特殊向量。物理意义：惯性矩阵的特征向量=主惯性轴，特征值=主惯量。协方差矩阵的特征向量=数据主方向(PCA)。对称矩阵的特征值全为实数，正定矩阵的特征值全为正。",
+          "module": "linear-algebra"
+        },
+        {
+          "en": "Positive Definite Matrix",
+          "zh": "正定矩阵",
+          "abbr": "PD",
+          "def": "所有特征值 > 0 的对称矩阵。质量矩阵和协方差矩阵都是正定的。",
+          "module": "linear-algebra"
+        },
+        {
+          "en": "Convex Optimization",
+          "zh": "凸优化",
+          "abbr": "",
+          "def": "目标函数和约束集都是凸的优化问题。局部最优即全局最优。",
+          "detail": "凸集：任意两点连线上的点仍在集合内。凸函数：弦在曲线上方。凸优化的核心优势：不存在局部最优陷阱，高效求解器(CVXPY/Gurobi)可在毫秒级求解中等规模问题。MPC、轨迹优化、全身控制中的 QP(二次规划)都是凸优化问题。",
+          "module": "calculus-optimization"
+        },
+        {
+          "en": "KKT Conditions",
+          "zh": "KKT 条件",
+          "abbr": "KKT",
+          "def": "Karush-Kuhn-Tucker 条件，约束优化问题最优解的必要条件。",
+          "module": "calculus-optimization"
+        },
+        {
+          "en": "Bayesian Inference",
+          "zh": "贝叶斯推断",
+          "abbr": "",
+          "def": "P(A|B)∝P(B|A)P(A)。后验 ∝ 似然 × 先验。机器人 SLAM/滤波的基础。",
+          "detail": "贝叶斯思维：用概率表示不确定性，观测到新数据后更新信念。先验 P(θ) 是事先对参数的认知，似然 P(D|θ) 是模型对数据的解释力，后验 P(θ|D) 是更新后的认知。机器人的卡尔曼滤波、粒子滤波、SLAM 都是贝叶斯推断的具体实现。",
+          "module": "probability-statistics"
+        },
+        {
+          "en": "Kalman Filter",
+          "zh": "卡尔曼滤波",
+          "abbr": "KF",
+          "def": "线性高斯系统的最优状态估计器。预测-更新两步递推。",
+          "detail": "预测步：x̂⁻ = Ax̂ + Bu, P⁻ = APAᵀ + Q。更新步：K = P⁻Hᵀ(HP⁻Hᵀ+R)⁻¹, x̂ = x̂⁻ + K(z-Hx̂⁻), P = (I-KH)P⁻。其中 Q 是过程噪声、R 是观测噪声协方差。EKF(扩展卡尔曼)通过线性化处理非线性系统。UKF(无迹卡尔曼)用 sigma 点避免求 Jacobian。IMU+GPS 融合定位的标准算法。",
+          "module": "probability-statistics"
+        },
+        {
+          "en": "Particle Filter",
+          "zh": "粒子滤波",
+          "abbr": "PF",
+          "def": "用随机粒子集近似后验分布的非参数滤波。AMCL 定位的核心。",
+          "detail": "用 N 个带权重的'粒子'(假说)近似后验分布 p(x|z)。每个粒子是一个可能的状态。步骤：① 传播(对每个粒子应用运动模型+噪声) ② 更新(用观测给每个粒子打分) ③ 重采样(复制高权重粒子、丢弃低权重粒子)。不要求线性/高斯假设，可处理多峰分布（如全局定位中的多个可能位置）。ROS 中的 AMCL 节点就是粒子滤波。",
+          "module": "probability-statistics"
+        },
+        {
+          "en": "Monte Carlo Method",
+          "zh": "蒙特卡洛方法",
+          "abbr": "MC",
+          "def": "通过随机采样估计期望值或求解积分的数值方法。",
+          "module": "probability-statistics"
+        },
+        {
+          "en": "Gradient / Hessian Matrix",
+          "zh": "梯度/海森矩阵",
+          "abbr": "",
+          "def": "梯度 ∇f 是一阶导数(指向最陡上升方向)，Hessian H 是二阶导数矩阵(描述曲率)。",
+          "detail": "梯度 ∇f ∈ ℝⁿ 每个分量是偏导数 ∂f/∂xᵢ，方向是函数增长最快的方向。Hessian Hᵢⱼ = ∂²f/∂xᵢ∂xⱼ，是 n×n 对称矩阵，正定说明是局部最小值。牛顿法用 Hessian 信息二阶优化 Δx = -H⁻¹∇f，收敛比梯度下降快很多但计算贵。",
+          "module": "calculus-optimization"
+        }
       ]
     },
     {
       "id": "paper-terms",
       "name": "📑 论文高频术语",
       "terms": [
-        { "en": "State of the Art", "zh": "当前最优/最先进水平", "abbr": "SOTA", "def": "某任务或基准上已知的最佳性能。论文中'achieves SOTA'即声称超越了所有已有方法。", "detail": "SOTA 是论文中最高频的缩写之一。用法：'Our method achieves SOTA on LIBERO with 98.1% SR'。注意：SOTA 是动态的——今天的 SOTA 明天可能被超越。评估时要看：① 基准是否公平(同数据/同设置) ② 提升是否显著(误差棒是否重叠) ③ 计算代价是否合理。", "module": "deep-learning" },
-        { "en": "Baseline", "zh": "基线/基准方法", "abbr": "", "def": "用于对比的参考方法。论文中新方法必须与 baseline 比较来证明有效性。", "detail": "好的 baseline 应该：① 是该领域公认的代表性方法 ② 使用相同数据和评测协议 ③ 经过合理调参(不能故意用弱 baseline 衬托自己)。常见表述：'We compare against the following baselines: OpenVLA, Octo, Diffusion Policy...'。", "module": "deep-learning" },
-        { "en": "Benchmark", "zh": "基准测试/评测基准", "abbr": "", "def": "标准化的数据集+评测协议+指标，用于公平比较不同方法的性能。", "detail": "具身智能常用 benchmark：SimplerEnv(VLA仿真评测)、LIBERO(操作四子集)、CALVIN(长程语言条件操作)、RLBench(100个操作任务)、ALFRED(移动操作+语言)。好的 benchmark 应该：可复现、有官方排行榜、评测指标明确、任务难度合理。", "module": "deep-learning" },
-        { "en": "End-to-End (E2E)", "zh": "端到端", "abbr": "E2E", "def": "从原始输入直接到最终输出的学习方式，省去中间人工设计的模块。", "module": "vla-models" },
-        { "en": "Pre-training / Fine-tuning", "zh": "预训练/微调", "abbr": "", "def": "先在大规模数据上预训练通用表示，再在目标任务小数据上微调。大模型时代的标准范式。", "module": "training-inference-optimization" },
-        { "en": "Generalization", "zh": "泛化能力", "abbr": "", "def": "模型在训练时未见过的数据/场景/任务上的表现能力。是衡量模型实用性的核心指标。", "detail": "具身智能的泛化维度：① 新物体(训练时没见过的杯子) ② 新场景(不同桌面/光照) ③ 新指令(未见过的语言描述) ④ 新机器人(跨本体迁移)。π0.7 首次展示了组合泛化的涌现——未训练过的指令×物体组合也能执行。", "module": "vla-models" },
-        { "en": "Inference / Latency", "zh": "推理/延迟", "abbr": "", "def": "模型处理一次输入并输出结果的过程和耗时。机器人要求实时推理（通常 >10Hz）。", "detail": "VLA 模型推理延迟是部署的核心瓶颈：7B 模型在 GPU 上 ~100ms/步，在 Jetson 上可能 >500ms。加速方法：INT4 量化(DA-PTQ)、Speculative Decoding、Flow Matching(10步 vs Diffusion 100步)、层截断(A1 VLA)。目标：操作任务 10-50Hz，步态控制 200-1000Hz。", "module": "training-inference-optimization" },
-        { "en": "Diffusion Transformer", "zh": "扩散 Transformer", "abbr": "DiT", "def": "将 Diffusion 模型的 U-Net 骨干替换为 Transformer 架构，获得更好的 scaling 特性和多任务条件化能力。", "detail": "2024 年 Peebles 等人提出将扩散模型的去噪网络从 U-Net 改为 Transformer。优势：① 更好的 scaling（参数越多性能越好）② 支持更长上下文 ③ 更灵活的条件注入。在具身 AI 中，DiT 被用作 VLA 的动作生成骨干（如 HiVLA 的低层动作专家、TRI 的 Science Robotics 论文中的 LBM 架构）。", "module": "deep-learning" },
-        { "en": "Autoregressive Generation", "zh": "自回归生成", "abbr": "AR", "def": "逐 token 依次生成序列的方法——每步基于已生成的 token 预测下一个。GPT/RT-2 用此方式生成动作 token。", "detail": "p(x₁, x₂, ..., xₙ) = ∏ p(xᵢ|x₁, ..., xᵢ₋₁)。VLA 中自回归生成动作 token（如 RT-2 式 bin 量化），训练用交叉熵损失。优势：与 LLM 架构天然兼容。劣势：序列太长时生成慢、误差累积。π₀-FAST 用 DCT 压缩将 350 token 降到 32 token，使 AR 在高频控制中可行。", "module": "vla-models" },
-        { "en": "Cross-Attention", "zh": "交叉注意力", "abbr": "", "def": "Q 来自一个序列、KV 来自另一个序列的注意力机制，用于跨模态信息融合。", "detail": "Attn(Q_action, K_obs, V_obs) 让动作 token 查询视觉/语言 token 的信息。在 VLA 中广泛使用：π₀ 的 flow head 用 cross-attention 注入观测条件，HiVLA 的级联交叉注意力依次融合全局→物体→技能语义。与 self-attention 的区别：self-attention Q/K/V 来自同一序列，cross-attention 跨序列。", "module": "deep-learning" },
-        { "en": "Large Behavior Model", "zh": "大行为模型", "abbr": "LBM", "def": "在大规模多样化机器人数据上预训练的具身 AI 模型，类比 LLM 在语言领域的地位。", "detail": "TRI 在 Science Robotics 2026 论文中正式定义 LBM 概念。核心论点：行为模型与语言模型一样遵循 Scaling Law——更多数据、更大模型系统性地提升多任务泛化、少样本适应和鲁棒性。DiT 架构的 LBM 已在 Boston Dynamics Atlas 上验证。代表了从'专用策略'到'通用行为模型'的范式转变。", "module": "vla-models" },
-        { "en": "Co-Training / Co-Fine-Tuning", "zh": "联合训练/联合微调", "abbr": "", "def": "同时使用机器人数据和网络数据（或仿真+真实数据）训练模型，防止灾难性遗忘。", "detail": "RT-2 首创：50% 机器人操作数据 + 50% 原始 VLM 网络数据联合微调，保持语言理解能力不退化。Sim-Real Co-Training（Stanford/NVIDIA 2026）进一步分析了其机理：主要贡献是数据增强效应（扩展分布覆盖），次要是重要性重加权。最优仿真/真实混合比通常在 30-50%。", "module": "sim-to-real" },
-        { "en": "Action Chain-of-Thought", "zh": "动作链式思维", "abbr": "ACoT", "def": "在动作空间（而非语言空间）构建思维链推理：先生成粗粒度动作意图序列，再生成精细动作。", "detail": "智元+北航在 CVPR 2026 提出(ACoT-VLA)。与 RT-2 的语言 CoT 不同，ACoT 直接在动作空间推理：'接近→对准→抓取'这样的粗粒度动作意图比自然语言描述更贴近控制语义。弥合了语义理解与精确控制之间的鸿沟，可解释性也更好。", "module": "vla-models" },
-        { "en": "Latent Action Model", "zh": "潜在动作模型", "abbr": "LAM", "def": "不直接预测关节级动作，而是预测中间的潜在动作表征，再由解码器映射到具体关节动作。", "detail": "WholeBodyVLA(ICLR 2026)的核心创新。分离的 Locomotion LAM + Manipulation LAM 分别处理移动和操作。优势：① 潜在空间可从无动作标签的视频中自监督学习 ② 同一潜在表征可适配不同机器人 ③ 移动和操作可独立训练后组合。", "module": "vla-models" },
-        { "en": "Dual-System Architecture", "zh": "双系统架构", "abbr": "", "def": "类比 Kahneman 的 System 1(快速直觉) / System 2(慢速推理)，将机器人控制分为快反应层和慢规划层。", "detail": "多篇顶级论文采用此范式：π₀.5(高层自回归子任务规划+低层 Flow Matching 动作生成)、GR00T N1(System1 20ms 快速反应+System2 慢速规划)、Gemini Robotics(ER 1.6 高层推理+Robotics 1.5 低层 VLA)。核心思想：高频运动控制(>50Hz)和低频语义推理(<5Hz)需要不同的架构和时钟频率。", "module": "vla-models" },
-        { "en": "Proprioception", "zh": "本体感受/本体感觉", "abbr": "", "def": "机器人对自身状态的内部感知——关节角度、关节速度、力矩、基座姿态等，不依赖外部传感器。", "detail": "类比人类闭着眼睛也知道自己手在哪。在 VLA 模型中，本体感受通常编码为向量 [q₁, ..., qₙ, q̇₁, ..., q̇ₙ] 后输入网络。区别于视觉(外部感知)和触觉(接触感知)。ViVa 论文联合预测未来视觉观察和本体感受状态来估计价值。", "module": "sensors-hardware" },
-        { "en": "Loco-Manipulation", "zh": "移动操作", "abbr": "", "def": "同时涉及移动(locomotion)和操作(manipulation)的任务——机器人需要边走路边干活。", "detail": "人形机器人的核心挑战。例如：走到冰箱前→打开冰箱门→取出饮料→走到桌前→放下。需要全身协调控制(腿的平衡+手的精确操作)。WholeBodyVLA 和 ESCAPE 是代表论文。比纯操作(桌面机械臂)和纯移动(导航)都难得多。", "module": "humanoid-fullstack" },
-        { "en": "DDPM / DDIM", "zh": "去噪扩散概率模型 / 去噪扩散隐式模型", "abbr": "DDPM/DDIM", "def": "DDPM 是标准扩散模型(100步去噪)；DDIM 是加速变体(10-20步)，推理快 5-10x 且质量近似。", "detail": "DDPM 训练：学习预测每步添加的噪声 ε_θ(x_t, t)。推理需要 T=100-1000 步逐步去噪，太慢。DDIM 发现可以跳步：从 100 步降到 10 步，质量几乎不变。Diffusion Policy 论文中用 DDIM 将推理从 500ms 降到 50ms。后续的 Flow Matching 进一步简化为 5-10 步 ODE 积分。", "module": "deep-learning" },
-        { "en": "DCT (Discrete Cosine Transform)", "zh": "离散余弦变换", "abbr": "DCT", "def": "将时域信号转换到频域的变换，FAST tokenizer 的核心——将动作序列压缩到频域后只保留低频系数。", "detail": "C_k = √(2/T)·Σ a_t·cos(π(2t+1)k/(2T))。平滑动作序列的能量集中在低频，保留前 K 个系数即可重建(K远小于T)。FAST tokenizer 将 50步×7维=350 个 token 压缩为约 32 个，使自回归 VLA 生成速度快 5x。DCT 广泛用于 JPEG 图像压缩，PI 将其创造性地应用于动作压缩。", "module": "vla-models" },
-        { "en": "GAE (Generalized Advantage Estimation)", "zh": "广义优势估计", "abbr": "GAE", "def": "在 PPO/Actor-Critic 中估计优势函数 A(s,a) 的方法，平衡偏差和方差。", "detail": "Â_t = Σ(γλ)ˡ·δ_{t+l}，其中 δ_t = r_t + γV(s_{t+1}) - V(s_t)。λ=0 退化为 TD(0)（低方差高偏差），λ=1 退化为 MC 估计（高方差低偏差）。Legged Gym 默认 γ=0.99, λ=0.95。是 PPO 训练机器人步态策略的标准配置。", "module": "reinforcement-learning" },
-        { "en": "Spatial Reasoning", "zh": "空间推理", "abbr": "", "def": "理解物体在 3D 空间中的位置、方向、距离和相对关系的能力。机器人操作的核心认知能力。", "detail": "包括：判断'杯子在盘子左边 15cm'、估计物体大小和距离、理解'里面/上面/后面'等空间介词。SpatialVLM(CVPR 2024)首次系统增强 VLM 的空间推理。Gemini Robotics-ER 1.6 将其作为核心升级方向。BeTTER 基准发现当前 VLA 的空间推理能力严重不足。", "module": "vla-models" },
-        { "en": "Causal Intervention", "zh": "因果干预", "abbr": "", "def": "通过主动改变环境变量来诊断模型是否真正理解因果关系，而非仅依赖统计相关。", "detail": "BeTTER(arXiv 2604.18000)的核心方法：通过空间布局变化(移动物体位置)和时间外推(延长任务时长)等因果干预，测试 VLA 模型是否真正'理解'任务还是只记住了感知-动作映射。结果揭示了严重的推理幻觉——标准基准高成功率掩盖了 VLA 的脆弱性。", "module": "vla-models" },
-        { "en": "Digital Twin", "zh": "数字孪生", "abbr": "", "def": "真实物理系统的高保真数字副本，实时同步状态，用于仿真、预测和优化。", "detail": "在机器人中：将真实车间/仓库精确建模到仿真器中，用 3DGS/NeRF 重建视觉，用 SysID 校准物理参数。智元 AGIBOT WORLD 数据集配套的 Genie Sim 3.0 就提供数字孪生能力。比传统仿真更精确，因为持续用真实数据更新仿真参数。NVIDIA Omniverse 是目前最主流的数字孪生平台。", "module": "sim-to-real" },
-        { "en": "Intermediate Representation", "zh": "中间表示/中间表征", "abbr": "", "def": "在感知输入和低级动作之间插入的显式中间层——如子任务分解、接触点、6D 位姿、边界框等。", "detail": "RoboInter(ICLR 2026)的核心概念：纯端到端 VLA 直接从像素到力矩，缺乏可解释的中间步骤。引入中间表示可以：① 提供中间监督信号提升泛化 ② 增强可解释性 ③ 支持模块化升级。HiVLA 用边界框作为中间表示(Visual Grounding)，ACoT 用粗粒度动作意图作为中间表示。'先思考后执行'范式的数据基础。", "module": "vla-models" },
-        { "en": "Post-Training Quantization", "zh": "训练后量化", "abbr": "PTQ", "def": "在模型训练完成后将权重/激活从 FP32/FP16 压缩到 INT8/INT4，减小模型体积和推理延迟。", "detail": "DA-PTQ(arXiv 2604.11572)发现 VLA 模型在量化后有独特的'动作漂移'问题——量化误差在时间步间累积导致轨迹偏移。解决方案：对时序累积敏感的通道分配更高比特。INT4 量化使 7B VLA 模型可在 Jetson Orin 上实时推理，是 VLA 上机器人的关键技术。", "module": "training-inference-optimization" },
-        { "en": "Machine Unlearning", "zh": "机器遗忘", "abbr": "", "def": "让模型精准'忘记'特定知识或行为，同时保留其他已学能力——VLA 安全部署的关键技术。", "detail": "VLA-Forget(arXiv 2604.03956)首次系统研究 VLA 模型的遗忘问题。场景：部署后发现模型学到了不安全行为(如用力过猛)，需要移除而不影响其他功能。方法：分模态遗忘(视觉/语言/动作层用不同策略)、比率感知编辑(根据各层对目标行为的贡献决定遗忘强度)。", "module": "vla-models" },
-        { "en": "FiLM (Feature-wise Linear Modulation)", "zh": "特征级线性调制", "abbr": "FiLM", "def": "通过 γ(c)·h + β(c) 对特征图进行条件化调制的轻量级方法。", "detail": "γ 和 β 由条件输入 c 通过 MLP 生成，对每个特征通道做仿射变换。Diffusion Policy 的 CNN 版本用 FiLM 注入观测条件（时间步和观测特征调制去噪过程）。比 cross-attention 计算量小但表达能力也弱，适合轻量级条件化场景。", "module": "deep-learning" },
-        { "en": "Temporal Ensemble", "zh": "时间集成", "abbr": "", "def": "将相邻 action chunk 的重叠预测用加权平均融合，使执行更平滑。", "detail": "ACT 论文提出：相邻 chunk 对同一时间步有不同预测，用指数加权平均 a_t = Σwᵢ·a_t^(i) / Σwᵢ (wᵢ = exp(-m·i)) 融合。新预测权重更高。效果：减少 60% 的动作抖动，使真实机器人执行更稳定。类似 MPC 中的滚动时域思想。", "module": "imitation-learning" },
-        { "en": "CVAE (Conditional VAE)", "zh": "条件变分自编码器", "abbr": "CVAE", "def": "在 VAE 基础上引入条件变量——编码器和解码器都以条件 c 为输入，学习条件生成分布 p(x|c)。", "detail": "ACT(Action Chunking with Transformers)的核心架构组件。编码器 q(z|o,a) 将观测和动作编码为潜在变量 z，z 捕捉'操作风格'（如从左侧还是右侧接近物体）。解码器 p(a|o,z) 由 o 和 z 生成动作。训练目标 ELBO = 重建损失 + β·KL 散度。推理时 z~N(0,I) 采样，引入随机性以覆盖多模态动作。", "module": "imitation-learning" },
-        { "en": "Ablation Study", "zh": "消融实验", "abbr": "", "def": "逐一移除模型的某个组件或设计选择，观察性能变化，以验证每个组件的贡献。", "detail": "论文的标准实验范式。例如：'去掉 Action Chunking → 成功率下降 30%'证明 chunking 的价值。好的消融实验应该：① 每次只改变一个变量 ② 使用同一评测协议 ③ 报告均值和方差。读论文时重点看消融表——它揭示了哪些设计选择真正重要。", "module": "deep-learning" },
-        { "en": "Success Rate", "zh": "成功率", "abbr": "SR", "def": "机器人操作任务的主要评测指标——在 N 次尝试中成功完成任务的比例。", "detail": "通常报告 mean ± std over 3+ seeds。注意：不同论文对'成功'的定义可能不同（如物体是否到达目标位置的阈值距离）。仿真成功率通常比真机高 10-30%（Sim-to-Real Gap）。除了 SR 还常报告完成时间、路径效率、能耗等辅助指标。", "module": "vla-models" },
-        { "en": "Long-Horizon Task", "zh": "长时域任务/长程任务", "abbr": "", "def": "需要多个连续步骤才能完成的任务（如'打开抽屉→取出杯子→倒水→放回'），是 VLA 的核心挑战。", "detail": "端到端 VLA 在长程任务中容易失败——误差累积、缺乏记忆、无法从失败中恢复。解决方案：层次化架构(HiVLA/π₀.5)、历史感知(HAMLET)、反思重规划(Goal2Skill)、空间记忆(ESCAPE)。LIBERO-LONG 是评测长程操作能力的标准基准。", "module": "vla-models" },
-        { "en": "POMDP (Partially Observable MDP)", "zh": "部分可观马尔可夫决策过程", "abbr": "POMDP", "def": "智能体无法完整观测环境状态的 MDP 扩展。真实机器人几乎都是 POMDP——相机只能看到部分场景。", "detail": "MDP 假设状态完全可观，但机器人只有有限传感器：相机看不到遮挡物、关节编码器不知道外部环境。POMDP 引入信念状态 b(s) = P(s|观测历史)，通过贝叶斯更新维护。实际求解用 belief space planning 或近似方法（如历史编码器/RNN 隐式维护信念）。HAMLET 的 moment tokens 就是一种隐式信念表示。", "module": "reinforcement-learning" },
-        { "en": "Structured Spatiotemporal VLA", "zh": "结构化时空VLA", "abbr": "ST-π", "def": "显式建模操作任务的空间位置和时间边界的VLA框架，将任务分解为带时空标注的子行为序列。", "detail": "ST-π(arXiv 2604.17880)提出双层显式时空建模：VLM做全局时空规划（每个子行为包含空间目标+起止时间+语义描述），动作专家做局部时空精细控制。区别于VLA-4D等隐式时空方法，首次让VLA显式'知道'什么时候做什么、在哪里做。在穿针、倒水等精细操作上显著优于隐式方法。", "module": "vla-models" },
-        { "en": "Motion Representation", "zh": "运动表示", "abbr": "", "def": "编码视频帧间运动信息的紧凑表征，用于VLA的时序推理。HiF-VLA(CVPR 2026)的核心概念。", "detail": "运动表示天然编码时序动态（方向、速度、变化趋势），比逐帧处理更高效。HiF-VLA用运动表示统一三种时序推理：Hindsight(回顾过去理解因果)、Insight(感知当前精准定位)、Foresight(预测未来辅助规划)。是VLA时序能力增强的新范式。", "module": "vla-models" },
-        { "en": "Reasoning VLA", "zh": "推理型VLA", "abbr": "", "def": "具备显式推理能力的VLA模型，在生成动作前先进行思维链推理或环境分析。", "detail": "代表：NVIDIA GR00T N1.7(VLM骨干从Cosmos-2B升级为Cosmos-Reason2-2B获得推理能力)、ReFineVLA(教师模型生成推理依据增强训练)、ACoT-VLA(动作空间思维链)。推理型VLA标志着从'反射式控制'向'思考后行动'的进化，是2026年VLA研究的核心方向。", "module": "vla-models" },
-        { "en": "Vision-Language-Latent-Action", "zh": "视觉-语言-潜在动作", "abbr": "ViLLA", "def": "智元GO-1提出的框架：不直接预测关节动作，而是预测潜在动作表征，统一不同机器人的动作空间。", "detail": "区别于传统VLA直接输出关节角度/速度，ViLLA在潜在空间(Latent Space)中做动作推理，再由本体特定解码器映射到具体关节。优势：潜在空间与机器人本体无关→天然支持跨具身迁移；可从无动作标签的视频中自监督学习→数据利用率更高。是VLA走向通用化的重要架构创新。", "module": "vla-models" }
+        {
+          "en": "State of the Art",
+          "zh": "当前最优/最先进水平",
+          "abbr": "SOTA",
+          "def": "某任务或基准上已知的最佳性能。论文中'achieves SOTA'即声称超越了所有已有方法。",
+          "detail": "SOTA 是论文中最高频的缩写之一。用法：'Our method achieves SOTA on LIBERO with 98.1% SR'。注意：SOTA 是动态的——今天的 SOTA 明天可能被超越。评估时要看：① 基准是否公平(同数据/同设置) ② 提升是否显著(误差棒是否重叠) ③ 计算代价是否合理。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Baseline",
+          "zh": "基线/基准方法",
+          "abbr": "",
+          "def": "用于对比的参考方法。论文中新方法必须与 baseline 比较来证明有效性。",
+          "detail": "好的 baseline 应该：① 是该领域公认的代表性方法 ② 使用相同数据和评测协议 ③ 经过合理调参(不能故意用弱 baseline 衬托自己)。常见表述：'We compare against the following baselines: OpenVLA, Octo, Diffusion Policy...'。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Benchmark",
+          "zh": "基准测试/评测基准",
+          "abbr": "",
+          "def": "标准化的数据集+评测协议+指标，用于公平比较不同方法的性能。",
+          "detail": "具身智能常用 benchmark：SimplerEnv(VLA仿真评测)、LIBERO(操作四子集)、CALVIN(长程语言条件操作)、RLBench(100个操作任务)、ALFRED(移动操作+语言)。好的 benchmark 应该：可复现、有官方排行榜、评测指标明确、任务难度合理。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "End-to-End (E2E)",
+          "zh": "端到端",
+          "abbr": "E2E",
+          "def": "从原始输入直接到最终输出的学习方式，省去中间人工设计的模块。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Pre-training / Fine-tuning",
+          "zh": "预训练/微调",
+          "abbr": "",
+          "def": "先在大规模数据上预训练通用表示，再在目标任务小数据上微调。大模型时代的标准范式。",
+          "module": "training-inference-optimization"
+        },
+        {
+          "en": "Generalization",
+          "zh": "泛化能力",
+          "abbr": "",
+          "def": "模型在训练时未见过的数据/场景/任务上的表现能力。是衡量模型实用性的核心指标。",
+          "detail": "具身智能的泛化维度：① 新物体(训练时没见过的杯子) ② 新场景(不同桌面/光照) ③ 新指令(未见过的语言描述) ④ 新机器人(跨本体迁移)。π0.7 首次展示了组合泛化的涌现——未训练过的指令×物体组合也能执行。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Inference / Latency",
+          "zh": "推理/延迟",
+          "abbr": "",
+          "def": "模型处理一次输入并输出结果的过程和耗时。机器人要求实时推理（通常 >10Hz）。",
+          "detail": "VLA 模型推理延迟是部署的核心瓶颈：7B 模型在 GPU 上 ~100ms/步，在 Jetson 上可能 >500ms。加速方法：INT4 量化(DA-PTQ)、Speculative Decoding、Flow Matching(10步 vs Diffusion 100步)、层截断(A1 VLA)。目标：操作任务 10-50Hz，步态控制 200-1000Hz。",
+          "module": "training-inference-optimization"
+        },
+        {
+          "en": "Diffusion Transformer",
+          "zh": "扩散 Transformer",
+          "abbr": "DiT",
+          "def": "将 Diffusion 模型的 U-Net 骨干替换为 Transformer 架构，获得更好的 scaling 特性和多任务条件化能力。",
+          "detail": "2024 年 Peebles 等人提出将扩散模型的去噪网络从 U-Net 改为 Transformer。优势：① 更好的 scaling（参数越多性能越好）② 支持更长上下文 ③ 更灵活的条件注入。在具身 AI 中，DiT 被用作 VLA 的动作生成骨干（如 HiVLA 的低层动作专家、TRI 的 Science Robotics 论文中的 LBM 架构）。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Autoregressive Generation",
+          "zh": "自回归生成",
+          "abbr": "AR",
+          "def": "逐 token 依次生成序列的方法——每步基于已生成的 token 预测下一个。GPT/RT-2 用此方式生成动作 token。",
+          "detail": "p(x₁, x₂, ..., xₙ) = ∏ p(xᵢ|x₁, ..., xᵢ₋₁)。VLA 中自回归生成动作 token（如 RT-2 式 bin 量化），训练用交叉熵损失。优势：与 LLM 架构天然兼容。劣势：序列太长时生成慢、误差累积。π₀-FAST 用 DCT 压缩将 350 token 降到 32 token，使 AR 在高频控制中可行。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Cross-Attention",
+          "zh": "交叉注意力",
+          "abbr": "",
+          "def": "Q 来自一个序列、KV 来自另一个序列的注意力机制，用于跨模态信息融合。",
+          "detail": "Attn(Q_action, K_obs, V_obs) 让动作 token 查询视觉/语言 token 的信息。在 VLA 中广泛使用：π₀ 的 flow head 用 cross-attention 注入观测条件，HiVLA 的级联交叉注意力依次融合全局→物体→技能语义。与 self-attention 的区别：self-attention Q/K/V 来自同一序列，cross-attention 跨序列。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Large Behavior Model",
+          "zh": "大行为模型",
+          "abbr": "LBM",
+          "def": "在大规模多样化机器人数据上预训练的具身 AI 模型，类比 LLM 在语言领域的地位。",
+          "detail": "TRI 在 Science Robotics 2026 论文中正式定义 LBM 概念。核心论点：行为模型与语言模型一样遵循 Scaling Law——更多数据、更大模型系统性地提升多任务泛化、少样本适应和鲁棒性。DiT 架构的 LBM 已在 Boston Dynamics Atlas 上验证。代表了从'专用策略'到'通用行为模型'的范式转变。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Co-Training / Co-Fine-Tuning",
+          "zh": "联合训练/联合微调",
+          "abbr": "",
+          "def": "同时使用机器人数据和网络数据（或仿真+真实数据）训练模型，防止灾难性遗忘。",
+          "detail": "RT-2 首创：50% 机器人操作数据 + 50% 原始 VLM 网络数据联合微调，保持语言理解能力不退化。Sim-Real Co-Training（Stanford/NVIDIA 2026）进一步分析了其机理：主要贡献是数据增强效应（扩展分布覆盖），次要是重要性重加权。最优仿真/真实混合比通常在 30-50%。",
+          "module": "sim-to-real"
+        },
+        {
+          "en": "Action Chain-of-Thought",
+          "zh": "动作链式思维",
+          "abbr": "ACoT",
+          "def": "在动作空间（而非语言空间）构建思维链推理：先生成粗粒度动作意图序列，再生成精细动作。",
+          "detail": "智元+北航在 CVPR 2026 提出(ACoT-VLA)。与 RT-2 的语言 CoT 不同，ACoT 直接在动作空间推理：'接近→对准→抓取'这样的粗粒度动作意图比自然语言描述更贴近控制语义。弥合了语义理解与精确控制之间的鸿沟，可解释性也更好。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Latent Action Model",
+          "zh": "潜在动作模型",
+          "abbr": "LAM",
+          "def": "不直接预测关节级动作，而是预测中间的潜在动作表征，再由解码器映射到具体关节动作。",
+          "detail": "WholeBodyVLA(ICLR 2026)的核心创新。分离的 Locomotion LAM + Manipulation LAM 分别处理移动和操作。优势：① 潜在空间可从无动作标签的视频中自监督学习 ② 同一潜在表征可适配不同机器人 ③ 移动和操作可独立训练后组合。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Dual-System Architecture",
+          "zh": "双系统架构",
+          "abbr": "",
+          "def": "类比 Kahneman 的 System 1(快速直觉) / System 2(慢速推理)，将机器人控制分为快反应层和慢规划层。",
+          "detail": "多篇顶级论文采用此范式：π₀.5(高层自回归子任务规划+低层 Flow Matching 动作生成)、GR00T N1(System1 20ms 快速反应+System2 慢速规划)、Gemini Robotics(ER 1.6 高层推理+Robotics 1.5 低层 VLA)。核心思想：高频运动控制(>50Hz)和低频语义推理(<5Hz)需要不同的架构和时钟频率。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Proprioception",
+          "zh": "本体感受/本体感觉",
+          "abbr": "",
+          "def": "机器人对自身状态的内部感知——关节角度、关节速度、力矩、基座姿态等，不依赖外部传感器。",
+          "detail": "类比人类闭着眼睛也知道自己手在哪。在 VLA 模型中，本体感受通常编码为向量 [q₁, ..., qₙ, q̇₁, ..., q̇ₙ] 后输入网络。区别于视觉(外部感知)和触觉(接触感知)。ViVa 论文联合预测未来视觉观察和本体感受状态来估计价值。",
+          "module": "sensors-hardware"
+        },
+        {
+          "en": "Loco-Manipulation",
+          "zh": "移动操作",
+          "abbr": "",
+          "def": "同时涉及移动(locomotion)和操作(manipulation)的任务——机器人需要边走路边干活。",
+          "detail": "人形机器人的核心挑战。例如：走到冰箱前→打开冰箱门→取出饮料→走到桌前→放下。需要全身协调控制(腿的平衡+手的精确操作)。WholeBodyVLA 和 ESCAPE 是代表论文。比纯操作(桌面机械臂)和纯移动(导航)都难得多。",
+          "module": "humanoid-fullstack"
+        },
+        {
+          "en": "DDPM / DDIM",
+          "zh": "去噪扩散概率模型 / 去噪扩散隐式模型",
+          "abbr": "DDPM/DDIM",
+          "def": "DDPM 是标准扩散模型(100步去噪)；DDIM 是加速变体(10-20步)，推理快 5-10x 且质量近似。",
+          "detail": "DDPM 训练：学习预测每步添加的噪声 ε_θ(x_t, t)。推理需要 T=100-1000 步逐步去噪，太慢。DDIM 发现可以跳步：从 100 步降到 10 步，质量几乎不变。Diffusion Policy 论文中用 DDIM 将推理从 500ms 降到 50ms。后续的 Flow Matching 进一步简化为 5-10 步 ODE 积分。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "DCT (Discrete Cosine Transform)",
+          "zh": "离散余弦变换",
+          "abbr": "DCT",
+          "def": "将时域信号转换到频域的变换，FAST tokenizer 的核心——将动作序列压缩到频域后只保留低频系数。",
+          "detail": "C_k = √(2/T)·Σ a_t·cos(π(2t+1)k/(2T))。平滑动作序列的能量集中在低频，保留前 K 个系数即可重建(K远小于T)。FAST tokenizer 将 50步×7维=350 个 token 压缩为约 32 个，使自回归 VLA 生成速度快 5x。DCT 广泛用于 JPEG 图像压缩，PI 将其创造性地应用于动作压缩。",
+          "module": "vla-models"
+        },
+        {
+          "en": "GAE (Generalized Advantage Estimation)",
+          "zh": "广义优势估计",
+          "abbr": "GAE",
+          "def": "在 PPO/Actor-Critic 中估计优势函数 A(s,a) 的方法，平衡偏差和方差。",
+          "detail": "Â_t = Σ(γλ)ˡ·δ_{t+l}，其中 δ_t = r_t + γV(s_{t+1}) - V(s_t)。λ=0 退化为 TD(0)（低方差高偏差），λ=1 退化为 MC 估计（高方差低偏差）。Legged Gym 默认 γ=0.99, λ=0.95。是 PPO 训练机器人步态策略的标准配置。",
+          "module": "reinforcement-learning"
+        },
+        {
+          "en": "Spatial Reasoning",
+          "zh": "空间推理",
+          "abbr": "",
+          "def": "理解物体在 3D 空间中的位置、方向、距离和相对关系的能力。机器人操作的核心认知能力。",
+          "detail": "包括：判断'杯子在盘子左边 15cm'、估计物体大小和距离、理解'里面/上面/后面'等空间介词。SpatialVLM(CVPR 2024)首次系统增强 VLM 的空间推理。Gemini Robotics-ER 1.6 将其作为核心升级方向。BeTTER 基准发现当前 VLA 的空间推理能力严重不足。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Causal Intervention",
+          "zh": "因果干预",
+          "abbr": "",
+          "def": "通过主动改变环境变量来诊断模型是否真正理解因果关系，而非仅依赖统计相关。",
+          "detail": "BeTTER(arXiv 2604.18000)的核心方法：通过空间布局变化(移动物体位置)和时间外推(延长任务时长)等因果干预，测试 VLA 模型是否真正'理解'任务还是只记住了感知-动作映射。结果揭示了严重的推理幻觉——标准基准高成功率掩盖了 VLA 的脆弱性。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Digital Twin",
+          "zh": "数字孪生",
+          "abbr": "",
+          "def": "真实物理系统的高保真数字副本，实时同步状态，用于仿真、预测和优化。",
+          "detail": "在机器人中：将真实车间/仓库精确建模到仿真器中，用 3DGS/NeRF 重建视觉，用 SysID 校准物理参数。智元 AGIBOT WORLD 数据集配套的 Genie Sim 3.0 就提供数字孪生能力。比传统仿真更精确，因为持续用真实数据更新仿真参数。NVIDIA Omniverse 是目前最主流的数字孪生平台。",
+          "module": "sim-to-real"
+        },
+        {
+          "en": "Intermediate Representation",
+          "zh": "中间表示/中间表征",
+          "abbr": "",
+          "def": "在感知输入和低级动作之间插入的显式中间层——如子任务分解、接触点、6D 位姿、边界框等。",
+          "detail": "RoboInter(ICLR 2026)的核心概念：纯端到端 VLA 直接从像素到力矩，缺乏可解释的中间步骤。引入中间表示可以：① 提供中间监督信号提升泛化 ② 增强可解释性 ③ 支持模块化升级。HiVLA 用边界框作为中间表示(Visual Grounding)，ACoT 用粗粒度动作意图作为中间表示。'先思考后执行'范式的数据基础。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Post-Training Quantization",
+          "zh": "训练后量化",
+          "abbr": "PTQ",
+          "def": "在模型训练完成后将权重/激活从 FP32/FP16 压缩到 INT8/INT4，减小模型体积和推理延迟。",
+          "detail": "DA-PTQ(arXiv 2604.11572)发现 VLA 模型在量化后有独特的'动作漂移'问题——量化误差在时间步间累积导致轨迹偏移。解决方案：对时序累积敏感的通道分配更高比特。INT4 量化使 7B VLA 模型可在 Jetson Orin 上实时推理，是 VLA 上机器人的关键技术。",
+          "module": "training-inference-optimization"
+        },
+        {
+          "en": "Machine Unlearning",
+          "zh": "机器遗忘",
+          "abbr": "",
+          "def": "让模型精准'忘记'特定知识或行为，同时保留其他已学能力——VLA 安全部署的关键技术。",
+          "detail": "VLA-Forget(arXiv 2604.03956)首次系统研究 VLA 模型的遗忘问题。场景：部署后发现模型学到了不安全行为(如用力过猛)，需要移除而不影响其他功能。方法：分模态遗忘(视觉/语言/动作层用不同策略)、比率感知编辑(根据各层对目标行为的贡献决定遗忘强度)。",
+          "module": "vla-models"
+        },
+        {
+          "en": "FiLM (Feature-wise Linear Modulation)",
+          "zh": "特征级线性调制",
+          "abbr": "FiLM",
+          "def": "通过 γ(c)·h + β(c) 对特征图进行条件化调制的轻量级方法。",
+          "detail": "γ 和 β 由条件输入 c 通过 MLP 生成，对每个特征通道做仿射变换。Diffusion Policy 的 CNN 版本用 FiLM 注入观测条件（时间步和观测特征调制去噪过程）。比 cross-attention 计算量小但表达能力也弱，适合轻量级条件化场景。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Temporal Ensemble",
+          "zh": "时间集成",
+          "abbr": "",
+          "def": "将相邻 action chunk 的重叠预测用加权平均融合，使执行更平滑。",
+          "detail": "ACT 论文提出：相邻 chunk 对同一时间步有不同预测，用指数加权平均 a_t = Σwᵢ·a_t^(i) / Σwᵢ (wᵢ = exp(-m·i)) 融合。新预测权重更高。效果：减少 60% 的动作抖动，使真实机器人执行更稳定。类似 MPC 中的滚动时域思想。",
+          "module": "imitation-learning"
+        },
+        {
+          "en": "CVAE (Conditional VAE)",
+          "zh": "条件变分自编码器",
+          "abbr": "CVAE",
+          "def": "在 VAE 基础上引入条件变量——编码器和解码器都以条件 c 为输入，学习条件生成分布 p(x|c)。",
+          "detail": "ACT(Action Chunking with Transformers)的核心架构组件。编码器 q(z|o,a) 将观测和动作编码为潜在变量 z，z 捕捉'操作风格'（如从左侧还是右侧接近物体）。解码器 p(a|o,z) 由 o 和 z 生成动作。训练目标 ELBO = 重建损失 + β·KL 散度。推理时 z~N(0,I) 采样，引入随机性以覆盖多模态动作。",
+          "module": "imitation-learning"
+        },
+        {
+          "en": "Ablation Study",
+          "zh": "消融实验",
+          "abbr": "",
+          "def": "逐一移除模型的某个组件或设计选择，观察性能变化，以验证每个组件的贡献。",
+          "detail": "论文的标准实验范式。例如：'去掉 Action Chunking → 成功率下降 30%'证明 chunking 的价值。好的消融实验应该：① 每次只改变一个变量 ② 使用同一评测协议 ③ 报告均值和方差。读论文时重点看消融表——它揭示了哪些设计选择真正重要。",
+          "module": "deep-learning"
+        },
+        {
+          "en": "Success Rate",
+          "zh": "成功率",
+          "abbr": "SR",
+          "def": "机器人操作任务的主要评测指标——在 N 次尝试中成功完成任务的比例。",
+          "detail": "通常报告 mean ± std over 3+ seeds。注意：不同论文对'成功'的定义可能不同（如物体是否到达目标位置的阈值距离）。仿真成功率通常比真机高 10-30%（Sim-to-Real Gap）。除了 SR 还常报告完成时间、路径效率、能耗等辅助指标。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Long-Horizon Task",
+          "zh": "长时域任务/长程任务",
+          "abbr": "",
+          "def": "需要多个连续步骤才能完成的任务（如'打开抽屉→取出杯子→倒水→放回'），是 VLA 的核心挑战。",
+          "detail": "端到端 VLA 在长程任务中容易失败——误差累积、缺乏记忆、无法从失败中恢复。解决方案：层次化架构(HiVLA/π₀.5)、历史感知(HAMLET)、反思重规划(Goal2Skill)、空间记忆(ESCAPE)。LIBERO-LONG 是评测长程操作能力的标准基准。",
+          "module": "vla-models"
+        },
+        {
+          "en": "POMDP (Partially Observable MDP)",
+          "zh": "部分可观马尔可夫决策过程",
+          "abbr": "POMDP",
+          "def": "智能体无法完整观测环境状态的 MDP 扩展。真实机器人几乎都是 POMDP——相机只能看到部分场景。",
+          "detail": "MDP 假设状态完全可观，但机器人只有有限传感器：相机看不到遮挡物、关节编码器不知道外部环境。POMDP 引入信念状态 b(s) = P(s|观测历史)，通过贝叶斯更新维护。实际求解用 belief space planning 或近似方法（如历史编码器/RNN 隐式维护信念）。HAMLET 的 moment tokens 就是一种隐式信念表示。",
+          "module": "reinforcement-learning"
+        },
+        {
+          "en": "Structured Spatiotemporal VLA",
+          "zh": "结构化时空VLA",
+          "abbr": "ST-π",
+          "def": "显式建模操作任务的空间位置和时间边界的VLA框架，将任务分解为带时空标注的子行为序列。",
+          "detail": "ST-π(arXiv 2604.17880)提出双层显式时空建模：VLM做全局时空规划（每个子行为包含空间目标+起止时间+语义描述），动作专家做局部时空精细控制。区别于VLA-4D等隐式时空方法，首次让VLA显式'知道'什么时候做什么、在哪里做。在穿针、倒水等精细操作上显著优于隐式方法。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Motion Representation",
+          "zh": "运动表示",
+          "abbr": "",
+          "def": "编码视频帧间运动信息的紧凑表征，用于VLA的时序推理。HiF-VLA(CVPR 2026)的核心概念。",
+          "detail": "运动表示天然编码时序动态（方向、速度、变化趋势），比逐帧处理更高效。HiF-VLA用运动表示统一三种时序推理：Hindsight(回顾过去理解因果)、Insight(感知当前精准定位)、Foresight(预测未来辅助规划)。是VLA时序能力增强的新范式。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Reasoning VLA",
+          "zh": "推理型VLA",
+          "abbr": "",
+          "def": "具备显式推理能力的VLA模型，在生成动作前先进行思维链推理或环境分析。",
+          "detail": "代表：NVIDIA GR00T N1.7(VLM骨干从Cosmos-2B升级为Cosmos-Reason2-2B获得推理能力)、ReFineVLA(教师模型生成推理依据增强训练)、ACoT-VLA(动作空间思维链)。推理型VLA标志着从'反射式控制'向'思考后行动'的进化，是2026年VLA研究的核心方向。",
+          "module": "vla-models"
+        },
+        {
+          "en": "Vision-Language-Latent-Action",
+          "zh": "视觉-语言-潜在动作",
+          "abbr": "ViLLA",
+          "def": "智元GO-1提出的框架：不直接预测关节动作，而是预测潜在动作表征，统一不同机器人的动作空间。",
+          "detail": "区别于传统VLA直接输出关节角度/速度，ViLLA在潜在空间(Latent Space)中做动作推理，再由本体特定解码器映射到具体关节。优势：潜在空间与机器人本体无关→天然支持跨具身迁移；可从无动作标签的视频中自监督学习→数据利用率更高。是VLA走向通用化的重要架构创新。",
+          "module": "vla-models"
+        }
+      ]
+    },
+    {
+      "id": "open-source-licenses",
+      "name": "📄 开源协议",
+      "terms": [
+        {
+          "en": "MIT License",
+          "zh": "MIT 许可证",
+          "abbr": "MIT",
+          "def": "最宽松的开源协议之一。允许任何人自由使用、修改、分发、商用，唯一要求是保留原作者的版权声明。",
+          "detail": "**核心条款**：① 可自由使用、复制、修改、合并、发布、分发、再许可、销售；② 唯一义务：在软件副本中包含版权声明和许可声明；③ 不提供任何担保（AS IS）。**适用场景**：绝大多数开源项目的首选，对商业化最友好。**代表项目**：OpenClaw / Hermes Agent / Whisper / sherpa-onnx / React / Node.js。**一句话**：「你随便用，但得说这东西原作者是谁」。"
+        },
+        {
+          "en": "Apache License 2.0",
+          "zh": "Apache 2.0 许可证",
+          "abbr": "Apache-2.0",
+          "def": "比 MIT 多了专利授权条款。允许自由使用、修改、分发、商用，同时授予使用者专利许可，但要求保留声明并标注修改。",
+          "detail": "**核心条款**：① 可自由使用、复制、修改、分发、商用（同 MIT）；② **额外专利授权**——贡献者自动授予使用者一份免费的专利许可，保护使用者不被贡献者起诉专利侵权；③ 如果你修改了代码，必须在修改的文件中标注「已修改」；④ 必须保留 NOTICE 文件中的归属信息；⑤ 如果你对项目提起专利诉讼，你的专利许可自动终止。**适用场景**：企业级项目首选——因为有明确的专利保护条款，法务风险更低。**代表项目**：FunASR / GPT-SoVITS / CosyVoice / TensorFlow / Kubernetes / Android。**一句话**：「MIT + 专利保护 + 标注修改」。"
+        },
+        {
+          "en": "GNU General Public License v2/v3",
+          "zh": "GPL 通用公共许可证",
+          "abbr": "GPL",
+          "def": "强 Copyleft 协议。允许自由使用和修改，但任何基于 GPL 代码的衍生作品必须也以 GPL 开源——「传染性」开源。",
+          "detail": "**核心条款**：① 可自由使用、修改、分发；② **Copyleft 强制**——任何包含 GPL 代码的衍生作品，其源代码也必须以 GPL 发布（不能闭源）；③ 用户有权获取源代码；④ **GPL v3 额外**：增加反 Tivoization 条款（禁止硬件厂商锁定软件）+ 专利诉讼自动终止。**关键区别**：一旦你的产品「链接」或「包含」了 GPL 代码，你的整个产品可能需要开源——这就是为什么很多商业公司**避免 GPL**。**适用场景**：希望确保代码永远开源的项目。**代表项目**：Linux Kernel / FAST-LIVO2 (GPLv2) / GCC / WordPress。**一句话**：「你用了我的代码，你的也得开源」。"
+        },
+        {
+          "en": "GNU Lesser General Public License",
+          "zh": "LGPL 宽松通用公共许可证",
+          "abbr": "LGPL",
+          "def": "GPL 的弱化版。允许闭源软件以动态链接方式使用 LGPL 库而不触发 Copyleft，但修改 LGPL 库本身仍需开源。",
+          "detail": "**核心条款**：① LGPL 库本身的修改必须开源（同 GPL）；② 但**通过动态链接（.so / .dll）使用 LGPL 库的闭源程序不需要开源**；③ 用户必须能替换 LGPL 库的版本。**适用场景**：想让库被广泛使用（包括商业产品），但又想保护库本身的开源。**代表项目**：Qt / FFmpeg / GNU C Library (glibc)。**一句话**：「库代码改了得开源，用的人不用」。"
+        },
+        {
+          "en": "BSD License (2-Clause / 3-Clause)",
+          "zh": "BSD 许可证",
+          "abbr": "BSD",
+          "def": "与 MIT 类似的宽松协议。2-Clause 版几乎等同 MIT；3-Clause 版额外禁止使用原作者名字做背书宣传。",
+          "detail": "**核心条款**：① 可自由使用、修改、分发、商用（同 MIT）；② 保留版权声明；③ **3-Clause 额外条款**：未经许可不得用原作者/组织名字为衍生产品做背书或推广。**适用场景**：学术项目常用（源自加州大学伯克利分校）。**代表项目**：FreeBSD / Nginx（部分）/ Flask。**一句话**：「基本同 MIT，但别拿我名字打广告」。"
+        },
+        {
+          "en": "Creative Commons (CC BY / CC BY-NC / CC BY-SA)",
+          "zh": "CC 知识共享协议",
+          "abbr": "CC",
+          "def": "主要用于非代码内容（论文、数据集、文档）。CC BY = 署名即可；CC BY-NC = 署名 + 非商用；CC BY-SA = 署名 + 相同方式共享。",
+          "detail": "**常见变体**：① **CC BY 4.0**——署名即可自由使用（最宽松）；② **CC BY-NC 4.0**——署名 + **禁止商业使用**；③ **CC BY-SA 4.0**——署名 + 衍生作品必须使用相同协议（类似 GPL 但用于内容）；④ **CC BY-NC-SA 4.0**——非商用 + 相同方式共享（最严格）。**适用场景**：数据集 / 模型权重 / 论文 / 教程 / 文档。**注意**：CC 协议**不适用于软件代码**（官方明确建议代码用 MIT/Apache/GPL）。**代表项目**：ChatTTS (CC BY-NC 4.0) / ImageNet / Wikipedia / 很多 HuggingFace 模型权重。**一句话**：「不是给代码用的，是给内容/数据用的」。"
+        },
+        {
+          "en": "Model License / Weights License",
+          "zh": "模型/权重专用协议",
+          "abbr": "",
+          "def": "专为 AI 模型权重设计的协议，通常在开源代码协议之外额外约束模型的使用方式（如禁止军事用途、限制商业规模等）。",
+          "detail": "**为什么需要**：AI 模型权重≠代码——代码是指令集，权重是训练产物。很多公司用 Apache-2.0 开源代码，但给权重加额外限制。**常见类型**：① **Llama 2/3 Community License**——可商用但 MAU > 7 亿需单独申请；② **Qwen License**——非商用免费，商用需申请；③ **Model License Agreement (阿里达摩院)**——FunASR 等模型权重使用此协议；④ **Responsible Use License**——禁止特定有害用途（深度伪造、监控、军事等）。**判断方法**：看项目根目录有无 MODEL_LICENSE / WEIGHTS_LICENSE 文件，以及 HuggingFace model card 中的 license 标签。**一句话**：「代码随便用，但模型权重另有规矩」。"
+        }
       ]
     }
   ]
