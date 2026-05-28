@@ -1,0 +1,6 @@
+{
+  "id": "os005",
+  "overview": "## 项目概述\n\n**OpenVLA** 是 UC Berkeley 开源的**通用机器人 VLA 基座模型**（GitHub 2.8k stars）——基于 7B VLM 预训练 + Open X-Embodiment 数据集微调。是首个大规模开源 VLA 模型，验证了「VLM → VLA」路线的可行性。后续 OpenVLA-OFT、RLinf 等都在此基础上做 RL 后训练。",
+  "quickStart": "## 快速开始\n\n```bash\n# 安装\npip install openvla\n\n# 推理\nfrom openvla import OpenVLA\nmodel = OpenVLA.from_pretrained('openvla/openvla-7b')\n\n# 给图像+语言指令，输出动作\naction = model.predict(\n    image=camera_image,\n    instruction=\"pick up the red cup\"\n)\nprint(action)  # [dx, dy, dz, drx, dry, drz, gripper]\n```",
+  "comparison": "## 横向对比\n\n| 维度 | OpenVLA | π₀ | GR00T | SmolVLA |\n|------|---------|-----|-------|----------|\n| **参数** | 7B | 3B | 未公开 | 0.5B |\n| **开源** | ✅ 完全 | ✅ 模型+代码 | 部分 | ✅ 完全 |\n| **训练数据** | Open X-Embodiment | 私有 | 私有 | LeRobot 格式 |\n| **RL 微调** | RLinf 支持 | openpi 内置 | RLinf 支持 | LeRobot 内置 |\n| **推理速度** | 慢（7B） | 中（3B+Flow） | 快 | ✅ 快（0.5B） |\n| **跨平台** | 好 | 好 | NVIDIA 生态 | 好 |"
+}

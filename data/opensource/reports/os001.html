@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeRobot — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">LeRobot — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="lerobot">LeRobot</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/huggingface/lerobot">https://github.com/huggingface/lerobot</a>  </p>
+<p><strong>Stars</strong>: 12.5k+ · <strong>License</strong>:  · <strong>收录日期</strong>:   </p>
+<p><strong>组织</strong>: Hugging Face  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-05-28</p>
+</blockquote>
+<hr />
+<h2 id="_2">项目概述</h2>
+<p><strong>LeRobot</strong> 是 Hugging Face 开源的<strong>机器人学习框架</strong>（GitHub 23.5k stars / Apache-2.0）——统一硬件接口 + 标准化数据集格式 + SOTA 策略算法，让机器人学习研究的门槛降低到「几行代码」。</p>
+<p><strong>一句话定位</strong>：LeRobot 之于机器人学习，类似 HuggingFace Transformers 之于 NLP。</p>
+<hr />
+<h2 id="_3">系统架构</h2>
+<pre><code>┌─────────────────────────────────────────────────────┐
+│              LeRobot 统一框架                          │
+├─────────────────────────────────────────────────────┤
+│  策略层：ACT / Diffusion Policy / VQ-BeT / SmolVLA  │
+│         / GR00T N1.5 / Pi0Fast                     │
+├─────────────────────────────────────────────────────┤
+│  数据层：LeRobotDataset (Parquet + MP4)             │
+│         标准化格式 / HuggingFace Hub 托管            │
+├─────────────────────────────────────────────────────┤
+│  硬件层：SO100 / Koch / ALOHA / Unitree G1         │
+│         / HopeJR / XLeRobot / 自定义硬件            │
+└─────────────────────────────────────────────────────┘
+</code></pre>
+<p><strong>三大设计原则</strong>：
+1. <strong>数据标准化</strong>：LeRobotDataset 格式（Parquet 存状态/动作 + MP4 存图像）让不同机器人采集的数据可互通
+2. <strong>策略即插即用</strong>：ACT / Diffusion / SmolVLA 等策略共享统一训练接口
+3. <strong>硬件抽象</strong>：<code>Robot</code> 基类抽象硬件差异，新硬件只需实现 <code>connect() / teleop() / record()</code> 三个方法</p>
+<hr />
+<h2 id="_4">代码架构解读</h2>
+<pre><code>lerobot/
+├── lerobot/
+│   ├── common/
+│   │   ├── datasets/        # LeRobotDataset 实现
+│   │   ├── policies/        # ACT / Diffusion / VQ-BeT / SmolVLA
+│   │   ├── robot_devices/   # 硬件驱动（SO100 / Koch / ALOHA）
+│   │   └── envs/           # 仿真环境接口
+│   ├── scripts/
+│   │   ├── train.py         # 统一训练入口
+│   │   ├── eval.py          # 统一评估
+│   │   ├── control_robot.py # 真机控制/采集
+│   │   └── push_dataset_to_hub.py  # 上传 HF Hub
+│   └── configs/             # Hydra 配置
+├── tests/
+└── examples/
+</code></pre>
+<p><strong>核心数据流</strong>：</p>
+<pre><code class="language-python"># 训练一行搞定
+from lerobot.scripts.train import train
+train(policy_type='act', env_type='pusht', num_epochs=100)
+
+# 自定义数据集
+from lerobot.common.datasets import LeRobotDataset
+ds = LeRobotDataset('my-dataset')  # 自动从 HF Hub 下载
+print(ds[0])  # {'observation.image': tensor, 'action': tensor, ...}
+</code></pre>
+<hr />
+<h2 id="_5">快速开始</h2>
+<pre><code class="language-bash"># 安装
+pip install lerobot
+
+# 可视化已有数据集
+python -m lerobot.scripts.visualize_dataset \
+    --repo-id lerobot/pusht
+
+# 训练 ACT 策略
+python -m lerobot.scripts.train \
+    --policy.type=act \
+    --env.type=pusht \
+    --training.num_epochs=100
+
+# 在 SO100 真机上采集数据
+python -m lerobot.scripts.control_robot \
+    --robot.type=so100 \
+    --control.type=record \
+    --repo-id my-dataset
+</code></pre>
+<p><strong>5 分钟体验</strong>：
+1. <code>pip install lerobot</code> 
+2. <code>python -m lerobot.scripts.train --policy.type=diffusion --env.type=pusht</code>
+3. 等训练完，<code>python -m lerobot.scripts.eval</code> 看效果</p>
+<hr />
+<h2 id="_6">横向对比</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>LeRobot</th>
+<th>RLinf</th>
+<th>robomimic</th>
+<th>OpenVLA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>定位</strong></td>
+<td>端到端机器人学习框架</td>
+<td>RL 后训练基础设施</td>
+<td>模仿学习基准</td>
+<td>VLA 模型</td>
+</tr>
+<tr>
+<td><strong>策略</strong></td>
+<td>ACT/Diffusion/SmolVLA/GR00T</td>
+<td>PPO/GRPO/SAC 算法层</td>
+<td>BC/BC-RNN/Diffusion</td>
+<td>OpenVLA 单一模型</td>
+</tr>
+<tr>
+<td><strong>数据格式</strong></td>
+<td>LeRobotDataset (标准)</td>
+<td>无统一格式</td>
+<td>robomimic format</td>
+<td>Open X-Embodiment</td>
+</tr>
+<tr>
+<td><strong>硬件支持</strong></td>
+<td>SO100/Koch/ALOHA/Unitree</td>
+<td>Franka/XSquare</td>
+<td>仿真为主</td>
+<td>通用</td>
+</tr>
+<tr>
+<td><strong>社区</strong></td>
+<td>HuggingFace 生态</td>
+<td>清华学术</td>
+<td>Stanford/UT</td>
+<td>Berkeley</td>
+</tr>
+<tr>
+<td><strong>Stars</strong></td>
+<td>23.5k</td>
+<td>3.6k</td>
+<td>1.0k</td>
+<td>2.8k</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

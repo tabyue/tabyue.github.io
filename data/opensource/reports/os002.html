@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MuJoCo — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">MuJoCo — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="mujoco">MuJoCo</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/google-deepmind/mujoco">https://github.com/google-deepmind/mujoco</a>  </p>
+<p><strong>Stars</strong>: 8.5k+ · <strong>License</strong>:  · <strong>收录日期</strong>:   </p>
+<p><strong>组织</strong>: Google DeepMind  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-05-28</p>
+</blockquote>
+<hr />
+<h2 id="_2">项目概述</h2>
+<p><strong>MuJoCo (Multi-Joint dynamics with Contact)</strong> 是 DeepMind 开源的<strong>高精度物理仿真引擎</strong>（GitHub 11.9k stars / Apache-2.0）。2021 年被 DeepMind 收购后从商业软件转为完全开源。是<strong>机器人学 + RL 研究中使用最广泛的物理引擎</strong>——dm_control / Gymnasium / robosuite / ManiSkill / IsaacLab 等几乎所有框架底层都用 MuJoCo。</p>
+<p><strong>核心优势</strong>：精确的接触动力学 + 极快的仿真速度 + 稳定的数值积分 + MJCF 模型描述语言。</p>
+<hr />
+<h2 id="_3">系统架构</h2>
+<pre><code>┌─────────────────────────────────┐
+│         MuJoCo 核心引擎          │
+├─────────────────────────────────┤
+│  物理求解器                       │
+│  ├─ 刚体动力学 (Recursive NE)    │
+│  ├─ 接触检测 (GJK + EPA)        │
+│  ├─ 约束求解 (PGS / Newton)     │
+│  └─ 腱/肌肉 (Tendon/Actuator)  │
+├─────────────────────────────────┤
+│  渲染器                          │
+│  ├─ OpenGL (默认)               │
+│  ├─ Vulkan                      │
+│  └─ EGL (headless)              │
+├─────────────────────────────────┤
+│  API 层                          │
+│  ├─ C API (核心)                │
+│  ├─ Python 绑定 (mujoco)       │
+│  └─ Unity / Unreal 插件         │
+├─────────────────────────────────┤
+│  模型描述 (MJCF XML)             │
+│  ├─ 运动链定义                   │
+│  ├─ 碰撞几何                     │
+│  ├─ 材质/纹理                    │
+│  └─ 传感器/执行器                 │
+└─────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="_4">快速开始</h2>
+<pre><code class="language-bash"># 安装
+pip install mujoco
+
+# Python 基础使用
+import mujoco
+import numpy as np
+
+# 加载模型
+model = mujoco.MjModel.from_xml_path('humanoid.xml')
+data = mujoco.MjData(model)
+
+# 仿真循环
+for _ in range(1000):
+    mujoco.mj_step(model, data)
+    print(f'time={data.time:.3f}, qpos={data.qpos[:3]}')
+
+# 渲染
+with mujoco.Renderer(model) as renderer:
+    renderer.update_scene(data)
+    img = renderer.render()
+</code></pre>
+<p><strong>GPU 加速（MuJoCo XLA / Warp）</strong>：</p>
+<pre><code class="language-python"># MuJoCo XLA (JAX 加速，数千并行)
+import mujoco.mjx as mjx
+model = mujoco.MjModel.from_xml_path('humanoid.xml')
+mjx_model = mjx.put_model(model)
+# 现在可以用 JAX vmap 并行数千个环境
+</code></pre>
+<hr />
+<h2 id="_5">横向对比</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>MuJoCo</th>
+<th>Isaac Sim</th>
+<th>PyBullet</th>
+<th>Genesis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>精度</strong></td>
+<td>✅ 最高（接触动力学）</td>
+<td>高</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td><strong>速度</strong></td>
+<td>快（CPU）/ 极快（MJX）</td>
+<td>极快（GPU）</td>
+<td>中</td>
+<td>极快（GPU）</td>
+</tr>
+<tr>
+<td><strong>并行</strong></td>
+<td>MJX: 数千</td>
+<td>数千 (GPU)</td>
+<td>❌</td>
+<td>数十万</td>
+</tr>
+<tr>
+<td><strong>渲染</strong></td>
+<td>中（OpenGL）</td>
+<td>✅ RTX 光追</td>
+<td>低</td>
+<td>高</td>
+</tr>
+<tr>
+<td><strong>生态</strong></td>
+<td>✅ 最大（dm_control 等）</td>
+<td>NVIDIA 生态</td>
+<td>传统</td>
+<td>新兴</td>
+</tr>
+<tr>
+<td><strong>协议</strong></td>
+<td>Apache-2.0</td>
+<td>NVIDIA</td>
+<td>zlib</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td><strong>Stars</strong></td>
+<td>11.9k</td>
+<td>6k+</td>
+<td>12.6k</td>
+<td>28.6k</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

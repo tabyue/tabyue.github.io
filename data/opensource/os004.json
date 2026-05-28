@@ -1,0 +1,6 @@
+{
+  "id": "os004",
+  "overview": "## 项目概述\n\n**Genesis** 是一个**生成式具身智能仿真平台**（GitHub 28.6k stars / Apache-2.0）。核心卖点：**单卡 RTX 4090 可达 430,000 倍实时速度**——比 Isaac Sim 更快。支持刚体 / MPM / SPH / FEM / PBD / 流体等多物理求解器 + 照片级光线追踪渲染。跨平台（Linux / macOS / Windows）。",
+  "quickStart": "## 快速开始\n\n```bash\n# 安装\npip install genesis-world\n\n# 基础示例\nimport genesis as gs\ngs.init()\n\nscene = gs.Scene()\nplane = scene.add_entity(gs.morphs.Plane())\nrobot = scene.add_entity(\n    gs.morphs.URDF(file='franka.urdf', pos=(0, 0, 0))\n)\nscene.build()\n\nfor i in range(1000):\n    scene.step()\n```\n\n**430,000× 实时速度示例**：\n```python\n# 大规模并行\nscene = gs.Scene(num_envs=65536)  # 65K 并行环境\nscene.build()\nscene.step()  # 一次 step 所有环境\n```",
+  "comparison": "## 横向对比\n\n| 维度 | Genesis | Isaac Lab | MuJoCo | PyBullet |\n|------|---------|-----------|--------|----------|\n| **速度** | ✅ 430,000× | 数千× | 数百× | 数十× |\n| **多物理** | ✅ 刚体/MPM/SPH/FEM/PBD/流体 | 刚体为主 | 刚体+软体 | 刚体 |\n| **渲染** | ✅ 照片级光追 | RTX 光追 | OpenGL | OpenGL |\n| **跨平台** | ✅ Linux/Mac/Win | Linux | 全平台 | 全平台 |\n| **Stars** | 28.6k | 6k+ | 11.9k | 12.6k |\n| **成熟度** | 新兴（2024-12） | 成熟 | 最成熟 | 传统 |"
+}

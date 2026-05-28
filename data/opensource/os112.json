@@ -1,0 +1,6 @@
+{
+  "id": "os112",
+  "overview": "## 项目概述\n\n**GPT-SoVITS** 是 RVC-Boss 开源的**5 秒语音克隆 TTS 神器**（GitHub 55.6k stars / Apache-2.0）——TTS 开源项目 Stars 第一。融合 GPT 架构理解文本语义 + SoVITS 声码器生成自然语音。仅需 5 秒参考音频即可克隆声线，1 分钟微调大幅提升相似度。支持中/英/日/韩/粤跨语言保持音色。",
+  "quickStart": "## 快速开始\n\n```bash\n# Windows 用户\n# 双击 go-webui.bat → 自动启动 7860 端口 WebUI\n\n# Linux / Docker\ngit clone https://github.com/RVC-Boss/GPT-SoVITS\ncd GPT-SoVITS\npip install -r requirements.txt\npython webui.py\n\n# WebUI 使用流程：\n# 1. 上传 5 秒参考音频\n# 2. 输入参考音频的转写文本\n# 3. 输入要合成的目标文本\n# 4. 点击「合成」→ 秒出结果\n\n# 命令行推理\nfrom GPT_SoVITS.inference_webui import get_tts_wav\naudio = get_tts_wav(\n    ref_wav_path='ref_5s.wav',\n    prompt_text='参考音频的文本',\n    text='你好，我是你的机器人助手',\n    text_language='zh'\n)\n```",
+  "comparison": "## 横向对比\n\n| 维度 | GPT-SoVITS | CosyVoice 2 | F5-TTS | OpenVoice V2 |\n|------|-----------|-------------|--------|---------------|\n| **Stars** | 55.6k | 8k | 12k | 36k |\n| **克隆门槛** | 5 秒 | 3 秒 | 零样本 | 3 秒 |\n| **自然度** | ✅ 极高 | ✅ 极高 | 高 | 高 |\n| **流式** | ✅ | ✅ 150ms | ❌ | ❌ |\n| **多语言** | 中英日韩粤 | 9 语言+18 方言 | 多语言 | 中英日韩法西 |\n| **License** | Apache-2.0 | Apache-2.0 | MIT | MIT |\n| **WebUI** | ✅ 完整 | 有限 | CLI | CLI |"
+}

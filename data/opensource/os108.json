@@ -1,0 +1,7 @@
+{
+  "id": "os108",
+  "overview": "## 项目概述\n\n**FAST-LIVO2** 是港大 MaRS 实验室（张富团队）开源的**最 SOTA LiDAR-惯性-视觉融合 SLAM 框架**（IEEE T-RO 2024 / GitHub 3.8k stars / GPLv2）。核心：ESIKF 序列化更新 + 直接法（无特征提取）+ 统一体素地图 + 逆曝光时间建模。适用于室外、退化场景、无人机高速飞行（70+ km/h 验证）。",
+  "architecture": "## 系统架构\n\n```\nLiDAR (10-20 Hz) ─┐\nIMU (200-1000 Hz) ─┼─ ESIKF (序列化更新) ─→ 19 维状态\nCamera (10-30 Hz) ─┘         │                    │\n                             │                    ↓\n                     统一体素地图 ←──── 位姿轨迹 SE(3)\n                   (几何+视觉双信息)\n```\n\n**四大创新**：\n1. **序列化 ESIKF**：先 LiDAR 更新再 Camera 更新，解耦维度不匹配\n2. **统一体素地图**：每个体素同时存概率平面 + 图像补丁\n3. **逆曝光时间 τ**：19 维状态含 τ，光照剧变时仍鲁棒\n4. **按需射线投射**：LiDAR 近距盲区补偿",
+  "quickStart": "## 快速开始\n\n```bash\n# Ubuntu 20.04 + ROS Noetic\ncd catkin_ws/src\ngit clone https://github.com/hku-mars/FAST-LIVO2\ngit clone https://github.com/xuankuzcr/rpg_vikit.git\ncd .. && catkin_make\nsource devel/setup.bash\n\n# 跑数据集\nroslaunch fast_livo mapping_avia.launch\nrosbag play YOUR_DATASET.bag\n\n# LiDAR-Camera 标定\n# 推荐 FAST-Calib: github.com/hku-mars/FAST-Calib\n```",
+  "comparison": "## 横向对比\n\n| 维度 | FAST-LIVO2 | FAST-LIO2 | LIO-SAM | ORB-SLAM3 |\n|------|------------|-----------|---------|------------|\n| **传感器** | LiDAR+IMU+Camera | LiDAR+IMU | LiDAR+IMU+GPS | Camera(+IMU) |\n| **方法** | 直接法融合 | 直接配准 | 特征+因子图 | 特征点 |\n| **退化处理** | ✅ 主动（几何+纹理互补） | 被动 | 被动+回环 | 差 |\n| **光照变化** | ✅ 逆曝光时间建模 | N/A | N/A | 差 |\n| **Stars** | 3.8k | 4.7k | 5.9k | 10k+ |"
+}

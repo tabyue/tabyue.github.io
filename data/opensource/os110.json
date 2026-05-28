@@ -1,0 +1,6 @@
+{
+  "id": "os110",
+  "overview": "## 项目概述\n\n**FunASR** 是阿里达摩院开源的**工业级语音识别工具包**（GitHub 15.2k stars / MIT）。核心：统一 AutoModel 接口 + 工业级预训练模型（Paraformer / SenseVoice / Fun-ASR-Nano）+ Docker 服务部署 + 170× realtime 速度。覆盖 ASR + VAD + 标点 + 说话人分离 + 情感识别全链路。",
+  "quickStart": "## 快速开始\n\n```bash\n# 安装\npip install funasr\n\n# 一行代码完成 VAD + ASR + 标点 + 说话人\nfrom funasr import AutoModel\nmodel = AutoModel(\n    model='iic/SenseVoiceSmall',\n    vad_model='fsmn-vad',\n    spk_model='cam++',\n    device='cuda'\n)\nresult = model.generate(input='meeting.wav')\nprint(result[0]['text'])\n# [00:00.4→00:03.8] Speaker 0: 让我们讨论计划。\n\n# 部署为 API 服务\nfunasr-server --device cuda  # OpenAI 兼容 API\n```",
+  "comparison": "## 横向对比\n\n| 维度 | FunASR | Whisper | sherpa-onnx |\n|------|--------|---------|-------------|\n| **定位** | 工具包 + 模型集成 | 单一模型 | 部署框架 |\n| **速度** | 170× realtime | 13× | 取决于模型 |\n| **中文** | ✅ SOTA | 中等 | 取决于模型 |\n| **说话人** | ✅ 内置 | ❌ | ✅ |\n| **情感** | ✅ emotion2vec | ❌ | ❌ |\n| **端侧** | Docker/ONNX | ONNX | ✅ 最强 |"
+}
