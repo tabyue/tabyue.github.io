@@ -2290,13 +2290,13 @@ async function openOsDetail(id){
         // 无详情文件，显示基础信息
         const p=OD.projects.find(x=>x.id===id);
         if(!p){body.innerHTML='<p>未找到项目</p>';return;}
-        body.innerHTML=`<h2 style="margin-bottom:12px">${p.name}</h2><div style="margin-bottom:12px"><a href="${p.github}" target="_blank" class="card-btn primary">💻 GitHub</a> <span class="os-stars" style="margin-left:8px">⭐ ${p.stars}</span></div><div class="md-body">${renderMd(p.description)}</div><div style="margin-top:16px;font-size:.8rem;color:var(--t3)">📄 License: ${p.license||'未知'} · 📅 收录: ${p.addedDate||''}</div><p style="margin-top:20px;color:var(--t3);font-size:.85rem">详细分析报告即将上线，敬请期待 🚧</p>`;
+        body.innerHTML=`<h2 style="margin-bottom:12px">${p.name}</h2><div style="margin-bottom:12px"><a href="${p.github}" target="_blank" class="card-btn primary">💻 GitHub</a> <span class="os-stars" style="margin-left:8px">⭐ ${p.stars}</span></div><div class="md-body">${renderMd(p.description)}</div><div style="margin-top:16px;font-size:.8rem;color:var(--t3)">📄 License: ${p.license||'未知'} · 📅 收录: ${p.addedDate||''}</div><p style="margin-top:20px;padding:16px;background:var(--bg3);border-radius:8px;color:var(--t2);font-size:.85rem">📋 该项目的详细分析报告正在撰写中，将包含：架构解读 / 代码走查 / 算法详解 / 性能基准 / 产业采用 / 快速开始指南等。敬请期待。</p>`;
         return;
     }
     // 有详情文件，渲染完整报告
     const p=OD.projects.find(x=>x.id===id)||{};
     let h=`<h2 style="margin-bottom:8px">${p.name||detail.id}</h2>`;
-    h+=`<div style="margin-bottom:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><a href="${p.github||''}" target="_blank" class="card-btn primary">💻 GitHub</a><span class="os-stars">⭐ ${p.stars||''}</span><span style="font-size:.8rem;color:var(--t3)">📄 ${p.license||''} · 📅 收录 ${p.addedDate||''}</span></div>`;
+    h+=`<div style="margin-bottom:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap"><a href="${p.github||''}" target="_blank" class="card-btn primary">💻 GitHub</a><a href="/data/opensource/reports/${id}.html" target="_blank" class="card-btn primary" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">📄 查看完整报告</a><span class="os-stars">⭐ ${p.stars||''}</span><span style="font-size:.8rem;color:var(--t3)">📄 ${p.license||''} · 📅 收录 ${p.addedDate||''}</span></div>`;
     // 渲染各个 section
     const sections=['overview','architecture','algorithms','models','environments','codeWalkthrough','keyPapers','quickStart','performance','industryAdoption','comparison','teamAndCommunity'];
     sections.forEach(key=>{

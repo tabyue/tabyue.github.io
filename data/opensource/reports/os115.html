@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RLinf (清华 — 具身/智能体 AI 强化学习后训练基础设施) — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">RLinf (清华 — 具身/智能体 AI 强化学习后训练基础设施) — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="rlinf-ai">RLinf (清华 — 具身/智能体 AI 强化学习后训练基础设施)</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/RLinf/RLinf">https://github.com/RLinf/RLinf</a>  </p>
+<p><strong>Stars</strong>: 3.6k · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-05-28  </p>
+<p><strong>组织</strong>: 清华大学 (Chao Yu + Yu Wang)  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-05-28</p>
+</blockquote>
+<hr />
+<h2 id="_2">项目概述</h2>
+<p><strong>RLinf（Reinforcement Learning Infrastructure）</strong> 是清华大学开源的具身/智能体 AI 强化学习基础设施框架。名称中「inf」既代表 Infrastructure（基础设施），也代表 Infinite（无限可能）。</p>
+<p><strong>核心使命</strong>：为 VLA / VLM / 世界模型的<strong>强化学习后训练（Post-Training RL）</strong>提供统一、可扩展、分布式的训练 pipeline——是当前具身智能从「SFT 能用」到「RL 好用」的关键工程化基础设施。</p>
+<p><strong>一句话定位</strong>：RLinf 之于具身 RL，类似 vLLM 之于 LLM 推理。</p>
+<hr />
+<h2 id="_3">系统架构</h2>
+<h3 id="_4">整体分层</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    RLinf 统一调度层                            │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
+│  │   PPO    │  │   GRPO   │  │   SAC    │  │  DSRL    │   │
+│  │ AsyncPPO │  │   DAPO   │  │  CrossQ  │  │  RECAP   │   │
+│  │Reinforce+│  │          │  │  RLPD    │  │  IQL     │   │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘   │
+├─────────────────────────────────────────────────────────────┤
+│                    模型后端（Actor 推理）                      │
+│  FSDP │ HuggingFace │ SGLang │ vLLM │ Megatron-Bridge       │
+├─────────────────────────────────────────────────────────────┤
+│                    VLA / VLM / 世界模型                       │
+│  π₀ │ π₀.₅ │ OpenVLA │ GR00T │ LingBot │ StarVLA │ Dexbotic│
+│  Qwen2.5-VL │ Qwen3-VL │ Wan │ OpenSora │ DreamZero        │
+├─────────────────────────────────────────────────────────────┤
+│                    环境 / 真机接口                            │
+│  ManiSkill │ LIBERO │ RoboTwin │ IsaacLab │ CALVIN │ RoboCasa│
+│  Franka │ XSquare Turtle2 │ Dexmal DOS-W1 │ GimArm         │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="_5">核心设计理念</h3>
+<ol>
+<li><strong>算法-模型-环境解耦</strong>：同一份 RL 算法代码可对接任何 VLA 模型和任何仿真/真机环境</li>
+<li><strong>多后端 Actor</strong>：根据模型规模自动选择 FSDP / SGLang / vLLM / Megatron 最优推理后端</li>
+<li><strong>混合执行模式</strong>：Actor 推理和 Env 交互<strong>异步并行</strong> → 吞吐量提升 <strong>2.434×</strong></li>
+<li><strong>零代码扩展</strong>：用户只需修改 YAML 配置即可扩展到多 GPU / 多节点，无需改 Python 代码</li>
+</ol>
+<hr />
+<h2 id="rl">支持的 RL 算法</h2>
+<h3 id="rl_1">在线 RL</h3>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>类型</th>
+<th>适用场景</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PPO</strong></td>
+<td>On-policy</td>
+<td>通用基线 / 仿真环境</td>
+<td>✅ 稳定</td>
+</tr>
+<tr>
+<td><strong>Async PPO</strong></td>
+<td>On-policy (异步)</td>
+<td>大规模并行仿真</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>GRPO</strong></td>
+<td>On-policy (Group RL)</td>
+<td>VLA 后训练首选 / π₀ 微调</td>
+<td>✅ 重点</td>
+</tr>
+<tr>
+<td><strong>DAPO</strong></td>
+<td>On-policy</td>
+<td>LLM 对齐 / 扩展场景</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Reinforce++</strong></td>
+<td>Policy Gradient</td>
+<td>简洁高效 baseline</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>SAC</strong></td>
+<td>Off-policy</td>
+<td>真机 RL / 样本效率优先</td>
+<td>✅ 重点</td>
+</tr>
+<tr>
+<td><strong>CrossQ</strong></td>
+<td>Off-policy (SAC 变体)</td>
+<td>去除 Target Q 网络，更稳定</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>RLPD</strong></td>
+<td>Off-policy + 离线数据</td>
+<td>先有演示再在线 RL</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>SAC-Flow</strong></td>
+<td>Off-policy + Flow Matching</td>
+<td>Flow Matching 策略的 RL 训练</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>DSRL</strong></td>
+<td>Off-policy + Diffusion</td>
+<td>在 Diffusion 潜空间用轻量 SAC 转向</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rl_2">离线 RL</h3>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>适用场景</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IQL</strong></td>
+<td>离线数据学习 / D4RL</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>RECAP</strong></td>
+<td>离线优势条件策略优化</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_6">模仿学习 / 人在环路</h3>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>适用场景</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DAgger</strong></td>
+<td>在线模仿学习</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>HG-DAgger</strong></td>
+<td>Human-Gated DAgger / 真机在线训练</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>SFT</strong></td>
+<td>全参数 / LoRA / VLM SFT</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_7">关键算法深度解读</h3>
+<h4 id="grpogroup-relative-policy-optimization">GRPO（Group Relative Policy Optimization）</h4>
+<pre><code class="language-python"># RLinf 中 GRPO 的核心实现思路（简化版）
+# 1. 对同一初始状态采样 G 条轨迹
+# 2. 用 reward 在组内做相对排序
+# 3. 优势函数 = (r_i - mean(r_group)) / std(r_group)
+# 4. 策略梯度更新
+
+def grpo_loss(log_probs, advantages, old_log_probs, clip_range=0.2):
+    ratio = torch.exp(log_probs - old_log_probs)
+    clipped = torch.clamp(ratio, 1 - clip_range, 1 + clip_range)
+    loss = -torch.min(ratio * advantages, clipped * advantages).mean()
+    return loss
+</code></pre>
+<p><strong>为什么 GRPO 适合 VLA 后训练</strong>：
+- PPO 需要 Value 网络估计 baseline，VLA 的状态空间（图像 + 语言）很难训一个好的 Value 网络
+- GRPO 用<strong>组内相对排序</strong>替代 Value 网络，不需要额外网络
+- 在 π₀ / GR00T 等大模型上，GRPO 比 PPO 更稳定且容易调参</p>
+<h4 id="dsrldiffusion-steering-via-reinforcement-learning">DSRL（Diffusion Steering via Reinforcement Learning）</h4>
+<pre><code>原理：不直接 RL 训练巨大的 Diffusion 模型
+而是：
+1. 冻结预训练好的 Diffusion Policy（如 π₀）
+2. 训练一个轻量 SAC Agent（~5M 参数）
+3. SAC Agent 在 Diffusion 的 latent noise 空间中「转向」
+4. 效果：用极少参数 + 极快训练 实现策略改进
+</code></pre>
+<p><strong>优势</strong>：训练成本降低 10-100×（因为不动 Diffusion 主干），适合资源有限的真机 RL</p>
+<hr />
+<h2 id="_8">支持的模型生态</h2>
+<h3 id="vla-rl">VLA 模型（开箱即用 RL 微调）</h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>参数量</th>
+<th>算法支持</th>
+<th>文档</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>π₀</strong></td>
+<td>3B</td>
+<td>GRPO / DSRL / SAC-Flow</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>π₀.₅</strong></td>
+<td>3B (开源版)</td>
+<td>GRPO / Sim-Real Co-Training</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>OpenVLA</strong></td>
+<td>7B</td>
+<td>PPO / GRPO</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>OpenVLA-OFT</strong></td>
+<td>7B (OFT 微调版)</td>
+<td>PPO / GRPO</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>GR00T</strong></td>
+<td>未公开</td>
+<td>GRPO</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>LingBot-VLA</strong></td>
+<td>未公开</td>
+<td>PPO / GRPO / 评估</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>StarVLA</strong></td>
+<td>未公开</td>
+<td>GRPO</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Dexbotic</strong></td>
+<td>未公开</td>
+<td>SAC / SFT-RL Lego</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vlm">视觉语言模型（VLM）</h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qwen2.5-VL</strong></td>
+<td>Reward 模型 / 多模态 RL</td>
+</tr>
+<tr>
+<td><strong>Qwen3-VL</strong></td>
+<td>Agent RL</td>
+</tr>
+<tr>
+<td><strong>Qwen3-VL-MoE</strong></td>
+<td>大规模 MoE Agent RL</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_9">世界模型</h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wan</strong></td>
+<td>视频世界模型 RL 微调</td>
+</tr>
+<tr>
+<td><strong>OpenSora</strong></td>
+<td>视频世界模型 RL 微调</td>
+</tr>
+<tr>
+<td><strong>DreamZero</strong></td>
+<td>世界动作模型 SFT + RL</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_10">自定义 / 轻量模型</h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MLP-Policy</strong></td>
+<td>状态空间 RL baseline</td>
+</tr>
+<tr>
+<td><strong>CNN-Policy (ResNet)</strong></td>
+<td>视觉 RL / 真机 RL</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_11">支持的环境</h2>
+<h3 id="12">仿真环境（12+）</h3>
+<table>
+<thead>
+<tr>
+<th>环境</th>
+<th>类型</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ManiSkill 3</strong></td>
+<td>通用操作</td>
+<td>桌面操作 / 移动操作</td>
+</tr>
+<tr>
+<td><strong>LIBERO</strong></td>
+<td>长程操作</td>
+<td>VLA 标准评测</td>
+</tr>
+<tr>
+<td><strong>LIBERO-Pro / Plus</strong></td>
+<td>增强版</td>
+<td>更难的长程任务</td>
+</tr>
+<tr>
+<td><strong>RoboTwin</strong></td>
+<td>双臂操作</td>
+<td>双臂协作</td>
+</tr>
+<tr>
+<td><strong>RoboVerse</strong></td>
+<td>通用</td>
+<td>多场景</td>
+</tr>
+<tr>
+<td><strong>BEHAVIOR</strong></td>
+<td>家居</td>
+<td>长程家务</td>
+</tr>
+<tr>
+<td><strong>MetaWorld</strong></td>
+<td>经典</td>
+<td>RL 基线对比</td>
+</tr>
+<tr>
+<td><strong>IsaacLab</strong></td>
+<td>高性能 GPU 并行</td>
+<td>大规模并行 RL</td>
+</tr>
+<tr>
+<td><strong>CALVIN</strong></td>
+<td>语言条件</td>
+<td>自然语言操作</td>
+</tr>
+<tr>
+<td><strong>RoboCasa</strong></td>
+<td>人形 + 家居</td>
+<td>人形机器人</td>
+</tr>
+<tr>
+<td><strong>EmbodiChain</strong></td>
+<td>多步推理</td>
+<td>Agent 推理链</td>
+</tr>
+<tr>
+<td><strong>GSEnv</strong></td>
+<td>3D Gaussian</td>
+<td>Real2Sim2Real</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_12">真实机器人</h3>
+<table>
+<thead>
+<tr>
+<th>硬件</th>
+<th>场景</th>
+<th>文档</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Franka Emika Panda</strong></td>
+<td>桌面操作</td>
+<td>✅ 完整指南</td>
+</tr>
+<tr>
+<td><strong>Dual-Franka</strong></td>
+<td>双臂</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>XSquare Turtle2</strong></td>
+<td>双臂移动</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Dexmal DOS-W1</strong></td>
+<td>灵巧手</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>GimArm</strong></td>
+<td>轻量机械臂</td>
+<td>✅ (2026-05)</td>
+</tr>
+<tr>
+<td><strong>Franka + 灵巧手</strong></td>
+<td>灵巧操作</td>
+<td>✅ (2026-05)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_13">传感器 &amp; 控制器</h3>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>设备</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>相机</strong></td>
+<td>Intel RealSense / Stereolabs ZED / Lumos</td>
+</tr>
+<tr>
+<td><strong>手部</strong></td>
+<td>Franka Hand / Ruiyan Hand</td>
+</tr>
+<tr>
+<td><strong>夹爪</strong></td>
+<td>Robotiq 2F-85 / 2F-140</td>
+</tr>
+<tr>
+<td><strong>遥操作</strong></td>
+<td>GELLO / SpaceMouse / PICO VR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_14">代码架构解读</h2>
+<h3 id="_15">目录结构</h3>
+<pre><code>RLinf/
+├── rlinf/                          # 核心库
+│   ├── algorithms/                 # RL 算法实现
+│   │   ├── ppo/                    # PPO / Async PPO
+│   │   ├── grpo/                   # GRPO (VLA 后训练核心)
+│   │   ├── sac/                    # SAC / CrossQ / RLPD / SAC-Flow
+│   │   ├── dsrl/                   # DSRL (Diffusion 潜空间 RL)
+│   │   └── offline/                # IQL / RECAP
+│   ├── models/                     # 模型适配层
+│   │   ├── vla/                    # π₀ / OpenVLA / GR00T 等
+│   │   ├── vlm/                    # Qwen-VL 等
+│   │   └── world_model/            # Wan / OpenSora / DreamZero
+│   ├── environments/               # 环境接口
+│   │   ├── sim/                    # ManiSkill / LIBERO / IsaacLab
+│   │   └── real/                   # Franka / XSquare 真机接口
+│   ├── backends/                   # Actor 推理后端
+│   │   ├── fsdp_backend.py
+│   │   ├── sglang_backend.py
+│   │   ├── vllm_backend.py
+│   │   └── megatron_bridge.py
+│   ├── distributed/                # 分布式调度
+│   │   ├── ray_cluster.py          # Ray 集群管理
+│   │   └── placement.py            # 组件放置策略
+│   └── utils/
+│       ├── reward/                  # 奖励函数设计
+│       └── logging/                 # Wandb / Tensorboard
+├── examples/                       # 示例配置
+│   ├── embodied/                   # 具身 RL 示例
+│   │   ├── config/                 # YAML 配置文件
+│   │   └── scripts/                # 启动脚本
+│   └── agentic/                    # Agent RL 示例
+├── requirements/                   # 依赖安装
+│   └── install.sh
+├── toolkits/                       # 工具箱
+│   └── realworld_check/            # 真机检查工具
+└── docs/                           # 文档源码
+</code></pre>
+<h3 id="_16">核心代码流程</h3>
+<h4 id="1-grpo-0-maniskill">1. 训练入口（以 GRPO + π₀ + ManiSkill 为例）</h4>
+<pre><code class="language-yaml"># examples/embodied/config/maniskill_grpo_pi0.yaml
+cluster:
+  num_nodes: 1
+  component_placement:
+    actor: {node_group: gpu, placement: 0}
+    env: {node_group: cpu, placement: 0}
+    trainer: {node_group: gpu, placement: 0}
+
+model:
+  type: pi0
+  pretrained: &quot;physical-intelligence/pi0-base&quot;
+  backend: sglang  # 或 vllm / fsdp
+
+algorithm:
+  type: grpo
+  group_size: 8           # 每组采样 8 条轨迹
+  clip_range: 0.2
+  lr: 5e-7
+  kl_coeff: 0.01
+
+environment:
+  type: maniskill
+  task: PickCube-v1
+  num_envs: 16            # 并行环境数
+  max_steps: 200
+
+reward:
+  type: sparse            # 或 dense / learned
+  success_bonus: 10.0
+
+training:
+  total_steps: 100000
+  batch_size: 64
+  save_interval: 5000
+  eval_interval: 2000
+</code></pre>
+<pre><code class="language-bash"># 一行命令启动训练
+python -m rlinf.train --config examples/embodied/config/maniskill_grpo_pi0.yaml
+</code></pre>
+<h4 id="2">2. 混合执行模式（核心性能优化）</h4>
+<pre><code class="language-python"># rlinf/distributed/hybrid_executor.py（概念代码）
+
+class HybridExecutor:
+    &quot;&quot;&quot;
+    核心创新：Actor 推理和 Env step 异步并行
+
+    传统串行模式：
+      Actor.infer() → Env.step() → Actor.infer() → ...
+      总时间 = T_actor + T_env（两者串行）
+
+    RLinf 混合模式：
+      while env_batch_1 在执行 step:
+          actor 在推理 env_batch_2 的动作
+      总时间 ≈ max(T_actor, T_env)（重叠）
+      吞吐量提升 = (T_actor + T_env) / max(T_actor, T_env) ≈ 2.434×
+    &quot;&quot;&quot;
+
+    def __init__(self, actor, envs, num_pipeline_stages=2):
+        self.actor = actor
+        self.envs = envs
+        self.stages = num_pipeline_stages
+
+    async def run_episode(self):
+        # 双缓冲：两组 env 轮流执行
+        obs_buffer = [self.envs[0].reset(), self.envs[1].reset()]
+
+        for step in range(max_steps):
+            stage = step % self.stages
+
+            # 当前 stage 的 env 在等 action
+            action = await self.actor.infer_async(obs_buffer[stage])
+
+            # 发送 action 给 env（非阻塞）
+            env_future = self.envs[stage].step_async(action)
+
+            # 同时处理另一个 stage 的推理
+            other_stage = (stage + 1) % self.stages
+            obs_buffer[other_stage] = await env_future
+</code></pre>
+<h4 id="3-vla-0">3. VLA 模型适配（以 π₀ 为例）</h4>
+<pre><code class="language-python"># rlinf/models/vla/pi0_adapter.py（概念代码）
+
+class Pi0Adapter:
+    &quot;&quot;&quot;
+    将 π₀ 模型包装为 RLinf 兼容的 Actor
+
+    关键：π₀ 是 Diffusion Policy，输出不是确定性动作
+    而是通过去噪 sampling 生成动作序列
+    &quot;&quot;&quot;
+
+    def __init__(self, model_path, backend='sglang'):
+        self.model = load_pi0(model_path)
+        self.backend = get_backend(backend)
+
+    def get_action(self, obs, instruction):
+        # π₀ 的推理：
+        # 1. 编码观测 + 语言指令
+        # 2. Diffusion 去噪生成动作 chunk
+        tokens = self.model.encode(obs, instruction)
+        action_chunk = self.model.denoise(
+            tokens, 
+            num_steps=10,       # diffusion steps
+            chunk_size=16       # 预测未来 16 步动作
+        )
+        return action_chunk
+
+    def get_log_prob(self, obs, instruction, action):
+        # RL 需要 log_prob 计算策略梯度
+        # 对 Diffusion Policy 来说 = ELBO 近似
+        return self.model.compute_elbo(obs, instruction, action)
+
+    def update(self, loss):
+        # 反向传播更新模型参数
+        loss.backward()
+        self.optimizer.step()
+</code></pre>
+<h4 id="4-rl">4. 真机 RL 数据流</h4>
+<pre><code class="language-python"># rlinf/environments/real/franka_env.py（概念代码）
+
+class FrankaRealEnv:
+    &quot;&quot;&quot;
+    真机 RL 环境接口
+
+    关键工程问题：
+    1. 安全约束（关节限位 / 力矩限制 / 碰撞检测）
+    2. 重置策略（人工重置 / 半自动重置）
+    3. 奖励设计（学习的 reward 或 基于传感器的 sparse reward）
+    4. 延迟补偿（网络延迟 / 控制延迟）
+    &quot;&quot;&quot;
+
+    def __init__(self, robot_ip, camera_type='realsense'):
+        self.robot = FrankaInterface(robot_ip)
+        self.camera = get_camera(camera_type)
+        self.safety = SafetyController()
+
+    def step(self, action):
+        # 1. 安全检查
+        safe_action = self.safety.clip(action)
+
+        # 2. 发送动作
+        self.robot.send_action(safe_action)
+
+        # 3. 等待执行 + 获取观测
+        time.sleep(self.dt)  # 控制频率 10-20 Hz
+        obs = self._get_obs()
+
+        # 4. 计算奖励
+        reward = self.reward_fn(obs)
+        done = self.success_detector(obs)
+
+        return obs, reward, done, {}
+
+    def _get_obs(self):
+        rgb = self.camera.get_rgb()        # 128×128 RGB
+        ee_pos = self.robot.get_ee_pose()  # 7D (pos + quat)
+        return {'image': rgb, 'state': ee_pos}
+</code></pre>
+<hr />
+<h2 id="_17">关键论文</h2>
+<h3 id="1-rlinf">1. RLinf 核心论文</h3>
+<ul>
+<li><strong>标题</strong>：RLinf: Reinforcement Learning Infrastructure for Embodied and Agentic AI</li>
+<li><strong>arXiv</strong>：2509.15965</li>
+<li><strong>核心贡献</strong>：提出混合执行模式 + 算法-模型-环境解耦架构</li>
+</ul>
+<h3 id="2-rlinf-user">2. RLinf-USER（真机在线学习）</h3>
+<ul>
+<li><strong>标题</strong>：RLinf-USER: A Unified and Extensible System for Real-World Online Policy Learning in Embodied AI</li>
+<li><strong>arXiv</strong>：2602.07837</li>
+<li><strong>核心贡献</strong>：首个覆盖「真机数据采集 → 在线 RL 训练 → 策略部署」全链路的统一系统</li>
+<li><strong>关键数字</strong>：Franka 真机 Peg-insertion 任务，从 0 开始 RL 训练 30 分钟内达到 90% 成功率</li>
+</ul>
+<h3 id="3-wovr-rl">3. WoVR（世界模型 RL 抗幻觉）</h3>
+<ul>
+<li><strong>标题</strong>：WoVR: World Models as Reliable Simulators for Post-Training VLA Policies with RL</li>
+<li><strong>arXiv</strong>：2602.13977</li>
+<li><strong>核心贡献</strong>：</li>
+<li><strong>问题</strong>：世界模型（Wan / OpenSora）的闭环自回归会产生「幻觉」——想象中成功但现实失败</li>
+<li><strong>解法</strong>：三层约束体系<ol>
+<li><strong>模拟器层</strong>：基于 Wan2.2-TI2V-5B + 首帧锚定 + context 噪声注入</li>
+<li><strong>交互层</strong>：KIR（关键帧初始化 Rollouts）——从任务关键帧开始想象，缩短误差累积</li>
+<li><strong>对齐层</strong>：PACE 共进化——策略和世界模型同步更新，避免分布偏移</li>
+</ol>
+</li>
+</ul>
+<hr />
+<h2 id="_18">快速开始</h2>
+<h3 id="_19">安装</h3>
+<pre><code class="language-bash"># 方式 1：pip 安装（推荐试用）
+pip install rlinf
+
+# 方式 2：源码安装（开发 / 完整功能）
+git clone https://github.com/RLinf/RLinf.git
+cd RLinf
+bash requirements/install.sh embodied --env maniskill_libero
+source .venv/bin/activate
+</code></pre>
+<h3 id="docker">Docker 一键启动</h3>
+<pre><code class="language-bash"># GPU 版本（包含 PyTorch + CUDA + 主流 VLA 模型支持）
+docker run -it --rm --gpus all \
+    --shm-size 20g \
+    --network host \
+    -v .:/workspace/RLinf \
+    rlinf/rlinf:agentic-rlinf0.1-torch2.6.0-openvla-openvlaoft-pi0
+</code></pre>
+<h3 id="maniskill-ppo">最简示例：ManiSkill + PPO</h3>
+<pre><code class="language-bash"># 1. 安装 ManiSkill 环境
+pip install mani-skill
+
+# 2. 运行 PPO 训练（MLP Policy + PickCube 任务）
+python -m rlinf.train \
+    --config examples/embodied/config/maniskill_ppo_mlp.yaml
+
+# 3. 查看 Wandb 训练曲线
+# 默认会上传到 wandb，也可用 tensorboard
+</code></pre>
+<h3 id="vla-rl-0-grpo">VLA RL 微调示例（π₀ + GRPO）</h3>
+<pre><code class="language-bash"># 1. 下载 π₀ 预训练权重
+huggingface-cli download physical-intelligence/pi0-base \
+    --local-dir ./checkpoints/pi0-base
+
+# 2. 修改配置中的模型路径
+# examples/embodied/config/maniskill_grpo_pi0.yaml
+#   model.pretrained: ./checkpoints/pi0-base
+
+# 3. 启动 GRPO 训练
+python -m rlinf.train \
+    --config examples/embodied/config/maniskill_grpo_pi0.yaml
+
+# 典型训练时间：8×A100，100K steps ≈ 6-8 小时
+</code></pre>
+<h3 id="rl-franka-sac">真机 RL 示例（Franka + SAC）</h3>
+<pre><code class="language-bash"># 控制节点（与 Franka 同一局域网）
+export FRANKA_ROBOT_IP=192.168.1.100
+bash examples/embodiment/start_controller.sh
+
+# 训练节点（有 GPU）
+python -m rlinf.train \
+    --config examples/embodied/config/realworld_sac_franka.yaml
+</code></pre>
+<hr />
+<h2 id="_20">性能基准</h2>
+<h3 id="_21">吞吐量对比</h3>
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>模式</th>
+<th>吞吐量 (steps/s)</th>
+<th>相对 RLinf</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RLinf</strong></td>
+<td>混合执行</td>
+<td><strong>1,247</strong></td>
+<td><strong>1.00×</strong></td>
+</tr>
+<tr>
+<td>OpenRL</td>
+<td>串行</td>
+<td>512</td>
+<td>0.41×</td>
+</tr>
+<tr>
+<td>TorchRL</td>
+<td>串行</td>
+<td>487</td>
+<td>0.39×</td>
+</tr>
+<tr>
+<td>CleanRL</td>
+<td>串行</td>
+<td>445</td>
+<td>0.36×</td>
+</tr>
+</tbody>
+</table>
+<p><strong>混合执行 vs 串行 = 2.434× 吞吐量提升</strong></p>
+<h3 id="dreamzero-sft">DreamZero SFT 吞吐量</h3>
+<table>
+<thead>
+<tr>
+<th>配置</th>
+<th>训练吞吐</th>
+<th>收敛时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RLinf DreamZero SFT</td>
+<td><strong>4× baseline</strong></td>
+<td>-60%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rl-franka-peg-insertion">真机 RL 效率（Franka Peg-insertion）</h3>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>达到 90% 成功率所需时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SAC (RLinf)</td>
+<td><strong>~30 分钟</strong></td>
+</tr>
+<tr>
+<td>RLPD (RLinf)</td>
+<td>~20 分钟（有演示数据）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_22">产业采用</h2>
+<table>
+<thead>
+<tr>
+<th>企业</th>
+<th>场景</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>智元 AgiBot</strong></td>
+<td>G2 人形 VLA RL 后训练</td>
+<td>量产人形的策略优化</td>
+</tr>
+<tr>
+<td><strong>X Square Robot</strong></td>
+<td>Turtle2 双臂真机 RL</td>
+<td>双臂协作任务</td>
+</tr>
+<tr>
+<td><strong>Dexmal</strong></td>
+<td>DOS-W1 灵巧手 RL</td>
+<td>灵巧操作 + Dexbotic 模型</td>
+</tr>
+<tr>
+<td><strong>摩尔线程</strong></td>
+<td>国产 GPU RL 加速</td>
+<td>GPU 算子适配</td>
+</tr>
+<tr>
+<td><strong>地平线 D-Robotics</strong></td>
+<td>边缘端 VLA RL</td>
+<td>边缘计算优化</td>
+</tr>
+<tr>
+<td><strong>PsiBot</strong></td>
+<td>人形 VLA RL</td>
+<td>VLA 后训练</td>
+</tr>
+<tr>
+<td><strong>GigaAi</strong></td>
+<td>具身 Agent RL</td>
+<td>Agent 任务</td>
+</tr>
+<tr>
+<td><strong>DexForce</strong></td>
+<td>力控 RL</td>
+<td>精密操作</td>
+</tr>
+<tr>
+<td><strong>YinWang</strong></td>
+<td>自动驾驶</td>
+<td>驾驶策略 RL</td>
+</tr>
+<tr>
+<td><strong>Robbyant</strong></td>
+<td>多场景</td>
+<td>通用 RL</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_23">横向对比</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>RLinf</th>
+<th>OpenRL</th>
+<th>TorchRL</th>
+<th>CleanRL</th>
+<th>Isaac RL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>定位</strong></td>
+<td>具身 + Agent RL 基础设施</td>
+<td>通用 RL 框架</td>
+<td>PyTorch RL 库</td>
+<td>单文件 RL</td>
+<td>NVIDIA 仿真 RL</td>
+</tr>
+<tr>
+<td><strong>VLA 支持</strong></td>
+<td>✅ π₀/GR00T/OpenVLA</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>部分</td>
+</tr>
+<tr>
+<td><strong>世界模型 RL</strong></td>
+<td>✅ Wan/OpenSora/DreamZero</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>真机 RL</strong></td>
+<td>✅ Franka/XSquare/Dexmal</td>
+<td>❌</td>
+<td>有限</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>分布式</strong></td>
+<td>✅ Ray + 多后端</td>
+<td>有限</td>
+<td>✅</td>
+<td>❌ (单机)</td>
+<td>✅ (GPU 并行)</td>
+</tr>
+<tr>
+<td><strong>算法覆盖</strong></td>
+<td>12+ (PPO/GRPO/SAC/DSRL/IQL...)</td>
+<td>8+</td>
+<td>6+</td>
+<td>10+</td>
+<td>PPO/SAC</td>
+</tr>
+<tr>
+<td><strong>混合执行</strong></td>
+<td>✅ (2.434×)</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>部分</td>
+</tr>
+<tr>
+<td><strong>协议</strong></td>
+<td>Apache-2.0</td>
+<td>Apache-2.0</td>
+<td>MIT</td>
+<td>MIT</td>
+<td>NVIDIA</td>
+</tr>
+<tr>
+<td><strong>Stars</strong></td>
+<td>3.6k</td>
+<td>1.8k</td>
+<td>7.2k</td>
+<td>6.4k</td>
+<td>N/A</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心结论</strong>：
+- <strong>如果你做 VLA 后训练</strong> → RLinf 是唯一选择（其他框架不支持 VLA）
+- <strong>如果你做通用 RL 研究</strong> → CleanRL / TorchRL 更成熟
+- <strong>如果你只做 Isaac Sim</strong> → Isaac RL 够用
+- <strong>如果你需要真机 RL</strong> → RLinf 有最完整的硬件支持</p>
+<hr />
+<h2 id="_24">团队与社区</h2>
+<h3 id="_25">核心团队</h3>
+<ul>
+<li><strong>Chao Yu</strong>（zoeyuchao@gmail.com）— 清华大学</li>
+<li><strong>Yu Wang</strong>（yu-wang@tsinghua.edu.cn）— 清华大学教授</li>
+</ul>
+<h3 id="_26">社区规模</h3>
+<ul>
+<li>GitHub Stars: 3.6k+</li>
+<li>Forks: 488</li>
+<li>Contributors: 50+</li>
+<li>Open Issues: 197</li>
+</ul>
+<h3 id="_27">正在招聘</h3>
+<ul>
+<li>博士后 / 博士 / 硕士 / 实习生</li>
+<li>方向：RL 基础设施 + 具身 AI</li>
+</ul>
+<h3 id="_28">相关链接</h3>
+<ul>
+<li>📖 文档：https://rlinf.readthedocs.io/</li>
+<li>🤗 HuggingFace：https://huggingface.co/RLinf</li>
+<li>📦 PyPI：https://pypi.org/project/rlinf/</li>
+<li>📝 论文：https://arxiv.org/abs/2509.15965</li>
+</ul>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
