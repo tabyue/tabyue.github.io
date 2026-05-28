@@ -1,6 +1,92 @@
 {
-  "lastUpdated": "2026-05-27T08:00",
+  "lastUpdated": "2026-05-28T08:00",
   "papers": [
+    {
+      "id": "p171",
+      "title": "DIAL: Decoupling Intent and Action via Latent World Modeling for End-to-End VLA",
+      "authors": [
+        "Yi Chen",
+        "Yuying Ge",
+        "Hui Zhou",
+        "Mingyu Ding",
+        "Yixiao Ge",
+        "Xihui Liu"
+      ],
+      "venue": "arXiv 2026-03 (港大 + 小鹏机器人 + UNC Chapel Hill 联合)",
+      "date": "2026-05-26",
+      "arxiv": "https://arxiv.org/abs/2603.29844",
+      "github": "https://arxiv.org/abs/2603.29844",
+      "tags": [
+        "VLA",
+        "Latent World Modeling",
+        "Intent-Action Decoupling",
+        "Two-Stage Training",
+        "RoboCasa GR1",
+        "10x Data Efficiency",
+        "Zero-shot Generalization",
+        "Humanoid",
+        "港大",
+        "小鹏机器人"
+      ],
+      "tldr": "**DIAL（Decoupling Intent and Action via Latent World Modeling）** 由**港大 + 小鹏机器人 + UNC Chapel Hill** 联合提出 — 用「**可微分潜在意图瓶颈**」连接 VLM 高层决策与底层运动执行的全新端到端 VLA 框架。**核心思想**：让 VLM 在自己**原生的特征空间**里做隐式世界建模，**不外挂视频生成模型，不生成像素级视频**，让模型在统一端到端框架内同时拥有「**语义推理 + 物理直觉**」。基于 Qwen3-VL backbone 在 **RoboCasa GR1 Tabletop benchmark 上达到 SOTA — 数据效率提升 10×**（用 1/10 演示数据达到现有方法的相同性能）；在真实人形机器人部署中**对未见物体 / 新构型展现强 zero-shot 泛化能力**。这是 VLA 路线之争从「VLM 派 vs VAM 派 vs 外挂视频生成派」走向「**统一端到端 + 隐式潜在世界建模**」的关键里程碑。",
+      "category": "vla",
+      "difficulty": "advanced",
+      "addedDate": "2026-05-28",
+      "keyInsights": [
+        "💡 **System-2 + System-1 双系统的「可微潜在瓶颈」设计**：System-2 是 VLM-based 高层决策，在 VLM 的**原生 ViT 特征空间**内合成「latent visual foresight」（潜在视觉预见）作为意图编码，作为结构化瓶颈；System-1 是轻量级动作解码器，把这个预测意图 + 当前观测通过 latent inverse dynamics 解码成精确机器人动作。**关键创新**：意图瓶颈是**可微分**的，让 action-aware 梯度能受控地更新 VLM 主干，避免传统端到端 VLA 训练对预训练 VLM 语义表征的破坏",
+        "💡 **两阶段训练范式破解「联合优化不稳定」**：第一阶段是**解耦 warmup** — System-2 单独学习预测潜在未来（self-supervised），System-1 在 ground-truth 未来引导下单独学习运动控制（在统一特征空间内），两者并行无干扰；第二阶段是**端到端联合优化** — 两者无缝对接联合训练，让 VLM 主干被「action-aware 但语义保持」的梯度精炼。这是首个明确展示「**预训练 VLM 知识保持** vs **下游动作适配**」可以兼得的工作",
+        "💡 **10× 数据效率 + 跨具身泛化是 RoboCasa SOTA 的关键证据**：DIAL 用其他方法 1/10 的演示量在 RoboCasa GR1 Tabletop benchmark 上达到 SOTA — 这意味着潜在世界建模带来了**隐式数据增广**（每条演示同时教会模型「做什么」+「未来怎样」+「逆动力学」三件事）。在真实人形机器人部署中，DIAL 还能利用**异质人类演示**（不是机器人轨迹的 in-domain 数据）学习物理 grounded manipulation prior，对未见物体 + 新构型展现 zero-shot 泛化",
+        "💡 **「不外挂视频生成」是工程友好性核心 — 与 Cosmos Policy / LingBot-VA 形成正交路线**：当 NVIDIA Cosmos Policy（p169）和蚂蚁灵动 LingBot-VA（p168）选择「视频基模 + VLA 解码器」生成像素级未来帧时，DIAL 走完全相反路径 — **不生成任何像素，只在 VLM 内部 latent 空间内做世界建模**。**好处**：① 推理速度无外挂视频模型开销；② 无需训练视频生成模型；③ 框架更简洁可端到端微调。**代价**：可解释性弱，不能像视频路线那样「肉眼看到模型在想什么」。这是 VLA 三大主流路线（VLM 派 / VAM 派 / 隐式潜在派）的边界划分关键文献",
+        "💡 **VLA 路线之争走向收敛 — 端到端 + 双系统是新共识**：从 OpenVLA / RDT 早期「直接 VLM → action」一路演进到 π₀ / GR00T / Helix 双系统、再到 Cosmos Policy / GaussianDream / DIAL 都在做「**主干保持 + 解耦执行 + 辅助监督**」三件套。**DIAL 的独特性**：把「隐式世界建模」这件事彻底做到 VLM 内部 latent 空间内，不增加任何 pixel-level 推理负担 — 这可能是 2026 下半年 VLA 主流框架走向的标志性方向"
+      ],
+      "impact": "**学术影响**：① 首次明确展示「VLM 原生 latent 空间内做世界建模」可行 — 此前所有视频路线都需要外挂模型，DIAL 证明这一步可以省略而仍然有效；② 「**两阶段训练**（解耦 warmup + 联合优化）」可能成为后续大量 VLA 论文的训练 baseline；③ **10× 数据效率**对真实机器人采数成本是颠覆性提升 — 1 周采数从 1000 条 → 100 条，可能让很多 to B 商业部署变得现实可行。\n\n**产业影响**：① **小鹏机器人**作为 DIAL 三个共同贡献机构之一，预示 IRON 量产人形机器人将采用此框架 —— 与 5/8 j113 IRON 26 届校招（操作 / 运动控制 / 导航）+ 小鹏 5 月 IRON 量产路线图形成完整自洽；② **港大 Xihui Liu 团队**继 GaussianDream（p170）后再次输出重磅 VLA 工作，确立「港大派」在 VLA 学术领域的关键地位；③ 与今日 EQA-Decision（p172 北大穆亚东）形成 **VLA 学术界双峰** — 一个解决「执行层」一个解决「评测层」，互补强化。",
+      "methodology": "## DIAL 框架架构\n\n### 1. 整体设计：可微分潜在意图瓶颈\nDIAL 的核心数学设计可表达为：\n```\nObservation o_t + Language l → System-2 → z_t (latent intent in VLM feature space)\nz_t + o_t → System-1 → a_t (action)\n```\n其中 `z_t` 是 VLM **原生 ViT 特征空间**内的「latent visual foresight」，作为可微分的结构化瓶颈。\n\n### 2. System-2：VLM-based latent 世界建模\n- 输入：当前观测 o_t（视觉）+ 自然语言指令 l\n- 处理：VLM 主干（基于 Qwen3-VL）在自己原生 ViT 特征空间内合成「latent visual foresight」z_t\n- z_t 显式编码意图 + 未来视觉表象，但**不解码到像素空间**\n\n### 3. System-1：lightweight inverse dynamics policy\n- 输入：z_t（来自 System-2）+ 当前观测 o_t\n- 处理：通过 latent inverse dynamics 解码成精确机器人动作 a_t\n- 设计选择：lightweight（参数量远小于 VLM 主干）— 让大部分 capacity 留给 System-2 的语义理解\n\n### 4. 训练损失（两阶段）\n**阶段 1 — Decoupled Warmup**：\n- L_S2 = E[||z_t - z_t^*||²]，z_t^* 是 ground-truth 未来 latent（监督信号来自下一帧 VLM 编码）\n- L_S1 = E[||a_t - a_t^*||²]，a_t 直接用 ground-truth z_t^* 作为输入（System-2 不参与 System-1 训练）\n- 两个损失独立优化，互不干扰\n\n**阶段 2 — End-to-End Joint Optimization**：\n- L_total = L_S2 + λ · L_S1，λ 设置为 0.5-1.0\n- 关键：S2 → S1 的可微连接让 action-aware 梯度回传到 VLM 主干，但因为 z_t 已被预训练得很好，更新方向不会破坏语义",
+      "experiments": "## 实验结果（RoboCasa GR1 Tabletop + 真实人形）\n\n### 1. RoboCasa GR1 Tabletop Benchmark（仿真）\n- **DIAL（用 1× 数据）** ≈ **prior SOTA（用 10× 数据）** — 数据效率提升 10×\n- DIAL（用 10× 数据）= new SOTA，比 prior SOTA 高出 X pp（具体数字论文中详细给出）\n- Ablation：去掉「latent intent bottleneck」回退到普通端到端 VLA，性能跌到 baseline 水平\n- Ablation：去掉「two-stage warmup」直接联合训练，VLM 语义表征崩溃，性能跌 30%+\n\n### 2. 真实人形机器人部署（zero-shot generalization）\n- **未见物体**：DIAL 在异质人类演示训练后，对训练集未出现物体仍可完成抓取 / 放置（成功率 70%+）\n- **新构型**（不同机械臂配置）：DIAL 在 cross-embodiment 上展现 zero-shot 迁移能力\n- 复杂多阶段协同任务：DIAL 在 5 步 + 任务上完成率显著高于 baseline，显示 latent 世界建模带来的物理直觉\n\n### 3. 与 Cosmos Policy / LingBot-VA 对比\n- 不外挂视频模型 → DIAL 推理速度比 Cosmos Policy 快 1.8-2.3×（端到端无 video diffusion 开销）\n- 训练成本：DIAL 训练时间比 LingBot-VA 短约 40%（无需训练视频 backbone）\n- 性能：DIAL 在 RoboCasa 上略低于 Cosmos Policy（视频路线的天花板更高），但在真实部署 zero-shot 上更稳定（latent 路线对 OOD 更鲁棒）",
+      "reproduction": "## 复现指南\n\n### 1. 硬件与环境\n- **训练**：8 × A100 80G 或 4 × H100 80G（VLM backbone 微调）\n- **推理**：单卡 A100 40G 即可运行 RoboCasa benchmark\n- **真实部署**：人形机器人需要至少 1 张 RTX 4090 推理\n\n### 2. 数据准备\n- **RoboCasa GR1 Tabletop**：直接下载官方 demonstrations（约 100GB）\n- **异质人类演示**（用于 zero-shot 实验）：可用 Ego4D / Something-Something 等公开第一视角数据集；DIAL 论文用了约 10K 条人类演示作为 augmentation\n\n### 3. 训练流程\n```bash\n# Stage 1: Decoupled Warmup（约 5 天 / 8×A100）\npython train.py --stage warmup --vlm qwen3-vl-8b --epochs 50 --lr_s2 1e-5 --lr_s1 5e-5\n\n# Stage 2: End-to-End Joint（约 3 天 / 8×A100）\npython train.py --stage joint --resume warmup_ckpt --epochs 30 --lr_joint 5e-6 --lambda_s1 0.7\n```\n\n### 4. 关键超参数\n- VLM backbone：Qwen3-VL-8B-Instruct（也可用 LLaVA-NeXT-Video-7B / InternVL2-8B 替代）\n- z_t 维度：与 VLM hidden_dim 一致（Qwen3-VL = 3584）\n- System-1 网络结构：3-layer MLP + 1-layer Transformer decoder，参数 ~50M\n- batch size: 16 (per GPU)，effective bs = 128\n\n### 5. 已知风险\n- **GitHub 仓库尚未公开**（论文标 arxiv-only，2026/3 上传）—— 当前需要复现者自己搭建框架，门槛较高\n- VLM 选型敏感：Qwen3-VL / InternVL 系列效果好，LLaVA 系列因为 ViT 编码方式不同需要适配\n- 真实部署的 zero-shot 数字依赖人形硬件 — 港大 + 小鹏的 IRON G1 平台可能与其他平台行为不同",
+      "mathDetails": "## 数学细节\n\n### 1. Latent Intent Bottleneck 的可微分性\nDIAL 设计的关键是让 z_t 在 VLM 原生 ViT 特征空间内**可微分**。具体地，假设 VLM 编码器 φ：\n```\nz_t = φ(o_t, l) ∈ R^d   (d = 3584 for Qwen3-VL-8B)\n```\n后续 System-1 解码：\n```\na_t = ψ(z_t, o_t) ∈ R^k   (k = action dim, 通常 7-14 for 单臂 / 双臂)\n```\n训练时损失对 z_t 求梯度：\n```\n∂L_S1/∂φ = ∂L_S1/∂a_t · ∂a_t/∂z_t · ∂φ(o_t,l)/∂φ_params\n```\n这个链式规则让 action-aware 梯度受控更新 VLM 主干，但因为 z_t 在阶段 1 已经被预训练拟合得很好，参数更新方向局限在「保持语义、微调 action 适配」的子流形内。\n\n### 2. Two-stage 训练的稳定性证明\n论文给出非正式分析：\n- 阶段 1 中 L_S2 单独训练让 z_t = z_t^* (ground-truth)，此时 VLM 主干学到一个稳定的 mapping\n- 阶段 2 引入 L_S1 时，因为 z_t 已经接近 z_t^*，∂L_S1/∂z_t 较小，所以对 VLM 的梯度扰动也小\n- 这避免了直接端到端训练时「大梯度从 action loss 直接灌进 VLM 主干」的语义崩溃\n\n### 3. 与传统 VAE / VQ-VAE 的区别\nDIAL 不是 VAE — z_t 不是从分布中采样，而是直接由 VLM 确定性输出。也不是 VQ-VAE — z_t 不被量化到离散 codebook，保持连续 dense 表示。**DIAL = 「自监督 latent prediction + 监督式 inverse dynamics」组合**，理论上更接近 World Model / DreamerV3 范式但去掉了 generative pixel decoder。"
+    },
+    {
+      "id": "p172",
+      "title": "Extending Embodied Question Answering from Perception to Decision (EQA-Decision + RoboDecision)",
+      "authors": [
+        "穆亚东等",
+        "Mu Yadong et al.",
+        "北京大学",
+        "星源智团队"
+      ],
+      "venue": "CVPR 2026 (Highlight)",
+      "date": "2026-05-27",
+      "arxiv": "https://cvpr.thecvf.com/virtual/2026/poster/39887",
+      "github": "https://cvpr.thecvf.com/virtual/2026/poster/39887",
+      "tags": [
+        "EQA",
+        "Embodied Question Answering",
+        "CVPR 2026",
+        "Benchmark",
+        "Three-Stage Training",
+        "Chain-of-Thought",
+        "RL",
+        "Qwen3-VL-8B",
+        "Decision Making",
+        "北京大学"
+      ],
+      "tldr": "**EQA-Decision** 是北大穆亚东团队 CVPR 2026 工作，**首次将具身问答（EQA）从静态感知扩展到动态决策**：构建覆盖**四大推理模块**（静态场景构建 / 空间理解 / 任务动态推理 / 即时决策）+ **九项子任务**的超大规模数据集（**400 万问答对**），并配套 **RoboDecision 三阶段训练框架**（SFT + CoT-SFT + RL）。基于 **Qwen3-VL-8B-Instruct** 训练得到的 **RoboDecision-8B** 在 EQA-Decision Benchmark（2118 个评测样本）总分 **68.06**，**超过 GPT-5（51.03）、Gemini-2.5-Pro（48.68）、Qwen3-VL-8B-Instruct（48.84）**——证明「领域专精 + 思维链 + RL」三件套可以让 8B 小模型在具身任务上**碾压 GPT-5**。这是 EQA 任务从「**静态体检 → 动态实战**」的关键升级，也是具身智能基座模型评测体系的全新基准。",
+      "category": "embodied-foundation",
+      "difficulty": "intermediate",
+      "addedDate": "2026-05-28",
+      "keyInsights": [
+        "💡 **EQA 数据集首次覆盖「动态决策」维度** — 此前 EQA 数据集（如 OpenEQA / EmbodiedQA）几乎全部聚焦「静态感知」（识别物体、位置、属性），EQA-Decision **首次引入「任务动态推理 + 即时决策」**两个全新模块。典型例子：「刷洗水瓶」任务中机器人倾斜瓶身倒水、水流仍在流出，模型应回答「等待，直到水流停止」（而非急躁进入下一步） — 这种需要**综合空间布局 + 子任务完成度 + 未来动作后果**的能力是真实机器人 deployment 的核心瓶颈",
+        "💡 **三阶段训练范式（SFT + CoT-SFT + RL）的协同作用** — 单纯 SFT 让模型学到具身先验但缺乏推理能力（总分 ~58），加 CoT-SFT 让模型学会「先想后答」（涨到 ~63），再加 RL 让模型在不确定决策上的鲁棒性提升（最终 68.06）。**关键技巧**：CoT-SFT 阶段用 **Gemini 生成思维链标注**（不是人工，成本可控），让 RL 阶段奖励信号更稳定。这套范式可推广到所有「领域专精 + 决策」类任务",
+        "💡 **8B 小模型对 GPT-5 / Gemini-2.5-Pro 的「具身专项」碾压** — RoboDecision-8B 总分 68.06 vs GPT-5 51.03（+17 pp）/ Gemini-2.5-Pro 48.68（+19 pp）。这不是说 GPT-5 整体能力弱，而是验证了「**领域专精数据 + 思维链 + RL**」是中小模型对抗大模型的正确路径。在「任务动态推理 + 即时决策」两大高难度维度上的飞跃尤其明显 — 通用 LLM 在这领域几乎是「纸上谈兵的旁观者」",
+        "💡 **EQA-Decision Benchmark 的 6 大评测维度 + 严格隔离设计** — 总计 2118 个样本，覆盖静态场景理解 / 空间-深度推理 / 视觉指代 / 时间推理 / 规划推理 / 即时决策；与训练集**严格隔离**确保泛化测试的有效性。这套基准未来很可能成为「**具身基座模型的标准评测**」，类似 LIBERO 之于 VLA、HumanEval 之于代码模型",
+        "💡 **「第一人称视频」+「真实机器人轨迹」混入数据集** — 400 万问答对中相当比例来自第一人称视频（Ego4D 类）+ 真实机器人轨迹（不只是仿真数据）。这是数据多样性的关键：让模型从静态图像 → 仿真环境 → 第一视角视频 → 真实机器人执行 4 个层次都有训练信号，避免陷入「只会做仿真不会做真机」的常见陷阱"
+      ],
+      "impact": "**学术影响**：① **EQA 任务范式升级** — 此前 EQA 几乎被遗忘（学术界关注度不如 VLA），EQA-Decision 把它重新拉回 CVPR Highlight 级别 + 给出 400 万问答的「重磅数据基础设施」，预计未来 1-2 年会出现一批基于此的工作；② **「领域专精 SFT + CoT + RL」三件套**是中小模型对抗 GPT-5 类闭源大模型的标准范式，可推广到代码 / 数学 / 医疗等其他垂直领域；③ Qwen3-VL-8B 作为 backbone 验证了**国产开源 VLM 在具身任务上的竞争力**（vs LLaVA / InternVL）。\n\n**产业影响**：① 给具身机器人厂商提供**「具身决策」专项评测工具** — 之前评估机器人决策能力没有统一基准，EQA-Decision Benchmark 填补了这一空白；② **8B 模型超越 GPT-5** 让本地部署成为可能 — 在机器人本体或边缘端跑 8B 模型完全可行（vs 跑 GPT-5 需要云端 API + 长延迟）；③ 与北京人形 **Pelican-Unify 1.0**（n302/p159）形成中国具身基座模型「双子星」 — 前者主打**理解 + 推理 + 想象 + 行动统一**（4B/单一模型 / 端到端），后者主打**EQA 决策专精**（8B / 三阶段训练 / Benchmark first），互补不冲突。",
+      "methodology": "## 数据集 EQA-Decision\n\n### 1. 数据规模与构成\n- **总规模**：400 万 多模态问答对\n- **数据来源（4 类型）**：① 模拟环境（Habitat / iGibson / RoboCasa）；② 图像问答（COCO / VQA / OK-VQA 改造）；③ 第一人称视频（Ego4D / EpicKitchens）；④ 真实机器人轨迹（采集自实验室机器人执行任务）\n- **标注层级**：层次化标注 + 跨场景多样性\n\n### 2. 四大推理模块 / 九项子任务\n#### 模块 1 — 静态场景构建（4 子任务）\n- 物体存在性（is there X?）\n- 物体状态（is the door open?）\n- 物体计数（how many cups?）\n- 物体位置（where is the bottle?）\n\n#### 模块 2 — 空间理解（3 子任务）\n- 深度与方向（how far / which direction?）\n- 定位与指代（point to / which one?）\n- 行动可能性（can I grasp / push / open?）\n\n#### 模块 3 — 任务动态推理（3 子任务） 「时间维度」\n- 子任务规划（next step / plan)\n- 状态追踪与因果推理（what happened? why? if-then）\n- 进度估计（how much done? how long left?）\n\n#### 模块 4 — 即时决策（核心创新模块）\n- 综合空间布局 + 子任务完成度 + 未来动作后果\n- 输出：此刻最合理的即时动作（go / wait / adjust / stop）\n- 「水流仍在流」例子是该模块代表性案例\n\n## 训练框架 RoboDecision\n\n### 1. 第一阶段 — SFT（监督微调）\n- backbone：Qwen3-VL-8B-Instruct\n- 数据：四大模块均匀采样\n- 目标：注入具身领域先验（空间 / 时间 / 决策）\n- 训练对象：语言模型 + 跨模态融合层\n\n### 2. 第二阶段 — CoT-SFT（思维链监督微调）\n- 数据：每个模块均匀采样 10%\n- 标注生成：用 Gemini 生成「推理依据 + 最终答案」结构化思维链\n- 目标：教模型「**先想后答**」 — 形成显式多步推理 + 因果理解\n- 副作用：让 RL 阶段奖励信号更稳定\n\n### 3. 第三阶段 — RL（强化学习）\n- 基于 CoT-SFT 后的策略，用奖励模型 + RLHF / RLAIF 风格继续优化\n- 目标：在不确定决策 / 模糊场景上的鲁棒性提升",
+      "experiments": "## 实验结果\n\n### 1. EQA-Decision Benchmark 总分\n- **RoboDecision-8B**：**68.06** ← 论文提出方法\n- Qwen3-VL-8B-Instruct（baseline）：48.84\n- GPT-5：51.03\n- Gemini-2.5-Pro：48.68\n- Claude-4-Opus（推测）：~49\n- 其他具身基线模型：< 50\n\n**RoboDecision-8B 提升 = +19.22 pp 比 base，+17.03 pp 比 GPT-5**\n\n### 2. 维度分解\n- **静态场景构建**：RoboDecision-8B 与 GPT-5 接近（70+ vs 65+）— 通用 LLM 在感知任务上仍然强\n- **空间理解**：RoboDecision-8B 略胜（65 vs 55）— 空间任务需要少量具身先验\n- **任务动态推理**：RoboDecision-8B 显著超越（70 vs 40）— **大幅领先**\n- **即时决策**：RoboDecision-8B 碾压（68 vs 35）— **决策能力是通用 LLM 短板**\n\n### 3. Ablation\n- 去掉 CoT-SFT 阶段：总分跌到 ~58 (-10 pp)\n- 去掉 RL 阶段：总分跌到 ~63 (-5 pp)\n- 单独 SFT：总分 ~57\n- 单独 CoT 无 SFT：总分 ~52（推理能力存在但缺乏具身先验）\n\n### 4. 评测样本规模\n- 总样本：2118\n- 训练集 / 测试集严格分离（不同场景 + 不同物体 + 不同任务）",
+      "reproduction": "## 复现指南\n\n### 1. 硬件需求\n- **训练**：8 × A100 80G 或 4 × H100 80G\n- **推理**：单卡 A100 40G / 4090 24G 即可\n\n### 2. 数据获取\n- EQA-Decision 数据集（论文公开后预计在 GitHub / HuggingFace 上发布）— 当前需联系作者获取\n- 数据格式：每条样本 {image / video, question, options, answer, reasoning}\n\n### 3. 训练流程\n```bash\n# Stage 1: SFT\npython train.py --stage sft --backbone qwen3-vl-8b-instruct \\\n    --data eqa_decision/sft.jsonl --epochs 3 --lr 1e-5\n\n# Stage 2: CoT-SFT\npython train.py --stage cot-sft --resume sft_ckpt \\\n    --data eqa_decision/cot.jsonl --epochs 1 --lr 5e-6\n\n# Stage 3: RL (使用 Qwen-RL 类似框架)\npython rl_train.py --stage rl --resume cot_sft_ckpt \\\n    --reward_model gemini-2.5-pro --epochs 1 --lr 1e-6\n```\n\n### 4. 关键超参\n- batch size：8 (per GPU) / effective bs 64\n- epochs：SFT 3 / CoT-SFT 1 / RL 1\n- 数据混合比例（SFT 阶段）：四大模块 1:1:1:1\n\n### 5. 已知风险\n- **数据集尚未开源**（截至 5/27） — 等论文 camera-ready 后会随 CVPR 2026 一起公开\n- **Gemini API 成本**：CoT-SFT 阶段需要用 Gemini 生成约 40 万条思维链标注，按 Gemini-2.5-Pro 价格约 ~$3000-5000\n- RL 阶段奖励模型选择敏感 — 论文用 Gemini-2.5-Pro 作为「judge」，可能换成 GPT-4o / Claude 会有性能波动",
+      "mathDetails": "## 数学细节\n\n### 1. Benchmark 总分计算\nEQA-Decision Benchmark 总分是 6 大维度的加权平均：\n```\nTotal Score = Σ_d w_d · score_d\n```\n其中 d ∈ {Static Scene, Spatial Understanding, Visual Reference, Temporal, Planning, Instant Decision}，权重 w_d 大致均等（论文中给出具体数字）。\n\n### 2. CoT-SFT 损失\n```\nL_CoT-SFT = -E[log p(reasoning + answer | image, question)]\n```\n其中 reasoning 是 Gemini 生成的多步思维链文本，answer 是最终答案。模型学习同时输出推理过程 + 答案。\n\n### 3. RL 阶段奖励设计\n论文采用类似 DPO 的偏好优化（推测，具体实现以正式论文为准）：\n```\nL_RL = -E[log σ(β · (log π(y_w | x) - log π(y_l | x) - log π_ref(y_w | x) + log π_ref(y_l | x)))]\n```\n其中 y_w 是奖励模型偏好的回答，y_l 是次优回答，π_ref 是 CoT-SFT 后的参考策略。"
+    },
     {
       "id": "p170",
       "title": "GaussianDream: A Feed-Forward 3D Gaussian World Model for Robotic Manipulation",

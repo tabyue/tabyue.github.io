@@ -1,5 +1,28 @@
 # automation-5 执行历史
 
+## 2026-05-28 08:00（早间轮）
+- 投稿箱：0 开放 Issue
+- 新闻 +3 / 论文 +2 / 招聘 +1 / 学习 +1 sec
+- n324 中科第五纪 A 轮数亿元（中科院+清华 / FAM 超少样本 / FlowWAM WorldArena 第一 / 海外亿元订单）
+- n325 新智具身 NeoteAI 近亿元天使（复旦系 + 触觉原生模态 + Meta 前研究员）
+- n326 北大穆亚东 EQA-Decision CVPR 2026（400 万问答 / RoboDecision-8B 总分 68.06 超 GPT-5）
+- p171 DIAL（港大+小鹏+UNC，arxiv:2603.29844 端到端 VLA 隐式潜在世界建模 / RoboCasa SOTA 数据效率 10×）+ 完整 detail
+- p172 EQA-Decision + RoboDecision（北大穆亚东 CVPR 2026 / 三阶段 SFT+CoT+RL / 8B 碾压 GPT-5）+ 完整 detail
+- j149 中科第五纪 A 轮扩招 5 大方向
+- mobile-robot-navigation +sec-15 EQA 决策导航 8.2K chars（模块 14→15 sec / 84.5K→92.6K，脱离最薄区前 5）
+- 0 dups（news 298 / papers 152 / os 96 / jobs 141），sitemap 468 chapters
+- commit 待 push origin/main
+
+## 2026-05-27 08:00（早间轮）
+- 投稿箱：0 开放 Issue
+- 新闻 +1 / 论文 +1 / 招聘 +1 / 学习 +1 sec
+- n323 理工华汇近亿元 Pre-A（北理工系学院派 + 军用特种亿元订单）
+- p170 GaussianDream（港大+CMU，3D 高斯训练插件 + 推理零开销 / LIBERO 98.4% / 真机 +15.6pp / arxiv:2605.20752）+ 完整 detail
+- j148 理工华汇扩招 5 方向
+- ai-infra +sec-23 Gaussian World Model 工程化 8.5K chars（模块 89K→98K）
+- 0 dups，692 JSON OK，sitemap 467 chapters
+- commit ba385ff push origin/main
+
 ## 2026-05-24 08:00（早间轮）
 - 投稿箱：无开放 Issue（gh issue list 返回 []）
 - 启动状态：HEAD 12668fc（5/22），工作树残留前轮 5/23 实例已写未提交工作（n312-314 / p164-165 / j143-144 / vla-models sec-20 _round_5_23 脚本）—— 接手不丢弃
