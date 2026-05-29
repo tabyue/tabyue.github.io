@@ -1,5 +1,21 @@
 # automation-5 执行历史
 
+## 2026-05-29 08:00（早间轮）
+- 投稿箱：0 开放 Issue
+- 新闻 +3 / 论文 +2 / 开源 +1 / 招聘 +1 / 学习 +1 sec
+- n327 自变量开源 Wall-OSS-0.5（国产首个零样本部署 VLA / 17 任务 4 项 ≥ 80 / 微调超 π0.5 17.5pp / 完整开源）
+- n328 Figure × Catalyst Brands 内华达里诺仓商业部署（Brookfield 同投资人协同 + 200 小时直播 24.96 万包裹）
+- n329 桥田智能国家工业母机基金独家投资亿元 A+（磁力换模 Q1 订单超 2025 全年 + 出海德国奔驰）
+- p173 Wall-OSS-0.5 (Gradient-Bridged Co-Training + RVQ + DMuon + Action-Space Flow Matching) 含完整 detail
+- p174 LIBERO-X (ICRA 2026 / 美团 + 北航) 五级递进 VLA 鲁棒性诊断 含完整 detail
+- os125 X-Square-Robot/wall-x（Apache 2.0 / 模型权重 + 训练代码 + 训练菜谱 + DMuon 实现完整开源）
+- j150 自变量 Wall-OSS-0.5 开源后扩招 5 大方向 35+ 岗位
+- 学习深化：training-inference-optimization +sec-16「Wall-OSS 范式」12.8K chars，模块 15→16 sec / 84K→97K，**脱离最薄区第一名**
+- 0 dups（news 301 / papers 154 / opensource 114 / jobs 142），710 JSON 全部 OK
+- sync_learn_split (2 files updated) + build_sitemap (470 chapters) 已跑
+- commit fdce14b 已 push origin/main
+- 经验：① opensource id 冲突 4 次连击（os121/os122 已被前实例占用）— 未来 `sorted(set(ids))` 看 id 池而非简单 max+1；② HEREDOC + 三引号陷阱再次踩到 — 改用 Write 工具写 .md 作 content 源 + Python 脚本 json.load + append 最稳；③ JSON 大文件 lastUpdated 三件套：learn 顶层 + 新 sec + learning-path 对应模块（sync_learn_split 自动处理 split）
+
 ## 2026-05-28 08:00（早间轮）
 - 投稿箱：0 开放 Issue
 - 新闻 +3 / 论文 +2 / 招聘 +1 / 学习 +1 sec

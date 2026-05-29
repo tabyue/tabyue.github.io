@@ -4,7 +4,7 @@
   "stage": "阶段一：数学与编程基础",
   "importance": "重要",
   "estimatedHours": 40,
-  "lastUpdated": "2026-05-01T05:50",
+  "lastUpdated": "2026-05-29T10:45",
   "description": "机器人底层控制、实时系统、ROS2 核心节点通常用 C++ 编写。不需要精通所有 C++ 特性，但智能指针、多线程和 CMake 是必须掌握的。",
   "prerequisites": [
     "基础编程经验"
@@ -48,7 +48,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：Modern C++ 语法、智能指针、lambda、optional\n**第2周**：多线程编程（mutex、atomic、condition_variable）\n**第3周**：CMake 构建系统 + Eigen 线性代数库\n**第4周**：写一个 ROS2 C++ 节点（订阅传感器 + 发布控制指令）",
-  "maturity": "growing",
+  "maturity": "comprehensive",
   "sectionsMeta": [
     {
       "id": "sec-01",
@@ -157,6 +157,18 @@
       "title": "C++ 端侧 ML 推理：把 VLA 模型塞进机器人本体",
       "lastUpdated": "2026-05-01T05:50",
       "chars": 7017
+    },
+    {
+      "id": "sec-19",
+      "title": "C++ 设计模式在机器人系统中的应用：状态机 / 观察者 / 工厂 / 单例",
+      "lastUpdated": "2026-05-29T10:45",
+      "chars": 9169
+    },
+    {
+      "id": "sec-20",
+      "title": "C++ 错误处理策略：异常 vs 错误码 vs Expected / std::optional 在机器人系统中的选择",
+      "lastUpdated": "2026-05-29T10:45",
+      "chars": 7357
     }
   ]
 }
