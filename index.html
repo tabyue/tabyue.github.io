@@ -255,6 +255,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 .ls-mod .ls-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ls-mod .ls-updated{width:6px;height:6px;background:var(--pk);border-radius:50%;flex-shrink:0;animation:pulse 2s infinite}
 .ls-mat{font-size:.7rem;flex-shrink:0;margin-left:2px;opacity:.85}
+.ls-mod-right{display:flex;align-items:center;gap:2px;margin-left:auto;flex-shrink:0}
+.ls-mod-arrow{color:var(--t3);font-size:.75rem;padding:2px 6px;cursor:pointer;border-radius:4px;transition:background .15s}
+.ls-mod-arrow:hover{background:var(--bg3)}
 /* Sidebar section sub-items (章节列表折叠在模块下) */
 .ls-sections{padding:4px 0 8px 38px;display:none}
 .ls-mod.active+.ls-sections,.ls-mod.expanded+.ls-sections{display:block}
@@ -1344,18 +1347,20 @@ function renderLearn(){
             const activeCls=_currentLearnMod===modId?' active':'';
             const isActive=_currentLearnMod===modId;
             const arrowCh=(isActive && !_modSecsCollapsed)?'▾':'▸';
-            // active 模块才显示箭头，箭头独立可点击（toggle 章节列表）
+            // maturity 标签（优先从 learnCache 读，fallback 从 LD 模块读）
+            const _mat=(learnCache[modId]&&learnCache[modId].maturity)||m.maturity||'';
+            const matSpan=_mat==='comprehensive'?'<span class="ls-mat" title="教材级完整">✅</span>'
+                :_mat==='foundation'?'<span class="ls-mat" title="基础搭建中">🌱</span>'
+                :_mat==='growing'?'<span class="ls-mat" title="持续完善中">🔄</span>':'';
+            // 箭头（active 模块才显示）
             const arrowSpan=isActive
-                ? `<span class="ls-mod-arrow" onclick="toggleModSecs(event,'${modId}')" title="${_modSecsCollapsed?'展开章节':'收起章节'}" style="margin-left:auto;color:var(--t3);font-size:.75rem;padding:2px 8px;cursor:pointer;border-radius:4px;transition:background .15s" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='transparent'">${arrowCh}</span>`
+                ? `<span class="ls-mod-arrow" onclick="toggleModSecs(event,'${modId}')" title="${_modSecsCollapsed?'展开章节':'收起章节'}">${arrowCh}</span>`
                 : '';
             sb+=`<div class="ls-mod${activeCls}" data-mod="${modId}" onclick="clickLearnMod('${modId}')">`;
             sb+=`<span class="ls-prog ${progCls}"></span>`;
             sb+=`<span class="ls-name">${m.name}</span>`;
             if(isUpdated)sb+=`<span class="ls-updated"></span>`;
-            const _mat=learnCache[modId]&&learnCache[modId].maturity;
-            if(_mat==='comprehensive')sb+=`<span class="ls-mat ls-mat-c" title="教材级完整">✅</span>`;
-            else if(_mat==='foundation')sb+=`<span class="ls-mat ls-mat-f" title="基础搭建中">🌱</span>`;
-            sb+=arrowSpan;
+            sb+=`<span class="ls-mod-right">${matSpan}${arrowSpan}</span>`;
             sb+=`</div>`;
             // 展开当前模块的章节列表（且未被用户收起）
             if(_currentLearnMod===modId && !_modSecsCollapsed && learnCache[modId] && learnCache[modId].sections){

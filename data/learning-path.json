@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-29T08:00",
+  "lastUpdated": "2026-05-29T19:26",
   "stages": [
     {
       "id": "foundation",
@@ -40,7 +40,8 @@
             "《Linear Algebra and Its Applications》配套习题"
           ],
           "howTo": "先看 3Blue1Brown 视频建立直觉（1周，每天1集），再跟 MIT 18.06 系统学习（4周），每章做 10 道习题。重点：搞懂矩阵乘法=线性变换，SVD 分解的几何意义。",
-          "weeklyPlan": "第1周：向量空间、矩阵运算、行列式 | 第2周：线性方程组、高斯消元、LU分解 | 第3周：特征值、对角化、正定矩阵 | 第4周：SVD、最小二乘、伪逆 | 第5-6周：旋转矩阵、四元数、齐次变换（结合机器人学）"
+          "weeklyPlan": "第1周：向量空间、矩阵运算、行列式 | 第2周：线性方程组、高斯消元、LU分解 | 第3周：特征值、对角化、正定矩阵 | 第4周：SVD、最小二乘、伪逆 | 第5-6周：旋转矩阵、四元数、齐次变换（结合机器人学）",
+          "maturity": "comprehensive"
         },
         {
           "name": "微积分与优化",
@@ -75,7 +76,8 @@
             "Nocedal《Numerical Optimization》（工具书）"
           ],
           "howTo": "微积分基础 2 周快速复习（重点是链式法则和泰勒展开），然后 4 周专攻凸优化（Boyd 教材前 5 章+课后习题），用 CVXPY 库编程练习。",
-          "weeklyPlan": "第1-2周：多元微积分复习，重做梯度和Jacobian练习题 | 第3周：凸集、凸函数、凸优化问题建模 | 第4周：对偶理论、KKT条件 | 第5周：梯度下降、牛顿法实现 | 第6周：CVXPY实践，解一个机器人轨迹优化问题"
+          "weeklyPlan": "第1-2周：多元微积分复习，重做梯度和Jacobian练习题 | 第3周：凸集、凸函数、凸优化问题建模 | 第4周：对偶理论、KKT条件 | 第5周：梯度下降、牛顿法实现 | 第6周：CVXPY实践，解一个机器人轨迹优化问题",
+          "maturity": "comprehensive"
         },
         {
           "name": "概率与统计",
@@ -110,7 +112,8 @@
             "Thrun《Probabilistic Robotics》（机器人概率方法必读）"
           ],
           "howTo": "先学概率论基础（条件概率、贝叶斯定理），再切入卡尔曼滤波（边学边用Python实现），最后读Probabilistic Robotics前5章。一定要手写一个卡尔曼滤波器和一个粒子滤波器！",
-          "weeklyPlan": "第1周：概率基础、条件概率、贝叶斯定理 | 第2周：高斯分布、MLE/MAP估计 | 第3周：卡尔曼滤波推导+Python实现 | 第4周：粒子滤波+蒙特卡洛方法"
+          "weeklyPlan": "第1周：概率基础、条件概率、贝叶斯定理 | 第2周：高斯分布、MLE/MAP估计 | 第3周：卡尔曼滤波推导+Python实现 | 第4周：粒子滤波+蒙特卡洛方法",
+          "maturity": "comprehensive"
         },
         {
           "name": "Python 编程与科学计算",
@@ -146,7 +149,8 @@
           ],
           "howTo": "不要系统学Python！直接上手写代码。从NumPy矩阵运算开始（实现矩阵乘法、SVD），逐步过渡到PyTorch（实现一个简单CNN）。2周内要做出一个能跑的小项目。",
           "weeklyPlan": "第1周：NumPy向量化运算+Matplotlib可视化，实现一个卡尔曼滤波器 | 第2周：PyTorch基础，训练一个MNIST分类器",
-          "lastUpdated": "2026-05-26T11:00"
+          "lastUpdated": "2026-05-26T11:00",
+          "maturity": "comprehensive"
         },
         {
           "name": "C++ 编程基础",
@@ -177,7 +181,8 @@
             "ROS2 官方 C++ Tutorials（边学边用）"
           ],
           "howTo": "不需要精通所有C++特性，够用即可。重点：智能指针（避免内存泄漏）、多线程（机器人必需）、CMake（编译必需）。用ROS2 C++ tutorial作为学习载体。",
-          "weeklyPlan": "第1周：Modern C++语法、智能指针、lambda | 第2周：多线程、CMake | 第3周：写一个ROS2 C++节点"
+          "weeklyPlan": "第1周：Modern C++语法、智能指针、lambda | 第2周：多线程、CMake | 第3周：写一个ROS2 C++节点",
+          "maturity": "comprehensive"
         },
         {
           "name": "AI 与机器人学术英语",
@@ -228,7 +233,8 @@
             "OpenReview 公开审稿意见档案（学习 reviewer 怎么写意见）"
           ],
           "howTo": "①每天读 1 篇 arXiv abstract + figure 1（5 分钟即可，重点是连续 30 天）；②每周看 1 个 ICRA / NeurIPS oral 录像（无字幕练耳朵）；③每月写 1 个项目 README in English（或者把本周读过的 paper 写一篇 200 字 summary）；④术语用 Anki 卡片每天 10 分钟。把英语从「学习任务」变成「日常工作流」是关键。",
-          "weeklyPlan": "第1周：术语精读 50 词 + arXiv abstract 读法 | 第2周：ICRA 5 分钟 elevator pitch 自录练习 | 第3周：第一篇 paper draft 的 abstract + intro 写作 | 第4周：模拟面试英语 + GitHub issue/PR 沟通规范"
+          "weeklyPlan": "第1周：术语精读 50 词 + arXiv abstract 读法 | 第2周：ICRA 5 分钟 elevator pitch 自录练习 | 第3周：第一篇 paper draft 的 abstract + intro 写作 | 第4周：模拟面试英语 + GitHub issue/PR 沟通规范",
+          "maturity": "comprehensive"
         }
       ]
     },
@@ -271,7 +277,8 @@
             "Peter Corke Robotics Toolbox（MATLAB/Python仿真验证）"
           ],
           "howTo": "先学Craig前5章（DH法），同步用Python实现一个6轴机械臂的正逆运动学。然后读Modern Robotics了解PoE方法。一定要自己推导一遍2-link和3-link的正逆运动学！",
-          "weeklyPlan": "第1周：刚体变换、齐次矩阵编程 | 第2周：DH参数法、正运动学实现 | 第3-4周：逆运动学（解析法+数值法） | 第5-6周：Jacobian计算、奇异分析、速度控制"
+          "weeklyPlan": "第1周：刚体变换、齐次矩阵编程 | 第2周：DH参数法、正运动学实现 | 第3-4周：逆运动学（解析法+数值法） | 第5-6周：Jacobian计算、奇异分析、速度控制",
+          "maturity": "growing"
         },
         {
           "name": "机器人动力学",
@@ -302,7 +309,8 @@
             "MuJoCo文档（理解仿真器如何计算动力学）"
           ],
           "howTo": "先用Lagrange方法推导2-link机械臂的动力学方程（手推！），再学Newton-Euler算法的递推实现。用MuJoCo验证你的推导是否正确。",
-          "weeklyPlan": "第1周：Lagrange力学推导2-link动力学 | 第2周：Newton-Euler递推算法实现 | 第3周：M/C/G矩阵的物理意义和性质 | 第4周：接触力学+MuJoCo仿真验证"
+          "weeklyPlan": "第1周：Lagrange力学推导2-link动力学 | 第2周：Newton-Euler递推算法实现 | 第3周：M/C/G矩阵的物理意义和性质 | 第4周：接触力学+MuJoCo仿真验证",
+          "maturity": "growing"
         },
         {
           "name": "控制理论",
@@ -337,7 +345,8 @@
           ],
           "howTo": "先做一个倒立摆PID控制（1周上手），再学LQR稳定倒立摆（感受最优控制的威力），然后学MPC（Drake库有现成示例），最后学阻抗控制（用MuJoCo仿真接触任务）。",
           "weeklyPlan": "第1周：PID控制+倒立摆实验 | 第2周：状态空间法+能控性分析 | 第3周：LQR设计+Riccati方程 | 第4-5周：MPC原理与Drake实现 | 第6周：阻抗控制+接触任务仿真",
-          "lastUpdated": "2026-05-09T06:00"
+          "lastUpdated": "2026-05-09T06:00",
+          "maturity": "growing"
         },
         {
           "name": "机械设计基础",
@@ -368,7 +377,8 @@
             "LEAP Hand 开源项目"
           ],
           "howTo": "理论+实践结合。买一套电机驱动板（如ODrive/RoboClaw），搭建一个单关节伺服系统，跑通位置/速度/力矩控制。",
-          "weeklyPlan": "第1周：电机原理+选型 | 第2周：减速器对比+传动设计 | 第3周：传感器选型+接口调试 | 第4周：搭建一个单关节伺服系统"
+          "weeklyPlan": "第1周：电机原理+选型 | 第2周：减速器对比+传动设计 | 第3周：传感器选型+接口调试 | 第4周：搭建一个单关节伺服系统",
+          "maturity": "growing"
         },
         {
           "name": "传感器与硬件接口",
@@ -408,7 +418,8 @@
             "ROS2 sensor_msgs 文档"
           ],
           "howTo": "按传感器类型逐个学习：先LiDAR（数据采集+可视化），再IMU（噪声模型+滤波），然后触觉和力传感器。每个传感器都要写代码处理真实/模拟数据。",
-          "weeklyPlan": "第1周：LiDAR原理+扫描处理 | 第2周：IMU噪声+EKF融合 | 第3周：触觉传感器+力传感器 | 第4周：编码器+视觉传感器选型 | 第5-6周：多传感器集成项目"
+          "weeklyPlan": "第1周：LiDAR原理+扫描处理 | 第2周：IMU噪声+EKF融合 | 第3周：触觉传感器+力传感器 | 第4周：编码器+视觉传感器选型 | 第5-6周：多传感器集成项目",
+          "maturity": "growing"
         },
         {
           "name": "ROS2 机器人操作系统",
@@ -440,7 +451,8 @@
             "MoveIt2 Tutorials"
           ],
           "howTo": "按官方Tutorials从头走一遍（约2周），然后分两条线：移动机器人走Nav2路线，机械臂走MoveIt2路线。一定要在真实/仿真机器人上跑通。",
-          "weeklyPlan": "第1周：安装配置+基础通信（topic/service/action）| 第2周：TF2+URDF+Rviz可视化 | 第3周：Nav2导航或MoveIt2运动规划 | 第4周：集成项目（自主导航小车 or 机械臂抓取）"
+          "weeklyPlan": "第1周：安装配置+基础通信（topic/service/action）| 第2周：TF2+URDF+Rviz可视化 | 第3周：Nav2导航或MoveIt2运动规划 | 第4周：集成项目（自主导航小车 or 机械臂抓取）",
+          "maturity": "comprehensive"
         }
       ]
     },
@@ -453,7 +465,7 @@
         {
           "name": "计算机视觉基础",
           "importance": "核心",
-          "lastUpdated": "2026-04-23T22:33",
+          "lastUpdated": "2026-05-29T10:46",
           "description": "图像处理、特征提取、目标检测是机器人感知环境的第一步",
           "topics": [
             {
@@ -480,7 +492,8 @@
             "SAM项目（segment-anything.com）"
           ],
           "howTo": "先掌握OpenCV基本操作（2周），再学目标检测（先YOLO后DETR），最后学SAM分割。做一个项目：相机图像→检测物体→估计位姿→规划抓取。",
-          "weeklyPlan": "第1-2周：OpenCV图像处理+相机标定 | 第3周：YOLO目标检测训练与部署 | 第4-5周：SAM分割+6DoF姿态估计 | 第6周：集成到机器人抓取Pipeline"
+          "weeklyPlan": "第1-2周：OpenCV图像处理+相机标定 | 第3周：YOLO目标检测训练与部署 | 第4-5周：SAM分割+6DoF姿态估计 | 第6周：集成到机器人抓取Pipeline",
+          "maturity": "foundation"
         },
         {
           "name": "3D 视觉与点云",
@@ -516,7 +529,8 @@
             "FoundationPose论文和代码"
           ],
           "howTo": "买一个RealSense D435（~$300），从点云采集和可视化开始，做平面分割和物体聚类，然后跑一遍ORB-SLAM3。最终目标：机器人看到一个物体→估计6DoF位姿→规划抓取。",
-          "weeklyPlan": "第1周：RealSense配置+Open3D点云处理 | 第2-3周：点云分割/聚类/配准 | 第4-5周：6DoF位姿估计 | 第6周：SLAM入门+RTAB-Map实践"
+          "weeklyPlan": "第1周：RealSense配置+Open3D点云处理 | 第2-3周：点云分割/聚类/配准 | 第4-5周：6DoF位姿估计 | 第6周：SLAM入门+RTAB-Map实践",
+          "maturity": "growing"
         },
         {
           "name": "多模态感知",
@@ -543,7 +557,8 @@
           ],
           "howTo": "从视觉+力觉融合开始（成本低：RealSense+腕部F/T传感器），做一个根据接触力调整抓取力度的实验。",
           "weeklyPlan": "第1周：触觉传感器原理+GelSight/DIGIT了解 | 第2周：力传感器接口+阻抗控制 | 第3周：多模态融合实验",
-          "lastUpdated": "2026-05-28T14:30"
+          "lastUpdated": "2026-05-28T14:30",
+          "maturity": "growing"
         }
       ]
     },
@@ -582,7 +597,8 @@
             "PyTorch官方Tutorials"
           ],
           "howTo": "跟李沐的d2l课程走，每章写代码复现。重点搞懂：反向传播的链式法则、Transformer的注意力机制、ResNet的残差连接。做一个图像分类+目标检测的完整项目。",
-          "weeklyPlan": "第1-2周：CNN(卷积/池化/ResNet) | 第3周：RNN/LSTM(序列建模) | 第4-5周：Transformer(注意力/位置编码/训练) | 第6周：训练技巧+混合精度 | 第7-8周：实践项目"
+          "weeklyPlan": "第1-2周：CNN(卷积/池化/ResNet) | 第3周：RNN/LSTM(序列建模) | 第4-5周：Transformer(注意力/位置编码/训练) | 第6周：训练技巧+混合精度 | 第7-8周：实践项目",
+          "maturity": "growing"
         },
         {
           "name": "强化学习",
@@ -614,7 +630,8 @@
             "CS285 (Berkeley Sergey Levine)"
           ],
           "howTo": "先读Sutton前6章理解核心概念，再用Stable Baselines3在Gymnasium环境做实验（CartPole/HalfCheetah），最后在Isaac Gym/Legged Gym训练机器人。PPO是必须精通的算法。",
-          "weeklyPlan": "第1-2周：MDP/Bellman/值迭代/策略迭代 | 第3周：DQN实现+CartPole | 第4-5周：PPO/SAC原理+HalfCheetah | 第6-7周：Isaac Gym机器人训练 | 第8周：Sim2Real迁移实验"
+          "weeklyPlan": "第1-2周：MDP/Bellman/值迭代/策略迭代 | 第3周：DQN实现+CartPole | 第4-5周：PPO/SAC原理+HalfCheetah | 第6-7周：Isaac Gym机器人训练 | 第8周：Sim2Real迁移实验",
+          "maturity": "growing"
         },
         {
           "name": "模仿学习",
@@ -646,7 +663,8 @@
             "ALOHA项目"
           ],
           "howTo": "先理解BC基本原理和分布偏移问题，然后复现Diffusion Policy（在Push-T任务上），再用LeRobot框架跑ACT。如果有硬件，用SO-100机械臂采集数据训练。",
-          "weeklyPlan": "第1周：BC原理+DAgger | 第2-3周：Diffusion Policy复现 | 第4-5周：ACT复现+LeRobot实践 | 第6周：真机数据采集+训练（如有硬件）"
+          "weeklyPlan": "第1周：BC原理+DAgger | 第2-3周：Diffusion Policy复现 | 第4-5周：ACT复现+LeRobot实践 | 第6周：真机数据采集+训练（如有硬件）",
+          "maturity": "growing"
         },
         {
           "name": "VLA 模型 (Vision-Language-Action)",
@@ -680,7 +698,8 @@
             "FAST tokenizer代码"
           ],
           "howTo": "先精读RT-2论文理解VLA范式（动作token化+co-fine-tuning），再研究OpenVLA的开源实现（跑通推理→尝试微调），最后读π₀理解Flow Matching。",
-          "weeklyPlan": "第1周：RT-2论文精读+动作token化实现 | 第2-3周：OpenVLA源码分析+推理测试 | 第4周：π₀/FAST论文+Flow Matching理解"
+          "weeklyPlan": "第1周：RT-2论文精读+动作token化实现 | 第2-3周：OpenVLA源码分析+推理测试 | 第4周：π₀/FAST论文+Flow Matching理解",
+          "maturity": "comprehensive"
         },
         {
           "name": "世界模型与LLM+机器人",
@@ -708,7 +727,8 @@
             "Yann LeCun JEPA演讲"
           ],
           "howTo": "先理解世界模型的哲学基础（为什么需要内部模型），再读SayCan等经典论文，最后跟踪π₀.5等前沿工作。这是研究前沿，重理解轻复现。",
-          "weeklyPlan": "第1周：世界模型概念+经典论文 | 第2周：LLM+机器人论文(SayCan/Code as Policies) | 第3周：前沿跟踪(π₀.5等)"
+          "weeklyPlan": "第1周：世界模型概念+经典论文 | 第2周：LLM+机器人论文(SayCan/Code as Policies) | 第3周：前沿跟踪(π₀.5等)",
+          "maturity": "comprehensive"
         }
       ]
     },
@@ -721,7 +741,7 @@
         {
           "name": "物理仿真引擎",
           "importance": "核心",
-          "lastUpdated": "2026-05-05T13:30",
+          "lastUpdated": "2026-05-29T19:26",
           "description": "仿真环境是训练和验证具身智能算法的核心基础设施",
           "topics": [
             {
@@ -748,7 +768,8 @@
             "Gazebo官方教程"
           ],
           "howTo": "从MuJoCo入手（最简洁，1周上手），用Python API加载模型→仿真→可视化。然后根据需要学Isaac Lab（大规模训练）或Genesis（可微分优化）。",
-          "weeklyPlan": "第1-2周：MuJoCo（MJCF建模+Python控制+RL环境搭建）| 第3-4周：Isaac Lab（GPU并行仿真+PPO训练）"
+          "weeklyPlan": "第1-2周：MuJoCo（MJCF建模+Python控制+RL环境搭建）| 第3-4周：Isaac Lab（GPU并行仿真+PPO训练）",
+          "maturity": "foundation"
         },
         {
           "name": "Sim-to-Real 迁移",
@@ -775,7 +796,8 @@
             "NVIDIA Sim2Real博客"
           ],
           "howTo": "先在仿真中训练一个简单任务（如CartPole或简单抓取），然后加Domain Randomization看鲁棒性变化。如果有真实机器人，尝试部署并分析Gap。",
-          "weeklyPlan": "第1周：Domain Randomization原理+实验 | 第2周：System Identification方法 | 第3-4周：Teacher-Student蒸馏实现+迁移实验"
+          "weeklyPlan": "第1周：Domain Randomization原理+实验 | 第2周：System Identification方法 | 第3-4周：Teacher-Student蒸馏实现+迁移实验",
+          "maturity": "growing"
         },
         {
           "name": "具身数据工程",
@@ -815,7 +837,8 @@
           ],
           "howTo": "从下载Open X-Embodiment子集开始,分析数据分布;搭建UMI/Gello采集系统;实现清洗Pipeline;用MuJoCo生成合成数据;最后跑一轮完整的数据闭环实验。",
           "weeklyPlan": "第1周：数据集全景+格式标准 | 第2周：采集系统搭建 | 第3周：质量工程+清洗 | 第4周：合成数据+增强 | 第5周：数据闭环实战",
-          "lastUpdated": "2026-05-12T00:30"
+          "lastUpdated": "2026-05-12T00:30",
+          "maturity": "growing"
         },
         {
           "name": "数据采集与管理",
@@ -843,7 +866,8 @@
             "LeRobot数据Hub"
           ],
           "howTo": "搭建一套简单的遥操作系统（从Gello或UMI开始），采集50-100个演示，训练一个BC/ACT策略。体验完整的\"数据采集→训练→部署\"流程。",
-          "weeklyPlan": "第1周：遥操作系统搭建 | 第2周：数据采集（50+episodes）| 第3周：数据管理+格式转换+训练"
+          "weeklyPlan": "第1周：遥操作系统搭建 | 第2周：数据采集（50+episodes）| 第3周：数据管理+格式转换+训练",
+          "maturity": "comprehensive"
         }
       ]
     },
@@ -892,7 +916,8 @@
               "detail": "联动 HTD（CMU 5/13）+ KAI / 戴盟 / 蓝点国产硬件，触觉传感器选型 + 数据流水线 + EMA Target Encoder + Touch Dreaming 实战"
             }
           ],
-          "weeklyPlan": "第 1-2 周：算力栈 + 训练优化模块联动 | 第 3-4 周：推理引擎栈 + chunk batching | 第 5-6 周：model serving + 平台工程 | 第 7 周：数据流水线 | 第 8 周：综合实战"
+          "weeklyPlan": "第 1-2 周：算力栈 + 训练优化模块联动 | 第 3-4 周：推理引擎栈 + chunk batching | 第 5-6 周：model serving + 平台工程 | 第 7 周：数据流水线 | 第 8 周：综合实战",
+          "maturity": "growing"
         },
         {
           "name": "模型训练与推理优化",
@@ -920,7 +945,8 @@
             "llama.cpp"
           ],
           "howTo": "先学DDP基础，再上DeepSpeed ZeRO训练大模型，然后学TensorRT部署到Jetson。",
-          "weeklyPlan": "第1-2周：分布式训练 | 第3周：模型压缩 | 第4-5周：端侧部署"
+          "weeklyPlan": "第1-2周：分布式训练 | 第3周：模型压缩 | 第4-5周：端侧部署",
+          "maturity": "foundation"
         },
         {
           "name": "云边端协同架构",
@@ -985,7 +1011,7 @@
         {
           "name": "桌面级机械臂项目",
           "importance": "入门实战",
-          "lastUpdated": "2026-04-29T12:00",
+          "lastUpdated": "2026-05-29T10:46",
           "description": "用低成本机械臂（如 SO-100/Koch v1.1）完成基本的抓取任务",
           "topics": [
             {
@@ -1007,7 +1033,8 @@
             "Koch v1.1设计文档（GitHub）"
           ],
           "howTo": "买一台SO-100（~$200），按LeRobot教程组装和标定，用遥操作采集抓取数据，训练ACT策略。目标：实现一个能抓取桌面物体的自主机器人。",
-          "weeklyPlan": "第1周：硬件组装+标定 | 第2周：遥操作+数据采集（50episodes）| 第3周：ACT训练+评估 | 第4周：迭代改进+新任务"
+          "weeklyPlan": "第1周：硬件组装+标定 | 第2周：遥操作+数据采集（50episodes）| 第3周：ACT训练+评估 | 第4周：迭代改进+新任务",
+          "maturity": "foundation"
         },
         {
           "name": "移动机器人导航项目",
@@ -1034,7 +1061,8 @@
             "SLAM Toolbox文档"
           ],
           "howTo": "TurtleBot3或自制底盘+RealSense+激光雷达，先跑通SLAM建图，再配置Nav2导航。目标：机器人在办公室/家里自主导航到指定位置。",
-          "weeklyPlan": "第1周：底盘搭建+传感器配置 | 第2-3周：SLAM建图+地图优化 | 第4-5周：Nav2配置+导航调参 | 第6周：完整集成测试"
+          "weeklyPlan": "第1周：底盘搭建+传感器配置 | 第2-3周：SLAM建图+地图优化 | 第4-5周：Nav2配置+导航调参 | 第6周：完整集成测试",
+          "maturity": "comprehensive"
         },
         {
           "name": "人形机器人全栈项目",
@@ -1063,7 +1091,8 @@
             "宇树开源控制代码"
           ],
           "howTo": "从仿真开始！先在Humanoid Gym中用PPO训练人形步态（不需要真机），然后逐步加入操作任务。有条件的话可以参与开源人形项目或加入机器人公司实习。",
-          "weeklyPlan": "长期项目：第1-4周：Humanoid Gym步态训练 | 第5-8周：加入上半身操作 | 第9-12周：VLA集成（如有真机）"
+          "weeklyPlan": "长期项目：第1-4周：Humanoid Gym步态训练 | 第5-8周：加入上半身操作 | 第9-12周：VLA集成（如有真机）",
+          "maturity": "comprehensive"
         },
         {
           "name": "具身Agent实战项目",
