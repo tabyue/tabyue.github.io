@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Segment Anything (SAM) — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Segment Anything (SAM) — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="segment-anything-sam">Segment Anything (SAM)</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/facebookresearch/segment-anything">https://github.com/facebookresearch/segment-anything</a>  </p>
+<p><strong>Stars</strong>: 48k+ · <strong>License</strong>:  · <strong>收录日期</strong>:   </p>
+<p><strong>组织</strong>: Meta AI  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-05-29</p>
+</blockquote>
+<hr />
+<h2 id="_2">项目概述</h2>
+<p><strong>Segment Anything (SAM)</strong> 是 Meta AI 发布的<strong>通用图像分割基础模型</strong>（GitHub 48k+ stars）。给定任意提示（点/框/文本），SAM 能分割图像中的任意物体——零样本、无需针对特定类别训练。</p>
+<p><strong>具身关联</strong>：机器人抓取前需要精确分割目标物体 → SAM 提供<strong>即插即用的通用分割能力</strong>，替代过去为每个物体训练专用分割网络的做法。</p>
+<hr />
+<h2 id="_3">系统架构</h2>
+<pre><code>┌─────────────────────────────────────┐
+│          SAM 架构                    │
+├─────────────────────────────────────┤
+│  Image Encoder (ViT-H / ViT-L)     │
+│  → 对整张图像只编码一次              │
+├─────────────────────────────────────┤
+│  Prompt Encoder                     │
+│  → 点 / 框 / 文本 / 掩码 提示编码    │
+├─────────────────────────────────────┤
+│  Mask Decoder (轻量 Transformer)    │
+│  → 输出多个候选掩码 + 置信度分数      │
+└─────────────────────────────────────┘
+</code></pre>
+<p><strong>关键设计</strong>：图像只编码一次（重复使用），每次新提示只过轻量 decoder → <strong>实时交互式分割</strong>。</p>
+<hr />
+<h2 id="_4">快速开始</h2>
+<pre><code class="language-python">from segment_anything import sam_model_registry, SamPredictor
+import cv2
+
+sam = sam_model_registry['vit_h'](checkpoint='sam_vit_h.pth')
+predictor = SamPredictor(sam)
+
+image = cv2.imread('scene.jpg')
+predictor.set_image(image)
+
+# 点击一个点 → 分割该物体
+masks, scores, _ = predictor.predict(
+    point_coords=np.array([[500, 300]]),
+    point_labels=np.array([1]),
+)
+print(f'Best mask score: {scores[0]:.3f}')
+</code></pre>
+<hr />
+<h2 id="_5">横向对比</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>SAM</th>
+<th>SAM 2</th>
+<th>Grounding DINO + SAM</th>
+<th>FastSAM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>输入提示</strong></td>
+<td>点/框/掩码</td>
+<td>点/框/掩码+视频</td>
+<td>文本 → 框 → 掩码</td>
+<td>自动</td>
+</tr>
+<tr>
+<td><strong>速度</strong></td>
+<td>中</td>
+<td>快（视频优化）</td>
+<td>慢（两步）</td>
+<td>✅ 实时</td>
+</tr>
+<tr>
+<td><strong>视频支持</strong></td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>机器人应用</strong></td>
+<td>单帧分割</td>
+<td>跟踪+分割</td>
+<td>语言指令分割</td>
+<td>端侧快速分割</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

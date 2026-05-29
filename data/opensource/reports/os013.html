@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diffusion Policy — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Diffusion Policy — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="diffusion-policy">Diffusion Policy</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/real-stanford/diffusion_policy">https://github.com/real-stanford/diffusion_policy</a>  </p>
+<p><strong>Stars</strong>: 5k+ · <strong>License</strong>:  · <strong>收录日期</strong>:   </p>
+<p><strong>组织</strong>: Columbia / Stanford  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-05-29</p>
+</blockquote>
+<hr />
+<h2 id="_2">项目概述</h2>
+<p><strong>Diffusion Policy</strong> 是 Columbia / MIT / Toyota Research 联合提出的<strong>扩散模型驱动的机器人策略学习框架</strong>（GitHub 5k+ stars / CoRL 2023 Best Paper）。核心思想：把动作生成建模为去噪扩散过程——从纯噪声逐步去噪生成高质量动作序列。</p>
+<p><strong>为什么重要</strong>：Diffusion Policy 是 π₀ / GR00T 等 VLA 模型的<strong>动作生成范式基础</strong>——理解它等于理解 2024-2026 年 VLA 主流架构的底层。</p>
+<hr />
+<h2 id="_3">系统架构</h2>
+<pre><code>观测 o_t ──┐
+            ├─→ 条件编码 → 去噪网络 U-Net / Transformer
+动作噪声 ──┘     ↓ (T 步去噪)
+              a_{t:t+H} (动作 chunk，H 步)
+</code></pre>
+<p><strong>两种实现</strong>：
+1. <strong>CNN-based (U-Net)</strong>：1D 时序卷积去噪网络（原论文默认）
+2. <strong>Transformer-based (DiT)</strong>：Diffusion Transformer（π₀ 采用这种）</p>
+<p><strong>动作 Chunking</strong>：一次生成未来 H 步动作（H=8-16），执行前 k 步后重新规划 → 平滑 + 高效。</p>
+<hr />
+<h2 id="_4">快速开始</h2>
+<pre><code class="language-bash"># 安装
+git clone https://github.com/real-stanford/diffusion_policy.git
+cd diffusion_policy
+mamba env create -f conda_environment.yaml
+
+# 训练（Push-T 任务）
+python train.py --config-name=train_diffusion_unet_lowdim_workspace \
+    task=pusht
+
+# 评估
+python eval.py --config-name=eval_diffusion_unet_lowdim_workspace \
+    task=pusht checkpoint=outputs/.../checkpoint.ckpt
+</code></pre>
+<hr />
+<h2 id="_5">横向对比</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Diffusion Policy</th>
+<th>ACT</th>
+<th>BC-RNN</th>
+<th>Flow Matching (π₀)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>生成范式</strong></td>
+<td>DDPM 去噪</td>
+<td>CVAE + Transformer</td>
+<td>RNN 自回归</td>
+<td>ODE Flow</td>
+</tr>
+<tr>
+<td><strong>多模态</strong></td>
+<td>✅ 天然多模态</td>
+<td>有限</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>动作 Chunk</strong></td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>推理速度</strong></td>
+<td>慢（T步去噪）</td>
+<td>快（单步）</td>
+<td>快</td>
+<td>中（10步ODE）</td>
+</tr>
+<tr>
+<td><strong>表达力</strong></td>
+<td>✅ 最强</td>
+<td>中</td>
+<td>低</td>
+<td>✅ 强</td>
+</tr>
+<tr>
+<td><strong>Stars</strong></td>
+<td>5k+</td>
+<td>3k+</td>
+<td>N/A</td>
+<td>11.5k (openpi)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
