@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-28T14:30",
+  "lastUpdated": "2026-05-29T20:24",
   "categories": [
     {
       "id": "all",
@@ -78,6 +78,250 @@
     }
   ],
   "models": [
+    {
+      "name": "Wall-OSS-0.5",
+      "org": "自变量机器人 (X Square Robot)",
+      "params": "3.4B (Qwen2.5-VL-3B + 0.4B Action)",
+      "description": "国产首个**「预训练即可零样本部署」VLA 模型** — 9000 万多模态样本 + 100 万轨迹 + 20+ 机器人形态协同训练。**三大技术创新**：① Gradient-Bridged Co-Training（动作监督直接塑造 VLM 主干）；② Vision-Aligned RVQ Action Tokenizer（动作 token 与视觉语义对齐）；③ DMuon 分布式优化器（100× 加速）。**零样本**：17 任务 4 项 ≥ 80 分（Block Sorting 100 / Rope Tightening 82 hold-out）。**微调后 60.5% vs π0.5 43.0%（领先 17.5pp / 10 任务子集 26pp）**。完整开源（Apache 2.0）：模型权重 + 训练代码 + 训练菜谱 + DMuon 优化器。",
+      "huggingface": "https://huggingface.co/x-square-robot/wall-oss-0.5",
+      "github": "https://github.com/X-Square-Robot/wall-x",
+      "paper": "https://x2robot.com/api/files/file/wall_oss_05.pdf",
+      "license": "Apache-2.0",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "零样本部署",
+        "开源",
+        "国产",
+        "Qwen2.5-VL",
+        "Flow Matching",
+        "RVQ",
+        "DMuon",
+        "自变量"
+      ],
+      "addedDate": "2026-05-29",
+      "updated": "2026-05",
+      "benchmarks": {
+        "Zero-shot 17-task avg": "50.0 (400k steps)",
+        "Block Sorting (zero-shot)": "100/100",
+        "Rope Tightening (hold-out)": "82/100",
+        "15-task Fine-tuned avg": "60.5% (vs pi0.5 43.0%)",
+        "10-task Manipulation subset": "+26pp vs pi0.5",
+        "Embodied Grounding": "+21.8 pts"
+      }
+    },
+    {
+      "name": "π0.5 (pi-zero-point-five)",
+      "org": "Physical Intelligence (PI)",
+      "params": "~3B (架构未完全公开)",
+      "description": "Physical Intelligence 2026 年初发布的**通用机器人策略模型** — 基于 π₀ 架构扩展，融合网络数据 + 跨机器人经验 + 口头指令多源协同。**分层推理 + 动作专家**架构：高层离散 token 自回归 + 低层 flow matching 去噪。是商业化最积极的 VLA（BMW / Figure 等已接入）。**未开源权重**，但通过 OpenPI 提供 API 参考实现。",
+      "huggingface": "",
+      "github": "https://github.com/Physical-Intelligence/openpi",
+      "paper": "https://www.physicalintelligence.company/blog/pi05",
+      "license": "商业（未开源权重）",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "PI",
+        "Flow Matching",
+        "商业",
+        "通用策略",
+        "BMW"
+      ],
+      "addedDate": "2026-05-29",
+      "updated": "2026-03",
+      "benchmarks": {
+        "LIBERO avg": "89.0%",
+        "Real robot 15-task": "43.0%",
+        "跨本体泛化": "支持 7+ 形态"
+      }
+    },
+    {
+      "name": "GR00T-N1",
+      "org": "NVIDIA",
+      "params": "~2B (DiT-based)",
+      "description": "NVIDIA 2026 GTC 发布的**人形机器人基座模型** — 基于 DiT (Diffusion Transformer) 架构 + 视觉/语言条件。训练数据来自 NVIDIA + Apple 合作数据集。与 Isaac Lab / Cosmos 深度集成。支持全身控制（locomotion + manipulation 统一）。在 NVIDIA Omniverse 生态中作为「具身 AI 大脑」的标准方案。",
+      "huggingface": "https://huggingface.co/nvidia/gr00t-n1-2b",
+      "github": "https://github.com/NVIDIA-Omniverse/GR00T-N1",
+      "paper": "https://arxiv.org/abs/2503.14734",
+      "license": "NVIDIA Open Model License",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "NVIDIA",
+        "DiT",
+        "人形",
+        "全身控制",
+        "Isaac Lab",
+        "GTC 2026"
+      ],
+      "addedDate": "2026-05-29",
+      "updated": "2026-03",
+      "benchmarks": {
+        "LIBERO avg": "~85%",
+        "Humanoid locomotion": "NVIDIA internal",
+        "Cross-embodiment": "5+ 形态"
+      }
+    },
+    {
+      "name": "HiF-VLA (Hindsight-Insight-Foresight)",
+      "org": "西湖大学 MiLAB + 西湖机器人 + 阿里达摩院",
+      "params": "~7B (VLA backbone)",
+      "description": "**CVPR 2026 接收** / ReconVLA 同团队（AAAI 2026 最佳论文奖）。**核心创新**：以 Motion（运动向量）为中心的双向时空推理 — 抛弃冗余的多帧像素堆叠，用低维 Motion 向量作为动态先验。「联合专家」模块同步完成未来视觉运动预测 + 高精度动作序列生成。**关键优势**：① 极长历史观测窗口下保持恒定低延迟；② 长程任务（CALVIN / LIBERO-LONG）成功率显著超越 SOTA；③ 赋予机器人「边想边做」的物理直觉。",
+      "huggingface": "",
+      "github": "https://github.com/OpenHelix-Team/HiF-VLA",
+      "paper": "https://arxiv.org/abs/2512.09928",
+      "license": "Apache-2.0",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "CVPR 2026",
+        "Motion-centric",
+        "时空推理",
+        "西湖大学",
+        "长程任务"
+      ],
+      "addedDate": "2026-05-29",
+      "updated": "2026-05",
+      "benchmarks": {
+        "CALVIN 5-step": "SOTA (显著超越)",
+        "LIBERO-LONG": "SOTA",
+        "推理延迟": "恒定低延迟（不随历史帧数增长）"
+      }
+    },
+    {
+      "name": "Pelican-Unify 1.0",
+      "org": "北京人形机器人创新中心",
+      "params": "~4B VLM (具体未公开)",
+      "description": "全球首个**理解·推理·想象·行动「大一统」具身基座模型** — 不是把 VLM + VLA 拼接，而是在单一模型内实现语义理解、因果推理、视觉想象、动作执行四重能力。**WorldArena 全球双冠（规划 + 执行）** / 4B 同级 VLM 第一 / RoboTwin VLA 前列。背后是北京人形联合清华、北大、中科院等构建的「鹈鹕」具身基座模型家族。",
+      "huggingface": "",
+      "github": "",
+      "paper": "https://arxiv.org/abs/2605.15153",
+      "license": "未公开（部分开放）",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "统一模型",
+        "WorldArena冠军",
+        "北京人形",
+        "具身基座",
+        "4B"
+      ],
+      "addedDate": "2026-05-29",
+      "updated": "2026-05",
+      "benchmarks": {
+        "WorldArena 规划": "全球第一",
+        "WorldArena 执行": "全球第一",
+        "4B VLM 对比": "同级第一",
+        "RoboTwin VLA": "前列"
+      }
+    },
+    {
+      "name": "LingBot-VA (蚂蚁灵动)",
+      "org": "蚂蚁灵动 + HKUST",
+      "params": "~3B",
+      "description": "**RSS 2026 接收** — 全球首个开源**视频-动作自回归扩散世界模型**。核心架构：MoT (Mixture of Tokens) + 闭环回滚 (closed-loop rollback) + 异步推理。让 VLA 在执行动作的同时「想象未来」 — 当预测与实际偏离时自动回滚重规划。**关键指标**：闭环回滚让 OOD 场景成功率提升 15-20pp。",
+      "huggingface": "",
+      "github": "https://github.com/robbyant/lingbot-world",
+      "paper": "https://arxiv.org/abs/2601.21998",
+      "license": "Apache-2.0",
+      "category": "world-model",
+      "tags": [
+        "世界模型",
+        "VLA",
+        "RSS 2026",
+        "蚂蚁灵动",
+        "闭环回滚",
+        "自回归扩散"
+      ],
+      "addedDate": "2026-05-29",
+      "updated": "2026-05",
+      "benchmarks": {
+        "OOD 恢复率": "+15-20pp (vs 无回滚)",
+        "闭环控制": "异步推理 + 回滚",
+        "开源": "完整代码 + 权重"
+      }
+    },
+    {
+      "name": "Cosmos Policy",
+      "org": "NVIDIA + Stanford (Moo Jin Kim)",
+      "params": "基于 Cosmos 视频基模 (数十亿参数)",
+      "description": "**ICLR 2026 Top 2%** — 证明了「**视频基模 0 改动就能当机器人策略**」的震撼性结论。核心思想：把预训练的视频生成模型（Cosmos）直接用作 VLA 的 world model — **单阶段后训练**（不需要两阶段预训练 + 微调），视频基模在后训练时自然学到动作关联。**LIBERO 98.5% / RoboCasa 67.1% SOTA**。",
+      "huggingface": "",
+      "github": "",
+      "paper": "https://arxiv.org/abs/2601.16163",
+      "license": "研究用途",
+      "category": "world-model",
+      "tags": [
+        "世界模型",
+        "视频基模",
+        "ICLR 2026 Top 2%",
+        "NVIDIA",
+        "Stanford",
+        "单阶段后训练",
+        "Cosmos"
+      ],
+      "addedDate": "2026-05-29",
+      "updated": "2026-05",
+      "benchmarks": {
+        "LIBERO": "98.5%",
+        "RoboCasa": "67.1% (SOTA)",
+        "训练效率": "单阶段后训练（无需两阶段）"
+      }
+    },
+    {
+      "name": "RDT-1B (Robotics Diffusion Transformer)",
+      "org": "清华 TSAIL + 上海 AI Lab",
+      "params": "1.2B",
+      "description": "**十亿参数级 Diffusion Transformer** 用于机器人操作 — 国内首个超过 1B 参数的开源操作策略模型。支持**多模态条件**（语言 + 图像 + 视频目标）+ **跨本体泛化**（单臂 / 双臂 / 灵巧手统一处理）。在 LIBERO / RoboTwin 上性能接近 π₀ 水平。完整开源：代码 + 权重 + 训练数据配方。",
+      "huggingface": "https://huggingface.co/robotics-diffusion-transformer/rdt-1b",
+      "github": "https://github.com/thu-ml/RoboticsDiffusionTransformer",
+      "paper": "https://arxiv.org/abs/2410.07864",
+      "license": "MIT",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "Diffusion Transformer",
+        "1B",
+        "清华",
+        "开源",
+        "跨本体",
+        "LIBERO"
+      ],
+      "addedDate": "2026-05-29",
+      "updated": "2026-04",
+      "benchmarks": {
+        "LIBERO avg": "~94%",
+        "RoboTwin": "前列",
+        "跨本体": "单臂/双臂/灵巧手统一"
+      }
+    },
+    {
+      "name": "DIAL (Decoupling Intent and Action via Latent World Modeling)",
+      "org": "港大 + 小鹏机器人 + UNC Chapel Hill",
+      "params": "~8B (Qwen3-VL-8B backbone)",
+      "description": "用「**可微分潜在意图瓶颈**」连接 VLM 高层决策与底层运动执行的端到端 VLA 框架。**核心思想**：让 VLM 在自己原生 ViT 特征空间里做隐式世界建模，不外挂视频生成模型。基于 Qwen3-VL 在 RoboCasa GR1 上达到 SOTA — **数据效率提升 10×**（1/10 数据达到等效性能）。两阶段训练避免语义崩溃。",
+      "huggingface": "",
+      "github": "",
+      "paper": "https://arxiv.org/abs/2603.29844",
+      "license": "研究用途",
+      "category": "vla",
+      "tags": [
+        "VLA",
+        "潜在世界建模",
+        "港大",
+        "小鹏机器人",
+        "Qwen3-VL",
+        "数据效率10x"
+      ],
+      "addedDate": "2026-05-29",
+      "updated": "2026-05",
+      "benchmarks": {
+        "RoboCasa GR1": "SOTA",
+        "数据效率": "10× (1/10 数据)",
+        "推理速度": "1.8-2.3× faster than Cosmos Policy"
+      }
+    },
     {
       "name": "FireRedASR2",
       "org": "小红书 FireRed AI Lab",

@@ -1,0 +1,6 @@
+{
+  "id": "os029",
+  "overview": "## 项目概述\n\n**Rerun** 是一个**多模态数据可视化 SDK**（GitHub 7k+ stars / MIT）——专为机器人 / 自动驾驶 / 空间计算设计。可视化点云 / 图像 / 3D 模型 / 时间序列 / 张量 / 标注——**全部实时流式显示**。\n\n**与 RViz / Foxglove 对比**：Rerun = 更现代的 UI + 更快的渲染 + Python/C++/Rust 多语言 SDK + 不依赖 ROS。",
+  "quickStart": "## 快速开始\n\n```python\nimport rerun as rr\nimport numpy as np\n\nrr.init('my_robot', spawn=True)  # 启动 Viewer\n\n# 记录点云\npoints = np.random.randn(1000, 3)\nrr.log('world/pointcloud', rr.Points3D(points, colors=[255, 0, 0]))\n\n# 记录图像\nimage = np.random.randint(0, 255, (480, 640, 3), dtype=np.uint8)\nrr.log('camera/rgb', rr.Image(image))\n\n# 记录时间序列\nfor t in range(100):\n    rr.set_time_sequence('frame', t)\n    rr.log('metrics/reward', rr.Scalar(np.sin(t * 0.1)))\n```",
+  "comparison": "## 横向对比\n\n| 维度 | Rerun | RViz2 | Foxglove | Wandb |\n|------|-------|-------|---------|-------|\n| **定位** | 通用多模态可视化 | ROS 可视化 | ROS Web 可视化 | ML 实验跟踪 |\n| **依赖 ROS** | ❌ | ✅ | 部分 | ❌ |\n| **3D 渲染** | ✅ 快 | 中 | 中 | ❌ |\n| **多语言** | Python/C++/Rust | C++ | Web | Python |\n| **实时流式** | ✅ | ✅ | ✅ | ❌ (批量) |\n| **Stars** | 7k+ | N/A | 3k+ | 9k+ |"
+}

@@ -1,0 +1,6 @@
+{
+  "id": "os011",
+  "overview": "## 项目概述\n\n**ORB-SLAM3** 是**最完整的视觉 SLAM 系统**（GitHub 6.5k+ stars / GPLv3）。支持单目 / 双目 / RGB-D + IMU 融合，提供定位 + 建图 + 回环检测 + 地图复用全套能力。是视觉 SLAM 领域的「**教科书级实现**」。\n\n**具身关联**：室内移动机器人的视觉定位首选方案（当不使用 LiDAR 时）。",
+  "quickStart": "## 快速开始\n\n```bash\n# 依赖\nsudo apt install libopencv-dev libeigen3-dev\n\n# 编译\ngit clone https://github.com/UZ-SLAMLab/ORB_SLAM3.git\ncd ORB_SLAM3\nchmod +x build.sh && ./build.sh\n\n# 跑 TUM 数据集（RGB-D）\n./Examples/RGB-D/rgbd_tum \\\n    Vocabulary/ORBvoc.txt \\\n    Examples/RGB-D/TUM1.yaml \\\n    /path/to/TUM/rgbd_dataset_freiburg1_desk \\\n    /path/to/TUM/associations.txt\n```",
+  "comparison": "## 横向对比\n\n| 维度 | ORB-SLAM3 | FAST-LIVO2 | Cartographer | RTAB-Map |\n|------|-----------|------------|-------------|----------|\n| **传感器** | Camera (+IMU) | LiDAR+IMU+Camera | LiDAR (+IMU) | 多种 |\n| **方法** | 特征点 | 直接法 | 子图+后端 | 图优化 |\n| **回环** | ✅ | 部分 | ✅ | ✅ |\n| **实时性** | ✅ | ✅ | ✅ | 中 |\n| **室外** | 中 | ✅ | 中 | 中 |\n| **Stars** | 6.5k | 3.8k | 7.2k | 2.7k |"
+}

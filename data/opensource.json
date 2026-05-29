@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-29T08:00",
+  "lastUpdated": "2026-05-29T20:24",
   "categories": [
     {
       "id": "all",
@@ -48,6 +48,162 @@
     }
   ],
   "projects": [
+    {
+      "id": "os126",
+      "name": "VLA-RL (清华 — VLA 在线强化学习微调框架)",
+      "github": "https://github.com/GuanxingLu/vlarl",
+      "organization": "清华大学 SIGS + NTU",
+      "category": "ai-model",
+      "description": "**VLA-RL** — 清华深研院 2026-05 发布的**「VLA + 在线 RL 微调」标准框架**。把预训练 VLA（OpenVLA-7B）通过 PPO 进一步提升，在 LIBERO 40 任务上超越 π₀-FAST +4.5pp。**三大创新**：① 轨迹级 RL 形式化（多模态多轮对话建模）；② Process Reward Model（克服稀疏奖励 — 用 VLM 微调 PRM 给中间步骤打分）；③ 工程优化四件套（Curriculum Selection / GPU-balanced envs / Batch Decoding / Critic Warmup）。**关键发现**：VLA-RL 受益于 test-time optimization — 推理时 best-of-N 采样从 83% → 93%，是 VLA 的「inference scaling law」早期火花。arxiv:2505.18719。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "🔥 VLA + RL 后训练标准框架",
+        "📈 超越 π₀-FAST +4.5pp",
+        "🧠 Process Reward Model",
+        "⚡ Inference Scaling Law"
+      ],
+      "stars": "🌟 新发布",
+      "tags": [
+        "VLA-RL",
+        "PPO",
+        "Process Reward",
+        "清华",
+        "在线RL",
+        "Inference Scaling"
+      ],
+      "addedDate": "2026-05-29"
+    },
+    {
+      "id": "os127",
+      "name": "LIBERO (CMU — 具身智能操作 Benchmark 套件)",
+      "github": "https://github.com/Lifelong-Robot-Learning/LIBERO",
+      "organization": "CMU Robotics Institute",
+      "category": "framework",
+      "description": "**LIBERO** — CMU 开发的具身操作 benchmark 标准套件（**4.3k stars**）。提供 130+ 操作任务 / 4 个难度级别（LIBERO-Spatial / Object / Goal / Long）/ 标准化评测协议。**所有主流 VLA 模型**（OpenVLA / π₀ / Wall-OSS / RDT / GR00T）**都在 LIBERO 上报告性能** — 是 VLA 社区的「ImageNet」。配套 LIBERO-X（ICRA 2026 五级递进鲁棒性诊断扩展）。基于 robosuite 仿真。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "⭐ 4.3k stars — VLA 社区标准 benchmark",
+        "📊 130+ 任务 / 4 难度级别",
+        "🤖 所有主流 VLA 都在此报告",
+        "📦 robosuite 仿真 + LeRobot 兼容"
+      ],
+      "stars": "4.3k",
+      "tags": [
+        "LIBERO",
+        "Benchmark",
+        "VLA评测",
+        "CMU",
+        "操作任务",
+        "标准套件"
+      ],
+      "addedDate": "2026-05-29"
+    },
+    {
+      "id": "os128",
+      "name": "ManiSkill (UCSD HAOSU Lab — GPU 并行操作仿真 Benchmark)",
+      "github": "https://github.com/haosulab/ManiSkill",
+      "organization": "UCSD Hao Su Lab",
+      "category": "simulation",
+      "description": "**ManiSkill** — UCSD Hao Su 团队开发的 GPU 大规模并行操作仿真 benchmark（**2.5k stars**）。**ManiSkill3**（2025-2026）：基于 SAPIEN 仿真器 + GPU 并行 + Gymnasium API + 高质量视觉渲染。提供 20+ 精细操作任务（拧螺丝 / 倒水 / 装配 / 灵巧手）。与 LeRobot / Gymnasium 完全兼容。是 VLA 精细操作评测的**金标准** — 比 LIBERO 更难、更接近真实。",
+      "language": "Python",
+      "license": "Apache-2.0",
+      "features": [
+        "⭐ 2.5k stars — GPU 并行操作仿真",
+        "🎮 SAPIEN + 高质量视觉",
+        "🔧 20+ 精细操作任务",
+        "🤖 Gymnasium API 兼容"
+      ],
+      "stars": "2.5k",
+      "tags": [
+        "ManiSkill",
+        "仿真",
+        "精细操作",
+        "GPU并行",
+        "SAPIEN",
+        "Benchmark"
+      ],
+      "addedDate": "2026-05-29"
+    },
+    {
+      "id": "os129",
+      "name": "RoboTwin (北大 + 北航 — 双臂操作 Benchmark + 数据生成)",
+      "github": "https://github.com/TianxingChen/RoboTwin",
+      "organization": "北京大学 + 北航",
+      "category": "framework",
+      "description": "**RoboTwin** — 北大 + 北航联合开发的**双臂机器人操作 benchmark + 自动数据生成框架**。**RoboTwin 2.0**（2026）：提供 50+ 双臂协作任务 / 自动化数据生成 pipeline / 标准评测协议。支持 COBOT Magic / Aloha / 自定义双臂。是国内 VLA 论文最常用的双臂 benchmark — Pelican-Unify / π₀ / Wall-OSS 都在 RoboTwin 上报告过。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "🦾 双臂操作标准 benchmark",
+        "🔄 自动数据生成 pipeline",
+        "📊 50+ 双臂协作任务",
+        "🤖 国内 VLA 论文标准评测"
+      ],
+      "stars": "1.2k",
+      "tags": [
+        "RoboTwin",
+        "双臂",
+        "Benchmark",
+        "数据生成",
+        "北大",
+        "北航"
+      ],
+      "addedDate": "2026-05-29"
+    },
+    {
+      "id": "os130",
+      "name": "SimplerEnv (UC Berkeley — 真机 VLA 评测轻量仿真)",
+      "github": "https://github.com/simpler-env/SimplerEnv",
+      "organization": "UC Berkeley",
+      "category": "simulation",
+      "description": "**SimplerEnv** — UC Berkeley 开发的**轻量化 VLA 真机评测仿真器**。核心理念：用精确校准的仿真代替昂贵的真机评测 — 与真机成功率相关系数 r > 0.9。支持 WidowX / Franka 等桌面臂。是 OpenVLA / π₀ / Wall-OSS 论文中**必报告的仿真基准之一**（与 LIBERO 互补：LIBERO 测泛化 / SimplerEnv 测真实性）。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "📐 仿真-真机相关 r>0.9",
+        "🤖 WidowX / Franka 支持",
+        "⚡ 轻量化（单卡可跑）",
+        "📊 VLA 论文标准副基准"
+      ],
+      "stars": "800+",
+      "tags": [
+        "SimplerEnv",
+        "仿真评测",
+        "真机相关",
+        "Berkeley",
+        "WidowX",
+        "轻量"
+      ],
+      "addedDate": "2026-05-29"
+    },
+    {
+      "id": "os131",
+      "name": "HiF-VLA (西湖大学 — Motion-centric VLA / CVPR 2026)",
+      "github": "https://github.com/OpenHelix-Team/HiF-VLA",
+      "organization": "西湖大学 MiLAB + 阿里达摩院",
+      "category": "ai-model",
+      "description": "**HiF-VLA**（CVPR 2026 接收）— 以 Motion（运动向量）为中心的双向时空推理框架。抛弃冗余像素级多帧输入，用低维 Motion 向量作为动态先验。「联合专家」模块同步完成未来视觉运动预测 + 高精度动作序列生成。**关键优势**：极长历史窗口下保持恒定低延迟 / CALVIN + LIBERO-LONG SOTA / 「边想边做」物理直觉。同团队 ReconVLA 获 AAAI 2026 最佳论文奖。",
+      "language": "Python",
+      "license": "Apache-2.0",
+      "features": [
+        "🏆 CVPR 2026 接收",
+        "⚡ Motion-centric 恒定低延迟",
+        "📈 CALVIN/LIBERO-LONG SOTA",
+        "🧠 同团队 AAAI 2026 最佳论文"
+      ],
+      "stars": "新发布",
+      "tags": [
+        "HiF-VLA",
+        "CVPR 2026",
+        "Motion",
+        "西湖大学",
+        "时空推理",
+        "长程任务"
+      ],
+      "addedDate": "2026-05-29"
+    },
     {
       "id": "os125",
       "name": "wall-x (X Square Robot — Wall-OSS-0.5 国产首个零样本部署 VLA)",
@@ -2558,5 +2714,5 @@
       "category": "framework"
     }
   ],
-  "totalItems": 82
+  "totalItems": 120
 }

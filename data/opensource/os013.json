@@ -1,0 +1,7 @@
+{
+  "id": "os013",
+  "overview": "## 项目概述\n\n**Diffusion Policy** 是 Columbia / MIT / Toyota Research 联合提出的**扩散模型驱动的机器人策略学习框架**（GitHub 5k+ stars / CoRL 2023 Best Paper）。核心思想：把动作生成建模为去噪扩散过程——从纯噪声逐步去噪生成高质量动作序列。\n\n**为什么重要**：Diffusion Policy 是 π₀ / GR00T 等 VLA 模型的**动作生成范式基础**——理解它等于理解 2024-2026 年 VLA 主流架构的底层。",
+  "architecture": "## 系统架构\n\n```\n观测 o_t ──┐\n            ├─→ 条件编码 → 去噪网络 U-Net / Transformer\n动作噪声 ──┘     ↓ (T 步去噪)\n              a_{t:t+H} (动作 chunk，H 步)\n```\n\n**两种实现**：\n1. **CNN-based (U-Net)**：1D 时序卷积去噪网络（原论文默认）\n2. **Transformer-based (DiT)**：Diffusion Transformer（π₀ 采用这种）\n\n**动作 Chunking**：一次生成未来 H 步动作（H=8-16），执行前 k 步后重新规划 → 平滑 + 高效。",
+  "quickStart": "## 快速开始\n\n```bash\n# 安装\ngit clone https://github.com/real-stanford/diffusion_policy.git\ncd diffusion_policy\nmamba env create -f conda_environment.yaml\n\n# 训练（Push-T 任务）\npython train.py --config-name=train_diffusion_unet_lowdim_workspace \\\n    task=pusht\n\n# 评估\npython eval.py --config-name=eval_diffusion_unet_lowdim_workspace \\\n    task=pusht checkpoint=outputs/.../checkpoint.ckpt\n```",
+  "comparison": "## 横向对比\n\n| 维度 | Diffusion Policy | ACT | BC-RNN | Flow Matching (π₀) |\n|------|-----------------|-----|--------|--------------------|\n| **生成范式** | DDPM 去噪 | CVAE + Transformer | RNN 自回归 | ODE Flow |\n| **多模态** | ✅ 天然多模态 | 有限 | ❌ | ✅ |\n| **动作 Chunk** | ✅ | ✅ | ❌ | ✅ |\n| **推理速度** | 慢（T步去噪） | 快（单步） | 快 | 中（10步ODE） |\n| **表达力** | ✅ 最强 | 中 | 低 | ✅ 强 |\n| **Stars** | 5k+ | 3k+ | N/A | 11.5k (openpi) |"
+}

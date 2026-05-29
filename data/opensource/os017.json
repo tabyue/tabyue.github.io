@@ -1,0 +1,7 @@
+{
+  "id": "os017",
+  "overview": "## 项目概述\n\n**Segment Anything (SAM)** 是 Meta AI 发布的**通用图像分割基础模型**（GitHub 48k+ stars）。给定任意提示（点/框/文本），SAM 能分割图像中的任意物体——零样本、无需针对特定类别训练。\n\n**具身关联**：机器人抓取前需要精确分割目标物体 → SAM 提供**即插即用的通用分割能力**，替代过去为每个物体训练专用分割网络的做法。",
+  "architecture": "## 系统架构\n\n```\n┌─────────────────────────────────────┐\n│          SAM 架构                    │\n├─────────────────────────────────────┤\n│  Image Encoder (ViT-H / ViT-L)     │\n│  → 对整张图像只编码一次              │\n├─────────────────────────────────────┤\n│  Prompt Encoder                     │\n│  → 点 / 框 / 文本 / 掩码 提示编码    │\n├─────────────────────────────────────┤\n│  Mask Decoder (轻量 Transformer)    │\n│  → 输出多个候选掩码 + 置信度分数      │\n└─────────────────────────────────────┘\n```\n\n**关键设计**：图像只编码一次（重复使用），每次新提示只过轻量 decoder → **实时交互式分割**。",
+  "quickStart": "## 快速开始\n\n```python\nfrom segment_anything import sam_model_registry, SamPredictor\nimport cv2\n\nsam = sam_model_registry['vit_h'](checkpoint='sam_vit_h.pth')\npredictor = SamPredictor(sam)\n\nimage = cv2.imread('scene.jpg')\npredictor.set_image(image)\n\n# 点击一个点 → 分割该物体\nmasks, scores, _ = predictor.predict(\n    point_coords=np.array([[500, 300]]),\n    point_labels=np.array([1]),\n)\nprint(f'Best mask score: {scores[0]:.3f}')\n```",
+  "comparison": "## 横向对比\n\n| 维度 | SAM | SAM 2 | Grounding DINO + SAM | FastSAM |\n|------|-----|-------|---------------------|----------|\n| **输入提示** | 点/框/掩码 | 点/框/掩码+视频 | 文本 → 框 → 掩码 | 自动 |\n| **速度** | 中 | 快（视频优化） | 慢（两步） | ✅ 实时 |\n| **视频支持** | ❌ | ✅ | ❌ | ❌ |\n| **机器人应用** | 单帧分割 | 跟踪+分割 | 语言指令分割 | 端侧快速分割 |"
+}

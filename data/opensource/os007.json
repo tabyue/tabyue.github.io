@@ -1,0 +1,6 @@
+{
+  "id": "os007",
+  "overview": "## 项目概述\n\n**Legged Gym** 是 ETH Zürich RSL 开源的**四足/双足机器人运动控制 RL 训练框架**（GitHub 3k+ stars）。基于 Isaac Gym GPU 并行仿真 + PPO 算法。ANYmal / Unitree Go1 / Go2 / H1 等四足和人形机器人的 locomotion 策略**几乎都是用 Legged Gym 或其变体训练的**。\n\n**定位**：locomotion RL 的事实标准训练框架。",
+  "quickStart": "## 快速开始\n\n```bash\n# 依赖：Isaac Gym (NVIDIA)\npip install isaacgym  # 需要从 NVIDIA 官网下载\n\ngit clone https://github.com/leggedrobotics/legged_gym.git\ncd legged_gym\npip install -e .\n\n# 训练 Unitree Go2 locomotion\npython legged_gym/scripts/train.py --task=go2\n\n# 可视化\npython legged_gym/scripts/play.py --task=go2\n```\n\n**Sim-to-Real 关键**：域随机化（摩擦 / 质量 / 推力扰动）+ 特权信息教师-学生蒸馏。",
+  "comparison": "## 横向对比\n\n| 维度 | Legged Gym | Isaac Lab | Humanoid Gym | MuJoCo Playground |\n|------|-----------|-----------|-------------|-------------------|\n| **定位** | locomotion 专用 | 通用 | 人形专用 | GPU MuJoCo |\n| **物理** | Isaac Gym (PhysX) | Isaac Sim (PhysX 5) | Isaac Gym | MuJoCo XLA |\n| **并行** | 4096+ envs | 4096+ | 4096+ | 数千 (JAX) |\n| **Sim2Real** | ✅ ANYmal 验证 | 中 | ✅ H1/G1 | 新 |\n| **Stars** | 3k+ | 6k+ | 2k+ | 1.7k |"
+}

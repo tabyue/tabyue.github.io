@@ -1,0 +1,6 @@
+{
+  "id": "os014",
+  "overview": "## 项目概述\n\n**ACT (Action Chunking with Transformers)** 是 Stanford 提出的**模仿学习策略**（GitHub 3k+ stars / RSS 2023）。核心思想：用 CVAE + Transformer 一次预测未来 **chunk_size** 步动作（如 20 步），解决了传统逐步预测的「**compound error**」问题。\n\n**为什么核心**：ACT 是 ALOHA 系统的默认策略，也是 LeRobot 框架内置的第一个策略——很多人入门机器人学习的第一个算法就是 ACT。",
+  "quickStart": "## 快速开始\n\n```python\n# 通过 LeRobot 使用 ACT（最简方式）\npython -m lerobot.scripts.train \\\n    --policy.type=act \\\n    --env.type=aloha \\\n    --training.num_epochs=2000 \\\n    --policy.chunk_size=20\n\n# ACT 核心超参数\n# chunk_size: 20 (一次预测 20 步动作)\n# kl_weight: 10 (CVAE 的 KL 散度权重)\n# hidden_dim: 512\n# num_heads: 8\n# num_layers: 6 (Transformer encoder layers)\n```",
+  "comparison": "## 横向对比\n\n| 维度 | ACT | Diffusion Policy | BC-RNN | SmolVLA |\n|------|-----|-----------------|--------|----------|\n| **范式** | CVAE + Transformer | DDPM 去噪 | RNN 自回归 | VLM + Flow |\n| **Chunk** | ✅ (20步) | ✅ (16步) | ❌ (逐步) | ✅ |\n| **多模态分布** | CVAE 近似 | ✅ 天然 | ❌ | ✅ |\n| **训练数据量** | 50条起 | 100条起 | 100条起 | 预训练+少量 |\n| **推理速度** | ✅ 快 | 慢(T步) | ✅ 快 | 中 |\n| **适用场景** | 双臂精细操作 | 通用 | 简单任务 | 语言条件 |"
+}
