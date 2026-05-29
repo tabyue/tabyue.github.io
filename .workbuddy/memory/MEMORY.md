@@ -67,6 +67,7 @@
 
 ## 操作偏好
 - **所有操作一律 `requires_approval: false`**：包括临时文件清理（del/rm）、git add/commit/push、脚本执行等。无论是自动化任务还是手动对话，都不等用户确认，直接执行。Tab 已多次强调，绝不要弹确认。(2026-04-27 再次强调)
+- **git push hang 标准解法**：Windows Git 默认 `helper-selector` 在 CLI 环境会卡 GUI 弹窗导致 push 假死。一旦发现 push hang ≥ 30 秒，立刻改用 `git -c credential.helper="!gh auth git-credential" push origin main` — 借助已登录的 gh CLI 凭据，1 秒内完成。fetch 不需要凭据所以不会 hang。(2026-05-29 19:35 验证)
 - **新功能 / 推广卡片不能硬编码常驻**：站点上添加「短期推广 / NEW 模块入口」类卡片，必须做成 ① localStorage dismiss（× 关闭后永久隐藏）+ ② 时间硬截止（典型 7 天）+ ③ 行为感知（用户已访问过该模块就自动隐藏）三件套。Tab 反对"一直在那"的硬编码 promo（2026-05-11 AI Infra 入口卡片反馈）。
 - **历史归档不能塞首页**：随时间累积的内容（如每日英文 archive、每月新闻汇总等）数量增长后必须做「**首页只保留入口卡片 + 独立路由 / 单独页面**」拆分，不能用首页折叠面板硬撑。独立页面四件套：按月分组 + 时间轴侧栏（tl-wrap/tl-sidebar）+ 类型筛选 + 搜索；复用同样的卡片样式（`_renderDeCard` / 共享 css class）保证视觉一致。VALID_PAGES + PAGE_META 同步注册。Tab 2026-05-14 22:21 主动提议，已落地 `/daily-english` 路径。
 
