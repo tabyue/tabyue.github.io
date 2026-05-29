@@ -1,0 +1,7 @@
+{
+  "id": "os103",
+  "overview": "## 项目概述\n\n**D2E (Desktop to Embodied AI)** — ICLR 2026 论文，「桌面游戏数据预训练 → 机器人迁移」的开创性框架。核心：① **OWA Toolkit**——把多样桌面交互（屏幕视频 + 音频 + 键鼠 + 窗口事件）统一为标准化 MCAP 格式，**152× 压缩比**；② **Generalist-IDM**——基于「带时间偏移的下事件预测 (NEP-τ)」实现跨游戏零样本泛化，已开源 1B 参数权重 + Hugging Face Demo；③ **VAPT**——把桌面预训练表征迁移到物理机器人。结果：1.3K+ 小时数据（259 小时人工 + 1K+ 小时伪标 YouTube），1B 参数模型 **LIBERO 96.6% + CANVAS 83.3%**，**匹配或超越 π0 (3.3B) / OpenVLA (7B) 等 7× 大模型**。配套 D2E-480p / D2E-Original 数据集（267 小时 / 31 款游戏）。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/worv-ai/D2E\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/worv-ai/D2E](https://github.com/worv-ai/D2E)  \n**Stars**: 1.6k  \n**License**: Apache 2.0  \n**语言**: Python",
+  "algorithms": "## 核心特性\n\n- 🌟 ICLR 2026 — 首个把桌面游戏数据用作具身 AI 预训练基底的完整框架\n- 💡 OWA Toolkit 152× 压缩 / Generalist-IDM NEP-τ 时间偏移技术\n- 🎮 D2E-480p 数据集 267 小时 / 31 款游戏 / 60fps 同步视频 + 键鼠\n- 📊 1B 参数 LIBERO 96.6% + CANVAS 83.3%，超越 π0 (3.3B) / OpenVLA (7B)\n- 💾 完整权重 + 数据集 + 推理代码 + 评估协议全开源",
+  "comparison": "## 定位与标签\n\n**组织**: MAUM.AI / Seoul National University / Stanford  \n**分类标签**: ICLR2026, 预训练, 桌面数据, MAUM.AI, VAPT, Generalist-IDM"
+}

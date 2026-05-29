@@ -1,0 +1,7 @@
+{
+  "id": "os099",
+  "overview": "## 项目概述\n\n**机器人模型的「R1 时刻」**——把 DeepSeek R1 的 RL 后训练 + 长链思考范式首次完整搬到 VLA 模型上。核心：① **LAPO（Latent-to-Action Policy Optimization）**：基于 veRL 的端到端 RL 后训练框架，联合优化潜在 CoT 推理与动作生成；② **自适应潜在 CoT**：模型学发出 `<latent_end>` token 动态调整推理长度；③ **物理接地的潜在目标**：用 SAM 类视觉基础模型提供「物理空间锚点」引导推理。基于 Qwen3-VL + veRL 国产开源栈，仅 1 条轨迹预热 + RL 后训练就能 LIBERO 99.9% SOTA / 真机操作 52.5% → 93.75%（+41pp）。论文 arXiv:2604.28192，作者来自至简动力 + 香港中文大学 + 北京大学。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/CHEN-H01/LaST-R1\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/CHEN-H01/LaST-R1](https://github.com/CHEN-H01/LaST-R1)  \n**Stars**: 37  \n**License**: MIT  \n**语言**: Python",
+  "algorithms": "## 核心特性\n\n- LAPO 端到端 RL 后训练框架\n- 自适应潜在 CoT（`<latent_end>` token）\n- 物理接地的潜在目标 z_target\n- Qwen3-VL + veRL 国产开源栈\n- LIBERO 99.9% SOTA\n- 真机 1 条轨迹 RL +41pp 提升\n- 兼容 Franka Panda 真机部署\n- Apache-2.0 友好的 MIT 协议",
+  "comparison": "## 定位与标签\n\n**组织**: CUHK + Peking University + Simplexity Robotics  \n**分类标签**: VLA, 潜在推理, Latent CoT, RL 后训练, Qwen3-VL, veRL, DeepSeek R1 范式, LIBERO 99%"
+}

@@ -1,0 +1,7 @@
+{
+  "id": "os105",
+  "overview": "## 项目概述\n\n**SSM-VLA (Seeing Space and Motion)** — ICRA 2026 论文，清华深研院 + 高德联合开源（2026-05-25）。**核心创新三件套**：① **Farsighted-LAM**——首次把潜在动作模型扎根于「冻结 DINOv2 特征 + RGB-D 联合监督 + 多帧时序建模」，让 VLA 真正具备几何感知与多尺度时序能力，突破传统「两帧潜在动作」限制；② **视觉思维链 (Visual CoT)**——先显式预测未来 RGB+深度，再生成动作，提供可解释中间表征；③ **多模态协同注意力**——三阶段渐进式推理（视觉预测 → 潜动作规划 → 动作执行）在单 Transformer 内完成。结果：CALVIN ABC-D 平均 4.38 任务完成长度（SOTA）；零样本泛化能力突出。论文 arxiv:2509.26251。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/Tsinghua-MARS-Lab/SSM-VLA\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/Tsinghua-MARS-Lab/SSM-VLA](https://github.com/Tsinghua-MARS-Lab/SSM-VLA)  \n**Stars**: 0.7k  \n**License**: Apache 2.0  \n**语言**: Python (PyTorch)",
+  "algorithms": "## 核心特性\n\n- 🌟 ICRA 2026 — 几何感知 (DINOv2 + RGB-D) + 远视多帧潜动作\n- 💡 视觉思维链 (Visual CoT) — 先想象 RGB+深度再行动，可解释\n- 🧠 三阶段渐进推理在单 Transformer 内 — 双向单向因果混合注意力\n- 📊 CALVIN ABC-D SOTA：4.38 任务完成长度 / 零样本泛化\n- 🔧 SfM 伪深度标签生成 — 无深度传感器数据也能训练",
+  "comparison": "## 定位与标签\n\n**组织**: 清华大学深圳国际研究生院 / 阿里巴巴 高德  \n**分类标签**: ICRA2026, VLA, DINOv2, RGB-D, VisualCoT, 清华, 高德"
+}

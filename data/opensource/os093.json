@@ -1,0 +1,7 @@
+{
+  "id": "os093",
+  "overview": "## 项目概述\n\n中国人民大学知识与推理实验室开源的 VLA 潜动作监督统一研究 baseline。论文「From Pixels to Tokens」首篇系统对比 4 种潜动作监督策略（Image-Continuous / Image-Discrete / Action-Continuous / Action-Discrete）在 OpenVLA-7B + LIBERO 上的效果。Repo 提供：①4 种策略的完整 PyTorch 实现；②VQ-VAE codebook 训练管线（256 codeword × 4 token/segment）；③LIBERO + DROID + Bridge 三库混训配置；④训练 / 评测 / 可视化脚本。结论：离散 action token 直接监督 > 连续回归 > image-warp 监督，在 LIBERO-Long 上从 76.5% 升至 84.7%。是新 VLA 项目预训练 backbone 选择的最佳参考实现。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/RUCKBReasoning/From_Pixels_to_Tokens\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/RUCKBReasoning/From_Pixels_to_Tokens](https://github.com/RUCKBReasoning/From_Pixels_to_Tokens)  \n**Stars**: 刚开源  \n**License**: Apache-2.0  \n**语言**: Python (PyTorch)",
+  "algorithms": "## 核心特性\n\n- 4 种潜动作监督策略统一实现\n- VQ-VAE codebook 训练管线（256 × 4）\n- OpenVLA-7B baseline 对接\n- LIBERO + DROID + Bridge 三库混训\n- 评测脚本 + tensorboard 可视化\n- 异构数据混训自动配比",
+  "comparison": "## 定位与标签\n\n**组织**: 中国人民大学 RUCKBReasoning Lab  \n**分类标签**: VLA, Latent Action, VQ-VAE, OpenVLA, LIBERO, RUC, Pretrain"
+}

@@ -1,0 +1,7 @@
+{
+  "id": "os084",
+  "overview": "## 项目概述\n\nVILAS 配套 arXiv 2605.02037 论文同步开源的完整 VLA 学习与部署平台。所有内容免费：6-DOF 机械臂的全套 STEP/STL CAD 文件 + 3D 打印软体末端 + ROS2 + Pinocchio 控制栈 + OpenVLA / Pi-0 / GR00T 三大开放 VLA 兼容微调脚本 + 250 万帧 70 任务数据集（HuggingFace 镜像）。BOM < 1500 USD（不含微控制器主板和工业级电池），相比 Franka FR3 / UR5e（30-50 K USD）降低 20-30 倍。在 70 任务桌面操作数据集上 fine-tune OpenVLA-7B 平均成功率 81.3%，与 ALOHA（10K USD）持平。是 Stanford LeRobot SO-100、UMI 之后\"低成本 VLA 四件套\"的最新成员。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/vilas-platform/vilas\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/vilas-platform/vilas](https://github.com/vilas-platform/vilas)  \n**Stars**: 刚发布（2026-05-04）  \n**License**: MIT  \n**语言**: Python / C++ / OpenSCAD",
+  "algorithms": "## 核心特性\n\n- 完整 BOM <$1500：所有零件可从淘宝/亚马逊采购，无定制工艺要求\n- 3D 打印软体末端：易损物体抓取 0% 损坏率，对比硬夹爪 17%\n- 兼容 OpenVLA / π0 / GR00T 三大开放 VLA：附 LoRA 微调脚本 + 标定工具\n- 70 任务 250 万帧数据集：上传 HuggingFace Datasets / vilas-platform，可直接训练\n- ROS 2 + Pinocchio 控制栈：50 Hz 实时控制 + Cartesian/Joint 双模式\n- 教学场景友好：附 4 课时入门视频 + 4 个 Notebook 教程",
+  "comparison": "## 定位与标签\n\n**组织**: VILAS Platform Community  \n**分类标签**: VLA, 低成本机器人, 开源硬件, 3D打印, 教学, ALOHA替代, OpenVLA, Pi-0, GR00T, ROS2"
+}

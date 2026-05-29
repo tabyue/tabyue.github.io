@@ -1,0 +1,7 @@
+{
+  "id": "os106",
+  "overview": "## 项目概述\n\n**FRAPPE** — 浙大 + 西湖 + 港科广 2026-05 联合开源，「**多未来表征对齐 + 并行渐进扩展**」把世界建模注入通用机器人策略的高效训练范式。核心创新：① 摆脱「像素级重建陷阱」，对齐多个视觉基座模型（DINO / CLIP / SAM 等）的未来表征，避免单一表征偏置；② 并行渐进扩展，避免推理时显式预测观测的误差累积；③ 可用**无动作标注的人类视频**低成本提升泛化。结果：RoboTwin 仿真基准与真实 ALOHA（松灵 COBOT MAGIC）任务全面超越 SOTA。论文 arxiv:2602.17259。代表了 VLA 世界建模的「**反像素重建**」路线。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/h-zhao1997/frappe\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/h-zhao1997/frappe](https://github.com/h-zhao1997/frappe)  \n**Stars**: 0.5k  \n**License**: Apache 2.0  \n**语言**: Python",
+  "algorithms": "## 核心特性\n\n- 🌟 多未来表征对齐 — 跳过像素重建陷阱，直接对齐 DINO/CLIP/SAM 表征\n- 💡 无动作标注人类视频 → 低成本泛化提升\n- ⚡ 并行渐进扩展 — 避免显式观测预测的误差累积\n- 🤖 在 ALOHA (COBOT MAGIC) 真机验证 + RoboTwin 仿真双 SOTA\n- 🎓 浙大 + 西湖 + 港科广三校联合 — 国内 VLA 世界建模标杆",
+  "comparison": "## 定位与标签\n\n**组织**: 浙江大学 / 西湖大学 / 香港科技大学（广州）  \n**分类标签**: VLA, 世界模型, 多表征对齐, 浙大, 西湖, 港科广, ALOHA"
+}

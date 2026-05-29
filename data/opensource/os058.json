@@ -1,0 +1,6 @@
+{
+  "id": "os058",
+  "overview": "## 项目概述\n\n高德AMAP CV Lab发布并开源的VLA基座模型，首次将\"动作流形学习(Action Manifold Learning, AML)\"落地到机器人操作：用DiT骨干直接在动作流形上预测连续动作序列，跳过扩散策略逐步去噪过程，推理效率显著提升。配套开源UniACT统一数据管线，标准化单臂/双臂/人形等异构平台的数据格式与动作空间，支持\"一脑多形\"——一个模型同时控制不同构型机器人。在LIBERO-Plus等权威基准上成功率大幅领先π0。仓库提供预训练代码、数据处理脚本、部署示例与多平台权重。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/amap-cvlab/ABot-Manipulation\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/amap-cvlab/ABot-Manipulation](https://github.com/amap-cvlab/ABot-Manipulation)  \n**Stars**: 新发布  \n**License**:   \n**语言**: Python",
+  "comparison": "## 定位与标签\n\n**组织**: Alibaba AMAP CV Lab (高德视觉实验室)  \n**分类标签**: VLA基座, 动作流形学习, DiT, 跨本体, 统一数据, 高德, 一脑多形"
+}

@@ -1,0 +1,6 @@
+{
+  "id": "os052",
+  "overview": "## 项目概述\n\nICLR 2026收录。BYOVLA (Bring Your Own VLA) 开源框架，实现了VLM2VLA方法——将任意VLM高效微调为VLA模型而不发生灾难性遗忘。核心创新是将低维机器人动作重新表示为自然语言描述（如'向右移动5cm，夹爪闭合到80%'），使微调数据与VLM预训练数据分布对齐，仅用LoRA即可完成训练。框架支持任意VLM骨干即插即用，保留VLM的视觉理解和推理能力，同时获得与全量微调VLA相当的操作性能。完整开源训练代码、数据管线和推理脚本。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/irom-princeton/byovla\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/irom-princeton/byovla](https://github.com/irom-princeton/byovla)  \n**Stars**: 1.2k+  \n**License**:   \n**语言**: Python",
+  "comparison": "## 定位与标签\n\n**组织**: Princeton University (IROM Lab)  \n**分类标签**: VLA, VLM, 灾难性遗忘, LoRA, ICLR 2026, 即插即用, 动作语言化"
+}

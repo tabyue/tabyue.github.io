@@ -1,0 +1,7 @@
+{
+  "id": "os123",
+  "overview": "## 项目概述\n\n**pyroki** — 模块化的机器人**运动学优化工具包**（GitHub **1.4k stars**）。基于 JAX，提供**可微分正/逆运动学** + **约束优化** + **轨迹优化**。**核心优势**：① JAX 自动微分——天然支持梯度优化而非传统数值方法；② 模块化设计——URDF 解析 + FK/IK + 碰撞检测可独立使用；③ **GPU 加速批量 IK**——比 PyBullet / Pinocchio 快 10-100×（JAX vmap）。**具身关联**：VLA 模型输出末端位姿后需要 IK 转关节角——pyroki 是当前最快的可微分 IK 方案。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/chungmin99/pyroki\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/chungmin99/pyroki](https://github.com/chungmin99/pyroki)  \n**Stars**: 1.4k  \n**License**: MIT  \n**语言**: Python (JAX)",
+  "algorithms": "## 核心特性\n\n- ⚡ JAX 可微分运动学 — GPU 批量 IK 10-100× 加速\n- 🔧 URDF 解析 + FK/IK + 碰撞检测模块化\n- 📐 约束优化 + 轨迹优化\n- 🤖 VLA 输出转关节角的最快方案",
+  "comparison": "## 定位与标签\n\n**组织**: chungmin99 (独立开发者)  \n**分类标签**: 运动学, IK, JAX, 可微分, 优化, URDF"
+}

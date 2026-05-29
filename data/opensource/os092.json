@@ -1,0 +1,7 @@
+{
+  "id": "os092",
+  "overview": "## 项目概述\n\n微软 2026-04-03 发布的生产级 AI Agent 编排开源框架，是 AutoGen（50K+ Star，多 Agent 对话）与 Semantic Kernel（26K+ Star，企业编排）的正式合并产物。Python + C#/.NET 双语支持，跨语言 API 一致。核心：①基于 graph 的 workflow 引擎支持 Sequential / Concurrent / Handoff / Group Chat / Magentic-One 五种编排模式；②MCP（Model Context Protocol）完整集成做动态工具发现；③对接 Microsoft Foundry / Azure OpenAI / OpenAI / Anthropic / Amazon Bedrock / Google Gemini 等多家 LLM 供应商；④YAML 声明式 Agent 定义；⑤三层 middleware（请求/响应/自定义流水线）+ OpenTelemetry 内置可观测性；⑥checkpointing / streaming / human-in-the-loop / time-travel 高级特性；⑦DevUI 交互式调试面板；⑧Foundry hosted agents 一键云部署。10.3K Star / 1.7K Fork（开源 1 个月内即破万）。具身智能场景：VLA 的高层任务规划与多 Agent 协作（Brain-Cerebellum 双脑架构）可基于此框架做编排层。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/microsoft/agent-framework\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/microsoft/agent-framework](https://github.com/microsoft/agent-framework)  \n**Stars**: 10.3K (4 月发布即破万)  \n**License**: MIT  \n**语言**: Python / C# / TypeScript",
+  "algorithms": "## 核心特性\n\n- graph workflow 引擎（5 种编排模式）\n- MCP 完整集成\n- Python + .NET 双语 API 一致\n- 6 大 LLM 供应商对接\n- YAML 声明式 Agent 定义\n- 三层 middleware + OpenTelemetry\n- checkpointing / streaming / HITL / time-travel\n- DevUI 交互式调试",
+  "comparison": "## 定位与标签\n\n**组织**: Microsoft  \n**分类标签**: Microsoft, Agent Framework, AutoGen, Semantic Kernel, MCP, Multi-Agent, Magentic-One, Enterprise"
+}

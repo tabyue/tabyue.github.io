@@ -1,0 +1,6 @@
+{
+  "id": "os061",
+  "overview": "## 项目概述\n\n腾讯 Robotics X 实验室联合混元团队 2026 年 4 月 24 日开源的具身多模态基座大模型，基于 HY-Embodied-0.5-MoT-2B（Mixture-of-Transformer）架构打造。面向机器人\"看得懂、想得清、做得到\"的完整链路做了专项优化——视觉编码器针对第一视角/多视角鱼眼做了视场补偿训练，语言解码器针对机器人任务规划/空间推理/具身问答做了 SFT，还提供了原生的视觉指代（visual grounding）和轨迹理解头。在规划、空间推理、具身问答、视觉指代、轨迹理解 5 大方向 10 个主流 benchmark 上取得 6 项第一 3 项第二，其中 7 个评测集在端侧领域模型中排名第一，单卡 24GB 显存即可部署，可以直接落在机器人本体侧。开源内容包括完整模型权重、推理代码、微调脚本、评测工具链和 ROS2 节点示例，和阿里 Qwen-VL、字节 Doubao-Vision 形成\"三足鼎立\"。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/Tencent-Hunyuan/HY-Embodied-0.5-X\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/Tencent-Hunyuan/HY-Embodied-0.5-X](https://github.com/Tencent-Hunyuan/HY-Embodied-0.5-X)  \n**Stars**: 新发布  \n**License**:   \n**语言**: Python",
+  "comparison": "## 定位与标签\n\n**组织**: Tencent Robotics X Lab × HY Vision Team  \n**分类标签**: 腾讯, HY-Embodied, Robotics X, 混元, 具身多模态基座, MoT, 端侧部署, 2B参数"
+}

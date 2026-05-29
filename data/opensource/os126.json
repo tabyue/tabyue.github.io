@@ -1,0 +1,7 @@
+{
+  "id": "os126",
+  "overview": "## 项目概述\n\n**VLA-RL** — 清华深研院 2026-05 发布的**「VLA + 在线 RL 微调」标准框架**。把预训练 VLA（OpenVLA-7B）通过 PPO 进一步提升，在 LIBERO 40 任务上超越 π₀-FAST +4.5pp。**三大创新**：① 轨迹级 RL 形式化（多模态多轮对话建模）；② Process Reward Model（克服稀疏奖励 — 用 VLM 微调 PRM 给中间步骤打分）；③ 工程优化四件套（Curriculum Selection / GPU-balanced envs / Batch Decoding / Critic Warmup）。**关键发现**：VLA-RL 受益于 test-time optimization — 推理时 best-of-N 采样从 83% → 93%，是 VLA 的「inference scaling law」早期火花。arxiv:2505.18719。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/GuanxingLu/vlarl\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/GuanxingLu/vlarl](https://github.com/GuanxingLu/vlarl)  \n**Stars**: 🌟 新发布  \n**License**: MIT  \n**语言**: Python",
+  "algorithms": "## 核心特性\n\n- 🔥 VLA + RL 后训练标准框架\n- 📈 超越 π₀-FAST +4.5pp\n- 🧠 Process Reward Model\n- ⚡ Inference Scaling Law",
+  "comparison": "## 定位与标签\n\n**组织**: 清华大学 SIGS + NTU  \n**分类标签**: VLA-RL, PPO, Process Reward, 清华, 在线RL, Inference Scaling"
+}

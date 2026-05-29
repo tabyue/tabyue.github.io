@@ -1,0 +1,7 @@
+{
+  "id": "os086",
+  "overview": "## 项目概述\n\n新一代高通量照片级机器人仿真器，配套 arXiv 2604.25459 论文（已被 RSS 2026 录用）。核心组合：①自研并行物理引擎 MotrixSim（广义坐标速度-脉冲、MCP + PGS 求解器、强调静摩擦保持与高刚度大时间步稳定，API 完全兼容 MuJoCo MJCF）；②批量化 3DGS 渲染管线（剪枝优化让单 GPU >10000 FPS @ 640×480 RGB）；③自动 Real2Sim 工作流（分割 + 补绘 + 3DGS / mesh 重建 + 6D 位姿 + 相机标定）；④Bridge-GS 数据集（在 BridgeV2 基础上补齐全套仿真所需元数据）。Sim2Real 实测：四足 / 人形零样本部署、视觉导航零样本部署、机械臂抓取零微调真机成功率 90%。是 2026 下半年视觉中心 RL 与 VLA 训练的国产基础设施候选。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/discoverse-dev/gs_playground\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/discoverse-dev/gs_playground](https://github.com/discoverse-dev/gs_playground)  \n**Stars**: 新发布 (RSS 2026)  \n**License**: Apache-2.0（待确认）  \n**语言**: Python / C++ / CUDA",
+  "algorithms": "## 核心特性\n\n- 单 GPU >10000 FPS 高保真渲染\n- MotrixSim 并行物理引擎（MCP + PGS）\n- MuJoCo MJCF 兼容\n- Real2Sim 自动管线\n- Bridge-GS 数据集\n- Sim2Real 零样本部署",
+  "comparison": "## 定位与标签\n\n**组织**: 清华 AIR DISCOVER Lab + 谋先飞技术 + 原力灵机 + 求之科技 + 地瓜机器人  \n**分类标签**: Photorealistic, 3DGS, MotrixSim, Sim2Real, RSS 2026, 国产仿真器"
+}

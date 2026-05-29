@@ -1,0 +1,7 @@
+{
+  "id": "os104",
+  "overview": "## 项目概述\n\n**FASTER (Fast Action Sampling for Immediate Reaction)** — 港大赵恒爽团队 2026-05 联合大晓机器人开源的**首个面向流匹配 VLA 模型的单步动作快采样方法**。核心问题：传统 Action Chunking 在动态环境中存在严重的「反应延迟」——机器人开始行动需要 N 步采样。FASTER 把即时动作采样压缩至**单步完成**，机器人对环境变化的响应时间显著降低。**即插即用**——无需修改模型架构，无需额外训练成本，可直接套到 π0.5 / X-VLA / OpenPI 等流匹配 VLA 上。论文 arxiv:2603.19199。与 π0-EqM (p167) 形成对照：EqM 是「能量梯度自适应步数」，FASTER 是「单步硬压缩 + 后续多步精修」，两者可正交叠加。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/innovator-zero/FASTER\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/innovator-zero/FASTER](https://github.com/innovator-zero/FASTER)  \n**Stars**: 0.9k  \n**License**: Apache 2.0  \n**语言**: Python (PyTorch)",
+  "algorithms": "## 核心特性\n\n- 🌟 首个面向流匹配 VLA 的「即时动作单步采样」方法\n- 💡 即插即用：无需改架构、无需重训练，套现有 π0/X-VLA 即可生效\n- ⚡ 反应延迟显著降低，dynamic 环境下显著优于 Action Chunking\n- 🔬 港大赵恒爽 + 大晓机器人联合（5/22 大晓战略合作 SBUS 上声电子）\n- 📐 与 π0-EqM 互补：EqM 控自适应步数，FASTER 控初始单步快出",
+  "comparison": "## 定位与标签\n\n**组织**: 香港大学 / 大晓机器人  \n**分类标签**: VLA, FlowMatching, FastSampling, 港大, 大晓机器人, 推理优化"
+}

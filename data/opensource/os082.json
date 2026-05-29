@@ -1,0 +1,7 @@
+{
+  "id": "os082",
+  "overview": "## 项目概述\n\nAllen AI 2026-05-05 同步 arXiv 论文（2605.02881）发布的最新一代开放 Vision-Language-Action 模型。基于 Molmo2-ER 具身推理 backbone，引入 Action Reasoning Token（执行动作前先生成 100-token 显式推理 trace），覆盖 7 项 sim+real 基准全面超越 Pi-05（平均 +4.7%，长程 +9.3%）。完整开放权重、训练代码与 13M token Action Reasoning 数据集，4×A100 即可训练，是 Pi-05 算力门槛的 1/3。是迄今任何开源 VLA 中最大规模实证研究。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/allenai/molmoact2\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/allenai/molmoact2](https://github.com/allenai/molmoact2)  \n**Stars**: 刚发布  \n**License**: Apache 2.0  \n**语言**: Python",
+  "algorithms": "## 核心特性\n\n- Molmo2-ER 共享 backbone：与 Allen AI 视觉-语言模型完全共享，一次预训练即可服务通用问答+机器人控制+导航\n- Action Reasoning Token：执行动作前生成 ~100 token 显式推理 trace，从根本上把 VLA 从黑盒转化为\"会解释\"的可审计控制器\n- 完整开放：模型权重 + 训练代码 + 13M token 推理数据集 + Docker 一键部署，4×A100 GPU 即可训练（Pi-05 需 12×A100）\n- 7 项基准全面 SOTA：LIBERO-Long / SimplerEnv-Bridge / SimplerEnv-Google / CALVIN-D-D / Bridge-V2 Franka / Allegro-Hand / UR5 真机\n- 推理动作频率 30-50 Hz，可在 2×A100 推理；100-token trace 自带人类可审计的失败诊断能力",
+  "comparison": "## 定位与标签\n\n**组织**: Allen Institute for AI (Ai2)  \n**分类标签**: VLA, 开放模型, Action Reasoning, Allen AI, 开源, 基础模型, Pi-05替代"
+}

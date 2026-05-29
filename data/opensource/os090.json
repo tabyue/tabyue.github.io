@@ -1,0 +1,7 @@
+{
+  "id": "os090",
+  "overview": "## 项目概述\n\nBAAI Agents 团队发布的 Exocentric Video → Humanoid Control 完整管线（arXiv 2604.27711）。把视频生成模型当作隐式世界模型：给定任务指令 + 场景图像，先合成第三人称视频，再用 4DHumans / SMPL-X 估计人体动作，最后通过通用 PHC / MaskedMimic 控制器还原到人形机器人。整体 training-free，已在 Unitree H1 / G1 完成 Sim2Real 验证。仓库提供：①CogVideoX-5B / SVD 任务条件 fine-tune 脚本；②4DHumans 动作估计 wrapper；③PHC + MaskedMimic 通用控制器；④12 个 interaction-rich 任务的 prompt 模板与评测脚本。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://baai-agents.github.io/ExoActor/\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://baai-agents.github.io/ExoActor/](https://baai-agents.github.io/ExoActor/)  \n**Stars**: 新发布  \n**License**: CC BY-NC 4.0 (research only)  \n**语言**: Python / PyTorch",
+  "algorithms": "## 核心特性\n\n- 视频生成 = 隐式世界模型\n- 三段式管线：Video Gen → Motion Estimation → Motion Controller\n- training-free 零样本任务覆盖\n- Unitree H1 / G1 实物验证\n- 12 个交互密集型任务模板",
+  "comparison": "## 定位与标签\n\n**组织**: BAAI Agents  \n**分类标签**: ExoActor, BAAI, Video Generation, Humanoid, Zero-Shot, PHC, 4DHumans"
+}

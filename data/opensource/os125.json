@@ -1,0 +1,7 @@
+{
+  "id": "os125",
+  "overview": "## 项目概述\n\n**Wall-OSS-0.5** — 自变量机器人 5/28 重磅开源 — **国产首个「预训练即可在物理机器人上零样本部署」的 VLA 模型**。3B Qwen2.5-VL 骨干 + MoT 混合专家 + **Gradient-Bridged Co-Training**（动作监督直接塑造 VLM 主干 / 不再外挂 Action Head）。**预训练数据**：20+ 种机器人形态 / 单轮 100 万 + 轨迹 + **9000 万多模态样本**（含 embodied bridge 样本）。**零样本核心数据**：17 任务测试 4 项 ≥ 80 分（Block Sorting 100 / Rope Tightening 82 hold-out）；**微调后 60.5% vs π0.5 43.0%（领先 17.5pp）**。**三大技术创新**：Gradient-Bridged Co-Training / Vision-Aligned RVQ Action Tokenizer / Action-Space Supervision for Flow Matching。**DMuon 分布式优化器**：Muon Newton-Schulz 矩阵分片，端到端 overhead 降低 100×。**完整开源**：模型权重 (Wall-OSS-FLOW + Wall-OSS-FAST 双权重) + 训练代码 + 训练菜谱 + 优化器实现，社区可复现。HuggingFace: huggingface.co/x-square-robot/wall-oss-0.5；Paper: x2robot.com/api/files/file/wall_oss_05.pdf。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/X-Square-Robot/wall-x\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/X-Square-Robot/wall-x](https://github.com/X-Square-Robot/wall-x)  \n**Stars**: 🌟 新发布  \n**License**: Apache-2.0  \n**语言**: Python",
+  "algorithms": "## 核心特性\n\n- 🌟 国产首个零样本部署 VLA\n- 🤖 3B Qwen2.5-VL 骨干 + MoT 专家\n- 🔧 Gradient-Bridged Co-Training\n- 📦 DMuon 优化器 100× 加速\n- ✅ 微调后超 π0.5 17.5pp（10 任务子集 26pp）\n- 🤗 HuggingFace 模型权重 + 训练菜谱完整开源",
+  "comparison": "## 定位与标签\n\n**组织**: X Square Robot（自变量机器人）  \n**分类标签**: Wall-OSS, X Square, 自变量, VLA开源, Apache 2.0, Qwen2.5-VL, Flow Matching, RVQ Tokenizer, DMuon, Pretrained Deployment, Hot 🔥"
+}

@@ -1,0 +1,6 @@
+{
+  "id": "os081",
+  "overview": "## 项目概述\n\nICLR 2026 Spotlight 论文 MemoryVLA 官方开源仓库——首个为 VLA 引入分层记忆系统（感知记忆 + 认知记忆，灵感来自人脑海马体）的通用框架。在 LIBERO-Long 等长时序任务上把 OpenVLA 的 38% 提升到 76%，且推理延迟仅 +12%。仓库提供：完整训练代码（PyTorch + HuggingFace Transformers）；预训练权重（ViT-Base + LLaMA-3 8B）；LoRA-style adapter，可挂载到现有 OpenVLA / Pi0 / GR00T 主干上获得记忆能力，无需重训主干；13 任务真机数据集（5 个机器人本体：Franka / UR5 / Kinova / xArm / Panda），约 200K episode；SimplerEnv / LIBERO / Mikasa-Robo 全套评测脚本。MIT 许可证，已获 600+ Star。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/shihao1895/MemoryVLA\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/shihao1895/MemoryVLA](https://github.com/shihao1895/MemoryVLA)  \n**Stars**: 600+  \n**License**:   \n**语言**: Python",
+  "comparison": "## 定位与标签\n\n**组织**: CUHK × NUS × Shenzhen Lab  \n**分类标签**: MemoryVLA, VLA, 记忆机制, ICLR 2026, 海马体, LIBERO, 长时序任务, LoRA Adapter"
+}

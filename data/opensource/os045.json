@@ -1,0 +1,6 @@
+{
+  "id": "os045",
+  "overview": "## 项目概述\n\n赋能小型VLA模型的知识蒸馏框架。核心创新：（1）多层次知识蒸馏管线，从GPT-4V级大模型逐级向1-3B参数的小型VLA注入场景理解、物体关系和抓取策略三层语义知识；（2）自适应Token压缩机制，根据任务复杂度动态调整视觉Token数量；（3）轻量化动作头设计。在SimplerEnv和真实机器人上验证，1-3B参数即达接近7B模型性能，推理速度提升3-5倍。为VLA在Jetson等边缘设备的实用化部署开辟路径。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://arxiv.org/abs/2604.20834\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://arxiv.org/abs/2604.20834](https://arxiv.org/abs/2604.20834)  \n**Stars**: 新发布  \n**License**:   \n**语言**: Python",
+  "comparison": "## 定位与标签\n\n**组织**: 匿名 (Under Review)  \n**分类标签**: VLA, 知识蒸馏, 小型化, 边缘部署, 高效推理"
+}

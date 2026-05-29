@@ -1,0 +1,7 @@
+{
+  "id": "os089",
+  "overview": "## 项目概述\n\n面向 Mobile Manipulation 的 diffusion-based VLA 实现。核心：在「锚轨迹」周围做截断扩散去噪（5-10 步），保留多模态动作分布的同时把推理延迟从 ~120ms 砍到 ~35ms（A100），并通过测试时残差自校正模块逐步纠偏 chunking 漂移。配套 arXiv 2604.01567 论文（CC BY-NC-SA 4.0）。仓库提供：①LoRA 化 SigLIP / SmolVLM 主干；②anchored diffusion head；③residual self-correction 模块；④Tiago / Stretch / Mobile ALOHA 三种平台示例。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/UQ-CVMR/AnchorVLA\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/UQ-CVMR/AnchorVLA](https://github.com/UQ-CVMR/AnchorVLA)  \n**Stars**: 新发布  \n**License**: CC BY-NC-SA 4.0  \n**语言**: Python / PyTorch",
+  "algorithms": "## 核心特性\n\n- 锚轨迹 + 截断扩散去噪\n- 测试时残差自校正\n- 推理延迟 35ms 接近闭环 50ms 预算\n- 支持 Mobile ALOHA / Tiago / Stretch\n- 保留多模态动作分布",
+  "comparison": "## 定位与标签\n\n**组织**: Univ. of Queensland CVMR Lab  \n**分类标签**: AnchorVLA, Anchored Diffusion, Mobile Manipulation, Closed-Loop, Self-Correction"
+}

@@ -1,0 +1,7 @@
+{
+  "id": "os087",
+  "overview": "## 项目概述\n\n腾讯混元开源的具身基础模型家族，技术报告 arXiv 2604.07430。核心架构 Mixture-of-Transformers（MoT），通过潜在 token 进行模态特定计算，强化细粒度感知。两个变体：①MoT-2B（4B 总参 / 2.2B 激活，速度等同 2B 密集模型，已开源 Hugging Face 权重 + 推理代码）；②32B 大模型（前沿性能，对标 Gemini 3.0 Pro）。训练数据 1 亿+ 具身专属数据点 + 2000 亿+ Token（覆盖 3D 空间 / 物理对象交互 / 代理动力学）。是国内大厂首个真正开源权重 + 推理代码的具身基础模型，可直接作为 VLA 微调起点。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/Tencent-Hunyuan/HY-Embodied\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/Tencent-Hunyuan/HY-Embodied](https://github.com/Tencent-Hunyuan/HY-Embodied)  \n**Stars**: 新发布（2026-04-09）  \n**License**: Apache-2.0（参考 Hunyuan 历史发布）  \n**语言**: Python / PyTorch",
+  "algorithms": "## 核心特性\n\n- MoT 混合专家架构 + 潜在 token 模态路由\n- 2B 激活 / 4B 总参，边缘部署友好\n- 1 亿+ 具身数据点 + 2000 亿 Token 训练\n- Hugging Face 权重 + 官方推理代码\n- 对标 Gemini 3.0 Pro 的 32B 版本",
+  "comparison": "## 定位与标签\n\n**组织**: Tencent Robotics X × Hunyuan Vision Team  \n**分类标签**: 腾讯Hunyuan, MoT, 具身基础模型, VLA, 开源权重, 边缘部署"
+}

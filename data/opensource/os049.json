@@ -1,0 +1,6 @@
+{
+  "id": "os049",
+  "overview": "## 项目概述\n\nResVLA提出了一种全新的VLA策略生成范式：通过频域（傅里叶/余弦变换）将机器人运动分解为低频全局意图和高频局部动态。确定性网络直接预测低频意图锚（Intent Anchor），残差扩散桥（Residual Diffusion Bridge）仅对高频残差进行精细去噪。这种'意图条件化生成'使扩散过程从有意义的起点出发，大幅缩小搜索空间，去噪步数可减至5步。在多个仿真基准上全面超越现有方法，特别在长程操作和精细装配任务中表现出色。提供完整代码和模型权重。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://res-vla.github.io/ResVLA/\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://res-vla.github.io/ResVLA/](https://res-vla.github.io/ResVLA/)  \n**Stars**: 新发布  \n**License**:   \n**语言**: Python",
+  "comparison": "## 定位与标签\n\n**组织**: 上海AI Lab / 复旦大学 / 香港大学  \n**分类标签**: VLA, 频域分析, 意图锚定, 残差扩散桥, Diffusion Policy, 长程操作"
+}

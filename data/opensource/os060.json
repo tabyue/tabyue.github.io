@@ -1,0 +1,6 @@
+{
+  "id": "os060",
+  "overview": "## 项目概述\n\nICLR 2026 论文 WholeBodyVLA 的官方开源实现。首个端到端完成人形大空间 loco-manipulation 的 VLA 框架，部署于智元 Agibot X2 双足人形平台，可在 100+ 米跨房间场景下连续完成走动+拾取+放置任务。核心创新是\"统一隐空间动作\"——把下肢步态、上肢末端、手指 DoF 压缩到同一低维动作流形 z_t 上由 VLA 预测，共享解码器再展开到全身自由度，避免了多头独立回归的维度灾难。仓库提供模仿学习+RL精调完整训练代码（PPO+KL约束，联合优化速度跟踪/ZMP稳定/末端误差/接触力）、Agibot X2 部署脚本、评测基准与预训练权重。任务成功率相对模块化基线从 42% 提升至 73%，样本效率相对多头 VLA 提升 3.1 倍。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/OpenDriveLab/WholebodyVLA\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/OpenDriveLab/WholebodyVLA](https://github.com/OpenDriveLab/WholebodyVLA)  \n**Stars**: 新发布  \n**License**:   \n**语言**: Python",
+  "comparison": "## 定位与标签\n\n**组织**: OpenDriveLab (Shanghai AI Lab / Agibot)  \n**分类标签**: 人形机器人, loco-manipulation, 统一隐空间, VLA, ICLR 2026, Agibot X2, OpenDriveLab, RL精调"
+}

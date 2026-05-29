@@ -1,0 +1,7 @@
+{
+  "id": "os107",
+  "overview": "## 项目概述\n\n**Psi-Zero** — USC Physical Superintelligence Lab 2026-05-05 开源，「**硬件无关**」的人形机器人 VLA 基础模型，**首日 GitHub 2,500+ stars**。核心架构：端到端 Transformer 同时处理视觉 token (ViT) + 语言指令 (T5/LLaMA 变体) + 动作序列，**自回归动作生成**（区别于 π0 的 diffusion 路线）。训练数据混合 MuJoCo / Isaac Gym 仿真 + 真机遥操作。预训练权重 + PsiSim 仿真环境同步开源，可在自研硬件上 fine-tune。**注意**：当前仅放出权重 + 训练脚本，**未公布标准基准评测分数**——AINews 评论指出这是「主要红旗」，但社区仍在快速复现验证。与 LeRobot 兼容，可与 HumDex / D2E 数据集联训。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/physical-superintelligence-lab/psi-zero\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/physical-superintelligence-lab/psi-zero](https://github.com/physical-superintelligence-lab/psi-zero)  \n**Stars**: 5.4k  \n**License**: MIT  \n**语言**: Python (PyTorch + HuggingFace)",
+  "algorithms": "## 核心特性\n\n- 🌟 首日 2.5K stars — 「硬件无关」的开源人形 VLA 基座\n- 💡 自回归动作生成（非 diffusion）— 区别于 π0 路线\n- 🔧 PsiSim 仿真环境（基于 Isaac Sim）配套开源\n- 🎓 USC PSI Lab — MIT/Stanford 校友新实验室首发力作\n- ⚠️ 缺乏标准基准 — 社区正在自行评估（HumDex/D2E 联训证据集中)",
+  "comparison": "## 定位与标签\n\n**组织**: USC Physical Superintelligence (PSI) Lab  \n**分类标签**: VLA, 人形, PSI, USC, 硬件无关, 自回归动作"
+}

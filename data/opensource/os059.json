@@ -1,0 +1,6 @@
+{
+  "id": "os059",
+  "overview": "## 项目概述\n\n面向具身Agent训练的大规模真实环境合成平台。通过自动挖掘真实网络数据构建了 1978 个真实环境和 19822 个工具，基于 Model Context Protocol (MCP) 统一工具调用接口，使环境与 Agent 策略完全解耦。核心创新是\"Agent-Env 共同进化\"：Agent 在环境中暴露短板→系统自动生成针对性挑战任务→ Agent 能力提升→环境再次进化。提供完整的环境合成管线、预置1978个训练场、Agent训练脚本、评估基准。显著提升 Agent 在长程工具调用、多步任务分解、错误恢复上的泛化能力，为具身智能体从仿真走向真实世界提供关键基础设施。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://arxiv.org/abs/2604.18292\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://arxiv.org/abs/2604.18292](https://arxiv.org/abs/2604.18292)  \n**Stars**: 新发布  \n**License**:   \n**语言**: Python",
+  "comparison": "## 定位与标签\n\n**组织**: ByteDance Seed / Renmin University of China  \n**分类标签**: Agent训练, MCP, 工具使用, 环境合成, 字节Seed, 人大, 共同进化"
+}

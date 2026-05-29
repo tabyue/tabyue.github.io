@@ -1,0 +1,7 @@
+{
+  "id": "os109",
+  "overview": "## 项目概述\n\n**Autoware** — 由日本东京大学发起、Autoware Foundation 全球社区维护的**全栈式自动驾驶框架**，是开源自动驾驶的「**事实标准**」。主打**「低成本、易部署、跨平台」**，支持 L2~L4 级自动驾驶，覆盖城市道路、高速、园区等场景。**核心模块**：感知（多传感器融合 / LiDAR 检测 / 摄像头融合）+ 定位（NDT / EKF / GNSS 融合）+ 规划（Lanelet2 道路网络 + 行为规划 + 运动规划）+ 控制（横向 + 纵向）。**两大版本**：① **Autoware.Universe** — 当前主推版本，基于 ROS 2 Humble；② **Autoware.Auto** — Apex.OS 版本，更注重产品级稳定性。**部署平台**：X86 + ARM (Jetson 系列) + 瑞芯微 + 百度昆仑芯。**典型用例**：园区无人车 / 配送机器人 / 矿区自动驾驶 / 末端物流 / 学术研究。**Autoware 与 Apollo 对比**：Autoware = 学术开源标杆 + 跨平台 + 易扩展；Apollo = 工业级 + 量产部署 + 中国生态深耕。**配套**：完整高精度地图工具链（PCD 点云图 + Lanelet2 矢量图 + OSM 语义图）+ AWSIM 仿真器 + Open Autonomous Driving Dataset。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/autowarefoundation/autoware\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/autowarefoundation/autoware](https://github.com/autowarefoundation/autoware)  \n**Stars**: 10.3k+  \n**License**: Apache-2.0  \n**语言**: C++ (核心) + Python (工具/仿真) + Rust (高性能模块)",
+  "algorithms": "## 核心特性\n\n- 🌍 全球开源自动驾驶标杆 — 东京大学发起 / Autoware Foundation 治理\n- 🛣️ L2-L4 全场景 — 城市/高速/园区 / 配送 / 矿区\n- 🤖 ROS 2 Humble 原生 — 与 ROS 生态深度集成\n- 🔌 跨平台 — X86 + Jetson + 瑞芯微 + 百度昆仑芯\n- 🗺️ Lanelet2 高精地图工具链 — PCD + 矢量 + 语义\n- 🎯 与 Apollo 互补 — Autoware 偏研究/低成本 / Apollo 偏量产/中国生态\n- 📚 AWSIM 仿真器 + 完整培训资料",
+  "comparison": "## 定位与标签\n\n**组织**: Autoware Foundation (东京大学发起 / 全球社区)  \n**分类标签**: 自动驾驶, Autoware, ROS2, Lanelet2, 园区无人车, L4, Universe, 全栈"
+}

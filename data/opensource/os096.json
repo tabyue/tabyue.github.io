@@ -1,0 +1,7 @@
+{
+  "id": "os096",
+  "overview": "## 项目概述\n\nKC-VLA 官方实现：用任务调制 KSM 检测语义关键帧 → 关键帧链 prompt 替代密集观测窗口 → VLA 解码生成动作。自建 NonMarkov-ManiSkill 4 任务集平均 92% vs 基线 57%。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/cytoplastm/KC-VLA\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/cytoplastm/KC-VLA](https://github.com/cytoplastm/KC-VLA)  \n**Stars**: ~120  \n**License**: MIT  \n**语言**: Python",
+  "algorithms": "## 核心特性\n\n- Task-modulated KSM\n- Keyframe Chain prompt\n- OpenVLA backbone\n- ManiSkill2 兼容\n- 真机 Franka Panda 验证",
+  "comparison": "## 定位与标签\n\n**组织**: Yipeng Chen et al. (UESTC + 多机构)  \n**分类标签**: VLA, long-horizon, non-markovian, keyframe, manipulation"
+}

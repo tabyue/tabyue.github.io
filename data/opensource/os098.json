@@ -1,0 +1,7 @@
+{
+  "id": "os098",
+  "overview": "## 项目概述\n\nNVIDIA GEAR 团队为 Unitree G1 等人形机器人提供端到端开源全栈：① **GEAR-SONIC**——大规模人体动作数据训练的统一全身策略（行走 / 爬行 / 双臂操作 / 遥操作 / 多模态控制）；② **Decoupled WBC**——下半身 RL + 上半身 IK 的解耦控制器（GR00T N1.5 / N1.6 同款）；③ **MotionBricks**——15000 FPS 实时潜在生成动作合成模型；④ 配套 Isaac-GR00T N1.7 VLA 微调流程 + VR 遥操作数据采集（PICO 头显） + C++ 推理栈 + BONES-SEED 数据集（142K 人体动作 / 288 小时 G1 MuJoCo 轨迹）。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/NVlabs/GR00T-WholeBodyControl\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/NVlabs/GR00T-WholeBodyControl](https://github.com/NVlabs/GR00T-WholeBodyControl)  \n**Stars**: 1.9k  \n**License**: Apache-2.0 (代码) + NVIDIA Open Model License (权重)  \n**语言**: Python + C++",
+  "algorithms": "## 核心特性\n\n- GEAR-SONIC 统一全身策略\n- Decoupled WBC（GR00T N1.5/N1.6 同款）\n- MotionBricks 15000 FPS 动作合成\n- Unitree G1 端到端 VLA 工作流\n- VR 遥操作数据采集（PICO）\n- BONES-SEED 142K 动作数据集\n- Isaac Lab + PPO 训练 + C++ 推理栈",
+  "comparison": "## 定位与标签\n\n**组织**: NVIDIA Labs (GEAR 团队)  \n**分类标签**: NVIDIA, GR00T, Unitree G1, 全身控制, WBC, Isaac Lab"
+}

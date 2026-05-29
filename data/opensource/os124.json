@@ -1,0 +1,7 @@
+{
+  "id": "os124",
+  "overview": "## 项目概述\n\n**RynnVLA-002** — 阿里达摩院 2025-11 开源的**统一 VLA + 世界模型（Action World Model）**（GitHub **829 stars**）。**核心创新**：图像、文本、动作共享统一词表，在单一 LLM 架构中**统一理解 & 生成多模态**。世界模型用「动作+视觉」预测未来图像状态，学习环境物理规律，反向增强动作规划——实现 VLA 与世界模型「**双向增强**」。**性能**：LIBERO 零预训练 **97.4%** 成功率 / 真实 LeRobot 任务成功率提升 **50%+**。**三阶段训练**：① 自我视角视频生成预训练；② 关键点轨迹预测增强动作意识；③ 转化为 VLA + 世界模型联合训练。**配套**：RynnRCP（机器人上下文协议）+ RynnVLA-001（基础版）+ RynnEC（具身认知）。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/alibaba-damo-academy/RynnVLA-002\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/alibaba-damo-academy/RynnVLA-002](https://github.com/alibaba-damo-academy/RynnVLA-002)  \n**Stars**: 829  \n**License**: Apache-2.0 (代码) + 模型协议  \n**语言**: Python (PyTorch)",
+  "algorithms": "## 核心特性\n\n- 🧠 统一 VLA + 世界模型 — Action World Model\n- 📊 LIBERO 97.4% / 真机 +50%\n- 🔄 VLA ↔ 世界模型双向增强\n- 📦 配套 RynnRCP + RynnEC + RynnVLA-001",
+  "comparison": "## 定位与标签\n\n**组织**: 阿里巴巴达摩院  \n**分类标签**: VLA, 世界模型, 达摩院, Action World Model, LIBERO, 统一架构"
+}

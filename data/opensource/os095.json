@@ -1,0 +1,7 @@
+{
+  "id": "os095",
+  "overview": "## 项目概述\n\n北大 / 北航 / 北智院联合发布的端到端「主动感知 + 主动操作」VLA 框架（论文 arXiv 2603.12193）。核心创新：① 双 Action Head 解耦（相机 head 与操作 head 独立梯度）；② 自下而上两阶段训练；③ 配套 ActiveViewPose-200K 主动相机运动数据集 + ActiveManip-Bench 12 任务基准。在真实 Franka FR3 + 主动相机臂实验中比 GR00T N1 / π₀ 平均 SR 高 28-31 个百分点。Repo 提供：模型权重 / ActiveViewPose-200K 数据集 / ActiveManip-Bench 评测脚本 / 训练 pipeline / 复现指南。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://lmzpai.github.io/SaPaVe\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://lmzpai.github.io/SaPaVe](https://lmzpai.github.io/SaPaVe)  \n**Stars**: 刚开源  \n**License**: Apache-2.0  \n**语言**: Python (PyTorch)",
+  "algorithms": "## 核心特性\n\n- 双 Action Head 解耦架构（Camera + Manip）\n- ActiveViewPose-200K 大规模主动感知数据集\n- ActiveManip-Bench 首个超越固定视角的 VLA 基准\n- Florence2-base + 3D Geometry Module\n- 完整两阶段训练 pipeline（PPO / 模仿学习）\n- Isaac Sim 仿真评测脚本",
+  "comparison": "## 定位与标签\n\n**组织**: Peking University × Beihang × BAAI  \n**分类标签**: SaPaVe, VLA, Active Perception, ActiveViewPose-200K, ActiveManip-Bench, BAAI, PKU, Beihang"
+}

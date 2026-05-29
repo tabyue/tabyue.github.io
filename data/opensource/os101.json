@@ -1,0 +1,7 @@
+{
+  "id": "os101",
+  "overview": "## 项目概述\n\n**ABot-M0** — 阿里巴巴高德地图 CV Lab 团队 2026-02 发布的「**全球首个统一架构机器人基础模型**」，2026-04 完整开源代码 + 数据集。核心创新：① **UniACT-dataset**——整合 6 个主流开源数据集，构建非私有领域规模最大的 **600 万+ 轨迹 / 9500+ 小时 / 20+ 机器人形态**统一操作数据集，统一动作表示 + 坐标系 + 控制频率 + 增量动作建模；② **Action Manifold Learning (AML)**——首次提出动作流形学习算法，让模型直接预测物理可行的动作序列，提升策略稳定性与解码效率；③ **3D 感知模块**——增强对前后 / 远近 / 遮挡的空间语义理解。结果：LIBERO 98.6% / LIBERO-Plus 80.5%（**比 π0 提升 ~30%**） / RoboCasa SOTA。论文 arxiv:2602.11236。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/amap-cvlab/ABot-Manipulation\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/amap-cvlab/ABot-Manipulation](https://github.com/amap-cvlab/ABot-Manipulation)  \n**Stars**: 5.2k  \n**License**: Apache 2.0  \n**语言**: Python (PyTorch)",
+  "algorithms": "## 核心特性\n\n- 🌟 600 万 + 轨迹 / 20+ 机器人形态统一操作数据集（非私有领域规模最大）\n- 💡 Action Manifold Learning — 首个动作流形学习范式，物理可行性约束\n- 🔧 跨平台数据融合 + 完全基于公开数据预训练，可复现\n- 📊 LIBERO-Plus 80.5%（比 π0 +30%） / LIBERO 98.6% / RoboCasa SOTA\n- 🧱 配套 UniACT 数据治理工具链：动作表示 / 坐标系 / 控制频率统一",
+  "comparison": "## 定位与标签\n\n**组织**: 阿里巴巴 / 高德 AMAP CV Lab  \n**分类标签**: VLA, 动作流形, AML, 高德, 阿里巴巴, 600万轨迹, UniACT, 基础模型"
+}

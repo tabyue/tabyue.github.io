@@ -1,0 +1,6 @@
+{
+  "id": "os053",
+  "overview": "## 项目概述\n\nVistaBot解决了端到端机器人操作模型对相机视角变化敏感的关键问题。框架整合三个组件：(1)基于VGGT的4D几何估计器——前馈式预测相机位姿和场景深度，无需多视角标定；(2)视频扩散模型驱动的视图合成——带记忆机制生成时空一致的目标视角潜在特征；(3)潜在动作学习——直接从合成潜在特征学习策略，跳过显式图像重建。集成到ACT和π₀两种主流框架中，在相机偏移30°+时仍保持高成功率。提出了新评估指标VGS(视点泛化分数)量化跨视角泛化能力。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://arxiv.org/abs/2604.21914\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://arxiv.org/abs/2604.21914](https://arxiv.org/abs/2604.21914)  \n**Stars**: 新发布  \n**License**:   \n**语言**: Python",
+  "comparison": "## 定位与标签\n\n**组织**: Tsinghua University / Shanghai AI Lab  \n**分类标签**: 视角鲁棒, 视图合成, 4D几何, 扩散模型, ACT, π₀, 部署友好"
+}

@@ -1,0 +1,7 @@
+{
+  "id": "os100",
+  "overview": "## 项目概述\n\n**HumDex（Humanoid Dexterous Manipulation Made Easy）** — USC PSI Lab 5/14 集中报道的开源**全身灵巧操作低成本数据系统**。核心：① **轻量级 VR 套装**取代昂贵动捕方案，单人单工位即可采集；② **统一 retargeting**——把人体动作通过 SE(3) 优化映射到 humanoid 灵巧手关节，解决「人 → 机器人形态映射」问题；③ **WorldEnv 仿真**适配多种主流人形（Unitree G1/H1、Apptronik Apollo、Tesla Optimus）；④ **完整训练 baseline**——基于 ACT / DP / VLA 三套基线策略 fine-tune 适配。论文 arXiv:2603.12260（v2），项目主页 [physical-superintelligence-lab/humdex](https://github.com/physical-superintelligence-lab/humdex)。低门槛 + 全栈开源，把人形数采从 \"百万级动捕室\" 拉低到 \"消费级 VR + 普通工位\" 量级。",
+  "quickStart": "## 快速开始\n\n```bash\n# 克隆仓库\ngit clone https://github.com/physical-superintelligence-lab/humdex\n\n# 具体安装和使用方法请参考项目 README\n```\n\n**GitHub**: [https://github.com/physical-superintelligence-lab/humdex](https://github.com/physical-superintelligence-lab/humdex)  \n**Stars**: 850  \n**License**: MIT  \n**语言**: Python",
+  "algorithms": "## 核心特性\n\n- 轻量级 VR 套装数采（HTC Vive Tracker × 6）\n- SE(3) 优化 retargeting（人 → humanoid 形态映射）\n- 兼容 Unitree G1/H1 / Apollo / Optimus\n- WorldEnv 仿真适配多构型人形\n- ACT / DP / VLA 三套训练 baseline\n- 单人单工位 1 小时采 200 trajectories\n- 完整端到端 pipeline（采集 → 训练 → 部署）\n- MIT 协议",
+  "comparison": "## 定位与标签\n\n**组织**: USC Physical Superintelligence (PSI) Lab  \n**分类标签**: HumDex, USC PSI, 数据采集, VR retargeting, humanoid, 灵巧操作, ACT, DP"
+}
