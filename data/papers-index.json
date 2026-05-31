@@ -1,6 +1,44 @@
 {
-  "lastUpdated": "2026-05-30T08:10",
+  "lastUpdated": "2026-05-31T08:00",
   "papers": [
+    {
+      "id": "p176",
+      "title": "Qwen-VLA: Unifying Vision-Language-Action Modeling across Tasks, Environments, and Robot Embodiments",
+      "authors": "Qiuyue Wang, Mingsheng Li, Jian Guan, ... (38 位通义实验室 + 学术合作者) / 阿里通义实验室",
+      "venue": "Tech Report / GitHub Open Source / arXiv",
+      "date": "2026-05-29",
+      "arxiv": "https://arxiv.org/abs/2605.30280",
+      "github": "https://github.com/QwenLM/Qwen-VLA",
+      "tags": [
+        "Qwen-VLA",
+        "VLA",
+        "跨本体",
+        "统一模型",
+        "DiT",
+        "Qwen3.5",
+        "VLN",
+        "ALOHA",
+        "通义"
+      ],
+      "tldr": "通义实验室首个**「统一具身基础模型」** — 单一 VLA 模型同时统一**操作 + 导航 + 轨迹预测**三大任务 + **11 种机器人本体**。架构：Qwen3.5-4B 主干 + 1.15B DiT 动作解码器 + **Embodiment-Aware Prompt Conditioning**（把硬件差异编码为自然语言）。四阶段训练（T2A → CPT → SFT → RL）。LIBERO 97.9% / RoboTwin-Hard 87.2% / VLN-CE R2R 69.0% / ALOHA OOD 76.9%（比 π₀.₅ 高 35.4 个百分点）/ DOMINO 零样本 26.6%（超越在 DOMINO 数据上微调的 PUMA）。",
+      "category": "vla-models",
+      "difficulty": "高级",
+      "addedDate": "2026-05-31",
+      "keyInsights": [
+        "**「VLA 大一统」首次实证**：操作 / 导航 / 轨迹预测三类历史上「各自为政」的具身任务可以在**同一个模型**中协同训练并**互相增益** — 因为它们在计算结构上同构「观察场景 + 理解指令 → 预测未来动作 / 轨迹序列」",
+        "**Embodiment-Aware Prompt Conditioning**：把机器人硬件差异（自由度 / 控制频率 / 运动学约束 / 接口协议）**编码为一段结构化文本** → 作为「**唯一的平台特定接口**」。模型架构 / 解码器权重保持不变，通过替换 prompt 实现 11 种本体零改动切换 — 比传统「为每种本体定制独立 model branch」轻量 **N 倍**",
+        "**四阶段训练 Pipeline**：① **T2A 预训练**冻结 VLM 只训 DiT，**仅文本不给图像**让 DiT 先学「动作是什么」，计算成本是多模态训练的 1/10；② **CPT** 解冻所有参数大规模异构联合训练；③ **SFT** 仿真 + 真机分支；④ **RL** 用 SimplerEnv 稀疏二值奖励直接优化成功率 — 阶梯式降低梯度冲突",
+        "**DiT 动作解码器（1.15B）**：基于 Diffusion Transformer 生成连续动作 / 轨迹序列 — 比传统 autoregressive token 解码更适合连续控制信号 + 跨任务统一接口",
+        "**真机 OOD 泛化能力**：ALOHA 6 类 in-domain 平均 **83.6%**，5 维 OOD（颜色 / 实例 / 位置 / 背景 / 指令）平均 **76.9%** — **比 π₀.₅ 高 35.4 个百分点** / 比无预训练变体高 40.7 个百分点。**背景维度 80.8% / 指令维度 84.6%** 最强",
+        "**DOMINO 零样本**：完全未使用 DOMINO 训练数据 → 26.6% 成功率 → **超越专门在 DOMINO 数据上微调的 PUMA（17.2%）** — 证明大规模异构联合训练涌现出动态操作的零样本能力",
+        "**通用模型超越专用模型**：单一 Qwen-VLA 通用模型在 5 个仿真基准中的 **3 个超越**为各基准独立微调的最佳专用模型 — 证伪「多任务联合训练必牺牲单任务性能」的常见迷思"
+      ],
+      "impact": "**国产 VLA 基础模型的里程碑式作品**：① 首次在「跨本体 + 跨任务 + 跨环境」三个维度同时实现 SOTA 的国产 VLA 模型；② **OpenVLA / GR00T / π₀ / RT-2** 之后第一个真正意义上的「通用具身基础模型」 — 之前的开源 VLA 大多还是「针对特定本体 + 特定任务族」；③ 与 5/28 自变量 Wall-OSS-0.5 + 5/29 WALL-WM 形成**「一周三连发」开源王炸**，中国具身智能基础模型层正式 catch up 国际 SOTA；④ **未来 1 年多家 VLA 团队会朝「跨本体统一接口 + prompt 编码硬件差异」方向迁移** — 这套范式比「为每种本体训独立 model」更可扩展；⑤ 阿里通义生态加持（Qwen3.5 多模态 / DashScope 部署 / 阿里云算力）让 Qwen-VLA 在工程落地上有天然优势。",
+      "methodology": "**1. 整体架构（双组件）**：\n- **VLM 主干**：Qwen3.5-4B（视觉编码器 + 文本编码器 + LLM Decoder） — 负责场景理解 / 指令解析 / 空间推理\n- **DiT 动作解码器**：1.15B 参数 Diffusion Transformer — 负责连续动作 / 轨迹生成\n- **跨注意力**：DiT 通过 cross-attention 读取 VLM 输出的视觉语言嵌入；**支持单向梯度回流**（VLM → DiT 单向，避免梯度回流污染预训练 VLM）\n\n**2. Embodiment-Aware Prompt Conditioning**：\n- 不为每种机器人定制独立 model branch / output head\n- 用一段**结构化文本**描述机器人硬件特性：自由度数量、控制频率、运动学约束、接口协议、动作空间范围（关节角 / 末端位姿 / 笛卡尔速度）\n- 将该 prompt **拼接到指令前**，让 VLM 同时编码「环境 + 指令 + 本体」三元组\n- **训练时**：同一个动作解码器接收来自 11 种机器人平台的数据；**推理时**：只需替换 prompt 中的平台描述即可切换控制约定\n\n**3. T2A（Text-to-Action）预训练**：\n- 冻结 VLM 主干，**只训 DiT**\n- **故意不给图像，只给文字**：让 DiT 先学「动作是什么」 — 理解不同指令对应的动作模式 / 学会根据机器人类型调整控制方式\n- 计算成本：每步约为多模态训练的 **1/10**（省去图像编码）\n- 收益：让 DiT 在加入图像之前已具备基本动作生成能力，避免多模态联合训练浪费算力在视觉无关的解码器学习\n\n**4. CPT（持续预训练）**：\n- 解冻所有参数\n- 数据来源（六类）：\n  1. **机器人轨迹**（11 种本体的真实遥操作 + 仿真采集）\n  2. **第一人称人类视频**（EgoDex / Ego4D 等）\n  3. **合成仿真数据**（Isaac Sim / RoboCasa / SimplerEnv）\n  4. **VLN 数据**（R2R / RxR / VLN-CE）\n  5. **轨迹监督**（trajectory-centric supervision）\n  6. **辅助 VL 数据**（视觉问答 / 图像描述等保留 VLM 能力）\n\n**5. SFT（监督微调）**：双分支并行：\n- 分支 A：**仿真多任务联合微调**（验证一个通用模型在多任务联合训练下能匹配甚至超越单任务专用模型）\n- 分支 B：**真机遥操作微调**（验证预训练表征向真实场景的迁移能力）\n\n**6. RL（强化学习）**：\n- 从多任务 SFT 检查点出发\n- 在 **SimplerEnv** 中用**稀疏二值成功奖励**做 RL\n- 直接优化闭环任务成功率",
+      "experiments": "**仿真基准（统一模型超越专用模型）**：\n- **LIBERO**：97.9%（vs 之前 SOTA 单任务模型在 90-95% 区间）\n- **Simpler-WidowX**：73.7%\n- **RoboTwin-Easy**：86.1%\n- **RoboTwin-Hard**：87.2%\n- **VLN-CE / R2R**：69.0% OSR\n- **VLN-CE / RxR**：59.6% SR — **超越专用导航模型 StreamVLN**\n\n**真机评测（ALOHA 双臂）**：\n- **6 类 in-domain 任务**：83.6% 平均\n- **5 维 OOD 泛化**（颜色 / 实例 / 位置 / 背景 / 指令）：**76.9%** 平均\n  - 颜色：73.1% / 实例：72.1% / 位置：73.5% / 背景：80.8% / 指令：84.6%\n  - **vs π₀.₅**：+35.4 个百分点\n  - **vs 无预训练变体**：+40.7 个百分点\n- **零样本测试**（QwenVLA-Base 未微调）：精准区分仅颜色不同的目标 / 抓取训练集中未见的日常物品（西兰花 / 玩具鸭 / 雨伞）/ 理解「接近」等罕见动作指令 / 黄色背景下拧笔帽\n\n**DOMINO 动态操作（零样本）**：\n- **Qwen-VLA**（完全零样本）：26.6%\n- **零样本 π₀.₅**：7.46%\n- **零样本 OpenVLA-OFT**：6.7%\n- **专门在 DOMINO 数据上微调的 PUMA**：17.2% — Qwen-VLA 零样本反超\n\n**关键洞察**：\n1. 多任务联合训练 **不仅不牺牲单任务性能**，还在多个场景中带来正向收益\n2. ALOHA 双臂 5 维 OOD 平均 76.9% 是公开发表的 VLA 模型中**最高记录之一**\n3. DOMINO 零样本 26.6% 证明大规模异构数据让模型涌现出动态操作能力（无需专门数据）",
+      "reproduction": "**硬件需求**：\n- **训练**：T2A 阶段 16-32 张 H100；CPT / SFT 64-128 张 H100；RL 阶段 8-16 张 H100\n- **推理**：单张 A100/H100 即可（4B+1.15B = 5.15B 参数）\n- **真机部署**：ALOHA / WidowX / RoboTwin / Galaxea / Unitree 等本体均已验证适配\n\n**Quickstart**：\n```bash\ngit clone https://github.com/QwenLM/Qwen-VLA\ncd Qwen-VLA\npip install -e .\n# 下载 checkpoint\nhuggingface-cli download Qwen/Qwen-VLA-Instruct\n# 仿真推理\npython examples/libero_eval.py --ckpt qwen-vla-instruct\n# 真机推理（ALOHA）\npython examples/aloha_inference.py --ckpt qwen-vla-instruct \\\n  --embodiment_prompt configs/aloha.yaml\n```\n\n**Embodiment Prompt 示例**（configs/aloha.yaml）：\n```yaml\nrobot_name: ALOHA\ndof: 14  # 7-DoF 双臂\ncontrol_freq: 50\naction_space: joint_position\njoint_limits: [[-3.14, 3.14], ...]\ncontrol_convention: joint_position_target\n```\n\n**11 种本体支持**：ALOHA 双臂 / WidowX 单臂 / RoboTwin 双臂 / Galaxea / Unitree H1 / Fourier GR-1 / Stretch 移动 / Spot 四足 / R2R 导航 / RxR 多语言导航 / DOMINO 动态\n\n**模型权重**：HuggingFace Qwen/Qwen-VLA-Instruct（4B+1.15B = 5.15B）+ Qwen-VLA-Base（无 SFT/RL）\n\n**数据集**：通义已开源完整训练数据集 + 配置 + 评测脚本",
+      "mathDetails": "**1. 统一动作-轨迹预测公式**：\n传统 VLA 各任务独立形式化：\n- 操作：$\\pi_{manip}(a_t | o_t, l)$\n- 导航：$\\pi_{nav}(v_t | o_t, l)$\n- 轨迹：$\\pi_{traj}(\\tau | o_t, l)$\n\nQwen-VLA 统一形式化：\n$$\\pi_\\theta(\\mathbf{y}_{1:H} | o_t, l, e) = \\prod_{h=1}^{H} p_\\theta(y_h | o_t, l, e, y_{<h})$$\n其中 $\\mathbf{y}$ 可以是动作序列 / 轨迹点 / 导航航点；$e$ 是**本体描述**（embodiment prompt）；$o_t$ 是当前观察；$l$ 是指令；$H$ 是 horizon\n\n**2. T2A 损失**（无图像预训练）：\n$$\\mathcal{L}_{T2A} = \\mathbb{E}_{l, e, \\mathbf{y}^* \\sim \\mathcal{D}_{text}} \\left[ \\| \\text{DiT}_\\phi(l, e) - \\mathbf{y}^* \\|^2 \\right]$$\n这里 $\\mathcal{D}_{text}$ 是只含文本指令 + 本体描述 + 真值动作的数据集，**完全不含图像**\n\n**3. CPT 损失**（多任务联合 + 多模态联合）：\n$$\\mathcal{L}_{CPT} = \\mathcal{L}_{action} + \\lambda_1 \\mathcal{L}_{trajectory} + \\lambda_2 \\mathcal{L}_{nav} + \\lambda_3 \\mathcal{L}_{VL}$$\n各损失项采用统一的 diffusion loss 形式：\n$$\\mathcal{L}_{diff} = \\mathbb{E}_{t, \\epsilon} \\left[ \\| \\epsilon - \\epsilon_\\theta(\\sqrt{\\bar{\\alpha}_t} \\mathbf{y}_0 + \\sqrt{1 - \\bar{\\alpha}_t} \\epsilon, t, c) \\|^2 \\right]$$\n\n**4. RL 优化目标**（PPO + 稀疏奖励）：\n$$J(\\theta) = \\mathbb{E}_{\\tau \\sim \\pi_\\theta} \\left[ \\sum_{t=0}^{T} \\gamma^t r(s_t, a_t) \\right], r \\in \\{0, 1\\}$$\n\n**5. Embodiment-Aware Conditioning 数学形式化**：\n$$\\pi(a | o, l, e) = \\text{DiT}([f_{VLM}(o), \\text{Embed}(l + e)])$$\n关键创新：将 $e$ **直接拼接到 $l$ 文本**，复用 VLM 的文本编码器 $\\text{Embed}(\\cdot)$ — 无需新增 embodiment-specific 参数 → **零新增训练开销**\n\n**6. 跨任务梯度互相增益证明**（实验观测）：\n令 $\\theta^*_{single}$ 为单任务最优，$\\theta^*_{joint}$ 为联合训练最优。在 LIBERO / RoboTwin-Hard / VLN-CE 上观察到：\n$$P(\\theta^*_{joint}) \\geq P(\\theta^*_{single})$$\n即**联合训练比单任务专用训练性能更优** — 颠覆「多任务训练必降单任务性能」的传统认知。文献给出的解释：跨任务共享的「**视觉定位 + 空间推理**」表征受益于更大的有效数据量与多样性。"
+    },
     {
       "id": "p175",
       "title": "WALL-WM: Carving World Action Modeling at the Event Joints",

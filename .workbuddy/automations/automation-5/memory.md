@@ -1,5 +1,26 @@
 # automation-5 执行历史
 
+## 2026-05-31 08:00（早间轮）
+- 投稿箱：0 开放 Issue
+- news +3 (n333-n335)：阿里通义 Qwen-VLA 开源（跨 11 本体统一三大任务 / LIBERO 97.9% / ALOHA OOD 76.9% +35.4pp）+ 上海具深科技红杉中国种子（CereBase 3.0 通用机器人小脑 / 宇树生态 / RaaS+UGC 双闭环）+ 云深处 2027 全球校招启动（IPO 后首场 / 12+ 方向 / VLA 岗位首次进入四足公司）
+- papers +1 (p176 Qwen-VLA)：含完整 keyInsights + impact + methodology + experiments + reproduction + mathDetails
+- opensource +1 (os132 Qwen-VLA Apache-2.0) — id 冲突踩坑两次（os127/128 已被并行实例占用），最终用 os132
+- jobs +1 (j152 云深处 2027 全球校招)
+- 学习深化：humanoid-fullstack +sec-20「跨本体统一 VLA × 全身移动操作：Qwen-VLA + WholeBodyVLA 两条 2026-05 范式分叉」10,900 chars / 8 大节（联动 p176 + p106 WholeBodyVLA + sec-16/17/18/19/22），模块 19→20 sec / 120K→131K chars
+- 0 dups（news 307 / papers 156 / os 121 / jobs 144）
+- sync_learn_split (2 files updated) + build_sitemap (10+32+490=532 URLs) 已跑
+- 经验：opensource id 必须读全 list 取 max+1，last id 是 list 头部但不一定是 max（多并发 commit 同加多个时危险）
+
+## 2026-05-30 08:00（早间轮）
+- 投稿箱：0 开放 Issue
+- news +3 (n330-n332)：腾讯 BEYOND 钛螺丝战略 / 自变量 WALL-WM 事件级世界模型开源 / 智身 10000 台量产破万
+- papers +1 (p175)：WALL-WM 完整 detail（methodology + experiments + reproduction + mathDetails + 7 keyInsights + impact）
+- jobs +1 (j151)：智身科技万台扩招
+- 学习深化：vla-models +sec-22「事件级世界模型」10K chars / 9 大节（联动 p175 + n331 双开源王炸），模块 21→22 sec / 188K→199K chars
+- 0 dups（news 304 / papers 155 / os 120 / jobs 143），839 JSON 全部解析通过
+- commit a0faa8b 已 push origin/main，9 files changed
+- 经验：HEREDOC + markdown 含 ```python``` 代码块陷阱再现 — 用 Write .md 单独存内容 + Python f.read() append 是最稳
+
 ## 2026-05-29 08:00（早间轮）
 - 投稿箱：0 开放 Issue
 - 新闻 +3 / 论文 +2 / 开源 +1 / 招聘 +1 / 学习 +1 sec
