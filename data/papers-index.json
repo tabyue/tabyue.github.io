@@ -1,6 +1,68 @@
 {
-  "lastUpdated": "2026-05-31T08:00",
+  "lastUpdated": "2026-06-01T08:00",
   "papers": [
+    {
+      "id": "p177",
+      "title": "FD-VLA: Force-Distilled Vision-Language-Action Model for Contact-Rich Manipulation",
+      "authors": "Ruiteng Zhao, Wenshuo Wang, Yicheng Ma, Xiaocong Li, Francis E.H. Tay, Marcelo H. Ang Jr., Haiyue Zhu / 新加坡国立大学（NUS）+ 新加坡 A*STAR",
+      "venue": "ICRA 2026",
+      "date": "2026-03-20",
+      "arxiv": "https://arxiv.org/abs/2602.02142",
+      "github": null,
+      "tags": [
+        "FD-VLA",
+        "VLA",
+        "力觉",
+        "蒸馏",
+        "接触丰富",
+        "ICRA2026",
+        "无传感器",
+        "VTLA"
+      ],
+      "tldr": "**首篇「无力觉传感器的力觉 VLA」** — NUS + A*STAR 团队提出**力蒸馏模块（FDM）**：训练阶段用真实力信号监督，**推理阶段不依赖力传感器**，仅靠视觉 + 本体状态预测「**潜在力 token**」。在三项接触丰富任务（**插插头 / 擦白板 / 按按钮**）上 FD-VLA **平均成功率 61.1%** vs SmolVLA 无力觉 23.3%（**+37.8 个百分点 / 162% 相对提升**）。**关键反直觉**：预测的蒸馏力 token **优于直接使用原始力传感器信号**（38.9%）— 因为原始力信号高维噪声多，蒸馏后的潜在表示更任务相关。",
+      "category": "vla-models",
+      "difficulty": "高级",
+      "addedDate": "2026-06-01",
+      "keyInsights": [
+        "**力觉 VLA 的「无传感器」范式**：训练时用真实力 / 力矩传感器作为**蒸馏教师**，推理时**完全不需要**力传感器 → 推断阶段只需「视觉 + 本体状态」就能预测出与真实力对齐的「潜在力 token」。极大降低部署门槛（昂贵 + 易损的 6 维力传感器不再是必备硬件）",
+        "**单可学习查询令牌（Single Learnable Query Token）**：FDM 用一个**可学习的查询向量 p** 通过多头注意力从「视觉 + 状态」上下文 [p, f^V, f^S] 中聚合接触相关信息 → 输出预测力 token。比「直接 MLP 编码力信号」高 12.2 个百分点（38.9% → 51.1%）；**比「使用真实力 token」额外高 10.0 个百分点**（51.1% → 61.1%）— 反直觉的「预测优于真实」",
+        "**方向性注意力掩码（Directional Attention Masking）**：把输入分为「感知流（视觉 + 语言）」+「控制流（状态 + 预测力）」 → 感知 token 只注意感知（保护预训练 VLM 对齐），控制 token 可注意感知（实现多模态融合），控制内部因果掩码 → **保护预训练语义不被微调破坏**",
+        "**参数效率惊人**：FD-VLA 参数仅为 π₀ 的 **1/10**，但平均成功率 61.1% 接近有力觉 π₀ 的 66.7%，远超无力觉 π₀ 的 46.7% — 证明「设计 > 规模」在接触丰富场景特别成立",
+        "**任务级数据**：擦白板 73.3%（22/30）/ 按按钮 70.0%（21/30）/ 插插头 40.0%（12/30）— 擦白板这种「持续接触 + 摩擦力反馈」任务受益最大；插插头这种「精度敏感」任务仍是难点（即使有力觉）"
+      ],
+      "impact": "**给所有 VLA 团队提供了「力觉降本部署」的方案** — 训练阶段做一次力数据采集，推理阶段告别力传感器。这对工业部署意义重大：6 维力传感器单价 5-20 万 + 易损易坏 + 安装空间苛刻，FD-VLA 让「力觉 VLA」首次具备规模化商用可行性。**与 5/31 戴盟 Daimon-Infinity 数据集形成天然组合**：先用 Daimon 数据训练，再用 FD-VLA 蒸馏部署，无传感器版本的 VTLA 落地链条打通。**短板**：仍需训练阶段拥有力传感器（不是「彻底无力觉」），且当前任务集中于桌面操作（长程 + 双手 + 灵巧未验证）。"
+    },
+    {
+      "id": "p178",
+      "title": "DyGRO-VLA: Dynamic Grouped Residual Optimization for Multi-Task VLA Models",
+      "authors": "江行智能研究团队（Jiangxing Intelligence Research Team）/ 江行智能",
+      "venue": "ICML 2026",
+      "date": "2026-05-19",
+      "arxiv": null,
+      "github": null,
+      "tags": [
+        "DyGRO-VLA",
+        "VLA",
+        "多任务",
+        "灾难性遗忘",
+        "信息瓶颈",
+        "MoRR",
+        "ICML2026",
+        "电力场景"
+      ],
+      "tldr": "**首篇专门针对 VLA 多任务灾难性遗忘的两阶段优化框架** — 江行智能团队 ICML 2026 工作。**LIBERO 多任务基准平均成功率 97.1%**（业界 SOTA）。**两阶段设计**：① **离线预训练**用「**信息瓶颈（Information Bottleneck）**」原理提取跨任务共享潜在表征（最大化表征-动作互信息 + 最小化表征-观测互信息 → 「抓大放小」）；② **在线微调**冻结共享表征，引入「**混合残差强化学习（Mixture-of-RL-Residuals, MoRR）**」 — 多个 RL 残差专家针对不同任务做精准优化，避免梯度冲突。",
+      "category": "vla-models",
+      "difficulty": "高级",
+      "addedDate": "2026-06-01",
+      "keyInsights": [
+        "**VLA 多任务的根本困境**：传统 RL 优化器在单任务上表现优异，但**多任务时不同任务梯度互相冲突** → 模型「学一个忘一个」。江行的分析揭示根源是 **RL 优化扭曲了预训练的共享表征** → 跨任务知识共享能力丧失。这是 VLA 规模化「一脑多体」必须解决的核心瓶颈",
+        "**信息瓶颈（IB）作为多任务表征学习的理论基础**：通过 max I(z; a) - β·I(z; o) 的 IB 目标函数，让潜在表征 z 只保留「对动作预测最关键」的信息（如物体空间位置 / 形态特征），过滤背景 / 光照等无关变量 → 不同任务的知识可以**有效复用**。这是把 IB 理论第一次系统应用到 VLA 多任务",
+        "**MoRR（混合残差强化学习）**：在冻结的预训练 backbone 之上，**为每个任务（或任务组）学习一个轻量化的 RL 残差策略** → 既保留通用能力（backbone 不动），又对特定任务精准优化（残差只训对应专家）→ 灾难性遗忘从根本上避免。类似 LoRA 的思路但用在 RL 阶段",
+        "**LIBERO 97.1% SOTA**：超越所有现有方法，10 个任务平均成功率 → 业内最高（DyGRO-VLA 之前的 SOTA 多在 92-95% 之间）。**LIBERO-Long（长程）+ LIBERO-Spatial / Object / Goal（空间 / 对象 / 目标）三大子集均显著领先**",
+        "**电力场景实战落地**：江行智能将 DyGRO-VLA 与「**TrackerSplat**」（动态场景稳定重建）+「**一脑多体协同**」结合，落地变电站巡检、电力作业等物理 AI 场景 → 全局大脑做语义理解 / 任务拆解 / 路径规划 / 冲突消解；具身终端做导航 / 避障 / 读数 / 操作 / 状态回传。**论文不只是 benchmark，还有真实工业部署**"
+      ],
+      "impact": "**为「一脑多体」具身基座提供了关键的多任务训练范式**。当前 VLA 训练几乎都是「单任务 SFT」+「多任务 mix 训练」，前者无法泛化、后者灾难性遗忘 → DyGRO-VLA 的「IB 共享表征 + MoRR 残差」范式给出了「**多任务并存且不互相覆盖**」的工程方案。预计 2026 H2 多个具身公司的「一脑多体」（机器人本体异构 + 任务异构）平台都会借鉴此方案。**短板**：论文未公开 arxiv（仅 ICML 录用）+ 代码 → 复现门槛较高；电力场景泛化到家庭 / 工业其他场景的迁移有待验证。"
+    },
     {
       "id": "p176",
       "title": "Qwen-VLA: Unifying Vision-Language-Action Modeling across Tasks, Environments, and Robot Embodiments",
@@ -3480,30 +3542,34 @@
     {
       "id": "p056",
       "title": "HiF-VLA: Hindsight, Insight and Foresight through Motion Representation for Vision-Language-Action Models",
-      "authors": "Zexin Lin, Hongjie Ding et al.",
+      "authors": "Minghui Lin, Pengxiang Ding, Shu Wang, Zifeng Zhuang, Yang Liu, Xinyang Tong, Wenxuan Song, Shangke Lyu, Siteng Huang, Donglin Wang / 西湖大学 MiLAB + 阿里达摩院 + 西湖机器人 + 浙江大学",
       "venue": "CVPR 2026",
-      "date": "2026-04",
+      "date": "2026-04-09",
       "arxiv": "https://arxiv.org/abs/2512.09928",
-      "github": "https://github.com/HiF-VLA/HiF-VLA",
+      "github": "https://github.com/OpenHelix-Team/HiF-VLA",
       "tags": [
+        "HiF-VLA",
         "VLA",
-        "CVPR 2026",
-        "时序推理",
         "运动表示",
-        "双向推理",
-        "Hindsight",
-        "Foresight"
+        "时空推理",
+        "CVPR2026",
+        "长程任务",
+        "联合专家",
+        "西湖大学"
       ],
-      "tldr": "提出HiF-VLA，利用紧凑运动表示（motion representation）实现VLA模型的双向时序推理统一框架。三种推理模式——Hindsight（回顾过去行为理解因果）、Insight（感知当前状态精准定位）、Foresight（预测未来趋势辅助规划）——通过运动信息作为统一桥梁进行融合。运动表示天然编码时序动态，可高效压缩历史和预测未来，同时避免处理完整视频帧的高计算开销。CVPR 2026接收论文。",
+      "tldr": "**以「运动 motion」为中心的双向时空推理 VLA** — 西湖大学 + 阿里达摩院 + 浙大 CVPR 2026 工作。彻底**摒弃**传统多帧图像堆叠的「像素级时空建模」，提取**低维紧凑的 Motion 向量**作为动态先验，通过创新的「**联合专家（Joint Expert）**」模块同步完成 ① **回顾（Hindsight）**：编码过去动力学；② **前瞻（Foresight）**：预测未来运动；③ **洞察（Insight）**：当前动作生成。**CALVIN ABC-D + LIBERO-Long 长程任务 SOTA**，且**推理延迟保持恒定**（不随观测窗口长度增长）。",
       "difficulty": "高级",
       "addedDate": "2026-04-23",
       "keyInsights": [
-        "运动表示是时序推理的自然载体——比逐帧处理更高效且信息更集中",
-        "统一三种时序推理模式(Hindsight/Insight/Foresight)，而非单独设计各个模块",
-        "双向推理：既能从过去推断当前，也能从当前预测未来",
-        "在时序相关操作任务上显著优于仅使用当前观测的VLA方法"
+        "**像素级时空建模的根本缺陷**：传统 VLA 通过堆叠多帧图像引入时间维度 → 静态背景占比 95%+ → 计算冗余 + 显存爆炸 + 推理延迟随窗口长度爆炸。**HiF-VLA 用「运动向量」(典型为 64-256 维) 代替「多帧像素」(典型为 480×640×3×T 维)**，节省计算量 1000x+",
+        "**运动作为「世界模型」的紧凑表示**：运动向量天然编码了「**状态间变化**」 + 过滤静态像素噪声 → 比像素级世界模型（DreamerV3 / VPP）更适合 VLA 在线推理场景。是「事件级世界模型（WALL-WM）+ 视频策略（Cosmos Policy）」之外的**第三条路线**：以运动为单位",
+        "**双向时空推理框架**：① Hindsight 编码过去几秒的运动轨迹（「**我刚才在做什么**」）；② Foresight 预测未来几步的运动（「**接下来世界会怎么变**」）；③ Insight 是「**回顾调制的联合专家（Hindsight-Modulated Joint Expert）**」融合两者输出当前动作。**「边想边做」范式 = 同时做「物理预判」+「动作生成」**，与 WAM（世界动作模型）思想契合但走「运动 motion」路线",
+        "**长程任务标志性突破**：CALVIN ABC-D（5 步指令链 + ABCD 4 个未见环境）+ LIBERO-Long（10 任务长程）都超越 SOTA。这两个 benchmark 是 VLA 长程能力的「试金石」 — 短程任务再强，长程一旦中断就崩盘 → HiF-VLA 的运动表示对**长程因果建模**有质的提升",
+        "**ReconVLA 同源团队**：HiF-VLA 通讯作者（黄思腾 / 王东林）的同实验室 ReconVLA 工作已获 **AAAI 2026 最佳论文奖** → 西湖大学 MiLAB 的「重建 + 运动」双线在 VLA 长程方向上的连贯研究价值已被顶会双重认可"
       ],
-      "impact": "为VLA模型的时序推理能力提供了统一的运动表示范式，CVPR 2026级别的工作表明时序建模正成为VLA研究的核心方向之一"
+      "impact": "**为长程 VLA 任务提供了「以运动为中心」的轻量化新范式**。在「VLA-as-Policy（OpenVLA / π / GR00T）」「Video-as-Policy（Cosmos Policy / LingBot-VA）」「Event-Level WM（WALL-WM）」之外，HiF-VLA 开辟了**「Motion-Centric WAM」**第四路线 → **运算量低 + 长程稳定 + 显存友好**，特别适合**端侧机器人部署**（边缘算力有限）。**与 FD-VLA / Daimon-Infinity 的协同**：运动表示天然包含「接触起始 / 持续 / 结束」事件 → 可与触觉 / 力觉信号自然融合，是 VTLA 长程任务的潜在最佳载体。代码已开源（OpenHelix-Team）+ 项目主页 hifvla.github.io 可直接复现。",
+      "category": "vla-models",
+      "lastUpdated": "2026-06-01T08:00"
     },
     {
       "id": "p055",
