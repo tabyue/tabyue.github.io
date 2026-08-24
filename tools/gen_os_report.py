@@ -5,7 +5,7 @@ import markdown
 from markdown.extensions.tables import TableExtension
 from markdown.extensions.fenced_code import FencedCodeExtension
 
-ROOT = Path('c:/Users/tabyue/WorkBuddy/Embodied-AI-Knowledge-Hub/tabyue.github.io')
+ROOT = Path(__file__).resolve().parent.parent
 
 def generate_report_html(project_id):
     detail_file = ROOT / f'data/opensource/{project_id}.json'

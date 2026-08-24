@@ -1,5 +1,16 @@
 # automation-5 执行历史
 
+## 2026-08-24 19:00（手动轮 · 内容补更 + 数据治理专项）
+- 距上次提交（2026-06-01 2b140c6）近三个月，本轮先补内容再还质量债
+- news +5 (n338-n342)：宇树 8/19 科创板上市（首日 +629.44% / 市值 4449 亿 / 中签率 0.018%）+ 小鹏机器人融资 + WRC 2026 + 元力无限融资 + 大晓 Kairos 3.1 世界模型开源
+- papers +2：p179 StellaVLA（In-Context 结构化示范 + 测试时适配）、p180 NebulaVLA（双频异步 + Guide Action），均配完整 detail
+- opensource +1：os133 LingBot-World 2.0（无限时长交互式世界模型 / Agentic Harness 首创 / 非商用许可）
+- jobs +2 (j154-j155)；学习深化 ×2：imitation-learning +sec-16、ai-infra +sec-24；daily-english 刷新 2 条
+- **数据治理**：28 个开源项目因 category 越界在页面完全不可见（占 23%）已归一；news 179 条分类归一到 6 个筛选按钮；index.html 修复 55 张卡片 `${p.org}` → undefined；重复清理 11 条（含 p017 误标 π₀ 并入真 HPT p016、国家电网同一事件四份收录并为一条）；p113-p120 补 keyInsights/impact；203 处 ASCII 双引号 → 「」；jobs totalItems 108→147；死链 sensor-hardware → sensors-hardware；os132/os133 补报告页
+- **新增 `tools/health_check.py`**（10 类巡检，提交前必跑，ALL OK 才能 commit）；修复 gen_os_report.py 硬编码 Windows 路径
+- 水位：news→n342 (307), papers→p180 (156), opensource→os133 (121), jobs→j155 (147)
+- 教训：查重不能只看标题前缀（同事件不同媒体措辞差异大 → 漏检；同公司不同事件 → 误报），改用同日期 + 正文 3-gram 包含度 ≥ 0.4；category 这类前端白名单字段是「静默失效」，写错不报错但内容直接消失
+
 ## 2026-05-31 08:00（早间轮）
 - 投稿箱：0 开放 Issue
 - news +3 (n333-n335)：阿里通义 Qwen-VLA 开源（跨 11 本体统一三大任务 / LIBERO 97.9% / ALOHA OOD 76.9% +35.4pp）+ 上海具深科技红杉中国种子（CereBase 3.0 通用机器人小脑 / 宇树生态 / RaaS+UGC 双闭环）+ 云深处 2027 全球校招启动（IPO 后首场 / 12+ 方向 / VLA 岗位首次进入四足公司）

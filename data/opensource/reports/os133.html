@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LingBot-World 2.0 / LingBot-World-Infinity (蚂蚁灵波 — 无限时长交互式世界模型) — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">LingBot-World 2.0 / LingBot-World-Infinity (蚂蚁灵波 — 无限时长交互式世界模型) — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="lingbot-world-20-lingbot-world-infinity">LingBot-World 2.0 / LingBot-World-Infinity (蚂蚁灵波 — 无限时长交互式世界模型)</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/robbyant/lingbot-world-v2">https://github.com/robbyant/lingbot-world-v2</a>  </p>
+<p><strong>Stars</strong>: 1.5k · <strong>License</strong>: CC BY-NC-SA 4.0 · <strong>收录日期</strong>: 2026-08-24  </p>
+<p><strong>组织</strong>: 蚂蚁灵波科技（Robbyant Team）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-08-24</p>
+</blockquote>
+<hr />
+<h2 id="_2">项目概述</h2>
+<p><strong>LingBot-World 2.0</strong>（又名 <strong>LingBot-World-Infinity</strong>）是蚂蚁灵波科技 2026-07-08 开源的第二代交互式世界模型，是 os091 LingBot-World 的重大迭代。</p>
+<p><strong>它要解决的核心痛点只有一个：交互式世界模型「生成越久越崩」</strong>。</p>
+<p>第一代及同期同类工作普遍存在同一个问题——自回归地一段段生成视频，误差会沿时间累积：十几秒还像样，一分钟后画面漂移、物体消失、场景失去一致性。这让世界模型只能做 demo，做不了「可以一直玩下去」的交互环境，更谈不上给具身策略当训练场。</p>
+<p>2.0 的答案是<strong>因果预训练范式 + 逐 chunk KV 缓存推理</strong>，把「任意长交互下输出质量保持一致」作为第一目标。</p>
+<p><strong>技术报告</strong>：arXiv:2607.07534《Infinite Worlds with Versatile Interactions》</p>
+<blockquote>
+<p>⚠️ <strong>许可证为 CC BY-NC-SA 4.0（禁止商用）</strong> —— 这是与 Apache-2.0 类项目最大的使用差别，商业场景接入前务必确认。</p>
+</blockquote>
+<hr />
+<h2 id="_3">架构与四大升级</h2>
+<p>代码库基于 <strong>Wan2.2</strong> 视频生成栈构建，<code>generate.py</code> 用 KV 缓存做因果推理、<strong>逐 chunk 处理视频帧而非一次性全出</strong>——这是「无限时长」在工程上的落点。</p>
+<h3 id="1">① 无界交互时长（因果预训练范式）</h3>
+<pre><code>传统双向 / 全序列生成：
+  一次性看到整段时序 → 长度受限于窗口 → 超出窗口就断裂
+
+2.0 因果范式：
+  chunk_1 → KV cache → chunk_2 → KV cache → chunk_3 → ...
+  每个 chunk 只依赖历史，训练时就按因果方式预训练
+  → 推理长度不再受训练窗口硬约束，质量随时长保持稳定
+</code></pre>
+<p>关键不在于「推理时改成因果」，而在于<strong>预训练阶段就按因果目标训练</strong>——否则推理阶段的因果约束与训练分布不匹配，长程漂移依旧会出现。</p>
+<h3 id="2">② 实时响应（蒸馏变体）</h3>
+<p>从基座蒸馏出实时变体，足以驱动 <strong>720p / 60fps</strong> 视频流。这个指标意味着世界模型第一次进入「可交互游戏级」帧率区间，而不是离线渲染。</p>
+<h3 id="3">③ 高度多样的交互元素</h3>
+<p>动作谱系大幅扩展（攻击 / 射箭 / 施法 / 射击等），并支持更丰富的<strong>文本驱动事件</strong>——不只是控制角色移动，还能用语言在世界里「制造事情发生」。</p>
+<h3 id="4-agentic-harness">④ Agentic Harness（世界建模领域首创）</h3>
+<p>2.0 首次把智能体框架引入世界模型，用两个 agent 分工：</p>
+<table>
+<thead>
+<tr>
+<th>Agent</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>pilot agent</strong></td>
+<td>规划并执行角色行为——相当于「玩家」</td>
+</tr>
+<tr>
+<td><strong>director agent</strong></td>
+<td>随场景推进合成新的环境元素——相当于「导演 / DM」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>为什么这件事重要</strong>：过去世界模型是被动的——你给动作，它出画面。有了 director agent，世界会<strong>主动演进</strong>：新的敌人、新的场景元素随剧情出现。对具身研究的意义是，它开始具备「自动生成课程（curriculum）」的雏形，而不只是一个回放器。</p>
+<hr />
+<h2 id="_4">已开源与待开源</h2>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>14B causal-fast</strong></td>
+<td>✅ 已开源</td>
+<td>HuggingFace + ModelScope 双通道</td>
+</tr>
+<tr>
+<td>causal-pretrain</td>
+<td>🚧 TODO</td>
+<td>因果预训练基座</td>
+</tr>
+<tr>
+<td>bidirectional</td>
+<td>🚧 TODO</td>
+<td>双向版本</td>
+</tr>
+<tr>
+<td>1.3B</td>
+<td>🚧 TODO</td>
+<td>轻量版，消费级显卡友好</td>
+</tr>
+</tbody>
+</table>
+<p><strong>先体验再决定要不要跑本地</strong>：</p>
+<ul>
+<li><strong>Reactor</strong>（海外 Web）——实时版在线体验</li>
+<li><strong>灵光 LingGuang</strong>（国内移动端）——实时版移动端体验</li>
+<li>官方完整能力 demo 在 <strong>WAIC 2026</strong> 展出</li>
+</ul>
+<p>目前只有 14B causal-fast 权重可用，意味着<strong>本地复现的显存门槛偏高</strong>；等 1.3B 放出后消费级显卡才会真正舒适。</p>
+<hr />
+<h2 id="_5">关键论文与延伸阅读</h2>
+<h3 id="_6">本体论文</h3>
+<ul>
+<li><strong>Infinite Worlds with Versatile Interactions</strong> — arXiv:2607.07534，LingBot-World 2.0 技术报告</li>
+</ul>
+<h3 id="_7">站内相关</h3>
+<ul>
+<li><strong>os091 LingBot-World</strong> — 第一代，理解 2.0 各项升级的对照基线</li>
+<li><strong>os102 Motus</strong> — 另一条「统一世界模型 + VLA」路线</li>
+<li><strong>os106 FRAPPE</strong> — 多未来表征对齐的世界建模思路</li>
+<li><strong>os115 RLinf</strong> — 世界模型当 RL 模拟器时的幻觉抑制（WoVR）方案</li>
+</ul>
+<hr />
+<h2 id="_8">快速开始</h2>
+<pre><code class="language-bash">git clone https://github.com/robbyant/lingbot-world-v2.git
+cd lingbot-world-v2
+
+pip install -r requirements.txt
+
+# 权重（HuggingFace 或 ModelScope 任选其一）
+huggingface-cli download robbyant/LingBot-World-Infinity-14B-causal-fast \
+    --local-dir ./checkpoints/lbw2-14b-causal-fast
+</code></pre>
+<h3 id="chunk">生成：逐 chunk 因果推理</h3>
+<pre><code class="language-bash">python generate.py \
+    --ckpt ./checkpoints/lbw2-14b-causal-fast \
+    --prompt 'a knight walking through a misty forest' \
+    --chunk_size 16 \
+    --num_chunks 60          # 想跑多久就加多少 chunk
+</code></pre>
+<p><code>generate.py</code> 的关键行为：</p>
+<ul>
+<li><strong>KV 缓存跨 chunk 复用</strong> —— 历史不重算，显存换时间</li>
+<li><strong>逐 chunk 出帧</strong> —— 可以边生成边看，而不是等全部算完</li>
+<li>想验证「无限时长」是否成立，把 <code>num_chunks</code> 调大后<strong>对比首尾画质与场景一致性</strong>，这是最直接的验证方式</li>
+</ul>
+<h3 id="agentic-harness">接入 Agentic Harness</h3>
+<pre><code class="language-text">pilot agent    → 输出角色动作序列（走 / 攻击 / 施法 ...）
+director agent → 输出环境事件（生成新元素 / 推进剧情）
+              ↓
+        世界模型逐 chunk 渲染
+</code></pre>
+<p>实践建议：先固定 director、只调 pilot，确认动作可控性；再放开 director，否则两个 agent 同时变动很难定位问题来源。</p>
+<h3 id="_9">显存与吞吐注意</h3>
+<ul>
+<li>14B + 长交互场景，KV 缓存会持续增长，长跑要留出余量或启用缓存裁剪</li>
+<li>实时变体（720p/60fps）与基座是<strong>不同权重</strong>，别拿基座去追帧率指标</li>
+</ul>
+<hr />
+<h2 id="_10">定位与对比</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>LingBot-World 2.0</th>
+<th>LingBot-World 1.0 (os091)</th>
+<th>通用视频生成模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>交互时长</strong></td>
+<td>无界（因果预训练）</td>
+<td>有限，长程漂移</td>
+<td>短片段</td>
+</tr>
+<tr>
+<td><strong>帧率</strong></td>
+<td>蒸馏实时版 720p/60fps</td>
+<td>非实时</td>
+<td>非实时</td>
+</tr>
+<tr>
+<td><strong>交互谱系</strong></td>
+<td>攻击 / 射箭 / 施法 / 射击 + 文本事件</td>
+<td>基础动作</td>
+<td>无交互</td>
+</tr>
+<tr>
+<td><strong>主动演进</strong></td>
+<td>✅ director agent</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>底座</strong></td>
+<td>Wan2.2</td>
+<td>——</td>
+<td>各异</td>
+</tr>
+<tr>
+<td><strong>协议</strong></td>
+<td>CC BY-NC-SA 4.0（非商用）</td>
+<td>——</td>
+<td>各异</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_11">对具身智能的实际价值</h3>
+<ol>
+<li><strong>策略训练场</strong> —— 无限时长 + 主动演进，比固定仿真场景更接近「持续变化的真实世界」</li>
+<li><strong>世界模型做 RL 模拟器</strong> —— 但要警惕幻觉问题：世界模型里成功、现实中失败是已知陷阱（参见 os115 RLinf 报告中 WoVR 的三层约束思路）</li>
+<li><strong>数据合成</strong> —— 交互谱系越丰富，可合成的行为分布越广</li>
+</ol>
+<p><strong>使用前的现实提醒</strong>：非商用许可 + 14B 显存门槛 + 只放出 causal-fast 一个变体，当前更适合研究与体验，产品化路径需要等后续版本与许可澄清。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

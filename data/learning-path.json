@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-01T08:00",
+  "lastUpdated": "2026-08-24T19:40",
   "stages": [
     {
       "id": "foundation",
@@ -636,7 +636,7 @@
         {
           "name": "模仿学习",
           "importance": "核心",
-          "lastUpdated": "2026-05-29T20:12",
+          "lastUpdated": "2026-08-24T19:40",
           "description": "从人类演示中学习机器人技能，是当前最实用的机器人学习范式",
           "topics": [
             {
@@ -654,6 +654,10 @@
             {
               "title": "遥操作数据采集",
               "detail": "获取人类演示数据的方法：直接示教（拖动机械臂）、遥操作（ALOHA主臂控制从臂）、VR遥操作（Meta Quest控制器）、视频学习（从人类视频中提取动作）。数据质量>数据数量，50个高质量demo > 500个低质量demo。"
+            },
+            {
+              "title": "In-Context 结构化示范与测试时适配（2026-08 新增）",
+              "detail": "StellaVLA（p179）范式：把示范从「观测-动作对」升级为「语义子目标 + 语言化 3D/2D 运动」的结构化理由，测试时检索一条示范塞进上下文即可适配 OOD，不更新任何参数。并行双专家 + 推理时删语言专家 + 前缀 KV 缓存 → 零自回归解码开销（88ms vs 3177ms）。VLA-Arena 榜首 0.63 / LIBERO 98.8% / LIBERO-Plus 85.1%。关键结论：结构化上下文迁移的是任务程序，不是固定空间轨迹。"
             }
           ],
           "resources": [
@@ -880,7 +884,7 @@
         {
           "name": "AI Infra 具身基础设施",
           "importance": "核心",
-          "lastUpdated": "2026-05-29T20:12",
+          "lastUpdated": "2026-08-24T19:40",
           "description": "把分散在「训练优化 / 平台工程 / 云边端 / 数据工程」四个模块的核心章节串成完整学习地图，并补充具身领域专属的前沿主题（vLLM/SGLang 适配、动作 chunk batching、多机器人 model serving）",
           "topics": [
             {
@@ -914,6 +918,10 @@
             {
               "title": "触觉感知基础设施（独家）",
               "detail": "联动 HTD（CMU 5/13）+ KAI / 戴盟 / 蓝点国产硬件，触觉传感器选型 + 数据流水线 + EMA Target Encoder + Touch Dreaming 实战"
+            },
+            {
+              "title": "双频异步推理 + Guide Action 边界连续性（独家 / 2026-08 新增）",
+              "detail": "NebulaVLA（p180）范式：System 2 语义规划 ~10Hz 与 System 1 电机控制 ~20Hz 解耦，两系统只通过一份抽象动作引导通信 → 可跨设备部署，真机延迟 115ms → 42ms（~2.7×）且成功率同时提升。Guide Action 借鉴图像外绘，在扩散去噪中用二值掩码强制回写锚点动作，让 chunk 边界误差恒等于零而非被优化压小，逐关节 jerk 平均降 25.6%。"
             }
           ],
           "weeklyPlan": "第 1-2 周：算力栈 + 训练优化模块联动 | 第 3-4 周：推理引擎栈 + chunk batching | 第 5-6 周：model serving + 平台工程 | 第 7 周：数据流水线 | 第 8 周：综合实战",

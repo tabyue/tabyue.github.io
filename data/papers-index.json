@@ -1,36 +1,79 @@
 {
-  "lastUpdated": "2026-06-01T08:00",
+  "lastUpdated": "2026-08-24T20:40",
   "papers": [
     {
-      "id": "p177",
-      "title": "FD-VLA: Force-Distilled Vision-Language-Action Model for Contact-Rich Manipulation",
-      "authors": "Ruiteng Zhao, Wenshuo Wang, Yicheng Ma, Xiaocong Li, Francis E.H. Tay, Marcelo H. Ang Jr., Haiyue Zhu / 新加坡国立大学（NUS）+ 新加坡 A*STAR",
-      "venue": "ICRA 2026",
-      "date": "2026-03-20",
-      "arxiv": "https://arxiv.org/abs/2602.02142",
+      "id": "p180",
+      "title": "NebulaVLA: A Dual-Frequency Vision-Language-Action Model With Guide Action for Robotic Manipulation",
+      "authors": "Cong Zhao, Shuai Tian, Xu Zhang, Baocheng Ni, Xinguo Song, Xueying Sun, Shu Jiang, Shouchang Yang, Bo Tang, Jin Deng, Ge Zhu, YongCheng Wang, Jin Xu, Ri Yang / 中兴通讯（ZTE Corporation）",
+      "venue": "arXiv preprint",
+      "date": "2026-08-17",
+      "arxiv": "https://arxiv.org/abs/2608.16503",
       "github": null,
       "tags": [
-        "FD-VLA",
+        "NebulaVLA",
         "VLA",
-        "力觉",
-        "蒸馏",
-        "接触丰富",
-        "ICRA2026",
-        "无传感器",
-        "VTLA"
+        "双频异步",
+        "GESTURE-7",
+        "Guide Action",
+        "中兴通讯",
+        "chunk边界",
+        "跨本体",
+        "边缘部署"
       ],
-      "tldr": "**首篇「无力觉传感器的力觉 VLA」** — NUS + A*STAR 团队提出**力蒸馏模块（FDM）**：训练阶段用真实力信号监督，**推理阶段不依赖力传感器**，仅靠视觉 + 本体状态预测「**潜在力 token**」。在三项接触丰富任务（**插插头 / 擦白板 / 按按钮**）上 FD-VLA **平均成功率 61.1%** vs SmolVLA 无力觉 23.3%（**+37.8 个百分点 / 162% 相对提升**）。**关键反直觉**：预测的蒸馏力 token **优于直接使用原始力传感器信号**（38.9%）— 因为原始力信号高维噪声多，蒸馏后的潜在表示更任务相关。",
+      "tldr": "**中兴通讯首次以第一作者单位入场 VLA** — 一篇罕见地把「工程可部署性」当作第一性问题的论文，三个贡献都直指真机痛点：① **异构双频架构**把语义规划（System 2，Qwen3-VL，~10Hz）与反应式电机控制（System 1，DiT，~20Hz）彻底解耦，两者可**部署在不同算力设备上**；② **GESTURE-7** 用 7 维向量 [x,y,z,r,p,w,gesture] 统一跨本体动作语义 — 位置量化到整厘米、角度量化到整度，**gesture 用自然语言关键词**（灵巧手和平行夹爪做抓取都叫 grasp）；③ **Guide Action** 借鉴图像外绘（Outpainting），把 chunk 拼接直接嵌进扩散去噪过程，用二值掩码强制保留锚点动作。结果：LIBERO-Plus **85.5%**（超 InternVLA-M1 的 81.3%）、动作生成加速 **~2.7×**；智元 A2 真机上**平均推理延迟从 115ms 降到 42ms**、成功率 92.08% / 92.5%，关节 jerk 平均**降低 25.6%**。",
+      "category": "ai-infra",
+      "difficulty": "中级",
+      "addedDate": "2026-08-24",
+      "keyInsights": [
+        "**双频不是「快慢系统」的又一次复述，而是给出了明确的数据流契约**：System 2 用 Qwen3-VL 处理语言指令 + 稀疏视觉输入（~10Hz），通过**可学习 token 抽取隐层特征**作为抽象动作引导；System 1 用 Q-Former 压缩这份引导 + 高频视觉 + 动作历史，经 DiT 去噪输出执行动作（~20Hz）。因为两者**只通过这份引导通信**，可以天然拆到两台设备上 — 这是论文反复强调的「原生支持分布式部署」，也是边缘算力场景最实用的性质",
+        "**异构频率的收益是「延迟和成功率同时改善」，不是二者取舍**：真机对比表里，同构频率变体 NebulaVLA-Homo 延迟 115ms、异构变体 NebulaVLA-Heter **仅 42ms**（还低于 InternVLA-M1 的 81ms），且成功率反而更高（Task1 92.08% vs 87.14%，Task2 92.5% vs 90%）。原因：高频通路只跑轻量动作策略，低频通路以更长间隔做场景理解与任务规划",
+        "**GESTURE-7 的核心设计是「故意量化」**：位置量化到整厘米、姿态量化到整度 — 论文明说这是为了**迁就机械公差与硬件不精确性**，同时**降低模型学习负担、抑制预测幻觉**。这与主流「越精细越好」的动作 tokenization 直觉相反，但对工业部署非常务实",
+        "**跨本体统一靠的是自然语言关键词，而非隐动作空间**：不同末端执行器取代表性关键点（灵巧手取中指根部、平行夹爪取夹爪中心），动作语义用共享关键词表 G = {grasp, push, rotate, release, ...} 表达，**同一动作在不同本体上共用同一个词**。词表可按任务自由扩展。副产品：因为动作描述本身就是语言，**天然支持语言条件化的 RL**",
+        "**Guide Action：把平滑性写进生成过程，而不是事后修**（本文最优雅的一点）— 现有方案几乎都是后处理：样条插值、最小化 jerk 的 RL 奖励、detokenizer 重设计，或 RTC 这类实时执行技巧。它们在生成过程之外操作，**无法保证跨 chunk 的语义一致性**。Guide Action 借鉴 RePaint / 图像外绘：用**上一 chunk 中尚未执行的动作**（如 a₄–a₇）作为条件生成下一 chunk，每步去噪后**强制回写已知动作** A^(t-1) = M ⊙ A_prior^(t-1) + (1-M) ⊙ A_noisy^(t-1)，其中 M[1..k]=1 是严格保留的锚点区、M[k+1..T]=0 是生成区",
+        "**引导点数量随推理延迟自适应**：训练时锚点个数从 0 到 3 随机采样，因此部署时可以按实际推理延迟动态选择锚点数 — 这是把「训练-推理频率对齐」做实的关键细节。Stage 3 的 L2 损失也**只作用在 M=0 的新生成区**，不去监督锚点区",
+        "**三阶段训练：S2 先 SFT 再 RL，最后 S1 蒸馏 S2 先验**。Stage 1 用五类任务给 S2 打底（GESTURE-7 位姿回归 / 2D 关键点回归 / 2Hz 2D 航点预测 / 2Hz 3D 轨迹预测 / CoT 子任务分解 + 未来 GESTURE-7 轨迹）；Stage 2 用 GRPO 强化轨迹规划，奖励由 GESTURE-7 距离（位置欧氏 + 角度欧氏 + gesture 0/1 失配惩罚，权重各 1.0）、关键点高斯核定位奖励、点距 + DTW 组合的航点奖励、以及权重 0.5 的格式奖励构成；Stage 3 联合优化 S1+S2（视觉编码器全程冻结）",
+        "**消融揭示的三阶段增益并不大，但方向明确**：完整三阶段 85.5% vs 无 SFT 无 RL 83.8%（+1.7）vs 只 SFT 不 RL 83.0%（+2.5）。S2 SFT 在 Layout 维度提升最显著（**+6.2%**，建立可靠空间先验）；S2 RL 进一步改善 Language 与 Layout 这类语义-空间耦合维度",
+        "**一个被作者坦诚披露的负迁移**：SFT 和 RL 都让 **Camera 扰动维度性能下降**（93.5 → 87.8 → 91.0）。作者归因于 GESTURE-7 的训练假设**隐式建立了视觉特征与空间坐标的固定映射**，相机位姿扰动破坏了这一对应关系。计划的解法是把观测视角条件显式纳入 GESTURE-7 训练框架",
+        "**Guide Action 的 jerk 收益集中在末端小关节**：10 次真机试验的平均 jerk（×10⁻³）在全部 7 个关节上都下降，**关节 12 降 41.2%（4.95→2.91）、关节 13 降 45.1%（3.37→1.85）**，平均降幅 25.6%。这类抖动恰恰是长时运行时机械磨损与人机共处安全感的主要来源"
+      ],
+      "impact": "**这篇论文的价值不在 SOTA 数字，而在它把三个「工程师每天在骂的问题」一次性摆上台面并给了可实现的解法** — 而且作者单位是中兴通讯，这本身就是信号：**电信设备巨头开始把 VLA 当作可交付系统而非研究课题**（项目受国家重点研发计划「面向双臂移动机器人的可信轻量化大模型」支持）。\n\n**1. 双频解耦的部署意义被低估了** — 大多数 VLA 论文默认单机单卡跑通就算部署成功。NebulaVLA 明确把 System 1 / System 2 设计成可拆分到不同设备：低频语义规划可以放边缘服务器甚至云端，高频电机控制留在本体（真机实验里 policy 跑在一张 RTX 4070 上）。对算力受限的量产机型，这是把大模型能力引入的现实路径，与 Figure Helix、HiRT 属同一范式但给出了更明确的数据流规范。\n\n**2. Guide Action 应该成为 chunked VLA 的默认组件** — action chunking 是当前主流（ACT / π₀ / GR00T 全系），但**推理延迟与控制频率的时间错配必然在 chunk 边界产生跳变**，实机表现为可听可见的机械抖动。业界通行做法是事后平滑，代价是牺牲语义一致性。把掩码约束放进去噪过程，让新 chunk 的起始状态天然对齐上一轨迹，这个思路迁移成本极低（不改架构、不改损失结构，只加掩码回写），值得任何跑 diffusion / flow-matching 动作头的团队直接试。\n\n**3. GESTURE-7 是对「动作 tokenization 军备竞赛」的一次务实回撤** — FAST、Mind-to-Hand 这类离散化方案需要庞大词表 + 大量演示才能覆盖动作空间，且跨形态语义对齐困难；PUMA/DOMINO、KineVLA 这类连续方案回归原始状态、缺少跨平台语义抽象。GESTURE-7 用「厘米级整数 + 度级整数 + 语言关键词」的混合表示，把精度主动降到硬件公差量级，换来跨本体统一和 RL 友好性。**它不适合精密装配**，但对绝大多数抓取 / 搬运 / 上下料任务够用。\n\n**4. 局限也很清楚** — ① 频率分配（10Hz / 20Hz）是**经验拍定且静态的**，不同任务域的最优配置不同，动态自适应调度仍是开放问题；② Guide Action 依赖固定锚点，在快速变化环境中会引入轻微响应滞后；③ 论文自己列出的真实拦路虎是**异构硬件同步、多传感器时间戳对齐、分布式时钟一致性** — 这三条恰恰是「双频可分布式部署」这个卖点的隐藏成本；④ Camera 维度的负迁移尚未解决。\n\n**关联脉络**：与本站已收录的 p152 AR-VLA（自回归 + 重锚机制把推理频率拉到 30Hz）、p155 FFDC（自适应 chunk + future-reality verifier）、p161 HandITL（Sigmoid Ramp Blending 抑制接管抖动）共同构成「**chunk 边界与频率错配**」这一工程主题的四种解法；ai-infra 模块 sec-22 讨论的 chunk size 取舍在此获得新的数据点。"
+    },
+    {
+      "id": "p179",
+      "title": "StellaVLA: In-Context Structured Demonstration for Generalizable Vision-Language-Action Models",
+      "authors": "Siyu Xu, Yunke Wang, Zijian Wang, Dihao Zhu, Chenghao Xia, Chengbin Du, Daochang Liu, Tao Huang, Chang Xu / 悉尼大学（Chang Xu 组）主导 + StellarEdge AI",
+      "venue": "arXiv preprint",
+      "date": "2026-08-12",
+      "arxiv": "https://arxiv.org/abs/2608.11671",
+      "github": null,
+      "tags": [
+        "StellaVLA",
+        "VLA",
+        "In-Context",
+        "测试时适配",
+        "结构化示范",
+        "跨本体",
+        "VLA-Arena",
+        "KV-Cache",
+        "ICIL"
+      ],
+      "tldr": "**VLA-Arena 榜首（2026-08-01 快照）总分 0.63，对比 π₀.₅ 的 0.44 和 LingBot-VLA 的 0.22** — 悉尼大学团队提出：不要让策略模仿专家「做了什么」，而要模仿专家「**为什么这么做**」。一条自动化离线流水线把每条原始轨迹转成**结构化示范**（任务计划 + 子目标描述 + 语言化的 2D/3D 运动），**零人工标注成本**；测试时只需检索**一条**同任务示范作为 in-context 前缀，**不更新任何参数**即可适配 OOD。LIBERO **98.8%**、LIBERO-Plus **85.1%**（比同配置对照 StarVLA-OFT 高 **10.1pp**）。**关键工程解法**：训练时并行挂一个空间-语言专家做辅助监督，**推理时整个专家被摘掉** + 示范前缀 KV 缓存 → 控制回路**零自回归解码开销**（88ms vs 挂上语言解码的 3177ms，差 **36 倍**）。",
       "category": "vla-models",
       "difficulty": "高级",
-      "addedDate": "2026-06-01",
+      "addedDate": "2026-08-24",
       "keyInsights": [
-        "**力觉 VLA 的「无传感器」范式**：训练时用真实力 / 力矩传感器作为**蒸馏教师**，推理时**完全不需要**力传感器 → 推断阶段只需「视觉 + 本体状态」就能预测出与真实力对齐的「潜在力 token」。极大降低部署门槛（昂贵 + 易损的 6 维力传感器不再是必备硬件）",
-        "**单可学习查询令牌（Single Learnable Query Token）**：FDM 用一个**可学习的查询向量 p** 通过多头注意力从「视觉 + 状态」上下文 [p, f^V, f^S] 中聚合接触相关信息 → 输出预测力 token。比「直接 MLP 编码力信号」高 12.2 个百分点（38.9% → 51.1%）；**比「使用真实力 token」额外高 10.0 个百分点**（51.1% → 61.1%）— 反直觉的「预测优于真实」",
-        "**方向性注意力掩码（Directional Attention Masking）**：把输入分为「感知流（视觉 + 语言）」+「控制流（状态 + 预测力）」 → 感知 token 只注意感知（保护预训练 VLM 对齐），控制 token 可注意感知（实现多模态融合），控制内部因果掩码 → **保护预训练语义不被微调破坏**",
-        "**参数效率惊人**：FD-VLA 参数仅为 π₀ 的 **1/10**，但平均成功率 61.1% 接近有力觉 π₀ 的 66.7%，远超无力觉 π₀ 的 46.7% — 证明「设计 > 规模」在接触丰富场景特别成立",
-        "**任务级数据**：擦白板 73.3%（22/30）/ 按按钮 70.0%（21/30）/ 插插头 40.0%（12/30）— 擦白板这种「持续接触 + 摩擦力反馈」任务受益最大；插插头这种「精度敏感」任务仍是难点（即使有力觉）"
+        "**从「模仿动作」到「模仿推理」是 ICIL 的分水岭**：已有 in-context 模仿学习（ICIL）只把检索到的轨迹当作原始观测 + 连续动作序列拼进前缀，这鼓励的是**表层像素模仿** — 策略看到专家「做了什么」但不知道「为什么」，缺了结构就干脆把示范当噪声、退回预训练先验（论文称之为**行为惯性 / behavioral inertia**）。StellaVLA 把示范升级成分层理由：**语义理由（子目标描述）+ 运动学理由（语言化 3D/2D 位移）**",
+        "**零人工标注的结构化提取流水线**：用现成 VLM（Qwen3-VL）把长程轨迹按视觉变化切成 K 个语义段并生成子目标描述；再用一个**确定性口语化算子 Φ** 把任意连续动作跨度映射为「Δx=+0.05, Δy=-0.02, Δz=+0.10 并闭合夹爪」这类文本，以及它在相机平面的 2D 投影。**同一个 Φ 在训练时被复用到 action chunk 这个更短的尺度上** — 这正是让检索示范与策略自身预测落在同一套词汇里的机制",
+        "**并行双专家 + 非对称推理（本文最重要的工程贡献）**：动作专家（轻量 MLP，回归连续 action chunk）与空间-语言专家（原生自回归 LM 头，输出子目标 + 同一 chunk 的 2D/3D 语言渲染）**严格并行** — 动作预测**不因果依赖**任何已生成的文本 token，二者只共享同一个 latent h_t。因此部署时可以把语言专家**整个删掉**：推理成本从 3177ms 掉到 88ms（36×），而训练期灌进主干的物理「心智模型」保留下来",
+        "**示范前缀 KV 缓存让「携带丰富理由」几乎零边际成本**：检索到的示范前缀在整个 rollout 内**不可变**，KV cache 只在 t=1 算一次，后续步只前向 live suffix。实测：无示范 64ms / 有图文示范无缓存 183ms / **有图文示范 + 缓存 91ms**",
+        "**因果性证据：示范确实被用了，而不是被忽略**（本文最有说服力的消融）— 同一 checkpoint 换示范内容：正确示范 98.8% → **无示范 62.4%** → **错误任务示范 44.9%**。如果策略基本忽略上下文，「缺失」与「错配」的结果应该差不多；错误示范**反而比没有示范更差**，说明策略在主动把示范当作**任务规格（task specification）**来读。LIBERO-Goal 尤其极端：无示范 24.8% / 错误示范 **0.0%**（同物体同场景但目标不同，只能靠示范消歧）",
+        "**文本比图像更可迁移 — 反直觉但可解释**：评测时只给文本示范拿到 98.8/84.4（LIBERO AVG / LIBERO-Plus），几乎等于图文全给的 98.8/85.1；而**只给图像掉到 92.9/75.7**。训练期换成只用图像示范，in-distribution 略好（98.4 vs 97.3）但 LIBERO-Plus 明显更差（**78.7 vs 85.0**）。解释：视觉示范让策略走「外观对应」捷径，分布内有效、一扰动就失灵；结构化语言把这条捷径堵掉，逼策略依赖更稳定的任务级 + 空间结构",
+        "**跨本体一致性有量化证据**：真机池混合了 125 条 Piper 遥操作轨迹（71,702 帧）+ 26 条 XR 人手 take + 26 条重定向到 Piper 的配对轨迹。固定观测只换检索来源，三种来源（真机 / 人手 / XR 重定向）的动作预测分歧仅 **0.0014–0.0016σ**，折合 **0.02°–0.03° 关节角、<0.05mm 夹爪宽度**。**关键设计**：异体示范**只进检索池**，可执行动作目标永远来自目标机器人自己的控制空间 — 因此不需要对齐源动作空间",
+        "**泛化增益随难度上升而扩大**：VLA-Arena 上对 π₀.₅ 的领先从 L0 的 0.15 扩大到 L1 的 **0.24**，L2 仍保持 0.17。Task Workflows 甚至**从 L0 的 0.64 涨到 L2 的 0.84** — 测试流程越偏离训练分布，上下文越有用。Unseen Objects 在三个难度上稳定 **0.80**（物体指代变了但程序可迁移）",
+        "**诚实的失败面**：Long Horizon 在 L1/L2 上**所有方法（含本文）都近乎归零** — 示范前缀在整个 episode 内固定，一旦执行漂移就**无法重新规划**，in-context 条件化本身解决不了多步误差累积。真机 OOD-L2 未见任务无人成功，StellaVLA 进度分 1.9/4（π₀.₅ 1.5 / StarVLA-OFT 1.1）",
+        "**子目标粒度早早饱和 → 前缀短到可缓存**：示范从 10 个子目标关键帧砍到 3 个，AVG 只从 98.8 掉到 98.1（-0.7）。说明策略消费的是**子目标分解本身**，不是稠密轨迹回放 — 计划一旦完整，加帧不加信息。这也正是前缀能短到可缓存的原因"
       ],
-      "impact": "**给所有 VLA 团队提供了「力觉降本部署」的方案** — 训练阶段做一次力数据采集，推理阶段告别力传感器。这对工业部署意义重大：6 维力传感器单价 5-20 万 + 易损易坏 + 安装空间苛刻，FD-VLA 让「力觉 VLA」首次具备规模化商用可行性。**与 5/31 戴盟 Daimon-Infinity 数据集形成天然组合**：先用 Daimon 数据训练，再用 FD-VLA 蒸馏部署，无传感器版本的 VTLA 落地链条打通。**短板**：仍需训练阶段拥有力传感器（不是「彻底无力觉」），且当前任务集中于桌面操作（长程 + 双手 + 灵巧未验证）。"
+      "impact": "**这篇论文把「测试时适配」从学术选项推成了工程可选项**，值得从三个层面看它的影响力：\n\n**1. 对部署范式的冲击** — 产线上最贵的问题是 OOD 失效：换个工位、改个光照、来个新 SKU 就要重新采数 + 微调，一个迭代周期以周计。StellaVLA 给的答案是**检索一条示范塞进前缀**，参数一个不动。真机上从分布内到 OOD-L1 只掉 5 个点，而 StarVLA-OFT 和 π₀.₅ 在同样的配对任务上掉 25 和 20 点 — 这种**优雅降级**特性，比 leaderboard 总分 0.63 更有商业意义。\n\n**2. 对「VLA 要不要显式推理」这场争论的推进** — Embodied CoT 一直被延迟问题卡死（本文实测自回归解码 83 个 token 就要 3177ms，高频控制回路完全放不进）。StellaVLA 的解法是**把推理的获取与推理的执行解耦**：训练期付费（联合 action + spatial-language 目标），部署期免费（摘掉语言专家 + 缓存前缀）。这条「训练时思考、推理时不说话」的路子，对所有想上 CoT 又受不了延迟的团队都直接可用。\n\n**3. 对数据战略的影响** — 「文本示范 ≈ 图文示范 > 图像示范」这个结论意味着：**跨本体数据的价值可以通过结构化语言抽取出来，而不必解决动作空间对齐**。人手视频、XR 遥操作、异构机器人轨迹都能作为**程序性指导**进入检索池，同时保持电机监督完全来自目标本体。这为「人类视频规模化利用」提供了一条比重定向 / 隐动作更轻的路径。\n\n**4. 需要冷静看待的部分** — ① 检索质量是单点故障：错误示范让性能掉到**低于无示范**的水平（44.9 vs 62.4），视觉与语义域漂移下的鲁棒检索是必须补的一环；② 长程组合性没被解决，固定前缀无法重规划；③ 运动学理由依赖量化到 VLM 词表的粗离散表示，精细操作的精度上限受此约束；④ 跨来源一致性只在**单步预测 + 匹配观测**下验证，不等于闭环不变性。\n\n**关联脉络**：与 p169 Cosmos Policy（视频基模当策略）、p168 LingBot-VA（视频-动作自回归世界模型）构成 2026 年「不靠加数据提泛化」的三条不同路线 — 世界模型派靠想象、视频基模派靠预训练先验、StellaVLA 靠检索 + 结构化上下文。三者都在回避「采更多真机数据」这条最贵的路。"
     },
     {
       "id": "p178",
@@ -62,6 +105,37 @@
         "**电力场景实战落地**：江行智能将 DyGRO-VLA 与「**TrackerSplat**」（动态场景稳定重建）+「**一脑多体协同**」结合，落地变电站巡检、电力作业等物理 AI 场景 → 全局大脑做语义理解 / 任务拆解 / 路径规划 / 冲突消解；具身终端做导航 / 避障 / 读数 / 操作 / 状态回传。**论文不只是 benchmark，还有真实工业部署**"
       ],
       "impact": "**为「一脑多体」具身基座提供了关键的多任务训练范式**。当前 VLA 训练几乎都是「单任务 SFT」+「多任务 mix 训练」，前者无法泛化、后者灾难性遗忘 → DyGRO-VLA 的「IB 共享表征 + MoRR 残差」范式给出了「**多任务并存且不互相覆盖**」的工程方案。预计 2026 H2 多个具身公司的「一脑多体」（机器人本体异构 + 任务异构）平台都会借鉴此方案。**短板**：论文未公开 arxiv（仅 ICML 录用）+ 代码 → 复现门槛较高；电力场景泛化到家庭 / 工业其他场景的迁移有待验证。"
+    },
+    {
+      "id": "p177",
+      "title": "FD-VLA: Force-Distilled Vision-Language-Action Model for Contact-Rich Manipulation",
+      "authors": "Ruiteng Zhao, Wenshuo Wang, Yicheng Ma, Xiaocong Li, Francis E.H. Tay, Marcelo H. Ang Jr., Haiyue Zhu / 新加坡国立大学（NUS）+ 新加坡 A*STAR",
+      "venue": "ICRA 2026",
+      "date": "2026-03-20",
+      "arxiv": "https://arxiv.org/abs/2602.02142",
+      "github": null,
+      "tags": [
+        "FD-VLA",
+        "VLA",
+        "力觉",
+        "蒸馏",
+        "接触丰富",
+        "ICRA2026",
+        "无传感器",
+        "VTLA"
+      ],
+      "tldr": "**首篇「无力觉传感器的力觉 VLA」** — NUS + A*STAR 团队提出**力蒸馏模块（FDM）**：训练阶段用真实力信号监督，**推理阶段不依赖力传感器**，仅靠视觉 + 本体状态预测「**潜在力 token**」。在三项接触丰富任务（**插插头 / 擦白板 / 按按钮**）上 FD-VLA **平均成功率 61.1%** vs SmolVLA 无力觉 23.3%（**+37.8 个百分点 / 162% 相对提升**）。**关键反直觉**：预测的蒸馏力 token **优于直接使用原始力传感器信号**（38.9%）— 因为原始力信号高维噪声多，蒸馏后的潜在表示更任务相关。",
+      "category": "vla-models",
+      "difficulty": "高级",
+      "addedDate": "2026-06-01",
+      "keyInsights": [
+        "**力觉 VLA 的「无传感器」范式**：训练时用真实力 / 力矩传感器作为**蒸馏教师**，推理时**完全不需要**力传感器 → 推断阶段只需「视觉 + 本体状态」就能预测出与真实力对齐的「潜在力 token」。极大降低部署门槛（昂贵 + 易损的 6 维力传感器不再是必备硬件）",
+        "**单可学习查询令牌（Single Learnable Query Token）**：FDM 用一个**可学习的查询向量 p** 通过多头注意力从「视觉 + 状态」上下文 [p, f^V, f^S] 中聚合接触相关信息 → 输出预测力 token。比「直接 MLP 编码力信号」高 12.2 个百分点（38.9% → 51.1%）；**比「使用真实力 token」额外高 10.0 个百分点**（51.1% → 61.1%）— 反直觉的「预测优于真实」",
+        "**方向性注意力掩码（Directional Attention Masking）**：把输入分为「感知流（视觉 + 语言）」+「控制流（状态 + 预测力）」 → 感知 token 只注意感知（保护预训练 VLM 对齐），控制 token 可注意感知（实现多模态融合），控制内部因果掩码 → **保护预训练语义不被微调破坏**",
+        "**参数效率惊人**：FD-VLA 参数仅为 π₀ 的 **1/10**，但平均成功率 61.1% 接近有力觉 π₀ 的 66.7%，远超无力觉 π₀ 的 46.7% — 证明「设计 > 规模」在接触丰富场景特别成立",
+        "**任务级数据**：擦白板 73.3%（22/30）/ 按按钮 70.0%（21/30）/ 插插头 40.0%（12/30）— 擦白板这种「持续接触 + 摩擦力反馈」任务受益最大；插插头这种「精度敏感」任务仍是难点（即使有力觉）"
+      ],
+      "impact": "**给所有 VLA 团队提供了「力觉降本部署」的方案** — 训练阶段做一次力数据采集，推理阶段告别力传感器。这对工业部署意义重大：6 维力传感器单价 5-20 万 + 易损易坏 + 安装空间苛刻，FD-VLA 让「力觉 VLA」首次具备规模化商用可行性。**与 5/31 戴盟 Daimon-Infinity 数据集形成天然组合**：先用 Daimon 数据训练，再用 FD-VLA 蒸馏部署，无传感器版本的 VTLA 落地链条打通。**短板**：仍需训练阶段拥有力传感器（不是「彻底无力觉」），且当前任务集中于桌面操作（长程 + 双手 + 灵巧未验证）。"
     },
     {
       "id": "p176",
@@ -136,12 +210,7 @@
     {
       "id": "p174",
       "title": "LIBERO-X: Robustness Litmus for Vision-Language-Action Models",
-      "authors": [
-        "Hongxin Zhao",
-        "Yang Li",
-        "Liang Zhang",
-        "Wei Liu"
-      ],
+      "authors": "Hongxin Zhao, Yang Li, Liang Zhang, Wei Liu",
       "venue": "ICRA 2026 (美团 + 北京航空航天大学)",
       "date": "2026-05-28",
       "arxiv": "https://arxiv.org/abs/2602.06556",
@@ -170,9 +239,7 @@
     {
       "id": "p173",
       "title": "Wall-OSS-0.5: Bringing Pretrained VLA Performance Closer to Post-Training Levels",
-      "authors": [
-        "X Square Robot Team"
-      ],
+      "authors": "X Square Robot Team",
       "venue": "技术报告 / 自变量机器人 X Square Robot 2026-05",
       "date": "2026-05-28",
       "arxiv": "https://x2robot.com/api/files/file/wall_oss_05.pdf",
@@ -204,58 +271,9 @@
       "impact": "国产 VLA 开源生态首个真正可复现的全栈方案。论文 + 代码 + 训练菜谱 + 优化器同步开源，预计 2026 年下半年成为 Hugging Face VLA Trending TOP3，与 π0.5 / OpenVLA / GR00T-N1 并列为「四大基线」。「预训练即部署」范式可能改变 VLA 社区数据策略 — 从「微调即可」转向「预训练数据规模 + 多模态对齐」是关键。对国产具身智能产业链的意义：自变量获四大厂（字节 / 阿里 / 美团 / 小米）战投 + 完整开源 = 国产 VLA 事实标准的重要竞争者，与北京人形 Pelican-Unify 1.0、银河通用 GR00T-N1.5 形成三足鼎立。"
     },
     {
-      "id": "p171",
-      "title": "DIAL: Decoupling Intent and Action via Latent World Modeling for End-to-End VLA",
-      "authors": [
-        "Yi Chen",
-        "Yuying Ge",
-        "Hui Zhou",
-        "Mingyu Ding",
-        "Yixiao Ge",
-        "Xihui Liu"
-      ],
-      "venue": "arXiv 2026-03 (港大 + 小鹏机器人 + UNC Chapel Hill 联合)",
-      "date": "2026-05-26",
-      "arxiv": "https://arxiv.org/abs/2603.29844",
-      "github": "https://arxiv.org/abs/2603.29844",
-      "tags": [
-        "VLA",
-        "Latent World Modeling",
-        "Intent-Action Decoupling",
-        "Two-Stage Training",
-        "RoboCasa GR1",
-        "10x Data Efficiency",
-        "Zero-shot Generalization",
-        "Humanoid",
-        "港大",
-        "小鹏机器人"
-      ],
-      "tldr": "**DIAL（Decoupling Intent and Action via Latent World Modeling）** 由**港大 + 小鹏机器人 + UNC Chapel Hill** 联合提出 — 用「**可微分潜在意图瓶颈**」连接 VLM 高层决策与底层运动执行的全新端到端 VLA 框架。**核心思想**：让 VLM 在自己**原生的特征空间**里做隐式世界建模，**不外挂视频生成模型，不生成像素级视频**，让模型在统一端到端框架内同时拥有「**语义推理 + 物理直觉**」。基于 Qwen3-VL backbone 在 **RoboCasa GR1 Tabletop benchmark 上达到 SOTA — 数据效率提升 10×**（用 1/10 演示数据达到现有方法的相同性能）；在真实人形机器人部署中**对未见物体 / 新构型展现强 zero-shot 泛化能力**。这是 VLA 路线之争从「VLM 派 vs VAM 派 vs 外挂视频生成派」走向「**统一端到端 + 隐式潜在世界建模**」的关键里程碑。",
-      "category": "vla",
-      "difficulty": "advanced",
-      "addedDate": "2026-05-28",
-      "keyInsights": [
-        "💡 **System-2 + System-1 双系统的「可微潜在瓶颈」设计**：System-2 是 VLM-based 高层决策，在 VLM 的**原生 ViT 特征空间**内合成「latent visual foresight」（潜在视觉预见）作为意图编码，作为结构化瓶颈；System-1 是轻量级动作解码器，把这个预测意图 + 当前观测通过 latent inverse dynamics 解码成精确机器人动作。**关键创新**：意图瓶颈是**可微分**的，让 action-aware 梯度能受控地更新 VLM 主干，避免传统端到端 VLA 训练对预训练 VLM 语义表征的破坏",
-        "💡 **两阶段训练范式破解「联合优化不稳定」**：第一阶段是**解耦 warmup** — System-2 单独学习预测潜在未来（self-supervised），System-1 在 ground-truth 未来引导下单独学习运动控制（在统一特征空间内），两者并行无干扰；第二阶段是**端到端联合优化** — 两者无缝对接联合训练，让 VLM 主干被「action-aware 但语义保持」的梯度精炼。这是首个明确展示「**预训练 VLM 知识保持** vs **下游动作适配**」可以兼得的工作",
-        "💡 **10× 数据效率 + 跨具身泛化是 RoboCasa SOTA 的关键证据**：DIAL 用其他方法 1/10 的演示量在 RoboCasa GR1 Tabletop benchmark 上达到 SOTA — 这意味着潜在世界建模带来了**隐式数据增广**（每条演示同时教会模型「做什么」+「未来怎样」+「逆动力学」三件事）。在真实人形机器人部署中，DIAL 还能利用**异质人类演示**（不是机器人轨迹的 in-domain 数据）学习物理 grounded manipulation prior，对未见物体 + 新构型展现 zero-shot 泛化",
-        "💡 **「不外挂视频生成」是工程友好性核心 — 与 Cosmos Policy / LingBot-VA 形成正交路线**：当 NVIDIA Cosmos Policy（p169）和蚂蚁灵动 LingBot-VA（p168）选择「视频基模 + VLA 解码器」生成像素级未来帧时，DIAL 走完全相反路径 — **不生成任何像素，只在 VLM 内部 latent 空间内做世界建模**。**好处**：① 推理速度无外挂视频模型开销；② 无需训练视频生成模型；③ 框架更简洁可端到端微调。**代价**：可解释性弱，不能像视频路线那样「肉眼看到模型在想什么」。这是 VLA 三大主流路线（VLM 派 / VAM 派 / 隐式潜在派）的边界划分关键文献",
-        "💡 **VLA 路线之争走向收敛 — 端到端 + 双系统是新共识**：从 OpenVLA / RDT 早期「直接 VLM → action」一路演进到 π₀ / GR00T / Helix 双系统、再到 Cosmos Policy / GaussianDream / DIAL 都在做「**主干保持 + 解耦执行 + 辅助监督**」三件套。**DIAL 的独特性**：把「隐式世界建模」这件事彻底做到 VLM 内部 latent 空间内，不增加任何 pixel-level 推理负担 — 这可能是 2026 下半年 VLA 主流框架走向的标志性方向"
-      ],
-      "impact": "**学术影响**：① 首次明确展示「VLM 原生 latent 空间内做世界建模」可行 — 此前所有视频路线都需要外挂模型，DIAL 证明这一步可以省略而仍然有效；② 「**两阶段训练**（解耦 warmup + 联合优化）」可能成为后续大量 VLA 论文的训练 baseline；③ **10× 数据效率**对真实机器人采数成本是颠覆性提升 — 1 周采数从 1000 条 → 100 条，可能让很多 to B 商业部署变得现实可行。\n\n**产业影响**：① **小鹏机器人**作为 DIAL 三个共同贡献机构之一，预示 IRON 量产人形机器人将采用此框架 —— 与 5/8 j113 IRON 26 届校招（操作 / 运动控制 / 导航）+ 小鹏 5 月 IRON 量产路线图形成完整自洽；② **港大 Xihui Liu 团队**继 GaussianDream（p170）后再次输出重磅 VLA 工作，确立「港大派」在 VLA 学术领域的关键地位；③ 与今日 EQA-Decision（p172 北大穆亚东）形成 **VLA 学术界双峰** — 一个解决「执行层」一个解决「评测层」，互补强化。",
-      "methodology": "## DIAL 框架架构\n\n### 1. 整体设计：可微分潜在意图瓶颈\nDIAL 的核心数学设计可表达为：\n```\nObservation o_t + Language l → System-2 → z_t (latent intent in VLM feature space)\nz_t + o_t → System-1 → a_t (action)\n```\n其中 `z_t` 是 VLM **原生 ViT 特征空间**内的「latent visual foresight」，作为可微分的结构化瓶颈。\n\n### 2. System-2：VLM-based latent 世界建模\n- 输入：当前观测 o_t（视觉）+ 自然语言指令 l\n- 处理：VLM 主干（基于 Qwen3-VL）在自己原生 ViT 特征空间内合成「latent visual foresight」z_t\n- z_t 显式编码意图 + 未来视觉表象，但**不解码到像素空间**\n\n### 3. System-1：lightweight inverse dynamics policy\n- 输入：z_t（来自 System-2）+ 当前观测 o_t\n- 处理：通过 latent inverse dynamics 解码成精确机器人动作 a_t\n- 设计选择：lightweight（参数量远小于 VLM 主干）— 让大部分 capacity 留给 System-2 的语义理解\n\n### 4. 训练损失（两阶段）\n**阶段 1 — Decoupled Warmup**：\n- L_S2 = E[||z_t - z_t^*||²]，z_t^* 是 ground-truth 未来 latent（监督信号来自下一帧 VLM 编码）\n- L_S1 = E[||a_t - a_t^*||²]，a_t 直接用 ground-truth z_t^* 作为输入（System-2 不参与 System-1 训练）\n- 两个损失独立优化，互不干扰\n\n**阶段 2 — End-to-End Joint Optimization**：\n- L_total = L_S2 + λ · L_S1，λ 设置为 0.5-1.0\n- 关键：S2 → S1 的可微连接让 action-aware 梯度回传到 VLM 主干，但因为 z_t 已被预训练得很好，更新方向不会破坏语义",
-      "experiments": "## 实验结果（RoboCasa GR1 Tabletop + 真实人形）\n\n### 1. RoboCasa GR1 Tabletop Benchmark（仿真）\n- **DIAL（用 1× 数据）** ≈ **prior SOTA（用 10× 数据）** — 数据效率提升 10×\n- DIAL（用 10× 数据）= new SOTA，比 prior SOTA 高出 X pp（具体数字论文中详细给出）\n- Ablation：去掉「latent intent bottleneck」回退到普通端到端 VLA，性能跌到 baseline 水平\n- Ablation：去掉「two-stage warmup」直接联合训练，VLM 语义表征崩溃，性能跌 30%+\n\n### 2. 真实人形机器人部署（zero-shot generalization）\n- **未见物体**：DIAL 在异质人类演示训练后，对训练集未出现物体仍可完成抓取 / 放置（成功率 70%+）\n- **新构型**（不同机械臂配置）：DIAL 在 cross-embodiment 上展现 zero-shot 迁移能力\n- 复杂多阶段协同任务：DIAL 在 5 步 + 任务上完成率显著高于 baseline，显示 latent 世界建模带来的物理直觉\n\n### 3. 与 Cosmos Policy / LingBot-VA 对比\n- 不外挂视频模型 → DIAL 推理速度比 Cosmos Policy 快 1.8-2.3×（端到端无 video diffusion 开销）\n- 训练成本：DIAL 训练时间比 LingBot-VA 短约 40%（无需训练视频 backbone）\n- 性能：DIAL 在 RoboCasa 上略低于 Cosmos Policy（视频路线的天花板更高），但在真实部署 zero-shot 上更稳定（latent 路线对 OOD 更鲁棒）",
-      "reproduction": "## 复现指南\n\n### 1. 硬件与环境\n- **训练**：8 × A100 80G 或 4 × H100 80G（VLM backbone 微调）\n- **推理**：单卡 A100 40G 即可运行 RoboCasa benchmark\n- **真实部署**：人形机器人需要至少 1 张 RTX 4090 推理\n\n### 2. 数据准备\n- **RoboCasa GR1 Tabletop**：直接下载官方 demonstrations（约 100GB）\n- **异质人类演示**（用于 zero-shot 实验）：可用 Ego4D / Something-Something 等公开第一视角数据集；DIAL 论文用了约 10K 条人类演示作为 augmentation\n\n### 3. 训练流程\n```bash\n# Stage 1: Decoupled Warmup（约 5 天 / 8×A100）\npython train.py --stage warmup --vlm qwen3-vl-8b --epochs 50 --lr_s2 1e-5 --lr_s1 5e-5\n\n# Stage 2: End-to-End Joint（约 3 天 / 8×A100）\npython train.py --stage joint --resume warmup_ckpt --epochs 30 --lr_joint 5e-6 --lambda_s1 0.7\n```\n\n### 4. 关键超参数\n- VLM backbone：Qwen3-VL-8B-Instruct（也可用 LLaVA-NeXT-Video-7B / InternVL2-8B 替代）\n- z_t 维度：与 VLM hidden_dim 一致（Qwen3-VL = 3584）\n- System-1 网络结构：3-layer MLP + 1-layer Transformer decoder，参数 ~50M\n- batch size: 16 (per GPU)，effective bs = 128\n\n### 5. 已知风险\n- **GitHub 仓库尚未公开**（论文标 arxiv-only，2026/3 上传）—— 当前需要复现者自己搭建框架，门槛较高\n- VLM 选型敏感：Qwen3-VL / InternVL 系列效果好，LLaVA 系列因为 ViT 编码方式不同需要适配\n- 真实部署的 zero-shot 数字依赖人形硬件 — 港大 + 小鹏的 IRON G1 平台可能与其他平台行为不同",
-      "mathDetails": "## 数学细节\n\n### 1. Latent Intent Bottleneck 的可微分性\nDIAL 设计的关键是让 z_t 在 VLM 原生 ViT 特征空间内**可微分**。具体地，假设 VLM 编码器 φ：\n```\nz_t = φ(o_t, l) ∈ R^d   (d = 3584 for Qwen3-VL-8B)\n```\n后续 System-1 解码：\n```\na_t = ψ(z_t, o_t) ∈ R^k   (k = action dim, 通常 7-14 for 单臂 / 双臂)\n```\n训练时损失对 z_t 求梯度：\n```\n∂L_S1/∂φ = ∂L_S1/∂a_t · ∂a_t/∂z_t · ∂φ(o_t,l)/∂φ_params\n```\n这个链式规则让 action-aware 梯度受控更新 VLM 主干，但因为 z_t 在阶段 1 已经被预训练拟合得很好，参数更新方向局限在「保持语义、微调 action 适配」的子流形内。\n\n### 2. Two-stage 训练的稳定性证明\n论文给出非正式分析：\n- 阶段 1 中 L_S2 单独训练让 z_t = z_t^* (ground-truth)，此时 VLM 主干学到一个稳定的 mapping\n- 阶段 2 引入 L_S1 时，因为 z_t 已经接近 z_t^*，∂L_S1/∂z_t 较小，所以对 VLM 的梯度扰动也小\n- 这避免了直接端到端训练时「大梯度从 action loss 直接灌进 VLM 主干」的语义崩溃\n\n### 3. 与传统 VAE / VQ-VAE 的区别\nDIAL 不是 VAE — z_t 不是从分布中采样，而是直接由 VLM 确定性输出。也不是 VQ-VAE — z_t 不被量化到离散 codebook，保持连续 dense 表示。**DIAL = 「自监督 latent prediction + 监督式 inverse dynamics」组合**，理论上更接近 World Model / DreamerV3 范式但去掉了 generative pixel decoder。"
-    },
-    {
       "id": "p172",
       "title": "Extending Embodied Question Answering from Perception to Decision (EQA-Decision + RoboDecision)",
-      "authors": [
-        "穆亚东等",
-        "Mu Yadong et al.",
-        "北京大学",
-        "星源智团队"
-      ],
+      "authors": "穆亚东等, Mu Yadong et al., 北京大学, 星源智团队",
       "venue": "CVPR 2026 (Highlight)",
       "date": "2026-05-27",
       "arxiv": "https://cvpr.thecvf.com/virtual/2026/poster/39887",
@@ -290,18 +308,46 @@
       "mathDetails": "## 数学细节\n\n### 1. Benchmark 总分计算\nEQA-Decision Benchmark 总分是 6 大维度的加权平均：\n```\nTotal Score = Σ_d w_d · score_d\n```\n其中 d ∈ {Static Scene, Spatial Understanding, Visual Reference, Temporal, Planning, Instant Decision}，权重 w_d 大致均等（论文中给出具体数字）。\n\n### 2. CoT-SFT 损失\n```\nL_CoT-SFT = -E[log p(reasoning + answer | image, question)]\n```\n其中 reasoning 是 Gemini 生成的多步思维链文本，answer 是最终答案。模型学习同时输出推理过程 + 答案。\n\n### 3. RL 阶段奖励设计\n论文采用类似 DPO 的偏好优化（推测，具体实现以正式论文为准）：\n```\nL_RL = -E[log σ(β · (log π(y_w | x) - log π(y_l | x) - log π_ref(y_w | x) + log π_ref(y_l | x)))]\n```\n其中 y_w 是奖励模型偏好的回答，y_l 是次优回答，π_ref 是 CoT-SFT 后的参考策略。"
     },
     {
+      "id": "p171",
+      "title": "DIAL: Decoupling Intent and Action via Latent World Modeling for End-to-End VLA",
+      "authors": "Yi Chen, Yuying Ge, Hui Zhou, Mingyu Ding, Yixiao Ge, Xihui Liu",
+      "venue": "arXiv 2026-03 (港大 + 小鹏机器人 + UNC Chapel Hill 联合)",
+      "date": "2026-05-26",
+      "arxiv": "https://arxiv.org/abs/2603.29844",
+      "github": "https://arxiv.org/abs/2603.29844",
+      "tags": [
+        "VLA",
+        "Latent World Modeling",
+        "Intent-Action Decoupling",
+        "Two-Stage Training",
+        "RoboCasa GR1",
+        "10x Data Efficiency",
+        "Zero-shot Generalization",
+        "Humanoid",
+        "港大",
+        "小鹏机器人"
+      ],
+      "tldr": "**DIAL（Decoupling Intent and Action via Latent World Modeling）** 由**港大 + 小鹏机器人 + UNC Chapel Hill** 联合提出 — 用「**可微分潜在意图瓶颈**」连接 VLM 高层决策与底层运动执行的全新端到端 VLA 框架。**核心思想**：让 VLM 在自己**原生的特征空间**里做隐式世界建模，**不外挂视频生成模型，不生成像素级视频**，让模型在统一端到端框架内同时拥有「**语义推理 + 物理直觉**」。基于 Qwen3-VL backbone 在 **RoboCasa GR1 Tabletop benchmark 上达到 SOTA — 数据效率提升 10×**（用 1/10 演示数据达到现有方法的相同性能）；在真实人形机器人部署中**对未见物体 / 新构型展现强 zero-shot 泛化能力**。这是 VLA 路线之争从「VLM 派 vs VAM 派 vs 外挂视频生成派」走向「**统一端到端 + 隐式潜在世界建模**」的关键里程碑。",
+      "category": "vla",
+      "difficulty": "advanced",
+      "addedDate": "2026-05-28",
+      "keyInsights": [
+        "💡 **System-2 + System-1 双系统的「可微潜在瓶颈」设计**：System-2 是 VLM-based 高层决策，在 VLM 的**原生 ViT 特征空间**内合成「latent visual foresight」（潜在视觉预见）作为意图编码，作为结构化瓶颈；System-1 是轻量级动作解码器，把这个预测意图 + 当前观测通过 latent inverse dynamics 解码成精确机器人动作。**关键创新**：意图瓶颈是**可微分**的，让 action-aware 梯度能受控地更新 VLM 主干，避免传统端到端 VLA 训练对预训练 VLM 语义表征的破坏",
+        "💡 **两阶段训练范式破解「联合优化不稳定」**：第一阶段是**解耦 warmup** — System-2 单独学习预测潜在未来（self-supervised），System-1 在 ground-truth 未来引导下单独学习运动控制（在统一特征空间内），两者并行无干扰；第二阶段是**端到端联合优化** — 两者无缝对接联合训练，让 VLM 主干被「action-aware 但语义保持」的梯度精炼。这是首个明确展示「**预训练 VLM 知识保持** vs **下游动作适配**」可以兼得的工作",
+        "💡 **10× 数据效率 + 跨具身泛化是 RoboCasa SOTA 的关键证据**：DIAL 用其他方法 1/10 的演示量在 RoboCasa GR1 Tabletop benchmark 上达到 SOTA — 这意味着潜在世界建模带来了**隐式数据增广**（每条演示同时教会模型「做什么」+「未来怎样」+「逆动力学」三件事）。在真实人形机器人部署中，DIAL 还能利用**异质人类演示**（不是机器人轨迹的 in-domain 数据）学习物理 grounded manipulation prior，对未见物体 + 新构型展现 zero-shot 泛化",
+        "💡 **「不外挂视频生成」是工程友好性核心 — 与 Cosmos Policy / LingBot-VA 形成正交路线**：当 NVIDIA Cosmos Policy（p169）和蚂蚁灵动 LingBot-VA（p168）选择「视频基模 + VLA 解码器」生成像素级未来帧时，DIAL 走完全相反路径 — **不生成任何像素，只在 VLM 内部 latent 空间内做世界建模**。**好处**：① 推理速度无外挂视频模型开销；② 无需训练视频生成模型；③ 框架更简洁可端到端微调。**代价**：可解释性弱，不能像视频路线那样「肉眼看到模型在想什么」。这是 VLA 三大主流路线（VLM 派 / VAM 派 / 隐式潜在派）的边界划分关键文献",
+        "💡 **VLA 路线之争走向收敛 — 端到端 + 双系统是新共识**：从 OpenVLA / RDT 早期「直接 VLM → action」一路演进到 π₀ / GR00T / Helix 双系统、再到 Cosmos Policy / GaussianDream / DIAL 都在做「**主干保持 + 解耦执行 + 辅助监督**」三件套。**DIAL 的独特性**：把「隐式世界建模」这件事彻底做到 VLM 内部 latent 空间内，不增加任何 pixel-level 推理负担 — 这可能是 2026 下半年 VLA 主流框架走向的标志性方向"
+      ],
+      "impact": "**学术影响**：① 首次明确展示「VLM 原生 latent 空间内做世界建模」可行 — 此前所有视频路线都需要外挂模型，DIAL 证明这一步可以省略而仍然有效；② 「**两阶段训练**（解耦 warmup + 联合优化）」可能成为后续大量 VLA 论文的训练 baseline；③ **10× 数据效率**对真实机器人采数成本是颠覆性提升 — 1 周采数从 1000 条 → 100 条，可能让很多 to B 商业部署变得现实可行。\n\n**产业影响**：① **小鹏机器人**作为 DIAL 三个共同贡献机构之一，预示 IRON 量产人形机器人将采用此框架 —— 与 5/8 j113 IRON 26 届校招（操作 / 运动控制 / 导航）+ 小鹏 5 月 IRON 量产路线图形成完整自洽；② **港大 Xihui Liu 团队**继 GaussianDream（p170）后再次输出重磅 VLA 工作，确立「港大派」在 VLA 学术领域的关键地位；③ 与今日 EQA-Decision（p172 北大穆亚东）形成 **VLA 学术界双峰** — 一个解决「执行层」一个解决「评测层」，互补强化。",
+      "methodology": "## DIAL 框架架构\n\n### 1. 整体设计：可微分潜在意图瓶颈\nDIAL 的核心数学设计可表达为：\n```\nObservation o_t + Language l → System-2 → z_t (latent intent in VLM feature space)\nz_t + o_t → System-1 → a_t (action)\n```\n其中 `z_t` 是 VLM **原生 ViT 特征空间**内的「latent visual foresight」，作为可微分的结构化瓶颈。\n\n### 2. System-2：VLM-based latent 世界建模\n- 输入：当前观测 o_t（视觉）+ 自然语言指令 l\n- 处理：VLM 主干（基于 Qwen3-VL）在自己原生 ViT 特征空间内合成「latent visual foresight」z_t\n- z_t 显式编码意图 + 未来视觉表象，但**不解码到像素空间**\n\n### 3. System-1：lightweight inverse dynamics policy\n- 输入：z_t（来自 System-2）+ 当前观测 o_t\n- 处理：通过 latent inverse dynamics 解码成精确机器人动作 a_t\n- 设计选择：lightweight（参数量远小于 VLM 主干）— 让大部分 capacity 留给 System-2 的语义理解\n\n### 4. 训练损失（两阶段）\n**阶段 1 — Decoupled Warmup**：\n- L_S2 = E[||z_t - z_t^*||²]，z_t^* 是 ground-truth 未来 latent（监督信号来自下一帧 VLM 编码）\n- L_S1 = E[||a_t - a_t^*||²]，a_t 直接用 ground-truth z_t^* 作为输入（System-2 不参与 System-1 训练）\n- 两个损失独立优化，互不干扰\n\n**阶段 2 — End-to-End Joint Optimization**：\n- L_total = L_S2 + λ · L_S1，λ 设置为 0.5-1.0\n- 关键：S2 → S1 的可微连接让 action-aware 梯度回传到 VLM 主干，但因为 z_t 已被预训练得很好，更新方向不会破坏语义",
+      "experiments": "## 实验结果（RoboCasa GR1 Tabletop + 真实人形）\n\n### 1. RoboCasa GR1 Tabletop Benchmark（仿真）\n- **DIAL（用 1× 数据）** ≈ **prior SOTA（用 10× 数据）** — 数据效率提升 10×\n- DIAL（用 10× 数据）= new SOTA，比 prior SOTA 高出 X pp（具体数字论文中详细给出）\n- Ablation：去掉「latent intent bottleneck」回退到普通端到端 VLA，性能跌到 baseline 水平\n- Ablation：去掉「two-stage warmup」直接联合训练，VLM 语义表征崩溃，性能跌 30%+\n\n### 2. 真实人形机器人部署（zero-shot generalization）\n- **未见物体**：DIAL 在异质人类演示训练后，对训练集未出现物体仍可完成抓取 / 放置（成功率 70%+）\n- **新构型**（不同机械臂配置）：DIAL 在 cross-embodiment 上展现 zero-shot 迁移能力\n- 复杂多阶段协同任务：DIAL 在 5 步 + 任务上完成率显著高于 baseline，显示 latent 世界建模带来的物理直觉\n\n### 3. 与 Cosmos Policy / LingBot-VA 对比\n- 不外挂视频模型 → DIAL 推理速度比 Cosmos Policy 快 1.8-2.3×（端到端无 video diffusion 开销）\n- 训练成本：DIAL 训练时间比 LingBot-VA 短约 40%（无需训练视频 backbone）\n- 性能：DIAL 在 RoboCasa 上略低于 Cosmos Policy（视频路线的天花板更高），但在真实部署 zero-shot 上更稳定（latent 路线对 OOD 更鲁棒）",
+      "reproduction": "## 复现指南\n\n### 1. 硬件与环境\n- **训练**：8 × A100 80G 或 4 × H100 80G（VLM backbone 微调）\n- **推理**：单卡 A100 40G 即可运行 RoboCasa benchmark\n- **真实部署**：人形机器人需要至少 1 张 RTX 4090 推理\n\n### 2. 数据准备\n- **RoboCasa GR1 Tabletop**：直接下载官方 demonstrations（约 100GB）\n- **异质人类演示**（用于 zero-shot 实验）：可用 Ego4D / Something-Something 等公开第一视角数据集；DIAL 论文用了约 10K 条人类演示作为 augmentation\n\n### 3. 训练流程\n```bash\n# Stage 1: Decoupled Warmup（约 5 天 / 8×A100）\npython train.py --stage warmup --vlm qwen3-vl-8b --epochs 50 --lr_s2 1e-5 --lr_s1 5e-5\n\n# Stage 2: End-to-End Joint（约 3 天 / 8×A100）\npython train.py --stage joint --resume warmup_ckpt --epochs 30 --lr_joint 5e-6 --lambda_s1 0.7\n```\n\n### 4. 关键超参数\n- VLM backbone：Qwen3-VL-8B-Instruct（也可用 LLaVA-NeXT-Video-7B / InternVL2-8B 替代）\n- z_t 维度：与 VLM hidden_dim 一致（Qwen3-VL = 3584）\n- System-1 网络结构：3-layer MLP + 1-layer Transformer decoder，参数 ~50M\n- batch size: 16 (per GPU)，effective bs = 128\n\n### 5. 已知风险\n- **GitHub 仓库尚未公开**（论文标 arxiv-only，2026/3 上传）—— 当前需要复现者自己搭建框架，门槛较高\n- VLM 选型敏感：Qwen3-VL / InternVL 系列效果好，LLaVA 系列因为 ViT 编码方式不同需要适配\n- 真实部署的 zero-shot 数字依赖人形硬件 — 港大 + 小鹏的 IRON G1 平台可能与其他平台行为不同",
+      "mathDetails": "## 数学细节\n\n### 1. Latent Intent Bottleneck 的可微分性\nDIAL 设计的关键是让 z_t 在 VLM 原生 ViT 特征空间内**可微分**。具体地，假设 VLM 编码器 φ：\n```\nz_t = φ(o_t, l) ∈ R^d   (d = 3584 for Qwen3-VL-8B)\n```\n后续 System-1 解码：\n```\na_t = ψ(z_t, o_t) ∈ R^k   (k = action dim, 通常 7-14 for 单臂 / 双臂)\n```\n训练时损失对 z_t 求梯度：\n```\n∂L_S1/∂φ = ∂L_S1/∂a_t · ∂a_t/∂z_t · ∂φ(o_t,l)/∂φ_params\n```\n这个链式规则让 action-aware 梯度受控更新 VLM 主干，但因为 z_t 在阶段 1 已经被预训练拟合得很好，参数更新方向局限在「保持语义、微调 action 适配」的子流形内。\n\n### 2. Two-stage 训练的稳定性证明\n论文给出非正式分析：\n- 阶段 1 中 L_S2 单独训练让 z_t = z_t^* (ground-truth)，此时 VLM 主干学到一个稳定的 mapping\n- 阶段 2 引入 L_S1 时，因为 z_t 已经接近 z_t^*，∂L_S1/∂z_t 较小，所以对 VLM 的梯度扰动也小\n- 这避免了直接端到端训练时「大梯度从 action loss 直接灌进 VLM 主干」的语义崩溃\n\n### 3. 与传统 VAE / VQ-VAE 的区别\nDIAL 不是 VAE — z_t 不是从分布中采样，而是直接由 VLM 确定性输出。也不是 VQ-VAE — z_t 不被量化到离散 codebook，保持连续 dense 表示。**DIAL = 「自监督 latent prediction + 监督式 inverse dynamics」组合**，理论上更接近 World Model / DreamerV3 范式但去掉了 generative pixel decoder。"
+    },
+    {
       "id": "p170",
       "title": "GaussianDream: A Feed-Forward 3D Gaussian World Model for Robotic Manipulation",
-      "authors": [
-        "Zijian Zhang",
-        "Yuqing Jiang",
-        "Qian Cheng",
-        "Si Liu",
-        "Ding Zhao",
-        "Ping Luo",
-        "Weitao Zhou",
-        "Haibao Yu"
-      ],
+      "authors": "Zijian Zhang, Yuqing Jiang, Qian Cheng, Si Liu, Ding Zhao, Ping Luo, Weitao Zhou, Haibao Yu",
       "venue": "arXiv 2026-05 (港大 + CMU 联合)",
       "date": "2026-05-20",
       "arxiv": "https://arxiv.org/abs/2605.20752",
@@ -431,14 +477,7 @@
     {
       "id": "p166",
       "title": "EvoScene-VLA: Evolving Scene Beliefs Inside the Action Decoder for Chunked Robot Control",
-      "authors": [
-        "Chushan Zhang",
-        "Ruihan Lu",
-        "Jinguang Tong",
-        "Xuesong Li",
-        "Yikai Wang",
-        "Hongdong Li"
-      ],
+      "authors": "Chushan Zhang, Ruihan Lu, Jinguang Tong, Xuesong Li, Yikai Wang, Hongdong Li",
       "venue": "arXiv 2026 (ANU 澳国立 + 北航 + UNSW 联合)",
       "date": "2026-05-21",
       "arxiv": "https://arxiv.org/abs/2605.21862",
@@ -470,13 +509,7 @@
     {
       "id": "p165",
       "title": "OmniHumanoid: Streaming Cross-Embodiment Video Generation with Paired-Free Adaptation",
-      "authors": [
-        "Yiren Song",
-        "Xiyao Deng",
-        "Pei Yang",
-        "Yihan Wang",
-        "Mike Zheng Shou"
-      ],
+      "authors": "Yiren Song, Xiyao Deng, Pei Yang, Yihan Wang, Mike Zheng Shou",
       "venue": "arXiv 2026 (NUS Show Lab)",
       "date": "2026-05-12",
       "arxiv": "https://arxiv.org/abs/2605.12038",
@@ -505,14 +538,7 @@
     {
       "id": "p164",
       "title": "Evo-Depth: A Lightweight Depth-Enhanced Vision-Language-Action Model",
-      "authors": [
-        "Tao Lin",
-        "Yuxin Du",
-        "Jiting Liu",
-        "Junchi Yan",
-        "Bo Zhao",
-        "et al."
-      ],
+      "authors": "Tao Lin, Yuxin Du, Jiting Liu, Junchi Yan, Bo Zhao, et al.",
       "venue": "arXiv 2026 (上海交大 SJTU + 多机构联合)",
       "date": "2026-05-14",
       "arxiv": "https://arxiv.org/abs/2605.14950",
@@ -541,11 +567,7 @@
     {
       "id": "p163",
       "title": "PointACT: Vision-Language-Action Models with Multi-Scale Point-Action Interaction",
-      "authors": [
-        "Shizhe Chen",
-        "Paul Pacaud",
-        "Cordelia Schmid"
-      ],
+      "authors": "Shizhe Chen, Paul Pacaud, Cordelia Schmid",
       "venue": "arXiv 2026 (Inria)",
       "date": "2026-05-20",
       "arxiv": "https://arxiv.org/abs/2605.21414",
@@ -578,27 +600,7 @@
     {
       "id": "p162",
       "title": "Dexora: Open-source VLA for High-DoF Bimanual Dexterity",
-      "authors": [
-        "Zongzheng Zhang",
-        "Jingrui Pang",
-        "Zhuo Yang",
-        "Kun Li",
-        "Minwen Liao",
-        "Saining Zhang",
-        "Modi Shi",
-        "Yao Mu",
-        "Jiayuan Gu",
-        "Hao Dong",
-        "Huazhe Xu",
-        "Li Yi",
-        "Yixin Zhu",
-        "Hang Zhao",
-        "Pengwei Wang",
-        "Shanghang Zhang",
-        "Jianyu Chen",
-        "Hongyang Li",
-        "Hao Zhao"
-      ],
+      "authors": "Zongzheng Zhang, Jingrui Pang, Zhuo Yang, Kun Li, Minwen Liao, Saining Zhang, Modi Shi, Yao Mu, Jiayuan Gu, Hao Dong, Huazhe Xu, Li Yi, Yixin Zhu, Hang Zhao, Pengwei Wang, Shanghang Zhang, Jianyu Chen, Hongyang Li, Hao Zhao",
       "venue": "ICRA 2026 (accepted)",
       "date": "2026-05-18",
       "arxiv": "https://arxiv.org/abs/2605.18722",
@@ -631,16 +633,7 @@
     {
       "id": "p161",
       "title": "Hand-in-the-Loop: Improving Dexterous VLA via Seamless Interventional Correction",
-      "authors": [
-        "Zhuohang Li",
-        "Liqun Huang",
-        "Wei Xu",
-        "Zhengming Zhu",
-        "Nie Lin",
-        "Xiao Ma",
-        "Xinjun Sheng",
-        "Ruoshi Wen"
-      ],
+      "authors": "Zhuohang Li, Liqun Huang, Wei Xu, Zhengming Zhu, Nie Lin, Xiao Ma, Xinjun Sheng, Ruoshi Wen",
       "venue": "arXiv 2026 (preprint)",
       "date": "2026-05-14",
       "arxiv": "https://arxiv.org/abs/2605.15157",
@@ -670,16 +663,7 @@
     {
       "id": "p160",
       "title": "VLAs-as-Tools: Towards Long-horizon Embodied Agents with Tool-Aligned Vision-Language-Action Models",
-      "authors": [
-        "Zixing Lei",
-        "Changxing Liu",
-        "Yichen Xiong",
-        "Minhao Xiong",
-        "Yuanzhuo Ding",
-        "Zhipeng Zhang",
-        "Weixin Li",
-        "Siheng Chen"
-      ],
+      "authors": "Zixing Lei, Changxing Liu, Yichen Xiong, Minhao Xiong, Yuanzhuo Ding, Zhipeng Zhang, Weixin Li, Siheng Chen",
       "venue": "arXiv 2026",
       "date": "2026-05-13",
       "arxiv": "https://arxiv.org/abs/2605.13119",
@@ -711,10 +695,7 @@
     {
       "id": "p159",
       "title": "Pelican-Unify 1.0: A Unified Embodied Intelligence Model (UEI) for Understanding, Reasoning, Imagination and Action",
-      "authors": [
-        "X-Humanoid Team",
-        "Beijing Humanoid Robot Innovation Center"
-      ],
+      "authors": "X-Humanoid Team, Beijing Humanoid Robot Innovation Center",
       "venue": "arXiv 2026 (Tech Report)",
       "date": "2026-05-14",
       "arxiv": "https://arxiv.org/abs/2605.15153",
@@ -748,19 +729,7 @@
     {
       "id": "p158",
       "title": "HarmoWAM: Harmonizing Generalizable and Precise Manipulation via Adaptive World Action Models",
-      "authors": [
-        "Qiuxuan Feng",
-        "Jiale Yu",
-        "Jiaming Liu",
-        "Yueru Jia",
-        "Zhuangzhe Wu",
-        "Hao Chen",
-        "Zezhong Qian",
-        "Shuo Gu",
-        "Peng Jia",
-        "Siwei Ma",
-        "Shanghang Zhang"
-      ],
+      "authors": "Qiuxuan Feng, Jiale Yu, Jiaming Liu, Yueru Jia, Zhuangzhe Wu, Hao Chen, Zezhong Qian, Shuo Gu, Peng Jia, Siwei Ma, Shanghang Zhang",
       "venue": "arXiv 2026",
       "date": "2026-05-14",
       "arxiv": "https://arxiv.org/abs/2605.10942",
@@ -796,18 +765,7 @@
     {
       "id": "p156",
       "title": "MoDE-VLA: Towards Human-Like Manipulation through RL-Augmented Teleoperation and Mixture-of-Dexterous-Experts VLA",
-      "authors": [
-        "Tutian Tang",
-        "Xingyu Ji",
-        "Wanli Xing",
-        "Ce Hao",
-        "Wenqiang Xu",
-        "Lin Shao",
-        "Cewu Lu",
-        "Qiaojun Yu",
-        "Jiangmiao Pang",
-        "Kaifeng Zhang"
-      ],
+      "authors": "Tutian Tang, Xingyu Ji, Wanli Xing, Ce Hao, Wenqiang Xu, Lin Shao, Cewu Lu, Qiaojun Yu, Jiangmiao Pang, Kaifeng Zhang",
       "venue": "arXiv 2026",
       "date": "2026-05-13",
       "arxiv": "2605.09011",
@@ -929,15 +887,7 @@
     {
       "id": "p157",
       "title": "OneWM-VLA: One Token Per Frame — Reconsidering Visual Bandwidth in World Models for VLA Policy",
-      "authors": [
-        "Zuojin Tang",
-        "Shengchao Yuan",
-        "Xiaoxin Bai",
-        "Zhiyuan Jing",
-        "De Ma",
-        "Gang Pan",
-        "Bin Liu"
-      ],
+      "authors": "Zuojin Tang, Shengchao Yuan, Xiaoxin Bai, Zhiyuan Jing, De Ma, Gang Pan, Bin Liu",
       "venue": "arXiv 2026-05",
       "date": "2026-05-08",
       "arxiv": "2605.07931",
@@ -1083,12 +1033,7 @@
     {
       "id": "p148",
       "title": "ProgressVLA: Progress-Guided Diffusion Policy for Vision-Language Robotic Manipulation",
-      "authors": [
-        "Hongyu Yan",
-        "Qiwei Li",
-        "Jiaolong Yang",
-        "Yadong Mu"
-      ],
+      "authors": "Hongyu Yan, Qiwei Li, Jiaolong Yang, Yadong Mu",
       "venue": "arXiv 2603.27670 / 北大 + 微软亚研 (MSRA) + 浙大",
       "date": "2026-03-29",
       "arxiv": "https://arxiv.org/abs/2603.27670",
@@ -1121,14 +1066,7 @@
     {
       "id": "p147",
       "title": "DeFI: Disentangled Robot Learning via Separate Forward and Inverse Dynamics Pretraining",
-      "authors": [
-        "Wenyao Zhang",
-        "Bozhou Zhang",
-        "Zekun Qi",
-        "Wenjun Zeng",
-        "Xin Jin",
-        "Li Zhang"
-      ],
+      "authors": "Wenyao Zhang, Bozhou Zhang, Zekun Qi, Wenjun Zeng, Xin Jin, Li Zhang",
       "venue": "ICLR 2026 / arXiv 2604.16391",
       "date": "2026-03-27",
       "arxiv": "https://arxiv.org/abs/2604.16391",
@@ -1161,16 +1099,7 @@
     {
       "id": "p146",
       "title": "Adaptive Action Chunking at Inference-time for Vision-Language-Action Models",
-      "authors": [
-        "Yuanchang Liang",
-        "Xiaobo Wang",
-        "Kai Wang",
-        "Shuo Wang",
-        "Xiaojiang Peng",
-        "Haoyu Chen",
-        "David Kim Huat Chua",
-        "Prahlad Vadakkepat"
-      ],
+      "authors": "Yuanchang Liang, Xiaobo Wang, Kai Wang, Shuo Wang, Xiaojiang Peng, Haoyu Chen, David Kim Huat Chua, Prahlad Vadakkepat",
       "venue": "arXiv 2604.04161",
       "date": "2026-04-05",
       "arxiv": "https://arxiv.org/abs/2604.04161",
@@ -1200,21 +1129,7 @@
     {
       "id": "p145",
       "title": "LaST-R1: Reinforcing Robotic Manipulation via Adaptive Physical Latent Reasoning",
-      "authors": [
-        "Hao Chen",
-        "Jiaming Liu",
-        "Zhonghao Yan",
-        "Nuowei Han",
-        "Renrui Zhang",
-        "Chenyang Gu",
-        "Jialin Gao",
-        "Ziyu Guo",
-        "Siyuan Qian",
-        "Yinxi Wang",
-        "Peng Jia",
-        "Shanghang Zhang",
-        "Pheng-Ann Heng"
-      ],
+      "authors": "Hao Chen, Jiaming Liu, Zhonghao Yan, Nuowei Han, Renrui Zhang, Chenyang Gu, Jialin Gao, Ziyu Guo, Siyuan Qian, Yinxi Wang, Peng Jia, Shanghang Zhang, Pheng-Ann Heng",
       "venue": "arXiv 2604.28192",
       "date": "2026-04-30",
       "arxiv": "https://arxiv.org/abs/2604.28192",
@@ -1244,16 +1159,7 @@
     {
       "id": "p144",
       "title": "When Life Gives You BC, Make Q-functions: Extracting Q-values from Behavior Cloning for On-Robot Reinforcement Learning",
-      "authors": [
-        "Lakshita Dodeja",
-        "Ondrej Biza",
-        "Shivam Vats",
-        "Stephen Hart",
-        "Stefanie Tellex",
-        "Robin Walters",
-        "Karl Schmeckpeper",
-        "Thomas Weng"
-      ],
+      "authors": "Lakshita Dodeja, Ondrej Biza, Shivam Vats, Stephen Hart, Stefanie Tellex, Robin Walters, Karl Schmeckpeper, Thomas Weng",
       "venue": "arXiv 2605.05172",
       "date": "2026-05-06",
       "arxiv": "https://arxiv.org/abs/2605.05172",
@@ -1280,10 +1186,7 @@
     {
       "id": "p143",
       "title": "StarVLA: A Lego-like Codebase for Vision-Language-Action Model Developing",
-      "authors": [
-        "StarVLA Community",
-        "HKUST"
-      ],
+      "authors": "StarVLA Community, HKUST",
       "venue": "arXiv 2604.05014",
       "date": "2026-04-06",
       "arxiv": "https://arxiv.org/abs/2604.05014",
@@ -1311,12 +1214,7 @@
     {
       "id": "p142",
       "title": "Learning while Deploying: Fleet-Scale Reinforcement Learning for Generalist Robot Policies (AGIBOT Finch)",
-      "authors": [
-        "Yi Wang",
-        "Xinchen Li",
-        "Pengwei Xie",
-        "Jianlan Luo et al. (16 authors)"
-      ],
+      "authors": "Yi Wang, Xinchen Li, Pengwei Xie, Jianlan Luo et al. (16 authors)",
       "venue": "arXiv 2605.00416",
       "date": "2026-05-01",
       "arxiv": "https://arxiv.org/abs/2605.00416",
@@ -1345,11 +1243,7 @@
     {
       "id": "p141",
       "title": "TriRelVLA: Triadic Relational Structure for Generalizable Embodied Manipulation",
-      "authors": [
-        "Hanyu Zhou",
-        "Chuanhao Ma",
-        "Gim Hee Lee"
-      ],
+      "authors": "Hanyu Zhou, Chuanhao Ma, Gim Hee Lee",
       "venue": "arXiv 2605.05714",
       "date": "2026-05-07",
       "arxiv": "https://arxiv.org/abs/2605.05714",
@@ -1404,11 +1298,7 @@
     {
       "id": "p139",
       "title": "Stability of Control Lyapunov Function Guided Reinforcement Learning",
-      "authors": [
-        "Zachary Olkin",
-        "William D. Compton",
-        "Aaron D. Ames"
-      ],
+      "authors": "Zachary Olkin, William D. Compton, Aaron D. Ames",
       "venue": "arXiv 2605.01978 (Caltech AMBER Lab) v2 May 2026",
       "date": "2026-05-06",
       "arxiv": "https://arxiv.org/abs/2605.01978",
@@ -1440,17 +1330,7 @@
     {
       "id": "p138",
       "title": "SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics",
-      "authors": [
-        "Mengzhen Liu",
-        "Enshen Zhou",
-        "Cheng Chi",
-        "Yi Han",
-        "Shanyu Rong",
-        "Liming Chen",
-        "Pengwei Wang",
-        "Zhongyuan Wang",
-        "Shanghang Zhang"
-      ],
+      "authors": "Mengzhen Liu, Enshen Zhou, Cheng Chi, Yi Han, Shanyu Rong, Liming Chen, Pengwei Wang, Zhongyuan Wang, Shanghang Zhang",
       "venue": "arXiv 2603.12193 (PKU / BUAA / BAAI) v2 May 2026",
       "date": "2026-05-04",
       "arxiv": "https://arxiv.org/abs/2603.12193",
@@ -1484,13 +1364,7 @@
     {
       "id": "p137",
       "title": "Dreaming the Unseen: World Model-regularized Diffusion Policy for Out-of-Distribution Robustness",
-      "authors": [
-        "Ziou Hu",
-        "Xiangtong Yao",
-        "Yuan Meng",
-        "Zhenshan Bing",
-        "Alois Knoll"
-      ],
+      "authors": "Ziou Hu, Xiangtong Yao, Yuan Meng, Zhenshan Bing, Alois Knoll",
       "venue": "arXiv 2603.21017 (TU Munich / Knoll Group)",
       "date": "2026-03-22",
       "arxiv": "https://arxiv.org/abs/2603.21017",
@@ -1519,21 +1393,7 @@
     {
       "id": "p136",
       "title": "Rhythm: Learning Interactive Whole-Body Control for Dual Humanoids",
-      "authors": [
-        "Hongjin Chen",
-        "Wei Zhang",
-        "Pengfei Li",
-        "Shihao Ma",
-        "Ke Ma",
-        "Yujie Jin",
-        "Zijun Xu",
-        "Xiaohui Wang",
-        "Yupeng Zheng",
-        "Zining Wang",
-        "Jieru Zhao",
-        "Yilun Chen",
-        "Wenchao Ding"
-      ],
+      "authors": "Hongjin Chen, Wei Zhang, Pengfei Li, Shihao Ma, Ke Ma, Yujie Jin, Zijun Xu, Xiaohui Wang, Yupeng Zheng, Zining Wang, Jieru Zhao, Yilun Chen, Wenchao Ding",
       "venue": "arXiv 2603.02856 (Fudan / SJTU / Tsinghua / Tars Robotics) v2 May 2026",
       "date": "2026-05-02",
       "arxiv": "https://arxiv.org/abs/2603.02856",
@@ -1562,13 +1422,7 @@
     {
       "id": "p135",
       "title": "STRONG-VLA: Decoupled Robustness Learning for Vision-Language-Action Models under Multimodal Perturbations",
-      "authors": [
-        "Yuhan Xie",
-        "Yuping Yan",
-        "Yunqi Zhao",
-        "Handing Wang",
-        "Yaochu Jin"
-      ],
+      "authors": "Yuhan Xie, Yuping Yan, Yunqi Zhao, Handing Wang, Yaochu Jin",
       "venue": "arXiv 2604.10055 (Westlake / Surrey / Bielefeld)",
       "date": "2026-04-11",
       "arxiv": "https://arxiv.org/abs/2604.10055",
@@ -1596,15 +1450,7 @@
     {
       "id": "p134",
       "title": "From Pixels to Tokens: A Systematic Study of Latent Action Supervision for Vision-Language-Action Models",
-      "authors": [
-        "Yihan Lin",
-        "Haoyang Li",
-        "Yang Li",
-        "Haitao Shen",
-        "Yihan Zhao",
-        "Chao Shao",
-        "Jing Zhang"
-      ],
+      "authors": "Yihan Lin, Haoyang Li, Yang Li, Haitao Shen, Yihan Zhao, Chao Shao, Jing Zhang",
       "venue": "arXiv 2605.04678 (RUC KBR / 中国人民大学知识与推理实验室)",
       "date": "2026-05-06",
       "arxiv": "https://arxiv.org/abs/2605.04678",
@@ -1631,16 +1477,7 @@
     {
       "id": "p132",
       "title": "RoboOS-NeXT: A Unified Memory-based Framework for Lifelong, Scalable, and Robust Multi-Robot Collaboration",
-      "authors": [
-        "Mingyu Cao",
-        "Huajie Tan",
-        "Yiqun Yao",
-        "Xiang Yu",
-        "Yang Liu",
-        "Tianyu Yu",
-        "Mengsi Lyu",
-        "Zhongyuan Wang"
-      ],
+      "authors": "Mingyu Cao, Huajie Tan, Yiqun Yao, Xiang Yu, Yang Liu, Tianyu Yu, Mengsi Lyu, Zhongyuan Wang",
       "venue": "arXiv 2605 / BAAI Tech Report",
       "date": "2026-05-08",
       "arxiv": "https://flagopen.github.io/roboos/",
@@ -1668,16 +1505,7 @@
     {
       "id": "p131",
       "title": "VILAS: A VLA-Integrated Low-cost Architecture with Soft Grasping for Robotic Manipulation",
-      "authors": [
-        "Zijian An",
-        "Hadi Khezam",
-        "Bill Cai",
-        "Ran Yang",
-        "Shijie Geng",
-        "Yiming Feng",
-        "Yue (Luna) Zheng",
-        "Lifeng Zhou"
-      ],
+      "authors": "Zijian An, Hadi Khezam, Bill Cai, Ran Yang, Shijie Geng, Yiming Feng, Yue (Luna) Zheng, Lifeng Zhou",
       "venue": "arXiv 2605.02037",
       "date": "2026-05-03",
       "arxiv": "https://arxiv.org/abs/2605.02037",
@@ -1706,14 +1534,7 @@
     {
       "id": "p130",
       "title": "ExoActor: Exocentric Video Generation as Generalizable Interactive Humanoid Control",
-      "authors": [
-        "Yanghao Zhou",
-        "Jingyu Ma",
-        "Yibo Peng",
-        "Zhenguo Sun",
-        "Yu Bai",
-        "Börje F. Karlsson"
-      ],
+      "authors": "Yanghao Zhou, Jingyu Ma, Yibo Peng, Zhenguo Sun, Yu Bai, Börje F. Karlsson",
       "venue": "arXiv 2604.27711",
       "date": "2026-04-30",
       "arxiv": "https://arxiv.org/abs/2604.27711",
@@ -1740,21 +1561,7 @@
     {
       "id": "p129",
       "title": "MMaDA-VLA: Large Diffusion Vision-Language-Action Model with Unified Multi-Modal Instruction and Generation",
-      "authors": [
-        "Yang Liu",
-        "Pengxiang Ding",
-        "Tengyue Jiang",
-        "Xudong Wang",
-        "Wenxuan Song",
-        "Minghui Lin",
-        "Han Zhao",
-        "Hongyin Zhang",
-        "Zifeng Zhuang",
-        "Wei Zhao",
-        "Siteng Huang",
-        "Jinkui Shi",
-        "Donglin Wang"
-      ],
+      "authors": "Yang Liu, Pengxiang Ding, Tengyue Jiang, Xudong Wang, Wenxuan Song, Minghui Lin, Han Zhao, Hongyin Zhang, Zifeng Zhuang, Wei Zhao, Siteng Huang, Jinkui Shi, Donglin Wang",
       "venue": "arXiv 2603.25406",
       "date": "2026-03-26",
       "arxiv": "https://arxiv.org/abs/2603.25406",
@@ -1782,14 +1589,7 @@
     {
       "id": "p128",
       "title": "AnchorVLA: Anchored Diffusion for Efficient End-to-End Mobile Manipulation",
-      "authors": [
-        "Jia Syuen Lim",
-        "Zhizhen Zhang",
-        "Peter Bohm",
-        "Brendan Tidd",
-        "Zi Huang",
-        "Yadan Luo"
-      ],
+      "authors": "Jia Syuen Lim, Zhizhen Zhang, Peter Bohm, Brendan Tidd, Zi Huang, Yadan Luo",
       "venue": "arXiv 2604.01567",
       "date": "2026-04-02",
       "arxiv": "https://arxiv.org/abs/2604.01567",
@@ -1816,18 +1616,7 @@
     {
       "id": "p127",
       "title": "OA-WAM: Object-Addressable World Action Model for Robust Robot Manipulation",
-      "authors": [
-        "Yushan Liu",
-        "Peibo Sun",
-        "Shoujie Li",
-        "Yifan Xie",
-        "Lingfeng Zhang",
-        "Xintao Chao",
-        "Shiyuan Dong",
-        "Fang Chen",
-        "Xiao-Ping Zhang",
-        "Wenbo Ding"
-      ],
+      "authors": "Yushan Liu, Peibo Sun, Shoujie Li, Yifan Xie, Lingfeng Zhang, Xintao Chao, Shiyuan Dong, Fang Chen, Xiao-Ping Zhang, Wenbo Ding",
       "venue": "arXiv 2605.06481",
       "date": "2026-05-07",
       "arxiv": "https://arxiv.org/abs/2605.06481",
@@ -1855,14 +1644,7 @@
     {
       "id": "p126",
       "title": "BifrostUMI: Bridging Robot-Free Demonstrations and Humanoid Whole-Body Manipulation",
-      "authors": [
-        "Chenhao Yu",
-        "Hongwu Wang",
-        "Youhao Hu",
-        "Jiachen Zhang",
-        "Yuanyuan Li",
-        "Shaqi Luo"
-      ],
+      "authors": "Chenhao Yu, Hongwu Wang, Youhao Hu, Jiachen Zhang, Yuanyuan Li, Shaqi Luo",
       "venue": "arXiv 2605.03452",
       "date": "2026-05-05",
       "arxiv": "https://arxiv.org/abs/2605.03452",
@@ -1890,23 +1672,7 @@
     {
       "id": "p125",
       "title": "Latent Bridge: Feature Delta Prediction for Efficient Dual-System Vision-Language-Action Model Inference",
-      "authors": [
-        "Yudong Liu",
-        "Yuan Li",
-        "Zijia Tang",
-        "Yuxi Zheng",
-        "Yueqian Lin",
-        "Qinsi Wang",
-        "Yi Li",
-        "Shuangjun Liu",
-        "Shuai Zhang",
-        "Taotao Jing",
-        "Dashan Gao",
-        "Ning Bi",
-        "Jingwei Sun",
-        "Yiran Chen",
-        "Hai Li"
-      ],
+      "authors": "Yudong Liu, Yuan Li, Zijia Tang, Yuxi Zheng, Yueqian Lin, Qinsi Wang, Yi Li, Shuangjun Liu, Shuai Zhang, Taotao Jing, Dashan Gao, Ning Bi, Jingwei Sun, Yiran Chen, Hai Li",
       "venue": "arXiv 2605.02739",
       "date": "2026-05-04",
       "arxiv": "https://arxiv.org/abs/2605.02739",
@@ -1934,18 +1700,12 @@
     {
       "id": "p123",
       "title": "dWorldEval: Scalable Robotic Policy Evaluation via Discrete Diffusion World Model",
-      "authors": [
-        "Yaxuan Li",
-        "Zhongyi Zhou",
-        "Yefei Chen",
-        "Yaokai Xue",
-        "Yichen Zhu"
-      ],
+      "authors": "Yaxuan Li, Zhongyi Zhou, Yefei Chen, Yaokai Xue, Yichen Zhu",
       "venue": "arXiv 2604.22152",
       "date": "2026-04-24",
       "arxiv": "https://arxiv.org/abs/2604.22152",
       "github": "",
-      "tldr": "把\"在数千环境 × 数千任务上评估机器人策略\"这个原本不可行的问题，用一个离散扩散世界模型作为可扩展评估代理来解决。把视觉 / 语言 / 机器人动作映射到统一 token 空间；用单个 transformer 去噪网络建模；引入稀疏关键帧记忆维持时空一致性，并用一个 progress token 自动判断任务是否完成（progress=1）。相比 WorldEval / Ctrl-World / WorldGym，在 LIBERO / RoboTwin / 真机任务上评估精度更高、吞吐更大。",
+      "tldr": "把「在数千环境 × 数千任务上评估机器人策略」这个原本不可行的问题，用一个离散扩散世界模型作为可扩展评估代理来解决。把视觉 / 语言 / 机器人动作映射到统一 token 空间；用单个 transformer 去噪网络建模；引入稀疏关键帧记忆维持时空一致性，并用一个 progress token 自动判断任务是否完成（progress=1）。相比 WorldEval / Ctrl-World / WorldGym，在 LIBERO / RoboTwin / 真机任务上评估精度更高、吞吐更大。",
       "category": "评测/世界模型",
       "difficulty": "进阶",
       "tags": [
@@ -1959,29 +1719,20 @@
       "keyInsights": [
         "💡 离散扩散 + 统一 token 空间，让评估代理同时建模感知 / 决策 / 反馈",
         "💡 稀疏关键帧记忆约束长序列时空一致性，避免漂移",
-        "💡 Progress token 让\"是否成功\"判断任务无关，无需人工脚本",
+        "💡 Progress token 让「是否成功」判断任务无关，无需人工脚本",
         "💡 把评估代价降到前向推理量级，加速比 >500×"
       ],
-      "impact": "把\"机器人 policy 千环境 × 千任务评估\"从不可行变可行，统一 token + progress token 设计简洁优雅。"
+      "impact": "把「机器人 policy 千环境 × 千任务评估」从不可行变可行，统一 token + progress token 设计简洁优雅。"
     },
     {
       "id": "p122",
       "title": "STARRY: Spatial-Temporal Action-Centric World Modeling for Robotic Manipulation",
-      "authors": [
-        "Yuxuan Tian",
-        "Yurun Jin",
-        "Bin Yu",
-        "Yukun Shi",
-        "Hao Wu",
-        "Chi Harold Liu",
-        "Kai Chen",
-        "Cong Huang"
-      ],
+      "authors": "Yuxuan Tian, Yurun Jin, Bin Yu, Yukun Shi, Hao Wu, Chi Harold Liu, Kai Chen, Cong Huang",
       "venue": "arXiv 2604.26848",
       "date": "2026-04-29",
       "arxiv": "https://arxiv.org/abs/2604.26848",
       "github": "",
-      "tldr": "VLA 长期存在\"预测式视觉表征与动作执行之间耦合不紧\"的问题。STARRY 提出统一扩散过程同时对未来时空潜在表示与动作做联合去噪——预测和动作不再两阶段，而是同步生成。配套 GASAM 模块（Geometry-Aware Selective Attention Modulation），把预测的深度与末端执行器几何转成 token 对齐权重，对动作 attention 做选择性调制。在多个精细操作任务上（要求时空协调）超过纯 VLA 与解耦预测策略。机构：北理工 / 中关村学院 / 中科大 / 哈工大 / 华东师大 / DeepCybo。",
+      "tldr": "VLA 长期存在「预测式视觉表征与动作执行之间耦合不紧」的问题。STARRY 提出统一扩散过程同时对未来时空潜在表示与动作做联合去噪——预测和动作不再两阶段，而是同步生成。配套 GASAM 模块（Geometry-Aware Selective Attention Modulation），把预测的深度与末端执行器几何转成 token 对齐权重，对动作 attention 做选择性调制。在多个精细操作任务上（要求时空协调）超过纯 VLA 与解耦预测策略。机构：北理工 / 中关村学院 / 中科大 / 哈工大 / 华东师大 / DeepCybo。",
       "category": "VLA/操作",
       "difficulty": "进阶",
       "tags": [
@@ -1997,32 +1748,14 @@
         "💡 联合扩散去噪：未来视觉表征与动作同步生成，消除两阶段信息瓶颈",
         "💡 GASAM 把深度 / 末端执行器几何转成 attention 权重，注入显式几何先验",
         "💡 时空 token 统一序列建模，长程任务（>5 步）显著提升 8-15 个点",
-        "💡 与 ConsisVLA-4D / Anticipation-VLA 形成 5 月\"VLA + 时空推理\"集群"
+        "💡 与 ConsisVLA-4D / Anticipation-VLA 形成 5 月「VLA + 时空推理」集群"
       ],
       "impact": "代表 VLA + World Model 路线的新范式：世界模型从外部代理变为动作生成的内生组件。"
     },
     {
       "id": "p121",
       "title": "GS-Playground: A High-Throughput Photorealistic Simulator for Vision-Informed Robot Learning",
-      "authors": [
-        "Yufei Jia",
-        "Heng Zhang",
-        "Ziheng Zhang",
-        "Junzhe Wu",
-        "Mingrui Yu",
-        "Zifan Wang",
-        "Dixuan Jiang",
-        "Zheng Li",
-        "Chenyu Cao",
-        "Zhuoyuan Yu",
-        "Tianle Liu",
-        "Yusen Qin",
-        "Ruqi Huang",
-        "Lei Han",
-        "Tiancai Wang",
-        "Guyue Zhou",
-        "等共 42 位作者（清华 AIR / 谋先飞 / 原力灵机 / 求之科技 / 地瓜机器人）"
-      ],
+      "authors": "Yufei Jia, Heng Zhang, Ziheng Zhang, Junzhe Wu, Mingrui Yu, Zifan Wang, Dixuan Jiang, Zheng Li, Chenyu Cao, Zhuoyuan Yu, Tianle Liu, Yusen Qin, Ruqi Huang, Lei Han, Tiancai Wang, Guyue Zhou, 等共 42 位作者（清华 AIR / 谋先飞 / 原力灵机 / 求之科技 / 地瓜机器人）",
       "venue": "RSS 2026 / arXiv 2604.25459",
       "date": "2026-04-28",
       "arxiv": "https://arxiv.org/abs/2604.25459",
@@ -2043,7 +1776,7 @@
         "💡 单 GPU >10000 FPS 高保真渲染，视觉 RL 首次达到 proprioceptive 训练规模",
         "💡 自研 MotrixSim 并行物理引擎：MCP + PGS，高刚度大时间步稳定",
         "💡 API 完全兼容 MuJoCo MJCF，开源生态零摩擦迁移",
-        "💡 自动 Real2Sim 管线打通\"重建即训练 / 训练即部署\"全链路",
+        "💡 自动 Real2Sim 管线打通「重建即训练 / 训练即部署」全链路",
         "💡 Sim2Real 实战：四足 / 人形零样本部署、抓取零微调真机 90%"
       ],
       "impact": "2026 年具身智能仿真基础设施标志性突破，全栈国产化（清华 AIR + 谋先飞 + 原力灵机 + 求之科技 + 地瓜机器人）+ RSS 顶会 + 全栈开源，后续 VLA / 视觉 RL 训练新基础设施候选。"
@@ -2051,14 +1784,12 @@
     {
       "id": "p120",
       "title": "ConsisVLA-4D: Advancing Spatiotemporal Consistency in Efficient 3D-Perception and 4D-Reasoning for Robotic Manipulation",
-      "authors": [
-        "匿名审稿（arXiv 预印本）"
-      ],
+      "authors": "匿名审稿（arXiv 预印本）",
       "venue": "arXiv 2605.05126",
       "date": "2026-05-07",
       "arxiv": "https://arxiv.org/abs/2605.05126",
       "github": "",
-      "tldr": "把\"时空一致性\"当 first-class citizen 嵌入 VLA 训练目标的新工作。在视觉编码后加轻量 3D 提升模块让 token 携带几何先验；在解码端引入跨帧 spatiotemporal consistency loss，使上一时刻物体位姿成为下一时刻的训练锚。在不显著增加推理代价的前提下提升长程操作的稳定性。与 5/5-5/6 RLDX-1 / MolmoAct2 / IVLR / Anticipation-VLA 形成 5 月\"VLA + 推理\"集群。",
+      "tldr": "把「时空一致性」当 first-class citizen 嵌入 VLA 训练目标的新工作。在视觉编码后加轻量 3D 提升模块让 token 携带几何先验；在解码端引入跨帧 spatiotemporal consistency loss，使上一时刻物体位姿成为下一时刻的训练锚。在不显著增加推理代价的前提下提升长程操作的稳定性。与 5/5-5/6 RLDX-1 / MolmoAct2 / IVLR / Anticipation-VLA 形成 5 月「VLA + 推理」集群。",
       "category": "VLA/操作",
       "difficulty": "中级",
       "tags": [
@@ -2068,17 +1799,19 @@
         "3D感知",
         "Manipulation"
       ],
-      "addedDate": "2026-05-07"
+      "addedDate": "2026-05-07",
+      "keyInsights": [
+        "把时空一致性当作 first-class 训练目标写进损失，而不是事后做平滑后处理",
+        "视觉编码后加轻量 3D 提升模块，让 token 自带几何先验",
+        "解码端引入跨帧 spatiotemporal consistency loss：上一时刻的物体位姿成为下一时刻的训练锚",
+        "推理代价基本不变的前提下提升长程操作稳定性，属于「几乎免费」的一类改进"
+      ],
+      "impact": "给出一条低成本提升 VLA 时序稳定性的路径，与同期 RLDX-1 / MolmoAct2 / IVLR / Anticipation-VLA 共同构成 2026 年 5 月「VLA + 推理」集群"
     },
     {
       "id": "p119",
       "title": "Safety in Embodied AI: A Survey of Risks, Attacks, and Defenses",
-      "authors": [
-        "Xiao Li",
-        "Xiang Zheng",
-        "Yifeng Gao",
-        "等 30+ 作者"
-      ],
+      "authors": "Xiao Li, Xiang Zheng, Yifeng Gao, 等 30+ 作者",
       "venue": "arXiv 2605.02900",
       "date": "2026-05-06",
       "arxiv": "https://arxiv.org/abs/2605.02900",
@@ -2093,7 +1826,14 @@
       "tldr": "首份覆盖具身 AI 全链路（感知-认知-规划-行动-交互）的统一安全框架综述，51 页 4 图 19 表 400+ 参考文献。提出五阶段威胁建模与全栈防御方法论，配套 Awesome list 把所有工作分类索引。对接 5/1 杭州条例与 EU AI Act 实施期，是产业安全合规审计的关键参考。",
       "category": "综述/安全",
       "difficulty": "中级",
-      "addedDate": "2026-05-07"
+      "addedDate": "2026-05-07",
+      "keyInsights": [
+        "首份覆盖感知-认知-规划-行动-交互全链路的具身 AI 统一安全框架综述",
+        "提出五阶段威胁建模与对应的全栈防御方法论，而非孤立讨论单点攻击",
+        "51 页 / 4 图 / 19 表 / 400+ 参考文献，配套 Awesome list 把相关工作分类索引",
+        "时间点对接杭州具身智能条例与 EU AI Act 实施期，可直接当合规审计检查清单用"
+      ],
+      "impact": "具身安全从零散攻防实验走向体系化的分水岭之作，对需要做安全合规审计的产业团队是当前最省时间的入口"
     },
     {
       "id": "p116",
@@ -2114,7 +1854,14 @@
       "tldr": "2026 年 5 月 4 日 arXiv 论文：针对 VLA 长程任务两大短板（固定粒度子任务分解+缺乏前瞻），提出 Anticipation 机制——用 Future-Image-Decoder 预测未来 K=4 帧关键观测和子目标 token 作为 policy 条件；预测与实际观测偏差超阈值时触发子目标重规划。LIBERO-Long、CALVIN-D-D 提升 18-24%，真机 Franka 长程从 38%→71%。即插即用模块，可挂 OpenVLA/Pi0/GR00T。",
       "category": "VLA模型",
       "difficulty": "高级",
-      "addedDate": "2026-05-06"
+      "addedDate": "2026-05-06",
+      "keyInsights": [
+        "Future-Image-Decoder 预测未来 K=4 帧关键观测与子目标 token，作为 policy 的前瞻条件",
+        "预测与实际观测偏差超阈值即触发子目标重规划——前瞻信号同时充当失败检测器",
+        "LIBERO-Long 与 CALVIN-D-D 提升 18-24%，真机 Franka 长程任务从 38% 提到 71%",
+        "即插即用模块，可直接挂在 OpenVLA / π₀ / GR00T 等现有策略上"
+      ],
+      "impact": "把「固定粒度子任务分解」换成由预测偏差驱动的动态重规划，且以外挂模块形式给出，是长程 VLA 中迁移成本最低的一类改进"
     },
     {
       "id": "p115",
@@ -2139,7 +1886,14 @@
       "tldr": "2026 年 5 月 5 日 arXiv + GitHub 同日上线，Allen AI 第二代开放 VLA 旗舰：建立在 Molmo2-ER 具身推理 backbone 之上，引入 Action Reasoning Token 显式生成 100-token 动作推理 trace 作为连续动作 head 的条件。覆盖 7 项 sim+real 基准（LIBERO-Long/SimplerEnv/CALVIN/Bridge-V2/Franka/Allegro/UR5）全面超越 Pi-05，平均 +4.7%，长程领先 9.3%。完全开放权重+训练代码+13M token 推理数据集，4×A100 可运行——Pi-05 算力门槛的 1/3。",
       "category": "VLA模型",
       "difficulty": "高级",
-      "addedDate": "2026-05-06"
+      "addedDate": "2026-05-06",
+      "keyInsights": [
+        "Action Reasoning Token：显式生成 100-token 动作推理 trace，作为连续动作 head 的条件输入",
+        "建立在 Molmo2-ER 具身推理 backbone 之上，推理能力与动作生成解耦但串联",
+        "7 项 sim + real 基准全面超越 π₀.₅，平均 +4.7%，长程任务领先 9.3%",
+        "完全开放权重 + 训练代码 + 13M token 推理数据集，4×A100 即可运行——约为 π₀.₅ 算力门槛的 1/3"
+      ],
+      "impact": "开放权重叠加低算力门槛，让「带显式推理的 VLA」第一次进入中小团队可复现区间，是 2026 年开放 VLA 阵营对闭源旗舰最直接的一次对标"
     },
     {
       "id": "p114",
@@ -2158,17 +1912,24 @@
         "LIBERO-Long",
         "机器人操作"
       ],
-      "tldr": "2026 年 5 月 1 日上线的全新长程机器人操作 VLA 框架 IVLR：用单一原生多模态 Transformer 自生成\"文本子目标 + 视觉关键帧\"交错的 trace，再由闭环动作解码器消费 trace 执行；LIBERO 整体成功率 95.5%、LIBERO-Long 92.4%（消融：无 trace 仅 37.7%、纯文本 62.0%、纯视觉 68.4%），证明长程操作必须文本+图像双模态思考缺一不可。",
+      "tldr": "2026 年 5 月 1 日上线的全新长程机器人操作 VLA 框架 IVLR：用单一原生多模态 Transformer 自生成「文本子目标 + 视觉关键帧」交错的 trace，再由闭环动作解码器消费 trace 执行；LIBERO 整体成功率 95.5%、LIBERO-Long 92.4%（消融：无 trace 仅 37.7%、纯文本 62.0%、纯视觉 68.4%），证明长程操作必须文本+图像双模态思考缺一不可。",
       "category": "VLA模型",
       "difficulty": "高级",
-      "addedDate": "2026-05-05"
+      "addedDate": "2026-05-05",
+      "keyInsights": [
+        "单一原生多模态 Transformer 自生成「文本子目标 + 视觉关键帧」交错的推理 trace，再由闭环动作解码器消费",
+        "消融是全文最有力的部分：无 trace 37.7% / 纯文本 62.0% / 纯视觉 68.4% / 双模态交错 92.4%",
+        "结论直白——长程操作必须同时用文本和图像思考，任一单模态都不足以支撑",
+        "LIBERO 整体成功率 95.5%，LIBERO-Long 92.4%"
+      ],
+      "impact": "用一组干净的消融把「交错多模态推理」从直觉变成可量化结论，为后续长程 VLA 的推理 trace 设计给出了明确的模态配比依据"
     },
     {
       "id": "p113",
       "title": "MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation",
-      "authors": "Shihao Hou, et al.",
+      "authors": "Hao Shi, Bin Xie, Yingfei Liu, Lin Sun, Fengrong Liu, Tiancai Wang, Erjin Zhou, Haoqiang Fan, Xiangyu Zhang, Gao Huang",
       "venue": "ICLR 2026 (Spotlight)",
-      "date": "2026-04",
+      "date": "2025-08",
       "arxiv": "https://arxiv.org/abs/2508.19236",
       "github": "https://github.com/shihao1895/MemoryVLA",
       "tags": [
@@ -2183,7 +1944,15 @@
       ],
       "category": "VLA模型",
       "difficulty": "高级",
-      "addedDate": "2026-05-05"
+      "addedDate": "2026-05-05",
+      "tldr": "机器人操作本质上是**非马尔可夫**的——当前该做什么取决于之前发生过什么，而主流 VLA 基本只看当下观测，因此在长程、强时间依赖的任务上普遍吃亏。MemoryVLA 借认知科学的记忆分工提出 Cognition-Memory-Action 框架：预训练 VLM 把观测编码成感知 token 与认知 token，构成「工作记忆」；另设 Perceptual-Cognitive Memory Bank 保存从工作记忆固化下来的低层细节与高层语义（对应海马体既存逐字情节又存语义要旨）。工作记忆按决策相关性从记忆库检索条目、与当前 token 自适应融合，并通过合并冗余反向更新记忆库；最后由记忆条件化的 diffusion 动作专家输出带时序意识的动作序列。在 3 种机器人、150+ 仿真与真机任务上评测：SimplerEnv-Bridge 71.9%、Fractal 72.7%、LIBERO-5 96.5%、Mikasa-Robo 41.2%，全面超过 CogACT 与 π₀（Bridge +14.6、Mikasa-Robo +11.8）；12 项真机任务 84.0%，其中长程任务相对 SOTA 基线提升 26 个百分点。",
+      "keyInsights": [
+        "操作任务是非马尔可夫的：只看当前帧的 VLA 在时间依赖任务上存在结构性缺陷",
+        "工作记忆 + 记忆库两级分工——短时缓冲服务即时控制，记忆库同时保留低层细节与高层语义",
+        "检索按决策相关性、更新靠合并冗余，让记忆规模可控而不是无限堆上下文",
+        "记忆条件化的 diffusion 动作专家把时序信息喂到动作生成端，而非只停在感知层"
+      ],
+      "impact": "把认知科学的记忆分工真正落进 VLA 架构，真机长程任务相对 SOTA 提升 26 个百分点，是「VLA 需要显式记忆」这一路线最有说服力的实证，ICLR 2026 Spotlight（配套开源见 os081）"
     },
     {
       "id": "p111",
@@ -2202,15 +1971,15 @@
         "Jetson",
         "NPU"
       ],
-      "tldr": "首个对主流开源 VLA（OpenVLA、RT-2、π0、GR00T N1、HY-Embodied）在 6 类硬件（NVIDIA Jetson Orin/Thor、AMD Ryzen AI、高通 RB6、Intel Core Ultra NPU、华为昇腾 Atlas、苹果 M4）上的系统性性能/能效/延迟特征研究。核心发现：（1）VLA 推理的瓶颈不在 FLOPs 而在 KV-cache 带宽——视觉 token 数直接决定延迟；（2）不同 XPU 的 VLM 主干/动作头/扩散头三段在不同硬件上最优切分点不同，统一部署几乎无解；（3）端侧量化（W4A8/W4A16）在接触丰富任务上会让成功率下降 3-8 个百分点；（4）能效上 Jetson Thor 峰值最高但 Apple M4 在低能耗场景下能效比最优；（5）推出\"XPU-aware VLA 部署决策树\"——按控制频率/任务复杂度/能耗预算把 5 款 VLA × 6 款 XPU 映射为 30 种推荐组合。",
+      "tldr": "首个对主流开源 VLA（OpenVLA、RT-2、π0、GR00T N1、HY-Embodied）在 6 类硬件（NVIDIA Jetson Orin/Thor、AMD Ryzen AI、高通 RB6、Intel Core Ultra NPU、华为昇腾 Atlas、苹果 M4）上的系统性性能/能效/延迟特征研究。核心发现：（1）VLA 推理的瓶颈不在 FLOPs 而在 KV-cache 带宽——视觉 token 数直接决定延迟；（2）不同 XPU 的 VLM 主干/动作头/扩散头三段在不同硬件上最优切分点不同，统一部署几乎无解；（3）端侧量化（W4A8/W4A16）在接触丰富任务上会让成功率下降 3-8 个百分点；（4）能效上 Jetson Thor 峰值最高但 Apple M4 在低能耗场景下能效比最优；（5）推出「XPU-aware VLA 部署决策树」——按控制频率/任务复杂度/能耗预算把 5 款 VLA × 6 款 XPU 映射为 30 种推荐组合。",
       "difficulty": "高级",
       "addedDate": "2026-05-01",
       "keyInsights": [
-        "VLA 端侧推理是\"带宽受限\"而非\"算力受限\"——KV-cache 决定延迟，提升 INT4 权重量化和视觉 token 压缩是主要抓手",
+        "VLA 端侧推理是「带宽受限」而非「算力受限」——KV-cache 决定延迟，提升 INT4 权重量化和视觉 token 压缩是主要抓手",
         "三段切分部署：VLM 主干 + 动作头 + 扩散/流匹配头可在不同 XPU 上混合执行，但需要 IPC 代价权衡",
         "量化不是免费午餐：接触丰富任务（擦桌/插件/拧瓶盖）对 W4A16 敏感，成功率会掉 3-8 pct",
         "硬件-算法协同设计：模型结构需要与目标 XPU 的内存层次（特别是 cache/共享内存）协同设计，而不是事后优化",
-        "部署决策树把 5×6 = 30 种组合量化成\"控制频率 × 任务复杂度 × 能耗\"的三维决策表，工程价值极高"
+        "部署决策树把 5×6 = 30 种组合量化成「控制频率 × 任务复杂度 × 能耗」的三维决策表，工程价值极高"
       ],
       "impact": "第一份公开的 VLA 端侧部署基准，预计成为具身机器人本体侧 VLM/VLA 选型的必备参考。对芯片厂（英伟达/AMD/高通/地平线）和机器人厂都有直接影响：前者需要针对 VLA 推理模式优化硬件，后者需要在 BOM 阶段就做好 VLA-硬件协同设计"
     },
@@ -2230,17 +1999,17 @@
         "具身学习",
         "数据基础设施"
       ],
-      "tldr": "迄今为止最系统的 VLA 数据基础设施综述：把 VLA 研究社区常被忽视的\"数据引擎\"单独抽出来，覆盖 150+ 数据集、70+ benchmark、20+ 数据生成/遥操/仿真工具链。核心论点——VLA 研究的瓶颈从模型结构转移到数据侧：真机遥操贵、仿真域差异大、人类视频动作标注缺、跨本体语义对齐难。作者把数据基础设施分四层：（1）数据源层（真机/仿真/人类视频/合成）、（2）采集引擎（遥操/自主探索/数据生成）、（3）标注与对齐（语言/动作/轨迹/空间关系）、（4）训练消费层（配方/重采样/课程学习）。给出数据到能力的\"可追溯性矩阵\"，把数据质量/规模/多样性/对齐精度与下游 VLA 任务性能做了定量关联。",
+      "tldr": "迄今为止最系统的 VLA 数据基础设施综述：把 VLA 研究社区常被忽视的「数据引擎」单独抽出来，覆盖 150+ 数据集、70+ benchmark、20+ 数据生成/遥操/仿真工具链。核心论点——VLA 研究的瓶颈从模型结构转移到数据侧：真机遥操贵、仿真域差异大、人类视频动作标注缺、跨本体语义对齐难。作者把数据基础设施分四层：（1）数据源层（真机/仿真/人类视频/合成）、（2）采集引擎（遥操/自主探索/数据生成）、（3）标注与对齐（语言/动作/轨迹/空间关系）、（4）训练消费层（配方/重采样/课程学习）。给出数据到能力的「可追溯性矩阵」，把数据质量/规模/多样性/对齐精度与下游 VLA 任务性能做了定量关联。",
       "difficulty": "中级",
       "addedDate": "2026-05-01",
       "keyInsights": [
-        "VLA 范式收敛后，下一个竞争维度是\"数据引擎\"——谁有更好的数据，而不是谁有更好的模型结构",
+        "VLA 范式收敛后，下一个竞争维度是「数据引擎」——谁有更好的数据，而不是谁有更好的模型结构",
         "四层数据基础设施框架：数据源/采集引擎/标注对齐/训练消费，明确每一层的开源与商业格局",
         "真机数据目前仍被低估：Open X-Embodiment 总量级仅 1M 条轨迹，远低于 LLM 的 token 规模",
         "合成数据+真机数据的最佳配比约 3:1 到 5:1（取决于任务复杂度），纯合成在接触丰富任务上退化严重",
         "数据可追溯矩阵：同样规模下，跨本体对齐质量 > 场景多样性 > 任务多样性 > 绝对规模"
       ],
-      "impact": "这篇综述把 VLA 社区的讨论焦点从\"谁的模型更好\"拉回到\"谁的数据底座更好\"，会直接影响 2026 下半年 OpenVLA-2、π0.5、GR00T N2 等开源项目的数据策略。对产业界是一张\"数据采集路线图\"，对学术界是一份\"benchmark + 数据源\"的全景字典"
+      "impact": "这篇综述把 VLA 社区的讨论焦点从「谁的模型更好」拉回到「谁的数据底座更好」，会直接影响 2026 下半年 OpenVLA-2、π0.5、GR00T N2 等开源项目的数据策略。对产业界是一张「数据采集路线图」，对学术界是一份「benchmark + 数据源」的全景字典"
     },
     {
       "id": "p117",
@@ -2260,10 +2029,17 @@
         "Sim-to-Real评测",
         "embodiment-grounded"
       ],
-      "tldr": "首个面向\"机器人本体接地\"的视频世界模型操作 benchmark：把 SimplerEnv / LIBERO / RoboCasa 等已有评测套件统一封装为\"world-model 视角\"评测——给定语言指令和初始观测，要求被评模型生成 K 步未来视频帧，并由独立的执行器/物理验证器判定物理可执行性、任务完成度、运动学合理性、夹爪一致性。评测 SOTA 视频世界模型（Sora-2、V-JEPA 2、Cosmos-1、Genie-2）后发现：常见失败模式为\"画面合理但物理不可执行\"——抓取动作中夹爪穿模、被抓物体重力消失、关节速度违反约束。RoboWM-Bench 提出 4 类新指标（PhysExec / TaskComplete / KinValid / GraspConsist），把\"视频世界模型→真实机器人\"的评测从主观转为可复现，奠定 2026 H2 世界模型 + VLA 协同训练的评测基础。",
+      "tldr": "首个面向「机器人本体接地」的视频世界模型操作 benchmark：把 SimplerEnv / LIBERO / RoboCasa 等已有评测套件统一封装为「world-model 视角」评测——给定语言指令和初始观测，要求被评模型生成 K 步未来视频帧，并由独立的执行器/物理验证器判定物理可执行性、任务完成度、运动学合理性、夹爪一致性。评测 SOTA 视频世界模型（Sora-2、V-JEPA 2、Cosmos-1、Genie-2）后发现：常见失败模式为「画面合理但物理不可执行」——抓取动作中夹爪穿模、被抓物体重力消失、关节速度违反约束。RoboWM-Bench 提出 4 类新指标（PhysExec / TaskComplete / KinValid / GraspConsist），把「视频世界模型→真实机器人」的评测从主观转为可复现，奠定 2026 H2 世界模型 + VLA 协同训练的评测基础。",
       "category": "世界模型",
       "difficulty": "高级",
-      "addedDate": "2026-04-30"
+      "addedDate": "2026-04-30",
+      "keyInsights": [
+        "把 SimplerEnv / LIBERO / RoboCasa 统一封装成 world-model 视角评测：给语言指令与初始观测，要求生成 K 步未来帧",
+        "判定交给独立的执行器与物理验证器，而不是人眼看画面像不像",
+        "提出 4 类新指标：PhysExec（物理可执行）/ TaskComplete（任务完成）/ KinValid（运动学合理）/ GraspConsist（夹爪一致）",
+        "SOTA 视频模型（Sora-2 / V-JEPA 2 / Cosmos-1 / Genie-2）的共性失败是「画面合理但物理不可执行」——夹爪穿模、被抓物体重力消失、关节速度越界"
+      ],
+      "impact": "把「视频世界模型能否驱动真实机器人」的评测从主观观感转为可复现指标，为世界模型 + VLA 协同训练提供了必要的评测底座"
     },
     {
       "id": "p108",
@@ -2282,17 +2058,17 @@
         "跨本体迁移",
         "OOD泛化"
       ],
-      "tldr": "提出 Vision-Language-Intention-Action（VLIA）两阶段框架：先用大规模第一视角视频+眼动数据训练 VLI（把\"注视点\"显式当作人类意图的瓶颈表征），再用少量机器人演示 fine-tune 为 VLIA。核心假设是\"意图\"跨本体不变——同一个\"拿杯子喝水\"的注视模式对人/Franka/UR5 都一致。实验上 OOD 任务相对提升 22%，真机用 1/20 机器人数据达到 OpenVLA 同等水平。把 VLA 的\"数据负担\"从昂贵的机器人遥操迁移到廉价的人类第一视角视频+眼动仪。",
+      "tldr": "提出 Vision-Language-Intention-Action（VLIA）两阶段框架：先用大规模第一视角视频+眼动数据训练 VLI（把「注视点」显式当作人类意图的瓶颈表征），再用少量机器人演示 fine-tune 为 VLIA。核心假设是「意图」跨本体不变——同一个「拿杯子喝水」的注视模式对人/Franka/UR5 都一致。实验上 OOD 任务相对提升 22%，真机用 1/20 机器人数据达到 OpenVLA 同等水平。把 VLA 的「数据负担」从昂贵的机器人遥操迁移到廉价的人类第一视角视频+眼动仪。",
       "difficulty": "中级",
       "addedDate": "2026-04-30",
       "keyInsights": [
         "意图瓶颈：用注视点作为人类意图的显式低维表征，把 V-L 和 A 之间插一个可解释中间层",
         "跨本体不变性：注视只依赖任务目标和人类自身，不依赖机器人形态，天然支持跨本体迁移",
         "两阶段训练：VLI 阶段用廉价人类数据预训练，VLIA 阶段用少量机器人数据微调，训练预算倾向数据杠杆",
-        "数据经济性：只需 1/20 机器人演示即可达到 OpenVLA 同等水平，动摇了\"VLA = 大规模机器人演示\"范式",
+        "数据经济性：只需 1/20 机器人演示即可达到 OpenVLA 同等水平，动摇了「VLA = 大规模机器人演示」范式",
         "OOD 泛化提升 22%：意图层比纯视觉层更能滤除干扰物/背景分布偏移"
       ],
-      "impact": "VLA 研究路线的一次\"数据源重构\"：大家都在卷机器人演示数据量，GazeVLA 反过来把矿挖到人类第一视角视频这条更大的通路上，也给戴眼动仪做 demo 的\"平民数采\"开了口子。对中小机器人公司是个福音——不必烧千万预算铺遥操产线"
+      "impact": "VLA 研究路线的一次「数据源重构」：大家都在卷机器人演示数据量，GazeVLA 反过来把矿挖到人类第一视角视频这条更大的通路上，也给戴眼动仪做 demo 的「平民数采」开了口子。对中小机器人公司是个福音——不必烧千万预算铺遥操产线"
     },
     {
       "id": "p106",
@@ -2404,33 +2180,6 @@
       "impact": "CVPR 2026代表性工作，展示了VLA从'感知-动作'二元模型向'理解-预测-交互'三元模型的演进方向"
     },
     {
-      "id": "p102",
-      "title": "Foca-VLA: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation",
-      "authors": "CVPR 2026 Authors",
-      "venue": "CVPR 2026",
-      "date": "2026-06",
-      "arxiv": "https://cvpr.thecvf.com/virtual/2026/poster/38209",
-      "github": "",
-      "tags": [
-        "VLA",
-        "CVPR 2026",
-        "力位混合控制",
-        "力感知",
-        "接触丰富操作",
-        "端到端"
-      ],
-      "tldr": "Foca-VLA是CVPR 2026收录的端到端视觉-语言-动作框架，首次为VLA模型引入混合力-位置控制和显式力感知能力。针对接触丰富的操作任务（如装配、擦拭、插入等需要精确力控的场景），Foca-VLA将力传感器信息原生融入VLA架构，使模型不仅能看到和理解任务，还能'感受'接触力并做出力-位置联合决策。这填补了现有VLA方法在接触力控制方面的空白——大多数VLA只做位置控制，遇到需要力反馈的任务会失败。",
-      "difficulty": "高级",
-      "addedDate": "2026-04-29",
-      "keyInsights": [
-        "首次将力传感器信息原生融入VLA端到端框架",
-        "混合力-位置控制：可同时输出位置目标和力约束",
-        "力感知模块使VLA能理解'该用多大力'，而非仅'该去哪'",
-        "在接触丰富任务（装配/擦拭/插入）上显著优于纯位置控制的VLA"
-      ],
-      "impact": "填补了VLA力控空白，CVPR 2026级别工作，推动VLA从纯视觉位置控制向力-视觉多模态控制演进"
-    },
-    {
       "id": "p101",
       "title": "X2-N: A Transformable Wheel-legged Humanoid Robot with Dual-mode Locomotion and Full Upper-Body Manipulation",
       "authors": "Hanfu Gai, Ning Chen et al. (AgiBot / 智元机器人)",
@@ -2445,14 +2194,14 @@
         "灵巧操作",
         "高自由度"
       ],
-      "tldr": "X2-N 提出一种高自由度可变形机器人，能在\"人形双足模式\"与\"轮腿模式\"之间无缝切换，同时配备完整上半身双臂。轮式模式下可高效长距离移动并跨越15cm台阶、20°斜坡等障碍；人形模式下可爬楼梯、承载5.5kg并完成日常家务。为解决现有平台\"轮式无上身无法操作\"、\"人形效率低\"两大痛点，X2-N 采用(1)双模式腿部构型设计，(2)上半身双臂+灵巧手模块化集成，(3)模式切换的全身控制策略。在物流配送、家庭服务、工业巡检等场景中展现出单一机器人完成多地形移动+灵巧操作的能力，代表人形机器人从\"纯运动\"向\"运动+操作一体化\"的路径。",
+      "tldr": "X2-N 提出一种高自由度可变形机器人，能在「人形双足模式」与「轮腿模式」之间无缝切换，同时配备完整上半身双臂。轮式模式下可高效长距离移动并跨越15cm台阶、20°斜坡等障碍；人形模式下可爬楼梯、承载5.5kg并完成日常家务。为解决现有平台「轮式无上身无法操作」、「人形效率低」两大痛点，X2-N 采用(1)双模式腿部构型设计，(2)上半身双臂+灵巧手模块化集成，(3)模式切换的全身控制策略。在物流配送、家庭服务、工业巡检等场景中展现出单一机器人完成多地形移动+灵巧操作的能力，代表人形机器人从「纯运动」向「运动+操作一体化」的路径。",
       "difficulty": "中级",
       "addedDate": "2026-04-29",
       "keyInsights": [
         "首次在同一平台同时实现人形模式与轮腿模式切换",
         "解决轮式机器人缺乏完整上半身导致操作能力受限的问题",
         "模式切换全身控制策略统一运动学建模",
-        "为人形机器人商业化提供\"一机多地形\"新路径"
+        "为人形机器人商业化提供「一机多地形」新路径"
       ],
       "impact": "智元机器人新一代可变形平台，定义人形+轮腿混合形态新范式"
     },
@@ -2472,7 +2221,7 @@
         "人大",
         "具身训练"
       ],
-      "tldr": "现有 LLM Agent 在真实复杂工具环境中泛化能力不足——训练场往往是手工构造的少量\"过家家\"环境。Agent-World 提出一套可扩展的真实环境合成管线：(1)从真实网络数据中自动挖掘 1978 个真实环境和 19822 个工具，覆盖办公/开发/生活服务/科研等多域；(2)基于 Model Context Protocol (MCP) 统一工具接口，将环境与 Agent 解耦；(3)环境反馈驱动的策略共同进化——Agent 在真实环境中暴露短板，训练场自动生成对应的挑战任务，形成\"Agent-Env\"共同演化闭环。实验显示，在 Agent-World 上训练的 Agent 在多步工具调用、长程任务分解、错误恢复三项能力上均显著超越现有方法，并具备对未见环境的零样本泛化能力。",
+      "tldr": "现有 LLM Agent 在真实复杂工具环境中泛化能力不足——训练场往往是手工构造的少量「过家家」环境。Agent-World 提出一套可扩展的真实环境合成管线：(1)从真实网络数据中自动挖掘 1978 个真实环境和 19822 个工具，覆盖办公/开发/生活服务/科研等多域；(2)基于 Model Context Protocol (MCP) 统一工具接口，将环境与 Agent 解耦；(3)环境反馈驱动的策略共同进化——Agent 在真实环境中暴露短板，训练场自动生成对应的挑战任务，形成「Agent-Env」共同演化闭环。实验显示，在 Agent-World 上训练的 Agent 在多步工具调用、长程任务分解、错误恢复三项能力上均显著超越现有方法，并具备对未见环境的零样本泛化能力。",
       "difficulty": "中级",
       "addedDate": "2026-04-29",
       "keyInsights": [
@@ -2482,32 +2231,6 @@
         "具身Agent长程工具使用能力评估新基准"
       ],
       "impact": "为具身Agent从玩具场景走向真实世界提供基础设施"
-    },
-    {
-      "id": "p099",
-      "title": "LoHo-Manip: Long-Horizon Manipulation via Trace-Conditioned VLA Planning",
-      "authors": "Isabella Liu et al. (10 authors)",
-      "venue": "arXiv 2026",
-      "date": "2026-04-24",
-      "arxiv": "https://arxiv.org/abs/2604.21924",
-      "tags": [
-        "长程操作",
-        "VLA",
-        "分层规划",
-        "Trace-Conditioning",
-        "Franka",
-        "累积误差"
-      ],
-      "tldr": "长程操作(如'把咖啡杯放进橱柜并关上门')一直是 VLA 策略的软肋——多步依赖、进度敏感、执行误差会累积爆炸。LoHo-Manip 提出 Trace-Conditioned 分层框架：(1)高层 VLM 规划器将长程任务分解为带时空轨迹提示(trace)的子任务序列；(2)Trace-Conditioned VLA 底层策略接受子任务描述+预期轨迹 trace 作为双条件输入；(3)trace 既做进度信号又做错误早停触发。实验覆盖具身规划、长程推理、轨迹预测及 Franka 真机端到端操作——在多步骤任务成功率、进度鲁棒性上显著超越端到端 VLA 基线。",
-      "difficulty": "进阶",
-      "addedDate": "2026-04-29",
-      "keyInsights": [
-        "Trace-Conditioning：时空轨迹作为进度信号弥合规划-执行鸿沟",
-        "高层 VLM + 低层 Trace-Conditioned VLA 分层架构",
-        "仿真+Franka 真机验证长程操作成功率",
-        "对'累积执行误差'问题提供可落地方案"
-      ],
-      "impact": "为 VLA 解决长程操作累积误差问题提供可复现的分层方案"
     },
     {
       "id": "p098",
@@ -2644,10 +2367,10 @@
     },
     {
       "id": "p093",
-      "title": "Long-Horizon Manipulation via Trace-Conditioned VLA Planning",
+      "title": "LoHo-Manip: Long-Horizon Manipulation via Trace-Conditioned VLA Planning",
       "authors": "Isabella Liu, An-Chieh Cheng, Rui Yan, Geng Chen, Ri-Zhao Qiu, Sha Yi, Hongxu Yin, Xiaolong Wang, Sifei Liu",
-      "venue": "arXiv 2604.21924",
-      "date": "2026-04",
+      "venue": "arXiv 2026",
+      "date": "2026-04-24",
       "arxiv": "https://arxiv.org/abs/2604.21924",
       "github": "",
       "tags": [
@@ -2655,11 +2378,16 @@
         "长程操作",
         "轨迹条件化",
         "VLA规划",
-        "多步推理"
+        "多步推理",
+        "VLA",
+        "分层规划",
+        "Trace-Conditioning",
+        "Franka",
+        "累积误差"
       ],
       "tldr": "现有VLA模型擅长单步或短程操作任务，但在需要多步规划的长程操作(Long-Horizon Manipulation)场景中表现欠佳——缺乏对任务全局结构的理解，容易在子任务衔接处失败。Trace-VLA提出轨迹条件化规划(Trace-Conditioned Planning)范式：首先由高层VLM根据语言指令和视觉观察生成完整操作轨迹规划(Trace)，以2D关键点序列的形式表达末端执行器的预期运动路径；然后将该轨迹作为条件输入低层VLA策略，引导其在每个时间步生成符合全局规划的动作。这种分层设计使VLA能够'先规划后执行'，在10+步的长程桌面操作任务中成功率显著提升。",
       "difficulty": "中级",
-      "addedDate": "2026-04-28",
+      "addedDate": "2026-04-29",
       "keyInsights": [
         "首次将2D轨迹规划作为VLA的显式条件输入，桥接高层语义规划与低层动作执行",
         "高层规划以关键点序列表达，可视化直观、易于人类校验和干预",
@@ -3046,11 +2774,11 @@
     {
       "id": "p076",
       "title": "Foca-VLA / ForceVLA2: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation",
-      "authors": "Shanghai AI Lab, Tongji University, Shanghai Jiao Tong University, et al.",
+      "authors": "Fudan University, SJTU, NUS, Shanghai University, Xi'an Jiaotong University",
       "venue": "CVPR 2026",
       "date": "2026-04",
       "arxiv": "https://arxiv.org/abs/2603.15169",
-      "github": "",
+      "github": "https://github.com/ft-robotic/ForceVLA",
       "tags": [
         "力控制",
         "力-位混合控制",
@@ -3058,11 +2786,16 @@
         "VLA",
         "CVPR 2026",
         "力感知",
-        "MoE"
+        "MoE",
+        "混合力位控制",
+        "接触操作",
+        "π₀",
+        "力位混合控制",
+        "端到端"
       ],
-      "tldr": "上海AI Lab联合同济大学、上海交大提出ForceVLA2（CVPR 2026收录），首次将混合力-位置控制与力感知能力统一于端到端VLA框架。此前具身智能在接触丰富操作任务中主要依赖位置控制，对交互力的显式感知和调节鲜有探索，导致在插入、擦拭、打磨等需要精细力控的任务中稳定性不足。ForceVLA2引入力感知专家混合（Force-aware MoE）模块，使VLA模型能够同时输出位置指令和力约束，在执行过程中动态切换和融合力控与位控模式。实验表明在接触丰富操作基准上显著超越纯位控VLA基线，尤其在需要精确力调节的任务（如门把手操作、物体插入、表面擦拭）中提升明显。这是首个在端到端VLA框架中实现工业级力-位混合控制的工作。",
+      "tldr": "复旦大学联合上海交大、新加坡国立等团队提出 Foca-VLA / ForceVLA2（CVPR 2026收录），首次将混合力-位置控制与力感知能力统一于端到端VLA框架。此前具身智能在接触丰富操作任务中主要依赖位置控制，对交互力的显式感知和调节鲜有探索，导致在插入、擦拭、打磨等需要精细力控的任务中稳定性不足。ForceVLA2引入力感知专家混合（Force-aware MoE）模块，使VLA模型能够同时输出位置指令和力约束，在执行过程中动态切换和融合力控与位控模式。实验表明在接触丰富操作基准上显著超越纯位控VLA基线，尤其在需要精确力调节的任务（如门把手操作、物体插入、表面擦拭）中提升明显。这是首个在端到端VLA框架中实现工业级力-位混合控制的工作。",
       "difficulty": "高级",
-      "addedDate": "2026-04-26",
+      "addedDate": "2026-04-29",
       "keyInsights": [
         "力-位混合控制：首次在VLA框架中实现位置控制与力控制的动态融合切换",
         "Force-aware MoE：力感知专家混合模块，根据接触状态自动选择控制模式",
@@ -3234,34 +2967,6 @@
         "天然可解释：低频/高频分离提供了'做什么'和'怎么做'的结构化理解"
       ],
       "impact": "提出了VLA策略生成的新范式——将频域分析引入扩散策略，既提升性能又增强可解释性，为VLA的高效部署提供了理论和工程双重支撑"
-    },
-    {
-      "id": "p067",
-      "title": "ForceVLA2: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation",
-      "authors": "Fudan University, SJTU, NUS, Shanghai University, Xi'an Jiaotong University",
-      "venue": "CVPR 2026",
-      "date": "2026-03",
-      "arxiv": "https://arxiv.org/abs/2603.15169",
-      "github": "https://github.com/ft-robotic/ForceVLA",
-      "tags": [
-        "VLA",
-        "力感知",
-        "混合力位控制",
-        "MoE",
-        "CVPR 2026",
-        "接触操作",
-        "π₀"
-      ],
-      "tldr": "首个将力感知显式引入VLA框架的工作（CVPR 2026接收）。核心创新：（1）混合力位控制架构——VLA模型同时输出位置指令和力控参数，在接触阶段自动切换力控模式；（2）力感知MoE模块——将力/力矩传感器信号作为独立模态融入VLA，通过专家路由机制动态分配位置控制和力控制权重；（3）基于π₀的Flow Matching动作头同时生成位置轨迹和力参考值。解决了当前VLA模型在接触丰富操作（擦拭、插入、研磨等）中因缺乏力感知而表现差的根本问题。力控专家分支在接触瞬间自动激活，实现了位置控制和力控制的无缝切换。",
-      "difficulty": "高级",
-      "addedDate": "2026-04-24",
-      "keyInsights": [
-        "当前VLA模型几乎全部基于纯位置控制——接触丰富任务是重大盲区",
-        "力感知MoE：力/力矩传感器信号作为独立模态，通过专家路由动态分配力控/位控权重",
-        "混合力位控制：位置主导的自由空间运动 + 力主导的接触阶段，自动无缝切换",
-        "基于π₀ Flow Matching架构，动作头同时输出位置轨迹和力参考值"
-      ],
-      "impact": "CVPR 2026级别工作，首次系统性解决VLA的力感知缺失问题，为接触丰富操作（工业装配、表面处理、精密插入等）的VLA部署开辟道路"
     },
     {
       "id": "p066",
@@ -4241,14 +3946,14 @@
         "数据集",
         "模仿学习"
       ],
-      "tldr": "首次系统研究机器人模仿学习的 Scaling Law：数据量、数据多样性、模型大小三者如何影响性能，发现\"数据多样性\"是最关键因素",
+      "tldr": "首次系统研究机器人模仿学习的 Scaling Law：数据量、数据多样性、模型大小三者如何影响性能，发现「数据多样性」是最关键因素",
       "difficulty": "中级",
       "addedDate": "2026-04-17",
       "keyInsights": [
         "数据量 Scaling Law: 性能 ∝ log(数据量)，边际收益递减",
         "数据多样性是最强因素：10 个不同场景的少量数据 > 1 个场景的大量数据",
         "模型大小 Scaling Law: 小模型也能在小数据上表现好，大模型需要大数据",
-        "发现了\"多样性饱和\"现象：超过某个阈值后增加多样性不再有效"
+        "发现了「多样性饱和」现象：超过某个阈值后增加多样性不再有效"
       ],
       "impact": "为机器人数据采集策略提供了科学依据，影响了后续所有大规模数据采集项目的策略"
     },
@@ -4315,8 +4020,8 @@
       "addedDate": "2026-04-17",
       "keyInsights": [
         "双层架构：高层（离散 token 自回归预测子任务）+ 低层（flow matching 连续动作生成）",
-        "高层预训练：在网络数据上预训练任务推理能力，学习 \"做什么\"",
-        "低层执行：实时 flow matching 去噪生成连续动作，执行 \"怎么做\"",
+        "高层预训练：在网络数据上预训练任务推理能力，学习 「做什么」",
+        "低层执行：实时 flow matching 去噪生成连续动作，执行 「怎么做」",
         "在开放世界（新环境、新物体、新指令）上展示了前所未有的泛化能力"
       ],
       "impact": "可能定义具身智能的 System 2 推理范式，高层推理 + 低层执行的架构被广泛跟进"
@@ -4365,7 +4070,7 @@
         "预训练在 OXE + 自有大规模数据集（10K+ hours）上",
         "在折叠衣服（多步骤、变形物体）任务上首次达到实用水平"
       ],
-      "impact": "Physical Intelligence 凭此成为估值超 20 亿美元的具身智能创业公司，证明了\"大规模预训练+微调\"在机器人领域的可行性"
+      "impact": "Physical Intelligence 凭此成为估值超 20 亿美元的具身智能创业公司，证明了「大规模预训练+微调」在机器人领域的可行性"
     },
     {
       "id": "p004",
@@ -4388,7 +4093,7 @@
         "RT-1-X 在跨本体任务上平均提升 50%（vs 单机器人训练）",
         "数据多样性比数据量更重要——验证了机器人领域的 scaling law"
       ],
-      "impact": "建立了机器人学习领域的数据基础设施标准，推动了开放协作的研究范式，被称为\"机器人的 ImageNet 时刻\""
+      "impact": "建立了机器人学习领域的数据基础设施标准，推动了开放协作的研究范式，被称为「机器人的 ImageNet 时刻」"
     },
     {
       "id": "p003",
@@ -4460,44 +4165,27 @@
       "impact": "开创了扩散模型在机器人策略学习中的应用范式，DP3、3D Diffusion Policy、Diffusion Policy 3D 等均基于此工作"
     },
     {
-      "id": "p017",
-      "title": "Scaling Proprioceptive-Visual Learning with Heterogeneous Pre-trained Transformers (π₀)",
-      "authors": "Physical Intelligence",
-      "venue": "arXiv 2024",
-      "date": "2024-10",
-      "tags": [
-        "VLA",
-        "模仿学习"
-      ],
-      "difficulty": "高级",
-      "tldr": "π₀ 的完整技术报告：PaliGemma 2B 视觉-语言骨干 + Flow Matching 动作头，在 10000+ 小时数据上预训练",
-      "keyInsights": [
-        "Flow Matching 比 Diffusion 推理快5x",
-        "预训练 → 微调范式在机器人上也成立",
-        "10步推理即可生成高质量动作"
-      ],
-      "impact": "目前性能最强的 VLA 模型之一，证明了大规模预训练的价值",
-      "arxiv": "https://arxiv.org/abs/2410.24164",
-      "github": ""
-    },
-    {
       "id": "p016",
-      "title": "HPT: Heterogeneous Pre-trained Transformers",
-      "authors": "Lirui Wang et al. (MIT)",
-      "venue": "CoRL 2024",
+      "title": "Scaling Proprioceptive-Visual Learning with Heterogeneous Pre-trained Transformers (HPT)",
+      "authors": "Lirui Wang, Xinlei Chen, Jialiang Zhao, Kaiming He (MIT CSAIL + Meta FAIR)",
+      "venue": "NeurIPS 2024",
       "date": "2024-09",
       "tags": [
-        "VLA",
-        "模仿学习"
+        "异构预训练",
+        "跨本体",
+        "模仿学习",
+        "Transformer",
+        "表征学习"
       ],
       "difficulty": "高级",
-      "tldr": "统一不同机器人本体的预训练 Transformer，用异构 tokenizer 处理不同传感器和执行器",
+      "tldr": "训练通用机器人模型的最大拦路虎是异构性——过去一份数据只服务一个本体、一个任务，昂贵且极易过拟合。HPT 把策略网络拆成三段：每个本体各有一个 stem，负责把该本体特有的本体感觉（proprioception）与视觉输入对齐成一小段 token；中间是一个大而可共享的 trunk，跨本体、跨任务预训练出与具体身体无关的通用表征；末端是任务特定的 head 输出控制量。作者在真机多本体数据集 + 仿真 + 部署机器人 + 人类视频上做异构预训练，把规模推到 52 个数据集来考察 scaling 行为，在多个仿真基准与真机场景的未见任务上把微调后策略性能提升 20% 以上。",
       "keyInsights": [
-        "不同机器人可以共享同一个 Transformer 骨干",
-        "异构 tokenizer 解决跨本体问题",
-        "预训练在混合数据上提升下游任务性能"
+        "stem-trunk-head 三段式：本体差异隔离在 stem，共享知识全部沉淀到 trunk",
+        "把异构的本体感觉 + 视觉输入统一对齐成短 token 序列，是跨本体共享的前提",
+        "52 个数据集规模上验证了训练目标的 scaling 行为——数据越异构越受益",
+        "未见任务上微调性能 +20% 以上，证明通用表征可迁移而非记忆"
       ],
-      "impact": "通向通用机器人基础模型的重要一步",
+      "impact": "异构预训练路线的奠基工作之一，此后跨本体 VLA（统一动作表示 / 本体 prompt 等方案）大多在回答它提出的同一个问题",
       "arxiv": "https://arxiv.org/abs/2409.20537",
       "github": "https://github.com/liruiw/HPT"
     },
@@ -4670,5 +4358,5 @@
       "github": ""
     }
   ],
-  "totalItems": 146
+  "totalItems": 156
 }

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-05-31T08:00",
+  "lastUpdated": "2026-08-24T20:40",
   "categories": [
     {
       "id": "all",
@@ -49,6 +49,37 @@
   ],
   "projects": [
     {
+      "id": "os133",
+      "name": "LingBot-World 2.0 / LingBot-World-Infinity (蚂蚁灵波 — 无限时长交互式世界模型)",
+      "github": "https://github.com/robbyant/lingbot-world-v2",
+      "organization": "蚂蚁灵波科技（Robbyant Team）",
+      "category": "ai-model",
+      "description": "**LingBot-World 2.0**（又名 **LingBot-World-Infinity**）— 蚂蚁灵波 2026-07-08 开源的第二代交互式世界模型（**1.5k stars**），是 os091 LingBot-World 的重大迭代，技术报告 arxiv:2607.07534《Infinite Worlds with Versatile Interactions》。**四大升级**：① **无界交互时长** — 靠精心设计的因果预训练范式，在任意长交互下保持输出质量一致，不再有「生成越久越崩」；② **实时响应** — 从基座蒸馏出实时变体，足以驱动 **720p / 60fps** 视频流；③ **高度多样的交互元素** — 动作谱系大幅扩展（攻击 / 射箭 / 施法 / 射击等）+ 更丰富的文本驱动事件；④ **Agentic Harness（首创）** — 在世界建模领域首次引入智能体框架：**pilot agent** 负责规划与执行角色行为，**director agent** 负责随场景推进合成新的环境元素。代码库基于 **Wan2.2**，`generate.py` 用 KV 缓存做因果推理、逐 chunk 处理视频帧而非一次性全出。已开源 **14B causal-fast** 权重（HuggingFace + ModelScope），causal-pretrain / bidirectional / 1.3B 版本在 TODO 中。实时版可在 Reactor（海外 Web）与灵光 LingGuang（国内移动端）直接体验，官方完整能力 demo 在 WAIC 2026。**注意 license 为 CC BY-NC-SA 4.0（非商用）**。",
+      "language": "Python",
+      "license": "CC BY-NC-SA 4.0",
+      "features": [
+        "⭐ 1.5k stars — 交互式世界模型开源标杆",
+        "♾️ 无界交互时长（因果预训练范式）",
+        "⚡ 实时蒸馏变体驱动 720p / 60fps",
+        "🎭 Agentic Harness — pilot + director 双智能体首创",
+        "📦 14B causal-fast 权重已开源（HF + ModelScope）",
+        "🔧 基于 Wan2.2 / KV 缓存逐 chunk 因果推理",
+        "⚠️ CC BY-NC-SA 4.0 非商用许可"
+      ],
+      "stars": "1.5k",
+      "tags": [
+        "LingBot-World",
+        "世界模型",
+        "蚂蚁灵波",
+        "Robbyant",
+        "交互式生成",
+        "Agentic Harness",
+        "实时推理",
+        "Wan2.2"
+      ],
+      "addedDate": "2026-08-24"
+    },
+    {
       "id": "os132",
       "name": "Qwen-VLA (阿里通义 — 跨本体跨任务统一具身基础模型)",
       "github": "https://github.com/QwenLM/Qwen-VLA",
@@ -77,106 +108,28 @@
       "addedDate": "2026-05-31"
     },
     {
-      "id": "os126",
-      "name": "VLA-RL (清华 — VLA 在线强化学习微调框架)",
-      "github": "https://github.com/GuanxingLu/vlarl",
-      "organization": "清华大学 SIGS + NTU",
+      "id": "os131",
+      "name": "HiF-VLA (西湖大学 — Motion-centric VLA / CVPR 2026)",
+      "github": "https://github.com/OpenHelix-Team/HiF-VLA",
+      "organization": "西湖大学 MiLAB + 阿里达摩院",
       "category": "ai-model",
-      "description": "**VLA-RL** — 清华深研院 2026-05 发布的**「VLA + 在线 RL 微调」标准框架**。把预训练 VLA（OpenVLA-7B）通过 PPO 进一步提升，在 LIBERO 40 任务上超越 π₀-FAST +4.5pp。**三大创新**：① 轨迹级 RL 形式化（多模态多轮对话建模）；② Process Reward Model（克服稀疏奖励 — 用 VLM 微调 PRM 给中间步骤打分）；③ 工程优化四件套（Curriculum Selection / GPU-balanced envs / Batch Decoding / Critic Warmup）。**关键发现**：VLA-RL 受益于 test-time optimization — 推理时 best-of-N 采样从 83% → 93%，是 VLA 的「inference scaling law」早期火花。arxiv:2505.18719。",
-      "language": "Python",
-      "license": "MIT",
-      "features": [
-        "🔥 VLA + RL 后训练标准框架",
-        "📈 超越 π₀-FAST +4.5pp",
-        "🧠 Process Reward Model",
-        "⚡ Inference Scaling Law"
-      ],
-      "stars": "🌟 新发布",
-      "tags": [
-        "VLA-RL",
-        "PPO",
-        "Process Reward",
-        "清华",
-        "在线RL",
-        "Inference Scaling"
-      ],
-      "addedDate": "2026-05-29"
-    },
-    {
-      "id": "os127",
-      "name": "LIBERO (CMU — 具身智能操作 Benchmark 套件)",
-      "github": "https://github.com/Lifelong-Robot-Learning/LIBERO",
-      "organization": "CMU Robotics Institute",
-      "category": "framework",
-      "description": "**LIBERO** — CMU 开发的具身操作 benchmark 标准套件（**4.3k stars**）。提供 130+ 操作任务 / 4 个难度级别（LIBERO-Spatial / Object / Goal / Long）/ 标准化评测协议。**所有主流 VLA 模型**（OpenVLA / π₀ / Wall-OSS / RDT / GR00T）**都在 LIBERO 上报告性能** — 是 VLA 社区的「ImageNet」。配套 LIBERO-X（ICRA 2026 五级递进鲁棒性诊断扩展）。基于 robosuite 仿真。",
-      "language": "Python",
-      "license": "MIT",
-      "features": [
-        "⭐ 4.3k stars — VLA 社区标准 benchmark",
-        "📊 130+ 任务 / 4 难度级别",
-        "🤖 所有主流 VLA 都在此报告",
-        "📦 robosuite 仿真 + LeRobot 兼容"
-      ],
-      "stars": "4.3k",
-      "tags": [
-        "LIBERO",
-        "Benchmark",
-        "VLA评测",
-        "CMU",
-        "操作任务",
-        "标准套件"
-      ],
-      "addedDate": "2026-05-29"
-    },
-    {
-      "id": "os128",
-      "name": "ManiSkill (UCSD HAOSU Lab — GPU 并行操作仿真 Benchmark)",
-      "github": "https://github.com/haosulab/ManiSkill",
-      "organization": "UCSD Hao Su Lab",
-      "category": "simulation",
-      "description": "**ManiSkill** — UCSD Hao Su 团队开发的 GPU 大规模并行操作仿真 benchmark（**2.5k stars**）。**ManiSkill3**（2025-2026）：基于 SAPIEN 仿真器 + GPU 并行 + Gymnasium API + 高质量视觉渲染。提供 20+ 精细操作任务（拧螺丝 / 倒水 / 装配 / 灵巧手）。与 LeRobot / Gymnasium 完全兼容。是 VLA 精细操作评测的**金标准** — 比 LIBERO 更难、更接近真实。",
+      "description": "**HiF-VLA**（CVPR 2026 接收）— 以 Motion（运动向量）为中心的双向时空推理框架。抛弃冗余像素级多帧输入，用低维 Motion 向量作为动态先验。「联合专家」模块同步完成未来视觉运动预测 + 高精度动作序列生成。**关键优势**：极长历史窗口下保持恒定低延迟 / CALVIN + LIBERO-LONG SOTA / 「边想边做」物理直觉。同团队 ReconVLA 获 AAAI 2026 最佳论文奖。",
       "language": "Python",
       "license": "Apache-2.0",
       "features": [
-        "⭐ 2.5k stars — GPU 并行操作仿真",
-        "🎮 SAPIEN + 高质量视觉",
-        "🔧 20+ 精细操作任务",
-        "🤖 Gymnasium API 兼容"
+        "🏆 CVPR 2026 接收",
+        "⚡ Motion-centric 恒定低延迟",
+        "📈 CALVIN/LIBERO-LONG SOTA",
+        "🧠 同团队 AAAI 2026 最佳论文"
       ],
-      "stars": "2.5k",
+      "stars": "新发布",
       "tags": [
-        "ManiSkill",
-        "仿真",
-        "精细操作",
-        "GPU并行",
-        "SAPIEN",
-        "Benchmark"
-      ],
-      "addedDate": "2026-05-29"
-    },
-    {
-      "id": "os129",
-      "name": "RoboTwin (北大 + 北航 — 双臂操作 Benchmark + 数据生成)",
-      "github": "https://github.com/TianxingChen/RoboTwin",
-      "organization": "北京大学 + 北航",
-      "category": "framework",
-      "description": "**RoboTwin** — 北大 + 北航联合开发的**双臂机器人操作 benchmark + 自动数据生成框架**。**RoboTwin 2.0**（2026）：提供 50+ 双臂协作任务 / 自动化数据生成 pipeline / 标准评测协议。支持 COBOT Magic / Aloha / 自定义双臂。是国内 VLA 论文最常用的双臂 benchmark — Pelican-Unify / π₀ / Wall-OSS 都在 RoboTwin 上报告过。",
-      "language": "Python",
-      "license": "MIT",
-      "features": [
-        "🦾 双臂操作标准 benchmark",
-        "🔄 自动数据生成 pipeline",
-        "📊 50+ 双臂协作任务",
-        "🤖 国内 VLA 论文标准评测"
-      ],
-      "stars": "1.2k",
-      "tags": [
-        "RoboTwin",
-        "双臂",
-        "Benchmark",
-        "数据生成",
-        "北大",
-        "北航"
+        "HiF-VLA",
+        "CVPR 2026",
+        "Motion",
+        "西湖大学",
+        "时空推理",
+        "长程任务"
       ],
       "addedDate": "2026-05-29"
     },
@@ -207,28 +160,106 @@
       "addedDate": "2026-05-29"
     },
     {
-      "id": "os131",
-      "name": "HiF-VLA (西湖大学 — Motion-centric VLA / CVPR 2026)",
-      "github": "https://github.com/OpenHelix-Team/HiF-VLA",
-      "organization": "西湖大学 MiLAB + 阿里达摩院",
-      "category": "ai-model",
-      "description": "**HiF-VLA**（CVPR 2026 接收）— 以 Motion（运动向量）为中心的双向时空推理框架。抛弃冗余像素级多帧输入，用低维 Motion 向量作为动态先验。「联合专家」模块同步完成未来视觉运动预测 + 高精度动作序列生成。**关键优势**：极长历史窗口下保持恒定低延迟 / CALVIN + LIBERO-LONG SOTA / 「边想边做」物理直觉。同团队 ReconVLA 获 AAAI 2026 最佳论文奖。",
+      "id": "os129",
+      "name": "RoboTwin (北大 + 北航 — 双臂操作 Benchmark + 数据生成)",
+      "github": "https://github.com/TianxingChen/RoboTwin",
+      "organization": "北京大学 + 北航",
+      "category": "framework",
+      "description": "**RoboTwin** — 北大 + 北航联合开发的**双臂机器人操作 benchmark + 自动数据生成框架**。**RoboTwin 2.0**（2026）：提供 50+ 双臂协作任务 / 自动化数据生成 pipeline / 标准评测协议。支持 COBOT Magic / Aloha / 自定义双臂。是国内 VLA 论文最常用的双臂 benchmark — Pelican-Unify / π₀ / Wall-OSS 都在 RoboTwin 上报告过。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "🦾 双臂操作标准 benchmark",
+        "🔄 自动数据生成 pipeline",
+        "📊 50+ 双臂协作任务",
+        "🤖 国内 VLA 论文标准评测"
+      ],
+      "stars": "1.2k",
+      "tags": [
+        "RoboTwin",
+        "双臂",
+        "Benchmark",
+        "数据生成",
+        "北大",
+        "北航"
+      ],
+      "addedDate": "2026-05-29"
+    },
+    {
+      "id": "os128",
+      "name": "ManiSkill (UCSD HAOSU Lab — GPU 并行操作仿真 Benchmark)",
+      "github": "https://github.com/haosulab/ManiSkill",
+      "organization": "UCSD Hao Su Lab",
+      "category": "simulation",
+      "description": "**ManiSkill** — UCSD Hao Su 团队开发的 GPU 大规模并行操作仿真 benchmark（**2.5k stars**）。**ManiSkill3**（2025-2026）：基于 SAPIEN 仿真器 + GPU 并行 + Gymnasium API + 高质量视觉渲染。提供 20+ 精细操作任务（拧螺丝 / 倒水 / 装配 / 灵巧手）。与 LeRobot / Gymnasium 完全兼容。是 VLA 精细操作评测的**金标准** — 比 LIBERO 更难、更接近真实。",
       "language": "Python",
       "license": "Apache-2.0",
       "features": [
-        "🏆 CVPR 2026 接收",
-        "⚡ Motion-centric 恒定低延迟",
-        "📈 CALVIN/LIBERO-LONG SOTA",
-        "🧠 同团队 AAAI 2026 最佳论文"
+        "⭐ 2.5k stars — GPU 并行操作仿真",
+        "🎮 SAPIEN + 高质量视觉",
+        "🔧 20+ 精细操作任务",
+        "🤖 Gymnasium API 兼容"
       ],
-      "stars": "新发布",
+      "stars": "2.5k",
       "tags": [
-        "HiF-VLA",
-        "CVPR 2026",
-        "Motion",
-        "西湖大学",
-        "时空推理",
-        "长程任务"
+        "ManiSkill",
+        "仿真",
+        "精细操作",
+        "GPU并行",
+        "SAPIEN",
+        "Benchmark"
+      ],
+      "addedDate": "2026-05-29"
+    },
+    {
+      "id": "os127",
+      "name": "LIBERO (CMU — 具身智能操作 Benchmark 套件)",
+      "github": "https://github.com/Lifelong-Robot-Learning/LIBERO",
+      "organization": "CMU Robotics Institute",
+      "category": "framework",
+      "description": "**LIBERO** — CMU 开发的具身操作 benchmark 标准套件（**4.3k stars**）。提供 130+ 操作任务 / 4 个难度级别（LIBERO-Spatial / Object / Goal / Long）/ 标准化评测协议。**所有主流 VLA 模型**（OpenVLA / π₀ / Wall-OSS / RDT / GR00T）**都在 LIBERO 上报告性能** — 是 VLA 社区的「ImageNet」。配套 LIBERO-X（ICRA 2026 五级递进鲁棒性诊断扩展）。基于 robosuite 仿真。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "⭐ 4.3k stars — VLA 社区标准 benchmark",
+        "📊 130+ 任务 / 4 难度级别",
+        "🤖 所有主流 VLA 都在此报告",
+        "📦 robosuite 仿真 + LeRobot 兼容"
+      ],
+      "stars": "4.3k",
+      "tags": [
+        "LIBERO",
+        "Benchmark",
+        "VLA评测",
+        "CMU",
+        "操作任务",
+        "标准套件"
+      ],
+      "addedDate": "2026-05-29"
+    },
+    {
+      "id": "os126",
+      "name": "VLA-RL (清华 — VLA 在线强化学习微调框架)",
+      "github": "https://github.com/GuanxingLu/vlarl",
+      "organization": "清华大学 SIGS + NTU",
+      "category": "ai-model",
+      "description": "**VLA-RL** — 清华深研院 2026-05 发布的**「VLA + 在线 RL 微调」标准框架**。把预训练 VLA（OpenVLA-7B）通过 PPO 进一步提升，在 LIBERO 40 任务上超越 π₀-FAST +4.5pp。**三大创新**：① 轨迹级 RL 形式化（多模态多轮对话建模）；② Process Reward Model（克服稀疏奖励 — 用 VLM 微调 PRM 给中间步骤打分）；③ 工程优化四件套（Curriculum Selection / GPU-balanced envs / Batch Decoding / Critic Warmup）。**关键发现**：VLA-RL 受益于 test-time optimization — 推理时 best-of-N 采样从 83% → 93%，是 VLA 的「inference scaling law」早期火花。arxiv:2505.18719。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "🔥 VLA + RL 后训练标准框架",
+        "📈 超越 π₀-FAST +4.5pp",
+        "🧠 Process Reward Model",
+        "⚡ Inference Scaling Law"
+      ],
+      "stars": "🌟 新发布",
+      "tags": [
+        "VLA-RL",
+        "PPO",
+        "Process Reward",
+        "清华",
+        "在线RL",
+        "Inference Scaling"
       ],
       "addedDate": "2026-05-29"
     },
@@ -266,184 +297,28 @@
       "addedDate": "2026-05-29"
     },
     {
-      "id": "os116",
-      "name": "Gymnasium (Farama — RL 环境标准 API，Gym 继承者)",
-      "github": "https://github.com/Farama-Foundation/Gymnasium",
-      "organization": "Farama Foundation",
-      "category": "framework",
-      "description": "**Gymnasium** — OpenAI Gym 的官方继承者，由 Farama Foundation 维护（GitHub **11.2k stars**）。**RL 环境的事实标准 API** — 所有主流 RL 框架（Stable Baselines3 / CleanRL / RLinf / TorchRL）都以 Gymnasium 为环境接口标准。提供统一的 `env.reset() / env.step(action)` API + 类型安全 + 向量化环境 + 录像录制。**具身智能关联**：ManiSkill / LIBERO / RoboTwin / IsaacLab 等仿真器全部实现 Gymnasium 接口；RLinf 的所有仿真环境也通过 Gymnasium wrapper 接入。如果你做 RL，这是**必须知道的第一个库**。",
-      "language": "Python",
-      "license": "MIT",
+      "id": "os124",
+      "name": "RynnVLA-002 (达摩院 — 统一 VLA + 世界模型 Action World Model)",
+      "github": "https://github.com/alibaba-damo-academy/RynnVLA-002",
+      "organization": "阿里巴巴达摩院",
+      "category": "ai-model",
+      "description": "**RynnVLA-002** — 阿里达摩院 2025-11 开源的**统一 VLA + 世界模型（Action World Model）**（GitHub **829 stars**）。**核心创新**：图像、文本、动作共享统一词表，在单一 LLM 架构中**统一理解 & 生成多模态**。世界模型用「动作+视觉」预测未来图像状态，学习环境物理规律，反向增强动作规划——实现 VLA 与世界模型「**双向增强**」。**性能**：LIBERO 零预训练 **97.4%** 成功率 / 真实 LeRobot 任务成功率提升 **50%+**。**三阶段训练**：① 自我视角视频生成预训练；② 关键点轨迹预测增强动作意识；③ 转化为 VLA + 世界模型联合训练。**配套**：RynnRCP（机器人上下文协议）+ RynnVLA-001（基础版）+ RynnEC（具身认知）。",
+      "language": "Python (PyTorch)",
+      "license": "Apache-2.0 (代码) + 模型协议",
       "features": [
-        "🌟 11.2k stars — RL 环境事实标准 API",
-        "🔄 OpenAI Gym 官方继承者",
-        "🤖 ManiSkill/LIBERO/IsaacLab 全部兼容",
-        "📦 向量化环境 + 录像录制 + 类型安全"
+        "🧠 统一 VLA + 世界模型 — Action World Model",
+        "📊 LIBERO 97.4% / 真机 +50%",
+        "🔄 VLA ↔ 世界模型双向增强",
+        "📦 配套 RynnRCP + RynnEC + RynnVLA-001"
       ],
-      "stars": "11.2k",
+      "stars": "829",
       "tags": [
-        "RL",
-        "Gymnasium",
-        "Gym",
-        "环境API",
-        "Farama",
-        "标准"
-      ],
-      "addedDate": "2026-05-28"
-    },
-    {
-      "id": "os117",
-      "name": "dm_control (DeepMind — MuJoCo 官方 RL 控制套件)",
-      "github": "https://github.com/google-deepmind/dm_control",
-      "organization": "Google DeepMind",
-      "category": "simulation",
-      "description": "**dm_control** — DeepMind 基于 MuJoCo 的官方 RL 控制套件（GitHub **4.4k stars**）。包含 **标准化控制任务**（Walker / Humanoid / Manipulator / Swimmer 等 30+ 任务）+ **MuJoCo Python 绑定** + **Composer** 框架（动态创建复杂场景）。是 RL 论文中最常用的连续控制基准之一。**与 Gymnasium 兼容**——可通过 shimmy 包转为 Gymnasium API。**具身关联**：人形机器人运动控制 / 操作任务 / 多关节连续控制的标准评测环境。",
-      "language": "Python",
-      "license": "Apache-2.0",
-      "features": [
-        "🌟 4.4k stars — DeepMind 官方 MuJoCo 控制套件",
-        "🏃 30+ 标准控制任务",
-        "🧩 Composer 框架动态场景创建",
-        "🔌 Gymnasium 兼容（via shimmy）"
-      ],
-      "stars": "4.4k",
-      "tags": [
-        "MuJoCo",
-        "RL",
-        "控制",
-        "DeepMind",
-        "连续控制",
-        "基准"
-      ],
-      "addedDate": "2026-05-28"
-    },
-    {
-      "id": "os118",
-      "name": "MuJoCo Playground (DeepMind — GPU 加速 RL + Sim-to-Real)",
-      "github": "https://github.com/google-deepmind/mujoco_playground",
-      "organization": "Google DeepMind",
-      "category": "simulation",
-      "description": "**MuJoCo Playground** — DeepMind 2025 年底开源的 **GPU 加速机器人学习 + Sim-to-Real** 库（GitHub **1.7k stars**）。基于 MuJoCo XLA / MuJoCo Warp，实现**数千环境并行**（Isaac Gym 级别的 GPU 并行 + MuJoCo 的精确物理）。包含预训练 locomotion 策略 + manipulation 任务 + sim-to-real 迁移 pipeline。**定位**：dm_control 的 GPU 加速升级版——保持 MuJoCo 物理精度的同时获得 Isaac Gym 级别的训练速度。",
-      "language": "Python (JAX + MuJoCo XLA)",
-      "license": "Apache-2.0",
-      "features": [
-        "🚀 GPU 加速 MuJoCo — 数千环境并行",
-        "🦿 locomotion + manipulation 预训练策略",
-        "🔄 内置 Sim-to-Real 迁移 pipeline",
-        "⚡ JAX + MuJoCo XLA — Isaac Gym 级速度"
-      ],
-      "stars": "1.7k",
-      "tags": [
-        "MuJoCo",
-        "GPU并行",
-        "Sim-to-Real",
-        "JAX",
-        "DeepMind",
-        "locomotion"
-      ],
-      "addedDate": "2026-05-28"
-    },
-    {
-      "id": "os119",
-      "name": "XLeRobot (双臂移动机器人全栈方案 — $660 成本)",
-      "github": "https://github.com/Vector-Wangel/XLeRobot",
-      "organization": "Vector-Wangel 社区",
-      "category": "hardware",
-      "description": "**XLeRobot** — 社区驱动的**双臂移动家庭机器人全栈开源方案**（GitHub **4.6k stars**）。**总成本仅 $660**——目前最低成本的双臂移动操作平台。基于 LeRobot 框架，支持 ACT / Diffusion / SmolVLA 等策略。**硬件**：SO100 双臂 + 差速底盘 + RealSense 相机。**软件**：LeRobot 数据采集 + 训练 + 部署完整 pipeline。**具身关联**：极低门槛让个人开发者 / 高校实验室也能做双臂移动操作研究——从「看论文」到「自己做」的关键跳板。",
-      "language": "Python",
-      "license": "MIT",
-      "features": [
-        "💰 $660 全成本 — 最低价双臂移动机器人",
-        "🤗 基于 LeRobot 框架",
-        "🦾 SO100 双臂 + 差速底盘 + RealSense",
-        "📦 ACT / Diffusion / SmolVLA 策略支持"
-      ],
-      "stars": "4.6k",
-      "tags": [
-        "双臂",
-        "移动操作",
-        "低成本",
-        "LeRobot",
-        "SO100",
-        "开源硬件"
-      ],
-      "addedDate": "2026-05-28"
-    },
-    {
-      "id": "os120",
-      "name": "robosuite (ARISE — 机器人操作仿真基准框架)",
-      "github": "https://github.com/ARISE-Initiative/robosuite",
-      "organization": "ARISE Initiative (Stanford / UT Austin / NVIDIA)",
-      "category": "simulation",
-      "description": "**robosuite** — ARISE Initiative 开源的**机器人操作仿真基准框架**（GitHub **1.7k stars**）。基于 MuJoCo，提供**标准化操作任务**（Pick-Place / Stack / Peg-in-Hole / Nut Assembly / Door Opening 等）+ **多机器人形态**（Panda / Sawyer / IIWA / Jaco / Kinova）+ **渲染器** + **控制器接口**。**与 Robomimic 配套**——robosuite 提供仿真环境，Robomimic 提供基于演示数据的学习框架。VLA 论文中最常用的操作评测环境之一。",
-      "language": "Python",
-      "license": "MIT",
-      "features": [
-        "🤖 标准化操作任务基准 — Pick/Stack/Peg-in-Hole/Door",
-        "🦾 多机器人形态 — Panda/Sawyer/IIWA/Jaco",
-        "🔧 MuJoCo 后端 + 渲染器 + 控制器",
-        "📊 与 Robomimic 配套 — 评测+学习一体"
-      ],
-      "stars": "1.7k",
-      "tags": [
-        "仿真",
-        "操作",
-        "基准",
-        "MuJoCo",
-        "robosuite",
-        "ARISE"
-      ],
-      "addedDate": "2026-05-28"
-    },
-    {
-      "id": "os121",
-      "name": "Robomimic (ARISE — 基于演示的机器人学习框架)",
-      "github": "https://github.com/ARISE-Initiative/robomimic",
-      "organization": "ARISE Initiative (Stanford / UT Austin / NVIDIA)",
-      "category": "framework",
-      "description": "**Robomimic** — ARISE Initiative 开源的**基于演示数据的机器人学习框架**（GitHub **1.0k stars**，CoRL 2021 Best Paper 获奖工作）。提供**算法库**（BC / BC-RNN / HBC / IRIS / Diffusion Policy / ACT）+ **标准数据集**（多质量等级演示数据）+ **评测流水线**。**核心贡献**：首次系统研究「**演示数据质量 vs 学习算法性能**」的关系——发现数据质量对性能影响远大于算法选择。**与 robosuite 配套**。**具身关联**：所有做模仿学习的人必须读的框架——理解 BC / Diffusion Policy / ACT 的标准评测方法。",
-      "language": "Python",
-      "license": "MIT",
-      "features": [
-        "🏆 CoRL 2021 Best Paper",
-        "📊 演示数据质量 vs 算法性能系统研究",
-        "🤖 BC / BC-RNN / Diffusion Policy / ACT 算法库",
-        "📦 标准数据集 + 评测流水线"
-      ],
-      "stars": "1.0k",
-      "tags": [
-        "模仿学习",
-        "演示数据",
-        "BC",
-        "Diffusion Policy",
-        "CoRL",
-        "ARISE"
-      ],
-      "addedDate": "2026-05-28"
-    },
-    {
-      "id": "os122",
-      "name": "MuJoCo Menagerie (DeepMind — 机器人 MJCF 模型库)",
-      "github": "https://github.com/google-deepmind/mujoco_menagerie",
-      "organization": "Google DeepMind",
-      "category": "hardware",
-      "description": "**MuJoCo Menagerie** — DeepMind 维护的**高质量机器人 MJCF 模型集合**（GitHub **2.2k stars**）。包含 **50+ 机器人模型**：Franka Panda / UR5e / ALOHA / Unitree Go2 / Unitree G1 / Shadow Hand / Allegro / ANYmal / Spot / Atlas 等——每个模型都经过**物理参数校准 + 碰撞几何优化**。**为什么重要**：做仿真 RL / 模仿学习时，一个好的 MJCF 模型是起点——Menagerie 省去了从零建模的巨大工作量。**与 MuJoCo / dm_control / MuJoCo Playground / IsaacLab 全部兼容**。",
-      "language": "MJCF (XML) + Python (工具)",
-      "license": "Apache-2.0",
-      "features": [
-        "📦 50+ 高质量机器人 MJCF 模型",
-        "🔬 物理参数校准 + 碰撞几何优化",
-        "🦾 Franka/UR5e/ALOHA/Unitree/Shadow Hand/Atlas",
-        "🔌 与 MuJoCo/dm_control/IsaacLab 兼容"
-      ],
-      "stars": "2.2k",
-      "tags": [
-        "MJCF",
-        "模型库",
-        "MuJoCo",
-        "Franka",
-        "Unitree",
-        "DeepMind"
+        "VLA",
+        "世界模型",
+        "达摩院",
+        "Action World Model",
+        "LIBERO",
+        "统一架构"
       ],
       "addedDate": "2026-05-28"
     },
@@ -474,28 +349,184 @@
       "addedDate": "2026-05-28"
     },
     {
-      "id": "os124",
-      "name": "RynnVLA-002 (达摩院 — 统一 VLA + 世界模型 Action World Model)",
-      "github": "https://github.com/alibaba-damo-academy/RynnVLA-002",
-      "organization": "阿里巴巴达摩院",
-      "category": "ai-model",
-      "description": "**RynnVLA-002** — 阿里达摩院 2025-11 开源的**统一 VLA + 世界模型（Action World Model）**（GitHub **829 stars**）。**核心创新**：图像、文本、动作共享统一词表，在单一 LLM 架构中**统一理解 & 生成多模态**。世界模型用「动作+视觉」预测未来图像状态，学习环境物理规律，反向增强动作规划——实现 VLA 与世界模型「**双向增强**」。**性能**：LIBERO 零预训练 **97.4%** 成功率 / 真实 LeRobot 任务成功率提升 **50%+**。**三阶段训练**：① 自我视角视频生成预训练；② 关键点轨迹预测增强动作意识；③ 转化为 VLA + 世界模型联合训练。**配套**：RynnRCP（机器人上下文协议）+ RynnVLA-001（基础版）+ RynnEC（具身认知）。",
-      "language": "Python (PyTorch)",
-      "license": "Apache-2.0 (代码) + 模型协议",
+      "id": "os122",
+      "name": "MuJoCo Menagerie (DeepMind — 机器人 MJCF 模型库)",
+      "github": "https://github.com/google-deepmind/mujoco_menagerie",
+      "organization": "Google DeepMind",
+      "category": "hardware",
+      "description": "**MuJoCo Menagerie** — DeepMind 维护的**高质量机器人 MJCF 模型集合**（GitHub **2.2k stars**）。包含 **50+ 机器人模型**：Franka Panda / UR5e / ALOHA / Unitree Go2 / Unitree G1 / Shadow Hand / Allegro / ANYmal / Spot / Atlas 等——每个模型都经过**物理参数校准 + 碰撞几何优化**。**为什么重要**：做仿真 RL / 模仿学习时，一个好的 MJCF 模型是起点——Menagerie 省去了从零建模的巨大工作量。**与 MuJoCo / dm_control / MuJoCo Playground / IsaacLab 全部兼容**。",
+      "language": "MJCF (XML) + Python (工具)",
+      "license": "Apache-2.0",
       "features": [
-        "🧠 统一 VLA + 世界模型 — Action World Model",
-        "📊 LIBERO 97.4% / 真机 +50%",
-        "🔄 VLA ↔ 世界模型双向增强",
-        "📦 配套 RynnRCP + RynnEC + RynnVLA-001"
+        "📦 50+ 高质量机器人 MJCF 模型",
+        "🔬 物理参数校准 + 碰撞几何优化",
+        "🦾 Franka/UR5e/ALOHA/Unitree/Shadow Hand/Atlas",
+        "🔌 与 MuJoCo/dm_control/IsaacLab 兼容"
       ],
-      "stars": "829",
+      "stars": "2.2k",
       "tags": [
-        "VLA",
-        "世界模型",
-        "达摩院",
-        "Action World Model",
-        "LIBERO",
-        "统一架构"
+        "MJCF",
+        "模型库",
+        "MuJoCo",
+        "Franka",
+        "Unitree",
+        "DeepMind"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os121",
+      "name": "Robomimic (ARISE — 基于演示的机器人学习框架)",
+      "github": "https://github.com/ARISE-Initiative/robomimic",
+      "organization": "ARISE Initiative (Stanford / UT Austin / NVIDIA)",
+      "category": "framework",
+      "description": "**Robomimic** — ARISE Initiative 开源的**基于演示数据的机器人学习框架**（GitHub **1.0k stars**，CoRL 2021 Best Paper 获奖工作）。提供**算法库**（BC / BC-RNN / HBC / IRIS / Diffusion Policy / ACT）+ **标准数据集**（多质量等级演示数据）+ **评测流水线**。**核心贡献**：首次系统研究「**演示数据质量 vs 学习算法性能**」的关系——发现数据质量对性能影响远大于算法选择。**与 robosuite 配套**。**具身关联**：所有做模仿学习的人必须读的框架——理解 BC / Diffusion Policy / ACT 的标准评测方法。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "🏆 CoRL 2021 Best Paper",
+        "📊 演示数据质量 vs 算法性能系统研究",
+        "🤖 BC / BC-RNN / Diffusion Policy / ACT 算法库",
+        "📦 标准数据集 + 评测流水线"
+      ],
+      "stars": "1.0k",
+      "tags": [
+        "模仿学习",
+        "演示数据",
+        "BC",
+        "Diffusion Policy",
+        "CoRL",
+        "ARISE"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os120",
+      "name": "robosuite (ARISE — 机器人操作仿真基准框架)",
+      "github": "https://github.com/ARISE-Initiative/robosuite",
+      "organization": "ARISE Initiative (Stanford / UT Austin / NVIDIA)",
+      "category": "simulation",
+      "description": "**robosuite** — ARISE Initiative 开源的**机器人操作仿真基准框架**（GitHub **1.7k stars**）。基于 MuJoCo，提供**标准化操作任务**（Pick-Place / Stack / Peg-in-Hole / Nut Assembly / Door Opening 等）+ **多机器人形态**（Panda / Sawyer / IIWA / Jaco / Kinova）+ **渲染器** + **控制器接口**。**与 Robomimic 配套**——robosuite 提供仿真环境，Robomimic 提供基于演示数据的学习框架。VLA 论文中最常用的操作评测环境之一。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "🤖 标准化操作任务基准 — Pick/Stack/Peg-in-Hole/Door",
+        "🦾 多机器人形态 — Panda/Sawyer/IIWA/Jaco",
+        "🔧 MuJoCo 后端 + 渲染器 + 控制器",
+        "📊 与 Robomimic 配套 — 评测+学习一体"
+      ],
+      "stars": "1.7k",
+      "tags": [
+        "仿真",
+        "操作",
+        "基准",
+        "MuJoCo",
+        "robosuite",
+        "ARISE"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os119",
+      "name": "XLeRobot (双臂移动机器人全栈方案 — $660 成本)",
+      "github": "https://github.com/Vector-Wangel/XLeRobot",
+      "organization": "Vector-Wangel 社区",
+      "category": "hardware",
+      "description": "**XLeRobot** — 社区驱动的**双臂移动家庭机器人全栈开源方案**（GitHub **4.6k stars**）。**总成本仅 $660**——目前最低成本的双臂移动操作平台。基于 LeRobot 框架，支持 ACT / Diffusion / SmolVLA 等策略。**硬件**：SO100 双臂 + 差速底盘 + RealSense 相机。**软件**：LeRobot 数据采集 + 训练 + 部署完整 pipeline。**具身关联**：极低门槛让个人开发者 / 高校实验室也能做双臂移动操作研究——从「看论文」到「自己做」的关键跳板。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "💰 $660 全成本 — 最低价双臂移动机器人",
+        "🤗 基于 LeRobot 框架",
+        "🦾 SO100 双臂 + 差速底盘 + RealSense",
+        "📦 ACT / Diffusion / SmolVLA 策略支持"
+      ],
+      "stars": "4.6k",
+      "tags": [
+        "双臂",
+        "移动操作",
+        "低成本",
+        "LeRobot",
+        "SO100",
+        "开源硬件"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os118",
+      "name": "MuJoCo Playground (DeepMind — GPU 加速 RL + Sim-to-Real)",
+      "github": "https://github.com/google-deepmind/mujoco_playground",
+      "organization": "Google DeepMind",
+      "category": "simulation",
+      "description": "**MuJoCo Playground** — DeepMind 2025 年底开源的 **GPU 加速机器人学习 + Sim-to-Real** 库（GitHub **1.7k stars**）。基于 MuJoCo XLA / MuJoCo Warp，实现**数千环境并行**（Isaac Gym 级别的 GPU 并行 + MuJoCo 的精确物理）。包含预训练 locomotion 策略 + manipulation 任务 + sim-to-real 迁移 pipeline。**定位**：dm_control 的 GPU 加速升级版——保持 MuJoCo 物理精度的同时获得 Isaac Gym 级别的训练速度。",
+      "language": "Python (JAX + MuJoCo XLA)",
+      "license": "Apache-2.0",
+      "features": [
+        "🚀 GPU 加速 MuJoCo — 数千环境并行",
+        "🦿 locomotion + manipulation 预训练策略",
+        "🔄 内置 Sim-to-Real 迁移 pipeline",
+        "⚡ JAX + MuJoCo XLA — Isaac Gym 级速度"
+      ],
+      "stars": "1.7k",
+      "tags": [
+        "MuJoCo",
+        "GPU并行",
+        "Sim-to-Real",
+        "JAX",
+        "DeepMind",
+        "locomotion"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os117",
+      "name": "dm_control (DeepMind — MuJoCo 官方 RL 控制套件)",
+      "github": "https://github.com/google-deepmind/dm_control",
+      "organization": "Google DeepMind",
+      "category": "simulation",
+      "description": "**dm_control** — DeepMind 基于 MuJoCo 的官方 RL 控制套件（GitHub **4.4k stars**）。包含 **标准化控制任务**（Walker / Humanoid / Manipulator / Swimmer 等 30+ 任务）+ **MuJoCo Python 绑定** + **Composer** 框架（动态创建复杂场景）。是 RL 论文中最常用的连续控制基准之一。**与 Gymnasium 兼容**——可通过 shimmy 包转为 Gymnasium API。**具身关联**：人形机器人运动控制 / 操作任务 / 多关节连续控制的标准评测环境。",
+      "language": "Python",
+      "license": "Apache-2.0",
+      "features": [
+        "🌟 4.4k stars — DeepMind 官方 MuJoCo 控制套件",
+        "🏃 30+ 标准控制任务",
+        "🧩 Composer 框架动态场景创建",
+        "🔌 Gymnasium 兼容（via shimmy）"
+      ],
+      "stars": "4.4k",
+      "tags": [
+        "MuJoCo",
+        "RL",
+        "控制",
+        "DeepMind",
+        "连续控制",
+        "基准"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os116",
+      "name": "Gymnasium (Farama — RL 环境标准 API，Gym 继承者)",
+      "github": "https://github.com/Farama-Foundation/Gymnasium",
+      "organization": "Farama Foundation",
+      "category": "framework",
+      "description": "**Gymnasium** — OpenAI Gym 的官方继承者，由 Farama Foundation 维护（GitHub **11.2k stars**）。**RL 环境的事实标准 API** — 所有主流 RL 框架（Stable Baselines3 / CleanRL / RLinf / TorchRL）都以 Gymnasium 为环境接口标准。提供统一的 `env.reset() / env.step(action)` API + 类型安全 + 向量化环境 + 录像录制。**具身智能关联**：ManiSkill / LIBERO / RoboTwin / IsaacLab 等仿真器全部实现 Gymnasium 接口；RLinf 的所有仿真环境也通过 Gymnasium wrapper 接入。如果你做 RL，这是**必须知道的第一个库**。",
+      "language": "Python",
+      "license": "MIT",
+      "features": [
+        "🌟 11.2k stars — RL 环境事实标准 API",
+        "🔄 OpenAI Gym 官方继承者",
+        "🤖 ManiSkill/LIBERO/IsaacLab 全部兼容",
+        "📦 向量化环境 + 录像录制 + 类型安全"
+      ],
+      "stars": "11.2k",
+      "tags": [
+        "RL",
+        "Gymnasium",
+        "Gym",
+        "环境API",
+        "Farama",
+        "标准"
       ],
       "addedDate": "2026-05-28"
     },
@@ -534,37 +565,6 @@
       "addedDate": "2026-05-28"
     },
     {
-      "id": "os113",
-      "name": "OpenClaw (全球第一 AI Agent 框架 — 369k stars / MIT / 50+ 消息通道)",
-      "github": "https://github.com/openclaw/openclaw",
-      "organization": "OpenClaw Foundation (创始人 Peter Steinberger → OpenAI Personal Agents 负责人)",
-      "category": "ai-agent-framework",
-      "description": "**OpenClaw** — 全球 GitHub Stars 第一的 AI Agent 框架（**369k+ stars**，2026 年 3 月超越 React / Linux 登顶）。MIT 协议 + TypeScript 主体 + Swift（iOS/macOS）。核心能力：① **任何 LLM 路由**（Claude / GPT / Gemini / DeepSeek / Kimi / 本地 Ollama）；② **50+ 消息通道**（WhatsApp / Telegram / Slack / Discord / 企业微信 / 飞书 / 钉钉）；③ **13,700+ ClawHub Skills 生态**（2026-05）；④ **自主规划 + 连贯执行复杂任务**（从对话交互工具升级为「数字替身」）。**创始人 Peter Steinberger 2026-02-14 加入 OpenAI 主管 Personal Agents 部门**，项目移交独立开源基金会管理（OpenAI 资金支持 + MIT 不变）。**与具身智能的关系**：① 可作为机器人的上层 Agent 调度层（语音 / 消息 → Agent → VLA / Nav 执行）；② hermes-embodied 等项目已在 OpenClaw 生态之上构建机器人技能闭环；③ 我们的 embodied-agent 学习模块（sec-0 到 sec-N）的参考实现。**中国生态**：阿里云 / 腾讯云 / 火山引擎均有一键部署服务；百度优选电商 Skill 上架 ClawHub。",
-      "language": "TypeScript (主体) + Swift (iOS/macOS)",
-      "license": "MIT",
-      "features": [
-        "🌟 GitHub 369k+ stars — 全球开源项目第一（超 React + Linux）",
-        "🤖 任意 LLM 路由 — Claude / GPT / Gemini / DeepSeek / Kimi / Ollama",
-        "📱 50+ 消息通道 — WhatsApp/Telegram/Slack/企微/飞书/钉钉",
-        "🧩 13,700+ ClawHub Skills — 可扩展技能市场",
-        "🔐 MIT 协议 — 完全开源、可自托管",
-        "🏢 OpenAI 资金支持 + 独立基金会管理",
-        "🇨🇳 阿里云/腾讯云/火山引擎一键部署"
-      ],
-      "stars": "369k+",
-      "tags": [
-        "AI Agent",
-        "OpenClaw",
-        "GitHub第一",
-        "MIT",
-        "TypeScript",
-        "50+通道",
-        "ClawHub",
-        "数字替身"
-      ],
-      "addedDate": "2026-05-28"
-    },
-    {
       "id": "os114",
       "name": "Hermes Agent (Nous Research — 自进化 AI Agent + hermes-embodied 具身扩展)",
       "github": "https://github.com/NousResearch/hermes-agent",
@@ -597,128 +597,33 @@
       "addedDate": "2026-05-28"
     },
     {
-      "id": "os108",
-      "name": "FAST-LIVO2 (港大 MaRS — 室外多传感器融合 SOTA SLAM)",
-      "github": "https://github.com/hku-mars/FAST-LIVO2",
-      "organization": "香港大学 MaRS Lab (张富团队)",
-      "category": "outdoor-navigation",
-      "description": "**FAST-LIVO2** — 香港大学 MaRS Lab 张富团队 2025-01-23 开源，**目前最 SOTA 的 LiDAR-惯性-视觉融合 SLAM 框架**（IEEE T-RO 2024 收录）。核心采用**误差状态迭代卡尔曼滤波器（ESIKF）+ 顺序更新策略**，先处理 LiDAR 数据再处理视觉数据，解决了不同传感器数据维度不匹配的问题。**直接法融合**——抛弃繁琐特征提取，LiDAR 直接对原始点云配准，视觉直接最小化光度误差。**关键创新**：① **统一体素地图（Unified Voxel Map）**——每个体素同时存储几何（概率平面）+ 视觉（图像补丁）；② **LiDAR 平面不确定性作为视觉光度误差几何先验**，跨模态自适应权重；③ **逆曝光时间 τ 作为状态分量**——支持光照剧烈变化场景（夜间、逆光）；④ **按需体素射线投射**——LiDAR 近距盲区也能稳定。第一作者郑纯然博士入选华为「天才少年」。**适用场景**：无人机自主飞行（70+ km/h 高速避障）、室外移动机器人、自动驾驶、退化场景（隧道、林地、高架桥下）。**配套**：MARS-LVIG 数据集 + LIV_handhold 硬件设备 + FAST-Calib 标定工具一键开源。",
-      "language": "C++ (ROS1) + ROS2 移植版",
-      "license": "GPLv2",
+      "id": "os113",
+      "name": "OpenClaw (全球第一 AI Agent 框架 — 369k stars / MIT / 50+ 消息通道)",
+      "github": "https://github.com/openclaw/openclaw",
+      "organization": "OpenClaw Foundation (创始人 Peter Steinberger → OpenAI Personal Agents 负责人)",
+      "category": "ai-agent-framework",
+      "description": "**OpenClaw** — 全球 GitHub Stars 第一的 AI Agent 框架（**369k+ stars**，2026 年 3 月超越 React / Linux 登顶）。MIT 协议 + TypeScript 主体 + Swift（iOS/macOS）。核心能力：① **任何 LLM 路由**（Claude / GPT / Gemini / DeepSeek / Kimi / 本地 Ollama）；② **50+ 消息通道**（WhatsApp / Telegram / Slack / Discord / 企业微信 / 飞书 / 钉钉）；③ **13,700+ ClawHub Skills 生态**（2026-05）；④ **自主规划 + 连贯执行复杂任务**（从对话交互工具升级为「数字替身」）。**创始人 Peter Steinberger 2026-02-14 加入 OpenAI 主管 Personal Agents 部门**，项目移交独立开源基金会管理（OpenAI 资金支持 + MIT 不变）。**与具身智能的关系**：① 可作为机器人的上层 Agent 调度层（语音 / 消息 → Agent → VLA / Nav 执行）；② hermes-embodied 等项目已在 OpenClaw 生态之上构建机器人技能闭环；③ 我们的 embodied-agent 学习模块（sec-0 到 sec-N）的参考实现。**中国生态**：阿里云 / 腾讯云 / 火山引擎均有一键部署服务；百度优选电商 Skill 上架 ClawHub。",
+      "language": "TypeScript (主体) + Swift (iOS/macOS)",
+      "license": "MIT",
       "features": [
-        "🌟 IEEE T-RO 2024 + 港大火星实验室 — LiDAR-惯性-视觉融合 SOTA",
-        "🔥 ESIKF 顺序更新 + 直接法 — 抛弃特征提取，光度误差直接对齐",
-        "🌐 统一体素地图 — 几何+视觉双信息共享",
-        "🌙 逆曝光时间状态分量 — 夜间/逆光场景鲁棒",
-        "🚁 室外/野外/隧道/退化场景 SLAM 首选 — 70+ km/h 无人机高速验证",
-        "📦 MARS-LVIG 数据集 + LIV_handhold 硬件 + FAST-Calib 标定全栈开源",
-        "⚙️ ROS2 Humble 移植版（VIS4ROB-lab）"
+        "🌟 GitHub 369k+ stars — 全球开源项目第一（超 React + Linux）",
+        "🤖 任意 LLM 路由 — Claude / GPT / Gemini / DeepSeek / Kimi / Ollama",
+        "📱 50+ 消息通道 — WhatsApp/Telegram/Slack/企微/飞书/钉钉",
+        "🧩 13,700+ ClawHub Skills — 可扩展技能市场",
+        "🔐 MIT 协议 — 完全开源、可自托管",
+        "🏢 OpenAI 资金支持 + 独立基金会管理",
+        "🇨🇳 阿里云/腾讯云/火山引擎一键部署"
       ],
-      "stars": "3.8k+",
+      "stars": "369k+",
       "tags": [
-        "SLAM",
-        "LiDAR-Inertial-Visual",
-        "室外导航",
-        "退化场景",
-        "ESIKF",
-        "港大MaRS",
-        "IEEE T-RO",
-        "无人机"
-      ],
-      "addedDate": "2026-05-28"
-    },
-    {
-      "id": "os109",
-      "name": "Autoware (autonomousfoundation — 全球开源 L2-L4 自动驾驶标杆)",
-      "github": "https://github.com/autowarefoundation/autoware",
-      "organization": "Autoware Foundation (东京大学发起 / 全球社区)",
-      "category": "outdoor-navigation",
-      "description": "**Autoware** — 由日本东京大学发起、Autoware Foundation 全球社区维护的**全栈式自动驾驶框架**，是开源自动驾驶的「**事实标准**」。主打**「低成本、易部署、跨平台」**，支持 L2~L4 级自动驾驶，覆盖城市道路、高速、园区等场景。**核心模块**：感知（多传感器融合 / LiDAR 检测 / 摄像头融合）+ 定位（NDT / EKF / GNSS 融合）+ 规划（Lanelet2 道路网络 + 行为规划 + 运动规划）+ 控制（横向 + 纵向）。**两大版本**：① **Autoware.Universe** — 当前主推版本，基于 ROS 2 Humble；② **Autoware.Auto** — Apex.OS 版本，更注重产品级稳定性。**部署平台**：X86 + ARM (Jetson 系列) + 瑞芯微 + 百度昆仑芯。**典型用例**：园区无人车 / 配送机器人 / 矿区自动驾驶 / 末端物流 / 学术研究。**Autoware 与 Apollo 对比**：Autoware = 学术开源标杆 + 跨平台 + 易扩展；Apollo = 工业级 + 量产部署 + 中国生态深耕。**配套**：完整高精度地图工具链（PCD 点云图 + Lanelet2 矢量图 + OSM 语义图）+ AWSIM 仿真器 + Open Autonomous Driving Dataset。",
-      "language": "C++ (核心) + Python (工具/仿真) + Rust (高性能模块)",
-      "license": "Apache-2.0",
-      "features": [
-        "🌍 全球开源自动驾驶标杆 — 东京大学发起 / Autoware Foundation 治理",
-        "🛣️ L2-L4 全场景 — 城市/高速/园区 / 配送 / 矿区",
-        "🤖 ROS 2 Humble 原生 — 与 ROS 生态深度集成",
-        "🔌 跨平台 — X86 + Jetson + 瑞芯微 + 百度昆仑芯",
-        "🗺️ Lanelet2 高精地图工具链 — PCD + 矢量 + 语义",
-        "🎯 与 Apollo 互补 — Autoware 偏研究/低成本 / Apollo 偏量产/中国生态",
-        "📚 AWSIM 仿真器 + 完整培训资料"
-      ],
-      "stars": "10.3k+",
-      "tags": [
-        "自动驾驶",
-        "Autoware",
-        "ROS2",
-        "Lanelet2",
-        "园区无人车",
-        "L4",
-        "Universe",
-        "全栈"
-      ],
-      "addedDate": "2026-05-28"
-    },
-    {
-      "id": "os110",
-      "name": "FunASR (Alibaba DAMO — 工业级 ASR 全套工具包)",
-      "github": "https://github.com/modelscope/FunASR",
-      "organization": "阿里达摩院语音实验室 / FunAudioLLM",
-      "category": "speech-asr",
-      "description": "**FunASR** — 阿里达摩院开源的**工业级语音识别工具包**，GitHub 15.2k+ stars。**核心定位**：① 提供基于工业语料训练的 SOTA 预训练模型；② 打通训练到部署全链路（训练 + 微调 + Docker 服务部署 + ONNX 导出）。**统一 AutoModel 接口** — 几行代码完成 VAD + ASR + 标点 + 说话人分离 + 情感识别全流水线。**自研模型**：Paraformer 系列（INTERSPEECH 2022/2023，单步非自回归 NAR，比自回归快 12×，AISHELL-1 CER 1.95%）+ fsmn-vad + ct-punc + emotion2vec。**集成模型**：SenseVoiceSmall（多语种 + 情感 + 事件，10 秒音频 70ms 处理）+ Fun-ASR-Nano（800M / 7 方言 / 26 口音 / 歌词识别）+ Whisper Large V3 + Qwen-Audio。**性能**：GPU 离线转录 RTF=0.0076，多线程加速比 1200+；CPU INT8 量化 RTF=0.0446，CER 无损失。**社区生态**：Triton GPU 部署 + sherpa-onnx 跨平台 + SenseVoice.cpp（GGML / 3-8 bit 量化）+ FastAPI 服务。**机器人应用场景**：会议记录 / 语音控制 / 人机对话 / 实时字幕 / 客服质检。",
-      "language": "Python (PyTorch)",
-      "license": "MIT (代码) + Model License Agreement (模型)",
-      "features": [
-        "🌟 GitHub 15.2k+ stars — 工业级 ASR 标杆",
-        "⚡ 170× realtime — Whisper 13× / 云 API 1× 全部碾压",
-        "🎯 统一 AutoModel — VAD + ASR + 标点 + 说话人分离 + 情感识别一行代码",
-        "🇨🇳 Paraformer + SenseVoice + Fun-ASR-Nano 中文 SOTA — AISHELL-1 CER 1.95%",
-        "🌍 50+ 语言支持 + 7 中文方言 + 26 口音",
-        "🚀 vLLM 加速 2-3× / Triton 部署 / sherpa-onnx 端侧",
-        "🤝 OpenAI API 兼容 + MCP Server (Claude/Cursor)",
-        "📦 ONNX 导出 + Docker + ARM64 + Windows SDK"
-      ],
-      "stars": "15.2k+",
-      "tags": [
-        "ASR",
-        "语音识别",
-        "Paraformer",
-        "SenseVoice",
-        "Fun-ASR-Nano",
-        "阿里达摩院",
-        "工业级",
-        "中文SOTA"
-      ],
-      "addedDate": "2026-05-28"
-    },
-    {
-      "id": "os111",
-      "name": "sherpa-onnx (k2-fsa — 跨平台离线语音部署框架)",
-      "github": "https://github.com/k2-fsa/sherpa-onnx",
-      "organization": "k2-fsa (Next-gen Kaldi 团队)",
-      "category": "speech-deployment",
-      "description": "**sherpa-onnx** — Next-gen Kaldi 团队开源的**跨平台离线语音部署框架**，GitHub 10.9k+ stars。**核心定位**：把多种语音模型（Whisper / SenseVoice / Paraformer / Moonshine / FireRedASR / FunASR-Nano）**统一转成 ONNX 格式**，部署到从服务器到嵌入式的各类平台，**完全离线运行**。**12 项语音功能**：ASR（流式 + 非流式）+ TTS + 说话人分离 + 说话人识别 + 说话人验证 + 语种识别 + VAD（silero-vad）+ 关键词检测 + 音频标签 + 标点恢复 + 语音增强（gtcrn / DPDFNet）+ 音源分离（spleeter / UVR）。**多平台覆盖**：Android / iOS / Windows / macOS / Linux / HarmonyOS（鸿蒙）+ WebAssembly（浏览器）+ WearOS + openKylin + NVIDIA Jetson + Raspberry Pi + RISC-V + RK NPU + Axera NPU + Ascend NPU。**12 种编程语言**：C++/C/Python/JavaScript/Java/C#/Kotlin/Swift/Go/Dart/Rust/Pascal。**机器人应用场景**：本体端语音交互（无需上云）/ 边缘计算 / 离线机器人 / 隐私敏感场景 / 低延迟唤醒。",
-      "language": "C++ (核心) + 多语言绑定",
-      "license": "Apache-2.0",
-      "features": [
-        "🚀 GitHub 10.9k+ stars — Next-gen Kaldi 旗舰部署框架",
-        "🎯 12 项语音功能（不只 ASR）— TTS + VAD + 说话人 + 增强 + 分离全套",
-        "📱 多平台：Android / iOS / Windows / macOS / Linux / 鸿蒙 / WebAssembly",
-        "🌐 12 种编程语言绑定 — C/C++/Python/Rust/Dart 等全覆盖",
-        "🔧 NPU 加速：RK NPU / Axera NPU / 昇腾 NPU / NVIDIA Jetson",
-        "💾 Raspberry Pi / RISC-V / WearOS — 嵌入式深度支持",
-        "🔌 Whisper / SenseVoice / Paraformer / FunASR-Nano / Moonshine / FireRedASR 全集成",
-        "🤖 完全离线 — 机器人本体语音交互首选"
-      ],
-      "stars": "10.9k+",
-      "tags": [
-        "ASR",
-        "TTS",
-        "ONNX",
-        "跨平台",
-        "嵌入式",
-        "Next-gen Kaldi",
-        "鸿蒙",
-        "离线部署"
+        "AI Agent",
+        "OpenClaw",
+        "GitHub第一",
+        "MIT",
+        "TypeScript",
+        "50+通道",
+        "ClawHub",
+        "数字替身"
       ],
       "addedDate": "2026-05-28"
     },
@@ -727,7 +632,7 @@
       "name": "GPT-SoVITS (RVC-Boss — 5 秒语音克隆开源神器)",
       "github": "https://github.com/RVC-Boss/GPT-SoVITS",
       "organization": "RVC-Boss (个人 + 社区维护)",
-      "category": "speech-tts",
+      "category": "ai-model",
       "description": "**GPT-SoVITS** — RVC 变声器创始人开源的**5 秒语音克隆 TTS 神器**，GitHub **55.6k+ stars**（TTS 开源项目第一）。**核心创新**：融合 GPT 架构理解文本语义 + SoVITS 声码器生成自然语音，**仅需 5 秒参考音频即可克隆声线**——业内最低门槛。**两种使用模式**：① **零样本克隆**：5 秒音频立即克隆；② **少样本微调**：1 分钟训练数据，相似度 / 真实感大幅提升（10 epoch / GPU 6GB+ 显存）。**多语言支持**：中 / 英 / 日 / 韩 / 粤，**跨语言保持音色**——用中文样本读英文/日文/韩文都能保持原说话人音色。**WebUI 全流程**：人声分离（bs_roformer / mel_band_roformer / mdxnet）+ 音频切片 + ASR 标注（自动）+ 模型训练 + 推理合成 + 实时预览。**部署**：Windows 双击启动 / Linux Docker / 7860 端口 Web 服务。**机器人应用场景**：定制化语音助手 / 个性化对话机器人 / 多角色配音 / 有声书 / 视频配音。**注意**：Apache-2.0 + 模型协议，商用前需检查授权。",
       "language": "Python (PyTorch + GPT + SoVITS 混合架构)",
       "license": "Apache-2.0 (代码) + 模型协议",
@@ -755,11 +660,137 @@
       "addedDate": "2026-05-28"
     },
     {
+      "id": "os111",
+      "name": "sherpa-onnx (k2-fsa — 跨平台离线语音部署框架)",
+      "github": "https://github.com/k2-fsa/sherpa-onnx",
+      "organization": "k2-fsa (Next-gen Kaldi 团队)",
+      "category": "framework",
+      "description": "**sherpa-onnx** — Next-gen Kaldi 团队开源的**跨平台离线语音部署框架**，GitHub 10.9k+ stars。**核心定位**：把多种语音模型（Whisper / SenseVoice / Paraformer / Moonshine / FireRedASR / FunASR-Nano）**统一转成 ONNX 格式**，部署到从服务器到嵌入式的各类平台，**完全离线运行**。**12 项语音功能**：ASR（流式 + 非流式）+ TTS + 说话人分离 + 说话人识别 + 说话人验证 + 语种识别 + VAD（silero-vad）+ 关键词检测 + 音频标签 + 标点恢复 + 语音增强（gtcrn / DPDFNet）+ 音源分离（spleeter / UVR）。**多平台覆盖**：Android / iOS / Windows / macOS / Linux / HarmonyOS（鸿蒙）+ WebAssembly（浏览器）+ WearOS + openKylin + NVIDIA Jetson + Raspberry Pi + RISC-V + RK NPU + Axera NPU + Ascend NPU。**12 种编程语言**：C++/C/Python/JavaScript/Java/C#/Kotlin/Swift/Go/Dart/Rust/Pascal。**机器人应用场景**：本体端语音交互（无需上云）/ 边缘计算 / 离线机器人 / 隐私敏感场景 / 低延迟唤醒。",
+      "language": "C++ (核心) + 多语言绑定",
+      "license": "Apache-2.0",
+      "features": [
+        "🚀 GitHub 10.9k+ stars — Next-gen Kaldi 旗舰部署框架",
+        "🎯 12 项语音功能（不只 ASR）— TTS + VAD + 说话人 + 增强 + 分离全套",
+        "📱 多平台：Android / iOS / Windows / macOS / Linux / 鸿蒙 / WebAssembly",
+        "🌐 12 种编程语言绑定 — C/C++/Python/Rust/Dart 等全覆盖",
+        "🔧 NPU 加速：RK NPU / Axera NPU / 昇腾 NPU / NVIDIA Jetson",
+        "💾 Raspberry Pi / RISC-V / WearOS — 嵌入式深度支持",
+        "🔌 Whisper / SenseVoice / Paraformer / FunASR-Nano / Moonshine / FireRedASR 全集成",
+        "🤖 完全离线 — 机器人本体语音交互首选"
+      ],
+      "stars": "10.9k+",
+      "tags": [
+        "ASR",
+        "TTS",
+        "ONNX",
+        "跨平台",
+        "嵌入式",
+        "Next-gen Kaldi",
+        "鸿蒙",
+        "离线部署"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os110",
+      "name": "FunASR (Alibaba DAMO — 工业级 ASR 全套工具包)",
+      "github": "https://github.com/modelscope/FunASR",
+      "organization": "阿里达摩院语音实验室 / FunAudioLLM",
+      "category": "ai-model",
+      "description": "**FunASR** — 阿里达摩院开源的**工业级语音识别工具包**，GitHub 15.2k+ stars。**核心定位**：① 提供基于工业语料训练的 SOTA 预训练模型；② 打通训练到部署全链路（训练 + 微调 + Docker 服务部署 + ONNX 导出）。**统一 AutoModel 接口** — 几行代码完成 VAD + ASR + 标点 + 说话人分离 + 情感识别全流水线。**自研模型**：Paraformer 系列（INTERSPEECH 2022/2023，单步非自回归 NAR，比自回归快 12×，AISHELL-1 CER 1.95%）+ fsmn-vad + ct-punc + emotion2vec。**集成模型**：SenseVoiceSmall（多语种 + 情感 + 事件，10 秒音频 70ms 处理）+ Fun-ASR-Nano（800M / 7 方言 / 26 口音 / 歌词识别）+ Whisper Large V3 + Qwen-Audio。**性能**：GPU 离线转录 RTF=0.0076，多线程加速比 1200+；CPU INT8 量化 RTF=0.0446，CER 无损失。**社区生态**：Triton GPU 部署 + sherpa-onnx 跨平台 + SenseVoice.cpp（GGML / 3-8 bit 量化）+ FastAPI 服务。**机器人应用场景**：会议记录 / 语音控制 / 人机对话 / 实时字幕 / 客服质检。",
+      "language": "Python (PyTorch)",
+      "license": "MIT (代码) + Model License Agreement (模型)",
+      "features": [
+        "🌟 GitHub 15.2k+ stars — 工业级 ASR 标杆",
+        "⚡ 170× realtime — Whisper 13× / 云 API 1× 全部碾压",
+        "🎯 统一 AutoModel — VAD + ASR + 标点 + 说话人分离 + 情感识别一行代码",
+        "🇨🇳 Paraformer + SenseVoice + Fun-ASR-Nano 中文 SOTA — AISHELL-1 CER 1.95%",
+        "🌍 50+ 语言支持 + 7 中文方言 + 26 口音",
+        "🚀 vLLM 加速 2-3× / Triton 部署 / sherpa-onnx 端侧",
+        "🤝 OpenAI API 兼容 + MCP Server (Claude/Cursor)",
+        "📦 ONNX 导出 + Docker + ARM64 + Windows SDK"
+      ],
+      "stars": "15.2k+",
+      "tags": [
+        "ASR",
+        "语音识别",
+        "Paraformer",
+        "SenseVoice",
+        "Fun-ASR-Nano",
+        "阿里达摩院",
+        "工业级",
+        "中文SOTA"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os109",
+      "name": "Autoware (autonomousfoundation — 全球开源 L2-L4 自动驾驶标杆)",
+      "github": "https://github.com/autowarefoundation/autoware",
+      "organization": "Autoware Foundation (东京大学发起 / 全球社区)",
+      "category": "framework",
+      "description": "**Autoware** — 由日本东京大学发起、Autoware Foundation 全球社区维护的**全栈式自动驾驶框架**，是开源自动驾驶的「**事实标准**」。主打**「低成本、易部署、跨平台」**，支持 L2~L4 级自动驾驶，覆盖城市道路、高速、园区等场景。**核心模块**：感知（多传感器融合 / LiDAR 检测 / 摄像头融合）+ 定位（NDT / EKF / GNSS 融合）+ 规划（Lanelet2 道路网络 + 行为规划 + 运动规划）+ 控制（横向 + 纵向）。**两大版本**：① **Autoware.Universe** — 当前主推版本，基于 ROS 2 Humble；② **Autoware.Auto** — Apex.OS 版本，更注重产品级稳定性。**部署平台**：X86 + ARM (Jetson 系列) + 瑞芯微 + 百度昆仑芯。**典型用例**：园区无人车 / 配送机器人 / 矿区自动驾驶 / 末端物流 / 学术研究。**Autoware 与 Apollo 对比**：Autoware = 学术开源标杆 + 跨平台 + 易扩展；Apollo = 工业级 + 量产部署 + 中国生态深耕。**配套**：完整高精度地图工具链（PCD 点云图 + Lanelet2 矢量图 + OSM 语义图）+ AWSIM 仿真器 + Open Autonomous Driving Dataset。",
+      "language": "C++ (核心) + Python (工具/仿真) + Rust (高性能模块)",
+      "license": "Apache-2.0",
+      "features": [
+        "🌍 全球开源自动驾驶标杆 — 东京大学发起 / Autoware Foundation 治理",
+        "🛣️ L2-L4 全场景 — 城市/高速/园区 / 配送 / 矿区",
+        "🤖 ROS 2 Humble 原生 — 与 ROS 生态深度集成",
+        "🔌 跨平台 — X86 + Jetson + 瑞芯微 + 百度昆仑芯",
+        "🗺️ Lanelet2 高精地图工具链 — PCD + 矢量 + 语义",
+        "🎯 与 Apollo 互补 — Autoware 偏研究/低成本 / Apollo 偏量产/中国生态",
+        "📚 AWSIM 仿真器 + 完整培训资料"
+      ],
+      "stars": "10.3k+",
+      "tags": [
+        "自动驾驶",
+        "Autoware",
+        "ROS2",
+        "Lanelet2",
+        "园区无人车",
+        "L4",
+        "Universe",
+        "全栈"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
+      "id": "os108",
+      "name": "FAST-LIVO2 (港大 MaRS — 室外多传感器融合 SOTA SLAM)",
+      "github": "https://github.com/hku-mars/FAST-LIVO2",
+      "organization": "香港大学 MaRS Lab (张富团队)",
+      "category": "perception",
+      "description": "**FAST-LIVO2** — 香港大学 MaRS Lab 张富团队 2025-01-23 开源，**目前最 SOTA 的 LiDAR-惯性-视觉融合 SLAM 框架**（IEEE T-RO 2024 收录）。核心采用**误差状态迭代卡尔曼滤波器（ESIKF）+ 顺序更新策略**，先处理 LiDAR 数据再处理视觉数据，解决了不同传感器数据维度不匹配的问题。**直接法融合**——抛弃繁琐特征提取，LiDAR 直接对原始点云配准，视觉直接最小化光度误差。**关键创新**：① **统一体素地图（Unified Voxel Map）**——每个体素同时存储几何（概率平面）+ 视觉（图像补丁）；② **LiDAR 平面不确定性作为视觉光度误差几何先验**，跨模态自适应权重；③ **逆曝光时间 τ 作为状态分量**——支持光照剧烈变化场景（夜间、逆光）；④ **按需体素射线投射**——LiDAR 近距盲区也能稳定。第一作者郑纯然博士入选华为「天才少年」。**适用场景**：无人机自主飞行（70+ km/h 高速避障）、室外移动机器人、自动驾驶、退化场景（隧道、林地、高架桥下）。**配套**：MARS-LVIG 数据集 + LIV_handhold 硬件设备 + FAST-Calib 标定工具一键开源。",
+      "language": "C++ (ROS1) + ROS2 移植版",
+      "license": "GPLv2",
+      "features": [
+        "🌟 IEEE T-RO 2024 + 港大火星实验室 — LiDAR-惯性-视觉融合 SOTA",
+        "🔥 ESIKF 顺序更新 + 直接法 — 抛弃特征提取，光度误差直接对齐",
+        "🌐 统一体素地图 — 几何+视觉双信息共享",
+        "🌙 逆曝光时间状态分量 — 夜间/逆光场景鲁棒",
+        "🚁 室外/野外/隧道/退化场景 SLAM 首选 — 70+ km/h 无人机高速验证",
+        "📦 MARS-LVIG 数据集 + LIV_handhold 硬件 + FAST-Calib 标定全栈开源",
+        "⚙️ ROS2 Humble 移植版（VIS4ROB-lab）"
+      ],
+      "stars": "3.8k+",
+      "tags": [
+        "SLAM",
+        "LiDAR-Inertial-Visual",
+        "室外导航",
+        "退化场景",
+        "ESIKF",
+        "港大MaRS",
+        "IEEE T-RO",
+        "无人机"
+      ],
+      "addedDate": "2026-05-28"
+    },
+    {
       "id": "os107",
       "name": "Psi-Zero (USC PSI Lab — 通用人形机器人 VLA 基座)",
       "github": "https://github.com/physical-superintelligence-lab/psi-zero",
       "organization": "USC Physical Superintelligence (PSI) Lab",
-      "category": "VLA / 人形基座",
+      "category": "ai-model",
       "description": "**Psi-Zero** — USC Physical Superintelligence Lab 2026-05-05 开源，「**硬件无关**」的人形机器人 VLA 基础模型，**首日 GitHub 2,500+ stars**。核心架构：端到端 Transformer 同时处理视觉 token (ViT) + 语言指令 (T5/LLaMA 变体) + 动作序列，**自回归动作生成**（区别于 π0 的 diffusion 路线）。训练数据混合 MuJoCo / Isaac Gym 仿真 + 真机遥操作。预训练权重 + PsiSim 仿真环境同步开源，可在自研硬件上 fine-tune。**注意**：当前仅放出权重 + 训练脚本，**未公布标准基准评测分数**——AINews 评论指出这是「主要红旗」，但社区仍在快速复现验证。与 LeRobot 兼容，可与 HumDex / D2E 数据集联训。",
       "language": "Python (PyTorch + HuggingFace)",
       "license": "MIT",
@@ -786,7 +817,7 @@
       "name": "FRAPPE (浙大 + 西湖 + 港科广 — 多未来表征对齐世界建模)",
       "github": "https://github.com/h-zhao1997/frappe",
       "organization": "浙江大学 / 西湖大学 / 香港科技大学（广州）",
-      "category": "VLA / 世界建模",
+      "category": "ai-model",
       "description": "**FRAPPE** — 浙大 + 西湖 + 港科广 2026-05 联合开源，「**多未来表征对齐 + 并行渐进扩展**」把世界建模注入通用机器人策略的高效训练范式。核心创新：① 摆脱「像素级重建陷阱」，对齐多个视觉基座模型（DINO / CLIP / SAM 等）的未来表征，避免单一表征偏置；② 并行渐进扩展，避免推理时显式预测观测的误差累积；③ 可用**无动作标注的人类视频**低成本提升泛化。结果：RoboTwin 仿真基准与真实 ALOHA（松灵 COBOT MAGIC）任务全面超越 SOTA。论文 arxiv:2602.17259。代表了 VLA 世界建模的「**反像素重建**」路线。",
       "language": "Python",
       "license": "Apache 2.0",
@@ -814,7 +845,7 @@
       "name": "SSM-VLA (清华深研院 + 高德 — ICRA 2026 几何感知 + 远视潜动作)",
       "github": "https://github.com/Tsinghua-MARS-Lab/SSM-VLA",
       "organization": "清华大学深圳国际研究生院 / 阿里巴巴 高德",
-      "category": "VLA / 空间感知",
+      "category": "ai-model",
       "description": "**SSM-VLA (Seeing Space and Motion)** — ICRA 2026 论文，清华深研院 + 高德联合开源（2026-05-25）。**核心创新三件套**：① **Farsighted-LAM**——首次把潜在动作模型扎根于「冻结 DINOv2 特征 + RGB-D 联合监督 + 多帧时序建模」，让 VLA 真正具备几何感知与多尺度时序能力，突破传统「两帧潜在动作」限制；② **视觉思维链 (Visual CoT)**——先显式预测未来 RGB+深度，再生成动作，提供可解释中间表征；③ **多模态协同注意力**——三阶段渐进式推理（视觉预测 → 潜动作规划 → 动作执行）在单 Transformer 内完成。结果：CALVIN ABC-D 平均 4.38 任务完成长度（SOTA）；零样本泛化能力突出。论文 arxiv:2509.26251。",
       "language": "Python (PyTorch)",
       "license": "Apache 2.0",
@@ -842,7 +873,7 @@
       "name": "FASTER (港大 + 大晓机器人 — 流匹配 VLA 单步快采样)",
       "github": "https://github.com/innovator-zero/FASTER",
       "organization": "香港大学 / 大晓机器人",
-      "category": "VLA / 推理优化",
+      "category": "ai-model",
       "description": "**FASTER (Fast Action Sampling for Immediate Reaction)** — 港大赵恒爽团队 2026-05 联合大晓机器人开源的**首个面向流匹配 VLA 模型的单步动作快采样方法**。核心问题：传统 Action Chunking 在动态环境中存在严重的「反应延迟」——机器人开始行动需要 N 步采样。FASTER 把即时动作采样压缩至**单步完成**，机器人对环境变化的响应时间显著降低。**即插即用**——无需修改模型架构，无需额外训练成本，可直接套到 π0.5 / X-VLA / OpenPI 等流匹配 VLA 上。论文 arxiv:2603.19199。与 π0-EqM (p167) 形成对照：EqM 是「能量梯度自适应步数」，FASTER 是「单步硬压缩 + 后续多步精修」，两者可正交叠加。",
       "language": "Python (PyTorch)",
       "license": "Apache 2.0",
@@ -869,7 +900,7 @@
       "name": "D2E + Generalist-IDM (MAUM.AI + 首尔大 + 斯坦福 — ICLR 2026 桌面预训练)",
       "github": "https://github.com/worv-ai/D2E",
       "organization": "MAUM.AI / Seoul National University / Stanford",
-      "category": "数据 / 预训练",
+      "category": "data-tools",
       "description": "**D2E (Desktop to Embodied AI)** — ICLR 2026 论文，「桌面游戏数据预训练 → 机器人迁移」的开创性框架。核心：① **OWA Toolkit**——把多样桌面交互（屏幕视频 + 音频 + 键鼠 + 窗口事件）统一为标准化 MCAP 格式，**152× 压缩比**；② **Generalist-IDM**——基于「带时间偏移的下事件预测 (NEP-τ)」实现跨游戏零样本泛化，已开源 1B 参数权重 + Hugging Face Demo；③ **VAPT**——把桌面预训练表征迁移到物理机器人。结果：1.3K+ 小时数据（259 小时人工 + 1K+ 小时伪标 YouTube），1B 参数模型 **LIBERO 96.6% + CANVAS 83.3%**，**匹配或超越 π0 (3.3B) / OpenVLA (7B) 等 7× 大模型**。配套 D2E-480p / D2E-Original 数据集（267 小时 / 31 款游戏）。",
       "language": "Python",
       "license": "Apache 2.0",
@@ -896,7 +927,7 @@
       "name": "Motus (生数科技 + 清华 — 统一世界模型 VLA 视频基座)",
       "github": "https://github.com/Shengshu-AI/Motus",
       "organization": "生数科技 / 清华大学",
-      "category": "世界模型 / VLA",
+      "category": "ai-model",
       "description": "**Motus** — 生数科技与清华大学联合研发的「**统一世界模型**」，2026-05 开源。核心理念：以视频大模型为基础架构，**统一 VLA / 世界模型 / 视频生成 / 仿真 / 导航五大基础范式**于同一框架，构建从感知到执行的端到端建模路径。突破传统「感知-推理-行动」模块化设计——视频数据天然包含物理世界时空结构、因果关系与动态变化，是连接感知与行动的关键多模态载体。在 50 任务数据规模扩展测试中，**平均成功率比 π0.5 提升 35.1pp，数据效率达到 13.55 倍**。统一了跨本体机器人数据 / 仿真数据 / 人类操作视频的动作空间，针对真机数据稀缺问题给出可扩展解决方案。",
       "language": "Python (PyTorch)",
       "license": "Apache 2.0",
@@ -923,7 +954,7 @@
       "name": "ABot-M0 (阿里高德 — 600 万轨迹动作流形 VLA 基座)",
       "github": "https://github.com/amap-cvlab/ABot-Manipulation",
       "organization": "阿里巴巴 / 高德 AMAP CV Lab",
-      "category": "VLA / 数据基座",
+      "category": "ai-model",
       "description": "**ABot-M0** — 阿里巴巴高德地图 CV Lab 团队 2026-02 发布的「**全球首个统一架构机器人基础模型**」，2026-04 完整开源代码 + 数据集。核心创新：① **UniACT-dataset**——整合 6 个主流开源数据集，构建非私有领域规模最大的 **600 万+ 轨迹 / 9500+ 小时 / 20+ 机器人形态**统一操作数据集，统一动作表示 + 坐标系 + 控制频率 + 增量动作建模；② **Action Manifold Learning (AML)**——首次提出动作流形学习算法，让模型直接预测物理可行的动作序列，提升策略稳定性与解码效率；③ **3D 感知模块**——增强对前后 / 远近 / 遮挡的空间语义理解。结果：LIBERO 98.6% / LIBERO-Plus 80.5%（**比 π0 提升 ~30%**） / RoboCasa SOTA。论文 arxiv:2602.11236。",
       "language": "Python (PyTorch)",
       "license": "Apache 2.0",
@@ -943,17 +974,24 @@
         "阿里巴巴",
         "600万轨迹",
         "UniACT",
-        "基础模型"
+        "基础模型",
+        "VLA基座",
+        "动作流形学习",
+        "DiT",
+        "跨本体",
+        "统一数据",
+        "一脑多形"
       ],
-      "addedDate": "2026-05-26"
+      "addedDate": "2026-05-26",
+      "url": "https://amap-cvlab.github.io/ABot-Manipulation/"
     },
     {
       "id": "os100",
       "name": "HumDex (USC PSI Lab — 人形全身灵巧操作低成本数据系统)",
       "github": "https://github.com/physical-superintelligence-lab/humdex",
       "organization": "USC Physical Superintelligence (PSI) Lab",
-      "category": "数据采集 / 灵巧操作",
-      "description": "**HumDex（Humanoid Dexterous Manipulation Made Easy）** — USC PSI Lab 5/14 集中报道的开源**全身灵巧操作低成本数据系统**。核心：① **轻量级 VR 套装**取代昂贵动捕方案，单人单工位即可采集；② **统一 retargeting**——把人体动作通过 SE(3) 优化映射到 humanoid 灵巧手关节，解决「人 → 机器人形态映射」问题；③ **WorldEnv 仿真**适配多种主流人形（Unitree G1/H1、Apptronik Apollo、Tesla Optimus）；④ **完整训练 baseline**——基于 ACT / DP / VLA 三套基线策略 fine-tune 适配。论文 arXiv:2603.12260（v2），项目主页 [physical-superintelligence-lab/humdex](https://github.com/physical-superintelligence-lab/humdex)。低门槛 + 全栈开源，把人形数采从 \"百万级动捕室\" 拉低到 \"消费级 VR + 普通工位\" 量级。",
+      "category": "data-tools",
+      "description": "**HumDex（Humanoid Dexterous Manipulation Made Easy）** — USC PSI Lab 5/14 集中报道的开源**全身灵巧操作低成本数据系统**。核心：① **轻量级 VR 套装**取代昂贵动捕方案，单人单工位即可采集；② **统一 retargeting**——把人体动作通过 SE(3) 优化映射到 humanoid 灵巧手关节，解决「人 → 机器人形态映射」问题；③ **WorldEnv 仿真**适配多种主流人形（Unitree G1/H1、Apptronik Apollo、Tesla Optimus）；④ **完整训练 baseline**——基于 ACT / DP / VLA 三套基线策略 fine-tune 适配。论文 arXiv:2603.12260（v2），项目主页 [physical-superintelligence-lab/humdex](https://github.com/physical-superintelligence-lab/humdex)。低门槛 + 全栈开源，把人形数采从 「百万级动捕室」 拉低到 「消费级 VR + 普通工位」 量级。",
       "language": "Python",
       "license": "MIT",
       "features": [
@@ -984,7 +1022,7 @@
       "name": "LaST-R1 (CUHK + 北大 + 至简动力 — 物理潜在推理 VLA)",
       "github": "https://github.com/CHEN-H01/LaST-R1",
       "organization": "CUHK + Peking University + Simplexity Robotics",
-      "category": "VLA 模型 / 强化学习",
+      "category": "ai-model",
       "description": "**机器人模型的「R1 时刻」**——把 DeepSeek R1 的 RL 后训练 + 长链思考范式首次完整搬到 VLA 模型上。核心：① **LAPO（Latent-to-Action Policy Optimization）**：基于 veRL 的端到端 RL 后训练框架，联合优化潜在 CoT 推理与动作生成；② **自适应潜在 CoT**：模型学发出 `<latent_end>` token 动态调整推理长度；③ **物理接地的潜在目标**：用 SAM 类视觉基础模型提供「物理空间锚点」引导推理。基于 Qwen3-VL + veRL 国产开源栈，仅 1 条轨迹预热 + RL 后训练就能 LIBERO 99.9% SOTA / 真机操作 52.5% → 93.75%（+41pp）。论文 arXiv:2604.28192，作者来自至简动力 + 香港中文大学 + 北京大学。",
       "language": "Python",
       "license": "MIT",
@@ -1016,7 +1054,7 @@
       "name": "GR00T-WholeBodyControl (NVIDIA 全身控制平台)",
       "github": "https://github.com/NVlabs/GR00T-WholeBodyControl",
       "organization": "NVIDIA Labs (GEAR 团队)",
-      "category": "人形机器人 / 全身控制",
+      "category": "locomotion",
       "description": "NVIDIA GEAR 团队为 Unitree G1 等人形机器人提供端到端开源全栈：① **GEAR-SONIC**——大规模人体动作数据训练的统一全身策略（行走 / 爬行 / 双臂操作 / 遥操作 / 多模态控制）；② **Decoupled WBC**——下半身 RL + 上半身 IK 的解耦控制器（GR00T N1.5 / N1.6 同款）；③ **MotionBricks**——15000 FPS 实时潜在生成动作合成模型；④ 配套 Isaac-GR00T N1.7 VLA 微调流程 + VR 遥操作数据采集（PICO 头显） + C++ 推理栈 + BONES-SEED 数据集（142K 人体动作 / 288 小时 G1 MuJoCo 轨迹）。",
       "language": "Python + C++",
       "license": "Apache-2.0 (代码) + NVIDIA Open Model License (权重)",
@@ -1045,7 +1083,7 @@
       "name": "StarVLA (港科大乐高式 VLA 底座)",
       "github": "https://github.com/starVLA/starVLA",
       "organization": "HKUST + Open-Source Community",
-      "category": "VLA / 训练评估底座",
+      "category": "framework",
       "description": "VLA 的「PyTorch 时刻」——把 OpenVLA / π 系列 / GR00T / OFT 四大主流动作头与 QwenVL / LLaVA / Cosmos / Gemma 等 backbone 统一在乐高式接口下；统一 5 大基准（LIBERO / SimplerEnv / RoboTwin 2.0 / RoboCasa-GR1 / BEHAVIOR-1K）评估。模块化 + 配置文件 + smoke test，单 GPU 就能跑全流程。",
       "language": "Python",
       "license": "MIT",
@@ -1071,7 +1109,7 @@
       "name": "KC-VLA (Keyframe Chaining VLA)",
       "github": "https://github.com/cytoplastm/KC-VLA",
       "organization": "Yipeng Chen et al. (UESTC + 多机构)",
-      "category": "VLA / 长时程操作",
+      "category": "ai-model",
       "description": "KC-VLA 官方实现：用任务调制 KSM 检测语义关键帧 → 关键帧链 prompt 替代密集观测窗口 → VLA 解码生成动作。自建 NonMarkov-ManiSkill 4 任务集平均 92% vs 基线 57%。",
       "language": "Python",
       "license": "MIT",
@@ -1097,7 +1135,7 @@
       "name": "SaPaVe (Active Perception VLA)",
       "github": "https://lmzpai.github.io/SaPaVe",
       "organization": "Peking University × Beihang × BAAI",
-      "category": "vla-research",
+      "category": "ai-model",
       "description": "北大 / 北航 / 北智院联合发布的端到端「主动感知 + 主动操作」VLA 框架（论文 arXiv 2603.12193）。核心创新：① 双 Action Head 解耦（相机 head 与操作 head 独立梯度）；② 自下而上两阶段训练；③ 配套 ActiveViewPose-200K 主动相机运动数据集 + ActiveManip-Bench 12 任务基准。在真实 Franka FR3 + 主动相机臂实验中比 GR00T N1 / π₀ 平均 SR 高 28-31 个百分点。Repo 提供：模型权重 / ActiveViewPose-200K 数据集 / ActiveManip-Bench 评测脚本 / 训练 pipeline / 复现指南。",
       "language": "Python (PyTorch)",
       "license": "Apache-2.0",
@@ -1127,7 +1165,7 @@
       "name": "Hubei Humanoid Action Foundation Model (MotionMaster + UniAct)",
       "github": "https://news.hubeidaily.net/pc/c_5487272.html",
       "organization": "湖北人形机器人创新中心 / 北武院（北京大学武汉人工智能研究院） / 北京虚拟动点科技",
-      "category": "humanoid-foundation",
+      "category": "ai-model",
       "description": "业内首个开源跨品牌「人形机器人动作大模型」（5 月 9 日武汉光谷发布）。两大核心模块：① **MotionMaster 虚拟动作生成器**（高阶语义 / 文本 / 视频 / 音频 / 动捕多模态输入 → 虚拟动作序列）；② **UniAct 真机执行引擎**（虚拟动作 → 多品牌、多机型机器人可执行硬件指令）。全行业开源，已生态合作宇树、乐聚、潜空间等。生态首款应用产品「潜擎」动创平台（潜空间）即将公测，文本生动作开发周期从 2-3 周/动作压缩到 30 分钟。意义：解决了「各品牌动作数据互不兼容」最大痛点，定位为人形机器人「小脑」基础设施级开源项目，与 Genesis GENE-26.5 / Helix-02 形成「大脑 + 小脑」分层范式互补。",
       "language": "Python (PyTorch)",
       "license": "Apache-2.0（待 GitHub 同步）",
@@ -1157,7 +1195,7 @@
       "name": "From Pixels to Tokens (RUC KBR)",
       "github": "https://github.com/RUCKBReasoning/From_Pixels_to_Tokens",
       "organization": "中国人民大学 RUCKBReasoning Lab",
-      "category": "vla-baseline",
+      "category": "ai-model",
       "description": "中国人民大学知识与推理实验室开源的 VLA 潜动作监督统一研究 baseline。论文「From Pixels to Tokens」首篇系统对比 4 种潜动作监督策略（Image-Continuous / Image-Discrete / Action-Continuous / Action-Discrete）在 OpenVLA-7B + LIBERO 上的效果。Repo 提供：①4 种策略的完整 PyTorch 实现；②VQ-VAE codebook 训练管线（256 codeword × 4 token/segment）；③LIBERO + DROID + Bridge 三库混训配置；④训练 / 评测 / 可视化脚本。结论：离散 action token 直接监督 > 连续回归 > image-warp 监督，在 LIBERO-Long 上从 76.5% 升至 84.7%。是新 VLA 项目预训练 backbone 选择的最佳参考实现。",
       "language": "Python (PyTorch)",
       "license": "Apache-2.0",
@@ -1218,7 +1256,7 @@
       "name": "LingBot-World (蚂蚁灵波)",
       "github": "https://github.com/robbyant/lingbot-world",
       "organization": "Robbyant / Ant Group",
-      "category": "world-model",
+      "category": "ai-model",
       "description": "蚂蚁集团 Robbyant 团队开源的交互式世界模型。核心特性：①分钟级（约 10 分钟）连续稳定生成，长时一致性 / 物体恒存性 SOTA；②16 FPS 生成吞吐 + <1s 端到端延迟，支持键盘 / 鼠标 / 文本实时操控；③Zero-shot 单图入世，覆盖写实 / 科幻 / 卡通 / 游戏多风格场景；④统一的可扩展数据引擎，混合数据采集 + 分层标注。仓库提供：模型权重（HuggingFace 上 LingBot-World / LingBot-World-Fast 双版本）、推理代码、ZMQ 实时交互 server、Gradio Demo、Benchmark Suite（含与 Genie3 / Cosmos / WHAM 的对比）。蚂蚁灵光 App 已接入移动端版本（百毫秒级响应、最长 60s 探索）。",
       "language": "Python / PyTorch / CUDA",
       "license": "Apache-2.0",
@@ -1299,7 +1337,7 @@
       "name": "DOMINO + PUMA (动态环境下可泛化机器人操作)",
       "github": "https://github.com/H-EmbodVis/DOMINO",
       "organization": "H-EmbodVis Lab",
-      "category": "benchmark-policy",
+      "category": "simulation",
       "description": "面向「动态环境下可泛化机器人操作」的开源基准 + 策略框架。DOMINO 是基准：覆盖运动物体跟随、环境扰动下抓取、不可预测变化下任务完成等场景，弥补现有 VLA 都基于静态单帧观测、缺乏时空动态的盲区。PUMA 是配套预测式策略架构：耦合历史运动线索 + 未来状态预测，让策略真正具备反应式具身智能能力。两者一起回答「如何让 VLA 在动态而非静态台面任务中工作」这个长期被搁置的问题。",
       "language": "Python / PyTorch",
       "license": "MIT（待确认）",
@@ -1325,7 +1363,7 @@
       "name": "HY-Embodied-0.5 (腾讯 Hunyuan 具身基础模型)",
       "github": "https://github.com/Tencent-Hunyuan/HY-Embodied",
       "organization": "Tencent Robotics X × Hunyuan Vision Team",
-      "category": "foundation-model",
+      "category": "ai-model",
       "description": "腾讯混元开源的具身基础模型家族，技术报告 arXiv 2604.07430。核心架构 Mixture-of-Transformers（MoT），通过潜在 token 进行模态特定计算，强化细粒度感知。两个变体：①MoT-2B（4B 总参 / 2.2B 激活，速度等同 2B 密集模型，已开源 Hugging Face 权重 + 推理代码）；②32B 大模型（前沿性能，对标 Gemini 3.0 Pro）。训练数据 1 亿+ 具身专属数据点 + 2000 亿+ Token（覆盖 3D 空间 / 物理对象交互 / 代理动力学）。是国内大厂首个真正开源权重 + 推理代码的具身基础模型，可直接作为 VLA 微调起点。",
       "language": "Python / PyTorch",
       "license": "Apache-2.0（参考 Hunyuan 历史发布）",
@@ -1380,7 +1418,7 @@
       "name": "Awesome-Embodied-AI-Safety",
       "github": "https://github.com/x-zheng16/Awesome-Embodied-AI-Safety",
       "organization": "x-zheng16 (郑响 等)",
-      "category": "research",
+      "category": "data-tools",
       "description": "配套 arXiv 2605.02900 综述的 awesome list：覆盖 400+ 篇具身 AI 安全相关工作，按感知-认知-规划-行动-交互五阶段 × 攻击/防御 双维度分类，含对抗补丁、语义幻觉、多模态后门、物理域攻击、工具滥用等条目，附论文链接、代码、数据集与 benchmark。是做具身 AI 安全研究/合规/审计的标准入口。",
       "language": "Markdown",
       "license": "MIT",
@@ -1407,7 +1445,7 @@
       "github": "https://github.com/vilas-platform/vilas",
       "organization": "VILAS Platform Community",
       "category": "hardware",
-      "description": "VILAS 配套 arXiv 2605.02037 论文同步开源的完整 VLA 学习与部署平台。所有内容免费：6-DOF 机械臂的全套 STEP/STL CAD 文件 + 3D 打印软体末端 + ROS2 + Pinocchio 控制栈 + OpenVLA / Pi-0 / GR00T 三大开放 VLA 兼容微调脚本 + 250 万帧 70 任务数据集（HuggingFace 镜像）。BOM < 1500 USD（不含微控制器主板和工业级电池），相比 Franka FR3 / UR5e（30-50 K USD）降低 20-30 倍。在 70 任务桌面操作数据集上 fine-tune OpenVLA-7B 平均成功率 81.3%，与 ALOHA（10K USD）持平。是 Stanford LeRobot SO-100、UMI 之后\"低成本 VLA 四件套\"的最新成员。",
+      "description": "VILAS 配套 arXiv 2605.02037 论文同步开源的完整 VLA 学习与部署平台。所有内容免费：6-DOF 机械臂的全套 STEP/STL CAD 文件 + 3D 打印软体末端 + ROS2 + Pinocchio 控制栈 + OpenVLA / Pi-0 / GR00T 三大开放 VLA 兼容微调脚本 + 250 万帧 70 任务数据集（HuggingFace 镜像）。BOM < 1500 USD（不含微控制器主板和工业级电池），相比 Franka FR3 / UR5e（30-50 K USD）降低 20-30 倍。在 70 任务桌面操作数据集上 fine-tune OpenVLA-7B 平均成功率 81.3%，与 ALOHA（10K USD）持平。是 Stanford LeRobot SO-100、UMI 之后「低成本 VLA 四件套」的最新成员。",
       "language": "Python / C++ / OpenSCAD",
       "license": "MIT",
       "features": [
@@ -1465,7 +1503,7 @@
       "id": "os081",
       "name": "MemoryVLA (ICLR 2026 Spotlight)",
       "organization": "CUHK × NUS × Shenzhen Lab",
-      "category": "VLA模型",
+      "category": "ai-model",
       "description": "ICLR 2026 Spotlight 论文 MemoryVLA 官方开源仓库——首个为 VLA 引入分层记忆系统（感知记忆 + 认知记忆，灵感来自人脑海马体）的通用框架。在 LIBERO-Long 等长时序任务上把 OpenVLA 的 38% 提升到 76%，且推理延迟仅 +12%。仓库提供：完整训练代码（PyTorch + HuggingFace Transformers）；预训练权重（ViT-Base + LLaMA-3 8B）；LoRA-style adapter，可挂载到现有 OpenVLA / Pi0 / GR00T 主干上获得记忆能力，无需重训主干；13 任务真机数据集（5 个机器人本体：Franka / UR5 / Kinova / xArm / Panda），约 200K episode；SimplerEnv / LIBERO / Mikasa-Robo 全套评测脚本。MIT 许可证，已获 600+ Star。",
       "language": "Python",
       "stars": "600+",
@@ -1486,7 +1524,7 @@
       "id": "os063",
       "name": "OpenArm",
       "organization": "OpenArm Community",
-      "category": "开源硬件",
+      "category": "hardware",
       "description": "完全开源的 7-DOF 人形机械臂，面向物理 AI 研究与接触丰富场景部署。2026 年 4 月发布，所有硬件设计（CAD、BOM、PCB 原理图）与驱动固件（FOC、串联弹性关节控制）开源，同时附带 MuJoCo / Isaac Sim 仿真 URDF、RL 步态控制器示范代码与 ROS 2 接口。单臂总成本可控制在 2000 美元以下，针对高校实验室与独立开发者极度友好。可与 LeRobot、OpenVLA 等软件栈无缝衔接。",
       "language": "Python + C++",
       "stars": "官方站 openarm.io",
@@ -1505,7 +1543,7 @@
       "id": "os062",
       "name": "Isaac GR00T N1.7",
       "organization": "NVIDIA",
-      "category": "VLA模型",
+      "category": "ai-model",
       "description": "NVIDIA Isaac GR00T 系列最新开源 Reasoning VLA 模型（Early Access），面向人形机器人灵巧操作与全身协同行走-操作（loco-manipulation）。首次在 VLA 中显式引入长链条思维链推理：VLM 主干做任务分解与空间约束，动作头生成 20-50Hz 关节指令。支持 Unitree G1/H1、Fourier GR-1、Booster T1、智元 X1、Apollo 等多种主流人形本体。权重以 NVIDIA Open Model License 发布，通过 NGC + Hugging Face 双通道分发，与 Isaac Lab/Sim/ROS 2 深度集成。",
       "language": "Python",
       "stars": "已开放 Early Access",
@@ -1524,7 +1562,7 @@
       "id": "os083",
       "name": "AGIBOT WORLD 2026",
       "organization": "智元机器人 × 上海人工智能实验室",
-      "category": "数据集",
+      "category": "data-tools",
       "description": "智元 AGIBOT WORLD 数据集 2026 年大版本升级：500+ 真实场景任务（家庭/工业/服务/医疗/巡检十大领域）、5+ 跨本体（G1/X1/X2-N/Lingbot 等）、30M+ episode（基础版）、800 万 + 小时操作时长。每条 episode 同步记录 RGB-D 多视角、6D 末端、关节力矩、双手腕 F/T、22 自由度灵巧手、第一视角文本指令、人类标注的 trace 关键帧+字幕——首次把 trace 标注作为标准字段，直接支持 IVLR / MemoryVLA 等需要 trace 监督的训练范式。基础版 CC-BY-NC 4.0 学术免费，企业版分级订阅。已被 NVIDIA GR00T、智元 GO-2、自变量 WALL-B 等产品线采用。配套 Hugging Face datasets 加载器和 LeRobot/RLDS 双格式工具链。",
       "language": "Python / Parquet / RLDS",
       "stars": "1.2k+",
@@ -1547,7 +1585,7 @@
       "id": "os061",
       "name": "HY-Embodied-0.5-X (腾讯 Robotics X × 混元 端侧具身多模态基座)",
       "org": "Tencent Robotics X Lab × HY Vision Team",
-      "description": "腾讯 Robotics X 实验室联合混元团队 2026 年 4 月 24 日开源的具身多模态基座大模型，基于 HY-Embodied-0.5-MoT-2B（Mixture-of-Transformer）架构打造。面向机器人\"看得懂、想得清、做得到\"的完整链路做了专项优化——视觉编码器针对第一视角/多视角鱼眼做了视场补偿训练，语言解码器针对机器人任务规划/空间推理/具身问答做了 SFT，还提供了原生的视觉指代（visual grounding）和轨迹理解头。在规划、空间推理、具身问答、视觉指代、轨迹理解 5 大方向 10 个主流 benchmark 上取得 6 项第一 3 项第二，其中 7 个评测集在端侧领域模型中排名第一，单卡 24GB 显存即可部署，可以直接落在机器人本体侧。开源内容包括完整模型权重、推理代码、微调脚本、评测工具链和 ROS2 节点示例，和阿里 Qwen-VL、字节 Doubao-Vision 形成\"三足鼎立\"。",
+      "description": "腾讯 Robotics X 实验室联合混元团队 2026 年 4 月 24 日开源的具身多模态基座大模型，基于 HY-Embodied-0.5-MoT-2B（Mixture-of-Transformer）架构打造。面向机器人「看得懂、想得清、做得到」的完整链路做了专项优化——视觉编码器针对第一视角/多视角鱼眼做了视场补偿训练，语言解码器针对机器人任务规划/空间推理/具身问答做了 SFT，还提供了原生的视觉指代（visual grounding）和轨迹理解头。在规划、空间推理、具身问答、视觉指代、轨迹理解 5 大方向 10 个主流 benchmark 上取得 6 项第一 3 项第二，其中 7 个评测集在端侧领域模型中排名第一，单卡 24GB 显存即可部署，可以直接落在机器人本体侧。开源内容包括完整模型权重、推理代码、微调脚本、评测工具链和 ROS2 节点示例，和阿里 Qwen-VL、字节 Doubao-Vision 形成「三足鼎立」。",
       "url": "https://github.com/Tencent-Hunyuan/HY-Embodied-0.5-X",
       "github": "https://github.com/Tencent-Hunyuan/HY-Embodied-0.5-X",
       "stars": "新发布",
@@ -1569,7 +1607,7 @@
       "id": "os060",
       "name": "WholeBodyVLA (人形大空间loco-manipulation统一隐空间VLA)",
       "org": "OpenDriveLab (Shanghai AI Lab / Agibot)",
-      "description": "ICLR 2026 论文 WholeBodyVLA 的官方开源实现。首个端到端完成人形大空间 loco-manipulation 的 VLA 框架，部署于智元 Agibot X2 双足人形平台，可在 100+ 米跨房间场景下连续完成走动+拾取+放置任务。核心创新是\"统一隐空间动作\"——把下肢步态、上肢末端、手指 DoF 压缩到同一低维动作流形 z_t 上由 VLA 预测，共享解码器再展开到全身自由度，避免了多头独立回归的维度灾难。仓库提供模仿学习+RL精调完整训练代码（PPO+KL约束，联合优化速度跟踪/ZMP稳定/末端误差/接触力）、Agibot X2 部署脚本、评测基准与预训练权重。任务成功率相对模块化基线从 42% 提升至 73%，样本效率相对多头 VLA 提升 3.1 倍。",
+      "description": "ICLR 2026 论文 WholeBodyVLA 的官方开源实现。首个端到端完成人形大空间 loco-manipulation 的 VLA 框架，部署于智元 Agibot X2 双足人形平台，可在 100+ 米跨房间场景下连续完成走动+拾取+放置任务。核心创新是「统一隐空间动作」——把下肢步态、上肢末端、手指 DoF 压缩到同一低维动作流形 z_t 上由 VLA 预测，共享解码器再展开到全身自由度，避免了多头独立回归的维度灾难。仓库提供模仿学习+RL精调完整训练代码（PPO+KL约束，联合优化速度跟踪/ZMP稳定/末端误差/接触力）、Agibot X2 部署脚本、评测基准与预训练权重。任务成功率相对模块化基线从 42% 提升至 73%，样本效率相对多头 VLA 提升 3.1 倍。",
       "url": "https://wholebodyvla.github.io/",
       "github": "https://github.com/OpenDriveLab/WholebodyVLA",
       "stars": "新发布",
@@ -1591,7 +1629,7 @@
       "id": "os059",
       "name": "Agent-World (真实工具环境合成与Agent训练平台)",
       "org": "ByteDance Seed / Renmin University of China",
-      "description": "面向具身Agent训练的大规模真实环境合成平台。通过自动挖掘真实网络数据构建了 1978 个真实环境和 19822 个工具，基于 Model Context Protocol (MCP) 统一工具调用接口，使环境与 Agent 策略完全解耦。核心创新是\"Agent-Env 共同进化\"：Agent 在环境中暴露短板→系统自动生成针对性挑战任务→ Agent 能力提升→环境再次进化。提供完整的环境合成管线、预置1978个训练场、Agent训练脚本、评估基准。显著提升 Agent 在长程工具调用、多步任务分解、错误恢复上的泛化能力，为具身智能体从仿真走向真实世界提供关键基础设施。",
+      "description": "面向具身Agent训练的大规模真实环境合成平台。通过自动挖掘真实网络数据构建了 1978 个真实环境和 19822 个工具，基于 Model Context Protocol (MCP) 统一工具调用接口，使环境与 Agent 策略完全解耦。核心创新是「Agent-Env 共同进化」：Agent 在环境中暴露短板→系统自动生成针对性挑战任务→ Agent 能力提升→环境再次进化。提供完整的环境合成管线、预置1978个训练场、Agent训练脚本、评估基准。显著提升 Agent 在长程工具调用、多步任务分解、错误恢复上的泛化能力，为具身智能体从仿真走向真实世界提供关键基础设施。",
       "url": "https://arxiv.org/abs/2604.18292",
       "github": "https://arxiv.org/abs/2604.18292",
       "stars": "新发布",
@@ -1607,27 +1645,6 @@
         "共同进化"
       ],
       "addedDate": "2026-04-29"
-    },
-    {
-      "id": "os058",
-      "name": "ABot-M0 (通用机器人操作基座模型)",
-      "org": "Alibaba AMAP CV Lab (高德视觉实验室)",
-      "description": "高德AMAP CV Lab发布并开源的VLA基座模型，首次将\"动作流形学习(Action Manifold Learning, AML)\"落地到机器人操作：用DiT骨干直接在动作流形上预测连续动作序列，跳过扩散策略逐步去噪过程，推理效率显著提升。配套开源UniACT统一数据管线，标准化单臂/双臂/人形等异构平台的数据格式与动作空间，支持\"一脑多形\"——一个模型同时控制不同构型机器人。在LIBERO-Plus等权威基准上成功率大幅领先π0。仓库提供预训练代码、数据处理脚本、部署示例与多平台权重。",
-      "url": "https://amap-cvlab.github.io/ABot-Manipulation/",
-      "github": "https://github.com/amap-cvlab/ABot-Manipulation",
-      "stars": "新发布",
-      "language": "Python",
-      "category": "ai-model",
-      "tags": [
-        "VLA基座",
-        "动作流形学习",
-        "DiT",
-        "跨本体",
-        "统一数据",
-        "高德",
-        "一脑多形"
-      ],
-      "addedDate": "2026-04-28"
     },
     {
       "id": "os057",
@@ -2742,5 +2759,5 @@
       "category": "framework"
     }
   ],
-  "totalItems": 120
+  "totalItems": 121
 }

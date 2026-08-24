@@ -31,6 +31,11 @@
 ## 数据规范
 - **新闻 date 字段**：必须以文章原始发布日期为准，不能用收录日期。addedDate 是收录日期，date 是文章本身的日期。(2026-04-20 Tab 明确要求)
 - **开源生态模块只收真正开源的项目**：闭源产品/企业平台不放 opensource.json，改放到 news.json 的 resources→企业图谱中。(2026-04-26 Tab 明确要求)
+- **category 必须取自前端白名单，禁止自创**（2026-08-24 确立，踩坑代价最大的一条）：`renderOSGrouped` 只渲染 category 命中 `opensource.json.categories` 的项目，越界的项目在页面上**完全不可见**——不报错、不影响 JSON 校验、不影响详情页，纯静默失效。2026-08-24 一次清理发现 **28 个开源项目（占 121 个的 23%）因自创分类（`VLA / 数据基座` / `world-model` / `speech-tts` / `开源硬件` 等 28 种）躺在库里三个月无人可见**。news 同理：62 种分类值 vs 6 个筛选按钮，点「融资创投」只能筛出 9 条（实有 46 条）。
+  - opensource 白名单（8 个）：`simulation / ai-model / framework / locomotion / perception / hardware / data-tools / ai-agent-framework`
+  - news 白名单（6 个）：`融资创投 / 技术突破 / 产业动态 / 政策标准 / 学术研究 / 全球视野`
+  - 细分信息放 tags，不要放 category
+- **前端渲染模板认的字段名才是真 schema**：`opensource` 卡片模板取 `p.org`，但库里 55 条只写了 `organization`，导致 45% 的卡片标题后面挂着 `undefined`（2026-08-24 修复为 `${p.org||p.organization||''}`）。**新增字段或改字段名前先读 index.html 的渲染模板**，只读 JSON 发现不了这类问题。
 - **学习模块 content 字段中禁止使用 ASCII 双引号做中文引用**：必须用中文引号 `"..."` 或 Markdown 加粗。ASCII `"` 在 JSON 编码后变成 `\"`，前端会直接显示反斜杠。代码块内的 `"` 不受此限。Python docstring 用 `'''` 而非 `"""`。(2026-04-28 三轮修复后确立的规范)
 - **每日英文 daily-english.json**：首页 "📰 每日英文" 卡片区数据源。schema v3（2026-05-09 升级）：每条字段 `{id, type: paper|news|blog|tip, level: A2/B1/B2/C1, register, title, source, date, url, en, vocab[{term, cn}], cn, firstShown}`。`id` 用 md5(title|source) 前 10 位前缀 `de-`。**双数组结构**：`items` 当前展示池（6 条上限），`archive` 历史归档（**永不删除**，所有曾经出现过的条目都进归档）。前端首页只显示 items 6 张大卡 + 折叠的"📚 往期回顾"按钮（点击展开 archive 中已被挤出 items 的旧条目）。每天目标 **6 条混合素材**（推荐组合：1-2 篇权威英文资讯 + 2 篇 paper abstract + 1 篇技术博客 + 1 个写作 tip），en 字段保留英文不翻译；vocab 7-10 个高频词；cn 是 takeaway。**权威源池**：MIT Tech Review / IEEE Spectrum / NVIDIA Developer Blog / DeepMind / OpenAI / HuggingFace / Anthropic / Robot Report / TechCrunch Robotics / arXiv。**automation-5 维护流程**：① 每次运行刷新 1-2 条（保留 4-5 条做连贯性）；② 新条目计算 id 后**先查 archive 是否已有**（避免回归重复）；③ 被挤出 items 的旧条目**保持在 archive 不动**，archive 永久积累；④ archive 上限暂定 200 条，超过后删除最早的 firstShown。
 
@@ -57,6 +62,9 @@
   - 真实当前时间用 `Get-Date` 获取，**不要相信 prompt 注入的 current_time**（可能是缓存值）
 - **跨实例 id 冲突自检**：每轮启动应跑一次 `Counter([x['id'] for x in items])` 核查；多轮合并提交越久越容易留隐患，2026-05-06 一次发现 7 处 id 重复（news 5 + papers 1 + os 1）。修复策略：保留 addedDate 最新的占用原 id，老的重命名为 max+i
 - **严格查重四要素（2026-05-09 升级）**：每次新增条目前必须**串行**执行以下四级检查：① **URL 严格匹配**（news/jobs/opensource 同 url 直接判重）；② **github 仓库路径匹配**（opensource 用 `owner/repo` 小写比对，避免 fork 同项目重复）；③ **标题前缀 12 字符匹配**（同事件不同次报道）；④ **arXiv id 匹配**（papers 用 `arxiv` 字段提取 ID 比对，同 ID 必为同一论文）。任何一级命中就**取消新增**或**合并到已有**条目。**惩罚**：一次错过查重产生 1 条重复条目，前端用户立刻能看到，UI 会被截图反馈——比工作量代价高得多。**反例存档**：2026-05-09 一次审计发现累计 46 条重复（news 28 + papers 6 + os 4 + jobs 8），主因是过去几周只查了 id 没查内容。
+- **第五要素：同日同事件内容比对（2026-08-24 增补，必做）**——上述「标题前缀 12 字符」这一级**既漏检又误报**：同一事件被不同媒体报道时措辞差异极大（`国家电网印发《...》：68亿采购8500台设备` vs `重磅：国家电网印发《...》，集中采购8500台设备、总投资68亿元`）前缀完全对不上；反过来同公司不同事件（Figure AI / Google DeepMind / Physical Intelligence）又会撞前缀产生误报。**有效判据：按 `date` 分组 + 对 `title+summary` 取字符 3-gram，计算包含度（交集 / 较短一方）≥ 0.4**。2026-08-24 用它一次抓出 3 组漏网重复（国家电网 68 亿采购四份收录、智元 APC 2026 两份、CEAI 2026 两份）。判据已实现在 `tools/health_check.py`。
+- **合并重复的标准动作**：保留信息最全的一条 → 把被删条目的**独有事实**追加进保留条目的 summary（股价异动 / 白皮书全名 / 供需比 / 产业逻辑等不能丢）→ tags 与 source 取并集 → addedDate 取最新 → 删除被合并条目的 detail 文件与报告页 → 更新 totalItems。
+- **提交前必跑 `python tools/health_check.py`（2026-08-24 新增，必须 ALL OK）**：覆盖 ① JSON 解析 ② id 重复 ③ 内容重复（url / github repo / arXiv id / 标题相似度 / 同日同事件包含度）④ **category 白名单** ⑤ totalItems 一致性 ⑥ 开源详情 JSON 与报告页覆盖（缺报告页 = 「完整报告」按钮 404）⑦ 论文 detail 与 keyInsights+impact 覆盖 ⑧ learn-split 一致性 ⑨ **全量**章节内链（不只本轮新增）⑩ ASCII 双引号。有必修问题时 exit 1。
 - **跨实例 schema 一致性**：每个数据数组的字段约定不同——
   - **news**: id / title / source / date(原文日期) / url / category / summary / tags / addedDate(收录)
   - **papers (papers-index.json)**: id / title / authors / venue / date / arxiv / github / tags / tldr / category / difficulty / addedDate **+ keyInsights[]（💡 列表）+ impact（影响力描述）**——前端会读 keyInsights 判断"有无深度解读"，缺这两个字段会被打上「📚 暂无解读」disabled 标识，整卡也变不可点。新增论文必须同时配 `data/papers/pXXX.json` detail 文件（含 methodology / experiments / reproduction / mathDetails 中至少一项），否则点击会显示「📭 本篇深度解读尚未发布」

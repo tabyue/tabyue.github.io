@@ -1,8 +1,118 @@
 {
-  "lastUpdated": "2026-05-14T01:40",
-  "date": "2026-05-11",
+  "lastUpdated": "2026-08-24T19:40",
+  "date": "2026-08-24",
   "description": "每日 6 条精选英文素材：权威资讯（IEEE Spectrum / MIT Tech Review / Nature 等）+ arXiv 论文摘要 + 行业博客 + 写作 tip。每条标注 CEFR 等级（A2/B1/B2/C1）和文体（学术/资讯/技术博客）。",
   "items": [
+    {
+      "id": "de-70e68f016d",
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "StellaVLA: In-Context Structured Demonstration for Generalizable Vision-Language-Action Models",
+      "source": "arXiv 2608.11671",
+      "date": "2026-08-12",
+      "url": "https://arxiv.org/abs/2608.11671",
+      "en": "Vision-Language-Action (VLA) models can follow instructions and manipulate objects, but their performance often collapses out of distribution (OOD), when the scene, viewpoint, or object differs from training. Adapting to each new situation typically requires collecting more data and fine-tuning. We present StellaVLA, a framework that instead adapts at test time by conditioning on a single retrieved demonstration. The key idea is to move beyond imitating what an expert did and instead convey why: an automated offline pipeline converts each raw trajectory into a structured demonstration, e.g., a task plan, sub-goal descriptions, and verbalized 3D motion, at zero human-annotation cost. Provided as in-context guidance, this structured demonstration lets the policy reason about the task rather than mimic a pixel trajectory, which also makes it transferable across embodiments. A parallel dual-training design internalizes this reasoning during training through a joint action-and-language objective, while inference uses the action expert alone, preserving real-time, high-frequency control with no added latency.",
+      "vocab": [
+        {
+          "term": "collapse out of distribution",
+          "cn": "在分布外崩溃（OOD 失效）"
+        },
+        {
+          "term": "adapt at test time",
+          "cn": "测试时适配（不更新参数）"
+        },
+        {
+          "term": "conditioning on",
+          "cn": "以……为条件"
+        },
+        {
+          "term": "retrieved demonstration",
+          "cn": "检索得到的示范"
+        },
+        {
+          "term": "verbalized",
+          "cn": "语言化的 / 用文字表述的"
+        },
+        {
+          "term": "at zero human-annotation cost",
+          "cn": "零人工标注成本"
+        },
+        {
+          "term": "in-context guidance",
+          "cn": "上下文引导"
+        },
+        {
+          "term": "transferable across embodiments",
+          "cn": "可跨本体迁移"
+        },
+        {
+          "term": "internalize",
+          "cn": "内化"
+        },
+        {
+          "term": "with no added latency",
+          "cn": "不增加额外延迟"
+        }
+      ],
+      "cn": "写作要点：这段摘要是「问题 → 已有做法的代价 → 我们的做法 → 关键思想 → 附加收益」的教科书式五段结构。特别注意 move beyond imitating what an expert did and instead convey why 这种用 what / why 对举来点明贡献的写法，比直接写 we propose a novel method 有力得多。另外 preserving real-time, high-frequency control with no added latency 是典型的「预先回应审稿人质疑」句式 —— 提出新增模块时主动说明它不带来代价。",
+      "firstShown": "2026-08-24"
+    },
+    {
+      "id": "de-7bf3bdc11e",
+      "type": "paper",
+      "level": "B2",
+      "register": "academic",
+      "title": "NebulaVLA: A Dual-Frequency Vision-Language-Action Model With Guide Action for Robotic Manipulation",
+      "source": "arXiv 2608.16503",
+      "date": "2026-08-17",
+      "url": "https://arxiv.org/abs/2608.16503",
+      "en": "Real-world deployment of Vision-Language-Action (VLA) models is often bottlenecked by efficiency-performance trade-offs, cross-embodiment generalization, and execution smoothness. We present NebulaVLA, an asynchronous dual-frequency architecture that decouples high-level semantic reasoning from low-level action control, optimizing computational resources and modularity. To bridge semantic gaps across heterogeneous robots, we introduce GESTURE-7, a unified language-grounded action representation. Furthermore, our Guide Action algorithm enforces kinematic continuity via mask-based smoothness constraints. Comprehensive evaluations demonstrate that NebulaVLA significantly outperforms synchronous baselines, achieving an 85.5% average success rate on LIBERO-Plus and accelerating action generation by approximately 2.7 times.",
+      "vocab": [
+        {
+          "term": "be bottlenecked by",
+          "cn": "受……制约 / 卡在……瓶颈上"
+        },
+        {
+          "term": "trade-off",
+          "cn": "权衡取舍"
+        },
+        {
+          "term": "decouple A from B",
+          "cn": "把 A 与 B 解耦"
+        },
+        {
+          "term": "modularity",
+          "cn": "模块化程度"
+        },
+        {
+          "term": "bridge semantic gaps",
+          "cn": "弥合语义鸿沟"
+        },
+        {
+          "term": "heterogeneous",
+          "cn": "异构的"
+        },
+        {
+          "term": "language-grounded",
+          "cn": "以语言接地的"
+        },
+        {
+          "term": "enforce",
+          "cn": "强制施加（约束）"
+        },
+        {
+          "term": "kinematic continuity",
+          "cn": "运动学连续性"
+        },
+        {
+          "term": "synchronous baseline",
+          "cn": "同步（架构）基线"
+        }
+      ],
+      "cn": "写作要点：开篇 is often bottlenecked by A, B, and C 用一个句子列清三个待解问题，后文三个 We / Furthermore 句逐一对应 —— 这种「三问题 → 三方案」的一对一映射让摘要极易读，值得直接套用。另外注意 decouple ... from ... 和 enforce ... via ... 这两个动词搭配，是系统类论文描述架构与约束时的高频表达。",
+      "firstShown": "2026-08-24"
+    },
     {
       "id": "de-7db94418ea",
       "type": "paper",
@@ -222,116 +332,6 @@
       "cn": "VLA 研究因动作解码范式 / 训练管线 / 评估基准的不兼容而严重碎片化。StarVLA 用一个统一的「策略中心公式」L_total = L_action + λ·L_aux 把 VLM-based 与 World-Model-based 两大范式纳入同一框架。模块化的 backbone-action-head 互换支持 QwenVL/LLaVA/Cosmos/Gemma 主干 + FAST/OFT/π Flow-Matching/GR00T 双系统动作头。LIBERO/SimplerEnv/RoboTwin 2.0/RoboCasa-GR1/BEHAVIOR-1K 五大基准统一评估接口。可复现训练 recipe 在 VLM 与 world-model 主干下均匹配或超越原方法——这是 VLA 的 PyTorch 时刻。",
       "id": "de-ed7453fc84",
       "firstShown": "2026-05-11"
-    },
-    {
-      "type": "news",
-      "level": "B2",
-      "register": "journalistic",
-      "title": "Hyundai-owned Boston Dynamics Atlas performs handstand and L-sit, signaling production-ready maturity",
-      "source": "The Straits Times",
-      "date": "2026-05-06",
-      "url": "https://www.straitstimes.com/world/hyundai-robot-performs-handstand-complex-gymnastics-moves",
-      "en": "Hyundai Motors' robotics unit released a video showing its production-ready Atlas humanoid robot performing complex gymnastics, marking a first-of-its-kind live demonstration that could signal the machine is nearing commercialisation. The robot performed a full handstand, then transitioned into an L-sit position while supporting its entire body weight on its hands. Atlas features human-scale hands with tactile sensing and fully rotational joints. It can lift up to 50kg, operates between minus 20 deg C and 40 deg C, and Hyundai plans to deploy it commercially across its plants from 2028.",
-      "vocab": [
-        {
-          "term": "production-ready",
-          "cn": "可量产的（adj），已具备规模化生产水平"
-        },
-        {
-          "term": "humanoid robot",
-          "cn": "人形机器人（n），与人体形态相似的机器人"
-        },
-        {
-          "term": "first-of-its-kind",
-          "cn": "首创（adj），同类首次"
-        },
-        {
-          "term": "commercialisation",
-          "cn": "商业化（n），从研发走向市场量产"
-        },
-        {
-          "term": "handstand",
-          "cn": "倒立（n），手撑地面、身体倒立的动作"
-        },
-        {
-          "term": "L-sit",
-          "cn": "L 形支撑（n），手撑地、身体呈 L 形的体操动作"
-        },
-        {
-          "term": "tactile sensing",
-          "cn": "触觉感知（n），通过传感器感知力 / 接触"
-        },
-        {
-          "term": "fully rotational joints",
-          "cn": "全旋关节（n），可 360° 转动的关节"
-        },
-        {
-          "term": "deploy",
-          "cn": "部署（v），把机器人放到生产场景使用"
-        },
-        {
-          "term": "plants",
-          "cn": "工厂（n），制造产线所在地"
-        }
-      ],
-      "cn": "现代汽车旗下波士顿动力公开「量产版 Atlas」执行复杂体操动作的视频——机器人完成完整倒立后转入 L-sit（双手撑地、L 形坐姿），同类首演。Atlas 配备人体尺度灵巧手 + 触觉感知 + 全旋关节，最大单臂负载 50 kg，工作温度 -20°C 至 40°C，现代计划 2028 年起在自家工厂大规模商用。",
-      "id": "de-c8c82f3913",
-      "firstShown": "2026-05-11"
-    },
-    {
-      "type": "paper",
-      "level": "C1",
-      "register": "academic",
-      "title": "Learning while Deploying: Fleet-Scale RL for Generalist Robot Policies",
-      "source": "arXiv (cs.RO)",
-      "date": "2026-05-01",
-      "url": "https://arxiv.org/abs/2605.00416",
-      "en": "Although generalist robot policies benefit from large-scale pretraining, offline data alone is insufficient for robust real-world deployment. Deployed robots encounter distribution shift, long-tail failures, and human correction opportunities that fixed demonstration datasets cannot fully capture. We present Learning While Deploying (LWD), a fleet-scale offline-to-online reinforcement learning framework. Combining DIVL for robust value estimation and QAM for policy extraction in flow-based VLA generators, a single policy attains 95% average success across 8 tasks on a fleet of 16 dual-arm robots, with the largest gains on 3-5 minute long-horizon tasks.",
-      "vocab": [
-        {
-          "term": "fleet-scale",
-          "cn": "舰队规模（adj），覆盖多台机器人协同的部署体量"
-        },
-        {
-          "term": "pretraining",
-          "cn": "预训练（n），在大规模数据上先训出通用模型"
-        },
-        {
-          "term": "offline data",
-          "cn": "离线数据（n），从预先收集好的 demonstration 中学习"
-        },
-        {
-          "term": "deployment",
-          "cn": "部署（n），把模型放进真实世界落地运行"
-        },
-        {
-          "term": "distribution shift",
-          "cn": "分布偏移（n），训练分布与部署分布不一致"
-        },
-        {
-          "term": "long-tail failures",
-          "cn": "长尾失败（n），罕见但累计起来重要的失败案例"
-        },
-        {
-          "term": "demonstration",
-          "cn": "示教（n），人工演示给机器人学习的数据"
-        },
-        {
-          "term": "offline-to-online",
-          "cn": "离线到在线（adj），先用离线数据预训再用在线数据微调的范式"
-        },
-        {
-          "term": "long-horizon",
-          "cn": "长程（adj），需要执行多步、跨较长时间的任务"
-        },
-        {
-          "term": "robust",
-          "cn": "鲁棒的（adj），在扰动和不确定下仍稳健"
-        }
-      ],
-      "cn": "通用机器人策略受益于大规模预训练，但仅靠离线数据不够鲁棒。已部署机器人会遇到分布偏移、长尾故障与人工纠正机会，固定 demonstration 数据集捕捉不到。LWD 提出舰队级 offline-to-online RL 框架，DIVL 做稳健价值估计 + QAM 在 flow-based VLA 中做策略提取，16 台双臂机器人 8 任务下平均成功率 95%，长程任务（3-5 分钟）收益最大。",
-      "id": "de-e2693c7304",
-      "firstShown": "2026-05-10"
     }
   ],
   "sources": [
@@ -836,6 +836,116 @@
       "cn": "VLA 模型在见过的任务上表现好但难以泛化。核心瓶颈是隐式视觉表示把物体外观、背景、场景布局纠缠在一起。TriRelVLA 显式构建「物体-手臂-任务」三元关系结构作为推理原语，用 relation-aware Graph Transformer 建模节点交互，再 bottleneck 投影到 LLM action head，跨新场景 / 新物体 / 新任务组合的泛化都大幅提升。",
       "id": "de-a214b0674e",
       "firstShown": "2026-05-10"
+    },
+    {
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "Learning while Deploying: Fleet-Scale RL for Generalist Robot Policies",
+      "source": "arXiv (cs.RO)",
+      "date": "2026-05-01",
+      "url": "https://arxiv.org/abs/2605.00416",
+      "en": "Although generalist robot policies benefit from large-scale pretraining, offline data alone is insufficient for robust real-world deployment. Deployed robots encounter distribution shift, long-tail failures, and human correction opportunities that fixed demonstration datasets cannot fully capture. We present Learning While Deploying (LWD), a fleet-scale offline-to-online reinforcement learning framework. Combining DIVL for robust value estimation and QAM for policy extraction in flow-based VLA generators, a single policy attains 95% average success across 8 tasks on a fleet of 16 dual-arm robots, with the largest gains on 3-5 minute long-horizon tasks.",
+      "vocab": [
+        {
+          "term": "fleet-scale",
+          "cn": "舰队规模（adj），覆盖多台机器人协同的部署体量"
+        },
+        {
+          "term": "pretraining",
+          "cn": "预训练（n），在大规模数据上先训出通用模型"
+        },
+        {
+          "term": "offline data",
+          "cn": "离线数据（n），从预先收集好的 demonstration 中学习"
+        },
+        {
+          "term": "deployment",
+          "cn": "部署（n），把模型放进真实世界落地运行"
+        },
+        {
+          "term": "distribution shift",
+          "cn": "分布偏移（n），训练分布与部署分布不一致"
+        },
+        {
+          "term": "long-tail failures",
+          "cn": "长尾失败（n），罕见但累计起来重要的失败案例"
+        },
+        {
+          "term": "demonstration",
+          "cn": "示教（n），人工演示给机器人学习的数据"
+        },
+        {
+          "term": "offline-to-online",
+          "cn": "离线到在线（adj），先用离线数据预训再用在线数据微调的范式"
+        },
+        {
+          "term": "long-horizon",
+          "cn": "长程（adj），需要执行多步、跨较长时间的任务"
+        },
+        {
+          "term": "robust",
+          "cn": "鲁棒的（adj），在扰动和不确定下仍稳健"
+        }
+      ],
+      "cn": "通用机器人策略受益于大规模预训练，但仅靠离线数据不够鲁棒。已部署机器人会遇到分布偏移、长尾故障与人工纠正机会，固定 demonstration 数据集捕捉不到。LWD 提出舰队级 offline-to-online RL 框架，DIVL 做稳健价值估计 + QAM 在 flow-based VLA 中做策略提取，16 台双臂机器人 8 任务下平均成功率 95%，长程任务（3-5 分钟）收益最大。",
+      "id": "de-e2693c7304",
+      "firstShown": "2026-05-10"
+    },
+    {
+      "type": "news",
+      "level": "B2",
+      "register": "journalistic",
+      "title": "Hyundai-owned Boston Dynamics Atlas performs handstand and L-sit, signaling production-ready maturity",
+      "source": "The Straits Times",
+      "date": "2026-05-06",
+      "url": "https://www.straitstimes.com/world/hyundai-robot-performs-handstand-complex-gymnastics-moves",
+      "en": "Hyundai Motors' robotics unit released a video showing its production-ready Atlas humanoid robot performing complex gymnastics, marking a first-of-its-kind live demonstration that could signal the machine is nearing commercialisation. The robot performed a full handstand, then transitioned into an L-sit position while supporting its entire body weight on its hands. Atlas features human-scale hands with tactile sensing and fully rotational joints. It can lift up to 50kg, operates between minus 20 deg C and 40 deg C, and Hyundai plans to deploy it commercially across its plants from 2028.",
+      "vocab": [
+        {
+          "term": "production-ready",
+          "cn": "可量产的（adj），已具备规模化生产水平"
+        },
+        {
+          "term": "humanoid robot",
+          "cn": "人形机器人（n），与人体形态相似的机器人"
+        },
+        {
+          "term": "first-of-its-kind",
+          "cn": "首创（adj），同类首次"
+        },
+        {
+          "term": "commercialisation",
+          "cn": "商业化（n），从研发走向市场量产"
+        },
+        {
+          "term": "handstand",
+          "cn": "倒立（n），手撑地面、身体倒立的动作"
+        },
+        {
+          "term": "L-sit",
+          "cn": "L 形支撑（n），手撑地、身体呈 L 形的体操动作"
+        },
+        {
+          "term": "tactile sensing",
+          "cn": "触觉感知（n），通过传感器感知力 / 接触"
+        },
+        {
+          "term": "fully rotational joints",
+          "cn": "全旋关节（n），可 360° 转动的关节"
+        },
+        {
+          "term": "deploy",
+          "cn": "部署（v），把机器人放到生产场景使用"
+        },
+        {
+          "term": "plants",
+          "cn": "工厂（n），制造产线所在地"
+        }
+      ],
+      "cn": "现代汽车旗下波士顿动力公开「量产版 Atlas」执行复杂体操动作的视频——机器人完成完整倒立后转入 L-sit（双手撑地、L 形坐姿），同类首演。Atlas 配备人体尺度灵巧手 + 触觉感知 + 全旋关节，最大单臂负载 50 kg，工作温度 -20°C 至 40°C，现代计划 2028 年起在自家工厂大规模商用。",
+      "id": "de-c8c82f3913",
+      "firstShown": "2026-05-11"
     }
   ]
 }

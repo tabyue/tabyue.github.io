@@ -3,6 +3,42 @@
 > ⚠️ **强制规则（2026-05-06 起）**：
 > 1. 每次修改 `data/learn/<mod>.json`（追加/修改 sections）后，**必须** `python tools/sync_learn_split.py` 同步生成 `data/learn-split/<mod>/{_index.json, sec-NN.json}`。前端走 B 方案按需加载——若不同步，用户看到的章节内容会停在旧版本。脚本是幂等的，无变化时不会改任何文件。
 > 2. 学习模块结构发生变化（新增/删除模块、新增/删除 section）后，建议同时运行 `python tools/build_sitemap.py` 重新生成 `sitemap.xml`，让搜索引擎抓到新页面。
+> 3. **（2026-08-24 起）提交前必须跑 `python tools/health_check.py`，必须 ALL OK 才能 commit。** 它覆盖 category 白名单、totalItems、开源报告页覆盖、论文 keyInsights 覆盖、同日同事件查重、全量章节内链等 10 类检查，有必修问题时 exit 1。
+
+## 2026-08-24T19:00 执行记录（手动轮 · 内容补更 + 数据治理专项）
+
+**背景：** 上次提交 2026-06-01（2b140c6），间隔近三个月。本轮先补关键内容，再把积累的数据质量债一次还清。
+
+**内容更新：**
+- 新闻 +5（n338-n342）：宇树科技 8/19 科创板上市（发行价 150.80 / 首日 +629.44% 市值 4449 亿 / 中签率 0.018% 创科创板新低 / H1 营收 11.52 亿 +48.54% 净利转正）、小鹏机器人独立融资、WRC 2026 看点、元力无限融资、大晓机器人开悟世界模型 Kairos 3.1 开源（视频生成 + 状态预测双项全球第一）
+- 论文 +2：p179 StellaVLA（arXiv 2608.11671 / In-Context 结构化示范 + 测试时适配 / KV-Cache / VLA-Arena）、p180 NebulaVLA（双频异步推理 + Guide Action 边界连续性），均配完整 detail
+- 开源 +1：os133 LingBot-World 2.0（蚂蚁灵波 / arXiv 2607.07534 / 无限时长交互式世界模型 / Agentic Harness pilot+director 首创 / Wan2.2 / CC BY-NC-SA 4.0）
+- 招聘 +2：j154 小鹏机器人、j155 元力无限
+- 学习深化 ×2：imitation-learning +sec-16（联动 p179）、ai-infra +sec-24（联动 p180）
+- daily-english 刷新 2 条（StellaVLA / NebulaVLA 摘要）
+
+**数据治理（本轮大头）：**
+- **28 个开源项目此前在页面上完全不可见** —— `renderOSGrouped` 只渲染 category 命中白名单的项目，而库里累积了 `VLA / 数据基座` / `world-model` / `speech-tts` / `开源硬件` 等 28 种自创分类（占 121 个项目的 23%），全部归一到 8 个白名单分类
+- **news 179 条分类越界** —— 62 种分类值 vs 6 个筛选按钮，点「融资创投」原本只能筛出 9 条（实有 46 条），全部归一，未映射 0
+- **55 张开源卡片标题后显示 `undefined`** —— 模板用 `${p.org}`，55 条只有 `organization`；index.html 改 `${p.org||p.organization||''}`
+- **重复清理 11 条**：p099→p093、p067+p102→p076、p017→p016（p017 标题写 HPT 内容却是 π₀，与 p005 重复；p016 才是真 HPT）、n161+n119+n189→n139（国家电网 68 亿四份收录）、n066→n051、n186→n211、n002→n063、n034→n082、os058→os101。合并原则：留信息最全的一条 + 追加另一条独有事实 + tags/source 取并集 + addedDate 取最新
+- **p113-p120 共 7 篇补 keyInsights/impact**（缺这两字段的卡片会退化成「暂无解读」且不可点）；p113 MemoryVLA 连 tldr 都没有（卡片显示 undefined），按 arXiv 2508.19236 摘要补全；p117 补 detail 文件
+- 43 条 papers 的 authors 由 list 归一为字符串；203 处 ASCII 双引号 → 「」；jobs totalItems 108→147（停在三个月前）；四文件 totalItems 全部校准
+- ai-infra sec-18 死链 `/learn/sensor-hardware/` → `/learn/sensors-hardware/`（模块名少个 s）
+- os132 / os133 补详情 JSON + 报告页（此前「完整报告」按钮 404）
+
+**工具：**
+- 新增 `tools/health_check.py`（10 类巡检，可重复运行，有必修问题 exit 1）
+- 修复 `tools/gen_os_report.py` 硬编码 `c:/Users/tabyue/...` 路径 → 按脚本位置推导 ROOT
+
+**数据健康：** health_check ALL OK / 0 告警；news 307 / papers 156 / opensource 121 / jobs 147；846 JSON 全部 OK；sync_learn_split 2 文件更新；build_sitemap 10+32+493=535 URL
+
+**当前数据编号水位：** news→n342 (307 条), papers→p180 (156 条), opensource→os133 (121 条), jobs→j155 (147 条)
+
+**踩坑教训：**
+- **「查重四要素」漏检严重**：URL / repo / 标题前缀 12 字 / arXiv id 四级检查漏掉了本轮 6 组重复——同一事件被不同媒体报道时标题措辞差异大，前缀比对完全失效；反而在 Figure AI / Google DeepMind / Physical Intelligence 上产生 3 个误报（同公司不同事件）。有效做法：**同日期分组 + 正文 3-gram 包含度（交集/较短一方）≥ 0.4**，一次抓出国家电网 / 智元 APC / CEAI 三组。已写进 health_check.py
+- **category 是「静默失效」字段**：写错不报错、不影响 JSON 校验、也不影响详情页，但前端分组渲染直接跳过，项目躺在库里三个月无人可见。凡前端有白名单的字段，新增条目必须比对白名单，禁止自创
+- **字段名不一致比字段缺失更隐蔽**：`org` / `organization` 两套写法并存，模板只认前者，45% 的卡片挂着 undefined。这类问题只读 JSON 发现不了，必须回头读渲染模板
 
 ## 2026-05-07T16:55 执行记录
 

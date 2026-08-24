@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qwen-VLA (阿里通义 — 跨本体跨任务统一具身基础模型) — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Qwen-VLA (阿里通义 — 跨本体跨任务统一具身基础模型) — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="qwen-vla">Qwen-VLA (阿里通义 — 跨本体跨任务统一具身基础模型)</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/QwenLM/Qwen-VLA">https://github.com/QwenLM/Qwen-VLA</a>  </p>
+<p><strong>Stars</strong>: 🌟 新发布 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-05-31  </p>
+<p><strong>组织</strong>: 阿里通义实验室  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-08-24</p>
+</blockquote>
+<hr />
+<h2 id="_2">项目概述</h2>
+<p><strong>Qwen-VLA</strong> 是阿里通义实验室 2026-05-29 开源的具身基础模型，核心主张是<strong>「一个模型同时干三件事、同时管十一种身体」</strong>：</p>
+<ul>
+<li><strong>三大任务统一</strong>：桌面 / 双臂<strong>操作</strong>、视觉语言<strong>导航</strong>、末端<strong>轨迹预测</strong>共享同一套权重，不再是「操作一个模型、导航另一个模型」</li>
+<li><strong>十一种本体统一</strong>：从单臂 Franka 到 ALOHA 双臂、从轮式底盘到人形，硬件差异不靠换 head，而是编码进 prompt</li>
+</ul>
+<p><strong>一句话定位</strong>：Qwen-VLA 是国产阵营对 π₀.₅ / GR00T 这类「通用具身基座」路线的正面回应，也是首个把「跨任务 + 跨本体」两个维度同时打通并完整开源（Apache-2.0）的中文团队工作。</p>
+<p><strong>技术报告</strong>：arXiv:2605.30280</p>
+<blockquote>
+<p>发布节奏值得注意：Qwen-VLA 与 Wall-OSS-0.5、WALL-WM 在同一周内相继开源，构成 2026 年年中国产具身开源最密集的一次集中释放。</p>
+</blockquote>
+<hr />
+<h2 id="_3">模型架构</h2>
+<h3 id="_4">整体结构</h3>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│  输入                                                          │
+│  ├── 多视角 RGB（头部 / 腕部 / 第三人称）                          │
+│  ├── 语言指令（任务描述）                                          │
+│  └── Embodiment Prompt（本体描述，自然语言）                       │
+│      例：'dual-arm ALOHA, 14-DoF, absolute joint control, 50Hz'  │
+├──────────────────────────────────────────────────────────────┤
+│  Qwen3.5-4B VLM 主干                                           │
+│  视觉编码 + 语言理解 + 跨模态推理 → 语义 latent                     │
+├──────────────────────────────────────────────────────────────┤
+│  DiT 动作解码器（1.15B）                                         │
+│  以语义 latent 为条件，扩散式生成动作 chunk                         │
+├──────────────────────────────────────────────────────────────┤
+│  输出（按 Embodiment Prompt 决定维度与语义）                        │
+│  ├── 操作：关节 / 末端位姿 action chunk                           │
+│  ├── 导航：离散或连续导航动作                                       │
+│  └── 轨迹：未来末端轨迹点序列                                       │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="embodiment-aware-prompt-conditioning">Embodiment-Aware Prompt Conditioning</h3>
+<p>这是全模型最关键、也最反直觉的一个设计：<strong>把硬件差异当成语言问题处理</strong>。</p>
+<p>传统跨本体方案要么给每个本体单独一个 action head（参数随本体数线性增长、新本体必须重训），要么把所有动作空间 padding 到同一个最大维度（浪费容量、语义混乱）。Qwen-VLA 改为把「几条手臂、多少自由度、绝对还是增量控制、控制频率多少」写成自然语言，和任务指令一起送进 VLM：</p>
+<pre><code>[Task]        put the mug into the microwave and close the door
+[Embodiment]  single-arm Franka Panda, 7-DoF joint position,
+              delta control, 20Hz, parallel gripper
+</code></pre>
+<p><strong>带来的三个直接好处</strong>：</p>
+<ol>
+<li><strong>参数不随本体数增长</strong> —— 11 种本体共用一套 DiT 解码器</li>
+<li><strong>新本体零架构改动</strong> —— 只要能用语言描述清楚，就能加入训练或直接尝试零样本迁移</li>
+<li><strong>VLM 的语言先验被复用</strong> —— 'dual-arm' 与 'two arms' 天然语义接近，本体之间因此可以共享泛化</li>
+</ol>
+<hr />
+<h2 id="_5">四阶段训练流程</h2>
+<p>Qwen-VLA 的训练被拆成 T2A → CPT → SFT → RL 四段，每段解决一个特定问题：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>全称</th>
+<th>目标</th>
+<th>关键做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T2A</strong></td>
+<td>Text-to-Action</td>
+<td>让 VLM 先学会「动作是一种可生成的模态」</td>
+<td>用文本 / 轨迹配对数据对齐语义空间与动作空间</td>
+</tr>
+<tr>
+<td><strong>CPT</strong></td>
+<td>Continual Pre-Training</td>
+<td>大规模跨本体跨任务预训练</td>
+<td>混合 11 种本体的操作 / 导航 / 轨迹数据联合训练</td>
+</tr>
+<tr>
+<td><strong>SFT</strong></td>
+<td>Supervised Fine-Tuning</td>
+<td>下游任务对齐</td>
+<td>在目标本体 / 目标任务的高质量演示上精调</td>
+</tr>
+<tr>
+<td><strong>RL</strong></td>
+<td>Reinforcement Learning</td>
+<td>补齐模仿学习吃不到的长尾</td>
+<td>在仿真中做在线试错，修复分布外与长程失败模式</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rl">为什么必须有 RL 阶段</h3>
+<p>纯模仿学习的策略在<strong>演示覆盖不到的状态</strong>上会迅速退化——这正是 OOD 评测掉分的主因。Qwen-VLA 最亮眼的一组数字（ALOHA OOD 76.9%，相对 π₀.₅ 提升 35.4 个百分点）主要来自这一阶段：RL 让策略在「已经偏离演示分布」的状态下依然知道怎么把任务拉回正轨。</p>
+<h3 id="dit">与 DiT 动作头的配合</h3>
+<p>动作解码器采用 DiT 而非自回归 token 预测，好处是<strong>动作 chunk 整段生成</strong>、时序更平滑，坏处是采样步数带来延迟。工程上通常配合减少去噪步数 + 动作 chunk 复用来把控制频率拉到可用区间——这一权衡与 os104 FASTER（流匹配 VLA 单步快采样）关注的是同一个瓶颈。</p>
+<hr />
+<h2 id="_6">关键论文与延伸阅读</h2>
+<h3 id="_7">本体论文</h3>
+<ul>
+<li><strong>Qwen-VLA 技术报告</strong> — arXiv:2605.30280，覆盖架构、四阶段训练与全部评测细节</li>
+</ul>
+<h3 id="_8">站内相关</h3>
+<ul>
+<li><strong>os101 ABot-M0</strong> — 另一条跨本体路线：统一动作表示 + 动作流形学习</li>
+<li><strong>os062 Isaac GR00T N1.7</strong> — 对照理解「本体适配层」与「语言化 prompt」的取舍</li>
+<li><strong>os088 DOMINO + PUMA</strong> — Qwen-VLA 零样本反超的那个基准与基线</li>
+<li><strong>os104 FASTER</strong> — 针对扩散 / 流匹配动作头采样延迟的优化方案</li>
+<li><strong>os115 RLinf</strong> — 想复现第四阶段 RL，这是最现成的基础设施</li>
+</ul>
+<hr />
+<h2 id="_9">快速开始</h2>
+<h3 id="_10">环境与权重</h3>
+<pre><code class="language-bash">git clone https://github.com/QwenLM/Qwen-VLA.git
+cd Qwen-VLA
+
+# 建议独立环境（VLM + DiT 对 torch 版本较敏感）
+conda create -n qwenvla python=3.10 -y
+conda activate qwenvla
+pip install -r requirements.txt
+
+# 权重（HuggingFace）
+huggingface-cli download Qwen/Qwen-VLA --local-dir ./checkpoints/qwen-vla
+</code></pre>
+<h3 id="embodiment-prompt">推理：关键在于写对 Embodiment Prompt</h3>
+<pre><code class="language-python">from qwen_vla import QwenVLAPolicy
+
+policy = QwenVLAPolicy.from_pretrained('./checkpoints/qwen-vla')
+
+# 本体描述写得越准，跨本体迁移效果越稳
+embodiment = (
+    'single-arm Franka Panda, 7-DoF joint position, '
+    'delta control, 20Hz, parallel gripper'
+)
+
+obs = {
+    'images': {'head': head_rgb, 'wrist': wrist_rgb},
+    'state': joint_positions,
+}
+
+action_chunk = policy.act(
+    obs,
+    instruction='pick up the red cube and place it on the plate',
+    embodiment=embodiment,
+)
+# action_chunk: (chunk_size, action_dim)，维度由 embodiment 决定
+</code></pre>
+<h3 id="_11">迁移到自己的机器人</h3>
+<pre><code class="language-text">1. 先用自然语言把本体写清楚：几条臂 / 多少 DoF / 绝对还是增量 / 控制频率 / 末端形式
+2. 直接零样本跑一遍，记录失败模式（抓不准？抖动？语义理解错？）
+3. 抖动多 → 检查控制频率与 chunk 长度是否匹配
+4. 语义对但动作偏 → 采 50-200 条演示做 SFT
+5. 只在特定场景失败 → 该场景做 RL 微调，而不是盲目加演示
+</code></pre>
+<h3 id="_12">常见坑</h3>
+<ul>
+<li><strong>Embodiment Prompt 与真实控制接口不一致</strong>（写了 delta 实际发绝对值）会导致动作看似合理但执行发散，这是最高频的接入错误</li>
+<li><strong>多视角相机命名</strong>要和训练时保持一致，视角错位比图像质量差影响更大</li>
+<li>DiT 去噪步数直接决定单次推理耗时，真机部署前先量一遍端到端延迟</li>
+</ul>
+<hr />
+<h2 id="_13">性能基准</h2>
+<table>
+<thead>
+<tr>
+<th>评测</th>
+<th>任务类型</th>
+<th>Qwen-VLA</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LIBERO</strong></td>
+<td>桌面操作</td>
+<td><strong>97.9%</strong></td>
+<td>接近饱和</td>
+</tr>
+<tr>
+<td><strong>RoboTwin-Hard</strong></td>
+<td>双臂协作（难）</td>
+<td><strong>87.2%</strong></td>
+<td>双臂长程</td>
+</tr>
+<tr>
+<td><strong>VLN-CE R2R</strong></td>
+<td>视觉语言导航</td>
+<td><strong>69.0%</strong></td>
+<td>与操作共享权重</td>
+</tr>
+<tr>
+<td><strong>ALOHA OOD</strong></td>
+<td>分布外操作</td>
+<td><strong>76.9%</strong></td>
+<td>比 π₀.₅ <strong>+35.4pp</strong></td>
+</tr>
+<tr>
+<td><strong>DOMINO</strong></td>
+<td>动态环境零样本</td>
+<td><strong>26.6%</strong></td>
+<td>超过在 DOMINO 上微调过的 PUMA</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_14">两个数字值得单独说</h3>
+<p><strong>① ALOHA OOD +35.4pp</strong> —— OOD 是当前 VLA 落地的真实瓶颈：实验室 95% 成功率的策略进到没见过的光照 / 摆位 / 干扰物场景常常腰斩。这个提升幅度说明「四阶段训练 + RL 收尾」对分布外鲁棒性的贡献远大于继续堆演示数据。</p>
+<p><strong>② DOMINO 零样本反超微调基线</strong> —— Qwen-VLA 没在 DOMINO 上训练，却超过了专门在 DOMINO 数据上微调的 PUMA（见 os088）。这是「通用基座 + 足够多样的预训练」压过「小数据专用微调」的一个直接证据。</p>
+<blockquote>
+<p>注意：以上均为论文与官方仓库报告数值，跨论文对比时要留意评测协议差异（相机配置 / 成功判定 / 试验次数），复现前建议先跑通官方 eval 脚本再做横向结论。</p>
+</blockquote>
+<hr />
+<h2 id="_15">横向对比</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Qwen-VLA</th>
+<th>π₀.₅</th>
+<th>GR00T N1.7 (os062)</th>
+<th>ABot-M0 (os101)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>主干</strong></td>
+<td>Qwen3.5-4B</td>
+<td>PaliGemma 系</td>
+<td>NVIDIA 自研</td>
+<td>自研</td>
+</tr>
+<tr>
+<td><strong>动作头</strong></td>
+<td>DiT 1.15B</td>
+<td>Flow Matching</td>
+<td>Diffusion</td>
+<td>动作流形（AML）</td>
+</tr>
+<tr>
+<td><strong>任务覆盖</strong></td>
+<td>操作 + 导航 + 轨迹</td>
+<td>操作为主</td>
+<td>操作 / 全身</td>
+<td>操作</td>
+</tr>
+<tr>
+<td><strong>跨本体机制</strong></td>
+<td>语言化 Embodiment Prompt</td>
+<td>数据混合</td>
+<td>本体适配层</td>
+<td>UniACT 统一动作表示</td>
+</tr>
+<tr>
+<td><strong>本体数</strong></td>
+<td>11</td>
+<td>多</td>
+<td>多</td>
+<td>20+</td>
+</tr>
+<tr>
+<td><strong>协议</strong></td>
+<td>Apache-2.0</td>
+<td>部分开源</td>
+<td>商业友好</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td><strong>OOD 表现</strong></td>
+<td>强（RL 收尾）</td>
+<td>基线</td>
+<td>中</td>
+<td>中</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么选</strong>：</p>
+<ul>
+<li>需要<strong>一套权重同时管操作和导航</strong> → Qwen-VLA 目前几乎是唯一开源选择</li>
+<li>只做<strong>桌面操作</strong>且追求数据规模 → ABot-M0（os101）的 600 万轨迹数据基座更对口</li>
+<li>关注<strong>人形全身控制</strong> → GR00T 生态（os062 / os098）更完整</li>
+<li>关注<strong>分布外鲁棒性</strong> → Qwen-VLA 的四阶段 + RL 是当前公开方案里最值得抄的一条</li>
+</ul>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
