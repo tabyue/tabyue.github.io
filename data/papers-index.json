@@ -1,6 +1,36 @@
 {
-  "lastUpdated": "2026-08-24T20:40",
+  "lastUpdated": "2026-08-24T21:10",
   "papers": [
+    {
+      "id": "p181",
+      "title": "AtlasVLA: Persistent World-Ego State Modeling for Vision-Language-Action Models",
+      "authors": "Guiyu Zhao, Longteng Guo, Yanghong Mei, Zilin Zhu, Yu Zhang, Bin Cao, MingMing Yu, Xingjian He, Jie Jiang, Jing Liu",
+      "venue": "arXiv preprint",
+      "date": "2026-08-07",
+      "arxiv": "https://arxiv.org/abs/2608.06729",
+      "github": "",
+      "tags": [
+        "AtlasVLA",
+        "VLA",
+        "世界状态",
+        "腕部相机",
+        "记忆",
+        "DiT",
+        "LIBERO",
+        "部分可观测"
+      ],
+      "tldr": "反应式 VLA 在只有腕部相机时会同时忘掉空间和进度：物体出视野就丢，长程任务会漏步。AtlasVLA 用双记忆改成「局部观测 → 更新隐藏状态 → 再出动作」：4D 持久世界记忆把 2D 腕部帧经 Depth Anything v3 反投影进 voxel-hash 地图（第一帧永久锚定），自我工作记忆跟踪任务进度；两者条件化 DiT 出 7-DoF 动作。严格仅腕部设定下 LIBERO 平均 97.6%、RLBench 70.8%，LIBERO-Long 比多视角 π₀ 高 9.4 点，真机长程 +17.5 点。",
+      "category": "vla-models",
+      "difficulty": "高级",
+      "addedDate": "2026-08-24",
+      "keyInsights": [
+        "把腕部单目的失败拆成感知遗忘和进度遗忘，对应空间地图与自我工作记忆两套机制",
+        "仅腕部 LIBERO 97.6%，Long 94.6%，超过带第三人称的 π₀ / OpenVLA-OFT",
+        "第一帧永久锚定 + voxel-hash 邻域融合，避免滑动窗口把早期场景冲掉",
+        "真机 Franka 全程无第三人称，长程相对 π₀ +17.5 点，说明进度记忆在真实遮挡下更值钱"
+      ],
+      "impact": "把「世界模型」从预测未来拉回到记住现在：相机预算不够时，持久空间状态可以替代一颗固定第三人称相机"
+    },
     {
       "id": "p180",
       "title": "NebulaVLA: A Dual-Frequency Vision-Language-Action Model With Guide Action for Robotic Manipulation",
@@ -2260,6 +2290,70 @@
       "impact": "填补学界'高透明度可复现 VLA 基线'空白，为硬件受限场景提供实用范本"
     },
     {
+      "id": "p093",
+      "title": "LoHo-Manip: Long-Horizon Manipulation via Trace-Conditioned VLA Planning",
+      "authors": "Isabella Liu, An-Chieh Cheng, Rui Yan, Geng Chen, Ri-Zhao Qiu, Sha Yi, Hongxu Yin, Xiaolong Wang, Sifei Liu",
+      "venue": "arXiv 2026",
+      "date": "2026-04-24",
+      "arxiv": "https://arxiv.org/abs/2604.21924",
+      "github": "",
+      "tags": [
+        "Trace-VLA",
+        "长程操作",
+        "轨迹条件化",
+        "VLA规划",
+        "多步推理",
+        "VLA",
+        "分层规划",
+        "Trace-Conditioning",
+        "Franka",
+        "累积误差"
+      ],
+      "tldr": "现有VLA模型擅长单步或短程操作任务，但在需要多步规划的长程操作(Long-Horizon Manipulation)场景中表现欠佳——缺乏对任务全局结构的理解，容易在子任务衔接处失败。Trace-VLA提出轨迹条件化规划(Trace-Conditioned Planning)范式：首先由高层VLM根据语言指令和视觉观察生成完整操作轨迹规划(Trace)，以2D关键点序列的形式表达末端执行器的预期运动路径；然后将该轨迹作为条件输入低层VLA策略，引导其在每个时间步生成符合全局规划的动作。这种分层设计使VLA能够'先规划后执行'，在10+步的长程桌面操作任务中成功率显著提升。",
+      "difficulty": "中级",
+      "addedDate": "2026-04-29",
+      "keyInsights": [
+        "首次将2D轨迹规划作为VLA的显式条件输入，桥接高层语义规划与低层动作执行",
+        "高层规划以关键点序列表达，可视化直观、易于人类校验和干预",
+        "在10+步长程操作任务中相比端到端VLA成功率大幅提升",
+        "NVIDIA Research主导，与UC San Diego合作"
+      ],
+      "impact": "为VLA在长程复杂操作场景中的应用提供了可行的分层规划方案"
+    },
+    {
+      "id": "p076",
+      "title": "Foca-VLA / ForceVLA2: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation",
+      "authors": "Fudan University, SJTU, NUS, Shanghai University, Xi'an Jiaotong University",
+      "venue": "CVPR 2026",
+      "date": "2026-04",
+      "arxiv": "https://arxiv.org/abs/2603.15169",
+      "github": "https://github.com/ft-robotic/ForceVLA",
+      "tags": [
+        "力控制",
+        "力-位混合控制",
+        "接触丰富操作",
+        "VLA",
+        "CVPR 2026",
+        "力感知",
+        "MoE",
+        "混合力位控制",
+        "接触操作",
+        "π₀",
+        "力位混合控制",
+        "端到端"
+      ],
+      "tldr": "复旦大学联合上海交大、新加坡国立等团队提出 Foca-VLA / ForceVLA2（CVPR 2026收录），首次将混合力-位置控制与力感知能力统一于端到端VLA框架。此前具身智能在接触丰富操作任务中主要依赖位置控制，对交互力的显式感知和调节鲜有探索，导致在插入、擦拭、打磨等需要精细力控的任务中稳定性不足。ForceVLA2引入力感知专家混合（Force-aware MoE）模块，使VLA模型能够同时输出位置指令和力约束，在执行过程中动态切换和融合力控与位控模式。实验表明在接触丰富操作基准上显著超越纯位控VLA基线，尤其在需要精确力调节的任务（如门把手操作、物体插入、表面擦拭）中提升明显。这是首个在端到端VLA框架中实现工业级力-位混合控制的工作。",
+      "difficulty": "高级",
+      "addedDate": "2026-04-29",
+      "keyInsights": [
+        "力-位混合控制：首次在VLA框架中实现位置控制与力控制的动态融合切换",
+        "Force-aware MoE：力感知专家混合模块，根据接触状态自动选择控制模式",
+        "接触丰富操作：在门把手、插入、擦拭等需要精细力调节的任务中显著超越位控基线",
+        "端到端训练：力感知和混合控制策略在统一VLA框架中端到端学习，无需手工设计力控规则"
+      ],
+      "impact": "首次在端到端VLA中实现工业级力-位混合控制，为接触丰富操作任务的规模化落地提供关键技术"
+    },
+    {
       "id": "p097",
       "title": "Awesome Robot Foundation Models 2025-2026: A Comprehensive Survey and Taxonomy",
       "authors": "Multi-institution",
@@ -2364,37 +2458,6 @@
         "两阶段RL训练实现快速移动中的鲁棒抓取"
       ],
       "impact": "为移动操作机器人的快速抓取提供了端到端学习方案"
-    },
-    {
-      "id": "p093",
-      "title": "LoHo-Manip: Long-Horizon Manipulation via Trace-Conditioned VLA Planning",
-      "authors": "Isabella Liu, An-Chieh Cheng, Rui Yan, Geng Chen, Ri-Zhao Qiu, Sha Yi, Hongxu Yin, Xiaolong Wang, Sifei Liu",
-      "venue": "arXiv 2026",
-      "date": "2026-04-24",
-      "arxiv": "https://arxiv.org/abs/2604.21924",
-      "github": "",
-      "tags": [
-        "Trace-VLA",
-        "长程操作",
-        "轨迹条件化",
-        "VLA规划",
-        "多步推理",
-        "VLA",
-        "分层规划",
-        "Trace-Conditioning",
-        "Franka",
-        "累积误差"
-      ],
-      "tldr": "现有VLA模型擅长单步或短程操作任务，但在需要多步规划的长程操作(Long-Horizon Manipulation)场景中表现欠佳——缺乏对任务全局结构的理解，容易在子任务衔接处失败。Trace-VLA提出轨迹条件化规划(Trace-Conditioned Planning)范式：首先由高层VLM根据语言指令和视觉观察生成完整操作轨迹规划(Trace)，以2D关键点序列的形式表达末端执行器的预期运动路径；然后将该轨迹作为条件输入低层VLA策略，引导其在每个时间步生成符合全局规划的动作。这种分层设计使VLA能够'先规划后执行'，在10+步的长程桌面操作任务中成功率显著提升。",
-      "difficulty": "中级",
-      "addedDate": "2026-04-29",
-      "keyInsights": [
-        "首次将2D轨迹规划作为VLA的显式条件输入，桥接高层语义规划与低层动作执行",
-        "高层规划以关键点序列表达，可视化直观、易于人类校验和干预",
-        "在10+步长程操作任务中相比端到端VLA成功率大幅提升",
-        "NVIDIA Research主导，与UC San Diego合作"
-      ],
-      "impact": "为VLA在长程复杂操作场景中的应用提供了可行的分层规划方案"
     },
     {
       "id": "p091",
@@ -2770,39 +2833,6 @@
         "跨本体泛化：在多种不同尺寸和构型的人形平台上验证迁移能力"
       ],
       "impact": "首个面向全身协调操作的跨本体人形VLA框架，为通用人形机器人操作奠定基础架构"
-    },
-    {
-      "id": "p076",
-      "title": "Foca-VLA / ForceVLA2: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation",
-      "authors": "Fudan University, SJTU, NUS, Shanghai University, Xi'an Jiaotong University",
-      "venue": "CVPR 2026",
-      "date": "2026-04",
-      "arxiv": "https://arxiv.org/abs/2603.15169",
-      "github": "https://github.com/ft-robotic/ForceVLA",
-      "tags": [
-        "力控制",
-        "力-位混合控制",
-        "接触丰富操作",
-        "VLA",
-        "CVPR 2026",
-        "力感知",
-        "MoE",
-        "混合力位控制",
-        "接触操作",
-        "π₀",
-        "力位混合控制",
-        "端到端"
-      ],
-      "tldr": "复旦大学联合上海交大、新加坡国立等团队提出 Foca-VLA / ForceVLA2（CVPR 2026收录），首次将混合力-位置控制与力感知能力统一于端到端VLA框架。此前具身智能在接触丰富操作任务中主要依赖位置控制，对交互力的显式感知和调节鲜有探索，导致在插入、擦拭、打磨等需要精细力控的任务中稳定性不足。ForceVLA2引入力感知专家混合（Force-aware MoE）模块，使VLA模型能够同时输出位置指令和力约束，在执行过程中动态切换和融合力控与位控模式。实验表明在接触丰富操作基准上显著超越纯位控VLA基线，尤其在需要精确力调节的任务（如门把手操作、物体插入、表面擦拭）中提升明显。这是首个在端到端VLA框架中实现工业级力-位混合控制的工作。",
-      "difficulty": "高级",
-      "addedDate": "2026-04-29",
-      "keyInsights": [
-        "力-位混合控制：首次在VLA框架中实现位置控制与力控制的动态融合切换",
-        "Force-aware MoE：力感知专家混合模块，根据接触状态自动选择控制模式",
-        "接触丰富操作：在门把手、插入、擦拭等需要精细力调节的任务中显著超越位控基线",
-        "端到端训练：力感知和混合控制策略在统一VLA框架中端到端学习，无需手工设计力控规则"
-      ],
-      "impact": "首次在端到端VLA中实现工业级力-位混合控制，为接触丰富操作任务的规模化落地提供关键技术"
     },
     {
       "id": "p075",
@@ -4358,5 +4388,5 @@
       "github": ""
     }
   ],
-  "totalItems": 156
+  "totalItems": 157
 }

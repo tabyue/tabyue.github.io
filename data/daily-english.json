@@ -1,8 +1,98 @@
 {
-  "lastUpdated": "2026-08-24T19:40",
+  "lastUpdated": "2026-08-24T21:10",
   "date": "2026-08-24",
   "description": "每日 6 条精选英文素材：权威资讯（IEEE Spectrum / MIT Tech Review / Nature 等）+ arXiv 论文摘要 + 行业博客 + 写作 tip。每条标注 CEFR 等级（A2/B1/B2/C1）和文体（学术/资讯/技术博客）。",
   "items": [
+    {
+      "id": "de-4afeb55a60",
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "AtlasVLA: Persistent World-Ego State Modeling for Vision-Language-Action Models",
+      "source": "arXiv 2608.06729",
+      "date": "2026-08-07",
+      "url": "https://arxiv.org/abs/2608.06729",
+      "en": "While Vision-Language-Action (VLA) models have advanced embodied AI, their fundamentally reactive paradigm severely limits performance in partially observable and long-horizon tasks. When restricted to a single wrist-mounted camera, they inevitably suffer from perception forgetting as objects exit the field of view, and temporal task-progress forgetting during multi-step execution. We propose AtlasVLA, which transitions from direct reactive manipulation to proactive reasoning through a persistent world-ego state: a 4D Persistent World State Memory that lifts transient 2D observations into a globally updated, voxel-hashed spatial map, and an Ego-Working State Memory that tracks historical ego state and task progress.",
+      "vocab": [
+        {
+          "term": "reactive paradigm",
+          "cn": "反应式范式（当前观测直接出动作）"
+        },
+        {
+          "term": "partially observable",
+          "cn": "部分可观测"
+        },
+        {
+          "term": "perception forgetting",
+          "cn": "感知遗忘"
+        },
+        {
+          "term": "field of view",
+          "cn": "视野 / FoV"
+        },
+        {
+          "term": "task-progress forgetting",
+          "cn": "任务进度遗忘"
+        },
+        {
+          "term": "persistent",
+          "cn": "持久的 / 持续保持的"
+        },
+        {
+          "term": "voxel-hashed",
+          "cn": "体素哈希索引的"
+        },
+        {
+          "term": "wrist-mounted camera",
+          "cn": "腕部相机"
+        }
+      ],
+      "cn": "写作要点：连续两个 forgetting 名词把贡献拆成空间和时间，比 we propose a novel memory 清楚。restricted to a single wrist-mounted camera 先把实验约束说死，后面的 SOTA 才站得住。transitions from A to B through C 是套贡献句式，through 后面必须是机制名而不是形容词。",
+      "firstShown": "2026-08-24"
+    },
+    {
+      "id": "de-7872ea292c",
+      "type": "news",
+      "level": "B2",
+      "register": "journalistic",
+      "title": "Robbyant Releases LingBot-VLA 2.0: An Open-Source 6B VLA for Cross-Embodiment Manipulation",
+      "source": "MarkTechPost",
+      "date": "2026-07-08",
+      "url": "https://www.marktechpost.com/2026/07/08/lingbot-vla-2-0/",
+      "en": "Ant Group's Robbyant has released LingBot-VLA 2.0, a vision-language-action foundation model for robots. The release includes a technical report, an Apache-2.0 codebase, and a 6B checkpoint. The team targets a well-known gap: VLA models often work in labs but stumble in deployment. LingBot-VLA 2.0 advances the prior version along three practical axes — generalization across 20 robot configurations, an expanded whole-body action space, and predictive dynamics modeling — and is pretrained on about 60,000 hours of data.",
+      "vocab": [
+        {
+          "term": "foundation model",
+          "cn": "基础模型 / 基座模型"
+        },
+        {
+          "term": "checkpoint",
+          "cn": "训练好的权重快照"
+        },
+        {
+          "term": "stumble in deployment",
+          "cn": "一部署就摔跤"
+        },
+        {
+          "term": "along three practical axes",
+          "cn": "沿着三条实用主轴"
+        },
+        {
+          "term": "generalization",
+          "cn": "泛化"
+        },
+        {
+          "term": "whole-body action space",
+          "cn": "全身动作空间"
+        },
+        {
+          "term": "pretrained on",
+          "cn": "在……上预训练"
+        }
+      ],
+      "cn": "资讯写法：先丢齐技术报告 / 协议 / 权重三件套，再用 work in labs but stumble in deployment 点出动机。three practical axes 后面的破折号列举比 First/Second/Third 更紧。数字 20 configurations / 60,000 hours 让轴线可验证。",
+      "firstShown": "2026-08-24"
+    },
     {
       "id": "de-70e68f016d",
       "type": "paper",
@@ -222,6 +312,75 @@
       "cn": "**机器人模型的「R1 时刻」** —— 把 DeepSeek R1 的「RL 后训练 + 长链思考」第一次完整搬到 VLA。两大创新：① **LAPO** 端到端 RL 联合优化潜在 CoT 推理 + 动作；② 自适应 `<latent_end>` token 学发何时停止推理。仅 1 条轨迹预热 + RL 后训练 → LIBERO 99.9% SOTA / 真机 52.5% → 93.75% (+41pp)，全面超越 GR00T N1 / π₀ / OpenVLA。**Takeaway**：VLA 后训练范式正从「SFT only」走向「SFT + RL with latent CoT」，纯模仿学习时代正在收尾。",
       "firstShown": "2026-05-11",
       "id": "de-a394866842"
+    }
+  ],
+  "sources": [
+    "MIT Technology Review (technologyreview.com)",
+    "IEEE Spectrum (spectrum.ieee.org)",
+    "NVIDIA Developer Blog (developer.nvidia.com)",
+    "DeepMind Research (deepmind.google)",
+    "OpenAI Blog (openai.com/blog)",
+    "Hugging Face Blog (huggingface.co/blog)",
+    "Anthropic Research (anthropic.com/research)",
+    "arXiv (arxiv.org)",
+    "The Robot Report (therobotreport.com)",
+    "TechCrunch Robotics (techcrunch.com/category/robotics)"
+  ],
+  "archive": [
+    {
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "StarVLA: A Lego-like Codebase for Vision-Language-Action Model Developing",
+      "source": "arXiv (cs.RO)",
+      "date": "2026-04-06",
+      "url": "https://arxiv.org/abs/2604.05014",
+      "en": "Vision-language-action (VLA) research is fragmented across incompatible action-decoding paradigms, training pipelines, and benchmarks. We introduce StarVLA, a modular open-source codebase that unifies VLM-based and world-model-based VLAs under a single policy-centric formulation L_total = L_action + lambda * L_aux. The framework supports independent backbone-action-head swapping across QwenVL, LLaVA, Cosmos and Gemma backbones with FAST, OFT, Flow-Matching pi, and GR00T dual-system action heads. A unified evaluation interface integrates LIBERO, SimplerEnv, RoboTwin 2.0, RoboCasa-GR1, and BEHAVIOR-1K benchmarks. Reproducible training recipes match or surpass prior methods on both VLM and world-model backbones with minimal data engineering, marking what we call the PyTorch moment of VLA.",
+      "vocab": [
+        {
+          "term": "fragmented",
+          "cn": "碎片化的（adj），分散且彼此不兼容"
+        },
+        {
+          "term": "incompatible",
+          "cn": "不兼容的（adj），无法协同工作"
+        },
+        {
+          "term": "action-decoding paradigms",
+          "cn": "动作解码范式（n），把模型输出变成机器人动作的方式"
+        },
+        {
+          "term": "policy-centric formulation",
+          "cn": "策略中心公式（n），把所有变体抽象成同一策略形式"
+        },
+        {
+          "term": "backbone-action-head swapping",
+          "cn": "主干-动作头互换（n），独立替换组件能力"
+        },
+        {
+          "term": "Flow-Matching",
+          "cn": "流匹配（n），扩散模型的连续-时间变体"
+        },
+        {
+          "term": "dual-system",
+          "cn": "双系统（adj），快慢两层级联架构"
+        },
+        {
+          "term": "unified evaluation",
+          "cn": "统一评估（n），所有方法在同一接口下对比"
+        },
+        {
+          "term": "reproducible",
+          "cn": "可复现的（adj），别人能复跑出同样结果"
+        },
+        {
+          "term": "PyTorch moment",
+          "cn": "PyTorch 时刻（n），借喻 PyTorch 让 DL 走向工程化的转折点"
+        }
+      ],
+      "cn": "VLA 研究因动作解码范式 / 训练管线 / 评估基准的不兼容而严重碎片化。StarVLA 用一个统一的「策略中心公式」L_total = L_action + λ·L_aux 把 VLM-based 与 World-Model-based 两大范式纳入同一框架。模块化的 backbone-action-head 互换支持 QwenVL/LLaVA/Cosmos/Gemma 主干 + FAST/OFT/π Flow-Matching/GR00T 双系统动作头。LIBERO/SimplerEnv/RoboTwin 2.0/RoboCasa-GR1/BEHAVIOR-1K 五大基准统一评估接口。可复现训练 recipe 在 VLM 与 world-model 主干下均匹配或超越原方法——这是 VLA 的 PyTorch 时刻。",
+      "id": "de-ed7453fc84",
+      "firstShown": "2026-05-11"
     },
     {
       "type": "paper",
@@ -278,75 +437,6 @@
       "firstShown": "2026-05-11",
       "id": "de-27659bd9fc"
     },
-    {
-      "type": "paper",
-      "level": "C1",
-      "register": "academic",
-      "title": "StarVLA: A Lego-like Codebase for Vision-Language-Action Model Developing",
-      "source": "arXiv (cs.RO)",
-      "date": "2026-04-06",
-      "url": "https://arxiv.org/abs/2604.05014",
-      "en": "Vision-language-action (VLA) research is fragmented across incompatible action-decoding paradigms, training pipelines, and benchmarks. We introduce StarVLA, a modular open-source codebase that unifies VLM-based and world-model-based VLAs under a single policy-centric formulation L_total = L_action + lambda * L_aux. The framework supports independent backbone-action-head swapping across QwenVL, LLaVA, Cosmos and Gemma backbones with FAST, OFT, Flow-Matching pi, and GR00T dual-system action heads. A unified evaluation interface integrates LIBERO, SimplerEnv, RoboTwin 2.0, RoboCasa-GR1, and BEHAVIOR-1K benchmarks. Reproducible training recipes match or surpass prior methods on both VLM and world-model backbones with minimal data engineering, marking what we call the PyTorch moment of VLA.",
-      "vocab": [
-        {
-          "term": "fragmented",
-          "cn": "碎片化的（adj），分散且彼此不兼容"
-        },
-        {
-          "term": "incompatible",
-          "cn": "不兼容的（adj），无法协同工作"
-        },
-        {
-          "term": "action-decoding paradigms",
-          "cn": "动作解码范式（n），把模型输出变成机器人动作的方式"
-        },
-        {
-          "term": "policy-centric formulation",
-          "cn": "策略中心公式（n），把所有变体抽象成同一策略形式"
-        },
-        {
-          "term": "backbone-action-head swapping",
-          "cn": "主干-动作头互换（n），独立替换组件能力"
-        },
-        {
-          "term": "Flow-Matching",
-          "cn": "流匹配（n），扩散模型的连续-时间变体"
-        },
-        {
-          "term": "dual-system",
-          "cn": "双系统（adj），快慢两层级联架构"
-        },
-        {
-          "term": "unified evaluation",
-          "cn": "统一评估（n），所有方法在同一接口下对比"
-        },
-        {
-          "term": "reproducible",
-          "cn": "可复现的（adj），别人能复跑出同样结果"
-        },
-        {
-          "term": "PyTorch moment",
-          "cn": "PyTorch 时刻（n），借喻 PyTorch 让 DL 走向工程化的转折点"
-        }
-      ],
-      "cn": "VLA 研究因动作解码范式 / 训练管线 / 评估基准的不兼容而严重碎片化。StarVLA 用一个统一的「策略中心公式」L_total = L_action + λ·L_aux 把 VLM-based 与 World-Model-based 两大范式纳入同一框架。模块化的 backbone-action-head 互换支持 QwenVL/LLaVA/Cosmos/Gemma 主干 + FAST/OFT/π Flow-Matching/GR00T 双系统动作头。LIBERO/SimplerEnv/RoboTwin 2.0/RoboCasa-GR1/BEHAVIOR-1K 五大基准统一评估接口。可复现训练 recipe 在 VLM 与 world-model 主干下均匹配或超越原方法——这是 VLA 的 PyTorch 时刻。",
-      "id": "de-ed7453fc84",
-      "firstShown": "2026-05-11"
-    }
-  ],
-  "sources": [
-    "MIT Technology Review (technologyreview.com)",
-    "IEEE Spectrum (spectrum.ieee.org)",
-    "NVIDIA Developer Blog (developer.nvidia.com)",
-    "DeepMind Research (deepmind.google)",
-    "OpenAI Blog (openai.com/blog)",
-    "Hugging Face Blog (huggingface.co/blog)",
-    "Anthropic Research (anthropic.com/research)",
-    "arXiv (arxiv.org)",
-    "The Robot Report (therobotreport.com)",
-    "TechCrunch Robotics (techcrunch.com/category/robotics)"
-  ],
-  "archive": [
     {
       "type": "paper",
       "level": "C1",

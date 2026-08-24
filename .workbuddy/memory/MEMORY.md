@@ -69,7 +69,8 @@
   - **news**: id / title / source / date(原文日期) / url / category / summary / tags / addedDate(收录)
   - **papers (papers-index.json)**: id / title / authors / venue / date / arxiv / github / tags / tldr / category / difficulty / addedDate **+ keyInsights[]（💡 列表）+ impact（影响力描述）**——前端会读 keyInsights 判断"有无深度解读"，缺这两个字段会被打上「📚 暂无解读」disabled 标识，整卡也变不可点。新增论文必须同时配 `data/papers/pXXX.json` detail 文件（含 methodology / experiments / reproduction / mathDetails 中至少一项），否则点击会显示「📭 本篇深度解读尚未发布」
   - **opensource**: id / name / github / organization / category / description / language / license / features / stars / tags / addedDate
-  - **jobs**: id / title / company / city(不是 location!) / type / category / salary / education / experience / tags / description / **postedDate**(注意是 postedDate 不是 postDate) / addedDate
+  - **jobs**: id / title / company / city(不是 location!) / type / category / salary / education / experience / tags / description / **postedDate + postDate 两个都要写**（前端排序/过期过滤长期只读 `postDate`，2026-08-24 晚间才改成兼容）/ addedDate / url / source
+  - jobs.category 白名单：`算法研究 / 工程开发 / 硬件机械 / 产品运营 / 实习`；type 白名单：`社招 / 校招 / 实习`（不要写「全职」）。2026-08-24 晚间发现 45 条分类越界 + 44 条 type=全职，点筛选按钮像没数据。城市可以写「杭州 / 上海」，筛选用 includes。
   - 新增条目前先 `python -c "print(json.dumps(items[0], ensure_ascii=False, indent=2))"` 实读一条核对，不要靠记忆
 
 

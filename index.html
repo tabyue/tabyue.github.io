@@ -2747,9 +2747,9 @@ function renderJobs(){
     // 过滤掉超过半年的过期岗位
     const sixMonthsAgo=new Date();sixMonthsAgo.setMonth(sixMonthsAgo.getMonth()-6);
     const cutoff=sixMonthsAgo.toISOString().slice(0,10);
-    JD.jobs=JD.jobs.filter(j=>(j.postDate||j.addedDate||'9999')>=cutoff);
-    // 按发布日期倒序
-    JD.jobs.sort((a,b)=>(b.postDate||'').localeCompare(a.postDate||''));
+    JD.jobs=JD.jobs.filter(j=>(j.postDate||j.postedDate||j.addedDate||'9999')>=cutoff);
+    // 按发布日期倒序（历史条目混用 postDate / postedDate）
+    JD.jobs.sort((a,b)=>(b.postDate||b.postedDate||'').localeCompare(a.postDate||a.postedDate||''));
     document.getElementById('jobCount').textContent=JD.jobs.length+' 个岗位';
     // 统计
     const typeCount={};const catCount={};const cityCount={};
@@ -2779,19 +2779,21 @@ function renderJobCards(){
     const filtered=JD.jobs.filter(j=>{
         if(f.type!=='全部'&&j.type!==f.type)return false;
         if(f.cat!=='全部'&&j.category!==f.cat)return false;
-        if(f.city!=='全部'&&j.city!==f.city)return false;
+        if(f.city!=='全部'&&!(j.city||'').includes(f.city))return false;
         return true;
     });
     document.getElementById('jobsGrid').innerHTML=filtered.length?filtered.map(j=>{
         const jNew=j.addedDate&&(Date.now()-new Date(j.addedDate).getTime())<3*86400000;
-        return `<a class="card" href="${j.url}" target="_blank" style="text-decoration:none;color:inherit">
+        const jobHref=j.url||'#';
+        const jobDate=j.postDate||j.postedDate||j.addedDate||'';
+        return `<a class="card" href="${jobHref}" ${j.url?'target="_blank"':''} style="text-decoration:none;color:inherit">
         <div class="card-tags"><span class="job-type jtype-${j.type}">${j.type}</span>${jNew?'<span class="status-tag status-new">NEW</span>':''}${j.tags.map(t=>`<span class="tag tag-purple">${t}</span>`).join('')}</div>
         <div class="card-title">${j.title}</div>
         <div class="job-company">${j.company}</div>
         <div class="job-salary">${j.salary}</div>
-        <div class="job-info"><span>📍 ${j.city}</span><span>🎓 ${j.education}</span><span>📅 ${j.experience}</span><span style="color:var(--t3)">发布: ${j.postDate}</span></div>
+        <div class="job-info"><span>📍 ${j.city}</span><span>🎓 ${j.education}</span><span>📅 ${j.experience}</span><span style="color:var(--t3)">发布: ${jobDate}</span></div>
         <div class="card-desc">${j.description}</div>
-        <div class="card-footer"><span class="card-btn primary">查看详情 →</span><span style="font-size:.68rem;color:var(--t3);margin-left:auto">来源: ${j.source}</span></div>
+        <div class="card-footer"><span class="card-btn primary">查看详情 →</span><span style="font-size:.68rem;color:var(--t3);margin-left:auto">来源: ${j.source||j.company||''}</span></div>
     </a>`}).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:40px">暂无符合条件的岗位</div>';
 }
 function filterJobs(el,dimension,value){

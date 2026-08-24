@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-24T20:40",
+  "lastUpdated": "2026-08-24T21:10",
   "categories": [
     {
       "id": "all",
@@ -48,6 +48,34 @@
     }
   ],
   "projects": [
+    {
+      "id": "os134",
+      "name": "LingBot-VLA 2.0 (蚂蚁灵波 — 跨本体全身动作基座)",
+      "github": "https://github.com/Robbyant/lingbot-vla-v2",
+      "organization": "蚂蚁灵波科技（Robbyant Team）",
+      "org": "蚂蚁灵波科技（Robbyant Team）",
+      "category": "ai-model",
+      "description": "**LingBot-VLA 2.0** — 蚂蚁灵波 2026-07-08 开源的第二代实用 VLA（**Apache-2.0**，约 787 stars），技术报告 arXiv:2607.06403。和 os133 LingBot-World 2.0 是两条腿：这边出动作，那边出世界。**三条升级**：① 预训练约 **6 万小时**（5 万小时 / **20 种构型**轨迹 + 1 万小时 Ego 视频）；② 动作扩到头 / 腰 / 底盘 / 灵巧手，工程上 **55 维**规范向量；③ DINO-Video + LingBot-Depth 做未来预测辅助。公开 **6B native-depth** 权重与 RoboTwin 后训练权重，主干 Qwen3-VL-4B-Instruct；高效后训练版 **RTX 4090 <130ms**。正确用法是下载权重再后训练，不要在工作站复现 6 万小时预训练。",
+      "language": "Python",
+      "license": "Apache-2.0",
+      "features": [
+        "⭐ ~787 stars / Apache-2.0 可商用",
+        "🌐 20 种本体 / 17 家厂商，约 6 万小时预训练",
+        "🦾 全身 55 维动作（头 / 腰 / 底盘 / 灵巧手）",
+        "📦 6B 权重 + RoboTwin 后训练权重（HF + ModelScope）",
+        "⚡ 4090 后训练推理 <130ms / 支持 torch.compile"
+      ],
+      "stars": "787",
+      "tags": [
+        "LingBot-VLA",
+        "蚂蚁灵波",
+        "跨本体",
+        "全身控制",
+        "Qwen3-VL",
+        "开源权重"
+      ],
+      "addedDate": "2026-08-24"
+    },
     {
       "id": "os133",
       "name": "LingBot-World 2.0 / LingBot-World-Infinity (蚂蚁灵波 — 无限时长交互式世界模型)",
@@ -2759,5 +2787,5 @@
       "category": "framework"
     }
   ],
-  "totalItems": 121
+  "totalItems": 122
 }
