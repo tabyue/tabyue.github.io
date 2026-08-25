@@ -1,5 +1,12 @@
 # automation-5 执行历史
 
+## 2026-08-25 12:10（午间学习补节）
+- 只补教材，不重收新闻/论文
+- data-collection +sec-08：HiPHI 动捕第三源（数据卡 / FrameNet / 不能当 VLA 动作标签）
+- humanoid-fullstack +sec-20：铁大 98% + 工信部标准尺子（与万台元年产能侧错开）
+- learning-path 同步 2 topic；sitemap 497 章
+- health_check ALL OK
+
 ## 2026-08-25 11:20（早间轮）
 - news +3：工信部标准指南征求意见（n346）/ 小米铁大工厂 98%（n347）/ 诺亦腾 HiPHI 617.5h（n348）
 - papers +1 p182 Temporal GRPO（轨迹级信用别名 / RoboTwin 75.8% +7.0）
