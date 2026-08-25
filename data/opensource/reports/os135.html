@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HiPHI (诺亦腾 — 617.5 小时高精度人体运动与人-物交互动捕集) — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">HiPHI (诺亦腾 — 617.5 小时高精度人体运动与人-物交互动捕集) — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="hiphi-6175-">HiPHI (诺亦腾 — 617.5 小时高精度人体运动与人-物交互动捕集)</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/noitom-robotics/hiphi">https://github.com/noitom-robotics/hiphi</a>  </p>
+<p><strong>Stars</strong>: 新发布 · <strong>License</strong>: ModalityNet Open Research License v1.0（科研非商用） · <strong>收录日期</strong>: 2026-08-25  </p>
+<p><strong>组织</strong>: 诺亦腾机器人（Noitom Robotics）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-08-25</p>
+</blockquote>
+<hr />
+<h2 id="_2">项目概述</h2>
+<p><strong>HiPHI</strong>（读作 hi-fi）是诺亦腾机器人（Noitom Robotics）在 WRC 2026 发布日公开的高精度光学动捕数据集，论文 arXiv:2608.16222《HiPHI: A Large-Scale Benchmark for High-Precision Human Motion and Object-Interaction》。它要补的缺口很具体：网上视频没有精确物理状态，实验室动捕精度够但行为覆盖窄。人形全身策略要的是「覆盖得广、状态又准」的中间层。</p>
+<p><strong>公开规模（含左右镜像，沿用 BONES-SEED 惯例）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>子集</th>
+<th>时长</th>
+<th>帧数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>合计</td>
+<td><strong>617.5 h</strong></td>
+<td>2.001 亿</td>
+</tr>
+<tr>
+<td>仅身体</td>
+<td>371.8 h</td>
+<td>1.205 亿</td>
+</tr>
+<tr>
+<td>人-物交互 (HOI)</td>
+<td>245.7 h</td>
+<td>7960 万</td>
+</tr>
+</tbody>
+</table>
+<p>原始采集约 308.7 小时，132 名演员，<strong>90 Hz</strong>，亚毫米级光学标记。人体给标准化 <strong>55 关节 BVH</strong>；HOI 同步物体 6-DoF 轨迹与共享 OBJ 网格，搬运 / 拉 / 推是成对记录，不是事后贴上去的孤立片段。</p>
+<p>语义按 <strong>FrameNet</strong> 组织：22 个 Frame、214 个 Frame-LU 标签。中位每个标签 23.5 名演员，154 个标签至少 10 人覆盖。这是给 VLA / 全身策略用的「动作原语索引」，不是按拍摄日期堆的 session 列表。</p>
+<hr />
+<h2 id="_3">数据怎么组织</h2>
+<pre><code>演员表演（光学动捕 90 Hz）
+        ↓
+55 关节 BVH 人体轨迹
+        +  （HOI 子集）
+物体 6-DoF + OBJ mesh（与人体同步）
+        ↓
+FrameNet 语义索引（Frame → Frame-LU）
+        ↓
+左右镜像扩增 → 617.5 h 公开发布包
+</code></pre>
+<p><strong>World Compiler</strong> 是诺亦腾给这套基础设施起的名字：把物理世界编译成模型可学的结构化状态。HiPHI 是该理念下第一个公开样本；商业侧声称每年可向合作方生产超过 10 万小时，今年晚些时候还计划放全模态交互语料，后续版本会补 SMPL / SOMA。</p>
+<p><strong>许可必须先读</strong>：Hugging Face 上对科研免费，走 <strong>ModalityNet Open Research License v1.0</strong>（非商用研究与评估）；商用走 modalitynet.com / info@modalitynet.com。下载前要填问卷并确认许可。不要把它当成 Apache-2.0 权重随便进产品。</p>
+<hr />
+<h2 id="_4">关键论文与链接</h2>
+<ul>
+<li><strong>HiPHI: A Large-Scale Benchmark for High-Precision Human Motion and Object-Interaction</strong> — arXiv:2608.16222</li>
+<li>Hugging Face：https://huggingface.co/datasets/noitomrobotics/HiPHI</li>
+<li>GitHub：https://github.com/noitom-robotics/hiphi/</li>
+<li>项目页：https://noitom-robotics.github.io/hiphi/</li>
+<li>站内对照：n348 发布稿 / 学习模块 data-collection、humanoid-fullstack</li>
+</ul>
+<hr />
+<h2 id="_5">快速开始</h2>
+<p>项目页：https://noitom-robotics.github.io/hiphi/<br />
+在线查看：https://hiphi-viewer.modalitynet.com/<br />
+论文：https://arxiv.org/abs/2608.16222<br />
+代码 / 工具：https://github.com/noitom-robotics/hiphi/<br />
+数据：https://huggingface.co/datasets/noitomrobotics/HiPHI</p>
+<pre><code class="language-bash">pip install -U huggingface_hub
+hf auth login
+hf download noitomrobotics/HiPHI \
+    --repo-type dataset \
+    --local-dir ./HiPHI
+</code></pre>
+<p>或：</p>
+<pre><code class="language-bash">git lfs install
+git clone https://huggingface.co/datasets/noitomrobotics/HiPHI
+</code></pre>
+<h3 id="_6">接入人形策略前先做的三件事</h3>
+<pre><code class="language-text">1. 确认许可是科研还是商用，商用不要直接用 HF 公开包
+2. 人体 BVH 的 55 关节约定对齐到目标本体（G1 / 自研）的重定向链路
+3. HOI 子集必须同时读物体轨迹和 mesh，不要只播人体骨骼
+</code></pre>
+<hr />
+<h2 id="_7">覆盖度、质量与真机</h2>
+<p>论文报告：在对比过的公开动捕集里，HiPHI 的动作覆盖最广，逐帧物理质量误差最低，并给出质量指标和评测指南。公司通稿补充：用 HiPHI 训出的策略已经在 <strong>宇树 G1</strong> 真机上跑过跑步、坐下、爬行、搬箱、拖行李箱。</p>
+<blockquote>
+<p>这些数字来自 arXiv:2608.16222 与 2026-08 发布通稿。独立复现「覆盖度 / 误差」表格是检验这套数据是否真能当共享基座的第一步；只下数据包不当评测，等于只收了广告。</p>
+</blockquote>
+<hr />
+<h2 id="_8">和站内条目怎么选</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>HiPHI</th>
+<th>常见互联网视频</th>
+<th>实验室小规模动捕</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>物理状态</td>
+<td>亚毫米 + 同步物体</td>
+<td>无精确状态</td>
+<td>有，但覆盖窄</td>
+</tr>
+<tr>
+<td>规模</td>
+<td>617.5 h 公开</td>
+<td>极大</td>
+<td>通常几十小时</td>
+</tr>
+<tr>
+<td>语义索引</td>
+<td>FrameNet 原语</td>
+<td>弱 / 无</td>
+<td>按 session</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>科研开放 / 商用另授</td>
+<td>视来源</td>
+<td>通常不公开</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么选</strong>：做人形全身运动先验、人-物交互模仿、图形学运动生成，优先这套；要跨本体操作轨迹仍应配真机遥操作 / LeRobot，不能指望动捕直接当 VLA 动作标签。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

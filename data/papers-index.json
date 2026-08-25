@@ -1,6 +1,39 @@
 {
-  "lastUpdated": "2026-08-24T21:10",
+  "lastUpdated": "2026-08-25T11:20",
   "papers": [
+    {
+      "id": "p182",
+      "title": "Temporal GRPO: Beyond Trajectory-Level Credit in Vision-Language-Action Reinforcement Learning",
+      "authors": "Yao Zhou, Hang Gao, Fengge Wu, Changwen Zheng, Wenwen Qiang / 中科院软件所 + 国科大",
+      "venue": "arXiv preprint",
+      "date": "2026-08-13",
+      "arxiv": "https://arxiv.org/abs/2608.13026",
+      "github": "",
+      "tags": [
+        "Temporal GRPO",
+        "VLA-RL",
+        "信用分配",
+        "GRPO",
+        "RoboTwin",
+        "LIBERO-Long",
+        "中科院软件所"
+      ],
+      "tldr": "结果驱动的 VLA-RL 常把一条最终成功失败优势广播到整条轨迹：前几段做对、后一段失败的 rollout，会和「一开始就失败」的轨迹拿到同一条负优势。Temporal GRPO 把任务编译成可检测的有序阶段，只比较进入同一阶段的轨迹，并把阶段优势写回对应动作区间。RoboTwin 2.0 宏平均 75.8%，比最强受控基线 SimpleVLA-RL 高 7.0 点；LIBERO-Long 受控实验显示前置阶段不被破坏、提升集中在第一次分叉的阶段。",
+      "category": "vla-models",
+      "difficulty": "高级",
+      "addedDate": "2026-08-25",
+      "keyInsights": [
+        "轨迹级信用别名：不同阶段进度可以对应同一条最终失败优势，负信号会回灌已经做对的子技能",
+        "不改 VLA、不加 critic，只改 GRPO 的比较单元和赋值窗口",
+        "RoboTwin 宏平均 75.8%，相对 SimpleVLA-RL +7.0；短 / 中 / 长程分别 +8.3 / +6.5 / +6.2",
+        "Stage-Reward GRPO 只有 59.2：检测到阶段但优势仍按轨迹赋，远远不够",
+        "LIBERO-Long 上前置阶段 Δp 接近 0，最大提升落在第一次分叉阶段",
+        "消融最大单项是同阶段分组；把门控拿掉、把未进入的轨迹当失败会掉到 92.5",
+        "阶段检测器和特权状态只用于后训练，评测必须关掉",
+        "局限写得很清楚：线性阶段 + 可靠谓词，分支和回退还不支持"
+      ],
+      "impact": "把 VLA-RL 从「要不要用最终成功做后训练」推进到「优势到底写回哪一段」。和 Q2RL 的 BC/RL 门控、NebulaVLA 的 chunk 边界平滑不打架：一个管探索保护，一个管动作连续，一个管长程阶段串扰。产线上如果任务阶段清楚、仿真谓词写得动，这是现有 GRPO 管线里改动最小的一刀；阶段会回退的开放家务，先不要硬切。"
+    },
     {
       "id": "p181",
       "title": "AtlasVLA: Persistent World-Ego State Modeling for Vision-Language-Action Models",
@@ -4388,5 +4421,5 @@
       "github": ""
     }
   ],
-  "totalItems": 157
+  "totalItems": 158
 }

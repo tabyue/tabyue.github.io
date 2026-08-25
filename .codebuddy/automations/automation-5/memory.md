@@ -5,6 +5,12 @@
 > 2. 学习模块结构发生变化（新增/删除模块、新增/删除 section）后，建议同时运行 `python tools/build_sitemap.py` 重新生成 `sitemap.xml`，让搜索引擎抓到新页面。
 > 3. **（2026-08-24 起）提交前必须跑 `python tools/health_check.py`，必须 ALL OK 才能 commit。** 它覆盖 category 白名单、totalItems、开源报告页覆盖、论文 keyInsights 覆盖、同日同事件查重、全量章节内链等 10 类检查，有必修问题时 exit 1。
 
+## 2026-08-25T11:20 执行记录（早间轮）
+
+**内容：** news +3（n346 工信部标准指南，n347 小米铁大工厂 98%，n348 HiPHI）；papers +1 p182 Temporal GRPO；os +1 os135；jobs +2；reinforcement-learning +sec-16；daily-english 刷新 2 条。
+
+**水位：** n348/313, p182/158, os135/123, j159/151。health_check ALL OK。未重写宇树/小鹏/WRC 综述。
+
 ## 2026-08-24T21:10 执行记录（晚间第二轮）
 
 **内容：** news +3（n343 WRC 闭幕 / 北京机域，n344 宇树五日回撤，n345 LingBot-VLA 2.0 补漏）；papers +1 p181 AtlasVLA；os +1 os134；jobs +2；world-models-llm +sec-11；daily-english 刷新 2 条。

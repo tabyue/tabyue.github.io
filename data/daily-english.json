@@ -1,8 +1,102 @@
 {
-  "lastUpdated": "2026-08-24T21:10",
-  "date": "2026-08-24",
+  "lastUpdated": "2026-08-25T11:20",
+  "date": "2026-08-25",
   "description": "每日 6 条精选英文素材：权威资讯（IEEE Spectrum / MIT Tech Review / Nature 等）+ arXiv 论文摘要 + 行业博客 + 写作 tip。每条标注 CEFR 等级（A2/B1/B2/C1）和文体（学术/资讯/技术博客）。",
   "items": [
+    {
+      "id": "de-70bcedbbbc",
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "Temporal GRPO: Beyond Trajectory-Level Credit in Vision-Language-Action Reinforcement Learning",
+      "source": "arXiv 2608.13026",
+      "date": "2026-08-13",
+      "url": "https://arxiv.org/abs/2608.13026",
+      "en": "Outcome-driven reinforcement learning offers a scalable way to post-train vision-language-action (VLA) policies from sparse task-success feedback. In common GRPO-based VLA post-training, one rollout-level advantage is applied to every action in the trajectory. A rollout that completes several valid stages but fails later can therefore penalize the actions that produced its earlier progress. We call this trajectory-level credit aliasing. Temporal GRPO addresses this problem by constructing detectable task stages, aligning each rollout with stage-specific action intervals, and comparing only rollouts that have entered the same stage.",
+      "vocab": [
+        {
+          "term": "outcome-driven",
+          "cn": "结果驱动的（只用最终成功失败）"
+        },
+        {
+          "term": "post-train",
+          "cn": "后训练"
+        },
+        {
+          "term": "rollout-level advantage",
+          "cn": "整条轨迹共享的优势"
+        },
+        {
+          "term": "penalize",
+          "cn": "惩罚 / 压低"
+        },
+        {
+          "term": "credit aliasing",
+          "cn": "信用别名（不同进度共用同一信号）"
+        },
+        {
+          "term": "detectable task stages",
+          "cn": "可检测的任务阶段"
+        },
+        {
+          "term": "aligning … with",
+          "cn": "把……对齐到"
+        },
+        {
+          "term": "action intervals",
+          "cn": "动作区间"
+        }
+      ],
+      "cn": "写作要点：先用 one rollout-level advantage is applied to every action 把错误做法说死，再用 A rollout that … can therefore penalize 给反例，最后 We call this … 命名。这种「做法 → 反例 → 术语」比 we propose a novel framework 清楚。addresses this problem by 后面三个分词是方法骨架，可直接当提纲。",
+      "firstShown": "2026-08-25"
+    },
+    {
+      "id": "de-78a6963aea",
+      "type": "news",
+      "level": "B2",
+      "register": "journalistic",
+      "title": "Noitom Robotics Releases HiPHI, a 617.5-Hour High-Precision Human Motion Dataset",
+      "source": "The Robotics Media",
+      "date": "2026-08-20",
+      "url": "https://theroboticsmedia.com/article/noitom-hiphi-617-hour-humanoid-motion-dataset-wrc-2026-august-20",
+      "en": "Beijing-based data startup Noitom Robotics has open-sourced HiPHI, a 617.5-hour, sub-millimeter human motion and object-interaction dataset it says is one of the largest ever released publicly, aimed at closing the training-data gap for embodied AI and humanoid robot learning. The dataset combines 371.8 hours of whole-body human motion with 245.7 hours of human-object interaction recorded from 132 performers, captured at sub-millimeter marker precision and 90 Hz.",
+      "vocab": [
+        {
+          "term": "open-sourced",
+          "cn": "开源发布了"
+        },
+        {
+          "term": "sub-millimeter",
+          "cn": "亚毫米级"
+        },
+        {
+          "term": "object-interaction",
+          "cn": "人-物交互"
+        },
+        {
+          "term": "training-data gap",
+          "cn": "训练数据缺口"
+        },
+        {
+          "term": "whole-body",
+          "cn": "全身的"
+        },
+        {
+          "term": "performers",
+          "cn": "动捕演员"
+        },
+        {
+          "term": "captured at",
+          "cn": "以……采集"
+        },
+        {
+          "term": "marker precision",
+          "cn": "光学标记精度"
+        }
+      ],
+      "cn": "资讯写法：open-sourced + 规模数字 + it says is one of the largest 先自负责任地引用官方口径，再用 aimed at 点动机。第二句用 combines A with B recorded from C, captured at D 把时长、人数、精度一次说完，适合当数据稿模板。",
+      "firstShown": "2026-08-25"
+    },
     {
       "id": "de-4afeb55a60",
       "type": "paper",
@@ -202,6 +296,75 @@
       ],
       "cn": "写作要点：开篇 is often bottlenecked by A, B, and C 用一个句子列清三个待解问题，后文三个 We / Furthermore 句逐一对应 —— 这种「三问题 → 三方案」的一对一映射让摘要极易读，值得直接套用。另外注意 decouple ... from ... 和 enforce ... via ... 这两个动词搭配，是系统类论文描述架构与约束时的高频表达。",
       "firstShown": "2026-08-24"
+    }
+  ],
+  "sources": [
+    "MIT Technology Review (technologyreview.com)",
+    "IEEE Spectrum (spectrum.ieee.org)",
+    "NVIDIA Developer Blog (developer.nvidia.com)",
+    "DeepMind Research (deepmind.google)",
+    "OpenAI Blog (openai.com/blog)",
+    "Hugging Face Blog (huggingface.co/blog)",
+    "Anthropic Research (anthropic.com/research)",
+    "arXiv (arxiv.org)",
+    "The Robot Report (therobotreport.com)",
+    "TechCrunch Robotics (techcrunch.com/category/robotics)"
+  ],
+  "archive": [
+    {
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "LaST-R1: Reinforcing Robotic Manipulation via Adaptive Physical Latent Reasoning",
+      "source": "arXiv (cs.RO)",
+      "date": "2026-04-30",
+      "url": "https://arxiv.org/abs/2604.28192",
+      "en": "Vision-language-action (VLA) models increasingly incorporate reasoning to handle complex robotic manipulation. However, existing methods are mostly confined to static imitation learning, which limits adaptivity and generalization. We introduce LaST-R1, a unified VLA framework that uses physically-grounded latent goals from a vision foundation model to guide latent chain-of-thought reasoning for action generation. We propose Latent-to-Action Policy Optimization (LAPO) that jointly optimizes latent reasoning and action generation through reinforcement learning, and an adaptive latent CoT mechanism that learns to emit a special latent_end token to dynamically adjust reasoning length. With only one-trajectory warm-up plus RL post-training, LaST-R1 achieves 99.9% on LIBERO and lifts real-robot success from 52.5% to 93.75%, outperforming GR00T N1, pi-0 and OpenVLA across all six tasks.",
+      "vocab": [
+        {
+          "term": "vision-language-action (VLA)",
+          "cn": "视觉-语言-动作（n），把视觉 + 自然语言映射到机器人动作的统一模型范式"
+        },
+        {
+          "term": "imitation learning",
+          "cn": "模仿学习（n），从人类演示数据学习策略，不依赖环境反馈"
+        },
+        {
+          "term": "physically-grounded",
+          "cn": "物理接地的（adj），把潜在表征锚定到真实物体的物理空间属性上"
+        },
+        {
+          "term": "latent chain-of-thought",
+          "cn": "潜在思维链（n），把『思考』放在视觉特征空间里走多步迭代"
+        },
+        {
+          "term": "policy optimization",
+          "cn": "策略优化（n），用 reward 信号调整动作策略的学习目标"
+        },
+        {
+          "term": "reinforcement learning (RL)",
+          "cn": "强化学习（n），通过环境反馈学习决策"
+        },
+        {
+          "term": "warm-up",
+          "cn": "预热（n），RL 训练前先用少量数据做初始化"
+        },
+        {
+          "term": "post-training",
+          "cn": "后训练（n），SFT 之后用 RL / DPO 等进一步优化模型"
+        },
+        {
+          "term": "outperform",
+          "cn": "超越（v），在性能指标上优于"
+        },
+        {
+          "term": "trajectory",
+          "cn": "轨迹（n），机器人执行任务的连续状态-动作序列"
+        }
+      ],
+      "cn": "**机器人模型的「R1 时刻」** —— 把 DeepSeek R1 的「RL 后训练 + 长链思考」第一次完整搬到 VLA。两大创新：① **LAPO** 端到端 RL 联合优化潜在 CoT 推理 + 动作；② 自适应 `<latent_end>` token 学发何时停止推理。仅 1 条轨迹预热 + RL 后训练 → LIBERO 99.9% SOTA / 真机 52.5% → 93.75% (+41pp)，全面超越 GR00T N1 / π₀ / OpenVLA。**Takeaway**：VLA 后训练范式正从「SFT only」走向「SFT + RL with latent CoT」，纯模仿学习时代正在收尾。",
+      "firstShown": "2026-05-11",
+      "id": "de-a394866842"
     },
     {
       "id": "de-7db94418ea",
@@ -258,75 +421,6 @@
       "cn": "OneWM-VLA 把 VLA 世界模型每帧视觉压成 1 个语义 token，仅训 14.71M LoRA 参数（π₀ 2B 主干冻结），LIBERO-Long 95.6% / Fold Cloth 真机 60%（vs π₀ 20%，+200%）——颠覆「视觉带宽决定 VLA 长程能力上限」的设计直觉。",
       "firstShown": "2026-05-13"
     },
-    {
-      "type": "paper",
-      "level": "C1",
-      "register": "academic",
-      "title": "LaST-R1: Reinforcing Robotic Manipulation via Adaptive Physical Latent Reasoning",
-      "source": "arXiv (cs.RO)",
-      "date": "2026-04-30",
-      "url": "https://arxiv.org/abs/2604.28192",
-      "en": "Vision-language-action (VLA) models increasingly incorporate reasoning to handle complex robotic manipulation. However, existing methods are mostly confined to static imitation learning, which limits adaptivity and generalization. We introduce LaST-R1, a unified VLA framework that uses physically-grounded latent goals from a vision foundation model to guide latent chain-of-thought reasoning for action generation. We propose Latent-to-Action Policy Optimization (LAPO) that jointly optimizes latent reasoning and action generation through reinforcement learning, and an adaptive latent CoT mechanism that learns to emit a special latent_end token to dynamically adjust reasoning length. With only one-trajectory warm-up plus RL post-training, LaST-R1 achieves 99.9% on LIBERO and lifts real-robot success from 52.5% to 93.75%, outperforming GR00T N1, pi-0 and OpenVLA across all six tasks.",
-      "vocab": [
-        {
-          "term": "vision-language-action (VLA)",
-          "cn": "视觉-语言-动作（n），把视觉 + 自然语言映射到机器人动作的统一模型范式"
-        },
-        {
-          "term": "imitation learning",
-          "cn": "模仿学习（n），从人类演示数据学习策略，不依赖环境反馈"
-        },
-        {
-          "term": "physically-grounded",
-          "cn": "物理接地的（adj），把潜在表征锚定到真实物体的物理空间属性上"
-        },
-        {
-          "term": "latent chain-of-thought",
-          "cn": "潜在思维链（n），把『思考』放在视觉特征空间里走多步迭代"
-        },
-        {
-          "term": "policy optimization",
-          "cn": "策略优化（n），用 reward 信号调整动作策略的学习目标"
-        },
-        {
-          "term": "reinforcement learning (RL)",
-          "cn": "强化学习（n），通过环境反馈学习决策"
-        },
-        {
-          "term": "warm-up",
-          "cn": "预热（n），RL 训练前先用少量数据做初始化"
-        },
-        {
-          "term": "post-training",
-          "cn": "后训练（n），SFT 之后用 RL / DPO 等进一步优化模型"
-        },
-        {
-          "term": "outperform",
-          "cn": "超越（v），在性能指标上优于"
-        },
-        {
-          "term": "trajectory",
-          "cn": "轨迹（n），机器人执行任务的连续状态-动作序列"
-        }
-      ],
-      "cn": "**机器人模型的「R1 时刻」** —— 把 DeepSeek R1 的「RL 后训练 + 长链思考」第一次完整搬到 VLA。两大创新：① **LAPO** 端到端 RL 联合优化潜在 CoT 推理 + 动作；② 自适应 `<latent_end>` token 学发何时停止推理。仅 1 条轨迹预热 + RL 后训练 → LIBERO 99.9% SOTA / 真机 52.5% → 93.75% (+41pp)，全面超越 GR00T N1 / π₀ / OpenVLA。**Takeaway**：VLA 后训练范式正从「SFT only」走向「SFT + RL with latent CoT」，纯模仿学习时代正在收尾。",
-      "firstShown": "2026-05-11",
-      "id": "de-a394866842"
-    }
-  ],
-  "sources": [
-    "MIT Technology Review (technologyreview.com)",
-    "IEEE Spectrum (spectrum.ieee.org)",
-    "NVIDIA Developer Blog (developer.nvidia.com)",
-    "DeepMind Research (deepmind.google)",
-    "OpenAI Blog (openai.com/blog)",
-    "Hugging Face Blog (huggingface.co/blog)",
-    "Anthropic Research (anthropic.com/research)",
-    "arXiv (arxiv.org)",
-    "The Robot Report (therobotreport.com)",
-    "TechCrunch Robotics (techcrunch.com/category/robotics)"
-  ],
-  "archive": [
     {
       "type": "paper",
       "level": "C1",

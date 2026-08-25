@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-24T21:10",
+  "lastUpdated": "2026-08-25T11:20",
   "categories": [
     {
       "id": "all",
@@ -48,6 +48,36 @@
     }
   ],
   "projects": [
+    {
+      "id": "os135",
+      "name": "HiPHI (诺亦腾 — 617.5 小时高精度人体运动与人-物交互动捕集)",
+      "github": "https://github.com/noitom-robotics/hiphi",
+      "organization": "诺亦腾机器人（Noitom Robotics）",
+      "org": "诺亦腾机器人（Noitom Robotics）",
+      "category": "data-tools",
+      "description": "**HiPHI** 是诺亦腾 2026-08-20 在 WRC 公开的光学动捕数据集（论文 arXiv:2608.16222）。公开发布 **617.5 小时**（含左右镜像）：371.8 h 全身 + 245.7 h 人-物交互，132 名演员、90 Hz、亚毫米精度，人体 55 关节 BVH，HOI 同步物体轨迹与 OBJ。语义按 FrameNet 原语索引，而不是按拍摄场次堆。HF 数据集 `noitomrobotics/HiPHI`，科研许可为 **ModalityNet Open Research License v1.0（非商用）**，商用另授。真机策略已在宇树 G1 演示跑、坐、爬、搬、拖。正确用法是当全身运动先验和 HOI 模仿的共享基座，不要指望动捕直接当跨本体 VLA 动作标签。",
+      "language": "Python",
+      "license": "ModalityNet Open Research License v1.0（科研非商用）",
+      "features": [
+        "617.5 h / 2.001 亿帧（含镜像）",
+        "90 Hz 亚毫米光学动捕，132 名演员",
+        "55 关节 BVH + HOI 同步物体 6-DoF / mesh",
+        "FrameNet 语义索引（22 Frame / 214 Frame-LU）",
+        "HF 公开 + 在线 viewer；商用需另授许可",
+        "G1 真机演示：跑 / 坐 / 爬 / 搬 / 拖"
+      ],
+      "stars": "新发布",
+      "tags": [
+        "HiPHI",
+        "诺亦腾",
+        "动捕",
+        "数据集",
+        "人形",
+        "FrameNet",
+        "HOI"
+      ],
+      "addedDate": "2026-08-25"
+    },
     {
       "id": "os134",
       "name": "LingBot-VLA 2.0 (蚂蚁灵波 — 跨本体全身动作基座)",
@@ -2787,5 +2817,5 @@
       "category": "framework"
     }
   ],
-  "totalItems": 122
+  "totalItems": 123
 }

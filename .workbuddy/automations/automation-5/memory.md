@@ -1,5 +1,14 @@
 # automation-5 执行历史
 
+## 2026-08-25 11:20（早间轮）
+- news +3：工信部标准指南征求意见（n346）/ 小米铁大工厂 98%（n347）/ 诺亦腾 HiPHI 617.5h（n348）
+- papers +1 p182 Temporal GRPO（轨迹级信用别名 / RoboTwin 75.8% +7.0）
+- os +1 os135 HiPHI（data-tools，科研非商用许可）
+- jobs +2 j158 诺亦腾 / j159 小米机器人
+- 学习：reinforcement-learning +sec-16；daily-english 刷新 2 条
+- 水位：n348/313, p182/158, os135/123, j159/151
+- 不重复：宇树股价、小鹏融资、WRC 开闭幕综述、6 月实景实训专项
+
 ## 2026-08-24 21:10（晚间第二轮）
 - news +3：WRC 闭幕+北京机域（n343）/ 宇树五日回撤 2000 亿（n344）/ LingBot-VLA 2.0 开源补漏（n345）
 - papers +1 p181 AtlasVLA（仅腕部双记忆 / LIBERO 97.6%）

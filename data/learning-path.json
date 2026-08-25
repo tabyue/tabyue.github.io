@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-24T21:10",
+  "lastUpdated": "2026-08-25T11:20",
   "stages": [
     {
       "id": "foundation",
@@ -603,7 +603,7 @@
         {
           "name": "强化学习",
           "importance": "核心",
-          "lastUpdated": "2026-05-29T19:50",
+          "lastUpdated": "2026-08-25T11:20",
           "description": "让机器人通过试错学习最优行为策略的核心方法",
           "topics": [
             {
@@ -621,6 +621,10 @@
             {
               "title": "Sim-to-Real Transfer",
               "detail": "仿真训练→真实部署的核心技术。Domain Randomization：随机化物理参数（摩擦/质量/延迟）让策略对不确定性鲁棒。System ID：精确辨识真实系统参数。Teacher-Student蒸馏：Teacher在仿真中用完美信息训练，Student只用传感器信号学Teacher的行为。"
+            },
+            {
+              "title": "Temporal GRPO 阶段信用（2026-08 新增）",
+              "detail": "结果驱动 GRPO 会把最终失败优势广播到整条轨迹，前几段做对的子技能被一起惩罚。Temporal GRPO（p182）把任务编译成可检测有序阶段，只比较进入同一阶段的 rollout，并把优势写回对应区间。RoboTwin 宏平均 75.8%，相对 SimpleVLA-RL +7.0；检测到阶段但优势仍按轨迹赋的 Stage-Reward GRPO 只有 59.2。"
             }
           ],
           "resources": [
