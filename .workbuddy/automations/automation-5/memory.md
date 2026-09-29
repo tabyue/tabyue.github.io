@@ -1,5 +1,15 @@
 # automation-5 执行历史
 
+## 2026-09-29 11:00（手动轮 · 补 8/25 之后五周）
+- 启动：本地落后 origin 4 个提交（远端已到 8/25），先 stash → ff pull；memory.md 冲突取远端版本
+- 投稿箱：0 开放 Issue
+- news +5：宇树 UnifoLM-WLA-1.0 开源（n349）/ Figure Helix 2.5 三十户零样本 9%→56%（n350）/ 地瓜 4 亿美元 C 轮（n351）/ 超维动力超 5 亿天使+（n352）/ YD/T 6771-2026 数据集质量标准 11/1 实施（n353）
+- papers +2：p183 Fast Plans Faithful Actions（Block-AR + NGM）、p184 DeCAL（视触觉灵巧 VLA），均配完整 detail
+- os +1 os136 UnifoLM-WLA（ai-model，Apache-2.0）+ 报告页；jobs +2 j160 珞石 / j161 星猿哲（2027 校招）
+- 学习：vla-models +sec-24 分层接口体检（7.9K），learning-path 同步 topic；daily-english +2（挤出 2 条进 archive）；企业图谱补超维 / 地瓜 / 诺亦腾 / 戴盟
+- 水位：n353/318, p184/160, os136/124, j161/153；sitemap 498 章；health_check ALL OK
+- 经验：gen_os_report.py 依赖 markdown 包，用 envs/default venv 跑；不重复收宇树股价、WRC、运动会综述
+
 ## 2026-08-25 12:10（午间学习补节）
 - 只补教材，不重收新闻/论文
 - data-collection +sec-08：HiPHI 动捕第三源（数据卡 / FrameNet / 不能当 VLA 动作标签）

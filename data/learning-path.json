@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-25T12:10",
+  "lastUpdated": "2026-09-29T11:00",
   "stages": [
     {
       "id": "foundation",
@@ -677,7 +677,7 @@
         {
           "name": "VLA 模型 (Vision-Language-Action)",
           "importance": "前沿",
-          "lastUpdated": "2026-06-01T08:00",
+          "lastUpdated": "2026-09-29T11:00",
           "description": "结合视觉理解、语言指令和动作生成的端到端模型",
           "topics": [
             {
@@ -697,6 +697,11 @@
             {
               "title": "多模态 Tokenization",
               "detail": "如何将不同模态统一为token序列：图像→ViT patch embedding、语言→BPE tokenization、动作→bin-based(RT-2)或DCT-based(FAST)。Token化策略直接影响模型性能和训练效率。"
+            },
+            {
+              "title": "分层 VLA 接口体检（2026-09 新增）",
+              "detail": "规划器逐 token 解码时一个 7 waypoint 计划要 57 次 VLM 前向，真机 1094 ms、机械臂 71% 时间在等；更关键的是抹掉计划终点成功率不变，执行器没用计划。Block-AR 一次前向出一个 waypoint（57→8，125 ms）；NGM 用相位门控、条件噪声和空嵌入 dropout 堵住位移积分捷径，LIBERO-Long 91.0%→96.2%（p183）。体检方法：敏感度 S、效用 U、视觉响应保留一起看。",
+              "lastUpdated": "2026-09-29T11:00"
             }
           ],
           "resources": [

@@ -1,8 +1,102 @@
 {
-  "lastUpdated": "2026-08-25T11:20",
-  "date": "2026-08-25",
+  "lastUpdated": "2026-09-29T11:00",
+  "date": "2026-09-29",
   "description": "每日 6 条精选英文素材：权威资讯（IEEE Spectrum / MIT Tech Review / Nature 等）+ arXiv 论文摘要 + 行业博客 + 写作 tip。每条标注 CEFR 等级（A2/B1/B2/C1）和文体（学术/资讯/技术博客）。",
   "items": [
+    {
+      "type": "news",
+      "level": "B2",
+      "register": "technical-blog",
+      "title": "Helix 2.5: Zero-Shot 30-Home Generalization",
+      "source": "Figure AI Blog",
+      "date": "2026-09-17",
+      "url": "https://www.figure.ai/news/helix-2-5-zero-shot-30-home-generalization",
+      "en": "Helix 02 showed that a neural policy could coordinate a humanoid's whole body over long horizons, from unloading a dishwasher to running a logistics task autonomously for 200 hours. But those systems learned from data collected where the robots would operate. Helix 2.5 was built to answer a harder question: can a humanoid enter a home it has never seen and immediately get to work, with its whole body, on its own? Holding task-specific data, architecture, training, and evaluation fixed, Index pretraining alone increased zero-shot success from 9% to 56%.",
+      "vocab": [
+        {
+          "term": "long horizon",
+          "cn": "长时程（多步连续任务）"
+        },
+        {
+          "term": "autonomously",
+          "cn": "自主地"
+        },
+        {
+          "term": "zero-shot",
+          "cn": "零样本（不在目标环境采数据）"
+        },
+        {
+          "term": "pretraining",
+          "cn": "预训练"
+        },
+        {
+          "term": "holding ... fixed",
+          "cn": "保持……不变（受控对照的常用说法）"
+        },
+        {
+          "term": "task-specific data",
+          "cn": "任务专用数据"
+        },
+        {
+          "term": "generalization",
+          "cn": "泛化"
+        },
+        {
+          "term": "on its own",
+          "cn": "独立地 / 无人干预"
+        }
+      ],
+      "cn": "学 holding X fixed 这个句式：写对照实验时先列出不变的变量，再说唯一改动带来的差异，读者一眼就知道结论从哪来。9% 到 56% 就是这样被单独量出来的。",
+      "id": "de-6a234d6a03",
+      "firstShown": "2026-09-29"
+    },
+    {
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "Fast Plans, Faithful Actions: Closing the Planning-Execution Gap in Hierarchical Vision-Language-Action Models",
+      "source": "arXiv 2609.30833",
+      "date": "2026-09-25",
+      "url": "https://arxiv.org/abs/2609.30833",
+      "en": "This hierarchical design has practical value only if the planner can generate plans fast enough to meet real-time control requirements, and the resulting plans actually contribute to the generation of action. We study one such system, a waypoint hierarchy pipeline adapted from pi0.5, and find that neither requirement is satisfied. This baseline relies on token-level autoregressive decoding to generate a waypoint plan, requiring 57 very expensive vision-language model forward passes. However, we find that erasing the waypoint endpoints has little effect on task success.",
+      "vocab": [
+        {
+          "term": "hierarchical",
+          "cn": "分层的"
+        },
+        {
+          "term": "real-time control",
+          "cn": "实时控制"
+        },
+        {
+          "term": "contribute to",
+          "cn": "对……起作用"
+        },
+        {
+          "term": "adapted from",
+          "cn": "改编自 / 在……基础上改造"
+        },
+        {
+          "term": "autoregressive decoding",
+          "cn": "自回归解码"
+        },
+        {
+          "term": "forward pass",
+          "cn": "一次前向计算"
+        },
+        {
+          "term": "erase",
+          "cn": "抹除"
+        },
+        {
+          "term": "have little effect on",
+          "cn": "对……几乎没有影响"
+        }
+      ],
+      "cn": "摘要结构值得模仿：先立两条必要条件（only if A and B），再说在基线上两条都不满足，最后抛出最反直觉的证据——抹掉终点成功率几乎不变。",
+      "id": "de-ccd292a87d",
+      "firstShown": "2026-09-29"
+    },
     {
       "id": "de-70bcedbbbc",
       "type": "paper",
@@ -96,96 +190,6 @@
       ],
       "cn": "资讯写法：open-sourced + 规模数字 + it says is one of the largest 先自负责任地引用官方口径，再用 aimed at 点动机。第二句用 combines A with B recorded from C, captured at D 把时长、人数、精度一次说完，适合当数据稿模板。",
       "firstShown": "2026-08-25"
-    },
-    {
-      "id": "de-4afeb55a60",
-      "type": "paper",
-      "level": "C1",
-      "register": "academic",
-      "title": "AtlasVLA: Persistent World-Ego State Modeling for Vision-Language-Action Models",
-      "source": "arXiv 2608.06729",
-      "date": "2026-08-07",
-      "url": "https://arxiv.org/abs/2608.06729",
-      "en": "While Vision-Language-Action (VLA) models have advanced embodied AI, their fundamentally reactive paradigm severely limits performance in partially observable and long-horizon tasks. When restricted to a single wrist-mounted camera, they inevitably suffer from perception forgetting as objects exit the field of view, and temporal task-progress forgetting during multi-step execution. We propose AtlasVLA, which transitions from direct reactive manipulation to proactive reasoning through a persistent world-ego state: a 4D Persistent World State Memory that lifts transient 2D observations into a globally updated, voxel-hashed spatial map, and an Ego-Working State Memory that tracks historical ego state and task progress.",
-      "vocab": [
-        {
-          "term": "reactive paradigm",
-          "cn": "反应式范式（当前观测直接出动作）"
-        },
-        {
-          "term": "partially observable",
-          "cn": "部分可观测"
-        },
-        {
-          "term": "perception forgetting",
-          "cn": "感知遗忘"
-        },
-        {
-          "term": "field of view",
-          "cn": "视野 / FoV"
-        },
-        {
-          "term": "task-progress forgetting",
-          "cn": "任务进度遗忘"
-        },
-        {
-          "term": "persistent",
-          "cn": "持久的 / 持续保持的"
-        },
-        {
-          "term": "voxel-hashed",
-          "cn": "体素哈希索引的"
-        },
-        {
-          "term": "wrist-mounted camera",
-          "cn": "腕部相机"
-        }
-      ],
-      "cn": "写作要点：连续两个 forgetting 名词把贡献拆成空间和时间，比 we propose a novel memory 清楚。restricted to a single wrist-mounted camera 先把实验约束说死，后面的 SOTA 才站得住。transitions from A to B through C 是套贡献句式，through 后面必须是机制名而不是形容词。",
-      "firstShown": "2026-08-24"
-    },
-    {
-      "id": "de-7872ea292c",
-      "type": "news",
-      "level": "B2",
-      "register": "journalistic",
-      "title": "Robbyant Releases LingBot-VLA 2.0: An Open-Source 6B VLA for Cross-Embodiment Manipulation",
-      "source": "MarkTechPost",
-      "date": "2026-07-08",
-      "url": "https://www.marktechpost.com/2026/07/08/lingbot-vla-2-0/",
-      "en": "Ant Group's Robbyant has released LingBot-VLA 2.0, a vision-language-action foundation model for robots. The release includes a technical report, an Apache-2.0 codebase, and a 6B checkpoint. The team targets a well-known gap: VLA models often work in labs but stumble in deployment. LingBot-VLA 2.0 advances the prior version along three practical axes — generalization across 20 robot configurations, an expanded whole-body action space, and predictive dynamics modeling — and is pretrained on about 60,000 hours of data.",
-      "vocab": [
-        {
-          "term": "foundation model",
-          "cn": "基础模型 / 基座模型"
-        },
-        {
-          "term": "checkpoint",
-          "cn": "训练好的权重快照"
-        },
-        {
-          "term": "stumble in deployment",
-          "cn": "一部署就摔跤"
-        },
-        {
-          "term": "along three practical axes",
-          "cn": "沿着三条实用主轴"
-        },
-        {
-          "term": "generalization",
-          "cn": "泛化"
-        },
-        {
-          "term": "whole-body action space",
-          "cn": "全身动作空间"
-        },
-        {
-          "term": "pretrained on",
-          "cn": "在……上预训练"
-        }
-      ],
-      "cn": "资讯写法：先丢齐技术报告 / 协议 / 权重三件套，再用 work in labs but stumble in deployment 点出动机。three practical axes 后面的破折号列举比 First/Second/Third 更紧。数字 20 configurations / 60,000 hours 让轴线可验证。",
-      "firstShown": "2026-08-24"
     },
     {
       "id": "de-70e68f016d",
@@ -311,6 +315,96 @@
     "TechCrunch Robotics (techcrunch.com/category/robotics)"
   ],
   "archive": [
+    {
+      "id": "de-4afeb55a60",
+      "type": "paper",
+      "level": "C1",
+      "register": "academic",
+      "title": "AtlasVLA: Persistent World-Ego State Modeling for Vision-Language-Action Models",
+      "source": "arXiv 2608.06729",
+      "date": "2026-08-07",
+      "url": "https://arxiv.org/abs/2608.06729",
+      "en": "While Vision-Language-Action (VLA) models have advanced embodied AI, their fundamentally reactive paradigm severely limits performance in partially observable and long-horizon tasks. When restricted to a single wrist-mounted camera, they inevitably suffer from perception forgetting as objects exit the field of view, and temporal task-progress forgetting during multi-step execution. We propose AtlasVLA, which transitions from direct reactive manipulation to proactive reasoning through a persistent world-ego state: a 4D Persistent World State Memory that lifts transient 2D observations into a globally updated, voxel-hashed spatial map, and an Ego-Working State Memory that tracks historical ego state and task progress.",
+      "vocab": [
+        {
+          "term": "reactive paradigm",
+          "cn": "反应式范式（当前观测直接出动作）"
+        },
+        {
+          "term": "partially observable",
+          "cn": "部分可观测"
+        },
+        {
+          "term": "perception forgetting",
+          "cn": "感知遗忘"
+        },
+        {
+          "term": "field of view",
+          "cn": "视野 / FoV"
+        },
+        {
+          "term": "task-progress forgetting",
+          "cn": "任务进度遗忘"
+        },
+        {
+          "term": "persistent",
+          "cn": "持久的 / 持续保持的"
+        },
+        {
+          "term": "voxel-hashed",
+          "cn": "体素哈希索引的"
+        },
+        {
+          "term": "wrist-mounted camera",
+          "cn": "腕部相机"
+        }
+      ],
+      "cn": "写作要点：连续两个 forgetting 名词把贡献拆成空间和时间，比 we propose a novel memory 清楚。restricted to a single wrist-mounted camera 先把实验约束说死，后面的 SOTA 才站得住。transitions from A to B through C 是套贡献句式，through 后面必须是机制名而不是形容词。",
+      "firstShown": "2026-08-24"
+    },
+    {
+      "id": "de-7872ea292c",
+      "type": "news",
+      "level": "B2",
+      "register": "journalistic",
+      "title": "Robbyant Releases LingBot-VLA 2.0: An Open-Source 6B VLA for Cross-Embodiment Manipulation",
+      "source": "MarkTechPost",
+      "date": "2026-07-08",
+      "url": "https://www.marktechpost.com/2026/07/08/lingbot-vla-2-0/",
+      "en": "Ant Group's Robbyant has released LingBot-VLA 2.0, a vision-language-action foundation model for robots. The release includes a technical report, an Apache-2.0 codebase, and a 6B checkpoint. The team targets a well-known gap: VLA models often work in labs but stumble in deployment. LingBot-VLA 2.0 advances the prior version along three practical axes — generalization across 20 robot configurations, an expanded whole-body action space, and predictive dynamics modeling — and is pretrained on about 60,000 hours of data.",
+      "vocab": [
+        {
+          "term": "foundation model",
+          "cn": "基础模型 / 基座模型"
+        },
+        {
+          "term": "checkpoint",
+          "cn": "训练好的权重快照"
+        },
+        {
+          "term": "stumble in deployment",
+          "cn": "一部署就摔跤"
+        },
+        {
+          "term": "along three practical axes",
+          "cn": "沿着三条实用主轴"
+        },
+        {
+          "term": "generalization",
+          "cn": "泛化"
+        },
+        {
+          "term": "whole-body action space",
+          "cn": "全身动作空间"
+        },
+        {
+          "term": "pretrained on",
+          "cn": "在……上预训练"
+        }
+      ],
+      "cn": "资讯写法：先丢齐技术报告 / 协议 / 权重三件套，再用 work in labs but stumble in deployment 点出动机。three practical axes 后面的破折号列举比 First/Second/Third 更紧。数字 20 configurations / 60,000 hours 让轴线可验证。",
+      "firstShown": "2026-08-24"
+    },
     {
       "type": "paper",
       "level": "C1",

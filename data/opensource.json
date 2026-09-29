@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-25T11:20",
+  "lastUpdated": "2026-09-29T11:00",
   "categories": [
     {
       "id": "all",
@@ -48,6 +48,37 @@
     }
   ],
   "projects": [
+    {
+      "id": "os136",
+      "name": "UnifoLM-WLA-1.0（宇树 — 6B 人形基座模型，单模型 64 项任务）",
+      "github": "https://github.com/unitreerobotics/unifolm-wla",
+      "organization": "宇树科技（Unitree Robotics）",
+      "org": "宇树科技（Unitree Robotics）",
+      "category": "ai-model",
+      "description": "宇树 2026-09-10 发布的第二代人形基座模型，Apache-2.0。6B 参数，约 2500 小时真机数据，同一个模型在 G1 上完成 64 项任务（54 项桌面操作 + 10 项全身移动操作），平行夹爪与两类五指灵巧手共用权重。三层结构：UnifoLM-ER-1-4B 做空间理解与推理，ER-Flow 预测场景中将要变化的区域，MMDiT 动作专家输出高频动作。9/11 放出 ER-1 与 ER-Flow 权重，9/20 放出模块与动作专家训练代码，9/28 放出 WLA-1.0-Base 与微调代码；LoRA 微调代码尚未发布。同步开源 UniBot-V1 Challenge、UnifoLM-WBT、UnifoLM-Dex1 三组数据集。基于 starVLA 与 Qwen-Image 二次开发。",
+      "language": "Python",
+      "license": "Apache-2.0（第三方组件保留原许可）",
+      "features": [
+        "6B 参数 / 约 2500 h 真机数据",
+        "单模型 64 项任务：54 桌面 + 10 全身移动操作",
+        "ER-1-4B 空间推理 + ER-Flow 场景变化预测 + MMDiT 动作专家",
+        "夹爪 / 两类五指灵巧手共用权重",
+        "提供动作 / 状态 / 统计量处理规范与模型服务端",
+        "配套开源 3 组数据集（UniBot-V1 / WBT / Dex1）"
+      ],
+      "stars": "新发布",
+      "tags": [
+        "宇树",
+        "UnifoLM-WLA",
+        "人形",
+        "基座模型",
+        "VLA",
+        "世界建模",
+        "灵巧手",
+        "Apache-2.0"
+      ],
+      "addedDate": "2026-09-29"
+    },
     {
       "id": "os135",
       "name": "HiPHI (诺亦腾 — 617.5 小时高精度人体运动与人-物交互动捕集)",
@@ -2817,5 +2848,5 @@
       "category": "framework"
     }
   ],
-  "totalItems": 123
+  "totalItems": 124
 }

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UnifoLM-WLA-1.0（宇树 — 6B 人形基座模型，单模型 64 项任务） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">UnifoLM-WLA-1.0（宇树 — 6B 人形基座模型，单模型 64 项任务） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="unifolm-wla-10-6b-64">UnifoLM-WLA-1.0（宇树 — 6B 人形基座模型，单模型 64 项任务）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/unitreerobotics/unifolm-wla">https://github.com/unitreerobotics/unifolm-wla</a>  </p>
+<p><strong>Stars</strong>: 新发布 · <strong>License</strong>: Apache-2.0（第三方组件保留原许可） · <strong>收录日期</strong>: 2026-09-29  </p>
+<p><strong>组织</strong>: 宇树科技（Unitree Robotics）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-09-29</p>
+</blockquote>
+<hr />
+<h2 id="_2">项目概述</h2>
+<p><strong>UnifoLM-WLA-1.0</strong> 是宇树科技的第二代通用人形基座模型，2026 年 9 月 10 日发布，分三批开源（9/11 权重、9/20 训练代码、9/28 Base 与微调代码）。它接在 4 月的 UnifoLM-VLA-0（os050）之后，名字里的 W 指以交互为中心的世界建模。</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数量</td>
+<td>6B</td>
+</tr>
+<tr>
+<td>真机数据</td>
+<td>约 2500 小时</td>
+</tr>
+<tr>
+<td>任务数</td>
+<td>64（54 桌面 + 10 全身移动操作）</td>
+</tr>
+<tr>
+<td>本体</td>
+<td>宇树 G1</td>
+</tr>
+<tr>
+<td>末端</td>
+<td>平行夹爪 / 两类五指灵巧手</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+</tbody>
+</table>
+<p>桌面任务包括叠毛巾、收纳餐盘、电池充电、整理厨房浴室；全身任务包括倒垃圾、把衣服放进洗衣机、铺床、取蔬菜。宇树称在 RefSpatial-Bench、Where2Place、EGO-PLAN2 等具身推理评测上领先，属于厂商自报。</p>
+<hr />
+<h2 id="_3">三层结构</h2>
+<pre><code>图像 + 语言 + 本体状态
+        ↓
+UnifoLM-ER-1-4B  —— 多模态空间理解与推理
+        ↓
+UnifoLM-ER-Flow  —— 预测场景中哪些区域将发生变化
+        ↓
+MMDiT 动作专家   —— 解码为高频电机指令
+</code></pre>
+<ul>
+<li><strong>ER-1-4B</strong>：具身推理 VLM，负责物体定位、放置位置、任务规划类问题</li>
+<li><strong>ER-Flow</strong>：在动作之前先预测场景变化，相当于轻量的交互式世界模型；这是和 VLA-0 最大的区别</li>
+<li><strong>MMDiT 动作专家</strong>：多模态扩散 Transformer，输出动作块</li>
+</ul>
+<p>代码基于 starVLA 框架与 Qwen-Image 二次开发。</p>
+<hr />
+<h2 id="_4">相关资料</h2>
+<ul>
+<li>项目页：https://unigen-x.github.io/unifolm-wla.github.io/</li>
+<li>代码：https://github.com/unitreerobotics/unifolm-wla</li>
+<li>上游框架：starVLA、Qwen-Image</li>
+<li>站内：新闻 n349、上一代 os050 / n130</li>
+</ul>
+<hr />
+<h2 id="_5">快速上手</h2>
+<pre><code class="language-bash">git clone https://github.com/unitreerobotics/unifolm-wla
+cd unifolm-wla
+# 仓库使用 uv 管理依赖
+uv sync
+</code></pre>
+<ul>
+<li>模型：Hugging Face 集合 unitreerobotics/unifolm-wla-10（UnifoLM-ER-1、UnifoLM-ER-Flow、UnifoLM-WLA-1.0-Base）</li>
+<li>训练动作专家：docs/train_action_expert_en.md（从头训练 / 基于 Base 微调 / 评测检查点 / 模型服务端）</li>
+<li>换本体前必读：docs/robot_action_state_processing_en.md，动作、状态与统计量归一化方式不一致是跨本体微调最常见的失败原因</li>
+</ul>
+<p><strong>尚未发布</strong>：LoRA 微调代码。</p>
+<hr />
+<h2 id="_6">能力与边界</h2>
+<ul>
+<li>单模型覆盖 64 项任务，桌面与全身移动操作共用权重</li>
+<li>跨末端执行器：夹爪与灵巧手之间迁移</li>
+<li>具身推理评测（RefSpatial-Bench / Where2Place / EGO-PLAN2）为厂商自报，尚无第三方复测</li>
+</ul>
+<p><strong>使用时要注意</strong>：</p>
+<ol>
+<li>2500 小时数据全部来自宇树自家本体，迁移到非宇树人形需要重新对齐动作空间</li>
+<li>全身移动操作只有 10 项，占比远低于桌面操作</li>
+<li>第三方组件的许可见 THIRD_PARTY_LICENSES.md，商用前需逐项核对</li>
+</ol>
+<hr />
+<h2 id="_7">与同类开源模型对比</h2>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>机构</th>
+<th>参数</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UnifoLM-WLA-1.0</td>
+<td>宇树</td>
+<td>6B</td>
+<td>场景变化预测 + 全身移动操作，夹爪 / 灵巧手共用</td>
+</tr>
+<tr>
+<td>UnifoLM-VLA-0</td>
+<td>宇树</td>
+<td>–</td>
+<td>上一代，偏桌面操作</td>
+</tr>
+<tr>
+<td>Qwen-VLA</td>
+<td>阿里通义</td>
+<td>–</td>
+<td>跨 11 种本体统一三类任务（os132）</td>
+</tr>
+<tr>
+<td>LingBot-VLA 2.0</td>
+<td>蚂蚁灵波</td>
+<td>6B</td>
+<td>通用操作 VLA，与 LingBot-World 成对（os134）</td>
+</tr>
+</tbody>
+</table>
+<p>选型建议：已有宇树 G1 的团队直接用 WLA-1.0-Base 微调；多本体混合场景先看 Qwen-VLA。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

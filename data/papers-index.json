@@ -1,6 +1,75 @@
 {
-  "lastUpdated": "2026-08-25T11:20",
+  "lastUpdated": "2026-09-29T11:00",
   "papers": [
+    {
+      "id": "p184",
+      "title": "DeCAL: Towards Physically-Grounded Dexterous Vision-Language-Action Models via Contact-Aware Latent Co-Imagination",
+      "authors": "Yankai Fu, Ning Chen, Junkai Zhao, Heng Zhang, Guocai Yao, Pengwei Wang, Zhongyuan Wang, Shanghang Zhang / 北京大学 + 北京智源人工智能研究院",
+      "venue": "arXiv preprint",
+      "date": "2026-09-08",
+      "arxiv": "https://arxiv.org/abs/2609.09119",
+      "github": "",
+      "tags": [
+        "DeCAL",
+        "灵巧手",
+        "视触觉",
+        "VTLA",
+        "MoT",
+        "接触门控",
+        "世界模型",
+        "北大",
+        "智源"
+      ],
+      "tldr": "灵巧操作里手指会挡住物体、接触状态变化很快，纯视觉 VLA 看不清。DeCAL 用 Mixture-of-Transformers 放三个专家：理解专家（Qwen3-VL）读语言、多视角图像和触觉；生成专家预测未来的视觉潜变量与触觉信号（触觉图、形变图、6 维力）；动作专家用分解式 flow matching 出 50 步臂+手动作块。两个关键设计：接触感知门控按步调节触觉权重，自由空间运动时不让触觉噪声干扰视觉；视触觉潜变量协同想象让策略基于预期的接触状态出动作。双 UR5 + 两只 22 自由度 SharpaWave 手上 6 个真机任务，平均完整成功率 71%、进度成功率 83.4%，30 Hz 运行。",
+      "category": "vla-models",
+      "difficulty": "高级",
+      "addedDate": "2026-09-29",
+      "keyInsights": [
+        "触觉融合的时机比融合方式更重要：接触是间歇的，自由空间段的触觉特征基本是噪声，直接拼接会干扰视觉定位和抓取决策",
+        "接触感知门控：以视觉-语言嵌入为 query、触觉 token 为 key/value 做交叉注意力，再由门控按步放大或压低触觉贡献",
+        "协同想象不是生成像素：生成专家预测未来视觉潜变量 + 原始触觉图 + 形变深度图 + 6 维净力，动作专家条件在预期交互状态上",
+        "MoT 定向信息流：理解→生成→动作单向流动，训练目标是联合最大化未来视触觉潜变量与未来动作的似然",
+        "6 个真机任务：擦花瓶 100%、擦白板 80%、拧瓶盖 80%、装配零件 65%、移液 60%、拧灯泡 40%；拧瓶盖换未见物体仍 75%",
+        "效率：单张 RTX 4090 上 50 步动作块 0.27 s，系统 30 Hz",
+        "硬件栈：双 6 自由度 UR5 + 两只 22 自由度 SharpaWave 五指手，三路 RealSense D435，每个指尖 320×240 视触觉传感器",
+        "作者承认的代价：假设触觉读数准确；示教时操作者没有指尖力反馈；没有大规模视触觉预训练"
+      ],
+      "impact": "和 FD-VLA（p177，训练用力、推理无力）形成两条路线：FD-VLA 省掉推理时的传感器，DeCAL 假设传感器在场并把「何时用触觉」和「预期接下来怎么接触」拆开处理。对灵巧手团队，接触门控是改动最小、最该先试的一块；协同想象要求带触觉的示教数据，戴盟 Daimon-Infinity（n337）这类数据集正好对上。拧灯泡 40% 也说明，螺旋接触和多次换握仍是灵巧操作的硬骨头。"
+    },
+    {
+      "id": "p183",
+      "title": "Fast Plans, Faithful Actions: Closing the Planning-Execution Gap in Hierarchical Vision-Language-Action Models",
+      "authors": "Chuanliang Xie, Boyu Ma, Gen Li, Yizhou Liu, Houwang Chen, Xinyu Zhou, Jianfei Yang / 南洋理工大学 MARS Lab",
+      "venue": "arXiv preprint",
+      "date": "2026-09-25",
+      "arxiv": "https://arxiv.org/abs/2609.30833",
+      "github": "",
+      "tags": [
+        "分层 VLA",
+        "Block-AR",
+        "NGM",
+        "π0.5",
+        "waypoint",
+        "规划延迟",
+        "LIBERO",
+        "NTU"
+      ],
+      "tldr": "分层 VLA 由 VLM 规划器出 waypoint、动作专家执行。作者在 π0.5 改出的 waypoint 分层基线上做受控干预，发现两个问题：规划器逐 token 解码，一个 7 waypoint 的计划要 57 次 VLM 前向，真机上机械臂 71% 时间在等；更糟的是把计划终点抹掉，成功率几乎不变——执行器根本没用计划。Block-AR 让一次前向吐出一个完整 waypoint（57→8 次，真机 1094→125 ms）；NGM 给目标开一条逐层通路，并用相位门控、条件噪声和 dropout 堵住「位移积分捷径」。LIBERO 四套平均 95.85%→98.45%，Long 91.0%→96.2%，抹掉终点后成功率掉 7.4 点，说明计划终于起作用。",
+      "category": "vla-models",
+      "difficulty": "高级",
+      "addedDate": "2026-09-29",
+      "keyInsights": [
+        "端到端成功率高不代表分层接口有效：固定图像、语言和流噪声，只抹掉 waypoint 终点，动作变化仅为重采样噪声的 0.6%，闭环成功率不降（U=0）",
+        "规划器与执行器粒度错配：执行器一次消费一个 waypoint，规划器却一次只吐一个 token；Block-AR 块内双向、块间因果，一次前向出整块，LIBERO 57→8 次、16 自由度双臂 120→8 次",
+        "真机数字：规划延迟 1094→125 ms（8.7×），请求往返 1266→293 ms，机械臂运动占比 29%→66%；Token-AR 从不输出结束码，Block-AR 结束码召回 0.61 / 精度 0.85",
+        "直接把目标位移注入每层会学到位移积分捷径：q−s 近似等于要预测的动作积分，等于把标签泄进条件；端点敏感度冲到 348%，视觉响应只剩 27%，成功率跌到 15%",
+        "NGM 三道约束：相位门控只在去噪粗阶段（t≥0.5 全开、t≤0.2 关闭）放行目标；训练时给终点加 σ=0.7 噪声；15% 概率换成空嵌入",
+        "NGM 后端点敏感度 42.6%、视觉响应保留 82%，LIBERO-Long 96.2%，四套平均 98.45%，比官方 π0.5 报告值高 1.6 点",
+        "评估指标值得借用：S(δ) 用重采样噪声做分母量敏感度，U 用抹除后的成功率差量效用，两者必须和完整计划成功率一起看",
+        "局限写得清楚：只在 π0.5 派生的一种分层上验证，NGM 依赖 AdaRMS 条件；每个变体只训一次，真机每任务 20 次，小差异不显著"
+      ],
+      "impact": "给分层 VLA 提供了一套可复用的接口体检方法：先量规划够不够快，再量计划有没有真的进入动作。很多双系统、快慢系统论文只报端到端成功率，这篇说明成功率可以在执行器完全忽略计划时照样很高。工程上 Block-AR 是纯解码改动，只要计划是定长 token 组就能直接套；NGM 的「条件等于标签积分」陷阱在任何目标条件策略里都会出现，值得在做 goal-conditioned 执行器时先查一遍。"
+    },
     {
       "id": "p182",
       "title": "Temporal GRPO: Beyond Trajectory-Level Credit in Vision-Language-Action Reinforcement Learning",
@@ -4421,5 +4490,5 @@
       "github": ""
     }
   ],
-  "totalItems": 158
+  "totalItems": 160
 }
