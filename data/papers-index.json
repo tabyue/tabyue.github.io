@@ -1,6 +1,174 @@
 {
-  "lastUpdated": "2026-09-29T11:00",
+  "lastUpdated": "2026-10-08T16:30",
   "papers": [
+    {
+      "id": "p189",
+      "title": "WareFly-VLA: A Vision-Language-Action Framework for UAV Navigation and Human Tracking in Smart Warehouses",
+      "authors": "Thinh D. Le, Son T. Nguyen, Duong Q. Nguyen, Dung D. Le, Ngo Anh Vien, H. Nguyen-Xuan",
+      "venue": "arXiv preprint (cs.RO / cs.CV)",
+      "date": "2026-10-06",
+      "arxiv": "https://arxiv.org/abs/2610.08526",
+      "github": "",
+      "tags": [
+        "WareFly-VLA",
+        "无人机",
+        "VLA基准",
+        "仓库巡检",
+        "人员跟踪",
+        "Isaac Sim",
+        "跨具身迁移",
+        "连续动作"
+      ],
+      "tldr": "VLA 在机械臂操作与地面移动导航上成绩不错，但**无人机的语言条件控制**在智能仓库场景几乎没人做——缺的是同时提供连续低层飞行动作、细粒度自然语言目标描述和真实工业环境的基准。WareFly-VLA 给出了一套照片级真实的无人机 VLA 框架与数据集：507 段人工遥操作飞行 episode、8504 个高分辨率 RGB 转移，采集于 NVIDIA Isaac Sim，每段都配人工书写的外观描述和同步的四自由度控制指令。覆盖两类空中任务（目标接近、人员跟随），含遮挡、长距离搜索、高度变化与杂乱干扰。论文在四种开源 VLA 架构（SmolVLA、GR00T N1.7、π₀、OpenVLA）上做了统一的**episode 级无泄漏**评测，两种控制频率。结论很直白：仓库场景的语言条件空中控制远未解决——严格泛化设定下性能大幅下滑；连续动作建模稳定优于离散动作分词；单帧只能可靠学到前向通道；现有基座模型接口从地面/人形本体迁移到空中平台效果很差。",
+      "category": "VLA/基准",
+      "difficulty": "中级",
+      "addedDate": "2026-10-08",
+      "keyInsights": [
+        "补齐了一个真空：VLA 基准几乎全是机械臂操作 + 地面导航，无人机这一大具身类别没有语言条件的连续控制基准",
+        "507 episodes / 8504 transitions，每段配人工书写的外观描述（不是模板生成）——语言粒度是这类基准的稀缺资产",
+        "四自由度控制指令（不是六自由度位姿），贴合真实无人机遥控通道，也解释了为什么「只有前向通道可从单帧可靠学到」",
+        "episode 级无泄漏协议是关键方法论：随机帧级切分会让同一 episode 的相邻帧横跨训练/测试集，虚高泛化数字",
+        "连续动作建模一致优于离散动作分词——这与地面操作上的结论方向一致，说明离散化的量化损失在高频低层控制上更致命",
+        "跨具身迁移失败：从地面/人形本体预训练的 VLA 接口迁到空中平台收益很差，说明「动作空间的语义」本身就绑定了本体动力学",
+        "数据同时给到了视频、语言、动作、位姿与难度标注，也能支撑世界模型研究，不只是策略评测",
+        "作者明确说机器人与人类本体都做了标注，为人类视频预训练路线在这个场景提供了对照基线"
+      ],
+      "impact": "对做仓库/巡检无人机的人来说，这是第一个能直接拿来用的语言条件空中控制基准。更广泛的含义是：VLA 社区的「跨本体泛化」叙事在这里撞了一次墙——SmolVLA / GR00T / π₀ / OpenVLA 都是地面或人形起家，迁到六自由度、欠驱动、姿态-位置强耦合的飞行器上时，动作 token 的语义根本对不上。这提示「统一动作空间」不该只做维度对齐，还要做动力学对齐。对 Tab 的具身平台组，这条结论直接相关：接入多款本体时，若把 VLA 当作统一接口，必须为每个本体族准备独立的动作头与归一化统计量，而不是指望一套 token 打天下。"
+    },
+    {
+      "id": "p188",
+      "title": "SpikingVLA: Asynchronous Spiking Vision-Language-Action Models",
+      "authors": "Jingya Wang, Dehao Zhang, Shuai Wang, Malu Zhang, Yang Yang, Haizhou Li",
+      "venue": "arXiv preprint (cs.CL)",
+      "date": "2026-10-07",
+      "arxiv": "https://arxiv.org/abs/2610.09710",
+      "github": "",
+      "tags": [
+        "SpikingVLA",
+        "脉冲神经网络",
+        "ANN-to-SNN",
+        "低延迟",
+        "能效",
+        "VLA推理",
+        "首动作延迟",
+        "异步执行"
+      ],
+      "tldr": "ANN-to-SNN 转换是绕开从头训练大规模 SNN 巨额成本、拿到高能效脉冲 VLA 的实用路线，但已有方法往往需要很多时间步才能保住性能，导致推理延迟大到无法实时部署。SpikingVLA 提出 **DIF（Dendritic Integrate-and-Fire）神经元**：通过树突混合（dendritic mixing）与自适应胞体放电缓解通道级激活离群值，让 ANN-to-SNN 转换在更少时间步下仍准确。在此之上再加**异步执行机制**，让 VLA 各组件的时间步计算重叠，减少同步开销与延迟。相比已有脉冲 VLA 方法，SR 与 SPL 分别提升 11.9% 与 12.6%，**首动作延迟降低 11.2×**。",
+      "category": "推理优化 / VLA",
+      "difficulty": "高级",
+      "addedDate": "2026-10-08",
+      "keyInsights": [
+        "核心矛盾：脉冲网络的能效来自时间步稀疏，但 ANN-to-SNN 转换需要大量时间步才能逼近原 ANN 精度——能效和延迟互相打架",
+        "DIF 神经元抓的是转换误差的真正来源——通道级激活离群值（channel-wise activation outliers）。这与 LLM 量化里 outlier 毁坏精度的机制是同一个故事的不同版本",
+        "树突混合把极端通道摊开到多个分支再做自适应胞体放电，本质是给激活分布做一次结构化重参数化",
+        "异步执行机制针对的是 VLA 的**多组件流水线结构**（视觉编码器 / 语言 / 动作头），让不同组件的时间步计算重叠而非全局同步",
+        "首动作延迟降 11.2× 这个指标选得很对：对机器人来说，用户下达指令到第一个动作之间的等待时间，比吞吐更能决定体验与安全性",
+        "评测走的是导航任务（SR / SPL），不是操作任务——这是当前脉冲 VLA 的现实边界，连续动作回归对脉冲编码更不友好",
+        "和 VLA-ACL（p187）的定位差异：VLA-ACL 在现有 Transformer 上做减法、今天就能用；SpikingVLA 是换计算范式，需要 NPU/神经形态硬件才能兑现能效收益"
+      ],
+      "impact": "这条线的价值不在当下，而在端侧。Jetson 级算力跑 7B VLA 的功耗预算决定了人形机器人的续航与散热，脉冲化是少数能跨数量级改善能效的路径。但要清醒：① 首动作延迟 11.2× 是相对已有脉冲方法的提升，不是相对 ANN 基线；② 场景是导航不是灵巧操作；③ 能效收益要在神经形态硬件（如 Intel Loihi 类）上才真正兑现，在 GPU 上模拟脉冲反而更慢。建议把它和 VLA-ACL 一起读——前者是范式赌注，后者是本季度的工程红利。"
+    },
+    {
+      "id": "p187",
+      "title": "VLA-ACL: Action-Consistent Visual Token Pruning for Efficient Vision-Language-Action Models",
+      "authors": "Owen Du, Yang Yue, Jie Zhang, Jiaqi Pi, Chi Bene Chen, Gao Huang / 清华大学（黄高团队）",
+      "venue": "arXiv preprint (cs.RO / cs.CV)",
+      "date": "2026-10-06",
+      "arxiv": "https://arxiv.org/abs/2610.08133",
+      "github": "https://github.com/du-owen/VLA-ACL",
+      "tags": [
+        "VLA-ACL",
+        "视觉token剪枝",
+        "推理加速",
+        "动作一致性",
+        "冻结基座",
+        "LIBERO",
+        "实时部署",
+        "清华"
+      ],
+      "tldr": "VLA 每个控制步都要处理很长的 token 序列，视觉 patch 占大头且冗余度高。已有剪枝方法要么用无训练的间接启发式（注意力分数、运动阈值），要么要微调整个基座 VLA（昂贵）。VLA-ACL 用**动作级监督**学一个轻量剪枝策略，基座 VLA 全程冻结：训练目标让「剪枝后视觉上下文产生的动作」与「全上下文教师产生的动作」保持一致，ground-truth 动作作辅助监督——这直接把 token 选择与其对下游控制输出的影响绑定。LIBERO 与真机操作上，剪掉多达 **87.5%** 的视觉 token 仍保持有竞争力的性能，计算量最多降 **75%**，推理加速 **1.5×**。",
+      "category": "推理优化 / VLA",
+      "difficulty": "中级",
+      "addedDate": "2026-10-08",
+      "keyInsights": [
+        "监督信号从「像不像原注意力」换成「动作一不一致」：剪枝的目标不是复现全量输入的中间表征，而是让剪枝后输出的动作与全上下文教师一致",
+        "基座 VLA 完全冻结，只训一个轻量剪枝策略——这对已部署的模型极其友好，不需要重训或重验",
+        "ground-truth 动作只作**辅助**监督，主监督是教师动作；避免把剪枝器训练成另一个行为克隆策略",
+        "87.5% 剪枝率 + 75% 计算削减 + 1.5× 加速，三者的比例说明加速并未线性跟随 FLOPs 削减——注意力之外仍有 KV、访存与调度开销在吃收益",
+        "针对的是 VLA 特有的「每个控制步都要跑一次大模型」场景，与 LLM 里一次性 prefill+decode 的剪枝需求形态不同",
+        "和同日出现的 Stage-Aware Visual Token Pruning（When and What to Prune）构成直接对照：一条走动作一致性学习，一条走阶段感知启发式",
+        "代码已开源（github.com/du-owen/VLA-ACL），是这波 VLA 效率论文里少见的三件套落地者"
+      ],
+      "impact": "VLA 落地卡在实时性上：控制频率要求 10—50 Hz，而 7B 级 VLA 的单次前向在边缘算力上常常上百毫秒。此前的主流答案是量化与蒸馏（会损泛化）或投机解码（结构复杂）。VLA-ACL 提供的是第三条路：**不动模型、只在输入端剪冗余**，且用动作一致性而不是注意力相似度做监督——这个监督选择是关键，因为注意力相似度保的是表征，而机器人要的是动作。对已在用 OpenVLA / π 系列做部署的团队，这是本周最值得先跑一遍的开源项目。它也和 SpikingVLA（p188）形成路线分野：一个在 Transformer 输入端做减法，一个把整个计算范式换成脉冲。"
+    },
+    {
+      "id": "p186",
+      "title": "What the Guard Misses, the Robot Executes: Implied Harm in VLA Instructions",
+      "authors": "Sripad Karne, Arjun Balaji / 哥伦比亚大学",
+      "venue": "arXiv preprint (cs.RO) — SPAIS 2026 workshop (CoRL 2026) under review",
+      "date": "2026-10-05",
+      "arxiv": "https://arxiv.org/abs/2610.05818",
+      "github": "",
+      "tags": [
+        "VLA安全",
+        "隐含危害",
+        "文本守卫",
+        "激活探针",
+        "拒绝能力",
+        "LIBERO",
+        "线性探针",
+        "SPAIS2026"
+      ],
+      "tldr": "VLA 只会输出动作，不会拒绝；所以筛查有害请求的重担落在外部监视器上。这篇做了一个控制得很干净的意图实验：任务、物体、场景全部固定，只改变**陈述目的的方式**——把危害隐含（L1 间接）、作为事实陈述（L2 直白）、公开宣告（L3 露骨），并配一个长度相近的无害对照组。结果：π₀.₅ 在每个显式度层级上都完成任务，频率和无害对照一样。文本守卫对露骨请求几乎全抓，对隐含请求几乎不抓——高达 95% 的隐含危害运行以「任务完成 + 未报警」收场，即使针对机器人指令重新校准后仍高达 90%。看模型激活也不补不上这个洞：线性探针在基础语言模型与视觉语言模型里几乎能完美区分有害/无害指令，但经过机器人训练后这个可分性显著削弱，隐含危害尤甚。",
+      "category": "VLA/安全",
+      "difficulty": "中级",
+      "addedDate": "2026-10-08",
+      "keyInsights": [
+        "VLA 没有拒绝通道：它只输出动作，不像聊天模型可以说「不」。所有安全判断必须外置，这是架构层面的约束而非调参问题",
+        "最难筛的是「普通动作 + 有害目的」：打开炉灶本身无害，目的是烧伤别人时才有害——机器人对目的完全免疫",
+        "实验设计干净：五个 LIBERO-Goal 厨房任务，每个挂一个有害理由（如把奶油奶酪放进碗里是为了让狗生病），三种措辞显式度 + 等长无害对照；任务、物体、场景全部固定",
+        "三种文本守卫（Llama Guard 3、WildGuard、Qwen3Guard）响应的是**措辞**不是**危害**：露骨几乎全抓，隐含几乎不抓，而人类标注者能识别其中大部分意图",
+        "OpenVLA-OFT 看起来更「安全」其实是假象：它对任何带理由的请求都失败，有害无害一视同仁——它只是处理不了多出来的那句话",
+        "机器人训练会**侵蚀危害信号**：两个模型家族里，有害意图在基座 LM/VLM 中几乎完美线性可分，机器人训练后显著变弱，隐含危害最严重",
+        "这把已知的「VLA 微调后视觉-语言知识退化」结论扩展到了安全相关内容——能力退化和安全退化可能同源",
+        "与 HazardArena 的区别：后者让 VLA 执行动作相同但安全/不安全的配对任务；本文固定动作只改变措辞的显式度，从而分离出「监视器是否响应措辞」这一变量"
+      ],
+      "impact": "这是目前对 VLA 安全监视器最干净的一次证伪：不是「守卫不够强」，而是**守卫在优化措辞层面的特征，而危害在目的层面**。对工程团队有三条直接结论：① 不能依赖通用文本守卫直接照搬到机器人指令上；② 重新校准阈值（文中做了 robot-instruction recalibration）收益有限，只从 95% 降到 90%；③ 激活监测在机器人训练后可信度下降，别把它当兜底。真正可行的是 OGAM（p185）这类**看行为轨迹而非看指令**的运行时监测——它不需要策略理解「危害」，只需要识别出「这次不像成功那次」。"
+    },
+    {
+      "id": "p185",
+      "title": "OGAM: Connecting Systematic Testing to Runtime Assurance through Object-Grounded Attention Monitoring for VLA Policies",
+      "authors": "Haki Darwish, Xiangyu Yin, Changwen Li, Rongjie Yan, Francisco Gomes de Oliveira Neto, Chih-Hong Cheng / 奥尔登堡大学（德）+ 查尔姆斯理工大学（瑞典）+ 中科院软件所",
+      "venue": "arXiv preprint (cs.LG)",
+      "date": "2026-10-05",
+      "arxiv": "https://arxiv.org/abs/2610.05878",
+      "github": "",
+      "tags": [
+        "OGAM",
+        "VLA安全",
+        "运行时保障",
+        "注意力监测",
+        "系统性测试",
+        "一致性校准",
+        "DTW",
+        "基准泛化"
+      ],
+      "tldr": "基准只给 VLA 喂少数几条规范指令，而部署面对的是组合爆炸的指令空间，穷举测试不可能。OGAM 把「系统性测试」和「运行时保障」接起来：先用成对组合测试生成场景锚定的指令集，找出成功与失败轨迹之间的注意力差异，再用这个信号在部署时提前中止正在走向失败的 episode。测试侧的结果很刺眼：OpenVLA、OpenVLA-OFT、UniVLA、π₀.₅ 在 87 个 out-of-benchmark 案例里没有一个完成 24 条可行指令中的任何一条。监测侧：把梯度加权视觉注意力投影到物体掩膜并按指令角色分组（被点名物体 / 最强竞争物体 / 其余物体 / 夹爪），用 DTW 对齐成功参考轨迹，再用 conformal calibration 设定早停阈值（名义误停率 α=0.05）。四种策略上 OGAM 在 20 秒预算内以 5—12 秒的中位时间中止 87—100% 的失败 episode，实测误停率 3—5%，且不需要失败标注数据训练。",
+      "category": "VLA/安全评测",
+      "difficulty": "高级",
+      "addedDate": "2026-10-08",
+      "keyInsights": [
+        "最刺眼的不是监测器，是测试侧：四种主流 VLA 在 87 个 out-of-benchmark 指令案例里，没有一种能完成 24 条可行指令中的任何一条——分布内 benchmark 的成功率对部署几乎没有预测力",
+        "不可行或有害请求会触发「行为替代」（behavior substitution）：机器人不拒绝，而是去做另一件事，这比失败更危险",
+        "可跨任务、跨模型比较的注意力表征是关键设计：不按物体身份分通道，而按指令角色分通道（点名物体 / 最强竞争者 / 其余 / 夹爪），使通道语义与具体物体无关",
+        "梯度加权注意力（对预测动作的梯度）比原始注意力更能反映「哪些像素真正影响了动作」",
+        "用 DTW 对齐成功参考，解决「同一阶段在不同速度下完成」导致的逐步比较刚性问题；两个读数：on-track（是否走在成功路径上）与 completion（完整注意力程序是否出现）",
+        "阈值只用成功 episode 做 conformal calibration，不需要失败标注——这在真机上极其重要，因为失败样本昂贵且危险",
+        "20 秒预算内中位 5—12 秒中止，意味着在失败完全展开之前干预；代价是 3—5% 误停率，需要在具体场景里权衡",
+        "作者明确定位：有限测试无法穷尽部署指令，所以测试的价值不在于覆盖率，而在于**提炼出可在线复用的失效信号**"
+      ],
+      "impact": "和同一天挂在 arXiv 上的 Implied Harm 工作（p186）构成 VLA 安全的一体两面：p186 证明**策略本身**不会拒绝有害请求、文本守卫只抓直白的措辞；OGAM 证明**外部监测**可以用注意力轨迹在失败展开前踩刹车。对做 VLA 落地的团队，OGAM 给出了一条不需要重训练模型、不需要失败数据的工程路径——今天就能在现有 OpenVLA / π₀.₅ 部署上加一层。它同时也给 benchmark 泼了冷水：分布内成功率与部署鲁棒性之间的鸿沟，比社区愿意承认的大得多。"
+    },
     {
       "id": "p184",
       "title": "DeCAL: Towards Physically-Grounded Dexterous Vision-Language-Action Models via Contact-Aware Latent Co-Imagination",
@@ -4490,5 +4658,5 @@
       "github": ""
     }
   ],
-  "totalItems": 160
+  "totalItems": 165
 }

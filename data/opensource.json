@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-29T11:00",
+  "lastUpdated": "2026-10-08T16:30",
   "categories": [
     {
       "id": "all",
@@ -48,6 +48,133 @@
     }
   ],
   "projects": [
+    {
+      "id": "os140",
+      "name": "VLA-ACL：动作一致性视觉 Token 剪枝（冻结基座 VLA，剪掉 87.5% 视觉 token，1.5× 加速）",
+      "github": "https://github.com/du-owen/VLA-ACL",
+      "organization": "清华大学（黄高团队）",
+      "org": "清华大学（黄高团队）",
+      "category": "framework",
+      "description": "arXiv 2610.08133（2026-10-06）的官方代码。VLA 每个控制步都要处理很长的 token 序列，视觉 patch 占大头且冗余度高。VLA-ACL 用**动作级监督**训练一个轻量剪枝策略，基座 VLA 全程冻结：训练目标让剪枝后上下文产生的动作与全上下文教师一致，ground-truth 动作为辅助监督——把 token 选择直接绑定到对下游控制输出的影响上。相比依赖注意力分数 / 运动阈值的无训练启发式或需要微调基座的做法，这条路不需要动已验证的模型。LIBERO 与真机操作上剪掉最多 87.5% 视觉 token 仍保持有竞争力性能，计算量最多降 75%，推理加速 1.5×。适合：已在部署 OpenVLA / π 系列、卡在实时性但不想重训或量化模型的团队。",
+      "language": "Python",
+      "license": "见仓库 LICENSE",
+      "features": [
+        "冻结基座 VLA，只训练轻量剪枝策略",
+        "动作一致性监督（教师动作为主，GT 动作为辅）",
+        "最多剪掉 87.5% 视觉 token",
+        "计算量最多降 75%，推理加速 1.5×",
+        "可扫剪枝率并在自己的任务上画成功率曲线",
+        "无需真机数据即可训练（用已有示教数据跑全上下文推理得教师动作）"
+      ],
+      "stars": "新发布",
+      "tags": [
+        "VLA-ACL",
+        "视觉token剪枝",
+        "推理加速",
+        "冻结基座",
+        "LIBERO",
+        "清华",
+        "实时部署"
+      ],
+      "addedDate": "2026-10-08"
+    },
+    {
+      "id": "os139",
+      "name": "RoboParty RP1 / ROBOTO_ORIGIN：全栈开源人形机器人（硬件设计 + ROS 2 + RL 训练 + 固件 + XR 遥操作）",
+      "github": "https://github.com/RoboParty/RP1",
+      "organization": "RoboParty",
+      "org": "RoboParty",
+      "category": "hardware",
+      "description": "RoboParty 在 IROS 2026 上发布的全栈开源人形平台 RP1，建立在早前的 ROBOTO_ORIGIN（RPO）之上。RPO 已公开硬件设计文件、ROS 2 部署软件、强化学习训练流程、URDF 与 MJCF 模型、固件、导航与 XR 遥操作模块；聚合仓库声明自有材料一般用 GPLv3，各模组与第三方组件保留各自许可。RP1 通过研发平台 PartyOS 延伸开放路径，内含 UFO 框架——用无监督强化学习训练低层运动策略，覆盖技能切换、扰动恢复与跌倒恢复。硬件侧通过自研 Romomo 执行器模组与实时运动控制系统提供最高 160 Nm 峰值关节扭矩；IROS 现场用「Kick Me」演示让观众推机器人并观察其姿态调整与平衡恢复。公司称开发者社区已超过 5000 人，更多软硬件发布计划在 2026 年第四季度。适合：高校与创客团队要一台**能改**的人形，而不是只能调 API 的黑盒。",
+      "language": "C++ / Python",
+      "license": "GPLv3（自有材料；各模组与第三方组件保留原许可）",
+      "features": [
+        "分层开放：机械设计 → 执行器 → 运动控制 → 仿真 → SDK → 训练工具",
+        "PartyOS + UFO 框架：无监督 RL 训低层运动策略（技能切换 / 扰动恢复 / 跌倒恢复）",
+        "Romomo 执行器模组，峰值关节扭矩最高 160 Nm",
+        "ROS 2 部署软件 + 导航 + XR 遥操作模块",
+        "URDF / MJCF 模型与固件一并开放",
+        "RPO 资源可直接作为 RP1 的前置学习材料"
+      ],
+      "stars": "新发布",
+      "tags": [
+        "RoboParty",
+        "RP1",
+        "ROBOTO_ORIGIN",
+        "全栈开源",
+        "PartyOS",
+        "UFO",
+        "人形硬件",
+        "GPLv3"
+      ],
+      "addedDate": "2026-10-08"
+    },
+    {
+      "id": "os138",
+      "name": "AgibotTech/sonic_for_a3：NVIDIA GEAR SONIC 全身控制的 A3 人形 C++ 适配（训练 + MuJoCo sim2sim + RKNN/Thor 部署）",
+      "github": "https://github.com/AgibotTech/sonic_for_a3",
+      "organization": "智元机器人（AgiBot）",
+      "org": "智元机器人（AgiBot）",
+      "category": "locomotion",
+      "description": "智元 2026-09-24 发布的开源仓库，把 NVIDIA GEAR 的 SONIC 全身控制工作流适配到 A3 人形机器人。完整给出训练侧适配（Hydra 配置、launcher、URDF/MJCF 资产、CSV 示例、reward/observation 契约）、MuJoCo sim2sim（含闭环踝/腰关节求解器），以及面向 A3 板载 RK3588S 的 RKNN 与 A3 Ultra 的 Drive Thor 两套 C++ 高性能部署路径。Hugging Face 上提供在内部动作数据上训练的 step-200,000 checkpoint（035），覆盖基础行走与简单操作。Apache-2.0；A3 机器人描述派生自 AgibotTech/A3-A3U-robot-model（Mulan PSL v2）。仓库明确提醒：真实机器人遥操作前必须使用安全龙门并在仿真中验证。已知限制：缺少 SMPL / 遥操作编码器、腕部跟踪较差、不支持跪姿等地面接触动作；被动足部仿真近似鞋底柔性以抑制踮脚，但可能引入不稳定。",
+      "language": "C++ / Python",
+      "license": "Apache-2.0（机器人描述派生自 Mulan PSL v2）",
+      "features": [
+        "SONIC 全身控制的 A3 完整训练适配（Hydra configs + launchers）",
+        "MuJoCo sim2sim，含闭环踝 / 腰关节求解器",
+        "板载 RK3588S 的 RKNN NPU 部署路径",
+        "A3 Ultra 的 NVIDIA Drive Thor 部署路径",
+        "Hugging Face step-200,000 checkpoint（035）",
+        "域随机化同时支持 A3 与 A3 Ultra，跨硬件部署",
+        "文档化了 T–N 电机曲线与被动足仿真等 sim-to-real 约束"
+      ],
+      "stars": "新发布",
+      "tags": [
+        "智元",
+        "AgiBot",
+        "SONIC",
+        "全身控制",
+        "WBC",
+        "A3",
+        "RKNN",
+        "Thor",
+        "sim2sim",
+        "Apache-2.0"
+      ],
+      "addedDate": "2026-10-08"
+    },
+    {
+      "id": "os137",
+      "name": "UniWAM：8B 世界-动作统一模型（MoT 三专家，语义理解 + 视觉预测 + 动作生成）",
+      "github": "https://github.com/UniWAM/UniWAM",
+      "organization": "UniWAM Team（Haoang Li 等）",
+      "org": "UniWAM Team（Haoang Li 等）",
+      "category": "ai-model",
+      "description": "2026-10-01 提交论文（arXiv 2610.02054），仓库于 9 月 30 日创建并持续更新到 10 月 3 日。8B 参数，MoT（Mixture-of-Transformers）架构把语义理解、视觉预测与动作生成放进三个专家（Physical Reasoner / World Generator / Action Predictor），通过联合多模态注意力交换信息。预训练混合机器人示教、人类第一视角视频（EgoDex / EgoANT）与 VQA 数据；后训练用「未来视觉噪声增广」降低对精确未来预测的依赖，再用「编码动作历史 + flow matching」初始化动作生成。底座为 Wan2.2-TI2V-5B（视频骨干）与 Qwen3-VL-2B-Instruct（视觉语言骨干）。后训练在 8×H100 上 10 小时完成 RoboTwin 2.0。三种预训练数据齐备时 RoboTwin C2C 与 C2R 平均成功率 71.73%。仓库含安装说明、requirements.txt、预训练资产表、RoboTwin 2.0 自包含推理部署，以及 LIBERO 训练与评测代码；Bridge / DROID / Fractal 与真机推理明确不在本次发布范围。",
+      "language": "Python",
+      "license": "见仓库 LICENSE / NOTICE",
+      "features": [
+        "8B MoT 三专家：物理推理 / 世界生成 / 动作预测",
+        "物理语言（physical language）把机器人动作表示为自然语言",
+        "机器人 + 人类第一视角 + VQA 三源互补监督",
+        "未来视觉噪声增广 + 历史条件 flow matching，减少去噪步数",
+        "ModelScope 双 checkpoint：UniWAM-base / UniWAM-robotwin-clean",
+        "RoboTwin 2.0 自包含推理 + LIBERO 训练与评测代码",
+        "8×H100 后训练 10 小时，RoboTwin 平均成功率 71.73%"
+      ],
+      "stars": "新发布",
+      "tags": [
+        "UniWAM",
+        "世界动作模型",
+        "WAM",
+        "MoT",
+        "flow matching",
+        "RoboTwin",
+        "LIBERO",
+        "8B"
+      ],
+      "addedDate": "2026-10-08"
+    },
     {
       "id": "os136",
       "name": "UnifoLM-WLA-1.0（宇树 — 6B 人形基座模型，单模型 64 项任务）",
@@ -2848,5 +2975,5 @@
       "category": "framework"
     }
   ],
-  "totalItems": 124
+  "totalItems": 128
 }

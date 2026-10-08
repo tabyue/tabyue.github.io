@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-29T11:00",
+  "lastUpdated": "2026-10-08T16:30",
   "stages": [
     {
       "id": "foundation",
@@ -677,7 +677,7 @@
         {
           "name": "VLA 模型 (Vision-Language-Action)",
           "importance": "前沿",
-          "lastUpdated": "2026-09-29T11:00",
+          "lastUpdated": "2026-10-08T16:30",
           "description": "结合视觉理解、语言指令和动作生成的端到端模型",
           "topics": [
             {
@@ -702,6 +702,11 @@
               "title": "分层 VLA 接口体检（2026-09 新增）",
               "detail": "规划器逐 token 解码时一个 7 waypoint 计划要 57 次 VLM 前向，真机 1094 ms、机械臂 71% 时间在等；更关键的是抹掉计划终点成功率不变，执行器没用计划。Block-AR 一次前向出一个 waypoint（57→8，125 ms）；NGM 用相位门控、条件噪声和空嵌入 dropout 堵住位移积分捷径，LIBERO-Long 91.0%→96.2%（p183）。体检方法：敏感度 S、效用 U、视觉响应保留一起看。",
               "lastUpdated": "2026-09-29T11:00"
+            },
+            {
+              "title": "部署鲁棒性与运行时保障（2026-10 新增）",
+              "detail": "OGAM（p185）用成对组合测试发现四种主流 VLA 在 87 个 out-of-benchmark 指令上无一条完成，并把注意力轨迹的偏离做成在线早停监测器：20 s 预算内中位 5—12 s 中止 87—100% 的失败 episode，误停 3—5%，且不需要失败标注。Implied Harm（p186）证明策略不会拒绝、文本守卫只抓措辞不抓目的（隐含危害漏检 95%），且机器人训练会侵蚀基座里的危害表征。结论：安全性必须由外部系统重建，看行为轨迹比看指令可靠。",
+              "lastUpdated": "2026-10-08T16:30"
             }
           ],
           "resources": [
@@ -947,7 +952,7 @@
         {
           "name": "模型训练与推理优化",
           "importance": "核心",
-          "lastUpdated": "2026-05-29T08:00",
+          "lastUpdated": "2026-10-08T16:30",
           "description": "分布式训练、模型压缩量化、端侧推理部署，让大模型能跑在真实机器人上",
           "topics": [
             {
@@ -961,6 +966,11 @@
             {
               "title": "端侧推理部署",
               "detail": "Jetson Orin系列(40-275 TOPS)、TensorRT加速(FP16/INT8)、ONNX导出、CUDA Graphs减少开销。目标：策略网络100Hz+实时推理。"
+            },
+            {
+              "title": "VLA 推理效率三条路线（2026-10 新增）",
+              "detail": "VLA-ACL（p187）用动作一致性监督训练剪枝策略、基座冻结，剪掉 87.5% 视觉 token、计算降 75%、加速 1.5×；加速不随 FLOPs 线性下降，说明瓶颈常在预处理与访存，动手前先 profile。SpikingVLA（p188）用 DIF 神经元缓解通道级激活离群值，首动作延迟降 11.2×，但能效收益需神经形态硬件兑现。WareFly-VLA（p189）给出连续动作建模优于离散分词、且跨具身迁移动力学不对齐时失效的证据。",
+              "lastUpdated": "2026-10-08T16:30"
             }
           ],
           "resources": [

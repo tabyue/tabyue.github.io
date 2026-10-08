@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniWAM：8B 世界-动作统一模型（MoT 三专家，语义理解 + 视觉预测 + 动作生成） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">UniWAM：8B 世界-动作统一模型（MoT 三专家，语义理解 + 视觉预测 + 动作生成） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="uniwam8b-mot">UniWAM：8B 世界-动作统一模型（MoT 三专家，语义理解 + 视觉预测 + 动作生成）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/UniWAM/UniWAM">https://github.com/UniWAM/UniWAM</a>  </p>
+<p><strong>Stars</strong>: 新发布 · <strong>License</strong>: 见仓库 LICENSE / NOTICE · <strong>收录日期</strong>: 2026-10-08  </p>
+<p><strong>组织</strong>: UniWAM Team（Haoang Li 等）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-08</p>
+</blockquote>
+<hr />
+<h2 id="_2">项目概述</h2>
+<p><strong>UniWAM（Unified World-Action Model）</strong> 是一个 8B 参数的世界-动作统一模型，论文 arXiv 2610.02054 于 2026 年 10 月 1 日提交，官方仓库 9 月 30 日创建、10 月 3 日仍在更新 README。它把<strong>语义理解、视觉预测与动作生成</strong>放进同一个模型里，用 MoT（Mixture-of-Transformers）架构连接三个专家。</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数量</td>
+<td>8B</td>
+</tr>
+<tr>
+<td>架构</td>
+<td>MoT 三专家 + 联合多模态注意力</td>
+</tr>
+<tr>
+<td>视频骨干</td>
+<td>Wan-AI/Wan2.2-TI2V-5B</td>
+</tr>
+<tr>
+<td>视觉语言骨干</td>
+<td>Qwen/Qwen3-VL-2B-Instruct</td>
+</tr>
+<tr>
+<td>后训练成本</td>
+<td>RoboTwin 2.0，8×H100 上 10 小时</td>
+</tr>
+<tr>
+<td>RoboTwin 平均成功率</td>
+<td>71.73%（三源预训练数据齐备时）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>为什么值得记录</strong>：2026 年 9 月底到 10 月初，arXiv 上出现了四篇同题的 WAM（world-action model）论文，UniWAM 是其中<strong>唯一把论文 + 代码 + 权重三件套都落地</strong>的。其余三篇只有论文。</p>
+<p><strong>边界</strong>：Bridge、DROID、Fractal 数据集与真机推理明确不在本次发布范围内。这是一个 RoboTwin / LIBERO 导向的发布，不是通用操作模型。</p>
+<hr />
+<h2 id="mot">三专家 MoT 架构</h2>
+<pre><code>机器人示教 + 人类第一视角视频 + VQA 数据
+                ↓
+  ┌─────────────┼─────────────┐
+  ↓             ↓             ↓
+Physical      World        Action
+Reasoner      Generator    Predictor
+（语义理解）   （视觉预测）   （动作生成）
+  └─────────────┼─────────────┘
+        联合多模态注意力（joint multimodal attention）
+</code></pre>
+<p>三个专家通过联合多模态注意力交换信息，而不是各跑各的再拼接。</p>
+<p><strong>预训练阶段</strong>：机器人示教、人类第一视角数据（EgoDex / EgoANT 切分并标注）与 VQA 数据混合监督。关键设计是<strong>物理语言（physical language）</strong>——把机器人动作用自然语言表达，让视觉-语言组件适配具身任务的同时保留语言能力。</p>
+<p><strong>后训练阶段</strong>两个设计值得注意：</p>
+<ol>
+<li><strong>未来视觉噪声增广（future visual noise augmentation）</strong>：训练时对未来的视觉目标加噪，降低模型对「精确预测未来」的依赖。这解决的是世界模型路线的老问题——预测误差累积</li>
+<li><strong>历史条件 flow matching（history-conditioned flow matching）</strong>：动作生成从<strong>被扰动的动作历史</strong>出发去噪，而不是从高斯噪声出发。视觉分支仍从高斯噪声起</li>
+</ol>
+<p><strong>人类数据的收益条件</strong>：论文对比了只用机器人数据与机器人 + 人类数据的 scaling 曲线——<strong>人类数据在机器人数据规模较大时才开始带来收益</strong>。这解释了为什么早期小规模的 human-video 预训练实验结论互相矛盾。</p>
+<hr />
+<h2 id="_3">相关资料</h2>
+<ul>
+<li>论文：arXiv 2610.02054（2026-10-01）</li>
+<li>项目页：https://uniwam.github.io/</li>
+<li>代码：https://github.com/UniWAM/UniWAM</li>
+<li>权重：ModelScope 集合 Kosmos524/UniWAM（UniWAM-base / UniWAM-robotwin-clean）</li>
+<li>上游：Wan-AI/Wan2.2-TI2V-5B、Qwen/Qwen3-VL-2B-Instruct</li>
+<li>站内：论文索引无独立条目（本报告对应开源库）；相关阅读见 VLA 模块第 21 节事件级世界模型</li>
+</ul>
+<hr />
+<h2 id="_4">快速上手</h2>
+<pre><code class="language-bash">git clone https://github.com/UniWAM/UniWAM
+cd UniWAM
+conda create -n ola-sem python=3.10 -y
+conda activate ola-sem
+pip install torch==2.7.1 torchvision==0.22.1 --index-url https://download.pytorch.org/whl/cu128
+pip install flash-attn --no-build-isolation
+pip install -r requirements.txt
+</code></pre>
+<p><strong>预训练资产</strong></p>
+<table>
+<thead>
+<tr>
+<th>资产</th>
+<th>位置</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UniWAM-base</td>
+<td>ModelScope（Kosmos524/UniWAM）</td>
+<td>机器人 + 人类 + VQA 混合预训练</td>
+</tr>
+<tr>
+<td>UniWAM-robotwin-clean</td>
+<td>ModelScope</td>
+<td>RoboTwin 2.0 clean 子集后训练</td>
+</tr>
+<tr>
+<td>Wan2.2-TI2V-5B</td>
+<td>Hugging Face</td>
+<td>视频骨干 + VAE</td>
+</tr>
+<tr>
+<td>Qwen3-VL-2B-Instruct</td>
+<td>Hugging Face</td>
+<td>视觉语言骨干</td>
+</tr>
+</tbody>
+</table>
+<p><strong>目录用途</strong>：<code>models/ train/ utils/ bak/wan/</code> 是物理语言模型与训练运行时；<code>data/robotwin2/</code> 只有加载与转换代码（不含数据）；<code>data/libero/ examples/libero_plus/ scripts/libero/</code> 是 LIBERO 训练与 LIBERO / LIBERO-plus 评测；<code>inference/robotwin/uniwam/</code> 是自包含的 RoboTwin 策略部署。</p>
+<p><strong>不在范围内</strong>：Bridge、DROID、Fractal、真机推理。</p>
+<hr />
+<h2 id="_5">能力与边界</h2>
+<p><strong>已验证</strong>：</p>
+<ul>
+<li>RoboTwin C2C 与 C2R 平均成功率 71.73%（三源预训练数据齐备时）</li>
+<li>后训练在 8×H100 上 10 小时完成 RoboTwin 2.0</li>
+<li>消融覆盖预训练数据组成、Physical Reasoner 的训练策略、动作生成方式</li>
+</ul>
+<p><strong>使用时要注意</strong>：</p>
+<ol>
+<li>71.73% 是<strong>论文自报</strong>的 RoboTwin 分数，RoboTwin 是仿真基准，与真机成功率不能直接换算</li>
+<li>该数字依赖三源数据齐备；只给机器人数据时显著更低</li>
+<li>发布范围不含 Bridge / DROID / Fractal / 真机推理，想做跨数据集验证需要自己接数据管线</li>
+<li>8B 模型 + Wan2.2 视频骨干，显存与推理延迟门槛高于常规 7B VLA；做实时部署前先测延迟预算</li>
+<li>机构归属未在仓库中标注，第三方组件许可需逐项核对（见 NOTICE）</li>
+</ol>
+<hr />
+<h2 id="-">与同类世界-动作模型对比</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>参数</th>
+<th>代码</th>
+<th>权重</th>
+<th>评测</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>UniWAM</strong>（本项目）</td>
+<td>8B</td>
+<td>✅</td>
+<td>✅</td>
+<td>RoboTwin 2.0 / LIBERO</td>
+</tr>
+<tr>
+<td>同期三篇 WAM 论文</td>
+<td>–</td>
+<td>❌</td>
+<td>❌</td>
+<td>各自基准</td>
+</tr>
+<tr>
+<td>UnifoLM-WLA-1.0（os136）</td>
+<td>6B</td>
+<td>✅</td>
+<td>✅</td>
+<td>G1 真机 64 项任务</td>
+</tr>
+<tr>
+<td>τ0-VLA 系列</td>
+<td>–</td>
+<td>–</td>
+<td>权重（下载量近零）</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<p><strong>选型建议</strong>：</p>
+<ul>
+<li>想在 <strong>RoboTwin / LIBERO</strong> 上做 WAM 路线研究 → UniWAM 是当前唯一能直接跑起来的</li>
+<li>想看<strong>真机任务覆盖</strong> → 宇树 UnifoLM-WLA-1.0（os136）更合适，但它是厂商自家本体数据</li>
+<li>想做<strong>全身控制 + 边缘部署</strong> → 智元 SONIC for A3（os138）</li>
+</ul>
+<p><strong>一个观察</strong>：权重取用量上，宇树 WLA 发布首周从 22 涨到 166（约 7.5 倍），而 τ0-VLA 的 world-model 组件连续两周零下载。组件间的采用分化已经固化——研究社区要的是能跑的代码，不只是权重。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

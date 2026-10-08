@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboParty RP1 / ROBOTO_ORIGIN：全栈开源人形机器人（硬件设计 + ROS 2 + RL 训练 + 固件 + XR 遥操作） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">RoboParty RP1 / ROBOTO_ORIGIN：全栈开源人形机器人（硬件设计 + ROS 2 + RL 训练 + 固件 + XR 遥操作） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="roboparty-rp1-roboto_origin-ros-2-rl-xr">RoboParty RP1 / ROBOTO_ORIGIN：全栈开源人形机器人（硬件设计 + ROS 2 + RL 训练 + 固件 + XR 遥操作）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/RoboParty/RP1">https://github.com/RoboParty/RP1</a>  </p>
+<p><strong>Stars</strong>: 新发布 · <strong>License</strong>: GPLv3（自有材料；各模组与第三方组件保留原许可） · <strong>收录日期</strong>: 2026-10-08  </p>
+<p><strong>组织</strong>: RoboParty  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-08</p>
+</blockquote>
+<hr />
+<h2 id="_2">项目概述</h2>
+<p><strong>RoboParty RP1</strong> 是在 IROS 2026（9/27—10/2，匹兹堡）上发布的全栈开源人形机器人平台，建立在 RoboParty 早前的 <strong>ROBOTO_ORIGIN（RPO）</strong> 之上。</p>
+<p><strong>分层开放路线</strong>：机械设计 → 执行器模组 → 运动控制系统 → 仿真环境 → SDK → 训练工具。开源范围从软件层延伸到整个机器人技术栈。</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>峰值关节扭矩</td>
+<td>最高 160 Nm（Romomo 执行器模组）</td>
+</tr>
+<tr>
+<td>研发平台</td>
+<td>PartyOS（含 UFO 框架）</td>
+</tr>
+<tr>
+<td>社区规模</td>
+<td>声称超过 5000 人</td>
+</tr>
+<tr>
+<td>后续节奏</td>
+<td>2026 Q4 更多软硬件发布</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>自有材料 GPLv3；各模组与第三方组件保留原许可</td>
+</tr>
+</tbody>
+</table>
+<p><strong>RPO 已公开的内容</strong>：硬件设计文件、ROS 2 部署软件、强化学习训练流程、URDF 与 MJCF 模型、固件、导航与 XR 遥操作模块。</p>
+<hr />
+<h2 id="partyos-ufo">PartyOS 与 UFO 框架</h2>
+<p><strong>UFO 框架</strong>是这份发布里最有辨识度的部分：用<strong>无监督强化学习</strong>训练低层运动策略，覆盖三类行为：</p>
+<ul>
+<li><strong>技能切换</strong>（skill transitions）</li>
+<li><strong>扰动恢复</strong>（disturbance recovery）</li>
+<li><strong>跌倒恢复</strong>（fall recovery）</li>
+</ul>
+<p>关键词是「无监督」——不依赖人工设计的奖励或分阶段课程，而是让策略自己 discover 出可用的低层行为库。</p>
+<p><strong>设计意图</strong>：让开发者能横跨<strong>机器人控制</strong>与 <strong>AI 训练</strong>两层工作，而不是把物理本体和软件当成两套系统分开处理。这直接对准了当前人形研究的一个现实痛点——做控制的和做学习的往往是两拨人，中间的接口层没人负责。</p>
+<p><strong>IROS 现场演示</strong>：「Kick Me」测试——观众可以 physically 推机器人，观察它调整姿态并恢复平衡。这个演示选得很聪明：它把控制算法的能力测试变成了任何人都能参与的交互。</p>
+<hr />
+<h2 id="_3">相关资料</h2>
+<ul>
+<li>主仓库：https://github.com/RoboParty/RP1</li>
+<li>前置平台：ROBOTO_ORIGIN（RPO）聚合仓库</li>
+<li>发布场合：IROS 2026（2026-09-27 至 10-02，美国匹兹堡）</li>
+<li>许可：GPLv3（自有材料）</li>
+<li>站内：新闻 n363、n358（IROS 2026 综述）；相关开源 os136、os138</li>
+</ul>
+<hr />
+<h2 id="_4">快速上手</h2>
+<pre><code class="language-bash"># 从 RPO 入手（RP1 的前置学习材料）
+git clone https://github.com/RoboParty/ROBOTO_ORIGIN
+# 仓库内含硬件设计文件、ROS 2 部署软件、RL 训练流程、URDF/MJCF、固件
+</code></pre>
+<p><strong>学习顺序建议</strong>：</p>
+<ol>
+<li>先读 RPO 的 URDF / MJCF，理解本体的运动学与动力学参数</li>
+<li>跑通 ROS 2 部署软件，把仿真里的模型与真机软件栈对上</li>
+<li>再进 RL 训练流程（Legged Gym 类范式）</li>
+<li>最后看 XR 遥操作模块——这是采集示教数据的入口</li>
+</ol>
+<p><strong>硬件注意</strong>：160 Nm 峰值关节扭矩意味着这台机器有真实的伤害能力。自组或二次开发时按工业安全规范处理，不要在没有急停与限位的情况下上电运行。</p>
+<p><strong>许可注意</strong>：聚合仓库声明自有材料一般用 GPLv3，但<strong>各模组与第三方组件保留各自许可</strong>。商用前必须逐模组核对，GPLv3 的传染性对商业产品是实质约束。</p>
+<hr />
+<h2 id="_5">能力与边界</h2>
+<p><strong>已开放</strong>：</p>
+<ul>
+<li>RPO：硬件设计、ROS 2 软件、RL 训练流程、URDF/MJCF、固件、导航、XR 遥操作</li>
+<li>RP1：通过 PartyOS / UFO 逐步开放整机栈</li>
+<li>IROS 现场验证了扰动恢复能力（Kick Me 测试）</li>
+</ul>
+<p><strong>边界与风险</strong>：</p>
+<ol>
+<li>RP1 是<strong>渐进式开放</strong>，当前可获取的内容少于 RPO；别假设「现在就能拿到全套图纸」</li>
+<li>160 Nm 峰值扭矩的整机需要相应的安全设施与操作规范</li>
+<li>GPLv3 许可对商业衍生品有传染性，与 Apache-2.0 项目（如 os136 / os138）的合规路径完全不同</li>
+<li>「5000 人社区」是公司自报数字，第三方活跃度需自行判断</li>
+<li>硬件物料与加工成本未公开，实际入手门槛可能高于纯软件项目</li>
+</ol>
+<hr />
+<h2 id="_6">与同类开源人形平台对比</h2>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>开放层</th>
+<th>许可</th>
+<th>适合谁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RoboParty RP1 / RPO</strong></td>
+<td>整机硬件 + 控制 + 训练工具</td>
+<td>GPLv3</td>
+<td>要一台<strong>能改</strong>的人形的高校 / 创客</td>
+</tr>
+<tr>
+<td>宇树 UnifoLM-WLA-1.0（os136）</td>
+<td>模型权重 + 训练代码 + 数据集</td>
+<td>Apache-2.0</td>
+<td>已有 G1，想换模型</td>
+</tr>
+<tr>
+<td>智元 sonic_for_a3（os138）</td>
+<td>全身控制 + sim2sim + 边缘部署</td>
+<td>Apache-2.0</td>
+<td>研究 WBC 算法</td>
+</tr>
+<tr>
+<td>宇树 H2 / G1 本体</td>
+<td>商品硬件 + 部分 SDK</td>
+<td>各自许可</td>
+<td>要现货本体</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心差异是开放层而非开放度</strong>。三者的开放层不同：模型 / 控制栈 / 整机。对高校团队来说这是真正的可选项——你可以只要模型（宇树）、只要控制（智元）、或连本体一起自己造（RoboParty）。</p>
+<p><strong>选型建议</strong>：预算有限且想深入理解整机 → RPO 的设计文件 + ROS 2 软件是最好的教材；想要快速出成果 → 直接用宇树 / 智元的现成栈。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

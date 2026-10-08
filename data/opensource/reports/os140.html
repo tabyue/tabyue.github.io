@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VLA-ACL：动作一致性视觉 Token 剪枝（冻结基座 VLA，剪掉 87.5% 视觉 token，1.5× 加速） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">VLA-ACL：动作一致性视觉 Token 剪枝（冻结基座 VLA，剪掉 87.5% 视觉 token，1.5× 加速） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="vla-acl-token-vla-875-token15">VLA-ACL：动作一致性视觉 Token 剪枝（冻结基座 VLA，剪掉 87.5% 视觉 token，1.5× 加速）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/du-owen/VLA-ACL">https://github.com/du-owen/VLA-ACL</a>  </p>
+<p><strong>Stars</strong>: 新发布 · <strong>License</strong>: 见仓库 LICENSE · <strong>收录日期</strong>: 2026-10-08  </p>
+<p><strong>组织</strong>: 清华大学（黄高团队）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-08</p>
+</blockquote>
+<hr />
+<h2 id="_2">项目概述</h2>
+<p><strong>VLA-ACL（Action-Consistent Learning）</strong> 是 arXiv 2610.08133（2026-10-06）的官方代码，来自清华大学黄高团队。它解决的是 VLA 推理的实时性问题——<strong>不改动基座模型，只在输入端剪掉冗余视觉 token</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>视觉 token 剪枝率</td>
+<td>最多 87.5%</td>
+</tr>
+<tr>
+<td>计算量削减</td>
+<td>最多 75%</td>
+</tr>
+<tr>
+<td>推理加速</td>
+<td>1.5×</td>
+</tr>
+<tr>
+<td>基座 VLA</td>
+<td>全程冻结</td>
+</tr>
+<tr>
+<td>监督信号</td>
+<td>动作一致性（教师动作为主，GT 动作为辅）</td>
+</tr>
+<tr>
+<td>评测</td>
+<td>LIBERO + 真机操作</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心思路</strong>：训练一个轻量剪枝策略，让「剪枝后上下文产生的动作」与「全上下文教师产生的动作」保持一致。这直接把 token 选择绑定到<strong>对下游控制输出的影响</strong>上，而不是绑定到注意力相似度这类间接代理。</p>
+<hr />
+<h2 id="_3">为什么用动作一致性而不是注意力相似度</h2>
+<p>已有剪枝方案两条路各有问题：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>做法</th>
+<th>问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无训练启发式</td>
+<td>按注意力分数 / 运动阈值丢 patch</td>
+<td>间接代理，与最终动作无关</td>
+</tr>
+<tr>
+<td>微调基座</td>
+<td>端到端重训</td>
+<td>昂贵，破坏已验证的模型</td>
+</tr>
+</tbody>
+</table>
+<p>VLA-ACL 的关键洞察是：<strong>注意力相似度保的是表征，机器人要的是动作</strong>。</p>
+<p>一个 patch 可能对表征贡献很大（背景纹理、桌面反光），但对下一步动作毫无影响；反之，物体边缘一个极小的接触缝隙 patch 对动作至关重要。用注意力相似度做监督，等于默认了「表征相似度是动作的良好代理」——这个假设从未被检验过。</p>
+<pre><code>图像 patches ──► 剪枝策略 π_θ ──► 保留子集 ──► 冻结的 VLA ──► a_pruned
+                              │
+                              └──► 全上下文教师 ──► a_teacher
+
+L = || a_pruned − stopgrad(a_teacher) ||²  +  λ · || a_pruned − a* ||²
+                                              （λ 小，辅助）
+</code></pre>
+<p><code>stopgrad</code> 保证梯度只回传到剪枝策略，不回传到冻结的基座。<code>λ</code> 必须小——否则剪枝器会退化成另一个行为克隆策略，学的是「输出什么动作」而不是「保留哪些 token」。</p>
+<hr />
+<h2 id="_4">相关资料</h2>
+<ul>
+<li>论文：arXiv 2610.08133（2026-10-06），cs.RO / cs.CV</li>
+<li>代码：https://github.com/du-owen/VLA-ACL</li>
+<li>团队：清华大学（黄高 Gao Huang 团队）</li>
+<li>站内：论文 p187（含完整解读与详情）；学习中心「模型训练与推理优化」模块第 17 节有配套讲解与可运行代码</li>
+<li>同期对照：SpikingVLA（p188）、WareFly-VLA（p189）</li>
+</ul>
+<hr />
+<h2 id="_5">快速上手</h2>
+<pre><code class="language-bash">git clone https://github.com/du-owen/VLA-ACL
+cd VLA-ACL
+pip install -r requirements.txt
+</code></pre>
+<p><strong>需要准备</strong>：</p>
+<ol>
+<li>一个已训好 / 已部署的 VLA（基座，全程冻结）</li>
+<li>你已有的示教数据——<strong>不需要新采真机数据</strong>。跑一遍全上下文推理得到教师动作即可</li>
+<li>目标保留率 ρ_target（论文用到 12.5%，但应扫一遍找自己的拐点）</li>
+</ol>
+<p><strong>建议的验证顺序</strong>：</p>
+<ol>
+<li>先在 LIBERO 上复现论文数字，确认剪枝器训练收敛</li>
+<li>换到自己的真机数据，扫剪枝率 ∈ {25%, 50%, 75%, 87.5%}，画「成功率 vs 剪枝率」曲线</li>
+<li>用 torch profiler 看加速到底来自注意力还是别处</li>
+<li>检查失败案例：被剪掉的 patch 是不是恰好包含接触区域？</li>
+</ol>
+<p><strong>不要直接抄 87.5%</strong>。你的任务冗余度不同，最优剪枝率也不同。</p>
+<hr />
+<h2 id="_6">能力与边界</h2>
+<p><strong>已验证</strong>：</p>
+<ul>
+<li>剪掉最多 87.5% 视觉 token 仍保持有竞争力性能</li>
+<li>计算量最多降 75%</li>
+<li>推理加速 1.5×</li>
+<li>LIBERO 与真机操作双评测</li>
+</ul>
+<p><strong>一个必须注意的比例关系</strong>：剪枝 87.5% / 计算降 75% / 加速只有 1.5× —— <strong>三者不成比例</strong>。</p>
+<p>这说明加速并未线性跟随 FLOPs 削减，原因是注意力之外还有：</p>
+<ul>
+<li>KV cache 的构造与访存</li>
+<li>多视角图像的预处理（resize、patchify）——这是<strong>固定成本</strong></li>
+<li>kernel launch 与调度开销</li>
+</ul>
+<p><strong>工程含义</strong>：如果瓶颈在访存或预处理，剪枝收益会被吃掉大半。<strong>动手之前先 profile</strong>。</p>
+<p><strong>另一个坑</strong>：剪枝器若在每个时间步独立决策，可能出现<strong>时间闪烁</strong>——同一物体在相邻帧被反复剪掉又恢复，引入动作抖动。建议加时间一致性约束（如 <code>λ_t · ||mask[t] − mask[t−1]||²</code>）或对剪枝决策做滑动平均。</p>
+<hr />
+<h2 id="vla">与同期 VLA 效率方案对比</h2>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>路线</th>
+<th>落地时间</th>
+<th>保真度</th>
+<th>收益量级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VLA-ACL</strong>（本项目）</td>
+<td>输入端剪枝，冻结基座</td>
+<td>本季度即可</td>
+<td>与基座完全一致</td>
+<td>1.5×</td>
+</tr>
+<tr>
+<td>SpikingVLA（p188）</td>
+<td>ANN→SNN 脉冲化</td>
+<td>依赖硬件生态</td>
+<td>有转换误差</td>
+<td>一个数量级（理论）</td>
+</tr>
+<tr>
+<td>量化 / 蒸馏</td>
+<td>改模型</td>
+<td>已成熟</td>
+<td>会损泛化</td>
+<td>2—8× 压缩</td>
+</tr>
+<tr>
+<td>Speculative Decoding</td>
+<td>系统层</td>
+<td>已成熟</td>
+<td>无损</td>
+<td>视接受率而定</td>
+</tr>
+<tr>
+<td>Stage-Aware Pruning</td>
+<td>阶段感知启发式</td>
+<td>论文阶段</td>
+<td>–</td>
+<td>与本项目可叠加</td>
+</tr>
+</tbody>
+</table>
+<p><strong>与 Stage-Aware Pruning 的关系</strong>：同期出现的 <em>When and What to Prune?</em> 走阶段感知启发式——在任务不同阶段用不同剪枝强度。两条路可叠加：<strong>阶段感知决定何时剪多少，动作一致性决定剪哪些</strong>。</p>
+<p><strong>选型建议</strong>：已在部署 OpenVLA / π 系列、卡在实时性但不想重训或量化模型的团队，这是本周最值得先跑一遍的开源项目。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
