@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenWAM：斯坦福可组合式世界-动作模型框架（因果视频预训练 + 动作策略 + 正逆动力学统一流程） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">OpenWAM：斯坦福可组合式世界-动作模型框架（因果视频预训练 + 动作策略 + 正逆动力学统一流程） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="openwam-">OpenWAM：斯坦福可组合式世界-动作模型框架（因果视频预训练 + 动作策略 + 正逆动力学统一流程）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenWAM/OpenWAM">https://github.com/OpenWAM/OpenWAM</a>  </p>
+<p><strong>Stars</strong>: 155 · <strong>License</strong>: AGPL-3.0 · <strong>收录日期</strong>: 2026-10-09  </p>
+<p><strong>组织</strong>: Stanford University  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-09</p>
+</blockquote>
+<hr />
+<h2 id="_2">项目概述</h2>
+<p><strong>OpenWAM</strong> 是斯坦福大学团队开源的<strong>可组合式世界-动作模型（World-Action Model, WAM）框架</strong>，论文 <em>OpenWAM: An Open Framework for Composable World-Action Models</em> 的官方代码。</p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>组织</td>
+<td>Stanford University（项目主页 openwam.stanford.edu）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>AGPL-3.0</td>
+</tr>
+<tr>
+<td>语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>创建</td>
+<td>2026-06-08，持续更新中</td>
+</tr>
+<tr>
+<td>适配基准</td>
+<td>LIBERO、RoboTwin、CALVIN、LeRobot</td>
+</tr>
+</tbody>
+</table>
+<p><strong>它解决的是 WAM 研究的「工程碎片化」问题。</strong> 世界-动作模型这条路线这两年论文不少，但每篇都是自己的一套代码：视频预训练一份、动作策略一份、动力学一份，彼此不兼容，导致「换个基座再跑一遍」的成本高到没人做。OpenWAM 把这三块整合进一个统一流程，并做成<strong>可组合</strong>的——各模块可以单独替换。</p>
+<h2 id="_3">为什么这件事重要</h2>
+<p>WAM 的核心假设是：<strong>先学会预测世界会怎么变，再把动作接上去</strong>。听起来简单，但三个子模块的接口从来没有标准化：</p>
+<pre><code>视频预训练  ──►  ?  ──►  动作策略  ──►  ?  ──►  执行
+                              ▲
+                         正/逆动力学
+</code></pre>
+<p>中间的「?」就是各家自己写的胶水代码。OpenWAM 填的就是这两个问号。</p>
+<hr />
+<h2 id="_4">三件套：因果视频预训练 + 动作策略 + 正逆动力学</h2>
+<pre><code>┌─────────────────────────────────────────────────────┐
+│  1. 因果机器人视频预训练（无动作标签）                   │
+│     输入：历史视频帧序列                                │
+│     输出：未来帧 / 未来隐变量预测                        │
+└──────────────────────┬──────────────────────────────┘
+                       │  共享表征
+        ┌──────────────┴──────────────┐
+        ▼                             ▼
+┌───────────────┐           ┌──────────────────┐
+│ 2. 动作策略    │           │ 3. 正/逆动力学     │
+│  观测 → 动作块 │           │  正：状态+动作→下一状态│
+│               │           │  逆：状态+目标→动作  │
+└───────────────┘           └──────────────────┘
+</code></pre>
+<p><strong>因果（causal）</strong> 是这里的关键词：预训练阶段只允许模型看过去来预测未来，不能看未来帧。这个约束的重要性在 <a href="/papers/p194">Long-WAM（p194）</a> 里被量化证明了——换成双向预训练的基座，加长上下文几乎没有收益。</p>
+<h2 id="_5">可配置的交互模式</h2>
+<p>框架支持多种模块间交互方式，不是写死一条路：</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>含义</th>
+<th>适用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>联合去噪</strong></td>
+<td>视频与动作在同一个去噪过程里联合生成</td>
+<td>两者强耦合的任务</td>
+</tr>
+<tr>
+<td><strong>先视频后动作</strong></td>
+<td>先预测未来视频隐变量，再据此生成动作</td>
+<td>需要显式「想象结果」的任务</td>
+</tr>
+<tr>
+<td>共享架构</td>
+<td>视频与动作共用一个主干</td>
+<td>参数受限时</td>
+</tr>
+<tr>
+<td>双专家模型</td>
+<td>视频专家 + 动作专家各自独立，通过接口通信</td>
+<td>想单独升级某一侧时</td>
+</tr>
+</tbody>
+</table>
+<p><strong>双专家模式对工程团队最实用</strong>：视频基座和动作头可以各自迭代、各自换版本，接口不变。</p>
+<h2 id="sdk">扩展 SDK</h2>
+<p>框架提供扩展点，可接入：</p>
+<ul>
+<li>自定义策略（policy）</li>
+<li>自定义动作解码器（action decoder）</li>
+<li>自定义仿真环境（environment）</li>
+</ul>
+<p>这意味着不必改用它的模型也能用它的流水线。</p>
+<hr />
+<h2 id="_6">相关资料</h2>
+<ul>
+<li>论文：<em>OpenWAM: An Open Framework for Composable World-Action Models</em>（Stanford University）</li>
+<li>代码：https://github.com/OpenWAM/OpenWAM</li>
+<li>项目主页：https://openwam.stanford.edu</li>
+<li>主题标签：world-action-models / world-models / video-generation / robot-learning / dynamics-learning / pretrained-models</li>
+</ul>
+<h2 id="_7">站内联动</h2>
+<ul>
+<li><a href="/papers/p194">Long-WAM（p194）</a>：AR 预训练是长上下文收益的前提——这条结论直接决定 OpenWAM 的预训练阶段该怎么配</li>
+<li><a href="/papers/p192">Vela（p192）</a>：动作表示层改造，可与 OpenWAM 的动作解码器扩展点对接</li>
+<li><a href="/opensource/os143">Isaac Lab-Arena（os143）</a>：评测环境侧的可组合框架</li>
+<li>学习中心「世界模型与 LLM+机器人」模块有配套正文讲解</li>
+</ul>
+<hr />
+<h2 id="_8">快速上手</h2>
+<pre><code class="language-bash">git clone https://github.com/OpenWAM/OpenWAM
+cd OpenWAM
+pip install -r requirements.txt
+</code></pre>
+<p><strong>建议的验证顺序</strong>：</p>
+<ol>
+<li>
+<p><strong>先跑一个已适配基准的最小实验</strong>。LIBERO 或 CALVIN 二选一，确认整条流水线能跑通。不要一上来就接自己的数据。</p>
+</li>
+<li>
+<p><strong>确认因果掩码真的开着</strong>。这是最容易出错也最难查的一处：框架默认可能为了调试方便打开双向注意力，一旦忘了关，你的「加长历史无收益」会与 <a href="/papers/p194">Long-WAM</a> 的发现完全相反，而且查不出来。</p>
+</li>
+<li>
+<p><strong>对比两种交互模式</strong>。用同一份数据跑「联合去噪」与「先视频后动作」，看哪个在你的任务上更好。这个对比的成本很低，但结论对后续路线选择影响很大。</p>
+</li>
+<li>
+<p><strong>再接入自己的本体</strong>。走扩展 SDK 的 policy / action decoder / environment 三个扩展点，不要改框架核心代码——AGPL-3.0 下改动核心意味着你也要开源。</p>
+</li>
+</ol>
+<h2 id="_9">许可提醒</h2>
+<p><strong>AGPL-3.0 是这份清单里最严格的许可</strong>。与 MIT（SPEAR）或 Apache-2.0 不同，AGPL 的传染性延伸到<strong>网络服务</strong>——如果你把基于 OpenWAM 的东西作为服务对外提供，按 AGPL 的要求也需要开放源码。</p>
+<p>商业闭源场景请务必先过一遍法务：要么改用别的框架，要么与斯坦福方谈商业授权。</p>
+<hr />
+<h2 id="_10">能力边界</h2>
+<p><strong>已验证</strong>：</p>
+<ul>
+<li>因果机器人视频预训练、动作策略、正/逆动力学三模块统一流程</li>
+<li>联合去噪 / 先视频后动作等多种交互模式可配置</li>
+<li>共享架构与双专家模型两种结构都支持</li>
+<li>原生适配 LIBERO、RoboTwin、CALVIN、LeRobot</li>
+</ul>
+<p><strong>尚未公开 / 需要自己测的</strong>：</p>
+<ul>
+<li>各基准上的完整成功率对照表（README 层面未给出系统的横向数字）</li>
+<li>真机部署的延迟数字</li>
+<li>多本体规模化的上限</li>
+</ul>
+<h2 id="_11">与同类框架的定位差异</h2>
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>定位</th>
+<th>是否含世界模型</th>
+<th>许可</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OpenWAM</strong></td>
+<td>WAM 专用可组合框架</td>
+<td><strong>是（核心）</strong></td>
+<td>AGPL-3.0</td>
+</tr>
+<tr>
+<td>LeRobot（HuggingFace）</td>
+<td>通用机器人学习（数据/训练/部署）</td>
+<td>否</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>Isaac Lab（NVIDIA）</td>
+<td>仿真与 RL 训练</td>
+<td>可选</td>
+<td>NVIDIA 许可</td>
+</tr>
+<tr>
+<td>RoboTwin</td>
+<td>双臂数据生成 + 仿真</td>
+<td>否</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>判断标准很直接</strong>：如果你的研究问题是「世界模型怎么帮到动作」，OpenWAM 是目前唯一把这条路做成框架的选项；如果只是要训一个策略，LeRobot 的生态更成熟。</p>
+<hr />
+<h2 id="_12">与本站相关条目的关系</h2>
+<p><strong>与 <a href="/papers/p194">Long-WAM（p194）</a></strong>：Long-WAM 回答的是「WAM 该用多长的历史、基座该怎么预训练」，OpenWAM 提供的是「把这套东西搭起来的框架」。一个给结论，一个给工具。想在 OpenWAM 上验证 Long-WAM 的结论是很自然的组合。</p>
+<p><strong>与 <a href="/papers/p189">WareFly-VLA（p189）</a></strong>：WareFly 的结论之一是跨具身迁移需要<strong>动力学对齐</strong>。OpenWAM 内置的正/逆动力学模块正是做这件事的地方——正动力学给出「这个动作在这个本体上会怎样」，逆动力学给出「要达成这个状态该出什么动作」。两者正好对上。</p>
+<p><strong>与 <a href="/opensource/os142">WBC-AGILE（os142）</a></strong>：AGILE 是 NVIDIA 的<strong>人形全身移动操作</strong>工作流，偏工程落地与 sim-to-real；OpenWAM 偏<strong>世界模型研究</strong>。目标不同，可互为参照。</p>
+<h2 id="_13">选型建议</h2>
+<table>
+<thead>
+<tr>
+<th>你是谁</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>做世界模型 / WAM 研究</td>
+<td><strong>直接用</strong>，这是目前最省事的起点</td>
+</tr>
+<tr>
+<td>做多本体统一接口</td>
+<td>值得看，特别是正逆动力学模块</td>
+</tr>
+<tr>
+<td>只想训一个能跑的策略</td>
+<td>先 LeRobot，别一上来就上 WAM</td>
+</tr>
+<tr>
+<td>商业闭源产品</td>
+<td><strong>先过法务</strong>，AGPL-3.0 限制明显</td>
+</tr>
+<tr>
+<td>边缘端部署</td>
+<td>暂不合适，框架定位是研究而非部署</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
