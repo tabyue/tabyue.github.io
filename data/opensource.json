@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-09T08:30",
+ "lastUpdated": "2026-10-10T08:35",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,122 @@
   }
  ],
  "projects": [
+  {
+   "id": "os148",
+   "name": "RoboICL：冻结 GPT-6 Astra 的具身上下文学习，不训练任务专用 VLA",
+   "github": "https://github.com/Mosi-AI/RoboICL",
+   "organization": "Mosi-AI",
+   "org": "Mosi-AI",
+   "category": "ai-model",
+   "description": "**RoboICL** 由三星与上海交通大学团队提出，走了一条与主流相反的路线：**不训练任务专用 VLA**，而是**冻结 GPT-6 Astra**，只在推理时向模型提供少量示范，并持续保留「机器人刚刚执行过什么、环境发生了什么」作为具身上下文，让模型每次决策时参考这些经验直接输出下一段双臂动作。在 RoboDojo 的 30 项双臂操作任务上评测，Open 类任务零样本、其余三类各只用一段示范。项目页给出完整结果入口与 **929 条可播放、可逐布局核查的三视角执行记录**，评测透明度在机器人领域属少见水平。",
+   "language": "Python",
+   "license": "MIT",
+   "features": [
+    "冻结通用大模型，不训练任务专用 VLA",
+    "把示范与机器人自身执行历史组织为可读取的具身上下文",
+    "RoboDojo 30 项双臂任务评测，Open 类零样本、其余三类各一段示范",
+    "929 条可播放、可逐布局核查的三视角执行记录",
+    "覆盖精密插入、长程双臂协作与依赖初始状态的操作"
+   ],
+   "stars": "330",
+   "tags": [
+    "RoboICL",
+    "上下文学习",
+    "GPT-6 Astra",
+    "双臂操作",
+    "RoboDojo",
+    "三星",
+    "上海交大"
+   ],
+   "addedDate": "2026-10-10"
+  },
+  {
+   "id": "os147",
+   "name": "Spotter：免训练外挂 VLM 反思，小模型主导执行的异步自愈范式",
+   "github": "https://github.com/zqc3117/Spotter",
+   "organization": "zqc3117",
+   "org": "zqc3117",
+   "category": "ai-agent-framework",
+   "description": "**Spotter** 针对具身智能落地的两个真实痛点：一是为了学会失败自愈（Recovery）需要大量算力采集失败数据并重训大模型；二是让前沿 VLM 逐步规划动作会让机械臂走一秒停两秒，物理落地不现实且 API 费用飞涨。它提出**外挂监视**思路：**零额外训练**（不需要重训具身模型或训练失败反思数据）、**即插即用**（π0.5、Cosmos Policy 等现成策略直接接入）、**极低调用开销**（具身小模型主导执行，前沿 VLM 只在后台异步巡检，整体耗时降低约 70%）。研究团队来自 Griffith University、清华大学、腾讯、复旦大学、同济大学。",
+   "language": "Python",
+   "license": "MIT",
+   "features": [
+    "Training-free：不需要重训具身模型，也不需要采集失败反思数据",
+    "Plug-and-play：π0.5、Cosmos Policy 等现成具身策略直接接入",
+    "双流异步架构：System 1 小模型主导连续执行，System 2 前沿 VLM 后台异步巡检",
+    "Double-check 轻量筛查器：只有连续异常被捕获时 VLM 才介入反思纠偏",
+    "整体耗时降低约 70%，一行命令即可复现"
+   ],
+   "stars": "167",
+   "tags": [
+    "Spotter",
+    "失败自愈",
+    "免训练",
+    "异步反思",
+    "VLM",
+    "双系统",
+    "即插即用"
+   ],
+   "addedDate": "2026-10-10"
+  },
+  {
+   "id": "os146",
+   "name": "RPent：清华大学团队发起的具身智能体化基础设施（Recursive Physical Agent）",
+   "github": "https://github.com/RLinf/RPent",
+   "organization": "RLinf",
+   "org": "RLinf",
+   "category": "ai-agent-framework",
+   "description": "**RPent（Recursive Physical Agent）**是由清华大学于超教授团队联合正行创新、无问芯穹共同发起的新一代具身智能开源项目，目标是构建具身智能**持续进化的智能体化基础设施（Agentic Infrastructure）**。它的定位与同团队的 RLinf 形成互补：RLinf 解决的是**强化学习训练基础设施**，RPent 解决的是**智能体化运行时**。核心设计理念是服务化、标准化、组合化——把模型、机器人、技能、记忆与环境统一纳入智能体基础设施，让具身智能系统能像软件一样被构建、扩展和持续进化。首个核心项目是 **Harness VLA**，把数字智能中广泛应用的 Harness Layer 首次引入具身智能系统。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "服务化、标准化、组合化三大设计理念，能力解耦 + 生态连接 + 智能重构",
+    "把模型、机器人、技能、记忆与环境统一纳入智能体基础设施",
+    "首个核心项目 Harness VLA：在保持 VLA 模型冻结的前提下，用 Agentic Planner 统一组织模型调用、任务执行与失败恢复",
+    "同团队 RLinf 为全球首个面向具身智能大规模强化学习的开源基础设施，Star 超 4100，入选 PyTorch Ecosystem 并被 NVIDIA 官方收录",
+    "Apache-2.0 许可，可自由用于研究与商业"
+   ],
+   "stars": "1446",
+   "tags": [
+    "RPent",
+    "Harness VLA",
+    "智能体基础设施",
+    "清华",
+    "RLinf",
+    "Agentic",
+    "具身智能体"
+   ],
+   "addedDate": "2026-10-10"
+  },
+  {
+   "id": "os145",
+   "name": "VPP2（Video Prediction Policy 2）：星动纪元世界动作模型，RoboDojo 榜首并已开源",
+   "github": "https://github.com/roboterax/video-prediction-policy-2",
+   "organization": "roboterax",
+   "org": "roboterax",
+   "category": "ai-model",
+   "description": "**VPP2（Video Prediction Policy 2）**是星动纪元的世界动作模型（World Action Model, WAM）开源实现，口号是 Predict Better, Act Better。它以平均成功率 **32.26%**、平均得分 **39.26** 登顶 **RoboDojo** 榜首，并在泛化能力、精细操作、记忆能力三项上拿到第一，超越 GPT-6 Astra、Physical Intelligence π0.5、英伟达 GR00T-N1.7 等模型。**关键点是它未使用任何额外数据或 Agent RSI**，仅用标准数据集就拿到榜首——性能来自预训练本身，不靠外挂增强策略或扩充数据刷分。对做 WAM / 视频预测式策略的团队，这是目前公开可复现的最强基线之一。",
+   "language": "Python",
+   "license": "NOASSERTION",
+   "features": [
+    "RoboDojo 榜首：平均成功率 32.26%、平均得分 39.26",
+    "泛化、精细操作、记忆三项单项第一",
+    "世界动作模型路线：把视频生成模型的未来预测能力迁移为机器人动作能力",
+    "仅用标准数据集，无额外数据与 Agent RSI 增强",
+    "官方实现 + 项目主页，代码可直接复现榜单结果"
+   ],
+   "stars": "116",
+   "tags": [
+    "VPP2",
+    "世界动作模型",
+    "WAM",
+    "星动纪元",
+    "RoboDojo",
+    "视频预测策略",
+    "开源"
+   ],
+   "addedDate": "2026-10-10"
+  },
   {
    "id": "os141",
    "name": "SPEAR：基于虚幻引擎的照片级真实具身 AI 仿真器（程序化控制任意 UE 应用，暴露 14000+ 函数）",
@@ -3091,5 +3207,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 132
+ "totalItems": 136
 }

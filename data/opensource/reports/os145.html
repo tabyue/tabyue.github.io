@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPP2（Video Prediction Policy 2）：星动纪元世界动作模型，RoboDojo 榜首并已开源 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">VPP2（Video Prediction Policy 2）：星动纪元世界动作模型，RoboDojo 榜首并已开源 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="vpp2video-prediction-policy-2robodojo">VPP2（Video Prediction Policy 2）：星动纪元世界动作模型，RoboDojo 榜首并已开源</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/roboterax/video-prediction-policy-2">https://github.com/roboterax/video-prediction-policy-2</a>  </p>
+<p><strong>Stars</strong>: 116 · <strong>License</strong>: NOASSERTION · <strong>收录日期</strong>: 2026-10-10  </p>
+<p><strong>组织</strong>: roboterax  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-10</p>
+</blockquote>
+<hr />
+<h2 id="_2">是什么</h2>
+<p>VPP2 是<strong>世界动作模型（World Action Model, WAM）</strong>路线的开源实现。WAM 是当前机器人学习的主流范式之一：把视频生成模型「预测未来画面」的能力，迁移为机器人「该怎么动」的动作能力。直觉上一个能在脑中推演未来的机器人，理应知道下一步该做什么。</p>
+<p><strong>为什么这条路线成立</strong>：视频生成模型在海量视频上学会了世界的物理演化规律——东西会怎么落、会怎么滑、手碰到之后会怎样。这些规律恰好是机器人决策最需要的先验，而它不需要任何机器人标注就能从视频里学到。</p>
+<h2 id="_3">成绩</h2>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RoboDojo 平均成功率</td>
+<td><strong>32.26%</strong></td>
+</tr>
+<tr>
+<td>RoboDojo 平均得分</td>
+<td><strong>39.26</strong></td>
+</tr>
+<tr>
+<td>单项第一</td>
+<td>泛化能力、精细操作、记忆能力</td>
+</tr>
+</tbody>
+</table>
+<p>对比对象包括 GPT-6 Astra、Physical Intelligence π0.5、英伟达 GR00T-N1.7。</p>
+<h2 id="_4">最重要的一点</h2>
+<p><strong>VPP2 未使用任何额外数据或 Agent RSI，仅使用标准数据集就拿到榜首。</strong></p>
+<p>这句话的含金量高于分数本身。榜单竞争激烈时，很多领先分数的来源其实是数据扩充或推理时的增强策略（Agent RSI 一类）。VPP2 声明性能提升来自<strong>预训练本身</strong>，意味着这个结果是可归因的——你照着它的训练配方做，理论上能复现。</p>
+<h2 id="robodojo">关于 RoboDojo</h2>
+<p>由香港大学 MMLab 牵头、全球近 20 所顶尖学术机构共建的具身智能统一评测基准，以<strong>仿真 + 真机全科大考</strong>和极致难度著称，被称为具身智能界的珠穆朗玛峰。它的价值在于立下一把统一、可复现的标尺——把「看起来很厉害」变成「分数上见真章」。</p>
+<h2 id="_5">适用与不适用</h2>
+<ul>
+<li><strong>适合</strong>：想研究 WAM 路线、需要一个强基线做对比、或想复现 RoboDojo 榜单结果的团队</li>
+<li><strong>不适合</strong>：想直接拿来做小规模业务部署的场景——这是研究型实现，不是产品</li>
+</ul>
+<hr />
+<h2 id="_6">世界动作模型的基本结构</h2>
+<pre><code>观测 o_t ──▶ 编码器 ──▶ 视觉隐变量
+                            │
+                            ▼
+                     ┌──────────────┐
+                     │  视频预测模块  │  预测未来画面/隐变量
+                     └──────────────┘
+                            │
+                            ▼
+                     ┌──────────────┐
+                     │   动作解码头   │  隐变量 → 可执行动作块
+                     └──────────────┘
+                            │
+                            ▼
+                        动作 a_{t:t+H}
+</code></pre>
+<p>关键分岔在于<strong>动作头接在哪里</strong>：</p>
+<ol>
+<li>接在预测出的未来表示上（VPP2 这类 WAM）——先想清楚世界会变成什么样，再决定怎么动</li>
+<li>直接接在当前观测编码上（常规 VLA）——看到什么就动什么</li>
+</ol>
+<p>路线 1 的优势是未来预测提供了<strong>稠密监督</strong>：动作标签每个时刻只有一个向量，而未来画面的每个 patch 都是监督信号。这解释了为什么 WAM 在数据效率上通常更好。</p>
+<h2 id="vpp2">VPP2 要解决的问题</h2>
+<p>论文与技术报告强调的核心问题是：<strong>如何让 WAM 在开放环境下泛化</strong>。</p>
+<p>这个问题之所以难，是因为视频预测模型在训练分布上学到的演化规律，一旦场景换到没见过的物体、光照、背景，预测质量会迅速下降，而动作头完全依赖这个预测。所以 WAM 的泛化能力上限，实际上被<strong>未来预测的分布外鲁棒性</strong>锁死了。</p>
+<p>VPP2 的做法是把提升押在<strong>预训练</strong>上，而不是靠推理时增强——这也是它能声称「不使用 Agent RSI」的原因。</p>
+<h2 id="_7">与同类工作的关系</h2>
+<table>
+<thead>
+<tr>
+<th>工作</th>
+<th>中间表示</th>
+<th>与 VPP2 的关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>π0.5 一类 VLA</td>
+<td>无未来预测</td>
+<td>不同路线，VPP2 多了稠密监督</td>
+</tr>
+<tr>
+<td>GR00T-N1.7</td>
+<td>图像/视频隐变量</td>
+<td>同路线，VPP2 在 RoboDojo 上更优</td>
+</tr>
+<tr>
+<td>UNITAS (p199)</td>
+<td>度量 3D 点轨迹</td>
+<td>指出像素表示与物理不同构，是对 VPP2 这类路线的改进方向</td>
+</tr>
+<tr>
+<td>Long-WAM (p194)</td>
+<td>视频隐变量 + 长上下文</td>
+<td>正交，改的是上下文长度</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_8">相关论文与资料</h2>
+<ul>
+<li><strong>VPP2 官方仓库</strong>：https://github.com/roboterax/video-prediction-policy-2</li>
+<li><strong>项目主页</strong>：https://robert-gyj.github.io/video-prediction-policy-2</li>
+<li><strong>RoboDojo 基准</strong>：由香港大学 MMLab 牵头，全球近 20 所顶尖学术机构共建</li>
+</ul>
+<h2 id="_9">站内关联条目</h2>
+<ul>
+<li><strong>p194 Long-WAM</strong>：Scaling the Context of World-Action Models——发现加长上下文的收益取决于视频基座是否为自回归预训练</li>
+<li><strong>p199 UNITAS</strong>：A 3D-Native World Action Model——指出像素距离不等于物理距离，提出度量 3D 表示</li>
+<li><strong>p196 RACE</strong>：Reliable Action-Chunk Extension——通过建模子技能切换时刻，安全地延长动作块</li>
+<li><strong>p195 ACT^3</strong>：三流 Transformer，让 VLM 与世界模型各自封闭、由动作专家统一读取</li>
+</ul>
+<h2 id="_10">建议阅读顺序</h2>
+<ol>
+<li>先看 RoboDojo 的任务设计与评分方式——否则看不懂 32.26% 意味着什么</li>
+<li>再看 VPP2 的预训练配方——这是它声称「不靠外挂」的依据</li>
+<li>然后读 p194 判断要不要加长上下文</li>
+<li>最后读 p199 判断要不要把表示换成度量 3D</li>
+</ol>
+<p>这四篇合起来覆盖了 WAM 路线的四个关键决策：<strong>表示、上下文、融合拓扑、动作块长度</strong>。</p>
+<hr />
+<h2 id="_11">环境准备</h2>
+<p>WAM 类项目通常依赖较重的视频/扩散栈，建议先确认显存：</p>
+<pre><code class="language-bash">git clone https://github.com/roboterax/video-prediction-policy-2.git
+cd video-prediction-policy-2
+pip install -r requirements.txt
+</code></pre>
+<h2 id="_12">推理最小示例</h2>
+<p>以下为<strong>结构示意</strong>，具体 API 请以仓库 README 为准：</p>
+<pre><code class="language-python">from vpp2 import VPP2Policy
+
+policy = VPP2Policy.from_pretrained('roboterax/vpp2')
+
+obs = env.reset()
+while not done:
+    # 关键：一次调用输出一个动作块，而不是单步动作
+    chunk = policy.predict_action_chunk(
+        obs,
+        instruction='把红色方块放到蓝色碗里',
+        horizon=16,
+    )
+    # 连续执行整个块再重新观测，避免 stop-and-go
+    for a in chunk:
+        obs, done = env.step(a)
+</code></pre>
+<h2 id="_13">关键实践提醒</h2>
+<p><strong>执行动作块时不要每步都重新推理</strong>。WAM 的推理成本远高于单步执行，逐步调用会把任务时长全部耗在等待上。如果必须缩短停顿，可参考 RACE（p196）的思路：把切换时刻建模出来，就能安全地用更长动作块。</p>
+<h2 id="_14">复现榜单结果的顺序</h2>
+<ol>
+<li>先跑通单任务推理，确认环境无误</li>
+<li>再跑 RoboDojo 的单项子集，对齐排行榜数字</li>
+<li>最后跑全量 30 项——全量评测耗时长，先对齐子集能省大量时间</li>
+</ol>
+<h2 id="_15">常见坑</h2>
+<ul>
+<li><strong>视频预测的分辨率不匹配</strong>：动作头依赖的隐变量分辨率与训练时不一致会导致动作幅度错误，检查配置里的分辨率参数</li>
+<li><strong>指令模板不一致</strong>：RoboDojo 的指令格式有固定模板，自定义改写会掉点</li>
+<li><strong>显存不足优先降 batch 而不是降分辨率</strong>：降分辨率会改变预测分布，直接破坏模型行为</li>
+</ul>
+<hr />
+<h2 id="_16">榜单成绩</h2>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>VPP2</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>平均成功率（Avg SR）</td>
+<td><strong>32.26%</strong></td>
+<td>RoboDojo 榜首</td>
+</tr>
+<tr>
+<td>平均得分（Avg Score）</td>
+<td><strong>39.26</strong></td>
+<td>RoboDojo 榜首</td>
+</tr>
+<tr>
+<td>泛化能力</td>
+<td><strong>第 1</strong></td>
+<td>单项</td>
+</tr>
+<tr>
+<td>精细操作</td>
+<td><strong>第 1</strong></td>
+<td>单项</td>
+</tr>
+<tr>
+<td>记忆能力</td>
+<td><strong>第 1</strong></td>
+<td>单项</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_17">被超越的对象</h2>
+<p>GPT-6 Astra、Physical Intelligence π0.5、英伟达 GR00T-N1.7。</p>
+<h2 id="3226">如何正确解读 32.26%</h2>
+<p>这个绝对数字看上去不高，原因是 <strong>RoboDojo 的设计目标就是极致难度</strong>——它是「仿真 + 真机」全科大考，任务覆盖泛化、精细操作、记忆、长程等多个维度，且刻意设置了分布外场景。在这样一把标尺上，32% 已经是当前最高水平。</p>
+<p><strong>不要拿这个数字与 LIBERO 一类已饱和基准上的 90%+ 直接比较</strong>——两者难度差一个量级。</p>
+<h2 id="_18">相对增量才是重点</h2>
+<p>VPP2 的价值不在于 32.26% 这个数，而在于：</p>
+<ol>
+<li>它<strong>不使用额外数据</strong>，说明预训练配方可迁移</li>
+<li>它<strong>不使用 Agent RSI</strong>，说明推理时不靠外挂</li>
+<li>它在<strong>三个单项上都第一</strong>，说明不是靠偏科堆总分</li>
+</ol>
+<p>第 3 点尤其重要：榜单总分第一有时是靠在擅长维度上刷分。三个单项同时第一，说明模型能力是均衡的。</p>
+<h2 id="_19">复现预期</h2>
+<p>官方声称仅用标准数据集、无额外增强即可达到上述成绩，理论上是可复现的。实际复现时若差距较大，优先检查：指令模板、观测分辨率、动作块长度这三项是否与官方配置一致。</p>
+<hr />
+<h2 id="_20">与其他路线的对比</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>VPP2（WAM）</th>
+<th>常规 VLA（π0.5 一类）</th>
+<th>上下文学习（RoboICL）</th>
+<th>3D 原生（UNITAS）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中间表示</td>
+<td>视频/视觉隐变量</td>
+<td>无未来预测</td>
+<td>无（直接输出动作）</td>
+<td>度量 3D 点轨迹</td>
+</tr>
+<tr>
+<td>是否需要训练</td>
+<td>是（预训练 + 后训练）</td>
+<td>是</td>
+<td><strong>否</strong>（冻结大模型）</td>
+<td>是</td>
+</tr>
+<tr>
+<td>监督密度</td>
+<td><strong>高</strong>（未来画面稠密）</td>
+<td>低（仅动作标签）</td>
+<td>低</td>
+<td>中高</td>
+</tr>
+<tr>
+<td>数据效率</td>
+<td><strong>较好</strong></td>
+<td>一般</td>
+<td>取决于示范质量</td>
+<td>较好</td>
+</tr>
+<tr>
+<td>推理成本</td>
+<td><strong>高</strong>（要跑视频预测）</td>
+<td>中</td>
+<td>高（大模型调用）</td>
+<td>中</td>
+</tr>
+<tr>
+<td>泛化来源</td>
+<td>预训练 + 视频先验</td>
+<td>预训练</td>
+<td>大模型零样本能力</td>
+<td>度量 3D 同构性</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_21">怎么选</h2>
+<ul>
+<li><strong>有 GPU、有数据、想做研究</strong>：VPP2 路线，监督密度高、数据效率好</li>
+<li><strong>要尽快落地、不想训模型</strong>：RoboICL 路线（os148），冻结大模型 + 少量示范</li>
+<li><strong>场景对物理精度极敏感</strong>（装配、插拔）：关注 UNITAS 一类 3D 原生表示</li>
+<li><strong>受推理延迟困扰</strong>：先上 RACE（p196）延长动作块，再考虑换模型</li>
+</ul>
+<h2 id="vpp2_1">VPP2 的主要短板</h2>
+<ol>
+<li><strong>推理成本高</strong>：要跑视频预测，实时性是主要挑战</li>
+<li><strong>泛化上限被未来预测锁死</strong>：分布外场景下预测质量下降会直接传导到动作</li>
+<li><strong>研究型实现</strong>：不是产品，工程化程度有限（Star 116，社区还小）</li>
+</ol>
+<h2 id="_22">与本站其他条目的关系</h2>
+<ul>
+<li>p194 Long-WAM：改上下文长度，可与 VPP2 叠加</li>
+<li>p199 UNITAS：改中间表示为度量 3D，指出了 VPP2 这类像素/隐变量路线的根本问题</li>
+<li>p196 RACE：改动作块长度决策，可缓解 VPP2 的推理成本问题</li>
+</ul>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
