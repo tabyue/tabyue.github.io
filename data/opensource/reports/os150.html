@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>opendm：面向通用具身智能的开放世界基础模型（原力灵机 Dexmal） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">opendm：面向通用具身智能的开放世界基础模型（原力灵机 Dexmal） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="opendm-dexmal">opendm：面向通用具身智能的开放世界基础模型（原力灵机 Dexmal）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/dexmal/opendm">https://github.com/dexmal/opendm</a>  </p>
+<p><strong>Stars</strong>: 2200 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-11  </p>
+<p><strong>组织</strong>: dexmal（原力灵机）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-11</p>
+</blockquote>
+<hr />
+<h2 id="_2">一个仓库矩阵，不是一个模型</h2>
+<p>评价 opendm 时最容易犯的错，是把它当成一个孤立的模型仓库。它其实是原力灵机（Dexmal）<strong>VLA 工程化矩阵</strong>中的模型本体：</p>
+<table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>定位</th>
+<th>许可</th>
+<th>星数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>opendm</strong></td>
+<td>开放世界具身基础模型本体</td>
+<td>Apache-2.0</td>
+<td>2.2k</td>
+</tr>
+<tr>
+<td><strong>dexbotic</strong></td>
+<td>VLA 工具箱（仿真 + 真机训练）</td>
+<td>MIT</td>
+<td>3k</td>
+</tr>
+<tr>
+<td><strong>realtime-vla</strong></td>
+<td>30Hz 帧率 / 480Hz 轨迹频率实时控制</td>
+<td>MIT</td>
+<td>624</td>
+</tr>
+<tr>
+<td><strong>opendw</strong></td>
+<td>动作条件的开源世界模型</td>
+<td>Apache-2.0</td>
+<td>976</td>
+</tr>
+<tr>
+<td><strong>dexbotic-benchmark</strong></td>
+<td>统一设置的横向对比基准</td>
+<td>MIT</td>
+<td>43</td>
+</tr>
+</tbody>
+</table>
+<p>理解这个矩阵，才知道 opendm 该怎么用：<strong>模型本体 + 工具箱 + 实时控制 + 世界模型 + 基准</strong>，五件套覆盖了从研究到部署的主要环节。</p>
+<h2 id="_3">「开放世界」意味着什么</h2>
+<p>多数 VLA 的评测场景是<strong>封闭集</strong>：预定义若干物体、若干任务，训练与测试同分布。开放世界（Open-World）指的是面向<strong>未预定义的物体与任务</strong>也能工作——这要求模型具备：</p>
+<ul>
+<li>开放词汇的物体理解（不依赖固定的分类头）；</li>
+<li>对未见指令的泛化（语言条件而非任务 ID）；</li>
+<li>对未知场景的适应（不依赖场景特定的微调）。</li>
+</ul>
+<h2 id="_4">为什么这类开源有价值</h2>
+<p>VLA 领域长期存在一个断层：论文里的 SOTA 模型多数不公开权重或只公开推理代码，而公开的模型往往落后一代。Dexmal 这套矩阵以 Apache-2.0 / MIT 许可放出，且<strong>工具箱支持多种策略</strong>（pi0、memoryvla、openvla-oft 等），意味着：</p>
+<ul>
+<li>研究者可以在<strong>同一套训练与评测设置</strong>下对比不同 VLA 策略（dexbotic-benchmark 的价值）；</li>
+<li>工程团队可以拿到一条<strong>从训练到实时部署</strong>的完整路径（dexbotic → realtime-vla）。</li>
+</ul>
+<h2 id="_5">与实时控制的关系</h2>
+<p><strong>realtime-vla</strong> 是这套矩阵里工程价值最容易被低估的一环：把 VLA 跑在 <strong>30Hz 视觉帧率、480Hz 轨迹频率</strong>上。多数 VLA 的公开实现跑在 5—10Hz，与真实机器人的控制周期（通常 100—500Hz）之间有巨大鸿沟，这个鸿沟正是「论文能跑、真机不能用」的主因之一。</p>
+<hr />
+<h2 id="_6">矩阵协作关系</h2>
+<pre><code>                    ┌─────────────────────────┐
+                    │   opendm                │
+                    │   开放世界具身基础模型   │
+                    └───────────┬─────────────┘
+                                │ 权重
+                                ▼
+┌───────────────────────────────────────────────────────────┐
+│  dexbotic（VLA 工具箱）                                    │
+│  · 仿真训练 / 真机训练                                     │
+│  · 支持 pi0 / memoryvla / openvla-oft 等多策略             │
+│  · 统一数据格式与评测脚本                                  │
+└───────┬──────────────────────────────────┬────────────────┘
+        │                                  │
+        ▼                                  ▼
+┌───────────────────┐          ┌────────────────────────┐
+│ opendw            │          │ realtime-vla           │
+│ 动作条件世界模型  │          │ 30Hz 帧率 / 480Hz 轨迹 │
+│ （世界-动作建模） │          │ （实时部署路径）       │
+└───────────────────┘          └────────────────────────┘
+        │                                  │
+        └──────────────┬───────────────────┘
+                       ▼
+        ┌────────────────────────────────┐
+        │ dexbotic-benchmark             │
+        │ 统一设置下的横向对比            │
+        └────────────────────────────────┘
+</code></pre>
+<h2 id="_7">关键设计：策略无关的工具箱</h2>
+<p>dexbotic 支持多种 VLA 策略这件事，在研究方法论上很重要。</p>
+<p>VLA 论文之间的对比长期不可信，原因是<strong>训练协议与评测设置不一致</strong>：数据配比不同、训练步数不同、评测任务的随机种子不同，导致「A 比 B 好」的结论往往无法归因。工具箱把训练与评测管线固定下来，只允许策略模块替换，就把变量控制住了——这与 VLANeXt 等「统一框架下系统消融」的工作是同一个动机，只是落在工程工具层面。</p>
+<h2 id="realtime-vla">realtime-vla 的频率拆解</h2>
+<p>两个频率是两件事，容易混淆：</p>
+<table>
+<thead>
+<tr>
+<th>频率</th>
+<th>含义</th>
+<th>为什么不能低</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>30Hz 视觉帧率</strong></td>
+<td>相机图像进入模型的速率</td>
+<td>低于 ~10Hz 时，快速运动物体的位置估计会滞后，闭环不稳定</td>
+</tr>
+<tr>
+<td><strong>480Hz 轨迹频率</strong></td>
+<td>输出的关节/末端轨迹点的插值频率</td>
+<td>与真实机器人的控制周期对齐，低于此值会出现明显的运动抖动</td>
+</tr>
+</tbody>
+</table>
+<p>多数开源 VLA 实现只做到「输出一段动作 chunk」，由下游控制器插值，中间丢了时序一致性保证。realtime-vla 把这两个频率显式提出来，等于把「能不能上真机」这个隐性门槛显性化了。</p>
+<h2 id="opendw">opendw 的位置</h2>
+<p>opendw 是<strong>动作条件（action-conditioned）</strong>的世界模型，与世界-动作模型（WAM）方向直接相关。它可以作为：</p>
+<ul>
+<li>数据增强的来源（生成反事实轨迹）；</li>
+<li>策略评估的环境（离线评估world model rollout）；</li>
+<li>世界-动作建模研究的起点。</li>
+</ul>
+<p>放在矩阵里看，它补的是「想象」这一环，而 opendm 补的是「执行」这一环。</p>
+<hr />
+<h2 id="_8">直接相关</h2>
+<ul>
+<li><strong>opendm 仓库</strong>：<code>github.com/dexmal/opendm</code> —— 模型本体与权重。</li>
+<li><strong>dexbotic</strong>：<code>github.com/dexmal/dexbotic</code> —— VLA 工具箱，含训练与评测脚本。</li>
+<li><strong>realtime-vla</strong>：<code>github.com/dexmal/realtime-vla</code> —— 30Hz / 480Hz 实时控制方案。</li>
+<li><strong>opendw</strong>：<code>github.com/dexmal/opendw</code> —— 动作条件的开源世界模型。</li>
+</ul>
+<h2 id="vla">理解 VLA 训练与评测的背景</h2>
+<ul>
+<li><strong>VLANeXt Family</strong>（arXiv 2026-10-07）：在统一框架与评测设置下系统消融 VLA 设计空间，提炼 12 条关键发现。<strong>读这篇能理解「为什么统一评测设置如此重要」</strong>——正是 dexbotic-benchmark 想解决的问题。</li>
+<li><strong>ProAct</strong>（arXiv:2610.09170）：动作分词器应当在保真度、可预测性、鲁棒性之间权衡，真机增益 +36.7 个百分点。读这篇能理解动作表示层的隐藏瓶颈。</li>
+<li><strong>OpenWAM</strong>：可组合的世界-动作模型框架，与 opendw 同属世界-动作建模方向，可对照阅读。</li>
+</ul>
+<h2 id="_9">建议的阅读顺序</h2>
+<ol>
+<li>先通读 dexbotic 的 README，理解工具箱支持哪些策略与数据格式；</li>
+<li>读 VLANeXt，理解 VLA 设计空间中哪些选择真正重要——这决定了你微调时该动哪里；</li>
+<li>读 ProAct，检查自己的动作表示层是否存在同类问题；</li>
+<li>最后回到 realtime-vla，把「训练出来的模型怎么以正确频率上真机」这条路走通。</li>
+</ol>
+<p>这套顺序对应的是「先有可比的设置，再知道改什么，最后能落地」的完整闭环。</p>
+<hr />
+<h2 id="_10">选型：先决定你要哪一块</h2>
+<p>不要一上来就 clone 全部五个仓库。按目标选：</p>
+<table>
+<thead>
+<tr>
+<th>你的目标</th>
+<th>从哪个仓库开始</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>想要一个开放世界 VLA 底座做微调</td>
+<td><strong>opendm</strong></td>
+</tr>
+<tr>
+<td>想在同一套设置下训/评多个 VLA</td>
+<td><strong>dexbotic</strong> + <strong>dexbotic-benchmark</strong></td>
+</tr>
+<tr>
+<td>想把 VLA 跑上真机并达到实时</td>
+<td><strong>realtime-vla</strong></td>
+</tr>
+<tr>
+<td>想研究世界-动作建模</td>
+<td><strong>opendw</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="opendm">典型路径：微调 opendm</h2>
+<pre><code class="language-bash"># 1. 取工具箱（训练管线在 dexbotic 里）
+git clone https://github.com/dexmal/dexbotic
+cd dexbotic &amp;&amp; pip install -e .
+
+# 2. 取模型权重（opendm）
+git clone https://github.com/dexmal/opendm
+
+# 3. 准备自己的数据并转成工具箱要求的格式
+python tools/convert.py --input /path/to/your/demo --output data/mydemo
+
+# 4. 微调（具体配置文件名以仓库为准）
+python train.py --config configs/opendm_finetune.py --data data/mydemo
+</code></pre>
+<p>具体脚本名请以仓库当前 README 为准——这类工程仓库的入口脚本迭代很快，照抄旧教程容易踩空。</p>
+<h2 id="_11">典型路径：实时部署</h2>
+<pre><code class="language-bash">git clone https://github.com/dexmal/realtime-vla
+cd realtime-vla &amp;&amp; pip install -r requirements.txt
+# 按 README 接入你的机器人控制接口，注意对齐两个频率：
+#   视觉输入 30Hz / 轨迹输出 480Hz
+</code></pre>
+<h2 id="_12">三个容易踩的坑</h2>
+<p><strong>坑一：数据格式</strong>。
+dexbotic 对数据格式有明确要求，直接喂自己采集的数据通常会报错。先用小样本跑通 <code>convert.py</code>，确认字段名与时序对齐后再全量转换。</p>
+<p><strong>坑二：评测设置</strong>。
+若要做方法对比，务必用 <code>dexbotic-benchmark</code> 的默认设置，并把随机种子固定。自己改设置之后的数字无法与公开结果比较。</p>
+<p><strong>坑三：实时性的真机校验</strong>。
+<code>realtime-vla</code> 标称 30Hz / 480Hz 是在特定硬件（README 提到 4090）上测得的。换硬件后应先实测端到端时延，再判断能否闭环，不要假定标称值可迁移。</p>
+<h2 id="_13">验证清单</h2>
+<p>微调完成后，按顺序检查：</p>
+<ol>
+<li>在仿真基准上跑一次，确认没有跑偏（sanity check）；</li>
+<li>用 <code>dexbotic-benchmark</code> 的设置跑，确认数字可比；</li>
+<li>真机上先跑<strong>降速版</strong>（降低速度限制），确认安全后再提到工作速度；</li>
+<li>记录端到端时延分布，而不只是平均时延——<strong>长尾时延</strong>才是真机事故的来源。</li>
+</ol>
+<hr />
+<h2 id="_14">公开可得的信息</h2>
+<p>截至 2026 年 10 月，可从仓库元数据确认的客观信息：</p>
+<table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>星数</th>
+<th>Fork</th>
+<th>许可</th>
+<th>最近更新</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>opendm</td>
+<td>2.2k</td>
+<td>184</td>
+<td>Apache-2.0</td>
+<td>2026-10-05</td>
+</tr>
+<tr>
+<td>dexbotic</td>
+<td>3k</td>
+<td>279</td>
+<td>MIT</td>
+<td>2026-09-16</td>
+</tr>
+<tr>
+<td>realtime-vla</td>
+<td>624</td>
+<td>44</td>
+<td>MIT</td>
+<td>2026-09-30</td>
+</tr>
+<tr>
+<td>opendw</td>
+<td>976</td>
+<td>56</td>
+<td>Apache-2.0</td>
+<td>2026-07-09</td>
+</tr>
+</tbody>
+</table>
+<p>社区活跃度（星数、fork 数）反映的是<strong>采纳度</strong>，不是模型能力。这一点必须区分清楚。</p>
+<h2 id="_15">关于能力指标</h2>
+<p>opendm 的模型能力指标请以仓库 README 与官方技术报告为准。在引用时需要注意：</p>
+<ul>
+<li><strong>不同基准之间不可比</strong>：LIBERO 已接近饱和（多方法 95%+），在这类基准上的高分主要说明「没有明显短板」，不能作为能力上限的证据；</li>
+<li><strong>真机数字才有部署含义</strong>：仿真数字与真机成功率之间常有 20—40 个百分点的落差；</li>
+<li><strong>看评测设置是否统一</strong>：若对比基线不是在同一套设置下跑的，结论不可信。</li>
+</ul>
+<h2 id="_16">矩阵的工程指标（更值得关注）</h2>
+<p>相比模型分数，这套矩阵的<strong>工程指标</strong>反而是它真正的卖点：</p>
+<ul>
+<li><strong>实时性</strong>：realtime-vla 的 30Hz 视觉 / 480Hz 轨迹，这是能否上真机的硬门槛；</li>
+<li><strong>可对比性</strong>：dexbotic-benchmark 提供的统一设置，解决的是领域内「结果不可比」的老问题；</li>
+<li><strong>许可友好</strong>：opendm 与 opendw 是 Apache-2.0，dexbotic 与 realtime-vla 是 MIT，均可商用。</li>
+</ul>
+<h2 id="_17">使用建议</h2>
+<p>把它当作<strong>工程底座</strong>而非<strong>SOTA 模型</strong>来评估。如果你已经有自己的数据与算力，这套矩阵的价值在于省去从零搭训练与部署管线的时间；如果你期望它直接给出最强能力，可能会失望——这一点对任何开源 VLA 都成立。</p>
+<hr />
+<h2 id="vla_1">与主流开源 VLA 底座的对比</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>许可</th>
+<th>突出点</th>
+<th>相对劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>openpi</strong>（Physical Intelligence）</td>
+<td>Apache-2.0</td>
+<td>π 系列官方实现、社区生态成熟</td>
+<td>与 PI 自家模型绑定较紧</td>
+</tr>
+<tr>
+<td><strong>openvla</strong></td>
+<td>Apache-2.0</td>
+<td>早期开放 VLA 标杆、结构清晰</td>
+<td>能力已落后一代</td>
+</tr>
+<tr>
+<td><strong>LingBot-VLA</strong>（蚂蚁灵波）</td>
+<td>Apache-2.0</td>
+<td>2 万小时真机数据、跨 20 种构型</td>
+<td>规模大，微调成本高</td>
+</tr>
+<tr>
+<td><strong>opendm</strong>（Dexmal）</td>
+<td>Apache-2.0</td>
+<td>开放世界定位 + 完整工具链矩阵</td>
+<td>单模型能力非 SOTA</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_18">关键差异：有没有「周边配套」</h2>
+<p>这张表里最实质的区别不是模型本身，而是<strong>周边配套的完整度</strong>：</p>
+<ul>
+<li>openpi / openvla 提供的是<strong>模型 + 最小推理代码</strong>；</li>
+<li>LingBot-VLA 提供的是<strong>模型 + 数据规模</strong>；</li>
+<li><strong>opendm 提供的是模型 + 训练工具箱 + 实时部署 + 世界模型 + 对比基准</strong>。</li>
+</ul>
+<p>对研究者，配套意味着可复现；对工程团队，配套意味着可落地。这两类价值都比「分数高几个点」更持久。</p>
+<h2 id="isaac-lab-arena-agilenvidia">与 Isaac Lab-Arena / AGILE（NVIDIA）的关系</h2>
+<p>NVIDIA 的两个开源项目偏<strong>仿真评测与训练基础设施</strong>（大规模并行评测、人形全身控制的 teacher-student 蒸馏）。Dexmal 这套偏<strong>模型与部署管线</strong>。</p>
+<p>两者互补：可以在 Isaac 生态里做仿真训练与大规模评测，在 dexbotic / realtime-vla 里做真机部署。工具链选型时不必二选一。</p>
+<h2 id="_19">选型决策树</h2>
+<pre><code>需要最强单模型能力？
+├─ 是 → 看 LingBot-VLA / 各家最新权重，接受较大的微调成本
+└─ 否 → 需要完整工程管线吗？
+        ├─ 是 → opendm + dexbotic + realtime-vla（本矩阵）
+        └─ 否 → 只要一个能跑的基线 → openvla / openpi
+</code></pre>
+<h2 id="_20">一句话判断</h2>
+<p>如果你的痛点是「有数据、有本体，但缺一条从训练到实时部署的通路」，这套矩阵是当前开源选项里配套最完整的之一；如果你的痛点是「模型不够强」，那应该去找更大的权重，而不是找更好的工具箱。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

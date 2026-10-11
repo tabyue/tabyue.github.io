@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HomeBody：会自己探索、记住场景并动手干活的人形机器人智能体（斯坦福 TML × Caltech） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">HomeBody：会自己探索、记住场景并动手干活的人形机器人智能体（斯坦福 TML × Caltech） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="homebody-tml-caltech">HomeBody：会自己探索、记住场景并动手干活的人形机器人智能体（斯坦福 TML × Caltech）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Stanford-TML/homebody">https://github.com/Stanford-TML/homebody</a>  </p>
+<p><strong>Stars</strong>: 410 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-11  </p>
+<p><strong>组织</strong>: Stanford TML  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-11</p>
+</blockquote>
+<hr />
+<h2 id="_2">它想解决什么问题</h2>
+<p>长时程家务任务（「把咖啡袋放到岛台上，再把用完的纸盒扔掉」）对人形机器人的要求，和实验室里的取放任务完全不同：</p>
+<ol>
+<li><strong>任务不是一次性的</strong>——要连续做对好几件事；</li>
+<li><strong>环境不完全已知</strong>——得先看看厨房里有什么、东西在哪；</li>
+<li><strong>需要记住</strong>——第二次来的时候应该知道垃圾桶在哪个角落。</li>
+</ol>
+<p>HomeBody 的定位就是这样一个<strong>会自己探索、记住场景并动手干活</strong>的智能体，而不是执行预编排脚本的执行器。</p>
+<h2 id="_3">三阶段发布路线</h2>
+<p>仓库 README 给出了明确的时间表，这个做法值得称赞——它让使用者知道现在能做什么、接下来能拿什么：</p>
+<table>
+<thead>
+<tr>
+<th>目标日期</th>
+<th>内容</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-10-05</td>
+<td><strong>SIM</strong>：含导航与取放的仿真环境</td>
+<td>已发布</td>
+</tr>
+<tr>
+<td>2026-10-12</td>
+<td><strong>REAL2SIM</strong>：探索与场景重建管线</td>
+<td>计划中</td>
+</tr>
+<tr>
+<td>2026-10-19</td>
+<td><strong>REAL</strong>：真机部署代码与搭建说明</td>
+<td>计划中</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sim">SIM 阶段已经能玩什么</h2>
+<p>在 MuJoCo 里的一个 <strong>real2sim 厨房</strong>场景中，驱动 Unitree G1 一次一个技能地完成任务：</p>
+<ul>
+<li>决策依据：<strong>机器人的相机画面 + 场景地图 + 对场景的记忆</strong>；</li>
+<li>物理完整性：<strong>行走策略、手臂、Dex3 灵巧手与每一个物体</strong>都用完整物理模拟；</li>
+<li>场景来源：复现了 SRC Kitchen 中的长时程任务，即真实厨房被数字化后放进仿真。</li>
+</ul>
+<h2 id="_4">交互方式</h2>
+<p>启动后打开 <code>http://127.0.0.1:8080</code>，输入任务并点「Start task」即可。也可以用无头模式跑单条任务，或用脚本化序列做管线自检（不需要模型）。</p>
+<h2 id="_5">为什么值得关注</h2>
+<p>具身智能体（embodied agent）方向的开源代码长期稀缺：多数仓库要么只放模型权重，要么只放单一技能的策略。HomeBody 放的是<strong>完整的智能体闭环</strong>——感知、记忆、决策、执行、评估、回放，而且提供了可复现的仿真环境。对想研究「长时程 + 记忆」的团队，这是一个可以直接开工的底座。</p>
+<hr />
+<h2 id="_6">系统分层</h2>
+<pre><code>┌──────────────────────────────────────────────────────────┐
+│  任务输入（自然语言）                                     │
+│  '把咖啡袋放到岛台上，再把用完的纸盒扔掉'                 │
+└───────────────────────┬──────────────────────────────────┘
+                        ▼
+┌──────────────────────────────────────────────────────────┐
+│  决策核心（可替换：Astra / Opus / -api 系列模型）         │
+│  · 读入：当前相机画面、场景地图、场景记忆                 │
+│  · 输出：下一个技能（skill）                              │
+└───────────────────────┬──────────────────────────────────┘
+                        ▼
+┌──────────────────────────────────────────────────────────┐
+│  技能层（一次一个技能）                                   │
+│  · 导航到某处  · 抓取  · 放置  · 丢弃                     │
+└───────────────────────┬──────────────────────────────────┘
+                        ▼
+┌──────────────────────────────────────────────────────────┐
+│  执行层（MuJoCo 全物理）                                  │
+│  · 行走策略（无 GPU 时自动回退 CPU）                      │
+│  · 手臂 + Dex3 灵巧手                                     │
+│  · 所有物体带完整物理                                     │
+└───────────────────────┬──────────────────────────────────┘
+                        ▼
+┌──────────────────────────────────────────────────────────┐
+│  记忆与评估                                               │
+│  · 场景记忆（物体位置、已探索区域）                       │
+│  · timeline / score_session / compose_cockpit            │
+└──────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="_7">记忆层为什么是核心</h2>
+<p>长时程任务的失败往往不是单个动作做错，而是<strong>做到一半忘了前面</strong>。具体表现为：</p>
+<ul>
+<li>已经确认过垃圾桶位置，第二轮又重新找一遍；</li>
+<li>物体被移动后，模型仍按旧位置规划；</li>
+<li>任务后半段忘了最初的目标状态。</li>
+</ul>
+<p>HomeBody 把「对场景的记忆」显式列为决策输入之一，就是为了处理这类问题。这与 ROMA 的感知链、以及 VLA 长时程记忆方向的工作是同一个问题的不同侧面。</p>
+<h2 id="_8">决策核心可替换的设计</h2>
+<p>仓库支持多家模型（Astra / Opus / 以及通过 API key 接入的 <code>-api</code> 系列）。这个设计有两层好处：</p>
+<ol>
+<li><strong>不被单一模型绑定</strong>：可以对比不同模型在同一仿真任务上的规划质量；</li>
+<li><strong>可以跑无模型基线</strong>：<code>tools/check_manipulation.py</code> 提供脚本化序列，用来验证仿真与执行管线本身没问题——这在调试时极其有用，能把「模型决策错误」和「执行管线错误」区分开。</li>
+</ol>
+<h2 id="_9">评估与回放工具链</h2>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tools/timeline.py</code></td>
+<td>逐步展示每一步的决策与结果</td>
+</tr>
+<tr>
+<td><code>tools/score_session.py</code></td>
+<td>判断每个物体是否最终归位</td>
+</tr>
+<tr>
+<td><code>tools/compose_cockpit.py</code></td>
+<td>生成回放视频 <code>cockpit.mp4</code></td>
+</tr>
+</tbody>
+</table>
+<p>这三个工具组合起来解决了一个老大难问题：<strong>长时程任务的成功率怎么报</strong>。只报「任务完成/未完成」没有诊断价值；逐技能打分 + 逐步回放才能定位是哪一步断的。</p>
+<hr />
+<h2 id="_10">直接相关</h2>
+<ul>
+<li><strong>HomeBody 项目页与技术报告</strong>：<code>github.com/Stanford-TML/homebody</code>，README 与 <code>docs/</code> 目录。</li>
+<li><strong>Stanford TML 相关前期工作</strong>：仓库由 Stanford University 与 Caltech 联合署名（† Equal advising），可沿作者线索追溯其在人形控制与场景理解上的前期论文。</li>
+</ul>
+<h2 id="_11">理解这个系统的背景读物</h2>
+<p><strong>长时程与记忆方向</strong></p>
+<ul>
+<li>MemoryVLA（<code>shihao1895/MemoryVLA</code>）——把记忆机制显式引入 VLA，与 HomeBody 的场景记忆是同一问题的不同实现层。</li>
+<li>EvoMem-VLA（站内论文）——状态演化记忆用于长时程任务。</li>
+<li>Long-WAM（站内论文）——延长视觉上下文到 19 秒，叠杯成功率从 63.3% 提升到 78.7%，说明<strong>上下文长度本身就是长时程能力的一种实现方式</strong>。</li>
+</ul>
+<p><strong>分层智能体方向</strong></p>
+<ul>
+<li>Harness VLA（清华 × 正行创新 × 无问芯穹）——把冻结的 VLA 封装为 <code>VLA_ACT</code> primitive，由 Agentic Planner 组织解析式 primitive 与它，是「大模型组织专家模型」的代表。</li>
+<li>RPent（<code>RLinf/RPent</code>，清华 × 无问芯穹）——具身智能体基础设施，端到端任务加速 7 倍。</li>
+<li>SuperNav——保持预训练 MLLM 的通用性，把运动交给导航技能与物理交互工具，已在真实四足上部署。</li>
+</ul>
+<h2 id="_12">建议的阅读路径</h2>
+<ol>
+<li>先读 HomeBody 的 README 与 <code>docs/</code>，理解三阶段发布边界与当前可用范围；</li>
+<li>读 MemoryVLA 或 Long-WAM，理解「记忆 / 长上下文」在 VLA 层怎么做；</li>
+<li>读 Harness VLA，理解「上层规划 + 下层专家执行」的分层范式；</li>
+<li>回到 HomeBody 的 <code>tools/timeline.py</code> 输出，对照理解一次长时程运行里决策链是如何展开的。</li>
+</ol>
+<p>这条路径能把「记忆」「规划」「执行」三层各自的现状串起来，比单独读任何一篇更清楚。</p>
+<hr />
+<h2 id="_13">安装</h2>
+<pre><code class="language-bash"># 1. 取代码并建立 Python 3.11+ 环境
+git clone https://github.com/Stanford-TML/homebody
+cd homebody
+python -m venv .venv &amp;&amp; source .venv/bin/activate
+
+# 2. 安装（-e 不能省，资产文件从当前目录读取）
+pip install -e .
+
+# 3. 接一个模型（三选一）
+npm install -g @openai/codex &amp;&amp; codex login      # --model astra
+npm install -g @anthropic-ai/claude-code &amp;&amp; claude   # --model opus
+export OPENAI_API_KEY=...                        # 或 ANTHROPIC_API_KEY
+
+# 4. 自检（check 不启动任何进程；provider-check 会发一个短请求）
+homebody check
+homebody provider-check --model astra
+</code></pre>
+<p><strong>无 GPU 或 Mac 用户</strong>：GPU 是可选的。缺 CUDA 时行走策略自动跑 CPU；渲染后端会自动选择（Linux 有 GPU 用 <code>egl</code>、无 GPU 用 <code>osmesa</code>、macOS 用 <code>cgl</code>）。Linux 无 GPU 需额外：</p>
+<pre><code class="language-bash">sudo apt install libosmesa6
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+</code></pre>
+<h2 id="_14">跑一个任务</h2>
+<pre><code class="language-bash"># 交互式：打开 http://127.0.0.1:8080，输入任务后点 Start task
+homebody --env src_kitchen --model astra
+
+# 无头模式跑单条任务
+homebody --headless --env src_kitchen --model opus \
+  --task &quot;Put the coffee bags on the island and throw away the used cartons.&quot;
+
+# 无模型的脚本化序列（用于验证执行管线，四个物体一次移动）
+python tools/check_manipulation.py --sequence configs/continuous_four.json --no-visuals
+</code></pre>
+<p>控制台默认无登录，<strong>除非网络可信，否则保持 <code>--host</code> 在 localhost</strong>。</p>
+<h2 id="_15">跑完之后看什么</h2>
+<pre><code class="language-bash">run=$(ls -d runs/session-* | tail -1)      # 最新一次运行
+python tools/timeline.py $run              # 逐步决策与结果
+python tools/score_session.py $run         # 物体是否都归位
+python tools/compose_cockpit.py $run       # 生成回放视频 cockpit.mp4
+</code></pre>
+<h2 id="_16">建议的上手顺序</h2>
+<ol>
+<li>先跑 <code>check_manipulation.py</code>，确认仿真与执行管线正常（不依赖模型）；</li>
+<li>再用 <code>--model astra</code> 跑一个短任务，观察 timeline；</li>
+<li>最后挑战多物体长时程任务，用 <code>score_session</code> 逐物体打分。</li>
+</ol>
+<p>跳过第 1 步直接上模型是常见的调试陷阱——分不清是模型错了还是管线错了。</p>
+<hr />
+<h2 id="_17">已公布的信息</h2>
+<p>仓库 README 给出了可直接尝试的任务示例，并说明这些任务在两个模型上都成功（每个模型跑两次，用 <code>configs/waves/fun.json</code> 打分）：</p>
+<ul>
+<li>The juice is for whoever sits at the round table nearest the recycling bin. Take it to them.</li>
+<li>Show the red and white carton to someone at the island, then put it back where it was.</li>
+<li>If the orange juice is next to the toaster, move it to the island.</li>
+</ul>
+<h2 id="_18">必须说明的口径问题</h2>
+<p><strong>这些是「可尝试的示例」，不是基准测试结果</strong>。README 的措辞是「每个任务在两个模型上都成功」，没有给出：</p>
+<ul>
+<li>任务总数与成功率分布；</li>
+<li>与基线方法的横向对比；</li>
+<li>多次运行的方差。</li>
+</ul>
+<p>因此不应把它们当作性能指标引用。真实的能力边界要等 REAL2SIM（10/12）与 REAL（10/19）阶段放出后，才有真机数据可谈。</p>
+<h2 id="_19">应该自己测什么</h2>
+<p>如果要把它当作研究底座，建议自建一套可复现的度量：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>定义</th>
+<th>为什么重要</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>技能成功率</td>
+<td>单个技能（导航/抓取/放置）的成功比例</td>
+<td>定位是执行问题还是规划问题</td>
+</tr>
+<tr>
+<td>任务完成率</td>
+<td>完整任务达成比例</td>
+<td>端到端能力</td>
+</tr>
+<tr>
+<td><strong>首次尝试后的重规划次数</strong></td>
+<td>一次任务中重新规划的次数</td>
+<td>反映记忆与状态跟踪质量</td>
+</tr>
+<tr>
+<td><strong>重复探索率</strong></td>
+<td>已探索区域被再次探索的比例</td>
+<td>直接度量记忆是否有效</td>
+</tr>
+</tbody>
+</table>
+<p>后两项是长时程智能体的关键指标，也是 HomeBody 声称要解决的核心问题——值得自己动手量化，而不是等官方数字。</p>
+<h2 id="_20">算力需求</h2>
+<ul>
+<li><strong>有 GPU</strong>：正常路径；</li>
+<li><strong>无 GPU / Mac</strong>：行走策略可跑 CPU，但吞吐显著下降，长时程任务的墙钟时间会很长。</li>
+</ul>
+<p>做批量实验建议至少准备一张消费级 GPU；只做管线验证则 CPU 足够。</p>
+<hr />
+<h2 id="_21">与同类开源项目的位置差异</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>定位</th>
+<th>与 HomeBody 的关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>openpi</strong>（Physical Intelligence）</td>
+<td>VLA 策略与权重</td>
+<td>提供「单个技能怎么做」，不解决「先做哪个」</td>
+</tr>
+<tr>
+<td><strong>lerobot</strong>（HuggingFace）</td>
+<td>机器人学习数据集与策略库</td>
+<td>偏数据与模型层，缺少智能体闭环</td>
+</tr>
+<tr>
+<td><strong>Isaac Lab-Arena</strong>（NVIDIA）</td>
+<td>可组合的大规模仿真评测</td>
+<td>偏评测基础设施，偏并行吞吐</td>
+</tr>
+<tr>
+<td><strong>HomeBody</strong></td>
+<td><strong>人形智能体闭环</strong>（探索 + 记忆 + 长时程决策）</td>
+<td>关注规划与记忆，可复用上述项目的技能层</td>
+</tr>
+</tbody>
+</table>
+<p>一句话概括：<strong>别人做的是「技能」，HomeBody 做的是「把技能组织起来完成一件长事」</strong>。</p>
+<h2 id="vla">与 VLA 路线的关系</h2>
+<p>互补而非竞争。VLA 解决「看到这个画面、听到这个指令，手该怎么动」；HomeBody 解决「厨房里有五件事要做，先做哪件、做完记什么、下一步去哪」。</p>
+<p>一个合理的组合方式是：用 VLA 作为 HomeBody 技能层的实现（抓取、放置），用 HomeBody 的决策与记忆层做上层组织。这与 Harness VLA、RPent 等「大模型 + VLA 分层」的思路一致——<strong>通用模型负责理解与规划，专家模型负责高精度执行</strong>。</p>
+<h2 id="real2sim">与 real2sim 路线的关系</h2>
+<p>HomeBody 的仿真场景是 <strong>real2sim 厨房</strong>：真实厨房被数字化后放进 MuJoCo，用于复现 SRC Kitchen 的长时程任务。</p>
+<p>这条路线与纯合成场景（随机摆放的物体）相比，优势在于<strong>任务分布真实</strong>——物体的种类、摆放方式、空间关系都来自真实厨房。代价是场景固定，泛化到新环境需要重新做一次重建，这正是 REAL2SIM 阶段要提供的能力（探索与场景重建管线）。</p>
+<h2 id="_22">选择建议</h2>
+<ul>
+<li>想研究<strong>长时程规划与记忆</strong> → HomeBody 是合适的起点；</li>
+<li>想研究<strong>单个操作技能的精度</strong> → 应看 openpi / lerobot / dexbotic；</li>
+<li>想做<strong>大规模并行评测</strong> → Isaac Lab-Arena 更合适；</li>
+<li>想搭<strong>生产级数据管线</strong> → AWS Physical AI Toolchain 更对口。</li>
+</ul>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

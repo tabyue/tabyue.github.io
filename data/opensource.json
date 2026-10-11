@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-10T08:35",
+ "lastUpdated": "2026-10-11T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,129 @@
   }
  ],
  "projects": [
+  {
+   "id": "os149",
+   "name": "HomeBody：会自己探索、记住场景并动手干活的人形机器人智能体（斯坦福 TML × Caltech）",
+   "github": "https://github.com/Stanford-TML/homebody",
+   "organization": "Stanford TML",
+   "org": "Stanford TML",
+   "category": "ai-agent-framework",
+   "description": "**HomeBody** 是一个驾驶 Unitree G1 人形机器人完成长时程家务任务的智能体系统：机器人**从自己的相机、地图和对场景的记忆**出发，一次一个技能地推进，而不是执行一条预先编排的脚本。仓库按 **SIM → REAL2SIM → REAL** 三阶段分批开源：10 月 5 日已放出仿真环境（导航 + 取放，MuJoCo 全物理模拟，行走策略、手臂、Dex3 灵巧手与所有物体都带完整物理），10 月 12 日计划放出探索与场景重建管线，10 月 19 日计划放出真机部署代码。仿真场景是一个 **real2sim 的厨房**，复现了 SRC Kitchen 中的长时程任务。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "SIM 阶段已开源：MuJoCo 中的 real2sim 厨房，导航 + 取放，G1 全身含 Dex3 灵巧手全物理模拟",
+    "任务由自然语言下达，智能体依据相机画面、场景地图与记忆逐步决策，而非播放固定脚本",
+    "分阶段发布路线明确：SIM（10/5）→ REAL2SIM 探索与重建（10/12）→ REAL 真机部署（10/19）",
+    "自带评估与回放工具：timeline 逐步决策回放、score_session 物体归位打分、compose_cockpit 生成回放视频",
+    "支持 Astra / Opus 等外部模型作为决策核心，也支持无模型的脚本化序列用于管线自检",
+    "可在 macOS（Apple Silicon）与 Linux 上运行，无 GPU 时行走策略自动回退 CPU"
+   ],
+   "stars": "410",
+   "tags": [
+    "HomeBody",
+    "人形智能体",
+    "Unitree G1",
+    "MuJoCo",
+    "real2sim",
+    "场景记忆",
+    "长时程任务",
+    "斯坦福"
+   ],
+   "addedDate": "2026-10-11"
+  },
+  {
+   "id": "os150",
+   "name": "opendm：面向通用具身智能的开放世界基础模型（原力灵机 Dexmal）",
+   "github": "https://github.com/dexmal/opendm",
+   "organization": "dexmal（原力灵机）",
+   "org": "dexmal",
+   "category": "ai-model",
+   "description": "**opendm** 是原力灵机（Dexmal）开源的**开放世界具身基础模型**，定位为通用具身智能（General-Purpose Embodied Intelligence）的 VLA 底座。Dexmal 同时维护了一整套围绕 VLA 工程化的开源仓库矩阵：**dexbotic**（VLA 工具箱，3k 星，支持 pi0 / memoryvla / openvla-oft 等多种策略与仿真、真机训练）、**realtime-vla**（把 VLA 跑在 30Hz 帧率与 480Hz 轨迹频率上）、**opendw**（动作条件世界模型）。opendm 是这个矩阵中面向「开放世界」场景的模型本体，采用 Apache-2.0 许可。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "面向开放世界（Open-World）的具身基础模型，不局限于预定义物体与任务集合",
+    "Apache-2.0 许可，可商用；与同门 dexbotic 工具箱共用训练与评测管线",
+    "配套 realtime-vla：30Hz 视觉帧率 + 480Hz 轨迹频率的实时控制方案（MIT 许可）",
+    "配套 opendw：动作条件（action-conditioned）的开源世界模型，可用于世界-动作建模研究",
+    "提供 dexbotic-benchmark 基准仓库，便于在同一套设置下横向对比不同 VLA 策略"
+   ],
+   "stars": "2200",
+   "tags": [
+    "opendm",
+    "Dexmal",
+    "原力灵机",
+    "开放世界",
+    "VLA",
+    "具身基础模型",
+    "dexbotic",
+    "Apache-2.0"
+   ],
+   "addedDate": "2026-10-11"
+  },
+  {
+   "id": "os151",
+   "name": "ROMA：以物体为中心的真实世界多模态主动感知系统（人大高瓴 GeWu-Lab × 智源研究院）",
+   "github": "https://github.com/GeWu-Lab/ROMA",
+   "organization": "人大高瓴 GeWu-Lab / 智源研究院 / 燧行 AresoX",
+   "org": "GeWu-Lab",
+   "category": "perception",
+   "description": "**ROMA（Real-World Object-Centric Multi-Sensory Active Perception）** 把视觉、听觉、触觉、力觉整合进「推理—交互—反馈」闭环：模型判断**缺什么证据**，决定对**哪个物体**做**哪种交互**、用**哪个模态**观察，由物理接口执行并回收多模态反馈。配套资源齐全——**ROMI-2K** 数据集（近 2000 个真实物体、6 类原子交互、同步传感反馈，托管在 HuggingFace）与 **ROMA Bench**（单属性 / 长链多属性 / 意图驱动三类评测）。它面向的是下一代**主动具身 Agent**：在证据不足时主动与环境交互来补全物理理解，而不是被动地融合已有传感输入。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "主动感知闭环：判断证据不足 → 选择目标物体/交互/模态 → 执行并回收反馈 → 再推理",
+    "ROMI-2K 数据集：近 2000 个真实物体、6 类原子交互、视觉/听觉/触觉/力觉同步采集",
+    "ROMA Bench：覆盖单属性、长链多属性与意图驱动三类主动感知评测",
+    "两阶段训练框架：先跨模态对齐，再注入证据充分性评估与交互选择能力",
+    "数据托管在 HuggingFace（GeWuLab/ROMA），便于直接取用",
+    "与 VLA 正交：可串联在策略之前，先把物体物理属性问清楚再执行操作"
+   ],
+   "stars": "260",
+   "tags": [
+    "ROMA",
+    "主动感知",
+    "多模态",
+    "触觉",
+    "力觉",
+    "ROMI-2K",
+    "GeWu-Lab",
+    "智源研究院"
+   ],
+   "addedDate": "2026-10-11"
+  },
+  {
+   "id": "os152",
+   "name": "AWS Physical AI Toolchain：Apache-2.0 开源的物理 AI 全链路参考架构（合成数据→训练→仿真→边缘→持续改进）",
+   "github": "https://github.com/aws-samples/sample-the-physical-ai-toolchain-on-aws",
+   "organization": "AWS（aws-samples）",
+   "org": "AWS",
+   "category": "framework",
+   "description": "AWS 于 2026 年 10 月 7—8 日发布的**开源物理 AI 工具链**，是一组「参考架构 + 基础设施即代码 + 部署自动化」的合集，覆盖物理 AI 开发的完整生命周期：**合成数据生成 → 模型训练 → 仿真与验证 → 边缘部署 → 持续改进**（运营数据回流生成新训练数据）。它**硬件中立、任务中立**：团队自带 URDF 机器人描述、遥操作数据与任务定义即可。底层整合 NVIDIA 机器人软件栈（Isaac GR00T / Isaac Sim / Isaac Lab / Cosmos / OSMO，边缘目标为 Jetson 与 RTX），AWS 侧用 SageMaker 训练、EC2 GPU 做仿真、IoT Greengrass 做边缘部署、Bedrock AgentCore 做编排。每个组件是**独立的 Terraform 模块**，可以只取其中一段，也可以整体部署。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "五大支柱：合成数据生成、模型训练、仿真与验证、边缘部署、持续改进（数据飞轮闭环）",
+    "每个组件是独立 Terraform 模块，可分阶段采用，不必整体上线",
+    "硬件与任务中立：自带 URDF、遥操作数据与任务定义即可接入",
+    "统一开放格式：原始数据用 Zarr、标准化为 LeRobot 格式、RL 任务用 Gymnasium、模型导出 ONNX、控制交给 ROS 2",
+    "整合 NVIDIA Isaac GR00T / Isaac Sim / Isaac Lab / Cosmos / OSMO，边缘侧 Jetson 与 RTX",
+    "Strands Agentic Layer：用自然语言表达意图，由 Agent 决定调用哪些组件"
+   ],
+   "stars": "380",
+   "tags": [
+    "AWS",
+    "Physical AI",
+    "工具链",
+    "Terraform",
+    "Isaac GR00T",
+    "LeRobot",
+    "ROS2",
+    "数据飞轮"
+   ],
+   "addedDate": "2026-10-11"
+  },
   {
    "id": "os148",
    "name": "RoboICL：冻结 GPT-6 Astra 的具身上下文学习，不训练任务专用 VLA",
@@ -3207,5 +3330,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 136
+ "totalItems": 140
 }
