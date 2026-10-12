@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeRobot Humanoid（运行时仓库）：MuJoCo 仿真 + 真机 CAN 控制器 + ONNX/Torch 双后端推理 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">LeRobot Humanoid（运行时仓库）：MuJoCo 仿真 + 真机 CAN 控制器 + ONNX/Torch 双后端推理 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="lerobot-humanoidmujoco-can-onnxtorch">LeRobot Humanoid（运行时仓库）：MuJoCo 仿真 + 真机 CAN 控制器 + ONNX/Torch 双后端推理</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/huggingface/lerobot-humanoid-runtime">https://github.com/huggingface/lerobot-humanoid-runtime</a>  </p>
+<p><strong>Stars</strong>: 1900 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-12  </p>
+<p><strong>组织</strong>: Hugging Face  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-12</p>
+</blockquote>
+<hr />
+<h2 id="_2">运行时仓库解决什么问题</h2>
+<p>LeRobot Humanoid Runtime 是 Hugging Face 开源双足人形平台的 <strong>运行时仓库</strong>——把训练好的策略部署到真机的必经环节。</p>
+<p>它存在的理由很实际：<strong>「仿真里能走」到「真机上能走」之间，隔着一整层琐碎但致命的工程细节</strong>。这些细节在论文里通常不写，却是每个做真机的人必须踩一遍的坑。</p>
+<p>具体来说：</p>
+<ul>
+<li>关节零点标定错了 → 机器人站的姿态是歪的，走两步就倒</li>
+<li>IMU 没校准 → 姿态估计有偏，平衡控制器基于错误信息做决策</li>
+<li>关节运动方向搞反 → 一上电就抽搐，可能损坏电机</li>
+<li>仿真控制器与真机控制器接口不一致 → sim2real 时要重写一遍控制代码</li>
+</ul>
+<p>Runtime 仓库把这四件事都做成了标准工具。</p>
+<h2 id="_3">核心组件</h2>
+<h3 id="mujoco">MuJoCo 仿真控制器</h3>
+<p>与真机控制器 <strong>共用接口</strong>。这一点是设计上的关键选择：如果仿真和真机各有一套 API，那么每次算法改动都要改两遍，且两者行为可能不一致。统一接口后，同一份策略代码可以直接在两种后端上跑。</p>
+<h3 id="can-mit">真机控制器（CAN + MIT 协议）</h3>
+<p>基于 <strong>CAN 总线 + MIT 协议</strong>，内置安全机制。</p>
+<p>MIT 协议是 MIT Mini-Cheetah 项目推广的一种电机控制协议，其特点是可以在单个 CAN 帧里同时下发位置、速度、前馈力矩与位置/速度增益：</p>
+<p>$$\tau = k_p(\theta_{des} - \theta) + k_d(\dot\theta_{des} - \dot\theta) + \tau_{ff}$$</p>
+<p>这个式子看起来简单，但它的工程价值在于 <strong>阻抗控制可以在电机侧闭环完成</strong>，主控只需下发期望轨迹与增益，不必以 1 kHz 的频率逐帧算力矩。这对主控算力有限的边缘平台特别重要。</p>
+<p>内置的安全机制通常包括：位置越限保护、速度越限保护、力矩限幅、通信超时处理（超时后电机进入阻尼模式而非保持最后指令）。</p>
+<h3 id="onnx-torch">策略推理运行器（ONNX / Torch 双后端）</h3>
+<p>支持 <strong>ONNX Runtime</strong> 与 <strong>PyTorch</strong> 两种推理后端。</p>
+<p>为什么需要两个？训练时用 PyTorch 方便调试；部署时 ONNX Runtime 通常更快、依赖更少、更容易在算力受限的主控上跑。双后端意味着 <strong>同一个策略文件可以在两种模式下加载</strong>，不必为部署单独做模型转换流程。</p>
+<h3 id="imu">IMU 集成模块</h3>
+<p>双足行走是典型的 <strong>倒立摆</strong> 问题，姿态反馈的精度直接决定能不能站稳。IMU 模块负责：</p>
+<ul>
+<li>原始数据读取与时间戳同步</li>
+<li>静态偏置标定</li>
+<li>与关节编码器数据的融合时序对齐</li>
+</ul>
+<p><strong>时序对齐</strong> 这一项常被忽略：IMU 通常跑在几百 Hz，关节编码器在 1 kHz，相机在 30 Hz。如果不做时间戳对齐，状态估计器会把不同时刻的数据当作同一时刻，引入系统性误差。</p>
+<h3 id="lerobot">LeRobot 集成控制器</h3>
+<p>接入 LeRobot 生态，可直接复用其数据集格式、训练流程与可视化工具。</p>
+<h2 id="_4">工具链清单</h2>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>用途</th>
+<th>不做会怎样</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>电机扫描</td>
+<td>逐个验证电机通信与编码器</td>
+<td>装好才发现某个电机是坏的，要拆</td>
+</tr>
+<tr>
+<td>交互式归零</td>
+<td>标定关节零点</td>
+<td>站姿歪斜，控制律基于错误构型</td>
+</tr>
+<tr>
+<td>IMU 校准</td>
+<td>消除零偏与尺度误差</td>
+<td>姿态估计有偏，平衡控制失效</td>
+</tr>
+<tr>
+<td>关节方向验证</td>
+<td>确认每个关节正方向</td>
+<td>一上电抽搐，可能损坏电机</td>
+</tr>
+<tr>
+<td>数据集生成</td>
+<td>采集与导出标准格式数据</td>
+<td>训练数据格式不兼容生态工具</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_5">运行时分层</h2>
+<pre><code>┌──────────────────────────────────────────────────────────┐
+│  策略层（来自 lerobot-legged-zoo 训练产物）              │
+│  ONNX / Torch 权重                                        │
+└───────────────────────┬──────────────────────────────────┘
+                        ▼
+┌──────────────────────────────────────────────────────────┐
+│  策略推理运行器                                           │
+│  ONNX Runtime / PyTorch 双后端                            │
+└───────────────────────┬──────────────────────────────────┘
+                        ▼
+┌──────────────────────────────────────────────────────────┐
+│  统一控制器接口（sim / real 共用）                        │
+└──────────┬──────────────────────────┬────────────────────┘
+           ▼                          ▼
+┌────────────────────┐    ┌──────────────────────────────┐
+│ MuJoCo 仿真后端    │    │ 真机 CAN 后端（MIT 协议）     │
+│ mj_step 驱动       │    │ 位置/速度/前馈力矩 + 增益     │
+│                    │    │ + 安全机制（越限/超时）       │
+└────────────────────┘    └──────────────┬───────────────┘
+                                         ▼
+                          ┌──────────────────────────────┐
+                          │  传感器同步层                 │
+                          │  IMU + 关节编码器 + 时间戳对齐│
+                          └──────────────────────────────┘
+</code></pre>
+<h2 id="mit">MIT 协议的力矩分解</h2>
+<p>MIT 协议下的电机侧控制律为：</p>
+<p>$$\tau_{cmd} = k_p(\theta_{des}-\theta) + k_d(\dot\theta_{des}-\dot\theta) + \tau_{ff}$$</p>
+<p>三项各有分工：</p>
+<ul>
+<li><strong>$k_p$ 项</strong>——位置跟踪，决定刚度。$k_p$ 太大会震荡，太小会瘫软</li>
+<li><strong>$k_d$ 项</strong>——速度阻尼，决定阻尼比。这一项对抑制震荡至关重要</li>
+<li><strong>$\tau_{ff}$ 项</strong>——前馈力矩。重力补偿、惯性力矩都可以放这里，好处是不依赖反馈误差就能输出正确的静态力矩</li>
+</ul>
+<p><strong>前馈这一项是实践中最容易被忽略、效果也最显著的一项</strong>。没有重力补偿时，控制器必须依靠位置误差来产生支撑力矩，结果是机器人「站得低」——稳态误差始终存在。加上重力前馈后，同样的 $k_p$ 可以让机器人站得更直。</p>
+<h2 id="_6">统一接口的设计价值</h2>
+<p>设控制器接口抽象为两个方法：</p>
+<pre><code class="language-python">class ControllerBackend:
+    def get_state(self) -&gt; RobotState: ...
+    def send_command(self, cmd: JointCommand) -&gt; None: ...
+</code></pre>
+<p>仿真后端与真机后端各自实现，上层策略只见接口。带来的直接收益：</p>
+<ol>
+<li><strong>同一份策略代码</strong>跑仿真与真机，消除「两套代码行为不一致」的问题</li>
+<li><strong>可以在仿真里回放真机日志</strong>——把真机采集的状态序列喂给仿真后端，验证仿真保真度</li>
+<li><strong>切换成本低</strong>——训练在云上 GPU 跑仿真，部署到本体时只换 backend</li>
+</ol>
+<p>第 2 点是 sim2real 调试的关键技巧：如果仿真回放真机轨迹时出现明显偏离，说明仿真器的动力学参数（质量、惯量、摩擦）与真机不符，应优先修正模型而非调策略。</p>
+<h2 id="_7">时序同步的处理</h2>
+<p>不同传感器频率不一致是常态。设：</p>
+<ul>
+<li>关节编码器：$f_j \approx 1000$ Hz</li>
+<li>IMU：$f_i \approx 200\text{—}500$ Hz</li>
+<li>相机：$f_c \approx 30$ Hz</li>
+</ul>
+<p>正确做法是给每个采样打上 <strong>硬件时间戳</strong>，在状态估计时按时间戳插值对齐，而不是简单地取「最近一次读数」。</p>
+<p>简单取最近值的误差量级：若关节延迟 1 ms、机器人关节角速度 5 rad/s，则角度误差 0.005 rad ≈ 0.29°。听起来不大，但在双足平衡的临界状态下，这个量级的误差足以让控制器做出错误的支撑腿判断。</p>
+<hr />
+<h2 id="_8">直接相关资源</h2>
+<ul>
+<li><strong>运行时仓库</strong>：<code>github.com/huggingface/lerobot-humanoid-runtime</code>（Apache-2.0）</li>
+<li><strong>硬件仓库</strong>：<code>github.com/huggingface/lerobot-humanoid-hardware</code></li>
+<li><strong>设计仓库</strong>：<code>github.com/huggingface/lerobot-humanoid-design</code></li>
+<li><strong>训练环境</strong>：<code>github.com/Virgileboat/lerobot-legged-zoo</code>（MJCF + MJLab）</li>
+<li><strong>上层生态</strong>：<code>github.com/huggingface/lerobot</code></li>
+</ul>
+<h2 id="_9">延伸阅读方向</h2>
+<ol>
+<li><strong>MIT Mini-Cheetah 电机控制协议</strong>——理解 $k_p$ / $k_d$ / $\tau_{ff}$ 三元组与 CAN 帧格式</li>
+<li><strong>双足状态估计</strong>——IMU 与关节编码器的融合、零偏在线估计、接触检测</li>
+<li><strong>系统辨识</strong>——如何重新测定自制机器人的惯量与摩擦，使仿真与真机一致</li>
+<li><strong>ONNX 导出与算子兼容</strong>——动态轴处理、算子降级、部署前后数值一致性检查</li>
+<li><strong>实时性保障</strong>——Linux PREEMPT_RT、线程优先级、通信抖动测量</li>
+</ol>
+<h2 id="_10">关联站点内容</h2>
+<ul>
+<li>开源项目 LeRobot Humanoid Hardware（本站 os155）——本仓库的硬件配套</li>
+<li>学习模块「Sim-to-Real」——仿真回放真机日志的保真度诊断方法</li>
+<li>学习模块「机器人动力学」——重力补偿前馈的作用与推导</li>
+<li>开源项目 HomeBody（本站 os149）——另一条 Unitree G1 上的部署路线</li>
+</ul>
+<hr />
+<h2 id="_11">安装</h2>
+<pre><code class="language-bash">git clone https://github.com/huggingface/lerobot-humanoid-runtime.git
+cd lerobot-humanoid-runtime
+pip install -e .
+</code></pre>
+<h2 id="_12">第一步：通电前先扫电机</h2>
+<p><strong>这一必须在装配完成后、第一次通电时执行</strong>，顺序不能颠倒。</p>
+<pre><code class="language-bash"># 逐个扫描电机，确认通信与编码器正常
+lerobot-humanoid-scan --port /dev/ttyUSB0 --verbose
+</code></pre>
+<p>预期输出应列出所有电机的 ID、固件版本、当前位置与温度。若某个电机无响应，先查接线与终端电阻，不要继续。</p>
+<h2 id="_13">第二步：交互式归零</h2>
+<pre><code class="language-bash">lerobot-humanoid-zero --port /dev/ttyUSB0 --interactive
+</code></pre>
+<p>工具会引导你把每个关节摆到零位并记录当前编码器读数。注意要点：</p>
+<ul>
+<li><strong>零位定义在模型资产里</strong>（<code>lerobot-humanoid-model</code> 的 MJCF），摆位时要与之一致</li>
+<li>使用 <strong>关节侧</strong> 编码器读数，而非电机侧</li>
+<li>归零完成后让机器人保持站立姿态，观察是否对称</li>
+</ul>
+<h2 id="_14">第三步：验证关节方向</h2>
+<pre><code class="language-bash">lerobot-humanoid-verify --check-direction
+</code></pre>
+<p>工具会给每个关节下发一个小幅正指令，并要求确认实际转动方向是否与期望一致。若不一致，在配置里翻转该关节的方向符号——<strong>不要改接线</strong>，改配置可逆且安全。</p>
+<h2 id="imu_1">第四步：IMU 校准</h2>
+<pre><code class="language-bash">lerobot-humanoid-imu --calibrate --samples 2000
+</code></pre>
+<p>校准时机器人必须 <strong>静止且水平</strong>。采集足够多样本以估计零偏；若条件允许，做六面校准可同时估计尺度误差与轴间非正交。</p>
+<h2 id="_15">第五步：仿真验证</h2>
+<pre><code class="language-python">'''
+用统一接口在 MuJoCo 中验证策略
+'''
+from lerobot_humanoid_runtime import MuJoCoBackend, load_policy
+
+backend = MuJoCoBackend(model_path=&quot;assets/humanoid/mjcf/scene.xml&quot;)
+policy = load_policy(&quot;ckpt/walk.onnx&quot;, backend=&quot;onnx&quot;)
+
+state = backend.get_state()
+for step in range(1000):
+    cmd = policy(state)
+    backend.send_command(cmd)
+    state = backend.get_state()
+    if state.fallen:
+        print(&quot;跌倒于步&quot;, step); break
+</code></pre>
+<h2 id="_16">第六步：上真机</h2>
+<pre><code class="language-bash"># 先用低增益试运行，确认无异常再逐步提高
+lerobot-humanoid-run --policy ckpt/walk.onnx \
+    --backend real --port /dev/ttyUSB0 \
+    --kp-scale 0.3 --kd-scale 0.5 --max-torque 0.4
+</code></pre>
+<p><strong>务必先用低增益低力矩试运行</strong>。这一步的目的是验证接线与方向正确，不是验证性能。确认一切正常后再逐步提高增益与力矩上限。</p>
+<h2 id="_17">数据集生成</h2>
+<pre><code class="language-bash">lerobot-humanoid-record --task walk_forward --episodes 50 \
+    --output data/walk_v1 --fps 50
+</code></pre>
+<p>产出的数据集直接兼容 LeRobot 格式，可用 <code>lerobot-train</code> 训练。</p>
+<hr />
+<h2 id="_18">该仓库的性能相关要点</h2>
+<p>Runtime 仓库本身不追求「算法性能」，它追求的是 <strong>部署可靠性</strong>。但有几个工程指标直接影响最终效果：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>控制频率</td>
+<td>双足平衡通常要求 ≥ 200 Hz，理想 500—1000 Hz</td>
+</tr>
+<tr>
+<td>关节延迟</td>
+<td>指令下发到执行的延迟，&gt; 5 ms 会显著恶化平衡</td>
+</tr>
+<tr>
+<td>IMU 与编码器对齐误差</td>
+<td>系统性姿态误差，影响支撑腿判断</td>
+</tr>
+<tr>
+<td>推理延迟</td>
+<td>策略前向耗时，需远小于控制周期</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_19">双后端推理的取舍</h2>
+<table>
+<thead>
+<tr>
+<th>后端</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ONNX Runtime</strong></td>
+<td>部署快、依赖少、边缘友好</td>
+<td>导出需处理动态轴与算子兼容</td>
+</tr>
+<tr>
+<td><strong>PyTorch</strong></td>
+<td>调试方便、与训练完全一致</td>
+<td>依赖重、启动慢、内存占用高</td>
+</tr>
+</tbody>
+</table>
+<p>实践建议：<strong>训练与调试用 PyTorch，最终部署用 ONNX</strong>，并在切换后做一次数值一致性检查（同一输入下两者输出的最大差异应在 1e-4 量级）。</p>
+<h2 id="_20">安全机制的重要性</h2>
+<p>真机控制器内置的安全机制不是可选项。对双足机器人而言，跌倒时的冲击力矩可以是额定值的数倍。关键保护包括：</p>
+<ul>
+<li><strong>位置越限</strong>——防止关节转到机械极限</li>
+<li><strong>速度越限</strong>——防止失控飞车</li>
+<li><strong>力矩限幅</strong>——这是最后一道防线</li>
+<li><strong>通信超时</strong>——主机死机时电机应进入阻尼模式，而非保持最后指令继续转</li>
+</ul>
+<p>最后一项常被忽略但极其重要：如果通信中断后电机保持最后指令，机器人会以最大力矩持续输出直到断电或损毁。正确行为是 <strong>超时进入阻尼/零力矩模式</strong>，让机器人软性倒下。</p>
+<h2 id="_21">与仿真性能的关系</h2>
+<p>Runtime 的统一接口设计还带来一个额外收益：<strong>可以量化仿真保真度</strong>。</p>
+<p>方法是在真机上采集一段轨迹（状态序列 + 指令序列），然后在 MuJoCo 中回放相同指令序列，比较仿真轨迹与真机轨迹的偏离。偏离量直接反映仿真模型的动力学误差，可用于指导系统辨识（重新测定质量、惯量、摩擦）。</p>
+<p>这是 sim2real 中最实用的一类诊断，而统一接口让它变得成本极低。</p>
+<hr />
+<h2 id="_22">与其他机器人运行时/中间件</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>定位</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LeRobot Humanoid Runtime</strong></td>
+<td>LeRobot Humanoid 专用运行时</td>
+<td>仿真/真机统一接口；ONNX/Torch 双后端；工具链齐全</td>
+</tr>
+<tr>
+<td><strong>ROS 2 Control</strong></td>
+<td>通用机器人控制框架</td>
+<td>生态最大；抽象层次高；配置复杂</td>
+</tr>
+<tr>
+<td><strong>LeRobot（上层）</strong></td>
+<td>模型/数据集/策略生态</td>
+<td>硬件无关的统一 Robot 接口</td>
+</tr>
+<tr>
+<td><strong>Isaac Lab / MJLab</strong></td>
+<td>训练环境</td>
+<td>大规模并行仿真，不做真机部署</td>
+</tr>
+<tr>
+<td><strong>holosoma_inference</strong></td>
+<td>人形策略推理</td>
+<td>HomeBody 项目所用的推理组件</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ros-2-control">与 ROS 2 Control 的关系</h2>
+<p>两者不冲突，层次不同：</p>
+<ul>
+<li><strong>ROS 2 Control</strong> 解决「如何把控制器接入一个由节点组成的分布式系统」</li>
+<li><strong>LeRobot Humanoid Runtime</strong> 解决「如何把一个训练好的策略跑在这台特定机器人上」</li>
+</ul>
+<p>对单机双足而言，Runtime 的路线更轻——没有 DDS 通信开销，控制回路更短，实时性更容易保证。ROS 2 的价值在多机协同与复杂系统集成时才凸显。</p>
+<h2 id="lerobot_1">与 LeRobot 上层生态的关系</h2>
+<p><code>huggingface/lerobot</code> 提供的是 <strong>硬件无关的 Robot 类抽象</strong>与模型/数据集生态；Runtime 则是 <strong>这个本体在抽象之下的具体实现</strong>。</p>
+<p>关系是：</p>
+<pre><code>LeRobot（数据集格式 + 策略实现 + 训练脚本）
+        ↓ 调用
+LeRobot Humanoid Runtime（本体专用控制器与工具）
+        ↓ 驱动
+真机电机
+</code></pre>
+<p>这种分层让「换机器人」的成本降到只换 Runtime 层。</p>
+<h2 id="_23">适用判断</h2>
+<ul>
+<li><strong>用 LeRobot Humanoid 硬件</strong> → 直接用本 Runtime，别自己写</li>
+<li><strong>用其他本体但想接入 LeRobot 生态</strong> → 参考本仓库实现自己的 Robot 类</li>
+<li><strong>做多机/复杂系统集成</strong> → 考虑 ROS 2 作为上层编排</li>
+</ul>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

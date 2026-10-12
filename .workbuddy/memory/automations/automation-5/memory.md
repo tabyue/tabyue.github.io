@@ -23,6 +23,12 @@
 - 学习：computer-vision +第 14 节（多视图几何与相机标定，12.5K）；3d-vision-pointcloud +第 10 节（场景流/非刚性配准/时序跟踪，10.0K）。
 - 校验：sync + sitemap（504 章节）+ health_check → ALL OK；已 push。
 
+### 2026-10-11 08:00—09:00
+- 投稿箱：无新投稿。发现并推送了前一轮遗留的未推送提交 f44a521。
+- 数据：新闻 +10（n385—n394）、论文 +5（p200—p204，含 detail）、开源 +4（os149—os152，含 detail + 报告页）、招聘 +6（j179—j184）、资源 r001 扩充 + 新增 r007。
+- 学习：sensors-hardware +第 18 节（多模态主动感知：选型/同步/标定，12K）；sim-to-real +第 12 节（重定向 IK/MPC/GNR + real-to-sim 数据引擎，12K）。
+- 校验：sync + sitemap（506 章节）+ health_check → ALL OK；已 push（9858361）。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
@@ -41,5 +47,8 @@
 - PowerShell stdout 常被吞，诊断结果写临时文件再 Read
 - **health_check 已加「news url 重复」硬校验（2026-10-10 踩到）**：两条新闻不能共用同一 URL。聚合稿（如 CSDN AI 日报、humanoid.guide 整合图）只能给其中一条用，其余必须另找独立源，否则 FAIL。写新闻前先备齐互不相同的 URL。
 - **Python 字符串定界（2026-10-10）**：脚本里 content 用 `"""`，示例代码的 docstring 用 `'''`；dict 最后一个字段的闭合是**裸 `'''` 行（无逗号）**，批量替换要单独处理一次，否则 SyntaxError 报在下一个字段开头。
-- **git push（2026-10-09 更新）**：`git credential-manager` 子进程静默崩溃，exit 128 且零输出；旧的 `!gh auth git-credential` trick 已失效。改用空 config 绕开 helper + token 嵌 URL，并需 `dangerouslyDisableSandbox: true`：
+- **git push（2026-10-11 更新）**：`git credential-manager` 子进程静默崩溃，exit 128 且零输出；旧的 `!gh auth git-credential` trick 已失效。改用空 config 绕开 helper + token 嵌 URL，并需 `dangerouslyDisableSandbox: true`：
   `$env:GIT_CONFIG_GLOBAL/$env:GIT_CONFIG_SYSTEM = 空cfg` + `git -c http.sslBackend=schannel push https://tabyue:$(gh auth token)@github.com/... main`
+  **空 cfg 必须用 `[System.IO.File]::WriteAllText($tmp,"")` 创建**；用 `">$tmp` 重定向会写成 UTF-16，git 报 `fatal: bad config line 1`。
+- **learning-path.json 结构**：`stages[].modules[]`，模块**只有 name 没有 id**，同步 lastUpdated 需按 name 子串匹配（如「传感器与硬件接口」「Sim-to-Real」）。
+- 每次开工先看 `git status -sb`：若 `ahead N` 说明上一轮 commit 未 push，本轮一并带上。

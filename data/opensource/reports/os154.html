@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BiGym 2.0：Unitree G1 全身家务操作基准（20 任务 / 60 条 VR 人类示教 / 全开源） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">BiGym 2.0：Unitree G1 全身家务操作基准（20 任务 / 60 条 VR 人类示教 / 全开源） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="bigym-20unitree-g1-20-60-vr">BiGym 2.0：Unitree G1 全身家务操作基准（20 任务 / 60 条 VR 人类示教 / 全开源）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/swirl-uk/BiGym2">https://github.com/swirl-uk/BiGym2</a>  </p>
+<p><strong>Stars</strong>: 420 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-12  </p>
+<p><strong>组织</strong>: University of Edinburgh（swirl-uk）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-12</p>
+</blockquote>
+<hr />
+<h2 id="bigym-20">BiGym 2.0 要解决什么</h2>
+<p>人形家务操作和机械臂操作是两个难度层级完全不同的问题。</p>
+<p>机械臂操作时基座固定，你只需要考虑末端去哪、抓什么、怎么避开障碍。而人形机器人做家务时，<strong>手臂在干活，身体同时在平衡、迈步、改变姿态</strong>。这意味着：</p>
+<ul>
+<li>手臂的运动会反作用于躯干，改变整体质心与支撑多边形</li>
+<li>为了够到高处的柜子要踮脚或迈步，为了拿地上的东西要弯腰或下蹲——<strong>操作任务本身就隐含着运动规划</strong></li>
+<li>控制器必须在「保持不倒」和「完成操作」两个目标之间持续权衡</li>
+</ul>
+<p>BiGym 2.0 就是为这个问题设计的基准：它是 BiGym 面向 <strong>Unitree G1 人形机器人</strong> 的重构版本，覆盖 <strong>20 项家务任务</strong>，并且——这一点很关键——<strong>示教与评测统一使用同一个全身控制器</strong>。</p>
+<h2 id="_2">为什么「统一全身控制器」是核心设计</h2>
+<p>在人形操作基准里，如果不同方法各用各的控制器，那么最终分数的差异可能来自控制器，而非被测方法。BiGym 2.0 的做法是：所有方法共享同一套机载视角、同一套本体感受、同一个全身控制器。</p>
+<p>这使得对比变成 <strong>控制变量实验</strong>：差异只能来自被测策略本身。</p>
+<h2 id="_3">数据规模</h2>
+<ul>
+<li><strong>20 项家务任务</strong></li>
+<li>每项任务 <strong>60 条人类 VR 示教</strong></li>
+<li>每条示教带 <strong>同步多相机视角</strong> 与 <strong>全身执行记录</strong></li>
+</ul>
+<p>VR 示教的价值在于：它记录的不只是末端轨迹，而是 <strong>整个人在执行任务时的全身运动</strong>——包括为了达到目标而做的迈步、弯腰、重心转移。这些恰恰是人形操作区别于固定基座操作的精华部分，也是遥操作（只给末端位姿）无法提供的数据。</p>
+<h2 id="_4">四类被测方法</h2>
+<p>BiGym 2.0 同时评测四条技术路线：</p>
+<ol>
+<li><strong>VLA 微调</strong>——在预训练视觉-语言-动作模型上微调</li>
+<li><strong>模仿学习</strong>——直接从示教学习</li>
+<li><strong>示教驱动强化学习</strong>——以示教为起点的强化学习</li>
+<li><strong>冷启动编码智能体</strong>——给智能体与在线 RL 相同的交互预算，让它直接写程序完成任务</li>
+</ol>
+<p>第 4 类是这个基准最有意思的设计。它把「用大模型写机器人程序」这条新兴路线放进了与传统方法同台竞技的位置，而且约束了交互预算以保证公平。</p>
+<hr />
+<h2 id="_5">评测架构</h2>
+<pre><code>┌────────────────────────────────────────────────────────────┐
+│                     20 项家务任务                          │
+│         每项 60 条 VR 人类示教（多相机 + 全身记录）         │
+└────────────────────────┬───────────────────────────────────┘
+                         │
+        ┌────────────────┼────────────────┬────────────────┐
+        ▼                ▼                ▼                ▼
+┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+│ VLA 微调     │ │  模仿学习    │ │ 示教驱动 RL  │ │ 编码智能体   │
+│              │ │              │ │              │ │ (冷启动)     │
+└──────┬───────┘ └──────┬───────┘ └──────┬───────┘ └──────┬───────┘
+       │                │                │                │
+       └────────────────┴────────────────┴────────────────┘
+                                │
+                                ▼
+              ┌─────────────────────────────────────┐
+              │   统一的全身控制器（Whole-Body Ctrl） │
+              │   统一机载视角 / 统一本体感受         │
+              └─────────────────────────────────────┘
+                                │
+                                ▼
+                        Unitree G1 人形机器人
+</code></pre>
+<h2 id="_6">全身控制器的角色</h2>
+<p>全身控制器处在策略与电机之间，负责把策略输出的高层意图（末端位姿、目标关节构型）转化为满足平衡约束的全身关节指令。</p>
+<p>数学上，这是一个带约束的优化问题。设关节角为 $q$，任务目标为末端位姿 $x_d$，则典型形式为：</p>
+<p>$$\min_q \ |x_{EE}(q) - x_d|^2_{W_{task}} + \lambda|q - q_{ref}|^2$$</p>
+<p>$$\text{s.t.}\quad \text{CoM} \in \text{支撑多边形},\quad \tau_{min} \le \tau \le \tau_{max}$$</p>
+<p>第一项是任务跟踪，第二项是构型正则（避免奇异位形），约束是 <strong>平衡约束</strong>（质心必须落在支撑多边形内）与 <strong>力矩限幅</strong>。</p>
+<p>BiGym 2.0 统一了这一层，意味着被测策略只需要输出「想让手去哪」，不必各自实现平衡控制——这大幅降低了方法间的实现差异，但也意味着基准 <strong>不评测</strong> 全身控制本身的质量。</p>
+<h2 id="_7">冷启动编码智能体的评测设计</h2>
+<p>「冷启动」的含义是：智能体从零开始，只通过有限的交互来理解和完成任务，而不是先看过示教。</p>
+<p>交互预算与在线 RL 对齐，这一点至关重要。否则编码智能体可以无限次试错，公平性就不成立。</p>
+<p>这类方法的输出是 <strong>程序代码</strong> 而非神经网络权重——它调用已有的技能模块（导航、抓取、放置）组成一个执行流程。因此它的优势与劣势都很鲜明：</p>
+<ul>
+<li><strong>优势</strong>：可解释、可调试、失败后容易定位与修复；对长程任务的结构化分解能力强</li>
+<li><strong>劣势</strong>：无法处理需要精细力控或连续自适应的环节；依赖底层技能库的质量</li>
+</ul>
+<p>实验证实了这一点：编码智能体在九项任务均值上 <strong>超过了所有示教驱动 RL 基线</strong>，并在 <strong>双手够取（bimanual reaching）</strong> 上领先——这类任务结构清晰、可分解为「左手去 A、右手去 B」。</p>
+<hr />
+<h2 id="_8">直接相关资源</h2>
+<ul>
+<li><strong>仓库</strong>：<code>github.com/swirl-uk/BiGym2</code>（Apache-2.0）——环境、60 条/任务的 VR 人类示教、评测轨迹全部开源</li>
+<li><strong>机构</strong>：University of Edinburgh（swirl-uk）</li>
+</ul>
+<h2 id="_9">延伸阅读</h2>
+<p><strong>全身控制（Whole-Body Control）</strong></p>
+<ul>
+<li>WBC 的主流实现建立在分层优化或任务优先级投影上，核心是处理「多个任务目标 + 平衡约束 + 力矩限幅」的冲突</li>
+<li>常用动力学库：Pinocchio、RBDL、Drake</li>
+</ul>
+<p><strong>冷启动编码智能体</strong></p>
+<ul>
+<li>这条路线把机器人任务视作程序合成问题：给定技能库与交互预算，让大模型写出调用序列</li>
+<li>与 VLA 的关系是 <strong>互补而非替代</strong>：VLA 擅长连续自适应，编码智能体擅长离散结构分解</li>
+</ul>
+<p><strong>人形示教采集</strong></p>
+<ul>
+<li>VR 遥操作是获取全身示教的主流方式，可同时记录手臂与躯干运动</li>
+<li>与 UMI（手持式采集）的差异：UMI 成本低、规模大，但不包含全身平衡信息</li>
+</ul>
+<h2 id="_10">关联站点内容</h2>
+<ul>
+<li>学习模块「机器人动力学」——全身动力学与平衡约束（支撑多边形、ZMP）</li>
+<li>学习模块「Sim-to-Real」——示教驱动 RL 的 sim2real 处理</li>
+<li>论文条目 p208（WARP-VLA）、p205（VersaCamVLA）——VLA 部署鲁棒性</li>
+<li>开源项目 HomeBody（本站 os149）——同为 Unitree G1，侧重长时程与记忆</li>
+</ul>
+<hr />
+<h2 id="_11">环境准备</h2>
+<pre><code class="language-bash">git clone https://github.com/swirl-uk/BiGym2.git
+cd BiGym2
+pip install -e .
+</code></pre>
+<h2 id="_12">第一步：跑通一个环境</h2>
+<p>先不要碰训练，先确认能渲染并采集一条轨迹：</p>
+<pre><code class="language-python">'''
+加载一个 BiGym 2.0 任务并检查观测空间
+'''
+from bigym.envs import BiGymEnv   # 以仓库实际 API 为准
+
+env = BiGymEnv(task=&quot;reach_target&quot;, whole_body_controller=&quot;default&quot;)
+obs = env.reset()
+
+print(&quot;观测键:&quot;, sorted(obs.keys()))
+print(&quot;相机:&quot;, [k for k in obs if &quot;image&quot; in k or &quot;rgb&quot; in k])
+print(&quot;本体感受维度:&quot;, obs.get(&quot;proprio&quot;, None) and obs[&quot;proprio&quot;].shape)
+
+for _ in range(50):
+    obs, r, done, info = env.step(env.action_space.sample())
+    if done:
+        obs = env.reset()
+</code></pre>
+<p>重点检查两件事：<strong>相机视角是不是「机载」的</strong>（不能有上帝视角，否则评测失真），以及 <strong>本体感受是否包含全身关节状态</strong>（而不只是手臂）。</p>
+<h2 id="_13">第二步：加载人类示教</h2>
+<pre><code class="language-python">'''
+读取某任务的 VR 人类示教并检查其完整性
+'''
+from bigym.data import load_demos
+
+demos = load_demos(task=&quot;reach_target&quot;, split=&quot;train&quot;)
+print(&quot;示教条数:&quot;, len(demos))            # 应为 60
+
+d = demos[0]
+print(&quot;步数:&quot;, len(d[&quot;actions&quot;]))
+print(&quot;全身关节维度:&quot;, d[&quot;qpos&quot;].shape[-1])
+print(&quot;相机路数:&quot;, len(d[&quot;images&quot;]))
+
+# 检查示教中是否存在「明显不是操作」的全身运动（迈步/弯腰）
+import numpy as np
+base_motion = np.abs(np.diff(d[&quot;root_pos&quot;], axis=0)).sum(axis=1)
+print(&quot;root 位移总量:&quot;, base_motion.sum())
+print(&quot;发生显著位移的步占比:&quot;, (base_motion &gt; 0.01).mean())
+</code></pre>
+<p>最后一项检查很有用：如果某任务的示教中 root 位移几乎为零，说明这个任务其实不需要全身移动，那么它作为「人形家务」任务的代表性就有限。</p>
+<h2 id="_14">第三步：跑一个基线并对比</h2>
+<pre><code class="language-bash"># 模仿学习基线
+python train.py --method il --task reach_target --demos 60 --seed 0
+
+# 编码智能体基线（限定交互预算）
+python train.py --method coding_agent --task reach_target --budget 100k --seed 0
+</code></pre>
+<h2 id="_15">评测注意事项</h2>
+<ul>
+<li><strong>种子固定</strong>：BiGym 2.0 的评测结果对随机种子敏感，务必多 seed 报告均值与方差</li>
+<li><strong>机载视角</strong>：确认没有误用外部相机，否则结果不可比</li>
+<li><strong>分任务报告</strong>：20 项任务的难度差异极大，只报总体均值会掩盖大量信息</li>
+<li><strong>对照已有结论</strong>：论文明确指出跨工作空间堆叠、pick-box、多物体运输是尚未解决的难点，如果你的方法在这些上表现异常好，先检查评测协议</li>
+</ul>
+<hr />
+<h2 id="_16">论文报告的主要结论</h2>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>九项任务均值表现</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VLA 微调</strong></td>
+<td>最高</td>
+<td>在统一全身控制器下表现最好</td>
+</tr>
+<tr>
+<td><strong>编码智能体（冷启动）</strong></td>
+<td>超过所有示教驱动 RL 基线</td>
+<td>在双手够取上领先</td>
+</tr>
+<tr>
+<td><strong>示教驱动 RL</strong></td>
+<td>被编码智能体超越</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>模仿学习</strong></td>
+<td>多物体运输任务上困难</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_17">明确未解决的开放问题</h2>
+<p>BiGym 2.0 的作者很诚实地列出了难点，这比单纯报一个总均分更有价值：</p>
+<ol>
+<li><strong>跨工作空间堆叠（cross-workspace stacking）</strong>——仍未解决。物体不在同一个可达区域内时，机器人需要移动身体再重新定位，误差累积严重</li>
+<li><strong>π0.5 在 pick-box 上表现偏低</strong>——说明即使是当前最强的通用 VLA，在特定人形操作任务上仍有明显短板</li>
+<li><strong>多物体运输</strong>——对模仿学习、示教驱动 RL、编码智能体 <strong>都很难</strong>。这类任务要求持续维持多个物体的稳定抓取，同时移动身体</li>
+</ol>
+<h2 id="_18">如何解读这些数字</h2>
+<p>最重要的一点是：<strong>编码智能体击败了示教驱动 RL</strong>。这在方法论层面是个值得注意的信号。</p>
+<p>原因是结构性的：RL 需要在连续动作空间里搜索，而家务任务往往是「离散的技能序列 + 少量连续参数」。编码智能体直接输出程序，天然契合这种结构；RL 则要从零学出这个离散结构，样本效率极低。</p>
+<p>反过来说，RL 应该在需要 <strong>连续自适应</strong> 的任务（如力控插入、柔顺擦拭）上占优——那些恰恰是写程序很难表达的部分。BiGym 2.0 列出的开放问题（跨工作空间堆叠、多物体运输）正是这类需要连续自适应的任务。</p>
+<h2 id="_19">作为基准的可信度</h2>
+<p>BiGym 2.0 在设计上有几个提高可信度的选择：</p>
+<ul>
+<li>统一全身控制器 → 消除控制器差异</li>
+<li>统一机载视角与本体感受 → 消除感知差异</li>
+<li>环境、示教、评测轨迹 <strong>全部开源</strong> → 可复现</li>
+<li>主动列出未解决任务 → 避免「报喜不报忧」</li>
+</ul>
+<p>主要局限是：目前只有 20 项任务，且全部基于 Unitree G1 单一本体，跨本体泛化能力无法通过该基准评估。</p>
+<hr />
+<h2 id="_20">与人形操作相关基准的位置</h2>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>本体</th>
+<th>任务数</th>
+<th>核心特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BiGym 2.0</strong></td>
+<td>Unitree G1</td>
+<td>20</td>
+<td>统一全身控制器；含冷启动编码智能体基线；VR 全身示教</td>
+</tr>
+<tr>
+<td><strong>BiGym（原版）</strong></td>
+<td>多本体</td>
+<td>—</td>
+<td>BiGym 2.0 的前身</td>
+</tr>
+<tr>
+<td><strong>LIBERO / LIBERO-Pro</strong></td>
+<td>Franka（固定基座）</td>
+<td>130+</td>
+<td>主流 VLA 评测；无全身平衡问题</td>
+</tr>
+<tr>
+<td><strong>RoboTwin</strong></td>
+<td>双臂</td>
+<td>—</td>
+<td>双臂协作，仿真为主</td>
+</tr>
+<tr>
+<td><strong>RoboDojo</strong></td>
+<td>多本体</td>
+<td>—</td>
+<td>仿真+真机全科大考，港大 MMLab 牵头</td>
+</tr>
+<tr>
+<td><strong>HomeBody（SIM）</strong></td>
+<td>Unitree G1</td>
+<td>长时程家务</td>
+<td>重探索与记忆，非标准基准</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_21">与其他基准的本质区别</h2>
+<p>LIBERO、RoboTwin 这类基准的机器人是 <strong>固定基座</strong> 的——它们评测的是「给定观察，如何操作」，不涉及平衡与移动。BiGym 2.0 把 <strong>全身运动</strong> 显式地纳入了评测对象。</p>
+<p>这带来一个直接后果：<strong>在 LIBERO 上表现好的方法，在 BiGym 2.0 上未必好</strong>。因为前者从未面对过「伸手去够时身体会失去平衡」这个问题。这也解释了为什么 π0.5 在 pick-box 上表现偏低——它的训练分布里没有这类全身耦合。</p>
+<h2 id="_22">使用建议</h2>
+<ul>
+<li><strong>评估通用 VLA 的操作能力</strong> → LIBERO / LIBERO-Pro（生态成熟、对比充分）</li>
+<li><strong>评估人形全身操作</strong> → BiGym 2.0</li>
+<li><strong>评估跨本体、仿真+真机综合能力</strong> → RoboDojo</li>
+<li><strong>评估长时程任务与记忆</strong> → HomeBody</li>
+</ul>
+<p>如果你正在做人形操作方向，建议 <strong>同时</strong> 跑 LIBERO 与 BiGym 2.0：两者的分数差恰好量化了「全身耦合」带来的额外难度。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

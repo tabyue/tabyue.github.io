@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jumper：22 自由度开源蟹形机器人（金钢科技全链路开源） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Jumper：22 自由度开源蟹形机器人（金钢科技全链路开源） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="jumper22">Jumper：22 自由度开源蟹形机器人（金钢科技全链路开源）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/KingKongRobotics/jumper">https://github.com/KingKongRobotics/jumper</a>  </p>
+<p><strong>Stars</strong>: 1800 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-12  </p>
+<p><strong>组织</strong>: KingKong Robotics（金钢科技）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-12</p>
+</blockquote>
+<hr />
+<h2 id="jumper">Jumper 是什么</h2>
+<p>Jumper 是金钢科技（KingKong Robotics）开源的 <strong>22 自由度蟹形仿生机器人</strong>。它的外形很不像传统研究平台：扁平台身、四条粗壮的行走腿、两条柔性辅助机械臂、模块化分段式躯干脊柱，再加两块圆形屏幕当「眼睛」显示情绪。它看起来像个玩具，但它同时是一台研究机器人。</p>
+<p>理解 Jumper 的价值，要先看清它在自由度分配上的非常规之处。常见的多足机器人每条腿只分配 <strong>3—4 个自由度</strong>（通常是髋部两个 + 膝部一个），整机 12—18 自由度。Jumper 把运动架构分布在 <strong>4 条专用行走腿 + 2 条柔性辅助机械臂 + 模块化分段式躯干脊柱</strong> 上，合计 <strong>22 个独立的活动关节</strong>，覆盖从腿部基部到肢体末端的所有核心运动环节。</p>
+<p>这个设计差异带来的能力差异很实在：</p>
+<ul>
+<li><strong>分段脊柱</strong>让躯干本身成为运动链的一环，而不是刚性地连接四条腿——这使得它可以做出蜷缩、拱起、侧倾等姿态，在狭窄空间和崎岖地形上的通过性显著优于刚性躯干</li>
+<li><strong>辅助臂</strong>不只是夹爪，它参与支撑与姿态调整，可以做擦地这类需要躯体配合的任务</li>
+<li><strong>22 个自由度下的跳跃</strong>对关节位置精度提出了远高于行走的要求，这直接解释了为什么要自研带双编码器的舵机</li>
+</ul>
+<h2 id="_2">为什么双磁编码器是硬需求</h2>
+<p>每个舵机内含 <strong>两个磁编码器</strong>：一个测电机位置，一个测关节位置。</p>
+<p>这个设计不是为了冗余，而是为了解决一个具体问题。<strong>电机位置 ≠ 关节位置</strong>——中间隔着减速器，而减速器有弹性、有回差、有摩擦。在低速行走时，这个差异可以忽略；但在跳跃这种高动态动作中，落地冲击会让减速器产生瞬时弹性形变，此时用电机位置推算关节位置会产生显著误差，控制律就会基于错误的姿态估计做出错误决策。</p>
+<p>双编码器的方案是：关节侧编码器直接测输出轴角度，闭环建在真正的被控量上，电机侧编码器用于速度环与力矩估计。代价是每个舵机多一套传感器与布线，收益是跳跃可控。</p>
+<p>金钢科技的主业正是磁编码器舵机，自称在中国人形机器人该部件的市占率超过 <strong>80%</strong>。所以这次开源的底层动机并不难理解：一家上游零部件厂商，用一台整机来展示自己部件的极限能力，同时把软件栈交给社区去探索场景。</p>
+<h2 id="_3">硬件规格一览</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>规格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自由度</td>
+<td>22（4 行走腿 + 2 辅助臂 + 分段脊柱）</td>
+</tr>
+<tr>
+<td>舵机</td>
+<td>22 个自研触觉舵机，每个内置双磁编码器</td>
+</tr>
+<tr>
+<td>主控</td>
+<td>Rockchip RK3576（8 核 + 6 TOPS NPU）</td>
+</tr>
+<tr>
+<td>深度感知</td>
+<td>dToF，每帧 2268 个测点</td>
+</tr>
+<tr>
+<td>视觉</td>
+<td>500 万像素，162° 对角视场</td>
+</tr>
+<tr>
+<td>惯性</td>
+<td>6 轴 IMU</td>
+</tr>
+<tr>
+<td>最高速度</td>
+<td>0.5 m/s</td>
+</tr>
+<tr>
+<td>最大夹持负载</td>
+<td>1 kg</td>
+</tr>
+<tr>
+<td>整机重量</td>
+<td>约 1.8 kg</td>
+</tr>
+<tr>
+<td>续航</td>
+<td>约 2 小时，电池可换</td>
+</tr>
+<tr>
+<td>充电</td>
+<td>USB-C，最高 140 W</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">这次开源的边界在哪</h2>
+<p>要准确评估「开源」这个词在这里的含义，需要区分三层：</p>
+<ol>
+<li><strong>硬件层</strong>：图纸、BOM、STL——可以真的自己造一台</li>
+<li><strong>软件层</strong>：AI 工具集 + MuJoCo 仿真环境 + PPO 训练管线</li>
+<li><strong>产品层</strong>：整机售价与上市时间——<strong>尚未公布</strong></li>
+</ol>
+<p>也就是说，你可以完整复现这台机器人的硬件与算法，但买不到成品。这是一个刻意的取舍：公司明确表示这次开源是一次产品实验，重点不是卖货，而是观察开发者会把 Jumper 带到哪些场景。</p>
+<p>配套的「螃蟹机器人开源挑战赛」自 2026 年 9 月 30 日启动，规则是在仿真软件中创作动作、外观或场景并提交录屏，奖品是 100 台 Jumper。这个设计的意图很清楚——用实物奖励换取社区的创造性输出，从而低成本地探索产品定位。</p>
+<hr />
+<h2 id="_5">工程体系分层</h2>
+<pre><code>┌───────────────────────────────────────────────────────────┐
+│  AI Coding Agent                                          │
+│  自然语言指令 → 生成动作 / 外观 / 场景                     │
+└───────────────────────┬───────────────────────────────────┘
+                        │
+┌───────────────────────▼───────────────────────────────────┐
+│  导出产物层                                                │
+│  .app（动作）  .skin（外观）  .map（场景）                 │
+└───────────────────────┬───────────────────────────────────┘
+                        │
+┌───────────────────────▼───────────────────────────────────┐
+│  训练与仿真层                                              │
+│  MuJoCo 物理仿真 + PPO 强化学习                            │
+└───────────────────────┬───────────────────────────────────┘
+                        │
+┌───────────────────────▼───────────────────────────────────┐
+│  运行时层                                                  │
+│  RK3576 主控 → 22 路舵机（CAN/串行） + 传感器同步          │
+└───────────────────────┬───────────────────────────────────┘
+                        │
+┌───────────────────────▼───────────────────────────────────┐
+│  硬件层                                                    │
+│  图纸 + BOM + STL（按左腿/右腿/躯干子装配体组织）          │
+└───────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="_6">三类导出产物的意义</h2>
+<p>这套工程体系里最值得注意的设计，是把 <strong>动作、外观、场景</strong> 三类产物分别固化为独立文件格式：</p>
+<ul>
+<li><strong><code>.app</code></strong>——动作包。一个训练好的步态、一段舞蹈、一套抓取序列，都是一个 <code>.app</code></li>
+<li><strong><code>.skin</code></strong>——外观包。设计仓库已内置「蜜蜂」「招财猫」「拉斐尔龟」等现成模板，自定义的可以导出分享</li>
+<li><strong><code>.map</code></strong>——场景包。仿真环境的布局、物体、光照</li>
+</ul>
+<p>为什么这个设计重要？因为它把「机器人能做什么」从「机器人长什么样」「机器人在哪干活」中解耦出来。传统开源机器人项目往往把这三者混在一个配置文件里，导致改外观就要重新验证动作。Jumper 的做法使得 <strong>动作可以在不同外观、不同场景间迁移复用</strong>——这正是「让社区贡献可累积」的前提。</p>
+<h2 id="22">22 自由度的控制架构</h2>
+<p>对 22 个自由度做全身控制，直接用一个端到端策略是不现实的——状态空间维数太高，且不同自由度的时间尺度差异巨大（脊柱姿态调整是慢变量，跳跃落地缓冲是快变量）。</p>
+<p>实践中通常采用分层：</p>
+<ol>
+<li><strong>任务层</strong>：由 AI Agent 或脚本给出意图（「走到那边」「跳起来」「抓住这个」）</li>
+<li><strong>技能层</strong>：每个技能对应一个训练好的策略（行走、跳跃、抓取、擦地），各技能独立训练、独立封装为 <code>.app</code></li>
+<li><strong>执行层</strong>：关节级伺服控制，双编码器闭环</li>
+</ol>
+<p>MuJoCo + PPO 的组合正是为第 2 层服务的：在仿真里为每个技能单独训练策略，验证后导出为 <code>.app</code>，真机加载执行。</p>
+<h2 id="_7">感知配置的特点</h2>
+<p>dToF（2268 点/帧）+ 广角相机 + IMU 的组合，是为 <strong>贴地、近距、快速运动</strong> 这一使用场景设计的：</p>
+<ul>
+<li><strong>dToF</strong> 提供直接深度，不依赖立体匹配——对蟹形机器人这种贴地视角、纹理稀疏的地面场景，双目视觉很容易失效</li>
+<li><strong>162° 对角视场</strong>覆盖近距大范围，代价是边缘畸变明显，校准要做好</li>
+<li><strong>6 轴 IMU</strong> 对跳跃的空中姿态估计是必需的，落地时刻的姿态误差直接决定缓冲是否成功</li>
+</ul>
+<p>NPU 6 TOPS 的算力定位很明确：跑不了大模型，但足够跑轻量策略网络与视觉前端。这是一个 <strong>边缘执行而非边缘推理</strong> 的配置——复杂决策在上位机或云端完成，本体只负责执行与实时感知。</p>
+<hr />
+<h2 id="_8">直接相关资源</h2>
+<ul>
+<li><strong>主仓库</strong>：<code>github.com/KingKongRobotics/jumper</code>（Apache-2.0）——硬件文档、BOM、AI 工具集、MuJoCo 训练环境</li>
+<li><strong>设计仓库</strong>：<code>github.com/KingKongRobotics/jumper-design</code>——外观模板（含「蜜蜂」「招财猫」「拉斐尔龟」）与 <code>.skin</code> 导出</li>
+<li><strong>社区</strong>：<code>beunlimited.me</code>——螃蟹机器人开源挑战赛（自 2026 年 9 月 30 日），奖品为 100 台 Jumper</li>
+<li><strong>首次亮相</strong>：2026 年 7 月上海世界人工智能大会（WAIC）</li>
+</ul>
+<h2 id="_9">延伸阅读方向</h2>
+<p>理解 Jumper 的设计取舍，建议补三个方面：</p>
+<ol>
+<li><strong>腿足机器人的动力学与控制</strong>——VMC（虚拟模型控制）、LQR、MPC、WBC（全身控制）是四条主流路线，Jumper 的技能层大概率落在 RL 策略 + 底层伺服的组合上</li>
+<li><strong>串联弹性驱动器（SEA）与减速器回差建模</strong>——这是理解「为什么需要双编码器」的理论基础</li>
+<li><strong>MuJoCo + PPO 的大规模并行训练</strong>——Isaac Lab、MJLab 等框架提供的并行 rollout 是把训练时间从天级压到小时级的关键</li>
+</ol>
+<h2 id="_10">关联站点内容</h2>
+<ul>
+<li>学习模块「机器人动力学」——关节空间动力学与减速器建模</li>
+<li>学习模块「Sim-to-Real」——仿真训练到真机部署的差距来源与处置</li>
+<li>开源项目 LeRobot Humanoid（本站 os155 / os156）——低成本双足路线的对照样本</li>
+</ul>
+<hr />
+<h2 id="_11">环境准备</h2>
+<pre><code class="language-bash"># 1. 获取代码
+git clone https://github.com/KingKongRobotics/jumper.git
+cd jumper
+
+# 2. 创建环境（建议 Python 3.10+）
+python -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -e .
+</code></pre>
+<h2 id="_12">第一步：先只跑仿真，不要碰硬件</h2>
+<p>这是最重要的一条建议。22 自由度的整机装配涉及大量舵机对齿、线缆管理与零点标定，第一次上手就装硬件的失败率极高。先在 MuJoCo 里把流程跑通：</p>
+<pre><code class="language-python">'''
+在 MuJoCo 中加载 Jumper 模型并检查自由度数量
+'''
+import mujoco, numpy as np
+
+model = mujoco.MjModel.from_xml_path(&quot;assets/jumper/scene.xml&quot;)
+data = mujoco.MjData(model)
+
+print(&quot;自由度 nv =&quot;, model.nv)      # 应为 22
+print(&quot;执行器 nu =&quot;, model.nu)
+print(&quot;关节名  :&quot;, [model.joint(i).name for i in range(model.njnt)])
+
+# 零位姿态下前进一步，观察是否稳定
+mujoco.mj_step(model, data)
+print(&quot;qpos 范数:&quot;, np.linalg.norm(data.qpos))
+</code></pre>
+<h2 id="_13">第二步：训练一个最小步态</h2>
+<p>不要一上来就训跳跃。先训一个「前进」技能，验证 PPO 管线：</p>
+<pre><code class="language-python">'''
+最小 PPO 训练循环骨架（示意，具体 API 以仓库为准）
+'''
+import numpy as np
+
+def compute_reward(state, prev_state, ctrl):
+    '''
+    前进奖励 = 前向位移 - 姿态惩罚 - 能耗惩罚 - 抖动惩罚
+    '''
+    dx = state[&quot;pos&quot;][0] - prev_state[&quot;pos&quot;][0]
+    tilt = np.abs(state[&quot;quat&quot;][1:3]).sum()      # 侧倾/俯仰偏离
+    energy = np.square(ctrl).sum()
+    jerk = np.square(state[&quot;qvel&quot;] - prev_state[&quot;qvel&quot;]).sum()
+    return 2.0 * dx - 0.5 * tilt - 1e-4 * energy - 1e-3 * jerk
+
+# 训练循环（伪代码）
+for it in range(total_steps):
+    obs = env.reset() if done else obs
+    act, _ = policy.predict(obs)
+    obs, r, done, info = env.step(act)
+    policy.update(r)
+    if it % 100_000 == 0:
+        policy.save(f&quot;ckpt/{it//1000}k.app&quot;)
+</code></pre>
+<p>奖励函数里 <strong>抖动惩罚（jerk）</strong> 这一项在真机部署时尤其重要：仿真中不加这一项也能训出能走的策略，但上真机后会剧烈抖动甚至损坏舵机。</p>
+<h2 id="_14">第三步：导出与部署</h2>
+<pre><code class="language-bash"># 导出动作包
+jumper export --ckpt ckpt/500k --out gaits/walk_forward.app
+
+# 部署到真机（需先完成舵机扫描与零点标定）
+jumper deploy --app gaits/walk_forward.app --port /dev/ttyUSB0
+</code></pre>
+<h2 id="_15">硬件装配检查清单</h2>
+<p>真机装配前逐项确认，这几项是失败率最高的地方：</p>
+<ul>
+<li>[ ] 每个舵机完成 <strong>零点标定</strong>（关节侧编码器，不是电机侧）</li>
+<li>[ ] 关节 <strong>运动方向</strong> 逐一验证——方向搞反会导致一上电就抽搐</li>
+<li>[ ] 线缆走向不与运动包络干涉（22 个自由度的走线是主要工程难点）</li>
+<li>[ ] IMU 安装位置刚性固定，且已完成静态标定</li>
+<li>[ ] 电池电压在满电与低电量下分别测试转矩裕度</li>
+</ul>
+<h2 id="_16">常见坑</h2>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>可能原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>仿真能走，真机抖</td>
+<td>奖励函数缺 jerk 惩罚；或仿真未建模减速器回差</td>
+</tr>
+<tr>
+<td>跳跃总是落地失败</td>
+<td>用了电机侧编码器做姿态闭环，未用关节侧</td>
+</tr>
+<tr>
+<td>某些动作在换外观后失效</td>
+<td>外观改变了质心分布，<code>.skin</code> 需同步更新质量参数</td>
+</tr>
+<tr>
+<td>舵机发热严重</td>
+<td>高动态动作占空比过高，检查是否超出连续转矩曲线</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_17">官方给出的规格</h2>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自由度</td>
+<td>22</td>
+<td>4 行走腿 + 2 辅助臂 + 分段脊柱</td>
+</tr>
+<tr>
+<td>最高速度</td>
+<td>0.5 m/s</td>
+<td>—</td>
+</tr>
+<tr>
+<td>最大夹持负载</td>
+<td>1 kg</td>
+<td>辅助臂末端</td>
+</tr>
+<tr>
+<td>整机重量</td>
+<td>约 1.8 kg</td>
+<td>含电池</td>
+</tr>
+<tr>
+<td>续航</td>
+<td>约 2 小时</td>
+<td>电池可换，USB-C 最高 140 W 快充</td>
+</tr>
+<tr>
+<td>主控算力</td>
+<td>6 TOPS NPU</td>
+<td>RK3576，8 核</td>
+</tr>
+<tr>
+<td>深度测点</td>
+<td>2268 点/帧</td>
+<td>dToF</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_18">需要注意的口径问题</h2>
+<p>公开资料中 <strong>没有</strong> 给出以下数据，评估时应保持谨慎：</p>
+<ul>
+<li>跳跃高度与跳跃成功率</li>
+<li>连续运行小时数下的故障率</li>
+<li>舵机寿命（高动态动作对舵机的磨损远高于行走）</li>
+<li>整机售价与交付时间</li>
+</ul>
+<p>也就是说，Jumper 目前公开的是 <strong>规格参数</strong>，而不是 <strong>性能实测数据</strong>。这两者的差别在机器人领域尤其重要：一台能跳一次的机器人和一台能连续跳一万次的机器人，规格表可以完全一样。</p>
+<h2 id="_19">与其他开源机器人平台的定位对比</h2>
+<p>Jumper 处在一条不太拥挤的位置上。常见的开源机器人在两个极端：要么是几千元的舵机小车/机械臂（自由度少、能力弱），要么是十几万元的人形/四足研究平台（能力强、门槛高）。22 自由度 + 全开源图纸 + 未定价，意味着它试图填补中间的 <strong>中自由度、可自制、能做高动态动作</strong> 这一档。</p>
+<p>真正的验证点在于：社区能否用它做出单个实验室想不到的场景。公司自己也承认「最终哪些场景真的有需求，仍然需要市场和开发者继续验证」。</p>
+<hr />
+<h2 id="_20">与同类开源机器人平台的位置</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>提供方</th>
+<th>自由度</th>
+<th>定位</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Jumper</strong></td>
+<td>金钢科技</td>
+<td>22</td>
+<td>蟹形仿生，可自制</td>
+<td>分段脊柱 + 辅助臂；双编码器舵机支撑跳跃；图纸/BOM/训练环境全开源</td>
+</tr>
+<tr>
+<td><strong>LeRobot Humanoid</strong></td>
+<td>Hugging Face</td>
+<td>29（G1）/ 双足平台</td>
+<td>低价可复现双足</td>
+<td>约 2500 美元；设计—硬件—运行时—模型—训练五仓库分离</td>
+</tr>
+<tr>
+<td><strong>Stanford TML HomeBody</strong></td>
+<td>Stanford × Caltech</td>
+<td>Unitree G1 全身</td>
+<td>长时程家务智能体</td>
+<td>重探索与记忆；SIM→REAL2SIM→REAL 分批开源</td>
+</tr>
+<tr>
+<td><strong>RoboParty RP1</strong></td>
+<td>RoboParty</td>
+<td>人形全栈</td>
+<td>全栈开源人形</td>
+<td>硬件+控制+模型全套</td>
+</tr>
+<tr>
+<td><strong>SO-100 / SO-ARM</strong></td>
+<td>Hugging Face</td>
+<td>6</td>
+<td>低成本机械臂</td>
+<td>桌面级，入门首选</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_21">选择建议</h2>
+<ul>
+<li><strong>想研究高动态运动（跳跃、翻越）</strong> → Jumper。分段脊柱与双编码器舵机是为这件事设计的</li>
+<li><strong>想研究双足行走并复现论文</strong> → LeRobot Humanoid。成本低、文档完整、与 LeRobot 生态打通</li>
+<li><strong>想研究长时程任务与记忆</strong> → HomeBody。它解决的是「机器人如何记住场景」而非「如何动」</li>
+<li><strong>预算有限、初次入门</strong> → SO-100 系列</li>
+</ul>
+<h2 id="jumper_1">Jumper 的独特价值</h2>
+<p>不在于自由度数量，而在于 <strong>「可自制的中自由度平台」这个品类目前几乎是空的</strong>。多数 20+ 自由度的平台都是整机出售的研究产品，图纸不开放；而图纸开放的项目自由度普遍偏低。Jumper 把这两件事同时做到了——这也是为什么它的开源在社区引发了超出其规格表本身的关注。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

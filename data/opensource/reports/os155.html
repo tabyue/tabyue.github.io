@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeRobot Humanoid（硬件仓库）：2500 美元开源双足人形平台，BOM 与 STL 全开放 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">LeRobot Humanoid（硬件仓库）：2500 美元开源双足人形平台，BOM 与 STL 全开放 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="lerobot-humanoid2500-bom-stl">LeRobot Humanoid（硬件仓库）：2500 美元开源双足人形平台，BOM 与 STL 全开放</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/huggingface/lerobot-humanoid-hardware">https://github.com/huggingface/lerobot-humanoid-hardware</a>  </p>
+<p><strong>Stars</strong>: 2600 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-12  </p>
+<p><strong>组织</strong>: Hugging Face  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-12</p>
+</blockquote>
+<hr />
+<h2 id="lerobot-humanoid">LeRobot Humanoid 是什么</h2>
+<p>LeRobot Humanoid 是 Hugging Face 推出的 <strong>约 2500 美元的开源双足人形平台</strong>。</p>
+<p>要理解它的意义，需要先理解它要解决的问题。过去「教机器人走路」这件事的结果高度依赖实验室条件：每家机构用的是自己改造的本体、自己调的结构参数、未公开的质量分布与减速器回差。结果是——论文 A 报告「我们的方法让机器人学会了走」，但你用论文 A 的方法在自己的机器人上复现，几乎必然失败，因为 <strong>你连机器人都不一样</strong>。</p>
+<p>LeRobot Humanoid 的解法是把整条链路标准化：</p>
+<table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lerobot-humanoid-design</code></td>
+<td>控制导向的设计工作流</td>
+</tr>
+<tr>
+<td><strong><code>lerobot-humanoid-hardware</code></strong></td>
+<td>机械装配文档、制造文件、BOM、STL</td>
+</tr>
+<tr>
+<td><code>lerobot-humanoid-runtime</code></td>
+<td>MuJoCo 仿真控制器 + 真机控制器 + 推理运行器</td>
+</tr>
+<tr>
+<td><code>lerobot-humanoid-model</code></td>
+<td>MJCF/URDF 模型资产与常量</td>
+</tr>
+<tr>
+<td><code>Virgileboat/lerobot-legged-zoo</code></td>
+<td>MJCF 模型 + MJLab 训练环境</td>
+</tr>
+</tbody>
+</table>
+<p>本条目是 <strong>硬件仓库</strong>。</p>
+<h2 id="_2">硬件仓库包含什么</h2>
+<ul>
+<li><strong>机械装配文档</strong>——分步骤的装配指引</li>
+<li><strong>制造文件</strong>——加工图纸与公差要求</li>
+<li><strong>电子接线与连接器映射</strong>——这是最容易被低估、也最容易出错的部分</li>
+<li><strong>BOM 采购清单</strong>——可以直接照着买</li>
+<li><strong>电机预组装调试工具</strong>——装配前先单独验证每个电机</li>
+<li><strong>STL 文件</strong>——按 <strong>左腿 / 右腿 / 躯干</strong> 子装配体组织</li>
+</ul>
+<h2 id="_3">关于发布范围</h2>
+<p>当前发布 <strong>聚焦双足平台</strong>，<strong>上半身硬件不在本次发布范围内</strong>。</p>
+<p>这是一个务实的取舍：双足行走本身就是难度足够高的独立问题，把上半身加进来会让机械复杂度、控制复杂度和装配难度同时翻倍。先解决「走」，再解决「走的同时干活」。</p>
+<h2 id="2500">2500 美元这个数字意味着什么</h2>
+<p>对比一下数量级：商业研究级人形平台通常在 5 万—100 万元区间。2500 美元把门槛压到了 <strong>个人开发者与小型实验室可以承受</strong> 的范围。</p>
+<p>这带来的不只是一个便宜的机器人，而是 <strong>研究可复现性的基础设施</strong>：当多个团队用同一台硬件时，A 报告的分数 B 才能真正对照。这与 ImageNet 对视觉、LLaMA 生态对语言模型的作用是同构的。</p>
+<hr />
+<h2 id="_4">五仓库分层</h2>
+<pre><code>┌──────────────────────────────────────────────────────────┐
+│  lerobot-humanoid-design                                 │
+│  控制导向设计：简化表示 → 设计空间探索 → 最优控制基准评估 │
+└───────────────────────┬──────────────────────────────────┘
+                        ▼
+┌──────────────────────────────────────────────────────────┐
+│  lerobot-humanoid-hardware      ← 本条目                 │
+│  装配文档 / 制造文件 / 接线映射 / BOM / STL               │
+└───────────────────────┬──────────────────────────────────┘
+                        ▼
+┌──────────────────────────────────────────────────────────┐
+│  lerobot-humanoid-model                                  │
+│  MJCF / URDF 模型资产与常量（仿真训练运行时共用）         │
+└───────────────────────┬──────────────────────────────────┘
+                        ▼
+┌──────────────────────────────────────────────────────────┐
+│  lerobot-humanoid-runtime                                │
+│  MuJoCo控制器 / 真机CAN控制器 / ONNX-Torch推理 / IMU      │
+└───────────────────────┬──────────────────────────────────┘
+                        ▼
+┌──────────────────────────────────────────────────────────┐
+│  lerobot-legged-zoo                                      │
+│  MJCF + MJLab 训练环境（uv 管理，需 CUDA GPU）            │
+└──────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="_5">「控制导向的设计工作流」值得单独说</h2>
+<p><code>lerobot-humanoid-design</code> 这个仓库的存在，反映了一种与传统机械设计不同的思路。</p>
+<p>传统流程是：设计结构 → 加工 → 装配 → 发现走不稳 → 改控制参数 → 还是不行 → 改结构。这个循环极慢，因为每次迭代都要动硬件。</p>
+<p>控制导向的设计把顺序反过来：</p>
+<ol>
+<li>用 <strong>简化机器人表示</strong>（如集中质量模型、简化腿长与质量分布）做设计空间探索</li>
+<li>对每个候选设计，用 <strong>最优控制基准</strong>（如轨迹优化求解一个标准行走问题）评估其控制难度</li>
+<li>只有在控制上可行的设计，才进入详细机械设计</li>
+</ol>
+<p>关键洞察是：<strong>有些机械设计在控制上根本不可行</strong>，无论算法多好。比如腿太长而脚太小，支撑多边形面积不足；或者质量分布集中在躯干上部，导致倒立摆动力学过于激进。这些用最优控制基准在几分钟内就能筛掉，而用试错要几个月。</p>
+<h2 id="_6">硬件子装配体组织</h2>
+<p>STL 按 <strong>左腿 / 右腿 / 躯干</strong> 组织，这个划分不是随意的：</p>
+<ul>
+<li><strong>左右腿完全对称</strong> → 只设计一次，镜像生产；也便于只换一侧做备件</li>
+<li><strong>躯干独立</strong> → 承载电池、主控、IMU，改动频率与腿部不同</li>
+<li>每个子装配可 <strong>独立加工与预装配</strong>，最后总装</li>
+</ul>
+<p>这种划分对自制者特别友好：可以并行加工三个子装配，任何一个出问题不会阻塞全部。</p>
+<h2 id="_7">为什么电子接线映射值得单独提供</h2>
+<p>这一项在多数开源硬件项目里是缺失的，但它恰恰是自制失败率最高的环节之一。</p>
+<p>22—29 个自由度意味着几十根线缆，涉及电机动力、编码器信号、通信总线、传感器供电。接错一根的后果轻则某个关节不动，重则烧毁驱动器。提供标准化的连接器映射 + 接线表，等于把「电气工程师的经验」固化成文档。</p>
+<p>配合 <code>lerobot-humanoid-runtime</code> 里的 <strong>电机扫描工具</strong>，可以在通电前先逐个验证电机编号与通信是否正常。</p>
+<hr />
+<h2 id="_8">直接相关资源</h2>
+<ul>
+<li><strong>硬件仓库</strong>：<code>github.com/huggingface/lerobot-humanoid-hardware</code>（Apache-2.0）</li>
+<li><strong>设计仓库</strong>：<code>github.com/huggingface/lerobot-humanoid-design</code>——控制导向设计工作流</li>
+<li><strong>运行时仓库</strong>：<code>github.com/huggingface/lerobot-humanoid-runtime</code></li>
+<li><strong>模型资产</strong>：<code>huggingface/lerobot-humanoid-model</code>——MJCF/URDF</li>
+<li><strong>训练环境</strong>：<code>github.com/Virgileboat/lerobot-legged-zoo</code>——MJCF + MJLab</li>
+<li><strong>上层生态</strong>：<code>github.com/huggingface/lerobot</code></li>
+</ul>
+<h2 id="_9">延伸阅读方向</h2>
+<ol>
+<li><strong>双足行走控制</strong>——LIPM（线性倒立摆模型）、ZMP 判据、MPC 步态生成、RL 步态策略是四条主流路线</li>
+<li><strong>控制导向的机械设计</strong>——把最优控制作为设计评估标准，在承诺硬件前筛掉不可行方案</li>
+<li><strong>LeRobot 数据集格式</strong>——Parquet 存状态/动作 + MP4 存图像，是理解整个生态的基础</li>
+<li><strong>sim2real 中的系统辨识</strong>——自制硬件尤其需要重新测定惯量与摩擦参数</li>
+</ol>
+<h2 id="_10">关联站点内容</h2>
+<ul>
+<li>开源项目 LeRobot Humanoid Runtime（本站 os156）——本仓库的运行时配套</li>
+<li>开源项目 Jumper（本站 os153）——同为低价可自制路线的对照</li>
+<li>开源项目 HomeBody（本站 os149）——Unitree G1 上的长时程家务智能体</li>
+<li>学习模块「机器人动力学」——足式机器人的动力学建模与平衡判据</li>
+</ul>
+<hr />
+<h2 id="_11">采购与准备</h2>
+<pre><code class="language-bash"># 1. 从硬件仓库获取 BOM 与制造文件
+git clone https://github.com/huggingface/lerobot-humanoid-hardware.git
+cd lerobot-humanoid-hardware
+</code></pre>
+<p>按 BOM 清单采购。建议注意三点：</p>
+<ol>
+<li><strong>电机按 1.2 倍数量采购</strong>——装配损坏与个体差异是常态，不要刚好买够</li>
+<li><strong>连接器宁可买多不买少</strong>——这是最容易缺料的部分</li>
+<li><strong>确认加工能力</strong>——STL 需要 3D 打印或 CNC；若没有条件，先确认本地加工服务的精度能否达到图纸公差</li>
+</ol>
+<h2 id="_12">加工与预装配</h2>
+<pre><code class="language-bash"># 按子装配体导出打印文件（路径以仓库实际结构为准）
+ls stl/left_leg/  stl/right_leg/  stl/torso/
+</code></pre>
+<p>装配顺序建议：</p>
+<ol>
+<li><strong>先做电机预组装调试</strong>——用仓库提供的工具逐个扫描电机，确认通信与编码器正常。<strong>这一步不要跳过</strong>，装好再拆的代价是数小时</li>
+<li><strong>装配单腿</strong>——先完成一条腿，验证关节活动范围与无干涉</li>
+<li><strong>镜像装配另一条腿</strong></li>
+<li><strong>装配躯干</strong>——安装电池、主控、IMU</li>
+<li><strong>总装与接线</strong>——严格按接线映射表执行</li>
+</ol>
+<h2 id="_13">通电前检查清单</h2>
+<ul>
+<li>[ ] 所有电机已通过扫描工具单独验证</li>
+<li>[ ] 接线与连接器映射表 <strong>逐根核对</strong>（不是抽查）</li>
+<li>[ ] 关节活动范围内无机械干涉（手动转动每个关节）</li>
+<li>[ ] 电池极性与电压确认</li>
+<li>[ ] IMU 刚性固定，未贴在会形变的位置</li>
+<li>[ ] 急停开关可达且功能正常</li>
+</ul>
+<p><strong>最后一项尤其重要</strong>：双足机器人一旦跌倒，力矩可能远超额定值，没有可靠的急停会损坏电机甚至伤人。</p>
+<h2 id="_14">第一次通电</h2>
+<pre><code class="language-bash"># 用 runtime 仓库的交互式归零工具标定关节零点
+lerobot-humanoid-zero --port /dev/ttyUSB0 --interactive
+
+# 验证关节运动方向（反向会导致一上电抽搐）
+lerobot-humanoid-verify --check-direction
+
+# IMU 校准
+lerobot-humanoid-imu --calibrate
+</code></pre>
+<h2 id="lerobot">与 LeRobot 生态对接</h2>
+<pre><code class="language-python">'''
+把 LeRobot Humanoid 接入标准 LeRobot 流程
+'''
+from lerobot.robots import make_robot
+
+robot = make_robot(&quot;lerobot_humanoid&quot;, port=&quot;/dev/ttyUSB0&quot;)
+robot.connect()
+
+obs = robot.get_observation()
+print(&quot;关节数:&quot;, len(obs[&quot;joint_pos&quot;]))
+print(&quot;IMU:&quot;, obs.get(&quot;imu&quot;))
+
+action = policy.select_action(obs)
+robot.send_action(action)
+</code></pre>
+<p>接入后可以直接复用 LeRobot 的 <strong>数据集格式、训练流程与可视化工具</strong>——这是这个平台相对于其他低价本体的最大优势。</p>
+<hr />
+<h2 id="_15">官方给出的规格</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>规格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>整机成本</td>
+<td>约 2500 美元</td>
+</tr>
+<tr>
+<td>形态</td>
+<td>双足（当前发布不含上半身）</td>
+</tr>
+<tr>
+<td>模型格式</td>
+<td>MJCF / URDF</td>
+</tr>
+<tr>
+<td>训练环境</td>
+<td>MJLab（需 CUDA GPU，可上云）</td>
+</tr>
+<tr>
+<td>推理后端</td>
+<td>ONNX / Torch 双后端</td>
+</tr>
+<tr>
+<td>通信</td>
+<td>CAN（MIT 协议）+ 安全机制</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_16">需要自行验证的指标</h2>
+<p>公开资料中没有给出以下数据，属于自制项目必须自行测定的部分：</p>
+<ul>
+<li>单腿最大关节力矩与连续工作转矩</li>
+<li>整机重量与质心位置（取决于实际用料与加工误差）</li>
+<li>续航时间（取决于电池选型）</li>
+<li>最大行走速度</li>
+</ul>
+<p><strong>注意</strong>：自制平台的实际性能与官方标称会有偏差，因为加工精度、电机个体差异、装配预紧力都会影响结果。建议装配完成后重新测定惯量参数并更新到 <code>lerobot-humanoid-model</code> 的模型资产里——否则仿真与真机的动力学不一致，sim2real 效果会很差。</p>
+<h2 id="_17">成本分解的意义</h2>
+<p>2500 美元这个数字的价值不在于绝对值，而在于它让以下几件事变得可行：</p>
+<ul>
+<li>个人开发者可以拥有一台人形机器人</li>
+<li>一个实验室可以买 <strong>10 台</strong> 做多机实验，而不是买 1 台</li>
+<li>论文结果可以被真正复现（同一硬件 + 同一模型资产）</li>
+</ul>
+<p>第三点是最深远的。过去人形机器人研究的大量结论无法复现，本质原因是硬件不一致。当硬件成为标准件后，这个领域才有可能像视觉、NLP 那样积累。</p>
+<hr />
+<h2 id="_18">与同类低价/开源人形平台</h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>提供方</th>
+<th>成本</th>
+<th>形态</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LeRobot Humanoid</strong></td>
+<td>Hugging Face</td>
+<td>~2500 美元</td>
+<td>双足</td>
+<td>五仓库分离；LeRobot 生态打通；当前不含上半身</td>
+</tr>
+<tr>
+<td><strong>Jumper</strong></td>
+<td>金钢科技</td>
+<td>未定价</td>
+<td>蟹形 22-DoF</td>
+<td>分段脊柱+辅助臂；可自制；双编码器舵机</td>
+</tr>
+<tr>
+<td><strong>Unitree G1</strong></td>
+<td>宇树</td>
+<td>商业售价</td>
+<td>人形 29-DoF</td>
+<td>生态成熟；BiGym 2.0 / HomeBody 等基准的本体</td>
+</tr>
+<tr>
+<td><strong>Berkeley Humanoid</strong></td>
+<td>UC Berkeley</td>
+<td>开源图纸</td>
+<td>双足</td>
+<td>学术界常用低价设计</td>
+</tr>
+<tr>
+<td><strong>SO-100 / SO-ARM</strong></td>
+<td>Hugging Face</td>
+<td>低价</td>
+<td>6-DoF 机械臂</td>
+<td>桌面操作入门，非足式</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lerobot-humanoid_1">LeRobot Humanoid 的独特位置</h2>
+<p>它的核心优势不是硬件性能，而是 <strong>与 LeRobot 生态的原生打通</strong>。</p>
+<p>LeRobot 提供了：统一 Robot 类接口、标准化数据集格式（Parquet + MP4）、SOTA 策略实现（ACT / Diffusion / π0 / π0.5 / GR00T N1.7 / SmolVLA 等）、LIBERO/MetaWorld 评测脚本。LeRobot Humanoid 作为其原生支持的本体之一，意味着你采集的数据、训练的策略可以 <strong>直接复用整个生态的工具链</strong>，不需要自己写数据转换。</p>
+<p>这一点对研究者意义重大：过去大量时间花在「把我的机器人数据转成能训练的格式」上，现在这部分被标准化了。</p>
+<h2 id="_19">选择建议</h2>
+<ul>
+<li><strong>想做双足行走算法研究、预算有限</strong> → LeRobot Humanoid</li>
+<li><strong>想做人形全身操作（上半身也要）</strong> → Unitree G1（当前 LeRobot Humanoid 尚不含上半身）</li>
+<li><strong>想做高动态/非双足运动</strong> → Jumper</li>
+<li><strong>只想学操作算法，不关心足式</strong> → SO-100 系列，成本更低</li>
+</ul>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
