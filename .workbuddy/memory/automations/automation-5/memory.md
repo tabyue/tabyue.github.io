@@ -29,6 +29,12 @@
 - 学习：sensors-hardware +第 18 节（多模态主动感知：选型/同步/标定，12K）；sim-to-real +第 12 节（重定向 IK/MPC/GNR + real-to-sim 数据引擎，12K）。
 - 校验：sync + sitemap（506 章节）+ health_check → ALL OK；已 push（9858361）。
 
+### 2026-10-12 08:00—08:55
+- 投稿箱：无新投稿。
+- 数据：新闻 +10（n395—n404）、论文 +5（p205—p209，含 detail）、开源 +4（os153—os156，含 detail + 报告页）、招聘 +6（j185/j186/j189/j190/j191/j192）、资源 r001 扩充 + 新增 r008（训练场与实景实训基础设施）。
+- 学习：robot-kinematics +第 17 节（运动学标定与误差建模，11.0K → 106K）；physics-simulation +第 16 节（接触动力学与约束求解器，8.7K → 105K）。
+- 校验：sync + sitemap（508 章节）+ health_check → ALL OK；已 push（9858361..cbfab4f）。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
@@ -52,3 +58,5 @@
   **空 cfg 必须用 `[System.IO.File]::WriteAllText($tmp,"")` 创建**；用 `">$tmp` 重定向会写成 UTF-16，git 报 `fatal: bad config line 1`。
 - **learning-path.json 结构**：`stages[].modules[]`，模块**只有 name 没有 id**，同步 lastUpdated 需按 name 子串匹配（如「传感器与硬件接口」「Sim-to-Real」）。
 - 每次开工先看 `git status -sb`：若 `ahead N` 说明上一轮 commit 未 push，本轮一并带上。
+- **开源选题先查库（2026-10-12）**：AWS Physical AI Toolchain=os152、ROBOTERA VPP2=os145、RLinf/RPent=os146 早已收录。搜到的「新开源」很可能上一轮已加，写条目前先按 github URL 子串比对现有 projects。
+- **学习正文用 raw 字符串** `r'''...'''`（2026-10-12）：正文含 `\{`、`\top`、`\Delta` 等 LaTeX 时，普通 `"""` 会报 SyntaxWarning 且需逐个转义；raw 字符串一次解决。示例代码 docstring 仍用 `'''`。
