@@ -58,6 +58,7 @@ health_check 覆盖：JSON 解析 / id 唯一 / 内容查重 / category 白名�
 - 数学与编程模块要求教材级（公理化定义、定理证明、数学史、误区、习题）
 - **模块/章节命名要 ASCII 友好**，避免 emoji 与中文括号污染 modId
 - 每轮深化后必须同步 3 处 lastUpdated：learn/*.json 顶层 + learning-path.json 对应模块（modules[].lastUpdated，用 `name` 匹配）+ 新增 section 自身
+- **2026-10-13 结构性重构**：29/32 模块章节已按 tier(0基础/1核心/2进阶/3前沿) 重排为教学梯度，全部章节有 difficulty(入门/中级/高级)/estimatedMinutes/shortTitle/isFrontier/isBrief。**以后新增章节一律 append 到对应 tier 的位置（前沿专题放尾部），禁止再 unshift 到开头**。重排工具 `tools/restructure_learn.py`（幂等，输入 `tools/learn_sort_plan/`）；前端 `/learn/<mod>` 现在是模块大纲页，`/learn/<mod>/<n>` 是章节页（带小节目录）；章节新增字段记得同步 `sync_learn_split.py` 的 sectionsMeta，缺了大纲页会静默降级
 
 ## 自动化跨实例协调
 - automation-5 常并行多实例共享工作树：启动先 `git status`，有残留则**接手而非覆盖**
