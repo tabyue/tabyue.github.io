@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arena 5.0：照片级 ROS 2 社交导航仿真与基准框架（NUS × TU Berlin × TUM） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Arena 5.0：照片级 ROS 2 社交导航仿真与基准框架（NUS × TU Berlin × TUM） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="arena-50-ros-2-nus-tu-berlin-tum">Arena 5.0：照片级 ROS 2 社交导航仿真与基准框架（NUS × TU Berlin × TUM）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Arena-Rosnav">https://github.com/Arena-Rosnav</a>  </p>
+<p><strong>Stars</strong>: 1500 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-10-13  </p>
+<p><strong>组织</strong>: NUS CLeAR Lab × TU Berlin × TUM  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-13</p>
+</blockquote>
+<hr />
+<p><strong>社交导航为什么需要专用平台</strong></p>
+<p>在医疗、物流、辅助机器人等场景，机器人要在 <strong>以人为中心的环境</strong> 里移动。这类导航的难点不只是「不撞墙」，而是：</p>
+<ul>
+<li>不闯入人的个人空间</li>
+<li>不逆向穿越人流</li>
+<li>不挡住 doorway 与通道</li>
+<li>在人群密度突变时调整策略</li>
+</ul>
+<p><strong>现有平台的三重困境</strong></p>
+<ol>
+<li><strong>遗留软件</strong>：很多平台仍依赖 ROS 1，sim2real 迁移成本高、人才断层</li>
+<li><strong>过于专用</strong>：只面向学习方法或只做概念验证，难以复现与工业化</li>
+<li><strong>高保真但封闭</strong>：Isaac Sim 这类模拟器使用门槛高且不完整开源</li>
+</ol>
+<p><strong>Arena 5.0 的中间路线</strong></p>
+<p><strong>高保真（Isaac Gym） + 完全开源 + ROS 2 原生</strong>，并保留前代积累的随机环境生成、评测工具、规划器与机器人模型接入能力。</p>
+<p><strong>论文与资金</strong></p>
+<p>发表于 Robotics: Science and Systems (RSS)。由 A*STAR 国家机器人计划（M23NBK0053）、新加坡 NRF 与 DSO 国家实验室 AI Singapore 计划（AISG2-RP-2020-017）支持。</p>
+<hr />
+<p><strong>两阶段场景生成流水线</strong></p>
+<p><strong>Generation Stage（文本 → 平面图）</strong></p>
+<ul>
+<li>输入：自然语言描述</li>
+<li>中间表示：<strong>3D 场景图（3DSG）</strong></li>
+<li>分工：把问题拆成两个子问题</li>
+<li><strong>文本 → 3DSG</strong>：由 LLM 求解（语义与关系）</li>
+<li><strong>3DSG → 平面图</strong>：由空间 GNN 求解（布局与几何）</li>
+</ul>
+<p>这个拆分很关键——LLM 擅长语义，GNN 擅长空间约束，硬让一方做另一方的活都会崩。</p>
+<p><strong>Population Stage（平面图 → 3D 资产）</strong></p>
+<ul>
+<li><strong>Asset Placer</strong>：按平面图中的 asset zone 布置 3D 模型</li>
+<li><strong>Model Database</strong>：预建语义向量模型库，按语义检索相关模型</li>
+<li><strong>Fitter</strong>：把检索到的模型按尺寸与位置拟合进 zone</li>
+<li>后处理 → 完整环境（3D 墙体 + 模型）</li>
+</ul>
+<p><strong>Isaac Gym 集成</strong></p>
+<ul>
+<li>完整接入 NVIDIA Isaac Gym 实现照片级仿真</li>
+<li>Arena 原有模块（随机环境生成、评测工具、ROS 2 支持、规划器、机器人模型、API）全部在 Isaac Gym 内可用</li>
+<li>训练效率显著提升</li>
+</ul>
+<p><strong>评测</strong></p>
+<ul>
+<li>一整套社交导航指标（不只是到达率）</li>
+<li>在难度分级的生成世界与定制世界上评测 SOTA 策略</li>
+<li>含用户研究，验证可用性与效率相对前代的显著提升</li>
+</ul>
+<hr />
+<h2 id="_2">直接相关资源</h2>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.11220">Demonstrating Arena 5.0: A Photorealistic ROS2 Simulation Framework for Developing and Benchmarking Social Navigation（arXiv 2610.11220）</a></strong> — NUS × TUB × TUM，RSS 2025 论文。LinKästner、Volodymyr Shcherbyna、Harold Soh 等。</li>
+<li><strong><a href="https://clear-nus.github.io/blog/arena5">Arena 5.0 官方博客与资源</a></strong> — CLeAR Lab 的介绍页，含论文、logo、GitHub 链接与场景示例。</li>
+<li><strong><a href="https://5.arena-rosnav.org/arena5.pdf">Arena 5.0 项目页（含 PDF）</a></strong> — 论文 PDF 与各版本文档入口。</li>
+</ul>
+<hr />
+<p><strong>获取代码</strong></p>
+<pre><code class="language-bash"># 主仓库
+git clone https://github.com/Arena-Rosnav/Arena-Rosnav.git
+# 论文：https://5.arena-rosnav.org/arena5.pdf
+# 博客：https://clear-nus.github.io/blog/arena5
+</code></pre>
+<p><strong>典型使用流程</strong></p>
+<ol>
+<li>用自然语言描述目标环境（如「一个有桌椅与狭窄通道的办公区」）</li>
+<li>跑 Generation Stage 得到平面图与 3DSG</li>
+<li>跑 Population Stage 生成完整 3D 环境</li>
+<li>接入待测导航规划器（Arena 提供统一 API）</li>
+<li>在难度分级的世界集上跑基准，收集社交导航指标</li>
+</ol>
+<p><strong>评测指标的选择建议</strong></p>
+<p>不要只看到达率与碰撞次数。社交导航的核心指标应包括：</p>
+<ul>
+<li>个人空间侵入（personal space violation）的累计时长</li>
+<li>与人流方向的逆行比例</li>
+<li>通行阻塞（blocking）事件次数</li>
+<li>路径的社交可解释性（是否可预测）</li>
+</ul>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>生成的平面图不可通行：检查 3DSG → 平面图 的 GNN 分支是否收敛，语义合理不等于几何可行</li>
+<li>资产悬空/穿模：Fitter 未考虑碰撞约束，需要在 Population Stage 后加碰撞过滤</li>
+<li>ROS 2 话题不通：确认用的是 ROS 2 distro 而非遗留的 ROS 1 桥接</li>
+</ul>
+<hr />
+<p><strong>平台能力</strong></p>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NVIDIA Isaac Gym 集成</td>
+<td>完整接入，照片级</td>
+</tr>
+<tr>
+<td>ROS 2 支持</td>
+<td>原生（非桥接）</td>
+</tr>
+<tr>
+<td>世界生成</td>
+<td>文本 → 3DSG → 平面图 → 3D 资产，全流程自动</td>
+</tr>
+<tr>
+<td>基准覆盖</td>
+<td>SOTA 社交导航策略，多难度世界，多指标</td>
+</tr>
+<tr>
+<td>场景类型</td>
+<td>办公室、NUS 校园、仓库，以及应急/救援专门场景</td>
+</tr>
+<tr>
+<td>多机器人</td>
+<td>支持 multi-robot setup</td>
+</tr>
+<tr>
+<td>监控与绘图</td>
+<td>内建 monitoring 与 plotting</td>
+</tr>
+</tbody>
+</table>
+<p><strong>相对前代的改进</strong></p>
+<p>论文通过生成上述基准并开展用户研究，证明 Arena 5.0 在 <strong>可用性与效率</strong> 上相比前代有显著提升。</p>
+<p><strong>适用边界</strong></p>
+<ul>
+<li>专注 <strong>社交导航</strong>（human-centric 环境），不是通用操作仿真平台</li>
+<li>需要 NVIDIA GPU 才能发挥 Isaac Gym 的照片级能力</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>保真度</th>
+<th>开源程度</th>
+<th>ROS 支持</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Arena 5.0</strong></td>
+<td>照片级（Isaac Gym）</td>
+<td><strong>完全开源</strong></td>
+<td><strong>ROS 2 原生</strong></td>
+<td>社交导航专用 + 基准</td>
+</tr>
+<tr>
+<td>Isaac Sim</td>
+<td>照片级</td>
+<td>部分开源</td>
+<td>ROS 2 支持</td>
+<td>通用机器人仿真</td>
+</tr>
+<tr>
+<td>Gazebo</td>
+<td>中</td>
+<td>完全开源</td>
+<td>ROS 2</td>
+<td>通用，社交场景需自建</td>
+</tr>
+<tr>
+<td>早期 Arena 版本</td>
+<td>中</td>
+<td>完全开源</td>
+<td>ROS 2</td>
+<td>社交导航，无照片级</td>
+</tr>
+<tr>
+<td>Habitat / iGibson</td>
+<td>高</td>
+<td>完全开源</td>
+<td>无（非 ROS 栈）</td>
+<td>室内导航与具身 AI</td>
+</tr>
+</tbody>
+</table>
+<p><strong>选择建议</strong></p>
+<ul>
+<li>做 <strong>人群环境中的移动机器人</strong> → Arena 5.0 是最合适的起点（自带指标与场景生成）</li>
+<li>做 <strong>操作类任务</strong> → 选 Isaac Lab / MuJoCo 系列</li>
+<li>做 <strong>通用导航但不关心社交合规</strong> → Gazebo 更轻量</li>
+</ul>
+<p><strong>与本站其他开源项目的关系</strong>：Arena 5.0 与 Isaac Lab-Arena（os143）互补——后者侧重通用操作策略的大规模并行评测，Arena 5.0 侧重导航在人机共处环境下的社交合规性。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

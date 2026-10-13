@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DexTacWAM：视觉-触觉世界动作模型（BAIR 人形智能中心，代码/权重/数据全开源） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">DexTacWAM：视觉-触觉世界动作模型（BAIR 人形智能中心，代码/权重/数据全开源） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="dextacwam-bair">DexTacWAM：视觉-触觉世界动作模型（BAIR 人形智能中心，代码/权重/数据全开源）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/dextacwam/DexTacWAM">https://github.com/dextacwam/DexTacWAM</a>  </p>
+<p><strong>Stars</strong>: 900 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-13  </p>
+<p><strong>组织</strong>: BAIR（UC Berkeley）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-13</p>
+</blockquote>
+<hr />
+<p><strong>为什么灵巧操作必须靠触觉</strong></p>
+<p>多指灵巧手在接触密集任务里，视觉能提供的信息是有限且滞后的：手指遮挡、物体形变、接触力分布、滑移前兆——这些只有触觉能给出。但多指触觉数据的采集成本极高：<strong>10 个指尖 × 高帧率 × 需要真机交互</strong>，规模远不如视觉数据。</p>
+<p><strong>DexTacWAM 的两步解法</strong></p>
+<ol>
+<li><strong>视觉到触觉迁移</strong>：大规模人类视频便宜且充足，触觉数据则依赖物理交互。DexTacWAM 只用 <strong>4 小时触觉交互数据</strong> 适配触觉编码器，然后直接用 <strong>每任务约 100 条示教</strong> 把预训练视频世界模型扩展到触觉预测，<strong>不对视频骨干做触觉 mid-training</strong>。</li>
+<li><strong>预测接触演化，而非条件化于接触</strong>：未来触觉预测为学习接触动力学提供了自监督目标。推理时，一次世界模型前向就能给动作专家提供 <strong>预测性的视触觉特征</strong>，不需要生成完整去噪的未来视觉或触觉观测。</li>
+</ol>
+<p><strong>决定性消融</strong></p>
+<p>保持触觉编码器、策略架构、训练流程完全一致，只把「世界模型 latent」替换成「直接注入的触觉特征」：4 任务均值 <strong>74.7 → 26.6</strong>。</p>
+<p>这个数字说明：把触觉当输入喂给策略，几乎不解决问题；<strong>让模型去预测接触如何演化</strong>，才真正改变了策略能利用的信息。</p>
+<hr />
+<p><strong>十指触觉压缩器（finger- and pose-aware tactile compressor）</strong></p>
+<p>问题：10 路指尖触觉流如果全部展开，token 数与计算量都会爆炸。</p>
+<p>方案：压缩为 <strong>2 个手级 latent</strong>，同时保留 <strong>89.4%</strong> 的融合前接触召回率。</p>
+<p>收益：<strong>训练加速 2.26×，推理加速 1.29×</strong>。</p>
+<p><strong>世界模型扩展</strong></p>
+<ul>
+<li>基座：预训练视频世界模型</li>
+<li>扩展方式：持续的视觉到触觉学习（continual vision-to-touch learning）</li>
+<li>触觉编码器适配：仅 4 小时触觉交互数据</li>
+<li>扩展到触觉预测：每任务约 100 条示教</li>
+<li><strong>不做</strong> 视频骨干的触觉 mid-training</li>
+</ul>
+<p><strong>推理路径</strong></p>
+<p>$$
+\text{观测} \xrightarrow{\text{世界模型单次前向}} \text{预测性视触觉特征} \xrightarrow{} \text{动作专家}
+$$</p>
+<p>关键点是不需要对未来视觉/触觉观测做完整去噪——预测 latent 本身就直接作为动作专家的条件。这把世界模型的「预演」成本从「生成完整未来」降到「前向一次」。</p>
+<p><strong>开源内容</strong></p>
+<ul>
+<li>代码：github.com/dextacwam/DexTacWAM</li>
+<li>权重与数据：Hugging Face <code>JensenYuan/dextacwam</code> collection</li>
+<li>项目页：dextacwam.github.io</li>
+</ul>
+<hr />
+<h2 id="_2">直接相关资源</h2>
+<ul>
+<li><strong><a href="https://dextacwam.github.io/">DexTacWAM 项目页</a></strong> — 含真机演示、世界模型预测、触觉可视化、消融与详细说明。</li>
+<li><strong><a href="https://arxiv.org/abs/2609.24976">DexTacWAM 论文（arXiv 2609.24976）</a></strong> — 作者 Jensen Yuan、Zekai Wang、Haoran Lu、Trevor Darrell、Ismini Lourentzou（原文 Lourentzou/Wei Zhan 等）等，BAIR Humanoid Intelligence Center。</li>
+<li><strong><a href="https://huggingface.co/collections/JensenYuan/dextacwam">权重与数据集（Hugging Face）</a></strong> — DexTacWAM 的模型权重与数据集，与 GitHub 代码配套。</li>
+</ul>
+<hr />
+<p><strong>获取代码与权重</strong></p>
+<pre><code class="language-bash">git clone https://github.com/dextacwam/DexTacWAM.git &amp;&amp; cd DexTacWAM
+# 权重与数据集在 Hugging Face
+# https://huggingface.co/collections/JensenYuan/dextacwam
+</code></pre>
+<p><strong>理解代码的三条主线</strong></p>
+<ol>
+<li><strong>触觉编码器适配</strong>：只用 4 小时触觉交互数据，看它如何接上视觉预训练表征</li>
+<li><strong>十指压缩器</strong>：10 路指尖流 → 2 个手级 latent，重点看 finger/pose aware 的条件化方式</li>
+<li><strong>世界模型到动作专家的接口</strong>：确认预测 latent 是直接作为条件，而不是先解码成观测</li>
+</ol>
+<p><strong>复现关键消融（建议第一个跑）</strong></p>
+<p>保持其他条件不变，把世界模型 latent 换成直接注入的触觉特征。若你的复现结果不是「大幅掉点」，说明接入方式有误——这是验证实现是否正确的最快判据。</p>
+<pre><code class="language-python">&quot;&quot;&quot;
+消融开关：世界模型 latent vs 直接触觉特征
+&quot;&quot;&quot;
+def build_action_expert_cond(tactile_latent, worldmodel_latent, mode='worldmodel'):
+    if mode == 'worldmodel':
+        return worldmodel_latent      # 预期：4 任务均值 ~74.7
+    elif mode == 'direct':
+        return tactile_latent         # 预期：4 任务均值 ~26.6
+    raise ValueError(mode)
+</code></pre>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>压缩器召回率远低于 89.4%：检查 finger/pose 条件化是否真的参与（只按时间压会丢手指身份）</li>
+<li>预测 latent 无用：确认没有退化成「先解码再编码」的绕路实现</li>
+</ul>
+<hr />
+<p><strong>六项富接触任务（每方法每任务 20 次真机试验，相机访问一致）</strong></p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>平均分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DexTacWAM</strong></td>
+<td><strong>70.6</strong></td>
+</tr>
+<tr>
+<td>RDP（最强基线）</td>
+<td>38.0</td>
+</tr>
+<tr>
+<td>ViTacFormer</td>
+<td>低于 RDP</td>
+</tr>
+</tbody>
+</table>
+<p>DexTacWAM 在 <strong>六项任务上全部取得最高分</strong>。</p>
+<p><strong>差距的分布很有信息量</strong>：在视觉最不提供信息的地方差距最大——tongs（夹钳）任务上所有基线都 ≤10，DexTacWAM 达到 <strong>60</strong>。值得注意的是，RDP 与 ViTacFormer <strong>已经接收指尖触觉输入</strong>，所以差距不是「有没有触觉」，而是「触觉怎么被用」。</p>
+<p><strong>消融</strong></p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>4 任务均值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>世界模型 latent</td>
+<td><strong>74.7</strong></td>
+</tr>
+<tr>
+<td>直接注入触觉特征（同编码器/同架构/同流程）</td>
+<td>26.6</td>
+</tr>
+</tbody>
+</table>
+<p><strong>效率</strong></p>
+<ul>
+<li>十指压缩：训练 <strong>2.26×</strong> 加速，推理 <strong>1.29×</strong> 加速</li>
+<li>触觉编码器适配数据：<strong>4 小时</strong></li>
+<li>扩展触觉预测：<strong>每任务约 100 条示教</strong></li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>触觉使用方式</th>
+<th>平均得分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DexTacWAM</strong></td>
+<td>预测触觉演化（世界模型 latent）</td>
+<td><strong>70.6</strong></td>
+</tr>
+<tr>
+<td>RDP</td>
+<td>触觉作为策略输入</td>
+<td>38.0</td>
+</tr>
+<tr>
+<td>ViTacFormer</td>
+<td>触觉作为策略输入</td>
+<td>&lt; 38.0</td>
+</tr>
+<tr>
+<td>DexTacWAM（直接触觉特征消融）</td>
+<td>触觉作为策略输入</td>
+<td>26.6（4 任务）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>与相关工作的关系</strong></p>
+<ul>
+<li><strong>相对纯视觉 VLA</strong>：在手指遮挡与柔性接触场景上有本质优势</li>
+<li><strong>相对「触觉作为额外模态」的 VLA</strong>：本项目的消融直接否定了这条捷径</li>
+<li><strong>相对 OpenViTac / UVTA 一类视触觉工作</strong>：DexTacWAM 强调的是 <strong>世界模型中的预测性触觉</strong>，而非感知侧的表征融合</li>
+<li><strong>与 Long-WAM / OpenWAM 的关系</strong>：同属 WAM 家族，DexTacWAM 把「被预测的世界状态」从视觉扩展到 <strong>多指接触演化</strong></li>
+</ul>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

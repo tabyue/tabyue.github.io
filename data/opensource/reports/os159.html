@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNITAS：首个 3D 原生世界动作模型（跨维智能 DexForce，1.7B 打过 6B/8B） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">UNITAS：首个 3D 原生世界动作模型（跨维智能 DexForce，1.7B 打过 6B/8B） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="unitas-3d-dexforce17b-6b8b">UNITAS：首个 3D 原生世界动作模型（跨维智能 DexForce，1.7B 打过 6B/8B）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/DexForce/UNITAS">https://github.com/DexForce/UNITAS</a>  </p>
+<p><strong>Stars</strong>: 800 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-13  </p>
+<p><strong>组织</strong>: 跨维智能 DexForce  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-13</p>
+</blockquote>
+<hr />
+<p><strong>核心主张：世界模型的预演空间应该是三维，而不是像素。</strong></p>
+<p>现有 WAM 大多建立在预训练视频生成器之上，用图像或视觉 latent 表示世界演化。但机器人交互发生在 <strong>公制三维空间</strong>，而图像是 <strong>视角相关的投影</strong>——同一段物理位移在近处占几百像素、远处占几十像素，相机一动像素坐标全变。让模型在像素空间预测未来，等于强迫它同时学物理与投影几何。</p>
+<p><strong>UNITAS 的做法</strong></p>
+<p>在一次交互内建立共享的公制三维坐标系，三类量全部落在其中：</p>
+<ul>
+<li><strong>观察</strong>：视觉 token 经世界对齐 3D 位置编码落地到三维位置</li>
+<li><strong>动作</strong>：动作流——人手关键点与机器人夹爪的 3D 点轨迹</li>
+<li><strong>环境响应</strong>：场景流——以动作流为条件的场景点位移</li>
+</ul>
+<p>预测目标从「未来图像」换成「三维位移场」，投影不再是需要在隐空间里反推的量。</p>
+<p><strong>为什么参数效率高</strong></p>
+<p>1.7B 打过 6B 与 8B，差距不在容量而在表示空间：当三维物理量直接可加减时，模型不需要花容量去隐式还原深度与视角。这对边缘部署是直接红利。</p>
+<hr />
+<p><strong>1. 动作流（action flow）</strong></p>
+<p>$$
+\mathcal{A} = {\, p_i(t) \in \mathbb{R}^3 \mid i = 1 \dots N_a,\; t \in [t_0, t_0+H] \,}
+$$</p>
+<p>把末端（夹爪或人手关键点）在时间窗内的运动表示为三维点轨迹。<strong>人手与机器人末端共用这一表示</strong>，只是点的语义绑定不同——这直接打通了人类视频数据的复用路径，无需额外重定向模块。</p>
+<p><strong>2. 场景流（scene flow）</strong></p>
+<p>给定动作流，场景点 $q_j$ 的位移</p>
+<p>$$
+\Delta q_j = f_\theta\big(q_j(t_0), \mathcal{A}, \mathcal{O}\big)
+$$</p>
+<p>$f_\theta$ 即模型要学的 <strong>物理演化算子</strong>。</p>
+<p><strong>3. 世界对齐 3D 位置编码</strong></p>
+<p>对第 $k$ 个视觉 token，其在世界系的三维位置由深度（或推断深度）反投影得到：</p>
+<p>$$
+c_k = R^\top (d_k K^{-1} u_k - t)
+$$</p>
+<p>位置编码 $PE(c_k)$ 直接加在 token 上，使注意力在 <strong>三维邻近性</strong> 上聚集，而非在图像网格邻近性上聚集。</p>
+<p><strong>4. 物理时间轨迹分词器</strong></p>
+<p>一条点轨迹经可学习映射压缩为单 token：</p>
+<p>$$
+z_i = \phi(\tau_i; c_i) \in \mathbb{R}^{d}, \quad c_i = p_i(t_0)
+$$</p>
+<p>序列长度从 $O(T \cdot N)$ 降到 $O(N)$；且时间以 <strong>物理量</strong> 而非帧序号进入模型，便于处理不同采样率的数据源。</p>
+<p><strong>5. 双用途接口</strong></p>
+<p>同一个接口既支持 <strong>直接动作执行</strong>（从观察与指令解码动作流），也支持 <strong>动作条件场景预测</strong>（给定候选动作流预测场景点位移，用于规划与评估）。</p>
+<hr />
+<h2 id="_2">直接相关资源</h2>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.12099">UNITAS: A 3D-Native World Action Model for Embodied Manipulation（arXiv 2610.12099）</a></strong> — 跨维智能 × 华南理工大学，27 页 11 图 13 表，投稿中。</li>
+<li><strong><a href="https://dexforce.com/technical-report/#/unitas-wam">UNITAS 技术报告与项目页</a></strong> — 跨维智能官方技术报告，含模型细节与演示。</li>
+<li><strong><a href="https://github.com/DexForce/UNITAS">代码仓库</a></strong> — 推理与训练代码，含 LIBERO / RoboTwin 评测脚本。</li>
+</ul>
+<hr />
+<p><strong>安装与首个基准</strong></p>
+<pre><code class="language-bash">git clone https://github.com/DexForce/UNITAS.git &amp;&amp; cd UNITAS
+# 按仓库 README 安装依赖并下载权重
+</code></pre>
+<p>建议的验证顺序：</p>
+<ol>
+<li><strong>先跑 LIBERO</strong>，对标 99.8%（最容易对齐的公开数字）</li>
+<li><strong>验证场景预测</strong>：给定一段动作流，检查预测位移场与真值的误差分布，确认是否复现相对 PointWorld 的 49% 降幅</li>
+<li><strong>换本体</strong>：把动作流的点绑定从夹爪换成人手关键点，观察零样本迁移比例——这是 3D 原生主张最直接的证据</li>
+<li><strong>上真机</strong>：注意三维坐标系标定误差会直接进入位移场，标定精度是第一瓶颈</li>
+</ol>
+<p><strong>位移误差自查</strong></p>
+<pre><code class="language-python">&quot;&quot;&quot;
+检查预测位移场与真值的误差（复现 49% 降幅的关键指标）
+&quot;&quot;&quot;
+import numpy as np
+
+def flow_error(pred_xyz, gt_xyz, valid=None):
+    # pred_xyz / gt_xyz: (T, N, 3) 场景点位移场
+    # valid: (T, N) 布尔掩码，剔除遮挡点
+    if valid is None:
+        valid = np.ones(pred_xyz.shape[:2], dtype=bool)
+    d = np.linalg.norm(pred_xyz - gt_xyz, axis=-1)
+    return float(d[valid].mean()), float(np.percentile(d[valid], 90))
+</code></pre>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>LIBERO 能复现但真机掉点严重：优先查 <strong>手眼标定与点云尺度</strong>，而不是调模型</li>
+<li>无深度输入时掉点明显：检查世界对齐位置编码分支是否退化成随机初始化</li>
+<li>场景预测误差接近 PointWorld：通常是动作流与场景流的时间对齐错位（物理时间分词器依赖严格时间戳）</li>
+</ul>
+<hr />
+<p><strong>动作条件场景预测（RoboTwin）</strong></p>
+<p>位移误差比 PointWorld 最多降低 <strong>49%</strong>——这是核心主张的直接验证。</p>
+<p><strong>操作成功率</strong></p>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LIBERO</td>
+<td><strong>99.8%</strong></td>
+</tr>
+<tr>
+<td>LIBERO-Plus</td>
+<td><strong>89.1%</strong></td>
+</tr>
+<tr>
+<td>RoboTwin 2.0 双臂 Clean</td>
+<td><strong>92.94%</strong></td>
+</tr>
+<tr>
+<td>RoboTwin 2.0 双臂 Randomized</td>
+<td><strong>93.04%</strong></td>
+</tr>
+<tr>
+<td>真机任务平均</td>
+<td><strong>85%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>参数效率</strong></p>
+<p>1.7B 的 UNITAS 超过：</p>
+<ul>
+<li>6B 的 Fast-WAM</li>
+<li>8B 的 Motus</li>
+<li>π0.5、LingBot-VA、PointWorld</li>
+</ul>
+<p><strong>论文规模</strong>：27 页、11 图、13 表，投稿中。arXiv 2610.12099。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>代表</th>
+<th>三维的角色</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>3D 原生</strong></td>
+<td><strong>UNITAS</strong></td>
+<td>输入输出的统一载体</td>
+<td>LIBERO <strong>99.8%</strong>，1.7B</td>
+</tr>
+<tr>
+<td>3D 感知</td>
+<td>PointWorld 等</td>
+<td>辅助信息（深度/点云/几何约束）</td>
+<td>位移误差高最多 49%</td>
+</tr>
+<tr>
+<td>视频 WAM</td>
+<td>Fast-WAM (6B)、Motus (8B)</td>
+<td>无（像素/latent 空间预测）</td>
+<td>参数更大但成功率更低</td>
+</tr>
+<tr>
+<td>通用 VLA</td>
+<td>π0.5、LingBot-VA</td>
+<td>无</td>
+<td>低于 UNITAS</td>
+</tr>
+</tbody>
+</table>
+<p><strong>读表要点</strong>：LIBERO 已接近饱和，99.8% 与 98% 的差距不具备统计显著性。真正值得看的是 <strong>真机 85%</strong> 与 <strong>场景预测位移误差降 49%</strong>——前者反映泛化，后者直接检验 3D 原生主张。</p>
+<p><strong>与 Long-WAM / OpenWAM 的关系</strong>：三者同属 WAM 家族但切入点不同——OpenWAM 是 <strong>可组合的试验台</strong>（比较交互设计），Long-WAM 解决 <strong>长上下文与实时性</strong>，UNITAS 解决 <strong>表示空间本身</strong>。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

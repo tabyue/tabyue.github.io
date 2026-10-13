@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hold_and_weld：ROS 2 双臂焊接-夹持框架（用第二只机械臂代替专用焊接夹具） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">hold_and_weld：ROS 2 双臂焊接-夹持框架（用第二只机械臂代替专用焊接夹具） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="hold_and_weldros-2-">hold_and_weld：ROS 2 双臂焊接-夹持框架（用第二只机械臂代替专用焊接夹具）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/silanus23/hold_and_weld">https://github.com/silanus23/hold_and_weld</a>  </p>
+<p><strong>Stars</strong>: 420 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-13  </p>
+<p><strong>组织</strong>: 独立开发者（Berkan Tali）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-13</p>
+</blockquote>
+<hr />
+<p><strong>要解决的问题很具体：焊接离不开专用夹具。</strong></p>
+<p>传统机器人焊接单元里，工件必须被固定在为它专门设计的夹具上。换一种工件就要换一套夹具——设计、制造、调试的成本和时间，让小批量、多品种的焊接自动化在经济上难以成立。</p>
+<p><strong>hold_and_weld 的思路</strong>：用 <strong>第二只机械臂当夹具</strong>。一只臂抓着工件并保持姿态，另一只臂完成焊接。这样夹具从「硬件」变成了「软件 + 一条机械臂」，换产时改的是配置而不是工装。</p>
+<p><strong>为什么这比听起来难</strong></p>
+<p>静态夹具里工件不动，焊接臂可以在整个工作空间里自由优化自己的可操作度。双臂方案里，抓持臂的位姿同时要满足：</p>
+<ul>
+<li>抓取采样器的排除体积约束（不能挡住焊缝、螺孔）</li>
+<li>为焊接臂留出一条全程保持高可操作度的路径</li>
+</ul>
+<p>这两者经常冲突。框架的应对是：<strong>在候选评估阶段沿采样的笛卡尔路径逐点检查</strong>，任何一项不达标（IK 失败、关节限位、Yoshikawa 可操作度过低、关节步距过大）就拒绝该候选。</p>
+<p><strong>当前边界</strong>：v0.3.0 是仿真中的概念验证，没有真实焊接试验。作者正在推进硬件演示。</p>
+<hr />
+<p><strong>五个 ROS 2 包</strong></p>
+<table>
+<thead>
+<tr>
+<th>包</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hold_and_weld_description</code></td>
+<td>机器人 URDF、网格与模型</td>
+</tr>
+<tr>
+<td><code>hold_and_weld_planning</code></td>
+<td>焊接路径生成与焊缝提取</td>
+</tr>
+<tr>
+<td><code>hold_and_weld_gripper_sampler</code></td>
+<td>约束感知抓取采样（排除含焊缝的表面与区域）</td>
+</tr>
+<tr>
+<td><code>hold_and_weld_application</code></td>
+<td>action server 与工作流协调（含自定义运动学求解器）</td>
+</tr>
+<tr>
+<td><code>hold_and_weld_bringup</code></td>
+<td>launch 文件与系统启动（含可视化器与单例 spawner）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>抓取采样</strong></p>
+<p>在 <strong>精确 CAD 表面</strong> 上生成对映抓取候选。排除体积（exclusion volumes）把抓取推离焊缝、螺孔等禁区；候选再按夹爪几何过滤，并与工件、次要物体和地面做碰撞检查。支持 STEP 与 URDF 输入。</p>
+<p><strong>焊缝提取</strong></p>
+<p><code>hold_and_weld_planning</code> 的网格流水线识别零件间的 <strong>接触边界</strong>，沿零件边缘追踪，再细化成焊接路径，导出为 JSON。</p>
+<p><strong>接近构型选择（ConfigurationFinder）</strong></p>
+<p>这是工程上最容易踩空的一步：<strong>到达焊缝起点，不代表机器人有合适的构型焊完整条缝</strong>。</p>
+<p>流程：</p>
+<ol>
+<li><code>ConfigurationFinder</code> 在 OMPL 规划接近运动之前先选择接近的关节构型</li>
+<li>自定义 <strong>Ceres IK 求解器</strong> 最小化位置与姿态误差，带硬关节限位与偏好接近种子的惩罚项</li>
+<li>多个初始种子探索不同的 IK 分支</li>
+<li>每个候选沿覆盖 <strong>下探 + 焊接运动</strong> 的采样笛卡尔路径评估，逐点解 IK（以上一次解为种子）</li>
+<li>拒绝条件：IK 失败、关节限位违反、Yoshikawa 可操作度过低、关节步距过大</li>
+<li>存活候选按 <strong>最小关节限位余量、最小可操作度、离家构型距离</strong> 排序</li>
+<li>OMPL 以选中构型为关节目标做规划；Pilz 处理下探与直线/圆弧焊接，其他曲线用稠密路点笛卡尔回退</li>
+</ol>
+<p><strong>双臂协调</strong></p>
+<p>action server 分别处理抓取与焊接，coordinator 编排整个工作单元：夹爪臂先取件并保持，焊接臂再执行焊接路径。独立 launch 文件允许任一侧单独运行。</p>
+<p><strong>模型目录</strong></p>
+<p>机器人与夹爪模型通过 <code>workcell.yaml</code> 选择，新的机器人/夹爪可通过 xacro 包装器与目录注册接入。</p>
+<hr />
+<h2 id="_2">直接相关资源</h2>
+<ul>
+<li><strong><a href="https://discourse.openrobotics.org/t/hold-and-weld-v0-3-0-configurable-dual-arm-welding-grasping-framework/58628/1">Hold_and_weld v0.3.0 发布帖（Open Robotics Discourse）</a></strong> — 作者 Berkan Tali 的发布说明，含抓取采样与焊缝提取的效果图、候选评估规则与路线图。</li>
+<li><strong><a href="https://github.com/silanus23/hold_and_weld">仓库 README 与 ADDING_A_ROBOT.md</a></strong> — 安装、用法示例、各包文档，以及添加机器人与夹爪模型的接口说明。</li>
+<li><strong><a href="https://github.com/silanus23/hold_and_weld">Duff et al., Building an Orthonormal Basis, Revisited (JCGT 2017)</a></strong> — 仓库引用文献，用于抓取采样中的正交基构造；机器人网格来自 Yaskawa Motoman 的 motoman_ros2（Apache-2.0 / BSD-3）。</li>
+</ul>
+<hr />
+<p><strong>用 Docker 快速开始（推荐）</strong></p>
+<pre><code class="language-bash">docker pull ghcr.io/silanus23/hold_and_weld:0.3.0
+</code></pre>
+<p><strong>源码构建</strong></p>
+<p>依赖：OpenCASCADE 7.9.3、CGAL、FCL、MoveIt 2。目标 ROS 2 Jazzy / Ubuntu 24.04。</p>
+<p>先编译网格求交扩展：</p>
+<pre><code class="language-bash">cd hold_and_weld_planning/hold_and_weld_planning/mesh
+mkdir build &amp;&amp; cd build
+cmake ..
+make
+cp mesh_intersection*.so ../
+</code></pre>
+<p>启动系统：</p>
+<pre><code class="language-bash">ros2 launch hold_and_weld_bringup system_bringup.launch.py
+</code></pre>
+<p><strong>配置工作单元</strong></p>
+<p>机器人与夹爪模型、基座位姿通过 <code>workcell.yaml</code> 选择；也可用 RViz2 中的交互式标记摆放机器人与场景物体，布局保存为 YAML 后拷回工作单元配置。</p>
+<p><strong>扩展</strong></p>
+<ul>
+<li>添加新机器人/夹爪：见 <code>ADDING_A_ROBOT.md</code></li>
+<li>开发路线：见 <code>ROADMAP.md</code></li>
+</ul>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>网格求交扩展没编译 → 焊缝提取的网格流水线直接不可用，这是最常见的第一步失败</li>
+<li>候选全被拒绝 → 多半是工作单元布局本身让焊接臂可操作度过低，先调基座位置再调算法</li>
+<li>STEP 导入失败 → 检查 OpenCASCADE 版本，7.9.3 是仓库验证过的版本</li>
+</ul>
+<hr />
+<p><strong>已验证的能力（仿真）</strong></p>
+<ul>
+<li>CAD 表面约束感知对映抓取采样，排除体积生效</li>
+<li>从 CAD 与网格几何提取焊缝并导出 JSON 路径</li>
+<li>双臂协调：夹爪臂取件保持 → 焊接臂执行焊接路径</li>
+<li>复杂几何测试样例（含凹面、椭圆曲面等特征）上抓取采样与焊缝提取结果良好</li>
+<li>含单元测试</li>
+</ul>
+<p><strong>当前限制（作者口径）</strong></p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>完整流程</td>
+<td>仿真中已演示</td>
+</tr>
+<tr>
+<td>真实焊接试验</td>
+<td><strong>尚未验证</strong></td>
+</tr>
+<tr>
+<td>几何覆盖度</td>
+<td>已测样例良好，仍需更多几何测试</td>
+</tr>
+<tr>
+<td>硬件演示</td>
+<td>推进中，见 ROADMAP</td>
+</tr>
+</tbody>
+</table>
+<p><strong>最值得关注的工程指标</strong></p>
+<p>作者在讨论中明确指出：判断这套系统是否成立的指标，是 <strong>焊接臂沿整条采样笛卡尔路径的 Yoshikawa 可操作度</strong>。如果抓持臂的位姿把可操作度压到阈值以下，这个「动态夹具」就失败了——仿真可以忽略持重所需的扭矩，真实部署不能。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>换产成本</th>
+<th>柔性</th>
+<th>成熟度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>专用焊接夹具</td>
+<td>高（重新设计制造）</td>
+<td>低</td>
+<td>工业标准</td>
+</tr>
+<tr>
+<td><strong>hold_and_weld</strong></td>
+<td>低（改配置）</td>
+<td>高</td>
+<td><strong>PoC，仿真验证</strong></td>
+</tr>
+<tr>
+<td>人工焊接</td>
+<td>—</td>
+<td>最高</td>
+<td>现成但有安全与人力问题</td>
+</tr>
+<tr>
+<td>商用柔性焊接单元</td>
+<td>中</td>
+<td>中</td>
+<td>成熟但闭源且昂贵</td>
+</tr>
+</tbody>
+</table>
+<p><strong>与 MoveIt 2 默认流水线的差别</strong></p>
+<p>MoveIt 2 提供通用的运动规划能力，但 <strong>不包含</strong>：</p>
+<ul>
+<li>与焊缝位置耦合的抓取采样（排除体积）</li>
+<li>从 CAD 自动提取焊缝</li>
+<li>「到达起点 ≠ 能焊完整条缝」的接近构型选择</li>
+</ul>
+<p>hold_and_weld 补的正是这三层 <strong>焊接领域专用</strong> 的逻辑。</p>
+<p><strong>定位说明</strong></p>
+<p>这是一个个人主导的开源项目而非厂商产品，价值在于把「双臂代替夹具」这条思路所需的全部环节（采样、提取、IK、规划、协调）打通成一个可运行的参考实现。对做工业机器人集成的团队来说，参考价值大于直接可用性。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
