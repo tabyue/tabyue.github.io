@@ -35,6 +35,12 @@
 - 学习：robot-kinematics +第 17 节（运动学标定与误差建模，11.0K → 106K）；physics-simulation +第 16 节（接触动力学与约束求解器，8.7K → 105K）。
 - 校验：sync + sitemap（508 章节）+ health_check → ALL OK；已 push（9858361..cbfab4f）。
 
+### 2026-10-13 08:00—09:20
+- 投稿箱：无新投稿。顺带把前几轮遗留的 4 个未推送提交一并推上。
+- 数据：新闻 +9（n405/406/410/411/412/413/415/416/417/418 中 9 条生效；4 条与既有条目重复被拦）、论文 +5（p211/p213/p214/p215/p216，含 detail）、开源 +4（os158—os161，含 detail + 报告页）、招聘 +6（j193—j198）、资源 r001 扩充 + 新增 r009（评测基准与榜单）。
+- 学习：control-theory +第 17 节（抖动治理：jerk 限幅 / 输入整形 / 高阶动作监督，11K → 109K）；mechanical-design +第 19 节（一体化关节模组量产工程，12K → 108K）。
+- 校验：sync + sitemap（510 章节）+ health_check 一次 FAIL（n411=n354 灵生 A 轮，同文双域名）→ 合并后 ALL OK；已 push（e55c8de）。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
@@ -59,4 +65,8 @@
 - **learning-path.json 结构**：`stages[].modules[]`，模块**只有 name 没有 id**，同步 lastUpdated 需按 name 子串匹配（如「传感器与硬件接口」「Sim-to-Real」）。
 - 每次开工先看 `git status -sb`：若 `ahead N` 说明上一轮 commit 未 push，本轮一并带上。
 - **开源选题先查库（2026-10-12）**：AWS Physical AI Toolchain=os152、ROBOTERA VPP2=os145、RLinf/RPent=os146 早已收录。搜到的「新开源」很可能上一轮已加，写条目前先按 github URL 子串比对现有 projects。
-- **学习正文用 raw 字符串** `r'''...'''`（2026-10-12）：正文含 `\{`、`\top`、`\Delta` 等 LaTeX 时，普通 `"""` 会报 SyntaxWarning 且需逐个转义；raw 字符串一次解决。示例代码 docstring 仍用 `'''`。
+- **学习正文用 raw 字符串** `r'''...'''`（2026-10-12）：正文含 `\{`、`\top`、`\Delta` 等 LaTeX 时，普通 `"""` 会报 SyntaxWarning 且需逐个转义；raw 字符串一次解决。示例代码 docstring 仍用 `'''`（外层是 `"""` 时）或 `"""`（外层是 `r'''` 时），**定界符不能与外层相同**。
+- **同文多域名导致 URL 查重失效（2026-10-13）**：`www.163.com/dy/article/X.html` 与 `dy.163.com/article/X.html` 是同一篇。URL 严格比对抓不到，只有 health_check 的同日同事件 3-gram 能拦。写新闻时同一稿件只取一个域名；health_check 报「同日同事件」时先确认是否真重复再合并（本轮是真重复，已把 n411 的独有事实并入 n354 后删除）。
+- **开源详情 keyPapers 必须是 markdown 字符串（2026-10-13）**：`tools/gen_os_report.py` 把 detail 各字段直接 `'\n'.join`，list-of-dict 会抛 `sequence item N: expected str instance, list found`。生成报告前先转成 `- **[标题](url)** — 说明`。
+- **写 os 脚本的括号层级（2026-10-13）**：`P.append(` + `dict(` + `meta=dict(` + `detail=dict(` 共 4 层，keyPapers 列表闭合后需 `]))))`。且 `detail` 必须在入表前 `m.pop('detail')`，否则 detail 会混进 `opensource.json` 的 projects 列表。
+- **新闻/论文/开源选题先查库（2026-10-13 强化）**：本轮 10 条新闻候选里 4 条已被 10-10/10-12 两轮收录（Yujin Robot= n371、CCTV 训练场=n398、RoboDojo、边融边投=n397）；论文候选里 UNITAS 与 Long-WAM 已收录；开源候选 HomeBody=os149。查重脚本拦下是正常结果，不是 bug，但要准备好备选条目补足数量。
