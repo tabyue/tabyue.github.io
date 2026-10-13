@@ -4,7 +4,7 @@
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 50,
-  "lastUpdated": "2026-08-24T19:40",
+  "lastUpdated": "2026-10-13T10:36",
   "description": "从人类演示中学习机器人技能。Diffusion Policy 和 ACT 是当前最实用的模仿学习算法。",
   "prerequisites": [
     "深度学习基础"
@@ -49,102 +49,171 @@
   ],
   "weeklyPlan": "**第1周**：BC 原理+DAgger\n**第2-3周**：Diffusion Policy 复现\n**第4-5周**：ACT+LeRobot\n**第6周**：真机数据采集+训练",
   "maturity": "growing",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
-      "title": "模仿学习的失败模式与调试方法论",
-      "lastUpdated": "2026-05-06T20:14",
-      "chars": 5792
+      "title": "模仿学习基础：从行为克隆到 DAgger",
+      "lastUpdated": "2026-04-30T10:32",
+      "chars": 3180,
+      "shortTitle": "模仿学习基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 3,
+      "tier": 0
     },
     {
       "id": "sec-02",
-      "title": "VLA 模型：语言驱动的模仿学习",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 3405
+      "title": "行为克隆 (BC)",
+      "lastUpdated": "",
+      "chars": 5854,
+      "shortTitle": "行为克隆",
+      "difficulty": "入门",
+      "estimatedMinutes": 7,
+      "tier": 0
     },
     {
       "id": "sec-03",
       "title": "Diffusion Policy：扩散模型在机器人中的崛起",
       "lastUpdated": "2026-04-30T11:07",
-      "chars": 3283
+      "chars": 3262,
+      "shortTitle": "Diffusion Policy",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "tier": 1
     },
     {
       "id": "sec-04",
-      "title": "模仿学习基础：从行为克隆到 DAgger",
-      "lastUpdated": "2026-04-30T10:32",
-      "chars": 3191
+      "title": "Diffusion Policy",
+      "lastUpdated": "",
+      "chars": 9430,
+      "shortTitle": "Diffusion Policy",
+      "difficulty": "中级",
+      "estimatedMinutes": 10,
+      "tier": 1
     },
     {
       "id": "sec-05",
-      "title": "行为克隆 (BC)",
+      "title": "ACT 与 LeRobot",
       "lastUpdated": "",
-      "chars": 5854
+      "chars": 5503,
+      "shortTitle": "ACT 与 LeRobot",
+      "difficulty": "中级",
+      "estimatedMinutes": 6,
+      "tier": 1
     },
     {
       "id": "sec-06",
-      "title": "Diffusion Policy",
-      "lastUpdated": "",
-      "chars": 9430
+      "title": "逆强化学习 (IRL) 与 GAIL",
+      "lastUpdated": "2026-04-19T16:45",
+      "chars": 9600,
+      "shortTitle": "逆强化学习",
+      "difficulty": "中级",
+      "estimatedMinutes": 11,
+      "tier": 1
     },
     {
       "id": "sec-07",
-      "title": "ACT 与 LeRobot",
-      "lastUpdated": "",
-      "chars": 5503
+      "title": "VLA 模型：语言驱动的模仿学习",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 3384,
+      "shortTitle": "VLA 模型",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "tier": 2
     },
     {
       "id": "sec-08",
-      "title": "逆强化学习 (IRL) 与 GAIL",
+      "title": "演示数据工程",
       "lastUpdated": "2026-04-19T16:45",
-      "chars": 9600
+      "chars": 11442,
+      "shortTitle": "演示数据工程",
+      "difficulty": "高级",
+      "estimatedMinutes": 13,
+      "tier": 2
     },
     {
       "id": "sec-09",
-      "title": "演示数据工程",
-      "lastUpdated": "2026-04-19T16:45",
-      "chars": 11442
+      "title": "模仿学习的失败模式与调试方法论",
+      "lastUpdated": "2026-05-06T20:14",
+      "chars": 5775,
+      "shortTitle": "模仿学习的失败模式与调试方法论",
+      "difficulty": "中级",
+      "estimatedMinutes": 7,
+      "tier": 2
     },
     {
       "id": "sec-10",
       "title": "模仿学习前沿方法",
       "lastUpdated": "2026-04-19T16:45",
-      "chars": 11392
+      "chars": 11392,
+      "shortTitle": "模仿学习前沿方法",
+      "difficulty": "高级",
+      "estimatedMinutes": 12,
+      "isFrontier": true,
+      "tier": 2
     },
     {
       "id": "sec-11",
-      "title": "全身协调模仿学习 (Whole-Body Imitation Learning)",
-      "lastUpdated": "2026-04-26T17:05",
-      "chars": 6212
+      "title": "Flow Matching策略：从Diffusion到更快的动作生成",
+      "lastUpdated": "2026-04-27T14:46",
+      "chars": 3564,
+      "shortTitle": "Flow Matching策略",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-12",
       "title": "跨本体模仿迁移（Cross-Embodiment Transfer）",
       "lastUpdated": "2026-04-27T11:33",
-      "chars": 3313
+      "chars": 3313,
+      "shortTitle": "跨本体模仿迁移",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-13",
-      "title": "Flow Matching策略：从Diffusion到更快的动作生成",
-      "lastUpdated": "2026-04-27T14:46",
-      "chars": 3564
+      "title": "全身协调模仿学习 (Whole-Body Imitation Learning)",
+      "lastUpdated": "2026-04-26T17:05",
+      "chars": 6212,
+      "shortTitle": "全身协调模仿学习",
+      "difficulty": "高级",
+      "estimatedMinutes": 7,
+      "tier": 2
     },
     {
       "id": "sec-14",
       "title": "模仿学习的「R1 时刻」：从纯 BC 到 RL 后训练 + 自适应推理（LaST-R1 + Q2RL + AAC 三件套深度精读 — 2026-05 最新）",
       "lastUpdated": "2026-05-11T14:35",
-      "chars": 9595
+      "chars": 9595,
+      "shortTitle": "模仿学习的「R1 时刻」",
+      "difficulty": "高级",
+      "estimatedMinutes": 11,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-15",
       "title": "从 50 Episodes 到 SOTA：Wall-OSS-0.5 高效模仿学习配方完全解析",
       "lastUpdated": "2026-05-29T20:12",
-      "chars": 7962
+      "chars": 7911,
+      "shortTitle": "从 50 Episodes 到 SOTA",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-16",
-      "title": "✨ 从模仿动作到模仿推理：In-Context 结构化示范与测试时适配（StellaVLA 2026-08 精读）",
+      "title": "从模仿动作到模仿推理：In-Context 结构化示范与测试时适配（StellaVLA 2026-08 精读）",
       "lastUpdated": "2026-08-24T19:40",
-      "chars": 12177
+      "chars": 12177,
+      "shortTitle": "从模仿动作到模仿推理",
+      "difficulty": "高级",
+      "estimatedMinutes": 14,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "id": "robot-kinematics",
   "name": "机器人运动学",
-  "lastUpdated": "2026-10-12T08:30",
+  "lastUpdated": "2026-10-13T10:36",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 60,
@@ -44,108 +44,181 @@
   ],
   "weeklyPlan": "**第1周**：刚体变换、齐次矩阵编程\n**第2周**：DH 参数法、正运动学实现\n**第3-4周**：逆运动学（解析法 + 数值法）\n**第5-6周**：Jacobian 计算、奇异分析、速度控制\n**第7周**：轨迹规划——多项式/梯形/笛卡尔直线 + 时间最优",
   "maturity": "growing",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
-      "title": "全身运动学：从机械臂到 30+ 自由度人形机器人（联动 Figure S0 / Optimus V3 / KAI 115 DOF）",
-      "lastUpdated": "2026-05-09T13:30",
-      "chars": 7341
+      "title": "旋转表示的完整理论：欧拉角、四元数、旋转向量与李群",
+      "lastUpdated": "2026-04-28T19:07",
+      "chars": 4927,
+      "shortTitle": "旋转表示的完整理论",
+      "difficulty": "入门",
+      "estimatedMinutes": 4,
+      "tier": 0
     },
     {
       "id": "sec-02",
-      "title": "奇异性分析与可操作性椭球：机械臂的“不可达禁区”",
-      "lastUpdated": "2026-05-03T09:55",
-      "chars": 11220
+      "title": "齐次变换与刚体运动：SE(3) 的完整数学",
+      "lastUpdated": "2026-04-28T19:07",
+      "chars": 3987,
+      "shortTitle": "齐次变换与刚体运动",
+      "difficulty": "入门",
+      "estimatedMinutes": 4,
+      "tier": 0
     },
     {
       "id": "sec-03",
-      "title": "并联与冗余机器人运动学",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 3232
+      "title": "刚体变换与齐次矩阵",
+      "lastUpdated": "",
+      "chars": 3124,
+      "shortTitle": "刚体变换与齐次矩阵",
+      "difficulty": "入门",
+      "estimatedMinutes": 3,
+      "tier": 0
     },
     {
       "id": "sec-04",
-      "title": "速度运动学：Jacobian 矩阵的推导与应用",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 2968
+      "title": "DH 参数法与正运动学",
+      "lastUpdated": "",
+      "chars": 6201,
+      "shortTitle": "DH 参数法与正运动学",
+      "difficulty": "入门",
+      "estimatedMinutes": 7,
+      "tier": 0
     },
     {
       "id": "sec-05",
-      "title": "轨迹生成：从关节空间到笛卡尔空间的平滑运动",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 3532
+      "title": "逆运动学",
+      "lastUpdated": "2026-04-19T22:16",
+      "chars": 6962,
+      "shortTitle": "逆运动学",
+      "difficulty": "中级",
+      "estimatedMinutes": 8,
+      "tier": 1
     },
     {
       "id": "sec-06",
       "title": "逆运动学求解的完整方法论",
       "lastUpdated": "2026-04-29T15:05",
-      "chars": 3188
+      "chars": 3188,
+      "shortTitle": "逆运动学求解的完整方法论",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "tier": 1
     },
     {
       "id": "sec-07",
-      "title": "旋转表示的完整理论：欧拉角、四元数、旋转向量与李群",
-      "lastUpdated": "2026-04-28T19:07",
-      "chars": 4941
+      "title": "Jacobian 与速度/力分析",
+      "lastUpdated": "",
+      "chars": 5524,
+      "shortTitle": "Jacobian 与速度/力分析",
+      "difficulty": "中级",
+      "estimatedMinutes": 6,
+      "tier": 1
     },
     {
       "id": "sec-08",
-      "title": "齐次变换与刚体运动：SE(3) 的完整数学",
-      "lastUpdated": "2026-04-28T19:07",
-      "chars": 4001
+      "title": "速度运动学：Jacobian 矩阵的推导与应用",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 2968,
+      "shortTitle": "速度运动学",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-09",
-      "title": "刚体变换与齐次矩阵",
-      "lastUpdated": "",
-      "chars": 3124
+      "title": "轨迹生成：从关节空间到笛卡尔空间的平滑运动",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 3523,
+      "shortTitle": "轨迹生成",
+      "difficulty": "中级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-10",
-      "title": "DH 参数法与正运动学",
-      "lastUpdated": "",
-      "chars": 6201
+      "title": "轨迹规划",
+      "lastUpdated": "2026-04-21T20:20",
+      "chars": 14378,
+      "shortTitle": "轨迹规划",
+      "difficulty": "中级",
+      "estimatedMinutes": 16,
+      "tier": 1
     },
     {
       "id": "sec-11",
-      "title": "逆运动学",
-      "lastUpdated": "2026-04-19T22:16",
-      "chars": 6962
+      "title": "Product of Exponentials (PoE) 公式与螺旋运动理论",
+      "lastUpdated": "2026-04-23T09:03",
+      "chars": 9374,
+      "shortTitle": "Product of Exponential…",
+      "difficulty": "高级",
+      "estimatedMinutes": 10,
+      "tier": 2
     },
     {
       "id": "sec-12",
-      "title": "Jacobian 与速度/力分析",
-      "lastUpdated": "",
-      "chars": 5524
+      "title": "冗余机器人运动规划与零空间控制",
+      "lastUpdated": "2026-04-27T11:30",
+      "chars": 2885,
+      "shortTitle": "冗余机器人运动规划与零空间控制",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-13",
-      "title": "Product of Exponentials (PoE) 公式与螺旋运动理论",
-      "lastUpdated": "2026-04-23T09:03",
-      "chars": 9374
+      "title": "并联与冗余机器人运动学",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 3216,
+      "shortTitle": "并联与冗余机器人运动学",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "tier": 2
     },
     {
       "id": "sec-14",
-      "title": "轨迹规划",
-      "lastUpdated": "2026-04-21T20:20",
-      "chars": 14378
+      "title": "奇异性分析与可操作性椭球：机械臂的“不可达禁区”",
+      "lastUpdated": "2026-05-03T09:55",
+      "chars": 11191,
+      "shortTitle": "奇异性分析与可操作性椭球",
+      "difficulty": "中级",
+      "estimatedMinutes": 12,
+      "tier": 2
     },
     {
       "id": "sec-15",
-      "title": "冗余机器人运动规划与零空间控制",
-      "lastUpdated": "2026-04-27T11:30",
-      "chars": 2885
+      "title": "运动学标定与误差建模：从名义 DH 参数到真实机器人的精度",
+      "lastUpdated": "2026-10-12T08:30",
+      "chars": 10974,
+      "shortTitle": "运动学标定与误差建模",
+      "difficulty": "高级",
+      "estimatedMinutes": 14,
+      "tier": 2
     },
     {
       "id": "sec-16",
       "title": "VLA 时代的运动学：从 Wall-OSS Action Chunk 到关节空间逆解实时执行",
       "lastUpdated": "2026-05-29T19:50",
-      "chars": 6506
+      "chars": 6455,
+      "shortTitle": "VLA 时代的运动学",
+      "difficulty": "高级",
+      "estimatedMinutes": 7,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-17",
-      "title": "运动学标定与误差建模：从名义 DH 参数到真实机器人的精度",
-      "lastUpdated": "2026-10-12T08:30",
-      "chars": 11008
+      "title": "全身运动学：从机械臂到 30+ 自由度人形机器人（联动 Figure S0 / Optimus V3 / KAI 115 DOF）",
+      "lastUpdated": "2026-05-09T13:30",
+      "chars": 7312,
+      "shortTitle": "全身运动学",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

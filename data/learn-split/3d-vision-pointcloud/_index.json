@@ -60,68 +60,111 @@
     }
   ],
   "weeklyPlan": "**第1周**：RealSense 配置 + Open3D 点云处理\n**第2-3周**：点云分割/聚类/配准\n**第4-5周**：6DoF 位姿估计\n**第6周**：SLAM 入门 + RTAB-Map 实践\n**第7周**：NeRF/3DGS 原理与 Nerfstudio 实践",
-  "lastUpdated": "2026-10-10T08:45",
+  "lastUpdated": "2026-10-13T10:36",
   "maturity": "growing",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
       "title": "深度相机与点云采集",
       "lastUpdated": "",
-      "chars": 9273
+      "chars": 9273,
+      "shortTitle": "深度相机与点云采集",
+      "difficulty": "入门",
+      "estimatedMinutes": 10,
+      "tier": 0
     },
     {
       "id": "sec-02",
       "title": "点云处理 (Open3D)",
       "lastUpdated": "",
-      "chars": 10579
+      "chars": 10579,
+      "shortTitle": "点云处理",
+      "difficulty": "中级",
+      "estimatedMinutes": 12,
+      "tier": 1
     },
     {
       "id": "sec-03",
       "title": "SLAM 基础",
       "lastUpdated": "",
-      "chars": 6857
+      "chars": 6857,
+      "shortTitle": "SLAM 基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 8,
+      "tier": 1
     },
     {
       "id": "sec-04",
       "title": "6DoF 位姿估计与抓取规划",
       "lastUpdated": "",
-      "chars": 15023
+      "chars": 15023,
+      "shortTitle": "6DoF 位姿估计与抓取规划",
+      "difficulty": "中级",
+      "estimatedMinutes": 17,
+      "tier": 1
     },
     {
       "id": "sec-05",
       "title": "深度学习点云处理（PointNet 系列）",
       "lastUpdated": "",
-      "chars": 20939
+      "chars": 20939,
+      "shortTitle": "深度学习点云处理",
+      "difficulty": "高级",
+      "estimatedMinutes": 23,
+      "tier": 2
     },
     {
       "id": "sec-06",
       "title": "NeRF 与 3D Gaussian Splatting 在机器人中的应用",
       "lastUpdated": "2026-04-22T19:28",
-      "chars": 12731
+      "chars": 12731,
+      "shortTitle": "NeRF 与 3D Gaussian Spl…",
+      "difficulty": "高级",
+      "estimatedMinutes": 14,
+      "tier": 2
     },
     {
       "id": "sec-07",
-      "title": "语言引导3D场景理解：3D-LLM与LEO",
-      "lastUpdated": "2026-04-27T00:45",
-      "chars": 4537
+      "title": "透明/反光物体的深度感知与补全",
+      "lastUpdated": "2026-04-27T14:43",
+      "chars": 2822,
+      "shortTitle": "透明/反光物体的深度感知与补全",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-08",
-      "title": "透明/反光物体的深度感知与补全",
-      "lastUpdated": "2026-04-27T14:43",
-      "chars": 2822
+      "title": "多视角视觉融合与主动感知（Active Perception）",
+      "lastUpdated": "2026-04-27T16:05",
+      "chars": 11073,
+      "shortTitle": "多视角视觉融合与主动感知",
+      "difficulty": "高级",
+      "estimatedMinutes": 12,
+      "tier": 2
     },
     {
       "id": "sec-09",
-      "title": "多视角视觉融合与主动感知（Active Perception）",
-      "lastUpdated": "2026-04-27T16:05",
-      "chars": 11073
+      "title": "动态场景与形变物体：场景流估计、非刚性配准与时序点云跟踪",
+      "lastUpdated": "2026-10-10T08:45",
+      "chars": 10009,
+      "shortTitle": "动态场景与形变物体",
+      "difficulty": "高级",
+      "estimatedMinutes": 13,
+      "tier": 2
     },
     {
       "id": "sec-10",
-      "title": "动态场景与形变物体：场景流估计、非刚性配准与时序点云跟踪",
-      "lastUpdated": "2026-10-10T08:45",
-      "chars": 10009
+      "title": "语言引导3D场景理解：3D-LLM与LEO",
+      "lastUpdated": "2026-04-27T00:45",
+      "chars": 4537,
+      "shortTitle": "语言引导3D场景理解",
+      "difficulty": "高级",
+      "estimatedMinutes": 5,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

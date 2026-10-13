@@ -1,7 +1,7 @@
 {
   "id": "robot-dynamics",
   "name": "机器人动力学",
-  "lastUpdated": "2026-05-04T00:28",
+  "lastUpdated": "2026-10-13T10:36",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 50,
@@ -45,96 +45,162 @@
   ],
   "weeklyPlan": "**第1周**：Lagrange 力学推导 2-link 动力学\n**第2周**：Newton-Euler 递推算法实现\n**第3周**：M/C/G 矩阵的物理意义和性质验证\n**第4周**：接触力学 + MuJoCo 仿真验证\n**第5周**：动力学参数辨识——从激励轨迹设计到最小二乘求解",
   "maturity": "growing",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
-      "title": "动力学在机器人控制中的应用实战",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 2705
+      "title": "动力学建模方法：拉格朗日与牛顿-欧拉",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 3139,
+      "shortTitle": "动力学建模方法",
+      "difficulty": "入门",
+      "estimatedMinutes": 3,
+      "tier": 0
     },
     {
       "id": "sec-02",
-      "title": "摩擦、柔性与动力学建模的工程修正",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 3124
+      "title": "Lagrange 力学",
+      "lastUpdated": "",
+      "chars": 7073,
+      "shortTitle": "Lagrange 力学",
+      "difficulty": "入门",
+      "estimatedMinutes": 8,
+      "tier": 0
     },
     {
       "id": "sec-03",
-      "title": "动力学建模方法：拉格朗日与牛顿-欧拉",
-      "lastUpdated": "2026-04-29T15:05",
-      "chars": 3151
+      "title": "Newton-Euler 递推算法",
+      "lastUpdated": "",
+      "chars": 8024,
+      "shortTitle": "Newton",
+      "difficulty": "入门",
+      "estimatedMinutes": 9,
+      "tier": 0
     },
     {
       "id": "sec-04",
       "title": "动力学性质与控制中的应用",
       "lastUpdated": "2026-04-29T15:05",
-      "chars": 1994
+      "chars": 1994,
+      "shortTitle": "动力学性质与控制中的应用",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-05",
-      "title": "Lagrange 力学",
+      "title": "动力学方程的性质",
       "lastUpdated": "",
-      "chars": 7073
+      "chars": 7057,
+      "shortTitle": "动力学方程的性质",
+      "difficulty": "中级",
+      "estimatedMinutes": 8,
+      "tier": 1
     },
     {
       "id": "sec-06",
-      "title": "Newton-Euler 递推算法",
+      "title": "接触力学基础",
       "lastUpdated": "",
-      "chars": 8024
+      "chars": 5185,
+      "shortTitle": "接触力学基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 6,
+      "tier": 1
     },
     {
       "id": "sec-07",
-      "title": "动力学方程的性质",
-      "lastUpdated": "",
-      "chars": 7057
+      "title": "旋量理论与李群李代数：现代机器人动力学的数学基础",
+      "lastUpdated": "2026-05-02T18:45",
+      "chars": 11039,
+      "shortTitle": "旋量理论与李群李代数",
+      "difficulty": "高级",
+      "estimatedMinutes": 11,
+      "tier": 2
     },
     {
       "id": "sec-08",
-      "title": "接触力学基础",
-      "lastUpdated": "",
-      "chars": 5185
+      "title": "摩擦、柔性与动力学建模的工程修正",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 3103,
+      "shortTitle": "摩擦、柔性与动力学建模的工程修正",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "tier": 2
     },
     {
       "id": "sec-09",
-      "title": "动力学参数辨识",
-      "lastUpdated": "2026-04-21T19:32",
-      "chars": 14249
+      "title": "柔性关节与弹性驱动建模",
+      "lastUpdated": "2026-04-27T00:42",
+      "chars": 2454,
+      "shortTitle": "柔性关节与弹性驱动建模",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-10",
-      "title": "柔性关节与弹性驱动建模",
-      "lastUpdated": "2026-04-27T00:42",
-      "chars": 2454
+      "title": "动力学参数辨识",
+      "lastUpdated": "2026-04-21T19:32",
+      "chars": 14249,
+      "shortTitle": "动力学参数辨识",
+      "difficulty": "高级",
+      "estimatedMinutes": 16,
+      "tier": 2
     },
     {
       "id": "sec-11",
-      "title": "计算力矩控制的MuJoCo仿真验证",
-      "lastUpdated": "2026-04-27T12:01",
-      "chars": 3171
+      "title": "动力学在机器人控制中的应用实战",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 2687,
+      "shortTitle": "动力学在机器人控制中的应用实战",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-12",
-      "title": "浮基动力学与人形机器人全身动力学",
-      "lastUpdated": "2026-04-28T12:00",
-      "chars": 9608
+      "title": "计算力矩控制的MuJoCo仿真验证",
+      "lastUpdated": "2026-04-27T12:01",
+      "chars": 3171,
+      "shortTitle": "计算力矩控制的MuJoCo仿真验证",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-13",
-      "title": "接触动力学与可微仿真：LCP、梯度传播与接触感知策略",
-      "lastUpdated": "2026-05-02T11:20",
-      "chars": 7976
+      "title": "浮基动力学与人形机器人全身动力学",
+      "lastUpdated": "2026-04-28T12:00",
+      "chars": 9608,
+      "shortTitle": "浮基动力学与人形机器人全身动力学",
+      "difficulty": "高级",
+      "estimatedMinutes": 10,
+      "tier": 2
     },
     {
       "id": "sec-14",
-      "title": "旋量理论与李群李代数：现代机器人动力学的数学基础",
-      "lastUpdated": "2026-05-02T18:45",
-      "chars": 11068
+      "title": "接触动力学与可微仿真：LCP、梯度传播与接触感知策略",
+      "lastUpdated": "2026-05-02T11:20",
+      "chars": 7961,
+      "shortTitle": "接触动力学与可微仿真",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-15",
       "title": "质心动力学与人形平衡控制：从 LIPM 到 SRBD + 全身 MPC",
       "lastUpdated": "2026-05-04T00:28",
-      "chars": 11129
+      "chars": 11129,
+      "shortTitle": "质心动力学与人形平衡控制",
+      "difficulty": "高级",
+      "estimatedMinutes": 11,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

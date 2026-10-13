@@ -261,7 +261,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--t1);line-height:1.
 /* Sidebar section sub-items (章节列表折叠在模块下) */
 .ls-sections{padding:4px 0 8px 38px;display:none}
 .ls-mod.active+.ls-sections,.ls-mod.expanded+.ls-sections{display:block}
-.ls-sec{padding:5px 12px;font-size:.76rem;color:var(--t3);cursor:pointer;border-radius:6px;transition:all .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ls-sec{padding:5px 12px;font-size:.76rem;color:var(--t3);cursor:pointer;border-radius:6px;transition:all .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px}
+.ls-sec-ov{color:var(--t2);font-weight:500;margin-bottom:2px}
+.ls-diff{width:5px;height:5px;border-radius:50%;flex-shrink:0;opacity:.85}
+.ls-diff-basic{background:var(--gn)}.ls-diff-mid{background:var(--p)}.ls-diff-adv{background:var(--pk)}
 .ls-sec:hover{color:var(--t2);background:var(--bg3)}
 .ls-sec.active{color:var(--p);background:var(--accent-subtle);font-weight:500}
 
@@ -404,6 +407,66 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
 .sec-nav-btn.primary{background:linear-gradient(135deg,var(--p) 0%,var(--pd) 100%);color:#fff;border:none;box-shadow:0 2px 10px rgba(58,163,255,.3)}
 .sec-nav-btn.primary:hover{box-shadow:0 6px 20px rgba(58,163,255,.45);transform:translateY(-1px)}
 .sec-nav-btn .arrow-icon{font-size:1rem;line-height:1}
+
+/* === 模块总览页（Overview） === */
+.lm-crumb{font-size:.78rem;color:var(--t3);margin-bottom:14px}
+.lm-title{font-size:1.85rem;font-weight:700;letter-spacing:-.02em;line-height:1.25;margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.lm-badge{font-size:.7rem;font-weight:500;padding:3px 9px;border-radius:20px;background:var(--bg3);border:1px solid var(--bd);color:var(--t2)}
+.lm-badge.comprehensive{background:rgba(50,217,107,.12);border-color:rgba(50,217,107,.3);color:var(--gn)}
+.lm-badge.foundation{background:rgba(255,159,10,.12);border-color:rgba(255,159,10,.3);color:var(--a)}
+.lm-badge.growing{background:var(--accent-subtle);border-color:rgba(58,163,255,.3);color:var(--p)}
+.lm-desc{font-size:.95rem;color:var(--t2);line-height:1.85;max-width:820px}
+.lm-meta{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 22px}
+.lm-chip{font-size:.75rem;padding:5px 11px;border-radius:20px;background:var(--bg3);border:1px solid var(--bd);color:var(--t2);display:inline-flex;align-items:center;gap:5px}
+.lm-chip b{color:var(--t1);font-weight:600}
+.lm-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px}
+.lm-btn{display:inline-flex;align-items:center;gap:7px;padding:11px 24px;border-radius:50px;font-size:.88rem;font-weight:600;cursor:pointer;border:none;transition:all .25s;background:linear-gradient(135deg,var(--p) 0%,var(--pd) 100%);color:#fff;box-shadow:0 2px 10px rgba(58,163,255,.3)}
+.lm-btn:hover{box-shadow:0 6px 20px rgba(58,163,255,.45);transform:translateY(-1px)}
+.lm-btn.ghost{background:var(--bg3);border:1px solid var(--bd);color:var(--t2);box-shadow:none}
+.lm-btn.ghost:hover{border-color:var(--p);color:var(--p);background:var(--accent-subtle);transform:none;box-shadow:none}
+.lm-block{margin-bottom:30px}
+.lm-block-h{font-size:.72rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.lm-prereq{display:flex;gap:8px;flex-wrap:wrap}
+.lm-prereq span{font-size:.8rem;padding:6px 13px;border-radius:8px;background:var(--bg3);border:1px solid var(--bd);color:var(--t2)}
+.lm-tier{margin-bottom:24px}
+.lm-tier-h{display:flex;align-items:center;gap:9px;margin-bottom:11px}
+.lm-tier-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.lm-tier-name{font-size:.86rem;font-weight:600;color:var(--t1)}
+.lm-tier-n{font-size:.72rem;color:var(--t3)}
+.lm-tier-line{flex:1;height:1px;background:var(--bd)}
+.lm-ol{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px}
+.lm-card{display:flex;gap:11px;padding:12px 14px;border:1px solid var(--bd);border-radius:12px;background:var(--bg2);cursor:pointer;transition:all .2s;border-left:3px solid transparent}
+.lm-card:hover{border-color:var(--card-hover-border);background:var(--bg3);transform:translateY(-1px)}
+.lm-card.read{border-left-color:var(--gn)}
+.lm-card-idx{font-size:.8rem;color:var(--t3);font-variant-numeric:tabular-nums;flex-shrink:0;padding-top:1px;min-width:20px}
+.lm-card-main{flex:1;min-width:0}
+.lm-card-t{font-size:.88rem;color:var(--t1);line-height:1.5;margin-bottom:7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lm-card-m{display:flex;gap:7px;flex-wrap:wrap;align-items:center;font-size:.7rem;color:var(--t3)}
+.diff{padding:1px 7px;border-radius:5px;font-weight:500}
+.diff-basic{background:rgba(50,217,107,.13);color:var(--gn)}
+.diff-mid{background:var(--accent-subtle);color:var(--p)}
+.diff-adv{background:rgba(255,84,112,.13);color:var(--pk)}
+.lm-tag{padding:1px 7px;border-radius:5px;background:var(--bg4);color:var(--t3)}
+.lm-tag.frontier{background:rgba(191,131,248,.14);color:var(--v)}
+.lm-tag.brief{background:var(--bg4);color:var(--t3)}
+
+/* === 章节内小节目录 === */
+.sec-toc{margin:0 0 26px;border:1px solid var(--bd);border-radius:12px;background:var(--bg2);overflow:hidden}
+.sec-toc>summary{padding:11px 16px;font-size:.82rem;font-weight:600;color:var(--t2);cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;transition:background .2s}
+.sec-toc>summary:hover{background:var(--bg3);color:var(--t1)}
+.sec-toc>summary::-webkit-details-marker{display:none}
+.sec-toc .st-arrow{font-size:.6rem;color:var(--t3);transition:transform .2s}
+.sec-toc[open] .st-arrow{transform:rotate(90deg)}
+.sec-toc-body{padding:4px 10px 12px;max-height:340px;overflow-y:auto}
+.st-item{display:block;width:100%;text-align:left;padding:5px 10px;font-size:.8rem;color:var(--t3);border:none;background:none;border-radius:6px;cursor:pointer;line-height:1.5;transition:all .18s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.st-item:hover{color:var(--p);background:var(--accent-subtle)}
+.st-item.lv4{padding-left:24px;font-size:.76rem;opacity:.9}
+.sec-back{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:var(--t3);cursor:pointer;padding:5px 12px;border:1px solid var(--bd);border-radius:50px;margin-bottom:14px;transition:all .2s;background:transparent}
+.sec-back:hover{color:var(--p);border-color:var(--p);background:var(--accent-subtle)}
+@media(max-width:768px){
+  .lm-ol{grid-template-columns:1fr}
+  .lm-title{font-size:1.45rem}
+}
 .sec-nav-label{font-size:.72rem;color:var(--t3);text-align:center;flex:1;min-width:0}
 .next-mod-btn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:28px;padding:14px 24px;border-radius:50px;cursor:pointer;font-size:.88rem;font-weight:600;background:var(--s);color:#fff;border:none;box-shadow:0 4px 16px rgba(48,209,88,.3);transition:all .25s;width:100%}
 .next-mod-btn:hover{box-shadow:0 6px 24px rgba(48,209,88,.4);transform:translateY(-1px)}
@@ -702,6 +765,13 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
                 <span style="color:var(--t3);font-size:.85rem;flex-shrink:0">进入 →</span>
             </a>
             <button onclick="dismissAiInfraPromo(event)" title="关闭推荐" style="position:absolute;top:8px;right:8px;width:24px;height:24px;border:none;background:transparent;color:var(--t3);cursor:pointer;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='transparent'">✕</button>
+        </div>
+    </div>
+    <div id="learnOrderNotice" style="max-width:1400px;margin:0 auto 14px;padding:0 24px;display:none">
+        <div style="position:relative;display:flex;align-items:center;gap:12px;padding:12px 40px 12px 18px;border:1px solid var(--bd);border-radius:12px;background:var(--bg3)">
+            <span style="font-size:1.2rem;flex-shrink:0">🧭</span>
+            <div style="font-size:.84rem;color:var(--t2);line-height:1.6">学习中心已按「基础 → 核心 → 进阶 → 前沿」重构章节顺序，旧的章节编号不再对应，已重置章节阅读记录（学习统计保留）。现在每个模块新增了<b style="color:var(--t1)">模块大纲页</b>，可以看到全部章节的难度与时长。</div>
+            <button onclick="dismissLearnOrderNotice()" title="知道了" style="position:absolute;top:8px;right:8px;width:24px;height:24px;border:none;background:transparent;color:var(--t3);cursor:pointer;border-radius:6px;font-size:14px;line-height:1">✕</button>
         </div>
     </div>
     <div class="learn-layout">
@@ -1038,7 +1108,8 @@ async function applyRoute(routeInput, opts){
         // 学习模块深链接
         if(r.page==='learn'&&r.modId){
             await waitForLD();
-            await openLearnModule(r.modId, null, {fromRouter:true, initialSec:r.secIdx||0});
+            await openLearnModule(r.modId, null, {fromRouter:true,
+                initialSec:(typeof r.secIdx==='number'?r.secIdx:null)});
         }
         // 每日英文归档独立页面
         if(r.page==='daily-english'){
@@ -1159,6 +1230,7 @@ async function init(){
         }
     }
     renderLearn();renderPapers();renderOS();renderNews();renderHomeLatest();renderJobs();renderModels();renderDatasets();renderHardware();renderRecentUpdates();renderGlossary();renderDailyEnglish();
+    _checkLearnOrderReset();
     // Sync inbox submission status from server-side processed records
     syncInboxStatus();
     // === 路由初始化（History API + 404 桥接 + hash 回退）===
@@ -1332,6 +1404,9 @@ function learnSearchClear(){
 
 function renderLearn(){
     if(!LD)return;
+    // 深链接进来的 modId 是英文 fileId（如 ros2），侧栏生成的是中文名派生的 id，
+    // 两者不同；统一按 fileId 比对，否则深链接时侧栏章节列表不展开。
+    const curFile=_currentLearnMod?(learnFileMap[_currentLearnMod]||_currentLearnMod):null;
     let sb='';
     LD.stages.forEach((s,si)=>{
         const isCol=_isStageCollapsed(si);
@@ -1340,15 +1415,21 @@ function renderLearn(){
         sb+=`<div class="ls-mods">`;
         s.modules.forEach(m=>{
             const modId=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
+            const fileId=learnFileMap[modId]||modId;
             const secCount=(m.topics||[]).length||3;
             const st=getModuleStatus(modId,secCount);
             const isUpdated=m.lastUpdated&&(Date.now()-new Date(m.lastUpdated).getTime())<3*86400000;
             const progCls=st.pct>=100?'done':(st.pct>0?'partial':'');
-            const activeCls=_currentLearnMod===modId?' active':'';
-            const isActive=_currentLearnMod===modId;
+            // 按 fileId 判定 active：兼容深链接（/learn/ros2）与侧栏点击（中文派生 id）两条路径
+            const isActive=(curFile!==null&&curFile===fileId)||_currentLearnMod===modId;
+            const activeCls=isActive?' active':'';
             const arrowCh=(isActive && !_modSecsCollapsed)?'▾':'▸';
+            // learnCache 的 key 随调用路径不同（英文 fileId 或中文派生 id），取实际存在的那个
+            const cacheKey=(learnCache[modId]&&learnCache[modId].sections)?modId
+                         :((learnCache[fileId]&&learnCache[fileId].sections)?fileId:null);
+            const cache=cacheKey?learnCache[cacheKey]:null;
             // maturity 标签（优先从 learnCache 读，fallback 从 LD 模块读）
-            const _mat=(learnCache[modId]&&learnCache[modId].maturity)||m.maturity||'';
+            const _mat=(cache&&cache.maturity)||m.maturity||'';
             const matSpan=_mat==='comprehensive'?'<span class="ls-mat" title="教材级完整">✅</span>'
                 :_mat==='foundation'?'<span class="ls-mat" title="基础搭建中">🌱</span>'
                 :_mat==='growing'?'<span class="ls-mat" title="持续完善中">🔄</span>':'';
@@ -1363,11 +1444,13 @@ function renderLearn(){
             sb+=`<span class="ls-mod-right">${matSpan}${arrowSpan}</span>`;
             sb+=`</div>`;
             // 展开当前模块的章节列表（且未被用户收起）
-            if(_currentLearnMod===modId && !_modSecsCollapsed && learnCache[modId] && learnCache[modId].sections){
+            if(isActive && !_modSecsCollapsed && cache && cache.sections){
                 sb+=`<div class="ls-sections">`;
-                learnCache[modId].sections.forEach((sec,i)=>{
+                sb+=`<div class="ls-sec ls-sec-ov${_currentLearnSec==null?' active':''}" onclick="event.stopPropagation();openLearnModule('${cacheKey}')">📋 模块大纲</div>`;
+                cache.sections.forEach((sec,i)=>{
                     const secActive=_currentLearnSec===i?' active':'';
-                    sb+=`<div class="ls-sec${secActive}" onclick="event.stopPropagation();switchToSection('${modId}',${i})">${String(i+1).padStart(2,'0')} ${sec.title}</div>`;
+                    const dcls=DIFF_CLS[sec.difficulty]||'mid';
+                    sb+=`<div class="ls-sec${secActive}" onclick="event.stopPropagation();switchToSection('${cacheKey}',${i})"><span class="ls-diff ls-diff-${dcls}" title="${sec.difficulty||'中级'}"></span>${String(i+1).padStart(2,'0')} ${sec.shortTitle||sec.title}</div>`;
                 });
                 sb+=`</div>`;
             }
@@ -1447,6 +1530,24 @@ function getModuleStatus(modId, totalSections){
     if(pct>=100)return{status:'done',label:'已完成',pct:100,visits:m.visits,cls:'status-done'};
     if(sectionsRead>0)return{status:'learning',label:`${sectionsRead}/${totalSections} 章`,pct,visits:m.visits,cls:'status-learning'};
     return{status:'visited',label:'已开始',pct:5,visits:m.visits,cls:'status-learning'};
+}
+// 章节重排后旧进度索引失效 —— 一次性迁移：清空章节已读集合，保留访问统计
+const LOV_KEY='eai_learn_order_v';
+function _checkLearnOrderReset(){
+    try{
+        if(localStorage.getItem(LOV_KEY)==='2')return;
+        const p=getProgress();
+        const had=Object.keys(p).length>0;
+        if(had){Object.values(p).forEach(m=>{m.sections=[]});saveProgress(p);}
+        localStorage.setItem(LOV_KEY,'2');
+        if(!had)return;
+        const box=document.getElementById('learnOrderNotice');
+        if(box)box.style.display='block';
+    }catch(e){}
+}
+function dismissLearnOrderNotice(){
+    const b=document.getElementById('learnOrderNotice');
+    if(b)b.style.display='none';
 }
 function timeAgo(ts){
     if(!ts)return'';
@@ -1598,7 +1699,14 @@ async function openLearnModule(modId, el, opts){
             // 注入 sections 占位（lazy load）
             idx.sections=(idx.sectionsMeta||[]).map(m=>({
                 title:m.title,
+                shortTitle:m.shortTitle||'',
                 lastUpdated:m.lastUpdated||'',
+                difficulty:m.difficulty||'',
+                tier:(m.tier==null?1:m.tier),
+                estimatedMinutes:m.estimatedMinutes||0,
+                chars:m.chars||0,
+                isFrontier:!!m.isFrontier,
+                isBrief:!!m.isBrief,
                 content:null,        // 占位：未加载
                 _secId:m.id,         // sec-01 ...
                 _modFileId:fileId,
@@ -1634,10 +1742,131 @@ async function openLearnModule(modId, el, opts){
         return;
     }
 
-    // === Render: 单章节显示模式 ===
-    _currentLearnSec=opts.initialSec||0;
+    // === Render ===
+    // initialSec 为 null/undefined（即路由只有 /learn/<mod>）时先展示模块总览页
+    const wantSec=(typeof opts.initialSec==='number'&&opts.initialSec>=0)?opts.initialSec:null;
+    _currentLearnSec=wantSec;
     renderLearn(); // 刷新 sidebar 展开章节列表
-    await _renderCurrentSection(modId, _currentLearnSec, d, opts);
+    if(wantSec==null){
+        await _renderModuleOverview(modId, d, opts);
+    }else{
+        await _renderCurrentSection(modId, wantSec, d, opts);
+    }
+}
+
+// === 模块总览页 ===
+const TIER_DEF=[
+    {t:0,name:'基础入门',desc:'建立概念与直觉',color:'var(--gn)'},
+    {t:1,name:'核心主线',desc:'必须掌握的主体内容',color:'var(--p)'},
+    {t:2,name:'进阶深化',desc:'工程化、调优与实战',color:'var(--a)'},
+    {t:3,name:'前沿专题',desc:'绑定具体论文/产品的最新进展',color:'var(--v)'}
+];
+const DIFF_CLS={'入门':'basic','中级':'mid','高级':'adv'};
+function _diffSpan(s){
+    const d=s.difficulty||'中级';
+    return `<span class="diff diff-${DIFF_CLS[d]||'mid'}">${d}</span>`;
+}
+function _fmtChars(n){
+    if(!n)return '';
+    return n>=10000?(n/10000).toFixed(1)+'万字':Math.round(n/1000)+'k字';
+}
+async function _renderModuleOverview(modId, d, opts){
+    opts=opts||{};
+    const body=document.getElementById('learnDetail');
+    const secs=d.sections||[];
+    const prog=getProgress()[modId];
+    const read=new Set(prog&&prog.sections||[]);
+    const totalMin=secs.reduce((a,s)=>a+(s.estimatedMinutes||0),0);
+    const totalChars=secs.reduce((a,s)=>a+(s.chars||0),0);
+    const dc={};
+    secs.forEach(s=>{dc[s.difficulty||'中级']=(dc[s.difficulty||'中级']||0)+1});
+    const lastUpd=secs.map(s=>s.lastUpdated).filter(Boolean).sort().pop();
+
+    let h='';
+    h+=`<div class="lm-crumb">${d.stage||''}</div>`;
+    const matMap={comprehensive:'教材级完整',foundation:'基础搭建中',growing:'持续完善中'};
+    h+=`<div class="lm-title">${d.name||modId}`;
+    if(d.maturity)h+=`<span class="lm-badge ${d.maturity}">${matMap[d.maturity]||d.maturity}</span>`;
+    h+=`</div>`;
+    if(d.description)h+=`<div class="lm-desc">${d.description}</div>`;
+
+    h+=`<div class="lm-meta">`;
+    h+=`<span class="lm-chip">📑 <b>${secs.length}</b> 章</span>`;
+    h+=`<span class="lm-chip">⏱ <b>${(totalMin/60).toFixed(1)}</b> 小时</span>`;
+    h+=`<span class="lm-chip">📝 <b>${(totalChars/10000).toFixed(1)}</b> 万字</span>`;
+    h+=`<span class="lm-chip">🎯 ${Object.entries(dc).sort().map(([k,v])=>`${k} ${v}`).join(' / ')}</span>`;
+    if(d.estimatedHours)h+=`<span class="lm-chip">建议 <b>${d.estimatedHours}</b> 学时</span>`;
+    if(lastUpd)h+=`<span class="lm-chip">更新 ${String(lastUpd).slice(0,10)}</span>`;
+    h+=`</div>`;
+
+    // 行动按钮：有进度时"继续学习"，否则"开始学习"
+    const nextIdx=secs.findIndex((s,i)=>!read.has(i));
+    const resumeIdx=nextIdx<0?0:nextIdx;
+    h+=`<div class="lm-actions">`;
+    h+=`<button class="lm-btn" onclick="switchToSection('${modId}',${resumeIdx})">${read.size?'继续学习 · 第 '+(resumeIdx+1)+' 章':'开始学习 →'}</button>`;
+    if(read.size){
+        const pct=Math.round(read.size/secs.length*100);
+        h+=`<button class="lm-btn ghost" onclick="openLearnModule('${modId}')">已读 ${read.size}/${secs.length} 章 · ${pct}%</button>`;
+    }
+    h+=`</div>`;
+
+    // 前置要求
+    const pre=d.prerequisites||[];
+    if(pre.length){
+        h+=`<div class="lm-block"><div class="lm-block-h">前置要求</div><div class="lm-prereq">`;
+        pre.forEach(p=>{h+=`<span>${p}</span>`});
+        h+=`</div></div>`;
+    }
+
+    // 按 tier 分组的章节大纲
+    h+=`<div class="lm-block"><div class="lm-block-h">章节大纲</div>`;
+    TIER_DEF.forEach(td=>{
+        const group=secs.map((s,i)=>({s,i})).filter(x=>(x.s.tier==null?1:x.s.tier)===td.t);
+        if(!group.length)return;
+        h+=`<div class="lm-tier"><div class="lm-tier-h">`;
+        h+=`<span class="lm-tier-dot" style="background:${td.color}"></span>`;
+        h+=`<span class="lm-tier-name">${td.name}</span>`;
+        h+=`<span class="lm-tier-n">${group.length} 章 · ${td.desc}</span>`;
+        h+=`<span class="lm-tier-line"></span></div><div class="lm-ol">`;
+        group.forEach(({s,i})=>{
+            h+=`<div class="lm-card${read.has(i)?' read':''}" onclick="switchToSection('${modId}',${i})">`;
+            h+=`<span class="lm-card-idx">${String(i+1).padStart(2,'0')}</span>`;
+            h+=`<div class="lm-card-main"><div class="lm-card-t">${s.title}</div><div class="lm-card-m">`;
+            h+=_diffSpan(s);
+            if(s.estimatedMinutes)h+=`<span>${s.estimatedMinutes} 分钟</span>`;
+            if(s.chars)h+=`<span>${_fmtChars(s.chars)}</span>`;
+            if(s.isFrontier)h+=`<span class="lm-tag frontier">前沿</span>`;
+            else if(s.isBrief)h+=`<span class="lm-tag brief">速览</span>`;
+            h+=`</div></div></div>`;
+        });
+        h+=`</div></div>`;
+    });
+    h+=`</div>`;
+
+    // 学习计划
+    if(d.weeklyPlan){
+        h+=`<div class="lm-block"><div class="lm-block-h">学习计划</div><div class="md-content" style="font-size:.86rem;line-height:1.9">${renderMd(d.weeklyPlan)}</div></div>`;
+    }
+    // 推荐资源
+    if(Array.isArray(d.resources)&&d.resources.length){
+        h+=`<details class="mod-resources"><summary>📖 推荐学习资源（${d.resources.length} 项）</summary><ul class="md-list" style="margin-top:8px">`;
+        d.resources.forEach(r=>{
+            if(typeof r==='string'){h+=`<li>${r.replace(/(https?:\/\/[^\s)】]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>')}</li>`;return;}
+            const badge=r.type?`<span style="display:inline-block;background:var(--accent-subtle);color:var(--p);font-size:.7rem;padding:1px 7px;border-radius:10px;margin-right:6px;font-weight:500">${r.type}</span>`:'';
+            const link=r.url?`<a href="${r.url}" target="_blank" rel="noopener" style="font-weight:600">${r.name||r.title||r.url}</a>`:`<strong>${r.name||r.title||''}</strong>`;
+            const desc=r.description?`<br><span style="color:var(--t2);font-size:.82em;line-height:1.6">${r.description}</span>`:'';
+            h+=`<li>${badge}${link}${desc}</li>`;
+        });
+        h+=`</ul></details>`;
+    }
+
+    body.innerHTML=h;
+    body.scrollTop=0;
+    window.scrollTo({top:0,behavior:'smooth'});
+    if(!opts.fromRouter){
+        _pushOrReplaceState('/learn/'+encodeURIComponent(modId), false);
+    }
+    updatePageMeta('learn', modId);
 }
 
 // 渲染单个章节到内容区（单章节模式）
@@ -1661,18 +1890,28 @@ async function _renderCurrentSection(modId, secIdx, d, opts){
 
     // 构建 HTML
     let h='';
-    // 面包屑
-    h+=`<div style="font-size:.78rem;color:var(--t3);margin-bottom:16px">${d.stage||''} · ${d.name} · <span style="color:var(--t2)">${String(secIdx+1).padStart(2,'0')}/${secLen}</span></div>`;
+    // 面包屑 + 返回大纲
+    h+=`<div style="font-size:.78rem;color:var(--t3);margin-bottom:10px">${d.stage||''} · ${d.name} · <span style="color:var(--t2)">${String(secIdx+1).padStart(2,'0')}/${secLen}</span></div>`;
+    h+=`<div class="sec-back" onclick="openLearnModule('${modId}')">← 模块大纲</div>`;
     // 章节标题
-    h+=`<h1 style="font-size:1.6rem;font-weight:700;margin-bottom:24px;letter-spacing:-.02em;line-height:1.3">${sec.title}</h1>`;
+    h+=`<h1 style="font-size:1.6rem;font-weight:700;margin-bottom:18px;letter-spacing:-.02em;line-height:1.3">${sec.title}</h1>`;
+    // 章节元信息条
+    h+=`<div class="lm-card-m" style="margin-bottom:20px">${_diffSpan(sec)}`;
+    if(sec.estimatedMinutes)h+=`<span class="lm-chip">⏱ ${sec.estimatedMinutes} 分钟</span>`;
+    if(sec.chars)h+=`<span class="lm-chip">${_fmtChars(sec.chars)}</span>`;
+    if(sec.isFrontier)h+=`<span class="lm-tag frontier">前沿专题</span>`;
+    else if(sec.isBrief)h+=`<span class="lm-tag brief">速览 / 跳转章节</span>`;
+    h+=`</div>`;
     // 更新提示
     const secIsNew=sec.lastUpdated&&(Date.now()-new Date(sec.lastUpdated).getTime())<3*86400000;
     if(secIsNew) h+=`<div class="sec-update-banner">🔥 本章节已于 ${String(sec.lastUpdated).replace('T',' ')} 更新</div>`;
     // 章节顶部锚点 + 「跳到结尾」
     h+=`<div id="secAnchorTop"></div>`;
     h+=`<div class="sec-inpage-jump top"><a href="#secAnchorBottom" onclick="_jumpInSec(event,'secAnchorBottom')">跳到本章结尾 ⏬</a></div>`;
+    // 小节目录占位（渲染后从 DOM 抽取 h3/h4 填充）
+    h+=`<div id="secTocSlot"></div>`;
     // 正文
-    h+=`<div class="md-content" style="font-size:.9rem;line-height:2">${renderMd(sec.content||'')}</div>`;
+    h+=`<div class="md-content" id="secMdBody" style="font-size:.9rem;line-height:2">${renderMd(sec.content||'')}</div>`;
     // 正文结尾「回到开头」
     h+=`<div class="sec-inpage-jump bottom"><a href="#secAnchorTop" onclick="_jumpInSec(event,'secAnchorTop')">⏫ 回到本章开头</a></div>`;
     h+=`<div id="secAnchorBottom"></div>`;
@@ -1723,6 +1962,7 @@ async function _renderCurrentSection(modId, secIdx, d, opts){
     h+=`</div>`;
 
     body.innerHTML=h;
+    _buildSecToc(body);
     body.scrollTop=0;
     // 切章节后把窗口滚到内容容器顶部（跳过粘性导航条），避免视觉上"原地不动"
     const _topNavH=48;
@@ -1738,6 +1978,30 @@ async function _renderCurrentSection(modId, secIdx, d, opts){
         _pushOrReplaceState(newPath, false);
     }
     updatePageMeta('learn', modId, secIdx);
+}
+
+// 从已渲染的正文中抽取 h3/h4 生成本章小节目录
+function _buildSecToc(root){
+    const slot=root.querySelector('#secTocSlot');
+    const md=root.querySelector('#secMdBody');
+    if(!slot||!md)return;
+    const hs=[...md.querySelectorAll('h3,h4')].filter(el=>el.textContent.trim());
+    if(hs.length<3){slot.remove();return;}
+    hs.forEach((el,i)=>{if(!el.id)el.id='st-'+(i+1);});
+    let html=`<details class="sec-toc"><summary><span class="st-arrow">▶</span>📑 本章目录（${hs.length} 节）</summary><div class="sec-toc-body">`;
+    hs.forEach(el=>{
+        const lv=el.tagName==='H4'?' lv4':'';
+        const txt=el.textContent.trim().replace(/"/g,'&quot;');
+        html+=`<button class="st-item${lv}" onclick="_jumpToEl('${el.id}')" title="${txt}">${txt}</button>`;
+    });
+    html+='</div></details>';
+    slot.innerHTML=html;
+}
+function _jumpToEl(id){
+    const el=document.getElementById(id);
+    if(!el)return;
+    const y=el.getBoundingClientRect().top+window.scrollY-48-14;
+    window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
 }
 
 // 切换到指定章节

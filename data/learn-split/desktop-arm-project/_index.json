@@ -1,7 +1,7 @@
 {
   "id": "desktop-arm-project",
   "name": "桌面级机械臂项目",
-  "lastUpdated": "2026-05-29T20:12",
+  "lastUpdated": "2026-10-13T10:36",
   "stage": "阶段六：项目实战",
   "importance": "入门实战",
   "estimatedHours": 40,
@@ -39,120 +39,202 @@
   ],
   "weeklyPlan": "**第1周**：硬件组装+标定\n**第2周**：遥操作+数据采集\n**第3周**：ACT 训练+评估\n**第4周**：迭代改进+新任务",
   "maturity": "foundation",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
-      "title": "桌面机械臂策略评估与动态诊断：让你的模仿学习不在真机翻车",
-      "lastUpdated": "2026-05-04T07:55",
-      "chars": 11680
+      "title": "开源桌面臂硬件生态：从 ALOHA 到 SO-100",
+      "lastUpdated": "2026-04-30T10:22",
+      "chars": 2344,
+      "shortTitle": "开源桌面臂硬件生态",
+      "difficulty": "入门",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 0
     },
     {
       "id": "sec-02",
-      "title": "从单臂到双臂：ALOHA 与协同操作",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 2706
+      "title": "硬件选型与组装",
+      "lastUpdated": "",
+      "chars": 4607,
+      "shortTitle": "硬件选型与组装",
+      "difficulty": "入门",
+      "estimatedMinutes": 5,
+      "tier": 0
     },
     {
       "id": "sec-03",
-      "title": "模仿学习到真机部署：完整 Pipeline 实战",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 4070
+      "title": "机械臂数学基础：齐次变换与DH参数",
+      "lastUpdated": "2026-04-28T18:57",
+      "chars": 4681,
+      "shortTitle": "机械臂数学基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 4,
+      "tier": 0
     },
     {
       "id": "sec-04",
-      "title": "开源桌面臂硬件生态：从 ALOHA 到 SO-100",
-      "lastUpdated": "2026-04-30T10:22",
-      "chars": 2358
+      "title": "桌面机械臂运动学：正逆解与工作空间",
+      "lastUpdated": "2026-04-28T18:57",
+      "chars": 4447,
+      "shortTitle": "桌面机械臂运动学",
+      "difficulty": "入门",
+      "estimatedMinutes": 5,
+      "tier": 0
     },
     {
       "id": "sec-05",
-      "title": "机械臂数学基础：齐次变换与DH参数",
+      "title": "桌面机械臂控制基础：PID、轨迹规划与力控入门",
       "lastUpdated": "2026-04-28T18:57",
-      "chars": 4693
+      "chars": 4563,
+      "shortTitle": "桌面机械臂控制基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 5,
+      "tier": 0
     },
     {
       "id": "sec-06",
-      "title": "桌面机械臂运动学：正逆解与工作空间",
+      "title": "ROS2 与机械臂驱动：MoveIt2 实战",
       "lastUpdated": "2026-04-28T18:57",
-      "chars": 4447
+      "chars": 5170,
+      "shortTitle": "ROS2 与机械臂驱动",
+      "difficulty": "入门",
+      "estimatedMinutes": 6,
+      "tier": 0
     },
     {
       "id": "sec-07",
-      "title": "桌面机械臂控制基础：PID、轨迹规划与力控入门",
-      "lastUpdated": "2026-04-28T18:57",
-      "chars": 4577
+      "title": "手眼标定与坐标变换实战",
+      "lastUpdated": "",
+      "chars": 6509,
+      "shortTitle": "手眼标定与坐标变换实战",
+      "difficulty": "高级",
+      "estimatedMinutes": 7,
+      "tier": 1
     },
     {
       "id": "sec-08",
-      "title": "ROS2 与机械臂驱动：MoveIt2 实战",
-      "lastUpdated": "2026-04-28T18:57",
-      "chars": 5186
+      "title": "视觉抓取 Pipeline",
+      "lastUpdated": "",
+      "chars": 6978,
+      "shortTitle": "视觉抓取 Pipeline",
+      "difficulty": "中级",
+      "estimatedMinutes": 8,
+      "tier": 1
     },
     {
       "id": "sec-09",
-      "title": "硬件选型与组装",
-      "lastUpdated": "",
-      "chars": 4607
+      "title": "LeRobot端到端实战：从开箱到自主抓取",
+      "lastUpdated": "2026-04-26T22:21",
+      "chars": 1987,
+      "shortTitle": "LeRobot端到端实战",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-10",
-      "title": "视觉抓取 Pipeline",
-      "lastUpdated": "",
-      "chars": 6978
+      "title": "模仿学习到真机部署：完整 Pipeline 实战",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 4045,
+      "shortTitle": "模仿学习到真机部署",
+      "difficulty": "中级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-11",
       "title": "模仿学习训练部署",
       "lastUpdated": "",
-      "chars": 5395
+      "chars": 5395,
+      "shortTitle": "模仿学习训练部署",
+      "difficulty": "中级",
+      "estimatedMinutes": 6,
+      "tier": 1
     },
     {
       "id": "sec-12",
-      "title": "手眼标定与坐标变换实战",
-      "lastUpdated": "",
-      "chars": 6509
+      "title": "Sim-to-Real闭环：从仿真训练到真机部署全流程",
+      "lastUpdated": "2026-04-27T12:01",
+      "chars": 3348,
+      "shortTitle": "Sim",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-13",
-      "title": "调试排错与性能优化",
-      "lastUpdated": "",
-      "chars": 5492
+      "title": "力控与柔顺操作：让桌面机械臂学会温柔",
+      "lastUpdated": "2026-04-29T12:00",
+      "chars": 4355,
+      "shortTitle": "力控与柔顺操作",
+      "difficulty": "高级",
+      "estimatedMinutes": 5,
+      "tier": 2
     },
     {
       "id": "sec-14",
-      "title": "LeRobot端到端实战：从开箱到自主抓取",
-      "lastUpdated": "2026-04-26T22:21",
-      "chars": 1987
+      "title": "抓取失败分析与自动重试策略",
+      "lastUpdated": "2026-04-28T12:03",
+      "chars": 3557,
+      "shortTitle": "抓取失败分析与自动重试策略",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-15",
-      "title": "Sim-to-Real闭环：从仿真训练到真机部署全流程",
-      "lastUpdated": "2026-04-27T12:01",
-      "chars": 3348
+      "title": "调试排错与性能优化",
+      "lastUpdated": "",
+      "chars": 5492,
+      "shortTitle": "调试排错与性能优化",
+      "difficulty": "高级",
+      "estimatedMinutes": 6,
+      "tier": 2
     },
     {
       "id": "sec-16",
-      "title": "抓取失败分析与自动重试策略",
-      "lastUpdated": "2026-04-28T12:03",
-      "chars": 3557
+      "title": "从单臂到双臂：ALOHA 与协同操作",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 2706,
+      "shortTitle": "从单臂到双臂",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-17",
-      "title": "力控与柔顺操作：让桌面机械臂学会温柔",
-      "lastUpdated": "2026-04-29T12:00",
-      "chars": 4355
+      "title": "桌面机械臂策略评估与动态诊断：让你的模仿学习不在真机翻车",
+      "lastUpdated": "2026-05-04T07:55",
+      "chars": 11661,
+      "shortTitle": "桌面机械臂策略评估与动态诊断",
+      "difficulty": "中级",
+      "estimatedMinutes": 13,
+      "tier": 2
     },
     {
       "id": "sec-18",
-      "title": "Wall-OSS-0.5 桌面机械臂零样本部署实战：4090 + SO-100 + 50 episodes",
-      "lastUpdated": "2026-05-29T10:46",
-      "chars": 9999
+      "title": "LeRobot SO-100 从开箱到 VLA 部署：2026 年最具性价比的具身智能入门套件",
+      "lastUpdated": "2026-05-29T20:12",
+      "chars": 7186,
+      "shortTitle": "LeRobot SO",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-19",
-      "title": "LeRobot SO-100 从开箱到 VLA 部署：2026 年最具性价比的具身智能入门套件",
-      "lastUpdated": "2026-05-29T20:12",
-      "chars": 7238
+      "title": "Wall-OSS-0.5 桌面机械臂零样本部署实战：4090 + SO-100 + 50 episodes",
+      "lastUpdated": "2026-05-29T10:46",
+      "chars": 9967,
+      "shortTitle": "Wall",
+      "difficulty": "高级",
+      "estimatedMinutes": 11,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

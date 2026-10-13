@@ -1,7 +1,7 @@
 {
   "id": "linear-algebra",
   "name": "线性代数",
-  "lastUpdated": "2026-04-28T17:22",
+  "lastUpdated": "2026-10-13T10:36",
   "stage": "阶段一：数学与编程基础",
   "importance": "核心",
   "estimatedHours": 60,
@@ -61,114 +61,189 @@
   ],
   "weeklyPlan": "**第1周**：向量空间、矩阵运算、行列式（MIT 18.06 Lec 1-6 + 3Blue1Brown Ep 1-5）\n**第2周**：线性方程组、高斯消元、LU分解（MIT 18.06 Lec 7-12）\n**第3周**：特征值、对角化、正定矩阵（MIT 18.06 Lec 13-18）\n**第4周**：SVD、最小二乘、伪逆（MIT 18.06 Lec 19-24）\n**第5-6周**：旋转矩阵、四元数、齐次变换（Modern Robotics Ch3 + 大量编程练习）",
   "maturity": "comprehensive",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
       "title": "线性代数的数学基础：从向量空间到线性映射",
       "lastUpdated": "2026-04-28T14:47",
-      "chars": 11343
+      "chars": 11343,
+      "shortTitle": "线性代数的数学基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 12,
+      "tier": 0
     },
     {
       "id": "sec-02",
-      "title": "矩阵运算的完整体系：分块、初等、LU 分解",
-      "lastUpdated": "2026-04-28T14:53",
-      "chars": 8808
+      "title": "向量运算的几何应用：点积、叉积、投影与机器人",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 3513,
+      "shortTitle": "向量运算的几何应用",
+      "difficulty": "入门",
+      "estimatedMinutes": 4,
+      "tier": 0
     },
     {
       "id": "sec-03",
-      "title": "线性方程组的完整理论：Gauss 消元、RREF 与解的结构",
+      "title": "矩阵运算的完整体系：分块、初等、LU 分解",
       "lastUpdated": "2026-04-28T14:53",
-      "chars": 7149
+      "chars": 8808,
+      "shortTitle": "矩阵运算的完整体系",
+      "difficulty": "中级",
+      "estimatedMinutes": 8,
+      "tier": 1
     },
     {
       "id": "sec-04",
-      "title": "四个基本子空间：Strang 的灵魂章节",
+      "title": "线性方程组的完整理论：Gauss 消元、RREF 与解的结构",
       "lastUpdated": "2026-04-28T14:53",
-      "chars": 6668
+      "chars": 7149,
+      "shortTitle": "线性方程组的完整理论",
+      "difficulty": "中级",
+      "estimatedMinutes": 7,
+      "tier": 1
     },
     {
       "id": "sec-05",
-      "title": "行列式完整理论：七条公理、Laplace 展开、Cramer 法则",
+      "title": "四个基本子空间：Strang 的灵魂章节",
       "lastUpdated": "2026-04-28T14:53",
-      "chars": 7138
+      "chars": 6668,
+      "shortTitle": "四个基本子空间",
+      "difficulty": "中级",
+      "estimatedMinutes": 6,
+      "tier": 1
     },
     {
       "id": "sec-06",
-      "title": "正交性与 QR 分解：Gram-Schmidt、Householder 与投影",
+      "title": "行列式完整理论：七条公理、Laplace 展开、Cramer 法则",
       "lastUpdated": "2026-04-28T14:53",
-      "chars": 8253
+      "chars": 7138,
+      "shortTitle": "行列式完整理论",
+      "difficulty": "中级",
+      "estimatedMinutes": 6,
+      "tier": 1
     },
     {
       "id": "sec-07",
-      "title": "矩阵范数、条件数与数值稳定性：当浮点进入线性代数",
+      "title": "正交性与 QR 分解：Gram-Schmidt、Householder 与投影",
       "lastUpdated": "2026-04-28T14:53",
-      "chars": 7767
+      "chars": 8253,
+      "shortTitle": "正交性与 QR 分解",
+      "difficulty": "中级",
+      "estimatedMinutes": 7,
+      "tier": 1
     },
     {
       "id": "sec-08",
-      "title": "向量运算的几何应用：点积、叉积、投影与机器人",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 3513
+      "title": "线性方程组与最小二乘",
+      "lastUpdated": "2026-04-28T17:03",
+      "chars": 4144,
+      "shortTitle": "线性方程组与最小二乘",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "tier": 1
     },
     {
       "id": "sec-09",
       "title": "特征值与特征向量",
       "lastUpdated": "2026-04-28T17:03",
-      "chars": 5145
+      "chars": 5120,
+      "shortTitle": "特征值与特征向量",
+      "difficulty": "中级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-10",
       "title": "SVD 分解",
       "lastUpdated": "2026-04-28T17:03",
-      "chars": 5070
+      "chars": 5070,
+      "shortTitle": "SVD 分解",
+      "difficulty": "中级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-11",
-      "title": "旋转表示与 SO(3)",
-      "lastUpdated": "",
-      "chars": 7285
+      "title": "正定矩阵与二次型",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 5519,
+      "shortTitle": "正定矩阵与二次型",
+      "difficulty": "中级",
+      "estimatedMinutes": 6,
+      "tier": 1
     },
     {
       "id": "sec-12",
-      "title": "齐次坐标与 SE(3)",
-      "lastUpdated": "",
-      "chars": 5779
+      "title": "二次型完整理论：惯性定理、Sylvester 判据、Cholesky",
+      "lastUpdated": "2026-04-28T16:52",
+      "chars": 6770,
+      "shortTitle": "二次型完整理论",
+      "difficulty": "中级",
+      "estimatedMinutes": 5,
+      "tier": 1
     },
     {
       "id": "sec-13",
-      "title": "线性方程组与最小二乘",
-      "lastUpdated": "2026-04-28T17:03",
-      "chars": 4144
+      "title": "Jordan 标准形：当矩阵不可对角化",
+      "lastUpdated": "2026-04-28T16:52",
+      "chars": 7397,
+      "shortTitle": "Jordan 标准形",
+      "difficulty": "高级",
+      "estimatedMinutes": 6,
+      "tier": 2
     },
     {
       "id": "sec-14",
-      "title": "正定矩阵与二次型",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 5519
+      "title": "矩阵范数、条件数与数值稳定性：当浮点进入线性代数",
+      "lastUpdated": "2026-04-28T14:53",
+      "chars": 7767,
+      "shortTitle": "矩阵范数、条件数与数值稳定性",
+      "difficulty": "高级",
+      "estimatedMinutes": 7,
+      "tier": 2
     },
     {
       "id": "sec-15",
-      "title": "张量分解与高维数据降维",
-      "lastUpdated": "2026-04-28T17:03",
-      "chars": 4331
+      "title": "旋转表示与 SO(3)",
+      "lastUpdated": "",
+      "chars": 7285,
+      "shortTitle": "旋转表示与 SO",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "tier": 2
     },
     {
       "id": "sec-16",
-      "title": "Jordan 标准形：当矩阵不可对角化",
-      "lastUpdated": "2026-04-28T16:52",
-      "chars": 7397
+      "title": "齐次坐标与 SE(3)",
+      "lastUpdated": "",
+      "chars": 5779,
+      "shortTitle": "齐次坐标与 SE",
+      "difficulty": "高级",
+      "estimatedMinutes": 6,
+      "tier": 2
     },
     {
       "id": "sec-17",
-      "title": "二次型完整理论：惯性定理、Sylvester 判据、Cholesky",
-      "lastUpdated": "2026-04-28T16:52",
-      "chars": 6770
+      "title": "张量分解与高维数据降维",
+      "lastUpdated": "2026-04-28T17:03",
+      "chars": 4331,
+      "shortTitle": "张量分解与高维数据降维",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-18",
       "title": "线性代数三大应用：差分方程、马尔可夫链、图拉普拉斯",
       "lastUpdated": "2026-04-28T16:52",
-      "chars": 6961
+      "chars": 6961,
+      "shortTitle": "线性代数三大应用",
+      "difficulty": "高级",
+      "estimatedMinutes": 6,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

@@ -60,122 +60,203 @@
     }
   ],
   "weeklyPlan": "**第1-2周**：多元微积分复习，重做梯度和 Jacobian 练习题（MIT 18.02 讲义）\n**第3周**：凸集、凸函数、凸优化问题建模（Boyd Ch1-3）\n**第4周**：对偶理论、KKT 条件（Boyd Ch4-5）\n**第5周**：梯度下降、牛顿法、L-BFGS 实现与对比\n**第6周**：CVXPY 实践，解一个机器人轨迹优化问题",
-  "lastUpdated": "2026-05-29T10:45",
+  "lastUpdated": "2026-10-13T10:36",
   "maturity": "comprehensive",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
-      "title": "微积分的数学基础：极限、连续、可微的本质",
+      "title": "实数的完备性与极限理论：数列、级数、函数空间",
       "lastUpdated": "2026-04-28T16:00",
-      "chars": 8751
+      "chars": 6217,
+      "shortTitle": "实数的完备性与极限理论",
+      "difficulty": "入门",
+      "estimatedMinutes": 6,
+      "tier": 0
     },
     {
       "id": "sec-02",
-      "title": "实数的完备性与极限理论：数列、级数、函数空间",
+      "title": "微积分的数学基础：极限、连续、可微的本质",
       "lastUpdated": "2026-04-28T16:00",
-      "chars": 6217
+      "chars": 8751,
+      "shortTitle": "微积分的数学基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 7,
+      "tier": 0
     },
     {
       "id": "sec-03",
       "title": "一元微分学的完整理论：导数、微分法则、隐函数、高阶",
       "lastUpdated": "2026-04-28T16:00",
-      "chars": 7356
+      "chars": 7356,
+      "shortTitle": "一元微分学的完整理论",
+      "difficulty": "入门",
+      "estimatedMinutes": 5,
+      "tier": 0
     },
     {
       "id": "sec-04",
-      "title": "多元微积分的严格理论：偏导、Jacobian、Hessian、隐函数定理",
+      "title": "积分理论：Riemann 积分、重积分、换元、Fubini",
       "lastUpdated": "2026-04-28T16:00",
-      "chars": 7020
+      "chars": 6395,
+      "shortTitle": "积分理论",
+      "difficulty": "入门",
+      "estimatedMinutes": 5,
+      "tier": 0
     },
     {
       "id": "sec-05",
-      "title": "积分理论：Riemann 积分、重积分、换元、Fubini",
-      "lastUpdated": "2026-04-28T16:00",
-      "chars": 6395
+      "title": "多元微积分",
+      "lastUpdated": "",
+      "chars": 7111,
+      "shortTitle": "多元微积分",
+      "difficulty": "入门",
+      "estimatedMinutes": 8,
+      "tier": 0
     },
     {
       "id": "sec-06",
-      "title": "无约束优化的完整理论：最优性条件、下降方法、收敛性",
-      "lastUpdated": "2026-04-28T16:00",
-      "chars": 7539
+      "title": "梯度与 Jacobian 矩阵",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 5372,
+      "shortTitle": "梯度与 Jacobian 矩阵",
+      "difficulty": "入门",
+      "estimatedMinutes": 6,
+      "tier": 0
     },
     {
       "id": "sec-07",
-      "title": "约束优化理论：KKT 条件、对偶理论、Slater 条件",
+      "title": "多元微积分的严格理论：偏导、Jacobian、Hessian、隐函数定理",
       "lastUpdated": "2026-04-28T16:00",
-      "chars": 5195
+      "chars": 7020,
+      "shortTitle": "多元微积分的严格理论",
+      "difficulty": "中级",
+      "estimatedMinutes": 5,
+      "tier": 1
     },
     {
       "id": "sec-08",
-      "title": "多元微积分",
-      "lastUpdated": "",
-      "chars": 7111
+      "title": "无约束优化的完整理论：最优性条件、下降方法、收敛性",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 7539,
+      "shortTitle": "无约束优化的完整理论",
+      "difficulty": "高级",
+      "estimatedMinutes": 6,
+      "tier": 1
     },
     {
       "id": "sec-09",
-      "title": "梯度与 Jacobian 矩阵",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 5380
+      "title": "凸优化基础",
+      "lastUpdated": "",
+      "chars": 7048,
+      "shortTitle": "凸优化基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 8,
+      "tier": 1
     },
     {
       "id": "sec-10",
-      "title": "凸优化基础",
+      "title": "拉格朗日对偶与 KKT 条件",
       "lastUpdated": "",
-      "chars": 7048
+      "chars": 6062,
+      "shortTitle": "拉格朗日对偶与 KKT 条件",
+      "difficulty": "中级",
+      "estimatedMinutes": 7,
+      "tier": 1
     },
     {
       "id": "sec-11",
-      "title": "拉格朗日对偶与 KKT 条件",
-      "lastUpdated": "",
-      "chars": 6062
+      "title": "约束优化理论：KKT 条件、对偶理论、Slater 条件",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 5195,
+      "shortTitle": "约束优化理论",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-12",
       "title": "数值优化方法",
       "lastUpdated": "",
-      "chars": 7543
+      "chars": 7543,
+      "shortTitle": "数值优化方法",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "tier": 2
     },
     {
       "id": "sec-13",
       "title": "机器人轨迹优化实战（CVXPY/CasADi）",
       "lastUpdated": "2026-04-28T17:22",
-      "chars": 3767
+      "chars": 3767,
+      "shortTitle": "机器人轨迹优化实战",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-14",
       "title": "李群与李代数：SE(3)上的优化与插值",
       "lastUpdated": "2026-04-28T17:22",
-      "chars": 3243
+      "chars": 3243,
+      "shortTitle": "李群与李代数",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "tier": 2
     },
     {
       "id": "sec-15",
       "title": "二阶锥规划(SOCP)与机器人力分配",
       "lastUpdated": "2026-04-28T17:22",
-      "chars": 2826
+      "chars": 2826,
+      "shortTitle": "二阶锥规划",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-16",
       "title": "变分法初步：泛函极值与最优轨迹",
       "lastUpdated": "2026-04-28T17:22",
-      "chars": 2543
+      "chars": 2543,
+      "shortTitle": "变分法初步",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-17",
       "title": "动力系统与稳定性：从相图到 Lyapunov",
       "lastUpdated": "2026-04-28T17:22",
-      "chars": 2642
+      "chars": 2642,
+      "shortTitle": "动力系统与稳定性",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-18",
       "title": "自动微分与随机优化：深度学习的数学引擎",
       "lastUpdated": "2026-04-28T17:22",
-      "chars": 3140
+      "chars": 3140,
+      "shortTitle": "自动微分与随机优化",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "tier": 2
     },
     {
       "id": "sec-19",
       "title": "蒙特卡洛积分与重要性采样：从 RL 到 VLA 训练的随机优化基石",
       "lastUpdated": "2026-05-29T10:45",
-      "chars": 5599
+      "chars": 5561,
+      "shortTitle": "蒙特卡洛积分与重要性采样",
+      "difficulty": "中级",
+      "estimatedMinutes": 5,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "id": "mechanical-design",
   "name": "机械设计基础",
-  "lastUpdated": "2026-10-13T09:05",
+  "lastUpdated": "2026-10-13T10:36",
   "stage": "阶段二：机器人学基础",
   "importance": "重要",
   "estimatedHours": 30,
@@ -43,120 +43,200 @@
   ],
   "weeklyPlan": "**第1周**：电机原理 + 选型计算\n**第2周**：减速器对比 + 传动设计\n**第3周**：传感器选型 + 接口调试\n**第4周**：搭建一个单关节伺服系统",
   "maturity": "growing",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
-      "title": "机器人关节模组与驱动器选型",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 3022
+      "title": "机器人 CAD 设计流程：从概念到制造",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 2913,
+      "shortTitle": "机器人 CAD 设计流程",
+      "difficulty": "入门",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 0
     },
     {
       "id": "sec-02",
-      "title": "机器人 CAD 设计流程：从概念到制造",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 2930
+      "title": "机械设计的工程基础：材料力学与强度设计",
+      "lastUpdated": "2026-04-28T19:01",
+      "chars": 3662,
+      "shortTitle": "机械设计的工程基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 4,
+      "tier": 0
     },
     {
       "id": "sec-03",
-      "title": "机械设计的工程基础：材料力学与强度设计",
+      "title": "机构学基础：自由度、连杆机构与传动原理",
       "lastUpdated": "2026-04-28T19:01",
-      "chars": 3676
+      "chars": 3486,
+      "shortTitle": "机构学基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 3,
+      "tier": 0
     },
     {
       "id": "sec-04",
-      "title": "机构学基础：自由度、连杆机构与传动原理",
+      "title": "公差与装配：尺寸链、配合与GD&T基础",
       "lastUpdated": "2026-04-28T19:01",
-      "chars": 3496
+      "chars": 3030,
+      "shortTitle": "公差与装配",
+      "difficulty": "入门",
+      "estimatedMinutes": 3,
+      "tier": 0
     },
     {
       "id": "sec-05",
-      "title": "公差与装配：尺寸链、配合与GD&T基础",
+      "title": "热设计与散热：电机热管理与温控策略",
       "lastUpdated": "2026-04-28T19:01",
-      "chars": 3040
+      "chars": 3868,
+      "shortTitle": "热设计与散热",
+      "difficulty": "入门",
+      "estimatedMinutes": 4,
+      "tier": 0
     },
     {
       "id": "sec-06",
-      "title": "热设计与散热：电机热管理与温控策略",
-      "lastUpdated": "2026-04-28T19:01",
-      "chars": 3879
+      "title": "电机类型与选型",
+      "lastUpdated": "",
+      "chars": 6652,
+      "shortTitle": "电机类型与选型",
+      "difficulty": "中级",
+      "estimatedMinutes": 8,
+      "tier": 1
     },
     {
       "id": "sec-07",
-      "title": "电机类型与选型",
+      "title": "减速器与传动",
       "lastUpdated": "",
-      "chars": 6652
+      "chars": 6190,
+      "shortTitle": "减速器与传动",
+      "difficulty": "中级",
+      "estimatedMinutes": 7,
+      "tier": 1
     },
     {
       "id": "sec-08",
-      "title": "减速器与传动",
-      "lastUpdated": "",
-      "chars": 6190
+      "title": "滚珠丝杠与直线传动：从选型计算到预紧调整的工程设计",
+      "lastUpdated": "2026-05-01T13:15",
+      "chars": 12689,
+      "shortTitle": "滚珠丝杠与直线传动",
+      "difficulty": "中级",
+      "estimatedMinutes": 14,
+      "tier": 1
     },
     {
       "id": "sec-09",
-      "title": "传感器",
-      "lastUpdated": "",
-      "chars": 5813
+      "title": "机器人关节模组与驱动器选型",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 3004,
+      "shortTitle": "机器人关节模组与驱动器选型",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "tier": 1
     },
     {
       "id": "sec-10",
-      "title": "灵巧手设计",
-      "lastUpdated": "",
-      "chars": 5936
+      "title": "关节模组选型与电机-减速器匹配计算",
+      "lastUpdated": "2026-04-28T12:03",
+      "chars": 3702,
+      "shortTitle": "关节模组选型与电机",
+      "difficulty": "中级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-11",
-      "title": "结构设计与快速原型",
-      "lastUpdated": "2026-04-21T18:42",
-      "chars": 5609
+      "title": "传感器",
+      "lastUpdated": "",
+      "chars": 5802,
+      "shortTitle": "传感器",
+      "difficulty": "中级",
+      "estimatedMinutes": 7,
+      "tier": 1
     },
     {
       "id": "sec-12",
-      "title": "3D打印快速原型与结构仿真验证",
-      "lastUpdated": "2026-04-27T00:42",
-      "chars": 2291
+      "title": "灵巧手设计",
+      "lastUpdated": "",
+      "chars": 5936,
+      "shortTitle": "灵巧手设计",
+      "difficulty": "中级",
+      "estimatedMinutes": 7,
+      "tier": 1
     },
     {
       "id": "sec-13",
-      "title": "线缆管理与机器人防护设计",
-      "lastUpdated": "2026-04-27T12:01",
-      "chars": 3012
+      "title": "结构设计与快速原型",
+      "lastUpdated": "2026-04-21T18:42",
+      "chars": 5609,
+      "shortTitle": "结构设计与快速原型",
+      "difficulty": "中级",
+      "estimatedMinutes": 6,
+      "tier": 1
     },
     {
       "id": "sec-14",
-      "title": "关节模组选型与电机-减速器匹配计算",
-      "lastUpdated": "2026-04-28T12:03",
-      "chars": 3702
+      "title": "3D打印快速原型与结构仿真验证",
+      "lastUpdated": "2026-04-27T00:42",
+      "chars": 2291,
+      "shortTitle": "3D打印快速原型与结构仿真验证",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-15",
-      "title": "伺服驱动与关节模组：从电流环到力控的完整驱动链路",
-      "lastUpdated": "2026-04-28T20:52",
-      "chars": 8547
+      "title": "线缆管理与机器人防护设计",
+      "lastUpdated": "2026-04-27T12:01",
+      "chars": 3012,
+      "shortTitle": "线缆管理与机器人防护设计",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "tier": 1
     },
     {
       "id": "sec-16",
-      "title": "滚珠丝杠与直线传动：从选型计算到预紧调整的工程设计",
-      "lastUpdated": "2026-05-01T13:15",
-      "chars": 12719
+      "title": "伺服驱动与关节模组：从电流环到力控的完整驱动链路",
+      "lastUpdated": "2026-04-28T20:52",
+      "chars": 8533,
+      "shortTitle": "伺服驱动与关节模组",
+      "difficulty": "中级",
+      "estimatedMinutes": 9,
+      "tier": 2
     },
     {
       "id": "sec-17",
-      "title": "全身触觉皮肤工程：从 GelSight 到 KAI 18000 触点 — 大规模触觉网络的设计、布线与数据通路",
-      "lastUpdated": "2026-05-08T08:30",
-      "chars": 6656
+      "title": "一体化关节模组量产工程：传动路线、批次一致性与散热瓶颈",
+      "lastUpdated": "2026-10-13T09:05",
+      "chars": 7225,
+      "shortTitle": "一体化关节模组量产工程",
+      "difficulty": "中级",
+      "estimatedMinutes": 10,
+      "tier": 2
     },
     {
       "id": "sec-18",
-      "title": "工业人形机器人量产工艺：从天机智能 10 亿元 B 轮到 Figure BotQ 工厂的工程实践",
-      "lastUpdated": "2026-05-29T19:26",
-      "chars": 8616
+      "title": "全身触觉皮肤工程：从 GelSight 到 KAI 18000 触点 — 大规模触觉网络的设计、布线与数据通路",
+      "lastUpdated": "2026-05-08T08:30",
+      "chars": 6618,
+      "shortTitle": "全身触觉皮肤工程",
+      "difficulty": "中级",
+      "estimatedMinutes": 9,
+      "tier": 2
     },
     {
       "id": "sec-19",
-      "title": "一体化关节模组量产工程：传动路线、批次一致性与散热瓶颈",
-      "lastUpdated": "2026-10-13T09:05",
-      "chars": 7225
+      "title": "工业人形机器人量产工艺：从天机智能 10 亿元 B 轮到 Figure BotQ 工厂的工程实践",
+      "lastUpdated": "2026-05-29T19:26",
+      "chars": 8563,
+      "shortTitle": "工业人形机器人量产工艺",
+      "difficulty": "高级",
+      "estimatedMinutes": 10,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

@@ -1,0 +1,12 @@
+{
+  "module": "imitation-learning",
+  "changed": true,
+  "order": [3, 4, 2, 5, 6, 7, 1, 8, 0, 9, 12, 11, 10, 13, 14, 15],
+  "tiers": {
+    "0": [3, 4],
+    "1": [2, 5, 6, 7],
+    "2": [1, 8, 0, 9, 12, 11, 10],
+    "3": [13, 14, 15]
+  },
+  "reason": "把 unshift 到开头的失败模式调试与 VLA/Diffusion 概述移回相应位置，BC→DAgger 基础回到最前，LaST-R1 三件套、Wall-OSS-0.5、StellaVLA 等论文专题聚尾"
+}

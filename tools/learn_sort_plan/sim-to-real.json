@@ -1,0 +1,12 @@
+{
+  "module": "sim-to-real",
+  "changed": true,
+  "order": [0, 1, 2, 3, 6, 4, 7, 8, 5, 11, 9, 10],
+  "tiers": {
+    "0": [0],
+    "1": [1, 2, 3, 6, 4],
+    "2": [7, 8, 5, 11],
+    "3": [9, 10]
+  },
+  "reason": "Domain Randomization(0) 保留开篇；Real-to-Sim 自动化建模(6) 前移到 Real-to-Sim-to-Real 闭环(4) 之前（先懂 Real2Sim 才懂闭环）；自适应 DR(7) 与领域不变特征(8) 紧接 DR/SysID/Teacher-Student 主线之后；Gap 定量诊断与调优(5) 降为进阶工程工具；人体动作重定向(11) 与 RoboWM-Bench(9)、GS-Playground(10) 两个产品级专题排最后。"
+}

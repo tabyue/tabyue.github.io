@@ -1,7 +1,7 @@
 {
   "id": "humanoid-fullstack",
   "name": "人形机器人全栈项目",
-  "lastUpdated": "2026-08-25T12:10",
+  "lastUpdated": "2026-10-13T10:36",
   "stage": "阶段六：项目实战",
   "importance": "高级实战",
   "estimatedHours": 100,
@@ -51,132 +51,226 @@
   ],
   "weeklyPlan": "**第1-4周**：Humanoid Gym 步态训练\n**第5-8周**：全身运动控制\n**第9-12周**：VLA 集成",
   "maturity": "comprehensive",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
-      "title": "人形机器人产业生态：玩家、商业模式与技术路线",
-      "lastUpdated": "2026-05-06T20:16",
-      "chars": 2780
+      "title": "人形机器人系统架构：从设计到全栈集成",
+      "lastUpdated": "2026-04-30T10:32",
+      "chars": 2265,
+      "shortTitle": "人形机器人系统架构",
+      "difficulty": "入门",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 0
     },
     {
       "id": "sec-02",
-      "title": "人形机器人的强化学习训练框架",
-      "lastUpdated": "2026-05-06T20:14",
-      "chars": 3505
+      "title": "人形机器人产业生态：玩家、商业模式与技术路线",
+      "lastUpdated": "2026-05-06T20:16",
+      "chars": 2766,
+      "shortTitle": "人形机器人产业生态",
+      "difficulty": "入门",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 0
     },
     {
       "id": "sec-03",
-      "title": "人形机器人的感知-决策-执行一体化",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 4259
+      "title": "人形机器人的运动学与逆运动学",
+      "lastUpdated": "2026-04-30T11:07",
+      "chars": 3006,
+      "shortTitle": "人形机器人的运动学与逆运动学",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "tier": 0
     },
     {
       "id": "sec-04",
-      "title": "人形机器人的运动学与逆运动学",
-      "lastUpdated": "2026-04-30T11:07",
-      "chars": 3006
+      "title": "人形机器人仿真环境搭建：Humanoid Gym实战",
+      "lastUpdated": "2026-04-27T14:46",
+      "chars": 4050,
+      "shortTitle": "人形机器人仿真环境搭建",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 0
     },
     {
       "id": "sec-05",
-      "title": "人形机器人系统架构：从设计到全栈集成",
-      "lastUpdated": "2026-04-30T10:32",
-      "chars": 2279
+      "title": "步态规划与控制",
+      "lastUpdated": "",
+      "chars": 8871,
+      "shortTitle": "步态规划与控制",
+      "difficulty": "中级",
+      "estimatedMinutes": 10,
+      "tier": 1
     },
     {
       "id": "sec-06",
-      "title": "步态规划与控制",
+      "title": "全身运动控制",
       "lastUpdated": "",
-      "chars": 8871
+      "chars": 5578,
+      "shortTitle": "全身运动控制",
+      "difficulty": "中级",
+      "estimatedMinutes": 6,
+      "tier": 1
     },
     {
       "id": "sec-07",
-      "title": "全身运动控制",
-      "lastUpdated": "",
-      "chars": 5610
+      "title": "感知系统集成",
+      "lastUpdated": "2026-04-19T22:00",
+      "chars": 4208,
+      "shortTitle": "感知系统集成",
+      "difficulty": "中级",
+      "estimatedMinutes": 5,
+      "tier": 1
     },
     {
       "id": "sec-08",
-      "title": "VLA 模型部署",
-      "lastUpdated": "",
-      "chars": 7629
+      "title": "人形机器人的感知-决策-执行一体化",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 4237,
+      "shortTitle": "人形机器人的感知",
+      "difficulty": "高级",
+      "estimatedMinutes": 5,
+      "tier": 1
     },
     {
       "id": "sec-09",
-      "title": "感知系统集成",
-      "lastUpdated": "2026-04-19T22:00",
-      "chars": 4208
+      "title": "人形机器人的强化学习训练框架",
+      "lastUpdated": "2026-05-06T20:14",
+      "chars": 3486,
+      "shortTitle": "人形机器人的强化学习训练框架",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-10",
       "title": "Sim-to-Real 全流程",
       "lastUpdated": "2026-04-19T22:00",
-      "chars": 4280
+      "chars": 4280,
+      "shortTitle": "Sim",
+      "difficulty": "中级",
+      "estimatedMinutes": 5,
+      "tier": 1
     },
     {
       "id": "sec-11",
-      "title": "工业部署与量产：从Demo到规模化落地",
-      "lastUpdated": "2026-04-24T13:10",
-      "chars": 15582
+      "title": "VLA 模型部署",
+      "lastUpdated": "",
+      "chars": 7629,
+      "shortTitle": "VLA 模型部署",
+      "difficulty": "中级",
+      "estimatedMinutes": 9,
+      "tier": 1
     },
     {
       "id": "sec-12",
       "title": "灵巧手操作与指尖力控：让人形机器人拥有精细操作能力",
       "lastUpdated": "2026-04-27T00:45",
-      "chars": 3253
+      "chars": 3253,
+      "shortTitle": "灵巧手操作与指尖力控",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-13",
-      "title": "人形机器人仿真环境搭建：Humanoid Gym实战",
-      "lastUpdated": "2026-04-27T14:46",
-      "chars": 4050
+      "title": "人形机器人电源系统与续航设计：从实验室到量产的能量工程",
+      "lastUpdated": "2026-04-28T06:56",
+      "chars": 13410,
+      "shortTitle": "人形机器人电源系统与续航设计",
+      "difficulty": "高级",
+      "estimatedMinutes": 15,
+      "tier": 2
     },
     {
       "id": "sec-14",
-      "title": "人形机器人电源系统与续航设计：从实验室到量产的能量工程",
-      "lastUpdated": "2026-04-28T06:56",
-      "chars": 13441
+      "title": "工业部署与量产：从Demo到规模化落地",
+      "lastUpdated": "2026-04-24T13:10",
+      "chars": 15582,
+      "shortTitle": "工业部署与量产",
+      "difficulty": "高级",
+      "estimatedMinutes": 18,
+      "tier": 2
     },
     {
       "id": "sec-15",
       "title": "家用人形机器人产品定义与架构选型：从 1X NEO 到若伴 Roban 的\"第 N+1 位家庭成员\"",
       "lastUpdated": "2026-05-07T07:30",
-      "chars": 9946
+      "chars": 9925,
+      "shortTitle": "家用人形机器人产品定义与架构选型",
+      "difficulty": "中级",
+      "estimatedMinutes": 12,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-16",
       "title": "视频生成 × 离散扩散：2026 年人形 VLA 的两条最新路线（ExoActor / MMaDA-VLA 案例精读）",
       "lastUpdated": "2026-05-08T23:30",
-      "chars": 4913
+      "chars": 4876,
+      "shortTitle": "视频生成 × 离散扩散",
+      "difficulty": "高级",
+      "estimatedMinutes": 5,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-17",
-      "title": "VLA 长时程任务工程：从「记忆瓶颈」到 KC-VLA / Helix-02 / π0.5 三条主流路线（2026-05 现状）",
+      "title": "VLA 长时程任务工程：从「记忆瓶颈」到 KC-VLA / Helix-02 / π0.5 三条主流路线",
       "lastUpdated": "2026-05-10T16:15",
-      "chars": 6012
+      "chars": 6012,
+      "shortTitle": "VLA 长时程任务工程",
+      "difficulty": "中级",
+      "estimatedMinutes": 7,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-18",
-      "title": "人形 VLA 全身控制前沿：PhysiFlow 多大脑 Flow Matching × 宇树 GD01 载人机甲范式（2026-05 最新突破）",
+      "title": "人形 VLA 全身控制前沿：PhysiFlow 多大脑 Flow Matching × 宇树 GD01 载人机甲范式",
       "lastUpdated": "2026-05-12T19:30",
-      "chars": 7473
+      "chars": 7411,
+      "shortTitle": "人形 VLA 全身控制前沿",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-19",
       "title": "2026 万台元年：从 Hyundai 25K Atlas 到天机 10K 力控双臂——人形量产部署全栈工程（VLA / 力控本体 / OEM 协议三件套）",
       "lastUpdated": "2026-05-25T08:00",
-      "chars": 9407
+      "chars": 9405,
+      "shortTitle": "2026 万台元年",
+      "difficulty": "高级",
+      "estimatedMinutes": 11,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-20",
       "title": "跨本体统一 VLA × 全身移动操作：从 Qwen-VLA 到 WholeBodyVLA 的两条 2026-05 范式分叉",
       "lastUpdated": "2026-05-31T08:00",
-      "chars": 10900
+      "chars": 10900,
+      "shortTitle": "跨本体统一 VLA × 全身移动操作",
+      "difficulty": "高级",
+      "estimatedMinutes": 12,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-21",
-      "title": "✨ 从展台到工站：铁大 98% 与工信部标准尺子（2026-08）",
+      "title": "从展台到工站：铁大 98% 与工信部标准尺子",
       "lastUpdated": "2026-08-25T12:10",
-      "chars": 5175
+      "chars": 5173,
+      "shortTitle": "从展台到工站",
+      "difficulty": "高级",
+      "estimatedMinutes": 7,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "id": "training-inference-optimization",
   "name": "模型训练与推理优化",
-  "lastUpdated": "2026-10-08T16:30",
+  "lastUpdated": "2026-10-13T10:36",
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 50,
@@ -61,108 +61,182 @@
   ],
   "weeklyPlan": "**第1-2周**：分布式训练（DDP → DeepSpeed ZeRO）\n**第3周**：模型压缩（量化 + 蒸馏）\n**第4-5周**：端侧部署（TensorRT + Jetson）\n**第6周**：Speculative Decoding + VLA推理加速前沿",
   "maturity": "foundation",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
-      "title": "实战：训练 VLA 模型的完整流程",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 4390
+      "title": "深度学习训练基础：从反向传播到优化器",
+      "lastUpdated": "2026-04-28T19:38",
+      "chars": 3898,
+      "shortTitle": "深度学习训练基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 3,
+      "tier": 0
     },
     {
       "id": "sec-02",
-      "title": "LoRA 与 PEFT：大模型高效微调完整指南",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 3646
+      "title": "GPU 架构与 CUDA 编程入门",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 3751,
+      "shortTitle": "GPU 架构与 CUDA 编程入门",
+      "difficulty": "入门",
+      "estimatedMinutes": 4,
+      "tier": 0
     },
     {
       "id": "sec-03",
-      "title": "模型并行与流水线并行：突破单卡显存限制",
-      "lastUpdated": "2026-04-30T10:22",
-      "chars": 2340
+      "title": "分布式训练",
+      "lastUpdated": "",
+      "chars": 7200,
+      "shortTitle": "分布式训练",
+      "difficulty": "中级",
+      "estimatedMinutes": 8,
+      "tier": 1
     },
     {
       "id": "sec-04",
-      "title": "推理优化全景：从量化到 Serving",
+      "title": "模型并行与流水线并行：突破单卡显存限制",
       "lastUpdated": "2026-04-30T10:22",
-      "chars": 2471
+      "chars": 2325,
+      "shortTitle": "模型并行与流水线并行",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-05",
-      "title": "GPU 架构与 CUDA 编程入门",
-      "lastUpdated": "2026-04-29T15:05",
-      "chars": 3773
+      "title": "LoRA/QLoRA 高效微调",
+      "lastUpdated": "2026-04-19T22:00",
+      "chars": 7070,
+      "shortTitle": "LoRA/QLoRA 高效微调",
+      "difficulty": "中级",
+      "estimatedMinutes": 8,
+      "tier": 1
     },
     {
       "id": "sec-06",
-      "title": "深度学习训练基础：从反向传播到优化器",
-      "lastUpdated": "2026-04-28T19:38",
-      "chars": 3911
+      "title": "模型压缩与量化",
+      "lastUpdated": "",
+      "chars": 5989,
+      "shortTitle": "模型压缩与量化",
+      "difficulty": "中级",
+      "estimatedMinutes": 6,
+      "tier": 1
     },
     {
       "id": "sec-07",
-      "title": "分布式训练",
+      "title": "端侧推理部署",
       "lastUpdated": "",
-      "chars": 7200
+      "chars": 7122,
+      "shortTitle": "端侧推理部署",
+      "difficulty": "中级",
+      "estimatedMinutes": 8,
+      "tier": 1
     },
     {
       "id": "sec-08",
-      "title": "模型压缩与量化",
-      "lastUpdated": "",
-      "chars": 6013
+      "title": "推理优化全景：从量化到 Serving",
+      "lastUpdated": "2026-04-30T10:22",
+      "chars": 2460,
+      "shortTitle": "推理优化全景",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-09",
-      "title": "端侧推理部署",
-      "lastUpdated": "",
-      "chars": 7122
+      "title": "vLLM 与大模型高效推理",
+      "lastUpdated": "2026-04-19T22:00",
+      "chars": 5289,
+      "shortTitle": "vLLM 与大模型高效推理",
+      "difficulty": "高级",
+      "estimatedMinutes": 6,
+      "tier": 2
     },
     {
       "id": "sec-10",
-      "title": "LoRA/QLoRA 高效微调",
-      "lastUpdated": "2026-04-19T22:00",
-      "chars": 7070
+      "title": "CUDA编程基础与自定义算子优化",
+      "lastUpdated": "2026-04-27T00:45",
+      "chars": 3149,
+      "shortTitle": "CUDA编程基础与自定义算子优化",
+      "difficulty": "入门",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-11",
-      "title": "Speculative Decoding 与 VLA 推理加速前沿",
-      "lastUpdated": "2026-04-23T02:53",
-      "chars": 11334
+      "title": "LoRA 与 PEFT：大模型高效微调完整指南",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 3646,
+      "shortTitle": "LoRA 与 PEFT",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "tier": 2
     },
     {
       "id": "sec-12",
-      "title": "vLLM 与大模型高效推理",
-      "lastUpdated": "2026-04-19T22:00",
-      "chars": 5289
+      "title": "模型蒸馏与VLA轻量化部署",
+      "lastUpdated": "2026-04-27T14:46",
+      "chars": 3951,
+      "shortTitle": "模型蒸馏与VLA轻量化部署",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-13",
-      "title": "CUDA编程基础与自定义算子优化",
-      "lastUpdated": "2026-04-27T00:45",
-      "chars": 3149
+      "title": "VLA 实时推理工程化：FlashAttention、KV Cache、Async Chunked Action 与端到端延迟预算",
+      "lastUpdated": "2026-05-05T06:10",
+      "chars": 12801,
+      "shortTitle": "VLA 实时推理工程化",
+      "difficulty": "高级",
+      "estimatedMinutes": 13,
+      "tier": 2
     },
     {
       "id": "sec-14",
-      "title": "模型蒸馏与VLA轻量化部署",
-      "lastUpdated": "2026-04-27T14:46",
-      "chars": 3951
+      "title": "实战：训练 VLA 模型的完整流程",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 4371,
+      "shortTitle": "实战",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-15",
-      "title": "VLA 实时推理工程化：FlashAttention、KV Cache、Async Chunked Action 与端到端延迟预算",
-      "lastUpdated": "2026-05-05T06:10",
-      "chars": 12837
+      "title": "Speculative Decoding 与 VLA 推理加速前沿",
+      "lastUpdated": "2026-04-23T02:53",
+      "chars": 11334,
+      "shortTitle": "Speculative Decoding 与…",
+      "difficulty": "高级",
+      "estimatedMinutes": 13,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-16",
       "title": "VLA 大规模预训练工程化：Wall-OSS 范式 — Gradient-Bridged Co-Training x DMuon x RVQ",
       "lastUpdated": "2026-05-29T08:00",
-      "chars": 12864
+      "chars": 12830,
+      "shortTitle": "VLA 大规模预训练工程化",
+      "difficulty": "高级",
+      "estimatedMinutes": 13,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-17",
-      "title": "VLA 推理效率的三条路线：视觉 Token 剪枝 × 脉冲化 × 动作分词（2026-10 前沿）",
+      "title": "VLA 推理效率的三条路线：视觉 Token 剪枝 × 脉冲化 × 动作分词",
       "lastUpdated": "2026-10-08T16:30",
-      "chars": 10488
+      "chars": 10433,
+      "shortTitle": "VLA 推理效率的三条路线",
+      "difficulty": "高级",
+      "estimatedMinutes": 14,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

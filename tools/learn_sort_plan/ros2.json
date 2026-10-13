@@ -1,0 +1,12 @@
+{
+  "module": "ros2",
+  "changed": true,
+  "order": [5, 3, 4, 2, 6, 7, 8, 9, 12, 10, 11, 1, 13, 0],
+  "tiers": {
+    "0": [5, 3],
+    "1": [4, 2, 6, 7, 8, 9],
+    "2": [12, 10, 11, 1],
+    "3": [13, 0]
+  },
+  "reason": "把原置顶的 Helix-02 多机协作与 Fleet 架构移到末尾，'核心通信机制'提到最前，并按 通信基础→Launch/Action→TF2/URDF→Nav2+MoveIt2→ros2_control→QoS调优/生产化→VLA 的依赖链重排"
+}

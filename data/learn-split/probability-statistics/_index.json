@@ -60,116 +60,193 @@
     }
   ],
   "weeklyPlan": "**第1周**：概率基础、条件概率、贝叶斯定理（MIT 6.041 前 5 讲 + Think Bayes Ch1-3）\n**第2周**：高斯分布、MLE/MAP 估计、GMM（Bishop Ch2）\n**第3周**：卡尔曼滤波推导 + Python 实现（Probabilistic Robotics Ch3）\n**第4周**：粒子滤波 + 蒙特卡洛方法（Probabilistic Robotics Ch4 + 编程实践）",
-  "lastUpdated": "2026-04-28T17:22",
+  "lastUpdated": "2026-10-13T10:36",
   "maturity": "comprehensive",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
       "title": "概率论的数学基础：样本空间、σ-代数、Kolmogorov 公理",
       "lastUpdated": "2026-04-28T17:22",
-      "chars": 5895
+      "chars": 5895,
+      "shortTitle": "概率论的数学基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 5,
+      "tier": 0
     },
     {
       "id": "sec-02",
       "title": "随机变量与分布：离散、连续、常见分布家族",
       "lastUpdated": "2026-04-28T16:00",
-      "chars": 7675
+      "chars": 7675,
+      "shortTitle": "随机变量与分布",
+      "difficulty": "入门",
+      "estimatedMinutes": 6,
+      "tier": 0
     },
     {
       "id": "sec-03",
-      "title": "期望、方差与矩：从积分到矩母函数",
-      "lastUpdated": "2026-04-28T16:00",
-      "chars": 6129
+      "title": "高斯分布与 GMM",
+      "lastUpdated": "",
+      "chars": 7597,
+      "shortTitle": "高斯分布与 GMM",
+      "difficulty": "入门",
+      "estimatedMinutes": 8,
+      "tier": 0
     },
     {
       "id": "sec-04",
-      "title": "大数定律与中心极限定理：概率论的两大支柱",
+      "title": "期望、方差与矩：从积分到矩母函数",
       "lastUpdated": "2026-04-28T16:00",
-      "chars": 6213
+      "chars": 6129,
+      "shortTitle": "期望、方差与矩",
+      "difficulty": "入门",
+      "estimatedMinutes": 4,
+      "tier": 0
     },
     {
       "id": "sec-05",
       "title": "多维随机变量：联合分布、条件、协方差矩阵与多元高斯",
       "lastUpdated": "2026-04-28T17:22",
-      "chars": 5705
+      "chars": 5705,
+      "shortTitle": "多维随机变量",
+      "difficulty": "入门",
+      "estimatedMinutes": 5,
+      "tier": 0
     },
     {
       "id": "sec-06",
-      "title": "参数估计理论：矩估计、MLE、MAP 与 Fisher 信息",
+      "title": "大数定律与中心极限定理：概率论的两大支柱",
       "lastUpdated": "2026-04-28T16:00",
-      "chars": 6265
+      "chars": 6213,
+      "shortTitle": "大数定律与中心极限定理",
+      "difficulty": "中级",
+      "estimatedMinutes": 5,
+      "tier": 1
     },
     {
       "id": "sec-07",
-      "title": "假设检验与置信区间：Neyman-Pearson、t 检验、置信度",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 5191
+      "title": "贝叶斯定理与推断",
+      "lastUpdated": "",
+      "chars": 7899,
+      "shortTitle": "贝叶斯定理与推断",
+      "difficulty": "中级",
+      "estimatedMinutes": 9,
+      "tier": 1
     },
     {
       "id": "sec-08",
-      "title": "贝叶斯定理与推断",
-      "lastUpdated": "",
-      "chars": 7899
+      "title": "参数估计理论：矩估计、MLE、MAP 与 Fisher 信息",
+      "lastUpdated": "2026-04-28T16:00",
+      "chars": 6265,
+      "shortTitle": "参数估计理论",
+      "difficulty": "中级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-09",
-      "title": "高斯分布与 GMM",
-      "lastUpdated": "",
-      "chars": 7597
+      "title": "假设检验与置信区间：Neyman-Pearson、t 检验、置信度",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 5191,
+      "shortTitle": "假设检验与置信区间",
+      "difficulty": "中级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-10",
-      "title": "卡尔曼滤波",
-      "lastUpdated": "",
-      "chars": 10844
+      "title": "随机过程初步：马尔可夫链、鞅与 Poisson 过程",
+      "lastUpdated": "2026-04-28T17:22",
+      "chars": 2693,
+      "shortTitle": "随机过程初步",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-11",
-      "title": "蒙特卡洛方法与粒子滤波",
+      "title": "卡尔曼滤波",
       "lastUpdated": "",
-      "chars": 10230
+      "chars": 10844,
+      "shortTitle": "卡尔曼滤波",
+      "difficulty": "中级",
+      "estimatedMinutes": 12,
+      "tier": 1
     },
     {
       "id": "sec-12",
-      "title": "信息论基础",
+      "title": "蒙特卡洛方法与粒子滤波",
       "lastUpdated": "",
-      "chars": 7363
+      "chars": 10218,
+      "shortTitle": "蒙特卡洛方法与粒子滤波",
+      "difficulty": "中级",
+      "estimatedMinutes": 12,
+      "tier": 1
     },
     {
       "id": "sec-13",
-      "title": "高斯过程回归（GPR）在机器人中的应用",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 4358
+      "title": "信息论基础",
+      "lastUpdated": "",
+      "chars": 7363,
+      "shortTitle": "信息论基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 8,
+      "tier": 1
     },
     {
       "id": "sec-14",
-      "title": "贝叶斯优化与超参数调优",
+      "title": "隐马尔可夫模型(HMM)与机器人行为识别",
       "lastUpdated": "2026-04-28T17:22",
-      "chars": 4381
+      "chars": 3538,
+      "shortTitle": "隐马尔可夫模型",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-15",
-      "title": "隐马尔可夫模型(HMM)与机器人行为识别",
+      "title": "集中不等式：从 Chebyshev 到亚高斯尾界",
       "lastUpdated": "2026-04-28T17:22",
-      "chars": 3538
+      "chars": 2527,
+      "shortTitle": "集中不等式",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-16",
-      "title": "随机过程初步：马尔可夫链、鞅与 Poisson 过程",
+      "title": "高斯过程回归（GPR）在机器人中的应用",
       "lastUpdated": "2026-04-28T17:22",
-      "chars": 2693
+      "chars": 4358,
+      "shortTitle": "高斯过程回归",
+      "difficulty": "高级",
+      "estimatedMinutes": 5,
+      "tier": 2
     },
     {
       "id": "sec-17",
-      "title": "集中不等式：从 Chebyshev 到亚高斯尾界",
+      "title": "贝叶斯优化与超参数调优",
       "lastUpdated": "2026-04-28T17:22",
-      "chars": 2527
+      "chars": 4381,
+      "shortTitle": "贝叶斯优化与超参数调优",
+      "difficulty": "高级",
+      "estimatedMinutes": 5,
+      "tier": 2
     },
     {
       "id": "sec-18",
       "title": "信息几何初步：Fisher 信息、KL 散度与自然梯度",
       "lastUpdated": "2026-04-28T17:22",
-      "chars": 2652
+      "chars": 2652,
+      "shortTitle": "信息几何初步",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isFrontier": true,
+      "isBrief": true,
+      "tier": 3
     }
   ]
 }

@@ -4,7 +4,7 @@
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 60,
-  "lastUpdated": "2026-10-13T09:05",
+  "lastUpdated": "2026-10-13T10:36",
   "description": "让机器人稳定、精确地执行期望运动的核心理论。从PID到MPC，从线性到非线性，控制理论是机器人的灵魂。",
   "prerequisites": [
     "微积分与优化",
@@ -50,108 +50,185 @@
   ],
   "weeklyPlan": "**第1周**：PID 控制 + 倒立摆实验\n**第2周**：状态空间法 + 能控性分析\n**第3周**：LQR 设计 + Riccati 方程\n**第4-5周**：MPC 原理与实现\n**第6周**：阻抗控制 + 接触任务仿真\n**第7周**：自适应控制与鲁棒控制",
   "maturity": "growing",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
-      "title": "模型预测控制（MPC）在机器人中的实现",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 3812
+      "title": "控制论基础：传递函数、稳定性与频域分析",
+      "lastUpdated": "2026-04-28T19:38",
+      "chars": 4144,
+      "shortTitle": "控制论基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 4,
+      "tier": 0
     },
     {
       "id": "sec-02",
-      "title": "最优控制理论：从 Pontryagin 到 DDP",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 2734
+      "title": "PID 控制",
+      "lastUpdated": "",
+      "chars": 12695,
+      "shortTitle": "PID 控制",
+      "difficulty": "入门",
+      "estimatedMinutes": 14,
+      "tier": 0
     },
     {
       "id": "sec-03",
-      "title": "Lyapunov 稳定性理论与控制设计",
-      "lastUpdated": "2026-04-30T10:22",
-      "chars": 2725
+      "title": "状态估计基础：卡尔曼滤波从原理到实现",
+      "lastUpdated": "2026-04-28T19:38",
+      "chars": 3729,
+      "shortTitle": "状态估计基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 4,
+      "tier": 0
     },
     {
       "id": "sec-04",
-      "title": "控制论基础：传递函数、稳定性与频域分析",
-      "lastUpdated": "2026-04-28T19:38",
-      "chars": 4154
+      "title": "Lyapunov 稳定性理论与控制设计",
+      "lastUpdated": "2026-04-30T10:22",
+      "chars": 2706,
+      "shortTitle": "Lyapunov 稳定性理论与控制设计",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-05",
-      "title": "状态估计基础：卡尔曼滤波从原理到实现",
-      "lastUpdated": "2026-04-28T19:38",
-      "chars": 3746
+      "title": "LQR 最优控制",
+      "lastUpdated": "",
+      "chars": 7943,
+      "shortTitle": "LQR 最优控制",
+      "difficulty": "中级",
+      "estimatedMinutes": 9,
+      "tier": 1
     },
     {
       "id": "sec-06",
-      "title": "PID 控制",
+      "title": "模型预测控制 (MPC)",
       "lastUpdated": "",
-      "chars": 12695
+      "chars": 7633,
+      "shortTitle": "模型预测控制",
+      "difficulty": "中级",
+      "estimatedMinutes": 8,
+      "tier": 1
     },
     {
       "id": "sec-07",
-      "title": "LQR 最优控制",
-      "lastUpdated": "",
-      "chars": 7943
+      "title": "模型预测控制（MPC）在机器人中的实现",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 3796,
+      "shortTitle": "模型预测控制",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-08",
-      "title": "模型预测控制 (MPC)",
-      "lastUpdated": "",
-      "chars": 7633
+      "title": "计算力矩控制与全身力矩优化",
+      "lastUpdated": "2026-04-27T00:42",
+      "chars": 2816,
+      "shortTitle": "计算力矩控制与全身力矩优化",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-09",
       "title": "阻抗/导纳控制",
       "lastUpdated": "",
-      "chars": 6067
+      "chars": 6067,
+      "shortTitle": "阻抗/导纳控制",
+      "difficulty": "中级",
+      "estimatedMinutes": 7,
+      "tier": 1
     },
     {
       "id": "sec-10",
       "title": "自适应控制与鲁棒控制",
       "lastUpdated": "2026-04-21T12:31",
-      "chars": 10077
+      "chars": 10077,
+      "shortTitle": "自适应控制与鲁棒控制",
+      "difficulty": "中级",
+      "estimatedMinutes": 11,
+      "tier": 1
     },
     {
       "id": "sec-11",
-      "title": "计算力矩控制与全身力矩优化",
-      "lastUpdated": "2026-04-27T00:42",
-      "chars": 2816
+      "title": "最优控制理论：从 Pontryagin 到 DDP",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 2723,
+      "shortTitle": "最优控制理论",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-12",
       "title": "滑模控制与干扰观测器",
       "lastUpdated": "2026-04-27T12:01",
-      "chars": 2935
+      "chars": 2935,
+      "shortTitle": "滑模控制与干扰观测器",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-13",
       "title": "强化学习控制器与经典控制器的混合架构",
       "lastUpdated": "2026-04-28T12:03",
-      "chars": 2561
+      "chars": 2561,
+      "shortTitle": "强化学习控制器与经典控制器的混合架构",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-14",
-      "title": "VLA 时代的控制系统：从策略网络到力矩指令的安全闭环",
-      "lastUpdated": "2026-05-03T02:30",
-      "chars": 11655
+      "title": "动作平滑性与高阶约束：jerk 限幅、输入整形与学习策略的抖动治理",
+      "lastUpdated": "2026-10-13T09:05",
+      "chars": 6413,
+      "shortTitle": "动作平滑性与高阶约束",
+      "difficulty": "中级",
+      "estimatedMinutes": 9,
+      "tier": 2
     },
     {
       "id": "sec-15",
-      "title": "多机器人协作控制：RoboOS-NeXT 范式与 STEM 共享记忆",
-      "lastUpdated": "2026-05-09T06:00",
-      "chars": 8926
+      "title": "VLA 时代的控制系统：从策略网络到力矩指令的安全闭环",
+      "lastUpdated": "2026-05-03T02:30",
+      "chars": 11655,
+      "shortTitle": "VLA 时代的控制系统",
+      "difficulty": "高级",
+      "estimatedMinutes": 14,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-16",
-      "title": "CLF-RL：让 RL 训出来的人形步态可证明稳定（Caltech AMBER 2026 最新成果）",
-      "lastUpdated": "2026-05-10T08:50",
-      "chars": 7917
+      "title": "多机器人协作控制：RoboOS-NeXT 范式与 STEM 共享记忆",
+      "lastUpdated": "2026-05-09T06:00",
+      "chars": 8888,
+      "shortTitle": "多机器人协作控制",
+      "difficulty": "高级",
+      "estimatedMinutes": 9,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-17",
-      "title": "动作平滑性与高阶约束：jerk 限幅、输入整形与学习策略的抖动治理",
-      "lastUpdated": "2026-10-13T09:05",
-      "chars": 6413
+      "title": "CLF-RL：让 RL 训出来的人形步态可证明稳定（Caltech AMBER 2026 最新成果）",
+      "lastUpdated": "2026-05-10T08:50",
+      "chars": 7887,
+      "shortTitle": "CLF",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

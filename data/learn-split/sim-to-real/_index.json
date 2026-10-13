@@ -1,7 +1,7 @@
 {
   "id": "sim-to-real",
   "name": "Sim-to-Real 迁移",
-  "lastUpdated": "2026-10-11T08:30",
+  "lastUpdated": "2026-10-13T10:36",
   "stage": "阶段五：仿真与 Sim-to-Real",
   "importance": "核心",
   "estimatedHours": 40,
@@ -56,78 +56,129 @@
   ],
   "weeklyPlan": "**第1周**：Domain Randomization\n**第2周**：System Identification\n**第3-4周**：Teacher-Student 蒸馏+迁移实验",
   "maturity": "growing",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
       "title": "Domain Randomization",
       "lastUpdated": "",
-      "chars": 10089
+      "chars": 10089,
+      "shortTitle": "Domain Randomization",
+      "difficulty": "入门",
+      "estimatedMinutes": 11,
+      "tier": 0
     },
     {
       "id": "sec-02",
       "title": "System Identification",
       "lastUpdated": "",
-      "chars": 8845
+      "chars": 8845,
+      "shortTitle": "System Identification",
+      "difficulty": "中级",
+      "estimatedMinutes": 10,
+      "tier": 1
     },
     {
       "id": "sec-03",
       "title": "Teacher-Student 蒸馏",
       "lastUpdated": "",
-      "chars": 8870
+      "chars": 8870,
+      "shortTitle": "Teacher",
+      "difficulty": "中级",
+      "estimatedMinutes": 10,
+      "tier": 1
     },
     {
       "id": "sec-04",
       "title": "视觉域迁移 (Visual Domain Adaptation)",
       "lastUpdated": "",
-      "chars": 9934
+      "chars": 9934,
+      "shortTitle": "视觉域迁移",
+      "difficulty": "中级",
+      "estimatedMinutes": 11,
+      "tier": 1
     },
     {
       "id": "sec-05",
-      "title": "Real-to-Sim-to-Real 闭环",
-      "lastUpdated": "",
-      "chars": 12353
+      "title": "Real-to-Sim自动化建模：从真实世界到仿真",
+      "lastUpdated": "2026-04-27T00:45",
+      "chars": 3251,
+      "shortTitle": "Real",
+      "difficulty": "中级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-06",
-      "title": "Sim-to-Real Gap 定量诊断与调优",
-      "lastUpdated": "2026-04-22T07:00",
-      "chars": 16660
+      "title": "Real-to-Sim-to-Real 闭环",
+      "lastUpdated": "",
+      "chars": 12353,
+      "shortTitle": "Real",
+      "difficulty": "中级",
+      "estimatedMinutes": 14,
+      "tier": 1
     },
     {
       "id": "sec-07",
-      "title": "Real-to-Sim自动化建模：从真实世界到仿真",
-      "lastUpdated": "2026-04-27T00:45",
-      "chars": 3251
+      "title": "自适应Domain Randomization：从固定随机化到学习随机化",
+      "lastUpdated": "2026-04-27T14:43",
+      "chars": 3036,
+      "shortTitle": "自适应Domain Randomizatio…",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "tier": 2
     },
     {
       "id": "sec-08",
-      "title": "自适应Domain Randomization：从固定随机化到学习随机化",
-      "lastUpdated": "2026-04-27T14:43",
-      "chars": 3036
+      "title": "领域不变特征学习：让策略\"看不见\"仿真与真实的差别",
+      "lastUpdated": "2026-04-29T17:50",
+      "chars": 10133,
+      "shortTitle": "领域不变特征学习",
+      "difficulty": "中级",
+      "estimatedMinutes": 11,
+      "tier": 2
     },
     {
       "id": "sec-09",
-      "title": "领域不变特征学习：让策略\"看不见\"仿真与真实的差别",
-      "lastUpdated": "2026-04-29T17:50",
-      "chars": 10163
+      "title": "Sim-to-Real Gap 定量诊断与调优",
+      "lastUpdated": "2026-04-22T07:00",
+      "chars": 16660,
+      "shortTitle": "Sim",
+      "difficulty": "高级",
+      "estimatedMinutes": 19,
+      "tier": 2
     },
     {
       "id": "sec-10",
-      "title": "视频世界模型评测：RoboWM-Bench 范式与 Sim-to-Real 评测体系演进",
-      "lastUpdated": "2026-04-30T15:00",
-      "chars": 6746
+      "title": "人体动作重定向与 Real-to-Sim 数据引擎：从 IK/MPC 到生成式流形采样",
+      "lastUpdated": "2026-10-11T08:30",
+      "chars": 7454,
+      "shortTitle": "人体动作重定向与 Real",
+      "difficulty": "高级",
+      "estimatedMinutes": 11,
+      "tier": 2
     },
     {
       "id": "sec-11",
-      "title": "3DGS 高吞吐量仿真：GS-Playground 范式与视觉中心 RL 工业级训练",
-      "lastUpdated": "2026-05-07T20:05",
-      "chars": 6161
+      "title": "视频世界模型评测：RoboWM-Bench 范式与 Sim-to-Real 评测体系演进",
+      "lastUpdated": "2026-04-30T15:00",
+      "chars": 6746,
+      "shortTitle": "视频世界模型评测",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-12",
-      "title": "人体动作重定向与 Real-to-Sim 数据引擎：从 IK/MPC 到生成式流形采样",
-      "lastUpdated": "2026-10-11T08:30",
-      "chars": 7454
+      "title": "3DGS 高吞吐量仿真：GS-Playground 范式与视觉中心 RL 工业级训练",
+      "lastUpdated": "2026-05-07T20:05",
+      "chars": 6161,
+      "shortTitle": "3DGS 高吞吐量仿真",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

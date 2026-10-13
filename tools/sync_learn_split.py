@@ -54,12 +54,20 @@ def sync_module(mod_id):
         valid_sec_files.add(sec_id + '.json')
         if write_if_changed(sec_path, sec):
             written += 1
-        sec_meta.append({
+        # 元信息要够前端直接渲染「模块大纲」卡片（难度/时长/分层），
+        # 缺一个就会出现大纲页时长为 0、全部落到默认难度的静默降级。
+        m = {
             'id': sec_id,
             'title': sec.get('title', ''),
             'lastUpdated': sec.get('lastUpdated', ''),
             'chars': len(sec.get('content', '')),
-        })
+        }
+        for k in ('shortTitle', 'difficulty', 'estimatedMinutes', 'isFrontier', 'isBrief'):
+            if sec.get(k) not in (None, '', False):
+                m[k] = sec[k]
+        if sec.get('tier') is not None:
+            m['tier'] = sec['tier']
+        sec_meta.append(m)
 
     # 清理失效的旧 sec-NN.json（如某模块从 14 节改到 11 节）
     for fn in os.listdir(out_dir):

@@ -4,7 +4,7 @@
   "stage": "阶段六：项目实战",
   "importance": "进阶实战",
   "estimatedHours": 50,
-  "lastUpdated": "2026-05-28T14:30",
+  "lastUpdated": "2026-10-13T10:36",
   "description": "构建一个能在室内自主导航的移动机器人。从 SLAM 建图到 Nav2 导航的完整实战。",
   "prerequisites": [
     "ROS2",
@@ -56,102 +56,172 @@
   ],
   "weeklyPlan": "**第1周**：底盘搭建+传感器\n**第2-3周**：SLAM 建图\n**第4-5周**：Nav2 导航\n**第6周**：集成测试",
   "maturity": "comprehensive",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
-      "title": "状态估计与贝叶斯滤波：导航系统的“隐形大脑”",
-      "lastUpdated": "2026-05-03T09:45",
-      "chars": 13619
+      "title": "底盘搭建",
+      "lastUpdated": "",
+      "chars": 4739,
+      "shortTitle": "底盘搭建",
+      "difficulty": "入门",
+      "estimatedMinutes": 5,
+      "tier": 0
     },
     {
       "id": "sec-02",
-      "title": "社交导航与动态环境避障",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 2907
+      "title": "地图表示与构建：从栅格地图到语义地图",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 3660,
+      "shortTitle": "地图表示与构建",
+      "difficulty": "入门",
+      "estimatedMinutes": 4,
+      "tier": 0
     },
     {
       "id": "sec-03",
       "title": "定位技术：从 AMCL 到视觉-惯性里程计",
       "lastUpdated": "2026-04-30T11:07",
-      "chars": 1966
+      "chars": 1966,
+      "shortTitle": "定位技术",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 0
     },
     {
       "id": "sec-04",
-      "title": "多机器人协同导航：从分布式规划到蜂群",
-      "lastUpdated": "2026-04-30T11:07",
-      "chars": 2015
+      "title": "全局与局部路径规划算法",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 3570,
+      "shortTitle": "全局与局部路径规划算法",
+      "difficulty": "入门",
+      "estimatedMinutes": 4,
+      "tier": 0
     },
     {
       "id": "sec-05",
-      "title": "地图表示与构建：从栅格地图到语义地图",
-      "lastUpdated": "2026-04-29T15:05",
-      "chars": 3672
+      "title": "SLAM 建图",
+      "lastUpdated": "",
+      "chars": 4417,
+      "shortTitle": "SLAM 建图",
+      "difficulty": "中级",
+      "estimatedMinutes": 5,
+      "tier": 1
     },
     {
       "id": "sec-06",
-      "title": "全局与局部路径规划算法",
-      "lastUpdated": "2026-04-29T15:05",
-      "chars": 3570
+      "title": "Nav2 自主导航",
+      "lastUpdated": "",
+      "chars": 7288,
+      "shortTitle": "Nav2 自主导航",
+      "difficulty": "中级",
+      "estimatedMinutes": 8,
+      "tier": 1
     },
     {
       "id": "sec-07",
-      "title": "底盘搭建",
-      "lastUpdated": "",
-      "chars": 4739
+      "title": "路径规划算法详解",
+      "lastUpdated": "2026-04-19T16:45",
+      "chars": 14929,
+      "shortTitle": "路径规划算法详解",
+      "difficulty": "中级",
+      "estimatedMinutes": 17,
+      "tier": 1
     },
     {
       "id": "sec-08",
-      "title": "SLAM 建图",
-      "lastUpdated": "",
-      "chars": 4417
+      "title": "代价地图与动态避障",
+      "lastUpdated": "2026-04-19T16:45",
+      "chars": 7572,
+      "shortTitle": "代价地图与动态避障",
+      "difficulty": "中级",
+      "estimatedMinutes": 9,
+      "tier": 1
     },
     {
       "id": "sec-09",
-      "title": "Nav2 自主导航",
-      "lastUpdated": "",
-      "chars": 7288
+      "title": "状态估计与贝叶斯滤波：导航系统的“隐形大脑”",
+      "lastUpdated": "2026-05-03T09:45",
+      "chars": 13592,
+      "shortTitle": "状态估计与贝叶斯滤波",
+      "difficulty": "中级",
+      "estimatedMinutes": 14,
+      "tier": 2
     },
     {
       "id": "sec-10",
-      "title": "路径规划算法详解",
-      "lastUpdated": "2026-04-19T16:45",
-      "chars": 14929
+      "title": "MPPI控制器：从DWA到模型预测路径积分",
+      "lastUpdated": "2026-04-27T14:40",
+      "chars": 11157,
+      "shortTitle": "MPPI控制器",
+      "difficulty": "高级",
+      "estimatedMinutes": 12,
+      "tier": 2
     },
     {
       "id": "sec-11",
-      "title": "代价地图与动态避障",
-      "lastUpdated": "2026-04-19T16:45",
-      "chars": 7572
+      "title": "语义导航与视觉-语言导航（VLN）",
+      "lastUpdated": "2026-04-26T22:21",
+      "chars": 2791,
+      "shortTitle": "语义导航与视觉",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-12",
-      "title": "语义导航与视觉-语言导航（VLN）",
-      "lastUpdated": "2026-04-26T22:21",
-      "chars": 2791
+      "title": "社交导航与动态环境避障",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 2891,
+      "shortTitle": "社交导航与动态环境避障",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-13",
-      "title": "多机器人协同SLAM与任务调度",
-      "lastUpdated": "2026-04-27T12:01",
-      "chars": 3834
+      "title": "多机器人协同导航：从分布式规划到蜂群",
+      "lastUpdated": "2026-04-30T11:07",
+      "chars": 2002,
+      "shortTitle": "多机器人协同导航",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 2
     },
     {
       "id": "sec-14",
-      "title": "MPPI控制器：从DWA到模型预测路径积分",
-      "lastUpdated": "2026-04-27T14:40",
-      "chars": 11157
+      "title": "多机器人协同SLAM与任务调度",
+      "lastUpdated": "2026-04-27T12:01",
+      "chars": 3834,
+      "shortTitle": "多机器人协同SLAM与任务调度",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-15",
-      "title": "EQA 决策导航：从「看懂场景」到「先想后动」的统一推理框架",
-      "lastUpdated": "2026-05-28T08:00",
-      "chars": 8173
+      "title": "室外 / 野外导航工程实战：FAST-LIVO2 多传感器融合 + Autoware 自动驾驶栈 + GPS-RTK 绝对定位",
+      "lastUpdated": "2026-05-28T14:30",
+      "chars": 11184,
+      "shortTitle": "室外 / 野外导航工程实战",
+      "difficulty": "高级",
+      "estimatedMinutes": 12,
+      "tier": 2
     },
     {
       "id": "sec-16",
-      "title": "室外 / 野外导航工程实战：FAST-LIVO2 多传感器融合 + Autoware 自动驾驶栈 + GPS-RTK 绝对定位",
-      "lastUpdated": "2026-05-28T14:30",
-      "chars": 11253
+      "title": "EQA 决策导航：从「看懂场景」到「先想后动」的统一推理框架",
+      "lastUpdated": "2026-05-28T08:00",
+      "chars": 8137,
+      "shortTitle": "EQA 决策导航",
+      "difficulty": "高级",
+      "estimatedMinutes": 10,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

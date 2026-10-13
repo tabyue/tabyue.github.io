@@ -1,0 +1,12 @@
+{
+  "module": "deep-learning",
+  "changed": true,
+  "order": [1, 2, 4, 5, 0, 3, 8, 6, 7, 9],
+  "tiers": {
+    "0": [1, 2],
+    "1": [4, 5, 0],
+    "2": [3, 8, 6, 7],
+    "3": [9]
+  },
+  "reason": "CNN/Transformer 回到最前，反向传播按其正文依赖（CNN/Transformer/VAE 之后）后移到生成模型与 GNN 之后、训练技巧之前，MoT 端侧 VLA 专题聚尾"
+}

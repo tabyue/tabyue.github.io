@@ -4,7 +4,7 @@
   "stage": "阶段四：AI 大脑",
   "importance": "前沿",
   "estimatedHours": 40,
-  "lastUpdated": "2026-10-08T16:30",
+  "lastUpdated": "2026-10-13T10:36",
   "description": "结合视觉理解、语言指令和动作生成的端到端模型。VLA 是具身智能的前沿方向。",
   "prerequisites": [
     "深度学习基础",
@@ -68,156 +68,276 @@
   ],
   "weeklyPlan": "**第1周**：RT-2 论文精读\n**第2-3周**：OpenVLA 源码+推理\n**第4周**：π₀/FAST 论文",
   "maturity": "comprehensive",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
       "title": "RT-2 / VLA 范式",
       "lastUpdated": "",
-      "chars": 7601
+      "chars": 7601,
+      "shortTitle": "RT",
+      "difficulty": "入门",
+      "estimatedMinutes": 8,
+      "tier": 0
     },
     {
       "id": "sec-02",
       "title": "OpenVLA 开源实践",
       "lastUpdated": "",
-      "chars": 10558
+      "chars": 10558,
+      "shortTitle": "OpenVLA 开源实践",
+      "difficulty": "中级",
+      "estimatedMinutes": 11,
+      "tier": 1
     },
     {
       "id": "sec-03",
       "title": "π₀ 与 Flow Matching",
       "lastUpdated": "",
-      "chars": 9919
+      "chars": 9919,
+      "shortTitle": "π₀ 与 Flow Matching",
+      "difficulty": "中级",
+      "estimatedMinutes": 11,
+      "tier": 1
     },
     {
       "id": "sec-04",
-      "title": "VLA 微调实战",
-      "lastUpdated": "",
-      "chars": 14305
+      "title": "VLA评估基准与系统性测试方法",
+      "lastUpdated": "2026-04-27T14:43",
+      "chars": 3555,
+      "shortTitle": "VLA评估基准与系统性测试方法",
+      "difficulty": "中级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-05",
-      "title": "层次化 VLA 架构：从端到端到分层解耦",
-      "lastUpdated": "2026-04-21T00:17",
-      "chars": 11432
+      "title": "VLA 微调实战",
+      "lastUpdated": "",
+      "chars": 14305,
+      "shortTitle": "VLA 微调实战",
+      "difficulty": "高级",
+      "estimatedMinutes": 16,
+      "tier": 2
     },
     {
       "id": "sec-06",
-      "title": "VLA 部署挑战与推理优化技术：从实验室到真实机器人",
-      "lastUpdated": "2026-10-08T16:30",
-      "chars": 13536
+      "title": "VLA 训练三阶段完整配方：从 VLM 预训练到 Mid-training 到动作精调",
+      "lastUpdated": "2026-04-30T07:30",
+      "chars": 11343,
+      "shortTitle": "VLA 训练三阶段完整配方",
+      "difficulty": "高级",
+      "estimatedMinutes": 13,
+      "isFrontier": true,
+      "tier": 2
     },
     {
       "id": "sec-07",
-      "title": "GR00T N1与人形机器人VLA部署实战",
-      "lastUpdated": "2026-04-26T22:21",
-      "chars": 2620
+      "title": "层次化 VLA 架构：从端到端到分层解耦",
+      "lastUpdated": "2026-04-21T00:17",
+      "chars": 11432,
+      "shortTitle": "层次化 VLA 架构",
+      "difficulty": "高级",
+      "estimatedMinutes": 13,
+      "tier": 2
     },
     {
       "id": "sec-08",
-      "title": "VLA评估基准与系统性测试方法",
-      "lastUpdated": "2026-04-27T14:43",
-      "chars": 3555
+      "title": "VLA 部署挑战与推理优化技术：从实验室到真实机器人",
+      "lastUpdated": "2026-10-08T16:30",
+      "chars": 13536,
+      "shortTitle": "VLA 部署挑战与推理优化技术",
+      "difficulty": "高级",
+      "estimatedMinutes": 15,
+      "tier": 2
     },
     {
       "id": "sec-09",
-      "title": "VLA 训练三阶段完整配方：从 VLM 预训练到 Mid-training 到动作精调（2026-04 前沿实战）",
-      "lastUpdated": "2026-04-30T07:30",
-      "chars": 11343
+      "title": "GR00T N1与人形机器人VLA部署实战",
+      "lastUpdated": "2026-04-26T22:21",
+      "chars": 2620,
+      "shortTitle": "GR00T N1与人形机器人VLA部署实战",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isFrontier": true,
+      "isBrief": true,
+      "tier": 3
     },
     {
       "id": "sec-10",
       "title": "触觉增强 VLA：从视觉-动作到视觉-触觉-动作（Touch-Augmented VLA, 2026-04 最新范式）",
       "lastUpdated": "2026-05-02T03:55",
-      "chars": 12040
+      "chars": 12040,
+      "shortTitle": "触觉增强 VLA",
+      "difficulty": "高级",
+      "estimatedMinutes": 14,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-11",
-      "title": "长程交错推理：从 IVLR 看 VLA 的\"先思后动\"范式（2026-05 最新突破）",
+      "title": "长程交错推理：从 IVLR 看 VLA 的\"先思后动\"范式",
       "lastUpdated": "2026-05-05T19:38",
-      "chars": 13860
+      "chars": 13860,
+      "shortTitle": "长程交错推理",
+      "difficulty": "高级",
+      "estimatedMinutes": 16,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-12",
-      "title": "Object-Addressable WAM 与锚定扩散：VLA 鲁棒性 + 推理效率前沿（2026-05 最新突破）",
+      "title": "Object-Addressable WAM 与锚定扩散：VLA 鲁棒性 + 推理效率前沿",
       "lastUpdated": "2026-05-08T17:20",
-      "chars": 9835
+      "chars": 9835,
+      "shortTitle": "Object",
+      "difficulty": "高级",
+      "estimatedMinutes": 11,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-13",
-      "title": "13. VLA 第三 / 第四阶段：结构化推理 + 舰队级 RL — TriRelVLA × LWD 范式精读（2026-05 最新进展）",
+      "title": "VLA 第三 / 第四阶段：结构化推理 + 舰队级 RL — TriRelVLA × LWD 范式精读",
       "lastUpdated": "2026-05-10T23:35",
-      "chars": 5174
+      "chars": 5119,
+      "shortTitle": "VLA 第三 / 第四阶段",
+      "difficulty": "高级",
+      "estimatedMinutes": 5,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-14",
       "title": "VLA 训练范式跃迁：DeFI 解耦预训练 × ProgressVLA 进度引导（ICLR 2026 双里程碑精读）",
       "lastUpdated": "2026-05-11T20:58",
-      "chars": 8716
+      "chars": 8664,
+      "shortTitle": "VLA 训练范式跃迁",
+      "difficulty": "高级",
+      "estimatedMinutes": 10,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-15",
       "title": "VLA 双系统三件套：从 Libra-VLA 异步双系统到 SA-VLA 流匹配 RL（ACL 2026 + 2026-05 最新突破）",
       "lastUpdated": "2026-05-14T09:20",
-      "chars": 7958
+      "chars": 7958,
+      "shortTitle": "VLA 双系统三件套",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-16",
       "title": "VLA 世界模型工程范式跃迁：单 token 视觉带宽 × LoRA 紧凑适配（OneWM-VLA 2026-05 反直觉精读）",
       "lastUpdated": "2026-05-13T03:28",
-      "chars": 6778
+      "chars": 6778,
+      "shortTitle": "VLA 世界模型工程范式跃迁",
+      "difficulty": "高级",
+      "estimatedMinutes": 7,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-17",
       "title": "灵巧手 VLA 范式跃迁：MoE 残差注入 × RL 增强遥操作（MoDE-VLA 2026-05 反直觉精读）",
       "lastUpdated": "2026-05-15T08:25",
-      "chars": 7498
+      "chars": 7498,
+      "shortTitle": "灵巧手 VLA 范式跃迁",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-18",
       "title": "World Action Model v2 三件套：HarmoWAM × FFDC × OneWM-VLA — 后 VLA 时代的「世界 + 行动」联合范式深度精读",
       "lastUpdated": "2026-05-16T08:00",
-      "chars": 7473
+      "chars": 7473,
+      "shortTitle": "World Action Model v2 …",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-19",
-      "title": "双手 + 双灵巧手 VLA 工程化范式：从 Dexora 看高 DoF 灵巧 VLA 的硬件 + 数据 + 算法三件套（2026-05 ICRA 标杆精读）",
+      "title": "双手 + 双灵巧手 VLA 工程化范式：从 Dexora 看高 DoF 灵巧 VLA 的硬件 + 数据 + 算法三件套",
       "lastUpdated": "2026-05-20T08:00",
-      "chars": 8991
+      "chars": 8991,
+      "shortTitle": "双手 + 双灵巧手 VLA 工程化范式",
+      "difficulty": "高级",
+      "estimatedMinutes": 9,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-20",
       "title": "3D-aware × 跨具身视频生成 × 轻量深度增强：2026-05 多模态 VLA 三件套（PointACT / OmniHumanoid / Evo-Depth）",
       "lastUpdated": "2026-05-23T08:00",
-      "chars": 7722
+      "chars": 7722,
+      "shortTitle": "3D",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-21",
-      "title": "VideoModel-as-Policy：从 Cosmos Policy 到 LingBot-VA — 视频基模直接做机器人策略的新主线（2026-05）",
+      "title": "VideoModel-as-Policy：从 Cosmos Policy 到 LingBot-VA — 视频基模直接做机器人策略的新主线",
       "lastUpdated": "2026-05-26T08:00",
-      "chars": 8012
+      "chars": 8012,
+      "shortTitle": "VideoModel",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-22",
-      "title": "事件级世界模型：从 WALL-WM 看 VLA 的下一个范式分叉（2026-05 最新突破）",
+      "title": "事件级世界模型：从 WALL-WM 看 VLA 的下一个范式分叉",
       "lastUpdated": "2026-05-30T08:30",
-      "chars": 10196
+      "chars": 10196,
+      "shortTitle": "事件级世界模型",
+      "difficulty": "高级",
+      "estimatedMinutes": 12,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-23",
       "title": "VLA 后训练三大瓶颈与 2026 Q2 最新对策（多任务遗忘 / 力觉缺失 / 时空近视）",
       "lastUpdated": "2026-06-01T08:00",
-      "chars": 9361
+      "chars": 9306,
+      "shortTitle": "VLA 后训练三大瓶颈与 2026 Q2 最…",
+      "difficulty": "高级",
+      "estimatedMinutes": 11,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-24",
-      "title": "分层 VLA 的接口体检：规划够不够快，计划有没有被用上（2026-09）",
+      "title": "分层 VLA 的接口体检：规划够不够快，计划有没有被用上",
       "lastUpdated": "2026-09-29T11:00",
-      "chars": 7879
+      "chars": 7879,
+      "shortTitle": "分层 VLA 的接口体检",
+      "difficulty": "高级",
+      "estimatedMinutes": 10,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-25",
-      "title": "VLA 部署鲁棒性与运行时保障：注意力失效测试、隐含危害与在线刹车（2026-10 前沿）",
+      "title": "VLA 部署鲁棒性与运行时保障：注意力失效测试、隐含危害与在线刹车",
       "lastUpdated": "2026-10-08T16:30",
-      "chars": 9749
+      "chars": 9749,
+      "shortTitle": "VLA 部署鲁棒性与运行时保障",
+      "difficulty": "高级",
+      "estimatedMinutes": 14,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

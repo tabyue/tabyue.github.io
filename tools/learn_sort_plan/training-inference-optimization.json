@@ -1,0 +1,12 @@
+{
+  "module": "training-inference-optimization",
+  "changed": true,
+  "order": [5, 4, 6, 2, 9, 7, 8, 3, 11, 12, 1, 13, 14, 0, 10, 15, 16],
+  "tiers": {
+    "0": [5, 4],
+    "1": [6, 2, 9, 7, 8],
+    "2": [3, 11, 12, 1, 13, 14, 0],
+    "3": [10, 15, 16]
+  },
+  "reason": "把被 unshift 到开头的推理优化/模型并行/LoRA 完整指南下沉，恢复「训练基础→GPU 架构→分布式→模型并行→LoRA→压缩量化→端侧部署」主线，实战 VLA 训练收在进阶末尾，Speculative Decoding / Wall-OSS / 2026-10 三条路线作为前沿专题排最后。"
+}

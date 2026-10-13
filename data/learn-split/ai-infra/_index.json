@@ -1,7 +1,7 @@
 {
   "id": "ai-infra",
   "name": "AI Infra 具身基础设施",
-  "lastUpdated": "2026-08-24T19:40",
+  "lastUpdated": "2026-10-13T10:36",
   "stage": "阶段六：系统工程与部署",
   "importance": "核心",
   "estimatedHours": 30,
@@ -63,150 +63,262 @@
   ],
   "weeklyPlan": "**第 1-2 周**：sec-0/1（全景 + 算力栈）+ 跳转读训练优化模块的 4-7\n**第 3-4 周**：sec-5/6（推理引擎 + chunk batching）+ 跳转读云边端模块\n**第 5-6 周**：sec-7（model serving）+ 跳转读平台工程模块\n**第 7 周**：sec-8/9/10（数据流水线）+ 跳转读数据工程模块\n**第 8 周**：sec-15 综合实战项目",
   "maturity": "growing",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
       "title": "AI Infra 全景：具身领域为什么需要专属基础设施？",
       "lastUpdated": "2026-05-11T16:10",
-      "chars": 4474
+      "chars": 4474,
+      "shortTitle": "AI Infra 全景",
+      "difficulty": "入门",
+      "estimatedMinutes": 5,
+      "tier": 0
     },
     {
       "id": "sec-02",
       "title": "GPU 算力栈：从数据中心到机器人本体的端到端路径",
       "lastUpdated": "2026-05-11T16:10",
-      "chars": 5616
+      "chars": 5612,
+      "shortTitle": "GPU 算力栈",
+      "difficulty": "中级",
+      "estimatedMinutes": 6,
+      "tier": 0
     },
     {
       "id": "sec-03",
-      "title": "🔗 分布式训练（DDP / FSDP / DeepSpeed ZeRO）",
-      "lastUpdated": "2026-05-11T15:30",
-      "chars": 731
+      "title": "具身算力芯片选型：NVIDIA vs 国产六雄（昇腾 / 海光 / 寒武纪 / 摩尔 / 沐曦 / 地平线）",
+      "lastUpdated": "2026-05-11T20:00",
+      "chars": 6327,
+      "shortTitle": "具身算力芯片选型",
+      "difficulty": "高级",
+      "estimatedMinutes": 6,
+      "tier": 1
     },
     {
       "id": "sec-04",
-      "title": "🔗 LoRA 与 PEFT：参数高效微调",
+      "title": "分布式训练（DDP / FSDP / DeepSpeed ZeRO）",
       "lastUpdated": "2026-05-11T15:30",
-      "chars": 573
+      "chars": 730,
+      "shortTitle": "分布式训练",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-05",
-      "title": "🔗 模型量化与压缩：从 FP16 到 INT4 的工程取舍",
+      "title": "LoRA 与 PEFT：参数高效微调",
       "lastUpdated": "2026-05-11T15:30",
-      "chars": 643
+      "chars": 574,
+      "shortTitle": "LoRA 与 PEFT",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-06",
-      "title": "推理引擎栈：vLLM / SGLang / Triton 在具身场景的特殊适配",
-      "lastUpdated": "2026-05-11T16:00",
-      "chars": 5120
+      "title": "模型量化与压缩：从 FP16 到 INT4 的工程取舍",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 643,
+      "shortTitle": "模型量化与压缩",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-07",
-      "title": "KV-Cache + 动作 Chunk Batching：VLA 推理的特殊优化",
+      "title": "推理引擎栈：vLLM / SGLang / Triton 在具身场景的特殊适配",
       "lastUpdated": "2026-05-11T16:00",
-      "chars": 4612
+      "chars": 5120,
+      "shortTitle": "推理引擎栈",
+      "difficulty": "高级",
+      "estimatedMinutes": 5,
+      "tier": 1
     },
     {
       "id": "sec-08",
-      "title": "多机器人 Model Serving：Ray Serve / KServe / 自研中间件对比",
+      "title": "KV-Cache + 动作 Chunk Batching：VLA 推理的特殊优化",
       "lastUpdated": "2026-05-11T16:00",
-      "chars": 4106
+      "chars": 4612,
+      "shortTitle": "KV",
+      "difficulty": "高级",
+      "estimatedMinutes": 5,
+      "tier": 1
     },
     {
       "id": "sec-09",
-      "title": "数据流水线全景：从遥操采集到训练就绪的端到端管道",
-      "lastUpdated": "2026-05-11T16:10",
-      "chars": 6368
+      "title": "多机器人 Model Serving：Ray Serve / KServe / 自研中间件对比",
+      "lastUpdated": "2026-05-11T16:00",
+      "chars": 4105,
+      "shortTitle": "多机器人 Model Serving",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-10",
-      "title": "🔗 数据集格式标准（LeRobot / RLDS / Open-X-Embodiment）",
-      "lastUpdated": "2026-05-11T15:30",
-      "chars": 545
+      "title": "数据流水线全景：从遥操采集到训练就绪的端到端管道",
+      "lastUpdated": "2026-05-11T16:10",
+      "chars": 6365,
+      "shortTitle": "数据流水线全景",
+      "difficulty": "中级",
+      "estimatedMinutes": 6,
+      "tier": 1
     },
     {
       "id": "sec-11",
-      "title": "🔗 数据闭环与主动学习",
+      "title": "数据集格式标准（LeRobot / RLDS / Open-X-Embodiment）",
       "lastUpdated": "2026-05-11T15:30",
-      "chars": 585
+      "chars": 546,
+      "shortTitle": "数据集格式标准",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-12",
-      "title": "平台工程基础：从单机器人到 fleet 管理的工程演进",
-      "lastUpdated": "2026-05-11T16:10",
-      "chars": 6774
+      "title": "数据闭环与主动学习",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 583,
+      "shortTitle": "数据闭环与主动学习",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-13",
-      "title": "🔗 K8s / Docker / CI/CD 三件套",
-      "lastUpdated": "2026-05-11T15:30",
-      "chars": 632
+      "title": "平台工程基础：从单机器人到 fleet 管理的工程演进",
+      "lastUpdated": "2026-05-11T16:10",
+      "chars": 6772,
+      "shortTitle": "平台工程基础",
+      "difficulty": "中级",
+      "estimatedMinutes": 7,
+      "tier": 1
     },
     {
       "id": "sec-14",
-      "title": "🔗 可观测性：日志 / 指标 / 追踪 + 机器人特有的视频回放",
+      "title": "K8s / Docker / CI/CD 三件套",
       "lastUpdated": "2026-05-11T15:30",
-      "chars": 557
+      "chars": 630,
+      "shortTitle": "K8s / Docker / CI/CD 三…",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-15",
-      "title": "🔗 云边端协同与 OTA：把模型安全送进 10000 台机器人",
+      "title": "可观测性：日志 / 指标 / 追踪 + 机器人特有的视频回放",
       "lastUpdated": "2026-05-11T15:30",
-      "chars": 797
+      "chars": 556,
+      "shortTitle": "可观测性",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-16",
-      "title": "实战：搭一套最小化具身 AI Infra（端到端 demo）",
-      "lastUpdated": "2026-05-11T16:00",
-      "chars": 7112
+      "title": "云边端协同与 OTA：把模型安全送进 10000 台机器人",
+      "lastUpdated": "2026-05-11T15:30",
+      "chars": 795,
+      "shortTitle": "云边端协同与 OTA",
+      "difficulty": "高级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-17",
-      "title": "具身算力芯片选型：NVIDIA vs 国产六雄（昇腾 / 海光 / 寒武纪 / 摩尔 / 沐曦 / 地平线）",
-      "lastUpdated": "2026-05-11T20:00",
-      "chars": 6329
+      "title": "实战：搭一套最小化具身 AI Infra（端到端 demo）",
+      "lastUpdated": "2026-05-11T16:00",
+      "chars": 7112,
+      "shortTitle": "实战",
+      "difficulty": "高级",
+      "estimatedMinutes": 7,
+      "tier": 2
     },
     {
       "id": "sec-18",
-      "title": "✨ AR-VLA 动作头工程化：自回归 + 重锚机制如何把 VLA 推理频率拉到 30Hz",
+      "title": "AR-VLA 动作头工程化：自回归 + 重锚机制如何把 VLA 推理频率拉到 30Hz",
       "lastUpdated": "2026-05-13T10:30",
-      "chars": 5423
+      "chars": 5423,
+      "shortTitle": "AR",
+      "difficulty": "高级",
+      "estimatedMinutes": 6,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-19",
-      "title": "✨ 触觉感知基础设施：从硬件到 Touch Dreaming 的全栈工程",
+      "title": "触觉感知基础设施：从硬件到 Touch Dreaming 的全栈工程",
       "lastUpdated": "2026-05-14T16:35",
-      "chars": 6980
+      "chars": 6978,
+      "shortTitle": "触觉感知基础设施",
+      "difficulty": "高级",
+      "estimatedMinutes": 7,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-20",
-      "title": "✨ Hand-in-the-Loop 工程化：VLA 量产部署的「人机共控」基础设施（HandITL 标准范式）",
+      "title": "Hand-in-the-Loop 工程化：VLA 量产部署的「人机共控」基础设施（HandITL 标准范式）",
       "lastUpdated": "2026-05-19T08:10",
-      "chars": 6951
+      "chars": 6949,
+      "shortTitle": "Hand",
+      "difficulty": "高级",
+      "estimatedMinutes": 7,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-21",
-      "title": "✨ 3D-aware VLA 工程化：从 PointACT 双系统到 RGB-D 数据流水线（30Hz 实时部署 Infra）",
+      "title": "3D-aware VLA 工程化：从 PointACT 双系统到 RGB-D 数据流水线（30Hz 实时部署 Infra）",
       "lastUpdated": "2026-05-22T08:00",
-      "chars": 7178
+      "chars": 7178,
+      "shortTitle": "3D",
+      "difficulty": "高级",
+      "estimatedMinutes": 7,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-22",
-      "title": "✨ Chunked VLA 推理基础设施：从 chunk size 取舍到 EvoScene-VLA 跨 chunk 场景先验流水线",
+      "title": "Chunked VLA 推理基础设施：从 chunk size 取舍到 EvoScene-VLA 跨 chunk 场景先验流水线",
       "lastUpdated": "2026-05-24T08:00",
-      "chars": 7732
+      "chars": 7732,
+      "shortTitle": "Chunked VLA 推理基础设施",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-23",
-      "title": "✨ Gaussian World Model 工程化：3D 几何监督即「训练阶段插件」+ 推理零开销",
+      "title": "Gaussian World Model 工程化：3D 几何监督即「训练阶段插件」+ 推理零开销",
       "lastUpdated": "2026-05-27T08:00",
-      "chars": 8509
+      "chars": 8509,
+      "shortTitle": "Gaussian World Model 工…",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-24",
-      "title": "✨ 双频异步 VLA 推理基础设施：从 chunk 边界抖动到 Guide Action 掩码回写（NebulaVLA 2026-08 精读）",
+      "title": "双频异步 VLA 推理基础设施：从 chunk 边界抖动到 Guide Action 掩码回写（NebulaVLA 2026-08 精读）",
       "lastUpdated": "2026-08-24T19:40",
-      "chars": 12937
+      "chars": 12936,
+      "shortTitle": "双频异步 VLA 推理基础设施",
+      "difficulty": "高级",
+      "estimatedMinutes": 15,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

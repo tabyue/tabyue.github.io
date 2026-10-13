@@ -5,7 +5,7 @@
   "importance": "核心",
   "estimatedHours": 60,
   "description": "CNN、Transformer、注意力机制是所有现代具身智能算法的基石。",
-  "lastUpdated": "2026-05-03T17:05",
+  "lastUpdated": "2026-10-13T10:36",
   "prerequisites": [
     "Python 编程",
     "线性代数",
@@ -45,66 +45,108 @@
   ],
   "weeklyPlan": "**第1周**：反向传播与自动微分（从零实现 micrograd）\n**第2-3周**：CNN 架构 + 可视化特征图\n**第4-5周**：Transformer + 注意力机制\n**第6-7周**：训练技巧 + 微调（LoRA/EMA）\n**第8周**：生成模型（VAE/扩散模型/Diffusion Policy）\n**第9周**：GNN + 序列模型（图注意力/LSTM/Mamba）",
   "maturity": "growing",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
-      "title": "反向传播与自动微分",
-      "lastUpdated": "2026-04-21T19:44",
-      "chars": 10907
+      "title": "CNN 架构",
+      "lastUpdated": "",
+      "chars": 11614,
+      "shortTitle": "CNN 架构",
+      "difficulty": "入门",
+      "estimatedMinutes": 13,
+      "tier": 0
     },
     {
       "id": "sec-02",
-      "title": "CNN 架构",
+      "title": "Transformer 与自注意力",
       "lastUpdated": "",
-      "chars": 11614
+      "chars": 11675,
+      "shortTitle": "Transformer 与自注意力",
+      "difficulty": "入门",
+      "estimatedMinutes": 13,
+      "tier": 0
     },
     {
       "id": "sec-03",
-      "title": "Transformer 与自注意力",
+      "title": "生成模型 (VAE / GAN / 扩散模型)",
       "lastUpdated": "",
-      "chars": 11675
+      "chars": 13537,
+      "shortTitle": "生成模型",
+      "difficulty": "中级",
+      "estimatedMinutes": 15,
+      "tier": 1
     },
     {
       "id": "sec-04",
-      "title": "训练技巧与微调",
+      "title": "图神经网络与序列模型",
       "lastUpdated": "",
-      "chars": 8253
+      "chars": 14440,
+      "shortTitle": "图神经网络与序列模型",
+      "difficulty": "中级",
+      "estimatedMinutes": 16,
+      "tier": 1
     },
     {
       "id": "sec-05",
-      "title": "生成模型 (VAE / GAN / 扩散模型)",
-      "lastUpdated": "",
-      "chars": 13537
+      "title": "反向传播与自动微分",
+      "lastUpdated": "2026-04-21T19:44",
+      "chars": 10907,
+      "shortTitle": "反向传播与自动微分",
+      "difficulty": "中级",
+      "estimatedMinutes": 12,
+      "tier": 1
     },
     {
       "id": "sec-06",
-      "title": "图神经网络与序列模型",
+      "title": "训练技巧与微调",
       "lastUpdated": "",
-      "chars": 14440
+      "chars": 8253,
+      "shortTitle": "训练技巧与微调",
+      "difficulty": "高级",
+      "estimatedMinutes": 9,
+      "tier": 2
     },
     {
       "id": "sec-07",
-      "title": "接触丰富操作与力-位混合控制",
-      "lastUpdated": "2026-04-26T09:37",
-      "chars": 5356
+      "title": "Flow Matching：从扩散模型到机器人策略生成的新范式",
+      "lastUpdated": "2026-04-29T11:48",
+      "chars": 7411,
+      "shortTitle": "Flow Matching",
+      "difficulty": "高级",
+      "estimatedMinutes": 8,
+      "tier": 2
     },
     {
       "id": "sec-08",
-      "title": "神经网络可解释性与机器人安全决策",
-      "lastUpdated": "2026-04-27T11:33",
-      "chars": 3935
+      "title": "接触丰富操作与力-位混合控制",
+      "lastUpdated": "2026-04-26T09:37",
+      "chars": 5356,
+      "shortTitle": "接触丰富操作与力",
+      "difficulty": "高级",
+      "estimatedMinutes": 6,
+      "tier": 2
     },
     {
       "id": "sec-09",
-      "title": "Flow Matching：从扩散模型到机器人策略生成的新范式",
-      "lastUpdated": "2026-04-29T11:48",
-      "chars": 7411
+      "title": "神经网络可解释性与机器人安全决策",
+      "lastUpdated": "2026-04-27T11:33",
+      "chars": 3935,
+      "shortTitle": "神经网络可解释性与机器人安全决策",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-10",
       "title": "Mixture-of-Transformers (MoT) 与稀疏 MoE：端侧 VLA 的参数-算力解耦之路",
       "lastUpdated": "2026-05-03T17:05",
-      "chars": 12353
+      "chars": 12353,
+      "shortTitle": "Mixture",
+      "difficulty": "高级",
+      "estimatedMinutes": 14,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }

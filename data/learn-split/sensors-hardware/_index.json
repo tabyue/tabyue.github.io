@@ -1,7 +1,7 @@
 {
   "id": "sensors-hardware",
   "name": "传感器与硬件接口",
-  "lastUpdated": "2026-10-11T08:30",
+  "lastUpdated": "2026-10-13T10:36",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 40,
@@ -62,114 +62,193 @@
   ],
   "weeklyPlan": "**第1周**：激光雷达原理 + RPLiDAR 数据采集与可视化\n**第2周**：IMU 噪声模型 + 互补滤波 + EKF 融合\n**第3周**：触觉传感器原理 + GelSight/FSR 数据处理\n**第4周**：F/T 传感器 + 力控基础实验\n**第5周**：编码器 + 电机闭环 PID 控制\n**第6周**：视觉传感器选型 + 深度图处理 + 综合传感器集成项目",
   "maturity": "growing",
+  "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
-      "title": "LiDAR 技术深入：2D/3D LiDAR 与固态激光雷达",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 2851
+      "title": "电子学基础：电路原理、信号调理与接口协议",
+      "lastUpdated": "2026-04-28T19:07",
+      "chars": 3302,
+      "shortTitle": "电子学基础",
+      "difficulty": "入门",
+      "estimatedMinutes": 3,
+      "tier": 0
     },
     {
       "id": "sec-02",
-      "title": "相机系统设计：从图像传感器到计算摄影",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 3471
+      "title": "电源系统设计：电池选型、电源管理与安全保护",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 2292,
+      "shortTitle": "电源系统设计",
+      "difficulty": "入门",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 0
     },
     {
       "id": "sec-03",
-      "title": "触觉与力传感器：机器人的\"皮肤\"",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 3165
+      "title": "传感器标定与误差分析：从原始数据到可靠测量",
+      "lastUpdated": "2026-04-28T19:07",
+      "chars": 4175,
+      "shortTitle": "传感器标定与误差分析",
+      "difficulty": "入门",
+      "estimatedMinutes": 5,
+      "tier": 0
     },
     {
       "id": "sec-04",
-      "title": "传感器数据融合：从互补滤波到因子图",
-      "lastUpdated": "2026-04-29T15:05",
-      "chars": 4327
+      "title": "激光雷达 (LiDAR)",
+      "lastUpdated": "",
+      "chars": 6696,
+      "shortTitle": "激光雷达",
+      "difficulty": "中级",
+      "estimatedMinutes": 7,
+      "tier": 1
     },
     {
       "id": "sec-05",
-      "title": "电源系统设计：电池选型、电源管理与安全保护",
-      "lastUpdated": "2026-04-29T15:05",
-      "chars": 2303
+      "title": "LiDAR 技术深入：2D/3D LiDAR 与固态激光雷达",
+      "lastUpdated": "2026-04-30T11:33",
+      "chars": 2836,
+      "shortTitle": "LiDAR 技术深入",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-06",
-      "title": "电子学基础：电路原理、信号调理与接口协议",
-      "lastUpdated": "2026-04-28T19:07",
-      "chars": 3312
+      "title": "IMU 与惯性导航",
+      "lastUpdated": "",
+      "chars": 4452,
+      "shortTitle": "IMU 与惯性导航",
+      "difficulty": "中级",
+      "estimatedMinutes": 5,
+      "tier": 1
     },
     {
       "id": "sec-07",
-      "title": "传感器标定与误差分析：从原始数据到可靠测量",
-      "lastUpdated": "2026-04-28T19:07",
-      "chars": 4190
+      "title": "视觉传感器选型指南",
+      "lastUpdated": "",
+      "chars": 2598,
+      "shortTitle": "视觉传感器选型指南",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-08",
-      "title": "激光雷达 (LiDAR)",
-      "lastUpdated": "",
-      "chars": 6696
+      "title": "相机系统设计：从图像传感器到计算摄影",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 3460,
+      "shortTitle": "相机系统设计",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "tier": 1
     },
     {
       "id": "sec-09",
-      "title": "IMU 与惯性导航",
-      "lastUpdated": "",
-      "chars": 4452
+      "title": "触觉与力传感器：机器人的\"皮肤\"",
+      "lastUpdated": "2026-04-30T10:58",
+      "chars": 3153,
+      "shortTitle": "触觉与力传感器",
+      "difficulty": "中级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-10",
       "title": "触觉传感器",
       "lastUpdated": "",
-      "chars": 4112
+      "chars": 4112,
+      "shortTitle": "触觉传感器",
+      "difficulty": "中级",
+      "estimatedMinutes": 4,
+      "tier": 1
     },
     {
       "id": "sec-11",
       "title": "力/力矩传感器 (F/T Sensor)",
       "lastUpdated": "",
-      "chars": 2424
+      "chars": 2424,
+      "shortTitle": "力/力矩传感器",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "isBrief": true,
+      "tier": 1
     },
     {
       "id": "sec-12",
       "title": "编码器与电机反馈",
       "lastUpdated": "",
-      "chars": 3496
+      "chars": 3496,
+      "shortTitle": "编码器与电机反馈",
+      "difficulty": "中级",
+      "estimatedMinutes": 3,
+      "tier": 1
     },
     {
       "id": "sec-13",
-      "title": "视觉传感器选型指南",
-      "lastUpdated": "",
-      "chars": 2598
+      "title": "传感器数据融合：从互补滤波到因子图",
+      "lastUpdated": "2026-04-29T15:05",
+      "chars": 4315,
+      "shortTitle": "传感器数据融合",
+      "difficulty": "中级",
+      "estimatedMinutes": 5,
+      "tier": 1
     },
     {
       "id": "sec-14",
-      "title": "深度相机原理、标定与多相机融合",
-      "lastUpdated": "2026-04-22T13:15",
-      "chars": 19597
+      "title": "IMU 姿态估计三大算法：互补滤波 / Madgwick / Extended Kalman Filter 完整实现",
+      "lastUpdated": "2026-05-04T15:20",
+      "chars": 17601,
+      "shortTitle": "IMU 姿态估计三大算法",
+      "difficulty": "中级",
+      "estimatedMinutes": 19,
+      "tier": 2
     },
     {
       "id": "sec-15",
-      "title": "多传感器时间同步与硬件触发",
-      "lastUpdated": "2026-04-27T11:33",
-      "chars": 3797
+      "title": "深度相机原理、标定与多相机融合",
+      "lastUpdated": "2026-04-22T13:15",
+      "chars": 19597,
+      "shortTitle": "深度相机原理、标定与多相机融合",
+      "difficulty": "高级",
+      "estimatedMinutes": 21,
+      "tier": 2
     },
     {
       "id": "sec-16",
-      "title": "IMU 姿态估计三大算法：互补滤波 / Madgwick / Extended Kalman Filter 完整实现",
-      "lastUpdated": "2026-05-04T15:20",
-      "chars": 17664
+      "title": "多传感器时间同步与硬件触发",
+      "lastUpdated": "2026-04-27T11:33",
+      "chars": 3797,
+      "shortTitle": "多传感器时间同步与硬件触发",
+      "difficulty": "高级",
+      "estimatedMinutes": 4,
+      "tier": 2
     },
     {
       "id": "sec-17",
       "title": "力/力矩传感器全栈工程：从应变片到天机智能量产级六维力",
       "lastUpdated": "2026-05-29T19:50",
-      "chars": 5457
+      "chars": 5425,
+      "shortTitle": "力/力矩传感器全栈工程",
+      "difficulty": "高级",
+      "estimatedMinutes": 6,
+      "isFrontier": true,
+      "tier": 3
     },
     {
       "id": "sec-18",
       "title": "多模态主动感知：触觉/听觉/力觉的选型、时间同步与跨模态标定",
       "lastUpdated": "2026-10-11T08:30",
-      "chars": 9641
+      "chars": 9641,
+      "shortTitle": "多模态主动感知",
+      "difficulty": "高级",
+      "estimatedMinutes": 14,
+      "isFrontier": true,
+      "tier": 3
     }
   ]
 }
