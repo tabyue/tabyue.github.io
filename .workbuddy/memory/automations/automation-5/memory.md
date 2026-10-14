@@ -41,6 +41,12 @@
 - 学习：control-theory +第 17 节（抖动治理：jerk 限幅 / 输入整形 / 高阶动作监督，11K → 109K）；mechanical-design +第 19 节（一体化关节模组量产工程，12K → 108K）。
 - 校验：sync + sitemap（510 章节）+ health_check 一次 FAIL（n411=n354 灵生 A 轮，同文双域名）→ 合并后 ALL OK；已 push（e55c8de）。
 
+### 2026-10-14 08:00—09:40
+- 投稿箱：无新投稿。
+- 数据：新闻 +10（n419—n428）、论文 +5（p217—p221，含 detail）、开源 +4（os162—os165，含 detail + 报告页）、招聘 +6（j199—j204）、资源 r001 扩充 + 新增 r010（具身数据基础设施与公开数据集）。
+- 学习：deep-learning +第 11 节（自监督表征与机器人视觉表征，8.5K）；embodied-agent +第 13 节（失败感知与自主恢复，7.4K）。
+- 校验：sync + sitemap（512 章节）+ health_check → ALL OK；已 push（29905d4）。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
@@ -70,3 +76,7 @@
 - **开源详情 keyPapers 必须是 markdown 字符串（2026-10-13）**：`tools/gen_os_report.py` 把 detail 各字段直接 `'\n'.join`，list-of-dict 会抛 `sequence item N: expected str instance, list found`。生成报告前先转成 `- **[标题](url)** — 说明`。
 - **写 os 脚本的括号层级（2026-10-13）**：`P.append(` + `dict(` + `meta=dict(` + `detail=dict(` 共 4 层，keyPapers 列表闭合后需 `]))))`。且 `detail` 必须在入表前 `m.pop('detail')`，否则 detail 会混进 `opensource.json` 的 projects 列表。
 - **新闻/论文/开源选题先查库（2026-10-13 强化）**：本轮 10 条新闻候选里 4 条已被 10-10/10-12 两轮收录（Yujin Robot= n371、CCTV 训练场=n398、RoboDojo、边融边投=n397）；论文候选里 UNITAS 与 Long-WAM 已收录；开源候选 HomeBody=os149。查重脚本拦下是正常结果，不是 bug，但要准备好备选条目补足数量。
+- **同一 URL 已被占用即说明内容已收录（2026-10-14）**：本轮 n427 首版（cinn.cn 经营验证稿）与 n389 撞 URL。不要换域名绕开，直接换选题；同文多域名是上一条老坑的变体。
+- **learn 脚本的「先写后 print」陷阱（2026-10-14）**：bump 函数在写文件之后才 print，print 若抛异常（如引用了不存在的 `sec["id"]`）文件已被改动。补跑前必须给 bump 加「按 shortTitle 判重」守卫。
+- **外层用 r""" 时，示例代码 docstring 只能用 '''（2026-10-14 复现）**：误用 `"""` 会提前闭合外层字符串，报错落在 docstring 正文首行并表现为 `IndentationError: unexpected indent`，与实际原因相距几百行。
+- **deep-learning 已有 Flow Matching 章节**（位于 tier 2），不要再写同题；写前先打印目标模块的 section 清单（短标题 + tier + 字数）。
