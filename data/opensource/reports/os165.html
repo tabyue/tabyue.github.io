@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GiT（Grounded in Time）：面向感知歧义下时序定位的多源双臂操作数据集与基准 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">GiT（Grounded in Time）：面向感知歧义下时序定位的多源双臂操作数据集与基准 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="gitgrounded-in-time">GiT（Grounded in Time）：面向感知歧义下时序定位的多源双臂操作数据集与基准</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://www.modelscope.cn/datasets/xgq12345/GIT_hdf5">https://www.modelscope.cn/datasets/xgq12345/GIT_hdf5</a>  </p>
+<p><strong>Stars</strong>: 180 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-14  </p>
+<p><strong>组织</strong>: GiT 团队（AgileX 双臂平台采集）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-14</p>
+</blockquote>
+<hr />
+<p><strong>核心主张：指令定位不只发生在空间里，也发生在时间里。</strong></p>
+<p>现有 VLA 基准绝大多数假设「看到当前帧就知道指令指的是哪个物体」。这个假设在实验室里成立，在真实场景里经常崩：台面上并排放着六支外观相同的试管，「把刚才污染的那支拿走」这句话，只有看过前面几分钟的人才能执行。</p>
+<p>GiT 把这个能力单独抽出来做成基准，价值在于——<strong>它让时序定位成为可测量的独立指标</strong>，而不是被任务成功率掩盖的隐藏因素。</p>
+<p><strong>为什么需要三个子集</strong>：real 提供真实动力学与噪声，sim 提供规模与可控变量，umi 提供低成本的采集扩展路径。三者互补，可以在不同预算下做消融。</p>
+<p><strong>对 VLA 训练的直接价值</strong>：同步多视角 RGB + 本体感知 + 时序真值的组合，既可用于训练记忆型策略（如带 Gated DeltaNet / 状态演化记忆的架构），也可用于评估策略是否真的在用历史信息。</p>
+<hr />
+<p><strong>任务构造原则</strong></p>
+<p>每个场景含若干<strong>感知近同</strong>的物体，指令所指对象由 episode 的时序结构唯一确定：</p>
+<p>$$
+o^{\star} = \arg\max_{o \in \mathcal{O}} \; p(o \mid \text{instr}, \tau_{0:t})
+$$</p>
+<p>而 $p(o \mid \text{instr}, f_t)$（仅当前帧）近似均匀——这是设计的硬性要求。</p>
+<p><strong>子集构成</strong></p>
+<table>
+<thead>
+<tr>
+<th>子集</th>
+<th>来源</th>
+<th>Episode</th>
+<th>任务族</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>real/</td>
+<td>真机遥操作</td>
+<td>1,260</td>
+<td>18</td>
+</tr>
+<tr>
+<td>sim/</td>
+<td>仿真</td>
+<td>2,400</td>
+<td>9</td>
+</tr>
+<tr>
+<td>umi/</td>
+<td>UMI 式采集</td>
+<td>1,800</td>
+<td>18</td>
+</tr>
+</tbody>
+</table>
+<p><strong>任务族分类</strong>：bio<em>（生物实验类）、house</em>（家务类）、industrial*（工业类）各 6 族。</p>
+<p><strong>HDF5 schema</strong></p>
+<p>每条 episode 为单个自包含文件 <code>{task}_episode{N}.hdf5</code>；图像流以<strong>编码字节</strong>存储（变长 uint8），需 <code>cv2.imdecode</code> / <code>PIL.Image.open</code> 按需解码；双臂键名为 <code>puppetLeft</code> / <code>puppetRight</code>。</p>
+<p><strong>时序真值</strong></p>
+<p>$$
+\text{demo}: [0, d], \quad \text{subtask}_k: [s_k, e_k]
+$$</p>
+<p>评测可只取歧义段 $[d+1, T]$。</p>
+<hr />
+<h2 id="_2">直接相关资源</h2>
+<ul>
+<li><strong><a href="https://www.modelscope.cn/datasets/xgq12345/GIT_hdf5">GiT 数据集（ModelScope）</a></strong> — Apache-2.0，含 real / sim / umi 三子集，1.90 TB。</li>
+<li><strong>官方网站、GitHub、arXiv、HuggingFace</strong> — 均在主页标注的 Website / GitHub / arXiv / HF 入口。</li>
+</ul>
+<h2 id="_3">延伸阅读</h2>
+<ul>
+<li><strong>RoboTwin 2.0</strong> — 双臂操作与随机化基准，可与 GiT 组合做能力分离。</li>
+<li><strong>Dual-Stream Memory for VLA / EvoMem-VLA</strong> — 面向记忆依赖操作的策略架构，这类方法正是 GiT 想要区分的对象。</li>
+</ul>
+<hr />
+<p><strong>获取与读取</strong></p>
+<pre><code class="language-bash"># 数据集主页（含申请入口）
+# https://www.modelscope.cn/datasets/xgq12345/GIT_hdf5
+pip install h5py opencv-python
+</code></pre>
+<pre><code class="language-python">'''
+读取一条 GiT episode：按需解码图像 + 读取时序标注
+'''
+import h5py, cv2, numpy as np
+
+def load_episode(path, cam='cam_high', every=10):
+    with h5py.File(path, 'r') as f:
+        frames = f[cam][:]                       # (T,) 变长 uint8 编码字节
+        imgs = [cv2.imdecode(np.frombuffer(b, np.uint8), cv2.IMREAD_COLOR)
+                for b in frames[::every]]
+        qpos = f['puppetLeft']['qpos'][:]        # (T, D) 本体感知
+        segs = f.attrs.get('subtask_ranges')     # 时序真值
+    return imgs, qpos, segs
+</code></pre>
+<p><strong>建议的验证顺序</strong></p>
+<ol>
+<li><strong>先测基线</strong>：用只吃当前帧的模型跑歧义段，确认它确实失败（这是基准有效性的前提）</li>
+<li><strong>加记忆</strong>：接入历史压缩模块，观察定位准确率提升幅度</li>
+<li><strong>消融序列长度</strong>：找出消歧所需的最短历史窗口</li>
+<li><strong>跨子集迁移</strong>：sim 训练 → real 评测，量化域差距</li>
+</ol>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>解码极慢：不要一次性解码全部帧，按批解码并缓存</li>
+<li>定位准确率不涨：检查是否把演示段也喂给模型（演示段已包含消歧信息，会虚高）</li>
+<li>真机子集掉点：先查多视角时间同步，再看相机外参</li>
+</ul>
+<hr />
+<p><strong>数据规模</strong></p>
+<table>
+<thead>
+<tr>
+<th>子集</th>
+<th>Episode</th>
+<th>任务族</th>
+<th>指令语言</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>real/（真机遥操作）</td>
+<td>1,260</td>
+<td>18</td>
+<td>英文</td>
+</tr>
+<tr>
+<td>sim/（仿真）</td>
+<td>2,400</td>
+<td>9</td>
+<td>英文</td>
+</tr>
+<tr>
+<td>umi/（UMI 式）</td>
+<td>1,800</td>
+<td>18</td>
+<td>英文</td>
+</tr>
+<tr>
+<td><strong>合计</strong></td>
+<td><strong>4,680</strong></td>
+<td>18</td>
+<td>英文</td>
+</tr>
+</tbody>
+</table>
+<p><strong>采集平台</strong>：AgileX 双臂平台。</p>
+<p><strong>模态</strong>：同步多视角 RGB、可选深度、完整本体感知状态。</p>
+<p><strong>格式与许可</strong>：HDF5（单 episode 单文件），Apache-2.0；ModelScope 上为 Gated 模式，需申请后下载。</p>
+<p><strong>更新</strong>：2026 年 10 月 12 日更新，约 1.90 TB。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>数据集 / 基准</th>
+<th>核心考察点</th>
+<th>是否考察时序定位</th>
+<th>双臂</th>
+<th>时序标注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GiT</strong></td>
+<td><strong>感知歧义下的时序定位</strong></td>
+<td><strong>是（核心）</strong></td>
+<td><strong>是</strong></td>
+<td><strong>有（帧区间）</strong></td>
+</tr>
+<tr>
+<td>LIBERO</td>
+<td>多任务操作泛化</td>
+<td>否</td>
+<td>否</td>
+<td>无</td>
+</tr>
+<tr>
+<td>RoboTwin 2.0</td>
+<td>双臂协作与随机化</td>
+<td>弱</td>
+<td>是</td>
+<td>无</td>
+</tr>
+<tr>
+<td>RoboDojo</td>
+<td>泛化/记忆/精细/长程/语义</td>
+<td>部分（记忆维度）</td>
+<td>部分</td>
+<td>无</td>
+</tr>
+<tr>
+<td>CALVIN</td>
+<td>长程语言条件操作</td>
+<td>弱</td>
+<td>否</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<p><strong>读表要点</strong>：GiT 填补的是「<strong>同一场景、同类多实例、必须靠历史消歧</strong>」这一格。随着 VLA 从「看清就抓」走向「记得刚才做了什么」，这类基准会越来越关键。</p>
+<p><strong>搭配建议</strong>：与 LIBERO（通用能力）、RoboTwin（双臂随机化）组合使用，可以分离出「操作能力」与「时序记忆能力」两个独立维度。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

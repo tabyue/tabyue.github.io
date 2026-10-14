@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-13T08:50",
+ "lastUpdated": "2026-10-14T08:50",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,131 @@
   }
  ],
  "projects": [
+  {
+   "id": "os165",
+   "name": "GiT（Grounded in Time）：面向感知歧义下时序定位的多源双臂操作数据集与基准",
+   "github": "https://www.modelscope.cn/datasets/xgq12345/GIT_hdf5",
+   "organization": "GiT 团队（AgileX 双臂平台采集）",
+   "org": "GiT",
+   "category": "data-tools",
+   "description": "**Grounded in Time（GiT）** 是一个专门针对**感知歧义下的时序定位（temporal grounding）**构建的机器人操作数据集与基准。\n\n**它的任务设计很特别**：场景里放多个**视觉上几乎一模一样**的物体，指令所指的那个无法从当前帧判断——区分它们的不是外观，而是 episode 的**时序结构**：哪支试管先被污染、哪个容器最后被装满、哪个零件刚刚被递过来。只靠当前帧定位指令的模型必然选错，必须**跟踪并推理整段历史**才能消歧。\n\n**数据规模**：real / sim / umi 三个互补子集，共 **4680 条 episode、18 个任务族**，采集于 AgileX 双臂平台。每条 episode 配对自然语言指令与任务的时序结构：\n- 显式切分**演示段**与**子任务段**，评测可只针对歧义部分\n- 子任务段标注（含 [frame_start, frame_end] 与描述），给出各阶段的时序真值\n- 同步的多视角 RGB、可选深度与完整本体感知状态\n\n**复用价值**：同一批 episode 既可作为基准，也可直接作为训练数据；标注记录了「哪个阶段消歧、何时消歧」，因此定位能力可被直接探测，而不必从任务成功率反推。",
+   "language": "Python / HDF5",
+   "license": "Apache-2.0",
+   "features": [
+    "专为感知歧义设计：同类多实例，必须靠时序结构而非外观消歧",
+    "real / sim / umi 三子集共 4680 episode、18 个任务族",
+    "显式切分演示段与子任务段，评测可锁定歧义区间",
+    "子任务段标注含帧区间与描述，提供时序定位真值",
+    "同步多视角 RGB + 可选深度 + 完整本体感知状态",
+    "HDF5 单文件自包含，图像以编码字节存储，按需解码省内存",
+    "同一批数据既作基准也作训练数据，标注可直接探测定位能力"
+   ],
+   "stars": 180,
+   "tags": [
+    "时序定位",
+    "感知歧义",
+    "双臂操作",
+    "HDF5",
+    "多视角",
+    "AgileX",
+    "数据集"
+   ],
+   "addedDate": "2026-10-14"
+  },
+  {
+   "id": "os164",
+   "name": "DreamTrue：动作忠实的跨本体机器人世界模型（几何校准 + 反事实后训练 + 视频奖励模型）",
+   "github": "https://github.com/brave-eai/DreamTrue",
+   "organization": "brave-eai（AgiBot World Challenge 2026 世界模型赛道冠军）",
+   "org": "brave-eai",
+   "category": "ai-model",
+   "description": "**DreamTrue** 是一个**多视角、跨本体**的机器人世界模型开源实现，目标是让视频预测**动作忠实**（action-faithful）且物理合理。\n\n**两个要解决的病**：\n1. **动作跟不上**：把机器人状态渲染进图像空间当条件时，标定误差会让渲染臂与真实臂错位，监督信号自相矛盾\n2. **只会预测成功**：公开数据集几乎全是成功示范，模型学到动作与成功的绑定，即使输入注定失败的反事实轨迹也倾向生成「任务完成」的画面\n\n**三步对症下药**：\n- **离线几何校准**：把动作轨迹渲染条件与目标视频在图像空间对齐\n- **反事实后训练**：修改已录制动作轨迹，在更宽的动作与接触配置下生成未来视频，补齐失败覆盖\n- **缺陷标注 + 具身视频奖励模型**：人工标注覆盖机器人/物体/交互三类缺陷，训练奖励模型后用 RL 后训练把预测推向物理合理\n\n**结果**：AgiBot 上动作跟随达 SOTA，人工评估交互缺陷率从 **48.12% 降到 6.25%**，并获 AgiBot World Challenge 2026 世界模型赛道第一名。\n\n**资产**：代码开源，模型与数据在 ModelScope 提供。",
+   "language": "Python",
+   "license": "开源（详见仓库）",
+   "features": [
+    "多视角、跨本体的机器人世界模型，动作条件在图像空间显式对齐",
+    "离线几何校准：修正渲染臂与真实臂的像素错位，消除自相矛盾的监督信号",
+    "反事实动作扩展：修改录制轨迹生成失败与次优交互样本，打破「只预测成功」偏置",
+    "三类缺陷人工标注数据集（机器人 / 物体 / 交互缺陷）",
+    "具身视频奖励模型：无配对真值未来时给出物理合理性反馈",
+    "RL 后训练：用奖励分数把视频分布推向物理合理，带 KL 约束防坍缩",
+    "AgiBot World Challenge 2026 世界模型赛道第 1 名"
+   ],
+   "stars": 240,
+   "tags": [
+    "世界模型",
+    "跨本体",
+    "几何校准",
+    "反事实",
+    "视频奖励模型",
+    "失败预测",
+    "AgiBot"
+   ],
+   "addedDate": "2026-10-14"
+  },
+  {
+   "id": "os163",
+   "name": "RAI：ROS 2 原生的具身 AI Agent 框架（多 Agent 编排 + 语音交互 + 开放集感知 + 基准评测）",
+   "github": "https://github.com/RobotcAI/rai",
+   "organization": "RobotecAI",
+   "org": "RobotcAI",
+   "category": "ai-agent-framework",
+   "description": "**RAI** 是 RobotecAI 开源的**厂商无关**具身 AI Agent 框架，基于 ROS 2 构建，让开发者不必从零搭建即可给机器人加上自然语言交互、语音对话与多 Agent 编排能力。\n\n**模块化包结构**：\n- **rai core**：多 Agent 系统、人机交互与多模态编排\n- **rai_whoami**：从结构文档、图片与 URDF 合成机器人本体描述（embodiment info），供 Agent 作为上下文使用\n- **rai_asr / rai_tts**：语音转写与语音合成\n- **rai_sim**：连接仿真环境\n- **rai_bench**：对 Agent、模型、工具、仿真器做系统基准评测\n- **rai_perception**：开放集目标检测\n- **rai_nomad**：集成 NoMaD 做导航\n\n**运行环境**：Ubuntu 22.04 / 24.04，Python 3.10 / 3.12，ROS 2 humble / jazzy。\n\n**仿真演示**：自主果园拖拉机、Franka Panda 机械臂、Husarion ROSbot XL、RB-KAIROS 移动操作机器人，覆盖农业、操作、导航等场景。\n\n**背景**：ROS Embodied AI Community Group 的旗舰项目，有 arXiv 论文（2505.07532）支撑。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "ROS 2 原生：以 ROS 2 工具为能力接口，Agent 通过工具调用机器人能力",
+    "rai_whoami：从 URDF / 文档 / 图片自动合成机器人本体描述作为 Agent 上下文",
+    "rai core 多 Agent 编排：复杂动作、预定义场景、自由形式自然语言指令皆可驱动",
+    "rai_asr / rai_tts：端到端语音交互，支持实时人机对话",
+    "rai_perception：开放集目标检测，不依赖预定义类别",
+    "rai_bench：对 Agent / 模型 / 工具 / 仿真器做系统性基准评测",
+    "rai_sim + rai_nomad：仿真环境接入与 NoMaD 导航集成",
+    "多平台仿真演示：果园拖拉机、Franka、ROSbot XL、RB-KAIROS"
+   ],
+   "stars": 602,
+   "tags": [
+    "ROS2",
+    "具身 Agent",
+    "多 Agent",
+    "语音交互",
+    "开放集检测",
+    "rai_bench",
+    "Apache-2.0"
+   ],
+   "addedDate": "2026-10-14"
+  },
+  {
+   "id": "os162",
+   "name": "AgentGarten：把物理仿真与神经渲染解耦的自进化代码世界（Adversarial Forcing 可微回放）",
+   "github": "https://github.com/MirroS-Lab/AgentGarten",
+   "organization": "MirroS Lab",
+   "org": "MirroS-Lab",
+   "category": "simulation",
+   "description": "**AgentGarten** 是一个开源的具身 Agent 训练环境框架，核心主张是**把物理仿真后端与神经渲染器彻底解耦**，同时拿到物理忠实度与视觉真实度，并切断长程交互中的视频幻觉累积。\n\n**它解决的问题**：\n- 传统仿真/游戏引擎（Isaac Sim、MuJoCo、Unity）动力学严格，但渲染贴图单调，存在严重视觉域差距，仿真跑通、实机抓瞎\n- 自回归视频世界模型画面逼真，但长程推演中几何形变、物理崩解，且每帧视觉伪影被下一帧递归放大，形成不可逆的幻觉死循环\n\n**架构**：仿真后端维护持久的真实状态、执行程序定义的交互规则，**从不摄入渲染帧**；结构化几何条件经统一接口导出，由共享神经渲染器实时合成视觉观测。渲染器由预训练视频模型适配几何条件而来，用提出的 **Adversarial Forcing** 蒸馏：精确回放使历史预填充可微，后续帧损失可回传到先前观测编码，辅以真实数据对抗监督提升画质、抑制闪烁。\n\n**性能与效果**：单卡 H100 上 480×832 达 **37.4 FPS**，满足闭环交互延迟阈值；捉迷藏等多 Agent 任务中，Agent **4 轮**学会搬障碍封路、**10 轮**学会搭坡翻墙，而经典 RL 基线分别需要约 2500 万轮与 1 亿轮。\n\n**自进化机制**：Agent 把每轮经验蒸馏成结构化 **playbook**，由后续代际继承并迭代精化；新世界用代码编写、经同一接口渲染，环境数量与难度可与 Agent 能力同步扩展。代码与环境全部开源。",
+   "language": "Python",
+   "license": "开源（详见仓库）",
+   "features": [
+    "物理仿真后端与神经渲染器解耦，仿真器永不摄入渲染帧，从根上切断幻觉累积",
+    "Adversarial Forcing：精确可微回放，使后续帧损失能回传到先前观测编码",
+    "真实数据对抗监督，抑制长程渲染闪烁与画质退化",
+    "单卡 H100 上 480×832 实时渲染 37.4 FPS，满足闭环交互延迟要求",
+    "结构化几何条件统一接口，同一渲染器服务多个仿真后端",
+    "Playbook 蒸馏：每轮经验蒸馏为结构化策略库，供后续代际继承与精化",
+    "世界以代码定义，环境数量与难度可随 Agent 能力同步扩展"
+   ],
+   "stars": 320,
+   "tags": [
+    "神经渲染",
+    "物理仿真",
+    "解耦架构",
+    "Adversarial Forcing",
+    "playbook",
+    "自进化 Agent",
+    "实时渲染"
+   ],
+   "addedDate": "2026-10-14"
+  },
   {
    "id": "os161",
    "name": "hold_and_weld：ROS 2 双臂焊接-夹持框架（用第二只机械臂代替专用焊接夹具）",
@@ -3579,5 +3704,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 148
+ "totalItems": 152
 }

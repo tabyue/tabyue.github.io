@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentGarten：把物理仿真与神经渲染解耦的自进化代码世界（Adversarial Forcing 可微回放） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">AgentGarten：把物理仿真与神经渲染解耦的自进化代码世界（Adversarial Forcing 可微回放） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="agentgartenadversarial-forcing">AgentGarten：把物理仿真与神经渲染解耦的自进化代码世界（Adversarial Forcing 可微回放）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/MirroS-Lab/AgentGarten">https://github.com/MirroS-Lab/AgentGarten</a>  </p>
+<p><strong>Stars</strong>: 320 · <strong>License</strong>: 开源（详见仓库） · <strong>收录日期</strong>: 2026-10-14  </p>
+<p><strong>组织</strong>: MirroS Lab  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-14</p>
+</blockquote>
+<hr />
+<p><strong>核心主张：视觉真实度与物理忠实度不是一个需要权衡的连续谱，而是两个可以拆开的模块。</strong></p>
+<p>过去所有方案都在同一个模型里同时追求这两件事：物理引擎追求状态正确而放弃画面，视频模型追求画面而放弃状态。AgentGarten 指出二者冲突的根源是<strong>自回归闭环</strong>——只要渲染结果被喂回状态更新，误差就会累积；一旦把回路切断，渲染器只负责「把真实状态画出来」，就不再需要承担物理正确性。</p>
+<p><strong>这套解耦带来的三个直接收益</strong></p>
+<ol>
+<li>状态层误差累积为零：仿真后端独立维护状态，渲染误差不进入动力学</li>
+<li>渲染器可以单独升级：换更强的视频基座不需要动物理与规则</li>
+<li>帧率可以单独优化：实时性只影响交互体验，不影响物理正确性</li>
+</ol>
+<hr />
+<p><strong>1. 仿真后端（Simulator Backend）</strong></p>
+<p>维护持久的世界状态 $s_t$，执行程序定义的交互规则：</p>
+<p>$$
+s_{t+1} = \mathcal{F}(s_t, a_t)
+$$</p>
+<p>关键约束：$\mathcal{F}$ <strong>不接受渲染帧作为输入</strong>。</p>
+<p><strong>2. 结构化几何条件接口</strong></p>
+<p>$$
+g_t = g(s_t) \in \mathcal{G}
+$$</p>
+<p>导出深度、位姿、语义实例等结构化条件，作为渲染器的唯一输入。</p>
+<p><strong>3. 共享神经渲染器</strong></p>
+<p>$$
+o_t = \mathcal{R}_\psi(g_t)
+$$</p>
+<p>由预训练视频模型适配几何条件而来，多环境共用一套权重。</p>
+<p><strong>4. Adversarial Forcing 蒸馏</strong></p>
+<p>精确可微回放 + 真实数据对抗监督：</p>
+<p>$$
+\min_\psi \; \mathcal{L}<em>{\text{rec}}(\hat{o}</em>{1:T}, o^{\star}<em>{1:T}) + \lambda \, \mathcal{L}</em>{\text{adv}}(\mathcal{R}<em>\psi, \mathcal{D}</em>{\text{real}})
+$$</p>
+<p><strong>5. Playbook 蒸馏与代际继承</strong></p>
+<p>$$
+\mathcal{B}^{(k+1)} = \mathrm{Refine}\big(\mathcal{B}^{(k)}, \mathrm{Distill}(\tau^{(k)})\big)
+$$</p>
+<p><strong>6. 世界即代码</strong></p>
+<p>新环境以代码定义规则与布局，经同一接口渲染，无需重新训练渲染器。</p>
+<hr />
+<h2 id="_2">直接相关资源</h2>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.12374">AgentGarten: Code Worlds for Evolving Agents（arXiv 2610.12374）</a></strong> — MirroS Lab，14 位作者，cs.CV，提出解耦架构与 Adversarial Forcing。</li>
+<li><strong><a href="https://mirros-lab.github.io/agent-garten">项目主页</a></strong> — 含渲染效果与交互演示。</li>
+<li><strong><a href="https://github.com/MirroS-Lab/AgentGarten">代码仓库</a></strong> — 仿真后端、渲染器与 playbook 蒸馏代码。</li>
+</ul>
+<h2 id="_3">延伸阅读</h2>
+<ul>
+<li><strong>OpenWAM</strong>（斯坦福）— 策略侧可组合世界-动作模型框架，与本仓库的环境侧思路互补。</li>
+<li><strong>DreamTrue</strong>（arXiv 2610.12468）— 动作忠实的机器人世界模型，关注「给定动作画面是否真这么演化」。</li>
+</ul>
+<hr />
+<p><strong>上手顺序</strong></p>
+<pre><code class="language-bash">git clone https://github.com/MirroS-Lab/AgentGarten.git &amp;&amp; cd AgentGarten
+# 按仓库 README 安装依赖、下载渲染器权重
+</code></pre>
+<ol>
+<li><strong>先跑通最小解耦样例</strong>：确认后端状态更新不依赖渲染输出</li>
+<li><strong>验证可微回放</strong>：短序列上检查末帧损失能否回传到首帧编码</li>
+<li><strong>测帧率</strong>：目标 ≥ 30 FPS，不达标时优先优化条件编码缓存与推理步数</li>
+<li><strong>跑多代 playbook 蒸馏</strong>：记录每代成功率曲线，确认代际增益</li>
+</ol>
+<p><strong>可微回放梯度检查</strong></p>
+<pre><code class="language-python">'''
+确认后续帧损失能回传到首帧观测编码（Adversarial Forcing 的前提）
+'''
+import torch
+
+def check_grad_to_first_frame(renderer, conds):
+    z0 = renderer.encode(conds[0]).clone().detach().requires_grad_(True)
+    frames = renderer.rollout(z0, conds[1:])
+    loss = renderer.rec_loss(frames[-1], conds[-1].target)
+    loss.backward()
+    return float(z0.grad.abs().mean())   # 应显著大于 0
+</code></pre>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>梯度为零：回放分支中残留 <code>detach()</code> 或 <code>no_grad</code></li>
+<li>画面闪烁：对抗监督权重过低，或真实数据与仿真几何分布不匹配</li>
+<li>帧率不达标：条件编码每帧重算，应缓存</li>
+<li>代际无增益：playbook 过于具体、缺少抽象层级</li>
+</ul>
+<hr />
+<p><strong>渲染性能</strong></p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分辨率</td>
+<td>480×832</td>
+</tr>
+<tr>
+<td>帧率</td>
+<td><strong>37.4 FPS</strong>（单卡 NVIDIA H100）</td>
+</tr>
+<tr>
+<td>判定</td>
+<td>满足自主 Agent 闭环延迟阈值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>学习效率（多 Agent 捉迷藏）</strong></p>
+<table>
+<thead>
+<tr>
+<th>涌现行为</th>
+<th>AgentGarten</th>
+<th>经典 RL 基线</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>搬障碍封路</td>
+<td><strong>4 轮</strong></td>
+<td>约 2500 万轮</td>
+</tr>
+<tr>
+<td>搭坡翻墙</td>
+<td><strong>10 轮</strong></td>
+<td>约 1 亿轮</td>
+</tr>
+</tbody>
+</table>
+<p>学习效率提升数个数量级，并涌现出复杂的多 Agent 协作策略。</p>
+<p><strong>论文规模</strong>：arXiv 2610.12374，11,550 KB 附件，cs.CV。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>物理忠实</th>
+<th>视觉真实</th>
+<th>长程稳定性</th>
+<th>典型帧率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AgentGarten</strong></td>
+<td><strong>高（独立后端）</strong></td>
+<td><strong>高（神经渲染）</strong></td>
+<td><strong>高（无闭环累积）</strong></td>
+<td><strong>37.4 FPS</strong></td>
+</tr>
+<tr>
+<td>Isaac Sim / MuJoCo</td>
+<td>高</td>
+<td>低（域差距大）</td>
+<td>高</td>
+<td>高</td>
+</tr>
+<tr>
+<td>自回归视频世界模型</td>
+<td>低（物理崩解）</td>
+<td>高</td>
+<td>低（幻觉累积）</td>
+<td>低</td>
+</tr>
+<tr>
+<td>游戏引擎 + 贴图增强</td>
+<td>高</td>
+<td>中</td>
+<td>高</td>
+<td>高</td>
+</tr>
+</tbody>
+</table>
+<p><strong>读表要点</strong>：真正决定可用性的不是画质分数，而是<strong>长程稳定性 + 闭环帧率</strong>两条。AgentGarten 的价值在于把「视觉真实度」从物理正确性的约束里解放出来——渲染器画错一帧不会污染状态，最坏情况只是 Agent 看到一张怪图。</p>
+<p><strong>与 OpenWAM / UniWAM 的关系</strong>：后者是<strong>策略侧</strong>的世界-动作模型（学预测与动作），AgentGarten 是<strong>环境侧</strong>的世界构建框架（造可交互的训练场）。两者正交，可以组合使用。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
