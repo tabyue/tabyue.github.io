@@ -47,6 +47,12 @@
 - 学习：deep-learning +第 11 节（自监督表征与机器人视觉表征，8.5K）；embodied-agent +第 13 节（失败感知与自主恢复，7.4K）。
 - 校验：sync + sitemap（512 章节）+ health_check → ALL OK；已 push（29905d4）。
 
+### 2026-10-15 08:00—09:00
+- 投稿箱：无新投稿（gh issue list 返回空）。开工时 `git status -sb` 显示 **ahead 1**（上一轮 ae9043d 未推送），本轮一并带上。
+- 数据：新闻 +10（n429—n438）、论文 +5（p222—p226，含 detail）、开源 +4（os166—os169，含 detail + 报告页）、招聘 +6（j205—j210）、资源新增 r011（开源基座模型与权重开放平台）+ r001 扩充。
+- 学习：cloud-edge-collaboration +「云端托管推理与云边协同」（8.7K → 108K）；multimodal-perception +「视触觉对齐与触觉分辨率瓶颈」（7.8K → 107K）。
+- 校验：sync + sitemap（514 章节）+ health_check → ALL OK；已 push（ae9043d..879778f）。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
@@ -80,3 +86,6 @@
 - **learn 脚本的「先写后 print」陷阱（2026-10-14）**：bump 函数在写文件之后才 print，print 若抛异常（如引用了不存在的 `sec["id"]`）文件已被改动。补跑前必须给 bump 加「按 shortTitle 判重」守卫。
 - **外层用 r""" 时，示例代码 docstring 只能用 '''（2026-10-14 复现）**：误用 `"""` 会提前闭合外层字符串，报错落在 docstring 正文首行并表现为 `IndentationError: unexpected indent`，与实际原因相距几百行。
 - **deep-learning 已有 Flow Matching 章节**（位于 tier 2），不要再写同题；写前先打印目标模块的 section 清单（短标题 + tier + 字数）。
+- **PowerShell 内联 `python -c @"..."@` 会吞字符导致 SyntaxError**（2026-10-15）：诊断脚本一律先 `Write` 成 `.py` 文件再跑，不要用 here-string 内联。
+- **一次性写不满可二次追加**（2026-10-15）：正文初版只有 6K 时，再写 `_upd_learn2.py` 用「按 shortTitle 找章节 + 判重标记（如正文末尾的『能力自检清单』）+ 追加」的方式补到 8K 左右，幂等且安全。
+- **选题先做「本轮新增内容」交叉核对**：本轮候选里星尘智能 150 亿=n419、UniWAM=n428、UNITAS=n410、UnifoLM=n413、巨蟹智能=n385、优必选一汽大众=n364、工博会节卡=n422 均为上一轮已收录，靠 `_dedup.py` 导出的标题/URL/arXiv/GitHub 全量清单才拦干净。
