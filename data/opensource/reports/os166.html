@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboRSI：上海 AI Lab 开源的机器人代码自进化框架（自顶向下技能精炼 + 四智能体协同治理） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">RoboRSI：上海 AI Lab 开源的机器人代码自进化框架（自顶向下技能精炼 + 四智能体协同治理） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="roborsi-ai-lab">RoboRSI：上海 AI Lab 开源的机器人代码自进化框架（自顶向下技能精炼 + 四智能体协同治理）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/nssmd/RoboRSI">https://github.com/nssmd/RoboRSI</a>  </p>
+<p><strong>Stars</strong>: 620 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-15  </p>
+<p><strong>组织</strong>: 上海人工智能实验室 × 清华大学  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-15</p>
+</blockquote>
+<hr />
+<p><strong>核心主张：机器人代码要能长期演化，必须先能被精确归因。</strong></p>
+<p>Code-as-Policies / Voyager 一类工作证明了「让大模型写机器人动作代码」的泛化能力，但它们共享一个致命弱点——代码库是<strong>扁平</strong>的。失败发生时，系统只能看到「某处出错了」，无法定位到具体是哪个技能分支的责任，于是最省事的修复方式就是全局重写，而这恰恰会破坏已经正确的部分。</p>
+<p>RoboRSI 的第一步是<strong>给能力分层</strong>：底层 Base Skills（运动学、点云滤波）、中层 Atomic Skills（表面对齐、夹爪开合）、顶层 Compound Skills（房间整理、货架分拣）。每一层都有显式的 I/O 契约与后置条件断言。</p>
+<p><strong>为什么契约这么关键</strong>：有了契约，一次执行异常可以被严格归因到<strong>责任分支</strong>——是输入不满足前置条件，还是输出违反后置条件，还是调度顺序错。归因精度做到了 95.8%，而准确归因正是「只改该改的地方」的前提，也是避免灾难性遗忘的机制性保障。</p>
+<p><strong>第二步是治理流程</strong>：单个大模型既写规划又写代码又做评审，等于自己给自己改卷。RoboRSI 拆成四个角色——Manager 算 token/执行预算并排发布里程碑，Planner 把高层意图编译成技能调用 DAG，Engineer 只合成<strong>局限在失败子分支内的模块化外科补丁</strong>，Reviewer 在仿真沙箱里跑回归套件、确认零退化才合入主库。</p>
+<p><strong>第三步是资产沉淀</strong>：频繁共现的稳定原子调用序列会被自动冻结并编译成可复用的复合原语，技能库随任务累积自我增强。真机 104 轮自主整理沉淀出 32 个已验证技能，正是这条机制在起作用。</p>
+<hr />
+<p><strong>TSR 三层金字塔</strong></p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>内容</th>
+<th>契约</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compound</td>
+<td>房间整理、货架分拣</td>
+<td>任务级 I/O + 子技能调用顺序</td>
+</tr>
+<tr>
+<td>Atomic</td>
+<td>表面对齐、夹爪开合</td>
+<td>单步前置/后置条件断言</td>
+</tr>
+<tr>
+<td>Base</td>
+<td>运动学求解、点云滤波</td>
+<td>纯函数式，输入输出类型固定</td>
+</tr>
+</tbody>
+</table>
+<p><strong>四智能体治理集体</strong></p>
+<ul>
+<li><strong>Manager</strong>：定宏观目标、算 token 与执行预算、排发布里程碑</li>
+<li><strong>Planner</strong>：把高层意图编译成有向无环的技能调用图 $\mathcal{G}=(\mathcal{V},\mathcal{E})$</li>
+<li><strong>Engineer</strong>：只在失败子分支内合成模块化外科补丁 $\Delta_{\text{patch}} \subseteq \text{subtree}(v_{\text{fail}})$</li>
+<li><strong>Reviewer</strong>：在仿真沙箱执行回归套件，零退化才允许合入</li>
+</ul>
+<p><strong>归因机制</strong></p>
+<p>失败沿 DAG 回溯，由契约违例定位责任节点：</p>
+<p>$$
+v_{\text{fail}} = \arg\max_{v \in \mathcal{V}} \ \mathbb{1}[\text{postcond}(v) \text{ violated}]
+$$</p>
+<p><strong>动态复合固化</strong></p>
+<p>$$
+\text{freeze}(v_{i_1} \to \cdots \to v_{i_k}) \longmapsto v^{\text{new}}_{\text{compound}} \quad \text{当} \quad \text{freq} &gt; \theta \ \wedge\ \text{stable}
+$$</p>
+<hr />
+<h2 id="_2">直接相关</h2>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.12424">RoboRSI: Stable, efficient, and reusable robot self-evolution in complex real-world environments</a></strong> — 上海 AI Lab × 清华，TSR + 四智能体。</li>
+<li><strong><a href="https://github.com/nssmd/RoboRSI">GitHub: nssmd/RoboRSI</a></strong> — 代码完全开源，Apache-2.0。</li>
+</ul>
+<h2 id="_3">延伸阅读</h2>
+<ul>
+<li><strong>Embodied Turing Machines / COAP（arXiv:2610.12369）</strong> — 测试时零模型的代码策略，可与 RoboRSI 的技能库互补。</li>
+<li><strong>RPent / Harness VLA（github.com/RLinf/RPent）</strong> — 具身智能体化基础设施，同样把技能库作为一等公民。</li>
+<li><strong>LIBERO / RoboTwin</strong> — RoboRSI 的主要评测基准，也是对比时的标准参照。</li>
+</ul>
+<hr />
+<p><strong>获取</strong></p>
+<pre><code class="language-bash">git clone https://github.com/nssmd/RoboRSI.git
+cd RoboRSI
+pip install -r requirements.txt
+</code></pre>
+<p><strong>最小验证流程</strong></p>
+<ol>
+<li>先跑通 Base Skills 的单元测试——这层是纯函数式的，最容易验证契约是否写对</li>
+<li>用仓库自带的 LIBERO 配置跑一轮 Planner→Engineer→Reviewer 闭环，观察补丁是否真的局限在失败子树</li>
+<li>关掉 Reviewer 做消融，对比归因精度与长期成功率的衰减速度</li>
+<li>再上真机，先从单物体整理开始，逐步加到多物体长程</li>
+</ol>
+<p><strong>契约检查示意</strong></p>
+<pre><code class="language-python">'''
+技能契约：前置条件 + 后置条件断言，用于精确归因
+'''
+class SkillContract:
+    def __init__(self, name, pre, post):
+        self.name, self.pre, self.post = name, pre, post
+
+    def check(self, state_in, state_out):
+        if not self.pre(state_in):
+            return 'PRECONDITION_VIOLATED'
+        if not self.post(state_out):
+            return 'POSTCONDITION_VIOLATED'
+        return 'OK'
+</code></pre>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>归因精度上不去：契约写得太宽松，后置条件只检查了「不报错」而非「状态真的改变了」</li>
+<li>Engineer 补丁越改越大：DAG 切分粒度太粗，一个节点承担了过多职责</li>
+<li>长期运行出现退化：Reviewer 的回归套件覆盖不足，需补失败样本的回归用例</li>
+<li>技能库膨胀但不复用：固化阈值 $\theta$ 太低，把偶发共现也冻结了</li>
+</ul>
+<hr />
+<p><strong>仿真基准（成功率）</strong></p>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>RoboRSI 相对最强基线</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LIBERO</td>
+<td>+2.7 ~ +11.0 个百分点</td>
+</tr>
+<tr>
+<td>LIBERO-PRO</td>
+<td>全线领先</td>
+</tr>
+<tr>
+<td>LIBERO-Plus</td>
+<td>全线领先</td>
+</tr>
+<tr>
+<td>RoboTwin</td>
+<td>全线领先</td>
+</tr>
+</tbody>
+</table>
+<p><strong>真机</strong></p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连续自主整理轮次</td>
+<td><strong>104 轮</strong>（双臂移动操作平台，无人工干预）</td>
+</tr>
+<tr>
+<td>沉淀已验证技能</td>
+<td><strong>32 个</strong></td>
+</tr>
+<tr>
+<td>故障归因精度</td>
+<td><strong>95.8%</strong>（契约隔离后）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>论文</strong>：arXiv:2610.12424。<strong>许可</strong>：Apache-2.0，代码完全开源。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>能力分层</th>
+<th>故障归因</th>
+<th>资产沉淀</th>
+<th>防灾难性遗忘</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RoboRSI</strong></td>
+<td><strong>三层 TSR + 显式契约</strong></td>
+<td><strong>95.8%</strong></td>
+<td><strong>自动固化复合技能</strong></td>
+<td><strong>契约隔离 + 回归套件</strong></td>
+</tr>
+<tr>
+<td>Voyager</td>
+<td>技能库（扁平）</td>
+<td>无显式机制</td>
+<td>有技能库</td>
+<td>无</td>
+</tr>
+<tr>
+<td>Code-as-Policies</td>
+<td>无分层</td>
+<td>无</td>
+<td>无</td>
+<td>无</td>
+</tr>
+<tr>
+<td>Agent Harness（VLA 冻结）</td>
+<td>无</td>
+<td>运行时反思</td>
+<td>无</td>
+<td>不适用</td>
+</tr>
+<tr>
+<td>Embodied Turing Machines / COAP</td>
+<td>代码库（模块化）</td>
+<td>显式状态机</td>
+<td>代码库继承</td>
+<td>回归测试</td>
+</tr>
+</tbody>
+</table>
+<p><strong>读表要点</strong>：RoboRSI 与 COAP 同属「代码即策略」路线，但分工不同——COAP 强调<strong>测试时不跑模型</strong>（状态估计 + 代码决策），RoboRSI 强调<strong>多智能体治理下的长期演化</strong>。两者都把「可验证」放在首位，这与纯神经网络路线的哲学根本不同。</p>
+<p><strong>搭配建议</strong>：把 RoboRSI 的技能库接入 COAP 式的确定性执行层，可能同时拿到「低延迟确定性执行」与「多智能体持续演化」。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

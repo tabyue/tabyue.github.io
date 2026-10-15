@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuperNav：浙江大学开源的零微调具身导航 Agent（冻结 MLLM + 统一视觉点位接口，已在宇树 Go2 四足实机部署） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">SuperNav：浙江大学开源的零微调具身导航 Agent（冻结 MLLM + 统一视觉点位接口，已在宇树 Go2 四足实机部署） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="supernav-agent-mllm-go2">SuperNav：浙江大学开源的零微调具身导航 Agent（冻结 MLLM + 统一视觉点位接口，已在宇树 Go2 四足实机部署）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/zju3dv/SuperNav">https://github.com/zju3dv/SuperNav</a>  </p>
+<p><strong>Stars</strong>: 540 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-15  </p>
+<p><strong>组织</strong>: 浙江大学 3DV Lab  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-15</p>
+</blockquote>
+<hr />
+<p><strong>核心主张：导航泛化能力来自大模型的通识，而微调恰恰会破坏它。</strong></p>
+<p>这是一个反直觉但逻辑自洽的判断。领域微调的本质是把模型往某个数据分布上拉——在导航任务上就是往 HM3D / MP3D 那几套仿真场景拉。模型在这些场景里变强了，代价是通识推理能力被覆盖。于是遇到没见过的房间布局、没见过的物体实例，微调模型就崩了（论文数据：下降 45%+）。</p>
+<p><strong>SuperNav 的解法不是「微调得更好」，而是「压根不微调」。</strong> 让冻结的 MLLM 做它擅长的事——理解「茶几上那副眼镜」这个模糊指代、推理出「先去客厅、再找茶几、再辨识眼镜、最后停在可操作距离」这样的动作序列；让确定性的导航工具做它擅长的事——避障、路径规划、轨迹执行。</p>
+<p><strong>接口是本项目的关键设计。</strong> 两层之间怎么通信？如果让 MLLM 输出文本指令再由另一个模型解析，就又引入了歧义。SuperNav 让 MLLM <strong>直接在图像上点</strong>——输出归一化 2D 坐标。这个设计的巧妙之处在于：图像坐标是 MLLM 视觉能力最强的模态，同时又是下层几何模块最容易消费的输入。而且因为 MLLM 每步都能看到新画面，它能基于视觉反馈持续修正，形成闭环。</p>
+<p><strong>为什么值得工程关注</strong>：整套方案绕开了「为每个场景收集导航数据并微调」这个昂贵环节。对没有大规模导航数据积累的团队，这提供了一条低成本起步路径。</p>
+<hr />
+<p><strong>三层解耦结构</strong></p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>职责</th>
+<th>是否可训练</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>高层认知</td>
+<td>指令理解、常识推理、长程决策</td>
+<td><strong>冻结</strong></td>
+</tr>
+<tr>
+<td>接口层</td>
+<td>归一化 2D 点位标注</td>
+<td>无需参数</td>
+</tr>
+<tr>
+<td>低层执行</td>
+<td>3D 投影、路径规划、轨迹跟踪</td>
+<td>确定性模块</td>
+</tr>
+</tbody>
+</table>
+<p><strong>统一视觉点位接口</strong></p>
+<p>MLLM 在观测图像 $I_t$ 上标注路点：</p>
+<p>$$
+p_t = (u_t, v_t), \quad u_t, v_t \in [0, 1]
+$$</p>
+<p>下层通过相机内参与深度把点位投影进 3D 地图：</p>
+<p>$$
+P_t^{\text{3D}} = \pi^{-1}(p_t, d(p_t); K, T_{\text{map}\leftarrow\text{cam}})
+$$</p>
+<p><strong>闭环修正</strong></p>
+<p>$$
+p_{t+1} = \text{MLLM}(I_{t+1}, \ell, \text{history})
+$$</p>
+<p>每一步都重新看画面并更新路点，因此遮挡、走错、目标变化都能被自然处理。</p>
+<p><strong>Agent Harness 四类技能</strong>：主动探索 / 多视角候选复查 / 卡死恢复 / 长程拓扑进度跟踪。</p>
+<hr />
+<h2 id="_2">直接相关</h2>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.12126">SuperNav: An Agentic Navigation System for Any Task in Any Scene</a></strong> — 浙大 3DV Lab。</li>
+<li><strong><a href="https://github.com/zju3dv/SuperNav">GitHub: zju3dv/SuperNav</a></strong> — 含 HM3D 配置与 Unitree Go2 部署驱动。</li>
+<li><strong><a href="https://zju3dv.github.io/SuperNav/">项目主页</a></strong> — 可视化结果与演示视频。</li>
+</ul>
+<h2 id="_3">延伸阅读</h2>
+<ul>
+<li><strong>HM3D（Habitat-Matterport 3D）</strong> — 本方案的评测基准，也是具身导航的事实标准。</li>
+<li><strong>ROMA（arXiv:2610.06955）</strong> — 以物体为中心的真实世界多模态主动感知，与导航的「主动探索」技能同源。</li>
+<li><strong>HomeBody（github.com/Stanford-TML/homebody）</strong> — 同样强调零微调的具身智能体路线，可对照阅读。</li>
+</ul>
+<hr />
+<p><strong>获取</strong></p>
+<pre><code class="language-bash">git clone https://github.com/zju3dv/SuperNav.git
+cd SuperNav
+pip install -r requirements.txt
+</code></pre>
+<p><strong>验证顺序</strong></p>
+<ol>
+<li>先在 HM3D 上跑通实例级导航，确认冻结 MLLM 的点位标注能被正确投影</li>
+<li>再测多目标与需求驱动任务，观察长程进度跟踪是否起作用</li>
+<li>做「未见环境」压力测试：这是本方案的主场，对比微调基线的下降幅度</li>
+<li>最后上实机（仓库含 Unitree Go2 部署驱动），先办公室后走廊</li>
+</ol>
+<p><strong>点位投影检查</strong></p>
+<pre><code class="language-python">'''
+把 MLLM 标注的归一化点位投影到 3D 地图坐标
+'''
+import numpy as np
+
+def unproject(p, depth, K, T_map_cam):
+    u, v = p
+    h, w = depth.shape
+    d = depth[int(v * (h - 1)), int(u * (w - 1))]
+    if not np.isfinite(d) or d &lt;= 0:
+        return None                      # 点位落在无效深度上，需重新标注
+    x = (u * w - K[0, 2]) * d / K[0, 0]
+    y = (v * h - K[1, 2]) * d / K[1, 1]
+    P_cam = np.array([x, y, d, 1.0])
+    return (T_map_cam @ P_cam)[:3]
+</code></pre>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>点位投影到无效深度：让 MLLM 重新标注，或先做主动探索补一帧观测</li>
+<li>长程任务中途丢失进度：Harness 的拓扑进度跟踪没接上，检查历史摘要是否传入 MLLM</li>
+<li>实机抖动：路点更新频率与控制周期不匹配，需要把点位变化做平滑后再下发</li>
+<li>卡死恢复不触发：检测阈值设得太宽，先收紧再看误触发率</li>
+</ul>
+<hr />
+<p><strong>HM3D 基准</strong></p>
+<table>
+<thead>
+<tr>
+<th>任务类型</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实例级导航</td>
+<td>超过微调基线</td>
+</tr>
+<tr>
+<td>多目标导航</td>
+<td>超过微调基线</td>
+</tr>
+<tr>
+<td>需求驱动导航</td>
+<td>超过微调基线</td>
+</tr>
+</tbody>
+</table>
+<p><strong>未见环境鲁棒性（关键指标）</strong></p>
+<table>
+<thead>
+<tr>
+<th>设置</th>
+<th>成功率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>微调模型（杂乱未见环境）</td>
+<td>下降 <strong>45%+</strong></td>
+</tr>
+<tr>
+<td><strong>SuperNav</strong></td>
+<td>保持 <strong>88%+</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>实机部署</strong>：真实 Unitree Go2 四足机器人，完成办公室与走廊环境下的长程多步导航。</p>
+<p><strong>论文</strong>：arXiv:2610.12126。<strong>项目页</strong>：zju3dv.github.io/SuperNav/</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>是否需导航微调</th>
+<th>未见环境表现</th>
+<th>实机验证</th>
+<th>认知能力来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SuperNav</strong></td>
+<td><strong>否</strong></td>
+<td><strong>88%+</strong></td>
+<td><strong>Unitree Go2</strong></td>
+<td>冻结 MLLM 通识</td>
+</tr>
+<tr>
+<td>端到端导航模型（VLN 微调）</td>
+<td>是</td>
+<td>下降 45%+</td>
+<td>视数据集而定</td>
+<td>微调后残留</td>
+</tr>
+<tr>
+<td>传统 SLAM + 目标检测</td>
+<td>不适用</td>
+<td>依赖目标类别</td>
+<td>成熟</td>
+<td>无</td>
+</tr>
+<tr>
+<td>VLA 直接输出导航动作</td>
+<td>是</td>
+<td>泛化受限</td>
+<td>较少</td>
+<td>机器人数据</td>
+</tr>
+</tbody>
+</table>
+<p><strong>读表要点</strong>：SuperNav 的取舍很清晰——它放弃了在分布内做到极致，换来了分布外的稳定性。对真实部署而言后者通常更重要，因为真实世界永远不会落在训练分布里。</p>
+<p><strong>搭配建议</strong>：与 SLAM 方案组合时，可以把 SuperNav 当作「开放语义目标查找与决策层」，把 SLAM 当作「精确位姿与避障层」，两者职责不重叠。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

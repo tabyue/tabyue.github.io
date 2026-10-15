@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpatialOPSD：把空间编码智能体的能力蒸馏进免工具多模态大模型（浙大/自蒸馏，推理延迟降 75%+） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">SpatialOPSD：把空间编码智能体的能力蒸馏进免工具多模态大模型（浙大/自蒸馏，推理延迟降 75%+） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="spatialopsd-75">SpatialOPSD：把空间编码智能体的能力蒸馏进免工具多模态大模型（浙大/自蒸馏，推理延迟降 75%+）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/vermouth599/Spatial-OPSD">https://github.com/vermouth599/Spatial-OPSD</a>  </p>
+<p><strong>Stars</strong>: 330 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-15  </p>
+<p><strong>组织</strong>: SpatialOPSD 团队  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-15</p>
+</blockquote>
+<hr />
+<p><strong>核心矛盾：能力最强的空间推理方案，恰恰是部署代价最高的方案。</strong></p>
+<p>空间编码智能体（让 MLLM 写几何脚本并执行）的效果好，是因为它把精确计算外包给了确定性代码——大模型不擅长算，但擅长决定「该算什么」。问题是这条链路在推理时要走完：生成代码 → 起沙箱 → 执行 → 回收结果 → 再生成。每一步都是延迟与失败点。</p>
+<p><strong>SpatialOPSD 的思路是「训练时贵、推理时便宜」。</strong> 训练阶段照常用昂贵的智能体链路，但把它的执行轨迹<strong>摘要化</strong>后当作特权信息喂给学生模型。學生是免工具的独立 MLLM，训练目标就是模仿老师的几何表征。推理时老师完全不出现——单次前向搞定。</p>
+<p><strong>为什么需要 Repetition-Aware Distillation</strong>：这是本工作最有工程价值的部分。特权信息泄漏会让模型学到一种「捷径」——不去真正理解空间关系，而是模仿老师输出里的表面模式，表现为退化的重复文本循环。朴素蒸馏下这个问题很严重。作者的解法是双重约束：重复掩码直接屏蔽已生成片段的再次出现，unlikelihood 正则则从损失层面惩罚重复 token。两者配对后重复幻觉下降 86.4%。</p>
+<p><strong>对具身场景的意义</strong>：机器人上的算力与实时性约束远比云端严苛。把「能力外包给代码」换成「能力内化进权重」，是用一次性的训练成本换每次推理的确定性——这笔账在高频控制回路里非常划算。</p>
+<hr />
+<p><strong>两阶段结构</strong></p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>参与者</th>
+<th>代价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>离线轨迹生成</td>
+<td>空间编码智能体（MLLM + Python 沙箱）</td>
+<td>高，但只做一次</td>
+</tr>
+<tr>
+<td>on-policy 自蒸馏</td>
+<td>老师视图（特权）→ 学生 MLLM</td>
+<td>训练期</td>
+</tr>
+<tr>
+<td>推理</td>
+<td>学生 MLLM（免工具）</td>
+<td><strong>单次前向</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>特权指导</strong></p>
+<p>老师执行轨迹摘要为 $\tau^{\text{sum}}$，学生模仿其几何表征：</p>
+<p>$$
+\mathcal{L}<em>{\text{distill}} = \mathbb{E}\big[ \text{KL}\big(p</em>{\text{teacher}}(\cdot \mid o, \tau^{\text{sum}}) \, | \, p_{\text{student}}(\cdot \mid o)\big) \big]
+$$</p>
+<p><strong>Repetition-Aware Distillation</strong></p>
+<p>$$
+\mathcal{L} = \mathcal{L}<em>{\text{distill}} + \lambda \, \mathcal{L}</em>{\text{unlikelihood}}, \qquad \mathcal{L}<em>{\text{unlikelihood}} = - \sum</em>{t \in \mathcal{T}<em>{\text{rep}}} \log\big(1 - p</em>\theta(y_t \mid y_{&lt;t})\big)
+$$</p>
+<p>配合重复掩码 $\mathcal{M}_{\text{rep}}$ 在 attention / logits 层面直接屏蔽重复片段。</p>
+<p><strong>推理</strong></p>
+<p>$$
+\hat{y} = \text{MLLM}_{\text{student}}(o), \quad \text{无代码生成、无沙箱、无外部执行}
+$$</p>
+<hr />
+<h2 id="_2">直接相关</h2>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.11366">SpatialOPSD: Self-Distilling Spatial Intelligence from Verified Coding Agent Traces</a></strong> — on-policy 自蒸馏框架。</li>
+<li><strong><a href="https://github.com/vermouth599/Spatial-OPSD">GitHub: vermouth599/Spatial-OPSD</a></strong> — 训练流水线与评测配置。</li>
+</ul>
+<h2 id="_3">延伸阅读</h2>
+<ul>
+<li><strong>Embodied-R1（github.com/pickxiguapi/Embodied-R1）</strong> — 强化具身推理 VLM，同属「把推理能力内化进权重」路线。</li>
+<li><strong>Spatial Forcing / RoboDojo 榜单</strong> — 空间推理能力的评测参照。</li>
+<li><strong>VILAS（github.com/vilas-platform/vilas）</strong> — 低成本 VLA 平台，适合验证免工具方案在板端的实际收益。</li>
+</ul>
+<hr />
+<p><strong>获取</strong></p>
+<pre><code class="language-bash">git clone https://github.com/vermouth599/Spatial-OPSD.git
+cd Spatial-OPSD
+pip install -r requirements.txt
+</code></pre>
+<p><strong>验证顺序</strong></p>
+<ol>
+<li>先跑老师的空间编码智能体，收集带验证的执行轨迹（这一步是数据生产，慢但只做一次）</li>
+<li>做轨迹摘要，检查摘要是否保留了因果链而不只是最终答案</li>
+<li>训学生模型，<strong>先关掉 Repetition-Aware 做朴素蒸馏基线</strong>，观察重复率</li>
+<li>打开重复掩码 + unlikelihood，对比重复率与任务指标的联合变化</li>
+<li>测端到端延迟，确认免工具推理确实带来数量级改善</li>
+</ol>
+<p><strong>重复率监控</strong></p>
+<pre><code class="language-python">'''
+监控生成中的退化重复：连续 n-gram 重复占比
+'''
+def repetition_rate(tokens, n=4):
+    grams = [tuple(tokens[i:i + n]) for i in range(len(tokens) - n + 1)]
+    if not grams:
+        return 0.0
+    seen, dup = set(), 0
+    for g in grams:
+        if g in seen:
+            dup += 1
+        seen.add(g)
+    return dup / len(grams)
+</code></pre>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>学生只会抄答案不学推理：轨迹摘要写得太「结论化」，需保留中间步骤与失败修正</li>
+<li>重复率降不下来：只加了掩码没加 unlikelihood，或 $\lambda$ 太小</li>
+<li>任务指标随重复率一起掉：$\lambda$ 过大抑制了必要的合法重复（如坐标列举），需扫参</li>
+<li>延迟没降下来：检查推理路径里是否残留了外部工具调用分支</li>
+</ul>
+<hr />
+<p><strong>主指标</strong></p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>端到端延迟</td>
+<td><strong>降低 75%+</strong>（对比工具增强方案）</td>
+</tr>
+<tr>
+<td>重复幻觉</td>
+<td><strong>下降 86.4%</strong>（对比朴素蒸馏）</td>
+</tr>
+<tr>
+<td>独立模型表现</td>
+<td>超过免工具基线</td>
+</tr>
+</tbody>
+</table>
+<p><strong>评测覆盖</strong>：3D 空间推理、物体定位、机器人可供性（affordance）基准。</p>
+<p><strong>部署形态</strong>：独立的免工具 MLLM，单次前向，无运行时 Python 环境与代码沙箱依赖。</p>
+<p><strong>论文</strong>：arXiv:2610.11366。<strong>许可</strong>：Apache-2.0。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>空间推理质量</th>
+<th>推理延迟</th>
+<th>运行时依赖</th>
+<th>确定性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SpatialOPSD</strong></td>
+<td>高于免工具基线</td>
+<td><strong>单次前向</strong></td>
+<td><strong>无</strong></td>
+<td><strong>高</strong></td>
+</tr>
+<tr>
+<td>空间编码智能体（工具增强）</td>
+<td>高（上界）</td>
+<td>高（代码+沙箱）</td>
+<td>Python + 沙箱</td>
+<td>低（沙箱易失败）</td>
+</tr>
+<tr>
+<td>免工具 MLLM 基线</td>
+<td>低</td>
+<td>单次前向</td>
+<td>无</td>
+<td>高</td>
+</tr>
+<tr>
+<td>外部几何模块 + 规则融合</td>
+<td>中</td>
+<td>中</td>
+<td>模块依赖</td>
+<td>高</td>
+</tr>
+</tbody>
+</table>
+<p><strong>读表要点</strong>：SpatialOPSD 的定位很明确——它的目标不是超过「老师」（工具增强智能体）的绝对上限，而是在<strong>接近老师的前提下把部署代价降到免工具水平</strong>。这是一个典型的「用训练算力换推理成本」的权衡。</p>
+<p><strong>搭配建议</strong>：对实时性要求高的板端部署，用 SpatialOPSD；对离线标注、数据生成等非实时场景，仍可保留工具增强智能体作为老师。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

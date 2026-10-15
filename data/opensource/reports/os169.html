@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RobotWorld：84 项任务、8 类本体的 robot use 仿真基准（检验通用多模态智能体把机器人当工具用） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">RobotWorld：84 项任务、8 类本体的 robot use 仿真基准（检验通用多模态智能体把机器人当工具用） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="robotworld84-8-robot-use">RobotWorld：84 项任务、8 类本体的 robot use 仿真基准（检验通用多模态智能体把机器人当工具用）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/robotworldai/robotworld">https://github.com/robotworldai/robotworld</a>  </p>
+<p><strong>Stars</strong>: 410 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-15  </p>
+<p><strong>组织</strong>: RobotWorld 团队（HKUST 等）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-15</p>
+</blockquote>
+<hr />
+<p><strong>核心问题：Computer Use 的能力，有多少能平移到 Robot Use？</strong></p>
+<p>过去两年通用智能体在数字世界进展神速——写代码、操作 GUI、调用 API。一个自然的推论是：把工具换成机器人，同样的能力就能迁移到物理世界。RobotWorld 的价值在于它不假设这个推论成立，而是把它做成了可测量的题目。</p>
+<p><strong>基准设计的两个关键决定</strong>：</p>
+<p><strong>第一，用可执行的成功判定，而不是让模型自评。</strong> 具身评测里最容易被高估的就是「模型说自己成功了」。RobotWorld 由预定义条件判定，且给出<strong>显式的交互预算</strong>——在预算内完成才算成功。这等价于给「效率」也计了分。</p>
+<p><strong>第二，同时分析执行轨迹，而不只看最终成功率。</strong> 这是本基准最有价值的部分。只看成功率，你只知道「失败了」；看轨迹，你能知道「失败在哪一环」。论文因此才能得出那个关键结论：智能体<strong>具备</strong>感知与控制所需的单点能力（写分割程序、估相机参数、建动力学近似），但<strong>不能稳定地把它们组合成成功行为</strong>。</p>
+<p><strong>四条具体失效模式</strong>：到达指令位姿却丢失任务相关物体状态；无法纠正无效动作；恢复太晚；把未完成的任务误判为完成。这四条都不是「能力缺失」，而是「闭环缺失」——恰恰是当前通用智能体在物理世界最薄弱的地方。</p>
+<p><strong>模型侧的有趣差异</strong>：Astra 在空间目标与受约束接触目标上更强，Opus 5.5 在连续平衡与限时交互目标上更强。这说明不同模型的物理世界能力剖面并不同构，选型时不能只看通用榜单。</p>
+<hr />
+<p><strong>任务空间</strong></p>
+<p>$$
+\mathcal{T} = \mathcal{D}<em>{\text{manip}} \cup \mathcal{D}</em>{\text{mobile}} \cup \mathcal{D}<em>{\text{locom}} \cup \mathcal{D}</em>{\text{drive}} \cup \mathcal{D}_{\text{aerial}}, \quad |\mathcal{T}| = 84
+$$</p>
+<p><strong>本体集合</strong>（8 类）：机械臂、人形机器人、四足机器人、车辆、无人机等。</p>
+<p><strong>交互协议</strong></p>
+<p>$$
+a_t = \text{Agent}(o_t, s_t, \text{feedback}_{&lt;t}), \qquad \sum_t \mathbb{1}[\text{step}_t] \le B
+$$</p>
+<p>智能体通过工具接口获取图像 $o_t$ 与机器人状态 $s_t$，发出动作 $a_t$；总步数受预算 $B$ 约束。</p>
+<p><strong>成功判定</strong></p>
+<p>$$
+\text{success} = \mathbb{1}\big[ \phi_{\text{task}}(\text{world state}) = \text{true} \big] \quad \text{且} \quad \text{steps} \le B
+$$</p>
+<p>由可执行判定函数给出，不依赖模型自报。</p>
+<p><strong>轨迹分析维度</strong>：感知构造（分割、标定） / 空间估计 / 动力学近似 / 失败恢复时机 / 完成状态误判。</p>
+<hr />
+<h2 id="_2">直接相关</h2>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.10409">RobotWorld: Benchmarking Multimodal Agents for Robot Use Across Diverse Tasks and Embodiments</a></strong> — 62 页，25 图。</li>
+<li><strong><a href="https://github.com/robotworldai/robotworld">GitHub: robotworldai/robotworld</a></strong> — 仿真环境与评测代码。</li>
+<li><strong><a href="https://robotworldai.github.io/blog/zh/">中文博客</a></strong> — 任务总览与分析说明。</li>
+</ul>
+<h2 id="_3">延伸阅读</h2>
+<ul>
+<li><strong>DESPITE（despite-safety.github.io）</strong> — LLM 具身规划安全基准，可与 RobotWorld 的安全维度互补。</li>
+<li><strong>RoboDojo</strong> — 港大 MMLab 的五维具身评测，侧重专用策略而非通用智能体。</li>
+<li><strong>AgentGarten / RoboRSI</strong> — 代码世界与自进化路线，是 RobotWorld 揭示的「闭环缺失」问题的潜在解法方向。</li>
+</ul>
+<hr />
+<p><strong>获取</strong></p>
+<pre><code class="language-bash">git clone https://github.com/robotworldai/robotworld.git
+cd robotworld
+pip install -r requirements.txt
+</code></pre>
+<p><strong>验证顺序</strong></p>
+<ol>
+<li>先跑一个单领域子集（建议从操作开始），确认工具接口的观测/动作格式</li>
+<li>用一个强模型跑全 84 项，建立基线成功率与<strong>分领域剖面</strong></li>
+<li>导出执行轨迹，按四类失效模式分桶统计——这一步比看总成功率有用得多</li>
+<li>对比不同模型：观察是否存在「A 模型在某类目标强、B 模型在另一类强」的分化</li>
+<li>若做方法研究，优先针对「恢复太晚」与「误判完成」这两类——它们是纯闭环问题，不涉及感知能力</li>
+</ol>
+<p><strong>失效模式分桶</strong></p>
+<pre><code class="language-python">'''
+把失败轨迹按四类失效模式分桶
+'''
+BUCKETS = ['lost_object_state', 'no_correction', 'late_recovery', 'false_completion']
+
+def bucketize(traj):
+    if traj.reached_pose and not traj.obj_state_tracked:
+        return 'lost_object_state'
+    if traj.ineffective_action_count &gt; 3 and not traj.corrected:
+        return 'no_correction'
+    if traj.recovery_step is not None and traj.recovery_step &gt; 0.8 * traj.budget:
+        return 'late_recovery'
+    if traj.reported_done and not traj.verified_done:
+        return 'false_completion'
+    return None
+</code></pre>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>成功率全部为零：工具接口的动作空间与模型输出格式不匹配，先跑一个手工脚本验证接口</li>
+<li>预算永远不够：先放宽预算跑一遍确认任务可解，再收紧到标准值</li>
+<li>轨迹日志缺关键字段：需要显式记录「是否自报完成」与「是否验证完成」，否则分桶做不了</li>
+</ul>
+<hr />
+<p><strong>基准规模</strong></p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>覆盖</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>任务数</td>
+<td><strong>84</strong></td>
+</tr>
+<tr>
+<td>领域</td>
+<td>操作 / 移动操作 / 运动 / 驾驶 / 飞行</td>
+</tr>
+<tr>
+<td>本体类型</td>
+<td><strong>8 类</strong></td>
+</tr>
+<tr>
+<td>判定方式</td>
+<td>可执行成功条件 + 交互预算</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心发现（定性）</strong></p>
+<table>
+<thead>
+<tr>
+<th>观察</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>智能体能写分割程序、估相机参数、建动力学近似</td>
+<td>单点能力<strong>具备</strong></td>
+</tr>
+<tr>
+<td>到达指令位姿却丢失物体状态</td>
+<td>组合失败</td>
+</tr>
+<tr>
+<td>无效动作未被纠正</td>
+<td>组合失败</td>
+</tr>
+<tr>
+<td>恢复时机过晚</td>
+<td>组合失败</td>
+</tr>
+<tr>
+<td>把未完成任务误判为完成</td>
+<td>组合失败</td>
+</tr>
+</tbody>
+</table>
+<p><strong>模型分化</strong>：Astra 更强于空间目标与受约束接触；Opus 5.5 更强于连续平衡与限时交互。</p>
+<p><strong>论文规模</strong>：62 页，25 图。<strong>许可</strong>：Apache-2.0。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>考察对象</th>
+<th>本体数</th>
+<th>成功判定</th>
+<th>轨迹分析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RobotWorld</strong></td>
+<td><strong>通用智能体的 robot use</strong></td>
+<td><strong>8 类</strong></td>
+<td><strong>可执行 + 预算</strong></td>
+<td><strong>有（四类失效模式）</strong></td>
+</tr>
+<tr>
+<td>LIBERO</td>
+<td>VLA 多任务操作泛化</td>
+<td>1</td>
+<td>可执行</td>
+<td>无</td>
+</tr>
+<tr>
+<td>RoboTwin 2.0</td>
+<td>双臂协作与随机化</td>
+<td>1–2</td>
+<td>可执行</td>
+<td>无</td>
+</tr>
+<tr>
+<td>RoboDojo</td>
+<td>五维能力（泛化/记忆/精细/长程/语义）</td>
+<td>少</td>
+<td>可执行</td>
+<td>部分</td>
+</tr>
+<tr>
+<td>BiDex-100</td>
+<td>双臂灵巧操作五维</td>
+<td>1</td>
+<td>可执行</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<p><strong>读表要点</strong>：RobotWorld 考察的对象<strong>不是机器人策略，而是通用智能体</strong>。这是它与所有 VLA 基准的根本区别——它问的是「Claude / GPT 这类模型直接操控机器人行不行」，而不是「训一个 VLA 能到多少」。</p>
+<p><strong>搭配建议</strong>：与 LIBERO / RoboDojo 组合使用，可以分离出「专用策略的能力上限」与「通用智能体的迁移损失」两条曲线。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
