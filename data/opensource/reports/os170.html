@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EmbodiedEvo：自进化编码智能体，用四个环境原语把大模型写代码的能力迁移到物理操作 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">EmbodiedEvo：自进化编码智能体，用四个环境原语把大模型写代码的能力迁移到物理操作 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="embodiedevo">EmbodiedEvo：自进化编码智能体，用四个环境原语把大模型写代码的能力迁移到物理操作</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Einsia/EmbodiedEvo">https://github.com/Einsia/EmbodiedEvo</a>  </p>
+<p><strong>Stars</strong>: 35 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-10-16  </p>
+<p><strong>组织</strong>: EinsiaAI  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-16</p>
+</blockquote>
+<hr />
+<p><strong>Coding Agent 是具身操作的第四条范式</strong></p>
+<p>理解 EmbodiedEvo 的位置，先要看清四条路线的分工：</p>
+<table>
+<thead>
+<tr>
+<th>范式</th>
+<th>谁生成动作</th>
+<th>如何根据反馈调整</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VLA</td>
+<td>学到的策略直接输出动作序列</td>
+<td>策略内部（不可解释）</td>
+</tr>
+<tr>
+<td>Agent + VLA</td>
+<td>Agent 规划调度，VLA 出具体动作</td>
+<td>双层，责任边界模糊</td>
+</tr>
+<tr>
+<td>单轮 LLM/VLM</td>
+<td>一次输出结构化动作描述，适配器转换执行</td>
+<td>无闭环</td>
+</tr>
+<tr>
+<td><strong>Coding Agent</strong></td>
+<td><strong>Agent 自主编写可执行程序</strong></td>
+<td><strong>读执行反馈 → 改代码 → 继续执行</strong></td>
+</tr>
+</tbody>
+</table>
+<p>EmbodiedEvo 属于最后一种。它的优势不在单步动作质量，而在<strong>长程任务的可分解性与经验的可继承性</strong>：一个 30 步的任务在 VLA 里是一个 30 步的动作序列（错了只能重来），在代码里是 5 个可单独调试的函数。</p>
+<p><strong>自进化闭环</strong></p>
+<p>$$\mathcal{L}^{(k+1)} = \text{Refine}\big(\mathcal{L}^{(k)},\ \text{Feedback}(\text{exec}(\mathcal{L}^{(k)}))\big)$$</p>
+<p>其中 $\mathcal{L}$ 是代码库而非策略权重。因为代码是离散、可读、可版本管理的，这个迭代可以<strong>被审查、被回滚、被部分替换</strong>——这是神经网络权重不具备的性质。</p>
+<p><strong>为什么需要「分段提交」</strong></p>
+<p>如果每次都提交完整程序，Agent 只能做全局重写，改对的地方也可能被改坏。分段提交 + 回合内状态保留（仿真状态、变量、函数持续存在）让 Agent 能：</p>
+<ol>
+<li>先跑通前 3 步，确认抓取姿态可靠</li>
+<li>保留这 3 步的变量与函数，只追加后续逻辑</li>
+<li>某一步失败时只回滚到该步，而非从头再来</li>
+</ol>
+<p>这就是「把一次物理交互变成可复用经验」的机制基础。</p>
+<hr />
+<p><strong>控制接口层（四个原语）</strong></p>
+<pre><code class="language-python">&quot;&quot;&quot;
+EmbodiedEvo 风格的最小控制循环。
+注意 docstring 用三引号，与外层字符串定界符区分。
+&quot;&quot;&quot;
+def run_episode(agent, env, max_steps=30):
+    instruction = env.get_instruction()
+    code_workspace = Workspace()
+
+    for t in range(max_steps):
+        # get_observation 不推进仿真，可以安全地多次调用做检查
+        obs = env.get_observation()
+        patch = agent.write_or_patch(code_workspace, instruction, obs)
+        code_workspace.apply(patch)          # 分段提交，变量与函数保留
+
+        action = code_workspace.next_action()
+        obs, done, terminated = env.step(action)
+
+        if done or terminated:
+            break
+    return code_workspace
+</code></pre>
+<p><strong>分层结构</strong></p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>职责</th>
+<th>是否可学习</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent（大模型）</td>
+<td>写代码、读反馈、决定下一步</td>
+<td>否（冻结底座）</td>
+</tr>
+<tr>
+<td>代码工作区</td>
+<td>承载技能函数与检查条件</td>
+<td>是（自进化产物）</td>
+</tr>
+<tr>
+<td>适配器</td>
+<td>把代码输出转成机器人指令</td>
+<td>否</td>
+</tr>
+<tr>
+<td>底层控制器</td>
+<td>逆运动学 + 动作插值</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意分工</strong>：底层控制器<strong>不做决策</strong>，只执行关节/末端位姿目标与夹爪指令。所有「怎么抓」「什么时候继续」的判断都在 Agent 写的代码里。这个边界保证了评测测的是 Agent 的推理能力，而不是底层控制器的质量。</p>
+<p><strong>不提供高级技能原语是有意为之</strong></p>
+<p>如果接口直接给 <code>grasp(object)</code>，评测就变成了「会不会调用 API」，而不是「能不能从视觉观察里构造出可靠的抓取」。EmbodiedEvo 明确不提供 <code>grasp</code>，Agent 必须自己把 <code>get_observation()</code> 的图像变成接近、对齐、闭合的动作序列。</p>
+<hr />
+<h2 id="_2">直接相关</h2>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.18867">EmbodiedEvo: Self-Evolving Coding Agent for Physical Intelligence</a></strong> — 论文原文。</li>
+<li><strong><a href="https://github.com/Einsia/EmbodiedEvo">GitHub: Einsia/EmbodiedEvo</a></strong> — 官方代码仓库。</li>
+<li><strong><a href="https://lab.einsia.ai/embodiedevo/">项目主页</a></strong> — 榜单结果与演示。</li>
+</ul>
+<h2 id="_3">延伸阅读</h2>
+<ul>
+<li><strong>RoboRSI（arXiv:2610.12424，github.com/nssmd/RoboRSI）</strong> — 同为代码自进化，但主打三层契约与四智能体归因，可与本工作互补。</li>
+<li><strong>RobotWorld（arXiv:2610.10409）</strong> — 84 项任务检验通用多模态智能体的 robot use 能力，是 Coding Agent 路线的对照基准。</li>
+<li><strong>CodeActionBench（arXiv:2609.33807）</strong> — 评测 agentic code-as-policy 的双臂操作基准，与本工作共享「代码即策略」假设。</li>
+<li><strong>RoboDojo</strong> — 港大 MMLab 联合近 20 所机构推出的通用机器人操作基准，本工作的主战场。</li>
+</ul>
+<hr />
+<p><strong>获取</strong></p>
+<pre><code class="language-bash">git clone https://github.com/Einsia/EmbodiedEvo.git
+cd EmbodiedEvo
+pip install -r requirements.txt
+</code></pre>
+<p><strong>最小验证流程</strong></p>
+<ol>
+<li>先只跑 <code>get_instruction()</code> + <code>get_observation()</code>，确认能拿到图像与机器人状态，且确认 <code>get_observation()</code> <strong>不会推进仿真</strong>（这一步错了后面全乱）</li>
+<li>让 Agent 写一个最简单的两段式程序：接近目标 → 闭合夹爪。只看这两步能否稳定成功</li>
+<li>加上反馈循环：抓取失败后让 Agent 重新观察并修正姿态，记录每次 patch 的 diff</li>
+<li>逐步加长任务，观察「已验证函数」是否被后续任务复用（这是自进化是否真的在发生的判据）</li>
+<li>最后再上 RoboDojo-sim 跑完整评测</li>
+</ol>
+<p><strong>检查条件该怎么写</strong></p>
+<pre><code class="language-python">&quot;&quot;&quot;
+带检查条件的技能函数——这是经验能沉淀下来的关键形式。
+&quot;&quot;&quot;
+def pick_and_place(env, target_pose, lift_height=0.15):
+    pre_grasp = target_pose + offset(0, 0, lift_height)
+    env.step(move_to(pre_grasp))
+    env.step(move_to(target_pose))
+
+    obs = env.get_observation()       # 不推进仿真，纯检查
+    if not gripper_closed_enough(obs, threshold=0.02):
+        return Result.FAILED, 'gripper not closed'
+
+    env.step(close_gripper())
+    env.step(move_to(pre_grasp))
+    return Result.SUCCESS, None
+</code></pre>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>Agent 反复全局重写：分段提交没生效，检查工作区的状态保留是否跨 step 持续</li>
+<li>任务进度停在半路：多数是 Agent 没能从图像判断「当前步骤是否成功」，应强化检查条件而非加大模型</li>
+<li>仿真里过、真机不过：底层控制器的逆运动学与动作插值存在理想化假设，需加入执行误差容限</li>
+<li>代码库膨胀但不复用：缺少「把已验证片段整理成带参数函数」的固化步骤，应显式加一个整理阶段</li>
+</ul>
+<hr />
+<p><strong>RoboDojo 榜单</strong></p>
+<p>EmbodiedEvo 在 RoboDojo 上登顶，是 Coding Agent 路线在通用机器人操作基准上取得的代表性结果。</p>
+<p><strong>范式对比（来自论文与社区分析）</strong></p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>VLA</th>
+<th>Agent+VLA</th>
+<th>单轮 LLM/VLM</th>
+<th><strong>Coding Agent</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>长程任务</td>
+<td>弱（误差累积）</td>
+<td>中</td>
+<td>弱</td>
+<td><strong>强（可分段调试）</strong></td>
+</tr>
+<tr>
+<td>经验复用</td>
+<td>需重训</td>
+<td>需重训</td>
+<td>无</td>
+<td><strong>函数库直接复用</strong></td>
+</tr>
+<tr>
+<td>可解释性</td>
+<td>低</td>
+<td>中</td>
+<td>中</td>
+<td><strong>高（代码可读）</strong></td>
+</tr>
+<tr>
+<td>单步动作质量</td>
+<td><strong>高</strong></td>
+<td><strong>高</strong></td>
+<td>低</td>
+<td>中（依赖底层控制器）</td>
+</tr>
+<tr>
+<td>反馈闭环</td>
+<td>无显式</td>
+<td>部分</td>
+<td>无</td>
+<td><strong>完整</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键诊断发现</strong></p>
+<p>团队分析 Astra 在 RoboDojo-sim 的执行轨迹：<strong>在井字棋任务中，模型知道要抓，却还没掌握可靠的抓法</strong>。这揭示了通用大模型进入物理世界时的典型断层——语义层面的「知道做什么」与物理层面的「做得稳」是两种能力，后者需要可积累的执行经验，而这正是代码库能承载的东西。</p>
+<p><strong>论文</strong>：arXiv:2610.18867。<strong>开源</strong>：github.com/Einsia/EmbodiedEvo（Python，2026-10-06 建仓）。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>动作载体</th>
+<th>长程调试</th>
+<th>经验沉淀</th>
+<th>底层依赖</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>EmbodiedEvo</strong></td>
+<td><strong>Python 代码库</strong></td>
+<td><strong>分段提交 + 状态保留</strong></td>
+<td><strong>带检查条件的函数</strong></td>
+<td>逆运动学 + 插值控制器</td>
+</tr>
+<tr>
+<td>RoboRSI</td>
+<td>Python 代码库（三层契约）</td>
+<td>契约归因 + 四智能体</td>
+<td>自动固化复合技能</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>Voyager</td>
+<td>技能库（扁平）</td>
+<td>无显式机制</td>
+<td>有技能库</td>
+<td>Minecraft API</td>
+</tr>
+<tr>
+<td>Code-as-Policies</td>
+<td>单次生成的代码</td>
+<td>无</td>
+<td>无</td>
+<td>机器人 API</td>
+</tr>
+<tr>
+<td>openpi / π0.5</td>
+<td>神经网络权重</td>
+<td>无（需重训）</td>
+<td>需重训</td>
+<td>端到端</td>
+</tr>
+</tbody>
+</table>
+<p><strong>读表要点</strong>：EmbodiedEvo 与 RoboRSI 同属「代码即策略 + 自进化」，但着力点不同——RoboRSI 解决<strong>归因</strong>（哪个技能分支该改），EmbodiedEvo 解决<strong>接口与闭环</strong>（怎么用最少原语支持长程交互与经验沉淀）。两者互补：把 RoboRSI 的三层契约接进 EmbodiedEvo 的工作区，理论上能同时拿到精确归因与长程调试。</p>
+<p><strong>与前一代的差别</strong>：Code-as-Policies 时代模型只生成一次代码，错了就废；EmbodiedEvo 的核心增量是<strong>持续交互中的代码演化</strong>——这是从「生成」到「演化」的跨越。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

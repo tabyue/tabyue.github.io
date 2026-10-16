@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeActionBench：25 个双臂仿真任务、675 次尝试，评测通用多模态 Agent 的「代码即策略」操作能力 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">CodeActionBench：25 个双臂仿真任务、675 次尝试，评测通用多模态 Agent 的「代码即策略」操作能力 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="codeactionbench25-675-agent">CodeActionBench：25 个双臂仿真任务、675 次尝试，评测通用多模态 Agent 的「代码即策略」操作能力</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/lyhkk/CodeActionBench">https://github.com/lyhkk/CodeActionBench</a>  </p>
+<p><strong>Stars</strong>: 2 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-10-16  </p>
+<p><strong>组织</strong>: 南洋理工大学（NTU）与合作团队  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-16</p>
+</blockquote>
+<hr />
+<p><strong>从 Computer Use 到 Robot Use</strong></p>
+<p>大模型智能体已经能编写程序、操作电脑、调用工具完成复杂数字任务。CodeActionBench 问的是：把工具换成机器人，同样的能力还剩多少？</p>
+<p>它与同期 RobotWorld 的差别在于<strong>聚焦度</strong>：RobotWorld 铺开 84 项任务、8 类本体做广度扫描；CodeActionBench 只用<strong>双臂操作</strong>这一个设定，但把评测协议做深——25 个任务 × 9 个配置 × 多次尝试，看的是<strong>同一批任务上不同模型与框架配置的能力剖面</strong>。</p>
+<p><strong>为什么要「共享接口」</strong></p>
+<p>这是整个评测设计的枢纽。接口给多少帮助，就决定了评测测的是什么：</p>
+<table>
+<thead>
+<tr>
+<th>接口提供</th>
+<th>评测测的是</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>物体位姿 + 抓取候选</td>
+<td>「会不会调用现成模块」</td>
+</tr>
+<tr>
+<td>完整技能库</td>
+<td>「会不会编排技能」</td>
+</tr>
+<tr>
+<td><strong>只有图像 + 机器人状态</strong></td>
+<td><strong>「能不能从观察里构造动作目标」</strong></td>
+</tr>
+</tbody>
+</table>
+<p>CodeActionBench 选第三种。它<strong>不额外做任务专属微调</strong>，也<strong>不提供</strong>任务示范、专门的感知或抓取模块输出、特权场景状态、预设任务策略。</p>
+<p><strong>评测检查三件事，不只是成功率</strong></p>
+<ol>
+<li><strong>任务结果</strong>：最终是否完成</li>
+<li><strong>中间进展</strong>：走到哪一步（部分完成也有信息量）</li>
+<li><strong>完成判断</strong>：模型自己认为做完了没有</li>
+</ol>
+<p>第三项常被忽略但极关键——<strong>判断失败并继续尝试</strong>是自主性的核心。一个总是误以为自己成功的 Agent，在工业场景里比一个明确知道自己失败的 Agent 危险得多。</p>
+<hr />
+<p><strong>评测流程</strong></p>
+<pre><code class="language-python">&quot;&quot;&quot;
+CodeActionBench 风格的评测循环：Agent 自行选择视觉证据、写代码、看反馈再改。
+&quot;&quot;&quot;
+def evaluate(agent, task, budget=30):
+    obs = task.get_observation()          # 仅图像 + 机器人状态
+    workspace = CodeWorkspace()
+
+    for step in range(budget):
+        patch = agent.generate(obs, task.instruction, workspace.history)
+        workspace.apply(patch)
+        action = workspace.next_action()
+        obs, done = task.step(action)
+
+        if workspace.claims_done():       # 完成判断也被评测
+            return Result(verified=task.check_success(), steps=step + 1,
+                          progress=task.progress())
+    return Result(verified=False, steps=budget, progress=task.progress())
+</code></pre>
+<p><strong>三个评测维度</strong></p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>含义</th>
+<th>为什么重要</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>任务结果</td>
+<td>成功条件是否满足</td>
+<td>主指标</td>
+</tr>
+<tr>
+<td>中间进展</td>
+<td>部分完成的程度</td>
+<td>区分「完全不会」与「差一步」</td>
+</tr>
+<tr>
+<td>完成判断</td>
+<td>Agent 自报是否与实际一致</td>
+<td>自主性的核心能力</td>
+</tr>
+</tbody>
+</table>
+<p><strong>技术栈</strong></p>
+<ul>
+<li>仿真：<strong>RoboTwin 2.0</strong> + <strong>SAPIEN</strong></li>
+<li>本体：<strong>ALOHA-AgileX</strong> 双臂机器人</li>
+<li>规模：25 个任务 × 9 个配置 = <strong>675 次尝试</strong></li>
+</ul>
+<p><strong>不提供的东西（这是设计而非缺失）</strong></p>
+<ul>
+<li>任务专属微调</li>
+<li>任务示范</li>
+<li>专门的感知或抓取模块输出</li>
+<li>特权场景状态</li>
+<li>预设任务策略</li>
+</ul>
+<p><strong>执行轨迹里的行为观察</strong>：模型会编写颜色分割程序、通过运动采样估计相机参数，也会根据物理规律建立近似动力学模型再用于控制。在积木堆叠任务中，Opus 5.5 先编写颜色分割程序，通过机械臂运动采样拟合相机参数，再把视觉信息转化为空间位置估计——这说明通用 Agent 在机器人任务上表现出的不是「调用技能」，而是<strong>临时现场建模</strong>。</p>
+<hr />
+<h2 id="_2">直接相关</h2>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2609.33807">CodeActionBench: Evaluating Agentic Code-as-Policy for Embodied Manipulation</a></strong> — 论文原文。</li>
+<li><strong><a href="https://github.com/lyhkk/CodeActionBench">GitHub: lyhkk/CodeActionBench</a></strong> — 官方仓库，MIT 许可。</li>
+<li><strong><a href="https://codeactionbench.org/">项目主页</a></strong> — 结果与轨迹展示。</li>
+</ul>
+<h2 id="_3">延伸阅读</h2>
+<ul>
+<li><strong>RobotWorld（arXiv:2610.10409，github.com/robotworldai/robotworld）</strong> — 84 项任务 8 类本体的 robot use 广度基准，与本基准互补。</li>
+<li><strong>RoboTwin 2.0</strong> — 本基准的仿真底座，双臂操作任务的主要来源。</li>
+<li><strong>SAPIEN</strong> — 物理仿真与渲染后端。</li>
+<li><strong>EmbodiedEvo（arXiv:2610.18867）</strong> — 自进化 Coding Agent，是本基准协议下值得测试的方法。</li>
+</ul>
+<hr />
+<p><strong>获取</strong></p>
+<pre><code class="language-bash">git clone https://github.com/lyhkk/CodeActionBench.git
+cd CodeActionBench
+pip install -r requirements.txt
+</code></pre>
+<p><strong>前置依赖</strong></p>
+<p>RoboTwin 2.0 与 SAPIEN 的环境配置是主要工作量，建议先单独跑通这两个依赖的官方示例，再接入本基准。</p>
+<p><strong>最小验证流程</strong></p>
+<ol>
+<li><strong>先在单个任务上跑通闭环</strong>：确认 Agent 能拿到图像、能提交代码、能收到反馈。这一步通了剩下的都是调参</li>
+<li><strong>固定预算再对比不同配置</strong>：预算（步数上限）必须一致，否则成功率不可比。论文用统一的 675 次尝试分摊到 9 个配置</li>
+<li><strong>一定要记录「完成判断」</strong>：Agent 自报完成 vs 实际成功的混淆矩阵，是这份基准最有价值的产出</li>
+<li><strong>别急着上真机</strong>：先在仿真里把「视觉证据选择」这一环跑明白——多数失败发生在这里而非动作生成</li>
+<li><strong>做框架配置对照</strong>：同一个模型在不同 harness 下差异巨大（Opus 5 在 Reference harness 与 Claude Code 下是 49.3% vs 45.3%），说明 harness 本身就值得优化</li>
+</ol>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>成功率普遍偏低：检查是否误给了特权状态（会让结果虚高）或误屏蔽了反馈（会让结果虚低）</li>
+<li>中间进展高但最终成功率低：典型的「会做但收不了尾」，多半是完成判断逻辑有问题</li>
+<li>不同配置差异过大：可能是预算或重试次数设置不一致，先对齐评测协议</li>
+<li>仿真与论文数字不符：确认 RoboTwin 2.0 与 SAPIEN 的版本，物理参数变化会显著影响结果</li>
+</ul>
+<p><strong>许可</strong>：MIT，可自由用于研究与工程对比。</p>
+<hr />
+<p><strong>主结果（尝试成功率）</strong></p>
+<table>
+<thead>
+<tr>
+<th>配置</th>
+<th>成功率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPT-6 Astra（Codex CLI）</td>
+<td><strong>73.3%</strong></td>
+</tr>
+<tr>
+<td>Claude Opus 5（Reference harness）</td>
+<td><strong>49.3%</strong></td>
+</tr>
+<tr>
+<td>Claude Opus 5（Claude Code）</td>
+<td><strong>45.3%</strong></td>
+</tr>
+<tr>
+<td>全部 9 个配置的最低值</td>
+<td>2.7%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>规模</strong>：25 个双臂仿真任务，9 个模型与运行框架配置，共 <strong>675 次尝试</strong>。</p>
+<p><strong>三个值得注意的读数</strong></p>
+<ol>
+<li><strong>2.7% 到 73.3% 的跨度说明「框架配置」和「模型能力」同等重要。</strong> 同一个模型换 harness 能差 4 个百分点（Opus 5：49.3% vs 45.3%），不同模型在同一 harness 下能差 20 个百分点以上。</li>
+<li><strong>73.3% 是「尝试成功率」不是「任务成功率」。</strong> 它衡量的是在给定预算内尝试后完成的比例，读这个数字时要连同预算一起看。</li>
+<li><strong>中间进展维度比最终成功率更能定位问题。</strong> 一个配置可能最终成功率低但进展高，说明它「会做但收不了尾」；另一个可能都低，说明「根本不会」。这两种失败需要完全不同的修复手段。</li>
+</ol>
+<p><strong>论文</strong>：arXiv:2609.33807。<strong>许可</strong>：MIT。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>任务数</th>
+<th>本体数</th>
+<th>接口帮助</th>
+<th>核心区分点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CodeActionBench</strong></td>
+<td>25</td>
+<td>1（ALOHA-AgileX 双臂）</td>
+<td><strong>最少（仅图像+状态）</strong></td>
+<td><strong>模型 × harness 配置剖面</strong></td>
+</tr>
+<tr>
+<td>RobotWorld</td>
+<td>84</td>
+<td>8</td>
+<td>少</td>
+<td>跨本体的 robot use 广度</td>
+</tr>
+<tr>
+<td>BiDex-100</td>
+<td>106</td>
+<td>2（双 Franka / Astribot S1）</td>
+<td>数据契约</td>
+<td>每个任务强制 OOD 变体</td>
+</tr>
+<tr>
+<td>RoboDojo</td>
+<td>42 仿真 + 18 真机</td>
+<td>多</td>
+<td>统一</td>
+<td>仿真与真机双轨</td>
+</tr>
+<tr>
+<td>LIBERO</td>
+<td>—</td>
+<td>单臂</td>
+<td>标准</td>
+<td>经典操作基准</td>
+</tr>
+</tbody>
+</table>
+<p><strong>读表要点</strong>：这些基准不互斥，测的是不同切面。如果你要回答「哪个通用模型最适合做机器人 Agent」，用 RobotWorld 或 CodeActionBench；如果要回答「我的 VLA 泛化好不好」，用 BiDex-100 或 RoboDojo。<strong>特别提醒</strong>：CodeActionBench 的接口帮助最少，因此它的绝对成功率数字<strong>不能</strong>与支持特权状态的基准直接比较。</p>
+<p><strong>与 EmbodiedEvo 的关系</strong>：两者都关注「代码即策略」，但角色不同——CodeActionBench 是<strong>尺子</strong>（评测），EmbodiedEvo 是<strong>选手</strong>（方法）。用 CodeActionBench 的协议去测 EmbodiedEvo 是很自然的下一步。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

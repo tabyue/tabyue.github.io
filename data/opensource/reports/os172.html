@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoopWAM：闭环世界动作模型，直接从部署 rollout（含失败样本）中持续改进通用策略 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">LoopWAM：闭环世界动作模型，直接从部署 rollout（含失败样本）中持续改进通用策略 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="loopwam-rollout">LoopWAM：闭环世界动作模型，直接从部署 rollout（含失败样本）中持续改进通用策略</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/loop-wam/LoopWAM">https://github.com/loop-wam/LoopWAM</a>  </p>
+<p><strong>Stars</strong>: 24 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-10-16  </p>
+<p><strong>组织</strong>: LoopWAM Team  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-16</p>
+</blockquote>
+<hr />
+<p><strong>为什么「更多专家示教」这条路已经到顶</strong></p>
+<p>专家示教只告诉模型「正确的路怎么走」，几乎不包含「手多伸出去两厘米会怎样」。而机器人真正需要的因果知识恰恰在后者里——只有见过后果，才知道边界在哪。</p>
+<p>从部署数据里学则面临两难：</p>
+<table>
+<thead>
+<tr>
+<th>用法</th>
+<th>问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模仿所有记录的动作</td>
+<td>强化次优甚至失败行为</td>
+</tr>
+<tr>
+<td>只保留成功样本</td>
+<td><strong>丢掉物理交互及其后果的证据</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>LoopWAM 的核心洞察是：失败样本的动作不该学，但它记录的「世界怎么变」依然该学。</strong></p>
+<p><strong>解法：把行为学习与世界建模拆开加权</strong></p>
+<ul>
+<li><strong>世界建模（视频预测）</strong>：所有质量层级的样本都保留完整监督——失败样本同样展示了真实的物理后果</li>
+<li><strong>行为学习（动作模仿）</strong>：按样本质量加权——好的多学、坏的不学</li>
+</ul>
+<p>这就同时拿到了「见过后果」与「不学坏动作」。</p>
+<p><strong>并行去噪让两者真正交互</strong></p>
+<p>视频 token 与动作 token 在<strong>整个去噪过程中</strong>持续交互，而不是各自算完再拼接。这意味着动作生成时能看到「如果我这么做，画面会变成什么样」——学到的后果直接参与决策。</p>
+<hr />
+<p><strong>双路径并行去噪</strong></p>
+<p>$$\text{Policy 路径}: \quad p(a_{t:t+H} \mid o_t, \ell)$$</p>
+<p>$$\text{FDM 路径}: \quad p(o_{t+1:t+H} \mid a_{t:t+H}, s_{t+H}) \quad \text{（前向动力学）}$$</p>
+<p>$$\text{IDM 路径}: \quad p(a_{t:t+H} \mid o_t, o_{t+H}) \quad \text{（逆动力学）}$$</p>
+<p>三条路径在<strong>并行去噪</strong>中交互，而非串行。</p>
+<p><strong>来源相关噪声采样</strong></p>
+<p>不同来源的样本（自身策略 vs 其他已部署策略）施加不同的噪声调度：</p>
+<p>$$\epsilon^{(i)} \sim \mathcal{N}(0, \sigma^2_{\text{source}(i)}), \qquad \sigma_{\text{self}} \neq \sigma_{\text{other}}$$</p>
+<p>这一个机制同时服务两个目标：对自身数据偏向行为学习，对其他来源数据偏向世界建模。</p>
+<p><strong>质量加权监督</strong></p>
+<p>$$\mathcal{L} = \underbrace{\mathcal{L}<em>{\text{video}}}</em>{\text{全质量保留}} + \lambda(q) \cdot \underbrace{\mathcal{L}<em>{\text{action}}}</em>{\text{按质量加权}}$$</p>
+<p>其中 $q \in [0,1]$ 是样本质量分，$\lambda(q)$ 单调递增。失败样本 $q \to 0$ 时 $\lambda \to 0$——动作不学，但视频监督保留。</p>
+<pre><code class="language-python">&quot;&quot;&quot;
+质量加权监督示意：视频监督全保留，动作模仿按质量打折。
+&quot;&quot;&quot;
+def loopwam_loss(batch, model):
+    q = batch['quality']                     # 每样本质量分 in [0, 1]
+    noise_scale = source_noise(batch['src'])  # 来源相关噪声
+
+    video_pred = model.denoise_video(batch['obs'], batch['act'], noise_scale)
+    action_pred = model.denoise_action(batch['obs'], batch['lang'], noise_scale)
+
+    loss_video = mse(video_pred, batch['obs_next'])          # 不做质量折扣
+    loss_action = (quality_weight(q) * mse(action_pred, batch['act'])).mean()
+
+    return loss_video + loss_action
+</code></pre>
+<p><strong>闭环迭代</strong></p>
+<p>$$\pi^{(k+1)} = \text{Train}\big(\pi^{(k)},\ \mathcal{D}^{(k)}<em>{\text{rollout}} \cup \mathcal{D}</em>{\text{expert}}\big)$$</p>
+<p>每轮部署产生新 rollout，加入训练集重训。论文报告三轮迭代的结果。</p>
+<hr />
+<h2 id="_2">直接相关</h2>
+<ul>
+<li><strong><a href="https://github.com/loop-wam/LoopWAM">LoopWAM: Closed-Loop Generalist Policy Improvement from Deployment Rollouts</a></strong> — 官方代码仓库（2026-10-12 建仓）。</li>
+<li><strong>RoboChallenge Table30-V2</strong> — 闭环迭代的主战场，23.67% → 43.33% 的提升在此测得。</li>
+</ul>
+<h2 id="_3">延伸阅读</h2>
+<ul>
+<li><strong>世界动作模型（WAM）系列</strong>：OpenWAM（斯坦福，可组合式）、VPP2（星动纪元）、UNITAS（跨维智能，3D 原生）——LoopWAM 的闭环机制可叠加在这些底座上。</li>
+<li><strong>RoboDojo</strong> — 港大 MMLab 的通用机器人操作基准，强调仿真与真机双轨评测。</li>
+<li><strong>离线强化学习（Offline RL）</strong> — 从混合质量数据中学习的经典范式，是理解「质量加权」的理论背景。</li>
+<li><strong>RoboTwin 2.0 / RoboCasa365</strong> — LoopWAM 的另外两个评测基准，便于横向对比。</li>
+</ul>
+<hr />
+<p><strong>获取</strong></p>
+<pre><code class="language-bash">git clone https://github.com/loop-wam/LoopWAM.git
+cd LoopWAM
+pip install -r requirements.txt
+</code></pre>
+<p><strong>最小验证流程</strong></p>
+<ol>
+<li><strong>先确认数据里同时有成功与失败样本</strong>：如果只有专家示教，LoopWAM 的机制无从发挥。先跑一轮部署采集，或者直接构造含失败的数据集</li>
+<li><strong>验证质量分 $q$ 的可靠性</strong>：$q$ 是整个方法的枢纽。先人工标注一小批样本，确认自动质量分与人工判断一致</li>
+<li><strong>做「失败样本保留 vs 删除」的对照</strong>：这是最关键的消融。保留失败样本但动作权重为 0，应该显著优于直接删掉</li>
+<li><strong>看视频预测质量</strong>：世界建模分支学得好不好，可以用「给定动作预测下一帧」的误差直接衡量，这个指标比最终成功率反馈快得多</li>
+<li><strong>再跑闭环迭代</strong>：三轮部署-训练，记录每轮成功率变化（论文：23.67% → 43.33%）</li>
+</ol>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>闭环迭代不涨反跌：质量分不准，把次优样本当成功学进去了。先修 $q$，别急着调模型</li>
+<li>视频预测误差降不下去：噪声调度对不同来源区分不够，检查 $\sigma_{\text{source}}$ 是否真的不同</li>
+<li>动作分支学到坏行为：$\lambda(q)$ 的下界不够低，失败样本的动作权重仍有残量</li>
+<li>训练不稳定：并行去噪的交互强度是可调项，交互过强会让两条路径互相干扰</li>
+</ul>
+<p><strong>值得注意</strong>：本仓库 2026-10-12 建仓，是较新的项目，API 可能变动，建议按 commit 锁定版本。</p>
+<hr />
+<p><strong>RoboChallenge Table30-V2（闭环迭代）</strong></p>
+<table>
+<thead>
+<tr>
+<th>轮次</th>
+<th>成功率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初始</td>
+<td>23.67%</td>
+</tr>
+<tr>
+<td>三轮部署-训练后</td>
+<td><strong>43.33%</strong>（+19.7 个百分点）</td>
+</tr>
+<tr>
+<td>最终得分</td>
+<td><strong>56.80</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>其他基准</strong></p>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>成功率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RoboTwin 2.0</td>
+<td><strong>94.5%</strong>（平均）</td>
+</tr>
+<tr>
+<td>RoboCasa365</td>
+<td><strong>49.5%</strong>（整体）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键限定</strong>：以上结果<strong>没有额外的具身预训练</strong>，且在三个基准的所有对比方法中取得<strong>整体最优</strong>。</p>
+<p><strong>怎么读 23.67% → 43.33%</strong></p>
+<p>这个提升来自<strong>三轮闭环</strong>，不是单次训练。它的意义在于证明「部署本身可以作为训练数据来源」——每部署一轮，产生的成功/次优/失败样本都能转化为下一轮的改进。这对工业落地尤其重要：产线上的机器人每天都在产生 rollout，如果能自发利用，改进就不再依赖额外标注。</p>
+<p><strong>注意</strong>：仓库较新（2026-10-12 建仓），star 数尚少，复现时留意与论文的 commit 对应关系。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>训练数据来源</th>
+<th>失败样本用法</th>
+<th>世界建模</th>
+<th>闭环迭代</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LoopWAM</strong></td>
+<td><strong>自身 + 其他策略的部署 rollout</strong></td>
+<td><strong>保留视频监督，动作按质量加权</strong></td>
+<td><strong>是（FDM/IDM）</strong></td>
+<td><strong>是（三轮验证）</strong></td>
+</tr>
+<tr>
+<td>标准模仿学习</td>
+<td>专家示教</td>
+<td>丢弃</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>离线 RL</td>
+<td>混合数据</td>
+<td>用于价值估计</td>
+<td>部分</td>
+<td>理论上有</td>
+</tr>
+<tr>
+<td>过滤式微调</td>
+<td>部署 rollout</td>
+<td>丢弃</td>
+<td>否</td>
+<td>部分</td>
+</tr>
+<tr>
+<td>世界动作模型（VPP2 / UNITAS）</td>
+<td>专家 + 视频预训练</td>
+<td>丢弃</td>
+<td>是</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+<p><strong>读表要点</strong>：LoopWAM 与同期 WAM 工作的差别不在架构，而在<strong>数据来源的哲学</strong>。大部分 WAM 仍在「用更好的预训练换更好的初始策略」，LoopWAM 问的是「部署之后怎么继续变好」。这两个方向其实正交——把 LoopWAM 的闭环机制套在更强的 WAM 底座上，是自然的下一步。</p>
+<p><strong>与 Robota-Embed 的对照</strong>：两者都关心「如何从历史经验里持续获益」，但 Robota-Embed 走<strong>检索</strong>（不改权重，改上下文），LoopWAM 走<strong>训练</strong>（把 rollout 重训进权重）。前者便宜、可逆，后者彻底、但每轮都要重训。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

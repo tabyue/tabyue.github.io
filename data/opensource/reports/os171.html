@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I-BFM-Code：首个面向人形-物体交互的行为基础模型，一套策略搞定搬箱/推箱/踢箱 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">I-BFM-Code：首个面向人形-物体交互的行为基础模型，一套策略搞定搬箱/推箱/踢箱 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="i-bfm-code-">I-BFM-Code：首个面向人形-物体交互的行为基础模型，一套策略搞定搬箱/推箱/踢箱</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Roboparty/I-BFM-Code">https://github.com/Roboparty/I-BFM-Code</a>  </p>
+<p><strong>Stars</strong>: 47 · <strong>License</strong>: CC BY-NC 4.0 · <strong>收录日期</strong>: 2026-10-16  </p>
+<p><strong>组织</strong>: RoboParty  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-16</p>
+</blockquote>
+<hr />
+<p><strong>从全身控制到物理交互</strong></p>
+<p>BFM-Zero 证明了：不需要任务奖励，只靠无监督交互也能学出一族可泛化的行为，并在推理时通过隐指令 $z$ 选出需要的那个。但它处理的动作空间是<strong>本体自身</strong>——关节怎么动、重心怎么移。</p>
+<p>I-BFM 要处理的是「本体 + 物体 + 接触」的耦合系统。差别在于：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>BFM-Zero</th>
+<th><strong>I-BFM</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>状态</td>
+<td>本体状态 $s$</td>
+<td><strong>人形-物体-接触耦合状态</strong> $(s, o, c)$</td>
+</tr>
+<tr>
+<td>交互对象</td>
+<td>无（自身运动）</td>
+<td><strong>箱子等外部物体</strong></td>
+</tr>
+<tr>
+<td>意图歧义</td>
+<td>弱</td>
+<td><strong>强（推 vs 踢在起步阶段不可分）</strong></td>
+</tr>
+<tr>
+<td>任务</td>
+<td>全身控制</td>
+<td><strong>搬箱 / 推箱 / 踢箱</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>多时间尺度的意图歧义是核心难题</strong></p>
+<p>设想同一个起始帧：人形站在箱子前，脚微微抬起。这可能是推箱的起步，也可能是踢箱的起步。差别要到几帧之后才显现——而那时候动作已经发出去了。</p>
+<p>如果后继特征（successor feature）只编码本体状态，这两条未来轨迹的表示会高度重叠，策略学到的就是两者的平均，哪个都做不好。把<strong>物体状态与接触状态</strong>纳入表示，才能让「箱子被推着平移」与「箱子被踢飞」在特征空间里分开。</p>
+<p><strong>LOGO</strong> 就是为解决这个歧义引入的机制：在更长的时间尺度上引入意图变量，让策略在短尺度上保持动作可行性、在长尺度上区分意图。</p>
+<hr />
+<p><strong>FB 表示回顾</strong></p>
+<p>Forward-Backward 表示把无奖励 RL 分解成两个函数：</p>
+<p>$$F(s, a, z) \in \mathbb{R}^d \quad \text{（后继特征）}, \qquad B(s') \in \mathbb{R}^d \quad \text{（后继测度）}$$</p>
+<p>使得任意奖励 $r$ 对应的最优 Q 函数可近似为：</p>
+<p>$$Q^\pi_r(s, a, z) \approx F(s, a, z)^\top \big( \mathbb{E}[B(s') r(s')] \big)$$</p>
+<p>训练完成后，给定新任务只需估计右侧的奖励向量，<strong>无需重新训练策略</strong>。这就是「基础模型」性质的来源。</p>
+<p><strong>I-BFM 的扩展</strong></p>
+<p>把状态从 $s$ 扩展为耦合状态 $\tilde{s} = (s^{\text{humanoid}},\ s^{\text{object}},\ s^{\text{contact}})$：</p>
+<p>$$F: (\tilde{s}, a, z) \mapsto \mathbb{R}^d, \qquad B: \tilde{s}' \mapsto \mathbb{R}^d$$</p>
+<p><strong>这一步不是简单的维度增加</strong>。加入物体与接触状态之后，后继特征才具备区分「箱子被推」与「箱子被踢」的能力——因为这两种未来的<strong>本体状态可能相似</strong>，但<strong>物体状态截然不同</strong>。</p>
+<p><strong>隐指令条件化</strong></p>
+<p>沿用 BFM-Zero 的接口：推理时给定隐指令 $z$，策略表现为对应行为。三个任务（搬箱 / 推箱 / 踢箱）共享一套权重，靠 $z$ 切换。</p>
+<pre><code class="language-python">&quot;&quot;&quot;
+I-BFM 推理接口示意：一套权重，靠隐指令 z 切换行为。
+&quot;&quot;&quot;
+policy = load_ibfm(checkpoint='166M_steps.pt')
+
+# 无监督训练后，隐指令可从目标任务的小样本上推断
+z_carry = policy.infer_latent(task_demos['carry_box'])
+z_push  = policy.infer_latent(task_demos['push_box'])
+z_kick  = policy.infer_latent(task_demos['kick_box'])
+
+obs = env.reset()
+for t in range(horizon):
+    action = policy.act(obs, z_carry)     # 切换 z 即切换行为
+    obs, _, done, _ = env.step(action)
+    if done:
+        break
+</code></pre>
+<hr />
+<h2 id="_2">直接相关</h2>
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.06129">I-BFM 论文（arXiv:2610.06129）</a></strong> — 首个面向人形-物体交互的行为基础模型。</li>
+<li><strong><a href="https://github.com/Roboparty/I-BFM-Code">GitHub: Roboparty/I-BFM-Code</a></strong> — 训练代码 + 166M 步权重 + 三个交互式演示（CC BY-NC 4.0）。</li>
+<li><strong><a href="https://huggingface.co/HanSj77/I-BFM-166560M-replay-buffer">Replay Buffer（HuggingFace）</a></strong> — 210 GiB 公开数据。</li>
+<li><strong><a href="https://iamhardworking.github.io/I-BFM/">项目主页</a></strong> — 演示视频与结果。</li>
+</ul>
+<h2 id="_3">延伸阅读</h2>
+<ul>
+<li><strong>BFM-Zero</strong> — 前作，无监督行为基础模型，I-BFM 继承其训练框架与隐指令接口。</li>
+<li><strong>Forward-Backward 表示</strong> — FB 表示是无奖励 RL 的核心工具，理解它是读懂 I-BFM 的前提。</li>
+<li><strong>RoboParty RP1（github.com/Roboparty/RP1）</strong> — 全栈开源人形硬件平台，I-BFM 的验证本体。</li>
+<li><strong>RoboParty UFO / MimicLite</strong> — 同团队的无监督 RL 框架与动作模仿技术。</li>
+</ul>
+<hr />
+<p><strong>获取</strong></p>
+<pre><code class="language-bash">git clone https://github.com/Roboparty/I-BFM-Code.git
+cd I-BFM-Code
+pip install -r requirements.txt
+</code></pre>
+<p><strong>权重与数据</strong></p>
+<ul>
+<li>模型权重：<strong>166M 步</strong> checkpoint，随仓库发布</li>
+<li>Replay buffer：<strong>210 GiB</strong>，托管于 HuggingFace（HanSj77/I-BFM-166560M-replay-buffer）</li>
+<li>演示：三个任务的交互式演示（搬箱 / 推箱 / 踢箱）</li>
+</ul>
+<p><strong>最小验证流程</strong></p>
+<ol>
+<li><strong>先跑演示，再谈训练</strong>：三个交互式演示是最快的正确性验证，先确认权重能加载、行为符合预期</li>
+<li><strong>只做隐指令推断</strong>：用仓库给的少量目标任务样本推断 $z$，验证「一套权重切三种行为」这个核心 claim</li>
+<li><strong>再考虑从头训练</strong>：官方配置 <strong>8×H200</strong>，166M 步。若算力不足，建议直接用公开的 replay buffer 做离线实验</li>
+<li><strong>消融耦合状态</strong>：把 FB 表示里的物体/接触状态去掉，对比三类任务的表现——这是验证论文主张最直接的实验</li>
+</ol>
+<p><strong>排错要点</strong></p>
+<ul>
+<li>三类任务混淆：多数是隐指令 $z$ 推断样本不足或质量差，先检查演示样本一致性</li>
+<li>箱子交互不稳定：接触状态的估计噪声过大，应检查接触检测阈值与仿真接触参数</li>
+<li>replay buffer 加载失败：210 GiB 分片存储，确认全部分片下载完整</li>
+<li>显存不足：166M 步的 checkpoint 与批量推理对显存要求高，先降 batch size 验证逻辑</li>
+</ul>
+<p><strong>许可提醒</strong>：代码与权重为 <strong>CC BY-NC 4.0</strong>，<strong>不可商用</strong>。</p>
+<hr />
+<p><strong>任务覆盖</strong></p>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>是否覆盖</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>搬箱（Carry Box）</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>推箱（Push Box）</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>踢箱（Kick Box）</td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>
+<p>三类任务共享<strong>一套策略权重</strong>，通过隐指令切换。</p>
+<p><strong>鲁棒性</strong></p>
+<p>具备<strong>抗摔抗扰</strong>能力——这是人形-物体交互场景下的关键指标，因为接触本身会带来大量未建模扰动。</p>
+<p><strong>开放资产规模</strong></p>
+<table>
+<thead>
+<tr>
+<th>资产</th>
+<th>规模</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>训练步数</td>
+<td><strong>166M 步</strong></td>
+</tr>
+<tr>
+<td>Replay buffer</td>
+<td><strong>210 GiB</strong>（HuggingFace 公开）</td>
+</tr>
+<tr>
+<td>交互式演示</td>
+<td>3 个任务</td>
+</tr>
+<tr>
+<td>官方复现配置</td>
+<td><strong>8×H200</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>复现门槛主要是硬件</strong>：数据和权重都给了，真正的门槛是 8×H200 的训练算力。这也是为什么公开的 210 GiB replay buffer 很有价值——它让没有大规模算力的团队也能做离线表示学习实验。</p>
+<p><strong>资源</strong>：项目主页 iamhardworking.github.io/I-BFM/；论文 arXiv:2610.06129。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>训练信号</th>
+<th>状态空间</th>
+<th>物理交互</th>
+<th>一套权重多任务</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>I-BFM</strong></td>
+<td><strong>无监督（无任务奖励）</strong></td>
+<td><strong>人形-物体-接触</strong></td>
+<td><strong>是</strong></td>
+<td><strong>是（隐指令切换）</strong></td>
+</tr>
+<tr>
+<td>BFM-Zero</td>
+<td>无监督</td>
+<td>本体状态</td>
+<td>否（全身控制）</td>
+<td>是</td>
+</tr>
+<tr>
+<td>单任务 RL（PPO/SAC）</td>
+<td>任务奖励</td>
+<td>视任务而定</td>
+<td>视任务而定</td>
+<td>否</td>
+</tr>
+<tr>
+<td>VLA（π0.5 等）</td>
+<td>示教监督</td>
+<td>视觉 + 语言</td>
+<td>是</td>
+<td>是（语言指令）</td>
+</tr>
+<tr>
+<td>目标条件 RL</td>
+<td>目标奖励</td>
+<td>本体 + 目标</td>
+<td>部分</td>
+<td>是</td>
+</tr>
+</tbody>
+</table>
+<p><strong>读表要点</strong>：I-BFM 的独特位置在「<strong>无监督 + 物理交互</strong>」这一格。VLA 也能一套权重多任务，但依赖大量示教监督；BFM-Zero 也是无监督，但不碰物体。I-BFM 把两者交叉起来，代价是需要大量无监督交互（166M 步）才能学到覆盖接触动力学的表示。</p>
+<p><strong>与 RoboParty RP1 的关系</strong>：I-BFM 的模型在 RoboParty 自己的 RP1 人形平台上验证，硬件开放（github.com/Roboparty/RP1）与算法开放（本仓库）是一体的——你可以同时拿到本体和能在上面跑的策略。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
