@@ -59,6 +59,12 @@
 - 学习：reinforcement-learning +「无监督技能发现与行为基础模型：FB 表示 / BFM-Zero / I-BFM」（8.0K）；imitation-learning +「从人类视频到机器人动作：重定向 / 观测对齐 / 控制器输入离线精修」（7.9K）。
 - 校验：sync + sitemap（516 章节）+ health_check 首轮 FAIL 2 项（papers-index / opensource 的 totalItems 未同步）→ 修后 ALL OK；已 push（132a28d，HEAD==origin/main）。
 
+### 2026-10-17 08:00—09:00
+- 投稿箱：无新投稿（`gh issue list --state open --json ...` 返回 `[]`）。开工时工作树干净、HEAD==origin/main。
+- 数据：新闻 +10（n449—n458）、论文 +5（p232—p236，含 detail）、开源 +4（os174—os177，含 detail + 报告页）、招聘 +6（j217—j222）、资源新增 r013（世界动作模型 WAM 与策略评测生态）+ r001 扩充。
+- 学习：embodied-data-engineering +「从人类视频到可训练轨迹：Agent 化数据生成与逐阶段校验」（6.2K → 108K）；platform-engineering +「策略评测基础设施：统一契约、O(N+M) 适配层与基准可复现性」（6.8K → 106K）。
+- 校验：sync + sitemap（518 章节）+ health_check → ALL OK；已 push（132a28d..11cba46），HEAD==origin/main。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
@@ -100,3 +106,9 @@
 - **写 OS 条目前先用 `gh api repos/<owner>/<repo>` 验证（2026-10-16）**：一次拿到 stars / language / license.spdx_id / pushed_at / created_at，比 WebFetch 更可靠。本轮据此排除了 404 的 inclusionAI/BiDex-100、psi-lab/SIMPLE、lambdahumanoid/lambda-0。license 为空时填「未声明」，不要编造 MIT/Apache。
 - **PowerShell 管道前不允许空元素（2026-10-16）**：`foreach (...) { ... } | Out-File` 报「不允许使用空管道元素」，必须先 `$out = @()` 收集再 `$out | Out-File`。
 - **health_check 的 totalItems 需手动同步（2026-10-16）**：`papers-index.json` 与 `opensource.json` 有 `totalItems` 字段但脚本不自动更新，加完条目后必须显式写入，否则 FAIL。
+- **开源选题改用 GitHub Search API（2026-10-17，强烈推荐）**：WebSearch 搜到的「新开源」命中率极低——本轮 RP1 / OpenWAM / RoboRSI / EmbodiedEvo / DexForce-UNITAS **全部已在库**。改成 Python 调 `api.github.com/search/repositories`，多查询并集：`topic:embodied-ai`、`topic:robot-learning`、`topic:humanoid`、`topic:vision-language-action`、`VLA robot manipulation`，加 `pushed:>YYYY-MM-DD` 与 `sort=stars`；再把结果与现库 `gh` URL 清单比对标 DUP/NEW。一次可拿到几十个真候选。
+- **PowerShell 不能内联带 `&` 的 gh API URL（2026-10-17）**：`gh api "search/repositories?q=...&per_page=30"` 报 `accepts 1 arg(s), received 13`。且 `ConvertFrom-Json` 解析 search 大响应会崩（`传入的对象无效，应为":"或"}"`）。**这类调用一律写成 .py 用 urllib**；确需在 PowerShell 取字段用 `--jq` 但同样受参数拆分限制。
+- **`python -c` 输出非 GBK 字符会 UnicodeEncodeError（2026-10-17）**：诊断脚本要么设 `$env:PYTHONIOENCODING='utf-8'`，要么写成 .py 文件再用 `Out-File -Encoding utf8` 落盘。
+- **arXiv export API 会 429（2026-10-17）**：取论文元数据改用 `WebFetch https://arxiv.org/abs/<id>`，稳定拿到标题/作者/提交日期/摘要。
+- **jobs.json 存在无 `url` 键的条目（2026-10-17）**：查重写 `x['url']` 会 `KeyError`，一律 `x.get('url','')`。
+- **learning-path 模块名与 learn/*.json 的 name 有 3 处不一致（2026-10-17）**：`platform-engineering`(具身智能平台工程)→LP「MLOps与持续交付」；`cloud-edge-collaboration`(云边协同)→「云边端协同架构」；`embodied-agent`(具身Agent系统)→「具身Agent实战项目」。按 name 精确匹配会**静默漏 bump**，需维护别名表。
