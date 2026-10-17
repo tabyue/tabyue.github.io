@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-16T08:30",
+ "lastUpdated": "2026-10-17T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,130 @@
   }
  ],
  "projects": [
+  {
+   "name": "FLUX 3 Action：Black Forest Labs 开源的 7B 世界动作模型，支持 DROID / SO-101 与 LeRobot 集成",
+   "github": "https://github.com/black-forest-labs/flux-action",
+   "organization": "Black Forest Labs",
+   "org": "BFL",
+   "category": "ai-model",
+   "description": "**FLUX 3 Action** 是 Black Forest Labs 发布的**开源权重 7B 世界动作模型**。输入相机画面、机器人状态与文本指令，输出下一段动作，**与接下来的视频帧一起联合去噪**。\n\n以图像生成（FLUX）闻名的 BFL 跨界做机器人控制，说明一个行业判断正在形成：**视频模型里积累的「物理直觉」，正被越来越多团队当作机器人大脑的底座**。\n\n**权重与变体**：HuggingFace 上提供独立的 **DROID** 与 **SO-101** 策略仓库，冻结编码器通过 base 仓库共享。DROID 提供 BF16 与 FP8r 两类包，各含 Base（4 步带 guidance）、Guidance 蒸馏（4 步）、步数蒸馏（1 步）三种推理配方，共六个包。\n\n**榜单**：据 BFL 官方博客，该模型在 NVIDIA **RoboLab-120** 榜单上超过了此前最强的开源模型 Cosmos 3 Nano，**参数量不到后者一半**。\n\n**工程细节**：仓库把训练与推理实现分文件存放（`transformer.py` / `transformer_inf_bf16.py` / `transformer_inf_fp8r.py`），让读者（尤其是 Coding Agent）可以直接读每条路径，不必追踪继承关系或配置分支。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "开源权重 7B 世界动作模型，输入图像+状态+指令，输出动作 chunk",
+    "动作与未来视频帧联合去噪（WAM 范式），而非纯 VLA 映射",
+    "提供 DROID 与 SO-101 两套策略权重，冻结编码器共享",
+    "六个推理包：BF16 / FP8r × Base(4步) / 引导蒸馏(4步) / 步数蒸馏(1步)",
+    "原生 LeRobot 集成（BF16 包含 LeRobot 配置），可走 lerobot 生态",
+    "RoboLab-120 榜单超过此前最强开源模型 Cosmos 3 Nano，参数量不到其一半"
+   ],
+   "stars": 181,
+   "tags": [
+    "FLUX 3 Action",
+    "Black Forest Labs",
+    "世界动作模型",
+    "WAM",
+    "DROID",
+    "SO-101",
+    "LeRobot",
+    "FP8"
+   ],
+   "id": "os177",
+   "addedDate": "2026-10-17"
+  },
+  {
+   "name": "EasyWAM：世界动作模型的统一训练/微调/评测代码库，模块化 + 原生高效计算",
+   "github": "https://github.com/OpenMOSS/EasyWAM",
+   "organization": "OpenMOSS（开源社区团队）",
+   "org": "OpenMOSS",
+   "category": "framework",
+   "description": "EasyWAM 是一个**面向世界动作模型（World Action Model, WAM）的统一研究代码库**，把模型实现、数据处理、分布式训练、参数高效微调（LoRA）与大规模评测串成一条一致的流程，目标是让 WAM 开发**高效、可复现、易扩展**。\n\n**两个设计重点**\n\n· **统一模块化**：模型组件共享一致的数据、训练、checkpoint 与评测接口，新的 WAM 设计更容易接入；\n· **效率是一等公民**：原生集成 Flash Attention 等高效计算路径，而不是事后优化。\n\n**配套资源**：提供 HuggingFace 上的模型 checkpoint 集合、中英双语 README、项目主页与文档。\n\n**定位**：它不提出新模型，而是给已经百花齐放但各自为战的 WAM 研究提供一个可比的公共底座——这与 ModAR 论文批评的「各家同时换骨干、数据、交互方式，无法归因」是同一个痛点。",
+   "language": "Python",
+   "license": "未声明",
+   "features": [
+    "模型实现 / 数据处理 / 分布式训练 / LoRA 微调 / 大规模评测 一条流水线",
+    "模块化模型组件，共享一致的数据、训练、checkpoint 与评测接口",
+    "原生集成 Flash Attention 等高效计算，效率作为一等设计目标",
+    "提供 HuggingFace checkpoint 集合，开箱可跑",
+    "中英双语文档，对中文研究者友好",
+    "覆盖 benchmark / codebase / foundation-models / world-action-model 等主题标签"
+   ],
+   "stars": 400,
+   "tags": [
+    "EasyWAM",
+    "OpenMOSS",
+    "世界动作模型",
+    "WAM",
+    "LoRA",
+    "分布式训练",
+    "评测",
+    "Flash Attention"
+   ],
+   "id": "os176",
+   "addedDate": "2026-10-17"
+  },
+  {
+   "name": "XPolicyLab：把 N 个策略接入 M 套评测环境的连接层，把 O(N×M) 适配成本降到 O(N+M)",
+   "github": "https://github.com/XPolicyLab/XPolicyLab",
+   "organization": "XPolicyLab 社区（IROS 2026 ScaleInfra Workshop 最佳工具论文）",
+   "org": "XPolicyLab",
+   "category": "framework",
+   "description": "XPolicyLab 是**策略代码与评测环境之间的共享层**。每个模型的依赖、checkpoint 和训练配方放在 `policy/<POLICY>/` 下，XPolicyLab 负责那些「无聊但极易出错」的部分：**服务化、观测/动作契约、评测接线**。\n\n**它解决的是组合爆炸问题**：把 N 个策略接到 M 套评测环境上，朴素做法是 N×M 套适配代码；有了统一的适配器层，成本降为 **O(N+M)**。\n\n**生态规模**：截至 2026 年 10 月，生态已集成 **63 个机器人策略**，横跨 VLA、世界—动作模型、模仿学习与记忆增强四个家族；同一套适配器同时服务 **RoboTwin、RoboDojo 仿真**与**标准化真机评测**。\n\n**荣誉**：获 **IROS 2026（匹兹堡）Building Scalable Infrastructure for Robot Learning Workshop 最佳工具论文奖**。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "策略代码与评测环境解耦：N×M 适配成本降为 O(N+M)",
+    "截至 2026-10 已集成 63 个机器人策略（VLA / WAM / IL / 记忆增强）",
+    "统一服务化层：依赖、checkpoint、训练配方各自隔离在 policy/<POLICY>/",
+    "同一套适配器服务 RoboTwin、RoboDojo 与标准化真机评测",
+    "标准化观测/动作契约，减少手写转换代码的出错空间",
+    "IROS 2026 ScaleInfra Workshop 最佳工具论文"
+   ],
+   "stars": 458,
+   "tags": [
+    "XPolicyLab",
+    "策略评测",
+    "RoboTwin",
+    "RoboDojo",
+    "适配器",
+    "IROS 2026",
+    "基准",
+    "VLA"
+   ],
+   "id": "os175",
+   "addedDate": "2026-10-17"
+  },
+  {
+   "name": "ASPIRE：NVIDIA GEAR Lab 开源的具身技能持续发现框架，把「训练」替换为可版本管理的技能库",
+   "github": "https://github.com/NVlabs/ASPIRE",
+   "organization": "NVIDIA GEAR Lab",
+   "org": "NVIDIA",
+   "category": "ai-agent-framework",
+   "description": "ASPIRE 提出一种**不同的持续学习范式**：**「训练」是技能精炼而不是梯度下降；「训练好的模型」是一个传感器运动技能仓库而不是浮点权重；「分布式训练」是一组各自练习不同技能的 Agent 而不是分片小批量**。\n\n一句话概括它的主张：**机器人能力应该像软件一样被调试、版本化和持续改进**。\n\n**v1.0（2026 年 10 月）进展**：ASPIRE 已能解魔方，并在 **80 个 LIBERO-Pro 的 Goal / Object / Spatial / Long 任务**以及选定的 Robosuite、BEHAVIOR-1K 任务上达到 **99% 成功率**。\n\n**真实世界能力**：仓库展示了两条真机链路——**跨本体 sim-to-real**（长时程餐桌收拾，仿真用 Claude Opus 4.6、真机用 GPT-5.5）与**在线真实世界学习**（解魔方，GPT-6 Astra）。\n\n**机制**：Coding Agent 检查执行轨迹、修复机器人程序，并把验证通过的修复**保留为可复用技能**。它结合了闭环执行轨迹、演化式搜索与不断增长的技能库，而不是只依赖固定策略或梯度更新。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "把「训练」重新定义为技能精炼，模型产物是技能仓库而非权重",
+    "v1.0 可解魔方，80 个 LIBERO-Pro 任务 + 部分 Robosuite / BEHAVIOR-1K 达 99% 成功率",
+    "Coding Agent 检查执行轨迹 → 修复程序 → 验证后固化为可复用技能",
+    "结合闭环执行轨迹、演化式搜索与增长式技能库，不依赖梯度更新",
+    "支持跨本体 sim-to-real 与在线真实世界学习两条真机链路",
+    "分布式形态是「一组 Agent 各练一项技能」，而非数据并行"
+   ],
+   "stars": 337,
+   "tags": [
+    "ASPIRE",
+    "NVIDIA",
+    "GEAR Lab",
+    "持续学习",
+    "技能发现",
+    "Coding Agent",
+    "LIBERO-Pro",
+    "BEHAVIOR-1K"
+   ],
+   "id": "os174",
+   "addedDate": "2026-10-17"
+  },
   {
    "name": "CodeActionBench：25 个双臂仿真任务、675 次尝试，评测通用多模态 Agent 的「代码即策略」操作能力",
    "github": "https://github.com/lyhkk/CodeActionBench",
@@ -3948,5 +4072,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 160
+ "totalItems": 164
 }

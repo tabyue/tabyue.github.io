@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASPIRE：NVIDIA GEAR Lab 开源的具身技能持续发现框架，把「训练」替换为可版本管理的技能库 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">ASPIRE：NVIDIA GEAR Lab 开源的具身技能持续发现框架，把「训练」替换为可版本管理的技能库 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="aspirenvidia-gear-lab">ASPIRE：NVIDIA GEAR Lab 开源的具身技能持续发现框架，把「训练」替换为可版本管理的技能库</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/NVlabs/ASPIRE">https://github.com/NVlabs/ASPIRE</a>  </p>
+<p><strong>Stars</strong>: 337 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-17  </p>
+<p><strong>组织</strong>: NVIDIA GEAR Lab  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-17</p>
+</blockquote>
+<hr />
+<p><strong>从「训一个模型」到「养一个技能库」</strong></p>
+<p>主流具身智能的持续改进路径是：采集更多数据 → 继续微调 → 发新权重。这条路有三个老问题：灾难性遗忘、数据回流成本高、以及每次迭代都要重新做一遍全量回归验证。</p>
+<p>ASPIRE 换了条路：<strong>模型权重不动，动的是技能库</strong>。Coding Agent 观察机器人执行任务的轨迹，定位失败发生在哪一步，改写对应的机器人程序，验证通过后把它作为一条可复用技能存进仓库。下一次遇到同类任务直接调用。</p>
+<p>这个设计的直接好处是<strong>能力可审计</strong>：技能是代码，可以 diff、可以回滚、可以做上线前审查。在需要合规的工业与公共服务场景里，这比一个黑盒权重文件更容易被接受。</p>
+<p><strong>为什么现在是时机</strong></p>
+<p>这条路线成立的前提是 Coding Agent 本身足够强。2026 年前后，代码 Agent 在长上下文理解、多步修改、工具调用上的能力才真正达到可以自主修复机器人程序的水平。ASPIRE 的 v0.1 到 v1.0 的跃迁（新增魔方、LIBERO-Pro 99%）正对应底座模型的代际升级。</p>
+<hr />
+<p><strong>技能精炼循环</strong></p>
+<pre><code class="language-python">&quot;&quot;&quot;
+ASPIRE 风格的核心循环：执行 → 诊断 → 修复 → 验证 → 固化。
+&quot;&quot;&quot;
+def aspire_round(skill_lib, task, agent, robot):
+    program = skill_lib.retrieve(task)          # 检索已有技能
+    trace = robot.execute(program)              # 在真机/仿真上执行
+    if trace.success:
+        return skill_lib.promote(program)       # 验证通过 → 固化
+
+    diagnosis = agent.inspect(trace)            # Agent 检查执行轨迹
+    patch = agent.repair(program, diagnosis)    # 定位失败步骤并改写程序
+    trace2 = robot.execute(patch)
+    if trace2.success:
+        skill_lib.add(patch, version=next_ver)  # 新增版本，不覆盖旧版
+    return skill_lib
+</code></pre>
+<p>注意最后一步是<strong>新增版本而不是覆盖</strong>——这与权重微调的本质区别就在这里：旧技能不会因为新技能的学习而退化。</p>
+<p><strong>分布式形态的重新定义</strong></p>
+<table>
+<thead>
+<tr>
+<th>传统分布式训练</th>
+<th>ASPIRE 的「分布式训练」</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据分片，多卡算梯度</td>
+<td>多个 Agent 各练一项技能</td>
+</tr>
+<tr>
+<td>需要参数同步（AllReduce）</td>
+<td>只需合并技能库</td>
+</tr>
+<tr>
+<td>通信开销随模型规模增长</td>
+<td>通信量与模型规模无关</td>
+</tr>
+</tbody>
+</table>
+<p>这个对比解释了为什么 ASPIRE 可以横向扩展：技能库的合并是集合并集操作，没有梯度同步的通信墙。</p>
+<p><strong>两种真机链路</strong></p>
+<p>· <strong>跨本体 sim-to-real</strong>：仿真里练（Claude Opus 4.6），迁移到真机执行（GPT-5.5），代表长时程餐桌收拾；
+· <strong>在线真实世界学习</strong>：直接在真机上迭代，代表解魔方（GPT-6 Astra）。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2607.00272">ASPIRE: Agentic Skills Discovery for Robotics</a></strong> — 项目主论文，提出以技能精炼替代梯度下降的持续学习范式。</li>
+<li><strong><a href="https://github.com/Lifelong-Robotic-Learning/LIBERO">LIBERO-Pro</a></strong> — ASPIRE 主要评测基准，覆盖 Goal / Object / Spatial / Long 四类共 80 任务。</li>
+<li><strong><a href="https://github.com/StanfordVL/BEHAVIOR-1K">BEHAVIOR-1K</a></strong> — Stanford VL 的大规模具身 AI 平台，ASPIRE 在其选定任务上验证。</li>
+<li><strong><a href="https://github.com/ARISE-Initiative/robosuite">Robosuite</a></strong> — 常用机器人操作仿真基准，ASPIRE 的对照评测之一。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.18867">EmbodiedEvo: Self-Evolving Coding Agent For Physical Intelligence</a></strong> — 同期同类工作，把物理反馈蒸馏为 Skills 与 Lessons，可与 ASPIRE 对照阅读。</li>
+</ul>
+<hr />
+<pre><code class="language-bash">git clone https://github.com/NVlabs/ASPIRE.git
+cd ASPIRE
+pip install -e .
+
+# 运行 LIBERO-Pro 评测
+python -m aspire.eval --suite libero_pro --tasks goal,object,spatial,long
+
+# 长时程餐桌收拾（sim-to-real）
+# 见 aspire/real/README.md
+
+# 解魔方（在线真实世界学习）
+# 见 docs/system2.md
+</code></pre>
+<p><strong>环境</strong>：Python，Apache-2.0。需要接入一个具备代码能力的底层大模型作为 Agent。</p>
+<p><strong>⚠️ 安全提示</strong>：生成的 Python 代码以较宽的系统权限运行，<strong>务必在隔离环境（容器 / 沙箱）中执行</strong>，不要直接在开发主机或生产机器上跑。</p>
+<p><strong>上手建议</strong>：先从 LIBERO-Pro 的仿真子集跑通「执行 → 诊断 → 修复」闭环，确认技能库能正常增长，再接真机。</p>
+<hr />
+<p><strong>v1.0 基准结果</strong></p>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LIBERO-Pro（Goal / Object / Spatial / Long，共 80 任务）</td>
+<td><strong>99% 成功率</strong></td>
+</tr>
+<tr>
+<td>Robosuite（选定任务）</td>
+<td>99% 量级</td>
+</tr>
+<tr>
+<td>BEHAVIOR-1K（选定任务）</td>
+<td>99% 量级</td>
+</tr>
+<tr>
+<td>解魔方</td>
+<td>已实现</td>
+</tr>
+</tbody>
+</table>
+<p><strong>版本演进</strong></p>
+<p>· <strong>v0.1（2026-06）</strong>：在 LIBERO-Pro、Robosuite、BEHAVIOR-1K 上取得 SOTA，底座为 Claude Opus 4.6；附带餐桌收拾 sim-to-real 演示。
+· <strong>v1.0（2026-10）</strong>：新增解魔方能力，LIBERO-Pro 80 任务与选定 Robosuite / BEHAVIOR-1K 任务达 99%。</p>
+<p><strong>如何看这个 99%</strong></p>
+<p>这是<strong>实验室评测</strong>结果，不是通用自主能力的证明。基准任务的环境、物体集合和初始条件都是已知的，真机开放场景的成功率会显著低于这个数字。它说明的方向性是「技能库路线在封闭任务集上可以做到很高」，而不是「机器人已经通用」。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>路线</th>
+<th>能力载体</th>
+<th>改进方式</th>
+<th>遗忘风险</th>
+<th>可审计性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>监督微调 / RL</strong></td>
+<td>权重</td>
+<td>梯度更新</td>
+<td>高（灾难性遗忘）</td>
+<td>低</td>
+</tr>
+<tr>
+<td><strong>上下文学习 / 检索</strong></td>
+<td>提示词</td>
+<td>加示例</td>
+<td>无</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>Code-as-Policies</strong></td>
+<td>单次生成的程序</td>
+<td>每次重写</td>
+<td>无</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>ASPIRE</strong></td>
+<td><strong>版本化技能库</strong></td>
+<td><strong>精炼 + 固化</strong></td>
+<td><strong>无</strong></td>
+<td><strong>高</strong></td>
+</tr>
+</tbody>
+</table>
+<p>与同类「代码自进化」工作（如 RoboRSI、EmbodiedEvo）相比，ASPIRE 的差异化在于<strong>把分布式扩展也重新定义了</strong>——不只是单个 Agent 写更好的代码，而是一组 Agent 并行练不同技能再合并仓库。</p>
+<p>与 VLA 的关系是<strong>互补而非替代</strong>：VLA 擅长连续、柔顺、需要力控的动作生成；技能库擅长离散、可分解、需要长期积累的流程型任务。现实系统很可能是「VLA 做原子动作，技能库做流程编排」。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

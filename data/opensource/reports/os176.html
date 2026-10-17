@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EasyWAM：世界动作模型的统一训练/微调/评测代码库，模块化 + 原生高效计算 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">EasyWAM：世界动作模型的统一训练/微调/评测代码库，模块化 + 原生高效计算 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="easywam">EasyWAM：世界动作模型的统一训练/微调/评测代码库，模块化 + 原生高效计算</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenMOSS/EasyWAM">https://github.com/OpenMOSS/EasyWAM</a>  </p>
+<p><strong>Stars</strong>: 400 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-10-17  </p>
+<p><strong>组织</strong>: OpenMOSS（开源社区团队）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-17</p>
+</blockquote>
+<hr />
+<p><strong>为什么需要 EasyWAM</strong></p>
+<p>世界动作模型在 2026 年进入快速涌现期：DreamZero、Cosmos Policy、Fast-WAM、FLUX 3 Action、OpenWAM、ModAR……但每家都换了视频骨干、训练数据、视频与动作的交互方式和推理流程。</p>
+<p>结果是：<strong>你看到某家涨了 5 个点，但说不清是哪个设计带来的</strong>。对研究者这妨碍归因，对工程师这妨碍选型。</p>
+<p>EasyWAM 的思路是提供一个公共底座：把骨干、数据、交互方式、评测做成可替换的模块，让大家在同一套脚手架上做对照实验。</p>
+<p><strong>它不是什么</strong></p>
+<p>EasyWAM 不提出新模型，也不承诺 SOTA。它的产出是<strong>可复现性</strong>与<strong>可比的实验条件</strong>。这在一个指标通胀、归因混乱的领域里，价值不比一个新模型低。</p>
+<hr />
+<p><strong>流水线分层</strong></p>
+<pre><code>数据处理 → 模型组件（骨干 / 交互方式 / 动作头）→ 分布式训练 → 评测
+     ↑                    ↑                        ↑          ↑
+  统一接口            可替换模块              LoRA / 全参   统一 benchmark
+</code></pre>
+<p><strong>模块化的关键：接口一致性</strong></p>
+<pre><code class="language-python">&quot;&quot;&quot;
+EasyWAM 风格：各模块共享同一套数据/训练/评测接口，
+换骨干或换交互方式只需替换对应组件。
+&quot;&quot;&quot;
+model = build_wam(
+    backbone=VideoBackbone.from_pretrained(cfg.backbone),
+    interaction=cfg.interaction,   # joint / disjoint / frame-then-action / modality-ar
+    action_head=FlowActionHead(cfg.action_dim),
+)
+trainer = WAMTrainer(model, datamodule=DataModule(cfg.data), strategy=cfg.strategy)
+trainer.fit()
+metrics = evaluate(model, benchmark=cfg.benchmark)
+</code></pre>
+<p><strong>为什么「效率是一等公民」很重要</strong></p>
+<p>WAM 的训练成本显著高于普通 VLA——它要同时建模未来观测与动作，序列更长、模态更多。如果效率靠事后优化，多数研究者跑不起对照实验，框架也就失去了「提供可比条件」的意义。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2602.05180">DreamZero</a></strong> — NVIDIA 提出 WAM 术语的代表工作，是 EasyWAM 需要兼容的主要模型形式之一。</li>
+<li><strong><a href="https://arxiv.org/abs/2609.17524">ModAR: Modality-Autoregressive World-Action Models</a></strong> — CMU 的模态自回归 WAM，展示了 EasyWAM 需要支持的模态组合维度。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.07922">OpenWAM: An Open Framework for Composable World-Action Models</a></strong> — 斯坦福的可组合 WAM 框架，与 EasyWAM 目标相近、实现方式不同。</li>
+<li><strong><a href="https://bfl.ai/models/flux-3-action">FLUX 3 Action</a></strong> — Black Forest Labs 的开源 7B WAM，可作为 EasyWAM 的骨干候选。</li>
+<li><strong><a href="https://arxiv.org/abs/2609.24682">Think Like a World Model, Act Like a VLA</a></strong> — 把 WAM 表征蒸馏进紧凑 VLA，是 WAM 落地路径的重要补充。</li>
+</ul>
+<hr />
+<pre><code class="language-bash">git clone https://github.com/OpenMOSS/EasyWAM.git
+cd EasyWAM
+pip install -e .
+
+# 从 HuggingFace 拉官方 checkpoint
+# 集合地址：huggingface.co/collections/OpenMOSS-Team/easywam
+
+# 训练 / 微调 / 评测
+python -m easywam.train  --config configs/&lt;MODEL&gt;.yaml
+python -m easywam.finetune --config configs/&lt;MODEL&gt;_lora.yaml
+python -m easywam.eval   --checkpoint &lt;CKPT&gt; --benchmark &lt;BENCH&gt;
+</code></pre>
+<p><strong>上手建议</strong>：</p>
+<ol>
+<li>先用官方 checkpoint 跑通评测，确认环境与依赖正确；</li>
+<li>再跑一次 LoRA 微调，熟悉数据接口；</li>
+<li>最后再替换骨干或交互方式做自己的对照实验。</li>
+</ol>
+<p><strong>注意</strong>：仓库 license 为<strong>未声明</strong>（GitHub 未识别到标准许可证），商用前需联系团队确认授权。</p>
+<hr />
+<p><strong>框架定位</strong></p>
+<p>EasyWAM 本身不发布性能数字，它提供的是<strong>跑出可比数字的脚手架</strong>。具体的基准结果见仓库文档中的 Benchmark Results 部分与 HuggingFace 上各 checkpoint 的模型卡。</p>
+<p><strong>工程特性</strong></p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模块化</td>
+<td>模型组件共享数据/训练/checkpoint/评测接口</td>
+</tr>
+<tr>
+<td>高效计算</td>
+<td>原生集成 Flash Attention</td>
+</tr>
+<tr>
+<td>参数高效微调</td>
+<td>支持 LoRA</td>
+</tr>
+<tr>
+<td>分布式训练</td>
+<td>支持多卡 / 多机</td>
+</tr>
+<tr>
+<td>大规模评测</td>
+<td>统一 benchmark 接口</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关注点</strong>：作为一个 2026 年 8 月才创建的年轻项目，接口稳定性与长期维护仍有待观察；接入生产前建议先在只读分支上验证。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>目标模型族</th>
+<th>是否做训练</th>
+<th>特色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>EasyWAM</strong></td>
+<td>世界动作模型（WAM）</td>
+<td>是</td>
+<td>模块化 + 效率优先，专为 WAM 归因设计</td>
+</tr>
+<tr>
+<td>XPolicyLab</td>
+<td>所有策略族</td>
+<td>否</td>
+<td>只做策略 ↔ 评测环境的连接层</td>
+</tr>
+<tr>
+<td>LeRobot</td>
+<td>VLA / IL</td>
+<td>是</td>
+<td>端到端栈，数据集生态成熟</td>
+</tr>
+<tr>
+<td>RLinf</td>
+<td>RL 策略</td>
+<td>是</td>
+<td>大规模强化学习训练基础设施</td>
+</tr>
+<tr>
+<td>OpenWAM</td>
+<td>WAM</td>
+<td>是（官方实现）</td>
+<td>单个模型族的官方代码</td>
+</tr>
+</tbody>
+</table>
+<p>EasyWAM 与 OpenWAM 都面向 WAM，但前者是<strong>多模型的统一底座</strong>，后者是<strong>单个模型的官方实现</strong>。要做跨模型对照选 EasyWAM；要复现 OpenWAM 自身结果则用其官方仓库。</p>
+<p>与 XPolicyLab 是<strong>互补关系</strong>：EasyWAM 负责把模型训出来，XPolicyLab 负责把训好的模型公平地接到评测上。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

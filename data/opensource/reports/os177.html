@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLUX 3 Action：Black Forest Labs 开源的 7B 世界动作模型，支持 DROID / SO-101 与 LeRobot 集成 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">FLUX 3 Action：Black Forest Labs 开源的 7B 世界动作模型，支持 DROID / SO-101 与 LeRobot 集成 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="flux-3-actionblack-forest-labs-7b-droid-so-101-lerobot">FLUX 3 Action：Black Forest Labs 开源的 7B 世界动作模型，支持 DROID / SO-101 与 LeRobot 集成</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/black-forest-labs/flux-action">https://github.com/black-forest-labs/flux-action</a>  </p>
+<p><strong>Stars</strong>: 181 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-17  </p>
+<p><strong>组织</strong>: Black Forest Labs  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-17</p>
+</blockquote>
+<hr />
+<p><strong>从画图到控机器人</strong></p>
+<p>Black Forest Labs 以 FLUX 图像生成模型闻名。它做机器人控制的逻辑是：视频生成模型在海量互联网视频上预训练后，已经隐式学到了物体如何下落、碰撞、被推动——这正是机器人规划需要的<strong>物理先验</strong>。</p>
+<p>FLUX 3 Action 把这个先验接到机器人上：不做纯 VLA 的「观测 → 动作」映射，而是<strong>同时预测未来视频帧和动作</strong>，两者在同一个去噪过程里联合生成。这样动作预测就被「未来会变成什么样」这个任务约束住了。</p>
+<p><strong>为什么联合去噪有用</strong></p>
+<p>纯 VLA 的鲁棒性上界主要受<strong>数据覆盖率</strong>限制：没见过的状态就不知道怎么动。而未来观测预测可以<strong>从无动作标签的海量视频中学习</strong>，这部分监督不需要机器人数据。FLUX 3 Action 正是把图像/视频预训练的红利搬到控制上。</p>
+<p><strong>代价与对策</strong></p>
+<p>联合去噪比纯动作头慢得多。BFL 的对策是给出<strong>步数蒸馏（1 步）</strong>与<strong>FP8r</strong> 量化包，把推理成本压到可部署区间。这实际上是承认了 WAM 的部署成本问题，并用蒸馏而非架构改动来解决——与学术界的表征蒸馏思路不谋而合。</p>
+<hr />
+<p><strong>前向过程</strong></p>
+<pre><code>输入：相机帧 I_t + 机器人状态 s_t + 文本指令 ℓ
+   ↓ 编码（冻结编码器，DROID / SO-101 共享 base 仓库的权重）
+token 序列
+   ↓ 联合去噪（Diffusion / Flow Transformer）
+输出：未来视频帧 Î_{t+1:t+H}  +  动作块 a_{t:t+H}
+</code></pre>
+<p><strong>简化伪代码</strong></p>
+<pre><code class="language-python">&quot;&quot;&quot;
+FLUX 3 Action 的核心：未来帧与动作在同一去噪循环里生成。
+&quot;&quot;&quot;
+def predict(frames, state, instruction, steps=4):
+    z_v = noise_like(future_video_shape)   # 未来视频的潜变量
+    z_a = noise_like(action_chunk_shape)   # 动作块的潜变量
+    cond = encode(frames, state, instruction)
+    for t in scheduler.timesteps(steps):
+        z_v, z_a = denoise_step(z_v, z_a, cond, t)   # 联合去噪
+    return decode_action(z_a), decode_video(z_v)
+</code></pre>
+<p><strong>六个推理包的选择</strong></p>
+<table>
+<thead>
+<tr>
+<th>配方</th>
+<th>BF16 子目录</th>
+<th>FP8r 子目录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base：4 步带 guidance</td>
+<td>根目录</td>
+<td><code>variants/fp8r</code></td>
+</tr>
+<tr>
+<td>引导蒸馏：4 步</td>
+<td><code>variants/gd</code></td>
+<td><code>variants/gd-fp8r</code></td>
+</tr>
+<tr>
+<td>步数蒸馏：1 步</td>
+<td><code>variants/sd</code></td>
+<td><code>variants/sd-fp8r</code></td>
+</tr>
+</tbody>
+</table>
+<p>· <strong>BF16 包</strong>附带 LeRobot 配置，<code>lerobot</code> 直接读 <code>config.json</code>；
+· <strong>原生 FP8r 包</strong>需要 FLUX Action 自己的推理代码。</p>
+<p><strong>代码组织上的讲究</strong>：训练（<code>transformer.py</code>）与推理（<code>transformer_inf_bf16.py</code> / <code>transformer_inf_fp8r.py</code>）分文件，不靠继承与配置分支复用。这让每条路径都可以被独立阅读——对人和对 Coding Agent 都更友好。</p>
+<hr />
+<ul>
+<li><strong><a href="https://huggingface.co/blog/black-forest-labs/flux-3-action">FLUX 3 Action 官方博客</a></strong> — 模型发布说明与 RoboLab-120 榜单结果。</li>
+<li><strong><a href="https://huggingface.co/docs/lerobot/main/en/flux3">LeRobot FLUX 3 集成文档</a></strong> — BF16 包的 LeRobot 调用方式。</li>
+<li><strong><a href="https://arxiv.org/abs/2602.05180">DreamZero</a></strong> — NVIDIA 提出 WAM 术语的工作，是理解 FLUX 3 Action 范式来源的必读。</li>
+<li><strong><a href="https://arxiv.org/abs/2609.17524">ModAR: Modality-Autoregressive World-Action Models</a></strong> — 提出「额外预测 RGB 未必有收益」的受控实验，可作为选型的反面参照。</li>
+<li><strong><a href="https://arxiv.org/abs/2609.24682">Think Like a World Model, Act Like a VLA</a></strong> — 把 WAM 表征蒸馏进 32 ms 的紧凑 VLA，解决 WAM 部署成本问题的另一条路。</li>
+</ul>
+<hr />
+<pre><code class="language-bash">git clone https://github.com/black-forest-labs/flux-action.git
+cd flux-action
+pip install -e .
+
+# 权重集合：huggingface.co/collections/black-forest-labs/flux-3-action
+#   flux-3-action-base   （共享的冻结编码器）
+#   flux-3-action-droid  （DROID 策略，BF16 / FP8r）
+#   flux-3-action-so101  （SO-101 策略）
+
+# 路线 A：走 LeRobot（BF16 包）
+#   lerobot 读 config.json，见 docs.lerobot 的 flux3 章节
+
+# 路线 B：走 FLUX Action 原生推理（支持 FP8r）
+python -m flux_action.infer --model &lt;REPO&gt; --variant sd-fp8r \
+    --images &lt;FRAMES&gt; --state &lt;STATE&gt; --instruction &quot;&lt;TASK&gt;&quot;
+</code></pre>
+<p><strong>选型建议</strong>：</p>
+<p>· 想快速验证效果 → 用 <strong>BF16 + LeRobot</strong>，生态成熟、调试方便；
+· 要压推理成本 → 用 <strong><code>variants/sd-fp8r</code></strong>（1 步 + FP8r），但需要 FLUX Action 原生推理代码。</p>
+<p><strong>注意</strong>：1 步蒸馏与 FP8 量化都会带来一定的精度损失，上线前应在本体与任务上实测，不要直接套用榜单数字。</p>
+<hr />
+<p><strong>榜单表现</strong></p>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NVIDIA RoboLab-120</td>
+<td>超过此前最强开源模型 <strong>Cosmos 3 Nano</strong>，参数量不到其一半</td>
+</tr>
+</tbody>
+</table>
+<p><strong>模型规格</strong></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数量</td>
+<td>7B</td>
+</tr>
+<tr>
+<td>类型</td>
+<td>世界动作模型（未来帧 + 动作联合去噪）</td>
+</tr>
+<tr>
+<td>支持本体</td>
+<td>DROID、SO-101</td>
+</tr>
+<tr>
+<td>推理配方</td>
+<td>Base(4步+guidance) / 引导蒸馏(4步) / 步数蒸馏(1步)</td>
+</tr>
+<tr>
+<td>精度</td>
+<td>BF16 / FP8r</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>如何看待这个结果</strong></p>
+<p>「7B 打过更大的开源模型」说明的是<strong>视频预训练底座的迁移效率</strong>，而不是 WAM 范式一定优于 VLA。WAM 的推理成本仍显著高于 VLA（参见同类工作中 14B WAM 单次推理 3 秒 / 45.9 GB 的报道），这也是 BFL 提供 1 步蒸馏与 FP8r 包的原因。</p>
+<p>对工程团队的现实建议是：<strong>先看部署预算再选范式</strong>——如果控制回路允许百毫秒级延迟且有足够显存，WAM 值得一试；如果只有 32 ms / 消费级卡的预算，VLA + 表征蒸馏可能是更实际的路线。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>参数量</th>
+<th>类型</th>
+<th>开源</th>
+<th>部署成本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FLUX 3 Action</strong></td>
+<td>7B</td>
+<td>WAM（联合去噪）</td>
+<td>是（Apache-2.0）</td>
+<td>中（有 1 步/FP8r 选项）</td>
+</tr>
+<tr>
+<td>Cosmos 3 Nano</td>
+<td>&gt;14B</td>
+<td>WAM</td>
+<td>是</td>
+<td>高</td>
+</tr>
+<tr>
+<td>DreamZero</td>
+<td>14B</td>
+<td>WAM</td>
+<td>部分</td>
+<td>高（~3 s / 45.9 GB）</td>
+</tr>
+<tr>
+<td>π0.5 类 VLA</td>
+<td>3—7B</td>
+<td>VLA</td>
+<td>部分</td>
+<td>低（~65 ms）</td>
+</tr>
+<tr>
+<td>ModAR</td>
+<td>30.1M</td>
+<td>WAM（模态自回归）</td>
+<td>未开源权重</td>
+<td>低（无预训练）</td>
+</tr>
+</tbody>
+</table>
+<p>FLUX 3 Action 的独特位置是：<strong>它是少数把工业级视频生成底座真正开放出来的 WAM</strong>，且许可宽松（Apache-2.0）、生态对接成熟（LeRobot）。</p>
+<p>与 EasyWAM 的关系：EasyWAM 是训练脚手架，FLUX 3 Action 是可直接用的权重与推理代码。想在 EasyWAM 上做 WAM 对照实验时，FLUX 3 Action 可以作为一个现成的骨干候选。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

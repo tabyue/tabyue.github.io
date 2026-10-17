@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XPolicyLab：把 N 个策略接入 M 套评测环境的连接层，把 O(N×M) 适配成本降到 O(N+M) — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">XPolicyLab：把 N 个策略接入 M 套评测环境的连接层，把 O(N×M) 适配成本降到 O(N+M) — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="xpolicylab-n-m-onm-onm">XPolicyLab：把 N 个策略接入 M 套评测环境的连接层，把 O(N×M) 适配成本降到 O(N+M)</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/XPolicyLab/XPolicyLab">https://github.com/XPolicyLab/XPolicyLab</a>  </p>
+<p><strong>Stars</strong>: 458 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-17  </p>
+<p><strong>组织</strong>: XPolicyLab 社区（IROS 2026 ScaleInfra Workshop 最佳工具论文）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-17</p>
+</blockquote>
+<hr />
+<p><strong>一个被低估的工程痛点</strong></p>
+<p>机器人学习领域的论文越来越多，但复现一个基线往往要花几天：下载 checkpoint、配环境、把评测环境的观测格式转成模型期望的格式、把模型输出的动作转回环境能执行的格式、处理夹爪的开关表示差异……</p>
+<p>这些工作没有研究价值，但<strong>每一处都可能悄悄出错</strong>。更麻烦的是：这些错误不报错，只是让成功率低几个点，而你可能以为是自己的方法不如人。</p>
+<p>XPolicyLab 把这层抽出来做成一个共享的适配器层。每个策略只需提供自己的依赖和 checkpoint，<strong>观测/动作契约与服务化</strong>由框架统一处理。</p>
+<p><strong>组合爆炸的算术</strong></p>
+<p>假设有 60 个策略和 3 套评测环境。
+· 朴素做法：每个策略为每套环境写一份适配 → 180 份代码；
+· XPolicyLab：每个策略写一份适配器，每套环境写一份适配器 → 63 份。</p>
+<p>而且新增第 61 个策略时，朴素做法要补 3 份，XPolicyLab 只需补 1 份。</p>
+<hr />
+<p><strong>目录与职责划分</strong></p>
+<pre><code>policy/&lt;POLICY&gt;/
+  ├── README.md        # 该策略的唯一事实来源：安装、checkpoint 布局、训练细节
+  ├── requirements.txt # 依赖隔离，避免与其他策略冲突
+  └── adapter.py       # 把框架的统一契约翻译成该策略的输入输出
+envs/&lt;ENV&gt;/
+  └── adapter.py       # 把该环境的观测/动作翻译成统一契约
+</code></pre>
+<p><strong>统一契约的伪代码</strong></p>
+<pre><code class="language-python">&quot;&quot;&quot;
+XPolicyLab 的核心思想：中间定义一层与双方无关的观测/动作契约。
+&quot;&quot;&quot;
+class UnifiedContract:
+    observation = dict(rgb=[...], depth=[...], state=[...], instruction=str)
+    action      = dict(joints=[...], eef_pose=[...], gripper=float)
+
+def run(policy_name, env_name, task):
+    policy = registry.load(policy_name)      # 只关心自己的依赖与权重
+    env    = registry.load_env(env_name)
+    while not task.done():
+        obs_u = env.adapter.to_unified(env.observe())
+        act_u = policy.adapter.predict(obs_u)
+        env.step(env.adapter.from_unified(act_u))
+</code></pre>
+<p><strong>为什么依赖隔离是硬要求</strong></p>
+<p>63 个策略来自不同团队，Torch / JAX / transformers / diffusers 的版本要求各不相同。如果放在同一个环境里必然冲突。XPolicyLab 让每个策略保有自己的依赖描述，框架侧只通过契约通信，避免了「装好 A 就跑不了 B」的经典困境。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2608.09892">XPolicyLab 技术报告</a></strong> — 框架论文，阐述统一契约与 O(N+M) 适配模型。</li>
+<li><strong><a href="https://robotwin-platform.github.io/leaderboard">RoboTwin</a></strong> — 双臂操作仿真基准与榜单，XPolicyLab 支持的主要评测环境之一。</li>
+<li><strong><a href="https://robodojo-benchmark.com/LeaderBoard">RoboDojo</a></strong> — 42 个仿真任务 + 18 个真机任务的五维能力评测，XPolicyLab 的另一主要评测环境。</li>
+<li><strong><a href="https://arxiv.org/abs/2406.09246">OpenVLA</a></strong> — 早期开源 VLA 代表作，是 XPolicyLab 集成的策略家族中的典型成员。</li>
+<li><strong><a href="https://arxiv.org/abs/2609.17524">ModAR: Modality-Autoregressive World-Action Models</a></strong> — 世界—动作模型家族代表，展示 XPolicyLab 需要兼容的模态多样性。</li>
+</ul>
+<hr />
+<pre><code class="language-bash">git clone https://github.com/XPolicyLab/XPolicyLab.git
+cd XPolicyLab
+
+# 安装框架
+pip install -e .
+
+# 按目标策略的 README 安装其专属依赖与 checkpoint
+cat policy/&lt;POLICY&gt;/README.md
+
+# 在 RoboTwin / RoboDojo 上跑评测
+python -m xpolicylab.eval --policy &lt;POLICY&gt; --env robotwin --task &lt;TASK&gt;
+</code></pre>
+<p><strong>上手顺序建议</strong>：</p>
+<ol>
+<li>先跑通一个已有策略 + 一个已有环境，确认适配器链路正常；</li>
+<li>再接入自己的策略——只需实现 <code>adapter.py</code> 的<code>to_unified</code> / <code>from_unified</code> 两个方向；</li>
+<li>最后在真机上用标准化评测验证。</li>
+</ol>
+<p><strong>注意</strong>：每个策略的 README 是该模型的<strong>事实来源</strong>（安装命令、checkpoint 布局、训练细节以它为准），仓库级 README 只讲概念和集成步骤。</p>
+<hr />
+<p><strong>生态规模</strong></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>已集成策略</td>
+<td>63 个（2026-10）</td>
+</tr>
+<tr>
+<td>策略家族</td>
+<td>VLA / 世界—动作模型 / 模仿学习 / 记忆增强</td>
+</tr>
+<tr>
+<td>支持环境</td>
+<td>RoboTwin、RoboDojo、标准化真机评测</td>
+</tr>
+</tbody>
+</table>
+<p><strong>成本模型</strong></p>
+<table>
+<thead>
+<tr>
+<th>做法</th>
+<th>新增第 N+1 个策略的适配量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>朴素（策略 × 环境）</td>
+<td>M 份（环境数）</td>
+</tr>
+<tr>
+<td>XPolicyLab</td>
+<td>1 份</td>
+</tr>
+</tbody>
+</table>
+<p><strong>荣誉</strong>：IROS 2026 Building Scalable Infrastructure for Robot Learning Workshop <strong>最佳工具论文奖</strong>。</p>
+<p><strong>说明</strong>：XPolicyLab 本身不产出策略性能数字——它的价值在<strong>降低对比实验的工程量与出错率</strong>，性能结果取决于被集成的各策略自身。各榜单请见 RoboDojo Leaderboard 与 RoboTwin Leaderboard。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>定位</th>
+<th>覆盖面</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>XPolicyLab</strong></td>
+<td>策略 ↔ 评测环境的<strong>连接层</strong></td>
+<td>63 策略 × 多环境，跨家族</td>
+</tr>
+<tr>
+<td>LeRobot</td>
+<td>数据集 + 模型 + 训练的<strong>端到端栈</strong></td>
+<td>以 HuggingFace 生态为主</td>
+</tr>
+<tr>
+<td>RLinf</td>
+<td>大规模<strong>强化学习训练</strong>基础设施</td>
+<td>训练侧</td>
+</tr>
+<tr>
+<td>EasyWAM</td>
+<td>世界动作模型的<strong>训练/微调/评测</strong>框架</td>
+<td>WAM 单一族</td>
+</tr>
+</tbody>
+</table>
+<p>XPolicyLab 的独特性在于<strong>它故意不做训练</strong>。它只解决「已有的策略怎么公平、低成本地接到已有的评测上」这一个问题，因此可以与任何训练框架并存。</p>
+<p>如果团队要做<strong>横向对比实验</strong>（比如验证自己的 VLA 是否真的优于基线），XPolicyLab 的价值最直接；如果要做<strong>训练</strong>，则应选 LeRobot / RLinf / EasyWAM 一类。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

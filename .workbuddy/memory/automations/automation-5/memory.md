@@ -53,6 +53,12 @@
 - 学习：cloud-edge-collaboration +「云端托管推理与云边协同」（8.7K → 108K）；multimodal-perception +「视触觉对齐与触觉分辨率瓶颈」（7.8K → 107K）。
 - 校验：sync + sitemap（514 章节）+ health_check → ALL OK；已 push（ae9043d..879778f）。
 
+### 2026-10-16 08:00—09:00
+- 投稿箱：无新投稿（`gh issue list --state open` 空）。
+- 数据：新闻 +10（n439—n448）、论文 +5（p227—p231，含 detail）、开源 +4（os170—os173，含 detail + 报告页）、招聘 +6（j211—j216）、资源新增 r012（全身移动操作与人类数据资源）+ r001 扩充。
+- 学习：reinforcement-learning +「无监督技能发现与行为基础模型：FB 表示 / BFM-Zero / I-BFM」（8.0K）；imitation-learning +「从人类视频到机器人动作：重定向 / 观测对齐 / 控制器输入离线精修」（7.9K）。
+- 校验：sync + sitemap（516 章节）+ health_check 首轮 FAIL 2 项（papers-index / opensource 的 totalItems 未同步）→ 修后 ALL OK；已 push（132a28d，HEAD==origin/main）。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
@@ -89,3 +95,8 @@
 - **PowerShell 内联 `python -c @"..."@` 会吞字符导致 SyntaxError**（2026-10-15）：诊断脚本一律先 `Write` 成 `.py` 文件再跑，不要用 here-string 内联。
 - **一次性写不满可二次追加**（2026-10-15）：正文初版只有 6K 时，再写 `_upd_learn2.py` 用「按 shortTitle 找章节 + 判重标记（如正文末尾的『能力自检清单』）+ 追加」的方式补到 8K 左右，幂等且安全。
 - **选题先做「本轮新增内容」交叉核对**：本轮候选里星尘智能 150 亿=n419、UniWAM=n428、UNITAS=n410、UnifoLM=n413、巨蟹智能=n385、优必选一汽大众=n364、工博会节卡=n422 均为上一轮已收录，靠 `_dedup.py` 导出的标题/URL/arXiv/GitHub 全量清单才拦干净。
+- **learn/*.json 必须 `indent=2`（2026-10-16）**：脚本用 `indent=1` 保存会让整个学习模块文件重排，产生 ±440 行的纯空白噪音 diff。news/jobs/papers-index/opensource/learning-path 则是 `indent=1`。写脚本时两类文件要分开处理；发现噪音 diff 后用 `json.dump(..., indent=2)` 重写再 `git commit --amend`。
+- **learning-path.json 在 `data/` 根，不在 `data/learn/`（2026-10-16）**：按 `data/learn/learning-path.json` 读会 FileNotFoundError，若脚本用 `os.path.exists` 容错就会得到 `lp=None`、bump 静默失败只打印 WARN。模块名就是「强化学习」「模仿学习」，无 id 字段。
+- **写 OS 条目前先用 `gh api repos/<owner>/<repo>` 验证（2026-10-16）**：一次拿到 stars / language / license.spdx_id / pushed_at / created_at，比 WebFetch 更可靠。本轮据此排除了 404 的 inclusionAI/BiDex-100、psi-lab/SIMPLE、lambdahumanoid/lambda-0。license 为空时填「未声明」，不要编造 MIT/Apache。
+- **PowerShell 管道前不允许空元素（2026-10-16）**：`foreach (...) { ... } | Out-File` 报「不允许使用空管道元素」，必须先 `$out = @()` 收集再 `$out | Out-File`。
+- **health_check 的 totalItems 需手动同步（2026-10-16）**：`papers-index.json` 与 `opensource.json` 有 `totalItems` 字段但脚本不自动更新，加完条目后必须显式写入，否则 FAIL。
