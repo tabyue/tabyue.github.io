@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-17T08:30",
+ "lastUpdated": "2026-10-18T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,139 @@
   }
  ],
  "projects": [
+  {
+   "id": "os181",
+   "name": "inspect-robots：面向物理 AI 的开源评测框架，任意 LLM/VLA 跑任意机械臂/人形与任意真机/仿真基准",
+   "github": "https://github.com/robocurve/inspect-robots",
+   "organization": "RoboCurve",
+   "org": "RoboCurve",
+   "category": "framework",
+   "description": "**inspect-robots** 是面向**物理 AI 的开源评测框架**，一句话概括它的目标：**让任意 LLM/VLA 跑在任意机械臂/人形上，对着任意真机或仿真基准做评测**。\n\n它解决的是具身智能评测里最烦人的工程问题——**适配矩阵爆炸**。策略有 N 个、评测环境有 M 套，两两对接的适配成本是 **O(N×M)**；每加一个新策略或新环境，就要写一批胶水代码。inspect-robots 的做法是把评测抽象成**统一的接口层**，把适配成本从 O(N×M) 压到 **O(N+M)**（与 XPolicyLab 的思路同源，但侧重点在评测而非策略接入）。\n\n**技术栈**：Python，MIT 许可，官方站点 inspectrobots.org，集成了 **Rerun** 做轨迹与观测的可视化回放——这一点对排查失败案例非常关键。683 stars（2026-10 数据）。",
+   "language": "Python",
+   "license": "MIT",
+   "features": [
+    "统一评测接口：任意 LLM/VLA × 任意机械臂/人形 × 任意真机/仿真基准",
+    "把 N×M 的适配成本降为 O(N+M) 的连接层设计",
+    "同时支持仿真基准与真实机器人评测",
+    "集成 Rerun 做轨迹、观测与中间结果的可视化回放",
+    "面向 LLM 与 VLA 两类策略（不只是 VLA）",
+    "MIT 许可，可商用",
+    "Python 实现，易于嵌入既有 CI"
+   ],
+   "stars": 683,
+   "tags": [
+    "inspect-robots",
+    "评测框架",
+    "Physical AI",
+    "VLA",
+    "LLM",
+    "基准",
+    "Rerun",
+    "可视化",
+    "O(N+M)适配"
+   ],
+   "addedDate": "2026-10-18"
+  },
+  {
+   "id": "os180",
+   "name": "every-embodied：Datawhale 开源中文具身智能教程，仅需 Python 基础从 0 构建 VLA / OpenVLA / SmolVLA / Pi0",
+   "github": "https://github.com/datawhalechina/every-embodied",
+   "organization": "Datawhale（开源学习社区）",
+   "org": "Datawhale",
+   "category": "ai-model",
+   "description": "**every-embodied** 是 Datawhale 社区的中文具身智能教程仓库，定位非常明确：**仅需 Python 基础，从 0 构建自己的具身智能机器人**。\n\n它不是论文列表，也不是文档集合，而是**可逐步执行的代码化教材**：从 0 逐步构建 **VLA / OpenVLA / SmolVLA / Pi0**，把这几条主流路线的模型结构、数据处理、训练与推理**逐个拆开重写一遍**。4.1K+ stars，Jupyter Notebook 为主。\n\n**价值**：中文具身智能资料长期存在两个断层——要么是论文翻译（读得懂但不会写），要么是工程仓库（会跑但不讲原理）。这个仓库用「**自己实现一遍**」的方式把两者接起来，对入门者和需要给团队做内部培训的工程师都直接可用。\n\n**注意**：仓库未声明开源许可（License 未指定），商用前需与作者确认；作为学习用途无碍。",
+   "language": "Jupyter Notebook",
+   "license": "未声明",
+   "features": [
+    "中文全程讲解，仅需 Python 基础即可起步",
+    "从 0 逐步实现 VLA / OpenVLA / SmolVLA / Pi0 四类主流模型",
+    "Jupyter Notebook 形式，代码可逐单元执行",
+    "覆盖模型结构、数据处理、训练与推理的完整链路",
+    "由 Datawhale 社区维护，配套学习路径与讨论",
+    "4.1K+ stars，中文具身智能方向星标最高的教程型仓库之一"
+   ],
+   "stars": 4108,
+   "tags": [
+    "every-embodied",
+    "Datawhale",
+    "中文教程",
+    "VLA",
+    "OpenVLA",
+    "SmolVLA",
+    "Pi0",
+    "从零实现",
+    "具身智能入门"
+   ],
+   "addedDate": "2026-10-18"
+  },
+  {
+   "id": "os179",
+   "name": "ProtoMotions：NVIDIA 开源的 GPU 加速物理仿真与学习框架，一套代码训数字人与真人形机器人",
+   "github": "https://github.com/NVlabs/ProtoMotions",
+   "organization": "NVIDIA Research（NVlabs）",
+   "org": "NVIDIA",
+   "category": "simulation",
+   "description": "**ProtoMotions** 是 NVIDIA 开源的 **GPU 加速仿真与学习框架**，用于训练**物理仿真的数字人与真人形机器人**。它把「角色动画」与「人形机器人控制」两条原本分离的路线统一到同一套仿真—学习栈上，是当前人形运控研究里复用度最高的基础设施之一。\n\n**定位**：不是通用机器人仿真器（那是 Isaac Lab / MuJoCo 的位置），而是**面向物理仿真体（physically simulated agents）的运动学习框架**——重点在如何让成千上万个并行环境里的仿真体通过强化学习学到自然、稳定、可迁移的运动技能。\n\n**关键词**（官方 topics）：character-animation、digital-human、**humanoid**、**humanoid-robots**、**physics-simulation**、**reinforcement-learning**。这组标签本身就是它的定位说明：一套代码同时覆盖动画与机器人。\n\n**适用**：人形全身运动控制、运动模仿（motion imitation）、大规模并行 RL 训练、从动画数据到机器人动作的迁移研究。Apache-2.0 许可，Python 实现，2.4K+ stars。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "GPU 加速的大规模并行物理仿真，支持成千上万环境同步滚动",
+    "统一覆盖数字人（角色动画）与真人形机器人两类仿真体",
+    "内置强化学习训练栈，面向运动技能学习而非通用控制",
+    "运动模仿（motion imitation）工作流：从参考运动到可执行策略",
+    "面向人形全身控制的观测/奖励/终止条件模板",
+    "Apache-2.0 许可，可商用",
+    "由 NVIDIA Research 维护，与 Isaac 生态理念一致但独立可跑"
+   ],
+   "stars": 2449,
+   "tags": [
+    "ProtoMotions",
+    "NVIDIA",
+    "物理仿真",
+    "强化学习",
+    "人形机器人",
+    "数字人",
+    "运动模仿",
+    "GPU并行",
+    "全身控制"
+   ],
+   "addedDate": "2026-10-18"
+  },
+  {
+   "id": "os178",
+   "name": "REKI：Kyutai 开源的 2.4B VLA 模型，用 32 个 register token 给策略加上「最近过去的记忆」",
+   "github": "https://github.com/kyutai-labs/reki",
+   "organization": "Kyutai（与 Inria、École des Ponts 合作）",
+   "org": "Kyutai",
+   "category": "ai-model",
+   "description": "**REKI** 是 Kyutai 联合 Inria 与 École des Ponts 发布的 **2.4B 视觉—语言—动作模型**，**全部在公开数据上预训练**，并**完整开源**数据整理、训练、推理、评测与部署代码，以及全部预训练与微调权重（MIT 许可）。\n\n它的结构极简：**2.2B 的 Qwen 视觉语言骨干 + 0.2B 的 flow-matching 动作专家**。真正的设计亮点在动作专家里：**32 个可学习的 register token** 排在动作 token 之前，对 VLM 编码后的 prompt 与图像视角做交叉注意力，同时对**更早帧的 register**做自注意力。由于 register 只依赖观测，每帧只需算一次，可以在滚动窗口里缓存，**记忆的代价几乎为零**。\n\n**效果**：在 LIBERO-Plus、RoboTwin Clean2Rand、RoboCasa365 三个基准上，只有约**两倍于它规模**的模型能超过它；LIBERO-Plus 取得公开数据预训练模型的最高分 **90.4%**；H100 上两路 256×256 相机输入下动作块计算 **21.8 ms**。最重要的是，记忆让**位姿之间的振荡减少约 4 倍**，仿真与真机上同样成立。\n\n**为什么值得关注**：主流 VLA 每一步只看当前帧，遇到感知走样（不同位姿投影出相似图像）就会在两点之间反复横跳。REKI 用几十个 token 就补上了这块短板，且改动不需要动视觉骨干——这是本轮最容易被直接复用的设计之一。",
+   "language": "Python",
+   "license": "MIT",
+   "features": [
+    "2.4B VLA：2.2B Qwen 视觉语言骨干 + 0.2B flow-matching 动作专家",
+    "32 个可学习 register token 提供跨帧记忆，排在动作 token 之前",
+    "register 只依赖观测，每帧算一次并在滚动窗口缓存，开销接近零",
+    "机器人状态与 flow 时间步通过 adaptive RMSNorm 注入，每种状态配置配独立小 MLP",
+    "LIBERO-Plus 90.4%，公开数据预训练模型中最高",
+    "位姿间振荡减少约 4 倍，仿真与真机一致",
+    "H100 上两路 256×256 相机输入动作块计算 21.8 ms",
+    "全链路开源：数据整理 / 训练 / 推理 / 评测 / 部署 + 全部权重，MIT 许可"
+   ],
+   "stars": 15,
+   "tags": [
+    "REKI",
+    "Kyutai",
+    "VLA",
+    "register tokens",
+    "跨帧记忆",
+    "flow matching",
+    "LIBERO-Plus",
+    "RoboTwin",
+    "RoboCasa365",
+    "公开数据预训练"
+   ],
+   "addedDate": "2026-10-18"
+  },
   {
    "name": "FLUX 3 Action：Black Forest Labs 开源的 7B 世界动作模型，支持 DROID / SO-101 与 LeRobot 集成",
    "github": "https://github.com/black-forest-labs/flux-action",
@@ -4072,5 +4205,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 164
+ "totalItems": 168
 }

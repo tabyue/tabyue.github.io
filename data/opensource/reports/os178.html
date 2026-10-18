@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REKI：Kyutai 开源的 2.4B VLA 模型，用 32 个 register token 给策略加上「最近过去的记忆」 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">REKI：Kyutai 开源的 2.4B VLA 模型，用 32 个 register token 给策略加上「最近过去的记忆」 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="rekikyutai-24b-vla-32-register-token">REKI：Kyutai 开源的 2.4B VLA 模型，用 32 个 register token 给策略加上「最近过去的记忆」</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/kyutai-labs/reki">https://github.com/kyutai-labs/reki</a>  </p>
+<p><strong>Stars</strong>: 15 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-10-18  </p>
+<p><strong>组织</strong>: Kyutai（与 Inria、École des Ponts 合作）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-18</p>
+</blockquote>
+<hr />
+<p><strong>要解决的问题：VLA 没有短期记忆</strong></p>
+<p>绝大多数 VLA 在每一步都只看<strong>当前帧</strong>。在闭环控制里这会带来一个非常具体的失败模式：当不同位姿投影出<strong>相似图像</strong>（感知走样，perceptual aliasing）时，策略无法判断自己刚刚是从哪个方向过来的，于是会在两个位姿之间<strong>反复横跳</strong>。这种振荡不一定导致任务失败，但会显著拉长节拍、增加机械磨损，是真机部署中最伤用户体验的问题之一。</p>
+<p>REKI 的做法是把记忆做成<strong>动作专家内部的一组 token</strong>，而不是外接一个记忆网络或额外引入历史帧。</p>
+<p><strong>整体结构</strong></p>
+<pre><code>观测（2 路 256x256 相机） + 文本指令
+        │
+        ▼
+  VLM 骨干（Qwen 系列，约 2.2B）
+        │  编码 prompt 与各帧视角
+        ▼
+  动作专家（约 0.2B，flow matching）
+        │
+   [ register x32 ][ action tokens ]
+        │      │            │
+        │      └── 对更早帧 register 做自注意力  ← 记忆通道
+        └───────── 对 VLM 编码结果做交叉注意力
+        ▼
+   动作块（action chunk）
+</code></pre>
+<p><strong>为什么它可以「几乎免费」</strong></p>
+<p>关键在于把 register 定义成 $r_t = f(o_t)$，即<strong>只依赖观测</strong>。如果 register 依赖动作，它就会随策略输出变化，跨步无法复用。论文显式做了这个约束，于是第 $t$ 帧的 register 在后续所有引用该帧的步骤里都是常数，可以放进滚动窗口缓存。</p>
+<p><strong>公开数据路线的意义</strong></p>
+<p>REKI 全部在<strong>公开数据</strong>上预训练，数据配方覆盖三类：公开机器人数据、第一人称人类数据、视觉语言数据。它证明了在规模不占优的情况下，<strong>数据配比 + 简单架构</strong>足以打到接近两倍规模模型的位置。对小团队而言这是最友好的一条路径。</p>
+<hr />
+<p><strong>记忆通道的三条注意力路径</strong></p>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>register → VLM 编码结果（交叉注意力）</td>
+<td>把当前帧的视觉语言信息压缩进 register</td>
+</tr>
+<tr>
+<td>register_t → register_{t-K..t-1}（自注意力）</td>
+<td>跨帧记忆，构成短期历史</td>
+</tr>
+<tr>
+<td>action tokens → register（同序列内）</td>
+<td>动作生成时读取记忆</td>
+</tr>
+</tbody>
+</table>
+<p><strong>条件注入</strong></p>
+<p>机器人状态 $s$ 与 flow 时间步 $\epsilon$ 通过 <strong>adaptive RMSNorm</strong> 注入：</p>
+<p>$$\mathrm{AdaRMSNorm}(x; s, \epsilon) = \gamma(s, \epsilon) \odot \frac{x}{\mathrm{RMS}(x)} + \beta(s, \epsilon)$$</p>
+<p>每种机器人状态配置（不同本体的状态维度与量纲）配一个<strong>独立的小状态 MLP</strong>，这让同一个动作专家骨架能适配多种本体，而不必为每种本体重新设计输入层。</p>
+<p><strong>动作生成</strong></p>
+<p>动作专家用 <strong>flow matching</strong> 生成动作块，而非自回归离散 token。对连续控制而言，flow matching 避免了动作离散化带来的量化误差，也天然支持一次输出多步动作块。</p>
+<p><strong>简化伪代码</strong></p>
+<pre><code class="language-python">&quot;&quot;&quot;
+REKI 风格：在动作专家前插入跨帧 register。
+&quot;&quot;&quot;
+class ActionExpertWithMemory(nn.Module):
+    def __init__(self, dim, n_reg=32, win=8):
+        super().__init__()
+        self.reg = nn.Parameter(torch.randn(n_reg, dim))
+        self.cross_attn = CrossAttn(dim)
+        self.self_attn = SelfAttn(dim)
+        self.cache = deque(maxlen=win)
+        self.flow_head = FlowHead(dim)
+
+    def encode_frame(self, vlm_feat):
+        # vlm_feat: VLM 编码后的 prompt + 各帧视角
+        q = self.reg.expand(vlm_feat.size(0), -1, -1)
+        r = self.cross_attn(q, vlm_feat)   # 只依赖观测
+        self.cache.append(r.detach())       # 因此可缓存
+        return r
+
+    def forward(self, vlm_feat, state, tau):
+        r_t = self.encode_frame(vlm_feat)
+        hist = torch.stack(list(self.cache)[:-1], dim=0)
+        r_mem = self.self_attn(r_t, hist) if len(hist) else r_t
+        x = self.adaptive_rmsnorm(state, tau)
+        return self.flow_head(torch.cat([r_mem, x], dim=-1))
+</code></pre>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.22178">REKI: Registering Knowledge in VLAs</a></strong> — 原始论文，Juliette Marrie 等，2026-10-15，含 LIBERO-Plus / RoboTwin / RoboCasa365 全部结果。</li>
+<li><strong><a href="https://kyutai.org/reki/">REKI 项目页</a></strong> — 官方主页与模型说明。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.22146">FastVLA</a></strong> — 同样面向 VLA 推理效率，用逆 Simpson 均匀度自适应压缩视觉 token，可与 REKI 的记忆机制组合阅读。</li>
+<li><strong><a href="https://arxiv.org/abs/2508.19236">MemoryVLA</a></strong> — 另一条记忆路线（感知—认知记忆模块），适合做对照理解记忆该放在哪一层。</li>
+<li><strong><a href="https://arxiv.org/abs/2210.02747">Flow Matching 原始论文</a></strong> — 理解 REKI 动作专家生成动作块的数学基础。</li>
+</ul>
+<hr />
+<p><strong>环境</strong></p>
+<pre><code class="language-bash">git clone https://github.com/kyutai-labs/reki.git
+cd reki
+pip install -e .
+# 权重（BF16）在 HuggingFace：kyutai-labs/reki
+</code></pre>
+<p><strong>推理（概念流程）</strong></p>
+<ol>
+<li>用 VLM 骨干编码文本指令与各相机视角；</li>
+<li>动作专家对最近的 $K$ 帧计算并缓存 register；</li>
+<li>以当前本体状态与 flow 时间步为条件，去噪生成动作块；</li>
+<li>执行动作块的前若干步，回到第 1 步（<strong>滚动窗口只保留最近 $K$ 帧的 register</strong>）。</li>
+</ol>
+<p><strong>在自己本体上微调的要点</strong></p>
+<ul>
+<li><strong>保持 register 只依赖观测</strong>这一约束；一旦让它依赖动作，缓存就失效，显存与耗时都会上升；</li>
+<li>每种状态配置用独立的小状态 MLP，不要把所有本体的状态拼成一个大向量；</li>
+<li>微调数据可以与预训练配方不一致，但建议保留第一人称人类数据与视觉语言数据的一定比例，防止表征退化。</li>
+</ul>
+<p><strong>评估时必须单独统计的指标</strong></p>
+<pre><code class="language-python">&quot;&quot;&quot;
+只看成功率会漏掉记忆机制的主要收益 —— 必须统计振荡。
+&quot;&quot;&quot;
+def oscillation_rate(traj):
+    # 相邻动作方向反转的次数占比
+    d = np.diff(traj, axis=0)
+    rev = np.sum((d[1:] * d[:-1]).sum(-1) &lt; 0)
+    return rev / max(len(d) - 1, 1)
+</code></pre>
+<p>对照实验至少要有「无 register 的同构模型」，否则无法把增益归因到记忆而不是容量。</p>
+<hr />
+<p><strong>性能位置（Pareto 前沿）</strong></p>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LIBERO-Plus</td>
+<td><strong>90.4%</strong>（公开数据预训练模型中最高分）</td>
+</tr>
+<tr>
+<td>RoboTwin Clean2Rand</td>
+<td>公开数据预训练模型中最佳</td>
+</tr>
+<tr>
+<td>RoboCasa365</td>
+<td>仅被约两倍规模的模型超过</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>规格</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>总参数量</td>
+<td>2.4B（VLM 2.2B + 动作专家 0.2B）</td>
+</tr>
+<tr>
+<td>register token 数</td>
+<td>32</td>
+</tr>
+<tr>
+<td>动作块计算耗时</td>
+<td><strong>21.8 ms</strong>（H100，两路 256×256 相机）</td>
+</tr>
+<tr>
+<td>权重精度</td>
+<td>BF16（暂未发布量化版本）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+</tr>
+</tbody>
+</table>
+<p><strong>记忆带来的定性改变</strong></p>
+<ul>
+<li>仿真与真机成功率均有提升；</li>
+<li><strong>位姿之间的振荡减少约 4 倍</strong>——这是记忆机制最直接的证据。</li>
+</ul>
+<p><strong>如何看待这个成绩</strong></p>
+<p>REKI 的定位是<strong>研究基线 + 工作站级部署</strong>，不是端侧实时方案。21.8 ms 是在 H100 上测的；换算到 Jetson 级算力，0.2B 的动作专家仍可实时，但 2.2B 的 VLM 骨干会成为主要开销。若目标是边缘部署，需要自己做量化验证，官方暂未发布量化权重。</p>
+<p>另一个诚实的边界是：在<strong>部分分布外基准</strong>上它仍被约两倍规模的模型超过，说明参数量的天花板依然存在，记忆补的是振荡问题而不是能力上限。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>规模</th>
+<th>记忆机制</th>
+<th>开源程度</th>
+<th>许可</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>REKI</strong></td>
+<td>2.4B</td>
+<td><strong>动作专家内 32 个跨帧 register，可缓存</strong></td>
+<td><strong>全链路（数据 + 训练 + 部署 + 权重）</strong></td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>OpenVLA 系列</td>
+<td>7B 级</td>
+<td>无（只看当前帧）</td>
+<td>权重 + 训练代码</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>CogACT</td>
+<td>7B 级</td>
+<td>无</td>
+<td>权重 + 代码</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>π 系列</td>
+<td>3—7B</td>
+<td>未公开</td>
+<td>部分</td>
+<td>闭源为主</td>
+</tr>
+<tr>
+<td>MemoryVLA</td>
+<td>7B 级</td>
+<td>感知—认知记忆模块</td>
+<td>部分</td>
+<td>研究用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>REKI 的独特位置</strong></p>
+<ol>
+<li><strong>记忆放在动作专家而不是视觉骨干。</strong> 记忆的是「专家已消化的信息」，而不是仍需再加工的图像特征——这是它便宜的根本原因。</li>
+<li><strong>完全开源到数据整理与部署环节。</strong> 大多数 VLA 只放权重与训练代码，评测与部署脚本往往缺失，而这两块恰恰是第三方复现的瓶颈。</li>
+<li><strong>只用公开数据预训练。</strong> 对无法拿到大规模真机数据的团队，这是唯一可走的路线，而 REKI 证明了这条路的上限比预想的高。</li>
+</ol>
+<p><strong>与同类记忆方案的差别</strong></p>
+<p>MemoryVLA 类方法通常引入独立的记忆模块或额外的历史帧编码，参数与计算开销随记忆长度增长；REKI 的 register 数量固定为 32、且可缓存，<strong>记忆长度的成本是常数级</strong>。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

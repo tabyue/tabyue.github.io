@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>inspect-robots：面向物理 AI 的开源评测框架，任意 LLM/VLA 跑任意机械臂/人形与任意真机/仿真基准 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">inspect-robots：面向物理 AI 的开源评测框架，任意 LLM/VLA 跑任意机械臂/人形与任意真机/仿真基准 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="inspect-robots-ai-llmvla">inspect-robots：面向物理 AI 的开源评测框架，任意 LLM/VLA 跑任意机械臂/人形与任意真机/仿真基准</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/robocurve/inspect-robots">https://github.com/robocurve/inspect-robots</a>  </p>
+<p><strong>Stars</strong>: 683 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-10-18  </p>
+<p><strong>组织</strong>: RoboCurve  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-18</p>
+</blockquote>
+<hr />
+<p><strong>评测是具身智能最被低估的工程瓶颈</strong></p>
+<p>模型侧的创新很容易被看到，但<strong>能不能公平、可复现地评出来</strong>决定了这些创新是否可信。现实是每家团队都有自己的评测脚本：数据格式不同、任务定义不同、成功判据不同、随机种子不同。结果是论文里的数字无法互相比较，自己团队内的改进也无法稳定归因。</p>
+<p><strong>适配矩阵爆炸</strong></p>
+<p>设策略数为 $N$、评测环境数为 $M$。若每对组合都要写一份适配代码，成本就是 $O(N \times M)$：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>环境 1</th>
+<th>环境 2</th>
+<th>...</th>
+<th>环境 M</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>策略 1</td>
+<td>适配</td>
+<td>适配</td>
+<td></td>
+<td>适配</td>
+</tr>
+<tr>
+<td>策略 2</td>
+<td>适配</td>
+<td>适配</td>
+<td></td>
+<td>适配</td>
+</tr>
+<tr>
+<td>...</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>策略 N</td>
+<td>适配</td>
+<td>适配</td>
+<td></td>
+<td>适配</td>
+</tr>
+</tbody>
+</table>
+<p>每加一个新策略就要写 $M$ 份适配；每加一个新环境就要写 $N$ 份。社区里 $N$ 和 $M$ 都在快速增长，这个矩阵很快就不可维护。</p>
+<p><strong>解法：中间表示</strong></p>
+<p>把成本降到 $O(N+M)$ 的办法是引入<strong>统一的中间表示</strong>——策略侧只负责把输出转成标准动作格式，环境侧只负责把观测转成标准观测格式，中间的评测逻辑只写一次：</p>
+<pre><code>策略 i ──► 标准动作格式 ──┐
+                          ├──► 统一评测流程 ──► 指标
+环境 j ──► 标准观测格式 ──┘
+</code></pre>
+<p>inspect-robots 做的就是这件事：定义好两侧的契约，让新增策略或环境的成本变成<strong>常数级</strong>。</p>
+<p><strong>为什么「可视化回放」不是锦上添花</strong></p>
+<p>它集成了 <strong>Rerun</strong> 做轨迹与观测回放。这在评测里是刚需而非加分项——聚合指标只能告诉你「成功率掉了 5 个点」，<strong>回放才能告诉你是在哪一步、因为什么掉的</strong>。排查失败案例时，缺少回放会让定位成本上升一个数量级。</p>
+<hr />
+<p><strong>三层结构</strong></p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>职责</th>
+<th>新增成本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>策略适配层</td>
+<td>把任意 LLM/VLA 的输出转成标准动作</td>
+<td>每策略 $O(1)$</td>
+</tr>
+<tr>
+<td>环境适配层</td>
+<td>把任意真机/仿真环境的观测转成标准格式</td>
+<td>每环境 $O(1)$</td>
+</tr>
+<tr>
+<td>评测核心</td>
+<td>任务定义、成功判据、指标聚合、回放</td>
+<td>只写一次</td>
+</tr>
+</tbody>
+</table>
+<p><strong>标准契约需要定义什么</strong></p>
+<p>一份可用的评测契约至少包含：</p>
+<ol>
+<li><strong>观测格式</strong>：相机帧（数量、分辨率、时间戳）、本体状态（关节角/速度/力矩）、可能的触觉或力信号；</li>
+<li><strong>动作格式</strong>：关节角 / 末端位姿 / 速度 / 力矩中的哪一种，坐标系定义，动作块长度与执行方式；</li>
+<li><strong>任务定义</strong>：初始状态分布、目标条件、最大步数；</li>
+<li><strong>成功判据</strong>：是二值成功还是部分得分，判据由谁计算（环境内还是外部）；</li>
+<li><strong>随机性控制</strong>：随机种子、初始状态采样方式、评测回合数。</li>
+</ol>
+<p><strong>为什么第 5 条最常被忽略却最关键</strong></p>
+<p>具身评测的方差极大。同一策略换一组初始状态，成功率可能差十几个点。不固定随机种子、不写明回合数，得到的数字<strong>不可复现</strong>，任何改进都无法归因。这也是很多团队「明明改了但看不出效果」的根源。</p>
+<p><strong>真机与仿真的统一难点</strong></p>
+<p>真机评测无法精确复位到同一初始状态，因此「固定种子」在真机上退化为「<strong>固定初始状态的操作规程</strong>」——例如用定位工装保证物体摆放误差在某个范围内。一套好的评测框架必须能表达这种<strong>带容差的初始条件</strong>，否则真机结果无法与仿真对齐。</p>
+<hr />
+<ul>
+<li><strong><a href="https://inspectrobots.org">inspect-robots 官方站点</a></strong> — 文档、支持的环境与策略列表。</li>
+<li><strong><a href="https://github.com/rerun-io/rerun">Rerun</a></strong> — 集成的可视化回放工具，用于轨迹与观测排查。</li>
+<li><strong><a href="https://github.com/XPolicyLab/XPolicyLab">XPolicyLab</a></strong> — 同样以 O(N+M) 适配为目标的连接层，IROS 2026 ScaleInfra Workshop 最佳工具论文。</li>
+<li><strong><a href="https://github.com/RoboTwin-Platform/RoboTwin">RoboTwin</a></strong> — 双臂操作仿真基准与榜单（ICML 2026）。</li>
+<li><strong><a href="https://dy.163.com/article/L9F1TVM505129QAF.html">中国信通院《具身智能发展报告 2026》</a></strong> — 行业对可复现评测与规模效应的判断。</li>
+</ul>
+<hr />
+<p><strong>安装</strong></p>
+<pre><code class="language-bash">git clone https://github.com/robocurve/inspect-robots.git
+cd inspect-robots
+pip install -e .
+# 官方文档：https://inspectrobots.org
+</code></pre>
+<p><strong>接入一个新策略的最小步骤</strong></p>
+<ol>
+<li>实现策略适配器：把模型输出转成标准动作（注意坐标系与量纲）；</li>
+<li>实现环境适配器（若环境已支持则跳过）：把观测转成标准格式，并声明最大步数与成功判据；</li>
+<li>配置评测：回合数、随机种子、是否录制回放；</li>
+<li>运行并产出指标与回放文件。</li>
+</ol>
+<p><strong>评测配置示例（概念示意）</strong></p>
+<pre><code class="language-yaml">eval:
+  policy:
+    type: vla
+    adapter: my_policy_adapter.MyVLA
+    checkpoint: ckpt/step-100k
+    action_space: joint_position     # 与本体一致的动作格式
+  env:
+    type: sim                        # sim 或 real
+    adapter: my_env_adapter.FrankaTabletop
+    max_steps: 200
+    success_fn: my_env_adapter.is_success
+  protocol:
+    episodes: 100                    # 回合数必须写明
+    seeds: [0, 1, 2, 3, 4]           # 种子必须固定
+    record: true                     # 打开回放录制
+  report:
+    metrics: [success_rate, steps_to_success, jitter, collision_count]
+</code></pre>
+<p><strong>接入清单（照着做不容易漏）</strong></p>
+<ul>
+<li>[ ] 动作坐标系与量纲是否与本体一致（最常见 bug）</li>
+<li>[ ] 动作块执行方式：是执行完整块还是只执行前 $k$ 步</li>
+<li>[ ] 成功判据由环境计算还是外部计算，是否与论文口径一致</li>
+<li>[ ] 随机种子与回合数是否已写入配置</li>
+<li>[ ] 回放是否开启（排查失败案例时不可省）</li>
+</ul>
+<hr />
+<p><strong>如何评估一个评测框架</strong></p>
+<p>评测框架本身没有准确率，评估它应看<strong>它是否让结果变得可复现、可归因</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>适配成本</td>
+<td>新增策略或环境为 $O(1)$，而非 $O(N)$ 或 $O(M)$</td>
+</tr>
+<tr>
+<td>覆盖范围</td>
+<td>LLM 与 VLA 两类策略；机械臂与人形两类本体；真机与仿真两类环境</td>
+</tr>
+<tr>
+<td>可复现性</td>
+<td>随机种子、回合数、初始状态容差可声明</td>
+</tr>
+<tr>
+<td>可排查性</td>
+<td>集成 Rerun 回放，能定位到具体步与具体原因</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT，可商用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>它解决的成本问题</strong></p>
+<p>一个中等规模团队维护自有评测脚本，通常要持续投入在：新策略接入、新环境接入、指标口径对齐、失败案例定位。用统一框架把这四项压到配置级后，<strong>评测从「每次都要重写」变成「写完一次长期复用」</strong>。</p>
+<p><strong>不适用的场景</strong></p>
+<ul>
+<li>只需要一次性、临时性的演示（直接写脚本更快）；</li>
+<li>需要高度定制化的专有指标且与通用契约冲突（需要先扩展契约）；</li>
+<li>追求极致吞吐的大规模分布式评测（需自行扩展并行层）。</li>
+</ul>
+<p><strong>一个诚实的边界</strong></p>
+<p>统一契约必然带来<strong>抽象损耗</strong>：某些环境的特有信号（如特殊触觉阵列、专用力传感器）可能无法被标准观测格式完整表达。接入这类环境时要么扩展契约、要么接受信息损失，这个取舍要在接入前想清楚。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>侧重点</th>
+<th>覆盖</th>
+<th>许可</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>inspect-robots</strong></td>
+<td><strong>评测</strong>（任意策略 × 任意环境）</td>
+<td>LLM + VLA，机械臂 + 人形，真机 + 仿真</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>XPolicyLab</td>
+<td>策略接入评测环境的连接层（IROS 2026 最佳工具论文）</td>
+<td>50+ 操作策略，RoboTwin / RoboDojo / 真机</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>RoboTwin</td>
+<td>双臂操作仿真基准 + 榜单</td>
+<td>双臂操作</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>LIBERO 系列</td>
+<td>操作任务基准</td>
+<td>单臂操作 + 分布外变体</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>SIMPLER</td>
+<td>仿真中的真机策略复现评测</td>
+<td>桌面操作</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>RoboDojo</td>
+<td>五维能力评测（42 仿真 + 18 真机）</td>
+<td>综合</td>
+<td>研究用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>选型建议</strong></p>
+<ul>
+<li><strong>要一套能接自己策略与自己环境的通用评测</strong> → inspect-robots；</li>
+<li><strong>要接主流公开策略跑公开榜单</strong> → XPolicyLab（已集成 50+ 策略与多个基准）；</li>
+<li><strong>做双臂操作研究</strong> → RoboTwin；</li>
+<li><strong>做单臂操作泛化研究</strong> → LIBERO-Plus 系列；</li>
+<li><strong>验证真机策略能否在仿真中复现</strong> → SIMPLER。</li>
+</ul>
+<p><strong>为什么「可复现评测」值得单独投入</strong></p>
+<p>行业正在从「演示驱动」转向「交付驱动」。中国信通院《具身智能发展报告 2026》明确指出，落地模式本质上仍未跳出<strong>每个场景、每个任务重做一遍</strong>的传统路径，而衡量是否跳出这条路径的唯一办法就是<strong>可复现的量化评测</strong>。没有它，换线成本、节拍、故障恢复这些真正决定商业化的指标都只能靠感觉。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

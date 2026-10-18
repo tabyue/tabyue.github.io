@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>every-embodied：Datawhale 开源中文具身智能教程，仅需 Python 基础从 0 构建 VLA / OpenVLA / SmolVLA / Pi0 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">every-embodied：Datawhale 开源中文具身智能教程，仅需 Python 基础从 0 构建 VLA / OpenVLA / SmolVLA / Pi0 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="every-embodieddatawhale-python-0-vla-openvla-smolvla-pi0">every-embodied：Datawhale 开源中文具身智能教程，仅需 Python 基础从 0 构建 VLA / OpenVLA / SmolVLA / Pi0</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/datawhalechina/every-embodied">https://github.com/datawhalechina/every-embodied</a>  </p>
+<p><strong>Stars</strong>: 4108 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-10-18  </p>
+<p><strong>组织</strong>: Datawhale（开源学习社区）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-18</p>
+</blockquote>
+<hr />
+<p><strong>中文具身智能资料的两个断层</strong></p>
+<p>第一个断层是<strong>论文翻译型资料</strong>：把 arXiv 论文翻成中文，读得懂术语，但不知道代码怎么写、数据怎么组织、训练脚本怎么排。</p>
+<p>第二个断层是<strong>工程仓库型资料</strong>：官方开源仓库能跑通，但代码面向研究效率而不是教学，抽象层次多、配置分支复杂，初学者很难从里面读出「为什么这样写」。</p>
+<p>every-embodied 选择的是第三条路：<strong>自己实现一遍</strong>。它把 VLA / OpenVLA / SmolVLA / Pi0 这几条主流路线<strong>逐个从零重写</strong>，读者在写的过程中自然会遇到所有关键决策——视觉特征怎么接进语言模型、动作怎么参数化、动作块怎么切、损失怎么算。</p>
+<p><strong>为什么「从零实现」比「读代码」有效</strong></p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>你会遇到什么</th>
+<th>你不会遇到什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>读论文</td>
+<td>术语、动机、结论</td>
+<td>维度对不上、显存爆了、loss 不降</td>
+</tr>
+<tr>
+<td>跑官方仓库</td>
+<td>最终结果</td>
+<td>为什么这么设计</td>
+</tr>
+<tr>
+<td><strong>从零实现</strong></td>
+<td><strong>全部</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>从零实现会强制你面对所有工程细节：token 序列怎么拼、注意力 mask 怎么设、动作归一化用什么统计量。这些恰恰是论文不写、但决定你能不能复现的东西。</p>
+<p><strong>与 Embodied-AI-Guide 的区别</strong></p>
+<p>同为 4K+ stars 的中文资料，<strong>Embodied-AI-Guide</strong>（Lumina 具身智能社区）更偏<strong>知识指南与资源索引</strong>，而 every-embodied 是<strong>代码化教材</strong>。两者互补：前者用于建立知识地图，后者用于动手。</p>
+<hr />
+<p><strong>四条模型路线的学习顺序</strong></p>
+<p>建议按下面顺序推进，因为概念是逐层叠加的：</p>
+<pre><code>1) VLA（概念最小实现）
+   视觉编码 → 与语言 token 拼接 → 自回归/flow 出动作
+        │
+2) OpenVLA（7B 级开源基线）
+   加入大规模预训练、动作离散化、多本体适配
+        │
+3) SmolVLA（小模型路线）
+   加入效率导向设计：更小的骨干、更紧凑的动作表示
+        │
+4) Pi0（flow matching + 混合专家）
+   加入 flow matching 动作专家、跨本体预训练范式
+</code></pre>
+<p><strong>一个最小 VLA 的组成</strong></p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>作用</th>
+<th>常见坑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>视觉编码器</td>
+<td>把图像变成 token</td>
+<td>分辨率与预训练时不一致会导致特征失效</td>
+</tr>
+<tr>
+<td>投影层</td>
+<td>把视觉 token 映射到 LLM 维度</td>
+<td>维度对不上是最常见的报错来源</td>
+</tr>
+<tr>
+<td>语言骨干</td>
+<td>融合指令与视觉</td>
+<td>注意力 mask 写错，训练能跑但结果很差</td>
+</tr>
+<tr>
+<td>动作头</td>
+<td>输出动作</td>
+<td>动作归一化统计量必须用训练集算，不能用 batch 统计量</td>
+</tr>
+<tr>
+<td>动作参数化</td>
+<td>连续 vs 离散</td>
+<td>离散化 bin 数决定精度上限</td>
+</tr>
+</tbody>
+</table>
+<p><strong>动作归一化：最容易被忽略的一步</strong></p>
+<p>不同本体的关节量纲差异极大（位置是米、角度是弧度、力矩是牛米）。如果直接把原始动作喂给网络，loss 会被大数值维度主导。正确做法是<strong>在训练集上统计每个动作维度的均值与标准差并保存</strong>，推理时用同一组统计量反归一化。这一步做错的表现是：<strong>训练 loss 下降但动作输出接近常数</strong>。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/openvla/openvla">OpenVLA</a></strong> — 7B 级开源 VLA 基线，教程中复现的对象之一。</li>
+<li><strong><a href="https://arxiv.org/abs/2410.24164">π₀: A Vision-Language-Action Flow Model</a></strong> — flow matching 动作专家的源头工作，对应教程中的 Pi0 部分。</li>
+<li><strong><a href="https://huggingface.co/blog/smolvla">SmolVLA</a></strong> — 小模型 VLA 路线，适合理解效率与精度的权衡。</li>
+<li><strong><a href="https://github.com/huggingface/lerobot">LeRobot</a></strong> — HuggingFace 的工程化机器人学习库，是从教程走向落地的下一站。</li>
+<li><strong><a href="https://github.com/TianxingChen/Embodied-AI-Guide">Embodied-AI-Guide</a></strong> — Lumina 社区的中文知识指南，与本项目互补。</li>
+</ul>
+<hr />
+<p><strong>起步</strong></p>
+<pre><code class="language-bash">git clone https://github.com/datawhalechina/every-embodied.git
+cd every-embodied
+pip install -r requirements.txt
+jupyter lab
+</code></pre>
+<p>按仓库目录顺序逐个 Notebook 执行，建议<strong>不要跳读</strong>——后一个模型的实现会复用前一个的组件。</p>
+<p><strong>建议的学习节奏</strong></p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>内容</th>
+<th>目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第 1 周</td>
+<td>VLA 最小实现</td>
+<td>能跑通一次前向，理解 token 拼接</td>
+</tr>
+<tr>
+<td>第 2 周</td>
+<td>数据处理与动作归一化</td>
+<td>能把自己的数据集喂进去</td>
+</tr>
+<tr>
+<td>第 3—4 周</td>
+<td>OpenVLA 复现</td>
+<td>理解大规模预训练的工程要点</td>
+</tr>
+<tr>
+<td>第 5 周</td>
+<td>SmolVLA / Pi0</td>
+<td>理解效率与 flow matching 动作专家</td>
+</tr>
+</tbody>
+</table>
+<p><strong>验证自己真的懂了的三个问题</strong></p>
+<ol>
+<li>如果换一个本体（关节数不同），你的代码要改哪几处？</li>
+<li>动作块长度 $H$ 增大一倍，显存与延迟分别会怎么变？</li>
+<li>训练 loss 在下降但真机一动不动，你会按什么顺序排查？</li>
+</ol>
+<p><strong>最小可运行骨架（概念示意）</strong></p>
+<pre><code class="language-python">&quot;&quot;&quot;
+VLA 的最小骨架：视觉 token 与语言 token 拼接后出动作。
+&quot;&quot;&quot;
+class MiniVLA(nn.Module):
+    def __init__(self, vision, llm, act_dim, chunk=16):
+        super().__init__()
+        self.vision = vision          # 图像 -&gt; [N, Dv]
+        self.proj = nn.Linear(Dv, Dllm)
+        self.llm = llm
+        self.act_head = nn.Linear(Dllm, act_dim * chunk)
+        self.register_buffer('act_mean', torch.zeros(act_dim))
+        self.register_buffer('act_std', torch.ones(act_dim))
+
+    def forward(self, img, text_ids):
+        v = self.proj(self.vision(img))            # 视觉 token
+        t = self.llm.embed(text_ids)               # 语言 token
+        h = self.llm(torch.cat([v, t], dim=1))     # 融合
+        a = self.act_head(h[:, -1])                # 取末位预测动作块
+        return a.view(-1, self.chunk, self.act_dim) * self.act_std + self.act_mean
+
+    @torch.no_grad()
+    def fit_stats(self, loader):
+        # 必须用训练集统计量，不能用 batch 统计量
+        m, s = running_mean_std(loader, key='actions')
+        self.act_mean.copy_(m); self.act_std.copy_(s)
+</code></pre>
+<hr />
+<p><strong>作为教材的评估维度</strong></p>
+<p>这个仓库没有榜单分数，评估应看它是否真的降低了学习门槛：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>评价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>前置要求</td>
+<td><strong>仅需 Python 基础</strong>，门槛显著低于直接读官方仓库</td>
+</tr>
+<tr>
+<td>覆盖路线</td>
+<td>VLA / OpenVLA / SmolVLA / Pi0，覆盖当前四条主流路线</td>
+</tr>
+<tr>
+<td>形式</td>
+<td>Jupyter Notebook，可逐单元执行与修改</td>
+</tr>
+<tr>
+<td>社区</td>
+<td>Datawhale 维护，4.1K+ stars，有配套讨论与学习路径</td>
+</tr>
+<tr>
+<td>许可</td>
+<td><strong>未声明</strong>，商用需与作者确认</td>
+</tr>
+</tbody>
+</table>
+<p><strong>适合谁</strong></p>
+<ul>
+<li>想转岗做具身智能算法的工程师（有 Python 与深度学习基础，缺机器人背景）；</li>
+<li>需要给团队做内部培训的技术负责人——可以直接把它作为训练材料；</li>
+<li>高校课程助教，需要一个可执行的课程项目骨架。</li>
+</ul>
+<p><strong>不适合谁</strong></p>
+<ul>
+<li>已有成熟 VLA 工程经验的从业者（应直接读官方仓库与论文）；</li>
+<li>需要立刻上生产的项目（许可未声明，且教学代码通常未做工程优化）。</li>
+</ul>
+<p><strong>一个提醒</strong></p>
+<p>教学代码为了可读性通常牺牲了工程效率（例如不做算子融合、不优化显存）。把它当作<strong>理解原理的台阶</strong>而不是生产基线——读懂之后应转向 OpenVLA / LeRobot 等工程化仓库落地。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>资源</th>
+<th>类型</th>
+<th>语言</th>
+<th>动手程度</th>
+<th>许可</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>every-embodied</strong></td>
+<td>代码化教材（从零实现）</td>
+<td>中文</td>
+<td><strong>高</strong></td>
+<td>未声明</td>
+</tr>
+<tr>
+<td>Embodied-AI-Guide</td>
+<td>知识指南 + 资源索引</td>
+<td>中文</td>
+<td>低</td>
+<td>未声明</td>
+</tr>
+<tr>
+<td>VLA-Handbook</td>
+<td>中文学习与面试手册</td>
+<td>中文</td>
+<td>低</td>
+<td>CC-BY-4.0</td>
+</tr>
+<tr>
+<td>LeRobot</td>
+<td>工程化机器人学习库</td>
+<td>英文</td>
+<td>中（重使用轻原理）</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>OpenVLA 官方仓库</td>
+<td>研究代码</td>
+<td>英文</td>
+<td>中</td>
+<td>Apache-2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>组合建议</strong></p>
+<pre><code>every-embodied（搞懂原理，从零写一遍）
+        ↓
+OpenVLA / SmolVLA 官方仓库（看工程实现如何优化）
+        ↓
+LeRobot（用工程化库落地到自己的本体）
+        ↓
+inspect-robots / RoboTwin（建立可复现的评测）
+</code></pre>
+<p>这条链路把「懂原理 → 读工程 → 能落地 → 可评测」四步串起来。其中最后一步常被跳过，但恰恰是决定一个策略能不能上线的关键——没有可复现评测，任何改进都无法归因。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
