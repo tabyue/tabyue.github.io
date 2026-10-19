@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OMG：清华 MARS Lab 开源的全模态运动生成框架，一套模型统一人形全身控制的多种输入模态 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">OMG：清华 MARS Lab 开源的全模态运动生成框架，一套模型统一人形全身控制的多种输入模态 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="omg-mars-lab">OMG：清华 MARS Lab 开源的全模态运动生成框架，一套模型统一人形全身控制的多种输入模态</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Tsinghua-MARS-Lab/OMG">https://github.com/Tsinghua-MARS-Lab/OMG</a>  </p>
+<p><strong>Stars</strong>: 122 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-10-19  </p>
+<p><strong>组织</strong>: 清华大学 MARS Lab  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-19</p>
+</blockquote>
+<hr />
+<p><strong>OMG</strong> 是一个<strong>面向通用人形控制的全模态运动生成框架</strong>。</p>
+<h3 id="_2">背景：人形控制的输入模态是碎的</h3>
+<p>在真实的人形机器人系统里，「让机器人做一个动作」这个指令可能以很多种形式到达：</p>
+<ul>
+<li>一段 <strong>动捕</strong> 的人体关节序列；</li>
+<li>一段 <strong>RGB 视频</strong> 重建出的人体运动；</li>
+<li>一句 <strong>自然语言</strong>（「把箱子搬到左边」）；</li>
+<li>若干 <strong>稀疏关键帧</strong> 或目标位姿；</li>
+<li>上层规划器给出的<strong>路径点 / 末端目标</strong>。</li>
+</ul>
+<p>常规工程做法是每种模态走一条独立分支、各自训一个模型。这在模态少的时候没问题，但一旦要覆盖上面全部输入，维护成本会急剧上升，而且<strong>不同模态之间无法互相补强</strong>——语言理解能力帮不上视频分支，视频分支的时序先验也帮不上语言分支。</p>
+<h3 id="omg">OMG 的思路</h3>
+<p>把这些模态统一到一个生成模型里，让模型学会<strong>在任意模态子集可用时</strong>都能产出合理的人形全身运动。</p>
+<h3 id="_3">为什么这件事重要</h3>
+<p>统一之后带来两个非显然的收益：</p>
+<ol>
+<li><strong>部署鲁棒性</strong>：某一路传感器失效（比如动捕丢帧、视觉重建失败）时，模型不会因为缺输入而崩溃，而是退化到用剩余模态继续生成。</li>
+<li><strong>跨模态补强</strong>：多模态联合训练让「语言能描述的语义」与「视频能提供的时序细节」在同一个表征空间里对齐，单模态的性能也会被带上去。</li>
+</ol>
+<h3 id="_4">定位</h3>
+<p>OMG 属于<strong>运动生成层</strong>，不是端到端 VLA。它产出的是人形全身运动（关节轨迹），上层可以接强化学习策略做跟踪，也可以直接作为参考运动喂给全身控制器。</p>
+<hr />
+<h3 id="_5">分层定位</h3>
+<p>把人形系统按职责分层，OMG 处在中间：</p>
+<pre><code>上层任务规划（语言 / 符号规划）
+        │  任务目标
+        ▼
+   OMG 运动生成   ← 多模态输入（动捕 / 视频 / 语言 / 关键帧）
+        │  全身关节轨迹
+        ▼
+   跟踪控制器（RL 策略 / WBC / MPC）
+        │  关节力矩
+        ▼
+      机器人本体
+</code></pre>
+<h3 id="_6">全模态编码</h3>
+<p>每一种输入模态先被编码到同一个表征空间。关键设计是<strong>模态无关的统一表示</strong>：不同模态的编码器输出在语义层面对齐，之后由共享的生成骨干处理。</p>
+<ul>
+<li><strong>动捕 / 视频</strong>：提供时序密集的运动细节，编码器重点保留关节角的时序连续性；</li>
+<li><strong>语言</strong>：提供语义与目标约束，编码器把描述映射为运动意图；</li>
+<li><strong>稀疏关键帧 / 目标位姿</strong>：提供稀疏但精确的约束。</li>
+</ul>
+<h3 id="_7">任意子集模态推理</h3>
+<p>训练时对模态做<strong>随机丢弃</strong>，使模型见过各种模态组合。推理时无论给哪几种模态都能工作。这个技巧与多模态学习里的 modality dropout 同思路，但在人形运动生成上的价值更实在——因为它直接对应传感器失效这个真机高频问题。</p>
+<h3 id="_8">与同类工作的关系</h3>
+<p>相较只吃单一模态的运动生成工作，OMG 的差异不在生成质量的上限，而在<strong>输入侧的宽度与缺失时的退化行为</strong>。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2606.10340">OMG: Omni-Modal Motion Generation for Generalist Humanoid Control</a></strong> — 本仓库对应的论文，全模态人形运动生成。</li>
+<li><strong><a href="https://arxiv.org/abs/2510.26236">PHUMA: Physically Reliable Humanoid Locomotion Dataset</a></strong> — 物理可靠的人形运动数据集，可与运动生成模块配套做数据质检。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.22184">Whole-Body Dexterity</a></strong> — 全身灵巧操作，运动生成的上层任务延伸。</li>
+</ul>
+<hr />
+<h3 id="_9">环境</h3>
+<p>Python 实现，MIT 许可。</p>
+<pre><code class="language-bash">git clone https://github.com/Tsinghua-MARS-Lab/OMG.git
+cd OMG
+# 按仓库 requirements 安装依赖
+pip install -r requirements.txt
+</code></pre>
+<h3 id="_10">最小流程</h3>
+<ol>
+<li>从项目主页或仓库获取预训练权重；</li>
+<li>准备输入模态（任选其一或组合）：动捕文件 / 视频 / 语言描述 / 关键帧；</li>
+<li>运行推理脚本生成全身关节轨迹；</li>
+<li>把轨迹导出为你的控制器能消费的格式（关节角序列或参考运动）。</li>
+</ol>
+<pre><code class="language-python"># 示意：不同模态可单独或组合输入
+motion = omg.generate(
+    text='move the box to the left',
+    # keypoints=...,   # 可选
+    # video=...,       # 可选
+)
+print(motion.joint_traj.shape)
+</code></pre>
+<h3 id="_11">接入自有机器人</h3>
+<p>OMG 输出的是与人形骨架对应的关节轨迹。接入自有本体时通常还需要：</p>
+<ul>
+<li><strong>重定向</strong>：把输出骨架映射到你机器人的关节结构；</li>
+<li><strong>物理可行性检查</strong>：过滤关节越限、自碰撞、浮空与打滑；</li>
+<li><strong>跟踪控制</strong>：用 RL 策略或 MPC 跟踪参考轨迹。</li>
+</ul>
+<h3 id="_12">建议的验证顺序</h3>
+<p>先在仿真里验证生成的运动可跟踪（跟踪误差达标），再考虑上真机。直接把生成轨迹下发到真机而没有跟踪层，是新手最常见的失败原因。</p>
+<hr />
+<h3 id="_13">定性收益</h3>
+<ul>
+<li><strong>模态宽度</strong>：一套模型覆盖多种输入模态，替代多路独立分支；</li>
+<li><strong>缺失鲁棒性</strong>：部分模态不可用时仍可生成，而不是直接失败；</li>
+<li><strong>维护成本</strong>：新增模态只需加编码器并对齐，不必重训整条分支。</li>
+</ul>
+<h3 id="_14">需要注意的边界</h3>
+<ul>
+<li><strong>122 stars、2026 年 6 月首发</strong>：属于较新的研究型仓库，工程完备度与成熟度不能和 Isaac Lab 这类大工程类比；</li>
+<li><strong>输出是运动而非力矩</strong>：不含底层控制器，需要自带跟踪层；</li>
+<li><strong>跨本体迁移需重定向</strong>：输出骨架与目标本体不一致时必须做重定向与物理可行性过滤。</li>
+</ul>
+<h3 id="_15">选型建议</h3>
+<p>如果你的痛点是「控制指令来源太多、各走一路难以维护」，或者真机上经常出现某一路传感器失效导致整条链路瘫痪，OMG 的设计思路值得参考。如果你的输入模态单一且稳定，引入统一模型的收益有限，直接用单模态方案更简单。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>OMG</th>
+<th>单模态运动生成</th>
+<th>端到端 VLA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入模态</td>
+<td>多模态统一</td>
+<td>单一</td>
+<td>图像 + 语言</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>全身关节轨迹</td>
+<td>全身关节轨迹</td>
+<td>动作块</td>
+</tr>
+<tr>
+<td>缺失退化</td>
+<td>可退化</td>
+<td>直接失败</td>
+<td>视实现</td>
+</tr>
+<tr>
+<td>是否含底层控制</td>
+<td>否（需跟踪层）</td>
+<td>否</td>
+<td>通常直接输出</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+<td>视项目</td>
+<td>视项目</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么选</strong>：</p>
+<ul>
+<li>需要<strong>多模态输入 + 可解释的中间表示（轨迹）</strong> → OMG 这一层；</li>
+<li>输入固定且只需要模仿单一数据源 → 单模态方案更轻；</li>
+<li>追求从图像语言直接到动作、且能接受黑箱 → 端到端 VLA。</li>
+</ul>
+<p>三者不是替代关系。实际系统里常见的是<strong>VLA 出高层意图 → 运动生成出轨迹 → 控制器跟踪</strong>，OMG 处在中间那一层。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

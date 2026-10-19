@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>wb_humanoid_mpc：面向人形全身移动操作的实时非线性 MPC，C++ 实现可上真机 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">wb_humanoid_mpc：面向人形全身移动操作的实时非线性 MPC，C++ 实现可上真机 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="wb_humanoid_mpc-mpcc">wb_humanoid_mpc：面向人形全身移动操作的实时非线性 MPC，C++ 实现可上真机</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/manumerous/wb_humanoid_mpc">https://github.com/manumerous/wb_humanoid_mpc</a>  </p>
+<p><strong>Stars</strong>: 383 · <strong>License</strong>: BSD-3-Clause · <strong>收录日期</strong>: 2026-10-19  </p>
+<p><strong>组织</strong>: manumerous  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-19</p>
+</blockquote>
+<hr />
+<p><strong>wb_humanoid_mpc</strong> 提供的是人形机器人<strong>全身移动操作</strong>的实时非线性 MPC 方案。</p>
+<h3 id="loco-manipulation">什么是 loco-manipulation</h3>
+<p>移动操作（loco-manipulation）指的是机器人<strong>在移动的同时操作物体</strong>：边走边推车、搬着箱子上台阶、走过去拉开门再穿过去。它比单纯的走路或单纯的桌面操作都难，因为：</p>
+<ul>
+<li>末端的操作力会<strong>反作用到躯干</strong>，影响平衡；</li>
+<li>迈步会<strong>改变基座位姿</strong>，影响末端精度；</li>
+<li>接触状态（脚—地、手—物）会<strong>频繁切换</strong>，是被控对象动力学发生突变的地方。</li>
+</ul>
+<h3 id="_2">常见拆法的问题</h3>
+<p>工程上常见的处理是分层：一个 locomotion 控制器管走路，一个 manipulation 控制器管手臂，再靠优先级（比如把操作当作扰动由腿部补偿）去协调。</p>
+<p>这个拆法在接触状态稳定的时候能用，但在<strong>接触切换的瞬间</strong>容易失配：腿不知道手正在推一个重物，手也不知道脚下一步要迈。表现就是推重物时机器人站不稳，或者迈步时末端突然甩一下。</p>
+<h3 id="nmpc">NMPC 的思路</h3>
+<p>把全身动力学、接触约束、任务目标放进<strong>同一个优化问题</strong>里求解。协调性不再需要手工设计权重——它是优化问题的解自然满足的性质。</p>
+<p>代价是<strong>求解速度</strong>。非线性 MPC 每次要求解一个非线性规划，能否在控制周期内解完决定了它能不能上真机。这也解释了为什么这个仓库是 <strong>C++</strong> 实现。</p>
+<h3 id="_3">额外用途：数据生成</h3>
+<p>仓库 topics 里带 <code>data-generation</code>。NMPC 作为一个<strong>高质量的专家控制器</strong>，可以离线跑出大量物理可行的全身轨迹，用来做模仿学习的演示数据——这比人工遥操作采集便宜得多，且轨迹天然满足动力学约束。</p>
+<hr />
+<h3 id="_4">优化问题的结构</h3>
+<p>NMPC 在每个控制周期求解一个有限时域最优控制问题。抽象形式：</p>
+<p>$$
+\min_{x_{0:N},\, u_{0:N-1}} \; \sum_{k=0}^{N-1} \ell(x_k, u_k) + \ell_f(x_N)
+$$</p>
+<p>满足：</p>
+<ul>
+<li><strong>全身动力学</strong>：$x_{k+1} = f(x_k, u_k)$（含浮动基座与关节耦合）</li>
+<li><strong>接触约束</strong>：脚—地的互补条件、摩擦锥</li>
+<li><strong>任务约束</strong>：末端位姿目标、躯干姿态、关节限位</li>
+<li><strong>操作力约束</strong>：末端可施加的力/力矩范围</li>
+</ul>
+<h3 id="_5">滚动时域</h3>
+<p>每个控制周期：</p>
+<pre><code>  感知当前状态 x_now
+        │
+        ▼
+  以 x_now 为初值求解 NMPC（热启动上一周期的解）
+        │
+        ▼
+  取解序列的第一个控制量 u_0 下发
+        │
+        ▼
+  下一周期重复
+</code></pre>
+<p><strong>热启动是实时性的关键</strong>：上一周期的解作为本周期的初值，通常只需几步迭代就收敛。冷启动每次从零求解，很难压进控制周期。</p>
+<h3 id="_6">为什么移动与操作要放在同一个问题里</h3>
+<p>如果拆成两个问题，末端操作力对躯干的影响必须以<strong>扰动</strong>的形式传给腿部控制器，而腿部迈步对基座的影响也要以<strong>基座运动补偿</strong>的形式传给手臂——这两条补偿通道的增益需要手工调，且在接触切换时失效。</p>
+<p>放在同一个问题里，这些耦合项是<strong>动力学方程自带的</strong>，不需要额外建模。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/manumerous/wb_humanoid_mpc">Whole-Body Nonlinear MPC for Realtime Humanoid Loco-Manipulation Planning and Control</a></strong> — 本仓库对应的工作，规划与控制一体的全身 NMPC。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.22184">Whole-Body Dexterity</a></strong> — 全身灵巧操作，与本仓库同属全身协调方向。</li>
+<li><strong><a href="https://arxiv.org/abs/2510.26236">PHUMA: Physically Reliable Humanoid Locomotion Dataset</a></strong> — 物理可靠的人形运动数据集，可用于 MPC 跟踪目标的来源。</li>
+</ul>
+<hr />
+<h3 id="_7">依赖与构建</h3>
+<p>C++ 实现，BSD-3-Clause 许可。构建通常需要：</p>
+<ul>
+<li>一个非线性优化求解器（此类 MPC 框架通常依赖 HPIPM / acados / Crocoddyl 一类库，具体以仓库 README 为准）</li>
+<li>机器人模型描述（URDF）</li>
+<li>可选：仿真环境（MuJoCo / Isaac 等）用于验证</li>
+</ul>
+<pre><code class="language-bash">git clone https://github.com/manumerous/wb_humanoid_mpc.git
+cd wb_humanoid_mpc
+# 按仓库 README 完成构建
+</code></pre>
+<h3 id="_8">建议的上手顺序</h3>
+<ol>
+<li><strong>先跑仿真里的站立 / 行走</strong>：确认 MPC 求解器与模型对接正确；</li>
+<li><strong>测求解耗时</strong>：记录每个控制周期的求解时间，检查是否满足你的控制频率（人形通常 200—1000 Hz 的底层力矩环，MPC 常在 50—200 Hz 的外环）；</li>
+<li><strong>加静态操作目标</strong>：末端固定位姿，验证全身协调；</li>
+<li><strong>再加移动操作</strong>：边走边操作，观察接触切换瞬间。</li>
+</ol>
+<h3 id="_9">接入自有本体</h3>
+<p>需要提供：URDF 模型、关节限位与力矩限、接触点定义（脚底）、质量与惯量参数。</p>
+<p><strong>惯量参数不准是这类方法最常见的失败原因</strong>——MPC 依赖模型做预测，模型错了预测就错。建议先做一轮系统辨识再上真机。</p>
+<hr />
+<h3 id="_10">实时性</h3>
+<p>仓库定位明确写了 <strong>Realtime</strong>。实时性是这类方法的核心指标，取决于三件事：</p>
+<ul>
+<li><strong>求解器效率</strong>：稀疏结构利用程度、是否支持热启动；</li>
+<li><strong>时域长度 $N$</strong>：越长越准但越慢；</li>
+<li><strong>模型复杂度</strong>：全身自由度数量直接影响问题规模。</li>
+</ul>
+<h3 id="_11">相对分层方案的优势</h3>
+<ul>
+<li><strong>接触切换处不需要手工协调</strong>：耦合由动力学方程保证；</li>
+<li><strong>约束统一表达</strong>：摩擦锥、关节限位、力矩限在同一问题内，不会出现两个控制器给出矛盾指令；</li>
+<li><strong>可离线产出高质量数据</strong>：作为专家控制器生成物理可行轨迹。</li>
+</ul>
+<h3 id="_12">已知代价</h3>
+<ul>
+<li><strong>依赖模型精度</strong>：预测质量直接受模型误差影响，惯量/摩擦不准会明显退化；</li>
+<li><strong>调参门槛高</strong>：代价函数权重、时域、约束松弛都需要经验；</li>
+<li><strong>算力要求</strong>：需要能跑满控制周期的计算资源，嵌入式平台可能受限。</li>
+</ul>
+<h3 id="_13">选型建议</h3>
+<p>如果你的任务里<strong>移动与操作强耦合</strong>（推、拉、搬着重物走），NMPC 的协调性收益明显。如果任务里移动与操作基本解耦（走到桌边停下再操作），分层方案更简单也够用。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>全身 NMPC</th>
+<th>分层（ locomotion + manipulation ）</th>
+<th>全身 RL 策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>协调性</td>
+<td>天然成立（同一优化问题）</td>
+<td>需手工设计补偿通道</td>
+<td>训练中学到</td>
+</tr>
+<tr>
+<td>模型依赖</td>
+<td>强</td>
+<td>中</td>
+<td>弱（靠域随机化）</td>
+</tr>
+<tr>
+<td>实时性</td>
+<td>依赖求解器，C++ 下可行</td>
+<td>高</td>
+<td>高（前向推理）</td>
+</tr>
+<tr>
+<td>可解释性</td>
+<td>高（约束与目标显式）</td>
+<td>高</td>
+<td>低</td>
+</tr>
+<tr>
+<td>长尾泛化</td>
+<td>弱（超出模型假设即退化）</td>
+<td>中</td>
+<td>较强</td>
+</tr>
+</tbody>
+</table>
+<p><strong>实践中的组合</strong>：很多系统用 <strong>NMPC 产出参考轨迹 / 演示数据 → RL 或跟踪控制器在真机上执行</strong>，兼顾约束满足与鲁棒性。这也与该仓库带 <code>data-generation</code> topic 的定位一致。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

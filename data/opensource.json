@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-18T08:30",
+ "lastUpdated": "2026-10-19T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,134 @@
   }
  ],
  "projects": [
+  {
+   "id": "os185",
+   "name": "robonix：用 Rust 写的机器人 Agentic 操作系统，把 VLA/VLM 与 Skill-MD 装进机器人运行时",
+   "github": "https://github.com/syswonder/robonix",
+   "organization": "syswonder",
+   "org": "syswonder",
+   "category": "ai-agent-framework",
+   "description": "**robonix** 自称 **The Agentic Operating System for Robots**——**面向机器人的智能体操作系统**。\n\n**它在补哪一层空白**：ROS 2 解决的是**通信与组件化**（节点、话题、服务、生命周期），但它并不回答「大模型怎么接进来」「技能怎么被 Agent 发现和调用」这些问题。随着 VLA/VLM 进入机器人栈，缺的是一层**把模型能力、技能库、任务编排组织起来的运行时**。\n\n**技术选型值得注意**：**Rust** 实现，许可为 **MulanPSL-2.0**（木兰宽松许可证）。Rust 在机器人系统里的价值是**内存安全与并发安全**——对长期运行、不能崩的机器人运行时来说，这比开发速度更重要。\n\n**Skill-MD**：仓库 topics 里有一个显眼的 `skill-md`。这暗示技能以 **Markdown 描述**的形式被组织与发现——让大模型能直接读懂技能清单并决定调用哪个，而不是靠硬编码的注册表。\n\n**工程信息**：Rust，**MulanPSL-2.0** 许可，402 stars，2025 年 9 月创建、维护至 2026 年 10 月，官网 robonix.ai。topics：agent / embodied-ai / robots / skill-md / vla / vlm。",
+   "language": "Rust",
+   "license": "MulanPSL-2.0",
+   "stars": 402,
+   "features": [
+    "面向机器人的 Agentic 运行时（Agentic OS）",
+    "Rust 实现，内存安全与并发安全",
+    "Skill-MD：以 Markdown 描述技能，便于大模型理解与调用",
+    "对接 VLA / VLM 模型能力",
+    "Agent 编排与技能库管理",
+    "官网 robonix.ai，402 stars",
+    "MulanPSL-2.0 许可（木兰宽松许可证）"
+   ],
+   "tags": [
+    "robonix",
+    "Agentic OS",
+    "机器人操作系统",
+    "Rust",
+    "Skill-MD",
+    "VLA",
+    "VLM",
+    "技能库",
+    "MulanPSL"
+   ],
+   "addedDate": "2026-10-19"
+  },
+  {
+   "id": "os184",
+   "name": "EmbodiChain：DexForce 开源的端到端 GPU 加速模块化具身智能平台，覆盖生成式仿真与数据生成",
+   "github": "https://github.com/DexForce/EmbodiChain",
+   "organization": "DexForce（松应科技）",
+   "org": "DexForce",
+   "category": "framework",
+   "description": "**EmbodiChain** 是一个**端到端、GPU 加速、模块化**的具身智能构建平台。\n\n**它的覆盖面**：从仓库 topics 可以看出它的定位——`generative-simulation`（生成式仿真）、`data-generation`（数据生成）、`motion-generation`（运动生成）、`physics-simulation`（物理仿真）、`real2sim`（真实到仿真）、`gpu-acceleration`、`agents`、`embodied-ai`。换句话说，它想覆盖的是**从场景生成到数据产出再到策略训练前的数据供给**这一段。\n\n**为什么叫 Chain**：具身智能的数据链路天然是一条链——场景生成 → 任务定义 → 轨迹生成 → 数据导出 → 模型训练。传统上每一环都是独立工具，靠脚本和人工串起来，一旦上游改了下游就得跟着改。做成 **Chain** 的价值是把这条链路显式化、模块化，每一环可替换。\n\n**GPU 加速的意义**：具身数据的瓶颈是**规模**。大规模并行仿真是唯一能把数据量提上去的手段，而并行度直接取决于能否把物理与渲染压到 GPU 上批量跑。\n\n**工程信息**：Python，**Apache-2.0** 许可，233 stars，2025 年 10 月创建、持续维护至 2026 年 10 月。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 233,
+   "features": [
+    "端到端链路：场景生成 → 任务定义 → 轨迹生成 → 数据导出",
+    "GPU 加速的大规模并行仿真",
+    "生成式仿真（generative simulation）：自动产出场景与任务",
+    "数据生成与运动生成模块",
+    "real2sim：从真实数据反向构建仿真场景",
+    "模块化设计，各环可替换",
+    "Apache-2.0 许可，可商用"
+   ],
+   "tags": [
+    "EmbodiChain",
+    "DexForce",
+    "松应科技",
+    "GPU加速",
+    "生成式仿真",
+    "数据生成",
+    "real2sim",
+    "模块化平台"
+   ],
+   "addedDate": "2026-10-19"
+  },
+  {
+   "id": "os183",
+   "name": "wb_humanoid_mpc：面向人形全身移动操作的实时非线性 MPC，C++ 实现可上真机",
+   "github": "https://github.com/manumerous/wb_humanoid_mpc",
+   "organization": "manumerous",
+   "org": "manumerous",
+   "category": "locomotion",
+   "description": "**wb_humanoid_mpc** 是一个**面向人形机器人全身移动操作（loco-manipulation）的实时非线性模型预测控制（NMPC）**实现，定位是**规划与控制一体**：既做轨迹规划，也做实时控制。\n\n**它解决什么问题**：人形机器人一边走路一边操作（比如边走边推门、搬着东西上下台阶）时，传统做法是把「移动」和「操作」拆成两个控制器分别求解，再靠优先级或权重去协调。这种拆法在**接触状态发生变化**时容易出问题—— locomotion 控制器不知道末端在推一个重物，manipulation 控制器也不知道脚下要迈一步。\n\n**NMPC 的取舍**：非线性 MPC 在一个优化问题里同时处理全身动力学、接触约束与任务目标，好处是**协调性天然成立**（约束都在同一个问题里），代价是**求解速度**——这也是这类方法能不能上真机的关键。这个仓库用 C++ 实现，正是奔着实时性去的。\n\n**工程信息**：**C++** 实现，**BSD-3-Clause** 许可，383 stars，2024 年 12 月创建、维护至 2026 年 10 月。topics：humanoid / locomotion / mpc / nonlinear / optimization / data-generation。",
+   "language": "C++",
+   "license": "BSD-3-Clause",
+   "stars": 383,
+   "features": [
+    "全身非线性 MPC（Whole-Body NMPC），统一处理移动与操作",
+    "规划与控制一体：同一优化问题输出轨迹与控制量",
+    "面向实时（Realtime）部署，C++ 实现",
+    "全身动力学 + 接触约束在同一优化框架内求解",
+    "可用于数据生成（作为专家控制器产出演示数据）",
+    "BSD-3-Clause 许可，可商用",
+    "383 stars，持续维护两年"
+   ],
+   "tags": [
+    "wb_humanoid_mpc",
+    "人形机器人",
+    "全身MPC",
+    "非线性MPC",
+    "移动操作",
+    "Loco-Manipulation",
+    "实时控制",
+    "C++"
+   ],
+   "addedDate": "2026-10-19"
+  },
+  {
+   "id": "os182",
+   "name": "OMG：清华 MARS Lab 开源的全模态运动生成框架，一套模型统一人形全身控制的多种输入模态",
+   "github": "https://github.com/Tsinghua-MARS-Lab/OMG",
+   "organization": "清华大学 MARS Lab",
+   "org": "清华大学 MARS Lab",
+   "category": "ai-model",
+   "description": "**OMG（Omni-Modal Motion Generation）** 是清华大学 MARS Lab 开源的**面向通用人形控制的全模态运动生成**工作，对应论文 *OMG: Omni-Modal Motion Generation for Generalist Humanoid Control*（arXiv 2606.10340）。\n\n**它要解决的问题**：人形机器人的控制信号来源非常杂——有动捕数据、有视频重建的人体运动、有语言描述、有稀疏的关键帧、也有来自上层规划器的目标位姿。传统做法是为每种输入模态单独训一个模型或在推理时各自走一条分支，结果是**模态一多就难以统一维护**，且不同模态之间的信息无法互相补强。\n\n**做法**：把多种输入模态统一到一个**运动生成模型**里，让模型学会在**任意子集模态可用**时都能生成合理的人形全身运动。这种「全模态」设计的直接收益是部署时的**鲁棒性**——某一路传感器失效或某一模态缺失时，模型不会直接崩掉，而是退化到用剩余模态继续生成。\n\n**工程信息**：Python 实现，**MIT 许可**（可商用），122 stars，项目主页 tsinghua-mars-lab.github.io/OMG/，2026 年 6 月创建、持续维护至 2026 年 10 月。仓库 topics 标注为 general-humanoid-control / humanoid-control / motion-generation / multi-modal-learning / robot-foundation-models。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 122,
+   "features": [
+    "统一多种输入模态的人形运动生成（动捕 / 视频 / 语言 / 稀疏关键帧等）",
+    "面向通用人形控制（Generalist Humanoid Control）而非单一技能",
+    "模态缺失时可退化运行，部署鲁棒性优于单模态分支方案",
+    "MIT 许可，可商用",
+    "配套项目主页与论文，可对照复现",
+    "Python 实现，便于接入既有 RL / 模仿学习管线"
+   ],
+   "tags": [
+    "OMG",
+    "清华MARS Lab",
+    "全模态运动生成",
+    "人形全身控制",
+    "通用人形控制",
+    "运动生成",
+    "多模态学习",
+    "MIT"
+   ],
+   "addedDate": "2026-10-19"
+  },
   {
    "id": "os181",
    "name": "inspect-robots：面向物理 AI 的开源评测框架，任意 LLM/VLA 跑任意机械臂/人形与任意真机/仿真基准",
@@ -4205,5 +4333,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 168
+ "totalItems": 172
 }

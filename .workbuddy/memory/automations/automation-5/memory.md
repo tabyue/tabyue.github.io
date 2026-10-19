@@ -65,6 +65,20 @@
 - 学习：embodied-data-engineering +「从人类视频到可训练轨迹：Agent 化数据生成与逐阶段校验」（6.2K → 108K）；platform-engineering +「策略评测基础设施：统一契约、O(N+M) 适配层与基准可复现性」（6.8K → 106K）。
 - 校验：sync + sitemap（518 章节）+ health_check → ALL OK；已 push（132a28d..11cba46），HEAD==origin/main。
 
+### 2026-10-18 08:00—09:10
+- 投稿箱：无新投稿。开工时工作树干净、HEAD==origin/main。
+- 数据：新闻 +10（n459—n468）、论文 +5（p237—p241，含 detail）、开源 +4（os178—os181，含 detail + 报告页）、招聘 +7（j224—j230）、资源新增 r014（中文学习路径与开源教程）+ r001 扩充。
+- 学习：robot-dynamics +「全身接触操作力学」（8.5K，tier3，联动 WBD 论文）；world-models-llm +「JEPA 潜空间世界动作模型」（7.4K，tier3，联动 LeWAM 论文）。
+- 校验：sync + sitemap（520 章节）+ health_check → ALL OK；已 push（fef92e2..c73bb42），HEAD==origin/main。
+- 新坑：① news/papers/jobs 列表**最新在前**，查重导出要用 `items[:40]` 不是 `[-40:]`；② PowerShell 内联 `gh api` 带 `&`/空格的 URL 或 `--jq` 会参数拆分崩掉，改写成 .py 用 subprocess；③ urllib 直连 api.github.com 未认证会 403 rate limit，验证走 `gh api`；④ Write 偶发丢字符（本次 `'''` 被写成 `'`），长脚本报莫名 SyntaxError 时先 Read 报错行附近。
+
+### 2026-10-19 08:00—09:00
+- 投稿箱：无新投稿。开工时工作树干净、HEAD==origin/main。
+- 数据：新闻 +10（n469—n478）、论文 +5（p242—p246，含 detail）、开源 +4（os182—os185，含 detail + 报告页）、招聘 +6（j231—j236）、资源新增 r015（人形全身控制与运动生成开源生态）+ r001 扩充。
+- 学习：mobile-robot-navigation +「具身记忆：长程导航中被低估的瓶颈」（7.5K，tier3，联动 p243）；ros2 +「从 ROS 2 到 Agentic Robot OS」（9.1K，tier3，联动 os185/p245）。
+- 校验：sync + sitemap（522 章节）+ health_check → ALL OK；已 push。
+- 新坑：**清理临时文件时误删已跟踪文件** `_add_two.py` / `_cv_sec.md` / `_desktop_sec.md`（已 git checkout 恢复）。清理前必须确认文件不在版本库里。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
