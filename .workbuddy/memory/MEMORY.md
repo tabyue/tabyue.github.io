@@ -49,12 +49,19 @@ python tools/build_sitemap.py         # 章节数变化时
 python tools/health_check.py          # 必须 ALL OK
 ```
 health_check 覆盖：JSON 解析 / id 唯一 / 内容查重 / category 白名单 / totalItems / 开源详情+报告页 / 论文 detail+keyInsights / learn-split 一致性 / 全量章节内链 / ASCII 双引号
+- **收尾清理临时脚本必须用 `git rm`，不能只 `Remove-Item`**：`git add -A` 会把根目录 `_*.py` 临时脚本一起提交进仓库（2026-10-20 中招）。保留 `_add_two.py` / `_cv_sec.md` / `_desktop_sec.md`（历史 tracked，误删过）
+- 学习中心体检脚本思路（可复用）：按模块统计 节数/总字数/均字数/薄章(<3000)/长章(>15000)/tier单调性/入门占比/前3节难度与字数/二级标题数
 
 ## 学习中心
 - **32 模块，核心原则：内容完整性 > 字数**（2026-05-29 Tab 明确，不要盲目追 100K）
 - 现状（2026-10-08）：vla-models 226K/25 sec、humanoid-fullstack 137K、ai-infra 111K/24 sec；最薄 ~93K（embodied-data-engineering）；sitemap 500 章节
 - 策略：**配合本轮新论文/新闻联动追加 section**，让前沿成果进入教学体系
-- 「AI Infra 具身基础设施」(id=ai-infra) 是混合型模块：A 类跳转章节（仅简介+深链）/ B 类跨模块整合 / C 类独家内容，设计原则是 0 内容重复
+- 「AI Infra 具身基础设施」(id=ai-infra) 是混合型模块：A 类跳转章节（仅简介+深链）/ B 类跨模块整合 / C 类独家内容，设计原则是 0 内容重复。**2026-10-20 已把 8 个 A 类残章（546-795 字）补到 2786-3727 字**——纯跳转空页太劝退，跳转入口保留但前面必须有能独立学到的正文
+- **`tools/restructure_learn.py:short_of()` 的切分字符集禁止再包含 ASCII 连字符 `-`**（2026-10-20 已修）。含它会把 `KV-Cache`→`KV`、`Sim-to-Real`→`Sim`、`Wall-OSS`→`Wall`、`CLF-RL`→`CLF`、`Newton-Euler`→`Newton` 切成碎片，大纲页/侧边栏直接不可读。现用 `SPLIT_RE=[：:｜|—–（(]` + `_is_fragment()` 回退
+- **章节顺序约束（硬）**：大纲页按 tier 分组渲染、组内保持数组原序。`/learn/<mod>/<n>` 的 n 就是数组下标，所以
+  1. **tier 必须单调不减**——非单调会让大纲页章节顺序错乱（academic-english / cloud-edge / world-models-llm 曾中招，用 isotonic 抬升修正，只改 tier 值不动顺序）
+  2. **新增章节只能在末尾 append，禁止插到中间/开头**——插中间会让后续编号全部平移，站内硬编码内链 `/learn/x/N` 集体失效 → health_check [9] FAIL
+  3. 要改善某模块开局的陡峭度，**原地扩写第 1 节**，不要插入新章节
 - 数学与编程模块要求教材级（公理化定义、定理证明、数学史、误区、习题）
 - **模块/章节命名要 ASCII 友好**，避免 emoji 与中文括号污染 modId
 - 每轮深化后必须同步 3 处 lastUpdated：learn/*.json 顶层 + learning-path.json 对应模块（modules[].lastUpdated，用 `name` 匹配）+ 新增 section 自身

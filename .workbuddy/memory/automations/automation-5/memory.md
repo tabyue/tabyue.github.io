@@ -133,3 +133,8 @@
 - **arXiv export API 会 429（2026-10-17）**：取论文元数据改用 `WebFetch https://arxiv.org/abs/<id>`，稳定拿到标题/作者/提交日期/摘要。
 - **jobs.json 存在无 `url` 键的条目（2026-10-17）**：查重写 `x['url']` 会 `KeyError`，一律 `x.get('url','')`。
 - **learning-path 模块名与 learn/*.json 的 name 有 3 处不一致（2026-10-17）**：`platform-engineering`(具身智能平台工程)→LP「MLOps与持续交付」；`cloud-edge-collaboration`(云边协同)→「云边端协同架构」；`embodied-agent`(具身Agent系统)→「具身Agent实战项目」。按 name 精确匹配会**静默漏 bump**，需维护别名表。
+- **收尾清理临时脚本必须用 `git rm` 不能只 `Remove-Item`（2026-10-20）**：`git add -A` 会把根目录 `_*.py` 临时脚本一起提交进仓库，只删磁盘文件会留下「已删除未提交」的脏状态。保留 `_add_two.py` / `_cv_sec.md` / `_desktop_sec.md`（历史 tracked）。
+- **学习中心可学性体检维度（2026-10-20，可复用）**：32 模块 / 531 章 / 3661K 字，均 6895 字/节。按模块统计：节数 / 总字数 / 均字数 / 薄章(<3000) / 长章(>15000) / tier 单调性 / 入门章节占比 / 前 3 节难度与字数 / `###` 二级标题数（前端小节目录吃 `###`，不是 `##`）。用户反馈「学不进去」时先跑这个，不要盲目扩量——本次结论是内容量充足、入口可读性才是瓶颈。
+- **`tools/restructure_learn.py:short_of()` 禁止再引入 ASCII 连字符 `-`（2026-10-20 修复）**：切碎了 59 个标题（KV-Cache→KV、Sim-to-Real→Sim、Wall-OSS→Wall、Newton-Euler→Newton）。已改为 `SPLIT_RE=[：:｜|—–（(]` + 碎片回退。
+- **tier 必须单调不减（2026-10-20）**：index.html:1824 按 tier 分组渲染大纲且组内保持数组原序，非单调 → 大纲页章节顺序错乱。修正用 isotonic（抬升 + 步长≤1），**只改 tier 值不动数组顺序**（动顺序会让 `/learn/<mod>/<n>` 编号平移、站内硬编码内链集体失效）。
+- **长章节不要拆分（2026-10-20）**：拆一节 = 后续编号全平移 + 内链失效。改为在开头自动生成「本节导航」引用块（字数 / 小节数 / 建议分钟 / 优先阅读路径 / 全节结构），renderMd 支持 blockquote（index.html:2235）和 markdown 表格（2296）。
