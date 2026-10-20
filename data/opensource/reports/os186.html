@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhyAgentOS-core：递归自改进（RSI）的物理智能体操作系统，让 Agent 用 agentic workflow 迭代自身 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">PhyAgentOS-core：递归自改进（RSI）的物理智能体操作系统，让 Agent 用 agentic workflow 迭代自身 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="phyagentos-corersi-agent-agentic-workflow">PhyAgentOS-core：递归自改进（RSI）的物理智能体操作系统，让 Agent 用 agentic workflow 迭代自身</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/PhyAgentOS/PhyAgentOS-core">https://github.com/PhyAgentOS/PhyAgentOS-core</a>  </p>
+<p><strong>Stars</strong>: 2989 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-10-20  </p>
+<p><strong>组织</strong>: PhyAgentOS  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-20</p>
+</blockquote>
+<hr />
+<p><strong>PhyAgentOS</strong> 的定位一句话概括：<strong>让具身 Agent 能改自己</strong>。</p>
+<h3 id="_2">三层缺口</h3>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>代表</th>
+<th>解决什么</th>
+<th>没解决什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通信与组件化</td>
+<td>ROS 2</td>
+<td>节点、话题、服务、生命周期</td>
+<td>模型怎么接进来</td>
+</tr>
+<tr>
+<td>Agent 编排</td>
+<td>RAI / robonix</td>
+<td>技能发现、任务编排、工具调用</td>
+<td>Agent 怎么改自己</td>
+</tr>
+<tr>
+<td><strong>自改进</strong></td>
+<td><strong>PhyAgentOS</strong></td>
+<td><strong>harness 的评估、修改与版本化</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">为什么自改进必须被系统化</h3>
+<p>本轮多条工作（Harness VLA、RAX、EMHO）指向同一结论：<strong>模型能力的释放取决于它外面那层 harness</strong>。但 harness 目前基本靠人手写，改一次要一轮工程迭代。如果 harness 可以被 Agent 自己评估和修改，迭代周期就从「人天」降到「小时」。</p>
+<h3 id="_4">适用与不适用</h3>
+<p><strong>适合</strong>：已经有稳定的模型与工具接口、想加速系统层迭代的团队；需要把「经验 → 系统改动」这条链路自动化的场景。
+<strong>不适合</strong>：连基础工具链都还不稳的早期项目——自改进的前提是有一个可评估的基线，基线不收敛时自我修改只会放大噪声。</p>
+<hr />
+<h3 id="_5">分层</h3>
+<pre><code>   任务 / 用户指令
+          |
+          v
+   Agentic Workflow 层（执行任务、产生经验轨迹）
+          |  经验 + 评估结果
+          v
+   自改进层（RSI）：诊断 -&gt; 提出 harness 改动 -&gt; 验证 -&gt; 采纳/回滚
+          |  版本化的 harness
+          v
+   Harness 层（规划 / 记忆 / 上下文构建 / 工具编排 / 动作校验 / 失败恢复）
+          |
+          v
+   模型能力层（VLM / VLA / WAM）与机器人运行时
+</code></pre>
+<h3 id="_6">关键设计：改动要可回滚</h3>
+<p>自改进系统的可靠与否，取决于<strong>能不能安全地拒绝一次坏改动</strong>。因此 harness 必须版本化，每次改动都要在留出任务集上回归验证，收益为正才合并，为负则回滚。这与软件开发里的 CI 是同一个道理，只是被改的对象从代码变成了提示与编排逻辑。</p>
+<h3 id="embodiedevo-aspire">与 EmbodiedEvo / ASPIRE 的差别</h3>
+<p>ASPIRE 与 EmbodiedEvo 演化的对象是<strong>技能库</strong>，PhyAgentOS 演化的对象是<strong>整套 harness</strong>——包括进度判断、感知工具调度、视觉 grounding 的落实方式。范围更大，风险也更高，因此更需要严格的回归验证机制。</p>
+<hr />
+<ul>
+<li><strong><a href="https://harnessvla.github.io/">Harness VLA</a></strong> — 把 VLA 收缩为 VLA_ACT 原语、由 Agentic Planner 组织的系统层思路，与 PhyAgentOS 的 harness 抽象同源。</li>
+<li><strong><a href="https://www.163.com/dy/article/L9KN546205569K8R.html">RAX: Scaling Online Exploration for Robot Agents</a></strong> — 让机器人智能体把在线探索固化为可复用程序，是「经验 → 系统资产」的实例。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.20134">EMHO: Embodied Agent Harness Optimization via Experience Traces</a></strong> — 把整套 harness 当优化对象，并给出多子任务共享时的增益—损失感知合并策略。</li>
+<li><strong><a href="https://github.com/NVlabs/ASPIRE">ASPIRE</a></strong> — NVIDIA GEAR Lab 的持续技能发现，演化对象是技能库而非 harness。</li>
+</ul>
+<hr />
+<h3 id="_7">环境</h3>
+<p>Python 技术栈，MIT 许可。</p>
+<pre><code class="language-bash">git clone https://github.com/PhyAgentOS/PhyAgentOS-core.git
+cd PhyAgentOS-core
+pip install -e .
+</code></pre>
+<h3 id="_8">建议的上手顺序</h3>
+<ol>
+<li><strong>先跑一个固定 harness 的最小任务</strong>，建立成功率基线。没有基线的自改进无法判断收益。</li>
+<li><strong>准备留出任务集</strong>：与训练/调试任务同分布但不重合，用于回归验证。</li>
+<li><strong>开启自改进闭环，但先只放开提示词级别的改动</strong>，观察改动是否可解释。</li>
+<li><strong>逐步放开编排与工具调度级别的改动</strong>，每一步都记录收益/损失。</li>
+<li><strong>把每次改动沉淀成 diff</strong>，人工审一遍——自改进不等于无人审。</li>
+</ol>
+<h3 id="_9">落地提醒</h3>
+<p>具身场景的反馈信号稀疏且诊断性弱（常只有「动作合法/非法」与回合末的 0/1），因此<strong>归因</strong>是自改进的最大难点：一个回合几十步，很难定位是哪一步导致的失败。上线前应先把轨迹日志与中间态观测做扎实，否则自改进只能盲改。</p>
+<hr />
+<h3 id="_10">定位性收益</h3>
+<ul>
+<li><strong>把系统层迭代从「人天」压到「小时」</strong>：harness 改动不再需要一轮工程排期。</li>
+<li><strong>MIT 许可 + 2989 stars + 128 forks</strong>：社区基础与商业集成门槛都较好。</li>
+<li><strong>维护活跃</strong>：2026 年 3 月创建、持续维护至 2026 年 10 月。</li>
+</ul>
+<h3 id="_11">需要自行验证的点</h3>
+<ul>
+<li>自改进在<strong>稀疏反馈</strong>下的归因能力；</li>
+<li>多子任务共享一个 harness 时的改动冲突（这正是 EMHO 提出的 EMHO-Merge 要解决的问题）；</li>
+<li>长期运行中的灾难性遗忘风险——改来改去可能把早期有效的行为覆盖掉。</li>
+</ul>
+<h3 id="_12">与同类项目的对照维度</h3>
+<p>评估这类系统时，建议只看三个指标：<strong>留出任务集上的成功率增量</strong>、<strong>单个改动的平均验证成本</strong>、<strong>回滚率</strong>。回滚率过高说明归因不准，验证成本过高说明不适合高频迭代。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>PhyAgentOS</th>
+<th>robonix（Rust）</th>
+<th>RAI（ROS 2 原生）</th>
+<th>ASPIRE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>演化对象</td>
+<td><strong>整套 harness</strong></td>
+<td>运行时语义 + 技能库</td>
+<td>ROS 2 之上的 Agent 框架</td>
+<td>技能库</td>
+</tr>
+<tr>
+<td>语言</td>
+<td>Python</td>
+<td>Rust</td>
+<td>Python</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+<td>MulanPSL-2.0</td>
+<td>Apache-2.0</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>核心命题</td>
+<td>Agent 改自己</td>
+<td>机器人 Agentic OS</td>
+<td>模型接入与编排</td>
+<td>持续技能发现</td>
+</tr>
+<tr>
+<td>stars</td>
+<td>2989</td>
+<td>402</td>
+<td>602</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>四者并不互斥：可以把 PhyAgentOS 的自改进层套在 RAI 或 robonix 提供的编排层之上。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

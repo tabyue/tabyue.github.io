@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-19T08:30",
+ "lastUpdated": "2026-10-20T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,129 @@
   }
  ],
  "projects": [
+  {
+   "id": "os189",
+   "name": "omnisim：为编码智能体设计的开源机器人仿真器，HTTP/JSON + MCP 控制、Newton 物理、可复现基准",
+   "github": "https://github.com/omnilink-tech/omnisim",
+   "organization": "Omnilink",
+   "org": "omnilink-tech",
+   "category": "simulation",
+   "description": "**omnisim** 的定位是 **open-source robotics simulator for coding agents**——一个**给编码智能体（coding agent）用**的开源机器人仿真器。\n**它与传统仿真器的根本差别在接口**：Isaac Lab / MuJoCo / Gazebo 假定使用者是**人写 Python/C++ 脚本**；omnisim 假定使用者是**AI Agent**，因此把控制面做成 **HTTP/JSON + MCP（Model Context Protocol）**，让 Agent 能直接通过标准协议驱动仿真、读取状态、跑基准。\n**技术栈**：**Newton 物理引擎** + wgpu 渲染 + ROS 2 对接 + 可复现基准。topics 覆盖 agentic-ai / mcp / model-context-protocol / gpu-physics / humanoid-robotics / mujoco / digital-twin 等。\n**工程数据**：188 stars、10 forks，2026 年 5 月创建、最近推送 2026-10-18，Apache-2.0 许可。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 188,
+   "features": [
+    "面向编码智能体的机器人仿真器",
+    "HTTP/JSON + MCP（Model Context Protocol）控制接口",
+    "Newton 物理引擎 + wgpu 渲染",
+    "ROS 2 对接能力",
+    "内置可复现基准（reproducible benchmarks）",
+    "数字孪生场景支持，Apache-2.0 许可"
+   ],
+   "tags": [
+    "omnisim",
+    "编码智能体",
+    "MCP",
+    "Model Context Protocol",
+    "Newton物理",
+    "机器人仿真",
+    "可复现基准",
+    "Digital Twin"
+   ],
+   "addedDate": "2026-10-20"
+  },
+  {
+   "id": "os188",
+   "name": "hflow：给机器人团队做「训练数据质量验证」的 SDK，把数据体检做成可复现的流水线步骤",
+   "github": "https://github.com/Hebbian-Robotics/hflow",
+   "organization": "Hebbian Robotics",
+   "org": "Hebbian-Robotics",
+   "category": "data-tools",
+   "description": "**hflow** 的定位是 **SDK for robotics teams to verify the quality of their data used for AI model training**——给机器人团队验证「喂给 AI 模型的数据到底好不好」的 SDK。\n**它在补哪一层**：整个具身社区这两年把注意力都放在模型和数据规模上，但**数据质量**一直缺少工具化的答案——大家靠看几条 Rerun/Foxglove 录播、靠训练完才发现数据有问题。hflow 主张把质量检查变成**可复现、可版本化的流水线步骤**，而不是一次性的人工抽查。\n**生态位**：topics 覆盖 **mcap / parquet / duckdb / foxglove / rerun / lerobot / multimodal / data-quality / physical-ai**，说明它定位在机器人数据的标准格式层之上、模型训练层之下。\n**工程数据**：301 stars、**161 forks**（fork 数接近 star 数的一半，说明有较多团队在改造自用），2026 年 8 月创建、最近推送 2026-10-19，Apache-2.0 许可。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 301,
+   "features": [
+    "面向机器人 AI 训练数据的质量验证 SDK",
+    "覆盖 MCAP / Parquet 等机器人数据标准格式",
+    "基于 DuckDB 做大规模数据集的查询与统计",
+    "与 Foxglove / Rerun 可视化生态对接",
+    "兼容 LeRobot 数据集约定",
+    "Apache-2.0，161 forks，工程可改造性强"
+   ],
+   "tags": [
+    "hflow",
+    "数据质量",
+    "Data Quality",
+    "MCAP",
+    "Parquet",
+    "DuckDB",
+    "LeRobot",
+    "Physical AI"
+   ],
+   "addedDate": "2026-10-20"
+  },
+  {
+   "id": "os187",
+   "name": "BFM-Zero：可提示的行为基础模型，用无监督 RL 让人形机器人零样本执行多样下游任务",
+   "github": "https://github.com/LeCAR-Lab/BFM-Zero",
+   "organization": "LeCAR-Lab",
+   "org": "LeCAR-Lab",
+   "category": "ai-model",
+   "description": "**BFM-Zero** 全称为 **A Promptable Behavioral Foundation Model for Humanoid Control Using Unsupervised Reinforcement Learning**——用**无监督强化学习**训练出的**可提示（promptable）人形控制行为基础模型**。\n**核心命题**：能不能不依赖任何任务奖励或外部监督，先让智能体在环境里自主探索出一大片行为，之后**只用一句提示**就把它引导到具体任务上？如果成立，人形控制就不必为每个任务重训一次。\n**技术路线**：无监督 RL 预训练（行为多样性最大化）+ 提示条件化。topics：humanoid / reinforcement-learning / sim2real / unsupervised-learning。\n**工程数据**：819 stars、75 forks，2025 年 11 月创建、最近推送 2026-10-19，项目页 lecar-lab.github.io/BFM-Zero/。注意：仓库**未声明开源许可证**（license 字段为空），商用前需联系作者确认。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 819,
+   "features": [
+    "可提示（promptable）的人形控制行为基础模型",
+    "无监督强化学习预训练，不依赖任务奖励",
+    "零样本执行下游任务，避免逐任务重训",
+    "覆盖 sim2real 迁移路径",
+    "819 stars / 75 forks，项目页含演示",
+    "Python 实现，便于与常见 RL 栈对接"
+   ],
+   "tags": [
+    "BFM-Zero",
+    "行为基础模型",
+    "无监督强化学习",
+    "人形控制",
+    "Promptable",
+    "零样本",
+    "Sim2Real"
+   ],
+   "addedDate": "2026-10-20"
+  },
+  {
+   "id": "os186",
+   "name": "PhyAgentOS-core：递归自改进（RSI）的物理智能体操作系统，让 Agent 用 agentic workflow 迭代自身",
+   "github": "https://github.com/PhyAgentOS/PhyAgentOS-core",
+   "organization": "PhyAgentOS",
+   "org": "PhyAgentOS",
+   "category": "ai-agent-framework",
+   "description": "**PhyAgentOS** 自称 **Recursive Self-Improving (RSI) physical agent operating system**——一套让智能体**通过 agentic workflow 递归地自我改进**的物理智能体操作系统。\n**它在补哪一层**：ROS 2 解决通信与组件化，RAI / robonix 解决 ROS 2 之上的 Agent 编排，但「Agent 如何**改自己**」这一层仍缺系统答案。PhyAgentOS 把 self-evolution 当成一等公民：harness（规划、记忆、工具编排、校验）不再由人手写死，而是可以被 Agent 自己评估、修改与版本化。\n**技术选型**：Python 实现，**MIT** 许可（对商业集成最友好），2026 年 3 月创建、维护至 2026 年 10 月。topics：agent / embodied-agent / embodied-ai / **harness** / **rsi** / **self-evolution** / claw。\n**工程数据**：2989 stars、128 forks，最近推送 2026-10-19，官网 phy-agent-os.x-era.com。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 2989,
+   "features": [
+    "递归自改进（RSI）的物理智能体运行时",
+    "以 harness 为一等抽象：规划 / 记忆 / 工具编排 / 校验均可被演化",
+    "agentic workflow 驱动的自评估与自修改闭环",
+    "面向具身场景（embodied-agent / embodied-ai）而非纯软件 Agent",
+    "MIT 许可，128 forks，商业集成门槛低",
+    "Python 实现，易于与现有 VLA / VLM 栈对接"
+   ],
+   "tags": [
+    "PhyAgentOS",
+    "RSI",
+    "递归自改进",
+    "Harness",
+    "Self-Evolution",
+    "具身Agent",
+    "Agentic Workflow",
+    "MIT"
+   ],
+   "addedDate": "2026-10-20"
+  },
   {
    "id": "os185",
    "name": "robonix：用 Rust 写的机器人 Agentic 操作系统，把 VLA/VLM 与 Skill-MD 装进机器人运行时",
@@ -4333,5 +4456,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 172
+ "totalItems": 176
 }
