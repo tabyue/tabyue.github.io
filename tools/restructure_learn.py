@@ -75,10 +75,29 @@ def clean_title(t):
     return t, tag
 
 
+# 切分字符集里**绝不能**包含 ASCII 连字符 '-'：
+# 否则 KV-Cache / Sim-to-Real / Wall-OSS / CLF-RL / 3D-aware / Newton-Euler /
+# Hand-in-the-Loop 这类术语会被切成无意义碎片（KV / Sim / Wall / CLF / 3D / Newton / Hand），
+# 大纲页和侧边栏会变得完全不可读。历史 bug，改这里前先想清楚。
+SPLIT_RE = re.compile(r'[：:｜|—–（(]')
+
+
+def _is_fragment(s):
+    """切断后剩下的若是无意义碎片，就放弃切分、用完整标题。
+
+    判定：长度 <4；或长度 <=3 的纯 ASCII（KV / Sim / Real / 3D / CLF / AR 这类缩写）。
+    """
+    if len(s) < 4:
+        return True
+    if len(s) <= 3 and all(ord(ch) < 128 for ch in s):
+        return True
+    return False
+
+
 def short_of(t, limit=22):
     """侧边栏短标题：优先取冒号/破折号前的主标题"""
-    head = re.split(r'[：:｜|｜—–\-–（(]', t, 1)[0].strip()
-    if not head:
+    head = SPLIT_RE.split(t, 1)[0].strip()
+    if not head or _is_fragment(head):
         head = t
     if len(head) > limit:
         head = head[:limit] + '…'

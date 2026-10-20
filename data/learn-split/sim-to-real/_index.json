@@ -1,7 +1,7 @@
 {
   "id": "sim-to-real",
   "name": "Sim-to-Real 迁移",
-  "lastUpdated": "2026-10-13T10:36",
+  "lastUpdated": "2026-10-20T10:20",
   "stage": "阶段五：仿真与 Sim-to-Real",
   "importance": "核心",
   "estimatedHours": 40,
@@ -83,7 +83,7 @@
       "title": "Teacher-Student 蒸馏",
       "lastUpdated": "",
       "chars": 8870,
-      "shortTitle": "Teacher",
+      "shortTitle": "Teacher-Student 蒸馏",
       "difficulty": "中级",
       "estimatedMinutes": 10,
       "tier": 1
@@ -103,7 +103,7 @@
       "title": "Real-to-Sim自动化建模：从真实世界到仿真",
       "lastUpdated": "2026-04-27T00:45",
       "chars": 3251,
-      "shortTitle": "Real",
+      "shortTitle": "Real-to-Sim自动化建模",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1
@@ -113,7 +113,7 @@
       "title": "Real-to-Sim-to-Real 闭环",
       "lastUpdated": "",
       "chars": 12353,
-      "shortTitle": "Real",
+      "shortTitle": "Real-to-Sim-to-Real 闭环",
       "difficulty": "中级",
       "estimatedMinutes": 14,
       "tier": 1
@@ -141,9 +141,9 @@
     {
       "id": "sec-09",
       "title": "Sim-to-Real Gap 定量诊断与调优",
-      "lastUpdated": "2026-04-22T07:00",
-      "chars": 16660,
-      "shortTitle": "Sim",
+      "lastUpdated": "2026-10-20T10:20",
+      "chars": 16921,
+      "shortTitle": "Sim-to-Real Gap…",
       "difficulty": "高级",
       "estimatedMinutes": 19,
       "tier": 2
@@ -153,7 +153,7 @@
       "title": "人体动作重定向与 Real-to-Sim 数据引擎：从 IK/MPC 到生成式流形采样",
       "lastUpdated": "2026-10-11T08:30",
       "chars": 7454,
-      "shortTitle": "人体动作重定向与 Real",
+      "shortTitle": "人体动作重定向与 Real-to-Sim…",
       "difficulty": "高级",
       "estimatedMinutes": 11,
       "tier": 2
@@ -177,6 +177,17 @@
       "shortTitle": "3DGS 高吞吐量仿真",
       "difficulty": "高级",
       "estimatedMinutes": 8,
+      "isFrontier": true,
+      "tier": 3
+    },
+    {
+      "id": "sec-13",
+      "title": "从真机失败到仿真复现：real-to-sim 的自动构建、参数拟合与失败库",
+      "lastUpdated": "2026-10-20T10:45",
+      "chars": 7735,
+      "shortTitle": "从真机失败到仿真复现",
+      "difficulty": "高级",
+      "estimatedMinutes": 45,
       "isFrontier": true,
       "tier": 3
     }

@@ -1,0 +1,246 @@
+=== modules sorted by size ===
+   98.1K | academic-english               | AI 与机器人学术英语 | 16 secs | 2026-10-13T10:36
+   99.0K | desktop-arm-project            | 桌面级机械臂项目 | 19 secs | 2026-10-13T10:36
+  102.8K | mechanical-design              | 机械设计基础 | 19 secs | 2026-10-13T10:36
+  102.8K | cpp-fundamentals               | C++ 编程基础 | 20 secs | 2026-10-13T10:36
+  102.9K | python-scientific-computing    | Python 编程与科学计算 | 16 secs | 2026-10-13T10:36
+  103.4K | sensors-hardware               | 传感器与硬件接口 | 18 secs | 2026-10-13T10:36
+  103.5K | sim-to-real                    | Sim-to-Real 迁移 | 12 secs | 2026-10-13T10:36
+  103.8K | 3d-vision-pointcloud           | 3D 视觉与点云 | 10 secs | 2026-10-13T10:36
+  104.6K | physics-simulation             | 物理仿真引擎 | 16 secs | 2026-10-13T10:36
+  104.7K | control-theory                 | 控制理论 | 17 secs | 2026-10-13T10:36
+  105.3K | calculus-optimization          | 微积分与优化 | 19 secs | 2026-10-13T10:36
+  106.2K | robot-kinematics               | 机器人运动学 | 17 secs | 2026-10-13T10:36
+  106.4K | robot-dynamics                 | 机器人动力学 | 16 secs | 2026-10-18T08:30
+  106.4K | computer-vision                | 计算机视觉基础 | 14 secs | 2026-10-13T10:36
+  106.6K | platform-engineering           | 具身智能平台工程 | 19 secs | 2026-10-17T08:30
+  107.0K | multimodal-perception          | 多模态感知 | 9 secs | 2026-10-15T08:45
+  107.1K | probability-statistics         | 概率与统计 | 18 secs | 2026-10-13T10:36
+  107.6K | training-inference-optimization | 模型训练与推理优化 | 17 secs | 2026-10-13T10:36
+  108.0K | deep-learning                  | 深度学习基础 | 11 secs | 2026-10-14T09:30
+  108.5K | cloud-edge-collaboration       | 云边端协同 | 11 secs | 2026-10-15T08:45
+  108.5K | embodied-data-engineering      | 具身数据工程 | 18 secs | 2026-10-17T08:30
+  109.0K | reinforcement-learning         | 强化学习 | 18 secs | 2026-10-16T08:45
+  111.2K | mobile-robot-navigation        | 移动机器人导航项目 | 17 secs | 2026-10-19T08:30
+  111.3K | ai-infra                       | AI Infra 具身基础设施 | 24 secs | 2026-10-13T10:36
+  111.5K | ros2                           | ROS2 机器人操作系统 | 15 secs | 2026-10-19T08:30
+  118.5K | data-collection                | 数据采集与管理 | 9 secs | 2026-10-13T10:36
+  118.6K | embodied-agent                 | 具身Agent系统 | 14 secs | 2026-10-20T08:30
+  119.0K | linear-algebra                 | 线性代数 | 18 secs | 2026-10-13T10:36
+  119.8K | world-models-llm               | 世界模型与LLM+机器人 | 13 secs | 2026-10-18T08:30
+  128.0K | imitation-learning             | 模仿学习 | 18 secs | 2026-10-20T08:30
+  136.3K | humanoid-fullstack             | 人形机器人全栈项目 | 21 secs | 2026-10-13T10:36
+  225.9K | vla-models                     | VLA 模型 (Vision-Language-Action) | 25 secs | 2026-10-13T10:36
+
+=== target section lists ===
+== sim-to-real | Sim-to-Real 迁移 | 12 secs | lastUpdated=2026-10-13T10:36
+   [0] t=0 | Domain Randomization | 10089c
+   [1] t=1 | System Identification | 8845c
+   [2] t=1 | Teacher | 8870c
+   [3] t=1 | 视觉域迁移 | 9934c
+   [4] t=1 | Real | 3251c
+   [5] t=1 | Real | 12353c
+   [6] t=2 | 自适应Domain Randomizatio… | 3036c
+   [7] t=2 | 领域不变特征学习 | 10133c
+   [8] t=2 | Sim | 16660c
+   [9] t=2 | 人体动作重定向与 Real | 7454c
+   [10] t=3 | 视频世界模型评测 | 6746c
+   [11] t=3 | 3DGS 高吞吐量仿真 | 6161c
+   sec keys: chars,content,difficulty,estimatedMinutes,shortTitle,tier,title
+== 3d-vision-pointcloud | 3D 视觉与点云 | 10 secs | lastUpdated=2026-10-13T10:36
+   [0] t=0 | 深度相机与点云采集 | 9273c
+   [1] t=1 | 点云处理 | 10579c
+   [2] t=1 | SLAM 基础 | 6857c
+   [3] t=1 | 6DoF 位姿估计与抓取规划 | 15023c
+   [4] t=2 | 深度学习点云处理 | 20939c
+   [5] t=2 | NeRF 与 3D Gaussian Spl… | 12731c
+   [6] t=2 | 透明/反光物体的深度感知与补全 | 2822c
+   [7] t=2 | 多视角视觉融合与主动感知 | 11073c
+   [8] t=2 | 动态场景与形变物体 | 10009c
+   [9] t=3 | 语言引导3D场景理解 | 4537c
+   sec keys: chars,content,difficulty,estimatedMinutes,shortTitle,tier,title
+== physics-simulation | 物理仿真引擎 | 16 secs | lastUpdated=2026-10-13T10:36
+   [0] t=0 | MuJoCo | 12435c
+   [1] t=0 | 物理仿真基础 | 3204c
+   [2] t=1 | MuJoCo 深入 | 4382c
+   [3] t=1 | NVIDIA Isaac Lab | 4647c
+   [4] t=1 | Genesis 与仿真器选型 | 6184c
+   [5] t=1 | 仿真基准与性能对比 | 2848c
+   [6] t=1 | 场景构建与资产管理 | 5784c
+   [7] t=1 | 仿真环境设计 | 3196c
+   [8] t=1 | Sim | 4589c
+   [9] t=2 | 可微分仿真与基于梯度的轨迹优化 | 2069c
+   [10] t=2 | 可微分仿真 | 3703c
+   [11] t=2 | 接触动力学与约束求解器 | 8675c
+   [12] t=2 | GPU 大规模并行仿真 | 8377c
+   [13] t=2 | 触觉仿真与软体物理 | 10487c
+   [14] t=3 | 视频世界模型 | 10948c
+   [15] t=3 | VLA 时代的物理仿真 | 13092c
+   sec keys: chars,content,difficulty,estimatedMinutes,lastUpdated,shortTitle,tier,title
+== control-theory | 控制理论 | 17 secs | lastUpdated=2026-10-13T10:36
+   [0] t=0 | 控制论基础 | 4144c
+   [1] t=0 | PID 控制 | 12695c
+   [2] t=0 | 状态估计基础 | 3729c
+   [3] t=1 | Lyapunov 稳定性理论与控制设计 | 2706c
+   [4] t=1 | LQR 最优控制 | 7943c
+   [5] t=1 | 模型预测控制 | 7633c
+   [6] t=1 | 模型预测控制 | 3796c
+   [7] t=1 | 计算力矩控制与全身力矩优化 | 2816c
+   [8] t=1 | 阻抗/导纳控制 | 6067c
+   [9] t=1 | 自适应控制与鲁棒控制 | 10077c
+   [10] t=2 | 最优控制理论 | 2723c
+   [11] t=2 | 滑模控制与干扰观测器 | 2935c
+   [12] t=2 | 强化学习控制器与经典控制器的混合架构 | 2561c
+   [13] t=2 | 动作平滑性与高阶约束 | 6413c
+   [14] t=3 | VLA 时代的控制系统 | 11655c
+   [15] t=3 | 多机器人协作控制 | 8888c
+   [16] t=3 | CLF | 7887c
+   sec keys: chars,content,difficulty,estimatedMinutes,lastUpdated,shortTitle,tier,title
+== sensors-hardware | 传感器与硬件接口 | 18 secs | lastUpdated=2026-10-13T10:36
+   [0] t=0 | 电子学基础 | 3302c
+   [1] t=0 | 电源系统设计 | 2292c
+   [2] t=0 | 传感器标定与误差分析 | 4175c
+   [3] t=1 | 激光雷达 | 6696c
+   [4] t=1 | LiDAR 技术深入 | 2836c
+   [5] t=1 | IMU 与惯性导航 | 4452c
+   [6] t=1 | 视觉传感器选型指南 | 2598c
+   [7] t=1 | 相机系统设计 | 3460c
+   [8] t=1 | 触觉与力传感器 | 3153c
+   [9] t=1 | 触觉传感器 | 4112c
+   [10] t=1 | 力/力矩传感器 | 2424c
+   [11] t=1 | 编码器与电机反馈 | 3496c
+   [12] t=1 | 传感器数据融合 | 4315c
+   [13] t=2 | IMU 姿态估计三大算法 | 17601c
+   [14] t=2 | 深度相机原理、标定与多相机融合 | 19597c
+   [15] t=2 | 多传感器时间同步与硬件触发 | 3797c
+   [16] t=3 | 力/力矩传感器全栈工程 | 5425c
+   [17] t=3 | 多模态主动感知 | 9641c
+   sec keys: chars,content,difficulty,estimatedMinutes,lastUpdated,shortTitle,tier,title
+== computer-vision | 计算机视觉基础 | 14 secs | lastUpdated=2026-10-13T10:36
+   [0] t=0 | 计算机视觉基础 | 3004c
+   [1] t=0 | 图像处理 | 9364c
+   [2] t=1 | 目标检测 | 10158c
+   [3] t=1 | 图像分割与语义理解 | 10084c
+   [4] t=1 | 视觉基础模型 | 13766c
+   [5] t=1 | 开放词汇检测与Grounding | 3128c
+   [6] t=1 | 多视图几何与相机标定 | 12530c
+   [7] t=1 | 3D 视觉与点云处理 | 3326c
+   [8] t=1 | 姿态估计 | 8026c
+   [9] t=2 | 视觉伺服与闭环抓取控制 | 2804c
+   [10] t=2 | 视觉伺服与 6D 物体位姿估计 | 3422c
+   [11] t=3 | 事件相机 | 11316c
+   [12] t=3 | VLA 时代的视觉数据引擎 | 3795c
+   [13] t=3 | VLA 时代的视觉编码器 | 11708c
+   sec keys: chars,content,difficulty,estimatedMinutes,lastUpdated,shortTitle,tier,title
+== desktop-arm-project | 桌面级机械臂项目 | 19 secs | lastUpdated=2026-10-13T10:36
+   [0] t=0 | 开源桌面臂硬件生态 | 2344c
+   [1] t=0 | 硬件选型与组装 | 4607c
+   [2] t=0 | 机械臂数学基础 | 4681c
+   [3] t=0 | 桌面机械臂运动学 | 4447c
+   [4] t=0 | 桌面机械臂控制基础 | 4563c
+   [5] t=0 | ROS2 与机械臂驱动 | 5170c
+   [6] t=1 | 手眼标定与坐标变换实战 | 6509c
+   [7] t=1 | 视觉抓取 Pipeline | 6978c
+   [8] t=1 | LeRobot端到端实战 | 1987c
+   [9] t=1 | 模仿学习到真机部署 | 4045c
+   [10] t=1 | 模仿学习训练部署 | 5395c
+   [11] t=2 | Sim | 3348c
+   [12] t=2 | 力控与柔顺操作 | 4355c
+   [13] t=2 | 抓取失败分析与自动重试策略 | 3557c
+   [14] t=2 | 调试排错与性能优化 | 5492c
+   [15] t=2 | 从单臂到双臂 | 2706c
+   [16] t=2 | 桌面机械臂策略评估与动态诊断 | 11661c
+   [17] t=3 | LeRobot SO | 7186c
+   [18] t=3 | Wall | 9967c
+   sec keys: chars,content,difficulty,estimatedMinutes,isBrief,lastUpdated,shortTitle,tier,title
+== academic-english | AI 与机器人学术英语 | 16 secs | lastUpdated=2026-10-13T10:36
+   [0] t=0 | 01 引言 | 2838c
+   [1] t=0 | 02 阅读篇 | 4698c
+   [2] t=0 | 03 听力篇 | 3087c
+   [3] t=1 | 04 写作篇 | 6315c
+   [4] t=1 | 05 写作篇 | 6636c
+   [5] t=1 | 06 写作篇 | 6605c
+   [6] t=1 | 07 演讲篇 | 5809c
+   [7] t=2 | 08 演讲篇 | 5154c
+   [8] t=1 | 09 面试篇 | 8582c
+   [9] t=2 | 10 面试篇 | 6151c
+   [10] t=1 | 11 术语篇 | 6667c
+   [11] t=1 | 12 沟通篇 | 8909c
+   [12] t=1 | 13 风格篇 | 8522c
+   [13] t=2 | 14 实战篇 | 5939c
+   [14] t=1 | 15 审稿篇 | 5252c
+   [15] t=1 | 16 跨文化协作篇 | 6921c
+   sec keys: chars,content,difficulty,estimatedMinutes,isBrief,lastUpdated,shortTitle,tier,title
+== data-collection | 数据采集与管理 | 9 secs | lastUpdated=2026-10-13T10:36
+   [0] t=0 | 相机选型与标定 | 19029c
+   [1] t=1 | 遥操作系统 | 15338c
+   [2] t=1 | 数据格式与标准 | 9099c
+   [3] t=1 | 数据增强 | 10834c
+   [4] t=2 | 自动化数据采集与质量筛选 | 20408c
+   [5] t=2 | 大规模数据工程与自动标注 | 21161c
+   [6] t=2 | 人体演示到机器人动作的Retargeting | 12552c
+   [7] t=2 | 众包数据采集与质量控制平台设计 | 3682c
+   [8] t=3 | 光学动捕第三源 | 6364c
+   sec keys: chars,content,difficulty,estimatedMinutes,shortTitle,tier,title
+== embodied-data-engineering | 具身数据工程 | 18 secs | lastUpdated=2026-10-17T08:30
+   [0] t=0 | 具身数据集全景图 | 9102c
+   [1] t=0 | 数据工程基础 | 5729c
+   [2] t=1 | 机器人演示数据的采集策略与遥操作系统 | 4040c
+   [3] t=1 | 数据采集系统实战 | 10823c
+   [4] t=1 | 数据标注与众包 | 3216c
+   [5] t=1 | 数据质量工程 | 9326c
+   [6] t=1 | 数据集格式标准 | 4794c
+   [7] t=1 | 数据格式标准与工具链 | 3612c
+   [8] t=1 | 合成数据与数据增强 | 6146c
+   [9] t=2 | 数据闭环与主动学习 | 2766c
+   [10] t=2 | 数据闭环系统 | 5939c
+   [11] t=2 | 数据安全、隐私与合成数据合规 | 2375c
+   [12] t=2 | 大规模数据集版本管理与DVC实战 | 3601c
+   [13] t=3 | 演示数据的分布覆盖分析与短板诊断 | 10616c
+   [14] t=3 | 异构数据摄取与具身 Common Crawl | 5923c
+   [15] t=3 | Wall | 5435c
+   [16] t=3 | 训练场、数据闭环与跨本体底座 | 8844c
+   [17] t=3 | 人类视频到训练轨迹的 Agent 化生成 | 6233c
+   sec keys: chars,content,difficulty,estimatedMinutes,shortTitle,tier,title
+
+=== learning-path module names ===
+lp top keys: lastUpdated,stages
+ stage: None | foundation
+    - 线性代数 | lu=2026-10-13T10:36
+    - 微积分与优化 | lu=2026-10-13T10:36
+    - 概率与统计 | lu=2026-10-13T10:36
+    - Python 编程与科学计算 | lu=2026-10-13T10:36
+    - C++ 编程基础 | lu=2026-10-13T10:36
+    - AI 与机器人学术英语 | lu=2026-10-13T10:36
+ stage: None | robotics-fundamentals
+    - 机器人运动学 | lu=2026-10-13T10:36
+    - 机器人动力学 | lu=2026-10-18T08:30
+    - 控制理论 | lu=2026-10-13T10:36
+    - 机械设计基础 | lu=2026-10-13T10:36
+    - 传感器与硬件接口 | lu=2026-10-13T10:36
+    - ROS2 机器人操作系统 | lu=2026-10-19T08:30
+ stage: None | perception
+    - 计算机视觉基础 | lu=2026-10-13T10:36
+    - 3D 视觉与点云 | lu=2026-10-13T10:36
+    - 多模态感知 | lu=2026-10-15T08:45
+ stage: None | ai-brain
+    - 深度学习基础 | lu=2026-10-14T09:30
+    - 强化学习 | lu=2026-10-16T08:45
+    - 模仿学习 | lu=2026-10-20T08:30
+    - VLA 模型 (Vision-Language-Action) | lu=2026-10-13T10:36
+    - 世界模型与LLM+机器人 | lu=2026-10-18T08:30
+ stage: None | simulation
+    - 物理仿真引擎 | lu=2026-10-13T10:36
+    - Sim-to-Real 迁移 | lu=2026-10-13T10:36
+    - 具身数据工程 | lu=2026-10-17T08:30
+    - 数据采集与管理 | lu=2026-10-13T10:36
+ stage: None | engineering
+    - AI Infra 具身基础设施 | lu=2026-10-13T10:36
+    - 模型训练与推理优化 | lu=2026-10-13T10:36
+    - 云边端协同架构 | lu=2026-10-15T08:45
+    - MLOps与持续交付 | lu=2026-10-17T08:30
+ stage: None | practice
+    - 桌面级机械臂项目 | lu=2026-10-13T10:36
+    - 移动机器人导航项目 | lu=2026-10-19T08:30
+    - 人形机器人全栈项目 | lu=2026-10-13T10:36
+    - 具身Agent实战项目 | lu=2026-10-20T08:30
