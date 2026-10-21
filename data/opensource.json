@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-20T08:30",
+ "lastUpdated": "2026-10-21T08:45",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,124 @@
   }
  ],
  "projects": [
+  {
+   "id": "os190",
+   "name": "mimic-video，超越 VLA 的「视频—动作模型」路线：用视频生成直接产出通用机器人控制策略",
+   "github": "https://github.com/mimic-video/mimic-video",
+   "organization": "Mimic Video",
+   "org": "mimic-video",
+   "category": "ai-model",
+   "description": "**mimic-video** 的定位是 **Video-Action Models for Generalizable Robot Control Beyond VLAs**——明确把「视频—动作模型（VAM）」作为 VLA 之外的另一条通用机器人控制路线来推进。\n\n**与 VLA 的分野**：VLA 让视觉—语言骨干直接出动作；VAM 则先建模**视频级的动态**（未来会怎么变），再从动态中导出控制。mimic-video 的主张是：视频生成模型在大规模互联网视频上学到的**物理常识与运动先验**，比纯机器人演示数据里的观测—动作对应**更具可迁移性**，因此在跨任务、跨本体的泛化上有望超过 VLA。\n\n**工程数据**：313 stars，Python 实现，**Apache-2.0** 许可，2026 年 4 月创建，最近推送 2026-10-19，项目主页 https://mimic-video.github.io/。topics 覆盖 robot-learning / robotics / vam / video-action-models / vla。\n\n**为什么值得关注**：2026 下半年 VAM 与 WAM 的分野正在变得清晰——VAM 更强调「用视频生成做策略」，WAM 更强调「世界模型 + 动作专家」。这个仓库是 VAM 路线里星数与实践完整度较高的一个公开实现。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 313,
+   "features": [
+    "视频—动作模型（VAM）路线的公开实现，明确对标并试图超越 VLA",
+    "以视频生成为核心建模对象，从动态中导出机器人控制",
+    "面向跨任务、跨本体的泛化能力设计",
+    "Apache-2.0 许可，可商用可二次开发",
+    "活跃维护（2026-10 仍在推送），项目主页与文档齐备"
+   ],
+   "tags": [
+    "mimic-video",
+    "VAM",
+    "视频动作模型",
+    "视频生成",
+    "通用机器人控制",
+    "跨本体泛化",
+    "Apache-2.0"
+   ],
+   "addedDate": "2026-10-21"
+  },
+  {
+   "id": "os191",
+   "name": "GroundingPI，4B 级具身 Grounding 基座模型：把检测/指代/指向/OCR/GUI/版面统一到一个模型，34 个基准整体 SOTA",
+   "github": "https://github.com/groundingpi/GroundingPI",
+   "organization": "GroundingPI Team",
+   "org": "groundingpi",
+   "category": "perception",
+   "description": "**GroundingPI** 是一个 **4B 规模的 grounding 基座模型**，明确定位为 **for physical intelligence**——为物理智能（机器人）服务，而不是通用的图文检索。\n\n**统一了六类 grounding 任务**：检测（detection）、指代表达（referring）、**指向（pointing）**、OCR、GUI、版面（layout）。据仓库说明，在 **34 个基准上整体 SOTA**，并在受控评测中**提升了机器人的泛化能力与数据效率**。\n\n**工程数据**：141 stars，Python 实现，**Apache-2.0** 许可，2026 年 9 月 30 日创建、最近推送 2026-10-14，项目主页 https://groundingpi.github.io/。topics 覆盖 embodied-ai / gui-grounding / object-detection / ocr / physical-intelligence / pointing / robot-learning / vision-language-model。\n\n**为什么重要**：通用 VLM 的 grounding 回答的是「图中哪里是这个物体」（**指称**），而机器人需要的是「夹爪该伸到哪个点、以什么姿态接触」（**可操作**）。GroundingPI 把这套能力做成独立基座，让策略层可以外挂调用，而不是把 grounding 能力塞进 VLA 骨干里占用容量。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 141,
+   "features": [
+    "4B 规模的具身 grounding 基座模型，参数量适合边缘/单机部署",
+    "统一六类 grounding：检测 / 指代 / 指向 / OCR / GUI / 版面",
+    "显式面向 physical intelligence，输出可直接供策略层消费",
+    "受控评测中提升机器人泛化与数据效率",
+    "Apache-2.0 许可，项目主页与文档齐备"
+   ],
+   "tags": [
+    "GroundingPI",
+    "Grounding",
+    "指代表达",
+    "指向",
+    "OCR",
+    "GUI grounding",
+    "物理智能",
+    "Apache-2.0"
+   ],
+   "addedDate": "2026-10-21"
+  },
+  {
+   "id": "os192",
+   "name": "robot-control-stack，去掉 ROS 的轻量 sim-to-real 框架：MuJoCo Gymnasium 原生封装 + VLA/RL 训练部署一体，支持 Franka/UR5e/xArm/SO101/YAM",
+   "github": "https://github.com/RobotControlStack/robot-control-stack",
+   "organization": "Robot Control Stack",
+   "org": "RobotControlStack",
+   "category": "framework",
+   "description": "**robot-control-stack** 是一个 **lean, ROS-free sim-to-real framework**，用于训练与部署 **VLA 模型与 RL 智能体**。它的核心主张是：**机器人学习不需要 ROS 这层中间件**——直接用 **MuJoCo + Gymnasium 原生封装**，同步执行，把从仿真到真机的路径压到最短。\n\n**支持的本体**：Franka、UR5e、xArm、SO101、YAM，均为 MuJoCo Gymnasium wrapper 形式，**同步执行**（synchronous execution）。\n\n**工程数据**：167 stars，Python 实现，**AGPL-3.0** 许可，2024 年 2 月创建、最近推送 2026-10-20（持续维护两年以上），主页 http://robotcontrolstack.org/。topics 覆盖 franka / gymnasium / mujoco / reinforcement-learning / robot-learning / robot-manipulation / sim-to-real / vision-language-actions-models。\n\n**为什么值得关注**：ROS 2 在真实机器人系统里不可替代，但在**纯学习流水线**（仿真采样 → 训练 → 部署）里它带来的是延迟、版本地狱与调试复杂度。这个仓库代表了「**学习侧去中间件**」的一派做法。",
+   "language": "Python",
+   "license": "AGPL-3.0",
+   "stars": 167,
+   "features": [
+    "ROS-free 的轻量 sim-to-real 框架，学习流水线不依赖中间件",
+    "MuJoCo Gymnasium 原生封装，同步执行（synchronous execution）",
+    "同时支持 VLA 训练部署与 RL 智能体训练",
+    "覆盖 Franka / UR5e / xArm / SO101 / YAM 五种本体",
+    "持续维护两年以上（2024-02 至今），接口相对稳定"
+   ],
+   "tags": [
+    "robot-control-stack",
+    "sim-to-real",
+    "ROS-free",
+    "MuJoCo",
+    "Gymnasium",
+    "Franka",
+    "UR5e",
+    "SO101"
+   ],
+   "addedDate": "2026-10-21"
+  },
+  {
+   "id": "os193",
+   "name": "strands-robots，用自然语言直接控制机器人与物理硬件的 Agent 框架：把 VLA 与世界基础模型接进 Strands Agents",
+   "github": "https://github.com/strands-labs/robots",
+   "organization": "Strands Labs",
+   "org": "strands-labs",
+   "category": "ai-agent-framework",
+   "description": "**strands-robots** 的定位是 **Control robots and physical hardware with natural language through Strands Agents**——用自然语言，通过 **Strands Agents** 框架来控制机器人与物理硬件。\n\n**它解决的是 Agent 层与机器人层之间的缺口**：大模型 Agent 生态（工具调用、规划、记忆）已经很成熟，但这些能力怎么落到**物理设备**上，一直缺少标准做法。这个仓库把 **VLA 与世界基础模型（world foundation models）**作为 Agent 可调用的能力接进 Strands Agents。\n\n**工程数据**：189 stars，Python 实现，**Apache-2.0** 许可，2026 年 2 月创建、最近推送 2026-10-20，主页 https://strands-labs.github.io/robots/。topics 覆盖 robots / strands-agents / strands-labs / vision-language-action / world-foundation-models。\n\n**为什么值得关注**：2026 年具身智能的一个明确趋势是**「Agent 层」与「策略层」分层**——上层 Agent 负责任务分解与工具编排，下层 VLA/WAM 负责具体动作。这个仓库是这个分层架构里，Agent 侧的一个开源实现。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 189,
+   "features": [
+    "通过 Strands Agents 框架用自然语言控制机器人与物理硬件",
+    "把 VLA 与世界基础模型封装为 Agent 可调用的能力",
+    "复用成熟 Agent 生态：工具调用、规划、记忆、多轮对话",
+    "Apache-2.0 许可，可商用可二次开发",
+    "活跃维护（2026-10 仍在推送），项目主页文档齐备"
+   ],
+   "tags": [
+    "strands-robots",
+    "Strands Agents",
+    "具身Agent",
+    "自然语言控制",
+    "VLA",
+    "世界基础模型",
+    "Apache-2.0"
+   ],
+   "addedDate": "2026-10-21"
+  },
   {
    "id": "os189",
    "name": "omnisim：为编码智能体设计的开源机器人仿真器，HTTP/JSON + MCP 控制、Newton 物理、可复现基准",
@@ -4456,5 +4574,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 176
+ "totalItems": 180
 }
