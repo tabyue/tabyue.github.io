@@ -9,6 +9,8 @@
   2. 标题剥离残留序号（「26. xxx」）与 emoji。
   3. 删除正文开头与章节标题重复的 # 行 —— 前端会单独渲染 h1，重复会连显两遍。
   4. 修正 /learn/<mod>/0 这类越界内链（URL 章节号从 1 起）→ 收敛为模块大纲页。
+  5. 解开被反引号包裹的 markdown 链接 —— renderMd 先保护行内代码再处理链接，
+     `[文字](/learn/x/1)` 会原样渲染成裸 markdown 文本，不可点击。
 
 同时补齐 shortTitle / estimatedMinutes / chars（新章节常漏）。
 不碰 tier / difficulty / 章节顺序 —— 那些由人或重排工具决定。
@@ -37,6 +39,8 @@ TAG_PLAIN = re.compile(r'\s*[，,、]?\s*20\d\d\s*[-年./]?\s*\d{0,2}\s*月?\s*'
 LEAD_NUM = re.compile(r'^\d+\.\s+')
 SPLIT_RE = re.compile(r'[：:｜|—–（(]')
 LINK_ZERO = re.compile(r'/learn/([a-z0-9-]+)/0\b')
+# 被反引号包住的 markdown 链接：前端把行内代码先保护起来，于是链接永远不会生效
+BACKTICKED_LINK = re.compile(r'`(\[[^\]\n]{1,80}\]\((?:/|https?://)[^)\s]+\))`')
 
 
 def clean_title(t):
@@ -142,6 +146,13 @@ def main():
                 changes.append('[内链] %s#%d  /learn/%s/0 → /learn/%s' % (mid, i, m.group(1), m.group(1)))
                 return '/learn/' + m.group(1)
             c = LINK_ZERO.sub(_fix, c)
+
+            # 解开反引号包裹的链接
+            def _unwrap(m):
+                st['backtick_link'] += 1
+                changes.append('[解反引号] %s#%d  %s' % (mid, i, m.group(1)[:60]))
+                return m.group(1)
+            c = BACKTICKED_LINK.sub(_unwrap, c)
 
             if c != (s.get('content') or ''):
                 s['content'] = c

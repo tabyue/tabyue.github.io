@@ -44,9 +44,12 @@
 
 ## 提交前必跑
 ```
+python tools/normalize_learn.py        # learn 有改动时：标题/正文/派生字段规范化
+python tools/fix_learn_links.py --dry  # 有修正项再去掉 --dry
 python tools/sync_learn_split.py      # learn 有改动时
 python tools/build_sitemap.py         # 章节数变化时
 python tools/health_check.py          # 必须 ALL OK
+python tools/verify_learn_structure.py # 必须 ALL OK（结构守卫，查 health_check 查不到的）
 ```
 health_check 覆盖：JSON 解析 / id 唯一 / 内容查重 / category 白名单 / totalItems / 开源详情+报告页 / 论文 detail+keyInsights / learn-split 一致性 / 全量章节内链 / ASCII 双引号
 - **收尾清理临时脚本必须用 `git rm`，不能只 `Remove-Item`**：`git add -A` 会把根目录 `_*.py` 临时脚本一起提交进仓库（2026-10-20 中招）。保留 `_add_two.py` / `_cv_sec.md` / `_desktop_sec.md`（历史 tracked，误删过）
@@ -66,6 +69,15 @@ health_check 覆盖：JSON 解析 / id 唯一 / 内容查重 / category 白名�
 - **模块/章节命名要 ASCII 友好**，避免 emoji 与中文括号污染 modId
 - 每轮深化后必须同步 3 处 lastUpdated：learn/*.json 顶层 + learning-path.json 对应模块（modules[].lastUpdated，用 `name` 匹配）+ 新增 section 自身
 - **2026-10-13 结构性重构**：29/32 模块章节已按 tier(0基础/1核心/2进阶/3前沿) 重排为教学梯度，全部章节有 difficulty(入门/中级/高级)/estimatedMinutes/shortTitle/isFrontier/isBrief。**以后新增章节一律 append 到对应 tier 的位置（前沿专题放尾部），禁止再 unshift 到开头**。重排工具 `tools/restructure_learn.py`（幂等，输入 `tools/learn_sort_plan/`）；前端 `/learn/<mod>` 现在是模块大纲页，`/learn/<mod>/<n>` 是章节页（带小节目录）；章节新增字段记得同步 `sync_learn_split.py` 的 sectionsMeta，缺了大纲页会静默降级
+- **2026-10-22 规范守卫**（重构 9 天后体检：结构守住了，写入规范回潮）。三条硬规范，已由脚本自动治理：
+  1. 标题里不写「（2026-10 前沿）」类时间标记 —— 前端按 `isFrontier` 显示徽章，标题重复写会超长被截断
+  2. 正文开头不重复章节标题（前端单独渲染 h1，会连显两遍）
+  3. 内链不要用反引号包裹 —— renderMd 先保护行内代码再处理链接，`` `[文字](/learn/x/1)` `` 会渲染成裸 markdown、不可点击
+  - `tools/normalize_learn.py`：幂等规范化（只补缺失，**不覆盖已有 shortTitle** —— 有些是人工精选用来区分同名章节的）
+  - `tools/fix_learn_links.py`：按「链接文字 ↔ 目标章节标题」修内链。重排只保证索引不越界，**不保证指向正确**，首跑修了 170 处历史错位
+  - `tools/verify_learn_structure.py`：结构守卫（元数据/difficulty 口径/tier 单调/前沿位置/标题规范/重复标题/内链/split 同步）
+- **内链章节号是 1-based**：`/learn/<mod>/N` 的 N 从 1 起（前端 `parseRoute: secIdx=n-1`），`/mod/0` 是错的。health_check 原先把 N 当 0-based 下标（既漏放 `/0` 又误报末章），2026-10-22 已修为 `1 <= N <= len`
+- **阅读时长两套口径并存（待定）**：自动化按 ~113 字/分钟，10-13 重构脚本按 400 字/分钟，13 处偏慢口径未统一（大纲页同体量章节时长差 6 倍）。`normalize_learn.py --resync-minutes` 可一键按 400 统一
 
 ## 自动化跨实例协调
 - automation-5 常并行多实例共享工作树：启动先 `git status`，有残留则**接手而非覆盖**

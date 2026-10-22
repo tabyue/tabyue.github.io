@@ -243,7 +243,9 @@ def check_internal_links(log):
             for mod, idx in set(re.findall(r'/learn/([a-z0-9-]+)/(\d+)', c)):
                 if mod not in modules:
                     broken.append(('%s#%d' % (mid, i), 'module', mod))
-                elif int(idx) >= modules[mod]:
+                # URL 里的章节号是 1-based（前端 parseRoute: secIdx = n-1），
+                # 所以合法区间是 1..len：/mod/0 是错的，/mod/len 是最后一章、合法。
+                elif not (1 <= int(idx) <= modules[mod]):
                     broken.append(('%s#%d' % (mid, i), 'index', '%s/%s' % (mod, idx)))
     log('    失效内链: %d %s' % (len(broken), broken[:8]))
     if broken:

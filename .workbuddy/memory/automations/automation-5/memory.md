@@ -105,7 +105,7 @@
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
 3. 写 `_upd_data.py` 一次性改 5 个 JSON（内含查重），再写 `_upd_learn.py` 扩正文
 4. **新增 opensource 条目后必须**：写 `data/opensource/<id>.json` + 跑 `tools/gen_os_report.py <id>`（用 `C:\Users\tabyue\.workbuddy\binaries\python\envs\default\Scripts\python.exe`，该 venv 装了 markdown）
-5. 收尾三连：`sync_learn_split.py` → `build_sitemap.py` → `health_check.py`（须 ALL OK）
+5. 收尾五连：`normalize_learn.py` → `fix_learn_links.py --dry`（有修正项再去掉 --dry）→ `sync_learn_split.py` → `build_sitemap.py` → `health_check.py` + `verify_learn_structure.py`（两个都须 ALL OK）
 6. 删 `_*.py` 临时脚本 → `git add -A` → commit → 用 gh 凭据 trick 推送
 7. 写 `.workbuddy/memory/YYYY-MM-DD.md` + 更新本文件
 
@@ -139,6 +139,15 @@
 - **learn/*.json 必须 `indent=2`（2026-10-16）**：脚本用 `indent=1` 保存会让整个学习模块文件重排，产生 ±440 行的纯空白噪音 diff。news/jobs/papers-index/opensource/learning-path 则是 `indent=1`。写脚本时两类文件要分开处理；发现噪音 diff 后用 `json.dump(..., indent=2)` 重写再 `git commit --amend`。
 - **learning-path.json 在 `data/` 根，不在 `data/learn/`（2026-10-16）**：按 `data/learn/learning-path.json` 读会 FileNotFoundError，若脚本用 `os.path.exists` 容错就会得到 `lp=None`、bump 静默失败只打印 WARN。模块名就是「强化学习」「模仿学习」，无 id 字段。
 - **写 OS 条目前先用 `gh api repos/<owner>/<repo>` 验证（2026-10-16）**：一次拿到 stars / language / license.spdx_id / pushed_at / created_at，比 WebFetch 更可靠。本轮据此排除了 404 的 inclusionAI/BiDex-100、psi-lab/SIMPLE、lambdahumanoid/lambda-0。license 为空时填「未声明」，不要编造 MIT/Apache。
+- **新增章节的三条硬规范（2026-10-22 起由脚本守卫）**：
+  1. **标题里不要写「（2026-10 前沿）」「，2026-10 新增」** —— 前端已按 `isFrontier` 显示「前沿」徽章，标题再写一遍会超长被截断。写入 `isFrontier: true` 即可；`normalize_learn.py` 会自动剥离并存进 `frontierTag`。
+  2. **正文开头不要重复章节标题**（`# 同名标题`）—— 前端单独渲染 h1，会连显两遍。
+  3. **内链不要用反引号包起来** —— `` `[文字](/learn/x/1)` `` 中 renderMd 先保护行内代码再处理链接，会原样渲染成裸 markdown、不可点击。直接写 `[文字](/learn/x/1)`。
+- **内链章节号是 1-based（2026-10-22 定案）**：`/learn/<mod>/N` 的 N 从 1 起（前端 `parseRoute: secIdx=n-1`）。写 `/mod/0` 是错的。
+  曾以为 health_check 能兜住，其实它当时把 N 当 0-based 数组下标，**既漏放 `/0` 又误报末章**，已修正为 `1 <= N <= len`。
+  写跨模块内链后跑 `tools/fix_learn_links.py --dry`：它按「链接文字 ↔ 目标章节标题」比对，能抓出重排/追加后指错章节的链接（首次运行修了 170 处历史错位）。
+- **章节结构体检用 `tools/verify_learn_structure.py`（2026-10-22 新增）**：覆盖元数据齐全度、difficulty 口径、tier 单调性、前沿章节是否集中在尾部、标题规范、正文重复标题、内链越界、learn-split 元数据同步。health_check 只管数据完整性，查不出这些。
+- **阅读时长口径不统一（2026-10-22 发现，未处理）**：自动化新增章节按 ~113 字/分钟写 estimatedMinutes（9000 字标 80 分钟），而 10-13 重构脚本按 400 字/分钟（标 12 分钟）。目前 13 处偏慢口径并存，大纲页上同体量章节时长差 6 倍。`normalize_learn.py` 只报告不自动改；要统一跑 `--resync-minutes`（需 Tab 确认用哪套口径）。
 - **PowerShell 管道前不允许空元素（2026-10-16）**：`foreach (...) { ... } | Out-File` 报「不允许使用空管道元素」，必须先 `$out = @()` 收集再 `$out | Out-File`。
 - **health_check 的 totalItems 需手动同步（2026-10-16）**：`papers-index.json` 与 `opensource.json` 有 `totalItems` 字段但脚本不自动更新，加完条目后必须显式写入，否则 FAIL。
 - **开源选题改用 GitHub Search API（2026-10-17，强烈推荐）**：WebSearch 搜到的「新开源」命中率极低——本轮 RP1 / OpenWAM / RoboRSI / EmbodiedEvo / DexForce-UNITAS **全部已在库**。改成 Python 调 `api.github.com/search/repositories`，多查询并集：`topic:embodied-ai`、`topic:robot-learning`、`topic:humanoid`、`topic:vision-language-action`、`VLA robot manipulation`，加 `pushed:>YYYY-MM-DD` 与 `sort=stars`；再把结果与现库 `gh` URL 清单比对标 DUP/NEW。一次可拿到几十个真候选。
