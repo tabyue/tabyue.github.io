@@ -93,6 +93,13 @@
 - 校验：sync + sitemap（533 章节）+ health_check **首轮即 ALL OK**；已 push（c5d9d61..31b5f5f），远程 HEAD 已核对一致。
 - 新坑：① **外层用 `r"""` 时示例代码 docstring 只能用 `'''`**（本轮 4 处误用，报错表现为 `SyntaxError: invalid character '，'`，排查时用 `Grep ^\s+"""` 定位缩进的 `"""`）。② **GitHub Search API 本轮 10 个查询 6 个 403 rate limit**，建议拆批 + sleep 8s。③ 学习正文一次写不满时，用「按 shortTitle 定位 + `### N.` 守卫 + 在 `---\n\n**关联阅读**` 前插入」二次追加，幂等且安全（本次 7.3K → 9.3K）。
 
+### 2026-10-22 08:00—09:20
+- 投稿箱：无新投稿。开工时工作树**不干净**（上一轮遗留 28 个 learn/*.json 规范化改动 + tools/_* 临时文件），判断良性后一并带上提交。
+- 数据：新闻 +10（n499—n508）、论文 +5（p257—p261，含 detail）、开源 +4（os194—os197，含 detail + 报告页）、招聘 +6（j249—j254）、资源新增 r018（机器人运行时与具身操作系统）+ r001 扩充。
+- 学习：training-inference-optimization「一步生成策略的工程化：一致性蒸馏 / 一步流匹配 / 潜噪声后训练 AWLS」（9.6K，tier3，联动 p261 + os194）；ros2「机器人运行时分层：把 1 kHz 运控与 50 Hz 策略放进同一台机器」（11.1K，tier3，联动 os196 + n508）。
+- 校验：sync + sitemap（535 章节）+ health_check **首轮 ALL OK**；已 push（31b5f5f..6545c0d），远程 HEAD 已核对。
+- 新坑：① **arXiv export API 本轮彻底不可用**（5 次重试全 429/503），改走 WebFetch `arxiv.org/abs/<id>` 稳定；② **`https://huggingface.co/papers/date/YYYY-MM-DD` 是好用的论文发现入口**（一次列出当天社区提上来的具身论文，但需二次确认 arXiv ID）；③ GitHub Search API 本轮 6 查询全成功（`-f q=` + 批次间 sleep 6），拿到 136 个 NEW；④ 微信 mp.weixin.qq.com 链接可作 news url，health_check 无异议。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
