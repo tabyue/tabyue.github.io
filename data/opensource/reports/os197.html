@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVA-CLIENT：真机部署、评测与数据采集三合一的统一框架，支持 UR5e / Franka / AgileX PiPer — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">EVA-CLIENT：真机部署、评测与数据采集三合一的统一框架，支持 UR5e / Franka / AgileX PiPer — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="eva-client-ur5e-franka-agilex-piper">EVA-CLIENT：真机部署、评测与数据采集三合一的统一框架，支持 UR5e / Franka / AgileX PiPer</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Noietch/EVA-CLIENT">https://github.com/Noietch/EVA-CLIENT</a>  </p>
+<p><strong>Stars</strong>: 334 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-22  </p>
+<p><strong>组织</strong>: CoLaLab  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-22</p>
+</blockquote>
+<hr />
+<h3 id="_2">具身工程里最贵的隐性成本</h3>
+<p>一个典型的具身算法团队，真机侧通常长这样：</p>
+<pre><code>   采数据：  自己写的遥操作脚本 + 自己的数据格式
+   训模型：  另一套数据加载器（因为格式对不上，又写了一个转换脚本）
+   部署：    第三种接口（因为部署要实时，重写了一套）
+   评测：    第四种脚本（因为要统计成功率，又写一遍）
+</code></pre>
+<p>四套代码的<strong>接口约定各不相同</strong>，于是：</p>
+<ul>
+<li><strong>换个本体</strong> → 四套全改；</li>
+<li><strong>换个策略</strong> → 部署与评测部分改；</li>
+<li><strong>数据格式升级</strong> → 训练与采集部分改，还要写迁移脚本。</li>
+</ul>
+<p>真正的代价不是写代码的时间，而是<strong>每次改动都要重新对齐一遍四套代码之间的隐式约定</strong>。</p>
+<h3 id="eva-client">EVA-CLIENT 的收敛方式</h3>
+<pre><code>   ┌──────────────────────────────────────┐
+   │           统一接口层                    │
+   │   observe() / act() / collect() / eval │
+   └──────────────────────────────────────┘
+              │            │            │
+              ▼            ▼            ▼
+        ┌─────────┐  ┌─────────┐  ┌─────────┐
+        │  UR5e   │  │ Franka  │  │ PiPer   │  本体适配
+        └─────────┘  └─────────┘  └─────────┘
+              │            │            │
+              └────────────┴────────────┘
+                           │
+                    ┌──────┴──────┐
+                    ▼             ▼
+               VLA / WAM / RL   遥操作采集
+</code></pre>
+<p><strong>关键点</strong>：策略与本体<strong>解耦</strong>。策略只面对统一接口，本体差异被封在适配层里。这意味着<strong>同一个策略换本体时只改配置，不改代码</strong>。</p>
+<h3 id="_3">为什么「评测」也要统一</h3>
+<p>评测常被当成「跑完看个数」，但实际上它是最容易<strong>失真</strong>的环节：</p>
+<ul>
+<li>初始状态怎么摆？（人工随手摆 → 每次分布不同）</li>
+<li>成功怎么判？（人眼看 → 主观且不可复现）</li>
+<li>失败怎么归？（只看总体成功率 → 不知道该改哪）</li>
+</ul>
+<p>把评测纳入同一框架，才能把<strong>初始状态分布、成功判据、失败归因</strong>都写进配置，让两次实验之间真正可比。</p>
+<hr />
+<h3 id="_4">三层结构</h3>
+<pre><code>   ┌─────────────────────────────────────┐
+   │  方法层：VLA / WAM / RL / 遥操作      │
+   └─────────────────────────────────────┘
+                    │  统一动作/观测契约
+                    ▼
+   ┌─────────────────────────────────────┐
+   │  EVA-CLIENT 核心                     │
+   │  · 观测标准化（相机 / 关节 / 力）      │
+   │  · 动作执行与频率控制                 │
+   │  · 回合管理（reset / step / done）    │
+   │  · 数据落盘（统一格式）               │
+   │  · 评测统计（成功率 / 失败归因）       │
+   └─────────────────────────────────────┘
+                    │
+                    ▼
+   ┌─────────────────────────────────────┐
+   │  本体适配层：UR5e / Franka / PiPer    │
+   └─────────────────────────────────────┘
+</code></pre>
+<h3 id="_5">观测契约</h3>
+<p>不同本体的传感器配置差异很大，统一做法是定义一个<strong>标准观测字典</strong>：</p>
+<pre><code class="language-python">obs = {
+    'rgb':   {'wrist': ..., 'front': ...},   # 相机（可选多路）
+    'joint': {'pos': ..., 'vel': ...},       # 关节状态
+    'eef':   {'pose': ..., 'wrench': ...},   # 末端位姿与力/力矩
+}
+</code></pre>
+<p>缺失的字段允许为 <code>None</code>，策略侧按需取用。<strong>这样新增本体只需实现一个「产出这个字典」的适配器</strong>。</p>
+<h3 id="_6">频率控制的必要性</h3>
+<p>策略推理频率（10—50 Hz）与机器人控制频率（常为 100—1000 Hz）不一致，中间必须做<strong>插值与安全限幅</strong>。这一层如果没有框架统一处理，每个策略各写一遍，很容易出现：</p>
+<ul>
+<li><strong>动作跳变</strong> → 触发机器人报警甚至危险运动；</li>
+<li><strong>时序错位</strong> → 观测与动作不对应，训练时学不到东西。</li>
+</ul>
+<h3 id="_7">数据闭环</h3>
+<pre><code>   遥操作采集 ──► 统一格式落盘 ──► 训练 ──► 部署
+        ▲                                    │
+        └────────── 评测失败样本 ◄────────────┘
+</code></pre>
+<p><strong>闭环的意义</strong>：评测中失败的回合可以直接<strong>回流成训练数据</strong>（特别是失败前几帧），形成针对性的数据补充。这是「部署—评测—采集」三合一真正的价值——不是省了三份代码，而是让<strong>闭环跑得起来</strong>。</p>
+<hr />
+<ul>
+<li><strong><a href="https://colalab.net/projects/eva-client/">EVA-CLIENT 项目主页</a></strong> — 支持本体、接口说明与示例</li>
+<li><strong><a href="https://github.com/Noietch/EVA-CLIENT">EVA-CLIENT 仓库</a></strong> — 源码与配置示例</li>
+<li><strong><a href="https://github.com/huggingface/lerobot">LeRobot</a></strong> — 训练与数据生态，常与真机部署框架搭配</li>
+<li><strong><a href="https://github.com/XPolicyLab/XPolicyLab">XPolicyLab</a></strong> — 策略 × 评测环境的适配层，仿真侧对应物</li>
+<li><strong><a href="https://github.com/RoboTwin-Platform/RoboTwin">RoboTwin 2.0</a></strong> — 仿真侧基准与合成数据，与真机侧形成闭环</li>
+</ul>
+<hr />
+<h3 id="_8">安装</h3>
+<pre><code class="language-bash">git clone https://github.com/Noietch/EVA-CLIENT
+cd EVA-CLIENT
+pip install -r requirements.txt
+</code></pre>
+<h3 id="_9">连接本体并跑一个策略</h3>
+<pre><code class="language-python">from eva import Robot, Policy
+
+robot = Robot.from_config('configs/piper.yaml')     # 本体：一行配置切换
+policy = Policy.load('checkpoints/my_vla.pt')       # 任意 VLA / WAM / RL 策略
+
+for ep in range(10):
+    obs = robot.reset()
+    for t in range(robot.max_steps):
+        action = policy.act(obs)                    # 统一观测契约
+        obs = robot.step(action)                    # 内部做插值与安全限幅
+        if obs['done']:
+            break
+    print('episode', ep, 'success:', obs['success'])
+</code></pre>
+<h3 id="_10">采集遥操作数据</h3>
+<pre><code class="language-bash">python -m eva.collect \
+    --robot configs/franka.yaml \
+    --teleop spacemouse \
+    --task pick_and_place \
+    --episodes 100 \
+    --out data/franka_pick_100
+</code></pre>
+<p>落盘的是<strong>统一格式</strong>，训练侧直接用同一个加载器读取，不再需要转换脚本。</p>
+<h3 id="_11">跑标准化评测</h3>
+<pre><code class="language-bash">python -m eva.evaluate \
+    --robot configs/ur5e.yaml \
+    --policy checkpoints/my_vla.pt \
+    --task_cfg tasks/pick_and_place.yaml \
+    --episodes 50 \
+    --report out/report.json
+</code></pre>
+<p><code>task_cfg</code> 里写死<strong>初始状态分布与成功判据</strong>，保证两次评测可比；报告给出成功率与失败类型分解。</p>
+<blockquote>
+<p><strong>实践建议</strong>：先用一个本体 + 一个策略跑通「采集 → 训练 → 部署 → 评测」整条链路，再扩展本体。中途换本体时，只应改动 <code>configs/*.yaml</code>，不应改动任何策略代码。</p>
+</blockquote>
+<hr />
+<h3 id="_12">收益的度量方式</h3>
+<p>EVA-CLIENT 的价值不体现在<strong>推理速度</strong>，而体现在<strong>工程迭代速度</strong>。合理的度量是：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>收敛前</th>
+<th>收敛后</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>新增一个本体的工作量</td>
+<td>四套代码全改</td>
+<td><strong>实现一个适配器</strong></td>
+</tr>
+<tr>
+<td>换策略的改动范围</td>
+<td>部署 + 评测代码</td>
+<td><strong>配置</strong></td>
+</tr>
+<tr>
+<td>数据格式变更的影响面</td>
+<td>采集 + 训练 + 迁移脚本</td>
+<td><strong>落盘 schema 一处</strong></td>
+</tr>
+<tr>
+<td>两次实验的可比性</td>
+<td>依赖人工一致性</td>
+<td><strong>配置保证</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="_13">生态位</h3>
+<p>334 stars、Apache-2.0、2026-07 创建且 2026-10 仍在推送，属于<strong>活跃成长中的实用工具</strong>。它不与仿真器或基准竞争，而是占据「<strong>真机侧的胶水层</strong>」这个位置。</p>
+<h3 id="_14">需要注意的边界</h3>
+<ul>
+<li><strong>本体覆盖有限</strong>：topics 列出的主要是 UR5e / Franka / AgileX PiPer，人形本体未见明确支持；</li>
+<li><strong>依赖 Python 实时性</strong>：Python 在 1 kHz 硬实时控制上先天不足，它更适合<strong>策略层（10—50 Hz）</strong>而非底层伺服；</li>
+<li><strong>评测标准化程度</strong>取决于你自己写的 <code>task_cfg</code> —— 框架提供机制，不保证你写的判据就合理。</li>
+</ul>
+<blockquote>
+<p>具体的接口与支持的本体清单以仓库 README 与 https://colalab.net/projects/eva-client/ 为准。</p>
+</blockquote>
+<hr />
+<h3 id="_15">同类工具的分工</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>定位</th>
+<th>与 EVA-CLIENT 的关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>EVA-CLIENT</strong></td>
+<td>真机侧<strong>三合一</strong>（部署/评测/采集）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>LeRobot</td>
+<td>数据集 + 模型 + 训练生态</td>
+<td>偏<strong>数据与模型</strong>，真机部署接口较弱</td>
+</tr>
+<tr>
+<td>XPolicyLab</td>
+<td>策略 × 环境的 <strong>O(N+M) 适配层</strong></td>
+<td>偏<strong>仿真评测</strong>的连接，可与它互补</td>
+</tr>
+<tr>
+<td>RoboTwin 2.0</td>
+<td>仿真基准 + 合成数据生成</td>
+<td>提供<strong>仿真侧</strong>数据，它是<strong>真机侧</strong></td>
+</tr>
+<tr>
+<td>embodied-first-exam</td>
+<td>物理世界代码智能体评测</td>
+<td>评的是<strong>编码 Agent</strong>，不是策略</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_16">什么时候该用它</h3>
+<ul>
+<li>你有<strong>真机</strong>且需要经常换策略/换本体 → 收益最大；</li>
+<li>你的团队<strong>只有仿真</strong> → 直接用仿真基准即可，它价值有限；</li>
+<li>你在做<strong>人形全身控制</strong> → 本体覆盖可能不满足，先确认适配层；</li>
+<li>你需要<strong>硬实时伺服</strong> → 它工作在策略层，底层运控另需方案。</li>
+</ul>
+<h3 id="_17">与训练框架的关系</h3>
+<p>它<strong>不替代</strong>训练框架（LeRobot 类）。典型组合是：</p>
+<pre><code>   RoboTwin / 遥操作  ──►  训练框架  ──►  EVA-CLIENT 部署 + 评测
+                                              │
+                                              └──► 失败样本回流到采集
+</code></pre>
+<p>即<strong>训练归训练、真机闭环归 EVA-CLIENT</strong>，用统一数据格式衔接。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

@@ -48,7 +48,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：安装配置 + 基础通信（topic/service/action）\n**第2周**：TF2 + URDF + RViz 可视化\n**第3周**：Nav2 导航或 MoveIt2 运动规划\n**第4周**：集成项目（自主导航小车 or 机械臂抓取）\n**第5周**：ros2_control 硬件抽象——编写自定义 HardwareInterface 连接真实电机",
-  "lastUpdated": "2026-10-20T10:20",
+  "lastUpdated": "2026-10-22T08:55",
   "maturity": "comprehensive",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -200,6 +200,17 @@
       "lastUpdated": "2026-10-19T08:30",
       "chars": 9053,
       "shortTitle": "从 ROS 2 到 Agentic…",
+      "difficulty": "高级",
+      "estimatedMinutes": 80,
+      "isFrontier": true,
+      "tier": 3
+    },
+    {
+      "id": "sec-16",
+      "title": "机器人运行时分层：把 1 kHz 运控与 50 Hz 策略放进同一台机器",
+      "lastUpdated": "2026-10-22T08:55",
+      "chars": 11103,
+      "shortTitle": "运行时分层与实时性保障",
       "difficulty": "高级",
       "estimatedMinutes": 80,
       "isFrontier": true,

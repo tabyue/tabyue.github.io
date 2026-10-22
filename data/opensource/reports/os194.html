@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phoenix-MWA（无界动力 MWA™）：端侧 7B 隐空间世界模型基座，六榜登顶并开源 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Phoenix-MWA（无界动力 MWA™）：端侧 7B 隐空间世界模型基座，六榜登顶并开源 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="phoenix-mwa-mwatm-7b">Phoenix-MWA（无界动力 MWA™）：端侧 7B 隐空间世界模型基座，六榜登顶并开源</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Anyverse-Dynamics/Phoenix-MWA">https://github.com/Anyverse-Dynamics/Phoenix-MWA</a>  </p>
+<p><strong>Stars</strong>: 6 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-10-22  </p>
+<p><strong>组织</strong>: Anyverse Dynamics（无界动力）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-22</p>
+</blockquote>
+<hr />
+<h3 id="_2">它解决的问题</h3>
+<p>主流 VLA 的做法是「视觉—语言骨干 + 动作专家」，直接学<strong>观测 → 动作</strong>。这条路的瓶颈在两端：</p>
+<ol>
+<li><strong>数据效率</strong>：观测到动作之间隔着巨大的语义—物理鸿沟，全靠网络自己弥合，需要海量演示；</li>
+<li><strong>泛化</strong>：学到的更多是「这一幕下人类这么动」，而不是「<strong>这样动物理上会发生什么</strong>」。</li>
+</ol>
+<p>Phoenix-MWA 走的是另一条：<strong>先在隐空间里建一个世界模型</strong>，让模型理解「世界会怎么变」，再用<strong>强化学习</strong>在这个世界里长出策略。</p>
+<h3 id="_3">为什么是「隐空间」</h3>
+<p>直接在像素空间建世界模型，代价是把大量容量花在<strong>重建静态外观</strong>上——桌子还是那张桌子，背景还是那个背景，这些与决策无关。隐空间世界模型的取舍是：</p>
+<table>
+<thead>
+<tr>
+<th>建模对象</th>
+<th>优点</th>
+<th>代价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>像素空间未来帧</td>
+<td>监督信号稠密、可视化友好</td>
+<td>容量浪费在静态外观，推理开销大</td>
+</tr>
+<tr>
+<td><strong>隐空间状态转移</strong></td>
+<td>只编码「变了什么」，紧凑且可实时</td>
+<td>表征质量依赖编码器，可解释性弱</td>
+</tr>
+</tbody>
+</table>
+<p>Phoenix-MWA 选后者，这也是它能做<strong>端侧 7B 实时部署</strong>的前提。</p>
+<h3 id="_4">四段能力链</h3>
+<pre><code>  理解世界            学会操作           自我进化            可靠执行
+  (隐空间WM)    →    (ILA:运动+接触) →  (PhysCanvas)   →   (端侧实时部署)
+      │                   │                 │                  │
+   物理因果            动作可学         云侧仿真迭代        真机精细操作
+</code></pre>
+<p><strong>「自我进化」这一段是它与多数开源基座的分野</strong>：策略不是训完就定死，而是在部署前先到云端仿真环境里跑一轮自我改进。这实际上是把 <strong>RL 的采样成本从真机转移到了仿真</strong>。</p>
+<hr />
+<h3 id="_5">整体结构</h3>
+<pre><code>   观测序列 o_{1:t} + 任务指令 ℓ
+              │
+              ▼
+   ┌────────────────────────────┐
+   │  隐空间世界模型编码器        │   像素 → 紧凑隐状态
+   └────────────────────────────┘
+              │  z_t
+              ▼
+   ┌────────────────────────────┐
+   │  隐空间动态模型             │   预测 z_{t+1..t+k}（给定动作）
+   └────────────────────────────┘
+              │
+       ┌──────┴───────┐
+       ▼              ▼
+  ┌─────────┐   ┌──────────────┐
+  │ 动作头   │   │ 接触预测头     │   Phoenix-ILA：运动 + 接触联合
+  └─────────┘   └──────────────┘
+       │
+       ▼  a_t
+  ┌────────────────────────────┐
+  │  Phoenix-PhysCanvas（云侧）  │   部署前自我进化
+  └────────────────────────────┘
+       │  更新后的权重
+       ▼
+  端侧 7B 实时部署
+</code></pre>
+<h3 id="phoenix-ila">Phoenix-ILA：把接触纳入动作学习</h3>
+<p>常规动作学习的监督是「演示里的关节/末端轨迹」。问题在于：<strong>接触是操作里最难也最关键的部分</strong>，而轨迹本身并不显式标注「此刻是否接触、接触力多大」。</p>
+<p>ILA 的做法是把接触作为一个<strong>并行的学习目标</strong>：</p>
+<p>$$\mathcal{L} = \mathcal{L}<em>{action} + \lambda_c\,\mathcal{L}</em>{contact}$$</p>
+<p>其中接触目标可以是<strong>接触/非接触的二分类</strong>，也可以是<strong>接触力的回归</strong>。这让隐空间表征里显式编码了「碰上了没有」这个维度——对插拔、装配、柔性物体操作这类任务，这个维度往往比轨迹精度更决定成败。</p>
+<h3 id="phoenix-physcanvas">Phoenix-PhysCanvas：云侧仿真自进化</h3>
+<pre><code>   端侧 7B 策略  ──►  上传权重
+                          │
+                          ▼
+              ┌──────────────────────┐
+              │  PhysCanvas 仿真环境   │  交互式世界模型
+              │  · 大规模并行 rollout │
+              │  · 环境扰动随机化      │
+              └──────────────────────┘
+                          │  RL 更新
+                          ▼
+                    下载改进权重 → 端侧
+</code></pre>
+<p><strong>这个循环的价值</strong>：真机采样的成本是分钟级/次且受场地限制，仿真采样是毫秒级且可无限并行。把 RL 的主循环放到云侧仿真，真机只负责<strong>最终验证与少量真实数据回流</strong>，是具身智能里最接近「软件迭代速度」的一种组织方式。</p>
+<p><strong>风险</strong>：仿真—真机的<strong>一致性</strong>决定了这套循环的上限。真机—仿真一致性做不到，云侧进化出来的策略可能只是<strong>过拟合了仿真器的物理误差</strong>。</p>
+<hr />
+<ul>
+<li><strong><a href="https://openphoenix-team.github.io/Phoenix-pages/">MWA™-Phoenix 技术报告</a></strong> — 无界动力官方报告，六榜结果与训练细节的一手来源</li>
+<li><strong><a href="https://github.com/RoboTwin-Platform/RoboTwin">RoboTwin 2.0</a></strong> — Phoenix 登顶的跨本体双臂基准之一，本轮同步收录（os195）</li>
+<li><strong><a href="https://github.com/Lifelong-Robot-Learning/LIBERO">LIBERO</a></strong> — 长程操作基准，LIBERO-Plus / LIBERO-Pro 为其鲁棒性与泛化扩展</li>
+<li><strong><a href="https://arxiv.org/abs/2610.28626">UniWALM</a></strong> — 世界—动作—语言统一模型，同属「统一建模」方向，可与隐空间方案对照阅读</li>
+<li><strong><a href="https://arxiv.org/abs/2610.28431">Plausible Future, Wrong Choice / TaskWAM</a></strong> — 指出 WAM 的「阶段混淆」问题，是隐空间世界模型在长程任务上的已知风险</li>
+</ul>
+<hr />
+<h3 id="_6">环境准备</h3>
+<pre><code class="language-bash">git clone https://github.com/Anyverse-Dynamics/Phoenix-MWA
+cd Phoenix-MWA
+pip install -r requirements.txt
+</code></pre>
+<h3 id="_7">加载基座并做一次隐空间预测</h3>
+<pre><code class="language-python">from phoenix import PhoenixMWA
+
+model = PhoenixMWA.from_pretrained('Anyverse-Dynamics/Phoenix-MWA-7B')
+model = model.cuda().eval()
+
+# 编码观测到隐状态
+z = model.encode(obs_seq)                # [T, D]
+
+# 给定候选动作序列，预测未来隐状态
+z_future = model.predict(z, action_seq)  # [K, D]
+
+# 从隐状态解码动作（端侧单步推理）
+action = model.act(z)                    # 可直接送控制器
+</code></pre>
+<h3 id="ila">用 ILA 目标做微调</h3>
+<pre><code class="language-python">out = model.forward(obs_seq, demo_actions)
+loss = out['loss_action'] + cfg.lambda_c * out['loss_contact']
+loss.backward()
+</code></pre>
+<h3 id="physcanvas">PhysCanvas 云侧自进化</h3>
+<pre><code class="language-python">canvas = model.make_canvas(env_cfg, n_parallel=256)
+canvas.load_policy(model)
+for it in range(cfg.n_iters):
+    rollouts = canvas.rollout(randomize=cfg.domain_rand)
+    canvas.rl_update(rollouts)
+model.load_state_dict(canvas.export_weights())
+</code></pre>
+<blockquote>
+<p><strong>注意</strong>：仓库许可标注为 NOASSERTION（未声明开源协议），商用前务必与无界动力确认授权范围。星数较低（6）说明它刚开源，API 可能不稳定，建议锁定 commit 使用。</p>
+</blockquote>
+<hr />
+<h3 id="_8">官方公布的榜单结果</h3>
+<p>同时登顶六项评测（官方口径）：</p>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>考察重点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LIBERO-Plus</strong></td>
+<td>环境扰动下的鲁棒性</td>
+</tr>
+<tr>
+<td><strong>LIBERO-Pro</strong></td>
+<td>任务变化后的泛化</td>
+</tr>
+<tr>
+<td><strong>RoboCasa GR1</strong></td>
+<td>复杂物体操作</td>
+</tr>
+<tr>
+<td><strong>Bench2Dex</strong></td>
+<td>双臂/灵巧操作</td>
+</tr>
+<tr>
+<td><strong>RoboTwin 2.0</strong></td>
+<td>跨本体迁移</td>
+</tr>
+<tr>
+<td><strong>RoboDojo</strong></td>
+<td><strong>真机</strong>执行</td>
+</tr>
+</tbody>
+</table>
+<p><strong>这六项的组合才是信息量所在</strong>：单独登顶一项可能是调参或数据复刻，六项横跨仿真鲁棒性、泛化、复杂操作、跨本体与真机，说明能力的<strong>广度</strong>而非单点。</p>
+<h3 id="_9">三条刻意声明的约束</h3>
+<ol>
+<li><strong>不做测试数据复刻</strong>——排除把评测集混入训练的可能；</li>
+<li><strong>不使用深度信息传感器</strong>——只用 RGB，排除靠额外硬件 modalities 提分；</li>
+<li><strong>不依赖任何 Agent</strong>——排除用上层规划器补策略短板。</li>
+</ol>
+<p>第三条尤其值得注意：<strong>放弃 Agent 兜底</strong>意味着能力必须来自模型本身，这让榜单数字更可信，但也意味着在需要长程规划的任务上，它可能不如「策略 + Agent」的组合。</p>
+<h3 id="_10">部署侧的关键数字</h3>
+<ul>
+<li><strong>端侧 7B</strong>：参数规模控制在可单卡实时推理的区间；</li>
+<li><strong>隐空间建模</strong>：避免像素级生成，推理开销显著低于需要显式生成未来视频的 WAM；</li>
+<li><strong>云侧自进化</strong>：RL 采样转移到仿真，真机只做验证与数据回流。</li>
+</ul>
+<blockquote>
+<p>具体的 FLOPs / 延迟 / 成功率数字以官方技术报告 https://openphoenix-team.github.io/Phoenix-pages/ 为准，第三方复现结果尚待社区补充。</p>
+</blockquote>
+<hr />
+<h3 id="vla">与 VLA 路线的差异</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>VLA（如 π0 系列）</th>
+<th>Phoenix-MWA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>建模对象</td>
+<td>观测 → 动作</td>
+<td>观测 → 隐状态转移 → 动作</td>
+</tr>
+<tr>
+<td>主要监督</td>
+<td>演示动作</td>
+<td>世界动态 + 动作 + <strong>接触</strong></td>
+</tr>
+<tr>
+<td>泛化来源</td>
+<td>大规模 VLM 先验</td>
+<td><strong>物理因果 + RL 探索</strong></td>
+</tr>
+<tr>
+<td>改进机制</td>
+<td>更多/更好的演示数据</td>
+<td><strong>云侧仿真自我进化</strong></td>
+</tr>
+<tr>
+<td>推理开销</td>
+<td>骨干前向 + 动作专家</td>
+<td>隐状态预测 + 动作头（无需生成视频）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="wam">与 WAM（世界—动作模型）的关系</h3>
+<p>Phoenix-MWA 属于 WAM 家族，但<strong>在隐空间而非像素空间</strong>建模未来。这带来两个后果：</p>
+<ul>
+<li><strong>优点</strong>：推理便宜、容量集中在决策相关信息上，更适合端侧；</li>
+<li><strong>缺点</strong>：隐状态不可直接可视化，调试与失败分析比像素级 WAM 更困难。</li>
+</ul>
+<h3 id="_11">选型建议</h3>
+<ul>
+<li>你的瓶颈是<strong>接触丰富的精细操作</strong>（插拔、装配、柔性物体）→ ILA 的接触监督值得试；</li>
+<li>你有<strong>云侧仿真资源</strong>但真机时间稀缺 → PhysCanvas 的自进化循环价值最大；</li>
+<li>你需要<strong>端侧实时闭环</strong> → 隐空间方案的开销显著低于像素级未来生成；</li>
+<li>你需要<strong>可解释/可调试的中间输出</strong> → 隐空间路线目前体验较差，像素级 WAM 更直观。</li>
+</ul>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

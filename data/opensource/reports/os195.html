@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboTwin 2.0：双臂协作操作基准与合成数据生成器，覆盖 50+ 任务、跨多种双臂本体 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">RoboTwin 2.0：双臂协作操作基准与合成数据生成器，覆盖 50+ 任务、跨多种双臂本体 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="robotwin-20-50">RoboTwin 2.0：双臂协作操作基准与合成数据生成器，覆盖 50+ 任务、跨多种双臂本体</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/RoboTwin-Platform/RoboTwin">https://github.com/RoboTwin-Platform/RoboTwin</a>  </p>
+<p><strong>Stars</strong>: 2993 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-10-22  </p>
+<p><strong>组织</strong>: RoboTwin Platform（ICML 2026）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-22</p>
+</blockquote>
+<hr />
+<h3 id="_2">双臂操作的两个现实困难</h3>
+<p><strong>困难一：采集贵。</strong> 单臂遥操作一个人还能勉强操作，双臂需要<strong>双手协同的时序配合</strong>——左手扶住、右手拧，两者的时间关系就是任务本身。用主从臂或 VR 采集，熟练操作员的产出速率和成功率都远低于单臂场景。</p>
+<p><strong>困难二：对比难。</strong> 各家自己搭的场景、自己定义的初始状态分布、自己写的成功判据，导致论文之间<strong>数字不可比</strong>。同一个方法在 A 家的场景里 80%、在 B 家 40%，很难判断是方法问题还是环境差异。</p>
+<h3 id="robotwin">RoboTwin 的两件套</h3>
+<pre><code>   任务定义（标准化场景 + 初始状态分布 + 成功判据）
+              │
+      ┌───────┴────────┐
+      ▼                ▼
+  ┌────────┐      ┌─────────────┐
+  │ 基准    │      │ 数据生成器   │
+  │ 评测策略 │      │ 自动出演示   │
+  └────────┘      └─────────────┘
+      │                │
+      ▼                ▼
+   可比的成功率      可训练的演示数据
+</code></pre>
+<p><strong>关键在于这两件套共享同一套任务定义</strong>——用于评测的任务，和用于生成训练数据的任务，是<strong>同一批</strong>。这解决了具身学习里一个长期痛点：<strong>训练分布与评测分布不一致</strong>。</p>
+<h3 id="_3">数据生成器意味着什么</h3>
+<p>传统流程是「人采数据 → 训策略 → 上基准评测」，三个环节的数据来源各不相同。RoboTwin 的流程是「<strong>基准任务 → 自动生成演示 → 训策略 → 在同一批任务上评测</strong>」。</p>
+<p>这带来两个直接好处：</p>
+<ol>
+<li><strong>数据规模不再受人力约束</strong>：要 1000 条演示，改个参数跑一晚上；</li>
+<li><strong>训练与评测同分布</strong>：避免了「训的是 A 场景、测的是 B 场景」这类隐性分布漂移。</li>
+</ol>
+<hr />
+<h3 id="_4">分层结构</h3>
+<pre><code>   任务配置（YAML / Python）
+   ┌─────────────────────────────────────┐
+   │ · 场景物体与初始状态分布              │
+   │ · 双臂本体 URDF / 关节配置            │
+   │ · 成功判据（谓词逻辑）                │
+   └─────────────────────────────────────┘
+              │
+              ▼
+   ┌─────────────────────────────────────┐
+   │  物理仿真后端                         │
+   └─────────────────────────────────────┘
+              │
+      ┌───────┴────────┐
+      ▼                ▼
+  ┌──────────────┐  ┌────────────────────┐
+  │ 专家轨迹生成  │  │  策略执行环境        │
+  │ （规划/优化） │  │  （观测 → 动作）     │
+  └──────────────┘  └────────────────────┘
+      │                     │
+      ▼                     ▼
+   演示数据集            成功率统计
+</code></pre>
+<h3 id="_5">专家轨迹从哪来</h3>
+<p>RoboTwin 的演示<strong>不是人采的</strong>，而是通过<strong>规划与优化</strong>在仿真里解出来的。这意味着：</p>
+<ul>
+<li>演示动作的<strong>最优性</strong>取决于求解器质量，而不是操作员水平；</li>
+<li>数据里<strong>没有人类噪声</strong>（犹豫、绕路），这对 BC 是好事（质量高）也可能是坏事（学不到恢复行为）；</li>
+<li>可以按需生成<strong>任意数量、任意难度</strong>的演示。</li>
+</ul>
+<h3 id="_6">为什么「成功判据」值得单独设计</h3>
+<p>双臂任务的成功往往不是单一条件，而是<strong>谓词的合取</strong>：物体 A 被放到容器 B 内 <strong>且</strong> 物体 C 未被碰倒 <strong>且</strong> 双臂未发生碰撞。RoboTwin 把成功判据写成显式的谓词逻辑，好处是：</p>
+<ol>
+<li><strong>可复核</strong>：不同论文用同一套判据，数字才可比；</li>
+<li><strong>可细分</strong>：能分别统计「抓取失败」「放置失败」「碰撞失败」，定位策略的具体短板。</li>
+</ol>
+<hr />
+<ul>
+<li><strong><a href="https://robotwin-platform.github.io">RoboTwin 项目主页</a></strong> — 任务清单、本体支持与最新榜单</li>
+<li><strong><a href="https://openphoenix-team.github.io/Phoenix-pages/">MWA™-Phoenix 技术报告</a></strong> — 官方宣称在 RoboTwin 2.0 登顶，可作该基准上的 SOTA 参考点</li>
+<li><strong><a href="https://arxiv.org/abs/2610.21306">VLA-Δ</a></strong> — 在 RoboTwin 2.0 Clean/Random 上给出 90.06 / 89.74，是对比数字的可引用来源</li>
+<li><strong><a href="https://arxiv.org/abs/2610.28164">From Predictive Geometry to Action</a></strong> — 预测式几何表征路线，同样在 LIBERO / SimplerEnv 上验证</li>
+</ul>
+<hr />
+<h3 id="_7">安装</h3>
+<pre><code class="language-bash">git clone https://github.com/RoboTwin-Platform/RoboTwin
+cd RoboTwin
+pip install -r requirements.txt
+</code></pre>
+<h3 id="_8">生成一批演示数据</h3>
+<pre><code class="language-bash"># 选定任务与本体，生成 N 条专家演示
+python -m robotwin.generate \
+    --task pick_and_place_dual \
+    --embodiment aloha_agilex \
+    --num 200 \
+    --out data/pick_place_200.hdf5
+</code></pre>
+<h3 id="_9">用生成的数据训练一个策略</h3>
+<pre><code class="language-python">from robotwin import load_demo
+
+demo = load_demo('data/pick_place_200.hdf5')
+for obs, action in demo:
+    loss = policy.update(obs, action)      # 任意 BC / 扩散 / 流策略
+</code></pre>
+<h3 id="_10">在基准上评测</h3>
+<pre><code class="language-bash">python -m robotwin.evaluate \
+    --task pick_and_place_dual \
+    --embodiment aloha_agilex \
+    --policy checkpoints/my_policy.pt \
+    --episodes 100
+</code></pre>
+<p>输出会给出<strong>总体成功率</strong>以及按失败类型（抓取 / 放置 / 碰撞）的分解。</p>
+<blockquote>
+<p><strong>建议</strong>：先用 <code>Clean</code> 设定跑通 pipeline，再切到 <code>Random</code>（随机化初始状态与干扰）设定——后者才是真正区分方法能力的场景，也是论文里通常引用的那个数字。</p>
+</blockquote>
+<hr />
+<h3 id="robotwin-20">为什么 RoboTwin 2.0 成为高频评测环境</h3>
+<p>2026 年下半年，多数具身操作论文会同时报 LIBERO 系（单臂/长程）与 <strong>RoboTwin 2.0</strong>（双臂/跨本体）两组数字。原因是它补上了 LIBERO 系不覆盖的两块：</p>
+<table>
+<thead>
+<tr>
+<th>能力维度</th>
+<th>LIBERO 系</th>
+<th>RoboTwin 2.0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>臂数</td>
+<td>单臂为主</td>
+<td><strong>双臂协同</strong></td>
+</tr>
+<tr>
+<td>本体</td>
+<td>单一</td>
+<td><strong>跨多种双臂本体</strong></td>
+</tr>
+<tr>
+<td>数据</td>
+<td>人工采集演示</td>
+<td><strong>自动生成演示</strong></td>
+</tr>
+<tr>
+<td>许可</td>
+<td>视版本</td>
+<td><strong>MIT</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="clean-random">Clean / Random 双设定</h3>
+<p>论文里常见的两个数字：</p>
+<ul>
+<li><strong>Clean</strong>：初始状态固定或轻微扰动，考察<strong>基本可执行性</strong>，多数方法在这里接近饱和；</li>
+<li><strong>Random</strong>：初始位姿、物体外观、干扰物大幅随机化，考察<strong>鲁棒性与泛化</strong>，这是真正拉开差距的场景。</li>
+</ul>
+<p>读论文时的经验法则：<strong>只看 Clean 数字没有分辨力</strong>，Clean 与 Random 之间的<strong>落差</strong>才是方法鲁棒性的度量。</p>
+<h3 id="_11">生态位</h3>
+<p>2993 stars 在具身开源里属于<strong>高关注度</strong>项目，且配套了项目主页（https://robotwin-platform.github.io）。高关注度带来的实际好处是：新发布的策会优先适配它，你可以用<strong>别人的评测数字</strong>来给自己选基线，省去大量重复实验。</p>
+<hr />
+<h3 id="_12">与其他操作基准的分工</h3>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>定位</th>
+<th>何时用它</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LIBERO / LIBERO-Plus / Pro</strong></td>
+<td>单臂长程、终身学习、鲁棒性扩展</td>
+<td>验证长程规划与扰动鲁棒性</td>
+</tr>
+<tr>
+<td><strong>RoboCasa</strong></td>
+<td>大规模家务场景、真实感</td>
+<td>验证开放场景的语义泛化</td>
+</tr>
+<tr>
+<td><strong>RoboTwin 2.0</strong></td>
+<td><strong>双臂协同 + 自动生成数据</strong></td>
+<td>验证双臂配合与跨本体迁移</td>
+</tr>
+<tr>
+<td><strong>SimplerEnv</strong></td>
+<td>真机—仿真一致性对照</td>
+<td>验证 sim-to-real 的落差</td>
+</tr>
+<tr>
+<td><strong>RoboDojo</strong></td>
+<td>真机执行榜</td>
+<td>验证真机落地</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_13">它不擅长什么</h3>
+<ul>
+<li><strong>长程任务规划</strong>：RoboTwin 的任务多是单段落的操作，对多阶段规划能力的考察弱于 LIBERO；</li>
+<li><strong>开放世界语义</strong>：场景与物体集合是预定义的，语义开放度不如 RoboCasa；</li>
+<li><strong>真机一致性</strong>：作为仿真基准，它不直接回答 sim-to-real 的落差——需要配合 SimplerEnv 类评测一起看。</li>
+</ul>
+<h3 id="_14">选型建议</h3>
+<ul>
+<li>做<strong>双臂策略</strong> → 它几乎是当前唯一的主流开源选择；</li>
+<li>缺<strong>双臂演示数据</strong> → 数据生成器可以直接产出，且 MIT 许可允许商用；</li>
+<li>做<strong>跨本体迁移</strong> → 它内置多本体支持，省去自己建模的成本；</li>
+<li>做<strong>长程任务</strong>或<strong>开放场景语义</strong> → 仍需配合 LIBERO / RoboCasa。</li>
+</ul>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

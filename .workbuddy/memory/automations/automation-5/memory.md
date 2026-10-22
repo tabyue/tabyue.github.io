@@ -86,6 +86,13 @@
 - 校验：sync + sitemap（524 章节）+ health_check **首轮即 ALL OK**；已 push（89f18a9），远程 HEAD 已核对一致。
 - 新坑：① arXiv export API 本轮大面积 429/timeout（8 次查询只成功 2 次），https 比 http 稳但仍需 4 次重试 + 8s 间隔；CBST / RoboSpan 两个 ID 始终没拿到，只能换选题。备选：直接 WebFetch `arxiv.org/abs/<id>` 最稳。② **用显式 URL push 后 `git status -sb` 仍显示 ahead 1**——因为 fetch 的是 URL 而非 remote，`origin/main` 引用没更新。解法：`gh api repos/<owner>/<repo>/commits/main --jq .sha` 核对远程，再 `git update-ref refs/remotes/origin/main <sha>`。③ 本轮选题查重命中率约 50%：法奥 C+/D 轮=n459、四川具身 EIR=n472、弗若斯特沙利文 3.6 万台=n473、乐聚×兆丰=n448、REKI=os178/p243、UnifoLM=os179/n413、格物通智=n474 全部已在库，靠导出清单才拦干净。
 
+### 2026-10-21 08:00—09:30
+- 投稿箱：无新投稿。开工时工作树干净、HEAD==origin/main。
+- 数据：新闻 +10（n489—n498）、论文 +5（p252—p256，含 detail）、开源 +4（os190—os193，含 detail + 报告页）、招聘 +6（j243—j248）、资源新增 r017（具身 Grounding 与视觉定位）+ r001 扩充。
+- 学习：vla-models +第 26 节「VLA 的因果可解释性：动作条件接口与推理预算该怎么花」（9.3K，tier3，联动 arXiv 2610.20750）；multimodal-perception +「具身 Grounding」（9.3K，tier3，联动 os191 GroundingPI）。
+- 校验：sync + sitemap（533 章节）+ health_check **首轮即 ALL OK**；已 push（c5d9d61..31b5f5f），远程 HEAD 已核对一致。
+- 新坑：① **外层用 `r"""` 时示例代码 docstring 只能用 `'''`**（本轮 4 处误用，报错表现为 `SyntaxError: invalid character '，'`，排查时用 `Grep ^\s+"""` 定位缩进的 `"""`）。② **GitHub Search API 本轮 10 个查询 6 个 403 rate limit**，建议拆批 + sleep 8s。③ 学习正文一次写不满时，用「按 shortTitle 定位 + `### N.` 守卫 + 在 `---\n\n**关联阅读**` 前插入」二次追加，幂等且安全（本次 7.3K → 9.3K）。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期

@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-21T08:45",
+ "lastUpdated": "2026-10-22T08:50",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,132 @@
   }
  ],
  "projects": [
+  {
+   "id": "os194",
+   "name": "Phoenix-MWA（无界动力 MWA™）：端侧 7B 隐空间世界模型基座，六榜登顶并开源",
+   "github": "https://github.com/Anyverse-Dynamics/Phoenix-MWA",
+   "organization": "Anyverse Dynamics（无界动力）",
+   "org": "Anyverse-Dynamics",
+   "category": "ai-model",
+   "description": "**Phoenix-MWA** 是无界动力（Anyverse Dynamics）**MWA™（隐空间世界模型）**路线的开源基座实现，2026 年 10 月 22 日随 **MWA™-Phoenix** 发布一同放出。\n\n**核心定位**：一个**端侧 7B 参数**的完整预训练世界模型基座，延续「**隐空间世界模型 + 强化学习**」的技术路线。配套两个关键组件：\n\n- **Phoenix-ILA**：把**运动与接触**共同纳入动作学习——不是只学轨迹，而是把接触事件当成显式学习目标；\n- **Phoenix-PhysCanvas**：交互式仿真世界模型，让策略在**部署前于云端仿真环境中自我进化**，再落到真机做实时部署与精细操作。\n\n**公开战绩**：同时登顶 **LIBERO-Plus、LIBERO-Pro、RoboCasa GR1、Bench2Dex、RoboTwin 2.0** 与 **RoboDojo 真机榜**六项评测，覆盖环境扰动鲁棒性、任务变化泛化、复杂物体操作、跨本体迁移与真机执行。官方特别强调三条约束：**不做测试数据复刻、不使用深度信息传感器、不依赖任何 Agent**。\n\n**工程数据**：Python 实现，仓库 2026-10-20 创建，最近推送 2026-10-20，当前 6 stars，许可未声明（NOASSERTION）。技术报告站点 https://openphoenix-team.github.io/Phoenix-pages/。\n\n**为什么值得关注**：这是一条与主流 VLA 明显不同的路线——**先在隐空间里建世界模型，再用 RL 从世界里长策略**。它把「理解世界 → 学会操作 → 自我进化 → 可靠执行」串成一条链，并用云端仿真自进化去补「最后一厘米」。星数不高是因为刚开源，但**六榜同时登顶 + 端侧 7B 可部署**的组合在开源具身基座里并不多见。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 6,
+   "features": [
+    "端侧 7B 参数的隐空间世界模型基座，面向实时部署设计",
+    "Phoenix-ILA：把运动与接触一并纳入动作学习，显式建模接触事件",
+    "Phoenix-PhysCanvas：云端交互式仿真世界模型，部署前自我进化",
+    "同时登顶 LIBERO-Plus / LIBERO-Pro / RoboCasa GR1 / Bench2Dex / RoboTwin 2.0 / RoboDojo 六榜",
+    "不使用深度信息传感器、不依赖外部 Agent，把能力压回模型本身",
+    "提供公开技术报告，链路可复核"
+   ],
+   "tags": [
+    "Phoenix-MWA",
+    "无界动力",
+    "世界模型",
+    "基座模型",
+    "隐空间",
+    "强化学习",
+    "接触学习",
+    "LIBERO",
+    "RoboDojo"
+   ],
+   "addedDate": "2026-10-22"
+  },
+  {
+   "id": "os195",
+   "name": "RoboTwin 2.0：双臂协作操作基准与合成数据生成器，覆盖 50+ 任务、跨多种双臂本体",
+   "github": "https://github.com/RoboTwin-Platform/RoboTwin",
+   "organization": "RoboTwin Platform（ICML 2026）",
+   "org": "RoboTwin-Platform",
+   "category": "simulation",
+   "description": "**RoboTwin** 是双臂（bimanual）机器人操作领域的开源**基准 + 数据生成器**，2.0 版本发表于 **ICML 2026**，官方仓库即 `RoboTwin-Platform/RoboTwin`。它在 2026 年下半年已经成为具身操作论文里最常出现的评测环境之一——本轮收录的 **Phoenix-MWA** 六榜登顶里就包括 RoboTwin 2.0。\n\n**它同时是两件东西**：\n\n1. **基准（benchmark）**：一组标准化的双臂操作任务，用于横向比较不同策略的成功率；\n2. **数据生成器（data generator）**：能**自动生成专家演示数据**，而不依赖人工遥操作采集。\n\n第二点才是它的核心价值——双臂操作的遥操作采集成本远高于单臂，**自动生成演示**把「要评测的任务」和「要训练的数据」合成了一个闭环。\n\n**工程数据**：Python 实现，**MIT 许可**（可商用），2993 stars，仓库 2024-09 创建、持续维护至 2026-09，topics 为 benchmark / data-generator / embodied-ai / robotics，项目主页 https://robotwin-platform.github.io。\n\n**为什么值得关注**：如果你想在双臂操作上做方法对比，绕不开它；如果你想低成本地拿到一批双臂演示数据，它的数据生成器是当前开源里最成熟的选择之一。MIT 许可也对商业团队友好。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 2993,
+   "features": [
+    "双臂协作操作基准，任务覆盖多类日常与工业操作",
+    "内置合成数据生成器：自动生成专家演示，无需人工遥操作",
+    "跨多种双臂本体，支持本体间的迁移评测",
+    "MIT 许可，学术与商业均可自由使用",
+    "已成为 2026 年具身操作论文的高频评测环境（如 Phoenix-MWA 六榜之一）",
+    "生态成熟：2993 stars，配套项目主页与持续维护"
+   ],
+   "tags": [
+    "RoboTwin",
+    "双臂操作",
+    "基准",
+    "合成数据",
+    "数据生成",
+    "bimanual",
+    "ICML 2026",
+    "MIT"
+   ],
+   "addedDate": "2026-10-22"
+  },
+  {
+   "id": "os196",
+   "name": "horus：用 Rust 写的「最快机器人运行时系统」，对标 Android 定位的机器人底层运行时",
+   "github": "https://github.com/softmata/horus",
+   "organization": "Horus Robotics（softmata）",
+   "org": "softmata",
+   "category": "framework",
+   "description": "**horus** 的自我定位非常直接：**Fastest Robotics Runtime System — If phones have Android, robots deserve HORUS.**（手机有 Android，机器人就该有 HORUS）。它是一个用 **Rust** 实现的机器人**运行时系统**，而非又一个机器人中间件。\n\n**它想填的层**：相机驱动、状态估计、运动控制（1 kHz）、策略推理（10—50 Hz）、语音交互、任务编排——这些模块对**实时性、带宽、失败语义**的要求完全不同。把它们全部塞进一张 ROS 2 计算图，代价是**实时性被最慢的一环决定、故障域被整张图共享**。horus 的思路是在**运行时层**解决这个问题。\n\n**为什么是 Rust**：运行时要管进程生命周期、通信原语、时间同步与资源隔离。这些恰好是**内存安全与零成本抽象**收益最大的地方——Rust 的所有权模型能消除一整类数据竞争，且不引入 GC 停顿。\n\n**工程数据**：**Rust** 实现，**Apache-2.0** 许可，442 stars，2025-10 创建、2026-10 仍在活跃推送，文档站 https://docs.horusrobotics.dev/。topics 覆盖 real-time / middleware / ros / ros2 / humanoid / drivers / distributed-systems / drones / python。\n\n**为什么值得关注**：具身智能的软件栈正在分层——**运行时 / 中间件 / Agent 框架**各有其职。horus 是运行时层里少见的、用系统级语言认真做的开源项目。如果你的瓶颈是**控制频率与抖动**而不是「生态够不够全」，值得看一眼。",
+   "language": "Rust",
+   "license": "Apache-2.0",
+   "stars": 442,
+   "features": [
+    "Rust 实现的机器人运行时：内存安全 + 零 GC 停顿，适合硬实时",
+    "覆盖进程生命周期、通信原语、时间同步与资源隔离",
+    "提供 ROS / ROS 2 兼容层，可与既有生态对接",
+    "多本体支持：humanoid / drones / 移动机器人 / 分布式系统",
+    "Apache-2.0 许可，商用友好",
+    "配套完整文档站，2026 年 10 月仍在活跃维护"
+   ],
+   "tags": [
+    "horus",
+    "机器人运行时",
+    "Rust",
+    "实时系统",
+    "中间件",
+    "ROS2",
+    "零GC",
+    "资源隔离"
+   ],
+   "addedDate": "2026-10-22"
+  },
+  {
+   "id": "os197",
+   "name": "EVA-CLIENT：真机部署、评测与数据采集三合一的统一框架，支持 UR5e / Franka / AgileX PiPer",
+   "github": "https://github.com/Noietch/EVA-CLIENT",
+   "organization": "CoLaLab",
+   "org": "Noietch",
+   "category": "data-tools",
+   "description": "**EVA-CLIENT** 解决的是一个非常具体、几乎所有具身团队都踩过的坑：**采数据、训模型、部署、评测这四个环节各写了一套胶水代码**，本体一换全部重写。\n\n它的做法是提供一个**统一框架**，把**部署（Deployment）、评测（Evaluation）与数据采集（Data Collection）**三件事收敛到同一套接口下，跑在真实机器人上。\n\n**已支持的本体**（据 topics）：**UR5e、Franka、AgileX PiPer** 等；覆盖的方法类型包括 **VLA、WAM、RL**，并支持**遥操作（teleoperation）**。\n\n**工程数据**：Python 实现，**Apache-2.0** 许可，334 stars，2026-07 创建、2026-10 仍在活跃推送，项目主页 https://colalab.net/projects/eva-client/。topics 含 robotics / embodied-ai / vla / wam / rl / teleoperation / deployment / inference / agent。\n\n**为什么值得关注**：具身智能的工程成本大头往往不在算法，而在**「同一个策略换个本体就要重写一遍接口」**。EVA-CLIENT 把这件事收敛成一层适配，对只有 1—2 台真机、又要同时试多种方法的团队尤其划算。Apache-2.0 许可也允许商用。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 334,
+   "features": [
+    "部署 / 评测 / 数据采集三合一，一套接口贯穿全流程",
+    "多本体适配：UR5e、Franka、AgileX PiPer 等",
+    "兼容多种方法类型：VLA / WAM / RL 策略均可接入",
+    "内置遥操作采集模块，支持人工演示数据回流",
+    "Apache-2.0 许可，商用友好",
+    "2026 年 10 月仍在活跃推送，配套项目主页与文档"
+   ],
+   "tags": [
+    "EVA-CLIENT",
+    "真机部署",
+    "评测",
+    "数据采集",
+    "遥操作",
+    "UR5e",
+    "Franka",
+    "AgileX",
+    "VLA"
+   ],
+   "addedDate": "2026-10-22"
+  },
   {
    "id": "os190",
    "name": "mimic-video，超越 VLA 的「视频—动作模型」路线：用视频生成直接产出通用机器人控制策略",
@@ -4574,5 +4700,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 180
+ "totalItems": 184
 }
