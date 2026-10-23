@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SimpleMemVLA：给 VLA 装原生视频记忆 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">SimpleMemVLA：给 VLA 装原生视频记忆 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="simplememvla-vla">SimpleMemVLA：给 VLA 装原生视频记忆</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenBMB/SimpleMemVLA">https://github.com/OpenBMB/SimpleMemVLA</a>  </p>
+<p><strong>Stars</strong>: 94 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-10-23  </p>
+<p><strong>组织</strong>: OpenBMB（面壁智能）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-23</p>
+</blockquote>
+<hr />
+<h3 id="_2">长时程为什么会断</h3>
+<p>典型 VLA 的输入是固定长度的观测窗口：</p>
+<p>$$
+a_t = \pi(o_{t-K:t},\, \ell)
+$$</p>
+<p>当任务跨度超过 $K$ 帧所覆盖的时间，模型在物理上就看不到早期证据。常见缓解手段有三种，都有代价：</p>
+<table>
+<thead>
+<tr>
+<th>做法</th>
+<th>代价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>直接加大 $K$</td>
+<td>计算与显存随 $K$ 增长，且注意力被稀释</td>
+</tr>
+<tr>
+<td>把历史压成文本摘要</td>
+<td>丢掉精确的空间与接触信息</td>
+</tr>
+<tr>
+<td>外挂检索式记忆</td>
+<td>检索什么、什么时候检索都要额外设计</td>
+</tr>
+</tbody>
+</table>
+<p>SimpleMemVLA 走的是第四条路：<strong>历史就是视频，原样保留，但用流式推理把成本压下来</strong>。</p>
+<h3 id="simplenav">与 SimpleNav 的关系</h3>
+<p>同属 OpenBMB 的 Simple 系列，思路一致——把一个方向里「大家都各写各的」的部分抽成统一框架。SimpleNav 做导航 VLA，SimpleMemVLA 做记忆。</p>
+<hr />
+<h3 id="_3">三个关键组件</h3>
+<ol>
+<li><strong>时间戳视觉历史</strong>：历史帧不是堆在一起，而是带上时间戳组织成视频记忆，让模型知道「这一步发生在多久以前」。</li>
+<li><strong>精确流式推理</strong>：新帧到来时复用已有帧的 KV 缓存，只对新帧做完整计算。所谓「精确」是指<strong>不牺牲注意力覆盖范围</strong>——与常见的滑窗丢弃不同。</li>
+<li><strong>记忆读写策略</strong>：决定保留哪些帧、什么时候淘汰。</li>
+</ol>
+<h3 id="_4">为什么「精确」很重要</h3>
+<p>很多长上下文方案是近似的（滑窗、压缩、稀疏注意力）。在机器人操作里近似有具体后果：<strong>你不确定模型到底有没有看到那次失败的关键帧</strong>。精确流式推理保证「历史全在，只是算得快」。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2609.05533">SimpleMemVLA 论文</a></strong> — 原生视频记忆与精确流式推理的方法来源。</li>
+<li><strong><a href="https://arxiv.org/abs/2608.19059">LT-Mem: Volatility-Aware Spatio-Temporal Memory</a></strong> — 跨 session 的长期记忆，与 SimpleMemVLA 的「单次任务内记忆」正好是时间尺度的两端。</li>
+<li><strong><a href="https://github.com/OpenBMB/SimpleNav">SimpleNav</a></strong> — 同系列的导航 VLA 框架。</li>
+</ul>
+<hr />
+<h3 id="_5">安装</h3>
+<pre><code class="language-bash">git clone https://github.com/OpenBMB/SimpleMemVLA.git
+cd SimpleMemVLA
+pip install -e .
+</code></pre>
+<h3 id="_6">使用要点</h3>
+<pre><code class="language-python">from simplememvla import MemVLA, VideoMemory
+
+model = MemVLA.from_pretrained('OpenBMB/SimpleMemVLA')
+memory = VideoMemory(max_seconds=120, fps=4)   # 保留 2 分钟视觉历史
+
+for obs in stream:
+    memory.append(obs.rgb, t=obs.timestamp)
+    action = model.act(obs, memory, instruction)
+</code></pre>
+<h3 id="_7">上手建议</h3>
+<ol>
+<li><strong>先在一个短任务上跑通</strong>，确认不带记忆时基线正常；</li>
+<li><strong>人为构造一个需要长记忆的任务</strong>（比如「把 A 放到 X，再把 B 放到 A 旁边」，且两步之间插入 30 秒的其他动作）；</li>
+<li>对比开 / 关记忆的成功率——<strong>这个差距就是记忆模块的真实价值</strong>；</li>
+<li>再逐步拉长间隔，找到你的任务在哪个时间跨度上开始崩。</li>
+</ol>
+<hr />
+<h3 id="_8">项目规模</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>94</td>
+</tr>
+<tr>
+<td>语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>创建</td>
+<td>2026-08-29</td>
+</tr>
+<tr>
+<td>最近推送</td>
+<td>2026-10-18</td>
+</tr>
+<tr>
+<td>论文</td>
+<td>arXiv:2609.05533</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_9">怎么评估它</h3>
+<p>不要只看官方数字。对你自己的任务，最有说服力的是<strong>记忆跨度—成功率曲线</strong>：横轴是任务中「需要回忆的证据距现在多少秒」，纵轴是成功率。开记忆前后两条曲线之间的面积，就是这个模块给你的真实收益。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>历史保真度</th>
+<th>推理成本</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>加大观测窗口</td>
+<td>高</td>
+<td>随 $K$ 线性增长</td>
+<td>跨度 &lt; 数十帧</td>
+</tr>
+<tr>
+<td>文本摘要</td>
+<td>低（丢空间细节）</td>
+<td>低</td>
+<td>语义级长期记忆</td>
+</tr>
+<tr>
+<td>检索式外挂记忆</td>
+<td>中</td>
+<td>取决于检索</td>
+<td>需要精确定位历史片段</td>
+</tr>
+<tr>
+<td><strong>SimpleMemVLA 视频记忆</strong></td>
+<td><strong>高（原样保留）</strong></td>
+<td><strong>流式复用，可控</strong></td>
+<td><strong>需要精确视觉证据的长时程操作</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>选型判据</strong>：如果你的失败是「模型不记得它刚才做过什么动作」，用视频记忆；如果是「模型不知道三小时前这间屋里有什么」，那更像 LT-Mem 那类跨 session 长期记忆问题（见本期论文 p266），不是同一个尺度。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

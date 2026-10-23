@@ -1,6 +1,151 @@
 {
- "lastUpdated": "2026-10-22T08:50",
+ "lastUpdated": "2026-10-23T08:30",
  "papers": [
+  {
+   "id": "p266",
+   "title": "LT-Mem: Volatility-Aware Spatio-Temporal Memory for Lifelong Scene Understanding",
+   "authors": "Yumin Lee, Hyoseok Ju, Giseop Kim",
+   "venue": "IROS 2026 最佳论文 / arXiv 2608.19059（cs.RO / cs.CV）",
+   "date": "2026-08-19",
+   "arxiv": "https://arxiv.org/abs/2608.19059",
+   "github": "",
+   "tags": [
+    "LT-Mem",
+    "IROS 2026 最佳论文",
+    "具身长记忆",
+    "Tri-Memory",
+    "跨会话重识别",
+    "LT-VQA",
+    "终身场景理解"
+   ],
+   "tldr": "**问题**：长期作业的机器人反复重访同一环境，物体被挪动、消失又放回。现有系统要么覆写历史以保持地图最新，要么存语义快照但**没有跨 session 的对象身份**——两者都会丢掉对象的历史轨迹，答不了「那把绿椅子历次到访都出现在哪」。论文把这种系统性的丢失称为**时间性失忆（temporal amnesia）**。\n\n**方法三层**：\n\n1. 多 session SLAM 主干提供空间对齐的逐对象观测；\n2. 推理层用五项**确定性证据评分**做跨 session 对象重识别，仅歧义案例交给受限 LLM 判 MATCH / NEW-TRACK / HOLD；\n3. 波动分数 V 用贝叶斯式证据累积，据此在**覆盖写 / 保持 / 多假设**三种更新之间选择。\n\n**记忆结构 Tri-Memory**：Live 存当前状态，Delta 记带时间戳的事件日志，Meta 累积波动统计并回灌更新策略。配套 **LT-VQA** 数据集与评测套件（多 session 录制 + 持久身份标注 + 时序问答对）。\n\n**结果**：各项指标全面超过基线，事件识别 F1 达 0.910，且累计 API token 消耗降到 VLM 基线的大约 1/16；消融显示收益来自结构化记忆架构而非 LLM 容量。",
+   "category": "具身智能",
+   "difficulty": "中级",
+   "keyInsights": [
+    "把「记忆怎么更新」变成一个**由对象波动性条件化的决策**，而不是固定阈值或一律覆写——这是它与普通语义地图最本质的区别。",
+    "跨 session 身份保持是所有 longitudinal 推理的地基：消融中去掉 Re-ID 会导致所有指标崩塌。",
+    "受限 LLM 只用在歧义案例上，配合确定性证据评分，使 token 消耗降一个数量级——这是「LLM 不该干所有活」的一个干净示范。",
+    "IROS 2026 评委会从近两千篇录用论文中选中它，实质上宣告具身长记忆已从工程补丁升级为领域公认的科学问题。"
+   ],
+   "impact": "家政、巡检、仓储这类「机器人长期待在同一栋楼里」的场景，真正的瓶颈不是一次任务做得多好，而是**能不能记住东西上次在哪**。LT-Mem 给出了第一个被顶会公认的架构化答案。",
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "p265",
+   "title": "SpatialScout: Can VLM Agents Actively Explore and Map 3D Scenes?",
+   "authors": "Zhaoxi Zhang, Hao Liang, Linxuan Wu, Yiming Wu, Yifu Yuan, Kun Liang, Chenming Tang, Meiyi Qiang, Wentao Zhang, Weikang Li",
+   "venue": "arXiv 2026-10（cs.CV / cs.CL）",
+   "date": "2026-10-19",
+   "arxiv": "https://arxiv.org/abs/2610.26659",
+   "github": "https://github.com/JesseZZZZZ/SpatialScout",
+   "tags": [
+    "SpatialScout",
+    "主动感知",
+    "3D度量地图",
+    "VLM Agent",
+    "基准评测",
+    "跨视角关联",
+    "空间智能"
+   ],
+   "tldr": "**为什么需要**：空间智能要求智能体主动获取视觉证据并把观测整合成连贯的三维世界表示。但空间问答（spatial QA）很难证明模型到底能不能通过**自主探索**构建准确的度量地图。SpatialScout 就是为这件事设计的基准。\n\n**基准构成**：80 个多样室内场景、**3140 个目标物体**。给定物体清单、RGB 观测、相机标定与相机位姿，智能体控制相机去探索场景，并在统一坐标系里估计物体中心。任务要求在**有限交互预算**下协调视点选择、跨视角关联、几何估计与地图修订。评测通过物体尺度的 overlap 分数同时衡量定位精度与目标覆盖率，并对漏检做惩罚。\n\n**结果**：当前最强前沿 VLM（Claude Opus 5.5）平均 overlap 只有 **41.71%**，47.23% 的目标 IoU 超过 0.5，但只有 **3.25%** 超过 0.9。这说明从「还原粗略布局」到「构建完整精确的度量地图」之间还有巨大差距。",
+   "category": "具身智能",
+   "difficulty": "中级",
+   "keyInsights": [
+    "把空间智能从「问答」拉回「主动建图」：给模型相机控制权与有限预算，逼它自己做视点选择，这才是具身场景真正的设定。",
+    "结果暴露了前沿 VLM 的硬上限——粗略布局能还原，精确度量地图做不到（IoU>0.9 的只有 3.25%）。这对「用 VLM 直接做 SLAM 替代品」的乐观预期是一记冷静剂。",
+    "任务把四种能力耦合在一起：视点选择、跨视角关联、几何估计、地图修订——任意一环掉链子都会反映在 overlap 分数上，因此它也是一个很好的诊断工具。",
+    "对导航与移动操作团队的现实含义：在部署 VLM 做语义建图之前，先想清楚你需要的是「大概在哪」还是「精确在哪」。"
+   ],
+   "impact": "为「VLM 能不能当具身的空间前端」提供了第一个可量化的测试床。结论偏负面但极有价值：它把讨论从感觉拉到数字，也让主动感知（active perception）重新成为值得投入的方向。",
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "p264",
+   "title": "AgenticRoboRL: Bringing Coding-Agent Post-Training to Agentic Robotics",
+   "authors": "Xinxin Liu, Bingxin Xu, Wenrui Bao, Ming Li, Wentao Bao, Chen Chen, Yuzhang Shang",
+   "venue": "arXiv 2026-10（cs.RO）",
+   "date": "2026-10-19",
+   "arxiv": "https://arxiv.org/abs/2610.28589",
+   "github": "",
+   "tags": [
+    "AgenticRoboRL",
+    "后训练",
+    "机器人规划器",
+    "harness 适配",
+    "多轮RL",
+    "LIBERO-PRO",
+    "SFT+RL"
+   ],
+   "tldr": "**观察**：近来的 agentic robotics 靠更好的 harness 与外部记忆来提升系统，但规划器本身几乎都依赖闭源强模型，**并没有提升规划器自己的能力**。而编码智能体这一侧，能力提升主要来自**对模型本身做后训练**。于是问题变成：后训练能不能同样提升机器人规划器？\n\n**难点**：不同 harness 的执行机制不一样——有的是调用 VLA 技能，有的是生成控制代码。为此 AgenticRoboRL 引入 **harness-specific adapters**，把记录下来的规划器交互与任务结果接起来，在保持执行组件固定的前提下共用同一条 RL 训练流水线。训练配方是 **SFT + 多轮 RL**。\n\n**结果**：在 LIBERO-PRO 上，把 **9B 参数规划器**的成功率从 18.1% 提到 **71.0%**，且不使用外部记忆，已接近 Codex（GPT-5.5）配外部记忆的 72.1%。作者将开源框架与训练好的规划器 checkpoint。",
+   "category": "具身智能",
+   "difficulty": "中级",
+   "keyInsights": [
+    "一个 9B 的开源规划器经过后训练可以逼近闭源强模型 + 外部记忆的水平——这意味着**机器人 Agent 的瓶颈不只在模型规模，也在有没有针对任务做过后训练**。",
+    "harness-specific adapter 是这篇工作的工程核心：它让同一条 RL 流水线能够跨「VLA 技能调用」与「控制代码生成」两种执行机制复用。",
+    "多轮 RL 而非单轮：机器人规划是序列决策，规划器每一步的产出都要在后续步骤里被验证，单轮监督信号覆盖不到。",
+    "与 AW-0（p262）形成对照：AW-0 把代码放进模型内部作为生成流，AgenticRoboRL 则保持模型是规划器、只做后训练——两条路都指向「让模型本身变强」。"
+   ],
+   "impact": "给资源受限的团队一条现实路径：不必依赖闭源模型当规划器，**用 SFT + 多轮 RL 把自己的 9B 模型训上去**就能打平强基线。这对国产模型 + 真机部署的路线尤其重要。",
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "p263",
+   "title": "DONIC: Generalist Dexterous Bimanual Tracking Control from Human Demonstrations",
+   "authors": "Mingze Sun, Ziang Cao, Yuan Fei, Qiankuan Tao, Zihan Wang, Tianqi Liu, Junhao Chen, Haiwen Diao, Fangzhou Hong, Zhaoxi Chen, Ziwei Liu",
+   "venue": "arXiv 2026-10（cs.RO）",
+   "date": "2026-10-21",
+   "arxiv": "https://arxiv.org/abs/2610.29997",
+   "github": "https://ropedia.github.io/DONIC",
+   "tags": [
+    "DONIC",
+    "BiHOI",
+    "双臂灵巧操作",
+    "参考跟踪",
+    "PPO+BC",
+    "重定向",
+    "接触角色奖励"
+   ],
+   "tldr": "**缺口**：已有的灵巧参考跟踪模型主要做单手、交互类型有限，而现实里大量动作是**不对称的双手协同**——一只手稳住物体，另一只手去开、转、挪。难点有两层：接触丰富的双臂数据稀缺；共享策略要学手角色与接触时机都在变的长轨迹。\n\n**数据**：**BiHOI**，多视角手—物交互数据集，1575 段序列、229 个物体、14.77 小时，从 32 个标定 RGB 视角采集，覆盖对称操作与不对称协同，重建双手与物体后把手部运动重定向成机器人参考。\n\n**方法**：DONIC 用 **PPO + BC 的反馈循环**，把验证成功的执行回收成示教；**以物体为中心的分手奖励**在保持物体运动反馈的同时，按每只手的参考接触角色分别监督；**Clip-Centered Advantages** 去掉与参考相关的优势偏置，同时保留轨迹内部的差异。\n\n**结果**：不做微调的单一个 checkpoint，在训练物体的未见轨迹上达到 **86.79%** 成功率，留出物体上 **57.32%**，比当前最强双臂跟踪基线分别高 77.36 与 45.73 个百分点。",
+   "category": "具身智能",
+   "difficulty": "高级",
+   "keyInsights": [
+    "以物体为中心的分手奖励是关键：只监督手部姿态不足以保证操作成功，而要求双手同时满足接触条件又会掩盖单手的进展。",
+    "Clip-Centered Advantages 解决了多段参考混合训练时的优势偏置——不同 clip 难度不等会在优势里留下与参考相关的常数偏移，削弱难序列中有用动作的更新。",
+    "把验证成功的 rollout 回收进 BC 数据，等于让 RL 自己给自己造血，缓解接触丰富双臂示教稀缺的问题。",
+    "对想做灵巧手团队的现实含义：通用双臂跟踪已经可以用「一个 checkpoint 覆盖多物体多任务」的方式做到，而不必为每个任务单独训一套。"
+   ],
+   "impact": "双臂灵巧操作长期被数据稀缺卡住。DONIC + BiHOI 同时给出数据与方法，并且证明了**跨操作类别与人体运动来源联合训练**可行，是把单手灵巧操作推向日常双手任务的重要一步。",
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "p262",
+   "title": "Agentic World Action Models",
+   "authors": "Zhuoyang Liu, Dantong Niu, Botong Zhang, Boning Shao, Jing Wang, Ruijie Zheng, Yuvan Sharma, Runyu Lu, Jiaming Liu, Renrui Zhang, Roei Herzig, Yutong Bai, Ken Goldberg, Danfei Xu, Yuke Zhu, Guanzhi Wang, Linxi \"Jim\" Fan, Trevor Darrell",
+   "venue": "arXiv 2026-10（cs.RO）",
+   "date": "2026-10-21",
+   "arxiv": "https://arxiv.org/abs/2610.30136",
+   "github": "https://agentic-wam.github.io/",
+   "tags": [
+    "AW-0",
+    "Agentic WAM",
+    "代码即技能",
+    "混合专家Transformer",
+    "技能库",
+    "RoboTwin 2.0",
+    "双臂操作"
+   ],
+   "tldr": "**两条路线的空白**：世界动作模型（WAM）能给机器人视觉预见与未来预测，但缺一套显式机制去做**组合式技能复用**；而 agentic robotics 用代码做规划与推理、有可复用技能，却又缺对物理动态的预测性接地。AW-0 把两者接起来。\n\n**做法**：在一个统一的 mixture-of-transformers 架构里，把**代码、未来视频、机器人动作**建模成三条耦合的生成流——code expert 生成带参数的技能例程与控制逻辑，video expert 与 action expert 分别生成未来视觉状态与低层电机指令。代码在这里有两个互补角色：既在世界模型内部结构化多步预测与控制，又把技能表示为可供后续 agentic 执行复用的**程序**。配套一条自动化标注流水线，给机器人与人类视频轨迹打上对齐的程序标签，并把反复出现的例程沉淀成可复用技能库。\n\n**结果**：在 RoboTwin 2.0 与真实双臂操作任务上超过 VLA 与 WAM 基线，语言跟随、语义推理与鲁棒性均有增益。",
+   "category": "具身智能",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把「代码」提升为 WAM 的一等公民生成流：不再是外挂的 planner 输出，而是与视频、动作在同一架构里联合去噪，让程序语义直接约束视觉与动作生成。",
+    "技能复用有了落点——自动化 curation 流水线把轨迹标注成程序，并把重复例程收敛为技能库，缓解 VLA 每次任务都从零学动作的问题。",
+    "混合执行（hybrid execution）用仲裁器在代码模式与连续控制模式之间切换，论文也诚实指出仲裁目前只按有效性准入，牺牲了干净场景的部分性能来换鲁棒性。",
+    "作者阵容横跨 UC Berkeley、Stanford、Georgia Tech、UT Austin、NVIDIA GEAR Lab，属于 WAM 与 agentic robotics 交叉方向的重磅合流。"
+   ],
+   "impact": "对工业界最直接的启发是：**把世界模型的预测能力与 agentic 代码的可复用性放在同一个架构里，而不是用 prompt 把它们粘起来**。这会让「训练一个能积累技能的机器人底座」第一次有了可工程化的形态。",
+   "addedDate": "2026-10-23"
+  },
   {
    "id": "p257",
    "title": "UniWALM: Unified World Action Language Model for Embodied Robot Control",
@@ -6784,5 +6929,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 235
+ "totalItems": 240
 }

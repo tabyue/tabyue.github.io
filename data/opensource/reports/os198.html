@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VLARLKit：把 VLA 的 RL 后训练做成库 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">VLARLKit：把 VLA 的 RL 后训练做成库 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="vlarlkit-vla-rl">VLARLKit：把 VLA 的 RL 后训练做成库</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/VLARLKit/VLARLKit">https://github.com/VLARLKit/VLARLKit</a>  </p>
+<p><strong>Stars</strong>: 315 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-10-23  </p>
+<p><strong>组织</strong>: VLARLKit  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-23</p>
+</blockquote>
+<hr />
+<h3 id="vla-rl">为什么 VLA 需要 RL 后训练</h3>
+<p>监督微调（SFT）有一个结构性上限：<strong>它只能学到示教数据里出现过的动作分布</strong>。示教再干净，也覆盖不到「物体被碰歪了怎么办」「抓取滑了一半怎么救」这类分布外情形。RL 后训练的价值就在这里——让策略在<strong>自己会犯错的分布</strong>上被优化。</p>
+<p>但 VLA + RL 的工程复杂度比 LLM + RL 高一个量级：</p>
+<ul>
+<li>环境不是纯文本的，需要物理仿真或真机；</li>
+<li>rollout 慢，一次交互几十到几百毫秒；</li>
+<li>奖励稀疏，多数任务只有末端成功信号；</li>
+<li>模型输出的是连续动作块（action chunk），不是离散 token。</li>
+</ul>
+<p>VLARLKit 的作用就是把这四件事的常用解法固化下来。</p>
+<h3 id="_2">它补的是哪一层</h3>
+<pre><code>   你的 VLA 模型            ← 你自己的
+   ─────────────────────────────
+   VLARLKit                 ← 这一层
+     ├ 环境封装（sim / real）
+     ├ rollout 收集与缓存
+     ├ 奖励与优势估计
+     └ 策略更新循环
+   ─────────────────────────────
+   LIBERO / 自定义基准       ← 评测
+</code></pre>
+<hr />
+<h3 id="_3">分层结构</h3>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>职责</th>
+<th>关键设计</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>环境层</td>
+<td>封装仿真 / 真机</td>
+<td>统一 observe / act 接口，屏蔽本体差异</td>
+</tr>
+<tr>
+<td>采集层</td>
+<td>并行 rollout</td>
+<td>多环境并行 + 轨迹缓存，缓解交互慢</td>
+</tr>
+<tr>
+<td>学习层</td>
+<td>优势估计与更新</td>
+<td>面向 action chunk 的优势分配</td>
+</tr>
+<tr>
+<td>模型层</td>
+<td>VLA 骨干</td>
+<td>可替换，只需满足动作头接口</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rl">与通用 RL 库的差别</h3>
+<p>通用 RL 库（Stable-Baselines3 之类）假设策略是一个小 MLP，输入是低维状态。VLA 的输入是图像 + 语言，输出是动作块，参数量在 B 级。这带来两个必须专门处理的问题：</p>
+<ol>
+<li><strong>显存</strong>：策略前向 + 反向都要过 VLM 骨干，单卡放不下 rollout 批量；</li>
+<li><strong>动作块的优势分配</strong>：一次决策产出 $H$ 步动作，奖励是逐步给的，需要决定优势怎么在这 $H$ 步上摊。</li>
+</ol>
+<p>VLARLKit 的价值主要就在这两点上。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.28589">AgenticRoboRL: Bringing Coding-Agent Post-Training to Agentic Robotics</a></strong> — 与 VLARLKit 形成上下层互补：一个训规划器，一个训 VLA。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.29997">DONIC: Generalist Dexterous Bimanual Tracking Control</a></strong> — PPO + BC 回收成功 rollout 的实践范本，其中的 Clip-Centered Advantages 思路可直接借到 VLA-RL。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.30136">Agentic World Action Models</a></strong> — 把代码流引入 WAM，代表另一条「让模型更强」的路线。</li>
+</ul>
+<hr />
+<h3 id="_4">安装</h3>
+<pre><code class="language-bash">git clone https://github.com/VLARLKit/VLARLKit.git
+cd VLARLKit
+pip install -e .
+</code></pre>
+<h3 id="_5">最小流程</h3>
+<pre><code class="language-python">from vlarlkit import Trainer, make_env
+
+# 1. 环境：仿真基准
+env = make_env('libero/spatial', n_envs=8)
+
+# 2. 载入你 SFT 好的 VLA
+policy = load_vla('checkpoints/my_vla_sft')
+
+# 3. 配置 RL
+trainer = Trainer(
+    policy=policy,
+    env=env,
+    algo='ppo',
+    horizon=8,            # action chunk 长度
+    rollout_steps=2048,
+)
+
+# 4. 训练
+trainer.train(total_steps=1_000_000)
+</code></pre>
+<h3 id="_6">建议的验证顺序</h3>
+<ol>
+<li><strong>先跑通 SFT 基线的评测</strong>，记下成功率——这是 RL 的起点；</li>
+<li><strong>只开 rollout 不更新</strong>，确认采集链路与显存没问题；</li>
+<li><strong>用稠密一点的奖励</strong>先跑一小段，确认成功率真的在涨；</li>
+<li>再换成稀疏的末端奖励跑完整实验。</li>
+</ol>
+<p>跳过第 3 步是最常见的失败原因：<strong>奖励太稀疏时，早期曲线看起来完全没在学，很难区分是 bug 还是正常</strong>。</p>
+<hr />
+<h3 id="_7">定位与规模</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>315</td>
+</tr>
+<tr>
+<td>语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>首次提交</td>
+<td>2026-02</td>
+</tr>
+<tr>
+<td>最近推送</td>
+<td>2026-10-12</td>
+</tr>
+</tbody>
+</table>
+<p>这是一个<strong>库而非模型仓库</strong>，因此没有官方榜单成绩。它的价值在于把 VLA-RL 这条链路的工程成本从「几周」压到「几天」。</p>
+<h3 id="_8">与相关项目的分工</h3>
+<ul>
+<li>与 <strong>RLinf</strong>（RLinf/RLinf）相比：RLinf 是面向具身与 agentic AI 的大规模 RL 基础设施，更重；VLARLKit 更轻，聚焦 VLA 这一层。</li>
+<li>与 <strong>AgenticRoboRL</strong>（arXiv:2610.28589，见本期论文 p264）相比：后者训练的是<strong>规划器</strong>，VLARLKit 训练的是<strong>底层 VLA 策略</strong>，两者正好可以叠起来用。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>定位</th>
+<th>训练对象</th>
+<th>适合谁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VLARLKit</strong></td>
+<td>VLA-RL 库</td>
+<td>VLA 策略本身</td>
+<td>已有 SFT VLA、想上 RL 的团队</td>
+</tr>
+<tr>
+<td>RLinf</td>
+<td>大规模 RL 基础设施</td>
+<td>策略 + 系统</td>
+<td>需要分布式大规模训练</td>
+</tr>
+<tr>
+<td>AgenticRoboRL</td>
+<td>规划器后训练框架</td>
+<td>上层规划器</td>
+<td>用 LLM 做规划的系统</td>
+</tr>
+<tr>
+<td>hflow</td>
+<td>训练数据质量验证 SDK</td>
+<td>数据</td>
+<td>想先看数据有没有问题的团队</td>
+</tr>
+</tbody>
+</table>
+<p><strong>选型建议</strong>：如果你的失败模式是「示教覆盖不到的情形会挂」，用 VLARLKit；如果是「任务分解错了」，用 AgenticRoboRL 那类规划器后训练；如果是「数据本身有脏样本」，先看 hflow。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

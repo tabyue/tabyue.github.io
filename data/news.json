@@ -1,6 +1,202 @@
 {
- "lastUpdated": "2026-10-22T08:50",
+ "lastUpdated": "2026-10-23T08:35",
  "news": [
+  {
+   "id": "n511",
+   "title": "智元机器人刷新上海办公楼租赁史最大单笔纪录：超 22 万平方米、年租金约 3.5 亿元",
+   "source": "IT之家",
+   "date": "2026-10-22",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzkzMjI3Mzc3OA==&mid=2247485100&idx=1&sn=539f620fa8fc752c8eb36259e926dee7&chksm=c373857ccd8289c49fbb9ca848d77e04e23ed1f46039f7f9f17dc49f14bce6e5dcc7f6230b07",
+   "category": "产业动态",
+   "summary": "据 IT 之家报道，**智元机器人刷新上海办公楼租赁史最大单笔纪录**，租赁面积超 **22 万平方米**，年租金约 **3.5 亿元**。此前上海最大单笔办公租赁纪录是今年 8 月鹰角网络租下的约 9 万平方米，智元把天花板抬高了约 2.4 倍。\n\n**产能侧的信号**：9 月 24 日，智元第 **2 万台**具身智能机器人宣布下线，刷新全球量产纪录。\n\n**行业口径对照**：Counterpoint Research 的人形机器人研究报告显示，2026 年上半年全球人形机器人出货量突破 **2.2 万台**，同比增长近 300%。（注：不同机构统计口径不同，另有工信部口径为上半年整机产品超 400 款、产量超 4 万台，弗若斯特沙利文口径为上半年全球销量 3.6 万台——引用时务必注明来源与口径。）\n\n**怎么读这条新闻**：办公面积是团队规模的先行指标。22 万平方米按人均 10—15 平方米估算，对应万人级别的办公容量——这属于**对未来 2—3 年组织規模的押注**，而不是当期产能的直接反映。对判断行业是否过热，它提醒的是：头部公司的扩张节奏已经跑在实际交付规模前面。",
+   "tags": [
+    "智元机器人",
+    "办公楼租赁",
+    "上海",
+    "第2万台下线",
+    "量产纪录",
+    "Counterpoint",
+    "出货量"
+   ],
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "n518",
+   "title": "IROS 2026 最佳论文授予 LT-Mem：波动感知的 Tri-Memory 把「时间性失忆」变成具身长记忆的科学问题",
+   "source": "42号电波 / 雷锋网",
+   "date": "2026-10-22",
+   "url": "http://mp.weixin.qq.com/s?__biz=MzIzMTcyMjM0MQ==&mid=2247489156&idx=1&sn=d16dddda93171fabfbed2517d8212d32&chksm=e92d48ffe5d62bbfd03446969d1394e2e2ff596cc098928b0a534428f227ffa9bccdfce0b931",
+   "category": "学术研究",
+   "summary": "IROS 2026（第 39 届 IEEE/RSJ 智能机器人与系统国际会议，美国匹兹堡）共收到 4348 篇投稿、录用 1585 篇，最佳论文授予韩国 DGIST 的 **LT-Mem：Volatility-Aware Spatio-Temporal Memory for Lifelong Scene Understanding**（作者 Yumin Lee、Hyoseok Ju、Giseop Kim，arXiv:2608.19059）。\n\n**它解决什么**：长期作业的机器人反复重访同一环境，物体被挪动、消失又放回。现有系统要么覆写历史以保持地图最新，要么存语义快照但没有跨 session 的对象身份——两者都会丢掉对象历史轨迹，答不了「那把绿椅子历次到访都出现在哪」。论文把这种系统性的丢失称为**时间性失忆（temporal amnesia）**。\n\n**方法三层**：\n\n- 多 session SLAM 主干提供空间对齐的逐对象观测；\n- 推理层用五项**确定性证据评分**做跨 session 对象重识别，仅歧义案例交给受限 LLM 判 MATCH / NEW-TRACK / HOLD；\n- 波动分数 V 用贝叶斯式证据累积，据此在**覆盖写 / 保持 / 多假设**三种更新之间选择。\n\n记忆结构为 **Tri-Memory**：Live 存当前状态，Delta 记带时间戳的事件日志，Meta 累积波动统计并回灌更新策略。配套 **LT-VQA** 数据集与评测套件，事件识别 F1 达 0.910，且累计 API token 消耗降到 VLM 基线的大约 1/16。\n\n评委会从近两千篇录用论文中选中它，被解读为学界在宣告：**具身长记忆已从工程补丁变成机器人领域公认的科学问题**。",
+   "tags": [
+    "IROS 2026",
+    "LT-Mem",
+    "具身长记忆",
+    "Tri-Memory",
+    "跨会话重识别",
+    "LT-VQA",
+    "DGIST",
+    "终身场景理解"
+   ],
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "n517",
+   "title": "工信部披露：2026 上半年我国人形机器人整机产品突破 400 款、产量超 4 万台，全年预计突破 10 万台",
+   "source": "上海证券报",
+   "date": "2026-10-22",
+   "url": "https://www.toutiao.com/article/7699559612231516699/",
+   "category": "政策标准",
+   "summary": "工业和信息化部近日披露的数据显示，**2026 年上半年我国人形机器人整机产品突破 400 款，产量超 4 万台，预计全年将突破 10 万台**。\n\n**资本端同步升温**：市场研究机构 PitchBook 数据显示，2026 年上半年全球机器人与物理 AI 领域风险投资总额达 **334 亿美元**，已超过 2025 年全年的 287 亿美元；而 2020 年这一数字还不到 50 亿美元。\n\n**二级市场表现**：人形机器人是本周 A 股核心主线。截至 10 月 22 日收盘，大业股份收获 5 连板，兆威机电、大洋电机、鸣志电器等多只个股涨停，权重股宇树科技本周累计涨幅超 20%。同日上证指数跌 1.48%、创业板指跌 4.37%，板块走出独立行情。\n\n**出货结构**：华金证券研报指出，当前出货以文娱展演与数采为主，更多实用场景正在加速落地；智元灵犀系列、宇树 G1 系列凭工具链与内容创作生态仍是小尺寸人形细分市场主力，导览导购类出货量也较高。该机构认为 2026 年下半年，服务业与工业领域更多前期试点项目将进入批量部署阶段。",
+   "tags": [
+    "工信部",
+    "人形机器人产量",
+    "400款",
+    "10万台",
+    "PitchBook",
+    "物理AI投资",
+    "A股机器人板块",
+    "批量部署"
+   ],
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "n516",
+   "title": "英伟达 GTC 柏林全面扩展 Isaac 平台：Agile ONE SN 参考人形、Isaac OS 运行时、Isaac Lab 3.0 与 Human 1M 数据集",
+   "source": "NVIDIA 官方博客 / 投资者关系",
+   "date": "2026-10-21",
+   "url": "https://blogs.nvidia.cn/blog/nvidia-advances-isaac-platform-for-general-purpose-robotics-with-new-reference-humanoid-frameworks-simulation-pipelines-and-data",
+   "category": "技术突破",
+   "summary": "英伟达在 GTC 柏林宣布对 **NVIDIA Isaac 开放机器人开发平台**做一次大扩展，补齐参考人形、数据集与运行时，目标是打通从数据生成、模型训练、仿真验证到实际部署的整条链路。黄仁勋称「通用机器人的 ChatGPT 时刻正在快速逼近」。\n\n**新增内容**：\n\n- **Agile ONE SN**（思灵机器人 Agile Robots 发布）：基于 Isaac GR00T 预配置、由 Jetson Thor 驱动的**全栈开放式参考人形**。身高 1.40 m、重 40 kg，**31 个自由度**，单臂负载 3 kg；配双 WUJI Hand 2 五指手（每只 20 DoF、1 kHz 力控与触觉）；Jetson Thor 提供 2070 FP4 TFLOPS 与 128 GB 统一内存。计划 2027 年初上市，已获斯坦福与苏黎世联邦理工关注。\n- **SimReady Central Library**：2000 多个仿真就绪的机器人与工厂资产，来自柯马、发那科、Franka Robotics、优傲等。\n- **Human 1M 数据集**：多样化人类活动、同步三视角视频与 3D 手部追踪，已在 Hugging Face 提供。\n- **Isaac Lab 3.0** 正式可用：开源、面向智能体的学习框架，支持多 GPU 工作流与 Newton、PhysX 物理引擎。\n- **Isaac OS**：基于 Holoscan 的开源运行时框架，把 AI、传感器、控制与机器人硬件连起来，追求从仿真到实体的确定性实时性能。\n- 三套面向 DGX Station 的开源参考工作流：用 RL 微调 GR00T 1.7、在 Isaac Lab 训练灵巧操作、用 ChatGPT Astra 对 Cosmos 世界模型后训练生成合成数据。",
+   "tags": [
+    "NVIDIA",
+    "Isaac",
+    "Agile ONE SN",
+    "Isaac OS",
+    "Isaac Lab 3.0",
+    "SimReady",
+    "Human 1M",
+    "GTC Berlin",
+    "Jetson Thor"
+   ],
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "n515",
+   "title": "智元联合北大发布 ViGAR：首个面向全尺寸人形双足的世界—动作模型，RoboTwin 2.0 平均成功率 74.51%",
+   "source": "智元机器人 / 北京大学 DA Group",
+   "date": "2026-10-22",
+   "url": "https://app.myzaker.com/news/article.php?pk=6ad9f1cb1bc8e05f54000005",
+   "category": "技术突破",
+   "summary": "智元联合北京大学 DA Group、CocoMatrix 团队发布 **ViGAR（Visual Goal-conditioned Action Reasoning，视觉目标条件动作推理）**，定位为**首个面向全尺寸人形双足机器人的完整世界—动作模型（WAM）**，已在 AgiBot A2 全尺寸人形双足平台上完成多步骤操作验证。\n\n**评测成绩**：在 RoboTwin 2.0 的 Clean2Random 基准上取得 Clean 82.00%、Random 67.02%，平均成功率 **74.51%**，超越最强基线 12.81 个百分点，发布时曾登顶榜单（榜单实时更新，发稿时列总榜第三）。同榜竞争者包括 π0.5、Xiaomi Robotics-0、GigaBrain-0.7、GalaxeaVLA 等。\n\n**基准的难点**：RoboTwin 要求所有模型只用干净场景的同一份示范数据训练，却要在杂物、背景、光照与桌面高度随机变化的场景中接受 50 项任务测试，其中包含整理台面、积木排序等多步骤长程任务。\n\n**真机验证的场景**：给文件盖好章再递到人手里、把桌上散落的垃圾逐件收进垃圾桶、从双层蒸笼里逐层取出馒头摆进盘中——这些动作需要模型既完成当前动作，又根据任务进度决定下一步如何推进。",
+   "tags": [
+    "ViGAR",
+    "智元机器人",
+    "北京大学",
+    "世界动作模型",
+    "RoboTwin 2.0",
+    "AgiBot A2",
+    "全尺寸人形",
+    "长时程操作"
+   ],
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "n514",
+   "title": "小鹏 IRON 人形机器人能力升级：第二代 VLA 每 0.2 秒重新推理一次，预测 6 秒内动作变化",
+   "source": "IT之家",
+   "date": "2026-10-22",
+   "url": "https://www.163.com/dy/article/L9SDJACT0511B8LM.html",
+   "category": "技术突破",
+   "summary": "小鹏汽车宣布，继上个月第二代 VLA 开始理解「时间」之后，本月该能力**端侧落地到人形机器人 IRON**。依托同一套物理 AI 基座，第二代 VLA 大模型升级后获得更强的**时序理解与未来行为预测**能力。\n\n**难点在哪**：与人握手、碰拳、击掌看似简单，难点是人不会按机器人的节奏出招——手掌突然握拳、击掌位置突然改变。IRON 不是识别一次手势再做完一套动作才反应，而是**一直观察、实时判断、持续调整**：每 0.2 秒根据眼前画面重新推理一次，并预测 6 秒内的动作变化，把「看到什么」和「身体怎么动」连成实时闭环。\n\n**本体规格**：新一代 IRON 走猫步步态，拥有仿人脊椎、仿生肌肉、全包覆柔性皮肤、头部 3D 曲面显示与仿生灵动双肩，灵巧手 22 个自由度；搭载物理世界大模型与 3 颗图灵 AI 芯片，构成 VLT+VLA+VLM 的高阶大小脑组合。按计划小鹏将在 2026 年底实现人形机器人量产，2027 年上半年开启交付，先落地门店与商场，再拓展到工业与家庭场景。",
+   "tags": [
+    "小鹏",
+    "IRON",
+    "第二代VLA",
+    "时序理解",
+    "0.2秒重推理",
+    "端侧部署",
+    "物理AI基座"
+   ],
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "n513",
+   "title": "2026 世界物理AI大会：王兴兴明确宇树三大布局方向，发布世界物理AI大赛，G1 累计下线约 1—2 万台",
+   "source": "证券时报 / IT之家 / 网易科技",
+   "date": "2026-10-22",
+   "url": "https://www.163.com/dy/article/L9ROMH4U051181RS.html",
+   "category": "产业动态",
+   "summary": "**2026 世界物理AI大会暨宇树合作伙伴生态大会**10 月 22 日在杭州举行，汇聚 3000 余名嘉宾。宇树科技董事长王兴兴明确**三大未来布局方向**：一是提升机器人大规模量产能力，适配千万级乃至亿级市场需求；二是自研与合作并行，推进物理 AI 小模型落地；三是布局超大规模算力集群。会上正式发布**世界物理AI大赛**，每年投入数千万元奖金，设八大赛道。\n\n**两个关键判断**：\n\n1. 王兴兴认为具身智能要跨过标志性时刻，最大的坎不是算力不够、也不是机器不够结实，而是**模型输入输出与真实机器人身体的对齐**；他判断物理 AI 很可能在未来一到三年被击穿。\n2. 宇树测试显示，**在完全零训练的情况下，GPT-6 已能直接指挥机器人画画、清洗画笔甚至下围棋**，机器人能自己换颜色、自己洗笔，落子精准度很高。他希望未来约 80% 的任务仅靠语音与语言指令完成，快的话明年有机会实现。\n\n**量产数据**：Unitree G1 自发布以来累计生产下线约 1—2 万台。宇树正在预研**物理AI机器人自进化 V1.0 大模型**——基础模型定期自我迭代，机器人每进化一轮又把真实世界经验回喂模型，形成闭环。",
+   "tags": [
+    "宇树科技",
+    "世界物理AI大会",
+    "王兴兴",
+    "物理AI大赛",
+    "G1量产",
+    "自进化大模型",
+    "GPT-6"
+   ],
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "n512",
+   "title": "松延动力（Noetix Robotics）秘密递交港股 IPO 申请：或募资数亿美元，最早 2027 年挂牌",
+   "source": "Bloomberg / Humanoids Daily",
+   "date": "2026-10-22",
+   "url": "https://www.humanoidsdaily.com/news/noetix-robotics-hong-kong-ipo-filing",
+   "category": "融资创投",
+   "summary": "据彭博社 10 月 22 日报道，北京人形机器人公司**松延动力（Noetix Robotics，工商主体 Songyan Power Beijing Technology）**已**秘密递交港股 IPO 申请**，可能募资数亿美元，最早 2027 年上市。知情人士强调讨论仍在进行，发行规模与时间都可能变化，Noetix 未回应置评请求。\n\n**融资脉络**：彭博提到 Noetix 在 3 月完成 10 亿元人民币（约 1.5 亿美元）融资，由电池厂商宁德时代关联产业投资平台领投。产品线包括 Bumi、N2 与 E1——其中 E1 教育版标注 67 TOPS 算力板、可选灵巧手与快拆电池，面向展馆、商场导览与企业服务。\n\n**市场背景**：彭博把 Noetix 置于一批冲刺港股上市的中国机器人公司之中，并指出今年香港 IPO 募资已超 500 亿美元；但机器人板块的接受度并不顺畅——**宇树股价自 8 月上市后已从高点回落近 40%**。对 Noetix 而言，下一步值得关注的实质信息是发行条款与财务披露，目前既无营收、也无出货量数据可供评估。",
+   "tags": [
+    "松延动力",
+    "Noetix Robotics",
+    "港股IPO",
+    "宁德时代",
+    "Bumi",
+    "人形机器人",
+    "港股上市"
+   ],
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "n510",
+   "title": "瑞士 Enact Intelligence 完成 3000 万美元 pre-seed：用电机内部测力替代指尖触觉，LeCun 与 Mistral 创始人参投",
+   "source": "The Next Web",
+   "date": "2026-10-22",
+   "url": "https://thenextweb.com/news/enact-intelligence-30m-pre-seed-robot-touch",
+   "category": "全球视野",
+   "summary": "苏黎世初创 **Enact Intelligence** 走出隐身模式，完成 **3000 万美元 pre-seed**，由 redalpine、Notion Capital、firstminute capital 出资；天使投资人包括 **Yann LeCun**、Mistral 创始人 Arthur Mensch、Path Robotics 创始人 Andrew Lonsberry。据 Sifted 报道，这是瑞士历史上金额最大的 pre-seed。\n\n**技术主张**：今天多数机器人主要靠相机理解世界，触觉传感器又太贵太脆、不适合工厂。Enact 的做法是**测量电机内部的力**——类比人类靠肌肉张力而非仅靠指尖来感知。公司称这条路线从简单机械臂到完整人形都适用，并且可以叠在视频模型之上，把它改成输出机器人动作。\n\n**团队**：创始人 Manuel Yves Galliker 曾负责 1X NEO 人形的软件，之后在 Physical Intelligence 工作；12 人团队来自 DeepMind、Amazon Robotics 与 Helsing。他刻意选苏黎世而非湾区，理由是硅谷软件与 AI 强，但机器人与硬件工程人才不足。公司计划到 2027 年底把团队扩大到 5 倍，正与制造、基础设施、零售、食品加工领域的欧洲大企业谈首批落地。",
+   "tags": [
+    "Enact Intelligence",
+    "pre-seed",
+    "力控触觉",
+    "本体感知",
+    "Yann LeCun",
+    "苏黎世",
+    "1X NEO"
+   ],
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "n509",
+   "title": "星忆智能完成数千万元种子轮及种子+轮融资：前智元整机产品负责人创业，做物理 AI 数据基础设施",
+   "source": "机器人前瞻 / 网易科技",
+   "date": "2026-10-22",
+   "url": "https://www.163.com/dy/article/L9SQS06F05569K8R.html",
+   "category": "融资创投",
+   "summary": "北京具身智能数据基础设施公司**星忆智能**宣布完成数千万元种子轮及种子+轮连续融资。种子轮由顺禧基金领投；种子+轮由产业资本**凌云光**领投，中关村资本、一创投资跟投。资金重点投向核心算法与产品研发、真实世界多模态数据基础设施建设，以及客户交付与商业化能力提升。\n\n**团队背景**：创始人兼 CEO 宋知珩曾任智元机器人全尺寸双足人形整机产品负责人，负责数采与遥操体系建设；此前是镁伽机器人前 20 号员工。公司成立于 2024 年，孵化于清华大学计算机系。\n\n**产品两条线**：\n\n- **EgoKit** 头戴式多模态数据采集系统，融合视觉、触觉与姿态感知，以第一视角记录人在真实环境中的观察、操作与交互；\n- **HBR Engine** 智能数据引擎，做自动清洗脱敏、智能标注与质量评估，把原始多模态数据转成可训练的数据资产。\n\n商业化分三阶段推进：建设基础设施、输出标准化产品、深化产学研合作，合作方包括清华大学、香港大学、字节跳动、中国信通院与智元机器人。",
+   "tags": [
+    "星忆智能",
+    "具身数据基础设施",
+    "EgoKit",
+    "HBR Engine",
+    "种子轮",
+    "凌云光",
+    "清华系",
+    "第一视角数采"
+   ],
+   "addedDate": "2026-10-23"
+  },
   {
    "id": "n499",
    "title": "宇树发布 H2-X「功夫传奇 守护」：续航 8 小时、31 自由度、2070 TOPS 算力，H2 平台的高爆发版本",
@@ -9125,9 +9321,13 @@
       "https://github.com/Anyverse-Dynamics/Phoenix-MWA",
       "https://www.stdaily.com/web/English/2026-10/21/content_598521.html"
      ]
+    },
+    {
+     "name": "2026-10 新增：数据基础设施与触觉感知",
+     "list": "**数据基础设施**：*星忆智能*（清华孵化，前智元整机产品负责人创业，EgoKit 头戴式数采 + HBR Engine 数据处理引擎，2026-10 完成种子轮及种子+轮）。\n**力控触觉**：*Enact Intelligence*（苏黎世，电机内部测力替代指尖触觉，3000 万美元 pre-seed，Yann LeCun 参投）。\n**危险作业人形**：*Minerva Humanoids*（美国，排爆人形 Roger，共享自主，约 1000 万美元 pre-seed）。\n**已冲刺资本市场**：*松延动力 Noetix*（北京，Bumi/N2/E1 产品线，2026-10 秘密递表港股 IPO）。"
     }
    ],
-   "lastUpdated": "2026-10-15T08:30"
+   "lastUpdated": "2026-10-23"
   },
   {
    "id": "r002",
@@ -9878,7 +10078,36 @@
      ]
     }
    ]
+  },
+  {
+   "id": "r019",
+   "name": "具身学习资源与工具生态（教材 / 框架 / 数据合成）",
+   "description": "把「学具身智能该从哪开始」拆成可执行的路径：系统教材、VLA 记忆与导航框架、世界模型数据合成工具。2026 年 10 月更新",
+   "category": "社区资源",
+   "lastUpdated": "2026-10-23",
+   "items": [
+    {
+     "name": "为什么需要一份「系统教材」",
+     "list": "具身智能的资料散落在论文、博客与仓库里，缺的是一条**从机器学习系统到物理 AI 的连续主线**。学习路径最容易断在两处：一是只学模型不学系统（不知道策略为什么在真机上跑不动），二是只学仿真不学部署（不知道 1 kHz 运控与 50 Hz 策略怎么共存）。建议路径：**先看系统教材建立全局 → 再挑一个可跑通的 VLA/导航框架动手 → 最后用数据合成工具补齐自己的数据闭环**。"
+    },
+    {
+     "name": "系统教材",
+     "list": "- **[Machine Learning Systems（Harvard CS249r）](https://github.com/harvard-edge/cs249r_book)** — 四卷本开源教材，覆盖 Foundations / Scaling / Agentic AI / **Physical AI**，配套 mlsysbook.ai，29130 stars，是目前把机器学习系统与具身 AI 串起来最完整的一本。\n- 阅读建议：不要通读。按「 Foundations 打底 → Physical AI 卷定位自己方向 → Agentic AI 卷补 Agent 工程 」的顺序跳读，重点做每章的动手实验。"
+    },
+    {
+     "name": "VLA 与导航框架（可直接跑通）",
+     "list": "- **[VLARLKit](https://github.com/VLARLKit/VLARLKit)** — 优雅的 VLA-RL 库，把「VLA 监督微调之后再用 RL 打磨」这条链路做成一个库（MIT，315 stars）。\n- **[SimpleMemVLA](https://github.com/OpenBMB/SimpleMemVLA)** — 给 VLA 装**原生视频记忆**：带时间戳的视觉历史 + 精确流式推理，专门解决长时程操作里历史被截断的问题（MIT，94 stars，配套 arXiv:2609.05533）。\n- **[SimpleNav](https://github.com/OpenBMB/SimpleNav)** — 导航 VLA 研究的统一、可复现、可扩展框架（MIT，137 stars）。\n- **[dreamforge](https://github.com/rzc156/dreamforge)** — 把世界模型的「想象」转成**纠错训练数据**：单卡可跑、可证伪的管线（SmolVLA · LIBERO · CEM · 配对仿真回放），MIT，130 stars。"
+    },
+    {
+     "name": "Real2Sim 与数据合成",
+     "list": "- **[Video2World](https://github.com/AetherLabsAI/Video2World)** — 从具身视频出发，把 **Real2Sim 当作软件工程问题**重新定义，并用它来评测编码智能体的交互式世界建模能力（Apache-2.0，197 stars）。\n- **[cadence](https://github.com/muellerberndt/cadence)** — 从实时经验中学习的大脑：默认走 System 1（感知、记忆、可塑性、动作），可选 System 2 做自我观察与慢速修正（GPL-3.0，453 stars）。\n- **[quackd](https://github.com/rokbenko/quackd)** — 一个 CLI 管所有机器人：接入后用 LLM 当大脑、VLA 控臂，驱动 LeRobot、SO-101、AlohaMini、ToddlerBot 或任意 ROS 2 底盘（Apache-2.0，269 stars）。"
+    },
+    {
+     "name": "怎麼组合成一条学习闭环",
+     "list": "推荐的最小闭环：**Isaac Lab / MuJoCo 起环境 → SimpleNav 或 VLARLKit 跑通一个基线 → dreamforge 生成纠错数据再训一轮 → Video2World 检验你的 Real2Sim 到底差在哪**。跑通这一圈，你就能回答「为什么我的策略在仿真里 90%、真机上 30%」。"
+    }
+   ]
   }
  ],
- "totalItems": 466
+ "totalItems": 476
 }

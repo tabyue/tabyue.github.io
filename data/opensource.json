@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-22T08:50",
+ "lastUpdated": "2026-10-23T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,124 @@
   }
  ],
  "projects": [
+  {
+   "id": "os201",
+   "name": "quackd：一个 CLI 管所有机器人，每台配一个 LLM 大脑",
+   "github": "https://github.com/rokbenko/quackd",
+   "organization": "rokbenko",
+   "org": "rokbenko",
+   "category": "ai-agent-framework",
+   "description": "**quackd** 的定位是 **One CLI for all your robots**：把机器人接进来、下命令、让它们协同工作，每台机器人配一个 LLM 当大脑（Claude、OpenAI、Gemini、Grok，或本地 Ollama / vLLM），机械臂用 VLA，决策用 LLM。\n\n**支持范围**：驱动 Microduck、Open Duck Mini、LeRobot、XLeRobot、AlohaMini、ToddlerBot，或任意 ROS 2 底盘，从笔记本上 offboard 控制。\n\n**对谁有用**：手里有多台异构机器人、受够了每台一套 SDK 的团队；想快速验证「LLM 编排 + VLA 执行」这套架构的人。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 269,
+   "features": [
+    "统一 CLI 管理多机器人",
+    "每机一个 LLM 大脑（云端或本地）",
+    "VLA 控臂 + LLM 做决策",
+    "支持 LeRobot / SO-101 / AlohaMini / ToddlerBot",
+    "任意 ROS 2 底盘",
+    "MCP 集成",
+    "本地模型（Ollama / vLLM）"
+   ],
+   "tags": [
+    "quackd",
+    "多机器人",
+    "LLM 编排",
+    "ROS 2",
+    "LeRobot",
+    "SO-101",
+    "offboard 控制",
+    "MCP"
+   ],
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "os200",
+   "name": "Video2World：把 Real2Sim 当软件工程问题重新定义",
+   "github": "https://github.com/AetherLabsAI/Video2World",
+   "organization": "AetherLabs AI",
+   "org": "AetherLabsAI",
+   "category": "simulation",
+   "description": "**Video2World** 的副标题已经把主张写清楚了：**Rethinking Embodied Real2Sim from a Software Engineering Perspective**。它既是一个从具身视频构建交互式世界模型的基准，也是一套用它来**评测编码智能体**的测试床。\n\n**为什么换个视角**：传统 Real2Sim 追求「把真实场景重建得尽可能像」——几何、材质、光照都对齐。但实际用起来你会发现，真正卡住的不是像不像，而是**这个仿真能不能被反复修改、调试、回归**。这是软件工程问题，不是渲染问题。\n\n**它做什么**：给编码智能体一段具身视频，让它产出可交互的世界模型；用可执行的标准来评判，而不是用像素相似度。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 197,
+   "features": [
+    "具身视频 → 交互式世界模型",
+    "面向编码智能体的基准",
+    "Real2Sim 的软件工程化视角",
+    "可执行评判标准",
+    "配套项目页",
+    "Apache-2.0"
+   ],
+   "tags": [
+    "Video2World",
+    "Real2Sim",
+    "世界模型",
+    "编码智能体",
+    "基准评测",
+    "仿真"
+   ],
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "os199",
+   "name": "SimpleMemVLA：给 VLA 装原生视频记忆",
+   "github": "https://github.com/OpenBMB/SimpleMemVLA",
+   "organization": "OpenBMB（面壁智能）",
+   "org": "OpenBMB",
+   "category": "ai-model",
+   "description": "**SimpleMemVLA** 给视觉—语言—动作模型装了一套**原生视频记忆（native-video memory）**：用带时间戳的视觉历史 + 精确流式推理（exact streaming inference），专门解决长时程机器人操作里**历史被截断**的问题。\n\n**问题的形状**：主流 VLA 每次决策只看最近几帧。短任务没问题，但一个「把三样东西依次放进抽屉」的任务，做到第三步时模型已经「忘了」第一步把什么放哪了——不是模型笨，是**输入里根本没有那段历史**。\n\n**做法**：把历史帧以带时间戳的形式保留为视频记忆，并在流式推理时精确复用 KV 缓存，让长历史的推理成本可控。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 94,
+   "features": [
+    "原生视频记忆",
+    "带时间戳的视觉历史",
+    "精确流式推理（KV 复用）",
+    "面向长时程操作",
+    "配套 arXiv:2609.05533",
+    "MIT 许可"
+   ],
+   "tags": [
+    "SimpleMemVLA",
+    "视频记忆",
+    "长时程操作",
+    "VLA",
+    "流式推理",
+    "OpenBMB"
+   ],
+   "addedDate": "2026-10-23"
+  },
+  {
+   "id": "os198",
+   "name": "VLARLKit：把 VLA 的 RL 后训练做成库",
+   "github": "https://github.com/VLARLKit/VLARLKit",
+   "organization": "VLARLKit",
+   "org": "VLARLKit",
+   "category": "framework",
+   "description": "**VLARLKit** 的自我定位是 **Elegant VLA-RL library**——把「VLA 监督微调之后再用强化学习打磨」这条链路整理成一个可直接用的库，而不是每篇论文各写一套脚本。\n\n**它解决的实际痛点**：VLA 团队做完 SFT 之后想上 RL，会发现可用的代码基本是碎片化的——环境封装一套、rollout 收集一套、优势估计与更新又是一套，换个模型或换个基准就要重写。VLARLKit 把这些收敛成统一抽象。\n\n**适用对象**：已经有 SFT 好的 VLA、想在仿真或真机上做 RL 后训练的团队；也适合想对比不同 RL 配方（PPO / GRPO 类）对同一 VLA 影响的研究者。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 315,
+   "features": [
+    "VLA 的 RL 后训练统一库",
+    "环境封装与 rollout 收集统一抽象",
+    "支持替换不同 VLA 骨干",
+    "MIT 许可，可商用",
+    "面向 LIBERO 类操作基准"
+   ],
+   "tags": [
+    "VLA-RL",
+    "后训练",
+    "强化学习",
+    "机器人操作",
+    "RLHF for VLA",
+    "Python"
+   ],
+   "addedDate": "2026-10-23"
+  },
   {
    "id": "os194",
    "name": "Phoenix-MWA（无界动力 MWA™）：端侧 7B 隐空间世界模型基座，六榜登顶并开源",
@@ -4700,5 +4818,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 184
+ "totalItems": 188
 }

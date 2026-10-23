@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>quackd：一个 CLI 管所有机器人，每台配一个 LLM 大脑 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">quackd：一个 CLI 管所有机器人，每台配一个 LLM 大脑 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="quackd-cli-llm">quackd：一个 CLI 管所有机器人，每台配一个 LLM 大脑</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/rokbenko/quackd">https://github.com/rokbenko/quackd</a>  </p>
+<p><strong>Stars</strong>: 269 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-23  </p>
+<p><strong>组织</strong>: rokbenko  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-23</p>
+</blockquote>
+<hr />
+<h3 id="_2">多机器人团队的日常</h3>
+<p>一个典型的小型机器人团队，手里的机器大概长这样：</p>
+<pre><code>   机械臂 A        → 厂商 SDK v1.2，Python
+   移动底盘 B      → ROS 2 Humble
+   桌面臂 C        → LeRobot
+   人形 D          → 另一套私有协议
+</code></pre>
+<p>每加一台就要写一套适配，每换一次任务就要改一遍编排脚本。quackd 想做的就是把这一层<strong>统一掉</strong>。</p>
+<h3 id="_3">它的抽象</h3>
+<pre><code>   ┌──────────────────────────────┐
+   │   LLM 大脑（每机一个）        │  决策：做什么
+   ├──────────────────────────────┤
+   │   VLA / 控制器                │  执行：怎么动
+   ├──────────────────────────────┤
+   │   本体适配（ROS 2 / SDK）      │  落地：发给谁
+   └──────────────────────────────┘
+</code></pre>
+<p>这三层分工是近年 agentic robotics 的主流共识，quackd 的贡献是把它做成了<strong>一个 CLI + 一套配置</strong>，而不是一套框架让你自己去填。</p>
+<hr />
+<h3 id="cli">为什么是 CLI 而不是框架</h3>
+<p>框架给你抽象，但要你写代码；CLI 给你约定，你写配置。对「先让机器动起来」这个目标，CLI 的前置成本低得多：</p>
+<ul>
+<li>不用设计目录结构；</li>
+<li>不用选消息队列；</li>
+<li>接不上时能很快判断是配置错还是代码错。</li>
+</ul>
+<p>代价是<strong>深度定制时不如框架灵活</strong>。这是一个明确的取舍。</p>
+<h3 id="llm-vla">LLM 与 VLA 的分工</h3>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>用什么</th>
+<th>频率</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>决策</td>
+<td>LLM</td>
+<td>低频（秒级）</td>
+<td>任务分解、失败归因、是否换策略</td>
+</tr>
+<tr>
+<td>执行</td>
+<td>VLA</td>
+<td>高频（10—50 Hz）</td>
+<td>把「抓起杯子」变成关节轨迹</td>
+</tr>
+</tbody>
+</table>
+<p>这个分层与 ros2 模块里讲的运行时分层的道理一致：<strong>不要让 LLM 去扛实时性</strong>。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/strands-labs/robots">strands-robots</a></strong> — 另一个用自然语言控制机器人的路线（本期站点已收录 os193）。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.28589">AgenticRoboRL</a></strong> — 若要让 quackd 里的 LLM 大脑真正变强，后训练是被验证过的路径。</li>
+<li><strong><a href="/learn/ros2/16">ros2 模块「机器人运行时分层」</a></strong> — 关于为什么 LLM 不该扛实时性的完整讨论。</li>
+</ul>
+<hr />
+<h3 id="_4">安装</h3>
+<pre><code class="language-bash">pip install quackd
+# 或从源码
+git clone https://github.com/rokbenko/quackd.git &amp;&amp; cd quackd &amp;&amp; pip install -e .
+</code></pre>
+<h3 id="_5">接入与驱动</h3>
+<pre><code class="language-bash"># 发现设备
+quackd discover
+
+# 接入一台 LeRobot 臂
+quackd connect so101 --port /dev/ttyACM0
+
+# 用自然语言下命令
+quackd run 'pick up the red block and put it in the box' --robot so101
+
+# 多机协同
+quackd run 'arm picks, base delivers' --fleet fleet.yaml
+</code></pre>
+<h3 id="_6">本地模型</h3>
+<pre><code class="language-bash">quackd run '...' --brain ollama:qwen3 --vla local:smolvla
+</code></pre>
+<p>对不想把场景图像传到云端的团队，本地 LLM + 本地 VLA 这条路径是刚需。</p>
+<hr />
+<h3 id="_7">项目规模</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>269</td>
+</tr>
+<tr>
+<td>语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>创建</td>
+<td>2026-08-28</td>
+</tr>
+<tr>
+<td>最近推送</td>
+<td>2026-10-22</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_8">适用边界</h3>
+<p><strong>适合</strong>：原型验证、教学、多机 demo、快速试架构。
+<strong>不适合</strong>：硬实时控制（1 kHz 运控不该走这条链路）、量产部署、有严格安全认证要求的场景。</p>
+<p>把它当成<strong>把想法跑起来的最快路径</strong>，而不是最终的生产运行时。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>定位</th>
+<th>实时性</th>
+<th>适合阶段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>quackd</strong></td>
+<td>多机统一 CLI + LLM 编排</td>
+<td>非硬实时</td>
+<td>原型 / 教学 / demo</td>
+</tr>
+<tr>
+<td>robonix</td>
+<td>Rust 写的机器人 Agentic OS</td>
+<td>追求硬实时</td>
+<td>系统级</td>
+</tr>
+<tr>
+<td>horus</td>
+<td>Rust 写的最快机器人运行时</td>
+<td>硬实时</td>
+<td>生产运行时</td>
+</tr>
+<tr>
+<td>RAI</td>
+<td>ROS 2 原生具身 AI Agent 框架</td>
+<td>取决于 ROS 2</td>
+<td>基于 ROS 2 的产品</td>
+</tr>
+</tbody>
+</table>
+<p><strong>选型</strong>：验证想法用 quackd，要上真机量产再看 robonix / horus / RAI。不要指望一个工具覆盖从原型到量产。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

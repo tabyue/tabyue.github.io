@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video2World：把 Real2Sim 当软件工程问题重新定义 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Video2World：把 Real2Sim 当软件工程问题重新定义 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="video2world-real2sim">Video2World：把 Real2Sim 当软件工程问题重新定义</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/AetherLabsAI/Video2World">https://github.com/AetherLabsAI/Video2World</a>  </p>
+<p><strong>Stars</strong>: 197 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-23  </p>
+<p><strong>组织</strong>: AetherLabs AI  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-23</p>
+</blockquote>
+<hr />
+<h3 id="real2sim">Real2Sim 的真实瓶颈</h3>
+<p>团队做 Real2Sim 通常会经历三个阶段：</p>
+<ol>
+<li><strong>兴奋期</strong>：重建出来了，看着挺像；</li>
+<li><strong>失望期</strong>：策略在重建场景里训出来的东西，真机上不好使；</li>
+<li><strong>迷茫期</strong>：不知道该改几何、改材质、改物理参数，还是改策略。</li>
+</ol>
+<p>第三阶段的根源是<strong>缺少可执行的评判标准</strong>——你不知道这一版 Real2Sim 比上一版好在哪。</p>
+<p>Video2World 的贡献在于：把「建出来的世界模型」当成一个<strong>软件制品</strong>来评判——它能不能跑、能不能改、能不能回归，比它像素上像不像更重要。</p>
+<h3 id="_2">与编码智能体的结合</h3>
+<p>这个视角天然适配编码智能体：如果世界模型是代码（场景描述 + 物理参数 + 任务逻辑），那编码智能体就能<strong>生成它、修改它、测试它</strong>。这正是 Video2World 把它做成编码智能体基准的原因。</p>
+<hr />
+<h3 id="_3">流水线</h3>
+<pre><code>   具身视频
+      │
+      ▼
+   [场景理解]  → 物体 / 几何 / 交互事件
+      │
+      ▼
+   [世界模型合成] → 可执行的场景描述 + 物理参数
+      │
+      ▼
+   [可执行评判] → 能不能跑 / 能不能改 / 回归是否通过
+      │
+      ▼
+   编码智能体评分
+</code></pre>
+<h3 id="_4">评判维度的转变</h3>
+<table>
+<thead>
+<tr>
+<th>传统维度</th>
+<th>Video2World 维度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>像素相似度</td>
+<td>可执行性</td>
+</tr>
+<tr>
+<td>几何重建误差</td>
+<td>可修改性</td>
+</tr>
+<tr>
+<td>材质外观</td>
+<td>回归稳定性</td>
+</tr>
+</tbody>
+</table>
+<p>这个转变的意义：<strong>当你用「能不能改」来要求世界模型时，你会发现很多高保真重建其实改不动</strong>——它们是一坨烘焙好的网格，而不是参数化的场景描述。</p>
+<hr />
+<ul>
+<li><strong><a href="https://aetherlabsai.github.io/Video2World/">Video2World 项目页</a></strong> — 方法说明与可视化结果。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.30136">Agentic World Action Models</a></strong> — 世界模型与代码规划的交叉方向，与 Video2World 的软件工程视角互相印证。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.28589">AgenticRoboRL</a></strong> — 编码智能体后训练进入机器人规划的代表工作。</li>
+</ul>
+<hr />
+<h3 id="_5">安装</h3>
+<pre><code class="language-bash">git clone https://github.com/AetherLabsAI/Video2World.git
+cd Video2World
+pip install -e .
+</code></pre>
+<h3 id="_6">作为基准使用</h3>
+<pre><code class="language-python">from video2world import Benchmark, CodingAgent
+
+bench = Benchmark.load('embodied_videos')
+agent = CodingAgent(model='your-agent')
+
+for task in bench.tasks:
+    world = agent.build_world(task.video)
+    score = bench.evaluate(world)
+</code></pre>
+<h3 id="_7">作为工程方法论使用</h3>
+<p>即使不做智能体研究，这套视角也值得拿去改造你自己的 Real2Sim 流水线：</p>
+<ol>
+<li>把场景<strong>参数化</strong>而不是烘焙成网格；</li>
+<li>给每个场景写<strong>可回归的测试</strong>（比如「在这个初始状态下执行 10 步，物体应到达 X」）；</li>
+<li>每次改动都跑一遍回归，用<strong>通过率</strong>而不是肉眼判断这一版是否更好。</li>
+</ol>
+<hr />
+<h3 id="_8">项目规模</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>197</td>
+</tr>
+<tr>
+<td>语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>创建</td>
+<td>2026-10-05</td>
+</tr>
+<tr>
+<td>最近推送</td>
+<td>2026-10-19</td>
+</tr>
+<tr>
+<td>项目页</td>
+<td>aetherlabsai.github.io/Video2World</td>
+</tr>
+</tbody>
+</table>
+<p>这是一个<strong>非常新</strong>的项目（创建于 2026-10-05），适合关注方向而非直接生产使用。</p>
+<h3 id="_9">值得关注的信号</h3>
+<p>创建一个月内 197 stars，说明「Real2Sim 该怎么被评测」这个议题正被大量团队同时意识到。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>关注点</th>
+<th>产出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Video2World</strong></td>
+<td>Real2Sim 的可执行性与可修改性</td>
+<td>编码智能体基准</td>
+</tr>
+<tr>
+<td>omnisim</td>
+<td>给编码智能体用的机器人仿真器（HTTP/JSON + MCP）</td>
+<td>仿真环境</td>
+</tr>
+<tr>
+<td>AgentGarten</td>
+<td>物理仿真与神经渲染解耦</td>
+<td>训练环境框架</td>
+</tr>
+<tr>
+<td>dreamforge</td>
+<td>用世界模型生成纠错训练数据</td>
+<td>数据管线</td>
+</tr>
+</tbody>
+</table>
+<p><strong>分工</strong>：Video2World 回答「我建的世界模型好不好」，omnisim 回答「智能体怎么控制仿真」，dreamforge 回答「建好之后怎么用起来」。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
