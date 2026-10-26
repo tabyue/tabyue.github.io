@@ -7,14 +7,14 @@
     <!-- 预设主题（避免 FOUC：浅色白屏闪烁） -->
     <script>(function(){try{var s=localStorage.getItem('eai_theme');document.documentElement.setAttribute('data-theme',s==='light'?'light':'dark');}catch(e){}})();</script>
     <title>具身智能知识门户 | Embodied AI Hub</title>
-    <meta name="description" content="具身智能从业与研究人员的一站式知识门户：6 阶段学习路径、30+ 模块教材级内容、最新论文/开源/招聘/资讯动态。">
+    <meta name="description" content="具身智能从业与研究人员的一站式知识门户：分阶段学习路径、模块化教材内容、最新论文/开源/招聘/资讯动态。">
     <meta name="keywords" content="具身智能, Embodied AI, 人形机器人, VLA, Vision-Language-Action, 机器人学习, 模仿学习, 强化学习, 世界模型, 仿真到现实, 机器人操作, ROS2, MuJoCo, Isaac">
     <meta name="author" content="tabyue">
     <link rel="canonical" href="https://www.tabyue.com/" id="canonical-link">
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="具身智能知识门户 | Embodied AI Hub" id="og-title">
-    <meta property="og:description" content="具身智能从业与研究人员的一站式知识门户：6 阶段学习路径、30+ 模块教材级内容、最新论文/开源/招聘/资讯动态。" id="og-description">
+    <meta property="og:description" content="具身智能从业与研究人员的一站式知识门户：分阶段学习路径、模块化教材内容、最新论文/开源/招聘/资讯动态。" id="og-description">
     <meta property="og:url" content="https://www.tabyue.com/" id="og-url">
     <meta property="og:site_name" content="具身智能知识门户">
     <meta property="og:locale" content="zh_CN">
@@ -528,6 +528,9 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
 .tab-updated{background:rgba(255,55,95,.08)!important;border-color:rgba(255,55,95,.25)!important}
 .sec-update-banner{background:rgba(255,55,95,.06);border:1px solid rgba(255,55,95,.15);border-radius:12px;padding:12px 18px;margin-bottom:24px;font-size:.8rem;color:var(--al);display:flex;align-items:center;gap:8px;line-height:1.5}
 .panel-updated{border-left:3px solid rgba(255,55,95,.4);padding-left:12px!important}
+/* Learning pages keep the floating contribution button away from reading text.
+   The contribution entry remains available in the top navigation. */
+body:has(#pg-learn.active) #inboxFab{display:none!important}
 /* Recent Updates Panel */
 .recent-updates{margin-top:60px;max-width:1100px;margin-left:auto;margin-right:auto;padding:0 24px 60px}
 .ru-header{display:flex;align-items:center;gap:10px;cursor:pointer;padding:16px 24px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);transition:border-color .2s}
@@ -637,6 +640,79 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
     .section-title,.page-title{font-size:2rem}
 }
 
+/* 学习中心：限定作用域，不影响其他页面与主题。 */
+#pg-learn .page-header{padding:36px 24px 20px}
+#pg-learn .learn-tools{max-width:1400px;margin:auto;padding:0 24px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#pg-learn .learn-note{color:var(--t2);font-size:.82rem;line-height:1.8;margin:10px 0;overflow-wrap:anywhere}
+#pg-learn [hidden]{display:none!important}
+#pg-learn .learn-search-wrap{flex-basis:100%;max-width:760px;margin-top:10px;min-width:0}
+#pg-learn .learn-search-wrap label,#pg-learn .sec-toc-filter label{display:block;font-size:.8rem;color:var(--t2);margin-bottom:6px}
+#pg-learn input{min-width:0;width:100%;background:var(--input-bg);color:var(--t1);border:1px solid var(--bd2);border-radius:8px;padding:10px 12px;font:inherit;font-size:.85rem}
+#pg-learn .learn-search-input{display:flex;align-items:center;gap:8px}
+#pg-learn #learnSearchResults{max-height:48vh;overflow-y:auto;background:var(--bg2);border:1px solid var(--bd);border-radius:10px;margin-top:8px;padding:8px}
+#pg-learn .learn-search-hit{display:block;padding:10px;border-bottom:1px solid var(--bd);color:var(--t1);text-decoration:none;overflow-wrap:anywhere}
+#pg-learn .learn-search-hit small{display:block;color:var(--t2);margin-top:4px}
+#pg-learn .learn-search-hit:hover{background:var(--accent-subtle)}
+#pg-learn .learn-layout{grid-template-columns:260px minmax(0,1fr);align-items:start}
+#pg-learn .learn-detail{width:100%;max-width:1000px;padding:24px clamp(20px,3vw,40px) 60px;overflow-wrap:anywhere}
+#pg-learn .learn-sidebar{min-width:0}
+#pg-learn .ls-stage-head{width:100%;background:none;border:0;text-align:left;font:inherit;font-size:.78rem}
+#pg-learn .ls-mod,#pg-learn .ls-sec{text-decoration:none;white-space:normal;overflow:visible;line-height:1.65}
+#pg-learn .ls-name{white-space:normal;overflow:visible;overflow-wrap:anywhere}
+#pg-learn .ls-name small{display:block;font-size:.68rem;font-weight:400;color:var(--t2);margin-top:3px}
+#pg-learn .ls-sections{padding-left:20px}
+#pg-learn .ls-sec{align-items:baseline}
+#pg-learn .lm-title{line-height:1.45;overflow-wrap:anywhere}
+#pg-learn .lm-btn,#pg-learn .lm-card,#pg-learn .sec-nav-btn{text-decoration:none}
+#pg-learn .lm-card-t{display:block;overflow:visible;-webkit-line-clamp:unset}
+#pg-learn .lm-ol{grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))}
+#pg-learn .lm-tier-h{flex-wrap:wrap}
+#pg-learn .lm-block-h{font-size:.9rem;color:var(--t1);letter-spacing:normal;text-transform:none}
+#pg-learn .lm-block ol{padding-left:24px;color:var(--t2)}
+#pg-learn .learn-stage-links{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}
+#pg-learn .learn-home-stage{margin:32px 0;scroll-margin-top:70px}
+#pg-learn .learn-home-stage>h2{font-size:1.2rem}
+#pg-learn .learn-home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px;margin-top:16px}
+#pg-learn .learn-home-card{padding:20px;background:var(--card-bg);border:1px solid var(--bd);border-radius:var(--r);min-width:0;display:flex;flex-direction:column;align-items:flex-start}
+#pg-learn .learn-home-card h3{font-size:1rem;line-height:1.6}
+#pg-learn .learn-home-card h3 a,#pg-learn .learn-routes a{color:var(--p)}
+#pg-learn .learn-home-card>p{font-size:.85rem;color:var(--t2);margin:10px 0;flex:1}
+#pg-learn progress{width:100%;height:7px;accent-color:var(--p);margin:8px 0 18px}
+#pg-learn .learn-resume{padding:20px;border:1px solid var(--p);border-radius:var(--r);margin:20px 0;display:flex;flex-wrap:wrap;align-items:center;gap:12px;background:var(--accent-subtle)}
+#pg-learn .learn-routes{padding:16px;border:1px solid var(--bd);border-radius:12px;margin:20px 0;font-size:.86rem}
+#pg-learn .learn-routes summary{cursor:pointer;font-weight:600}
+#pg-learn .learn-routes p{margin-top:12px;color:var(--t2)}
+#pg-learn .learn-reader-tools{position:sticky;top:48px;z-index:20;display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--bg);padding:10px 0;margin-bottom:18px;border-bottom:1px solid var(--bd)}
+#pg-learn #secMdBody{max-width:78ch;margin:auto;min-width:0}
+#pg-learn .md-content :is(h2,h3,h4,h5,h6){scroll-margin-top:120px}
+#pg-learn .md-content h6{font-size:.88rem;color:var(--t1);margin:18px 0 10px}
+#pg-learn .md-content :is(pre,table,.katex-block){max-width:100%;min-width:0}
+#pg-learn .md-content table{display:block;overflow-x:auto}
+#pg-learn .md-content img{max-width:100%;height:auto}
+#pg-learn .sec-toc-filter{padding:0 14px 10px}
+#pg-learn .sec-toc-body{max-height:min(34vh,320px);overscroll-behavior:contain;padding:4px 10px 12px}
+#pg-learn .sec-toc-body ol{list-style:none;margin:0;padding:0}
+#pg-learn .sec-toc-body ol ol{padding-left:18px;border-left:1px solid var(--bd);margin-left:10px}
+#pg-learn .st-item{white-space:normal;overflow:visible;text-overflow:clip;color:var(--t2);overflow-wrap:anywhere;padding:7px 10px}
+#pg-learn .st-item[aria-current]{color:var(--p);background:var(--accent-subtle)}
+#pg-learn .sec-nav{gap:10px;flex-wrap:wrap}
+#pg-learn .sec-nav-btn{min-width:0;white-space:normal;overflow-wrap:anywhere}
+#pg-learn :is(button,a,input,summary):focus-visible{outline:2px solid var(--p);outline-offset:3px}
+#pg-learn .learn-mobile-nav{display:none}
+@media(max-width:768px){
+  #pg-learn .page-header{padding:24px 16px 12px}
+  #pg-learn .learn-tools{padding:0 16px 12px}
+  #pg-learn .learn-mobile-nav{display:inline-flex}
+  #pg-learn .learn-layout{grid-template-columns:minmax(0,1fr);padding:0 12px 40px}
+  #pg-learn .learn-sidebar{display:none;position:relative;top:auto;height:auto;max-height:50vh;border-right:0;border-bottom:1px solid var(--bd)}
+  #pg-learn.learn-nav-open .learn-sidebar{display:block}
+  #pg-learn .learn-detail{padding:16px 4px 40px}
+  #pg-learn .learn-reader-tools{gap:6px;padding:8px 0}
+  #pg-learn .learn-reader-tools .card-btn{padding:6px 10px;font-size:.74rem}
+  #pg-learn .sec-toc-body{max-height:28vh}
+  #pg-learn .sec-toc-body ol ol{padding-left:12px;margin-left:4px}
+  #pg-learn .learn-home-grid{grid-template-columns:minmax(0,1fr)}
+}
     </style>
 </head>
 <body>
@@ -704,7 +780,7 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
         </div>
     </div>
     <div class="quick-grid">
-        <div class="quick-card" onclick="go('learn')"><div class="qc-icon">📚</div><div class="qc-title">学习中心</div><div class="qc-desc">6 阶段完整学习路径，每个知识点含详细说明、学习计划和推荐资源</div></div>
+        <div class="quick-card" onclick="go('learn')"><div class="qc-icon">📚</div><div class="qc-title">学习中心</div><div class="qc-desc" id="homeLearnSummary">分阶段完整学习路径，每个知识点含详细说明、学习计划和推荐资源</div></div>
         <div class="quick-card" onclick="go('papers')"><div class="qc-icon">📄</div><div class="qc-title">论文深度解读</div><div class="qc-desc">方法论详解 · 实验数据 · 代码复现 · 数学原理，真正学到东西</div></div>
         <div class="quick-card" onclick="go('opensource')"><div class="qc-icon">💻</div><div class="qc-title">开源生态</div><div class="qc-desc">LeRobot、MuJoCo、Genesis 等核心项目入门教程</div></div>
         <div class="quick-card" onclick="go('models')"><div class="qc-icon">🧠</div><div class="qc-title">模型库</div><div class="qc-desc">VLA · VLM · ASR · TTS · 视觉 · 声纹，一站式模型索引</div></div>
@@ -741,53 +817,31 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
 
 <!-- LEARN -->
 <div class="page" id="pg-learn">
-    <div class="page-header" style="padding-bottom:24px">
-        <h1 class="page-title"><span class="icon">📚</span> 学习中心</h1>
-        <p class="page-sub">从零基础到具身智能项目实战 · 6 阶段 30+ 模块教材级内容</p>
+    <div class="page-header">
+        <h1 class="page-title">学习中心</h1>
+        <p class="page-sub" id="learnSummary">从零基础到具身智能项目实战</p>
     </div>
-    <div style="max-width:1400px;margin:0 auto;padding:0 24px 16px;display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap">
-        <button class="card-btn" onclick="exportProgress()" title="导出进度码">📤 导出</button>
-        <button class="card-btn" onclick="importProgress()" title="粘贴进度码恢复">📥 导入</button>
-        <button class="card-btn" onclick="resetProgress()" title="清除学习记录" style="color:var(--t3)">🗑️</button>
-    </div>
-    <div id="aiInfraPromo" style="max-width:1400px;margin:0 auto 18px;padding:0 24px;display:none">
-        <div style="position:relative;display:flex;align-items:center;gap:14px;padding:14px 44px 14px 18px;border:1px solid var(--bd);border-radius:14px;background:linear-gradient(135deg,rgba(58,163,255,.08),rgba(191,131,248,.08))">
-            <a href="/learn/ai-infra" data-spa="1" style="display:flex;align-items:center;gap:14px;flex:1;text-decoration:none;color:inherit;cursor:pointer;min-width:0">
-                <span style="font-size:1.6rem;flex-shrink:0">🛠️</span>
-                <div style="flex:1;min-width:0">
-                    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-                        <span style="font-weight:500;font-size:1rem">AI Infra · 具身基础设施</span>
-                        <span style="font-size:.7rem;padding:2px 7px;border-radius:5px;background:var(--p);color:#fff;font-weight:500">NEW</span>
-                        <span style="font-size:.7rem;padding:2px 7px;border-radius:5px;background:var(--bg3);color:var(--t2)">第 31 个模块</span>
-                    </div>
-                    <div style="font-size:.82rem;color:var(--t2);margin-top:4px;line-height:1.5">把分散在「训练优化 / 平台工程 / 云边端 / 数据工程」四个模块的核心章节串成完整学习地图，附 vLLM 适配 / Chunk Batching / 多机器人 Serving / 端到端实战 5 个独家章节</div>
-                </div>
-                <span style="color:var(--t3);font-size:.85rem;flex-shrink:0">进入 →</span>
-            </a>
-            <button onclick="dismissAiInfraPromo(event)" title="关闭推荐" style="position:absolute;top:8px;right:8px;width:24px;height:24px;border:none;background:transparent;color:var(--t3);cursor:pointer;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='transparent'">✕</button>
+    <div class="learn-tools">
+        <a class="card-btn" href="/learn" data-spa="1">阶段总览</a>
+        <button class="card-btn learn-mobile-nav" id="learnNavToggle" type="button" onclick="toggleLearnNavigation()" aria-controls="learnSidebar" aria-expanded="false">课程导航</button>
+        <button class="card-btn" type="button" onclick="exportProgress()">导出进度</button>
+        <button class="card-btn" type="button" onclick="importProgress()">导入进度</button>
+        <button class="card-btn" type="button" onclick="resetProgress()">清除记录</button>
+        <div class="learn-search-wrap" onkeydown="learnSearchKeydown(event)">
+            <label for="learnSearch">搜索模块、章节与小节</label>
+            <div class="learn-search-input">
+                <input type="search" id="learnSearch" placeholder="多个关键词用空格分隔" oninput="learnSearchFilter()" onfocus="learnSearchFilter()" aria-controls="learnSearchResults" autocomplete="off" />
+                <button class="card-btn" type="button" id="learnSearchClear" onclick="learnSearchClear()" aria-label="清空搜索" style="display:none">清空</button>
+            </div>
+            <div id="learnSearchResults" aria-label="学习搜索结果" style="display:none"></div>
         </div>
-    </div>
-    <div id="learnOrderNotice" style="max-width:1400px;margin:0 auto 14px;padding:0 24px;display:none">
-        <div style="position:relative;display:flex;align-items:center;gap:12px;padding:12px 40px 12px 18px;border:1px solid var(--bd);border-radius:12px;background:var(--bg3)">
-            <span style="font-size:1.2rem;flex-shrink:0">🧭</span>
-            <div style="font-size:.84rem;color:var(--t2);line-height:1.6">学习中心已按「基础 → 核心 → 进阶 → 前沿」重构章节顺序，旧的章节编号不再对应，已重置章节阅读记录（学习统计保留）。现在每个模块新增了<b style="color:var(--t1)">模块大纲页</b>，可以看到全部章节的难度与时长。</div>
-            <button onclick="dismissLearnOrderNotice()" title="知道了" style="position:absolute;top:8px;right:8px;width:24px;height:24px;border:none;background:transparent;color:var(--t3);cursor:pointer;border-radius:6px;font-size:14px;line-height:1">✕</button>
-        </div>
+        <p id="learnStorageNotice" class="learn-note" role="status" hidden></p>
     </div>
     <div class="learn-layout">
-        <div class="learn-sidebar" id="learnSidebar">
-            <div style="position:sticky;top:0;z-index:10;padding:10px 10px 8px;background:var(--bg2);border-bottom:1px solid var(--bd)">
-                <div style="position:relative">
-                    <input type="text" id="learnSearch" placeholder="🔍 搜模块 / 章节 / 关键词..." oninput="learnSearchFilter()" onfocus="learnSearchFilter()" onblur="setTimeout(()=>{const r=document.getElementById('learnSearchResults');if(r)r.style.display='none'},200)" style="width:100%;padding:8px 30px 8px 12px;border-radius:8px;border:1px solid var(--bd);background:var(--bg3);color:var(--t1);font-size:.85rem;outline:none;box-sizing:border-box" />
-                    <span id="learnSearchClear" onclick="learnSearchClear()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--t3);cursor:pointer;font-size:.85rem;display:none;padding:2px 6px">✕</span>
-                </div>
-                <div id="learnSearchResults" style="display:none;max-height:360px;overflow-y:auto;margin-top:6px;border:1px solid var(--bd);border-radius:8px;background:var(--bg2)"></div>
-            </div>
-            <div id="learnSidebarBody"><div style="color:var(--t3);text-align:center;padding:40px;font-size:.85rem">加载中...</div></div>
-        </div>
-        <div class="learn-detail" id="learnDetail">
-            <div class="learn-detail-empty"><span class="hint-icon">📖</span><div>从左侧选择一个模块开始学习</div><div style="font-size:.78rem;color:var(--t3)">点击模块名称展开详细内容</div></div>
-        </div>
+        <nav class="learn-sidebar" id="learnSidebar" aria-label="课程导航">
+            <div id="learnSidebarBody"><p class="learn-note">正在加载课程导航...</p></div>
+        </nav>
+        <div class="learn-detail" id="learnDetail" aria-busy="false"><p role="status">正在加载学习路径...</p></div>
     </div>
 </div>
 
@@ -964,11 +1018,12 @@ function toggleTheme(){
     const cur=document.documentElement.getAttribute('data-theme')||getDefaultTheme();
     const next=cur==='dark'?'light':'dark';
     applyTheme(next);
-    localStorage.setItem('eai_theme',next);
+    try{localStorage.setItem('eai_theme',next);}catch(e){}
 }
 // Init theme — 默认 dark；只有用户主动切到 light 才记住
 (function(){
-    const saved=localStorage.getItem('eai_theme');
+    let saved;
+    try{saved=localStorage.getItem('eai_theme');}catch(e){}
     applyTheme(saved==='light'?'light':'dark');
 })();
 
@@ -979,8 +1034,8 @@ let _routerSuppress=false;
 
 // 每板块 SEO 元信息（动态写到 title/description/og）
 const PAGE_META={
-  home:{title:'具身智能知识门户 | Embodied AI Hub',desc:'具身智能从业与研究人员的一站式知识门户：6 阶段学习路径、30+ 模块教材级内容、最新论文/开源/招聘/资讯动态。'},
-  learn:{title:'学习中心 - 具身智能 6 阶段学习路径 | 具身智能知识门户',desc:'30 个模块覆盖数学基础、深度学习、机器人学、模仿学习、强化学习、VLA、世界模型、仿真到现实，每个模块教材级深度（≥80K 字符）。'},
+  home:{title:'具身智能知识门户 | Embodied AI Hub',desc:'具身智能从业与研究人员的一站式知识门户：分阶段学习路径、模块化教材内容、最新论文/开源/招聘/资讯动态。'},
+  learn:{title:'学习中心 - 具身智能分阶段学习路径 | 具身智能知识门户',desc:'覆盖数学基础、深度学习、机器人学、模仿学习、强化学习、VLA、世界模型与仿真到现实，提供模块大纲、学习方法和实践建议。'},
   papers:{title:'论文库 - 具身智能与人形机器人前沿论文 | 具身智能知识门户',desc:'最新 VLA、世界模型、模仿学习、强化学习等具身智能论文深度解读，含方法论、实验数据、代码复现。'},
   opensource:{title:'开源生态 - 具身智能开源项目精选 | 具身智能知识门户',desc:'LeRobot、MuJoCo、Genesis、OpenVLA、Isaac GR00T 等具身智能核心开源项目入门教程与导航。'},
   models:{title:'模型库 - VLA / VLM / 视觉语音模型 | 具身智能知识门户',desc:'VLA、VLM、ASR、TTS、视觉、声纹模型一站式索引。'},
@@ -1009,7 +1064,12 @@ function updatePageMeta(page, modId, secIdx){
   let meta=PAGE_META[page]||PAGE_META.home;
   let title=meta.title, desc=meta.desc;
   let path='/'+(page==='home'?'':page);
+  if(page==='learn'&&!modId&&LD?.stages){
+    title=`学习中心 - ${LD.stages.length} 阶段学习路径 | 具身智能知识门户`;
+    desc=`${LD.stages.length} 个阶段、${getAllModuleIds().length} 个学习模块。`+desc;
+  }
   if(page==='learn'&&modId){
+    modId=canonicalLearnId(modId);
     path='/learn/'+encodeURIComponent(modId);
     // 从 learnCache / LD 反查模块名
     const cached=learnCache&&learnCache[modId];
@@ -1017,7 +1077,7 @@ function updatePageMeta(page, modId, secIdx){
     if(cached&&cached.name)modName=cached.name;
     else if(typeof LD!=='undefined'&&LD&&LD.stages){
       LD.stages.forEach(s=>(s.modules||[]).forEach(m=>{
-        const mid=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
+        const mid=canonicalLearnId(m.id||learnAlias(m.name));
         if(mid===modId)modName=m.name||modId;
       }));
     }
@@ -1045,6 +1105,11 @@ function _pushOrReplaceState(path, replace){
 
 function go(id, opts){
     opts=opts||{};
+    if(id==='learn'&&!opts.learnTransition){
+        if(!opts.fromRouter)_pushOrReplaceState('/learn',!!opts.replace);
+        return applyRoute('/learn',opts);
+    }
+    ++_learnRequestId;
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     const tgt=document.getElementById('pg-'+id);
     if(!tgt){console.warn('go: unknown page',id);return;}
@@ -1059,8 +1124,6 @@ function go(id, opts){
     }
     // 更新 SEO meta
     updatePageMeta(id);
-    // 刷新 AI Infra 推荐卡片（用户访问 ai-infra 后自动隐藏）
-    if(typeof refreshAiInfraPromo==='function')refreshAiInfraPromo();
 }
 
 // 解析任意 URL（path 或 hash）→ 返回 {page, modId, secIdx}
@@ -1084,8 +1147,8 @@ function parseRoute(input){
     if(page==='learn'&&parts.length>=2){
         r.modId=parts[1];
         if(parts.length>=3){
-            const n=parseInt(parts[2],10);
-            r.secIdx=isNaN(n)?0:Math.max(0,n-1);
+            const n=/^\d+$/.test(parts[2])?Number(parts[2]):NaN;
+            r.secIdx=Number.isSafeInteger(n)&&n>0?n-1:-1;
         }
     }
     return r;
@@ -1094,37 +1157,84 @@ function parseRoute(input){
 async function applyRoute(routeInput, opts){
     opts=opts||{};
     const r=parseRoute(routeInput);
-    _routerSuppress=true;
-    try{
-        // 切板块（不写历史栈，由路由调用方决定）
-        document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-        const tgt=document.getElementById('pg-'+r.page);
-        if(tgt)tgt.classList.add('active');
-        document.querySelectorAll('.topbar-nav a').forEach(a=>a.classList.remove('active'));
-        document.querySelector(`.topbar-nav a[onclick="go('${r.page}')"]`)?.classList.add('active');
-        document.getElementById('nav').classList.remove('open');
-        if(!opts.skipScroll)window.scrollTo({top:0,behavior:'instant'});
-        updatePageMeta(r.page, r.modId, r.secIdx);
-        // 学习模块深链接
-        if(r.page==='learn'&&r.modId){
+    const token=++_learnRequestId;
+    // 不在 await 期间锁住历史栈；每次导航立刻使旧学习请求失效。
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('pg-'+r.page)?.classList.add('active');
+    document.querySelectorAll('.topbar-nav a').forEach(a=>a.classList.remove('active'));
+    document.querySelector(`.topbar-nav a[onclick="go('${r.page}')"]`)?.classList.add('active');
+    document.getElementById('nav').classList.remove('open');
+    if(!opts.skipScroll)window.scrollTo({top:0,behavior:'instant'});
+    updatePageMeta(r.page,r.modId,r.secIdx);
+    if(r.page==='learn'){
+        toggleLearnNavigation(false);
+        if(r.modId){
+            return openLearnModule(r.modId,null,{fromRouter:true,token,initialSec:r.secIdx,skipScroll:opts.skipScroll});
+        }
+        _currentLearnMod=null;
+        _currentLearnSec=null;
+        const body=document.getElementById('learnDetail');
+        body.innerHTML='<p role="status">正在加载学习路径...</p>';
+        body.setAttribute('aria-busy','true');
+        try{
             await waitForLD();
-            await openLearnModule(r.modId, null, {fromRouter:true,
-                initialSec:(typeof r.secIdx==='number'?r.secIdx:null)});
-        }
-        // 每日英文归档独立页面
-        if(r.page==='daily-english'){
-            try{await renderDailyEnglishArchivePage()}catch(e){console.warn('de-arch render failed',e)}
-        }
-    }finally{
-        _routerSuppress=false;
+            if(!isCurrentLearnRequest(token,null))return;
+            renderLearn();
+            renderLearnHome();
+            updatePageMeta('learn');
+        }catch(e){if(isCurrentLearnRequest(token,null))showLearnError('学习路径加载失败');}
+    }
+    if(r.page==='daily-english'){
+        try{await renderDailyEnglishArchivePage()}catch(e){console.warn('de-arch render failed',e)}
     }
 }
 
+let _ldPromise=null;
+let _learnRequestId=0;
+async function loadLearnJSON(url){
+    const controller=new AbortController();
+    let timer;
+    try{
+        return await Promise.race([
+            (async()=>{
+                const response=await fetch(_normUrl(url),{signal:controller.signal});
+                if(!response.ok)throw new Error('学习数据请求失败');
+                return response.json();
+            })(),
+            new Promise((_,reject)=>{timer=setTimeout(()=>{controller.abort();reject(new Error('学习数据请求超时'));},12000);})
+        ]);
+    }finally{clearTimeout(timer);}
+}
 function waitForLD(){
-    return new Promise(res=>{
-        const tick=()=>{if(typeof LD!=='undefined'&&LD)res();else setTimeout(tick,80);};
-        tick();
-    });
+    if(LD&&Array.isArray(LD.stages))return Promise.resolve(LD);
+    if(!_ldPromise){
+        _ldPromise=loadLearnJSON('data/learning-path.json').then(data=>{
+            if(!data||!Array.isArray(data.stages))throw new Error('学习路径格式无效');
+            LD=data;
+            _checkLearnOrderReset();
+            return LD;
+        }).finally(()=>{_ldPromise=null;});
+    }
+    return _ldPromise;
+}
+function isCurrentLearnRequest(token,modId,secIdx){
+    return token===_learnRequestId&&document.getElementById('pg-learn').classList.contains('active')
+        &&(modId===undefined||_currentLearnMod===modId)
+        &&(secIdx===undefined||_currentLearnSec===secIdx);
+}
+function showLearnError(message,modId){
+    const body=document.getElementById('learnDetail');
+    body.setAttribute('aria-busy','false');
+    body.innerHTML='<div class="learn-error" role="alert"><h2>'+learnEsc(message)+'</h2><p class="learn-note">请检查网络后重试；章节编号保持原样，不会自动跳到其他章节。</p><div class="lm-actions"><button class="card-btn primary" type="button" id="learnRetry">重试</button>'
+        +(modId?'<a class="card-btn" data-spa="1" href="'+learnPath(modId)+'">回模块大纲</a>':'')
+        +'<a class="card-btn" data-spa="1" href="/learn">回阶段总览</a></div></div>';
+    document.getElementById('learnRetry').onclick=()=>applyRoute(location.pathname);
+}
+function toggleLearnNavigation(force){
+    const page=document.getElementById('pg-learn');
+    const open=typeof force==='boolean'?force:!page.classList.contains('learn-nav-open');
+    page.classList.toggle('learn-nav-open',open);
+    document.getElementById('learnNavToggle').setAttribute('aria-expanded',String(open));
 }
 
 // 浏览器前进/后退
@@ -1145,34 +1255,6 @@ document.addEventListener('click',(e)=>{
     window.scrollTo({top:0,behavior:'smooth'});
 });
 
-// === AI Infra 推荐卡片（限时显示 + 可关闭）===
-// 规则：① 用户主动关闭后永久隐藏；② 距首次进入学习中心 7 天后自动隐藏；
-//      ③ 已访问过 ai-infra 模块后自动隐藏（不再需要推荐）
-const AI_INFRA_PROMO_DEADLINE='2026-05-18';   // 7 天硬截止
-function shouldShowAiInfraPromo(){
-    try{
-        if(localStorage.getItem('eai_promo_aiinfra_dismissed')==='1')return false;
-        // 已访问过 ai-infra 模块：不再推荐
-        const prog=JSON.parse(localStorage.getItem('eai_learn_progress')||'{}');
-        if(prog['ai-infra-具身基础设施']||prog['ai-infra'])return false;
-        // 时间硬截止
-        if(new Date()>new Date(AI_INFRA_PROMO_DEADLINE+'T23:59:59'))return false;
-    }catch(e){return true}
-    return true;
-}
-function refreshAiInfraPromo(){
-    const el=document.getElementById('aiInfraPromo');
-    if(!el)return;
-    el.style.display=shouldShowAiInfraPromo()?'block':'none';
-}
-function dismissAiInfraPromo(e){
-    if(e){e.preventDefault();e.stopPropagation()}
-    try{localStorage.setItem('eai_promo_aiinfra_dismissed','1')}catch(_){}
-    refreshAiInfraPromo();
-}
-// 进入学习中心时刷新一次
-document.addEventListener('DOMContentLoaded',refreshAiInfraPromo);
-
 // 兼容老 hash 链接：访问 #/learn/... 时立刻升级到真路径
 window.addEventListener('hashchange',()=>{
     if(_routerSuppress)return;
@@ -1188,7 +1270,7 @@ window.addEventListener('hashchange',()=>{
 
 // 兼容老调用：glossary/recent updates 里用 selectLearnModule
 function selectLearnModule(modId){
-    const path='/learn/'+encodeURIComponent(modId);
+    const path=learnPath(modId);
     history.pushState({},'',path);
     applyRoute(path);
 }
@@ -1207,7 +1289,9 @@ function _normUrl(u){
 async function loadJ(u){try{const r=await fetch(_normUrl(u)+'?t='+Date.now());return r.ok?await r.json():null}catch(e){return null}}
 
 async function init(){
-    [LD,PD,OD,ND,JD,MD,HD,DS,GD]=await Promise.all([loadJ('data/learning-path.json'),loadJ('data/papers-index.json'),loadJ('data/opensource.json'),loadJ('data/news.json'),loadJ('data/jobs.json'),loadJ('data/models.json'),loadJ('data/hardware.json'),loadJ('data/datasets.json'),loadJ('data/glossary.json')]);
+    // 学习路由独立启动，不等待其他板块数据，也不在加载完成后覆盖用户新导航。
+    initializeRoute();
+    [,PD,OD,ND,JD,MD,HD,DS,GD]=await Promise.all([waitForLD().catch(()=>null),loadJ('data/papers-index.json'),loadJ('data/opensource.json'),loadJ('data/news.json'),loadJ('data/jobs.json'),loadJ('data/models.json'),loadJ('data/hardware.json'),loadJ('data/datasets.json'),loadJ('data/glossary.json')]);
     if(LD)document.getElementById('sModules').textContent=LD.stages?LD.stages.reduce((s,st)=>s+(st.modules?st.modules.length:0),0):'-';
     if(PD)document.getElementById('sPapers').textContent=PD.papers.length;
     if(OD)document.getElementById('sOS').textContent=OD.projects.length;
@@ -1233,6 +1317,8 @@ async function init(){
     _checkLearnOrderReset();
     // Sync inbox submission status from server-side processed records
     syncInboxStatus();
+}
+function initializeRoute(){
     // === 路由初始化（History API + 404 桥接 + hash 回退）===
     let initRoute=null;
     // 1) 来自 404.html 桥接的深路径（GitHub Pages SPA 标准做法）
@@ -1264,6 +1350,7 @@ let _currentLearnMod=null;
 let _modSecsCollapsed=false;
 // 点击模块标题（不点箭头）：active 已展开 = 切到第 1 节并展开；active 已收起 = 仅展开；非 active = 打开它
 function clickLearnMod(modId){
+    modId=canonicalLearnId(modId);
     if(_currentLearnMod===modId){
         // 已 active：若被收起则展开，否则不动（不要 toggle 收起，避免误操作）
         if(_modSecsCollapsed){
@@ -1278,6 +1365,7 @@ function clickLearnMod(modId){
 // 点击 active 模块标题右侧的 ▾/▸ 箭头：仅 toggle 章节列表收起/展开（不切换模块）
 function toggleModSecs(ev,modId){
     ev.stopPropagation();
+    modId=canonicalLearnId(modId);
     if(_currentLearnMod!==modId){
         // 用户在非 active 模块的箭头上误触：直接打开它
         _modSecsCollapsed=false;
@@ -1302,93 +1390,91 @@ function toggleStage(si,el){
     const next=!_isStageCollapsed(si);
     _stageCollapsed[si]=next;
     el.classList.toggle('collapsed',next);
+    el.querySelector('.ls-stage-head')?.setAttribute('aria-expanded',String(!next));
 }
 
 // === 学习中心搜索 ===
-let _learnSearchIndex=null;       // 章节级索引（异步加载）
+let _learnSearchIndex=null;
 let _learnSearchIndexLoading=false;
-async function buildLearnSearchIndex(){
-    if(_learnSearchIndex||_learnSearchIndexLoading)return;
+let _learnSearchError='';
+const _learnSearchMeta=Object.create(null);
+async function buildLearnSearchIndex(retry=false){
+    if(_learnSearchIndexLoading||(_learnSearchIndex&&!retry))return;
     _learnSearchIndexLoading=true;
-    if(!LD)return;
-    const idx=[];
-    // 模块级（同步可得）
-    LD.stages.forEach(s=>(s.modules||[]).forEach(m=>{
-        const modId=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
-        const fileId=learnFileMap[modId]||modId;
-        idx.push({type:'module',name:m.name,modId,fileId,desc:m.description||'',stage:s.title,topics:(m.topics||[]).map(t=>t.title).join(' ')});
-    }));
-    // 章节级（异步加载所有 _index.json）
-    const seen=new Set();
-    const tasks=[];
-    LD.stages.forEach(s=>(s.modules||[]).forEach(m=>{
-        const modId=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
-        const fileId=learnFileMap[modId]||modId;
-        if(seen.has(fileId))return; seen.add(fileId);
-        tasks.push((async()=>{
-            try{
-                const ix=await loadJ(`data/learn-split/${fileId}/_index.json`);
-                if(!ix)return;
-                (ix.sectionsMeta||[]).forEach((sm,i)=>{
-                    idx.push({type:'section',title:sm.title||'',modId,fileId,modName:m.name,secIdx:i,stage:s.title});
-                });
-            }catch(e){/* ignore */}
-        })());
-    }));
-    await Promise.all(tasks);
-    _learnSearchIndex=idx;
-    _learnSearchIndexLoading=false;
-    // 索引建好后若搜索框有内容，立刻刷新结果
-    const ipt=document.getElementById('learnSearch');
-    if(ipt&&ipt.value.trim())learnSearchFilter();
+    _learnSearchError='';
+    const token=_learnRequestId;
+    try{
+        await waitForLD();
+        const rows=[];
+        const modules=getAllModuleIds();
+        let cursor=0,failed=0;
+        await Promise.all(Array.from({length:Math.min(6,modules.length)},async()=>{
+            while(cursor<modules.length){
+                const m=modules[cursor++],meta=getLearnMeta(m.id)||{};
+                rows.push({type:'module',title:m.name,modId:m.id,desc:meta.description||'',topics:(meta.topics||[]).map(t=>typeof t==='string'?t:t.title||'').join(' ')});
+                try{
+                    const ix=_learnSearchMeta[m.id]||await loadLearnJSON(`data/learn-split/${m.id}/_index.json`);
+                    if(!Array.isArray(ix?.sectionsMeta))throw new Error('章节索引格式无效');
+                    _learnSearchMeta[m.id]=ix;
+                    ix.sectionsMeta.forEach((sm,i)=>rows.push({type:'section',title:sm.title||'',modId:m.id,modName:m.name,secIdx:i,
+                        headings:learnStrings(sm.headings),summary:typeof sm.summary==='string'?sm.summary:''}));
+                }catch(e){failed++;}
+            }
+        }));
+        _learnSearchIndex=rows;
+        if(failed)_learnSearchError=`${failed} 个模块的小节索引暂不可用，可重试补全。`;
+    }catch(e){_learnSearchError='搜索索引加载失败，请重试。';}
+    finally{
+        _learnSearchIndexLoading=false;
+        if(isCurrentLearnRequest(token))learnSearchFilter(false);
+    }
 }
-function learnSearchFilter(){
-    const ipt=document.getElementById('learnSearch');
-    const box=document.getElementById('learnSearchResults');
-    const clr=document.getElementById('learnSearchClear');
+function rankLearnSearch(rows,query){
+    const words=String(query||'').toLowerCase().trim().split(/\s+/).filter(Boolean);
+    if(!words.length)return[];
+    return rows.map((r,index)=>{
+        const title=String(r.title||r.name||'').toLowerCase();
+        const headings=learnStrings(r.headings).join(' ').toLowerCase();
+        const hay=[title,r.modName,r.desc,r.topics,headings,r.summary].join(' ').toLowerCase();
+        if(!words.every(w=>hay.includes(w)))return null;
+        const score=(words.every(w=>title.includes(w))?100:0)+words.reduce((n,w)=>n+(title.startsWith(w)?30:title.includes(w)?20:headings.includes(w)?10:1),0);
+        return {r,score,index};
+    }).filter(Boolean).sort((a,b)=>b.score-a.score||a.index-b.index).map(item=>item.r);
+}
+function learnSearchFilter(autoBuild=true){
+    const ipt=document.getElementById('learnSearch'),box=document.getElementById('learnSearchResults');
     if(!ipt||!box)return;
-    const q=(ipt.value||'').trim().toLowerCase();
-    if(clr)clr.style.display=q?'block':'none';
+    const q=ipt.value.trim();
+    document.getElementById('learnSearchClear').style.display=q?'inline-flex':'none';
     if(!q){box.style.display='none';box.innerHTML='';return;}
-    // 后台异步建索引
-    if(!_learnSearchIndex)buildLearnSearchIndex();
-    const data=_learnSearchIndex||[];
-    if(data.length===0){
-        box.style.display='block';
-        box.innerHTML='<div style="padding:14px;color:var(--t3);font-size:.78rem;text-align:center">索引加载中...</div>';
-        return;
-    }
-    // 简单匹配：标题 / 模块名 / 描述 / topics
-    const hits=[];
-    for(const r of data){
-        if(hits.length>=20)break;
-        const hay=(r.type==='module'?(r.name+' '+r.desc+' '+r.topics+' '+r.stage):(r.title+' '+r.modName+' '+r.stage)).toLowerCase();
-        if(hay.includes(q)){hits.push(r)}
-    }
-    if(hits.length===0){
-        box.style.display='block';
-        box.innerHTML=`<div style="padding:14px;color:var(--t3);font-size:.78rem;text-align:center">未找到「${q}」相关内容</div>`;
-        return;
-    }
-    let html='';
+    if(autoBuild&&!_learnSearchIndex&&!_learnSearchIndexLoading&&!_learnSearchError)buildLearnSearchIndex();
+    const hits=rankLearnSearch(_learnSearchIndex||[],q).slice(0,30);
+    let html=_learnSearchIndexLoading?'<p class="learn-note" role="status">正在加载模块、章节与小节索引...</p>':'';
+    if(_learnSearchError)html+=`<p class="learn-note" role="status">${learnEsc(_learnSearchError)}</p><button class="card-btn" type="button" onclick="buildLearnSearchIndex(true);learnSearchFilter(false)">重试索引</button>`;
+    if(!hits.length&&!_learnSearchIndexLoading)html+=`<p class="learn-note">未找到「${learnEsc(q)}」相关内容。</p>`;
     hits.forEach(r=>{
-        if(r.type==='module'){
-            const stageShort=(r.stage||'').replace(/^[^：]*：/,'').slice(0,12);
-            html+=`<div onclick="learnSearchPick('${r.modId}')" style="padding:8px 12px;border-bottom:1px solid var(--bd);cursor:pointer;font-size:.82rem" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='transparent'">
-                <div style="display:flex;align-items:center;gap:6px"><span style="font-size:.7rem;padding:1px 6px;border-radius:4px;background:var(--p);color:#fff">模块</span><span style="font-weight:500">${r.name}</span></div>
-                <div style="font-size:.72rem;color:var(--t3);margin-top:2px">${stageShort}</div></div>`;
-        }else{
-            const stageShort=(r.stage||'').replace(/^[^：]*：/,'').slice(0,12);
-            html+=`<div onclick="learnSearchPick('${r.modId}',${r.secIdx})" style="padding:8px 12px;border-bottom:1px solid var(--bd);cursor:pointer;font-size:.82rem" onmouseover="this.style.background='var(--bg3)'" onmouseout="this.style.background='transparent'">
-                <div style="display:flex;align-items:center;gap:6px"><span style="font-size:.7rem;padding:1px 6px;border-radius:4px;background:var(--bg3);color:var(--t2)">章节</span><span>${r.title}</span></div>
-                <div style="font-size:.72rem;color:var(--t3);margin-top:2px">${r.modName} · ${stageShort}</div></div>`;
-        }
+        const words=q.toLowerCase().split(/\s+/);
+        const heading=learnStrings(r.headings).find(h=>words.some(w=>h.toLowerCase().includes(w)));
+        html+=`<a class="learn-search-hit" data-spa="1" href="${learnPath(r.modId,r.secIdx)}"><strong>${r.type==='module'?'模块':'章节'} · ${learnEsc(r.title)}</strong><small>${learnEsc(r.modName||'模块大纲')}${heading?' · 小节：'+learnEsc(heading):''}</small></a>`;
     });
-    box.style.display='block';
     box.innerHTML=html;
+    box.style.display='block';
+}
+function learnSearchKeydown(event){
+    const box=document.getElementById('learnSearchResults');
+    if(event.key==='Escape'){event.preventDefault();learnSearchClear();document.getElementById('learnSearch').focus();}
+    if(event.key==='Enter'&&event.target.id==='learnSearch'&&!event.isComposing){
+        event.preventDefault();
+        const first=box.querySelector('.learn-search-hit');
+        if(first)first.click();
+    }
+    if(event.key==='ArrowDown'&&event.target.id==='learnSearch'){
+        const first=box.querySelector('.learn-search-hit');
+        if(first){event.preventDefault();first.focus();}
+    }
 }
 function learnSearchPick(modId,secIdx){
-    const path=secIdx===undefined?'/learn/'+encodeURIComponent(modId):'/learn/'+encodeURIComponent(modId)+'/'+(secIdx+1);
+    const path=learnPath(modId,secIdx);
     history.pushState({},'',path);
     applyRoute(path);
     learnSearchClear();
@@ -1404,62 +1490,73 @@ function learnSearchClear(){
 
 function renderLearn(){
     if(!LD)return;
-    // 深链接进来的 modId 是英文 fileId（如 ros2），侧栏生成的是中文名派生的 id，
-    // 两者不同；统一按 fileId 比对，否则深链接时侧栏章节列表不展开。
-    const curFile=_currentLearnMod?(learnFileMap[_currentLearnMod]||_currentLearnMod):null;
+    const sidebar=document.getElementById('learnSidebar');
+    const scroll=sidebar.scrollTop;
+    const progress=getProgress();
     let sb='';
     LD.stages.forEach((s,si)=>{
-        const isCol=_isStageCollapsed(si);
-        sb+=`<div class="ls-stage${isCol?' collapsed':''}">`;
-        sb+=`<div class="ls-stage-head" onclick="toggleStage(${si},this.parentElement)"><span>${s.title}</span><span class="ls-arrow">▼</span></div>`;
-        sb+=`<div class="ls-mods">`;
-        s.modules.forEach(m=>{
-            const modId=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
-            const fileId=learnFileMap[modId]||modId;
-            const secCount=(m.topics||[]).length||3;
-            const st=getModuleStatus(modId,secCount);
-            const isUpdated=m.lastUpdated&&(Date.now()-new Date(m.lastUpdated).getTime())<3*86400000;
-            const progCls=st.pct>=100?'done':(st.pct>0?'partial':'');
-            // 按 fileId 判定 active：兼容深链接（/learn/ros2）与侧栏点击（中文派生 id）两条路径
-            const isActive=(curFile!==null&&curFile===fileId)||_currentLearnMod===modId;
-            const activeCls=isActive?' active':'';
-            const arrowCh=(isActive && !_modSecsCollapsed)?'▾':'▸';
-            // learnCache 的 key 随调用路径不同（英文 fileId 或中文派生 id），取实际存在的那个
-            const cacheKey=(learnCache[modId]&&learnCache[modId].sections)?modId
-                         :((learnCache[fileId]&&learnCache[fileId].sections)?fileId:null);
-            const cache=cacheKey?learnCache[cacheKey]:null;
-            // maturity 标签（优先从 learnCache 读，fallback 从 LD 模块读）
-            const _mat=(cache&&cache.maturity)||m.maturity||'';
-            const matSpan=_mat==='comprehensive'?'<span class="ls-mat" title="教材级完整">✅</span>'
-                :_mat==='foundation'?'<span class="ls-mat" title="基础搭建中">🌱</span>'
-                :_mat==='growing'?'<span class="ls-mat" title="持续完善中">🔄</span>':'';
-            // 箭头（active 模块才显示）
-            const arrowSpan=isActive
-                ? `<span class="ls-mod-arrow" onclick="toggleModSecs(event,'${modId}')" title="${_modSecsCollapsed?'展开章节':'收起章节'}">${arrowCh}</span>`
-                : '';
-            sb+=`<div class="ls-mod${activeCls}" data-mod="${modId}" onclick="clickLearnMod('${modId}')">`;
-            sb+=`<span class="ls-prog ${progCls}"></span>`;
-            sb+=`<span class="ls-name">${m.name}</span>`;
-            if(isUpdated)sb+=`<span class="ls-updated"></span>`;
-            sb+=`<span class="ls-mod-right">${matSpan}${arrowSpan}</span>`;
-            sb+=`</div>`;
-            // 展开当前模块的章节列表（且未被用户收起）
-            if(isActive && !_modSecsCollapsed && cache && cache.sections){
-                sb+=`<div class="ls-sections">`;
-                sb+=`<div class="ls-sec ls-sec-ov${_currentLearnSec==null?' active':''}" onclick="event.stopPropagation();openLearnModule('${cacheKey}')">📋 模块大纲</div>`;
-                cache.sections.forEach((sec,i)=>{
-                    const secActive=_currentLearnSec===i?' active':'';
-                    const dcls=DIFF_CLS[sec.difficulty]||'mid';
-                    sb+=`<div class="ls-sec${secActive}" onclick="event.stopPropagation();switchToSection('${cacheKey}',${i})"><span class="ls-diff ls-diff-${dcls}" title="${sec.difficulty||'中级'}"></span>${String(i+1).padStart(2,'0')} ${sec.shortTitle||sec.title}</div>`;
-                });
-                sb+=`</div>`;
+        const collapsed=_isStageCollapsed(si);
+        sb+=`<div class="ls-stage${collapsed?' collapsed':''}"><button type="button" class="ls-stage-head" aria-expanded="${!collapsed}" onclick="toggleStage(${si},this.parentElement)"><span>${learnEsc(s.title)}</span><span class="ls-arrow" aria-hidden="true">▼</span></button><div class="ls-mods">`;
+        (s.modules||[]).forEach(m=>{
+            const id=canonicalLearnId(m.id||learnAlias(m.name));
+            const cache=learnCache[id];
+            const st=learnStatus(progress[id],learnTotal(id,progress[id]));
+            const active=_currentLearnMod===id;
+            sb+=`<a class="ls-mod${active?' active':''}" data-mod="${learnEsc(id)}" data-spa="1" href="${learnPath(id)}"${active?' aria-current="page"':''}><span class="ls-prog ${st.pct===100?'done':st.status!=='new'?'partial':''}"></span><span class="ls-name">${learnEsc(m.name)}<small>${learnEsc(st.label)}</small></span></a>`;
+            if(active&&cache?.sections){
+                sb+=`<button type="button" class="card-btn" data-mod="${learnEsc(id)}" onclick="toggleModSecs(event,this.dataset.mod)" aria-expanded="${!_modSecsCollapsed}">${_modSecsCollapsed?'展开章节':'收起章节'}</button>`;
+                if(!_modSecsCollapsed){
+                    sb+='<div class="ls-sections" style="display:block">';
+                    sb+=`<a class="ls-sec ls-sec-ov${_currentLearnSec==null?' active':''}" data-mod="${learnEsc(id)}" data-sec="overview" data-spa="1" href="${learnPath(id)}">模块大纲</a>`;
+                    cache.sections.forEach((sec,i)=>{
+                        const current=_currentLearnSec===i;
+                        sb+=`<a class="ls-sec${current?' active':''}" data-mod="${learnEsc(id)}" data-sec="${i}" data-spa="1" href="${learnPath(id,i)}"${current?' aria-current="page"':''}><span class="ls-diff ls-diff-${DIFF_CLS[sec.difficulty]||'mid'}"></span><span>${String(i+1).padStart(2,'0')} ${learnEsc(sec.shortTitle||sec.title)}${progress[id]?.sections.includes(i)?' · 已完成':''}</span></a>`;
+                    });
+                    sb+='</div>';
+                }
             }
         });
-        sb+=`</div></div>`;
+        sb+='</div></div>';
     });
     document.getElementById('learnSidebarBody').innerHTML=sb;
+    sidebar.scrollTop=scroll;
+    const modules=getAllModuleIds();
+    const totals=modules.map(m=>learnTotal(m.id,progress[m.id]));
+    const known=totals.every(n=>n>0);
+    const summary=`${LD.stages.length} 个阶段 · ${modules.length} 个模块 · ${known?'共':'已知'} ${totals.reduce((a,b)=>a+b,0)} 章${known?'':'（部分章数待加载）'}`;
+    document.getElementById('learnSummary').textContent=summary;
+    const homeSummary=document.getElementById('homeLearnSummary');
+    if(homeSummary)homeSummary.textContent=summary+'，含学习方法、练习与推荐资源';
 }
-let _currentLearnSec=0;
+function renderLearnHome(){
+    if(!LD||_currentLearnMod!==null)return;
+    const progress=getProgress(),all=getAllModuleIds();
+    let h='<h2 class="lm-title">按阶段学习，按目标选择</h2><p class="learn-note">按下方顺序建立知识体系；完成状态需在章节末尾手动标记，打开正文只记录访问位置。历史完成记录保留。</p>';
+    const recent=all.filter(m=>Number.isInteger(progress[m.id]?.lastSection)).sort((a,b)=>progress[b.id].lastVisit-progress[a.id].lastVisit)[0];
+    if(recent){
+        const idx=resumeLearnSection(recent.id,progress[recent.id],learnTotal(recent.id,progress[recent.id]));
+        h+=`<div class="learn-resume"><a class="lm-btn" href="${learnPath(recent.id,idx)}" data-spa="1">继续上次学习 · ${learnEsc(recent.name)} · 第 ${idx+1} 章</a><span class="learn-note">${timeAgo(progress[recent.id].lastVisit)}</span></div>`;
+    }
+    const routes=[['打基础',['linear-algebra','python-scientific-computing','deep-learning']],['跑通机器人项目',['robot-kinematics','ros2','desktop-arm-project']],['模型与部署',['vla-models','training-inference-optimization','ai-infra']]];
+    h+='<details class="learn-routes"><summary>三条轻量路线建议（不改变课程顺序）</summary>';
+    routes.forEach(([title,ids])=>{
+        const links=ids.map(id=>all.find(m=>m.id===id)).filter(Boolean);
+        if(links.length)h+=`<p><strong>${title}</strong>：${links.map(m=>`<a data-spa="1" href="${learnPath(m.id)}">${learnEsc(m.name)}</a>`).join(' → ')}</p>`;
+    });
+    h+='</details><nav class="learn-stage-links" aria-label="阶段快速定位">'+LD.stages.map((s,i)=>`<button class="card-btn" type="button" onclick="_jumpToEl('learn-stage-${i}')">${learnEsc(s.title)}</button>`).join('')+'</nav>';
+    LD.stages.forEach((stage,i)=>{
+        h+=`<section class="learn-home-stage" id="learn-stage-${i}"><h2>${learnEsc(stage.title)}</h2><p class="learn-note">${learnEsc(stage.description||stage.subtitle||'')}</p><div class="learn-home-grid">`;
+        (stage.modules||[]).forEach(m=>{
+            const id=canonicalLearnId(m.id||learnAlias(m.name)),st=learnStatus(progress[id],learnTotal(id,progress[id]));
+            h+=`<article class="learn-home-card"><h3><a href="${learnPath(id)}" data-spa="1">${learnEsc(m.name)}</a></h3><p>${learnEsc(m.description||'')}</p><div class="learn-note">${st.total?st.total+' 章':'章数待加载'} · ${learnEsc(st.label)} · ${st.pct}%</div><progress value="${st.pct}" max="100" aria-label="${learnEsc(m.name)}完成进度">${st.pct}%</progress><a class="card-btn" href="${learnPath(id)}" data-spa="1">查看模块大纲</a></article>`;
+        });
+        h+='</div></section>';
+    });
+    const body=document.getElementById('learnDetail');
+    body.innerHTML=h;
+    body.setAttribute('aria-busy','false');
+}
+let _currentLearnSec=null;
 
 // Learn module ID mapping (中文名 → 英文文件名)
 const learnFileMap={
@@ -1503,51 +1600,169 @@ const learnFileMap={
 
 // === LEARNING PROGRESS ===
 const LP_KEY='eai_learn_progress';
-function getProgress(){try{return JSON.parse(localStorage.getItem(LP_KEY))||{}}catch(e){return{}}}
-function saveProgress(p){localStorage.setItem(LP_KEY,JSON.stringify(p))}
-function trackModuleVisit(modId, totalSections){
-    const p=getProgress();
-    if(!p[modId])p[modId]={visits:0,sections:[],firstVisit:Date.now(),lastVisit:0};
-    p[modId].visits++;
-    p[modId].lastVisit=Date.now();
-    if(totalSections)p[modId].totalSections=totalSections;
-    saveProgress(p);
+function learnEsc(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function learnAlias(name){return String(name||'').replace(/[\s\/()]/g,'-').toLowerCase();}
+function canonicalLearnId(value){
+    const raw=String(value||'').trim();
+    const alias=learnAlias(raw);
+    const mapped=Object.prototype.hasOwnProperty.call(learnFileMap,alias)?learnFileMap[alias]:null;
+    for(const stage of LD?.stages||[]){
+        for(const m of stage.modules||[]){
+            const old=learnAlias(m.name);
+            const oldId=Object.prototype.hasOwnProperty.call(learnFileMap,old)?learnFileMap[old]:old;
+            if(raw===m.id||alias===old||raw===oldId||mapped===oldId)return m.id||oldId;
+        }
+    }
+    return mapped||raw;
 }
-function trackSectionVisit(modId, secIdx){
-    const p=getProgress();
-    if(!p[modId])p[modId]={visits:1,sections:[],firstVisit:Date.now(),lastVisit:Date.now()};
-    if(!p[modId].sections.includes(secIdx))p[modId].sections.push(secIdx);
-    p[modId].lastVisit=Date.now();
-    saveProgress(p);
+function learnPath(modId,secIdx){
+    return '/learn/'+encodeURIComponent(canonicalLearnId(modId))+(Number.isInteger(secIdx)&&secIdx>=0?'/'+(secIdx+1):'');
 }
-function getModuleStatus(modId, totalSections){
-    const p=getProgress();
-    const m=p[modId];
-    if(!m||m.visits===0)return{status:'new',label:'未学习',pct:0,visits:0,cls:'status-new'};
-    const sectionsRead=(m.sections||[]).length;
-    const pct=totalSections>0?Math.round(sectionsRead/totalSections*100):0;
-    if(pct>=100&&m.visits>1)return{status:'review',label:`复习 ${m.visits} 次`,pct:100,visits:m.visits,cls:'status-review'};
-    if(pct>=100)return{status:'done',label:'已完成',pct:100,visits:m.visits,cls:'status-done'};
-    if(sectionsRead>0)return{status:'learning',label:`${sectionsRead}/${totalSections} 章`,pct,visits:m.visits,cls:'status-learning'};
-    return{status:'visited',label:'已开始',pct:5,visits:m.visits,cls:'status-learning'};
+function getLearnMeta(modId){
+    const id=canonicalLearnId(modId);
+    for(const stage of LD?.stages||[]){
+        const m=(stage.modules||[]).find(m=>canonicalLearnId(m.id||learnAlias(m.name))===id);
+        if(m)return m;
+    }
+    return null;
 }
-// 章节重排后旧进度索引失效 —— 一次性迁移：清空章节已读集合，保留访问统计
-const LOV_KEY='eai_learn_order_v';
-function _checkLearnOrderReset(){
+function learnStrings(value){return (Array.isArray(value)?value:[value]).filter(v=>typeof v==='string'&&v.trim());}
+function readingMinutes(item){
+    const value=item?.readingMinutes??item?.estimatedMinutes;
+    return Number.isFinite(Number(value))&&Number(value)>0?Math.ceil(Number(value)):0;
+}
+function learnTotal(modId,record){
+    const id=canonicalLearnId(modId);
+    const meta=getLearnMeta(id);
+    const declared=Number(meta?.sectionCount);
+    if(Number.isSafeInteger(declared)&&declared>0)return declared;
+    if(Array.isArray(learnCache[id]?.sections))return learnCache[id].sections.length;
+    const saved=Number(record?.totalSections);
+    return Number.isSafeInteger(saved)&&saved>0?saved:0;
+}
+function mergeLearnProgress(sources,strict=false){
+    const out=Object.create(null);
+    const validIndex=n=>Number.isSafeInteger(n)&&n>=0;
+    const indices=a=>[...new Set(Array.isArray(a)?a.filter(validIndex):[])].sort((a,b)=>a-b);
+    const timestamp=t=>typeof t==='number'&&Number.isFinite(t)&&t>0?t:0;
+    for(const source of sources){
+        if(!source||typeof source!=='object'||Array.isArray(source)){if(strict)throw new Error('进度格式无效');continue;}
+        for(const [key,r] of Object.entries(source)){
+            if(!key||['__proto__','prototype','constructor'].includes(key)||!r||typeof r!=='object'||Array.isArray(r)){
+                if(strict)throw new Error('模块记录无效');continue;
+            }
+            if(strict){
+                if(!['sections','visits','visitedSections','lastVisit'].some(k=>Object.prototype.hasOwnProperty.call(r,k)))throw new Error('缺少学习记录');
+                for(const k of ['sections','visitedSections'])if(r[k]!==undefined&&(!Array.isArray(r[k])||r[k].some(n=>!validIndex(n))))throw new Error('章节记录无效');
+                for(const k of ['visits','totalSections','firstVisit','lastVisit'])if(r[k]!==undefined&&(!Number.isSafeInteger(r[k])||r[k]<0))throw new Error('统计记录无效');
+                if(r.lastSection!=null&&!validIndex(r.lastSection))throw new Error('续读章节无效');
+            }
+            const id=canonicalLearnId(key);
+            if(!id||['__proto__','prototype','constructor'].includes(id))continue;
+            const sections=indices(r.sections);
+            const visited=indices(r.visitedSections);
+            const next={sections,visitedSections:visited,visits:Number.isSafeInteger(r.visits)&&r.visits>0?r.visits:0,
+                firstVisit:timestamp(r.firstVisit),lastVisit:timestamp(r.lastVisit),
+                lastSection:validIndex(r.lastSection)?r.lastSection:null,
+                totalSections:Number.isSafeInteger(r.totalSections)&&r.totalSections>0?r.totalSections:0};
+            const prev=out[id];
+            if(!prev){out[id]=next;continue;}
+            const latest=next.lastVisit>=prev.lastVisit?next:prev;
+            out[id]={sections:indices([...prev.sections,...next.sections]),visitedSections:indices([...prev.visitedSections,...next.visitedSections]),
+                visits:Math.max(prev.visits,next.visits),firstVisit:Math.min(...[prev.firstVisit,next.firstVisit].filter(Boolean))||0,
+                lastVisit:Math.max(prev.lastVisit,next.lastVisit),lastSection:latest.lastSection,
+                totalSections:latest.totalSections||Math.max(prev.totalSections,next.totalSections)};
+            if(!Number.isFinite(out[id].firstVisit))out[id].firstVisit=0;
+        }
+    }
+    return out;
+}
+let _progressMemory=Object.create(null);
+let _progressVolatile=false;
+function getProgress(){
+    if(_progressVolatile)return mergeLearnProgress([_progressMemory]);
+    try{return mergeLearnProgress([JSON.parse(localStorage.getItem(LP_KEY)||'{}')]);}
+    catch(e){return mergeLearnProgress([_progressMemory]);}
+}
+function saveProgress(p){
+    _progressMemory=mergeLearnProgress([p]);
     try{
-        if(localStorage.getItem(LOV_KEY)==='2')return;
-        const p=getProgress();
-        const had=Object.keys(p).length>0;
-        if(had){Object.values(p).forEach(m=>{m.sections=[]});saveProgress(p);}
-        localStorage.setItem(LOV_KEY,'2');
-        if(!had)return;
-        const box=document.getElementById('learnOrderNotice');
-        if(box)box.style.display='block';
-    }catch(e){}
+        localStorage.setItem(LP_KEY,JSON.stringify(_progressMemory));
+        _progressVolatile=false;
+        const notice=document.getElementById('learnStorageNotice');
+        if(notice)notice.hidden=true;
+        return true;
+    }catch(e){
+        _progressVolatile=true;
+        const notice=document.getElementById('learnStorageNotice');
+        if(notice){notice.hidden=false;notice.textContent='浏览器无法保存进度，本次会话仍可使用。离开前请导出进度码。';}
+        return false;
+    }
 }
-function dismissLearnOrderNotice(){
-    const b=document.getElementById('learnOrderNotice');
-    if(b)b.style.display='none';
+function trackModuleVisit(modId,totalSections){
+    const id=canonicalLearnId(modId),p=getProgress(),now=Date.now();
+    const r=p[id]||(p[id]={visits:0,sections:[],visitedSections:[],firstVisit:now,lastSection:null});
+    r.visits++;
+    r.firstVisit=r.firstVisit||now;
+    // 大纲访问不覆盖续读时间，否则首页可能把仅打开的大纲误认为最近阅读。
+    if(!r.lastVisit)r.lastVisit=now;
+    if(totalSections>0)r.totalSections=totalSections;
+    saveProgress(p);
+}
+function trackSectionVisit(modId,secIdx){
+    if(!Number.isSafeInteger(secIdx)||secIdx<0)return;
+    const id=canonicalLearnId(modId),p=getProgress(),now=Date.now();
+    const r=p[id]||(p[id]={visits:1,sections:[],visitedSections:[],firstVisit:now});
+    r.visitedSections=[...new Set([...(r.visitedSections||[]),secIdx])];
+    r.lastSection=secIdx;
+    r.firstVisit=r.firstVisit||now;
+    r.lastVisit=now;
+    r.totalSections=learnTotal(id,r);
+    saveProgress(p);
+}
+function learnStatus(record,totalSections){
+    const total=Number.isSafeInteger(totalSections)&&totalSections>0?totalSections:0;
+    const completed=new Set((record?.sections||[]).filter(i=>Number.isSafeInteger(i)&&i>=0&&(!total||i<total))).size;
+    const done=total>0&&completed===total;
+    const pct=done?100:total?Math.min(99,Math.max(0,Math.floor(completed/total*100))):0;
+    const started=!!(record&&(record.visits||record.lastVisit||completed||record.visitedSections?.length));
+    return {status:done?'done':started?'learning':'new',label:done?'已完成':completed?`已完成 ${completed}/${total||'?'} 章`:started?'已开始 · 尚未标记完成':'未学习',
+        pct,completed,total,visits:record?.visits||0,cls:done?'status-done':started?'status-learning':'status-new'};
+}
+function getModuleStatus(modId,totalSections){
+    const id=canonicalLearnId(modId),r=getProgress()[id];
+    return learnStatus(r,learnTotal(id,r)||totalSections);
+}
+function resumeLearnSection(modId,record,total){
+    const r=record||getProgress()[canonicalLearnId(modId)];
+    return Number.isInteger(r?.lastSection)&&r.lastSection>=0&&(!total||r.lastSection<total)?r.lastSection:0;
+}
+function toggleSectionComplete(modId,secIdx){
+    const id=canonicalLearnId(modId);
+    if(_currentLearnMod!==id||_currentLearnSec!==secIdx||!learnCache[id]?.sections?.[secIdx])return;
+    const p=getProgress();
+    const r=p[id]||(p[id]={visits:1,sections:[],visitedSections:[secIdx],firstVisit:Date.now(),lastVisit:Date.now(),lastSection:secIdx,totalSections:learnTotal(id)});
+    r.sections=r.sections.includes(secIdx)?r.sections.filter(i=>i!==secIdx):[...r.sections,secIdx];
+    saveProgress(p);
+    refreshLearnProgress();
+}
+function refreshLearnProgress(){
+    renderLearn();
+    if(!document.getElementById('pg-learn').classList.contains('active'))return;
+    if(!_currentLearnMod)renderLearnHome();
+    else if(_currentLearnSec==null&&learnCache[_currentLearnMod])_renderModuleOverview(_currentLearnMod,learnCache[_currentLearnMod],{skipScroll:true});
+    else{
+        const done=getProgress()[_currentLearnMod]?.sections.includes(_currentLearnSec);
+        const status=document.getElementById('secCompletionStatus');
+        if(status)status.textContent=done?'本章已完成':'本章未完成 · 浏览不会自动标记学完';
+        const button=document.getElementById('secCompleteButton');
+        if(button){button.textContent=done?'取消完成':'标记学完';button.setAttribute('aria-pressed',String(!!done));}
+    }
+}
+// 保留旧函数入口；不重排章节、不清空 sections，重复执行也不会丢失记录。
+function _checkLearnOrderReset(){
+    const p=getProgress();
+    if(Object.keys(p).length)saveProgress(p);
 }
 function timeAgo(ts){
     if(!ts)return'';
@@ -1604,20 +1819,11 @@ function doImport(){
     try{
         const json=decodeURIComponent(escape(atob(code)));
         const data=JSON.parse(json);
-        // 合并进度（保留更高的访问次数和更多的已读章节）
-        const current=getProgress();
-        Object.keys(data).forEach(k=>{
-            if(!current[k]){current[k]=data[k];return}
-            current[k].visits=Math.max(current[k].visits||0,data[k].visits||0);
-            const mergedSecs=new Set([...(current[k].sections||[]),...(data[k].sections||[])]);
-            current[k].sections=[...mergedSecs];
-            current[k].lastVisit=Math.max(current[k].lastVisit||0,data[k].lastVisit||0);
-            current[k].firstVisit=Math.min(current[k].firstVisit||Infinity,data[k].firstVisit||Infinity);
-        });
-        saveProgress(current);
-        renderLearn();
-        msg.innerHTML='<span style="color:var(--sl)">✓ 导入成功！已合并 '+Object.keys(data).length+' 个模块的进度</span>';
-        setTimeout(()=>document.querySelector('div[style*=fixed]:last-of-type')?.remove(),1500);
+        const imported=mergeLearnProgress([data],true);
+        if(!Object.keys(imported).length)throw new Error('进度记录为空');
+        const stored=saveProgress(mergeLearnProgress([getProgress(),imported]));
+        refreshLearnProgress();
+        msg.textContent='已合并 '+Object.keys(imported).length+' 个模块的进度。'+(stored?'已保存。':'仅保留在本次会话，请重新导出备份。');
     }catch(e){
         msg.innerHTML='<span style="color:#f87171">✗ 进度码无效，请检查是否完整粘贴</span>';
     }
@@ -1625,132 +1831,89 @@ function doImport(){
 
 function resetProgress(){
     if(!confirm('确定要清除所有学习记录吗？此操作不可恢复。'))return;
-    localStorage.removeItem(LP_KEY);
-    renderLearn();
+    saveProgress({});
+    refreshLearnProgress();
 }
-const learnCache={};
+const learnCache=Object.create(null);
 
 // 获取学习路径中所有模块的有序列表
 function getAllModuleIds(){
     if(!LD||!LD.stages)return[];
     const list=[];
-    LD.stages.forEach(s=>s.modules.forEach(m=>{
-        const id=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
-        list.push({id,name:m.name});
+    LD.stages.forEach(s=>(s.modules||[]).forEach(m=>{
+        const id=canonicalLearnId(m.id||learnAlias(m.name));
+        if(!list.some(item=>item.id===id))list.push({id,name:m.name});
     }));
     return list;
 }
 // 获取当前模块的下一个模块
 function getNextModule(currentModId){
     const all=getAllModuleIds();
-    const idx=all.findIndex(m=>m.id===currentModId);
+    const idx=all.findIndex(m=>m.id===canonicalLearnId(currentModId));
     return idx>=0&&idx<all.length-1?all[idx+1]:null;
 }
 // 获取当前模块的上一个模块
 function getPrevModule(currentModId){
     const all=getAllModuleIds();
-    const idx=all.findIndex(m=>m.id===currentModId);
+    const idx=all.findIndex(m=>m.id===canonicalLearnId(currentModId));
     return idx>0?all[idx-1]:null;
 }
-async function openLearnModule(modId, el, opts){
+async function openLearnModule(modId,el,opts){
     opts=opts||{};
-    // 切换到新模块（包括深链接 / 路由调入）时默认展开章节列表
-    if(_currentLearnMod!==modId)_modSecsCollapsed=false;
-    // 确保当前 page 切到 learn（从首页/术语表/资讯链接调入时必要）
-    const curPage=document.querySelector('.page.active');
-    if(!curPage||curPage.id!=='pg-learn'){
-        go('learn',{fromRouter:true,skipScroll:true});
-    }
-    // 后台静默预热搜索索引（异步，不阻塞渲染）
-    if(typeof buildLearnSearchIndex==='function')setTimeout(buildLearnSearchIndex,200);
-    const body=document.getElementById('learnDetail');
-    body.innerHTML='<div style="text-align:center;color:var(--t3);padding:60px">⏳ 加载学习内容...</div>';
-
-    // 同步 URL（push 一条新 history）
-    if(!opts.fromRouter){
-        const newPath='/learn/'+encodeURIComponent(modId);
-        _pushOrReplaceState(newPath, false);
-    }
-    // SEO meta（先用模块 id 作为占位，后面拿到 d.name 后再更新一次）
-    updatePageMeta('learn', modId, opts.initialSec);
-
-    // Update sidebar active state
+    if(!document.getElementById('pg-learn').classList.contains('active'))go('learn',{fromRouter:true,skipScroll:true,learnTransition:true});
+    const token=opts.token??++_learnRequestId;
+    if(token!==_learnRequestId)return;
+    const requestedId=modId;
+    modId=canonicalLearnId(modId);
+    const wantSec=typeof opts.initialSec==='number'?opts.initialSec:null;
+    const changedModule=_currentLearnMod!==modId;
+    if(changedModule)_modSecsCollapsed=false;
     _currentLearnMod=modId;
-    document.querySelectorAll('.ls-mod').forEach(m=>m.classList.toggle('active',m.dataset.mod===modId));
-    // Expand parent stage if collapsed
-    const activeMod=document.querySelector(`.ls-mod[data-mod="${modId}"]`);
-    if(activeMod){
-        const stage=activeMod.closest('.ls-stage');
-        if(stage?.classList.contains('collapsed')){
-            stage.classList.remove('collapsed');
-            // 同步状态记录，避免下次 renderLearn 时被打回 collapsed
-            const stages=Array.from(document.querySelectorAll('.ls-stage'));
-            const si=stages.indexOf(stage);
-            if(si>=0)_stageCollapsed[si]=false;
-        }
-    }
-
-    // === 加载 _index.json（仅元信息，~4KB）===
-    const fileId=learnFileMap[modId]||modId;
-    if(!learnCache[modId]){
-        // 优先尝试拆分版（学习中心 B 方案）
-        let idx=await loadJ(`data/learn-split/${fileId}/_index.json`);
-        if(idx){
-            // 注入 sections 占位（lazy load）
-            idx.sections=(idx.sectionsMeta||[]).map(m=>({
-                title:m.title,
-                shortTitle:m.shortTitle||'',
-                lastUpdated:m.lastUpdated||'',
-                difficulty:m.difficulty||'',
-                tier:(m.tier==null?1:m.tier),
-                estimatedMinutes:m.estimatedMinutes||0,
-                chars:m.chars||0,
-                isFrontier:!!m.isFrontier,
-                isBrief:!!m.isBrief,
-                content:null,        // 占位：未加载
-                _secId:m.id,         // sec-01 ...
-                _modFileId:fileId,
-                _chars:m.chars||0
-            }));
-            learnCache[modId]=idx;
-        }else{
-            // 兼容旧整文件
-            const data=await loadJ(`data/learn/${fileId}.json`);
-            if(data)learnCache[modId]=data;
-        }
-    }
-    const d=learnCache[modId];
-
-    // Track module open
-    const totalSec=d?d.sections?.length||0:0;
-    trackModuleVisit(modId, totalSec);
-    if(!d){
-        let mod=null;
-        LD.stages.forEach(s=>s.modules.forEach(m=>{
-            const mid=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
-            if(mid===modId)mod=m;
-        }));
-        if(mod){
-            const topics=(mod.topics||[]).map(t=>{
-                if(typeof t==='object'&&t.title)return `<li><strong>${t.title}</strong><br><span style="color:var(--t2)">${t.detail||''}</span></li>`;
-                return `<li>${t}</li>`;
-            }).join('');
-            body.innerHTML=`<h2>${mod.name}</h2><p style="color:var(--t2);margin:8px 0 20px">${mod.description}</p><div class="md-section"><div class="md-label">📚 知识点详解</div><ul class="md-list">${topics}</ul></div><div class="md-section"><div class="md-label">🎯 怎么学</div><div class="md-text">${mod.howTo||''}</div></div><div class="md-section"><div class="md-label">📅 学习计划</div><div class="md-text">${mod.weeklyPlan||''}</div></div><div class="md-section"><div class="md-label">📖 推荐资源</div><ul class="md-list">${(mod.resources||[]).map(r=>'<li>'+r+'</li>').join('')}</ul></div>`;
-        }else{
-            body.innerHTML='<p style="color:var(--t3)">内容开发中，敬请期待...</p>';
-        }
-        return;
-    }
-
-    // === Render ===
-    // initialSec 为 null/undefined（即路由只有 /learn/<mod>）时先展示模块总览页
-    const wantSec=(typeof opts.initialSec==='number'&&opts.initialSec>=0)?opts.initialSec:null;
     _currentLearnSec=wantSec;
-    renderLearn(); // 刷新 sidebar 展开章节列表
-    if(wantSec==null){
-        await _renderModuleOverview(modId, d, opts);
-    }else{
-        await _renderCurrentSection(modId, wantSec, d, opts);
+    toggleLearnNavigation(false);
+    learnSearchClear();
+    const body=document.getElementById('learnDetail');
+    body.innerHTML='<p role="status">正在加载学习内容...</p>';
+    body.setAttribute('aria-busy','true');
+    if(!opts.fromRouter)_pushOrReplaceState(learnPath(modId,wantSec),!!opts.replace);
+    renderLearn();
+    updatePageMeta('learn',modId,wantSec);
+    try{
+        await waitForLD();
+        if(!isCurrentLearnRequest(token))return;
+        modId=canonicalLearnId(requestedId);
+        _currentLearnMod=modId;
+        if(!/^[a-z0-9][a-z0-9-]*$/.test(modId)){showLearnError('未找到此学习模块');return;}
+        if(modId!==requestedId){
+            // 仅规范模块 ID；旧链接的数字章节编号和查询参数原样保留。
+            const suffix=location.pathname.split('/').filter(Boolean).slice(2).join('/');
+            history.replaceState({},'',learnPath(modId)+(suffix?'/'+suffix:'')+location.search);
+        }
+        LD.stages.forEach((s,i)=>{if((s.modules||[]).some(m=>canonicalLearnId(m.id||learnAlias(m.name))===modId))_stageCollapsed[i]=false;});
+        if(!learnCache[modId]){
+            let data;
+            try{
+                const idx=await loadLearnJSON(`data/learn-split/${modId}/_index.json`);
+                if(!isCurrentLearnRequest(token,modId,wantSec))return;
+                if(!Array.isArray(idx?.sectionsMeta))throw new Error('模块大纲无效');
+                data={...idx,id:modId,sections:idx.sectionsMeta.map(m=>({...m,content:null,_secId:m.id,_modFileId:modId}))};
+            }catch(e){
+                if(!isCurrentLearnRequest(token,modId,wantSec))return;
+                data=await loadLearnJSON(`data/learn/${modId}.json`);
+                if(!isCurrentLearnRequest(token,modId,wantSec))return;
+                if(!Array.isArray(data?.sections))throw new Error('模块内容无效');
+            }
+            learnCache[modId]=data;
+        }
+        if(!isCurrentLearnRequest(token,modId,wantSec))return;
+        const d=learnCache[modId];
+        if(changedModule||wantSec==null)trackModuleVisit(modId,d.sections.length);
+        renderLearn();
+        const renderOpts={...opts,token};
+        if(wantSec==null)_renderModuleOverview(modId,d,renderOpts);
+        else await _renderCurrentSection(modId,wantSec,d,renderOpts);
+    }catch(e){
+        if(isCurrentLearnRequest(token))showLearnError('学习内容加载失败',modId);
     }
 }
 
@@ -1770,14 +1933,23 @@ function _fmtChars(n){
     if(!n)return '';
     return n>=10000?(n/10000).toFixed(1)+'万字':Math.round(n/1000)+'k字';
 }
-async function _renderModuleOverview(modId, d, opts){
+let _learnOutlineFilter='all';
+function filterLearnOutline(value){
+    if(!['all','main','frontier'].includes(value))return;
+    _learnOutlineFilter=value;
+    if(_currentLearnSec==null&&learnCache[_currentLearnMod])_renderModuleOverview(_currentLearnMod,learnCache[_currentLearnMod],{skipScroll:true});
+}
+function _renderModuleOverview(modId, d, opts){
     opts=opts||{};
+    if(!isCurrentLearnRequest(opts.token??_learnRequestId,modId,null))return;
     const body=document.getElementById('learnDetail');
     const secs=d.sections||[];
+    const meta=getLearnMeta(modId)||{};
     const prog=getProgress()[modId];
-    const read=new Set(prog&&prog.sections||[]);
-    const totalMin=secs.reduce((a,s)=>a+(s.estimatedMinutes||0),0);
-    const totalChars=secs.reduce((a,s)=>a+(s.chars||0),0);
+    const read=new Set((prog?.sections||[]).filter(i=>i<secs.length));
+    const status=getModuleStatus(modId);
+    const totalMin=readingMinutes(d)||readingMinutes(meta)||secs.reduce((a,s)=>a+readingMinutes(s),0);
+    const totalChars=Number(d.chars)||Number(meta.chars)||secs.reduce((a,s)=>a+(Number(s.chars)||0),0);
     const dc={};
     secs.forEach(s=>{dc[s.difficulty||'中级']=(dc[s.difficulty||'中级']||0)+1});
     const lastUpd=secs.map(s=>s.lastUpdated).filter(Boolean).sort().pop();
@@ -1791,37 +1963,44 @@ async function _renderModuleOverview(modId, d, opts){
     if(d.description)h+=`<div class="lm-desc">${d.description}</div>`;
 
     h+=`<div class="lm-meta">`;
-    h+=`<span class="lm-chip">📑 <b>${secs.length}</b> 章</span>`;
-    h+=`<span class="lm-chip">⏱ <b>${(totalMin/60).toFixed(1)}</b> 小时</span>`;
-    h+=`<span class="lm-chip">📝 <b>${(totalChars/10000).toFixed(1)}</b> 万字</span>`;
-    h+=`<span class="lm-chip">🎯 ${Object.entries(dc).sort().map(([k,v])=>`${k} ${v}`).join(' / ')}</span>`;
-    if(d.estimatedHours)h+=`<span class="lm-chip">建议 <b>${d.estimatedHours}</b> 学时</span>`;
+    h+=`<span class="lm-chip"><b>${secs.length}</b> 章</span>`;
+    h+=`<span class="lm-chip">正文浏览估算：${totalMin?'约 '+totalMin+' 分钟':'待补充'}</span>`;
+    if(totalChars)h+=`<span class="lm-chip">${_fmtChars(totalChars)}</span>`;
+    h+=`<span class="lm-chip">${['入门','中级','高级'].filter(k=>dc[k]).map(k=>`${k} ${dc[k]}`).join(' / ')}</span>`;
+    if(d.estimatedHours||meta.estimatedHours)h+=`<span class="lm-chip">含练习的建议投入：<b>${learnEsc(d.estimatedHours||meta.estimatedHours)}</b> 小时</span>`;
     if(lastUpd)h+=`<span class="lm-chip">更新 ${String(lastUpd).slice(0,10)}</span>`;
     h+=`</div>`;
 
-    // 行动按钮：有进度时"继续学习"，否则"开始学习"
-    const nextIdx=secs.findIndex((s,i)=>!read.has(i));
-    const resumeIdx=nextIdx<0?0:nextIdx;
-    h+=`<div class="lm-actions">`;
-    h+=`<button class="lm-btn" onclick="switchToSection('${modId}',${resumeIdx})">${read.size?'继续学习 · 第 '+(resumeIdx+1)+' 章':'开始学习 →'}</button>`;
-    if(read.size){
-        const pct=Math.round(read.size/secs.length*100);
-        h+=`<button class="lm-btn ghost" onclick="openLearnModule('${modId}')">已读 ${read.size}/${secs.length} 章 · ${pct}%</button>`;
-    }
-    h+=`</div>`;
+    h+='<p class="learn-note">浏览估算仅用于安排阅读，不含练习、调试与复盘，不代表掌握程度；建议投入包含这些实践活动。</p>';
+    const resumeIdx=resumeLearnSection(modId,prog,secs.length);
+    h+='<div class="lm-actions">';
+    if(secs.length)h+=`<a class="lm-btn" data-spa="1" href="${learnPath(modId,resumeIdx)}">${Number.isInteger(prog?.lastSection)?'继续学习 · 第 '+(resumeIdx+1)+' 章':'开始学习'}</a>`;
+    h+=`<span class="learn-note">已完成 ${status.completed}/${status.total||secs.length} 章 · ${status.pct}%</span></div>`;
+    const objectives=learnStrings(d.learningObjectives||meta.learningObjectives);
+    const guide=learnStrings(d.studyGuide||meta.studyGuide);
+    if(objectives.length)h+=`<section class="lm-block"><h2 class="lm-block-h">学习目标</h2><ul class="md-list">${objectives.map(t=>'<li>'+learnEsc(t)+'</li>').join('')}</ul></section>`;
+    if(guide.length)h+=`<section class="lm-block"><h2 class="lm-block-h">学习方法</h2><ol>${guide.map(t=>'<li>'+renderMd(t)+'</li>').join('')}</ol></section>`;
+    else if(meta.howTo)h+=`<section class="lm-block"><h2 class="lm-block-h">学习方法</h2><div class="md-text">${renderMd(String(meta.howTo))}</div></section>`;
 
-    // 前置要求
-    const pre=d.prerequisites||[];
+    // 前置要求允许单个字符串或字符串数组。
+    const pre=learnStrings(d.prerequisites||meta.prerequisites);
     if(pre.length){
         h+=`<div class="lm-block"><div class="lm-block-h">前置要求</div><div class="lm-prereq">`;
-        pre.forEach(p=>{h+=`<span>${p}</span>`});
+        pre.forEach(p=>{h+=`<span>${renderMd(p)}</span>`});
         h+=`</div></div>`;
     }
 
     // 按 tier 分组的章节大纲
-    h+=`<div class="lm-block"><div class="lm-block-h">章节大纲</div>`;
+    h+=`<div class="lm-block"><h2 class="lm-block-h">章节大纲</h2><div class="filters" aria-label="章节范围">`;
+    [['all','全部'],['main','基础与主线'],['frontier','前沿']].forEach(([value,label])=>{
+        h+=`<button class="fbtn${_learnOutlineFilter===value?' active':''}" type="button" aria-pressed="${_learnOutlineFilter===value}" onclick="filterLearnOutline('${value}')">${learnEsc(label)}</button>`;
+    });
+    h+='</div><p class="learn-note">筛选仅改变显示范围，章节编号和完成进度不变。</p>';
+    let visible=0;
     TIER_DEF.forEach(td=>{
-        const group=secs.map((s,i)=>({s,i})).filter(x=>(x.s.tier==null?1:x.s.tier)===td.t);
+        if(_learnOutlineFilter==='main'&&td.t>=3||_learnOutlineFilter==='frontier'&&td.t<3)return;
+        const group=secs.map((s,i)=>({s,i})).filter(x=>(x.s.tier==null?1:Math.min(3,Math.max(0,Number(x.s.tier)||0)))===td.t);
+        visible+=group.length;
         if(!group.length)return;
         h+=`<div class="lm-tier"><div class="lm-tier-h">`;
         h+=`<span class="lm-tier-dot" style="background:${td.color}"></span>`;
@@ -1829,18 +2008,20 @@ async function _renderModuleOverview(modId, d, opts){
         h+=`<span class="lm-tier-n">${group.length} 章 · ${td.desc}</span>`;
         h+=`<span class="lm-tier-line"></span></div><div class="lm-ol">`;
         group.forEach(({s,i})=>{
-            h+=`<div class="lm-card${read.has(i)?' read':''}" onclick="switchToSection('${modId}',${i})">`;
+            h+=`<a class="lm-card${read.has(i)?' read':''}" data-spa="1" href="${learnPath(modId,i)}">`;
             h+=`<span class="lm-card-idx">${String(i+1).padStart(2,'0')}</span>`;
-            h+=`<div class="lm-card-main"><div class="lm-card-t">${s.title}</div><div class="lm-card-m">`;
+            h+=`<div class="lm-card-main"><div class="lm-card-t">${learnEsc(s.title)}</div><div class="lm-card-m">`;
             h+=_diffSpan(s);
-            if(s.estimatedMinutes)h+=`<span>${s.estimatedMinutes} 分钟</span>`;
+            h+=`<span>${readingMinutes(s)?'浏览约 '+readingMinutes(s)+' 分钟':'浏览估算待补充'}</span>`;
+            if(read.has(i))h+='<span>已完成</span>';
             if(s.chars)h+=`<span>${_fmtChars(s.chars)}</span>`;
             if(s.isFrontier)h+=`<span class="lm-tag frontier">前沿</span>`;
             else if(s.isBrief)h+=`<span class="lm-tag brief">速览</span>`;
-            h+=`</div></div></div>`;
+            h+=`</div></div></a>`;
         });
         h+=`</div></div>`;
     });
+    if(!visible)h+='<p class="learn-note">当前筛选下暂无章节，请切换为全部。</p>';
     h+=`</div>`;
 
     // 学习计划
@@ -1861,43 +2042,48 @@ async function _renderModuleOverview(modId, d, opts){
     }
 
     body.innerHTML=h;
-    body.scrollTop=0;
-    window.scrollTo({top:0,behavior:'smooth'});
-    if(!opts.fromRouter){
-        _pushOrReplaceState('/learn/'+encodeURIComponent(modId), false);
-    }
-    updatePageMeta('learn', modId);
+    body.setAttribute('aria-busy','false');
+    if(!opts.skipScroll){body.scrollTop=0;window.scrollTo({top:0,behavior:'smooth'});}
+    updatePageMeta('learn',modId);
 }
 
 // 渲染单个章节到内容区（单章节模式）
 async function _renderCurrentSection(modId, secIdx, d, opts){
     opts=opts||{};
+    const token=opts.token??_learnRequestId;
+    if(!isCurrentLearnRequest(token,modId,secIdx))return;
     const body=document.getElementById('learnDetail');
-    if(!d||!d.sections||!d.sections[secIdx]){
-        body.innerHTML='<p style="color:var(--t3)">内容加载中...</p>';
+    if(!Number.isInteger(secIdx)||secIdx<0||!d?.sections?.[secIdx]){
+        showLearnError('未找到指定章节',modId);
         return;
     }
     const sec=d.sections[secIdx];
     const secLen=d.sections.length;
     const nextMod=getNextModule(modId);
 
-    // 加载内容
-    if(sec.content==null && sec._secId && sec._modFileId){
-        const sd=await loadJ(`data/learn-split/${sec._modFileId}/${sec._secId}.json`);
-        if(sd){sec.content=sd.content||'';sec.lastUpdated=sec.lastUpdated||sd.lastUpdated||'';}
-        else{sec.content='*章节内容加载失败*';}
+    // 失败不写入正文缓存；返回时必须仍是同一次模块/章节请求。
+    if(sec.content==null&&sec._secId&&sec._modFileId){
+        const sd=await loadLearnJSON(`data/learn-split/${sec._modFileId}/${encodeURIComponent(sec._secId)}.json`);
+        if(!isCurrentLearnRequest(token,modId,secIdx))return;
+        if(typeof sd?.content!=='string')throw new Error('章节正文无效');
+        sec.content=sd.content;
+        sec.lastUpdated=sec.lastUpdated||sd.lastUpdated||'';
     }
+    if(typeof sec.content!=='string')throw new Error('章节正文缺失');
+    if(!isCurrentLearnRequest(token,modId,secIdx))return;
 
     // 构建 HTML
     let h='';
     // 面包屑 + 返回大纲
     h+=`<div style="font-size:.78rem;color:var(--t3);margin-bottom:10px">${d.stage||''} · ${d.name} · <span style="color:var(--t2)">${String(secIdx+1).padStart(2,'0')}/${secLen}</span></div>`;
-    h+=`<div class="sec-back" onclick="openLearnModule('${modId}')">← 模块大纲</div>`;
+    h+=`<nav class="learn-reader-tools" aria-label="阅读导航"><a class="card-btn" data-spa="1" href="${learnPath(modId)}">模块大纲</a><button class="card-btn" type="button" onclick="returnToSecToc()">本章目录</button><button class="card-btn learn-mobile-nav" type="button" onclick="toggleLearnNavigation(true);_jumpToEl('learnSidebar')">课程导航</button></nav>`;
     // 章节标题
-    h+=`<h1 style="font-size:1.6rem;font-weight:700;margin-bottom:18px;letter-spacing:-.02em;line-height:1.3">${sec.title}</h1>`;
+    h+=`<h1 style="font-size:1.6rem;font-weight:700;margin-bottom:18px;letter-spacing:-.02em;line-height:1.3">${learnEsc(sec.title)}</h1>`;
+    const completed=!!getProgress()[modId]?.sections.includes(secIdx);
+    h+=`<p class="learn-note" id="secCompletionStatus" role="status">${completed?'本章已完成':'本章未完成 · 浏览不会自动标记学完'}</p>`;
     // 章节元信息条
     h+=`<div class="lm-card-m" style="margin-bottom:20px">${_diffSpan(sec)}`;
-    if(sec.estimatedMinutes)h+=`<span class="lm-chip">⏱ ${sec.estimatedMinutes} 分钟</span>`;
+    h+=`<span class="lm-chip">${readingMinutes(sec)?'浏览约 '+readingMinutes(sec)+' 分钟':'浏览估算待补充'}（不含练习）</span>`;
     if(sec.chars)h+=`<span class="lm-chip">${_fmtChars(sec.chars)}</span>`;
     if(sec.isFrontier)h+=`<span class="lm-tag frontier">前沿专题</span>`;
     else if(sec.isBrief)h+=`<span class="lm-tag brief">速览 / 跳转章节</span>`;
@@ -1908,27 +2094,19 @@ async function _renderCurrentSection(modId, secIdx, d, opts){
     // 章节顶部锚点 + 「跳到结尾」
     h+=`<div id="secAnchorTop"></div>`;
     h+=`<div class="sec-inpage-jump top"><a href="#secAnchorBottom" onclick="_jumpInSec(event,'secAnchorBottom')">跳到本章结尾 ⏬</a></div>`;
-    // 小节目录占位（渲染后从 DOM 抽取 h3/h4 填充）
+    // 小节目录占位：渲染后从正文抽取全部 h2-h6。
     h+=`<div id="secTocSlot"></div>`;
     // 正文
-    h+=`<div class="md-content" id="secMdBody" style="font-size:.9rem;line-height:2">${renderMd(sec.content||'')}</div>`;
+    h+=`<div class="md-content" id="secMdBody" style="font-size:.9rem;line-height:2">${renderMd(sec.content,true)}</div>`;
     // 正文结尾「回到开头」
     h+=`<div class="sec-inpage-jump bottom"><a href="#secAnchorTop" onclick="_jumpInSec(event,'secAnchorTop')">⏫ 回到本章开头</a></div>`;
     h+=`<div id="secAnchorBottom"></div>`;
     // 模块推荐资源 — 直接读学习模块自身 d.resources（learn-split/_index.json 注入，最权威），
     // 没有时再回落到 learning-path.json 反查
-    let resList=Array.isArray(d&&d.resources)?d.resources:null;
-    if(!resList||!resList.length){
-        let modMeta=null;
-        const tryMids=new Set([modId, d&&d.id, d&&d.name?(d.name).replace(/[\s\/()]/g,'-').toLowerCase():'']);
-        Object.keys(learnFileMap||{}).forEach(zh=>{
-            if(learnFileMap[zh]===modId)tryMids.add(zh);
-        });
-        LD?.stages?.forEach(s=>s.modules.forEach(m=>{
-            const mid=(m.name||'').replace(/[\s\/()]/g,'-').toLowerCase();
-            if(tryMids.has(mid)||(d&&m.name===d.name))modMeta=m;
-        }));
-        if(modMeta&&Array.isArray(modMeta.resources))resList=modMeta.resources;
+    let resList=Array.isArray(d.resources)?d.resources:null;
+    if(!resList?.length){
+        const modMeta=getLearnMeta(modId);
+        if(Array.isArray(modMeta?.resources))resList=modMeta.resources;
     }
     if(resList&&resList.length){
         const openByDefault=secIdx===0;
@@ -1948,69 +2126,92 @@ async function _renderCurrentSection(modId, secIdx, d, opts){
             <ul class="md-list" style="margin-top:8px">${resHtml}</ul>
         </details>`;
     }
+    h+=`<div class="lm-actions"><button class="lm-btn" id="secCompleteButton" type="button" aria-pressed="${completed}" onclick="toggleSectionComplete('${modId}',${secIdx})">${completed?'取消完成':'标记学完'}</button><button class="card-btn" type="button" onclick="returnToSecToc()">返回本章目录</button></div>`;
     // 底部翻页（上一章 / 进度 / 下一章）
     h+=`<div class="sec-nav">`;
     if(secIdx>0){
-        h+=`<div class="sec-nav-btn" onclick="switchToSection('${modId}',${secIdx-1})">← ${d.sections[secIdx-1].title}</div>`;
+        h+=`<a class="sec-nav-btn" data-spa="1" href="${learnPath(modId,secIdx-1)}">上一章 · ${learnEsc(d.sections[secIdx-1].title)}</a>`;
     }else{h+=`<div></div>`}
     h+=`<div class="sec-nav-label">${secIdx+1} / ${secLen}</div>`;
     if(secIdx<secLen-1){
-        h+=`<div class="sec-nav-btn primary" onclick="switchToSection('${modId}',${secIdx+1})">下一章 →</div>`;
+        h+=`<a class="sec-nav-btn primary" data-spa="1" href="${learnPath(modId,secIdx+1)}">下一章</a>`;
     }else if(nextMod){
-        h+=`<div class="sec-nav-btn primary" onclick="openLearnModule('${nextMod.id}')">📖 ${nextMod.name} →</div>`;
+        h+=`<a class="sec-nav-btn primary" data-spa="1" href="${learnPath(nextMod.id)}">下一模块 · ${learnEsc(nextMod.name)}</a>`;
     }else{h+=`<div></div>`}
     h+=`</div>`;
 
     body.innerHTML=h;
+    body.setAttribute('aria-busy','false');
     _buildSecToc(body);
     body.scrollTop=0;
-    // 切章节后把窗口滚到内容容器顶部（跳过粘性导航条），避免视觉上"原地不动"
-    const _topNavH=48;
-    const _detailTop=body.getBoundingClientRect().top + window.scrollY - _topNavH - 8;
-    window.scrollTo({top: Math.max(0, _detailTop), behavior:'smooth'});
-    // 高亮代码
-    body.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.hl){hljs?.highlightElement(el);el.dataset.hl='1'}});
-    // 追踪阅读
-    trackSectionVisit(modId, secIdx);
-    // SEO
-    if(!opts.fromRouter){
-        const newPath='/learn/'+encodeURIComponent(modId)+'/'+(secIdx+1);
-        _pushOrReplaceState(newPath, false);
+    if(!opts.skipScroll){
+        const top=body.getBoundingClientRect().top+window.scrollY-56;
+        window.scrollTo({top:Math.max(0,top),behavior:'smooth'});
     }
-    updatePageMeta('learn', modId, secIdx);
+    body.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.hl&&window.hljs){window.hljs.highlightElement(el);el.dataset.hl='1';}});
+    trackSectionVisit(modId,secIdx);
+    renderLearn();
+    updatePageMeta('learn',modId,secIdx);
 }
 
-// 从已渲染的正文中抽取 h3/h4 生成本章小节目录
-function _buildSecToc(root){
-    const slot=root.querySelector('#secTocSlot');
-    const md=root.querySelector('#secMdBody');
-    if(!slot||!md)return;
-    const hs=[...md.querySelectorAll('h3,h4')].filter(el=>el.textContent.trim());
-    if(hs.length<3){slot.remove();return;}
-    hs.forEach((el,i)=>{if(!el.id)el.id='st-'+(i+1);});
-    let html=`<details class="sec-toc"><summary><span class="st-arrow">▶</span>📑 本章目录（${hs.length} 节）</summary><div class="sec-toc-body">`;
-    hs.forEach(el=>{
-        const lv=el.tagName==='H4'?' lv4':'';
-        const txt=el.textContent.trim().replace(/"/g,'&quot;');
-        html+=`<button class="st-item${lv}" onclick="_jumpToEl('${el.id}')" title="${txt}">${txt}</button>`;
+// 使用渲染后的实际标题层级；跳级标题归入最近的上级，不伪造小节。
+function learnHeadingTree(headings){
+    const root={level:0,children:[]},stack=[root];
+    headings.forEach(h=>{
+        const node={...h,children:[]};
+        while(stack.length>1&&stack[stack.length-1].level>=node.level)stack.pop();
+        stack[stack.length-1].children.push(node);
+        stack.push(node);
     });
-    html+='</div></details>';
-    slot.innerHTML=html;
+    return root.children;
+}
+function _buildSecToc(root){
+    const slot=root.querySelector('#secTocSlot'),md=root.querySelector('#secMdBody');
+    if(!slot||!md)return;
+    const headings=[...md.querySelectorAll('h2,h3,h4,h5,h6')].filter(el=>el.textContent.trim());
+    if(!headings.length){slot.innerHTML='<p class="learn-note">本章没有小节标题，可直接阅读正文。</p>';return;}
+    const tree=learnHeadingTree(headings.map((el,i)=>{
+        if(!el.id)el.id='st-'+(i+1);
+        return {id:el.id,title:el.textContent.trim(),level:Number(el.tagName.slice(1))};
+    }));
+    const list=nodes=>'<ol>'+nodes.map(n=>`<li data-toc-item><button type="button" class="st-item" data-target="${learnEsc(n.id)}" data-title="${learnEsc(n.title)}" onclick="jumpLearnHeading(this)">${learnEsc(n.title)}</button>${n.children.length?list(n.children):''}</li>`).join('')+'</ol>';
+    slot.innerHTML=`<details class="sec-toc" open><summary>本章目录（${headings.length} 节，可折叠）</summary><div class="sec-toc-filter"><label for="secTocFilter">筛选小节</label><input type="search" id="secTocFilter" placeholder="输入小节关键词" oninput="filterSecToc(this.value)" /></div><nav class="sec-toc-body" aria-label="本章小节">${list(tree)}</nav><p class="learn-note" id="secTocEmpty" hidden>没有匹配的小节。</p></details>`;
+}
+function filterSecToc(query){
+    const words=String(query).trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const items=[...document.querySelectorAll('#secTocSlot li[data-toc-item]')];
+    items.reverse().forEach(li=>{
+        const button=li.querySelector('.st-item');
+        const match=words.every(w=>button.dataset.title.toLowerCase().includes(w));
+        li.hidden=!match&&![...li.querySelectorAll('li[data-toc-item]')].some(child=>!child.hidden);
+    });
+    const empty=document.getElementById('secTocEmpty');
+    if(empty)empty.hidden=items.some(li=>!li.hidden);
+}
+function jumpLearnHeading(button){
+    document.querySelectorAll('#secTocSlot .st-item').forEach(b=>b.removeAttribute('aria-current'));
+    button.setAttribute('aria-current','location');
+    _jumpToEl(button.dataset.target);
+}
+function returnToSecToc(){
+    const toc=document.querySelector('#secTocSlot details');
+    if(toc)toc.open=true;
+    _jumpToEl('secTocSlot');
+    const input=document.getElementById('secTocFilter');
+    if(input)input.focus({preventScroll:true});
 }
 function _jumpToEl(id){
     const el=document.getElementById(id);
     if(!el)return;
-    const y=el.getBoundingClientRect().top+window.scrollY-48-14;
+    for(let parent=el.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
+    const toolbar=document.querySelector('#learnDetail .learn-reader-tools');
+    const y=el.getBoundingClientRect().top+window.scrollY-60-(toolbar?.getBoundingClientRect().height||0);
     window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
 }
 
-// 切换到指定章节
-async function switchToSection(modId, secIdx){
-    _currentLearnSec=secIdx;
-    const d=learnCache[modId];
-    await _renderCurrentSection(modId, secIdx, d);
-    // 更新 sidebar 高亮
-    document.querySelectorAll('.ls-sec').forEach((el,i)=>el.classList.toggle('active',i===secIdx));
+// 每次切章都通过同一个请求入口；URL 和侧栏先更新，再按需加载正文。
+function switchToSection(modId,secIdx){
+    return openLearnModule(canonicalLearnId(modId),null,{initialSec:secIdx});
 }
 
 // 章节内顶 ↔ 底跳转（不修改 URL hash，平滑滚动）
@@ -2023,116 +2224,20 @@ function _jumpInSec(ev, anchorId){
     window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
 }
 
-// 按需加载并渲染某 section 内容（核心提速点）
-async function ensureSectionRendered(modId, idx){
-    const d=learnCache[modId];
-    if(!d||!d.sections||!d.sections[idx])return;
-    const sec=d.sections[idx];
-    const panel=document.querySelector(`#learn-ch-${idx}`);
-    if(!panel||panel.dataset.rendered==='1')return;
-    // 拉取 content（如未加载）
-    if(sec.content==null && sec._secId && sec._modFileId){
-        const sd=await loadJ(`data/learn-split/${sec._modFileId}/${sec._secId}.json`);
-        if(sd){sec.content=sd.content||'';sec.lastUpdated=sec.lastUpdated||sd.lastUpdated||'';}
-        else{sec.content='*章节内容加载失败*';}
-    }
-    const slot=panel.querySelector('.learn-md-slot');
-    if(slot){
-        const secIsNew=sec.lastUpdated&&(Date.now()-new Date(sec.lastUpdated).getTime())<3*86400000;
-        const updBanner=secIsNew?`<div class="sec-update-banner">🔥 本章节已于 ${String(sec.lastUpdated).replace('T',' ')} 更新</div>`:'';
-        slot.innerHTML=updBanner+renderMd(sec.content||'');
-    }
-    panel.dataset.rendered='1';
-    // 高亮代码
-    panel.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.hl){hljs?.highlightElement(el);el.dataset.hl='1'}});
-}
-
-// 滚动到指定章节
-function scrollToChapter(idx){
-    const ch=document.getElementById(`learn-ch-${idx}`);
-    if(ch){
-        const detail=document.getElementById('learnDetail');
-        if(detail) detail.scrollTo({top:ch.offsetTop - 20, behavior:'smooth'});
-    }
-    // 更新 TOC 高亮
-    document.querySelectorAll('.learn-toc .toc-item').forEach((el,i)=>el.classList.toggle('active',i===idx));
-}
-
-// 滚动懒加载：当 chapter 进入视口时加载
-let _scrollLazyObserver=null;
-function _setupScrollLazyLoad(modId){
-    if(_scrollLazyObserver) _scrollLazyObserver.disconnect();
-    const detail=document.getElementById('learnDetail');
-    if(!detail) return;
-    _scrollLazyObserver=new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-            if(entry.isIntersecting){
-                const idx=parseInt(entry.target.dataset.lidx);
-                if(!isNaN(idx)) ensureSectionRendered(modId, idx);
-                // 更新 TOC 高亮
-                document.querySelectorAll('.learn-toc .toc-item').forEach((el,i)=>el.classList.toggle('active',i===idx));
-                // 追踪阅读（2秒后标记已读）
-                setTimeout(()=>{
-                    trackSectionVisit(modId, idx);
-                }, 3000);
-            }
-        });
-    },{root:detail, rootMargin:'200px 0px', threshold:0.1});
-    document.querySelectorAll('.learn-chapter').forEach(ch=>_scrollLazyObserver.observe(ch));
-}
-let _readTimer=null;
-let _readObserver=null;
-function switchLearnTab(idx,modId,opts){
-    opts=opts||{};
-    document.querySelectorAll('#learn-tabs .modal-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
-    document.querySelectorAll('.learn-panel').forEach(p=>p.classList.toggle('active',+p.dataset.lidx===idx));
-    const detail=document.getElementById('learnDetail');
-    if(detail)detail.scrollTop=0;
-    // 按需渲染当前 section（懒加载）
-    if(modId)ensureSectionRendered(modId, idx);
-    // 同步 URL（深链接到具体节）
-    if(modId&&!opts.fromRouter){
-        const newPath='/learn/'+encodeURIComponent(modId)+'/'+(idx+1);
-        _pushOrReplaceState(newPath, !!opts.replace);
-        updatePageMeta('learn', modId, idx);
-    }
-    const active=document.querySelector('.learn-panel.active');
-    if(active)active.querySelectorAll('pre code').forEach(el=>{if(!el.dataset.hl){hljs?.highlightElement(el);el.dataset.hl='1'}});
-    // 清理之前的检测
-    if(_readTimer){clearTimeout(_readTimer);_readTimer=null}
-    if(_readObserver){_readObserver.disconnect();_readObserver=null}
-    if(!modId)return;
-    const sentinel=active?.querySelector(`.read-sentinel[data-sec="${idx}"]`);
-    if(!sentinel)return;
-    const p=getProgress()[modId];
-    if(p?.sections?.includes(idx))return;
-    const rootEl=document.getElementById('learnDetail');
-    _readObserver=new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-            if(entry.isIntersecting){
-                _readTimer=setTimeout(()=>{
-                    trackSectionVisit(modId, idx);
-                    const tabs=document.querySelectorAll('#learn-tabs .modal-tab');
-                    if(tabs[idx])tabs[idx].classList.add('tab-visited');
-                    // Update sidebar progress indicator
-                    renderLearn();
-                    _readObserver?.disconnect();
-                },2000);
-            }else{
-                if(_readTimer){clearTimeout(_readTimer);_readTimer=null}
-            }
-        });
-    },{root:rootEl,threshold:0.5});
-    _readObserver.observe(sentinel);
-}
+// 旧调用入口统一走单章节导航，避免遗留观察器绕过请求令牌或自动完成。
+function ensureSectionRendered(modId,idx){return switchToSection(modId,idx);}
+function scrollToChapter(idx){if(_currentLearnMod)return switchToSection(_currentLearnMod,idx);}
+function switchLearnTab(idx,modId,opts){return openLearnModule(modId,null,{...opts,initialSec:idx});}
 function closeLearnModal(){
-    // Legacy: no longer used with split layout, but keep for safety
     document.getElementById('learnModal').classList.remove('open');
     document.body.style.overflow='';
-    if(_readTimer)clearTimeout(_readTimer);
-    if(_readObserver)_readObserver.disconnect();
-    renderLearn();
+    go('learn');
 }
+
+// 只读测试入口：可在控制台或 Node VM 中验证，不写缓存、不触发网络。
+window.learnTest=Object.freeze({canonicalLearnId,mergeLearnProgress,learnStatus,rankLearnSearch,learnHeadingTree,readingMinutes,
+    resumeLearnSection,getAllModuleIds,getNextModule,getPrevModule,learnTotal,parseRoute,learnPath,
+    getState:()=>({module:_currentLearnMod,section:_currentLearnSec,request:_learnRequestId,searchLoading:_learnSearchIndexLoading})});
 
 // === RENDER PAPERS ===
 function tagClass(t){const m={'模仿学习':'green','VLA':'violet','强化学习':'amber','数据集':'cyan','世界模型':'pink','人形机器人':'purple'};return 'tag-'+(m[t]||'purple')}
@@ -2225,22 +2330,36 @@ function switchModalTab(el,idx){
 function closePaperModal(){document.getElementById('paperModal').classList.remove('open');document.body.style.overflow=''}
 
 // === MARKDOWN RENDERER ===
-function renderMd(t){
+function protectMdFences(text,blocks){
+    const lines=text.replace(/\r\n?/g,'\n').split('\n'),out=[];
+    for(let i=0;i<lines.length;i++){
+        const start=lines[i].match(/^ {0,3}((?:>[ \t]?)*)(`{3,}|~{3,})([^`]*)$/);
+        if(!start){out.push(lines[i]);continue;}
+        const prefix=start[1],fence=start[2],lang=(start[3].trim().match(/^[\w+-]+/)||['text'])[0];
+        const body=[];
+        for(i++;i<lines.length;i++){
+            const line=prefix?lines[i].replace(/^ {0,3}(?:>[ \t]?)+/,''):lines[i];
+            const close=line.match(/^ {0,3}(`{3,}|~{3,})[ \t]*$/);
+            if(close&&close[1][0]===fence[0]&&close[1].length>=fence.length)break;
+            body.push(line);
+        }
+        const escaped=(body.join('\n')+'\n').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        const idx=blocks.length;
+        blocks.push('<pre><code class="language-'+lang+'">'+escaped+'</code></pre>');
+        out.push(prefix+'%%CODEBLOCK_'+idx+'%%');
+    }
+    return out.join('\n');
+}
+function renderMd(t,learnHeadings=false){
     if(!t)return'';
     try{
-    let h=t;
-    // 0. 引用块（在代码块之前处理，这样引用块内的代码块也能被后续步骤正确识别）
+    // Protect all code first, including quoted fences and incomplete legacy quotes.
+    const codeBlocks=[];
+    let h=protectMdFences(t,codeBlocks);
+    // 引用块只能处理正文，不能把生成的 HTML 标签插入代码文本。
     h=h.replace(/(^|\n)((?:>[ ]?[^\n]*\n?)+)/g,(_,pre,block)=>{
         const lines=block.split('\n').filter(l=>l.trim()).map(l=>l.replace(/^>\s?/,'')).join('\n');
         return pre+'\n<blockquote class="md-quote">\n'+lines+'\n</blockquote>\n';
-    });
-    // 1. 保护代码块（先提取，用占位符替换，最后还原）
-    const codeBlocks=[];
-    h=h.replace(/```(\w*)\n([\s\S]*?)```/g,(_,lang,code)=>{
-        const escaped=code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-        const idx=codeBlocks.length;
-        codeBlocks.push('<pre><code class="language-'+(lang||'text')+'">'+escaped+'</code></pre>');
-        return'\n%%CODEBLOCK_'+idx+'%%\n';
     });
     // 2. 保护行内代码
     const inlineCodes=[];
@@ -2279,10 +2398,17 @@ function renderMd(t){
         return`<a href="${url}" target="_blank" class="card-btn">🎬 ${title||'观看视频'}</a>`;
         return`<div class="video-embed">${title?`<div class="video-title">🎬 ${title}</div>`:''}<div class="video-container"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div>`;
     });
-    // 5. 标题（从多到少处理，避免 #### 被 ### 先匹配）
-    h=h.replace(/^#### (.+)$/gm,'<h5 class="md-h5">$1</h5>');
-    h=h.replace(/^### (.+)$/gm,'<h4>$1</h4>');
-    h=h.replace(/^## (.+)$/gm,'<h3>$1</h3>');
+    // 学习正文支持全部 Markdown 标题层级；其他板块保持原渲染规则。
+    if(learnHeadings){
+        h=h.replace(/^(#{1,6})[ \t]+(.+)$/gm,(_,marks,title)=>{
+            const level=Math.min(6,marks.length+1);
+            return `<h${level}>${title}</h${level}>`;
+        });
+    }else{
+        h=h.replace(/^#### (.+)$/gm,'<h5 class="md-h5">$1</h5>');
+        h=h.replace(/^### (.+)$/gm,'<h4>$1</h4>');
+        h=h.replace(/^## (.+)$/gm,'<h3>$1</h3>');
+    }
     // 6. 粗体
     h=h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
     // 6.5 Markdown 链接 [txt](url) — 内部 /xxx 走 SPA 路由，外部 http(s) target=_blank

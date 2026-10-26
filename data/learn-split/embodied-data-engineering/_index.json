@@ -73,7 +73,17 @@
       "shortTitle": "具身数据集全景图",
       "difficulty": "入门",
       "estimatedMinutes": 10,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 10,
+      "headings": [
+        "为什么数据是具身智能的第一生产力？",
+        "主要开源数据集",
+        "数据集选择决策树",
+        "数据集使用示例",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "具身智能与 NLP/CV 最大的区别：数据获取成本极高。"
     },
     {
       "id": "sec-02",
@@ -83,7 +93,18 @@
       "shortTitle": "数据工程基础",
       "difficulty": "入门",
       "estimatedMinutes": 6,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 6,
+      "headings": [
+        "1. 数据的生命周期",
+        "2. 文件格式选型",
+        "3. Python 数据处理三件套",
+        "4. 数据清洗核心流程",
+        "5. ETL 管道（Extract-Transform-Load）",
+        "6. 数据探索与可视化",
+        "练习题"
+      ],
+      "summary": "具身智能的数据工程不是从采集机器人数据开始的——首先要掌握通用的数据处理技能。本节从零建立数据工程的基础能力。"
     },
     {
       "id": "sec-03",
@@ -93,7 +114,17 @@
       "shortTitle": "机器人演示数据的采集策略与遥操作系统",
       "difficulty": "中级",
       "estimatedMinutes": 4,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 遥操作系统分类",
+        "2. Leader-Follower 架构（ALOHA 方案）",
+        "3. 数据采集策略",
+        "4. 数据质量控制",
+        "5. 数据规模参考",
+        "练习题"
+      ],
+      "summary": "具身智能的数据不像互联网数据可以爬取——必须靠人类在真实物理环境中操控机器人来收集。本节系统讲解遥操作(Teleoperation)系统的设计和采集策略。"
     },
     {
       "id": "sec-04",
@@ -103,7 +134,17 @@
       "shortTitle": "数据采集系统实战",
       "difficulty": "高级",
       "estimatedMinutes": 12,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 12,
+      "headings": [
+        "遥操作系统全景",
+        "数据质量 > 数据数量",
+        "UMI 数据采集完整流程",
+        "采集效率优化技巧",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "数据采集是具身智能最大的瓶颈。不同遥操作方案适合不同场景和预算："
     },
     {
       "id": "sec-05",
@@ -113,7 +154,18 @@
       "shortTitle": "数据标注与众包",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 机器人数据标注的特殊性",
+        "2. 标注类型",
+        "3. 半自动标注流水线",
+        "4. 质量控制",
+        "5. 成本优化",
+        "6. 标注平台推荐",
+        "练习题"
+      ],
+      "summary": "机器人学习需要的不仅是\"有数据\"，更需要\"有标签的好数据\"。本节系统讲解标注方法论、质量控制和成本优化。"
     },
     {
       "id": "sec-06",
@@ -123,7 +175,16 @@
       "shortTitle": "数据质量工程",
       "difficulty": "中级",
       "estimatedMinutes": 10,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 10,
+      "headings": [
+        "数据质量的四个维度",
+        "数据清洗 Pipeline",
+        "数据归一化与标准化",
+        "练习",
+        "参考答案"
+      ],
+      "summary": ""
     },
     {
       "id": "sec-07",
@@ -133,7 +194,20 @@
       "shortTitle": "数据集格式标准",
       "difficulty": "中级",
       "estimatedMinutes": 5,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 5,
+      "headings": [
+        "机器人数据集格式标准",
+        "1. 为什么需要标准格式？",
+        "2. RLDS（Reinforcement Learning Dataset Spec）",
+        "3. LeRobot 格式（HuggingFace）",
+        "4. Open-X-Embodiment 数据集",
+        "5. 从原始数据到标准格式",
+        "6. 数据版本管理",
+        "7. 数据质量指标",
+        "练习题"
+      ],
+      "summary": "具身智能领域正在形成标准化的数据格式——本节讲解主流数据集格式的设计思想和实际使用。"
     },
     {
       "id": "sec-08",
@@ -143,7 +217,17 @@
       "shortTitle": "数据格式标准与工具链",
       "difficulty": "中级",
       "estimatedMinutes": 4,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 4,
+      "headings": [
+        "主流数据格式对比",
+        "LeRobot 数据集结构详解",
+        "数据版本管理 (DVC)",
+        "数据可视化工具",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "1. HDF5 → LeRobot 格式转换并上传"
     },
     {
       "id": "sec-09",
@@ -153,7 +237,16 @@
       "shortTitle": "合成数据与数据增强",
       "difficulty": "中级",
       "estimatedMinutes": 7,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 7,
+      "headings": [
+        "合成数据：用仿真补充真实数据",
+        "仿真数据自动化生成",
+        "图像数据增强（机器人专用）",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "真实数据采集昂贵，合成数据可以大幅降低成本："
     },
     {
       "id": "sec-10",
@@ -164,7 +257,20 @@
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 数据闭环架构",
+        "2. 应回传什么数据？",
+        "3. 数据价值评估",
+        "4. 人工干预设计",
+        "5. DAgger 风格的数据收集",
+        "6. 安全的数据回传",
+        "7. 再训练触发策略",
+        "8. 实战架构：Tesla Autopilot 启示",
+        "练习题"
+      ],
+      "summary": "\"一次训练、一次部署\"已经过时——现代机器人系统需要数据闭环：部署的机器人持续回传数据，模型持续改进。"
     },
     {
       "id": "sec-11",
@@ -174,7 +280,16 @@
       "shortTitle": "数据闭环系统",
       "difficulty": "高级",
       "estimatedMinutes": 7,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 7,
+      "headings": [
+        "数据闭环：持续改进的飞轮",
+        "自动失败分析",
+        "完整数据闭环流程",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "1. 见上方 FailureAnalyzer 类"
     },
     {
       "id": "sec-12",
@@ -185,7 +300,16 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "为什么数据隐私对具身智能重要？",
+        "数据合规框架",
+        "隐私保护技术路线",
+        "合成数据的合规优势",
+        "练习"
+      ],
+      "summary": "机器人部署在家庭、医院、工厂等敏感环境中，采集的数据包含： - 视觉数据：人脸、家居环境、个人物品 - 行为数据：日常习惯、健康状态 - 空间数据：房屋布局、办公室结构"
     },
     {
       "id": "sec-13",
@@ -195,7 +319,15 @@
       "shortTitle": "大规模数据集版本管理与DVC实战",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "为什么机器人数据需要版本管理？",
+        "DVC核心概念",
+        "DVC + LeRobot 数据管线",
+        "练习"
+      ],
+      "summary": "机器人训练数据动辄几百GB（图像+深度+关节），Git无法处理大文件。DVC (Data Version Control) 专门解决这个问题——用Git管理元数据，用云存储管理实际数据。"
     },
     {
       "id": "sec-14",
@@ -206,7 +338,29 @@
       "difficulty": "中级",
       "estimatedMinutes": 13,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 13,
+      "headings": [
+        "演示数据分布覆盖与短板诊断",
+        "1. 为什么要做数据覆盖分析？",
+        "2. 状态空间覆盖度量",
+        "方法一：低维统计可视化",
+        "方法二：高维流形的 UMAP/t-SNE 投影",
+        "方法三：基于密度的覆盖率量化",
+        "3. 动作空间覆盖分析",
+        "动作多样性指标：条件熵",
+        "4. BeTTER 三大失败模式的数据诊断对照表",
+        "语义多样性的量化：平均 pairwise similarity",
+        "5. 主动扩充：哪一条新演示最有价值？",
+        "方法一：不确定性驱动（MC Dropout）",
+        "方法二：失败驱动（Failure-Based）",
+        "6. 数据短板诊断实操清单",
+        "7. 从诊断到改进：典型案例",
+        "8. 把数据诊断嵌入 CI/CD",
+        "9. 前沿：从数据驱动到数据生成",
+        "练习题"
+      ],
+      "summary": "想象一下这个场景：你花两周采了 200 条桌面抓取演示，训练出一个 ACT 策略，在验证集上 loss 很低，真机测试却只有 30% 成功率。你心里可能想：\"是不是模型不够大？\"——但真正的问题往往出在数据上。"
     },
     {
       "id": "sec-15",
@@ -217,7 +371,32 @@
       "difficulty": "高级",
       "estimatedMinutes": 6,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 6,
+      "headings": [
+        "异构数据摄取（Universal Embodied Data Ingestion）：从 EI-30K 看具身 Common Crawl",
+        "一、为什么具身数据需要\"统一摄取\"？",
+        "1.1 数据分布天差地别",
+        "1.2 传统数据工程的失败模式",
+        "二、EI-30K 数据集的工程结构",
+        "2.1 三层摄取架构",
+        "2.2 数据角色差异化",
+        "2.3 EI-30K 真实组成（参考）",
+        "三、统一摄取的工程实操",
+        "3.1 视觉对齐：DINO 隐空间",
+        "3.2 动作对齐：标准化到 7-DoF 末端速度",
+        "3.3 数据流水线分流",
+        "四、消融实验给出的工程结论",
+        "4.1 DINO vs VAE：量化对比",
+        "4.2 数据规模 Scaling Law",
+        "4.3 异构比例消融",
+        "五、对企业的工程启示",
+        "5.1 自建数据集时的三件事",
+        "5.2 如何评估自有数据集质量",
+        "5.3 数据采集 ROI 估算",
+        "六、与本模块其他章节的衔接"
+      ],
+      "summary": "结构性问题：① 数据量级跨越 6 个数量级（EB vs TB）；② 动作标签覆盖率 < 1%；③ 本体不一致（有的是双臂，有的是 humanoid，有的是 dog）；④ 视角不一致；⑤ 采样频率不一致（10Hz 到 1kHz 都有）。"
     },
     {
       "id": "sec-16",
@@ -228,7 +407,17 @@
       "difficulty": "高级",
       "estimatedMinutes": 6,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 6,
+      "headings": [
+        "1. Wall-OSS 三源数据混合策略",
+        "2. 数据配比的艺术：为什么 80% 多模态 + 15% 轨迹 + 5% 自采？",
+        "3. 数据采集工程化：从手动到自动",
+        "4. 数据质检 Pipeline：自动过滤 + 修复",
+        "5. LeRobot 数据格式标准化",
+        "6. 学习路径 — 数据工程师的核心技能"
+      ],
+      "summary": "Wall-OSS-0.5 证明「预训练即部署」的核心不在于模型架构有多新，而在于训练数据的配方设计。本节拆解 Wall-OSS-0.5 的 9000 万多模态样本 + 100 万轨迹数据如何配比、采集、清洗、格式化 — 这是 VLA 数据工程师的核心技能。"
     },
     {
       "id": "sec-17",
@@ -239,7 +428,25 @@
       "difficulty": "中级",
       "estimatedMinutes": 11,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "1. 三层基础设施",
+        "2. 第一层：训练场到底在解决什么",
+        "但数量不是能力",
+        "3. 第二层：数据闭环的工程形态",
+        "3.1 采集端：协议比设备重要",
+        "3.2 质检：把「看着没问题」变成可判定的规则",
+        "3.3 版本管理：数据要有 commit",
+        "3.4 回流：闭环的那一笔",
+        "4. 第三层：跨本体底座",
+        "为什么「人类视频 → 机器人数据」是这条路的胜负手",
+        "端侧算力这一层",
+        "5. 一条可自己搭的最小闭环",
+        "6. 判断这个行业真实成熟度的三个问题",
+        "延伸阅读"
+      ],
+      "summary": "数据闭环与主动学习讲的是方法论，本节讲的是承载这套方法论的物理与组织基础设施——到 2026 年 10 月，它已经长成了一个独立的产业层。"
     },
     {
       "id": "sec-18",
@@ -250,7 +457,28 @@
       "difficulty": "高级",
       "estimatedMinutes": 15,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 10,
+      "headings": [
+        "一、为什么人类视频是最可扩展的示范源",
+        "二、预定义管线的失效点",
+        "三、四阶段流水线与 Agent 调度",
+        "四、为什么校验器比生成器更关键",
+        "五、数据放大：一条视频变一批轨迹",
+        "六、与其他数据路线的分工",
+        "七、落地清单",
+        "能力自检",
+        "八、什么样的生成数据算「好」",
+        "九、什么时候值得用 Agent 化生成，什么时候不值",
+        "十、常见失败模式与排查",
+        "十一、与真实采集的混合配比",
+        "十二、与世界模型路线的交汇",
+        "扩展自检"
+      ],
+      "summary": "具身数据工程在 2026 年遇到了一个结构性矛盾：最丰富的数据源（人类视频）和能直接训练机器人的数据（机器人轨迹）之间，隔着一道很贵的翻译工序。互联网上有近乎无限的人类操作视频，但机器人需要的不是视频，而是「在给定初始条件下，关节/末端应该怎么走，且走完物理上成立」。"
     }
-  ]
+  ],
+  "readingMinutes": 125,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 108488
 }

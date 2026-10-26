@@ -4,10 +4,23 @@
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 50,
-  "lastUpdated": "2026-10-20T10:20",
+  "lastUpdated": "2026-10-26",
   "description": "从人类演示中学习机器人技能。Diffusion Policy 和 ACT 是当前最实用的模仿学习算法。",
   "prerequisites": [
-    "深度学习基础"
+    "能用 Tensor、Dataset、DataLoader 和优化器完成监督训练；可补学 [PyTorch 深度学习](/learn/python-scientific-computing/8) 与 [反向传播与自动微分](/learn/deep-learning/5)。",
+    "理解演示样本中的观测和动作，能说明 shape、dtype、单位及取值范围；[模仿学习基础](/learn/imitation-learning/1) 提供不依赖真机的最小输入示例。",
+    "学习生成式策略前，补齐 [生成模型](/learn/deep-learning/3) 与 [Transformer 与自注意力](/learn/deep-learning/2)。训练 RL 专家不是必修前置，可使用脚本专家或已有演示。"
+  ],
+  "learningObjectives": [
+    "从演示数据训练 BC 策略，区分离线动作预测误差与闭环执行成功率。",
+    "说明分布偏移如何产生，以及 DAgger 如何收集学生实际访问状态上的专家标签。",
+    "比较 Diffusion Policy 与 ACT 的动作块生成方式，根据数据质量、失败类型和推理开销设计对照实验。"
+  ],
+  "studyGuide": [
+    "从 [模仿学习基础](/learn/imitation-learning/1) 与 [行为克隆](/learn/imitation-learning/2) 建立基线；先检查数据加载、一次参数更新和策略输出 shape，再开展闭环评估。合成样本只验证训练流程，不代表机器人效果。",
+    "用 [扩散策略原理](/learn/imitation-learning/3) 理解加噪、采样和动作块，再结合 [Diffusion Policy 示例](/learn/imitation-learning/4) 分别写出训练与推理的输入输出。",
+    "学习 [ACT 与 LeRobot](/learn/imitation-learning/5)，记录观测窗口、预测动作块和实际执行步数；比较方法时保持任务、数据划分和评估条件一致。",
+    "依据 [演示数据工程](/learn/imitation-learning/8) 和 [失败模式与调试](/learn/imitation-learning/9)，提交数据检查结果、BC 基线、一个替代方法的对照记录及一次失败定位；未开展的实验明确标注，不用训练损失代替闭环成功率。"
   ],
   "resources": [
     {
@@ -54,12 +67,23 @@
     {
       "id": "sec-01",
       "title": "模仿学习基础：从行为克隆到 DAgger",
-      "lastUpdated": "2026-04-30T10:32",
-      "chars": 3180,
+      "lastUpdated": "2026-10-26",
+      "chars": 3926,
       "shortTitle": "模仿学习基础",
       "difficulty": "入门",
       "estimatedMinutes": 3,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 为什么选择模仿学习？",
+        "2. 行为克隆（Behavioral Cloning, BC）",
+        "3. 分布偏移问题（Compounding Error）",
+        "4. DAgger（Dataset Aggregation）",
+        "5. 现代 IL 方法全景",
+        "6. BC 的实用技巧",
+        "练习题"
+      ],
+      "summary": "模仿学习（IL）是让机器人\"看人做，自己学\"的方法——不需要奖励函数，只需要专家演示。本节从最简单的行为克隆讲起。"
     },
     {
       "id": "sec-02",
@@ -69,7 +93,17 @@
       "shortTitle": "行为克隆",
       "difficulty": "入门",
       "estimatedMinutes": 7,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 7,
+      "headings": [
+        "什么是模仿学习？",
+        "行为克隆（BC）的核心思想",
+        "BC 的致命问题：分布偏移（Distribution Shift）",
+        "为什么 BC 在 VLA 时代又火了？",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "模仿学习（Imitation Learning） 是让机器人通过观察人类的演示来学习行为策略。和强化学习的对比："
     },
     {
       "id": "sec-03",
@@ -79,7 +113,18 @@
       "shortTitle": "扩散模型的崛起",
       "difficulty": "高级",
       "estimatedMinutes": 3,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 为什么动作预测需要扩散模型？",
+        "2. 扩散模型回顾",
+        "3. Diffusion Policy 架构",
+        "4. 采样策略",
+        "5. Action Chunking：关键创新",
+        "6. Diffusion Policy 的变体",
+        "练习题"
+      ],
+      "summary": "2023 年以来，Diffusion Policy 成为机器人操作领域的新范式——相比 BC 和 ACT，它能更好地处理多模态动作。"
     },
     {
       "id": "sec-04",
@@ -89,7 +134,18 @@
       "shortTitle": "Diffusion Policy",
       "difficulty": "中级",
       "estimatedMinutes": 10,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 10,
+      "headings": [
+        "扩散模型用于机器人：为什么？",
+        "扩散模型的核心思想",
+        "Action Chunking：预测一串动作",
+        "Diffusion Policy 原理图",
+        "Action Chunking（动作分块）",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "传统 BC 输出一个确定性动作 $a = \\pi(s)$，或一个高斯分布 $a \\sim \\mathcal{N}(\\mu_\\theta(s), \\sigma^2)$。"
     },
     {
       "id": "sec-05",
@@ -99,7 +155,17 @@
       "shortTitle": "ACT 与 LeRobot",
       "difficulty": "中级",
       "estimatedMinutes": 6,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 6,
+      "headings": [
+        "ACT（Action Chunking with Transformers）",
+        "核心思想",
+        "ACT vs Diffusion Policy",
+        "LeRobot：HuggingFace 的机器人学习框架",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "ACT 是 Stanford 提出的另一种模仿学习方法，和 Diffusion Policy 是目前最流行的两个方案。"
     },
     {
       "id": "sec-06",
@@ -109,7 +175,20 @@
       "shortTitle": "逆强化学习",
       "difficulty": "中级",
       "estimatedMinutes": 11,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 11,
+      "headings": [
+        "从“模仿动作”到“理解意图”",
+        "IRL 的数学形式化",
+        "经典 IRL 方法：Maximum Entropy IRL",
+        "GAIL：对抗式模仿学习",
+        "IRL vs BC vs GAIL 对比",
+        "什么时候用 IRL/GAIL？",
+        "IRL 的直觉：学习“为什么”",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "行为克隆（BC）直接模仿专家的动作：看到什么状态就执行什么动作。这有一个根本局限——它学的是“怎么做”，而不是“为什么做”。"
     },
     {
       "id": "sec-07",
@@ -119,7 +198,20 @@
       "shortTitle": "VLA 模型",
       "difficulty": "高级",
       "estimatedMinutes": 3,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 从 BC 到 VLA 的演进",
+        "2. VLA 的核心：语言驱动",
+        "3. VLA 的架构",
+        "4. 预训练数据",
+        "5. 推理优化",
+        "6. VLA 的泛化能力",
+        "7. 开源 VLA 对比",
+        "8. 训练自己的 VLA",
+        "练习题"
+      ],
+      "summary": "2023 年以来，VLA（Vision-Language-Action）成为模仿学习的新范式——通过语言指令和大规模预训练实现前所未有的泛化能力。"
     },
     {
       "id": "sec-08",
@@ -129,7 +221,19 @@
       "shortTitle": "演示数据工程",
       "difficulty": "高级",
       "estimatedMinutes": 13,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 13,
+      "headings": [
+        "数据是模仿学习的命脉",
+        "数据采集方式全景",
+        "Leader-Follower 遥操作详解",
+        "数据质量的关键指标",
+        "数据增强技术",
+        "大规模数据集：Open X-Embodiment",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "在模仿学习中，数据质量直接决定策略质量。很多实验室花 80% 的时间在数据采集和清洗上，只花 20% 在模型训练上。这一节详细讲解如何高效采集和管理机器人演示数据。"
     },
     {
       "id": "sec-09",
@@ -139,7 +243,21 @@
       "shortTitle": "模仿学习的失败模式与调试方法论",
       "difficulty": "中级",
       "estimatedMinutes": 7,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 7,
+      "headings": [
+        "1. IL 的典型失败模式",
+        "2. 调试工具箱",
+        "Loss 曲线诊断",
+        "注意力可视化",
+        "行为可视化",
+        "3. 数据集诊断",
+        "4. 单元测试式调试",
+        "5. 部署前的 Sanity Check",
+        "6. 失败案例分析",
+        "练习题"
+      ],
+      "summary": "训练 IL 模型最难的不是\"让 loss 下降\"——loss 下降但部署不工作的情况比比皆是。本节系统讲解 IL 的失败模式和诊断方法。"
     },
     {
       "id": "sec-10",
@@ -150,7 +268,20 @@
       "difficulty": "高级",
       "estimatedMinutes": 12,
       "isFrontier": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 12,
+      "headings": [
+        "从经典到前沿：模仿学习的演进",
+        "方法演进时间线",
+        "Flow Matching：扩散模型的进化",
+        "3D Diffusion Policy：从图像到点云",
+        "π₀ (Physical Intelligence)：大规模通用模型",
+        "Scaling Laws：模仿学习的规模定律",
+        "方法选择决策树",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "模仿学习在 2023-2026 年经历了爆发式发展。本节梳理最新的前沿方法，帮助你理解当前的研究热点和实际可用的工具。"
     },
     {
       "id": "sec-11",
@@ -160,7 +291,16 @@
       "shortTitle": "Flow Matching策略",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "Diffusion Policy的瓶颈",
+        "Flow Matching：更快的生成范式",
+        "数学原理",
+        "pi-0的架构选择",
+        "练习"
+      ],
+      "summary": "Diffusion Policy需要50-100步去噪才能生成动作，推理延迟约100-200ms。对于需要实时响应的机器人（50Hz控制=20ms预算），这太慢了。"
     },
     {
       "id": "sec-12",
@@ -170,7 +310,17 @@
       "shortTitle": "跨本体模仿迁移",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "什么是跨本体迁移？",
+        "跨本体迁移的技术路线",
+        "任务空间统一表示",
+        "Embodied-R1的Pointing机制",
+        "Open X-Embodiment的经验",
+        "练习"
+      ],
+      "summary": "不同机器人有不同的本体形态（关节数、尺寸、动力学），但它们可能需要完成相同的任务。跨本体迁移让一种机器人学到的技能能迁移到另一种机器人上。"
     },
     {
       "id": "sec-13",
@@ -180,7 +330,19 @@
       "shortTitle": "全身协调模仿学习",
       "difficulty": "高级",
       "estimatedMinutes": 7,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 7,
+      "headings": [
+        "从单臂操作到全身协调：模仿学习的下一个前沿",
+        "全身协调的核心挑战",
+        "HEX 框架：人形对齐专家 (2026)",
+        "全身协调数据采集",
+        "代码示例：简化的全身协调策略",
+        "全身模仿学习 vs 传统分层控制",
+        "2026年全身模仿学习前沿方向",
+        "练习"
+      ],
+      "summary": "传统模仿学习主要关注单臂桌面操作（如 ALOHA 双臂、UR5 单臂）。但人形机器人时代，模仿学习面临全新挑战——全身协调控制：机器人需要同时控制双手操作、双腿行走、躯干平衡，三者紧密耦合。"
     },
     {
       "id": "sec-14",
@@ -191,7 +353,28 @@
       "difficulty": "高级",
       "estimatedMinutes": 11,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "背景：为什么 2026 年 5 月是模仿学习的转折点？",
+        "一、LaST-R1：机器人模型的\"R1 时刻\"",
+        "1.1 灵感：DeepSeek R1 范式",
+        "1.2 LAPO 框架（Latent-to-Action Policy Optimization）",
+        "1.3 实测数据为什么如此惊艳？",
+        "1.4 工程复现路径",
+        "二、Q2RL：从 BC 里\"白嫖\"出 Q 函数",
+        "2.1 问题动机：BC → online RL 为什么这么难？",
+        "2.2 Q2RL 的两个超简单创新",
+        "2.3 真机效率惊人",
+        "三、AAC：推理时的动作熵自适应",
+        "3.1 固定 chunk size 的两难",
+        "3.2 AAC 的极简方案",
+        "3.3 真机 +15pp 的根源",
+        "四、产线落地：三件套一起用怎么部署？",
+        "五、动手练习：在 LIBERO 上跑通 LaST-R1",
+        "六、扩展阅读与最新进展"
+      ],
+      "summary": "纯模仿学习（BC、Diffusion Policy、ACT）在 2024-2025 年取得了惊人进展——它们让机器人从演示数据中\"学会\"了叠衣服、装电池、装杯子等过去 RL 完全做不到的细粒度任务。但 2026 年开春，业界遇到了一堵墙："
     },
     {
       "id": "sec-15",
@@ -202,18 +385,59 @@
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 8,
+      "headings": [
+        "1. 为什么 50 Episodes 就够了？",
+        "2. 数据采集的艺术：50 Episodes 的质量 > 500 的数量",
+        "3. 微调配方详解：LoRA vs Full FT vs QLoRA",
+        "4. 数据增强：用 10 倍数据换 0 成本",
+        "5. 训练过程监控：如何判断模型学到了",
+        "6. 从仿真到真机：Sim-to-Real 微调策略",
+        "7. 常见失败模式 + 修复",
+        "8. 进阶：多任务联合微调",
+        "9. 学习路径"
+      ],
+      "summary": "Wall-OSS-0.5 证明了一个震撼性结论：50 episodes / 任务就能达到 60.5% 平均成功率（领先 π0.5 17.5pp）。这意味着模仿学习的数据效率已经发生了代际跃升 — 从「500 episodes 才能用」到「50 episodes 即 SOTA」。本节完整拆解这一高效模仿学习配方背后的工程原理和实战技巧。"
     },
     {
       "id": "sec-16",
       "title": "从模仿动作到模仿推理：In-Context 结构化示范与测试时适配（StellaVLA 2026-08 精读）",
-      "lastUpdated": "2026-08-24T19:40",
-      "chars": 12177,
+      "lastUpdated": "2026-10-26",
+      "chars": 12206,
       "shortTitle": "从模仿动作到模仿推理",
       "difficulty": "高级",
       "estimatedMinutes": 14,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 14,
+      "headings": [
+        "0. 为什么这一节单独立项",
+        "1. 核心洞察：ICIL 之前为什么没跑起来",
+        "1.1 「模仿动作」与「模仿推理」的分野",
+        "1.2 结构化示范：两层理由",
+        "1.3 确定性算子 Φ 的双尺度复用（最容易实现错的地方）",
+        "2. 并行双专家：本节最重要的工程范式",
+        "2.1 问题：Embodied CoT 的延迟死结",
+        "2.2 解法：并行而非串行",
+        "2.3 为什么能在部署时安全地把语言专家整个删掉",
+        "2.4 可迁移的实现骨架",
+        "3. 前缀缓存：让「携带丰富理由」几乎零成本",
+        "4. 效果与证据链",
+        "4.1 主结果",
+        "4.2 泛化增益随难度上升而扩大",
+        "4.3 因果性证据：示范确实被读了",
+        "4.4 反直觉发现：文本比图像更可迁移",
+        "5. 跨本体：本模块 sec-12 的 2026 版答案",
+        "5.1 量化证据",
+        "5.2 实验设计的巧思（值得抄）",
+        "6. λ 的非单调性：一个明确的工程旋钮",
+        "7. 落地决策树",
+        "8. 局限与开放问题（面试与选型必读）",
+        "9. 与另两条「不靠加数据」路线的关系",
+        "10. 课后思考题"
+      ],
+      "summary": "模仿学习走到 2026 年，最贵的问题已经不是「怎么把演示学会」，而是「学会之后一换场景就崩，然后要重新采数据 + 重新微调」。这个循环以周计，是产线上最真实的成本。"
     },
     {
       "id": "sec-17",
@@ -224,7 +448,24 @@
       "difficulty": "高级",
       "estimatedMinutes": 15,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "从人类视频到机器人动作：重定向、外观对齐与控制器输入的离线精修",
+        "一、为什么必须走人类数据这条路",
+        "二、第一层：运动学重定向",
+        "三、第二层：观测对齐（相机视角 + 手臂外观）",
+        "四、第三层：控制器输入的离线精修（最容易被省掉的一步）",
+        "五、数据现状：哪些数据集真的能用",
+        "六、在训练流程里放在哪：pre / mid / post 三段",
+        "七、动手：一个可跑的重定向 + 精修管线",
+        "八、常见误区",
+        "九、与相邻章节的关系",
+        "十、能力自检清单",
+        "十一、补论：为什么「直接学人类动作」往往比「先重定向」效果差",
+        "十二、工程落地：评估一条人类数据管线是否值得投入"
+      ],
+      "summary": "模仿学习前面几节讲的都是「用机器人自己的示教数据」。这条路的成本结构是硬伤：一次真机遥操作采集，需要操作员 + 机器人 + 场景准备，单位时间产出通常只有几十条轨迹，而且换一个本体就得重采。"
     },
     {
       "id": "sec-18",
@@ -235,7 +476,39 @@
       "difficulty": "高级",
       "estimatedMinutes": 45,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 13,
+      "headings": [
+        "一、先承认模仿学习的天花板",
+        "二、「玩」是一种被低估的数据协议",
+        "什么叫「玩」",
+        "两种数据的覆盖形态不同",
+        "三、DSP 的三段式",
+        "第一段：监督式游戏（Supervised Play）",
+        "第二段：自主采集 + 世界模型",
+        "第三段：推理时用 MPC，play policy 当提议分布",
+        "附加的一步：闭环蒸馏",
+        "四、结果怎么读",
+        "五、它和相邻路线是什么关系",
+        "六、工程前置条件：三个硬门槛",
+        "七、最小可运行骨架",
+        "八、能力自检清单",
+        "九、与其他章节的连接",
+        "十、再深入一层：为什么「无目标」反而是优势",
+        "角度一：标签会限制分布的宽度",
+        "角度二：误差恢复需要的正是「非任务」数据",
+        "角度三：成本的非线性",
+        "十一、世界模型该训到什么程度",
+        "判据一：单步误差与多步漂移要分开看",
+        "判据二：够用的标准由 MPC 的 horizon 决定",
+        "判据三：误差的方向比大小重要",
+        "十二、常见的失败模式与排查",
+        "十三、如果你只有一台机器人"
+      ],
+      "summary": "到目前为止，本模块讲的大多数方法——行为克隆、DAgger、Diffusion Policy、ACT、VLA——共享同一个前提：先有人类演示，再让策略去拟合它。这条路线在过去几年里非常有效，但它有一个绕不开的结构性上限。"
     }
-  ]
+  ],
+  "readingMinutes": 148,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 128761
 }

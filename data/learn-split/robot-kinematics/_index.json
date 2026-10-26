@@ -54,7 +54,20 @@
       "shortTitle": "旋转表示的完整理论",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 为什么旋转这么\"麻烦\"？",
+        "2. 旋转矩阵 $R \\in SO(3)$",
+        "3. 欧拉角（Euler Angles）",
+        "4. 轴角表示（Axis-Angle）",
+        "5. 四元数（Quaternion）",
+        "6. 旋转表示的互相转换",
+        "7. $SO(3)$ 的李群结构",
+        "8. 表示方式选择指南",
+        "练习题"
+      ],
+      "summary": "运动学的基石是旋转。看似简单的\"描述一个物体的朝向\"，背后蕴含着丰富的数学——从最直观的欧拉角到最优雅的李群。本节从零建立完整的旋转理论。"
     },
     {
       "id": "sec-02",
@@ -64,7 +77,19 @@
       "shortTitle": "齐次变换与刚体运动",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 齐次变换矩阵",
+        "2. $SE(3)$ 的群结构",
+        "3. 坐标系链与变换链",
+        "4. 伴随表示（Adjoint）",
+        "5. 刚体运动的微分",
+        "6. 实用工具代码",
+        "7. 在机器人学中的应用地图",
+        "练习题"
+      ],
+      "summary": "上一节讲了纯旋转 $SO(3)$，本节加入平移，构成完整的刚体运动——特殊欧氏群 $SE(3)$。这是运动学、控制、SLAM 的统一数学语言。"
     },
     {
       "id": "sec-03",
@@ -74,7 +99,15 @@
       "shortTitle": "刚体变换与齐次矩阵",
       "difficulty": "入门",
       "estimatedMinutes": 3,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 3,
+      "headings": [
+        "SE(3) 变换矩阵",
+        "指数坐标（Modern Robotics 核心思想）",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "把旋转 R∈SO(3) 和平移 p∈R³ 统一表示。连续变换通过矩阵连乘实现：T_02 = T_01 · T_12。"
     },
     {
       "id": "sec-04",
@@ -84,7 +117,19 @@
       "shortTitle": "DH 参数法与正运动学",
       "difficulty": "入门",
       "estimatedMinutes": 7,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 7,
+      "headings": [
+        "什么是运动学？",
+        "为什么需要 DH 参数法？",
+        "DH 参数的含义",
+        "正运动学计算流程",
+        "DH 参数法步骤",
+        "UR5 机械臂完整 DH 参数与正运动学",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "运动学研究机器人各个关节的运动如何决定末端执行器（如夹爪）的位置和姿态，不考虑力和力矩。"
     },
     {
       "id": "sec-05",
@@ -94,7 +139,22 @@
       "shortTitle": "逆运动学",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 8,
+      "headings": [
+        "问题定义",
+        "为什么逆运动学比正运动学难？",
+        "多解问题",
+        "解析法（闭合解）",
+        "2-Link 平面臂解析 IK 的完整推导",
+        "6-DOF 球腕机器人的解析 IK（Pieper 方法）",
+        "数值法（Newton-Raphson 迭代）",
+        "数值 IK 的工程细节",
+        "冗余机器人（>6 DoF）",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "已知目标位姿 T_goal，求关节角度 q，使得 FK(q) = T_goal。"
     },
     {
       "id": "sec-06",
@@ -104,7 +164,21 @@
       "shortTitle": "逆运动学求解的完整方法论",
       "difficulty": "中级",
       "estimatedMinutes": 3,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 3,
+      "headings": [
+        "逆运动学求解方法论",
+        "1. IK 问题的数学本质",
+        "2. 解析法详解",
+        "3. 数值法详解",
+        "Jacobian 转置法（最简单）",
+        "Jacobian 伪逆法",
+        "阻尼最小二乘（DLS / Levenberg-Marquardt）",
+        "4. 冗余臂的 IK：零空间利用",
+        "5. IK 求解器对比",
+        "练习题"
+      ],
+      "summary": "正运动学（FK）是唯一的、简单的；逆运动学（IK）可能有多解、无解或无穷多解——是运动学中最有挑战性的问题。"
     },
     {
       "id": "sec-07",
@@ -114,7 +188,18 @@
       "shortTitle": "Jacobian 与速度/力分析",
       "difficulty": "中级",
       "estimatedMinutes": 6,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 6,
+      "headings": [
+        "Jacobian 矩阵：连接关节空间和笛卡尔空间的桥梁",
+        "直觉理解",
+        "Jacobian 的多种用途",
+        "奇异构型",
+        "速度椭球",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "Jacobian（雅可比矩阵）描述了关节速度 $\\dot{q}$ 和末端速度 $v$ 之间的线性映射关系："
     },
     {
       "id": "sec-08",
@@ -125,7 +210,21 @@
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 3,
+      "headings": [
+        "速度运动学与 Jacobian",
+        "1. Jacobian 矩阵的定义",
+        "2. 几何 Jacobian 的构造",
+        "3. 解析 Jacobian vs 几何 Jacobian",
+        "4. Jacobian 的关键性质",
+        "奇异性",
+        "操作度（Manipulability）",
+        "5. 力映射（Static Force Analysis）",
+        "6. Jacobian 的数值计算",
+        "练习题"
+      ],
+      "summary": "正运动学告诉我们\"关节角 → 末端位姿\"，但控制机器人时更常需要\"关节速度 → 末端速度\"的映射——这就是 Jacobian 矩阵的作用。"
     },
     {
       "id": "sec-09",
@@ -135,7 +234,23 @@
       "shortTitle": "轨迹生成",
       "difficulty": "中级",
       "estimatedMinutes": 4,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 关节空间轨迹",
+        "多项式插值",
+        "梯形速度曲线（最常用）",
+        "S 曲线（七段式）",
+        "2. 笛卡尔空间轨迹",
+        "直线插值",
+        "圆弧插值",
+        "NURBS 曲线",
+        "3. 时间最优轨迹",
+        "4. 运动约束处理",
+        "5. 在线轨迹生成 vs 离线规划",
+        "练习题"
+      ],
+      "summary": "轨迹（Trajectory）= 路径（Path）+ 时间（Time）。规划器给出路径后，还需要为路径上的每个点分配时间戳——这就是轨迹生成。"
     },
     {
       "id": "sec-10",
@@ -145,7 +260,23 @@
       "shortTitle": "轨迹规划",
       "difficulty": "中级",
       "estimatedMinutes": 16,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 16,
+      "headings": [
+        "从“去哪”到“怎么去”",
+        "关节空间 vs 笛卡尔空间",
+        "多项式轨迹",
+        "三次多项式（Cubic）",
+        "五次多项式（Quintic）",
+        "梯形速度曲线（工业标配）",
+        "多路点轨迹（Via Points）",
+        "笛卡尔空间直线规划",
+        "时间最优轨迹（进阶）",
+        "工程实践总结",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "前面我们解决了： - 正运动学：给定 q → 计算末端位姿 - 逆运动学：给定目标位姿 → 求 q - Jacobian：关节速度 ↔ 末端速度"
     },
     {
       "id": "sec-11",
@@ -155,7 +286,21 @@
       "shortTitle": "Product of Exponential…",
       "difficulty": "高级",
       "estimatedMinutes": 10,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 10,
+      "headings": [
+        "为什么需要 PoE？DH 参数法的局限",
+        "螺旋运动：刚体运动的统一描述",
+        "螺旋轴的 6 维表示",
+        "螺旋轴的 4×4 矩阵表示 [S]",
+        "PoE 正运动学公式",
+        "矩阵指数的封闭解（Rodrigues 公式推广）",
+        "PoE 空间 Jacobian",
+        "DH vs PoE 完整对比总结",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "DH 参数法虽然是工业标准，但存在几个根本性限制："
     },
     {
       "id": "sec-12",
@@ -166,7 +311,16 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "什么是冗余机器人？",
+        "零空间（Null Space）的数学",
+        "零空间的典型应用",
+        "任务优先级框架",
+        "练习"
+      ],
+      "summary": "当机器人的自由度(DoF)大于任务空间维度时，就是冗余机器人。"
     },
     {
       "id": "sec-13",
@@ -176,7 +330,18 @@
       "shortTitle": "并联与冗余机器人运动学",
       "difficulty": "高级",
       "estimatedMinutes": 3,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 并联机器人架构",
+        "2. Delta 机器人逆运动学",
+        "3. Stewart 平台运动学",
+        "4. 冗余机器人",
+        "5. 冗余 IK：零空间",
+        "6. 冗余 IK 的数值实现",
+        "练习题"
+      ],
+      "summary": "串联机器人的反面是并联机器人（Delta/Stewart）——多个闭环结构。冗余机器人则是 $n > 6$ 的系统。本节讲解这两类特殊机器人的运动学。"
     },
     {
       "id": "sec-14",
@@ -186,7 +351,25 @@
       "shortTitle": "奇异性分析与可操作性椭球",
       "difficulty": "中级",
       "estimatedMinutes": 12,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 12,
+      "headings": [
+        "1. 为什么工业和具身智能同时怕奇异",
+        "2. 从雅可比矩阵到“几何奇异”",
+        "3. 奇异值分解（SVD）：看透雅可比的三把尺子",
+        "4. 奇异性分类（六种主流类型）",
+        "5. 可操作性椭球（Yoshikawa Manipulability Ellipsoid）",
+        "6. 阻尼最小二乘（DLS）：工业级奇异性回避",
+        "7. 冗余机器人：用“零空间”同时做两件事",
+        "8. 优化视角下的奇异回避：二次规划（QP）是万金油",
+        "9. 规划层面：提前绕过奇异",
+        "10. VLA / 具身智能时代的新启示",
+        "11. 完整实战：7-DoF Panda 机械臂奇异监控",
+        "12. 工程检查清单（真机上机前对照）",
+        "13. 练习题",
+        "14. 延伸阅读"
+      ],
+      "summary": "新手写逆运动学用 J^+ \\dot{x} 解析得很漂亮，一上真机发现： - 机器人突然“抽风”，某个关节角速度飙到 500°/s - 明明目标只是 “向前 1cm”，关节却走出一段奇怪弧线 - 重现一次成功、下次就报保护停机"
     },
     {
       "id": "sec-15",
@@ -196,7 +379,24 @@
       "shortTitle": "运动学标定与误差建模",
       "difficulty": "高级",
       "estimatedMinutes": 14,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 14,
+      "headings": [
+        "1. 先分清两个常被混淆的指标",
+        "2. 误差来源的完整分解",
+        "3. 误差建模：从参数误差到位姿误差",
+        "误差雅可比怎么求",
+        "4. 标定问题的形式化",
+        "位姿误差怎么算出来",
+        "5. 可辨识性：不是所有参数都能标定出来",
+        "6. 测量方案的选择",
+        "7. 完整实现：一个可运行的标定流程",
+        "8. 标定之后：改模型还是改控制器",
+        "9. 与手眼标定的关系",
+        "10. 常见误区",
+        "11. 习题"
+      ],
+      "summary": "前十六节我们一直在讨论「给定一组参数，如何算出末端位姿」。这一节要讨论一个在工程上更痛的问题：这组参数本身是错的。"
     },
     {
       "id": "sec-16",
@@ -207,7 +407,19 @@
       "difficulty": "高级",
       "estimatedMinutes": 7,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 7,
+      "headings": [
+        "1. VLA Action Chunk 的结构",
+        "2. 实时逆运动学（IK）：从笛卡尔到关节",
+        "3. Action Chunk 执行策略",
+        "4. 奇异点处理",
+        "5. 冗余度利用（7-DoF 机械臂）",
+        "6. 轨迹平滑与限速",
+        "7. 实测延迟分析",
+        "8. 学习路径"
+      ],
+      "summary": "VLA 模型输出的是「笛卡尔空间 action chunk」（16 步 × 7-14 维），但机器人关节伺服器只接受「关节空间指令」。这中间的桥梁 — 实时逆运动学（IK）+ 轨迹平滑 + 奇异点避让 — 是 VLA 部署的关键工程环节。本节深入讲解从 VLA action chunk 到关节指令的完整执行链路。"
     },
     {
       "id": "sec-17",
@@ -218,7 +430,24 @@
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 8,
+      "headings": [
+        "1. 为什么人形机器人需要「全身运动学」",
+        "2. 浮动基座建模：从 SE(3) 自由度开始",
+        "3. 全身雅可比：多任务的层叠表达",
+        "4. 接触约束：脚底就是新基座",
+        "5. Figure S0 范式：视觉-本体感知融合的运动学",
+        "6. 多端任务的可解性条件",
+        "7. 代码示例：6 DOF 浮动基座 + 7 DOF 单臂的雅可比构造",
+        "8. 30+ DOF 量产人形的真实复杂度",
+        "9. 学习路径与练习题",
+        "10. 小结"
+      ],
+      "summary": "工业机械臂运动学有一个隐含前提：基座（base frame）固定在地面或工作台，所有关节都基于这个固定基座做位姿计算。但人形机器人 / 四足机器人有两个关键差异："
     }
-  ]
+  ],
+  "readingMinutes": 115,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 106189
 }

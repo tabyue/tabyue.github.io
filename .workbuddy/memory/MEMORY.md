@@ -68,7 +68,7 @@ health_check 覆盖：JSON 解析 / id 唯一 / 内容查重 / category 白名�
 - 数学与编程模块要求教材级（公理化定义、定理证明、数学史、误区、习题）
 - **模块/章节命名要 ASCII 友好**，避免 emoji 与中文括号污染 modId
 - 每轮深化后必须同步 3 处 lastUpdated：learn/*.json 顶层 + learning-path.json 对应模块（modules[].lastUpdated，用 `name` 匹配）+ 新增 section 自身
-- **2026-10-13 结构性重构**：29/32 模块章节已按 tier(0基础/1核心/2进阶/3前沿) 重排为教学梯度，全部章节有 difficulty(入门/中级/高级)/estimatedMinutes/shortTitle/isFrontier/isBrief。**以后新增章节一律 append 到对应 tier 的位置（前沿专题放尾部），禁止再 unshift 到开头**。重排工具 `tools/restructure_learn.py`（幂等，输入 `tools/learn_sort_plan/`）；前端 `/learn/<mod>` 现在是模块大纲页，`/learn/<mod>/<n>` 是章节页（带小节目录）；章节新增字段记得同步 `sync_learn_split.py` 的 sectionsMeta，缺了大纲页会静默降级
+- **2026-10-13 结构性重构**：29/32 模块章节已按 tier(0基础/1核心/2进阶/3前沿) 重排为教学梯度，全部章节有 difficulty(入门/中级/高级)/estimatedMinutes/shortTitle/isFrontier/isBrief。**以后新增章节一律在数组末尾 append，并保持 tier 单调，禁止插到中间或开头**。重排工具 `tools/restructure_learn.py`（幂等，输入 `tools/learn_sort_plan/`）；前端 `/learn/<mod>` 现在是模块大纲页，`/learn/<mod>/<n>` 是章节页（带小节目录）；章节新增字段记得同步 `sync_learn_split.py` 的 sectionsMeta，缺了大纲页会静默降级
 - **2026-10-22 规范守卫**（重构 9 天后体检：结构守住了，写入规范回潮）。三条硬规范，已由脚本自动治理：
   1. 标题里不写「（2026-10 前沿）」类时间标记 —— 前端按 `isFrontier` 显示徽章，标题重复写会超长被截断
   2. 正文开头不重复章节标题（前端单独渲染 h1，会连显两遍）
@@ -77,7 +77,10 @@ health_check 覆盖：JSON 解析 / id 唯一 / 内容查重 / category 白名�
   - `tools/fix_learn_links.py`：按「链接文字 ↔ 目标章节标题」修内链。重排只保证索引不越界，**不保证指向正确**，首跑修了 170 处历史错位
   - `tools/verify_learn_structure.py`：结构守卫（元数据/difficulty 口径/tier 单调/前沿位置/标题规范/重复标题/内链/split 同步）
 - **内链章节号是 1-based**：`/learn/<mod>/N` 的 N 从 1 起（前端 `parseRoute: secIdx=n-1`），`/mod/0` 是错的。health_check 原先把 N 当 0-based 下标（既漏放 `/0` 又误报末章），2026-10-22 已修为 `1 <= N <= len`
-- **阅读时长两套口径并存（待定）**：自动化按 ~113 字/分钟，10-13 重构脚本按 400 字/分钟，13 处偏慢口径未统一（大纲页同体量章节时长差 6 倍）。`normalize_learn.py --resync-minutes` 可一键按 400 统一
+- **2026-10-26 浏览时长口径已分离**：保留源 `estimatedMinutes` 不覆盖；`sync_learn_split.py` 派生 `readingMinutes`（中文400字/分、英文220词/分、代码900字符/分）到章节索引/模块/目录。前端统一显示「浏览约N分钟（不含练习）」；`estimatedHours` 另标含练习建议投入，不代表掌握程度。不要再盲跑 `--resync-minutes`。
+- **2026-10-26 学习体验重构**：7阶段/32模块/539章，章节标题顺序全部保持。`learning-path.modules[].id` 为真实英文ID；旧中文URL仅作alias；同步脚本自动更新id/sectionCount/chars/readingMinutes/lastUpdated。进度key和缓存统一canonical ID，无损合并旧记录；`sections`仅手动完成、`visitedSections/lastSection`负责访问和续读，禁止打开即算完成或再次清空进度。
+- 新模块导学字段 `learningObjectives[]/studyGuide[]/prerequisites[]`；guide和前置支持Markdown内链。搜索读取split的headings/summary，不全量下载正文。守卫新增目录计数/派生时长/搜索元数据和导学内链检查；`normalize_learn`不能将`/0`静默改成大纲，不能修改围栏代码中的链接。
+- 回归：`python -B -m unittest discover -s tools -p test_learn_pipeline.py`（34项）、`node tools/test_learn_ui.cjs`（32项，现有playwright-core+Edge）。截图与JSON保留 `.workbuddy/validation/`，仅本机git exclude，不提交；Markdown必须先保护引用内代码围栏，后处理引用块，防代码混入blockquote HTML。
 
 ## 自动化跨实例协调
 - automation-5 常并行多实例共享工作树：启动先 `git status`，有残留则**接手而非覆盖**

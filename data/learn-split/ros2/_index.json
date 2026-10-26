@@ -60,7 +60,19 @@
       "shortTitle": "核心通信机制",
       "difficulty": "入门",
       "estimatedMinutes": 11,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 11,
+      "headings": [
+        "为什么需要 ROS2？",
+        "三种通信模式",
+        "Topic（话题）详解",
+        "QoS 策略",
+        "ROS2 通信模式选择指南",
+        "ROS2 常用命令速查",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "ROS2（Robot Operating System 2）不是一个传统意义上的“操作系统”，而是一套机器人软件中间件——提供进程间通信、硬件抽象、包管理等基础设施。"
     },
     {
       "id": "sec-02",
@@ -70,7 +82,18 @@
       "shortTitle": "ROS2 通信机制深度解析",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 4,
+      "headings": [
+        "1. ROS2 架构层次",
+        "2. DDS 核心概念",
+        "3. QoS（Quality of Service）详解",
+        "4. 节点生命周期（Lifecycle Nodes）",
+        "5. TF2 坐标变换",
+        "6. 性能调优",
+        "练习题"
+      ],
+      "summary": "从 ROS1 到 ROS2，最大的变化是底层通信从自定义 TCPROS 换成了工业级的 DDS（Data Distribution Service）。理解 DDS 才能调好 ROS2 的性能。"
     },
     {
       "id": "sec-03",
@@ -80,7 +103,18 @@
       "shortTitle": "ROS2 Launch 系统与参数管理",
       "difficulty": "入门",
       "estimatedMinutes": 5,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 5,
+      "headings": [
+        "1. Launch 文件基础",
+        "2. 参数管理",
+        "3. Composable Nodes（零拷贝节点组合）",
+        "4. 命名空间与重映射",
+        "5. Launch 事件与条件",
+        "6. 最佳实践",
+        "练习题"
+      ],
+      "summary": "一个机器人系统需要同时启动十几个节点——手动一个个启动不现实。Launch 系统是 ROS2 的\"编排器\"。"
     },
     {
       "id": "sec-04",
@@ -90,7 +124,18 @@
       "shortTitle": "ROS2 高级主题",
       "difficulty": "中级",
       "estimatedMinutes": 6,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 6,
+      "headings": [
+        "1. Service（同步请求-响应）",
+        "2. Action（长时任务 + 反馈 + 可取消）",
+        "3. Executor 调度模型",
+        "4. 参数服务器与动态重配置",
+        "5. 自定义消息类型",
+        "6. ROS2 调试工具",
+        "练习题"
+      ],
+      "summary": "Topic 适合数据流，但对于\"执行一个任务\"\"查询一个值\"等场景，需要 Service 和 Action。Executor 则决定了节点如何调度回调。"
     },
     {
       "id": "sec-05",
@@ -100,7 +145,17 @@
       "shortTitle": "TF2 坐标变换",
       "difficulty": "中级",
       "estimatedMinutes": 12,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 12,
+      "headings": [
+        "TF2：ROS2 的坐标系管理系统",
+        "为什么需要坐标变换？",
+        "TF2 坐标系树",
+        "调试工具",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "在机器人系统中，不同组件有各自的坐标系：相机坐标系、激光雷达坐标系、机械臂基座坐标系、世界坐标系……"
     },
     {
       "id": "sec-06",
@@ -110,7 +165,18 @@
       "shortTitle": "URDF 模型描述",
       "difficulty": "中级",
       "estimatedMinutes": 9,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 9,
+      "headings": [
+        "URDF：机器人的“数字蓝图”",
+        "URDF 描述什么？",
+        "关节类型",
+        "URDF 在 ROS2 中的用途",
+        "Xacro 宏",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "URDF（Unified Robot Description Format） 是 ROS 中描述机器人模型的标准格式。一个 URDF 文件包含了机器人的完整物理描述。"
     },
     {
       "id": "sec-07",
@@ -120,7 +186,17 @@
       "shortTitle": "Nav2 与 MoveIt2",
       "difficulty": "中级",
       "estimatedMinutes": 10,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 10,
+      "headings": [
+        "Nav2 和 MoveIt2：ROS2 的两大规划框架",
+        "Nav2：移动机器人导航",
+        "MoveIt2：机械臂运动规划",
+        "MoveIt2（机械臂运动规划）",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "Nav2 是 ROS2 中移动机器人（轮式/四足）的标准导航框架，实现从 A 点到 B 点的自主导航。"
     },
     {
       "id": "sec-08",
@@ -130,7 +206,25 @@
       "shortTitle": "ros2_control 与硬件抽象",
       "difficulty": "中级",
       "estimatedMinutes": 16,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 16,
+      "headings": [
+        "为什么需要 ros2_control？",
+        "核心架构",
+        "三层抽象",
+        "硬件接口类型",
+        "接口类型",
+        "编写自定义 HardwareInterface",
+        "URDF 中的 ros2_control 配置",
+        "控制器配置 (YAML)",
+        "控制器类型速查",
+        "常见硬件对接方案",
+        "从仿真到真机的切换",
+        "启动流程",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "前面我们学了 Nav2（导航）和 MoveIt2（运动规划），但它们输出的都是期望运动（速度指令或关节轨迹）。谁来把这些指令变成真实电机的 PWM 信号？"
     },
     {
       "id": "sec-09",
@@ -140,7 +234,15 @@
       "shortTitle": "DDS通信调优与QoS策略选择",
       "difficulty": "高级",
       "estimatedMinutes": 3,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "DDS是ROS2的通信基础",
+        "QoS策略选择指南",
+        "QoS不匹配 = 收不到消息",
+        "练习"
+      ],
+      "summary": "ROS2底层使用DDS(Data Distribution Service)中间件进行通信。不同的QoS(Quality of Service)配置直接影响数据传输的可靠性和延迟。"
     },
     {
       "id": "sec-10",
@@ -150,7 +252,17 @@
       "shortTitle": "Lifecycle节点与生产级ROS2系统设…",
       "difficulty": "高级",
       "estimatedMinutes": 3,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "从Demo到产品：ROS2 Lifecycle节点",
+        "Lifecycle节点的状态机",
+        "为什么机器人需要Lifecycle？",
+        "Lifecycle节点实现",
+        "生产级ROS2系统设计模式",
+        "练习"
+      ],
+      "summary": "实验室的ROS2节点用 ros2 run 启动，Ctrl+C 停止——简单粗暴。但生产环境需要优雅的状态管理：节点启动时初始化硬件、运行时监控健康状态、停止时安全释放资源。Lifecycle节点提供了这个能力。"
     },
     {
       "id": "sec-11",
@@ -160,7 +272,18 @@
       "shortTitle": "Launch文件与多机器人系统部署",
       "difficulty": "高级",
       "estimatedMinutes": 5,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 5,
+      "headings": [
+        "ROS2 Launch系统",
+        "Launch文件类型",
+        "Python Launch文件示例",
+        "多机器人部署",
+        "Namespace隔离",
+        "参数管理",
+        "练习"
+      ],
+      "summary": "ROS2的Launch系统用于启动和配置复杂的多节点系统。一个机器人系统可能需要同时启动20+个节点（驱动、感知、规划、控制、可视化），手动逐个启动不现实。"
     },
     {
       "id": "sec-12",
@@ -170,7 +293,19 @@
       "shortTitle": "ROS2 实战架构",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "1. ROS2 项目结构",
+        "2. 单机器人架构",
+        "3. 跨网络的多机器人",
+        "4. 云边架构",
+        "5. ROS2 与云的桥接",
+        "6. Fleet 管理系统",
+        "7. 生产环境清单",
+        "练习题"
+      ],
+      "summary": "\"写个 Hello World\"和\"搭建生产机器人系统\"之间有巨大鸿沟。本节讲解现实中 ROS2 架构的演进和最佳实践。"
     },
     {
       "id": "sec-13",
@@ -181,7 +316,26 @@
       "difficulty": "高级",
       "estimatedMinutes": 13,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 13,
+      "headings": [
+        "1. 为什么 VLA 时代 ROS2 还会更重要",
+        "2. VLA 节点的 ROS2 接口设计",
+        "2.1 核心契约：把 VLA 看成\"高层 Action Server\"",
+        "2.2 接口定义（IDL）",
+        "2.3 ROS2 节点骨架（Python）",
+        "3. 推理性能：把 VLA 嵌进 ros2_control 实时环",
+        "3.1 控制频率分层",
+        "3.2 ros2_control 中的\"VLA + 平滑器 + 安全闸门\"链",
+        "4. micro-ROS：把 VLA 输出送到末端执行器",
+        "5. 多策略协同：QoS 与 Lifecycle 的实战配置",
+        "6. 完整 launch 与 YAML（生产级）",
+        "7. 可追溯：rosbag2 + 策略指纹满足合规",
+        "8. 工程陷阱与最佳实践",
+        "9. 联动本站",
+        "10. 练习"
+      ],
+      "summary": "2024 年起 VLA（Vision-Language-Action）大模型——OpenVLA、π0、GR00T、RDT-1B、HY-Embodied、VLOA 等——把\"端到端神经策略\"做成了机器人的新标配。一个直觉是：\"既然神经网络直接输出关节扭矩或末端位姿，那 ROS2 这种基于话题/服务的中间件还有用吗？\""
     },
     {
       "id": "sec-14",
@@ -192,7 +346,22 @@
       "difficulty": "高级",
       "estimatedMinutes": 10,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 10,
+      "headings": [
+        "1. ROS2 多机协作的三大工程问题",
+        "2. DDS Discovery Server：跨网络发现的标准答案",
+        "3. Domain Bridge：把命名空间变成「物理隔离」",
+        "4. 多机时间同步：从 NTP 到 PTP",
+        "5. 多机协作的三种通信范式",
+        "5.1 中心化（Central Coordinator）",
+        "5.2 去中心化（Distributed Consensus）",
+        "5.3 隐式通信（Implicit / Observation-based） — Helix-02 范式",
+        "6. 多机仿真：Gazebo / Isaac Sim 多机器人配置",
+        "7. 实战检查清单",
+        "8. 进阶读物"
+      ],
+      "summary": "ROS2 在「单机器人完成单一任务」上已是工业级成熟方案，但多机器人协作才是下一个十年的爆发点。从仓储 AMR 集群、工厂 AGV 编队、到 2026 年 Figure Helix-02 把单个神经网络部署到两台 humanoid 上做协同铺床，我们都需要一个稳定、低延迟、易扩展的多机通信层。本节先讲清楚 ROS2 给多机协作准备的三层基座（DDS Disc"
     },
     {
       "id": "sec-15",
@@ -203,7 +372,26 @@
       "difficulty": "高级",
       "estimatedMinutes": 80,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 12,
+      "headings": [
+        "ROS 2 解决了什么",
+        "缺的那一层",
+        "Agentic 操作系统在做什么",
+        "Skill-MD：让技能可被发现",
+        "描述里最该写的两件事",
+        "失败处理：Agentic 运行时的真正价值",
+        "恢复技能的三分类",
+        "一个可运行的技能注册与编排骨架",
+        "与同类框架的横向对照",
+        "实时性：Agentic 层与 ROS 2 QoS 的关系",
+        "迁移路径：四步走",
+        "一个反面提醒：什么时候不该上 Agent",
+        "与本节相关的站点资源",
+        "选型与落地建议",
+        "能力自检清单"
+      ],
+      "summary": "到第 11 节为止，我们已经把 ROS 2 的核心机制过了一遍：节点、话题、服务、动作、参数、生命周期、DDS QoS、Launch 与多机部署。第 12 节讨论了它在 VLA 时代的角色。"
     },
     {
       "id": "sec-16",
@@ -214,7 +402,34 @@
       "difficulty": "高级",
       "estimatedMinutes": 80,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 14,
+      "headings": [
+        "一台机器人上有几种时间尺度",
+        "一个具体的失败场景",
+        "三层切分：运行时 / 中间件 / Agent 框架",
+        "ROS 2 到底在哪一层",
+        "运行时层的四个职责",
+        "实时性的度量：均值是陷阱",
+        "怎么测",
+        "隔离手段：从核绑定到优先级",
+        "CPU 核绑定",
+        "实时调度优先级",
+        "内存配额与故障隔离",
+        "频率桥接：策略 50 Hz → 运控 1 kHz",
+        "三个必须做的处理",
+        "时间同步：统一时钟与时间戳",
+        "三个常见时钟",
+        "多机场景：PTP",
+        "时间戳该打在哪",
+        "决策表：什么时候该引入独立运行时",
+        "高频坑",
+        "能力自检清单"
+      ],
+      "summary": "先把问题具体化。一台人形机器人上同时跑着这些模块，它们对时间的要求完全不同："
     }
-  ]
+  ],
+  "readingMinutes": 137,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 122907
 }

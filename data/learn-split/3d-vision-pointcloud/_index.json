@@ -72,7 +72,17 @@
       "shortTitle": "深度相机与点云采集",
       "difficulty": "入门",
       "estimatedMinutes": 10,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 10,
+      "headings": [
+        "深度相机：给机器人一双“3D 眼睛”",
+        "三种主流深度传感技术",
+        "从深度图到点云",
+        "深度相机选型决策",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "普通 RGB 相机只能获取 2D 图像，缺少深度信息。深度相机（RGB-D Camera） 同时输出彩色图像和深度图，让机器人能感知 3D 世界。"
     },
     {
       "id": "sec-02",
@@ -82,7 +92,18 @@
       "shortTitle": "点云处理",
       "difficulty": "中级",
       "estimatedMinutes": 12,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 12,
+      "headings": [
+        "什么是点云？",
+        "点云从哪来？",
+        "点云处理的基本操作",
+        "Open3D：点云处理的标准库",
+        "抓取点检测",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "点云（Point Cloud） 是 3D 空间中一组离散点的集合，每个点包含 $(x, y, z)$ 坐标，可能还有颜色 $(r, g, b)$ 和法线 $(n_x, n_y, n_z)$ 等信息。"
     },
     {
       "id": "sec-03",
@@ -92,7 +113,18 @@
       "shortTitle": "SLAM 基础",
       "difficulty": "入门",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 8,
+      "headings": [
+        "同步定位与地图构建",
+        "前端（数据关联）",
+        "后端（全局优化）",
+        "主流方案",
+        "SLAM 算法选择指南",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "机器人同时回答两个问题：我在哪里？世界长什么样？"
     },
     {
       "id": "sec-04",
@@ -102,7 +134,19 @@
       "shortTitle": "6DoF 位姿估计与抓取规划",
       "difficulty": "中级",
       "estimatedMinutes": 17,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 17,
+      "headings": [
+        "什么是 6DoF 位姿？",
+        "位姿估计的三种方法",
+        "基于 ICP 的位姿精修",
+        "抓取规划：从位姿到抓取",
+        "抓取候选生成",
+        "Contact-GraspNet：深度学习抓取",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "机器人抓取物体的前提：精确知道物体在 3D 空间中的位置（x, y, z）和姿态（roll, pitch, yaw），共 6 个自由度（Degrees of Freedom）。"
     },
     {
       "id": "sec-05",
@@ -112,7 +156,19 @@
       "shortTitle": "深度学习点云处理",
       "difficulty": "高级",
       "estimatedMinutes": 23,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 24,
+      "headings": [
+        "为什么点云需要专门的深度学习模型？",
+        "PointNet：开创性工作",
+        "PointNet 实现",
+        "PointNet++ ：层级特征学习",
+        "PointNet++ 关键模块",
+        "后续发展与应用",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "点云与图像有本质区别，不能直接用 CNN 处理："
     },
     {
       "id": "sec-06",
@@ -122,7 +178,21 @@
       "shortTitle": "NeRF 与 3D Gaussian…",
       "difficulty": "高级",
       "estimatedMinutes": 14,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 14,
+      "headings": [
+        "超越点云：神经 3D 表示的崛起",
+        "NeRF：神经辐射场原理",
+        "3D Gaussian Splatting (3DGS)：实时神经渲染",
+        "在机器人中的关键应用",
+        "1. 场景重建与数字孪生",
+        "2. 透明/反光物体处理",
+        "3. 语义NeRF与机器人交互",
+        "4. 3DGS 用于机器人 Sim-to-Real",
+        "NeRF/3DGS 的局限与工程考量",
+        "练习"
+      ],
+      "summary": "传统点云是离散的 3D 表示，有固有局限：稀疏、无法表示连续表面、从单一视角观测时存在大量遮挡区域。近年来，神经辐射场（NeRF） 和 3D 高斯溅射（3D Gaussian Splatting, 3DGS） 两大技术革命性地改变了 3D 场景表示，并正在深刻影响机器人领域。"
     },
     {
       "id": "sec-07",
@@ -133,7 +203,15 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "深度相机的致命弱点",
+        "问题根源",
+        "解决方案",
+        "练习"
+      ],
+      "summary": "结构光和ToF深度相机在透明物体（玻璃杯、塑料瓶）和反光物体（金属件、镜面）上会产生严重的深度缺失或错误。这在机器人抓取中是高频问题——厨房场景中30%+物体涉及透明/反光。"
     },
     {
       "id": "sec-08",
@@ -143,7 +221,18 @@
       "shortTitle": "多视角视觉融合与主动感知",
       "difficulty": "高级",
       "estimatedMinutes": 12,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 12,
+      "headings": [
+        "为什么单一视角不够？",
+        "多视角感知的数学基础",
+        "完整实现：多视角融合策略学习",
+        "主动感知（Active Perception）",
+        "多视角融合在不同机器人系统中的应用",
+        "设计多视角系统的工程考量",
+        "练习"
+      ],
+      "summary": "机器人操作中的一个核心痛点是视觉遮挡——手指抓取物体时恰好挡住了腕部相机的视野，精密操作时看不清关键接触点。2026年arXiv论文FingerViP(2604.21331)首次系统性地提出通过指尖微型相机解决这一问题，开辟了多视角感知的新范式。"
     },
     {
       "id": "sec-09",
@@ -153,7 +242,41 @@
       "shortTitle": "动态场景与形变物体",
       "difficulty": "高级",
       "estimatedMinutes": 13,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 13,
+      "headings": [
+        "1. 静态假设的失效",
+        "前置概念清单",
+        "2. 场景流：定义与表示",
+        "2.1 什么是场景流",
+        "2.2 自运动与场景流的分解",
+        "3. 经典方法",
+        "3.1 从 ICP 到场景流",
+        "3.2 基于光流的提升法",
+        "3.3 变分方法",
+        "4. 深度学习方法",
+        "4.1 FlowNet3D",
+        "4.2 PointPWC-Net",
+        "4.3 自监督训练",
+        "5. 非刚性配准",
+        "5.1 问题形式",
+        "5.2 Coherent Point Drift（CPD）",
+        "5.3 CPD 的三个优良性质",
+        "5.4 什么时候用非刚性配准",
+        "6. 时序跟踪",
+        "6.1 从逐帧估计到状态估计",
+        "6.2 恒定速度模型何时失效",
+        "6.3 数据关联：跟踪里最难的一步",
+        "7. 形变物体操作",
+        "7.1 为什么形变物体难",
+        "7.2 可行的表示",
+        "7.3 与场景流的关系",
+        "8. 评测指标",
+        "9. 可运行示例",
+        "10. 常见误区",
+        "11. 习题"
+      ],
+      "summary": "前面几节处理的点云——深度相机采集、Open3D 处理、SLAM 建图、6DoF 位姿估计——有一个共同的隐含假设：场景是静止的。"
     },
     {
       "id": "sec-10",
@@ -164,7 +287,19 @@
       "difficulty": "高级",
       "estimatedMinutes": 5,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 5,
+      "headings": [
+        "为什么需要语言引导的3D理解？",
+        "从2D VLM到3D场景理解",
+        "3D-LLM：让大语言模型理解3D世界",
+        "LEO：具身多模态大模型",
+        "3D特征提取：从点云到Token",
+        "开放词汇3D检测",
+        "前沿工作",
+        "练习"
+      ],
+      "summary": "传统3D视觉只做几何处理（分割、检测、重建），不理解语义。但机器人需要理解'把红色的杯子放到微波炉里面'——这需要将语言与3D空间紧密绑定。"
     },
     {
       "id": "sec-11",
@@ -175,7 +310,40 @@
       "difficulty": "高级",
       "estimatedMinutes": 46,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 12,
+      "headings": [
+        "一、点云给出的是几何，操作需要的是可供性",
+        "二、可供性的形式化",
+        "从动作空间出发的定义",
+        "三种常见的简化",
+        "三、从点云提取接触几何",
+        "法向估计",
+        "曲率",
+        "支撑关系",
+        "四、可供性学习的三条路线",
+        "路线一：解析规则（无学习）",
+        "路线二：监督学习",
+        "路线三：从世界模型或视频中自监督",
+        "五、遮挡与不完全观测",
+        "三种应对",
+        "六、透明与反光物体的老问题",
+        "七、最小可运行骨架",
+        "八、能力自检清单",
+        "九、与其他章节的连接",
+        "十、再深入一层：可供性在长程任务里怎么组织",
+        "接触图（Contact Graph）",
+        "为什么这个视角有用",
+        "与可供性的接口",
+        "十一、补充自检",
+        "十二、可供性估计的常见坑",
+        "十三、可供性与数据闭环",
+        "十四、与其他感知模态的关系"
+      ],
+      "summary": "点云告诉你物体表面在哪里。这是一件很基础、也很不够用的事。"
     }
-  ]
+  ],
+  "readingMinutes": 130,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 112171
 }

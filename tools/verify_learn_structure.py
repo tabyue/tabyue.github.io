@@ -20,6 +20,8 @@ import os
 import re
 import sys
 from collections import Counter
+from normalize_learn import BACKTICKED_LINK, map_prose
+from sync_learn_split import reading_metadata
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LEARN = os.path.join(ROOT, 'data', 'learn')
@@ -37,11 +39,18 @@ META_KEYS = ('shortTitle', 'difficulty', 'tier', 'estimatedMinutes')
 fails, warns = [], []
 
 
+def read_json(path):
+    with io.open(path, encoding='utf-8') as stream:
+        return json.load(stream)
+
+
 def main():
+    fails.clear()
+    warns.clear()
     mods = {}
     for f in sorted(os.listdir(LEARN)):
         if f.endswith('.json'):
-            mods[f[:-5]] = json.load(io.open(os.path.join(LEARN, f), encoding='utf-8'))
+            mods[f[:-5]] = read_json(os.path.join(LEARN, f))
 
     total = sum(len(d.get('sections', [])) for d in mods.values())
     print('模块 %d，章节 %d' % (len(mods), total))
@@ -141,7 +150,7 @@ def main():
         if not os.path.exists(ip):
             split_bad.append('%s 缺 _index.json' % mid)
             continue
-        idx = json.load(io.open(ip, encoding='utf-8'))
+        idx = read_json(ip)
         sm = idx.get('sectionsMeta') or []
         secs = d.get('sections', [])
         if len(sm) != len(secs):
@@ -161,6 +170,66 @@ def main():
     print('[8] learn-split 一致性问题: %d %s' % (len(split_bad), split_bad[:6]))
     if split_bad:
         fails.append('learn-split 不一致 %s' % split_bad[:5])
+
+    # --- 9 Catalog counts, derived browsing/search metadata and module guidance ---
+    derived_bad, guidance_bad = [], []
+    catalog = read_json(os.path.join(ROOT, 'data', 'learning-path.json'))
+    entries = [m for stage in catalog.get('stages', []) for m in stage.get('modules', [])]
+    ids = [m.get('id') for m in entries]
+    if len(ids) != len(set(ids)) or set(ids) != set(mods):
+        derived_bad.append('catalog IDs must cover every module exactly once')
+    for entry in entries:
+        mid = entry.get('id')
+        if mid not in mods:
+            continue
+        d = mods[mid]
+        secs = d['sections']
+        ix = read_json(os.path.join(SPLIT, mid, '_index.json'))
+        sm = ix.get('sectionsMeta') or []
+        reading = sum(reading_metadata(s.get('content') or '')['readingMinutes'] for s in secs)
+        chars = sum(len(s.get('content') or '') for s in secs)
+        if entry.get('sectionCount') != len(secs) or entry.get('readingMinutes') != reading or entry.get('chars') != chars:
+            derived_bad.append(mid + ': catalog counts/reading estimate stale')
+        if ix.get('readingMinutes') != reading or ix.get('chars') != chars:
+            derived_bad.append(mid + ': module reading estimate stale')
+        if entry.get('lastUpdated') != d.get('lastUpdated'):
+            derived_bad.append(mid + ': catalog lastUpdated stale')
+        for i, (sec, meta) in enumerate(zip(secs, sm), 1):
+            expected = reading_metadata(sec.get('content') or '')
+            if any(meta.get(k) != v for k, v in expected.items()):
+                derived_bad.append('%s/%d: browsing/search metadata stale' % (mid, i))
+            if sec.get('tier') not in (0, 1, 2, 3):
+                guidance_bad.append('%s/%d: invalid tier' % (mid, i))
+            prose = []
+            map_prose(sec.get('content') or '', lambda chunk: prose.append(chunk) or chunk)
+            if BACKTICKED_LINK.search('\n'.join(prose)):
+                guidance_bad.append('%s/%d: prose link wrapped in backticks' % (mid, i))
+        for key in ('prerequisites', 'learningObjectives', 'studyGuide'):
+            values = d.get(key)
+            if values is not None and (not isinstance(values, list) or not values or
+                    any(not isinstance(v, str) or not v.strip() for v in values)):
+                guidance_bad.append('%s: invalid %s' % (mid, key))
+            if ix.get(key) != values:
+                derived_bad.append('%s: %s missing from split' % (mid, key))
+        def strings(value):
+            if isinstance(value, str):
+                yield value
+            elif isinstance(value, list):
+                for child in value:
+                    yield from strings(child)
+            elif isinstance(value, dict):
+                for child in value.values():
+                    yield from strings(child)
+        for text in strings({k: v for k, v in d.items() if k != 'sections'}):
+            for target, number in LINK.findall(text):
+                if target not in mods or not (1 <= int(number) <= len(mods[target]['sections'])):
+                    guidance_bad.append('%s: invalid guidance link /learn/%s/%s' % (mid, target, number))
+    print('[9] 目录计数/浏览估算/搜索索引问题: %d %s' % (len(derived_bad), derived_bad[:5]))
+    print('[10] 导学内链/字段/正文链接问题: %d %s' % (len(guidance_bad), guidance_bad[:5]))
+    if derived_bad:
+        fails.append('派生数据未同步 %s' % derived_bad[:5])
+    if guidance_bad:
+        fails.append('导学或正文链接问题 %s' % guidance_bad[:5])
 
     print('\n' + '=' * 60)
     for w in warns:

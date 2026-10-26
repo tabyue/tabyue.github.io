@@ -68,7 +68,23 @@
       "difficulty": "入门",
       "estimatedMinutes": 22,
       "isBrief": true,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 7,
+      "headings": [
+        "1. 为什么机器人用 Linux？",
+        "2. 文件系统与目录结构",
+        "3. 核心命令速查",
+        "4. Shell 脚本基础",
+        "5. 包管理",
+        "6. 环境变量与配置",
+        "为什么机器人几乎只用 Linux",
+        "systemd：把你的程序变成\"开机就跑、挂了自动重启\"",
+        "udev：让串口设备有固定名字",
+        "排查\"卡\"的问题：一套固定流程",
+        "一个实用的排查工具箱",
+        "练习题"
+      ],
+      "summary": "机器人软件栈（ROS2、PyTorch、ONNX Runtime）几乎全部运行在 Linux 上。本节从零讲起，让没有 Linux 经验的人也能上手。"
     },
     {
       "id": "sec-02",
@@ -79,7 +95,18 @@
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 3,
+      "headings": [
+        "1. OSI 七层模型与 TCP/IP",
+        "2. TCP vs UDP：机器人通信的选择",
+        "3. IP 地址与子网",
+        "4. 分布式系统核心挑战",
+        "5. 消息队列与异步通信",
+        "6. 安全通信",
+        "练习题"
+      ],
+      "summary": "机器人系统本质上是分布式系统——多个节点（传感器、控制器、规划器）通过网络通信协作。理解网络基础是构建可靠机器人平台的前提。"
     },
     {
       "id": "sec-03",
@@ -90,7 +117,18 @@
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 3,
+      "headings": [
+        "1. Docker 核心概念",
+        "2. ROS2 + Docker 标准 Dockerfile",
+        "3. GPU 容器（NVIDIA Container Toolkit）",
+        "4. Docker Compose 多服务编排",
+        "5. 机器人场景的 Docker 特殊需求",
+        "6. CI/CD 集成",
+        "练习题"
+      ],
+      "summary": "\"在我机器上能跑\"——这句话在机器人团队协作中是最大的坑。Docker 容器化让环境一致、部署可重复。"
     },
     {
       "id": "sec-04",
@@ -101,7 +139,24 @@
       "difficulty": "中级",
       "estimatedMinutes": 22,
       "isBrief": true,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 7,
+      "headings": [
+        "1. K8s 核心概念",
+        "2. 为什么机器人集群需要 K8s？",
+        "3. 边缘 K8s 方案",
+        "4. 机器人 Fleet 管理架构",
+        "5. 实战：K3s + ROS2 部署",
+        "6. OTA 更新策略",
+        "先问一句：你真的需要 K8s 吗",
+        "概念映射：从 compose 到 K8s",
+        "批跑仿真：一个能直接用的 Job 模板",
+        "GPU 调度",
+        "四个高频坑",
+        "更轻的替代方案",
+        "练习题"
+      ],
+      "summary": "当机器人从 1 台变成 100 台，手动管理不再可行。Kubernetes（K8s）是管理容器化应用集群的事实标准。"
     },
     {
       "id": "sec-05",
@@ -112,7 +167,18 @@
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 单体 vs 微服务",
+        "2. 机器人平台的典型微服务拆分",
+        "3. gRPC vs REST",
+        "4. Protobuf 定义示例",
+        "5. 数据库选型",
+        "6. 部署与监控",
+        "练习题"
+      ],
+      "summary": "当机器人系统从\"一台设备\"扩展到\"一个平台\"时，需要后端服务支撑：任务调度、模型管理、数据存储、监控告警。微服务架构是标准选择。"
     },
     {
       "id": "sec-06",
@@ -122,7 +188,19 @@
       "shortTitle": "CI/CD与自动化测试",
       "difficulty": "中级",
       "estimatedMinutes": 4,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 4,
+      "headings": [
+        "CI/CD：让机器人软件可靠交付",
+        "为什么机器人项目更需要 CI/CD？",
+        "CI/CD 流水线",
+        "机器人测试的三个层级",
+        "仿真自动化测试",
+        "Docker 容器化",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "CI/CD（持续集成/持续交付） 是现代软件工程的标准实践。在机器人项目中尤其重要——因为软件 bug 可能导致硬件损坏。"
     },
     {
       "id": "sec-07",
@@ -132,7 +210,19 @@
       "shortTitle": "可观测性",
       "difficulty": "中级",
       "estimatedMinutes": 4,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 4,
+      "headings": [
+        "可观测性：机器人系统的\"体检\"",
+        "1. 三大支柱",
+        "2. 结构化日志",
+        "3. 指标类型",
+        "4. 分布式追踪",
+        "5. 告警（Alerting）",
+        "6. Dashboard 设计原则",
+        "练习题"
+      ],
+      "summary": "当机器人出问题时，\"log 里有什么？CPU 多少？哪个调用慢？\"——可观测性的三大支柱回答这些问题。"
     },
     {
       "id": "sec-08",
@@ -142,7 +232,19 @@
       "shortTitle": "MLOps与数据平台",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 8,
+      "headings": [
+        "MLOps：让机器人学习可复现、可迭代",
+        "机器人 MLOps 面临的特殊挑战",
+        "核心工具链",
+        "典型工作流",
+        "数据管理最佳实践",
+        "实验追踪",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "MLOps 把机器学习的实验管理、数据版本控制、模型部署等流程标准化。在机器人领域，MLOps 解决的是：“这个策略是用什么数据、什么超参数训练的？上次效果好的那个版本在哪？”"
     },
     {
       "id": "sec-09",
@@ -152,7 +254,19 @@
       "shortTitle": "CI/CD 与机器人软件自动化部署",
       "difficulty": "中级",
       "estimatedMinutes": 5,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 5,
+      "headings": [
+        "1. CI/CD 对机器人开发的意义",
+        "2. GitHub Actions 机器人 CI 示例",
+        "3. 测试金字塔",
+        "4. ROS2 专属 CI",
+        "5. 部署流水线",
+        "6. 自动化回归测试",
+        "7. 发布管理",
+        "练习题"
+      ],
+      "summary": "\"在我机器上能跑\" → \"在 100 台机器人上都能跑\"。CI/CD（持续集成 / 持续部署）让这个跨越成为可能。"
     },
     {
       "id": "sec-10",
@@ -162,7 +276,20 @@
       "shortTitle": "Observability 可观测性",
       "difficulty": "中级",
       "estimatedMinutes": 10,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 10,
+      "headings": [
+        "1. 可观测性三支柱：Logs / Metrics / Traces",
+        "2. 结构化日志：从 print 到可查询",
+        "3. 高频遥测的采样与下采样",
+        "4. OpenTelemetry：跨进程 Trace 贯穿机器人软件栈",
+        "5. 机器人特有第四支柱：传感器数据回放",
+        "6. SLO/SLI/SLA：把'体验'翻译成可观测的数字",
+        "7. 从可观测性到'智能根因分析'",
+        "8. 工程落地清单",
+        "练习题"
+      ],
+      "summary": "很多团队把 Monitoring（监控）和 Observability（可观测性）混为一谈。两者的本质区别："
     },
     {
       "id": "sec-11",
@@ -172,7 +299,19 @@
       "shortTitle": "监控运维与 OTA 更新",
       "difficulty": "高级",
       "estimatedMinutes": 9,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 9,
+      "headings": [
+        "为什么机器人需要专业的运维系统？",
+        "监控体系四层架构",
+        "技术栈",
+        "Prometheus + Grafana 监控示例",
+        "OTA（Over-The-Air）远程更新",
+        "告警规则设计",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "机器人不是部署完就不管了——它在真实世界中运行，会遇到各种意外："
     },
     {
       "id": "sec-12",
@@ -182,7 +321,18 @@
       "shortTitle": "性能测试与基准",
       "difficulty": "高级",
       "estimatedMinutes": 8,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 8,
+      "headings": [
+        "机器人性能基准：你的系统够不够快、够不够准？",
+        "机器人系统的关键性能指标",
+        "延迟分析：找到瓶颈在哪",
+        "性能基准测试框架",
+        "A/B 测试：新策略 vs 旧策略",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "性能测试不是可选项——它决定了你的机器人能不能在真实世界中工作。一个推理延迟 200ms 的策略在仿真里完美，在真机上会因为延迟导致动作滞后而失败。"
     },
     {
       "id": "sec-13",
@@ -192,7 +342,19 @@
       "shortTitle": "安全合规与故障恢复",
       "difficulty": "高级",
       "estimatedMinutes": 10,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 10,
+      "headings": [
+        "机器人安全：不只是代码不 crash",
+        "安全等级 (ISO 10218 / ISO 15066)",
+        "机器人安全的三道防线",
+        "软件安全层实现",
+        "故障恢复策略",
+        "Watchdog（看门狗）模式",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "机器人在物理世界中运行，安全问题是致命的——不是 500 错误页面，而是机械臂打到人。"
     },
     {
       "id": "sec-14",
@@ -203,7 +365,17 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "机器人功能安全：从Demo到产品的必经之路",
+        "核心标准体系",
+        "安全完整性等级（SIL）",
+        "人形机器人的安全架构",
+        "ISO 15066 人机协作安全限值",
+        "练习"
+      ],
+      "summary": "实验室的机器人Demo崩溃了重启就好，但部署在工厂/医院/家庭的机器人如果出错，后果可能是人身伤害。功能安全确保机器人在故障情况下仍然安全。"
     },
     {
       "id": "sec-15",
@@ -213,7 +385,15 @@
       "shortTitle": "机器人Fleet管理与远程运维平台",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "什么是Fleet管理？",
+        "Fleet管理核心功能",
+        "Fleet管理架构",
+        "练习"
+      ],
+      "summary": "当部署的机器人从1台变成100台、1000台时，需要统一的Fleet管理平台来监控、更新和运维。"
     },
     {
       "id": "sec-16",
@@ -223,7 +403,22 @@
       "shortTitle": "边缘端推理服务化与机器人 OTA 灰度发布",
       "difficulty": "高级",
       "estimatedMinutes": 10,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 10,
+      "headings": [
+        "为什么需要\"机器人版\"OTA？",
+        "架构总览：从云端训练到边缘推理的 5 层流水线",
+        "步骤 1：模型注册中心——版本治理是合规起点",
+        "步骤 2：策略编译与量化——速度与精度的工程平衡",
+        "步骤 3：灰度发布策略——按\"机器人维度\"分桶",
+        "步骤 4：边缘 Runtime——双策略 A/B 与毫秒级回退",
+        "步骤 5：遥测回传与\"影子模式\"评测",
+        "6 个常见踩坑",
+        "行业标杆案例（2026 Q2）",
+        "练习题",
+        "延伸阅读"
+      ],
+      "summary": "把一个 VLA 策略部署到一台真机调通后，\"上量产\"是另一个量级的工程问题。当机器人数量从 10 台到 10000 台，且每台都跑着不同版本的策略、漂在客户场景里时，传统软件 OTA（Over-The-Air）的概念远远不够："
     },
     {
       "id": "sec-17",
@@ -233,7 +428,21 @@
       "shortTitle": "VLA 模型 Serving 平台工程",
       "difficulty": "高级",
       "estimatedMinutes": 9,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 9,
+      "headings": [
+        "1. VLA Serving vs LLM Serving：关键差异",
+        "2. 推理引擎选型",
+        "3. 多机器人并发 Serving",
+        "4. 模型热更新（Zero-Downtime Deployment）",
+        "5. 监控与告警（具身 Observability）",
+        "6. 数据回流与持续学习",
+        "7. 边缘部署：Jetson AGX Orin 工程化",
+        "8. CI/CD for Robotics（具身 DevOps）",
+        "9. 成本分析 — VLA Serving 的真实开支",
+        "10. 学习路径"
+      ],
+      "summary": "VLA 模型（3-7B 参数）在真实机器人上 serving 的挑战远超 LLM chatbot — 它不仅要低延迟（< 50ms / 30Hz 控制），还要高可靠（24/7 不间断）、多机器人并发（一台 GPU 服务 N 台机器人）。本节讲解从 vLLM 推理引擎到具身 MLOps 的完整平台工程栈。"
     },
     {
       "id": "sec-18",
@@ -244,7 +453,27 @@
       "difficulty": "高级",
       "estimatedMinutes": 12,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 12,
+      "headings": [
+        "具身 AI 安全工程：全链路威胁建模与防御",
+        "1. 为什么具身 AI 的安全问题与传统 AI 安全不同？",
+        "2. 五阶段威胁建模框架（综述核心贡献）",
+        "2.1 感知层攻击与防御",
+        "2.2 认知层攻击与防御",
+        "2.3 规划层攻击与防御",
+        "2.4 行动层攻击与防御",
+        "2.5 交互层攻击与防御",
+        "3. 安全开发生命周期 (SDL) 落地清单",
+        "4. 5 大合规标准对照（2026-Q2）",
+        "5. 端到端安全架构示例",
+        "6. 红队演练：如何攻击自己的机器人",
+        "7. 合规审计报告模板",
+        "8. 参考资源（综述配套 GitHub 收藏夹）",
+        "练习题",
+        "延伸阅读"
+      ],
+      "summary": "2026 年 5 月 6 日，arXiv 上线了 51 页的《Safety in Embodied AI: A Survey of Risks, Attacks, and Defenses》（2605.02900，30+ 作者，400+ 参考文献，配套 Awesome-Embodied-AI-Safety GitHub 仓库）。这是首份覆盖具身 AI 全链路"
     },
     {
       "id": "sec-19",
@@ -255,7 +484,28 @@
       "difficulty": "高级",
       "estimatedMinutes": 14,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 10,
+      "headings": [
+        "一、组合爆炸的算术",
+        "二、统一契约：中间那一层该长什么样",
+        "三、依赖隔离是硬要求，不是洁癖",
+        "四、基准怎么选",
+        "五、可复现性：三件必须锁死的事",
+        "六、与训练框架的分工",
+        "七、落地清单",
+        "能力自检",
+        "八、从成功率数字到可行动的结论",
+        "九、仿真评测与真机评测的口径差异",
+        "十、评测平台的工程实现要点",
+        "十一、常见坑",
+        "十二、为什么这层正在成为标配",
+        "扩展自检"
+      ],
+      "summary": "机器人学习这两年有一个不太被讨论、但严重消耗工程时间的痛点：把 N 个策略接到 M 套评测环境上。朴素做法需要 N×M 份适配代码，而且每一份都可能悄悄出错——这些错误不报错，只是让成功率低几个百分点，你会误以为是自己的方法不如人。"
     }
-  ]
+  ],
+  "readingMinutes": 129,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 113173
 }

@@ -8,8 +8,9 @@
      既冗余又让标题超长（侧栏/卡片都会被截断）。剥下来的内容存进 frontierTag。
   2. 标题剥离残留序号（「26. xxx」）与 emoji。
   3. 删除正文开头与章节标题重复的 # 行 —— 前端会单独渲染 h1，重复会连显两遍。
-  4. 修正 /learn/<mod>/0 这类越界内链（URL 章节号从 1 起）→ 收敛为模块大纲页。
-  5. 解开被反引号包裹的 markdown 链接 —— renderMd 先保护行内代码再处理链接，
+  4. 解开正文中被反引号包裹的 markdown 链接（不改代码围栏内示例）。
+     越界内链交给结构守卫报告，不能擅自收敛到大纲页掩盖问题。
+     renderMd 先保护行内代码再处理链接，
      `[文字](/learn/x/1)` 会原样渲染成裸 markdown 文本，不可点击。
 
 同时补齐 shortTitle / estimatedMinutes / chars（新章节常漏）。
@@ -72,9 +73,33 @@ def short_of(t, limit=22):
     return head
 
 
+def map_prose(content, transform):
+    """Transform only prose, preserving fenced code examples byte for byte."""
+    out, chunk, fence = [], [], None
+    for line in content.splitlines(keepends=True):
+        marker = re.match(r'^ {0,3}(?:>[ \t]?)*(`{3,}|~{3,})(.*)$', line.rstrip('\r\n'))
+        if fence is None and marker:
+            if chunk:
+                out.append(transform(''.join(chunk)))
+                chunk = []
+            fence = marker.group(1)
+            out.append(line)
+        elif fence is not None:
+            out.append(line)
+            if marker and marker.group(1)[0] == fence[0] and len(marker.group(1)) >= len(fence) and not marker.group(2).strip():
+                fence = None
+        else:
+            chunk.append(line)
+    if chunk:
+        out.append(transform(''.join(chunk)))
+    return ''.join(out)
+
+
 def est_minutes(content):
-    code = sum(len(b) for b in re.findall(r'```.*?```', content, re.S))
-    text = re.sub(r'```.*?```', ' ', content, flags=re.S)
+    chunks = []
+    map_prose(content, lambda text: chunks.append(text) or text)
+    text = '\n'.join(chunks)
+    code = max(0, len(content) - sum(len(t) for t in chunks))
     cn = len(re.findall(r'[\u4e00-\u9fa5]', text))
     en = len(re.findall(r'[A-Za-z]{2,}', text))
     return max(3, int(round(cn / 400 + en / 220 + code / 900)))
@@ -119,7 +144,8 @@ def main():
     mods = {}
     for f in sorted(os.listdir(LEARN)):
         if f.endswith('.json'):
-            mods[f[:-5]] = json.load(io.open(os.path.join(LEARN, f), encoding='utf-8'))
+            with io.open(os.path.join(LEARN, f), encoding='utf-8') as stream:
+                mods[f[:-5]] = json.load(stream)
 
     for mid, d in mods.items():
         for i, s in enumerate(d.get('sections', [])):
@@ -140,19 +166,15 @@ def main():
                 changes.append('[去重复标题] %s#%d — %s' % (mid, i, s['title'][:40]))
                 c = c2
 
-            # /learn/<mod>/0 → 模块大纲页
-            def _fix(m):
-                st['link_zero'] += 1
-                changes.append('[内链] %s#%d  /learn/%s/0 → /learn/%s' % (mid, i, m.group(1), m.group(1)))
-                return '/learn/' + m.group(1)
-            c = LINK_ZERO.sub(_fix, c)
+            # Never silently turn an invalid chapter number into a module link.
+            # Report through verify_learn_structure.py and resolve using actual titles.
 
             # 解开反引号包裹的链接
             def _unwrap(m):
                 st['backtick_link'] += 1
                 changes.append('[解反引号] %s#%d  %s' % (mid, i, m.group(1)[:60]))
                 return m.group(1)
-            c = BACKTICKED_LINK.sub(_unwrap, c)
+            c = map_prose(c, lambda chunk: BACKTICKED_LINK.sub(_unwrap, chunk))
 
             if c != (s.get('content') or ''):
                 s['content'] = c
@@ -163,7 +185,10 @@ def main():
             if not s.get('shortTitle'):
                 s['shortTitle'] = short_of(s['title'])
                 st['shortTitle_filled'] += 1
-            s['chars'] = len(s.get('content') or '')
+            chars = len(s.get('content') or '')
+            if s.get('chars') != chars:
+                s['chars'] = chars
+                st['chars_synced'] += 1
             if not s.get('estimatedMinutes'):
                 s['estimatedMinutes'] = est_minutes(s.get('content') or '')
                 st['minutes_filled'] += 1
@@ -208,8 +233,8 @@ def main():
         print('\n无变化，未写盘')
         return
     for mid, d in mods.items():
-        io.open(os.path.join(LEARN, mid + '.json'), 'w', encoding='utf-8').write(
-            json.dumps(d, ensure_ascii=False, indent=2) + '\n')
+        with io.open(os.path.join(LEARN, mid + '.json'), 'w', encoding='utf-8') as stream:
+            stream.write(json.dumps(d, ensure_ascii=False, indent=2) + '\n')
     print('\n已写入 %d 个模块 —— 记得跑 tools/sync_learn_split.py' % len(mods))
 
 

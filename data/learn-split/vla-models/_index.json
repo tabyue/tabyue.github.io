@@ -4,11 +4,23 @@
   "stage": "阶段四：AI 大脑",
   "importance": "前沿",
   "estimatedHours": 40,
-  "lastUpdated": "2026-10-21T09:10",
+  "lastUpdated": "2026-10-26",
   "description": "结合视觉理解、语言指令和动作生成的端到端模型。VLA 是具身智能的前沿方向。",
   "prerequisites": [
-    "深度学习基础",
-    "模仿学习"
+    "能解释图像特征、token、自注意力和监督训练；可补学 [CNN 架构](/learn/deep-learning/1)、[Transformer](/learn/deep-learning/2) 与 [反向传播](/learn/deep-learning/5)。",
+    "理解行为克隆、分布偏移与动作分块；对应 [模仿学习基础](/learn/imitation-learning/1)、[扩散策略原理](/learn/imitation-learning/3) 和 [ACT 与 LeRobot](/learn/imitation-learning/5)。",
+    "能说明动作每一维的含义、单位、坐标系和归一化范围。[动作分词实验](/learn/vla-models/1) 不需要真机或大模型；加载模型前另行核对资源条件。"
+  ],
+  "learningObjectives": [
+    "画出图像、语言到动作的处理流程，区分连续动作、bin 编号与词表 token ID。",
+    "实现动作编码与解码，检查边界值、词表偏移和量化误差，并解释离散动作生成与 Flow Matching 的基本区别。",
+    "制定微调与部署评估方案，分别记录成功率、泛化表现、推理延迟和运行时停止条件。"
+  ],
+  "studyGuide": [
+    "先完成 [RT-2 / VLA 范式](/learn/vla-models/1) 中的 NumPy 分词实验；验收时检查范围端点、bin 编号、词表 ID 和重建误差，架构伪代码仅用于理解接口。",
+    "结合 [OpenVLA 开源实践](/learn/vla-models/2) 理解推理入口，再读 [Flow Matching](/learn/vla-models/3)；明确噪声端、数据端和积分方向，并注明代码骨架与完整模型的区别。",
+    "用 [评估基准与测试方法](/learn/vla-models/4) 建立评估表，再按 [VLA 微调实战](/learn/vla-models/5) 设计实验；随机模拟结果不能作为真实策略的测量结果。",
+    "依据 [部署挑战与推理优化](/learn/vla-models/8) 拆解延迟，结合 [部署鲁棒性与运行时保障](/learn/vla-models/25) 定义中止条件。第一轮提交分词检查、一个推理或微调实验的记录和评估表；资源不足时注明未验证项。"
   ],
   "resources": [
     {
@@ -73,12 +85,22 @@
     {
       "id": "sec-01",
       "title": "RT-2 / VLA 范式",
-      "lastUpdated": "",
-      "chars": 7601,
+      "lastUpdated": "2026-10-26",
+      "chars": 7839,
       "shortTitle": "RT-2 / VLA 范式",
       "difficulty": "入门",
       "estimatedMinutes": 8,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 9,
+      "headings": [
+        "核心思想",
+        "意义",
+        "VLA 范式的革命性意义",
+        "RT-2 架构详解",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "将机器人动作离散化为 token，与语言 token 统一在 VLM 中解码："
     },
     {
       "id": "sec-02",
@@ -88,17 +110,40 @@
       "shortTitle": "OpenVLA 开源实践",
       "difficulty": "中级",
       "estimatedMinutes": 11,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 11,
+      "headings": [
+        "OpenVLA：开源的视觉-语言-动作模型",
+        "VLA 模型的核心范式",
+        "OpenVLA 的架构",
+        "为什么 OpenVLA 重要？",
+        "LoRA 微调到新机器人",
+        "VLA 模型架构对比",
+        "动作 Tokenization 方法对比",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "OpenVLA 是 Stanford 和 TRI 联合发布的开源 VLA 模型，基于 LLaMA 2 7B 微调而来，是目前最容易上手的 VLA 实践入口。"
     },
     {
       "id": "sec-03",
       "title": "π₀ 与 Flow Matching",
-      "lastUpdated": "",
-      "chars": 9919,
+      "lastUpdated": "2026-10-26",
+      "chars": 10127,
       "shortTitle": "π₀ 与 Flow Matching",
       "difficulty": "中级",
       "estimatedMinutes": 11,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 11,
+      "headings": [
+        "π₀ 架构",
+        "π₀-FAST",
+        "π₀.5 双层架构",
+        "Flow Matching 核心代码",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "PaliGemma 2B（视觉-语言骨干）+ Flow Matching Action Head"
     },
     {
       "id": "sec-04",
@@ -108,7 +153,16 @@
       "shortTitle": "VLA评估基准与系统性测试方法",
       "difficulty": "中级",
       "estimatedMinutes": 4,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 4,
+      "headings": [
+        "为什么需要标准化评估？",
+        "主流评估基准",
+        "系统性评估框架",
+        "评估最佳实践",
+        "练习"
+      ],
+      "summary": "VLA领域缺乏统一的评估标准，不同论文用不同的任务、机器人、指标，结果难以横向对比。"
     },
     {
       "id": "sec-05",
@@ -118,7 +172,18 @@
       "shortTitle": "VLA 微调实战",
       "difficulty": "高级",
       "estimatedMinutes": 16,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 16,
+      "headings": [
+        "为什么需要微调？",
+        "微调策略对比",
+        "LoRA 微调详解",
+        "数据收集最佳实践",
+        "数据增强策略",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "预训练 VLA 模型（如 OpenVLA）在 Open X-Embodiment 数据集上训练，覆盖了多种机器人和任务。但直接部署到你的机器人上通常效果不好，原因是："
     },
     {
       "id": "sec-06",
@@ -129,7 +194,26 @@
       "difficulty": "高级",
       "estimatedMinutes": 13,
       "isFrontier": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 13,
+      "headings": [
+        "本节关注的问题",
+        "1. 三阶段范式总览",
+        "2. 阶段 1 回顾：通用 VLM 预训练（你通常不用自己做）",
+        "3. 阶段 2：Mid-training 具身化过渡（本节重点）",
+        "3.1 为什么要单独做 Mid-training？",
+        "3.2 Mid-training 的数据配方",
+        "3.3 Mid-training 训练代码骨架",
+        "4. 阶段 3：动作 Fine-tuning（经典路径，已有成熟实现）",
+        "5. GazeVLA 视角：从\"数据配方\"到\"数据源重构\"",
+        "6. HY-Embodied-0.5-X 的工程启示（端侧约束下的三阶段）",
+        "7. 选型决策树",
+        "8. 常见工程陷阱（2026 年最新）",
+        "9. 动手练习",
+        "10. 延伸阅读",
+        "本节小结"
+      ],
+      "summary": "过去两年 VLA（Vision-Language-Action）研究大多默认一条简单路径：拿一个开源 VLM（PaliGemma / Qwen-VL / LLaVA） → 直接在机器人动作数据上 fine-tune → 得到 VLA。这条路径简单粗暴，但从 2026 年上半年开始，越来越多实证工作发现它存在两个被严重低估的缺陷："
     },
     {
       "id": "sec-07",
@@ -139,7 +223,21 @@
       "shortTitle": "层次化 VLA 架构",
       "difficulty": "高级",
       "estimatedMinutes": 13,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 13,
+      "headings": [
+        "端到端 VLA 的根本矛盾",
+        "层次化 VLA 的核心思想",
+        "HiVLA：以视觉定位为核心的层次化架构",
+        "级联交叉注意力（Cascaded Cross-Attention）",
+        "层次化 VLA 对比",
+        "为什么层次化是趋势？",
+        "实现简化的层次化 VLA",
+        "π₀.5 的双层架构",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "端到端 VLA（如 RT-2、OpenVLA）将视觉理解、语言推理和动作生成全部放在一个大模型中。这带来了一个根本性矛盾："
     },
     {
       "id": "sec-08",
@@ -149,7 +247,19 @@
       "shortTitle": "VLA 部署挑战与推理优化技术",
       "difficulty": "高级",
       "estimatedMinutes": 15,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 15,
+      "headings": [
+        "部署挑战",
+        "推理优化技术",
+        "量化部署",
+        "部署架构选择",
+        "安全部署策略",
+        "推理服务化部署",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "VLA 模型从实验室到真实机器人部署，面临几个核心挑战："
     },
     {
       "id": "sec-09",
@@ -161,7 +271,17 @@
       "estimatedMinutes": 3,
       "isFrontier": true,
       "isBrief": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 3,
+      "headings": [
+        "NVIDIA GR00T N1：专为人形机器人设计的VLA",
+        "GR00T N1 架构",
+        "与其他VLA模型的对比",
+        "人形VLA部署的挑战",
+        "部署Pipeline代码框架",
+        "练习"
+      ],
+      "summary": "GR00T N1 是NVIDIA于2026年初发布的人形机器人基础模型，基于Cosmos-Reason2骨干网络，专门针对人形机器人的全身控制场景设计。作为早期版本已在Isaac Lab中开放使用。"
     },
     {
       "id": "sec-10",
@@ -172,7 +292,30 @@
       "difficulty": "高级",
       "estimatedMinutes": 14,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 14,
+      "headings": [
+        "本节关注的问题",
+        "1. 触觉传感器硬件速览",
+        "2. 经典路线：触觉作为\"第三路输入\"",
+        "3. 新范式：Touch Dreaming——让模型\"梦见\"未来触觉",
+        "3.1 HTD（Humanoid Transformer with Touch Dreaming）架构",
+        "3.2 核心训练代码",
+        "3.3 为什么\"潜在空间触觉预测\" > \"原始触觉像素预测\"？",
+        "4. 实验设计：如何在你的机器人上做触觉增强 VLA？",
+        "4.1 数据采集 checklist",
+        "4.2 训练配方（Touch Dreaming 原文）",
+        "4.3 评估协议",
+        "5. 和其他前沿方向的关系",
+        "5.1 vs WholeBodyVLA（统一隐空间）",
+        "5.2 vs Foca-VLA（力位混合控制 VLA）",
+        "5.3 vs VLA 三阶段训练（Mid-training）",
+        "6. 工程陷阱 Top 5",
+        "7. 动手练习",
+        "8. 延伸阅读",
+        "本节小结"
+      ],
+      "summary": "经典 VLA（RT-2/OpenVLA/π0）只消费两种输入模态：视觉 + 语言。机器人通过摄像头看，通过语言指令理解，然后输出动作。这个范式在\"远距离可视任务\"上已经很强——抓起一个颜色鲜艳、形状规则、和背景有明显对比的物体。"
     },
     {
       "id": "sec-11",
@@ -183,7 +326,23 @@
       "difficulty": "高级",
       "estimatedMinutes": 16,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 16,
+      "headings": [
+        "问题：长程任务为什么这么难？",
+        "两条破解路线",
+        "IVLR 架构：交错的视觉-语言推理",
+        "消融实验告诉我们什么？",
+        "工程突破：伪监督是怎么做的",
+        "IVLR vs MemoryVLA：互补还是替代？",
+        "最小可运行的 IVLR Demo",
+        "鲁棒性短板与下一步",
+        "与 2026 VLA 三大新范式的关系",
+        "练习",
+        "参考答案要点",
+        "延伸阅读"
+      ],
+      "summary": "到 2026 年 4 月，LIBERO-Long（10 步以上长任务基准）在主流 VLA 上的 SOTA 长期卡在 60-70% 区间——OpenVLA 38%、Pi0 65%、MemoryVLA 76%。同样的模型在 LIBERO-Object 这种 1-3 步短任务上轻松突破 90%，但只要任务一长，性能就断崖式下跌。"
     },
     {
       "id": "sec-12",
@@ -194,7 +353,31 @@
       "difficulty": "高级",
       "estimatedMinutes": 11,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "一、为什么 2026 年 5 月这三篇值得放到一起讲？",
+        "二、OA-WAM：把\"指向谁\"和\"现在长什么样\"分开建模",
+        "2.1 直觉先行",
+        "2.2 架构拆解",
+        "2.3 双头解码：World 头 + Flow-Matching 动作头",
+        "2.4 实验结果与\"slot intervention\"测试",
+        "2.5 工程实践要点",
+        "三、Latent Bridge：双系统 VLA 推理优化的\"特征 delta\"范式",
+        "3.1 问题：双系统 VLA 的 VLM 调用太贵了",
+        "3.2 架构与训练范式",
+        "3.3 两种\"桥接\"实现方式",
+        "3.4 实验结果",
+        "3.5 为什么这个范式重要？",
+        "四、AnchorVLA：移动操作场景的扩散策略工程化",
+        "4.1 移动操作 vs 桌面操作：为什么 chunking + diffusion 不够？",
+        "4.2 AnchorVLA 的双重妙招",
+        "4.3 实验对比",
+        "五、把三篇放回一张图：2026 下半年 VLA 工程化路线",
+        "六、动手实验建议（教学场景）",
+        "七、参考资料"
+      ],
+      "summary": "到 2026 年春，VLA（Vision-Language-Action）已经把\"端到端把视觉/语言映射到动作\"这件事跑通了。但是真要往真实机器人产线、家庭服务、移动操作场景上推，立刻撞到三堵墙："
     },
     {
       "id": "sec-13",
@@ -205,7 +388,26 @@
       "difficulty": "高级",
       "estimatedMinutes": 5,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 5,
+      "headings": [
+        "一、VLA 演化四阶段总览（2024-2026）",
+        "二、Phase 3 — 结构化推理：TriRelVLA 范式精读",
+        "2.1 核心洞察：把视觉表示「拆开」",
+        "2.2 工程实现要点",
+        "2.3 LIBERO-Long 数据印证",
+        "三、Phase 4 — 舰队级 RL：LWD 范式精读",
+        "3.1 核心洞察：把 deployment 当训练循环",
+        "3.2 两个核心算法",
+        "3.3 真实舰队数据印证",
+        "3.4 工程化代价",
+        "四、工程落地参照：北京人形 + 速腾聚创",
+        "4.1 北京人形「慧思开物 Agent」≈ Phase 3 的 Agent 层落地",
+        "4.2 速腾聚创「VTLA-3D」≈ Phase 3 的多模态扩展",
+        "五、Phase 5 展望：World-Model + Fleet RL（2026 H2）",
+        "六、给学习者的实践建议"
+      ],
+      "summary": "理解这条曲线很关键——2026 年的 VLA 不再是「再训一个更大的模型」，而是开始关心模型怎么在现实世界一边干活一边变好。"
     },
     {
       "id": "sec-14",
@@ -216,7 +418,31 @@
       "difficulty": "高级",
       "estimatedMinutes": 10,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 10,
+      "headings": [
+        "一、为什么 VLA 训练需要范式跃迁？",
+        "1.1 数据规模困境：机器人演示永远稀缺",
+        "1.2 目标错位困境：视频生成 vs 动作预测",
+        "1.3 进度感知缺失困境：长程任务终止靠手写规则",
+        "二、DeFI 范式：把 VLA 训练拆成两条独立预训练管线",
+        "2.1 核心 Insight：解耦视频生成与动作预测",
+        "2.2 GFDM 为什么是数据规模解放器？",
+        "2.3 GIDM 为什么是机器人侧的「self-supervised」放大器？",
+        "2.4 实测效果：CALVIN 4.51 / 5 接近上限",
+        "2.5 工程化代价",
+        "三、ProgressVLA 范式：把任务进度变成可微观测变量",
+        "3.1 核心 Insight：进度信号 = 长程任务的可微目标",
+        "3.2 三阶段训练管线",
+        "3.3 实测效果：长程任务 +14.8pp 大幅提升",
+        "3.4 工程化要点",
+        "四、范式融合：DeFI + ProgressVLA + LaST-R1 + AAC = ICLR 2026 VLA 全栈",
+        "4.1 范式映射对比 LLM",
+        "4.2 落地路径",
+        "五、动手实验：复现 DeFI Mini 版本",
+        "六、本节小结"
+      ],
+      "summary": "到 2025 年底，VLA 模型的训练已经走入了一个非常清晰的瓶颈：数据不够 + 目标错位。"
     },
     {
       "id": "sec-15",
@@ -227,7 +453,29 @@
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 8,
+      "headings": [
+        "概述",
+        "1. VLA 范式的三大里程碑（2024-2026）",
+        "2. Libra-VLA：异步粗到细双系统",
+        "2.1 核心思路",
+        "2.2 学习平衡定理（Learning Equilibrium）",
+        "2.3 训练流程",
+        "2.4 实验结果（关键数据）",
+        "3. SA-VLA：流匹配 VLA 的 RL 微调神器",
+        "3.1 问题诊断",
+        "3.2 三层对齐框架",
+        "表示对齐（Representation Alignment）",
+        "奖励对齐（Reward Alignment）",
+        "探索对齐（Exploration Alignment）— SCAN",
+        "3.3 实验结果",
+        "4. VLA + RL 三件套：LaST-R1 / Q2RL / SA-VLA 的互补关系",
+        "5. 双系统 VLA 三大流派对比",
+        "6. 工程实战：组装一个「三件套 + 双系统」的 VLA Stack",
+        "7. 小结与展望"
+      ],
+      "summary": "2026 年 5 月，VLA（Vision-Language-Action）领域迎来「双系统范式 + 流匹配 RL」两条主线同周收敛——智元研究院 Libra-VLA 在 ACL 2026 主会场提出首个可证明的异步双系统学习平衡定理，南洋理工 + A*STAR + 北航联合提出 SA-VLA 系统化解决「流匹配 VLA 在 RL 微调时空间偏差侵蚀」问题。"
     },
     {
       "id": "sec-16",
@@ -238,7 +486,20 @@
       "difficulty": "高级",
       "estimatedMinutes": 7,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 7,
+      "headings": [
+        "🔥 核心问题：VLA 世界模型为什么需要\"瘦身\"",
+        "🏗️ Adaptive Attention Pooling：单 token 是怎么压出来的",
+        "🌊 单一 Flow Matching 目标：把 latent 流和动作流串起来",
+        "🪶 LoRA 14.71M 参数：怎么把 π₀ 2B 适配到私有任务",
+        "🧪 真机 deformable 任务为什么 +200%",
+        "🚀 与门户已有内容的联动",
+        "🛠️ 工程落地清单（如果你想跑 OneWM-VLA）",
+        "📚 延伸阅读",
+        "💡 课后思考题"
+      ],
+      "summary": "🎯 学习目标：掌握\"单视觉 token 世界模型 + LoRA 紧凑适配\"这一 2026 年 5 月最新工程范式，理解为什么\"视觉带宽不是 VLA 长程能力上限\"——并能用 200 行代码把 π₀ 私有化适配到自己的任务。"
     },
     {
       "id": "sec-17",
@@ -249,18 +510,63 @@
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 8,
+      "headings": [
+        "🔥 为什么\"灵巧手 VLA\"是 VLA 当前最难的子赛道",
+        "🛠️ 解法一：IMCopilot——RL 预训练的灵巧手原子技能库",
+        "1.1 7 个原子级技能模块",
+        "1.2 共享自主：让人类操作员\"只管大方向\"",
+        "🛠️ 解法二：MoDE-VLA——灵巧专家混合 + 残差注入",
+        "2.1 在冻结主干上加\"残差专家\"",
+        "2.2 为什么\"残差\"比\"重训\"更聪明",
+        "2.3 真机验证：4 个 in-hand 任务 2× 成功率",
+        "🚀 实战：用残差专家给自己的 VLA 加触觉模态",
+        "3.1 30 行代码实现 LoRA 残差注入",
+        "3.2 训练数据准备清单",
+        "🌐 对比表：当前主流 VLA 加多模态的 4 种范式",
+        "🔮 未来 6 个月预测：灵巧手 VLA 的 3 条进化路径",
+        "📚 核心参考"
+      ],
+      "summary": "🎯 学习目标：掌握\"灵巧手 VLA + 触觉/力觉融合 + RL 增强遥操作\"这套组合拳，理解为什么 2026 年 5 月 MoDE-VLA 的 2× 成功率背后藏着「采数效率 3.7×」这个被忽视的真正胜负手。"
     },
     {
       "id": "sec-18",
       "title": "World Action Model v2 三件套：HarmoWAM × FFDC × OneWM-VLA — 后 VLA 时代的「世界 + 行动」联合范式深度精读",
-      "lastUpdated": "2026-05-16T08:00",
-      "chars": 7473,
+      "lastUpdated": "2026-10-26",
+      "chars": 7617,
       "shortTitle": "World Action Model v2…",
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 8,
+      "headings": [
+        "学习目标",
+        "为什么需要 WAM：VLA 的三个根本短板",
+        "短板 1：缺乏物理常识",
+        "短板 2：长程任务规划失效",
+        "短板 3：人类视频数据用不上",
+        "WAM 的两条流派路线",
+        "流派 A：Imagine-then-Execute（先想象再执行）",
+        "流派 B：Joint Modeling（联合建模）",
+        "标杆作品 1：HarmoWAM（2026-05-14）— 把两派优势统一",
+        "核心创新：双专家 + 过程自适应门控",
+        "关键消融",
+        "OOD 零样本结果（最大红利）",
+        "工程参数",
+        "标杆作品 2：FFDC（2026-05-13）— 自适应执行长度",
+        "核心创新：未来-现实验证（Future-Reality Verification）",
+        "关键收益",
+        "工程意义",
+        "标杆作品 3：OneWM-VLA（2026-05）— 视觉带宽反直觉压缩",
+        "核心创新：每帧 1 个语义 token",
+        "三件套合谋：WAM v2 范式三角",
+        "落地决策树：你的项目应该用 VLA、Joint WAM、还是 HarmoWAM？",
+        "自检练习",
+        "延伸阅读"
+      ],
+      "summary": "1. 理解 VLA → WAM 的范式跃迁是什么、为什么从 2026 年 Q2 开始集中爆发 2. 掌握 WAM 的两条流派路线：Imagine-then-Execute vs Joint Modeling 的优劣权衡 3. 解构 2026-05 三篇标杆工作：HarmoWAM（双专家协同）、FFDC（自适应执行）、OneWM-VLA（视觉带宽压缩） 4. "
     },
     {
       "id": "sec-19",
@@ -271,7 +577,37 @@
       "difficulty": "高级",
       "estimatedMinutes": 9,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 9,
+      "headings": [
+        "0. 为什么这一节单独立项",
+        "1. 高 DoF 灵巧 VLA 范式跃迁：从 6+6 到 30+30",
+        "1.1 范式定义",
+        "1.2 为什么第四代不能「拼装」前三代",
+        "2. 混合遥操作管道：「外骨骼 + Vision Pro」反直觉硬件设计",
+        "2.1 传统方案的局限",
+        "2.2 Dexora 的「机械分层」哲学",
+        "2.3 Python 伪代码：混合遥操作主循环",
+        "2.4 数字孪生 1:1 对齐的关键",
+        "3. 数据质量感知训练：discriminator 的 14pp 贡献",
+        "3.1 问题：双手遥操作示教 30-50% 是「噪声 / 半失败」",
+        "3.2 Dexora 解法：离线判别器 + clip 级权重",
+        "3.3 ablation 实证",
+        "4. 训练 stack：仿真 + 真机联合 + 跨具身 latent action space",
+        "4.1 联合训练混合比",
+        "4.2 跨具身 latent action space（zero-shot 换灵巧手）",
+        "5. 部署：从 ICRA 论文到工厂量产的最后一公里",
+        "5.1 Dexora + 临界点的产业级配方",
+        "5.2 部署 checklist",
+        "6. 三件套对比与协同：MoDE-VLA × HandITL × Dexora",
+        "6.1 路径决策树",
+        "7. 学习路径与扩展阅读",
+        "7.1 推荐学习顺序",
+        "7.2 关键论文",
+        "7.3 关键开源仓库（关注 ICRA 2026 现场公开）",
+        "8. 一句话总结"
+      ],
+      "summary": "到 2026-05 为止，VLA 的主流叙事还停留在 ① 单臂双夹爪（ALOHA / Mobile ALOHA / OpenVLA / RDT-1B）；② 单臂 + 单灵巧手（π₀-Inspire / GR00T N1.5 / SmolVLA）；③ 双臂双夹爪（RDT-2 / Bimanual π₀ / RT-2-Bimanual）。真正稀缺的是「双臂 + "
     },
     {
       "id": "sec-20",
@@ -282,7 +618,28 @@
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 8,
+      "headings": [
+        "0. 为什么这一节单独立项",
+        "1. 三件套各自的核心创新",
+        "1.1 PointACT：3D-aware VLA 必须双系统",
+        "1.2 OmniHumanoid：Paired-free 跨具身视频生成",
+        "1.3 Evo-Depth：轻量隐式深度增强（0.9B 边缘部署）",
+        "2. 三件套的工程联动",
+        "2.1 数据飞轮：OmniHumanoid 给 PointACT / Evo-Depth 喂数据",
+        "2.2 空间感知层级：3D 显式 vs 2D 隐式",
+        "2.3 部署 checklist",
+        "选型决策树",
+        "训练成本对照",
+        "3. 反直觉教训汇总",
+        "4. 实战代码片段",
+        "4.1 在自定义机器人上跑 Evo-Depth（边缘 Jetson Orin）",
+        "4.2 用 OmniHumanoid 给 Centaur-G1 做数据增广",
+        "4.3 PointACT + Evo-Depth 联合训练（精度 + 速度兼得）",
+        "5. 延伸阅读"
+      ],
+      "summary": "到 2026-05 为止，VLA「3D-aware × 跨具身视频生成 × 轻量深度增强」三个方向几乎在同一周内出现 SOTA 标杆（5/12-5/20），它们不是孤立工作，而是「VLA 怎么补上空间感知 + 怎么搞规模化数据 + 怎么落到边缘部署」三个工程难题的最新答卷："
     },
     {
       "id": "sec-21",
@@ -293,7 +650,36 @@
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 8,
+      "headings": [
+        "0. 为什么需要「VLA 之外的另一条主线」",
+        "1. 范式对比：VLA vs VideoModel-as-Policy",
+        "1.1 架构对比",
+        "1.2 关键属性对比",
+        "2. 关键技术拆解",
+        "2.1 共享潜在空间（Shared Latent Space）",
+        "2.2 闭环回滚训练（Closed-Loop Rollout）",
+        "2.3 单阶段后训练（Single-Stage Post-Training）",
+        "2.4 测试时模型基础规划（Test-Time Model-Based Planning）",
+        "3. SOTA 数字对比",
+        "3.1 LIBERO（标准 VLA 评测）",
+        "3.2 RoboCasa（家庭场景）",
+        "3.3 真实双臂任务（5 任务平均）",
+        "4. 工程决策树：什么时候选哪条路线",
+        "4.1 选传统 VLA 的场景",
+        "4.2 选 VideoModel-as-Policy 的场景",
+        "4.3 折中：VLA + Video World Model 增强（World Action Model 路线）",
+        "5. 落地 checklist：选定 VideoModel-as-Policy 后的工程要点",
+        "5.1 选基模",
+        "5.2 数据准备",
+        "5.3 后训练资源",
+        "5.4 异步推理（关键工程）",
+        "5.5 Self-Improvement（高阶）",
+        "6. 与本节其他范式的关系",
+        "7. 2026-05 总结：VLA 不死，但范式正在分化"
+      ],
+      "summary": "到 2026-05 中下旬，VLA（Vision-Language-Action）虽然仍是机器人基础模型的主流范式，但学术界和产业界开始集体怀疑一个深层假设："
     },
     {
       "id": "sec-22",
@@ -304,7 +690,25 @@
       "difficulty": "高级",
       "estimatedMinutes": 12,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 12,
+      "headings": [
+        "22.1 背景：为什么主流 VLA 在真机上「跑不动」？",
+        "22.2 范式分叉：从「时钟切片」到「事件切片」",
+        "22.2.1 主流做法（Chunk-Centric）",
+        "22.2.2 WALL-WM 的答案：Action-Grounded Semantic Event（AGSE）",
+        "22.3 三大架构创新（教科书级精讲）",
+        "22.3.1 单向解耦扩散架构（Prior-Aligned Decoupling）",
+        "22.3.2 几何感知双掩码（Sight-Cone + Tube）",
+        "22.3.3 Staircase CoT 解码（可解释性 + 实时性）",
+        "22.4 双部署模式 — 同一套权重的灵活性",
+        "22.5 实验数据：真机 Core15 L1 全面领先",
+        "22.6 与本节其他范式的关系",
+        "22.7 工程落地决策树",
+        "22.8 落地 checklist（生产部署）",
+        "22.9 学习资源"
+      ],
+      "summary": "回顾过去两年的 VLA 主线：从 RT-2 → OpenVLA → π₀ → GR00T N1 → Wall-OSS-0.5，演进路径基本是「更大的数据、更广的语义覆盖、更快的推理」。这条路成果斐然 — benchmark 分数节节攀升，开源权重也越来越友好。"
     },
     {
       "id": "sec-23",
@@ -315,7 +719,31 @@
       "difficulty": "高级",
       "estimatedMinutes": 11,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "23.1 为什么这一节重要？",
+        "23.2 瓶颈 1 — 多任务灾难性遗忘的根源与 DyGRO-VLA 的 MoRR 解法",
+        "23.2.1 灾难性遗忘的具体表现",
+        "23.2.2 江行智能的两阶段解法",
+        "23.2.3 工程实现的 5 个关键决策",
+        "23.3 瓶颈 2 — 接触丰富操作的力觉缺失与 FD-VLA 的「无传感器」解法",
+        "23.3.1 为什么 VLA 在接触丰富任务上集体扑街？",
+        "23.3.2 FD-VLA 的「力蒸馏」解法",
+        "23.3.3 与 Daimon-Infinity 的天然组合",
+        "23.3.4 部署 checklist（无力觉 FD-VLA）",
+        "23.4 瓶颈 3 — 时空近视与 HiF-VLA 的「运动表示」解法",
+        "23.4.1 多帧像素堆叠的灾难",
+        "23.4.2 运动向量：1000x+ 维度压缩",
+        "23.4.3 双向时空推理框架",
+        "23.4.4 长程任务 SOTA + 推理延迟恒定",
+        "23.4.5 与世界动作模型（WAM）的关系",
+        "23.5 三件套的协同：构建下一代 VLA 后训练 stack",
+        "23.6 实战练习",
+        "23.7 进阶研究方向",
+        "23.8 延伸阅读"
+      ],
+      "summary": "回到本模块前面 22 节构筑的 VLA 知识体系，你已经掌握了： - 架构演进：RT-2 → OpenVLA → π / GR00T → Qwen-VLA → WALL-WM 的完整线索 - 训练范式：SFT → RL → 后训练（PPO / DPO / Flow Matching） - 数据生态：OXE / DROID / RoboMIND / Daimo"
     },
     {
       "id": "sec-24",
@@ -326,7 +754,20 @@
       "difficulty": "高级",
       "estimatedMinutes": 10,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 10,
+      "headings": [
+        "24.1 从一个反常的实验说起",
+        "24.2 前置概念：waypoint 分层长什么样",
+        "24.3 R1：规划延迟从哪里来",
+        "24.4 R2：怎么量「计划有没有被用上」",
+        "24.5 为什么直接把目标塞进去会更糟：位移积分捷径",
+        "24.6 NGM：保留通路，堵住捷径",
+        "24.7 真机上看到什么",
+        "24.8 把这套体检用到你的系统上",
+        "24.9 练习"
+      ],
+      "summary": "前面几节讲过双系统、快慢系统和 waypoint 式的分层 VLA：上面一个 VLM 规划器负责「想」，下面一个动作专家负责「做」。这类系统的论文通常只报一个数字——端到端成功率。成功率高，大家就默认分层起了作用。"
     },
     {
       "id": "sec-25",
@@ -337,7 +778,21 @@
       "difficulty": "高级",
       "estimatedMinutes": 14,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 14,
+      "headings": [
+        "25.1 一个刺眼的测试结果",
+        "25.2 前置概念：分布内的边界在哪里",
+        "25.3 从测试信号到在线监测：对象锚定注意力课程",
+        "25.4 对齐：为什么不能逐步比较",
+        "25.5 为什么「不需要失败标注」是决定性的设计",
+        "25.6 另一半问题：策略不会拒绝",
+        "25.7 外部守卫为什么补不上",
+        "25.8 一套今天就能上线的运行时保障清单",
+        "25.9 和本模块其他几节的关系",
+        "25.10 练习"
+      ],
+      "summary": "前面 24 节讲的大多是怎么把 VLA 训得更强：更好的架构（分层、双系统、世界动作模型）、更好的数据（触觉、人类视频、合成数据）、更好的后训练（RL、量化、进度引导）。这一节换一个问题：训好了以后，你怎么知道它在真实部署里会不会出事？"
     },
     {
       "id": "sec-26",
@@ -348,7 +803,30 @@
       "difficulty": "高级",
       "estimatedMinutes": 20,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 12,
+      "headings": [
+        "1. 为什么「能不能干」不等于「知道它怎么干」",
+        "2. 激活补丁：一把能测因果的尺子",
+        "它和相关分析的区别",
+        "具体做法",
+        "为什么需要几十万次",
+        "3. 动作条件接口（action-conditioning interface）",
+        "一个重要的细节",
+        "4. 信息分工：先选物体，再定位置",
+        "5. 从分析到剪枝：目标化 vs 启发式",
+        "结果的正确读法",
+        "6. 动手：在自己的模型上跑一次层扫描",
+        "三个高频坑",
+        "判断你是否复现成功的三条标准",
+        "7. 用统一的语言看懂本轮工作：改 Y / 改 M / 改 R",
+        "8. 常见坑与排查顺序",
+        "9. 能力自检清单"
+      ],
+      "summary": "前面 25 节讲的都是怎么把 VLA 训得更强：更好的架构（分层、双系统、世界动作模型）、更好的数据（触觉、人类视频、合成数据）、更好的后训练（RL、量化、进度引导）。这一节换一个角度："
     }
-  ]
+  ],
+  "readingMinutes": 266,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 235671
 }

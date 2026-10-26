@@ -1,7 +1,7 @@
 {
   "id": "robot-dynamics",
   "name": "机器人动力学",
-  "lastUpdated": "2026-10-20T15:40",
+  "lastUpdated": "2026-10-26",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 50,
@@ -55,7 +55,17 @@
       "shortTitle": "动力学建模方法",
       "difficulty": "入门",
       "estimatedMinutes": 3,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 为什么需要动力学？",
+        "2. 拉格朗日方法（Lagrangian Mechanics）",
+        "3. 牛顿-欧拉方法（递推算法）",
+        "4. 两种方法对比",
+        "5. 惯性参数辨识",
+        "练习题"
+      ],
+      "summary": "运动学回答\"怎么动\"，动力学回答\"为什么动\"——力/力矩与加速度的关系。本节系统讲解两种主要的动力学建模方法。"
     },
     {
       "id": "sec-02",
@@ -65,7 +75,16 @@
       "shortTitle": "Lagrange 力学",
       "difficulty": "入门",
       "estimatedMinutes": 8,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 8,
+      "headings": [
+        "核心思想",
+        "Lagrange 力学 vs Newton-Euler 对比",
+        "动力学方程物理意义",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "从能量角度推导运动方程，不需要分析约束力： $$L = T - V \\quad (\\text{动能} - \\text{势能})$$ $$\\frac{d}{dt}\\frac{\\partial L}{\\partial \\dot{q}_i} - \\frac{\\partial L}{\\partial q_i} = \\tau_i$$"
     },
     {
       "id": "sec-03",
@@ -75,7 +94,16 @@
       "shortTitle": "Newton-Euler 递推算法",
       "difficulty": "入门",
       "estimatedMinutes": 9,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 9,
+      "headings": [
+        "机器人动力学方程",
+        "Newton-Euler 递推算法",
+        "什么时候用动力学？",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "动力学研究的是力/力矩和运动的关系。机器人动力学方程的标准形式："
     },
     {
       "id": "sec-04",
@@ -86,7 +114,23 @@
       "difficulty": "中级",
       "estimatedMinutes": 22,
       "isBrief": true,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 7,
+      "headings": [
+        "动力学性质与控制应用",
+        "1. 质量矩阵 $M(q)$ 的性质",
+        "2. $\\dot{M} - 2C$ 的反对称性",
+        "3. 正向动力学 vs 逆向动力学",
+        "4. 操作空间动力学",
+        "5. 动力学在各控制方法中的角色",
+        "6. 动力学仿真中的常见问题",
+        "线性可参数化：为什么它是自适应控制的地基",
+        "斜对称性的物理含义：能量守恒",
+        "从性质到控制器：三种用法的稳定性代价",
+        "参数辨识：激励轨迹比算法更重要",
+        "练习题"
+      ],
+      "summary": "机器人动力学方程不只是\"一组微分方程\"——它有深刻的数学性质，这些性质是设计控制器的基础。"
     },
     {
       "id": "sec-05",
@@ -96,7 +140,15 @@
       "shortTitle": "动力学方程的性质",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 8,
+      "headings": [
+        "M(q)q̈ + C(q,q̇)q̇ + G(q) = τ",
+        "M, C, G 矩阵速查",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "M(q) 质量矩阵 - 对称正定：M = M^T, x^T M x > 0 - 反映惯性：对角线 = 各关节的等效惯量 - 非对角线 = 关节之间的耦合惯性"
     },
     {
       "id": "sec-06",
@@ -106,7 +158,17 @@
       "shortTitle": "接触力学基础",
       "difficulty": "入门",
       "estimatedMinutes": 6,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 6,
+      "headings": [
+        "刚性接触 vs 柔性接触",
+        "摩擦锥模型（库仑摩擦）",
+        "抓取力分析",
+        "MuJoCo 中的接触模型",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "- 刚性接触：接触面不可穿透，用约束方程处理。线性互补问题 (LCP) - 柔性接触（Spring-Damper）：允许微小穿透，接触力 = k·δ + d·δ̇。MuJoCo 用的就是柔性模型"
     },
     {
       "id": "sec-07",
@@ -116,7 +178,25 @@
       "shortTitle": "旋量理论与李群李代数",
       "difficulty": "高级",
       "estimatedMinutes": 11,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 11,
+      "headings": [
+        "1. 为什么传统方法不够用",
+        "2. 刚体位姿的群结构",
+        "3. 李代数 so(3) 与 se(3)：切空间的物理含义",
+        "4. 指数映射：从李代数到李群",
+        "5. 伴随变换：坐标系之间的旋量映射",
+        "6. 空间动力学：Featherstone 方程",
+        "7. 在 Pinocchio 里实操",
+        "8. 李代数优化：现代 VLA 动作解码的几何原语",
+        "9. 与四元数、6D 表示的对比",
+        "10. 常见工程陷阱",
+        "11. 为什么这个工具链对具身智能关键",
+        "参考资料",
+        "练习题",
+        "练习参考答案（精简版）"
+      ],
+      "summary": "传统机器人教材（Craig、Spong）用 DH 参数 + 欧拉角描述运动，在单臂仿真中够用，但遇到全身动力学、可微仿真、VLA 动作建模时会暴露三大问题：欧拉角奇异、递推表达复杂、与优化不兼容。现代机器人学（Park & Lynch《Modern Robotics》、Featherstone《Rigid Body Dynamics Algorithms》、"
     },
     {
       "id": "sec-08",
@@ -126,7 +206,21 @@
       "shortTitle": "摩擦、柔性与动力学建模的工程修正",
       "difficulty": "中级",
       "estimatedMinutes": 3,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 关节摩擦模型",
+        "库仑 + 粘滞摩擦（经典模型）",
+        "Stribeck 摩擦（含静摩擦和负斜率段）",
+        "LuGre 摩擦（动态模型）",
+        "2. 齿轮传动的摩擦",
+        "3. 柔性关节建模",
+        "4. 齿隙（Backlash）",
+        "5. 参数辨识的现代方法",
+        "6. 真实机器人建模的工程检查清单",
+        "练习题"
+      ],
+      "summary": "标准动力学方程 $M(q)\\ddot{q} + C\\dot{q} + G = \\tau$ 假设机器人是理想的刚体。真实机器人远非如此——本节讲解如何把摩擦、柔性、间隙等工程效应加入模型。"
     },
     {
       "id": "sec-09",
@@ -137,7 +231,16 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "为什么需要关注柔性关节？",
+        "刚性关节 vs 柔性关节",
+        "柔性关节动力学方程",
+        "串联弹性驱动器（SEA）",
+        "练习"
+      ],
+      "summary": "实际机器人中，关节并非理想刚性连接。谐波减速器、弹性体传动等元件引入了明显的柔性（弹性变形），这种柔性在高精度操作和碰撞安全中至关重要。"
     },
     {
       "id": "sec-10",
@@ -147,7 +250,22 @@
       "shortTitle": "动力学参数辨识",
       "difficulty": "高级",
       "estimatedMinutes": 16,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 16,
+      "headings": [
+        "从实际机器人中“学”到动力学参数",
+        "为什么重要？",
+        "动力学模型的线性参数化",
+        "辨识流程",
+        "激励轨迹设计",
+        "回归矩阵构建",
+        "完整辨识流程代码",
+        "实际工程注意事项",
+        "开源工具",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "前面几节我们假设 M(q)、C(q,q̇)、G(q) 是已知的——但真实机器人的质量、质心位置、惯性张量往往不精确："
     },
     {
       "id": "sec-11",
@@ -158,7 +276,20 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 重力补偿：最基础的应用",
+        "2. 计算力矩控制（Computed Torque Control）",
+        "3. 阻抗控制（Impedance Control）",
+        "4. 全身控制（Whole-Body Control）",
+        "5. 轨迹优化",
+        "6. 外力估计（无力传感器的力感知）",
+        "7. 动力学在 RL 中的作用",
+        "8. 实战工具对比",
+        "练习题"
+      ],
+      "summary": "有了完整的动力学理论和模型，本节展示这些理论如何直接应用到机器人控制的实战场景。"
     },
     {
       "id": "sec-12",
@@ -168,7 +299,15 @@
       "shortTitle": "计算力矩控制的MuJoCo仿真验证",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "为什么需要仿真验证？",
+        "MuJoCo中的动力学量",
+        "MuJoCo实际使用",
+        "练习"
+      ],
+      "summary": "推导了机器人动力学方程和控制律后，在真机上测试前必须先在仿真中验证。MuJoCo提供了精确的刚体动力学仿真，是验证控制算法的最佳工具。"
     },
     {
       "id": "sec-13",
@@ -178,18 +317,49 @@
       "shortTitle": "浮基动力学与人形机器人全身动力学",
       "difficulty": "高级",
       "estimatedMinutes": 10,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 11,
+      "headings": [
+        "为什么需要浮基动力学？",
+        "固定基座 vs 浮基",
+        "浮基动力学方程",
+        "接触约束",
+        "从零实现浮基动力学",
+        "全身运动优化 (Whole-Body Control)",
+        "工具选型",
+        "Pinocchio 浮基动力学示例",
+        "ZMP 稳定性判据",
+        "练习"
+      ],
+      "summary": "前面学习的 Lagrange 和 Newton-Euler 方法都假设机器人固定在世界坐标系中（基座不动）。但人形机器人、四足机器人的基座（躯干）是自由浮动的——没有固定支撑，基座的位置和姿态由接触力和自身动力学共同决定。这就是浮基动力学（Floating-Base Dynamics）。"
     },
     {
       "id": "sec-14",
       "title": "接触动力学与可微仿真：LCP、梯度传播与接触感知策略",
-      "lastUpdated": "2026-05-02T11:20",
-      "chars": 7961,
+      "lastUpdated": "2026-10-26",
+      "chars": 7939,
       "shortTitle": "接触动力学与可微仿真",
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 8,
+      "headings": [
+        "1. 为什么接触动力学如此棘手？",
+        "2. 接触力学的标准数学表述：LCP",
+        "3. 从 LCP 到 NCP：凸锥与原-对偶优化",
+        "4. 可微接触：让梯度穿过接触求解器",
+        "4.1 为什么需要可微？",
+        "4.2 三条主要路线",
+        "5. 代码：MuJoCo 可微仿真（基于 MJX + JAX）",
+        "6. 接触感知策略：三种范式对比",
+        "7. 从仿真到真机：接触 Sim-to-Real 四大坑",
+        "8. 选型决策树",
+        "9. 前沿方向（2026 年正在发生）",
+        "10. 练习题",
+        "参考资料"
+      ],
+      "summary": "2026 年具身智能最热的方向之一是“接触丰富操作”（contact-rich manipulation）——灵巧手抓握、双臂装配、擦拭、倒水等任务都高度依赖接触。本节把接触动力学、LCP/互补问题、可微仿真、接触感知策略学习这条技术主线串起来，补上“光滑动力学→真实接触”这块拼图。"
     },
     {
       "id": "sec-15",
@@ -200,7 +370,25 @@
       "difficulty": "高级",
       "estimatedMinutes": 11,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "1. 为什么要讲质心动力学？",
+        "2. 质心（Center of Mass）与动量的严格定义",
+        "3. 线性倒立摆模型（LIPM）：最简单的\"人形控制入门\"",
+        "3.1 Capture Point：人形平衡的\"控制目标\"",
+        "3.2 LIPM 代码实现：5 分钟跑通",
+        "4. SRBD：LIPM 之后的\"一层升级\"",
+        "4.1 摩擦锥的凸化",
+        "4.2 SRBD-MPC 代码骨架（Python + qpoases）",
+        "5. 分层控制架构：Centroidal + Whole-Body QP",
+        "6. 角动量调控：为什么人走路会摆手？",
+        "7. 常见工程陷阱与诊断清单",
+        "8. 2026 年工业界选型指南",
+        "9. 练习题",
+        "10. 延伸阅读"
+      ],
+      "summary": "前面两节「浮基动力学」和「接触动力学」给出了人形机器人最严格的数学描述——34 维甚至 50 维的广义坐标、接触 LCP、全身动力学方程 $M(q)\\ddot q + h(q,\\dot q) = S^\\top \\tau + J_c^\\top F_c$。理论漂亮，但直接求解代价太高：2026 年的量产人形（宇树 H1、智元 A3、特斯拉 Optimus Gen"
     },
     {
       "id": "sec-16",
@@ -211,7 +399,31 @@
       "difficulty": "高级",
       "estimatedMinutes": 45,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 13,
+      "headings": [
+        "从末端执行器到全身接触",
+        "先复习：接触的力学模型",
+        "全身抓取的静力学可行性",
+        "为什么「直接重定向」几乎必然失败",
+        "WBD 流水线：三步走",
+        "第一步：生成可行的全身抓取数据集",
+        "第二步：训练任意到任意的 RL 专家",
+        "第三步：蒸馏为单一策略",
+        "观测、动作与奖励的设计",
+        "数学推导：为什么躯干承重能突破末端负载上限",
+        "真机部署的注意事项",
+        "能力自检清单",
+        "补充一：全身接触的规划难度在哪里",
+        "补充二：全身接触与浮动基动力学的统一视角",
+        "补充三：真机调参的经验顺序",
+        "补充四：练习题",
+        "补充五：与相邻模块的接口"
+      ],
+      "summary": "到目前为止，本模块讨论的操作对象基本是手爪：抓取靠手指夹紧，力从末端传出去。但回想你自己搬一个大纸箱——你不会只用两只手捏住箱子的两个角，而是把箱子靠在小臂和肚子上，用整个上半身托住它。这时你的躯干、前臂、大腿都成了接触面，身体的重量参与了承重。"
     }
-  ]
+  ],
+  "readingMinutes": 124,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 110020
 }

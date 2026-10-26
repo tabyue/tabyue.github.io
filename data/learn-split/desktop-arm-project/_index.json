@@ -50,7 +50,22 @@
       "difficulty": "入门",
       "estimatedMinutes": 22,
       "isBrief": true,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 6,
+      "headings": [
+        "1. 主流开源桌面臂对比",
+        "2. LeRobot + SO-100 快速上手",
+        "3. 硬件改装与升级路线",
+        "4. 常见坑与解决方案",
+        "5. 从桌面臂到真实应用",
+        "选型决策：先定任务，再定臂",
+        "传动方案的取舍：舵机 / 行星 / 谐波",
+        "遥操作主手：它决定数据质量的上限",
+        "相机布局：腕部 vs 第三人称",
+        "采购清单与常见坑",
+        "练习题"
+      ],
+      "summary": "具身智能研究的入门门槛正在快速降低——开源桌面臂让个人研究者也能做真机实验。本节系统介绍主流开源桌面臂平台。"
     },
     {
       "id": "sec-02",
@@ -60,7 +75,15 @@
       "shortTitle": "硬件选型与组装",
       "difficulty": "入门",
       "estimatedMinutes": 5,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 5,
+      "headings": [
+        "推荐方案",
+        "从零开始的完整路线图",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "SO-100 入门路径： 1. 购买套件（LeRobot 文档有链接） 2. 组装（约 2-4 小时） 3. 安装 LeRobot 软件 4. 标定（自动标定脚本）"
     },
     {
       "id": "sec-03",
@@ -70,7 +93,18 @@
       "shortTitle": "机械臂数学基础",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 刚体位姿的数学描述",
+        "2. DH 参数（Denavit-Hartenberg）",
+        "3. 关节空间 vs 笛卡尔空间",
+        "4. 以 SO-100 六轴臂为例的 DH 参数表",
+        "5. Jacobian 矩阵：速度与力的桥梁",
+        "6. 常见误区与陷阱",
+        "练习题"
+      ],
+      "summary": "桌面机械臂项目从拆箱到自主抓取，每一步都建立在数学基础之上。本节从最底层的数学概念讲起，确保你在动手之前理解每个公式的含义。"
     },
     {
       "id": "sec-04",
@@ -80,7 +114,21 @@
       "shortTitle": "桌面机械臂运动学",
       "difficulty": "入门",
       "estimatedMinutes": 5,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 5,
+      "headings": [
+        "运动学求解",
+        "1. 正运动学求解",
+        "2. 逆运动学（IK）：三大方法",
+        "方法一：解析法（Analytical / Closed-Form）",
+        "方法二：数值法（Newton-Raphson / Jacobian Pseudo-inverse）",
+        "方法三：优化法（用于冗余臂）",
+        "3. 工作空间分析",
+        "4. 奇异位型分析",
+        "5. 关节空间 vs 笛卡尔空间规划对比",
+        "练习题"
+      ],
+      "summary": "掌握了 DH 参数和齐次变换后，本节深入讲解正运动学（FK）和逆运动学（IK）的完整求解方法，以及工作空间分析。"
     },
     {
       "id": "sec-05",
@@ -90,7 +138,20 @@
       "shortTitle": "桌面机械臂控制基础",
       "difficulty": "入门",
       "estimatedMinutes": 5,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 5,
+      "headings": [
+        "1. 关节级 PID 控制",
+        "2. 计算力矩法（Computed Torque）",
+        "3. 轨迹规划",
+        "关节空间轨迹",
+        "笛卡尔空间轨迹",
+        "4. 力/力矩控制入门",
+        "5. 桌面臂控制系统架构",
+        "6. 实用调试技巧",
+        "练习题"
+      ],
+      "summary": "硬件组装好、运动学写完之后，最核心的问题来了：如何让机械臂平稳、精确、安全地运动？本节从最基础的 PID 控制讲起，逐步深入到轨迹规划和力控制。"
     },
     {
       "id": "sec-06",
@@ -100,7 +161,18 @@
       "shortTitle": "ROS2 与机械臂驱动",
       "difficulty": "入门",
       "estimatedMinutes": 6,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 6,
+      "headings": [
+        "1. ROS2 核心概念速览",
+        "2. URDF / XACRO 建模",
+        "3. ros2_control 硬件接口",
+        "4. MoveIt2 运动规划",
+        "5. 规划器选择指南",
+        "6. 常见问题排查",
+        "练习题"
+      ],
+      "summary": "桌面机械臂项目中，ROS2 生态是连接硬件驱动、运动规划、感知系统的\"总线\"。本节从 ROS2 的核心概念讲起，到 MoveIt2 的完整使用流程。"
     },
     {
       "id": "sec-07",
@@ -110,7 +182,20 @@
       "shortTitle": "手眼标定与坐标变换实战",
       "difficulty": "高级",
       "estimatedMinutes": 7,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 7,
+      "headings": [
+        "从像素到关节角的完整链路",
+        "坐标系链",
+        "各坐标系详解",
+        "相机内参与像素反投影",
+        "Eye-in-Hand vs Eye-to-Hand",
+        "AruCo 标定板标定法",
+        "完整坐标变换 Pipeline",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "当相机看到一个物体在像素 (320, 240) 处，怎么让机械臂精确地伸到那个位置？这中间需要经过一连串坐标变换。"
     },
     {
       "id": "sec-08",
@@ -120,7 +205,16 @@
       "shortTitle": "视觉抓取 Pipeline",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 8,
+      "headings": [
+        "视觉引导抓取：机器人的核心技能",
+        "各步骤详解",
+        "简化版 vs 完整版",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "“看到物体并抓起来”是机器人最基础也是最重要的技能。一个完整的视觉抓取 Pipeline 包含多个步骤："
     },
     {
       "id": "sec-09",
@@ -131,7 +225,23 @@
       "difficulty": "高级",
       "estimatedMinutes": 22,
       "isBrief": true,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 7,
+      "headings": [
+        "LeRobot：最低门槛的具身智能实战平台",
+        "硬件清单与成本",
+        "完整工作流",
+        "数据采集技巧（经验之谈）",
+        "ACT vs Diffusion Policy 选型",
+        "常见问题排查",
+        "端到端链路：每个环节到底要花多久",
+        "数据体检：训练前必做的五件事",
+        "训练配置：真正值得调的四个超参",
+        "部署时的实时性坑",
+        "迭代策略：什么时候该重采而不是重训",
+        "练习"
+      ],
+      "summary": "HuggingFace的LeRobot框架将具身智能的门槛降到了最低——用SO-100机械臂（~$200）+ USB摄像头 + LeRobot框架，就能完成从数据采集到模型训练到自主部署的全流程。"
     },
     {
       "id": "sec-10",
@@ -141,7 +251,19 @@
       "shortTitle": "模仿学习到真机部署",
       "difficulty": "中级",
       "estimatedMinutes": 4,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 整体流程",
+        "2. 任务定义",
+        "3. 数据采集最佳实践",
+        "4. 数据清洗流水线",
+        "5. 模型选择与训练",
+        "6. 真机部署",
+        "7. 评估与迭代",
+        "练习题"
+      ],
+      "summary": "从\"人操控机器人采数据\"到\"机器人自主完成任务\"的完整流程——本节手把手走一遍桌面臂的模仿学习项目。"
     },
     {
       "id": "sec-11",
@@ -151,7 +273,18 @@
       "shortTitle": "模仿学习训练部署",
       "difficulty": "中级",
       "estimatedMinutes": 6,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 6,
+      "headings": [
+        "从采集到部署：端到端模仿学习实践",
+        "完整流程",
+        "数据采集方案对比",
+        "训练技巧",
+        "关键经验",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "当基于规则的抓取 Pipeline 不够用时（复杂物体、柔性物体、多步任务），端到端模仿学习是更强大的方案。"
     },
     {
       "id": "sec-12",
@@ -161,7 +294,16 @@
       "shortTitle": "Sim-to-Real闭环",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "为什么桌面机械臂是Sim2Real最佳入门项目？",
+        "完整 Sim-to-Real Pipeline",
+        "常见的Sim-to-Real Gap来源",
+        "LeRobot Sim-to-Real 快速指南",
+        "练习"
+      ],
+      "summary": "桌面机械臂（SO-100/Koch）成本低、安全风险小、社区活跃，是体验完整 Sim-to-Real 流程的最佳起点。"
     },
     {
       "id": "sec-13",
@@ -171,7 +313,18 @@
       "shortTitle": "力控与柔顺操作",
       "difficulty": "高级",
       "estimatedMinutes": 5,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 5,
+      "headings": [
+        "为什么需要力控？",
+        "力控的三种范式",
+        "阻抗控制的数学原理",
+        "力/位混合控制",
+        "桌面机械臂的力感知方案",
+        "从力控到VLA力感知（前沿方向）",
+        "练习"
+      ],
+      "summary": "前面所有章节都在讲位置控制——把末端移动到目标位置。但很多现实任务需要的不是精确位置，而是精确力："
     },
     {
       "id": "sec-14",
@@ -181,7 +334,14 @@
       "shortTitle": "抓取失败分析与自动重试策略",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "机器人抓取的典型失败模式",
+        "自动失败检测",
+        "练习"
+      ],
+      "summary": "即使训练好的策略，真实部署中也会有10-30%的失败。关键是分析失败原因并自动恢复。"
     },
     {
       "id": "sec-15",
@@ -191,7 +351,18 @@
       "shortTitle": "调试排错与性能优化",
       "difficulty": "高级",
       "estimatedMinutes": 6,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 6,
+      "headings": [
+        "实战中最花时间的不是训练，是调试",
+        "常见问题与排查清单",
+        "系统化调试流程",
+        "自动化诊断脚本",
+        "性能优化清单",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "理论上一切正确的方案，部署到真实机器人上总会遇到各种问题。学会系统化地排查和解决问题，是项目实战的核心能力。"
     },
     {
       "id": "sec-16",
@@ -202,7 +373,22 @@
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "从单臂到双臂：双臂协同操作",
+        "1. 双臂比单臂复杂在哪？",
+        "2. ALOHA：Leader-Follower 双臂遥操作系统",
+        "3. ACT：Action Chunking Transformer",
+        "4. 双臂任务设计",
+        "5. 协同控制策略",
+        "松耦合：独立控制 + 顺序协调",
+        "紧耦合：同时控制双臂",
+        "6. 双臂动力学与力协调",
+        "7. 双臂数据集与基准",
+        "练习题"
+      ],
+      "summary": "单臂能做的事有限——抓取、放置、擦拭。双臂协同才能开启一整类新任务：烹饪、折叠衣物、拆包装等。本节以 ALOHA 为标杆讲解双臂系统。"
     },
     {
       "id": "sec-17",
@@ -212,7 +398,27 @@
       "shortTitle": "桌面机械臂策略评估与动态诊断",
       "difficulty": "中级",
       "estimatedMinutes": 13,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 13,
+      "headings": [
+        "1. 为什么\"训练集成功率 95%\"骗得了自己骗不了桌子",
+        "2. BeTTER 三大失败模式在桌面臂上的体现",
+        "失败模式一：词汇-运动学捷径（Lexical-Kinematic Shortcut）",
+        "失败模式二：行为惯性（Behavioral Inertia）",
+        "失败模式三：语义特征坍塌（Semantic Feature Collapse）",
+        "3. 桌面臂\"诚实评估\"协议：三关六试法",
+        "第一关：静态基线（Sanity Check）",
+        "第二关：随机化测试（Distributional Robustness）",
+        "第三关：动态扰动测试（True Embodied Reasoning）",
+        "4. 让评估自动化：桌面臂评估脚手架",
+        "5. 真机评估的额外工程考量",
+        "安全第一：失败模式分类",
+        "减少人类判官偏差：客观成功定义",
+        "统计功效：20 次够吗？",
+        "6. 从评估报告到改进闭环",
+        "练习题"
+      ],
+      "summary": "在桌面臂上做模仿学习，大家最常见的评估方式是："
     },
     {
       "id": "sec-18",
@@ -223,7 +429,21 @@
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 8,
+      "headings": [
+        "1. 硬件清单与购买指南",
+        "2. 开箱 + 组装（30 分钟）",
+        "3. 软件环境搭建（20 分钟）",
+        "4. 首次标定（15 分钟）",
+        "5. 第一个 VLA 推理（5 分钟）",
+        "6. 遥操作数据采集（50 分钟 = 50 episodes）",
+        "7. LoRA 微调（6 小时 / 4090）",
+        "8. 评估 + 调优",
+        "9. 长期运行 + 数据回流",
+        "10. 从桌面到真实场景：扩展路径"
+      ],
+      "summary": "LeRobot SO-100 是 HuggingFace 2026 年推出的$259 双臂桌面机械臂，搭配 Wall-OSS-0.5 开源 VLA，构成了 2026 年最具性价比的具身智能学习和部署平台。本节是一个完整的从开箱到 VLA 部署的实操手册 — 不需要任何机器人背景，跟着做就能跑通。"
     },
     {
       "id": "sec-19",
@@ -234,7 +454,20 @@
       "difficulty": "高级",
       "estimatedMinutes": 11,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "1. 为什么桌面臂 + Wall-OSS-0.5 是绝配？",
+        "2. 环境准备：4090 上的 Wall-OSS 工作站",
+        "3. 零样本评估：直接跑 17 任务套件",
+        "4. 50 Episodes 微调菜谱：从「能用」到「好用」",
+        "5. RVQ 动作 Token 调试技巧（独家）",
+        "6. 完整工作流：一个新任务从 0 到部署",
+        "7. 性能基线（实测数据）",
+        "8. 常见问题排查（FAQ）",
+        "9. 学习路径推荐 — 把 Wall-OSS 玩透"
+      ],
+      "summary": "2026 年 5 月 28 日自变量机器人开源 Wall-OSS-0.5 — 国产首个「预训练即可零样本部署」VLA 模型 — 这对桌面机械臂玩家是一个改变游戏规则的事件。本节系统讲解如何把 Wall-OSS-0.5 部署到你的 SO-100 / Koch / LeRobot SO-Arm-100 桌面双臂上，包括环境准备、零样本评估、50 episodes"
     },
     {
       "id": "sec-20",
@@ -245,7 +478,31 @@
       "difficulty": "高级",
       "estimatedMinutes": 44,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 8,
+      "headings": [
+        "一、为什么要给桌面臂装触觉",
+        "二、先做一件事：跑纯本体感知基线",
+        "实验设计",
+        "为什么这很重要",
+        "三、选型：桌面项目的三条可行路",
+        "档位一：几百元——力敏电阻 / 简易电容阵列",
+        "档位二：几千元——商用指尖力/触觉模块",
+        "档位三：万元级——视触觉（GelSight 类）",
+        "四、机械集成：比选型更容易翻车",
+        "三个要点",
+        "五、接入策略：分两步，别一次全接",
+        "第一步：只做反射层",
+        "第二步：才考虑进策略输入",
+        "为什么不能一步到位",
+        "六、最小可运行骨架",
+        "七、能力自检清单",
+        "八、与其他章节的连接"
+      ],
+      "summary": "本模块前面十九节把桌面级机械臂的硬件、运动学、视觉抓取、模仿学习、力控都走了一遍。走到这里你会发现一个共同的天花板：所有这些能力都是开环的。"
     }
-  ]
+  ],
+  "readingMinutes": 125,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 110788
 }

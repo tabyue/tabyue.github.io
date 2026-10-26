@@ -1,13 +1,26 @@
 {
   "id": "linear-algebra",
   "name": "线性代数",
-  "lastUpdated": "2026-10-13T10:36",
+  "lastUpdated": "2026-10-26",
   "stage": "阶段一：数学与编程基础",
   "importance": "核心",
   "estimatedHours": 60,
   "description": "矩阵运算、特征值分解、SVD 分解是理解机器人运动学和计算机视觉的基石。机器人的每一个关节旋转都是一次矩阵变换，理解线性代数就是理解机器人运动的语言。",
   "prerequisites": [
-    "高中数学基础"
+    "能解二元一次方程，理解函数、坐标和基本三角函数；第一遍学习不要求掌握抽象代数。",
+    "运行代码前，能创建数组、查看 shape 并做矩阵乘法；可补学 [NumPy 科学计算](/learn/python-scientific-computing/7)。",
+    "首章的多项式积分内积练习属于拓展，需要 [积分理论](/learn/calculus-optimization/4)；可以完成基础学习后再回访。"
+  ],
+  "learningObjectives": [
+    "用二维例子解释线性组合、基和线性映射，并说明矩阵乘法顺序为什么重要。",
+    "求解方程组与最小二乘问题，区分精确解和近似解，并用残差、秩和条件数检查结果。",
+    "解释 SVD 与伪逆的用途，用旋转矩阵和齐次变换计算坐标变换及其逆变换。"
+  ],
+  "studyGuide": [
+    "首次阅读 [线性代数的数学基础](/learn/linear-algebra/1)，先解释向量空间、线性组合、基和线性映射；SVD 找核空间的代码先看输入输出，积分内积和谱定理练习留待回访。",
+    "结合 [向量运算的几何应用](/learn/linear-algebra/2)、[矩阵运算](/learn/linear-algebra/3) 和 [线性方程组](/learn/linear-algebra/4)，完成点积、叉积、矩阵连乘和方程组求解；逐项标出数组 shape，并给出几何解释。",
+    "学习 [正交性与 QR](/learn/linear-algebra/7)、[最小二乘](/learn/linear-algebra/8)、[特征值](/learn/linear-algebra/9) 和 [SVD](/learn/linear-algebra/10)；用同一组带噪数据比较拟合残差，再按 [数值稳定性](/learn/linear-algebra/14) 检查病态矩阵的敏感性。",
+    "完成 [旋转表示](/learn/linear-algebra/15) 与 [齐次坐标](/learn/linear-algebra/16) 的变换实验；验收时验证旋转矩阵的正交性、变换与逆变换的复合结果，并解释变换顺序。"
   ],
   "sections": [
     {

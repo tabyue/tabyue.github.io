@@ -65,7 +65,20 @@
       "shortTitle": "云边端三层架构",
       "difficulty": "中级",
       "estimatedMinutes": 23,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 25,
+      "headings": [
+        "开局引导：读这一章之前",
+        "云边端协同：让机器人连接云端大脑",
+        "三层架构",
+        "关键设计原则",
+        "各层职责",
+        "通信架构",
+        "断网容错设计",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "云边端协同是本站信息密度最高的几章之一，因为它同时涉及网络、算力、实时控制和部署运维四条线。如果这是你第一次接触这个话题，先把下面 5 个概念对上号，后面的内容会顺很多："
     },
     {
       "id": "sec-02",
@@ -75,7 +88,18 @@
       "shortTitle": "边缘AI与实时计算",
       "difficulty": "中级",
       "estimatedMinutes": 17,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 17,
+      "headings": [
+        "边缘 AI：让机器人本地“思考”",
+        "为什么不能全部用云端？",
+        "NVIDIA Jetson 系列",
+        "边缘端部署流程",
+        "ROS2 实时配置",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "边缘 AI 指在靠近数据源的设备上直接运行 AI 推理，而不是把数据发到云端处理。对机器人来说，边缘 AI 是实时响应的关键。"
     },
     {
       "id": "sec-03",
@@ -85,7 +109,18 @@
       "shortTitle": "模型压缩与边缘部署优化",
       "difficulty": "高级",
       "estimatedMinutes": 10,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 10,
+      "headings": [
+        "把大模型塞进小设备",
+        "四大压缩方向",
+        "TensorRT 量化实战",
+        "知识蒸馏：大模型教小模型",
+        "ONNX 导出与优化 Pipeline",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "云端 VLA 动辄 7B-70B 参数，Jetson Orin 只有 32-64GB 显存、275 TOPS INT8 算力。模型压缩是云边端协同的核心技能——决定了哪些能力可以下放到边缘。"
     },
     {
       "id": "sec-04",
@@ -95,7 +130,26 @@
       "shortTitle": "机器人基础模型的云端托管与云边协同",
       "difficulty": "高级",
       "estimatedMinutes": 22,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 13,
+      "headings": [
+        "从「每家自研大脑」到「调用公共智能」",
+        "一、为什么大脑会往云上走",
+        "二、端到端延迟预算：把它当成一条硬约束",
+        "延迟预算的分解",
+        "延迟预算计算器",
+        "三、分层放置：什么必须在端上",
+        "四、断网降级：把「网络不可用」当成正常状态",
+        "降级状态机",
+        "五、数据回流闭环：云端托管的真正价值",
+        "六、常见误区",
+        "七、自检与练习",
+        "八、与 MCP / ROS 2 的接口落地",
+        "观测快照合成",
+        "九、案例推演：一个双臂装配工位的上云决策",
+        "十、能力自检清单"
+      ],
+      "summary": "2026 年 10 月 13 日，Physical Intelligence 开放了 Pi API 测试版，把最新机器人基础模型以托管方式提供给外部开发者。流程被简化为四步：开发者上传机器人数据 → 在平台管理的算力上启动微调 → 通过托管网关调用微调后的模型驱动自己的机器人 → 评估数据反过来指导下一轮采集。"
     },
     {
       "id": "sec-05",
@@ -105,7 +159,19 @@
       "shortTitle": "5G/通信协议与机器人网络",
       "difficulty": "中级",
       "estimatedMinutes": 10,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 10,
+      "headings": [
+        "让机器人上网：通信技术选型",
+        "通信技术对比",
+        "5G 三大场景对机器人的意义",
+        "ROS2 DDS 通信配置",
+        "MQTT + gRPC 跨域通信",
+        "网络质量监控与自适应",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "云边端协同的物理基础是网络通信。选择合适的通信协议直接决定了延迟、带宽和可靠性。"
     },
     {
       "id": "sec-06",
@@ -115,7 +181,18 @@
       "shortTitle": "分布式数据管理与OTA更新",
       "difficulty": "中级",
       "estimatedMinutes": 9,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 9,
+      "headings": [
+        "机器人的数据生命周期",
+        "数据流架构",
+        "边缘数据过滤策略",
+        "OTA (Over-The-Air) 模型更新",
+        "数据采集标准化: RoboSet 格式",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "一个运行中的机器人每秒产生大量数据——RGB 图像、深度图、IMU、关节状态、激光雷达点云。这些数据如何采集、过滤、传输、存储、利用，就是分布式数据管理的核心课题。"
     },
     {
       "id": "sec-07",
@@ -125,7 +202,21 @@
       "shortTitle": "MCP 协议",
       "difficulty": "中级",
       "estimatedMinutes": 11,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 11,
+      "headings": [
+        "从 API 到 MCP：机器人如何与 LLM 对话？",
+        "MCP 核心概念",
+        "MCP 协议的三大原语",
+        "MCP Server 部署在机器人上",
+        "Python 实现：机器人 MCP Server",
+        "MCP 与其他方案对比",
+        "MCP 在机器人场景的优势",
+        "实际项目案例：OpenClaw",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "前几节我们讨论了云端 API、gRPC、MQTT 等通信方式。但一个关键问题没解决：LLM 怎么知道机器人能做什么？怎么调用机器人的能力？"
     },
     {
       "id": "sec-08",
@@ -135,7 +226,16 @@
       "shortTitle": "数字孪生与实时同步",
       "difficulty": "中级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "什么是数字孪生？",
+        "数字孪生的三个层级",
+        "核心技术组件",
+        "NVIDIA Omniverse 数字孪生架构",
+        "练习"
+      ],
+      "summary": "数字孪生（Digital Twin） 是物理机器人在虚拟世界中的实时镜像。物理机器人的每一个动作、每一个传感器读数，都同步映射到虚拟模型中。"
     },
     {
       "id": "sec-09",
@@ -145,7 +245,15 @@
       "shortTitle": "WebRTC远程遥操与低延迟视频传输",
       "difficulty": "中级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "为什么需要远程遥操？",
+        "延迟要求",
+        "WebRTC遥操架构",
+        "练习"
+      ],
+      "summary": "远程遥操作（Teleoperation）让操作员可以在千里之外控制机器人。应用场景：危险环境（核电站/深海）、远程医疗手术、远程数据采集（分布式众包）。"
     },
     {
       "id": "sec-10",
@@ -155,7 +263,28 @@
       "shortTitle": "联邦学习与隐私保护",
       "difficulty": "中级",
       "estimatedMinutes": 11,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 11,
+      "headings": [
+        "1. 为什么机器人需要联邦学习",
+        "1.1 量产部署的数据困境",
+        "1.2 机器人联邦学习 vs 传统联邦学习",
+        "2. 联邦学习核心算法",
+        "2.1 FedAvg基础",
+        "3. 差分隐私与安全聚合",
+        "3.1 差分隐私(Differential Privacy)",
+        "3.2 安全聚合(Secure Aggregation)",
+        "4. 异构机器人联邦学习",
+        "4.1 Non-IID问题与解决方案",
+        "4.2 跨本体联邦",
+        "5. 工程部署实践",
+        "5.1 机器人联邦学习部署架构",
+        "5.2 通信优化",
+        "5.3 2026年工程最佳实践清单",
+        "6. 前沿方向",
+        "练习"
+      ],
+      "summary": "随着具身智能从单机Demo进入千台级量产部署（2026年星动纪元、银河通用、宇树等已实现），一个关键问题浮出水面：多台机器人在不同场景中采集的操作数据如何安全地汇聚起来训练更好的模型？ 联邦学习(Federated Learning, FL)为这个问题提供了系统化的解决方案——让模型参数而非原始数据流动，在保护数据隐私的同时实现协同训练。"
     },
     {
       "id": "sec-11",
@@ -165,7 +294,35 @@
       "shortTitle": "全栈机器人控制中间件 3ms 端到端",
       "difficulty": "中级",
       "estimatedMinutes": 12,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 12,
+      "headings": [
+        "为什么 2026 年「云边端协同」需要重新理解：3ms 控制中间件 + 多人形分布式协作",
+        "一、传统云边端栈在 2026 年的不足",
+        "二、GENE-26.5 的 3ms 中间件：拆开看每一层",
+        "1. 视觉/触觉传感器 → latent 表征（500μs-1ms）",
+        "2. 双系统 VLA 推理：System 1 vs System 2（1-3ms）",
+        "3. 控制中间件：3ms 端到端（500μs-1ms）",
+        "4. 整体延迟预算（控制循环闭环）",
+        "三、Helix-02 多机协作：分布式策略 + 共享观察",
+        "1. 通信带宽降到 0",
+        "2. 异构机型扩展容易",
+        "3. 极端鲁棒性",
+        "四、2026 年人形云边端三层架构模板",
+        "关键设计决策",
+        "五、可运行的最小示例：3ms 闭环 stub",
+        "1. 共享内存 ring buffer（C++）",
+        "2. Policy（Python）写入 ring buffer",
+        "3. Motor driver（C++）读取并发 EtherCAT",
+        "六、与本模块前面章节的关系",
+        "七、练习",
+        "参考答案与提示",
+        "八、本节小结"
+      ],
+      "summary": "2026 年 5 月初，两个看似独立但实际深度相关的发布同时改写了机器人云边端协同的行业基准："
     }
-  ]
+  ],
+  "readingMinutes": 126,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 109771
 }

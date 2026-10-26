@@ -71,7 +71,19 @@
       "shortTitle": "深度学习训练基础",
       "difficulty": "入门",
       "estimatedMinutes": 3,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 前向传播",
+        "2. 损失函数",
+        "3. 反向传播（Backpropagation）",
+        "4. 优化器全景",
+        "5. 学习率调度",
+        "6. 训练稳定性技巧",
+        "7. 显存分析",
+        "练习题"
+      ],
+      "summary": "在讨论分布式训练、量化压缩之前，必须先理解训练的基本机制——前向传播、损失计算、反向传播和参数更新。"
     },
     {
       "id": "sec-02",
@@ -81,7 +93,17 @@
       "shortTitle": "GPU 架构与 CUDA 编程入门",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 4,
+      "headings": [
+        "1. CPU vs GPU 架构",
+        "2. NVIDIA GPU 层次结构",
+        "3. CUDA 编程基础",
+        "4. 显存管理",
+        "5. 性能分析工具",
+        "练习题"
+      ],
+      "summary": "深度学习训练的速度取决于 GPU。理解 GPU 架构才能写出高效的训练/推理代码，也才能理解为什么某些操作慢、显存为什么不够。"
     },
     {
       "id": "sec-03",
@@ -91,7 +113,18 @@
       "shortTitle": "分布式训练",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 8,
+      "headings": [
+        "为什么需要分布式",
+        "三种并行策略",
+        "并行策略选择",
+        "DeepSpeed 训练示例",
+        "混合精度训练",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "大模型（VLA 7B+参数）单卡放不下，需要多 GPU 甚至多机训练。"
     },
     {
       "id": "sec-04",
@@ -102,7 +135,23 @@
       "difficulty": "中级",
       "estimatedMinutes": 22,
       "isBrief": true,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 7,
+      "headings": [
+        "1. 三种并行对比",
+        "2. 数据并行（DP / DDP / FSDP）",
+        "3. 张量并行（TP）",
+        "4. 流水线并行（PP）",
+        "5. DeepSpeed ZeRO",
+        "6. 混合并行（3D 并行）",
+        "张量并行怎么切：从矩阵乘推导",
+        "流水线并行的气泡问题",
+        "三种并行的通信量对比",
+        "组合时的配置顺序",
+        "一个自检清单",
+        "练习题"
+      ],
+      "summary": "当模型太大放不进单张 GPU 时（7B+ 参数的 VLA 模型），需要将模型切分到多张 GPU 上。本节讲解三种并行策略。"
     },
     {
       "id": "sec-05",
@@ -112,7 +161,18 @@
       "shortTitle": "LoRA/QLoRA 高效微调",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 8,
+      "headings": [
+        "为什么需要 LoRA？",
+        "LoRA 原理",
+        "QLoRA：4-bit 量化 + LoRA",
+        "LoRA 微调 VLA 模型",
+        "QLoRA 量化微调",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "全量微调一个 7B 的 VLA 模型需要 ~56GB 显存（FP16 参数 + 优化器状态），一般实验室根本没有这么多 GPU。LoRA（Low-Rank Adaptation） 只训练极少的参数（<1%），把显存需求降低到一张消费级 GPU。"
     },
     {
       "id": "sec-06",
@@ -122,7 +182,18 @@
       "shortTitle": "模型压缩与量化",
       "difficulty": "中级",
       "estimatedMinutes": 6,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 6,
+      "headings": [
+        "压缩方法概览",
+        "量化详解",
+        "量化的核心数学",
+        "GGUF/GPTQ 量化（大语言模型）",
+        "知识蒸馏",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "VLA 模型通常有 7B+ 参数，需要 14GB+ 显存（FP16）。但机器人的边缘设备（Jetson AGX Orin）只有 32-64GB 共享内存。模型压缩和量化是让大模型部署到边缘设备的关键技术。"
     },
     {
       "id": "sec-07",
@@ -132,7 +203,16 @@
       "shortTitle": "端侧推理部署",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 8,
+      "headings": [
+        "机器人常见部署硬件",
+        "TensorRT 部署流程",
+        "推理优化技巧",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "1. 在 Jetson 上部署一个 YOLO 检测器，测量 FPS"
     },
     {
       "id": "sec-08",
@@ -143,7 +223,18 @@
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 推理优化层次",
+        "2. 量化（Quantization）",
+        "3. 图优化与算子融合",
+        "4. KV-Cache 与 PagedAttention",
+        "5. Serving 框架对比",
+        "6. 机器人推理的特殊需求",
+        "练习题"
+      ],
+      "summary": "训练完成后，模型需要以最低延迟、最高吞吐量服务。本节系统讲解推理优化的完整技术栈。"
     },
     {
       "id": "sec-09",
@@ -153,7 +244,19 @@
       "shortTitle": "vLLM 与大模型高效推理",
       "difficulty": "高级",
       "estimatedMinutes": 6,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 6,
+      "headings": [
+        "为什么 VLA 推理需要 vLLM？",
+        "传统推理 vs vLLM",
+        "PagedAttention 原理",
+        "vLLM 部署 VLA 推理服务",
+        "vLLM 部署配置",
+        "推理优化全景",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "当 VLA 模型采用自回归生成动作（如 π₀、RT-2）时，推理瓶颈在逐 token 生成。vLLM 通过 PagedAttention 和 连续批处理 大幅提升吞吐量。"
     },
     {
       "id": "sec-10",
@@ -163,7 +266,17 @@
       "shortTitle": "CUDA编程基础与自定义算子优化",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "为什么机器人工程师需要了解CUDA？",
+        "CUDA编程模型",
+        "机器人场景的CUDA优化目标",
+        "PyTorch自定义CUDA扩展",
+        "TensorRT部署优化",
+        "练习"
+      ],
+      "summary": "机器人上的VLA/感知模型运行在GPU上(Jetson Orin等)。当标准PyTorch算子无法满足实时性要求时，需要编写自定义CUDA kernel来加速关键路径。"
     },
     {
       "id": "sec-11",
@@ -173,7 +286,20 @@
       "shortTitle": "LoRA 与 PEFT",
       "difficulty": "中级",
       "estimatedMinutes": 3,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "LoRA 与 PEFT 完整指南",
+        "1. 为什么需要 PEFT？",
+        "2. LoRA（Low-Rank Adaptation）",
+        "3. PEFT 方法家族",
+        "4. HuggingFace PEFT 实战",
+        "5. QLoRA：4-bit 量化 + LoRA",
+        "6. VLA 专用的 PEFT 设计",
+        "7. 超参数与性能对照",
+        "练习题"
+      ],
+      "summary": "7B+ VLA 模型全参数微调需要几百 GB 显存——PEFT（Parameter-Efficient Fine-Tuning）技术让普通用户也能微调大模型。"
     },
     {
       "id": "sec-12",
@@ -183,7 +309,16 @@
       "shortTitle": "模型蒸馏与VLA轻量化部署",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "为什么需要模型蒸馏？",
+        "蒸馏的三种范式",
+        "VLA蒸馏Pipeline",
+        "端侧部署优化组合",
+        "练习"
+      ],
+      "summary": "VLA模型越来越大(7B-34B参数)，但机器人端侧算力有限(Jetson Orin 275 TOPS)。模型蒸馏将大模型(Teacher)的知识压缩到小模型(Student)中。"
     },
     {
       "id": "sec-13",
@@ -193,7 +328,31 @@
       "shortTitle": "VLA 实时推理工程化",
       "difficulty": "高级",
       "estimatedMinutes": 13,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 13,
+      "headings": [
+        "1. 先算账：VLA 推理时间到底花在哪？",
+        "2. 为什么机器人需要不止 10Hz？控制论视角的延迟预算",
+        "3. 核心武器 A：FlashAttention 2/3",
+        "4. 核心武器 B：KV Cache 与 PagedAttention",
+        "4.1 为什么必须有 KV Cache？",
+        "4.2 PagedAttention：vLLM 的杀手锏",
+        "5. 核心武器 C：Speculative Decoding（投机解码）",
+        "5.1 原理：用小模型\"投机\"大模型的输出",
+        "5.2 VLA 专属的投机解码设计",
+        "6. 核心武器 D：Async Chunked Action（异步动作分块）",
+        "6.1 核心思想",
+        "6.2 数学保证",
+        "6.3 时序图",
+        "6.4 代码实现骨架",
+        "6.5 Chunk 长度的 Bias-Variance 权衡",
+        "7. 端到端延迟预算表：把 110ms 压到 28ms",
+        "8. 实战：从 OpenVLA 到真机部署的完整脚本",
+        "9. 工程陷阱清单",
+        "10. 延伸阅读",
+        "练习题"
+      ],
+      "summary": "VLA（Vision-Language-Action）模型落地真机的最后一公里，不是精度，是延迟。论文里 94% 的成功率在机器人上跑崩，往往是推理延迟 250ms 把 30Hz 闭环拖成了 4Hz，导致姿态误差发散。本节把一次 VLA 推理拆解到微秒级，讲透 FlashAttention、KV Cache、PagedAttention、Speculativ"
     },
     {
       "id": "sec-14",
@@ -203,7 +362,19 @@
       "shortTitle": "实战：训练 VLA 模型的完整流程",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "1. VLA 模型架构概览",
+        "2. 数据准备",
+        "3. 训练配置",
+        "4. 训练监控",
+        "5. 评估",
+        "6. 部署优化",
+        "7. 常见问题与排查",
+        "练习题"
+      ],
+      "summary": "VLA（Vision-Language-Action）模型是具身智能的前沿方向。本节以 OpenVLA 为例讲解从数据到部署的完整训练流程。"
     },
     {
       "id": "sec-15",
@@ -214,7 +385,21 @@
       "difficulty": "高级",
       "estimatedMinutes": 13,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 13,
+      "headings": [
+        "为什么 VLA 推理需要 Speculative Decoding？",
+        "Speculative Decoding 核心原理",
+        "数学分析：为什么能保证输出质量不变？",
+        "实现细节",
+        "VLA 推理中的特殊优化",
+        "Flash Attention 2 与 VLA",
+        "VLA 推理加速技术全景",
+        "实战：VLA 推理延迟预算",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "自回归 VLA 模型（如 π₀、OpenVLA、GR00T N1.7）生成动作序列时，每个 token 必须等前一个 token 完成后才能开始——这是自回归解码的串行瓶颈。一个 7B 模型生成 64 个动作 token 可能需要 200-500ms，远不能满足机器人 100Hz 控制频率的需求。"
     },
     {
       "id": "sec-16",
@@ -225,7 +410,20 @@
       "difficulty": "高级",
       "estimatedMinutes": 13,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 13,
+      "headings": [
+        "1. 为什么传统 VLA 训练范式有问题？",
+        "2. 核心创新一：Gradient-Bridged Co-Training（梯度桥接协同训练）",
+        "3. 核心创新二：Vision-Aligned RVQ Action Tokenizer",
+        "4. 核心创新三：Action-Space Supervision for Flow Matching",
+        "5. 核心创新四：DMuon 分布式优化器（让 VLA co-training 经济可行）",
+        "6. 实战训练 Pipeline：从 0 到 Wall-OSS-0.5 完整流程",
+        "7. 与 OpenVLA / π0.5 / GR00T-N1 的工程对比",
+        "8. 工程师能学到什么 — 三个可迁移的技能",
+        "9. 学习清单 — 想做 VLA 训练工程的下一步"
+      ],
+      "summary": "2026 年 5 月 28 日，自变量机器人开源 Wall-OSS-0.5 揭示了 VLA 大模型工程化的新范式 — 「预训练即部署」。这不是一个普通的开源动作，而是 VLA 训练工程的第三代范式转移："
     },
     {
       "id": "sec-17",
@@ -236,7 +434,19 @@
       "difficulty": "高级",
       "estimatedMinutes": 14,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 14,
+      "headings": [
+        "1. VLA 的延迟预算为什么和 LLM 不一样",
+        "2. 路线一：视觉 Token 剪枝，从启发式到动作一致性",
+        "3. 加速为什么不随 FLOPs 线性下降",
+        "4. 路线二：脉冲化，用事件驱动换能效",
+        "5. 路线三：连续 vs 离散动作分词",
+        "6. 三条路线的选型",
+        "7. 和本模块其他几节的关系",
+        "8. 练习"
+      ],
+      "summary": "第 14 节讲了 VLA 实时推理的工程化（FlashAttention、KV Cache、异步动作块、延迟预算），第 15 节讲了大规模预训练的工程范式。这一节补上中间缺的一环：当延迟预算已经被压到极限时，还能从哪些维度继续省。"
     },
     {
       "id": "sec-18",
@@ -247,7 +457,33 @@
       "difficulty": "高级",
       "estimatedMinutes": 80,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 12,
+      "headings": [
+        "为什么要先回答「能不能一步出动作」",
+        "前置概念：生成式策略在生成什么",
+        "三条「把 K 步压成 1 步」的路线",
+        "路线一：一致性模型与一致性蒸馏（Consistency Models / CD）",
+        "路线二：一步流匹配（Shortcut / Mean Flow）",
+        "路线三：渐进式蒸馏（Progressive Distillation）",
+        "三条路线的对比",
+        "一步策略的能力边界：模态坍缩",
+        "一个实用的判断方法",
+        "潜噪声后训练：不动解码器，改输入",
+        "三条路的代价",
+        "AWLS：把 RL 信号降维成监督权重",
+        "为什么这比「用 critic 梯度」安全",
+        "与加权行为克隆的本质差别",
+        "不是所有检查点都适合做这件事",
+        "端侧部署的算账方式",
+        "决策表：什么时候该用哪种方案",
+        "高频坑",
+        "能力自检清单"
+      ],
+      "summary": "在讨论任何加速技巧之前，先把约束摆清楚。机器人闭环里，策略的输出频率直接决定它能控制什么样的动态："
     }
-  ]
+  ],
+  "readingMinutes": 133,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 120951
 }

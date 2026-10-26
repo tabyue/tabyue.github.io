@@ -4,7 +4,7 @@
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 60,
-  "lastUpdated": "2026-10-16T08:45",
+  "lastUpdated": "2026-10-26",
   "description": "让机器人通过试错学习最优行为策略。PPO 是四足步态训练的标配，SAC 适合连续动作空间。",
   "prerequisites": [
     "深度学习基础",
@@ -55,12 +55,26 @@
     {
       "id": "sec-01",
       "title": "强化学习数学基础：概率、动态规划与值函数",
-      "lastUpdated": "2026-04-28T19:38",
-      "chars": 4354,
+      "lastUpdated": "2026-10-26",
+      "chars": 5551,
       "shortTitle": "强化学习数学基础",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 5,
+      "headings": [
+        "1. 概率论回顾（RL 视角）",
+        "2. 马尔可夫决策过程（MDP）形式化",
+        "3. 值函数与 Bellman 方程",
+        "4. 动态规划（已知模型）",
+        "策略评估（Policy Evaluation）",
+        "策略迭代（Policy Iteration）",
+        "值迭代（Value Iteration）",
+        "5. 从 DP 到 RL：当模型未知时",
+        "6. 策略梯度定理",
+        "练习题"
+      ],
+      "summary": "在学习 PPO、SAC 等具体算法之前，必须先建立 RL 的数学基础——概率论的应用、值函数的定义、动态规划的思想。"
     },
     {
       "id": "sec-02",
@@ -70,7 +84,20 @@
       "shortTitle": "MDP 与 Bellman 方程",
       "difficulty": "入门",
       "estimatedMinutes": 9,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 9,
+      "headings": [
+        "什么是强化学习？",
+        "马尔可夫决策过程（MDP）",
+        "“马尔可夫性”是什么意思？",
+        "策略、价值函数和 Bellman 方程",
+        "RL 的分类体系",
+        "Bellman 方程的直觉",
+        "探索 vs 利用 困境",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "强化学习（RL） 是一种让智能体通过与环境的试错交互来学习最优行为的方法。它和监督学习的本质区别："
     },
     {
       "id": "sec-03",
@@ -80,7 +107,20 @@
       "shortTitle": "PPO 与 SAC",
       "difficulty": "中级",
       "estimatedMinutes": 10,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 10,
+      "headings": [
+        "策略梯度方法",
+        "REINFORCE：最朴素的策略梯度",
+        "PPO（Proximal Policy Optimization）",
+        "SAC（Soft Actor-Critic）",
+        "PPO vs SAC 选择指南",
+        "PPO vs SAC 对比",
+        "选择建议",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "在连续动作空间中（如机器人关节力矩），无法像 DQN 那样对每个动作算 Q 值（动作有无限个）。策略梯度方法直接学习策略函数 $\\pi_\\theta(a|s)$，输出动作的概率分布。"
     },
     {
       "id": "sec-04",
@@ -90,7 +130,18 @@
       "shortTitle": "策略优化算法",
       "difficulty": "中级",
       "estimatedMinutes": 4,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 策略梯度的问题",
+        "2. 信赖域方法（TRPO）",
+        "3. PPO：TRPO 的简化版",
+        "4. GAE（Generalized Advantage Estimation）",
+        "5. PPO 完整训练循环",
+        "6. PPO 超参数调优",
+        "练习题"
+      ],
+      "summary": "PPO 是当前机器人 RL 的默认算法——但为什么是 PPO？它解决了什么问题？本节从 TRPO 的动机出发，完整推导 PPO。"
     },
     {
       "id": "sec-05",
@@ -100,7 +151,18 @@
       "shortTitle": "奖励工程",
       "difficulty": "中级",
       "estimatedMinutes": 10,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 10,
+      "headings": [
+        "奖励函数是 RL 的灵魂",
+        "奖励设计的基本原则",
+        "奖励函数的类型",
+        "Reward Hacking：奖励函数的陷阱",
+        "奖励调试方法",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "在 RL 中，奖励函数决定了智能体学什么。奖励设计的好坏直接决定最终策略的质量。这一节详细讲解如何为机器人任务设计有效的奖励函数。"
     },
     {
       "id": "sec-06",
@@ -110,7 +172,17 @@
       "shortTitle": "Sim-to-Real 迁移",
       "difficulty": "高级",
       "estimatedMinutes": 6,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 6,
+      "headings": [
+        "Domain Randomization",
+        "Teacher-Student 蒸馏",
+        "Sim-to-Real Gap 的来源",
+        "完整 Sim2Real 流程",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "随机化仿真参数（摩擦 0.2-1.5、质量 ±20%、延迟 0-40ms），让策略对不确定性鲁棒。"
     },
     {
       "id": "sec-07",
@@ -121,7 +193,19 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "1. Sim-to-Real gap 的来源",
+        "2. 四种 Sim-to-Real 策略",
+        "3. 域随机化详解",
+        "4. 系统辨识（SysID）",
+        "5. Teacher-Student 蒸馏",
+        "6. Anymal 的成功案例",
+        "7. 实战检查清单",
+        "练习题"
+      ],
+      "summary": "RL 的最大挑战不是在仿真中训练，而是让仿真学到的策略在真机上工作。本节系统讲解 Sim-to-Real 的完整方法论。"
     },
     {
       "id": "sec-08",
@@ -131,7 +215,17 @@
       "shortTitle": "课程学习",
       "difficulty": "高级",
       "estimatedMinutes": 11,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 11,
+      "headings": [
+        "从简单到复杂：让 RL 学得更好",
+        "为什么需要课程学习？",
+        "课程类型",
+        "课程学习 vs 直接训练 效果",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "直接训练复杂任务往往很难收敛。课程学习（Curriculum Learning） 借鉴人类学习方式：从简单任务开始，逐步增加难度。"
     },
     {
       "id": "sec-09",
@@ -141,7 +235,16 @@
       "shortTitle": "离线强化学习",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "为什么需要离线RL？",
+        "离线RL的核心挑战：分布偏移",
+        "主流离线RL算法",
+        "离线RL在机器人中的应用",
+        "练习"
+      ],
+      "summary": "传统RL（在线RL）需要与环境不断交互来收集数据——对机器人来说，这意味着真实硬件上的数百万次试错，成本极高且危险。"
     },
     {
       "id": "sec-10",
@@ -152,7 +255,24 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 现代具身 RL 技术栈",
+        "2. 典型应用模式",
+        "模式 A：端到端 RL（Anymal/H1 走路）",
+        "模式 B：RL + 控制器混合",
+        "模式 C：BC 预训练 + RL 微调",
+        "模式 D：RL 学习残差",
+        "3. RL 与 IL 的关系",
+        "4. 工业级 RL 流水线",
+        "5. 持续学习与适应",
+        "6. 调参与监控",
+        "7. 硬件资源规划",
+        "8. 著名项目案例",
+        "练习题"
+      ],
+      "summary": "2025 年，RL 在机器人领域已经从\"理论研究\"走向\"工业落地\"。本节梳理当前最实用的 RL 技术栈和典型应用模式。"
     },
     {
       "id": "sec-11",
@@ -162,7 +282,21 @@
       "shortTitle": "机器人 RL 实战",
       "difficulty": "高级",
       "estimatedMinutes": 5,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 5,
+      "headings": [
+        "机器人 RL 实战完整流程",
+        "1. 任务设计",
+        "2. 环境设置",
+        "3. 奖励函数设计",
+        "4. 课程学习（Curriculum）",
+        "5. 域随机化",
+        "6. 训练过程",
+        "7. 评估与部署",
+        "8. 真机常见坑",
+        "练习题"
+      ],
+      "summary": "从理论到实战——本节讲解如何从零训练一个能工作的机器人 RL 策略，以四足机器人行走为例。"
     },
     {
       "id": "sec-12",
@@ -172,7 +306,19 @@
       "shortTitle": "RL 在具身智能中的实战",
       "difficulty": "高级",
       "estimatedMinutes": 10,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 10,
+      "headings": [
+        "从论文到真机：RL 工程实践",
+        "训练框架选择",
+        "PPO 超参数速查",
+        "训练调试清单",
+        "真机部署流程",
+        "实际项目案例：四足机器人步态训练",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "这一节聚焦 RL 在真实机器人项目中的工程实践，包括训练框架选择、超参数调优、调试技巧和部署流程。"
     },
     {
       "id": "sec-13",
@@ -182,7 +328,22 @@
       "shortTitle": "RLHF/RLEF",
       "difficulty": "高级",
       "estimatedMinutes": 9,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 9,
+      "headings": [
+        "从人类反馈中学习：RLHF 在机器人中的应用",
+        "为什么机器人需要 RLHF？",
+        "RLHF 三步流程",
+        "数学形式化",
+        "RLEF：环境反馈替代人类反馈",
+        "RLHF vs RLEF vs 传统 RL 对比",
+        "代码实现：RLHF for Robotics",
+        "RLEF 实现：自动环境反馈",
+        "实际应用案例",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "RLHF（Reinforcement Learning from Human Feedback） 最初在 LLM 对齐中大放异彩（ChatGPT 的核心技术之一），现在正被引入具身智能领域，解决一个关键问题：如何定义好的机器人行为？"
     },
     {
       "id": "sec-14",
@@ -194,7 +355,21 @@
       "estimatedMinutes": 3,
       "isFrontier": true,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "1. RLHF：对齐大语言模型",
+        "2. RLEF：环境反馈",
+        "3. 离线 RL（Offline RL）",
+        "4. 模型驱动 RL（Model-Based RL）",
+        "5. 具身世界模型",
+        "6. 多智能体 RL（MARL）",
+        "7. 可信赖 RL",
+        "8. RL 的未来展望",
+        "9. 学习路径建议",
+        "练习题"
+      ],
+      "summary": "2025 年的 RL 早已超越 Atari 游戏——LLM 训练、机器人具身、世界模型...本节梳理 RL 在前沿的几条主线。"
     },
     {
       "id": "sec-15",
@@ -205,7 +380,26 @@
       "difficulty": "高级",
       "estimatedMinutes": 9,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 9,
+      "headings": [
+        "1. 为什么 BC + RL 一直是个老大难？",
+        "痛点 1：BC 学到的「好动作」会被 RL 替换",
+        "痛点 2：从零跑 RL 太贵",
+        "痛点 3：保守约束（IQL / AWAC）牺牲性能上限",
+        "2. Q2RL 的两个核心创新",
+        "创新 1：Q-Estimation — 从 BC 反向估出 Q",
+        "创新 2：Q-Gating — 在 BC / RL 之间动态选择",
+        "3. 数学保证：单调改进定理",
+        "4. 真机性能：1-2 小时学到 100%",
+        "5. 完整训练管线（实战代码）",
+        "6. 与其他 BC+RL 方法对比",
+        "7. 工程落地：何时用 Q2RL",
+        "8. Q2RL 与本课程其他章节的关系",
+        "9. 进一步阅读",
+        "10. 思考题"
+      ],
+      "summary": "本节联动 2026-05-06 arXiv 论文 Q2RL: When Life Gives You BC, Make Q-functions（Brown / Northeastern / TRI Toyota Research）——这是 2026 年「BC + RL」组合最重要的工程级进展之一。理论上的「offline-to-online RL」一直被「分"
     },
     {
       "id": "sec-16",
@@ -216,7 +410,20 @@
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 8,
+      "headings": [
+        "1. 为什么 VLA 需要 RL？",
+        "2. VLA-RL 框架概览（清华 VLA-RL 论文）",
+        "3. 轨迹级 RL 形式化",
+        "4. Process Reward Model：克服稀疏奖励",
+        "5. 实战：Wall-OSS-0.5 + RL 微调",
+        "6. 关键工程优化",
+        "7. Test-Time Compute Scaling（推理时优化）",
+        "8. VLA-RL vs 其他后训练方法",
+        "9. 完整代码仓库与学习路径"
+      ],
+      "summary": "「VLA 已死」还是「VLA + RL = 终极答案」？2026 年的实践给出了答案：预训练 VLA 是 imitation learning 的天花板，RL 微调是突破天花板的唯一路径。本节系统讲解 VLA-RL 范式 — 从 OpenVLA / Wall-OSS-0.5 等预训练模型出发，通过在线 RL 进一步提升性能、泛化性和 OOD 鲁棒性。"
     },
     {
       "id": "sec-17",
@@ -227,7 +434,20 @@
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 4,
+      "headings": [
+        "0. 为什么这一节接在 VLA-RL 后面",
+        "1. 信用别名到底错在哪",
+        "2. Temporal GRPO 的三步",
+        "2.1 编译可检测的有序阶段",
+        "2.2 轨迹切成阶段区间",
+        "2.3 只和「进入了同一阶段」的轨迹比",
+        "3. 数字怎么读（不要和 LIBERO 刷榜横比）",
+        "4. 落地时先问三个问题",
+        "5. 练习"
+      ],
+      "summary": "上一节 VLA-RL 把共识写死了：预训练 VLA 是模仿学习的天花板，结果驱动的在线后训练是突破天花板的路径。业界已经在用 GRPO / SimpleVLA-RL 做这件事——采一组完整轨迹，用最终成功失败算一条组内相对优势，再写回整条动作序列。"
     },
     {
       "id": "sec-18",
@@ -238,7 +458,27 @@
       "difficulty": "高级",
       "estimatedMinutes": 15,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 10,
+      "headings": [
+        "无监督技能发现与行为基础模型：FB 表示、BFM-Zero 与 I-BFM",
+        "一、先看问题：奖励工程的真实代价",
+        "二、路线一：互信息最大化（以技能为隐变量）",
+        "三、路线二：后继特征（Successor Features）",
+        "四、Forward-Backward 表示：把 $\\phi$ 也学出来",
+        "五、BFM-Zero：把 FB 做成基础模型",
+        "六、I-BFM：从全身控制到人形-物体交互",
+        "七、三种范式的分工：什么时候该用哪一条",
+        "八、动手：从零跑通一个 FB 表示",
+        "九、常见误区",
+        "十、能力自检清单",
+        "十一、补论：FB 表示与「世界模型」的关系",
+        "十二、工程落地：什么时候值得上这套"
+      ],
+      "summary": "前面「奖励工程」一节讲了怎么把任务目标写成奖励函数。但那套方法有一个前提——每个任务都要写一次。这在研究里可以接受，在产业里是灾难：一条产线上可能有几十个工位、上百个动作变体，每换一个 SKU 就要重新设计奖励、重新调权重、重新跑几百万步训练。"
     }
-  ]
+  ],
+  "readingMinutes": 123,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 110159
 }

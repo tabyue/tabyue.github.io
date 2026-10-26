@@ -55,7 +55,21 @@
       "shortTitle": "CNN 架构",
       "difficulty": "入门",
       "estimatedMinutes": 13,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 13,
+      "headings": [
+        "什么是卷积神经网络？",
+        "核心思想：局部连接 + 权值共享",
+        "CNN 的基本组件",
+        "卷积操作的数学本质",
+        "经典 CNN 架构演进",
+        "在具身智能中的应用",
+        "卷积操作的数学理解",
+        "从零实现卷积 + ResNet残差块",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "卷积神经网络（CNN） 是深度学习中处理图像数据的核心架构。它的设计灵感来自生物视觉系统——人眼先识别边缘、纹理等局部特征，再逐步组合成物体的完整认知。"
     },
     {
       "id": "sec-02",
@@ -65,7 +79,22 @@
       "shortTitle": "Transformer 与自注意力",
       "difficulty": "入门",
       "estimatedMinutes": 13,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 13,
+      "headings": [
+        "什么是 Transformer？",
+        "为什么需要 Transformer？",
+        "自注意力的直觉",
+        "数学表达",
+        "Multi-Head Attention",
+        "Transformer Block 结构",
+        "在具身智能中的应用",
+        "Self-Attention 直觉理解",
+        "完整 Transformer Encoder 实现",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "Transformer 是 2017 年 Google 在论文 “Attention Is All You Need” 中提出的架构，它彻底改变了 NLP，后来又席卷了计算机视觉和机器人领域。"
     },
     {
       "id": "sec-03",
@@ -75,7 +104,21 @@
       "shortTitle": "生成模型",
       "difficulty": "中级",
       "estimatedMinutes": 15,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 15,
+      "headings": [
+        "从判别到生成：让模型“创造”数据",
+        "三大生成模型范式",
+        "VAE（变分自编码器）",
+        "GAN（生成对抗网络）",
+        "扩散模型（最重要！）",
+        "扩散模型的关键直觉",
+        "VAE 实现",
+        "Diffusion Policy 的核心思想",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "前面的 CNN 和 Transformer 主要做判别任务（分类、检测、分割）。生成模型的目标是学习数据的分布，并生成新的、逼真的样本。"
     },
     {
       "id": "sec-04",
@@ -85,7 +128,22 @@
       "shortTitle": "图神经网络与序列模型",
       "difficulty": "中级",
       "estimatedMinutes": 16,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 16,
+      "headings": [
+        "超越图像和文本：结构化数据与时序数据",
+        "图神经网络 (GNN) 基础",
+        "GNN 的主要变体",
+        "GNN 在具身智能中的应用",
+        "序列模型：RNN / LSTM / GRU",
+        "LSTM 在机器人中的典型用法",
+        "状态空间模型 (SSM / Mamba)",
+        "序列模型选型",
+        "GNN + 序列模型结合：时空建模",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "前面的 CNN 处理规则网格（图像），Transformer 处理序列。但具身智能中还有两类重要数据："
     },
     {
       "id": "sec-05",
@@ -95,7 +153,22 @@
       "shortTitle": "反向传播与自动微分",
       "difficulty": "中级",
       "estimatedMinutes": 12,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 12,
+      "headings": [
+        "反向传播：深度学习的引擎",
+        "为什么需要反向传播？",
+        "链式法则：反向传播的数学基础",
+        "计算图视角",
+        "常见层的梯度",
+        "从零实现反向传播（micrograd 风格）",
+        "PyTorch 的自动微分引擎",
+        "梯度消失与梯度爆炸",
+        "计算图与内存",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "前面的 CNN、Transformer、VAE 都有一个共同点——它们都通过梯度下降优化参数。而计算梯度的核心算法就是反向传播（Backpropagation）。如果不理解反向传播，深度学习就是一个黑箱。"
     },
     {
       "id": "sec-06",
@@ -105,7 +178,22 @@
       "shortTitle": "自监督表征学习与机器人视觉表征",
       "difficulty": "中级",
       "estimatedMinutes": 24,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 11,
+      "headings": [
+        "为什么要读这一节：机器人的视觉是从「无标注数据」里长出来的",
+        "1. 表征到底要学到什么",
+        "2. 对比学习：用「拉近与推远」构造监督",
+        "3. 不用负样本：BYOL、SimSiam 与 EMA 教师",
+        "4. 掩码建模：MAE 与「重建什么」的选择",
+        "5. 机器人表征的三个特殊要求",
+        "6. 怎么评价一个表征好不好",
+        "7. 常见误区",
+        "8. 小结与练习",
+        "9. 两阶段还是端到端：表征与策略怎么接",
+        "10. 实践选型清单（2026）"
+      ],
+      "summary": "前面几节我们默认一个前提——模型要学什么，数据里就标了什么：分类有类别标签，检测有框， 生成有配对样本。到了机器人这里，这个前提直接崩塌。一台机械臂一天采集 8 小时视频， 里面没有一张图被标注过「这是杯子把手」「此时夹持力 3.2 N」「这一步失败了」。 靠人工标注既贵又慢，而且很多中间量（接触力、物体可动性、任务进度）根本标不出来。"
     },
     {
       "id": "sec-07",
@@ -115,7 +203,18 @@
       "shortTitle": "训练技巧与微调",
       "difficulty": "高级",
       "estimatedMinutes": 9,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 9,
+      "headings": [
+        "为什么需要训练技巧？",
+        "关键训练技巧概览",
+        "学习率调度策略",
+        "混合精度训练",
+        "LoRA（Low-Rank Adaptation）",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "深度学习模型有数百万到数十亿参数，训练过程极其复杂。没有正确的训练技巧，常见问题包括： - 训练不收敛：loss 震荡不下降，模型学不到东西 - 过拟合：训练集准确率99%但测试集50%，泛化能力差 - 训练太慢：大模型训练几天甚至几周 - 显存溢出：模型太大放不进 GPU"
     },
     {
       "id": "sec-08",
@@ -125,7 +224,22 @@
       "shortTitle": "Flow Matching",
       "difficulty": "高级",
       "estimatedMinutes": 8,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 8,
+      "headings": [
+        "为什么机器人领域需要 Flow Matching？",
+        "Diffusion vs Flow Matching：核心区别",
+        "Flow Matching 直觉解释",
+        "数学原理",
+        "连续归一化流 (Continuous Normalizing Flow, CNF)",
+        "条件流匹配损失",
+        "代码实现：Flow Matching 动作生成",
+        "pi0 的 Flow Matching 架构",
+        "Diffusion Policy vs Flow Matching Policy 实验对比",
+        "CVPR 2026 前沿：力感知 VLA (Foca-VLA)",
+        "练习"
+      ],
+      "summary": "Diffusion Policy（扩散策略）在2023年开创了用生成模型做机器人策略学习的范式，但存在一个核心痛点：推理太慢。标准DDPM需要50-100步去噪才能生成一条动作轨迹，这对需要20-50ms响应的机器人控制来说是致命的。"
     },
     {
       "id": "sec-09",
@@ -135,7 +249,19 @@
       "shortTitle": "接触丰富操作与力-位混合控制",
       "difficulty": "高级",
       "estimatedMinutes": 6,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 6,
+      "headings": [
+        "为什么需要力控制？",
+        "经典力控制理论回顾",
+        "ForceVLA2：端到端力-位混合控制",
+        "力感知 MoE 架构",
+        "阻抗控制与柔顺行为",
+        "VLA 力控制前沿",
+        "接触丰富操作的训练数据挑战",
+        "练习"
+      ],
+      "summary": "前面学习的所有深度学习模型——CNN 提取视觉特征、Transformer 做序列推理、扩散模型生成动作——最终都需要输出控制指令让机器人执行。当前主流 VLA 模型（RT-2、π₀、OpenVLA 等）几乎全部基于纯位置控制：模型输出目标位置/关节角度，由底层 PD 控制器跟踪执行。"
     },
     {
       "id": "sec-10",
@@ -145,7 +271,17 @@
       "shortTitle": "神经网络可解释性与机器人安全决策",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "为什么可解释性对机器人至关重要？",
+        "可解释性方法分类",
+        "Grad-CAM：CNN的决策可视化",
+        "VLA注意力可解释性",
+        "安全决策框架",
+        "练习"
+      ],
+      "summary": "深度学习模型是黑箱——我们不知道 VLA 为什么选择某个动作。在自动驾驶、医疗机器人、家庭服务机器人等安全敏感场景中，这是不可接受的。"
     },
     {
       "id": "sec-11",
@@ -156,7 +292,26 @@
       "difficulty": "高级",
       "estimatedMinutes": 14,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 14,
+      "headings": [
+        "为什么要读这一节：端侧 VLA 的\"参数-算力解耦\"困境",
+        "1. 前置知识回顾：为什么稠密 Transformer 端侧扛不住",
+        "2. MoE 的核心思想：把 FFN 拆成 N 个专家",
+        "3. 数学精确：路由的 Top-k 可微近似",
+        "4. Mixture-of-Transformers (MoT)：把整层 Transformer 都变成专家",
+        "5. 完整 PyTorch 实现：从零写一个 MoT Block",
+        "6. 工程落地的 4 个深坑",
+        "7. MoT 与其他端侧技术的协同",
+        "8. 与经典稠密架构的定量对比",
+        "9. 何时不要用 MoT",
+        "10. 练习与自检",
+        "延伸阅读"
+      ],
+      "summary": "在前面几节里，我们把深度学习的\"模型规模\"和\"计算量\"当成同一个东西：参数越多，FLOPs 越多，推理越慢。这个假设在云端训练时是成立的，在 CV 任务中也大致成立。但 2026 年当 VLA（Vision-Language-Action）模型要落到机器人本体上时，这个假设被现实无情打破。"
     }
-  ]
+  ],
+  "readingMinutes": 121,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 107964
 }

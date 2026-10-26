@@ -72,7 +72,19 @@
       "shortTitle": "Agent架构设计",
       "difficulty": "入门",
       "estimatedMinutes": 18,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 18,
+      "headings": [
+        "什么是具身 Agent？",
+        "Agent vs 普通模型",
+        "Agent 的四大核心模块",
+        "Agent 的推理循环（ReAct）",
+        "经典Agent框架",
+        "ReAct Agent 代码框架",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "具身 Agent（Embodied Agent） 是一个能在物理环境中自主感知、推理、决策和执行的智能系统。它不只是一个模型，而是一个完整的闭环系统。"
     },
     {
       "id": "sec-02",
@@ -82,7 +94,18 @@
       "shortTitle": "记忆系统设计",
       "difficulty": "中级",
       "estimatedMinutes": 9,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 9,
+      "headings": [
+        "让机器人拥有记忆",
+        "记忆的三层架构",
+        "工作记忆：LLM Context 管理",
+        "情景记忆：向量检索经验",
+        "空间记忆：语义地图",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "人类的智能离不开记忆：记住东西放在哪、上次做错了什么、这个人喜欢什么。具身 Agent 也需要类似的记忆系统来积累经验、维护上下文和提升效率。"
     },
     {
       "id": "sec-03",
@@ -92,7 +115,18 @@
       "shortTitle": "技能学习与积累",
       "difficulty": "中级",
       "estimatedMinutes": 9,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 9,
+      "headings": [
+        "从硬编码到自主学习",
+        "技能的层级结构",
+        "技能库设计",
+        "Voyager 式自主技能发现",
+        "SayCan：技能可行性评估",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "早期机器人的每个动作都是工程师手写的。具身 Agent 的目标是让机器人自主学习新技能，并将学会的技能存入可复用的技能库。"
     },
     {
       "id": "sec-04",
@@ -102,7 +136,18 @@
       "shortTitle": "安全约束与人机交互",
       "difficulty": "中级",
       "estimatedMinutes": 7,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 7,
+      "headings": [
+        "机器人不能只聪明，还得安全",
+        "安全的三道防线",
+        "LLM 层安全过滤",
+        "人机交互接口",
+        "Asimov 三定律的工程实现",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "一个能自主决策的机器人如果没有安全约束，就是一颗定时炸弹。具身 Agent 必须在能力和安全之间取得平衡。"
     },
     {
       "id": "sec-05",
@@ -112,7 +157,16 @@
       "shortTitle": "MCP协议与LLM工具调用",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "MCP：让LLM发现和调用机器人能力的标准协议",
+        "为什么需要MCP？",
+        "MCP Server 实现",
+        "LLM + MCP 的 ReAct 循环",
+        "练习"
+      ],
+      "summary": "Model Context Protocol (MCP) 是2024-2025年兴起的标准化协议，让LLM通过统一接口发现和调用外部工具。在具身智能中，MCP让LLM可以像调用API一样控制机器人。"
     },
     {
       "id": "sec-06",
@@ -122,7 +176,15 @@
       "shortTitle": "长期记忆与经验回放",
       "difficulty": "高级",
       "estimatedMinutes": 5,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 5,
+      "headings": [
+        "为什么具身Agent需要长期记忆？",
+        "记忆系统架构",
+        "实现：向量数据库记忆系统",
+        "练习"
+      ],
+      "summary": "当前VLA/Agent系统是无状态的——每次任务从零开始，不记住之前的经验。但真实世界中的机器人需要："
     },
     {
       "id": "sec-07",
@@ -132,7 +194,18 @@
       "shortTitle": "LLM驱动的自进化操作Agent",
       "difficulty": "高级",
       "estimatedMinutes": 9,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 9,
+      "headings": [
+        "从静态代码生成到动态自进化",
+        "长短期反思架构",
+        "核心实现",
+        "短期反思 vs 长期反思对比",
+        "与其他LLM操作方法对比",
+        "前沿方向",
+        "练习"
+      ],
+      "summary": "传统的LLM驱动操作（如Code as Policies、VoxPoser）是一次性的——LLM根据任务描述生成代码，执行一次，成功或失败就结束了。这种模式有两个根本缺陷："
     },
     {
       "id": "sec-08",
@@ -142,7 +215,14 @@
       "shortTitle": "具身安全约束与人机安全交互协议",
       "difficulty": "高级",
       "estimatedMinutes": 3,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "为什么安全是最高优先级？",
+        "三层安全架构",
+        "练习"
+      ],
+      "summary": "与人共处的机器人必须保证人身安全。ISO 15066定义了协作机器人的安全标准："
     },
     {
       "id": "sec-09",
@@ -152,7 +232,17 @@
       "shortTitle": "多Agent协作",
       "difficulty": "高级",
       "estimatedMinutes": 14,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 14,
+      "headings": [
+        "协作架构",
+        "多机器人协作的关键挑战",
+        "典型应用场景",
+        "协作通信协议",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "当任务复杂到一个机器人无法独立完成时，需要多个 Agent 协同工作。"
     },
     {
       "id": "sec-10",
@@ -163,7 +253,22 @@
       "difficulty": "高级",
       "estimatedMinutes": 14,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 14,
+      "headings": [
+        "为什么这一章重要",
+        "1. 三条技术路线的精确定义",
+        "2. 维度化对比：12 个决策因子",
+        "3. 路线 A：端到端整体式 VLA 的工作机制",
+        "4. 路线 B：分层 LLM+Skill 的工作机制",
+        "5. 路线 C：统一隐空间 VLA 的核心洞察",
+        "6. 融合架构：产品级具身智能体的真实形态",
+        "7. 架构选型决策树",
+        "8. 常见工程陷阱与破解",
+        "9. 练习题",
+        "10. 延伸阅读"
+      ],
+      "summary": "2026 年 4 月，ICLR 收录的 WholeBodyVLA 在智元 Agibot X2 上首次让一个人形机器人端到端走完 100+ 米、跨房间完成拾取放置；同一周，教育部把「具身智能」列为 38 个新增本科专业之一，放到 9 所高校首批招生。这两条新闻放在一起，本质上是在说同一件事：具身智能体的系统架构正在经历从「手工分层」到「端到端统一」，再到「分层"
     },
     {
       "id": "sec-11",
@@ -174,7 +279,24 @@
       "difficulty": "高级",
       "estimatedMinutes": 10,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 10,
+      "headings": [
+        "为什么“长程任务”是 2026 年 VLA 的最大突破口",
+        "长程任务为什么难？误差累积的数学本质",
+        "范式一：Chain-of-Thought（CoT）—— 纯语言推理",
+        "范式二：Interleaved Vision-Language Reasoning（IVLR）—— 文本+视觉交错思考",
+        "范式三：Anticipation-VLA —— 滚动预期 + 动态子目标重规划",
+        "范式四：Action Reasoning Token —— MolmoAct2 显式动作推理",
+        "四范式定量对比（LIBERO-Long）",
+        "选型决策树",
+        "工程陷阱速查",
+        "与本课程其他模块的衔接",
+        "练习",
+        "参考答案要点",
+        "延伸阅读"
+      ],
+      "summary": "2024-2025 年的 VLA 模型（OpenVLA、RT-2、Octo、π0）在短程操作（pick-and-place、open-drawer、stack-blocks）上已经接近商业可用：单步任务 LIBERO 整体成功率 80-90%。但长程任务（5 步以上的组合任务，例如\"泡一杯茶\"\"做三明治\"\"整理书桌\"）成功率却长期卡在 LIBERO-Long"
     },
     {
       "id": "sec-12",
@@ -185,7 +307,20 @@
       "difficulty": "高级",
       "estimatedMinutes": 13,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 13,
+      "headings": [
+        "1. 2026 年具身 Agent 架构全景",
+        "2. 高层规划器：任务分解 + 状态机",
+        "3. VLA 执行层：Wall-OSS-0.5 作为 Agent 动作引擎",
+        "4. 工具调用一体化：让 VLA Agent 使用外部工具",
+        "5. 记忆系统：让 Agent 跨任务积累经验",
+        "6. 多 Agent 协作：双臂 / 双机器人协同",
+        "7. 具身 Agent 的评估框架",
+        "8. 部署 Checklist — 生产级具身 Agent",
+        "9. 学习路径"
+      ],
+      "summary": "2026 年具身 Agent 的核心范式已从「LLM + 固定技能库」演变为「VLA 原生动作 + LLM 高层规划 + 工具调用一体化」。Wall-OSS-0.5 的开源证明了一件事：VLA 不仅是动作执行器，更可以是 Agent 的感知-决策-执行统一体。本节深入讲解如何设计、开发和部署一个生产级具身 Agent 系统。"
     },
     {
       "id": "sec-13",
@@ -196,7 +331,23 @@
       "difficulty": "高级",
       "estimatedMinutes": 21,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 10,
+      "headings": [
+        "为什么要读这一节：会干活不等于能收场",
+        "1. 失败的分类：先分清是哪种错",
+        "2. 失败检测：四个信号源",
+        "3. 恢复策略：四级递进",
+        "4. Harness 层：把恢复做成系统能力而不是模型能力",
+        "5. 反事实重规划：用世界模型先「想一遍」",
+        "6. 经验固化：让失败只犯一次",
+        "7. 常见误区",
+        "8. 小结与练习",
+        "9. 恢复能力与系统架构的协同设计",
+        "10. 上线前的恢复能力检查清单",
+        "11. 与相邻模块的关系"
+      ],
+      "summary": "前面几节我们把 Agent 讲成一个「规划—执行」的机器：理解指令、拆子目标、 调用技能、拿到结果。这套叙述有个隐含假设——每一步都会成功。 真实机器人不这样工作。夹爪会滑、门会比预期重、光照会变、 上一个动作把物体推到了下一个动作够不着的地方。"
     },
     {
       "id": "sec-14",
@@ -207,7 +358,44 @@
       "difficulty": "高级",
       "estimatedMinutes": 42,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 15,
+      "headings": [
+        "一、先定义清楚什么是 Harness",
+        "二、为什么 Harness 突然成了瓶颈",
+        "一个具体的例子",
+        "三、反馈稀疏：具身场景独有的困难",
+        "三种应对思路",
+        "四、从经验轨迹优化整个 Harness",
+        "多子任务共享一个 Harness 的冲突问题",
+        "一个意外的发现",
+        "五、在线探索：把有效做法固化成程序",
+        "六、工程落地：版本化、回归集、回滚",
+        "1. Harness 必须版本化",
+        "2. 必须有留出回归集",
+        "3. 必须能回滚",
+        "自检：三个指标判断这套机制是否在正轨上",
+        "七、最小可运行骨架",
+        "八、能力自检清单",
+        "九、与其他章节的连接",
+        "十、再深入一层：Harness 与模型的职责边界该怎么划",
+        "判据：这件事能不能被解析地写出来",
+        "边界是会移动的",
+        "一个容易踩的坑：原语粒度",
+        "十一、记忆在 Harness 里的位置",
+        "挑选比存储更难",
+        "记忆与规划是耦合的",
+        "十二、Agent 间协作时的 Harness",
+        "十三、评估 Harness 改动时的三个陷阱",
+        "陷阱一：用同一批任务调又评",
+        "陷阱二：只看平均成功率",
+        "陷阱三：忽略方差",
+        "十四、什么时候不该做 Harness 自改进"
+      ],
+      "summary": "在数字智能领域，Harness 这个词最近被频繁提起，但很少有人给出可操作的定义。我们先把它钉死。"
     }
-  ]
+  ],
+  "readingMinutes": 140,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 118866
 }

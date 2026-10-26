@@ -60,7 +60,20 @@
       "shortTitle": "控制论基础",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 线性时不变系统（LTI）",
+        "2. 拉普拉斯变换速查",
+        "3. 稳定性判据",
+        "4. 频域分析",
+        "Bode 图",
+        "奈奎斯特判据",
+        "5. 状态空间与传递函数的对偶",
+        "6. 根轨迹法",
+        "练习题"
+      ],
+      "summary": "在学习 PID、LQR、MPC 等具体控制器之前，必须先掌握经典控制理论的基石——传递函数、稳定性判据和频域分析。这些是理解\"为什么控制器这样设计\"的关键。"
     },
     {
       "id": "sec-02",
@@ -70,7 +83,20 @@
       "shortTitle": "PID 控制",
       "difficulty": "入门",
       "estimatedMinutes": 14,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 14,
+      "headings": [
+        "什么是控制理论？",
+        "开环 vs 闭环控制",
+        "PID 控制器",
+        "PID 调参直觉",
+        "调参方法",
+        "PID 参数调节效果对比",
+        "完整倒立摆 PID 控制",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "控制理论研究的核心问题：如何让一个系统从当前状态到达目标状态，并且保持在那里。"
     },
     {
       "id": "sec-03",
@@ -80,7 +106,18 @@
       "shortTitle": "状态估计基础",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 为什么需要状态估计？",
+        "2. 线性卡尔曼滤波器（KF）",
+        "3. 扩展卡尔曼滤波器（EKF）",
+        "4. 无迹卡尔曼滤波器（UKF）",
+        "5. 卡尔曼滤波的直觉",
+        "6. Q 和 R 的调参",
+        "练习题"
+      ],
+      "summary": "控制器需要完整的状态信息才能工作，但传感器只能给出部分、有噪声的观测。卡尔曼滤波器是从噪声观测中最优估计状态的标准方法。"
     },
     {
       "id": "sec-04",
@@ -91,7 +128,24 @@
       "difficulty": "中级",
       "estimatedMinutes": 22,
       "isBrief": true,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 7,
+      "headings": [
+        "1. 稳定性的严格定义",
+        "2. Lyapunov 直接法",
+        "3. 常用 Lyapunov 函数",
+        "4. 线性系统的 Lyapunov 方程",
+        "5. LaSalle 不变性原理",
+        "6. 基于 Lyapunov 的控制器设计（CLF）",
+        "为什么需要 Lyapunov：线性化特征值法不够用",
+        "核心思想：找一个\"能量函数\"",
+        "构造 V 的三种常用套路",
+        "LaSalle 不变集原理：处理 Ṽ 半负定",
+        "用 Lyapunov 设计控制器，而不只是分析",
+        "常见误区",
+        "练习题"
+      ],
+      "summary": "如何证明一个控制器能让系统稳定？频域方法（Bode/Nyquist）只适用于线性系统。对非线性系统，Lyapunov 方法是唯一的通用工具。"
     },
     {
       "id": "sec-05",
@@ -101,7 +155,20 @@
       "shortTitle": "LQR 最优控制",
       "difficulty": "中级",
       "estimatedMinutes": 9,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 9,
+      "headings": [
+        "从 PID 到最优控制",
+        "LQR 的问题设定",
+        "Q 和 R 的直觉",
+        "Riccati 方程",
+        "LQR vs PID",
+        "LQR 设计直觉",
+        "完整 LQR 倒立摆控制",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "PID 简单好用，但有局限： - 只能处理单输入单输出（SISO），机器人通常是多关节耦合 - 参数靠试，没有“最优”保证 - 不能同时优化多个目标（既要快又要省力）"
     },
     {
       "id": "sec-06",
@@ -111,7 +178,15 @@
       "shortTitle": "模型预测控制",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 9,
+      "headings": [
+        "核心思想",
+        "足式机器人中的 MPC",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "在每个时间步求解一个有限时域优化问题： $$\\min_{u_0,...,u_{N-1}} \\sum_{k=0}^{N-1} [l(x_k, u_k)] + V_f(x_N)$$ $$\\text{s.t.} \\quad x_{k+1} = f(x_k, u_k), \\quad x_k \\in X, \\quad u_k \\in U$$"
     },
     {
       "id": "sec-07",
@@ -121,7 +196,22 @@
       "shortTitle": "模型预测控制（MPC）在机器人中的实现",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 4,
+      "headings": [
+        "1. MPC 的核心思想",
+        "2. 线性 MPC 与 QP",
+        "3. 非线性 MPC（NMPC）",
+        "4. MPC 在机器人中的经典应用",
+        "四足机器人步态控制",
+        "自动驾驶轨迹跟踪",
+        "机械臂视觉伺服",
+        "5. MPC 的调参",
+        "6. 实时性与求解加速",
+        "7. MPC vs RL 对比",
+        "练习题"
+      ],
+      "summary": "MPC 是现代机器人控制的核心——从四足机器人步态到自动驾驶，MPC 无处不在。本节讲解 MPC 的原理和实现。"
     },
     {
       "id": "sec-08",
@@ -132,7 +222,17 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 3,
+      "headings": [
+        "计算力矩控制（Computed Torque Control）",
+        "核心公式",
+        "与PID控制的本质区别",
+        "全身力矩优化（Whole-Body Torque Optimization）",
+        "优先级控制框架",
+        "练习"
+      ],
+      "summary": "计算力矩控制是基于模型的控制方法，利用已知的机器人动力学模型精确补偿非线性项（重力、科里奥利力），将非线性系统转化为线性系统，再施加线性控制律。"
     },
     {
       "id": "sec-09",
@@ -142,7 +242,16 @@
       "shortTitle": "阻抗/导纳控制",
       "difficulty": "中级",
       "estimatedMinutes": 7,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 7,
+      "headings": [
+        "核心思想",
+        "阻抗控制 vs 导纳控制",
+        "应用场景",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "让机器人末端表现为一个弹簧-阻尼系统： $$M_d \\ddot{x} + B_d \\dot{x} + K_d (x - x_d) = F_{ext}$$"
     },
     {
       "id": "sec-10",
@@ -152,7 +261,20 @@
       "shortTitle": "自适应控制与鲁棒控制",
       "difficulty": "中级",
       "estimatedMinutes": 11,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 11,
+      "headings": [
+        "从理想到真实：为什么需要自适应和鲁棒控制？",
+        "两种哲学",
+        "自适应控制：在线学习系统参数",
+        "自适应控制代码实现",
+        "鲁棒控制：滑模控制（SMC）",
+        "机器人中的实际应用",
+        "自适应 vs PID vs LQR 对比",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "前面学的 PID、LQR、MPC 都假设我们精确知道系统参数（质量、摩擦、惯量）。但在真实世界中："
     },
     {
       "id": "sec-11",
@@ -163,7 +285,18 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 最优控制问题的形式化",
+        "2. Pontryagin 极大值原理",
+        "3. 动态规划与 HJB 方程",
+        "4. LQR：最优控制的闭式解",
+        "5. 非线性最优控制：iLQR 与 DDP",
+        "6. 机器人中的应用",
+        "练习题"
+      ],
+      "summary": "LQR 是最优控制的一个特例——本节从最优控制的一般理论讲起，涵盖 Pontryagin 极大值原理、动态规划、DDP 等高级方法。"
     },
     {
       "id": "sec-12",
@@ -174,7 +307,16 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "什么是滑模控制？",
+        "滑模面设计",
+        "控制律",
+        "抖振问题与解决",
+        "练习"
+      ],
+      "summary": "滑模控制（Sliding Mode Control, SMC） 是一种鲁棒控制方法，能在存在模型不确定性和外部干扰的情况下保证跟踪性能。核心思想：设计一个滑模面，把系统状态强制驱动到该面上，然后沿面滑动到目标点。"
     },
     {
       "id": "sec-13",
@@ -185,7 +327,15 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "两种控制范式的互补",
+        "三种混合架构",
+        "残差策略学习",
+        "练习"
+      ],
+      "summary": ""
     },
     {
       "id": "sec-14",
@@ -195,7 +345,25 @@
       "shortTitle": "动作平滑性与高阶约束",
       "difficulty": "中级",
       "estimatedMinutes": 9,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 9,
+      "headings": [
+        "一、抖动：仿真指标看不见、真机一定会遇到的头号故障",
+        "抖动的四种常见来源",
+        "二、平滑性的三个度量：位置、速度、加速度，以及为什么是 jerk",
+        "三、时域整形：从梯形速度到 jerk 连续的 S 曲线",
+        "梯形速度曲线的问题",
+        "七段式 S 曲线",
+        "一个简单的在线 jerk 限幅器",
+        "四、频域视角：输入整形与残余振动抑制",
+        "五、学习策略为什么会抖：零阶监督的结构性缺陷",
+        "问题形式化",
+        "高阶监督：一阶动作的引入",
+        "实现",
+        "六、把四层防线串起来：一个可落地的抖动治理流水线",
+        "七、本节要点"
+      ],
+      "summary": "在仿真里评价一个控制器，我们习惯看跟踪误差、累计回报、成功率。这三个指标有一个共同盲区：它们对动作的时间结构几乎不敏感。"
     },
     {
       "id": "sec-15",
@@ -206,7 +374,24 @@
       "difficulty": "高级",
       "estimatedMinutes": 14,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 14,
+      "headings": [
+        "为什么要在控制模块里讨论 VLA？",
+        "时间尺度金字塔：控制仍是最底层的铁律",
+        "一、VLA 输出到关节力矩的五层翻译管线",
+        "层 1：时间插值——把 10Hz 策略变成 1kHz 指令",
+        "层 2：安全裁剪——最后一道人为编写的防线",
+        "层 3：经典跟踪控制——PID + 前馈 + 阻抗",
+        "层 4：阻抗/导纳——柔顺操作的关键",
+        "层 5：FOC——最后一公里",
+        "二、2026 三种 VLA+控制融合架构对比",
+        "三、完整参考实现：VLA→PD+阻抗 的 1kHz 关节控制循环",
+        "四、真机调试清单：VLA 上机前 12 条必查",
+        "五、延伸阅读与前沿趋势",
+        "六、练习题"
+      ],
+      "summary": "2026 年机器人领域最剧烈的变化，不是\"控制被 VLA 取代\"，而是控制的角色被重新定义。早期业内一度流行一个浪漫的说法：\"有了足够大的 VLA，PID/MPC/阻抗控制都可以扔掉。\"但 2025 年下半年到 2026 年 Q1 的真机落地（特斯拉 Optimus V3、魔法原子 MagicBot X1、自变量 WALL-B、智元 X2-N、Meta 新收"
     },
     {
       "id": "sec-16",
@@ -217,7 +402,38 @@
       "difficulty": "高级",
       "estimatedMinutes": 9,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 9,
+      "headings": [
+        "为什么这个话题重要",
+        "一、控制理论的扩展：从 SISO 到多智能体",
+        "1.1 单 agent 控制：传统范式",
+        "1.2 多 agent 控制的传统做法",
+        "1.3 RoboOS-NeXT 的范式跳变",
+        "二、STEM：跨机器人的共享记忆抽象",
+        "2.1 三层记忆的形式定义",
+        "2.2 STEM 检索的形式化",
+        "2.3 控制论意义：STEM = 跨 agent 的「全局观察器」",
+        "三、Brain-Cerebellum 双层架构",
+        "3.1 架构总图",
+        "3.2 Brain 的决策目标",
+        "3.3 Cerebellum：本体技能库",
+        "3.4 通信协议",
+        "四、对比传统集中式 / 分布式",
+        "五、实测数据（来自 RoboOS-NeXT 论文）",
+        "5.1 餐厅协作（4 agent 异构）",
+        "5.2 超市补货 + 拣货协作（6 agent 异构）",
+        "5.3 家庭场景（3 agent 终身学习）",
+        "5.4 消融实验（验证三层 STEM 不可缺）",
+        "六、自己动手：用 RoboOS-NeXT 跑一个最小协作案例",
+        "6.1 仿真版（无须真机）",
+        "6.2 单真机 + 云 Brain",
+        "6.3 多真机协作（≥2 台）",
+        "七、与 NVIDIA Isaac OS / DeepMind RT-Foundation 的对比",
+        "八、给学习者的进阶路径",
+        "关键阅读"
+      ],
+      "summary": "到 2026 年 5 月为止，单机器人 VLA 已经卷到 95% 的桌面操作成功率，下一个真正的硬骨头是多机器人协作：餐厅里的调酒臂 + 双足服务员 + 移动配菜车 + 厨房臂如何在客户点单后协同把酒、菜、餐桌按时拼出来；超市里 6 台 AGV + 2 台机械臂 + 1 台双足 8 小时连续运行不打架；家庭里 Spot Mini + 桌面双臂 + 叠衣机器人"
     },
     {
       "id": "sec-17",
@@ -228,7 +444,31 @@
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 8,
+      "headings": [
+        "1. 为什么人形机器人控制需要\"可证明的稳定性\"",
+        "1.1 RL 控制器的\"黑盒焦虑\"",
+        "1.2 Caltech AMBER 30 年家底",
+        "1.3 2026 年 5 月的破局",
+        "2. 核心定理与证明思路",
+        "2.1 系统模型",
+        "2.2 CLF-RL 奖励函数",
+        "2.3 主定理（连续时间）",
+        "2.4 证明骨架（4 步）",
+        "2.5 离散时间扩展",
+        "2.6 实践中的 reward shaping 兼容性",
+        "3. 工程实战：在 PyTorch + Isaac Gym 跑 CLF-RL",
+        "3.1 最小例子：Cart-Pole",
+        "3.2 双足行走（Cassie 仿真）",
+        "3.3 与传统 RL 的对比",
+        "4. 与 RoboOS-NeXT、Helix-02 等 2026 范式的关系",
+        "5. 进一步阅读与练习",
+        "5.1 推荐论文",
+        "5.2 课后练习",
+        "6. 小结"
+      ],
+      "summary": "2024-2025 年人形机器人圈出现一个共识：RL（PPO / SAC）训出来的步态确实又快又自然，但工业落地时甲方反复追问一个问题——"
     },
     {
       "id": "sec-18",
@@ -239,7 +479,36 @@
       "difficulty": "高级",
       "estimatedMinutes": 45,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 10,
+      "headings": [
+        "一、为什么稳定的位置控制会在接触时失稳",
+        "自由空间 vs 接触状态",
+        "二、耦合：被忽略的第二个放大器",
+        "耦合从哪里来",
+        "一个实用的判断",
+        "三、时延：最隐蔽的失稳源",
+        "时延的三个来源",
+        "时延为什么会致命",
+        "四、被动性：一个能给出硬保证的框架",
+        "什么是被动性",
+        "为什么被动性有用",
+        "控制器怎么保持无源",
+        "无源性的代价",
+        "五、诊断流程：振荡了先查什么",
+        "六、最小可运行骨架",
+        "七、能力自检清单",
+        "八、与其他章节的连接",
+        "九、再深入一层：采样率、抗混叠与力控的真实带宽",
+        "采样率决定上限，时延决定实际",
+        "抗混叠滤波是一把双刃剑",
+        "一个实用的检查：阶跃响应测时延",
+        "十、补充自检"
+      ],
+      "summary": "一个反直觉但极其常见的现象：一套在自由空间里调得很好的控制器，一旦接触到环境就开始振荡；而同样的控制器，在刚性环境上振荡得更厉害。"
     }
-  ]
+  ],
+  "readingMinutes": 131,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 115822
 }

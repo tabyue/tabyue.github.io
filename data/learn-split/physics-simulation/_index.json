@@ -1,14 +1,26 @@
 {
   "id": "physics-simulation",
   "name": "物理仿真引擎",
-  "lastUpdated": "2026-10-26T08:40",
+  "lastUpdated": "2026-10-26",
   "stage": "阶段五：仿真与 Sim-to-Real",
   "importance": "核心",
   "estimatedHours": 40,
   "description": "仿真环境是训练和验证具身智能算法的核心基础设施。MuJoCo 入门，Isaac Lab 大规模训练。",
   "prerequisites": [
-    "Python 编程",
-    "机器人动力学"
+    "能运行 Python 程序并处理数组；可补学 [控制流与函数](/learn/python-scientific-computing/2) 和 [NumPy 科学计算](/learn/python-scientific-computing/7)。",
+    "理解位置、速度、加速度、力矩与质量矩阵；对应 [动力学建模方法](/learn/robot-dynamics/1) 和 [Lagrange 力学](/learn/robot-dynamics/2)，接触实验另需 [接触力学基础](/learn/robot-dynamics/6)。",
+    "关节跟踪需理解 [PID 控制](/learn/control-theory/2)；封装学习环境前需理解 [MDP 的观测、动作与奖励](/learn/reinforcement-learning/2)。运行最小物理仿真不以训练 RL 策略为前提。"
+  ],
+  "learningObjectives": [
+    "解释 MJCF 中的 body、joint、geom 和 actuator，区分模型参数、仿真状态与控制输入。",
+    "运行最小场景并记录状态，通过改变步长、质量或摩擦观察仿真行为。",
+    "构造具有 reset 和 step 接口的环境，说明观测、动作、奖励、成功与超时条件，并诊断穿透、抖动或失稳现象。"
+  ],
+  "studyGuide": [
+    "从 [MuJoCo](/learn/physics-simulation/1) 的内嵌 MJCF 场景开始；先检查时间推进与状态有限值，再按需渲染。外部机器人模型需单独核对资产和路径，不作为第一个成功标准。",
+    "结合 [物理仿真基础](/learn/physics-simulation/2) 理解碰撞、接触和数值积分，再用 [MuJoCo 深入](/learn/physics-simulation/3) 检查执行器与 API；在同一场景比较步长或控制参数，保留状态曲线。",
+    "通过 [Isaac Lab](/learn/physics-simulation/4) 和 [仿真器选型](/learn/physics-simulation/5) 了解资源要求，不必同时安装所有引擎；依据 [资产管理](/learn/physics-simulation/7) 与 [环境设计](/learn/physics-simulation/8) 写清任务接口和随机化配置。",
+    "使用 [接触动力学与约束求解器](/learn/physics-simulation/12) 诊断一次接触异常；验收提交最小场景、环境接口说明和诊断记录。只有仿真结果时，不宣称完成真机迁移。"
   ],
   "resources": [
     {
@@ -55,12 +67,28 @@
     {
       "id": "sec-01",
       "title": "MuJoCo",
-      "lastUpdated": "2026-04-19T22:16",
-      "chars": 12435,
+      "lastUpdated": "2026-10-26",
+      "chars": 12983,
       "shortTitle": "MuJoCo",
       "difficulty": "入门",
       "estimatedMinutes": 13,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 14,
+      "headings": [
+        "什么是物理仿真？",
+        "MuJoCo：机器人仿真的标准工具",
+        "MuJoCo 的物理原理（深入理解）",
+        "为什么 MuJoCo 比其他引擎更稳定？",
+        "MuJoCo 的时间步进方案",
+        "关键仿真参数的含义",
+        "MJCF 格式详解",
+        "MJCF 格式",
+        "仿真器性能对比",
+        "入门路线",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "物理仿真引擎是在计算机中模拟真实世界物理规律的软件。对机器人研究来说，仿真是不可或缺的工具："
     },
     {
       "id": "sec-02",
@@ -70,7 +98,18 @@
       "shortTitle": "物理仿真基础",
       "difficulty": "入门",
       "estimatedMinutes": 3,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 牛顿-欧拉方程",
+        "2. 碰撞检测",
+        "3. 接触力求解",
+        "4. 数值积分方法",
+        "5. 仿真步长的选择",
+        "6. 物理引擎内部循环",
+        "练习题"
+      ],
+      "summary": "在使用 MuJoCo、Isaac Sim 之前，必须理解物理引擎内部的基本原理——刚体动力学方程如何求解、碰撞如何检测和处理、数值积分方法如何影响仿真精度。"
     },
     {
       "id": "sec-03",
@@ -80,7 +119,21 @@
       "shortTitle": "MuJoCo 深入",
       "difficulty": "中级",
       "estimatedMinutes": 5,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 5,
+      "headings": [
+        "1. MJCF 建模完整指南",
+        "2. 几何体类型与碰撞",
+        "3. 执行器（Actuator）类型",
+        "4. Python API 实战",
+        "5. 高级特性",
+        "可微分（MJX）",
+        "接触模型调参",
+        "6. 可视化与录屏",
+        "7. 性能优化",
+        "练习题"
+      ],
+      "summary": "MuJoCo 是当前机器人仿真的事实标准——Google DeepMind 收购后完全开源。本节深入讲解 MJCF 建模和 MuJoCo 的高级特性。"
     },
     {
       "id": "sec-04",
@@ -90,7 +143,17 @@
       "shortTitle": "NVIDIA Isaac Lab",
       "difficulty": "中级",
       "estimatedMinutes": 5,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 5,
+      "headings": [
+        "Isaac Lab：GPU 加速的机器人学习平台",
+        "为什么需要 GPU 并行仿真？",
+        "架构原理",
+        "什么时候用 Isaac Lab vs MuJoCo？",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "Isaac Lab（原 Isaac Gym + Orbit）是 NVIDIA 开发的机器人学习平台，最大特点是在 GPU 上并行运行数千个仿真环境。"
     },
     {
       "id": "sec-05",
@@ -100,7 +163,15 @@
       "shortTitle": "Genesis 与仿真器选型",
       "difficulty": "中级",
       "estimatedMinutes": 7,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 7,
+      "headings": [
+        "选型建议",
+        "Genesis 快速入门",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "新一代 Python 原生可微仿真引擎，Taichi 后端 GPU 加速： - 比 MuJoCo 快 10-80x - 支持可微分物理（基于梯度优化轨迹） - 多物理耦合（刚体+软体+流体+布料）"
     },
     {
       "id": "sec-06",
@@ -111,7 +182,20 @@
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 3,
+      "headings": [
+        "仿真器选型与性能对比",
+        "1. 主流仿真器全景",
+        "2. 性能对比（训练场景）",
+        "3. MuJoCo 的优势",
+        "4. Isaac Lab 的优势",
+        "5. Genesis 的优势（2025 新秀）",
+        "6. 选型决策树",
+        "7. 迁移常见痛点",
+        "练习题"
+      ],
+      "summary": "机器人仿真器选择直接决定了项目效率——选错会导致数月延误。本节系统对比主流仿真器。"
     },
     {
       "id": "sec-07",
@@ -121,7 +205,18 @@
       "shortTitle": "场景构建与资产管理",
       "difficulty": "中级",
       "estimatedMinutes": 7,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 7,
+      "headings": [
+        "从空白到复杂场景",
+        "场景构建的三种方式",
+        "URDF vs MJCF 格式对比",
+        "程序化场景生成",
+        "资产管理最佳实践",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "仿真的价值在于可以构造无限多样的训练场景。学会高效地构建和管理仿真场景，是大规模训练的基础。"
     },
     {
       "id": "sec-08",
@@ -131,7 +226,17 @@
       "shortTitle": "仿真环境设计",
       "difficulty": "中级",
       "estimatedMinutes": 3,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 仿真环境的核心要素",
+        "2. 域随机化（Domain Randomization）",
+        "3. 奖励函数设计",
+        "4. 并行仿真",
+        "5. 场景资产管理",
+        "练习题"
+      ],
+      "summary": "物理引擎是工具，如何设计好的仿真环境才是核心能力。本节讲解任务环境构建的方法论和域随机化技术。"
     },
     {
       "id": "sec-09",
@@ -141,7 +246,19 @@
       "shortTitle": "Sim-to-Real 迁移技术",
       "difficulty": "中级",
       "estimatedMinutes": 5,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 5,
+      "headings": [
+        "仿真训的策略，真机能用吗？",
+        "Reality Gap 的来源",
+        "三大迁移策略",
+        "Domain Randomization 实现",
+        "System Identification",
+        "迁移成功的关键指标",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "仿真和真实世界之间存在Sim-to-Real Gap。直接将仿真中训好的策略部署到真机，成功率往往骤降。Sim-to-Real 技术就是用来弥合这个鸿沟的。"
     },
     {
       "id": "sec-10",
@@ -152,7 +269,17 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "可微分物理仿真：用梯度优化一切",
+        "为什么可微分仿真很重要？",
+        "Genesis引擎：可微分仿真实战",
+        "可微分仿真的关键挑战",
+        "仿真器可微分性对比",
+        "练习"
+      ],
+      "summary": "传统仿真器（MuJoCo、Isaac Sim）是“黑盒”——给输入得输出，但无法计算“如果改变参数X，输出会怎么变”。可微分仿真打破了这个限制：整个物理仿真过程对所有参数可微，可以直接用梯度下降优化。"
     },
     {
       "id": "sec-11",
@@ -162,7 +289,24 @@
       "shortTitle": "可微分仿真",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "可微分仿真：从梯度到优化",
+        "1. 什么是可微分仿真？",
+        "2. 主流可微分仿真器",
+        "3. 核心应用：基于梯度的轨迹优化",
+        "4. 可微仿真的核心挑战：接触不连续",
+        "Soft contact（软接触）",
+        "Smoothing through randomization（随机化平滑）",
+        "Reparameterization",
+        "5. 系统辨识（Sysid）",
+        "6. 可微仿真 + RL 混合",
+        "7. 局限性",
+        "8. 工程建议",
+        "练习题"
+      ],
+      "summary": "传统物理仿真器是\"黑盒\"——你输入控制，它输出轨迹。可微分仿真让仿真器变成\"白盒\"——可以反向传播梯度，直接对参数/轨迹做基于梯度的优化。"
     },
     {
       "id": "sec-12",
@@ -172,7 +316,24 @@
       "shortTitle": "接触动力学与约束求解器",
       "difficulty": "高级",
       "estimatedMinutes": 11,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 11,
+      "headings": [
+        "1. 接触为什么是困难的",
+        "2. 三类接触模型",
+        "类型一：罚函数法（Penalty / Spring-Damper）",
+        "类型二：约束法（LCP / 线性互补问题）",
+        "类型三：软接触 / 凸优化模型（MuJoCo 路线）",
+        "3. Delassus 算子与质量比问题",
+        "4. 摩擦锥与它的线性化",
+        "5. 求解器：投影高斯-赛德尔（PGS）",
+        "6. 数值积分与稳定性的关系",
+        "7. 常见仿真病态与诊断",
+        "8. MuJoCo 的 solref / solimp 参数",
+        "9. 误区",
+        "10. 习题"
+      ],
+      "summary": "前面十五节讲了刚体动力学、数值积分、仿真器选型和可微分仿真。这一节要下沉到仿真器最底层、也是最容易被当成黑箱的部分：接触与约束求解。"
     },
     {
       "id": "sec-13",
@@ -182,7 +343,26 @@
       "shortTitle": "GPU 大规模并行仿真",
       "difficulty": "高级",
       "estimatedMinutes": 9,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 9,
+      "headings": [
+        "为什么 RL 训练必须做 GPU 并行仿真？",
+        "GPU 并行仿真的物理实现：从 CPU 到 GPU 的范式跨越",
+        "CPU 仿真器（MuJoCo / Bullet）的瓶颈",
+        "GPU 仿真器（Isaac Lab / Genesis / MJX）的设计",
+        "Isaac Lab 4096 并行 PPO 实战代码",
+        "并行仿真的 5 大隐藏陷阱",
+        "陷阱 1：环境 reset 不可批量化导致严重慢",
+        "陷阱 2：观测 / 奖励 / done 必须全部在 GPU tensor 上",
+        "陷阱 3：物理时间步过小导致并行优势消失",
+        "陷阱 4：Domain Randomization 必须批量",
+        "陷阱 5：训练完成后部署到真机仍然要 sim-to-real 测试",
+        "主流 GPU 仿真器对比（2026-Q2）",
+        "联动前沿：从 4096 并行到 100K 并行的扩展路径",
+        "练习题",
+        "延伸阅读"
+      ],
+      "summary": "经典强化学习教材中的 PPO/SAC 训练公式默认 batch 来自单环境。但真实机器人 RL 不能这样做："
     },
     {
       "id": "sec-14",
@@ -192,7 +372,22 @@
       "shortTitle": "触觉仿真与软体物理",
       "difficulty": "高级",
       "estimatedMinutes": 12,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 12,
+      "headings": [
+        "为什么灵巧操作需要触觉仿真？",
+        "触觉传感器的工作原理",
+        "GelSight / DIGIT 原理详解",
+        "触觉仿真的核心挑战",
+        "保真度 vs 效率的矛盾",
+        "ETac 框架：数据驱动触觉仿真的突破",
+        "Python 实现：简化的触觉仿真模型",
+        "触觉信息在灵巧操作中的四大应用",
+        "触觉仿真的前沿与挑战",
+        "练习",
+        "参考答案要点"
+      ],
+      "summary": "前面章节介绍的 MuJoCo、Isaac Lab 等仿真器主要处理刚体动力学——物体碰撞、关节运动、力矩传递。但真实的灵巧操作远不止刚体："
     },
     {
       "id": "sec-15",
@@ -203,7 +398,21 @@
       "difficulty": "高级",
       "estimatedMinutes": 12,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 12,
+      "headings": [
+        "仿真的下一代范式：学习出来的物理引擎",
+        "核心思想：「看视频学物理」",
+        "三种主流架构",
+        "从像素到语义：Mask World Model 的范式转变",
+        "完整工作流：世界模型驱动的策略学习",
+        "Python 实现：简化的视频世界模型",
+        "语义掩码世界模型的实现思路",
+        "世界模型 vs 传统仿真器：选择指南",
+        "前沿方向",
+        "练习"
+      ],
+      "summary": "前面几节介绍的 MuJoCo、Isaac Lab、Genesis 都是基于方程的仿真器——人类把物理规律写成公式（牛顿力学、接触模型、摩擦锥），引擎按公式求解。但这种方式有一个根本限制：你只能仿真你能写出方程的东西。"
     },
     {
       "id": "sec-16",
@@ -214,7 +423,21 @@
       "difficulty": "高级",
       "estimatedMinutes": 14,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 14,
+      "headings": [
+        "1. 为什么 VLA 时代的物理仿真完全不一样？",
+        "2. Wall-OSS-0.5 训练数据合成 Pipeline 实战",
+        "3. 视频世界模型与传统物理仿真：互补还是替代？",
+        "4. Isaac Lab 4096 并行 PPO + VLA 数据采集双开",
+        "5. 可微分仿真：让 VLA 梯度直接进入物理引擎",
+        "6. 仿真 → 真机 5 大新范式（Sim-to-Real 2026 升级版）",
+        "7. 工程架构：百万级仿真数据流水线",
+        "8. MuJoCo Playground vs Isaac Lab vs Genesis：选型决策树",
+        "9. 学习路径推荐 — 仿真 + VLA 的下一步",
+        "10. 必读论文 + 必跑代码"
+      ],
+      "summary": "2026 年物理仿真的角色发生了根本性转变：从「测试控制算法的工具」（MuJoCo 经典用法），到「为 VLA 大模型生产 100M+ 训练轨迹的数据工厂」+「与视频世界模型协同进化的可微分基础设施」。本节系统讲解 VLA 时代物理仿真的工程实践，包括 Wall-OSS-0.5 训练数据如何在 MuJoCo Playground / Isaac Lab 上合"
     },
     {
       "id": "sec-17",
@@ -225,7 +448,45 @@
       "difficulty": "高级",
       "estimatedMinutes": 42,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 12,
+      "headings": [
+        "一、精密装配为什么是仿真的硬骨头",
+        "二、间隙是什么，量级有多大",
+        "三、凸分解为什么会抹掉间隙",
+        "三种替代方案对比",
+        "四、精确凸块程序化拼装",
+        "参数化族才是重点",
+        "一个容易被忽略的参数：倒角",
+        "五、资产校验：怎么知道你的资产是对的",
+        "校验一：间隙实测",
+        "校验二：插入力曲线",
+        "校验三：灵敏度扫描",
+        "六、与触觉仿真、软体物理的关系",
+        "七、工程落地清单",
+        "八、能力自检清单",
+        "九、与其他章节的连接",
+        "十、再深入一层：插入过程的阶段划分",
+        "阶段一：搜索（Search）",
+        "阶段二：导入（Chamfer Entry）",
+        "阶段三：配合（Engagement）",
+        "阶段四：到底（Seating）",
+        "阶段划分对策略设计的意义",
+        "十一、课程学习怎么按间隙排课",
+        "基本排法",
+        "怎么判断该不该进入下一课",
+        "一个反直觉的建议：训练时保留一部分简单样本",
+        "十二、常见坑与排查",
+        "十三、如果你没有 CAD 模型",
+        "十四、补充自检",
+        "十五、从资产到训练：一个完整的检查清单",
+        "阶段 A：资产生成后（秒级，必跑）",
+        "阶段 B：单资产试训（分钟到小时级）",
+        "阶段 C：批次训练前（小时级）",
+        "阶段 D：真机验证前",
+        "十六、与其他仿真误差的关系"
+      ],
+      "summary": "在物理仿真里做抓取很容易，做精密装配极难。差别不在算法，而在资产。"
     },
     {
       "id": "sec-18",
@@ -236,7 +497,29 @@
       "difficulty": "高级",
       "estimatedMinutes": 43,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "从「不穿模」到「求解器崩掉」",
+        "接触点密度的量级差异",
+        "求解器在接触密集下会发生什么",
+        "三角取舍：通用性、稳定性、速度",
+        "灵巧操作特有的三个仿真难题",
+        "专用引擎能做的四件事",
+        "诊断清单：先测再训",
+        "高频坑",
+        "选型决策表",
+        "并行化与接触求解的冲突",
+        "灵巧操作的 sim-to-real 有什么不一样",
+        "与可微分仿真的关系",
+        "一张可执行的决策流程",
+        "与相邻模块的接口",
+        "练习题"
+      ],
+      "summary": "前面讨论接触动力学时，默认的场景是机械臂抓一个方块：接触点个位数，求解器跑得很稳。这个默认设定在灵巧操作里不成立。"
     }
-  ]
+  ],
+  "readingMinutes": 140,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 120045
 }

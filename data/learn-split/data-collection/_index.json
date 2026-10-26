@@ -47,7 +47,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：遥操作系统搭建 + 相机选型\n**第2周**：相机标定 + 手眼标定实战\n**第3周**：数据格式与标准 (RLDS/LeRobot)\n**第4周**：数据增强 + 自动化采集管线\n**第5周**：数据质量筛选 + DAgger 迭代采集",
-  "lastUpdated": "2026-10-23T08:55",
+  "lastUpdated": "2026-10-26",
   "maturity": "comprehensive",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -59,7 +59,21 @@
       "shortTitle": "相机选型与标定",
       "difficulty": "入门",
       "estimatedMinutes": 21,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 21,
+      "headings": [
+        "机器人视觉传感器全景",
+        "相机类型对比",
+        "选型决策树",
+        "RealSense D435i：最常用的机器人深度相机",
+        "相机内参与畸变模型",
+        "棋盘格标定实战",
+        "手眼标定 (Eye-in-Hand / Eye-to-Hand)",
+        "多相机系统同步",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "机器人数据采集的第一步是选对相机。不同任务对图像模态、分辨率、帧率、视场角的需求截然不同。"
     },
     {
       "id": "sec-02",
@@ -69,7 +83,17 @@
       "shortTitle": "遥操作系统",
       "difficulty": "中级",
       "estimatedMinutes": 17,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 17,
+      "headings": [
+        "方案对比",
+        "数据质量 > 数据数量",
+        "遥操作方案选择",
+        "遥操作代码示例",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "50 个高质量 demo > 500 个低质量 demo（Scaling Law 论文结论）"
     },
     {
       "id": "sec-03",
@@ -79,7 +103,18 @@
       "shortTitle": "数据格式与标准",
       "difficulty": "中级",
       "estimatedMinutes": 10,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 10,
+      "headings": [
+        "机器人数据格式：让数据可复用",
+        "RLDS（Reinforcement Learning Datasets）",
+        "LeRobot 数据格式",
+        "数据质量 >> 数据数量",
+        "Open X-Embodiment / RLDS 格式",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "不同研究团队用不同格式存储数据，导致数据难以共享和复用。标准化数据格式是大规模机器人学习的基础。"
     },
     {
       "id": "sec-04",
@@ -89,7 +124,16 @@
       "shortTitle": "数据增强",
       "difficulty": "中级",
       "estimatedMinutes": 12,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 12,
+      "headings": [
+        "为什么机器人数据增强很重要？",
+        "常用增强方法",
+        "动作增强",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "在机器人领域，收集演示数据非常昂贵（需要人类操作真实机器人）。数据增强通过对已有数据施加变换，人工增加数据多样性。"
     },
     {
       "id": "sec-05",
@@ -99,7 +143,19 @@
       "shortTitle": "自动化数据采集与质量筛选",
       "difficulty": "高级",
       "estimatedMinutes": 23,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 23,
+      "headings": [
+        "从人工采集到自动化流水线",
+        "自动化采集策略对比",
+        "脚本化自动采集系统",
+        "数据质量评估与自动筛选",
+        "DAgger：交互式数据采集",
+        "数据版本管理",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "手动遥操作采集效率有瓶颈（1 条轨迹 1-5 分钟），规模化数据采集需要自动化。核心思路：用已有策略自动采集 → 筛选高质量数据 → 反哺策略训练。"
     },
     {
       "id": "sec-06",
@@ -109,7 +165,19 @@
       "shortTitle": "大规模数据工程与自动标注",
       "difficulty": "高级",
       "estimatedMinutes": 24,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 24,
+      "headings": [
+        "从百条到百万条：构建生产级机器人数据管道",
+        "为什么数据规模如此关键？",
+        "生产级数据管道架构",
+        "数据清洗：从粗到精的质量控制",
+        "自动语言标注：让LLM为机器人数据写指令",
+        "仿真数据生成：用数字孪生扩展数据规模",
+        "数据版本管理与血缘追踪",
+        "练习"
+      ],
+      "summary": "2025-2026年具身智能领域最重要的趋势之一是数据工程从研究附属品升级为独立核心能力。Open X-Embodiment（100万+轨迹）、AGIBOT WORLD 2026（600万+轨迹）等大规模数据集的发布，证明了“数据即护城河”。"
     },
     {
       "id": "sec-07",
@@ -119,7 +187,21 @@
       "shortTitle": "人体演示到机器人动作的Retargeting",
       "difficulty": "高级",
       "estimatedMinutes": 14,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 14,
+      "headings": [
+        "从人类视频学习：低成本数据采集的新范式",
+        "为什么需要Retargeting？",
+        "Retargeting 核心问题",
+        "三类 Retargeting 方法",
+        "1. 关键点匹配法（Pose-Based）",
+        "2. 潜在空间法（Latent Space）",
+        "3. 端到端视觉法（Video-to-Action）",
+        "灵巧手 Retargeting：最难的子问题",
+        "产业落地：具身智能训练师的工作流程",
+        "练习"
+      ],
+      "summary": "2025-2026年具身智能领域最重要的数据范式转变之一是从遥操作走向人体演示。核心思路：让人类直接用双手演示操作（无需穿戴任何遥操作设备），通过视觉系统捕捉人体动作，再将其重定向（Retarget）到机器人的动作空间。这种方式的数据采集成本比遥操作低1-2个数量级，且更接近人类自然操作习惯。"
     },
     {
       "id": "sec-08",
@@ -129,18 +211,41 @@
       "shortTitle": "众包数据采集与质量控制平台设计",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "为什么需要众包数据采集？",
+        "Open X-Embodiment 的启示",
+        "众包采集平台架构",
+        "数据质量自动检查",
+        "众包采集的激励与质量控制",
+        "练习"
+      ],
+      "summary": "单个实验室的数据采集能力有限（1台机器人、1个场景）。要训练泛化能力强的 VLA 模型，需要多场景、多机器人、多操作员的大规模数据。"
     },
     {
       "id": "sec-09",
       "title": "光学动捕第三源：HiPHI 如何把人体状态变成可学原语",
-      "lastUpdated": "2026-08-25T12:10",
+      "lastUpdated": "2026-10-26",
       "chars": 6364,
       "shortTitle": "光学动捕第三源",
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 8,
+      "headings": [
+        "0. 这一节补哪块缺口",
+        "1. 三种数据源分别缺什么",
+        "2. 为什么必须同步物体状态",
+        "3. FrameNet 索引怎么用，不要当装饰",
+        "4. 接到人形本体：动捕是先验，不是动作标签",
+        "5. 数据卡最小字段（写进仓库，不要写在 Slack）",
+        "6. 最小可用流水线（科研）",
+        "7. 和本模块其他数据源怎么拼",
+        "8. 练习"
+      ],
+      "summary": "本模块已经覆盖遥操作、LeRobot / RLDS、增强、自动标注、相机标定、质量筛选、人体到机器人的 Retargeting 和众包。缺的是 2026-08 才公开、但很快会变成默认引用的第三种数据源：高精度光学动捕。"
     },
     {
       "id": "sec-10",
@@ -151,7 +256,24 @@
       "difficulty": "高级",
       "estimatedMinutes": 76,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 12,
+      "headings": [
+        "两种视角，两种数据哲学",
+        "手部姿态为什么难",
+        "传感器选型对照",
+        "时间同步：比精度更常见的失败原因",
+        "采集 SOP 与质量门禁",
+        "数据引擎：从原始流到可训练资产",
+        "高频坑",
+        "采集规模的事前估算",
+        "操作者与场景的采样偏差",
+        "能力自检清单"
+      ],
+      "summary": "本节讲具身数据采集中最容易被低估、也最容易返工的一块：手部姿态。相机能买到标定好的，动捕能租到，但手——尤其是带接触的手——至今没有便宜又准的通用方案。本节从「第一人称 vs 多视角」两种采集哲学讲起，拆解手部姿态为什么难，给出传感器选型对照、时间同步的工程做法、以及一套可运行的质量打分代码。"
     }
-  ]
+  ],
+  "readingMinutes": 145,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 128020
 }

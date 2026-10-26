@@ -66,7 +66,15 @@
       "shortTitle": "底盘搭建",
       "difficulty": "入门",
       "estimatedMinutes": 5,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 5,
+      "headings": [
+        "推荐方案",
+        "传感器配置",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "- 激光雷达：RPLIDAR A1（$100，360°扫描，12m范围） - 深度相机：RealSense D435（可选） - IMU：MPU-6050（可选，提升里程计精度）"
     },
     {
       "id": "sec-02",
@@ -76,7 +84,17 @@
       "shortTitle": "地图表示与构建",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 地图表示方法",
+        "2. 占用栅格地图（Occupancy Grid）",
+        "3. Costmap（代价地图）",
+        "4. SLAM 建图流程",
+        "5. 语义地图：不只是墙和空地",
+        "练习题"
+      ],
+      "summary": "导航的前提是地图——机器人需要知道\"世界长什么样\"才能规划路径。本节系统讲解各种地图表示方法和构建流程。"
     },
     {
       "id": "sec-03",
@@ -87,7 +105,24 @@
       "difficulty": "中级",
       "estimatedMinutes": 22,
       "isBrief": true,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 6,
+      "headings": [
+        "机器人定位技术",
+        "1. 定位问题分类",
+        "2. AMCL（自适应蒙特卡洛定位）",
+        "3. 视觉-惯性里程计（VIO）",
+        "4. GPS/RTK + IMU（户外定位）",
+        "5. 视觉定位与重定位",
+        "6. 多传感器融合架构",
+        "定位是分层的，不要指望一个算法解决所有问题",
+        "轮式里程计的误差模型",
+        "激光、视觉还是融合",
+        "一个最小可运行的 EKF 融合",
+        "定位出问题时的排查顺序",
+        "练习题"
+      ],
+      "summary": "导航的第一步是知道\"我在哪\"——定位（Localization）是所有后续决策的基础。本节系统讲解移动机器人定位技术。"
     },
     {
       "id": "sec-04",
@@ -97,7 +132,22 @@
       "shortTitle": "全局与局部路径规划算法",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 4,
+      "headings": [
+        "路径规划算法",
+        "1. 全局规划：图搜索",
+        "A* 算法",
+        "RRT / RRT* (Rapidly-exploring Random Trees)",
+        "2. 局部规划：实时避障",
+        "DWA (Dynamic Window Approach)",
+        "TEB (Timed Elastic Band)",
+        "3. 算法对比",
+        "4. ROS2 Nav2 导航栈",
+        "5. 路径平滑",
+        "练习题"
+      ],
+      "summary": "有了地图，下一步是在地图上找到从起点到终点的路径。本节系统讲解全局规划（找路径）和局部规划（避障行走）。"
     },
     {
       "id": "sec-05",
@@ -107,7 +157,18 @@
       "shortTitle": "SLAM 建图",
       "difficulty": "中级",
       "estimatedMinutes": 5,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 5,
+      "headings": [
+        "SLAM：同时定位与建图",
+        "SLAM 的“鸡生蛋”悖论",
+        "SLAM 的分类",
+        "SLAM 的基本流程",
+        "建图技巧",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "SLAM（Simultaneous Localization and Mapping） 是机器人领域最核心的问题之一——机器人在探索未知环境时，需要同时解决“我在哪”和“环境什么样”两个问题。"
     },
     {
       "id": "sec-06",
@@ -117,7 +178,17 @@
       "shortTitle": "Nav2 自主导航",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 8,
+      "headings": [
+        "移动机器人自主导航",
+        "导航三要素",
+        "Nav2 导航框架",
+        "Nav2 调参重点",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "自主导航是移动机器人最核心的能力——在未知或动态环境中，从当前位置安全地到达目标位置。"
     },
     {
       "id": "sec-07",
@@ -127,7 +198,18 @@
       "shortTitle": "路径规划算法详解",
       "difficulty": "中级",
       "estimatedMinutes": 17,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 17,
+      "headings": [
+        "从 A* 到 RRT*：理解路径规划的核心算法",
+        "搜索式规划 vs 采样式规划",
+        "A* 算法详解",
+        "RRT (Rapidly-exploring Random Trees)",
+        "DWA (Dynamic Window Approach) — 局部规划",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "路径规划是导航的大脑——给定起点、终点和环境地图，找到一条安全、高效的路径。"
     },
     {
       "id": "sec-08",
@@ -137,7 +219,18 @@
       "shortTitle": "代价地图与动态避障",
       "difficulty": "中级",
       "estimatedMinutes": 9,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 9,
+      "headings": [
+        "代价地图：机器人眼中的世界",
+        "代价值的含义",
+        "代价地图的层次结构",
+        "膨胀半径：安全与通行的平衡",
+        "动态避障",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "代价地图（Costmap） 是导航系统的核心数据结构。它把传感器数据转化为栅格地图，每个单元格的“代价”值表示通过该位置的危险程度。"
     },
     {
       "id": "sec-09",
@@ -147,7 +240,25 @@
       "shortTitle": "状态估计与贝叶斯滤波",
       "difficulty": "中级",
       "estimatedMinutes": 14,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 14,
+      "headings": [
+        "1. 为什么“状态估计”是移动机器人最底层的问题",
+        "2. 状态空间模型：把物理规律写成两条方程",
+        "3. 贝叶斯滤波统一框架",
+        "4. 卡尔曼滤波（KF）：最优线性估计器的直觉推导",
+        "5. 扩展卡尔曼滤波（EKF）：把非线性线性化",
+        "6. EKF 的完整 Python 实现（差速机器人 + LiDAR 距离观测）",
+        "7. 无迹卡尔曼滤波（UKF）：别求导，我直接采样",
+        "8. 粒子滤波（PF）：放弃高斯假设",
+        "9. robot_localization：生产环境的 EKF/UKF 融合配置",
+        "10. 一致性检验：你的滤波器“有没有说谎”",
+        "11. 状态估计 vs SLAM vs VIO：终于可以画出一张完整图",
+        "12. 工程检查清单（上车前对照一遍）",
+        "13. 练习题",
+        "14. 延伸阅读与下一步"
+      ],
+      "summary": "你手里的机器人能动、能看、能建图，但它的所有“知识”都只是“对世界的带噪声观测”："
     },
     {
       "id": "sec-10",
@@ -157,7 +268,20 @@
       "shortTitle": "MPPI控制器",
       "difficulty": "高级",
       "estimatedMinutes": 12,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 12,
+      "headings": [
+        "为什么需要MPPI？",
+        "DWA vs MPPI 核心区别",
+        "数学原理",
+        "温度参数的直觉",
+        "从零实现MPPI",
+        "Nav2 中使用 MPPI",
+        "MPPI vs DWB 实测对比",
+        "GPU 加速 MPPI",
+        "练习"
+      ],
+      "summary": "DWA（Dynamic Window Approach）是Nav2默认的局部规划器，简单可靠但有局限：速度空间离散采样导致动作不够平滑、前瞻时间短容易陷入局部最优、难以处理复杂的非凸约束。MPPI（Model Predictive Path Integral）是Nav2 Humble开始引入的新一代局部控制器，通过蒙特卡洛采样+路径积分的方式实现更优的局部导"
     },
     {
       "id": "sec-11",
@@ -168,7 +292,16 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "超越点到点导航：理解语义的导航",
+        "语义导航的三个层级",
+        "语义地图构建",
+        "VLN（视觉-语言导航）前沿",
+        "练习"
+      ],
+      "summary": "传统导航：“去坐标(3.2, 1.5)”——需要精确的地图坐标。 语义导航：“去厨房拿杯水”——需要理解语义（厨房在哪？水在哪？）。"
     },
     {
       "id": "sec-12",
@@ -179,7 +312,20 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 传统避障 vs 社交导航",
+        "2. 社交距离（Proxemics）",
+        "3. 行人预测",
+        "4. 社交感知规划",
+        "5. 社交行为模式",
+        "6. 动态障碍处理",
+        "7. 社交导航的评估指标",
+        "8. 主要数据集",
+        "练习题"
+      ],
+      "summary": "室内服务机器人、送餐机器人、商场导购——这些场景中机器人和人共享空间。\"能避开人\"只是基本要求，真正的挑战是让人觉得机器人不烦人——这就是社交导航。"
     },
     {
       "id": "sec-13",
@@ -190,7 +336,18 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 多机器人系统的层次",
+        "2. 碰撞避免：RVO / ORCA",
+        "3. 分布式任务分配",
+        "4. 编队控制",
+        "5. 蜂群智能",
+        "6. 协同 SLAM",
+        "练习题"
+      ],
+      "summary": "单个机器人是\"点\"，多机器人是\"系统\"——从 2 台到 100 台协同，面临着全新的挑战。"
     },
     {
       "id": "sec-14",
@@ -200,7 +357,17 @@
       "shortTitle": "多机器人协同SLAM与任务调度",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "从单机到多机",
+        "多机器人SLAM架构",
+        "地图融合关键技术",
+        "任务调度算法",
+        "冲突避免",
+        "练习"
+      ],
+      "summary": "单台移动机器人建图慢、覆盖有限。多机器人协同可以并行探索，大幅提高效率，但带来新的挑战：地图融合、任务分配、冲突避免。"
     },
     {
       "id": "sec-15",
@@ -210,7 +377,52 @@
       "shortTitle": "室外 / 野外导航工程实战",
       "difficulty": "高级",
       "estimatedMinutes": 12,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 12,
+      "headings": [
+        "一、室外导航的根本挑战",
+        "1.1 室外 vs 室内导航的本质差异",
+        "1.2 室外导航的三大子问题",
+        "二、FAST-LIVO2：室外多传感器融合 SLAM 标杆",
+        "2.1 FAST-LIVO2 的核心创新",
+        "创新 1：序列化 ESIKF + 直接法融合",
+        "创新 2：统一体素地图（Unified Voxel Map）",
+        "创新 3：逆曝光时间 τ 作为状态分量",
+        "创新 4：按需体素射线投射",
+        "2.2 FAST-LIVO2 的数学核心：序列化 ESIKF",
+        "状态预测（IMU 高频 200-1000 Hz）",
+        "LiDAR 更新（几何观测）",
+        "Camera 更新（光度观测，依赖 LiDAR 几何先验）",
+        "IEKF 迭代更新",
+        "退化处理（室外特有）",
+        "2.3 与同类系统的横向对比",
+        "2.4 FAST-LIVO2 工程化部署 Checklist",
+        "硬件准备",
+        "标定流程",
+        "软件依赖",
+        "已知坑（社区高频问题）",
+        "三、Autoware：室外全栈自动驾驶开源标杆",
+        "3.1 Autoware 的定位",
+        "3.2 Autoware 的全栈架构",
+        "3.3 Autoware 高精地图：Lanelet2",
+        "3.4 Autoware 部署 Checklist",
+        "硬件需求",
+        "软件部署",
+        "关键工程经验",
+        "四、GPS-RTK：室外绝对定位的核心",
+        "4.1 为什么必须用 RTK 而不是普通 GPS？",
+        "4.2 RTK 在室外导航栈中的角色",
+        "4.3 推荐 RTK 接收机",
+        "五、室外导航完整工程范式",
+        "5.1 推荐技术栈组合",
+        "园区 / 校园配送机器人（< 10 km/h，结构化）",
+        "自动驾驶乘用车（30-100 km/h，城市道路）",
+        "矿区 / 农田 / 林业作业车辆（< 30 km/h，非结构化）",
+        "无人机自主飞行（70+ km/h，3D）",
+        "5.2 与本模块前序章节的关系",
+        "六、本节小结"
+      ],
+      "summary": "关键认知：室内导航的成熟方案（Nav2 + Cartographer + AMCL）在室外几乎全部失效——必须重新设计感知 + 定位 + 规划栈。"
     },
     {
       "id": "sec-16",
@@ -221,7 +433,34 @@
       "difficulty": "高级",
       "estimatedMinutes": 10,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 10,
+      "headings": [
+        "一、从「路径规划导航」到「决策导航」：范式转变",
+        "1.1 传统导航的三层架构（Nav2 / ROS2 主流方案）",
+        "1.2 EQA-Decision 提出的新范式：决策导航",
+        "二、EQA-Decision 数据集的四大推理模块（导航视角解读）",
+        "2.1 模块 1：静态场景构建——「这是哪？周围有什么？」",
+        "2.2 模块 2：空间理解——「我和它的相对关系是什么？」",
+        "2.3 模块 3：任务动态推理——「现在做到哪一步了？接下来呢？」",
+        "2.4 模块 4：即时决策——「此刻最合理的动作是什么？」",
+        "三、RoboDecision 三阶段训练范式（如何训练「会决策的导航器」）",
+        "3.1 阶段 1：SFT 基础具身先验注入",
+        "3.2 阶段 2：CoT-SFT 「先想后答」",
+        "3.3 阶段 3：RL 鲁棒性优化",
+        "四、EQA 决策导航与现有路线的对比",
+        "4.1 EQA 决策导航 vs VLN（视觉-语言导航）",
+        "4.2 EQA 决策导航 vs VLA（视觉-语言-动作）",
+        "4.3 与 Pelican-Unify 1.0 / DIAL 的关系",
+        "五、落地决策树：什么时候用 EQA 决策导航？",
+        "六、工程化部署 Checklist",
+        "6.1 硬件需求",
+        "6.2 软件栈推荐",
+        "6.3 关键工程决策",
+        "6.4 评测建议",
+        "七、本节小结"
+      ],
+      "summary": "传统移动机器人导航是一个「分层 + 解耦」的架构："
     },
     {
       "id": "sec-17",
@@ -232,7 +471,30 @@
       "difficulty": "高级",
       "estimatedMinutes": 75,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 12,
+      "headings": [
+        "为什么导航做不长",
+        "记忆不是上下文窗口",
+        "一个具体例子",
+        "第三类最难：只能靠交互得到的信息",
+        "从「检索记忆」到「用记忆行动」",
+        "四大任务族",
+        "一个可运行的最小记忆模块",
+        "记忆的工程实现：存储、失效与容量",
+        "失效策略必须按类分别设计",
+        "容量控制的实用做法",
+        "一个常被忽略的问题：写入时机",
+        "与既有模块的边界：记忆 ≠ 语义地图",
+        "评测自己的记忆模块",
+        "与 EMem 系统的对照",
+        "与导航系统的对接点",
+        "能力自检清单"
+      ],
+      "summary": "在前面几节里，我们把导航系统拆成了定位、建图、规划、控制这些模块，每个模块都有成熟的算法与工程实现。但当任务从「从 A 点走到 B 点」变成「去厨房把昨天放在抽屉里的那把螺丝刀拿来」，成功率会断崖式下跌。"
     }
-  ]
+  ],
+  "readingMinutes": 131,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 113911
 }

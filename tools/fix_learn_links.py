@@ -22,6 +22,7 @@ import io
 import json
 import os
 import re
+from normalize_learn import map_prose
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LEARN = os.path.join(ROOT, 'data', 'learn')
@@ -218,7 +219,7 @@ def main():
                     here, txt[:38], full, (cur or '?')[:40], cur_score, bt[:40], best))
                 return m.group(0)
 
-            nc = LINK.sub(repl, c)
+            nc = map_prose(c, lambda chunk: LINK.sub(repl, chunk))
             if nc != c:
                 sec['content'] = nc
                 sec['chars'] = len(nc)
@@ -236,11 +237,12 @@ def main():
     rep += lowconf
     rep.append('')
     rep.append('模块级/合法首页链接跳过 %d 处' % skipped)
-    rep_path = os.path.join(ROOT, 'tools', '_links_report.txt')
+    rep_path = os.path.join(ROOT, '.workbuddy', 'validation', 'learn-links.txt')
+    os.makedirs(os.path.dirname(rep_path), exist_ok=True)
     io.open(rep_path, 'w', encoding='utf-8').write('\n'.join(rep))
     print('fixed=%d  flagged=%d  lowconf=%d  skipped=%d' % (
         len(fixed), len(flagged), len(lowconf), skipped))
-    print('report -> tools/_links_report.txt')
+    print('report -> .workbuddy/validation/learn-links.txt')
 
     if args.dry:
         print('\nDRY RUN，未写盘')

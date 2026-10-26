@@ -42,7 +42,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：世界模型概念+经典论文\n**第2周**：LLM+机器人论文\n**第3周**：前沿跟踪",
-  "lastUpdated": "2026-10-26T08:40",
+  "lastUpdated": "2026-10-26",
   "maturity": "comprehensive",
   "sectionsMeta": [
     {
@@ -53,7 +53,17 @@
       "shortTitle": "世界模型概念",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 9,
+      "headings": [
+        "开局引导：读这一章之前",
+        "核心思想",
+        "世界模型 vs VLA vs 传统控制",
+        "世界模型的核心loop",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "世界模型这一章有个隐藏门槛：它默认你已经知道 VLA 是什么、以及「预测未来」和「输出动作」这两条技术路线的区别。如果没有这个底子，第一小节就会读得很空。先把下面 5 个概念对上号："
     },
     {
       "id": "sec-02",
@@ -63,7 +73,17 @@
       "shortTitle": "LLM 作为任务规划器",
       "difficulty": "中级",
       "estimatedMinutes": 11,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 11,
+      "headings": [
+        "为什么用 LLM 做机器人规划？",
+        "LLM 规划的三种范式",
+        "ReAct 框架",
+        "LLM+机器人经典工作时间线",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "大语言模型（LLM）拥有海量的常识知识和推理能力，这恰好是传统机器人规划最缺的。"
     },
     {
       "id": "sec-03",
@@ -73,7 +93,16 @@
       "shortTitle": "π₀.5 双层架构",
       "difficulty": "中级",
       "estimatedMinutes": 9,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 9,
+      "headings": [
+        "架构设计",
+        "双层架构代码框架",
+        "为什么需要双层？",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "高层（自回归 LM）：预测子任务 token 序列 低层（Flow Matching）：生成连续动作"
     },
     {
       "id": "sec-04",
@@ -83,7 +112,23 @@
       "shortTitle": "视频世界模型",
       "difficulty": "中级",
       "estimatedMinutes": 20,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 20,
+      "headings": [
+        "视频世界模型：让机器人“看到”未来",
+        "为什么视频是理想的世界模型载体？",
+        "主要技术路线",
+        "UniSim：交互式视频世界模型",
+        "Genie 2 & Kairos 3.0",
+        "ViVa：视频生成价值模型",
+        "视频世界模型代码框架",
+        "视频世界模型 vs 其他预测方式",
+        "视频世界模型的训练范式",
+        "前沿动态（2026年）",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "视频世界模型是当前具身智能最活跃的研究方向之一。核心思想：用视频生成模型预测未来画面，让机器人在“想象”中评估行动后果。"
     },
     {
       "id": "sec-05",
@@ -93,7 +138,19 @@
       "shortTitle": "具身常识推理与多模态基础模型",
       "difficulty": "入门",
       "estimatedMinutes": 27,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 27,
+      "headings": [
+        "为什么机器人需要常识？",
+        "常识推理的三个层级",
+        "多模态基础模型架构",
+        "代码实践：常识推理增强的任务规划",
+        "Affordance 预测：理解物体“能做什么”",
+        "多模态基础模型用于具身推理",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "传统机器人只理解“坐标”和“力”，不理解“意图”和“物理直觉”。人类做家务时依赖大量未明说的常识："
     },
     {
       "id": "sec-06",
@@ -103,7 +160,19 @@
       "shortTitle": "VLMVLA训练范式",
       "difficulty": "中级",
       "estimatedMinutes": 5,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 5,
+      "headings": [
+        "从 VLM 到 VLA：训练流程中的分布鸿沟",
+        "三阶段训练范式",
+        "数学原理：邻近度估计与数据选择",
+        "实践意义：为什么中间训练有效？",
+        "对比其他训练范式",
+        "实验对照框架",
+        "请记住的核心观点",
+        "练习"
+      ],
+      "summary": "当前 VLA 模型的标准训练流程是：拿一个预训练好的 VLM（如 PaliGemma、Qwen-VL），然后在机器人操作数据上微调，让它学会输出动作。但这里有一个被忽视的问题——数据分布鸿沟。"
     },
     {
       "id": "sec-07",
@@ -113,7 +182,17 @@
       "shortTitle": "具身奖励模型与RLEF",
       "difficulty": "中级",
       "estimatedMinutes": 5,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 5,
+      "headings": [
+        "从RLHF到RLEF",
+        "具身奖励模型",
+        "Embodied-R1的RFT方法",
+        "VLM作为奖励函数",
+        "RLEF vs RLHF vs 纯BC",
+        "练习"
+      ],
+      "summary": "LLM领域用RLHF（人类反馈强化学习）对齐模型行为。具身智能领域的类比是RLEF（环境反馈强化学习）——用机器人与环境的交互结果来强化VLA。"
     },
     {
       "id": "sec-08",
@@ -123,7 +202,15 @@
       "shortTitle": "具身常识图谱",
       "difficulty": "中级",
       "estimatedMinutes": 5,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 5,
+      "headings": [
+        "为什么机器人需要知识图谱？",
+        "具身常识图谱的三层结构",
+        "LLM + 知识图谱 协同",
+        "练习"
+      ],
+      "summary": "LLM有隐式的常识知识，但不够结构化。机器人需要可查询、可推理、可更新的结构化知识。"
     },
     {
       "id": "sec-09",
@@ -133,7 +220,19 @@
       "shortTitle": "自回归视频世界模型",
       "difficulty": "中级",
       "estimatedMinutes": 9,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 9,
+      "headings": [
+        "1. 把世界建模转化为\"下一帧预测\"",
+        "2. 视觉 Tokenizer：VQ-VAE 与 MAGVIT 路线",
+        "3. 自回归世界模型：从 VideoGPT 到 Cosmos-1",
+        "4. V-JEPA 2：Meta 的非生成式对立面",
+        "5. 机器人策略闭环：从世界模型到 MPC",
+        "6. 三代技术对比",
+        "7. 对具身智能工程师的启示",
+        "练习题"
+      ],
+      "summary": "前面第 4 节我们讲了视频世界模型的语义掩码范式（MWM），那一节聚焦在\"把像素重建换成语义预测\"的思想转变。这一节我们沿另一条主线往下挖：把世界建模视为 token 序列的自回归预测，从 VideoGPT（2021）到 Meta V-JEPA 2（2025）到 NVIDIA Cosmos（2026），看这一范式是如何一步步走向机器人策略闭环的。"
     },
     {
       "id": "sec-10",
@@ -143,19 +242,41 @@
       "shortTitle": "双引擎世界模型",
       "difficulty": "中级",
       "estimatedMinutes": 15,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 15,
+      "headings": [
+        "背景：2026 年 4 月底 MagicLab 在硅谷发布 Magic-Mix",
+        "1. 为什么\"双引擎\"？从单模型困境讲起",
+        "2. WAM 决策引擎：视频 + 动作协同训练",
+        "3. Creator 数据引擎：不是\"数据增强\"，而是\"数据发电厂\"",
+        "4. 最小可复现实现：闭环伪代码",
+        "5. 与其他世界模型的定位差异",
+        "6. 工程落地的五个陷阱",
+        "7. 延伸阅读",
+        "练习"
+      ],
+      "summary": "2026 年 4 月 30 日，魔法原子（MagicLab）在其发起的首届全球具身智能峰会（GEIS，Silicon Valley）上发布了新一代具身世界模型 Magic-Mix。与 NVIDIA Cosmos、Meta V-JEPA 2、ACE Kairos 这些\"偏研究 / 偏基础平台\"的工作相比，Magic-Mix 的定位非常直接——它是一个面向量产具"
     },
     {
       "id": "sec-11",
       "title": "腕部单目的持久世界状态：AtlasVLA 把记忆从时间缓存拉回空间地图",
-      "lastUpdated": "2026-08-24T21:10",
-      "chars": 2448,
+      "lastUpdated": "2026-10-26",
+      "chars": 2449,
       "shortTitle": "腕部单目的持久世界状态",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isFrontier": true,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "为什么反应式 VLA 在腕部单目下会忘事",
+        "双记忆分别管什么",
+        "数字该怎么读",
+        "和「视频世界模型」不是一条路",
+        "工程上什么时候该用"
+      ],
+      "summary": "看完 π₀.5 双层架构 和 MemoryVLA 之后，很容易觉得「记忆」已经是 VLA 标配。2026-08 的 AtlasVLA（p181，arXiv 2608.06729）把这个问题拆成了两个不同的洞："
     },
     {
       "id": "sec-12",
@@ -166,7 +287,26 @@
       "difficulty": "中级",
       "estimatedMinutes": 12,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 12,
+      "headings": [
+        "从「预测世界」到「世界-动作模型」",
+        "1. 为什么是「视频预训练 + 动作头」而不是端到端",
+        "因果性：一个容易被忽略的硬约束",
+        "2. 三个可组合模块",
+        "模块 C：动力学为什么必须单独存在",
+        "3. 长上下文：加了为什么没用",
+        "坑一：阶段二把因果结构洗掉了",
+        "坑二：记忆里存的是快照而不是变化",
+        "坑三：记忆随 episode 线性增长",
+        "4. 表征塑造：训练期加，推理期不加",
+        "部署形态对比",
+        "5. 动作表示：被默认接受却很少被质疑的一环",
+        "6. 一条可以直接用的组合路线",
+        "7. 与本站其他内容的分工",
+        "延伸阅读"
+      ],
+      "summary": "看完自回归视频世界模型与双引擎世界模型闭环之后，一个绕不开的问题是：预测未来这件事，到底是怎么变成动作的？"
     },
     {
       "id": "sec-13",
@@ -177,7 +317,27 @@
       "difficulty": "高级",
       "estimatedMinutes": 42,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "像素重建是一笔昂贵的税",
+        "JEPA 的基本形式",
+        "既有流水线的断层",
+        "LeWAM 的两个核心设计",
+        "设计一：联合训练目标",
+        "设计二：各向同性高斯约束",
+        "规划为什么会快 32 倍",
+        "效果：增量在规划，不在模仿",
+        "与视频世界模型的分工",
+        "落地时的三个坑",
+        "能力自检清单",
+        "补充一：JEPA 与 VLA 的关系",
+        "补充二：训练数据配方",
+        "补充三：失败模式诊断表",
+        "补充四：练习题",
+        "补充五：与相邻模块的接口"
+      ],
+      "summary": "本模块前面讨论的视频世界模型有一个共同动作：预测未来的像素。无论是扩散模型逐帧去噪，还是自回归模型逐 token 生成，模型都要把未来画面的每一个细节重建出来。"
     },
     {
       "id": "sec-14",
@@ -188,7 +348,29 @@
       "difficulty": "高级",
       "estimatedMinutes": 56,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 13,
+      "headings": [
+        "为什么「预测未来」还不够",
+        "三层改进：行为、过程、递归",
+        "物理世界的四条约束",
+        "收益结转的四条件",
+        "场景：一个抓取策略的成功率卡在 62%",
+        "世界模型在闭环里的三个具体用法",
+        "可运行示例：用分歧度筛数据",
+        "高频坑",
+        "一个诚实的现状判断",
+        "把三个用法串成一个完整闭环",
+        "怎么判断闭环真的在变强",
+        "世界模型误差在闭环里怎么累积",
+        "从这里再往前一步",
+        "与相邻模块的接口",
+        "练习题"
+      ],
+      "summary": "前面几节把世界模型讲成了一台预测机器：给定当前观测 $o_t$ 与动作序列 $a_{t:t+k}$，输出未来观测 $\\hat{o}_{t+k}$。这个定义没错，但它把世界模型的用途说窄了。"
     }
-  ]
+  ],
+  "readingMinutes": 154,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 130991
 }

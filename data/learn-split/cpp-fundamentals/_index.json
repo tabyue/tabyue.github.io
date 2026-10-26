@@ -4,7 +4,7 @@
   "stage": "阶段一：数学与编程基础",
   "importance": "重要",
   "estimatedHours": 40,
-  "lastUpdated": "2026-10-13T10:36",
+  "lastUpdated": "2026-10-26",
   "description": "机器人底层控制、实时系统、ROS2 核心节点通常用 C++ 编写。不需要精通所有 C++ 特性，但智能指针、多线程和 CMake 是必须掌握的。",
   "prerequisites": [
     "基础编程经验"
@@ -59,7 +59,20 @@
       "shortTitle": "C++ 语言基础",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 4,
+      "headings": [
+        "C++ 在机器人中的地位",
+        "一、从源码到可执行文件",
+        "二、头文件与编译单元",
+        "三、基本数据类型",
+        "四、auto 与类型推导（C++11+）",
+        "五、const 与 constexpr",
+        "六、类型转换",
+        "七、Hello World 到 ROS2 Node",
+        "八、练习"
+      ],
+      "summary": "Python 快速开发，C++ 高性能执行——两者在机器人学中各有其位。ROS2 核心用 C++ 写、MuJoCo/Pinocchio/Drake 都是 C++、实时控制器只能用 C/C++。学 C++ 不是“可选”，而是“必须”。"
     },
     {
       "id": "sec-02",
@@ -69,7 +82,20 @@
       "shortTitle": "指针、引用与内存模型",
       "difficulty": "入门",
       "estimatedMinutes": 4,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 4,
+      "headings": [
+        "为什么 C++ 需要指针和引用",
+        "一、栈（Stack）vs 堆（Heap）",
+        "二、指针（Pointer）",
+        "三、引用（Reference）",
+        "四、值传递 vs 引用传递 vs 指针传递",
+        "五、动态内存管理（new/delete）",
+        "六、数组与 C 字符串",
+        "七、内存布局与对齐",
+        "八、练习"
+      ],
+      "summary": "Python 的一切都是引用——你从不直接管理内存。C++ 给你完全的内存控制权：栈 vs 堆、指针算术、引用传递——这是 C++ 高性能的根源，也是 bug 的温床。"
     },
     {
       "id": "sec-03",
@@ -80,7 +106,20 @@
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 3,
+      "headings": [
+        "C++ 的函数比 Python 复杂得多",
+        "一、函数重载（Overloading）",
+        "二、默认参数",
+        "三、内联函数",
+        "四、头文件与 include guard",
+        "五、命名空间（Namespace）",
+        "六、链接（Linkage）",
+        "七、Lambda（C++11+）",
+        "八、练习"
+      ],
+      "summary": "Python 函数只有一种。C++ 函数有重载、默认参数、内联、模板、constexpr、lambda——理解它们需要先理解 C++ 的编译模型。"
     },
     {
       "id": "sec-04",
@@ -90,7 +129,19 @@
       "shortTitle": "面向对象编程",
       "difficulty": "入门",
       "estimatedMinutes": 5,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 5,
+      "headings": [
+        "C++ OOP：比 Python 复杂 10 倍但控制力 100 倍",
+        "一、类的基本结构",
+        "二、构造函数家族",
+        "三、拷贝控制（Rule of Five / Rule of Zero）",
+        "四、继承",
+        "五、虚函数表（vtable）机制",
+        "六、运算符重载",
+        "七、练习"
+      ],
+      "summary": "Python 的 OOP 靠 duck typing 和 GC 简化了一切。C++ 的 OOP 必须处理资源生命周期——构造、拷贝、移动、析构四件套。"
     },
     {
       "id": "sec-05",
@@ -100,7 +151,19 @@
       "shortTitle": "STL 容器与算法",
       "difficulty": "入门",
       "estimatedMinutes": 5,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 5,
+      "headings": [
+        "STL：C++ 的标准“工具箱”",
+        "一、序列容器",
+        "二、关联容器",
+        "三、迭代器",
+        "四、STL 算法精选",
+        "五、string 与 string_view",
+        "六、容器选择指南",
+        "七、练习"
+      ],
+      "summary": "STL（Standard Template Library）提供了通用的容器（数据结构）和算法，是 C++ 程序员每天使用的核心工具。掌握 STL 是写出高效现代 C++ 的前提。"
     },
     {
       "id": "sec-06",
@@ -111,7 +174,20 @@
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 3,
+      "headings": [
+        "原始指针的问题",
+        "一、unique_ptr（独占所有权）",
+        "二、shared_ptr（共享所有权）",
+        "三、weak_ptr（打破循环引用）",
+        "四、所有权语义总结",
+        "五、Rule of Zero（现代 C++ 黄金法则）",
+        "六、工厂模式 + unique_ptr",
+        "七、与 ROS2 的集成",
+        "八、练习"
+      ],
+      "summary": "前面讲过 new/delete 的四种常见 bug。智能指针（C++11）用 RAII 自动管理堆内存——对象离开作用域时自动释放，从根源消除内存泄漏。"
     },
     {
       "id": "sec-07",
@@ -121,7 +197,18 @@
       "shortTitle": "RAII 与资源管理",
       "difficulty": "入门",
       "estimatedMinutes": 7,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 7,
+      "headings": [
+        "RAII：C++ 最核心的设计哲学",
+        "什么是 RAII？",
+        "RAII 在机器人中的应用",
+        "RAII 的三个规则",
+        "Move 语义：避免不必要的拷贝",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "RAII（Resource Acquisition Is Initialization） 是 C++ 最重要的编程范式。理解 RAII，就理解了为什么 C++ 可以同时做到高性能和内存安全。"
     },
     {
       "id": "sec-08",
@@ -131,7 +218,20 @@
       "shortTitle": "Modern C++",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 8,
+      "headings": [
+        "Modern C++：写出安全、高效的机器人代码",
+        "最重要的新特性",
+        "智能指针——Modern C++ 最重要的改进",
+        "智能指针（核心！）",
+        "Lambda 表达式",
+        "std::optional (C++17)",
+        "Modern C++ 速查表",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "C++11/14/17/20 引入了大量新特性，让代码更安全、更简洁。机器人项目中常用的 Modern C++ 特性："
     },
     {
       "id": "sec-09",
@@ -141,7 +241,20 @@
       "shortTitle": "模板与泛型编程",
       "difficulty": "中级",
       "estimatedMinutes": 7,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 7,
+      "headings": [
+        "模板：写一次代码，适用所有类型",
+        "函数模板",
+        "类模板",
+        "模板特化",
+        "可变参数模板 (Variadic Templates)",
+        "CRTP：编译时多态",
+        "模板在机器人中的典型应用",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "在机器人编程中，很多算法对不同数据类型是通用的。比如 PID 控制器可以用于 float 也可以用于 double；滤波器可以处理标量也可以处理向量。模板让你只写一份代码就能处理所有类型。"
     },
     {
       "id": "sec-10",
@@ -151,7 +264,18 @@
       "shortTitle": "C++ 模板与泛型编程",
       "difficulty": "中级",
       "estimatedMinutes": 4,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 函数模板",
+        "2. 类模板",
+        "3. Eigen 库——模板的典范",
+        "4. 模板特化",
+        "5. CRTP（Curiously Recurring Template Pattern）",
+        "6. C++20 Concepts（现代约束）",
+        "练习题"
+      ],
+      "summary": "模板是 C++ 最强大也最复杂的特性——STL 容器、Eigen 矩阵库、ROS2 消息类型都建立在模板之上。"
     },
     {
       "id": "sec-11",
@@ -161,7 +285,18 @@
       "shortTitle": "CMake 构建系统",
       "difficulty": "中级",
       "estimatedMinutes": 5,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 5,
+      "headings": [
+        "CMake：C++ 项目的标准构建工具",
+        "为什么需要 CMake？",
+        "CMakeLists.txt 基本结构",
+        "ROS2 CMakeLists.txt",
+        "构建和运行",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "CMake 是 C++ 项目的事实标准构建系统，ROS2 包也用 CMake（通过 ament_cmake）。"
     },
     {
       "id": "sec-12",
@@ -171,7 +306,18 @@
       "shortTitle": "Eigen 线性代数库",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 8,
+      "headings": [
+        "Eigen：C++ 的线性代数利器",
+        "为什么机器人 C++ 代码都用 Eigen？",
+        "核心类型",
+        "Eigen 与四元数",
+        "性能注意事项",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "Eigen 是 C++ 中最流行的线性代数库，被 ROS2、MoveIt、Drake 等几乎所有机器人框架使用。"
     },
     {
       "id": "sec-13",
@@ -181,7 +327,17 @@
       "shortTitle": "多线程编程",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 8,
+      "headings": [
+        "多线程：让机器人同时做多件事",
+        "C++ 多线程核心概念",
+        "机器人中的典型多线程模式",
+        "关键原则",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "一个机器人系统需要同时运行多个任务： - 读取相机图像（30Hz） - 读取 IMU 数据（200Hz） - 运行检测算法（10Hz） - 发送控制命令（100Hz）"
     },
     {
       "id": "sec-14",
@@ -191,7 +347,19 @@
       "shortTitle": "C++ 并发编程",
       "difficulty": "中级",
       "estimatedMinutes": 5,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 5,
+      "headings": [
+        "1. std::thread 基础",
+        "2. 数据共享与竞争",
+        "3. 互斥锁（Mutex）",
+        "4. 条件变量",
+        "5. 原子操作",
+        "6. 无锁数据结构",
+        "7. 实时系统的并发注意事项",
+        "练习题"
+      ],
+      "summary": "机器人系统是天生的并发场景——感知线程、控制线程、规划线程、通信线程同时运行。本节讲解 C++ 并发编程的核心知识。"
     },
     {
       "id": "sec-15",
@@ -202,7 +370,15 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "C++20协程简介",
+        "协程 vs 线程",
+        "简单协程示例",
+        "练习"
+      ],
+      "summary": "协程(Coroutine)是可以暂停和恢复的函数。在机器人中，协程可以简化异步传感器读取和多任务协调的代码。"
     },
     {
       "id": "sec-16",
@@ -212,7 +388,20 @@
       "shortTitle": "C++ 性能优化",
       "difficulty": "高级",
       "estimatedMinutes": 4,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 测量先于优化",
+        "2. 编译器优化",
+        "3. 缓存友好性",
+        "4. 数据布局优化",
+        "5. SIMD（单指令多数据）",
+        "6. 移动语义与完美转发",
+        "7. 常量传播与内联",
+        "8. 机器人中的性能场景",
+        "练习题"
+      ],
+      "summary": "C++ 的核心优势是性能。但\"写 C++\"不等于\"快\"——本节讲解真正让 C++ 代码跑得飞快的技术。"
     },
     {
       "id": "sec-17",
@@ -223,7 +412,17 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "为什么机器人需要实时系统？",
+        "实时 vs 非实时",
+        "RT-Linux 配置",
+        "C++ 实时编程规范",
+        "ROS2 实时配置",
+        "练习"
+      ],
+      "summary": "机器人的控制循环必须在严格的时间约束内完成： - 电机控制: 1kHz (每1ms必须发出指令) - 力控制: 500Hz-1kHz (2ms内响应接触力) - 视觉处理: 30-60Hz (可以不实时)"
     },
     {
       "id": "sec-18",
@@ -233,17 +432,57 @@
       "shortTitle": "C++ 错误处理策略",
       "difficulty": "中级",
       "estimatedMinutes": 8,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 8,
+      "headings": [
+        "一、机器人系统中的错误处理为什么特殊？",
+        "1.1 三种主流策略对比",
+        "二、异常（Exception）",
+        "2.1 什么时候用异常？",
+        "2.2 什么时候不用异常？",
+        "2.3 ROS2 的异常策略",
+        "三、错误码（Return Code）",
+        "3.1 经典 C 风格",
+        "3.2 问题：错误码容易被忽略",
+        "四、std::expected / std::optional（现代 C++ 推荐）",
+        "4.1 std::optional：可能没有值",
+        "4.2 std::expected (C++23)：值或错误",
+        "4.3 C++23 之前的替代：tl::expected",
+        "五、机器人项目的最佳实践",
+        "5.1 分层错误处理策略",
+        "5.2 错误恢复策略矩阵",
+        "5.3 完整示例：实时控制循环的错误处理",
+        "六、本节小结"
+      ],
+      "summary": "机器人系统对错误处理的要求比普通应用更严格："
     },
     {
       "id": "sec-19",
       "title": "C++ 设计模式在机器人系统中的应用：状态机 / 观察者 / 工厂 / 单例",
-      "lastUpdated": "2026-05-29T10:45",
-      "chars": 9148,
+      "lastUpdated": "2026-10-26",
+      "chars": 9166,
       "shortTitle": "C++ 设计模式在机器人系统中的应用",
       "difficulty": "中级",
       "estimatedMinutes": 10,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 10,
+      "headings": [
+        "一、为什么机器人软件需要设计模式？",
+        "二、状态机模式（State Machine）",
+        "2.1 机器人状态机的典型设计",
+        "2.2 ROS2 中的状态机（lifecycle_node）",
+        "三、观察者模式（Observer / Pub-Sub）",
+        "3.1 为什么机器人需要观察者模式？",
+        "3.2 C++ 实现",
+        "四、工厂模式（Factory）",
+        "4.1 硬件抽象工厂",
+        "4.2 为什么不直接 if-else？",
+        "五、单例模式（Singleton）",
+        "5.1 线程安全的 C++11 单例",
+        "5.2 单例的替代方案（依赖注入）",
+        "六、本节小结"
+      ],
+      "summary": "机器人系统天然具有以下特征——恰好是设计模式最擅长解决的问题域："
     },
     {
       "id": "sec-20",
@@ -254,7 +493,24 @@
       "difficulty": "高级",
       "estimatedMinutes": 7,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 7,
+      "headings": [
+        "1. 为什么端侧推理必须用 C++",
+        "2. 常用推理运行时（C++ API）",
+        "3. 最小 ONNX Runtime C++ 推理骨架",
+        "4. 量化：从 FP16 到 INT4",
+        "5. Zero-copy 与内存池",
+        "6. 多流并行：感知/决策/控制三段流水",
+        "7. 不同 XPU 的 C++ 选型（对照 p111 论文）",
+        "8. 工程陷阱清单",
+        "9. 延伸阅读",
+        "练习题"
+      ],
+      "summary": "在具身智能真实落地中，VLA（Vision-Language-Action）模型不会跑在云端 H100 上——机器人需要在本体侧的 Jetson Orin/Thor、昇腾 Atlas、Apple M4、高通 QCS8550 等 XPU 上做 20-50Hz 的实时推理。此时 Python + PyTorch 的启动开销、GIL、内存冗余都变得不可接受，C++"
     }
-  ]
+  ],
+  "readingMinutes": 111,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 102811
 }

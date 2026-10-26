@@ -66,7 +66,18 @@
       "shortTitle": "计算机视觉基础",
       "difficulty": "入门",
       "estimatedMinutes": 3,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 3,
+      "headings": [
+        "1. 图像的数学表示",
+        "2. 相机模型",
+        "3. 图像处理基础",
+        "4. 深度学习目标检测",
+        "5. 6D 物体位姿估计",
+        "6. 机器人视觉的特殊需求",
+        "练习题"
+      ],
+      "summary": "机器人的\"眼睛\"是相机，但原始像素需要经过处理才能变成有用的信息。本节从图像处理基础讲起。"
     },
     {
       "id": "sec-02",
@@ -76,7 +87,18 @@
       "shortTitle": "图像处理",
       "difficulty": "入门",
       "estimatedMinutes": 11,
-      "tier": 0
+      "tier": 0,
+      "readingMinutes": 11,
+      "headings": [
+        "计算机视觉基础",
+        "图像的本质",
+        "OpenCV 能做什么？",
+        "在机器人中的典型应用",
+        "相机标定（张正友法）",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "计算机视觉是让机器“看懂”图像和视频的技术。在具身智能中，视觉是机器人获取环境信息的最重要传感器。"
     },
     {
       "id": "sec-03",
@@ -86,7 +108,25 @@
       "shortTitle": "目标检测",
       "difficulty": "中级",
       "estimatedMinutes": 11,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 11,
+      "headings": [
+        "目标检测：让机器人知道“什么在哪里”",
+        "检测算法的两大流派",
+        "YOLO 系列",
+        "DETR（DEtection TRansformer）",
+        "在机器人中怎么用？",
+        "单张图片推理",
+        "解析结果",
+        "实时视频检测",
+        "SAM (Segment Anything)",
+        "机器人视觉 Pipeline",
+        "目标检测模型选择指南",
+        "机器人视觉Pipeline选择",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "目标检测是计算机视觉的核心任务之一：在图像中找到所有物体，并输出每个物体的类别和边界框。"
     },
     {
       "id": "sec-04",
@@ -96,7 +136,21 @@
       "shortTitle": "图像分割与语义理解",
       "difficulty": "中级",
       "estimatedMinutes": 11,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 11,
+      "headings": [
+        "从检测到分割：更精细的视觉理解",
+        "分割任务分类",
+        "语义分割经典架构",
+        "SegFormer — Transformer 语义分割",
+        "实例分割：Mask R-CNN",
+        "实例分割实战：YOLO-Seg",
+        "语义分割在机器人中的应用",
+        "分割模型选型对比",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "目标检测给出的是矩形框，但机器人抓取需要知道物体的精确轮廓。图像分割就是为每个像素分配类别或实例标签。"
     },
     {
       "id": "sec-05",
@@ -106,7 +160,21 @@
       "shortTitle": "视觉基础模型",
       "difficulty": "入门",
       "estimatedMinutes": 15,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 15,
+      "headings": [
+        "视觉基础模型：通用视觉能力的基座",
+        "核心模型一览",
+        "SAM2：分割一切 2.0",
+        "SAM2 视频分割（追踪+分割）",
+        "DINOv2：自监督视觉特征",
+        "DINOv2 实战：图像检索",
+        "基础模型在机器人中的组合应用",
+        "CLIP / SigLIP：图文对齐",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "2023-2024 年，计算机视觉进入基础模型时代。与传统“一个任务训一个模型”不同，基础模型在海量数据上预训练，获得通用的视觉表征能力，然后零样本或少样本迁移到各种下游任务。"
     },
     {
       "id": "sec-06",
@@ -116,7 +184,15 @@
       "shortTitle": "开放词汇检测与Grounding",
       "difficulty": "中级",
       "estimatedMinutes": 3,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 3,
+      "headings": [
+        "传统检测 vs 开放词汇检测",
+        "Grounding DINO",
+        "机器人中的应用Pipeline",
+        "练习"
+      ],
+      "summary": "Grounding DINO 是当前最强的开放词汇检测器，将DINO检测器与语言-视觉对齐结合："
     },
     {
       "id": "sec-07",
@@ -126,7 +202,44 @@
       "shortTitle": "多视图几何与相机标定",
       "difficulty": "中级",
       "estimatedMinutes": 14,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 14,
+      "headings": [
+        "1. 为什么必须先学多视图几何",
+        "前置概念清单",
+        "2. 针孔相机模型",
+        "2.1 从物理到数学",
+        "2.2 从物理长度到像素",
+        "2.3 内参矩阵 $K$ 的自由度",
+        "3. 畸变模型",
+        "3.1 径向畸变",
+        "3.2 切向畸变",
+        "3.3 关于畸变阶数的实践建议",
+        "4. 完整的投影链条",
+        "5. 相机标定",
+        "5.1 标定什么",
+        "5.2 张正友标定法",
+        "5.3 标定的实操要点",
+        "6. 对极几何",
+        "6.1 问题设定",
+        "6.2 几何推导",
+        "6.3 从 $E$ 恢复位姿",
+        "6.4 退化的情况",
+        "7. 三角化",
+        "7.1 线性三角化（DLT）",
+        "7.2 误差特性：这是本节最该记住的一点",
+        "8. PnP：已知 3D 点求相机位姿",
+        "8.1 问题",
+        "8.2 最少解与常用解",
+        "8.3 为什么必须配 RANSAC",
+        "8.4 PnP 的退化配置",
+        "9. 单应矩阵",
+        "10. 常见误区",
+        "11. 完整可运行示例：标定 → 位姿 → 三角化",
+        "12. 手眼标定（eye-in-hand 必看）",
+        "13. 习题"
+      ],
+      "summary": "这是整章里最容易被跳过、但最不该跳过的一节。原因很具体："
     },
     {
       "id": "sec-08",
@@ -136,7 +249,19 @@
       "shortTitle": "3D 视觉与点云处理",
       "difficulty": "中级",
       "estimatedMinutes": 4,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 3D 数据表示",
+        "2. 点云基础操作",
+        "3. ICP 配准（Point Cloud Registration）",
+        "4. 点云分割",
+        "5. 抓取点生成",
+        "6. 3D 场景理解",
+        "7. NeRF 与 Gaussian Splatting（前沿）",
+        "练习题"
+      ],
+      "summary": "机器人操作需要 3D 理解——抓取点在哪？物体的朝向？周围有什么障碍？这些都依赖 3D 视觉。"
     },
     {
       "id": "sec-09",
@@ -146,7 +271,17 @@
       "shortTitle": "姿态估计",
       "difficulty": "中级",
       "estimatedMinutes": 9,
-      "tier": 1
+      "tier": 1,
+      "readingMinutes": 9,
+      "headings": [
+        "姿态估计的方法分类",
+        "在机器人操作中的典型 Pipeline",
+        "物体 6DoF 位姿估计",
+        "在机器人中的应用",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "目标检测告诉我们物体在图像中的 2D 位置。但机器人要抓取物体，还需要知道物体在 3D 空间中的精确位姿（6DoF：3D 位置 + 3D 旋转）。"
     },
     {
       "id": "sec-10",
@@ -157,7 +292,17 @@
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "什么是视觉伺服？",
+        "两大范式",
+        "IBVS 核心公式",
+        "闭环抓取Pipeline",
+        "深度学习+视觉伺服",
+        "练习"
+      ],
+      "summary": "视觉伺服（Visual Servoing） 是用视觉反馈实时调整机器人运动的控制方法。与开环控制（先看一眼再执行）不同，视觉伺服在执行过程中持续使用相机反馈来修正运动误差。"
     },
     {
       "id": "sec-11",
@@ -167,7 +312,20 @@
       "shortTitle": "视觉伺服与 6D 物体位姿估计",
       "difficulty": "高级",
       "estimatedMinutes": 3,
-      "tier": 2
+      "tier": 2,
+      "readingMinutes": 3,
+      "headings": [
+        "视觉伺服与 6D 位姿估计",
+        "1. 6D 位姿估计的输入输出",
+        "2. 经典方法：PnP + 特征",
+        "3. 基于学习的 6D 姿态估计",
+        "4. FoundationPose（最前沿，2024）",
+        "5. 视觉伺服（Visual Servoing）",
+        "6. 实时性能",
+        "7. 机器人应用的最佳实践",
+        "练习题"
+      ],
+      "summary": "对机器人操作来说，\"看到物体\"只是第一步——还要知道精确的 6D 位姿（位置 3 + 朝向 3）才能抓取。"
     },
     {
       "id": "sec-12",
@@ -178,7 +336,24 @@
       "difficulty": "高级",
       "estimatedMinutes": 13,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 13,
+      "headings": [
+        "事件相机：超越帧的视觉革命",
+        "帧相机 vs 事件相机",
+        "事件相机的工作原理",
+        "事件数据的表示方法",
+        "Python 实现：事件数据处理",
+        "事件相机在机器人中的应用",
+        "主流事件相机硬件",
+        "事件+帧融合架构（Sony AI Ace架构解析）",
+        "事件驱动光流估计",
+        "深度学习处理事件数据",
+        "事件相机 vs 传统相机选型指南",
+        "前沿趋势",
+        "练习"
+      ],
+      "summary": "2026年4月，Sony AI的乒乓球机器人Ace登上Nature封面，其核心视觉传感器正是事件相机。这种生物启发的传感器正在彻底改变机器人在高速、高动态范围场景中的感知能力。"
     },
     {
       "id": "sec-13",
@@ -189,7 +364,20 @@
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 4,
+      "headings": [
+        "1. 四层数据基础设施",
+        "2. 数据源对比与现状",
+        "3. 数据配方：黄金比例与经验规则",
+        "4. 跨本体对齐：最卡脖子的问题",
+        "5. 标注自动化：让 VLM 先做预标注",
+        "6. 视觉侧的数据质量指标",
+        "7. 数据管线工程化：HDF5 / WebDataset / LeRobot",
+        "8. 未来方向",
+        "练习题"
+      ],
+      "summary": "2026 年 VLA 社区有一个重要的共识切换——模型竞争逐渐让位于\"数据引擎\"之争。arXiv 2604.23001《Vision-Language-Action in Robotics: A Survey of Datasets, Benchmarks, and Data Engines》系统性地把这件事讲透了：数据基础设施分四层，每一层都有自己的工程分"
     },
     {
       "id": "sec-14",
@@ -200,7 +388,20 @@
       "difficulty": "高级",
       "estimatedMinutes": 12,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 12,
+      "headings": [
+        "1. 为什么 VLA 需要专门的视觉编码器？",
+        "2. 双 ViT 并行架构详解（OpenVLA 范式）",
+        "3. Vision-Aligned RVQ：让动作 token 与视觉对齐（Wall-OSS 独创）",
+        "4. 多视角融合：head_cam + wrist_cam 的工程实践",
+        "5. 跨本体迁移：训练 Aloha 部署 SO-100 不崩的关键",
+        "6. 数据增强：让你的视觉编码器跨场景",
+        "7. 视觉编码器性能优化（推理加速）",
+        "8. 学习路径推荐 — 视觉 + VLA 的下一步",
+        "9. 必读论文 + 必跑代码"
+      ],
+      "summary": "2026 年视觉模型在 VLA 中的角色发生了根本性转变。从「只是图像编码器」（ViT / DINOv2 / SigLIP），到「与动作 token 共享语义空间的多模态对齐底座」（Wall-OSS-0.5 的 Vision-Aligned RVQ）— 这一节系统讲解 VLA 时代视觉编码器的工程实践，包括主流 ViT 系列对比、双 ViT 并行架构、Vis"
     },
     {
       "id": "sec-15",
@@ -211,7 +412,40 @@
       "difficulty": "高级",
       "estimatedMinutes": 45,
       "isFrontier": true,
-      "tier": 3
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "一、检测框不是动作",
+        "二、Grounding 的三个层次",
+        "层次一：物体级（Object-level）",
+        "层次二：部件级（Part-level）",
+        "层次三：接触点与交互区域（Affordance-level）",
+        "三、从锚定到动作：几何计算这一段不能省",
+        "三个必须算出来的量",
+        "为什么这段容易被跳过",
+        "四、评测：通用指标与机器人成功率为什么脱节",
+        "原因一：评测的粒度不对",
+        "原因二：误差容忍度不对",
+        "原因三：缺少真机闭环",
+        "五、锚定—执行失配：一类被低估的失败",
+        "表现",
+        "三个常见来源",
+        "诊断办法",
+        "六、数据 Scaling：可验证的空间监督",
+        "七、最小可运行骨架",
+        "八、能力自检清单",
+        "九、与其他章节的连接",
+        "十、再深入一层：锚定的误差预算怎么分配",
+        "误差链路",
+        "典型量级",
+        "预算怎么分配",
+        "视觉伺服是最后一道保险",
+        "十一、补充自检"
+      ],
+      "summary": "目标检测的输出是一个框，分割的输出是一个掩码。这两样东西对机器人来说都不够用。"
     }
-  ]
+  ],
+  "readingMinutes": 127,
+  "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
+  "chars": 113669
 }
