@@ -100,6 +100,13 @@
 - 校验：sync + sitemap（535 章节）+ health_check **首轮 ALL OK**；已 push（31b5f5f..6545c0d），远程 HEAD 已核对。
 - 新坑：① **arXiv export API 本轮彻底不可用**（5 次重试全 429/503），改走 WebFetch `arxiv.org/abs/<id>` 稳定；② **`https://huggingface.co/papers/date/YYYY-MM-DD` 是好用的论文发现入口**（一次列出当天社区提上来的具身论文，但需二次确认 arXiv ID）；③ GitHub Search API 本轮 6 查询全成功（`-f q=` + 批次间 sleep 6），拿到 136 个 NEW；④ 微信 mp.weixin.qq.com 链接可作 news url，health_check 无异议。
 
+### 2026-10-23 08:00—09:20
+- 投稿箱：无新投稿。开工时工作树**不干净**（上一轮遗留 2 个提交 c993a79/d939a1b 未推送），本轮一并带上。
+- 数据：新闻 +10（n509—n518）、论文 +5（p262—p266，含 detail）、开源 +4（os198—os201，含 detail + 报告页）、招聘 +6（j255—j260）、资源新增 r019（具身学习资源与工具生态）+ r001 扩充。
+- 学习：sim-to-real「Real2Sim 的工程化：从『重建得像』到『改得动、测得准』」（7.8K，tier3，联动 os200 Video2World + p263 BiHOI + j259）；data-collection「第一视角与多视角采集：手部姿态为什么是具身数据的硬骨头」（8.6K，tier3，联动 n509 星忆智能 EgoKit + p263）。
+- 校验：sync_learn_split + build_sitemap（537 章节）+ health_check + verify_learn_structure **首轮即 ALL OK**；已 push（c993a79..e02d86c），远程 HEAD 已核对一致。
+- 新坑：① **`gh api search/repositories` 必须显式 `-X GET`**（带 `-f` 会自动切 POST → 404），本轮 6 个查询一次全成功、拿到 143 个候选（NEW 约 100）。② **Python 单引号字符串里的裸 `'`**：LaTeX `$A^{(i)}_{t'}$` 与示例 `` `pick(obj, approach='top')` `` 都会提前闭合外层字符串，报错是「Perhaps you forgot a comma?」且 caret 指错位置——搜 `'` 定位最快。③ 论文发现仍靠 `huggingface.co/papers/date/<date>`，本轮一次拿 4 个候选。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
@@ -164,3 +171,5 @@
 - **补薄章节的正确姿势（2026-10-20）**：薄章节多数是「概览清单」式——小节结构完整但每点只有一两句话。不要重写，用 `re.search(r'^#{2,3}\s*练习', c, re.M)` 定位「练习题」小节，在它**之前**插入深度小节（原理推导 + 决策表 + 可运行代码 + 高频坑）。用 `add.strip().split('\n')[0][:30] in c` 做幂等守卫。
 - **优先补 tier0/1，不是 tier2/3（2026-10-20）**：tier2/3 的高级专题（信息几何、变分法、集中不等式）2500 字是可接受的；tier0/1 的基础章薄了才真的学不扎实。选靶时先看 tier 再看字数。
 - **章节正文用 `###` 三级标题，不是 `##`（2026-10-20）**：前端小节目录吃 `###`。ai-infra 那批 A 类跳转章节用的是 `##`（历史遗留），新增内容跟着所在章节的既有层级走。
+- **外层单引号字符串禁用裸 `'`（2026-10-23）**：脚本里正文用 `'...'` 时，LaTeX 撇号（`$A^{(i)}_{t'}$`）与示例代码里的 `approach='top'` 都会提前闭合字符串。报错为 `SyntaxError: invalid syntax. Perhaps you forgot a comma?`，caret 指向一大段无关文本——**直接搜 `'` 定位**。改法：LaTeX 用 `_{t2}`，代码里的引号用 `"top"`（代码块内允许 ASCII 双引号）。
+- **`gh api` 带 `-f` 参数会切到 POST（2026-10-23）**：`gh api search/repositories -f q=...` 返回 `Not Found (HTTP 404)`。必须写 `gh api -X GET 'search/repositories?q=<urlencoded>&sort=stars&per_page=30'`。URL 编码用 `urllib.parse.quote`，在 Python subprocess 里 `&` 安全。

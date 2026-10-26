@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-23T08:30",
+ "lastUpdated": "2026-10-26T08:40",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,117 @@
   }
  ],
  "projects": [
+  {
+   "id": "os205",
+   "name": "RLark：跨集群具身智能云原生平台，用 Kubernetes CRD 管跨集群机器人训练作业",
+   "github": "https://github.com/RLinf/RLark",
+   "organization": "RLinf",
+   "org": "RLinf",
+   "category": "framework",
+   "description": "**RLark** 是一个**跨集群具身智能云原生平台**。用 Kubernetes 原生的 **CRD（自定义资源）**来管理跨集群的具身 AI 工作负载，提供统一作业调度、跨集群 Pod 网络与多运行时支持。\n\n**它解决的实际问题**：具身智能的大规模 RL 训练很少在一个集群里跑完——仿真农场在 A 地、GPU 在 B 地、真机在 C 地。把这三处的作业统一编排起来，通常要自己写一堆胶水脚本。RLark 把这件事故意做成了**声明式**：你写 CRD，它负责调度与组网。\n\n**为什么值得关注**：RLinf 团队本身做具身 RL 基础设施（本站已收录 RLinf 主项目），RLark 是它在**多云/多集群编排**这一层的延伸。当训练规模从「单机多卡」走到「跨地域多集群」，编排层会成为新的瓶颈。",
+   "language": "Go",
+   "license": "Apache-2.0",
+   "stars": 255,
+   "features": [
+    "Kubernetes 原生 CRD 定义具身 AI 工作负载",
+    "统一作业调度",
+    "跨集群 Pod 网络",
+    "多运行时支持",
+    "边缘计算场景适配"
+   ],
+   "tags": [
+    "RLark",
+    "云原生",
+    "Kubernetes",
+    "跨集群",
+    "具身智能基础设施",
+    "作业编排",
+    "RLinf"
+   ],
+   "addedDate": "2026-10-26"
+  },
+  {
+   "id": "os204",
+   "name": "OpenETA：把感知、动作、验证与学习接成闭环的具身任务智能体",
+   "github": "https://github.com/OpenMOSS/OpenETA",
+   "organization": "OpenMOSS",
+   "org": "OpenMOSS",
+   "category": "ai-agent-framework",
+   "description": "**OpenETA** 是一个**具身任务智能体（embodied task agent）**，官方一句话定位是：把**感知（perception）、动作（action）、验证（verification）与学习（learning）**接成一个**持续的物理世界闭环**。\n\n**它补的是哪一环**：多数具身智能体框架止步于「规划 → 执行」。OpenETA 明确把**验证**与**学习**列为闭环里的独立环节——执行完之后要判断到底做没做成，并把这次结果回灌进后续能力。\n\n**为什么值得关注**：这正好对应本轮收录的综述 [Toward Recursive Self-Improvement in Physical AI](/papers/p267) 所强调的那件事——机器人不只是要改进行为，还要改进**产生行为的那套过程**。验证 + 学习两个环节，就是把「改进过程」落到工程上的最小骨架。\n\n**技术栈关联**：仓库 topics 覆盖 vla、wam（世界动作模型）、task-planning、physical-ai，与世界动作模型路线天然衔接。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 209,
+   "features": [
+    "感知—动作—验证—学习四段闭环",
+    "具身任务智能体架构",
+    "面向持续物理世界交互",
+    "与 VLA / WAM 路线衔接"
+   ],
+   "tags": [
+    "OpenETA",
+    "具身智能体",
+    "闭环",
+    "验证",
+    "持续学习",
+    "OpenMOSS",
+    "physical-ai"
+   ],
+   "addedDate": "2026-10-26"
+  },
+  {
+   "id": "os203",
+   "name": "τ0-VLA：带世界模型引导测试时计算的层次化机器人基座模型",
+   "github": "https://github.com/sii-research/tau-0-vla",
+   "organization": "sii-research",
+   "org": "sii-research",
+   "category": "ai-model",
+   "description": "**τ0-VLA**（tau-0-VLA）是一个**层次化机器人基座模型**，其官方实现主打**世界模型引导的测试时计算（world-model-guided test-time computation）**。\n\n**思路要点**：传统 VLA 是「看到 → 直接输出动作」的单次前向。τ0-VLA 引入层次结构，并在推理时用一个世界模型来引导计算——本质上是把「想一想再做」变成可训练的推理预算分配，而不是固定的前向次数。\n\n**为什么值得关注**：测试时计算（test-time compute）是 2025—2026 年大模型侧最确定的收益来源之一，但把它搬到机器人上有天然困难——机器人的「思考」必须发生在有实时约束的闭环里。τ0-VLA 给出的层次化 + 世界模型引导的组合，是这条路线上的一个具体实现。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 641,
+   "features": [
+    "层次化机器人基座模型",
+    "世界模型引导的测试时计算",
+    "官方论文实现"
+   ],
+   "tags": [
+    "tau-0-VLA",
+    "层次化VLA",
+    "测试时计算",
+    "世界模型引导",
+    "机器人基座模型"
+   ],
+   "addedDate": "2026-10-26"
+  },
+  {
+   "id": "os202",
+   "name": "SuperDex：Meta 把专用物理引擎、机器人创作工具与可扩展 RL 接口压进同一个仿真平台",
+   "github": "https://github.com/facebookresearch/project_superdex",
+   "organization": "facebookresearch",
+   "org": "facebookresearch",
+   "category": "simulation",
+   "description": "**SuperDex** 是 Meta（Facebook Research）开源的统一仿真平台，把三样东西合在一起：一个**专用物理引擎**、一套**机器人创作工具（authoring tools）**，以及一个**可扩展的强化学习接口**。官方路线图还包括 VR 遥操作与更多能力。\n\n**它要解决的老问题**：灵巧操作的仿真长期卡在一个两难——通用物理引擎（MuJoCo、Bullet、PhysX）在**接触丰富**的场景下要么慢、要么不稳、要么需要大量调参才能不穿模。而研究者真正需要的往往是「快速搭一个手内操作任务 → 大规模并行跑 RL → 迁移到真机」，这条链路上的每一步都在用不同的工具。\n\n**为什么值得关注**：这是少见的由大厂把**物理引擎层**直接开源的项目，而不是在现有引擎上包一层环境。对做灵巧手、手内重定向、多指抓取的人来说，接触求解的质量直接决定 RL 能不能收敛。",
+   "language": "C++",
+   "license": "Apache-2.0",
+   "stars": 760,
+   "features": [
+    "专用物理引擎（面向接触丰富场景）",
+    "机器人创作/编排工具链",
+    "可扩展强化学习接口",
+    "统一仿真平台形态",
+    "VR 遥操作（规划中）"
+   ],
+   "tags": [
+    "SuperDex",
+    "Meta",
+    "物理引擎",
+    "灵巧操作",
+    "强化学习",
+    "接触动力学",
+    "仿真平台"
+   ],
+   "addedDate": "2026-10-26"
+  },
   {
    "id": "os201",
    "name": "quackd：一个 CLI 管所有机器人，每台配一个 LLM 大脑",
@@ -4818,5 +4929,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 188
+ "totalItems": 192
 }

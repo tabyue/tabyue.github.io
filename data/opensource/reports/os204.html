@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenETA：把感知、动作、验证与学习接成闭环的具身任务智能体 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">OpenETA：把感知、动作、验证与学习接成闭环的具身任务智能体 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="openeta">OpenETA：把感知、动作、验证与学习接成闭环的具身任务智能体</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenMOSS/OpenETA">https://github.com/OpenMOSS/OpenETA</a>  </p>
+<p><strong>Stars</strong>: 209 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-26  </p>
+<p><strong>组织</strong>: OpenMOSS  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-26</p>
+</blockquote>
+<hr />
+<h3 id="_2">大多数具身智能体停在了哪一步</h3>
+<p>一个典型的具身智能体循环长这样：</p>
+<pre><code>感知 → 规划 → 执行 → （结束）
+</code></pre>
+<p>问题出在括号里。执行完之后：</p>
+<ul>
+<li><strong>没人验证</strong>：系统默认「发出动作 = 任务完成」；</li>
+<li><strong>没有学习</strong>：这次成功或失败的经验不进入任何可复用的地方。</li>
+</ul>
+<p>结果是系统在<strong>开环</strong>运行：每一次任务都是从零开始，同一个坑可以掉一百次。</p>
+<h3 id="openeta_1">OpenETA 补上的两段</h3>
+<pre><code>感知 → 动作 → 验证 → 学习 ──┐
+  ↑                          │
+  └──────────────────────────┘
+</code></pre>
+<ul>
+<li><strong>验证（verification）</strong>：执行之后独立判断「到底做没做成」，而不是把执行器的返回当作真值；</li>
+<li><strong>学习（learning）</strong>：把验证结果回灌进后续能力——可以是记忆更新、技能库修订，也可以是策略微调的数据来源。</li>
+</ul>
+<p>这两段加起来，才构成一个<strong>持续的物理世界闭环</strong>。</p>
+<hr />
+<h3 id="_3">四段的职责划分</h3>
+<table>
+<thead>
+<tr>
+<th>段</th>
+<th>输入</th>
+<th>输出</th>
+<th>常见实现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>感知</td>
+<td>多模态观测</td>
+<td>状态/场景表示</td>
+<td>VLM、3D 重建、状态估计</td>
+</tr>
+<tr>
+<td>动作</td>
+<td>表示 + 任务</td>
+<td>可执行动作序列</td>
+<td>VLA、技能库、MPC</td>
+</tr>
+<tr>
+<td>验证</td>
+<td>执行前后观测</td>
+<td>成功/失败 + 失败类型</td>
+<td>状态比对、VLM 判定、程序化检查</td>
+</tr>
+<tr>
+<td>学习</td>
+<td>验证结果 + 轨迹</td>
+<td>更新的记忆/技能/策略</td>
+<td>经验库、技能修订、微调数据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_4">为什么「验证」必须独立</h3>
+<p>一个反直觉但重要的设计原则：<strong>不要让执行器自己报告成功</strong>。</p>
+<p>机械臂返回「trajectory executed」只说明轨迹发完了，不说明杯子被拿起来了。把这类返回当作成功信号，会让整个闭环建立在错误标签上——后面的学习越努力，错得越系统。</p>
+<p>独立的验证环节通常需要：</p>
+<ul>
+<li><strong>程序化检查</strong>（最可靠）：目标状态是否达成，用可计算的谓词判定；</li>
+<li><strong>视觉判定</strong>（次可靠）：用 VLM 判断前后帧的语义差；</li>
+<li><strong>混合</strong>：程序化为主，视觉为辅，冲突时报警。</li>
+</ul>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.29677">Toward Recursive Self-Improvement in Physical AI</a></strong> — 本站已收录（p267）。给出了「改进收益能否结转」的四条件，是 OpenETA 闭环设计最直接的理论参照。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.30043">TARSphere</a></strong> — 本站已收录（p270）。提供了长程具身智能体的评测栈，可用来检验闭环是否真的带来提升。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.30136">Agentic World Action Models</a></strong> — 本站已收录（p262）。世界模型与动作模型耦合，可作为「动作」段的实现选择。</li>
+</ul>
+<hr />
+<h3 id="_5">获取</h3>
+<pre><code class="language-bash">git clone https://github.com/OpenMOSS/OpenETA.git
+cd OpenETA
+</code></pre>
+<p>仓库 topics 覆盖 agent、embodied-agent、vla、wam、task-planning，按 README 配置依赖。</p>
+<h3 id="_6">搭一个最小闭环</h3>
+<p>即使不用 OpenETA，下面这个骨架也值得照着实现一遍：</p>
+<pre><code class="language-python">def run_episode(task, max_steps=30):
+    obs = perceive()
+    for step in range(max_steps):
+        plan  = decide(obs, task)
+        exec_actions(plan)
+        obs   = perceive()
+        ok    = verify(obs, task)      # 独立验证
+        learn(plan, obs, ok)           # 回灌
+        if ok:
+            return SUCCESS
+    return FAIL
+</code></pre>
+<h3 id="_7">检查清单</h3>
+<pre><code class="language-text">□ verify 是否独立于执行器返回值
+□ 失败是否被分类（不是只有 True/False）
+□ learn 的产物是否可被后续 episode 检索到
+□ 同一失败模式第二次出现时，行为是否不同
+</code></pre>
+<p>最后一条是唯一真正检验闭环是否成立的测试。</p>
+<hr />
+<h3 id="_8">项目规模</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>209</td>
+</tr>
+<tr>
+<td>语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>创建</td>
+<td>2026-07-25</td>
+</tr>
+<tr>
+<td>最近推送</td>
+<td>2026-10-16</td>
+</tr>
+<tr>
+<td>主页</td>
+<td>https://openmoss.ai/OpenETA/</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_9">成熟度判断</h3>
+<p>创建于 2026 年 7 月，星标 209，属于<strong>早期但方向明确</strong>的框架。价值主要在于它把「验证 + 学习」显式列为架构的一等公民，而不是散落在代码里的零散逻辑。</p>
+<h3 id="_10">适用边界</h3>
+<p><strong>适合</strong>：</p>
+<ul>
+<li>需要长期运行、希望能力随时间提升的机器人系统；</li>
+<li>研究具身自改进 / 持续学习的团队；</li>
+<li>已有 VLA 或 WAM 底座、想在其上搭组织层的项目。</li>
+</ul>
+<p><strong>不适合</strong>：</p>
+<ul>
+<li>一次性 demo；</li>
+<li>没有独立验证手段的场景（如无法判定成败的开放任务）；</li>
+<li>对延迟极敏感的硬实时控制回路。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>覆盖环节</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OpenETA</strong></td>
+<td>感知—动作—验证—学习</td>
+<td>显式闭环，验证与学习是一等公民</td>
+</tr>
+<tr>
+<td>quackd（os201）</td>
+<td>编排多机器人</td>
+<td>统一 CLI + 每机一个 LLM 大脑</td>
+</tr>
+<tr>
+<td>robonix（os185）</td>
+<td>Agentic OS</td>
+<td>Rust 实现，追求硬实时</td>
+</tr>
+<tr>
+<td>PhyAgentOS-core（os186）</td>
+<td>递归自改进 OS</td>
+<td>强调 RSI</td>
+</tr>
+<tr>
+<td>EmbodiedEvo（os170）</td>
+<td>自进化编码智能体</td>
+<td>用环境原语驱动代码自进化</td>
+</tr>
+</tbody>
+</table>
+<p>这几者并不互斥：OpenETA 定义的是<strong>闭环的环节</strong>，其余项目各自在某一环上做深。真要搭系统，常见做法是以 OpenETA 的四段为骨架，在各段里选用专门的框架。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

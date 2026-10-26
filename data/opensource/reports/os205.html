@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RLark：跨集群具身智能云原生平台，用 Kubernetes CRD 管跨集群机器人训练作业 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">RLark：跨集群具身智能云原生平台，用 Kubernetes CRD 管跨集群机器人训练作业 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="rlark-kubernetes-crd">RLark：跨集群具身智能云原生平台，用 Kubernetes CRD 管跨集群机器人训练作业</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/RLinf/RLark">https://github.com/RLinf/RLark</a>  </p>
+<p><strong>Stars</strong>: 255 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-26  </p>
+<p><strong>组织</strong>: RLinf  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-26</p>
+</blockquote>
+<hr />
+<h3 id="_2">具身智能训练的地理位置是分布式的</h3>
+<p>一个真实的大规模具身 RL 项目，资源通常长这样：</p>
+<pre><code>  A 地：仿真农场（CPU 密集，成千上万个并行环境）
+  B 地：GPU 集群（训练，需要高带宽互联）
+  C 地：真机实验室（评测与数据采集，物理隔离）
+</code></pre>
+<p>这三处几乎不可能在同一个机房。于是每支团队都要自己写一套「把作业从 A 搬到 B 再搬到 C」的胶水——脚本、定时任务、手工同步数据集、人工盯进度。</p>
+<p><strong>RLark 的命题</strong>是把这件事变成声明式：你描述「我要跑什么」，平台负责「在哪里跑、怎么组网、失败怎么恢复」。</p>
+<h3 id="kubernetes-crd">为什么用 Kubernetes CRD</h3>
+<p>CRD（Custom Resource Definition）的价值在于：你可以定义一种<strong>属于具身 AI 的资源类型</strong>，比如</p>
+<pre><code class="language-yaml">kind: EmbodiedRLJob
+spec:
+  simReplicas: 4096
+  learner:
+    gpus: 8
+    policy: ppo
+  realEval:
+    schedule: &quot;0 */6 * * *&quot;
+</code></pre>
+<p>然后由控制器（controller）把它翻译成实际的 Pod、Service、网络策略。写 YAML 的人不需要知道底层集群拓扑。</p>
+<hr />
+<h3 id="_3">三层职责</h3>
+<pre><code>      声明层：CRD（EmbodiedRLJob 等）
+              │  controller 翻译
+              ▼
+      调度层：统一作业调度
+              │
+              ▼
+      网络层：跨集群 Pod 网络 + 多运行时
+</code></pre>
+<h3 id="pod">跨集群 Pod 网络为什么是难点</h3>
+<p>仿真器与训练器需要高频通信（rollout 数据上行、策略参数下行）。跨集群时：</p>
+<ul>
+<li><strong>IP 空间不互通</strong>：集群 A 的 Pod IP 在集群 B 里不可路由；</li>
+<li><strong>NAT 与防火墙</strong>：跨地域通常要穿 NAT；</li>
+<li><strong>延迟与带宽</strong>：仿真数据量大，跨地域带宽是硬约束。</li>
+</ul>
+<p>RLark 显式提供跨集群 Pod 网络，正是针对这一层。</p>
+<h3 id="_4">多运行时支持</h3>
+<p>具身工作负载不只有一种形态：仿真进程、训练进程、评测进程、数据采集进程，各自的运行时要求不同（有的要 GPU，有的要实时内核，有的要特定驱动）。多运行时支持意味着同一套编排能覆盖这些异构需求。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.29677">Toward Recursive Self-Improvement in Physical AI</a></strong> — 本站已收录（p267）。其中「持续练习安全可负担」这条判据，直接依赖可靠的跨集群作业编排。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.28589">AgenticRoboRL</a></strong> — 本站已收录（p264）。RL 后训练的工程化，是 RLark 要支撑的典型工作负载类型。</li>
+</ul>
+<hr />
+<h3 id="_5">获取</h3>
+<pre><code class="language-bash">git clone https://github.com/RLinf/RLark.git
+cd RLark
+</code></pre>
+<p>文档站点：https://rlark.readthedocs.io/en/latest/</p>
+<h3 id="_6">落地前先回答三个问题</h3>
+<pre><code class="language-text">1. 我的作业真的跨集群吗？
+   —— 如果全部在一个 K8s 集群内，原生 Job / Volcano 就够了，
+      引入跨集群编排只会增加运维负担。
+
+2. 跨集群的带宽够吗？
+   —— 仿真 rollout 数据量往往被低估。先测：
+       单环境单步观测大小 × 并行数 × 帧率 = 上行带宽需求
+   跨地域带宽不足时，正确做法是「训练靠近仿真」而非强行组网。
+
+3. 失败恢复的语义是什么？
+   —— 仿真节点挂了：重跑即可（无状态）。
+      训练节点挂了：需要 checkpoint 恢复（有状态）。
+      真机评测挂了：可能需要人工介入（物理世界不可逆）。
+   三种失败必须区别对待，统一 retry 策略会出问题。
+</code></pre>
+<hr />
+<h3 id="_7">项目规模</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>255</td>
+</tr>
+<tr>
+<td>语言</td>
+<td>Go</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>创建</td>
+<td>2026-07-28</td>
+</tr>
+<tr>
+<td>最近推送</td>
+<td>2026-10-23</td>
+</tr>
+<tr>
+<td>文档</td>
+<td>https://rlark.readthedocs.io/en/latest/</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_8">成熟度判断</h3>
+<p>由 RLinf 团队（本站已收录其主项目 RLinf）发布，方向明确且文档站点已上线。星标 255，属于早期基础设施项目。</p>
+<h3 id="_9">适用边界</h3>
+<p><strong>适合</strong>：</p>
+<ul>
+<li>训练资源分布在多个集群 / 地域的团队；</li>
+<li>已在用 Kubernetes、希望把具身工作负载纳入同一套编排的组织；</li>
+<li>需要统一管理仿真、训练、评测、数采四类作业的平台组。</li>
+</ul>
+<p><strong>不适合</strong>：</p>
+<ul>
+<li>单机或单集群场景（过度设计）；</li>
+<li>没有 Kubernetes 运维能力的团队；</li>
+<li>对调度延迟极敏感的真机实时控制回路（K8s 不是实时调度器）。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>抽象层级</th>
+<th>跨集群</th>
+<th>适合规模</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>手写脚本 + cron</td>
+<td>无</td>
+<td>需自建</td>
+<td>单人/小团队</td>
+</tr>
+<tr>
+<td>Slurm</td>
+<td>作业</td>
+<td>有限</td>
+<td>HPC 集群内</td>
+</tr>
+<tr>
+<td>K8s 原生 Job</td>
+<td>作业</td>
+<td>否</td>
+<td>单集群</td>
+</tr>
+<tr>
+<td>Volcano / Kubeflow</td>
+<td>作业/管线</td>
+<td>有限</td>
+<td>单集群大规模</td>
+</tr>
+<tr>
+<td><strong>RLark</strong></td>
+<td><strong>具身工作负载（CRD）</strong></td>
+<td><strong>是</strong></td>
+<td>跨地域多集群</td>
+</tr>
+</tbody>
+</table>
+<p>选择原则很直接：<strong>先确认瓶颈是不是真的在编排层</strong>。如果训练跑不满是因为算法或数据，换编排框架不会有任何改善；只有当「作业调度与组网」本身成为主要时间开销时，RLark 这类工具的收益才显现。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

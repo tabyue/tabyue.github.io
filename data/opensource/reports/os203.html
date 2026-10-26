@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>τ0-VLA：带世界模型引导测试时计算的层次化机器人基座模型 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">τ0-VLA：带世界模型引导测试时计算的层次化机器人基座模型 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="0-vla">τ0-VLA：带世界模型引导测试时计算的层次化机器人基座模型</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/sii-research/tau-0-vla">https://github.com/sii-research/tau-0-vla</a>  </p>
+<p><strong>Stars</strong>: 641 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-26  </p>
+<p><strong>组织</strong>: sii-research  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-26</p>
+</blockquote>
+<hr />
+<h3 id="_2">从「直接输出动作」到「想一想再输出」</h3>
+<p>标准 VLA 的推理是一次前向：</p>
+<p>$$
+a_t = \pi_\theta(o_t, \ell)
+$$</p>
+<p>给定观测 $o_t$ 与语言指令 $\ell$，直接回归动作。所有计算预算在训练时就固定了，推理时无论任务难易，花的算力一样多。</p>
+<p><strong>τ0-VLA 的改动</strong>是把这个单次映射拆成层次结构，并让<strong>世界模型</strong>参与推理时的计算过程——换句话说，模型可以在推理阶段多花一点算力（做一次或多次内部推演），然后再决定输出什么动作。</p>
+<h3 id="_3">为什么这件事对机器人特别难</h3>
+<p>大语言模型可以慢慢想，因为没人给它的回答设 deadline。机器人不行：</p>
+<ul>
+<li>闭环控制通常要求 <strong>10—50 Hz</strong> 的动作输出；</li>
+<li>思考时间挤占的是<strong>控制周期</strong>，不是用户等待时间；</li>
+<li>想太久，机器人就僵在那儿；想太浅，复杂任务做不对。</li>
+</ul>
+<p>所以「测试时计算」在机器人上的真正命题不是<strong>要不要想</strong>，而是<strong>怎么在预算内想得值</strong>。</p>
+<hr />
+<h3 id="_4">层次化结构的一般形态</h3>
+<pre><code>      高层：任务分解 / 子目标提出
+              │
+              ▼
+      中层：世界模型引导的内部推演
+              │
+              ▼
+      低层：动作生成（可执行 token）
+</code></pre>
+<p>三层的关键在于<strong>频率不同</strong>：高层可能每几秒动一次，低层每 20—100 ms 就要出动作。层次化的价值正是让「昂贵的思考」不必在每一个控制周期都发生。</p>
+<h3 id="_5">世界模型引导意味着什么</h3>
+<p>世界模型在这里的作用不是生成漂亮的未来视频，而是提供一个<strong>可查询的动力学代理</strong>：</p>
+<p>$$
+\hat{o}<em>{t+k} = W(o_t, a</em>{t:t+k})
+$$</p>
+<p>有了它，策略可以在内部evaluate若干候选动作序列的后果，再挑一个执行。这就是「世界模型引导的测试时计算」。</p>
+<h3 id="_6">与本站已收录工作的关系</h3>
+<table>
+<thead>
+<tr>
+<th>工作</th>
+<th>关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agentic World Action Models (p262)</td>
+<td>同类：把世界模型与动作模型耦合</td>
+</tr>
+<tr>
+<td>FRED (p268)</td>
+<td>互补：提升单步未来表征质量，可直接改善引导信号</td>
+</tr>
+<tr>
+<td>LaLa-World (p269)</td>
+<td>互补：低成本潜空间世界模型，适合放进测试时推演</td>
+</tr>
+<tr>
+<td>SkeLAM (p271)</td>
+<td>互补：让世界模型的潜动作与真实控制量对齐</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.30136">Agentic World Action Models</a></strong> — 本站已收录（p262）。世界模型与动作模型耦合的另一条路线。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.30320">FRED</a></strong> — 本站已收录（p268）。提升单步未来表征质量，直接改善世界模型引导信号的可靠性。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.27851">LaLa-World</a></strong> — 本站已收录（p269）。低成本潜空间世界模型，更适合放进测试时推演循环。</li>
+</ul>
+<hr />
+<h3 id="_7">获取</h3>
+<pre><code class="language-bash">git clone https://github.com/sii-research/tau-0-vla.git
+cd tau-0-vla
+</code></pre>
+<p>按仓库 README 安装依赖并下载权重。</p>
+<h3 id="_8">使用时的三个检查点</h3>
+<pre><code class="language-text">1. 推理预算上限
+   —— 内部推演最多能做几步？超过就强制出动作。
+   没有硬上限的实现在真机上会卡住控制周期。
+
+2. 降级路径
+   —— 世界模型不可用时（如观测异常）能否退回单次前向？
+   必须有，否则一次感知故障就让机器人停摆。
+
+3. 预算与收益的关系
+   —— 简单任务上多想是否反而变差？
+   过思考（over-thinking）在具身任务里是真实存在的现象。
+</code></pre>
+<hr />
+<h3 id="_9">项目规模</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>641</td>
+</tr>
+<tr>
+<td>语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>创建</td>
+<td>2026-07-26</td>
+</tr>
+<tr>
+<td>最近推送</td>
+<td>2026-10-13</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_10">适用边界</h3>
+<p><strong>适合</strong>：</p>
+<ul>
+<li>研究「推理预算怎么分配」这类问题的团队；</li>
+<li>长程、需要多步推演的操作任务；</li>
+<li>已有世界模型、想把它接到策略推理里的项目。</li>
+</ul>
+<p><strong>不适合</strong>：</p>
+<ul>
+<li>高频硬实时控制（测试时计算会破坏周期确定性）；</li>
+<li>算力极度受限的端侧部署；</li>
+<li>简单短程任务——此时层次化与推演带来的收益可能抵不上延迟。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>路线</th>
+<th>推理时算力</th>
+<th>延迟</th>
+<th>适合任务</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标准 VLA（π0 / OpenVLA）</td>
+<td>固定一次前向</td>
+<td>低且确定</td>
+<td>短程反应式操作</td>
+</tr>
+<tr>
+<td>扩散/流匹配策略</td>
+<td>多步去噪</td>
+<td>中</td>
+<td>多峰动作分布</td>
+</tr>
+<tr>
+<td>一步生成策略（一致性蒸馏）</td>
+<td>一次前向</td>
+<td>低</td>
+<td>端侧实时</td>
+</tr>
+<tr>
+<td><strong>τ0-VLA</strong></td>
+<td><strong>可变，世界模型引导</strong></td>
+<td><strong>可变，需上限</strong></td>
+<td>长程、需推演的任务</td>
+</tr>
+</tbody>
+</table>
+<p>本站 <a href="/learn/training-inference-optimization/17">training-inference-optimization</a> 一节专门讨论过一步生成策略的工程化；τ0-VLA 代表的是相反方向的取舍——<strong>用延迟换推演深度</strong>。两者并不冲突，实践中常见的解法是分层：低层用一步策略保证实时，高层用小频率的世界模型推演做规划。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

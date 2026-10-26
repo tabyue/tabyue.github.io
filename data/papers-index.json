@@ -1,6 +1,150 @@
 {
- "lastUpdated": "2026-10-23T08:30",
+ "lastUpdated": "2026-10-26T08:40",
  "papers": [
+  {
+   "id": "p271",
+   "title": "Skeleton-Grounded Latent Action Model for Robot World Models (SkeLAM)",
+   "authors": "Qi Lv, Jiayi Lin, Yuxin Jiang, Jianzong Wang, Xiang Deng, Mike Zheng Shou",
+   "venue": "arXiv 2610.31474（cs.RO）",
+   "date": "2026-10-22",
+   "arxiv": "https://arxiv.org/abs/2610.31474",
+   "github": "https://aopolin-lv.github.io/SkeLAM/",
+   "tags": [
+    "SkeLAM",
+    "潜动作模型",
+    "机器人世界模型",
+    "骨架监督",
+    "跨模态交换重建",
+    "DROID",
+    "zero-shot迁移"
+   ],
+   "tldr": "**问题**：机器人世界模型模拟环境如何随机器人动作演化。**潜动作模型**能从视频里学动力学——把视觉变化编码成代理动作。但**以重建为驱动的潜动作**会把机器人自身运动、物体响应和其他场景变化混在一起，导致它与真实机器人控制量之间对不上。\n\n**方法 SkeLAM**（skeleton-guided latent action model）：\n\n1. **分解**：把潜动作拆成两部分——由**机器人骨架监督**锚定的**运动学分量**，与保留补充视觉动力学的**残差分量**；\n2. **跨模态交换重建**：鼓励 RGB -derived 与 skeleton-derived 的运动学表征在视频重建中可互换；\n3. **双通道条件化**：世界模型通过两条独立条件通路分别注入两个分量，并用 **branch dropout** 降低对「来自未来的残差信息」的依赖；\n4. **轻量适配器**：把机器人动作映射到运动学空间，随后对世界模型微调以适配这些预测条件。\n\n**推理**：从当前观测与机器人动作生成未来观测。\n\n**结果**：在 DROID 上相比 DreamDojo，末端执行器 **ADE 降低 19.5%**、**LPIPS 降低 11.1%**。运动探针（motion probing）支持了运动学专门化的存在；定性结果展示了生成 rollout 中的**零样本 human-to-robot 运动迁移**；策略评测显示预测成功率与真实机器人执行测得的成功率一致。",
+   "category": "具身智能",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把潜动作显式拆成「骨架锚定的运动学分量 + 残差分量」，直接针对潜动作与真实控制量对不上这个老问题——这是一个干净的结构性解法。",
+    "跨模态交换重建是让两种来源的运动学表征真正对齐的关键，而不是各学各的。",
+    "branch dropout 显式降低模型对「未来残差」的依赖，是防止世界模型在推理时偷看未来的工程细节，却直接决定它能不能用于闭环。",
+    "「预测成功率与真机实测一致」这条比 ADE/LPIPS 更重要：它意味着世界模型可以作为策略筛选的代理评测器使用。"
+   ],
+   "impact": "世界模型要能被机器人真正「驾驶」，潜动作就必须与真实控制量对齐。SkeLAM 用骨架监督给出了可迁移的做法，并把它兑现为零样本 human-to-robot 迁移。",
+   "addedDate": "2026-10-26"
+  },
+  {
+   "id": "p270",
+   "title": "TARSphere: A Robot-Oriented Full-Stack Framework for Long-Horizon Embodied Agents in Evolving Physical and Social Environments",
+   "authors": "Yicheng Xu, Zhikai Xu, Ziyuan Chen, Yuhang Dong, Tao Zhang, Zhucun Xue, Yong Liu, Jiangning Zhang",
+   "venue": "arXiv 2610.30043（cs.RO）",
+   "date": "2026-10-21",
+   "arxiv": "https://arxiv.org/abs/2610.30043",
+   "github": "https://github.com/xuyicheng-zju/TARSphere",
+   "tags": [
+    "TARSphere",
+    "长程具身智能体",
+    "全栈框架",
+    "事件驱动FSM",
+    "Harness",
+    "人机协调",
+    "评测基准"
+   ],
+   "tldr": "**动机**：机器人必须在物理与社会双重约束下行动，并适应环境与人类需求的变化。现有具身智能体系统往往只盯着指定目标，或把执行抽象成符号动作，限制了在**持续演化的世界**里的评估。\n\n**三层结构**：\n\n- **TARSphere-Infra**：在物理仿真器中运行机器人策略，带具身 NPC 与受限对话；**事件驱动有限状态机（FSM）**用已完成的动作与已传递的信息来更新任务状态并评估结果。\n- **TARSphere-Harness**：具身大脑 Harness，让一个**冻结的多模态大模型（MLLM）**通过多级可执行技能行动，利用观测、层次化记忆与执行反馈来修正决策。\n- **TARSphere-Bench**：agent-in-the-loop 策展对齐任务语义、因果依赖与场景几何，构建 **30 个室内场景、360 条 episode**，五组配对条件分别评测感知鲁棒性、扰动适应、任务更新、人类协调与意图理解，覆盖 navigate-and-report 与 fetch-and-deliver 两类任务。\n\n**发现**：8 个 MLLM 的评测显示，**通用模型可以超过专用具身模型**；但**任务更新与人机交互依然困难**。频繁的碰撞与跌倒进一步说明：即便共享同一套动作接口与决策预算，也应当把**执行安全性**与任务成功率放在一起评估。",
+   "category": "具身智能",
+   "difficulty": "中级",
+   "keyInsights": [
+    "把「物理约束 + 社会约束」同时放进评测，而不是只测任务成功率——这是长程具身智能体评测长期缺的一块。",
+    "事件驱动 FSM 用「已完成的动作 + 已传递的信息」更新任务状态，解决了开放式任务里「怎么判断这一步算做完」的判定难题。",
+    "Harness 层让冻结的 MLLM 通过多级可执行技能行动，说明能力瓶颈未必在底座模型，而在**把模型接到可执行技能上的组织层**。",
+    "「通用 MLLM 能打过专用具身模型」这个结论值得警惕：它多半反映具身微调在长程开放任务上反而损失了通用推理能力。",
+    "把碰撞与跌倒频率列为与成功率并列的一等公民指标，是对「只看 success rate」这一评测惯性的直接纠偏。"
+   ],
+   "impact": "给出了一套可复现的长程具身智能体评测栈（Infra + Harness + Bench），让「机器人能不能在变化的物理与社会环境里持续干活」从口号变成可测指标。",
+   "addedDate": "2026-10-26"
+  },
+  {
+   "id": "p269",
+   "title": "LaLa-World: Scaling Latent World Models with Natural Language Actions",
+   "authors": "Junha Song, Geonmo Gu, Jeongeun Park, Heejeong Nam, Lucas Maes, Byeongho Heo, Dongyoon Han, Sangdoo Yun",
+   "venue": "arXiv 2610.27851（cs.CV / cs.LG）",
+   "date": "2026-10-20",
+   "arxiv": "https://arxiv.org/abs/2610.27851",
+   "github": "https://github.com/junha1125/LaLa-World",
+   "tags": [
+    "LaLa-World",
+    "潜空间世界模型",
+    "JEPA",
+    "自然语言动作",
+    "MPC规划",
+    "LaLa-Policy"
+   ],
+   "tldr": "**主张**：JEPA 风格的潜空间世界模型（**LWM**）可以通过采纳视频生成模型那种**语言条件化接口**，实现跨领域、跨数据源的学习，并成为「想象式规划」与下游策略微调的有效基础。\n\n**两个关键设计**：\n\n1. **动作与视觉变化都用语言描述**——数值动作和视觉变化统一写成语言，使得一个单一的未来预测器能在异构数据集上联合训练；\n2. **预测器建在语言模型之上**——让它既能读懂语言条件，又能预测未来潜状态。\n\n**效果**：单一预测器在平均 MPC 规划性能上**超过为每个领域/任务单独训练的现有 LWM**；加入图像与视频数据进一步提升平均规划性能与对动作措辞的鲁棒性。在与基于 RAEv2 的视频生成模型基线的对照实验中，LaLa-World 以 **1/6 的训练成本**达到可比的规划性能，规划速度快 **13.9 倍**。\n\n**下游**：预训练的 LaLa-World 可作为 **LaLa-Policy** 的初始化，联合预测动作与未来视觉表征；在 LIBERO 与 RoboCasa 上与 Cosmos Policy 竞争力相当，推理最快可达 **5.5 倍**加速。",
+   "category": "具身智能",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把「用语言描述数值动作」当作跨数据集的通用接口，是让单一世界模型吃得下仿真轨迹、真机轨迹、网络图像与视频的关键一招。",
+    "预言器建在语言模型上而非纯视觉骨干上，使它天然具备解读语言条件的能力——这是 JEPA 系世界模型此前相对薄弱的一环。",
+    "对照实验给出的不是微小的涨点：1/6 训练成本、13.9 倍规划加速、5.5 倍推理加速。潜空间路线的效率优势在这里被量化得相当清楚。",
+    "「对动作措辞更鲁棒」是个容易被忽略但很实用的性质——真实部署里指令措辞的自由度远比基准集里大。"
+   ],
+   "impact": "世界模型路线一直被生成式视频模型的高成本拖累。LaLa-World 证明潜空间 + 语言接口的组合能在保持规划质量的同时把成本压一个数量级，这直接影响「世界模型能不能进闭环控制」这个问题的答案。",
+   "addedDate": "2026-10-26"
+  },
+  {
+   "id": "p268",
+   "title": "Self-Distilling Future Video Representations for World Action Models (FRED)",
+   "authors": "Huiwon Jang, Suhyeok Jang, Hyeonmo Kang, Seungku Kim, Jinwoo Shin, Sihyun Yu",
+   "venue": "arXiv 2610.30320（cs.RO / cs.CV）",
+   "date": "2026-10-21",
+   "arxiv": "https://arxiv.org/abs/2610.30320",
+   "github": "https://huiwon-jang.github.io/FRED/",
+   "tags": [
+    "FRED",
+    "世界动作模型",
+    "WAM",
+    "自蒸馏",
+    "未来表征",
+    "human-to-robot",
+    "单步去噪"
+   ],
+   "tldr": "**背景**：世界动作模型（**WAM**）借助预训练视频扩散模型里丰富的时空先验来学通用机器人策略。近期一类 WAM 为了推理效率，不再做完整的多步去噪生成视频，而是**只做一步去噪、从中间层抽「未来视频表征」，再接一个独立的动作解码器**。代价是：动作预测的质量直接取决于这层未来表征的质量。\n\n**方法 FRED**（Future REpresentation learning via self-Distillation with temporal context）：\n\n1. **自蒸馏**：以「从真值未来观测中抽取的表征」为目标，训练模型直接从噪声预测未来表征；\n2. **历史条件化**：把视频模型条件化在历史观测上，为预测未来表征提供时序上下文。\n\n**结果**：在多样的真实操作场景中一致超过同类 WAM，增益在**长程任务**与**零样本环境泛化**下尤其大。最亮眼的是 human-to-robot 技能迁移：在**机器人训练数据里完全没有、只在人类视频里演示过**的任务上，FRED 达到 **50.0%** 成功率，而最好的对比 WAM 只有 **19.4%**。",
+   "category": "具身智能",
+   "difficulty": "高级",
+   "keyInsights": [
+    "指明了单步去噪 WAM 的命门：既然不再迭代去噪，动作质量就完全押在中间层未来表征上——那么优化目标应该从「生成得像」改成「表征得对」。",
+    "自蒸馏的构造很干净：用真值未来观测抽出的表征当目标，让模型学会一步从噪声跳到那里。这把「一步跳」从工程妥协变成了可训练目标。",
+    "历史观测条件化是必要的一半：没有时序上下文，单步预测未来表征本质上是个欠定问题。",
+    "19.4% → 50.0% 这个 human-to-robot 迁移增益，说明未来表征质量的提升主要兑现为**跨形态迁移能力**，而不是同分布任务上的小幅涨点。"
+   ],
+   "impact": "如果 WAM 要走「一步推理」的高效路线，FRED 给出了把这条路走通的标准做法。对数据稀缺的任务，从人类视频直接迁移的可行性被显著抬高。",
+   "addedDate": "2026-10-26"
+  },
+  {
+   "id": "p267",
+   "title": "Toward Recursive Self-Improvement in Physical AI",
+   "authors": "Meng Luo, Zechen Bai, Shanqing Xu, Yanlin Li, Kaixin Li, Mengchen Qian, Weifeng Lu, Ran Zhang, Yingtian Zou, Ziyang Luo, Wei Chen, Hongzhan Lin",
+   "venue": "arXiv 2610.29677（cs.RO / cs.AI），93 页综述",
+   "date": "2026-10-21",
+   "arxiv": "https://arxiv.org/abs/2610.29677",
+   "github": "https://physical2rsi.github.io/",
+   "tags": [
+    "递归自改进",
+    "RSI",
+    "Physical AI",
+    "机器人学习",
+    "自我改进机制",
+    "综述"
+   ],
+   "tldr": "**问题**：递归自改进（**RSI**）指的不只是系统改进自己的**行为**，还要改进**它用来改进自己的那套过程**。数字智能体已经在实践这一点——重写自己的代码、用可执行测试检查每个版本。但把这套机制搬进物理世界，得在部分观测下通过昂贵的试验学习，还得考虑工况变化与潜在的不可逆后果。\n\n**这篇综述做了什么**：把 RSI 定位进机器人学习，并追溯从「改进机器人能力」到「改进生成这些能力的过程」的路径。它给出的核心判据是——**收益只有在四个条件同时满足时才能结转**：\n\n1. 反馈确实针对尚存的学习需求；\n2. 接收方能使用这个改变；\n3. 收益能活过任务或硬件的变更；\n4. 持续练习仍然安全且负担得起。\n\n**现状**：现有研究集中在操作任务上，支持了行为改进、对后续学习有益、以及流程改进三个层面。有些系统还会改变改进者自身的知识或工具，但综述指出——**已审阅的物理研究尚未能分离出可归因于「递归」本身的收益**。\n\n**产出**：把上述发现综合成评估原则与研究方向，目标是让机器能**一次一次试错地、安全地改进它改进的方式**。",
+   "category": "具身智能",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把 RSI 从「智能体改代码」拉回到机器人学习的约束下：部分观测、昂贵试错、工况漂移、不可逆后果——这四条决定了物理世界的 RSI 不是数字世界 RSI 的简单外推。",
+    "「收益结转四条件」是本综述最有操作性的产出：反馈对准需求、接收方能用、收益跨任务/硬件存活、持续练习安全可负担。任何一项缺失，所谓自改进就只是单次调优。",
+    "坦率的结论：现有物理 RSI 研究**还没有一项能分离出递归带来的增量**。这既是批评，也是给后来者的明确空白。",
+    "把「改进过程」本身列为可优化对象，等价于承认机器人学习的瓶颈正在从数据规模转向**学习机制的可改进性**。"
+   ],
+   "impact": "当行业把注意力从「再训一个更大的 VLA」转向「怎么让机器人自己变强」时，这篇 93 页综述是第一个系统性的坐标系。它给出的四条件可以直接当作项目立项时的检查清单。",
+   "addedDate": "2026-10-26"
+  },
   {
    "id": "p266",
    "title": "LT-Mem: Volatility-Aware Spatio-Temporal Memory for Lifelong Scene Understanding",
@@ -6929,5 +7073,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 240
+ "totalItems": 245
 }
