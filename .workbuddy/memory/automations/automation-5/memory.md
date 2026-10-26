@@ -107,6 +107,13 @@
 - 校验：sync_learn_split + build_sitemap（537 章节）+ health_check + verify_learn_structure **首轮即 ALL OK**；已 push（c993a79..e02d86c），远程 HEAD 已核对一致。
 - 新坑：① **`gh api search/repositories` 必须显式 `-X GET`**（带 `-f` 会自动切 POST → 404），本轮 6 个查询一次全成功、拿到 143 个候选（NEW 约 100）。② **Python 单引号字符串里的裸 `'`**：LaTeX `$A^{(i)}_{t'}$` 与示例 `` `pick(obj, approach='top')` `` 都会提前闭合外层字符串，报错是「Perhaps you forgot a comma?」且 caret 指错位置——搜 `'` 定位最快。③ 论文发现仍靠 `huggingface.co/papers/date/<date>`，本轮一次拿 4 个候选。
 
+### 2026-10-26 08:17—09:10
+- 投稿箱：无新投稿。开工时工作树干净、HEAD==origin/main（e02d86c）。
+- 数据：新闻 +10（n519—n528）、论文 +5（p267—p271，含 detail）、开源 +4（os202—os205，含 detail + 报告页）、招聘 +6（j261—j266）、资源新增 r020（具身智能标准、评测体系与实训场资源）。
+- 学习：world-models-llm「世界模型作为自改进的引擎：从预测未来到改进改进的过程」（9.8K，tier3，联动 p267 RSI 综述 / os204 OpenETA）；physics-simulation「接触丰富场景的仿真：灵巧操作为什么逼出了专用物理引擎」（7.5K，tier3，联动 os202 SuperDex）。
+- 校验：sync + sitemap（539 章节）+ health_check + verify_learn_structure **首轮即 ALL OK**；已 push（e02d86c..f6d4837），远程 HEAD 已核对一致。
+- 新坑：① `huggingface.co/papers/date/<date>` 返回的可能是邻近几天的列表（本轮要 10-25 拿到 10-23），按 upvote 挑完仍要逐个 WebFetch arXiv 核对；② **`gh api repos/<x> --jq "多字段"` 在 PowerShell 内联报 `accepts 1 arg(s), received 2`**（jq 表达式含空格/引号被参数拆分），批量核验 repo 一律写 .py 用 subprocess；③ **resources 有独立 category 体系且 health_check 不校验**，新增资源用 `Counter(...).most_common(1)` 取现存众数最稳（本轮=学术资源）；④ 同日 6 条新闻要刻意错开主题才不撞 3-gram 查重。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
