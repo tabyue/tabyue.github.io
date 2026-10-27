@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>rosclaw：给具身 Agent 的 Physical AI 运行时——受治理的动作、经验与技能进化 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">rosclaw：给具身 Agent 的 Physical AI 运行时——受治理的动作、经验与技能进化 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="rosclaw-agent-physical-ai">rosclaw：给具身 Agent 的 Physical AI 运行时——受治理的动作、经验与技能进化</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/ros-claw/rosclaw">https://github.com/ros-claw/rosclaw</a>  </p>
+<p><strong>Stars</strong>: 230 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-10-27  </p>
+<p><strong>组织</strong>: ros-claw  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-27</p>
+</blockquote>
+<hr />
+<p>rosclaw 定位为<strong>具身 Agent 的 Physical AI 运行时</strong>，不是又一个机器人中间件。</p>
+<h3 id="ros-2">ROS 2 缺什么</h3>
+<p>ROS 2 解决得很好的是：节点通信（DDS）、服务/动作接口、实时调度、设备驱动抽象。它<strong>不解决</strong>：</p>
+<ul>
+<li>一个由 LLM 提出的动作，<strong>该不该执行</strong>（治理）；</li>
+<li>一次执行产生的轨迹，<strong>能不能被后续复用</strong>（经验验证）；</li>
+<li>机器人在长期运行中积累的空间与物体知识，<strong>怎么组织</strong>（物理记忆）；</li>
+<li>技能库<strong>怎么随经验增长而更新</strong>，且不破坏已有能力（技能进化）。</li>
+</ul>
+<p>rosclaw 声称要补的就是这四块。</p>
+<h3 id="_2">四个模块的职责</h3>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>职责</th>
+<th>对应痛点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Governed action</td>
+<td>动作执行前的策略/审批层</td>
+<td>Agent 提出危险动作无人拦</td>
+</tr>
+<tr>
+<td>Verified experience</td>
+<td>经验入库前的校验</td>
+<td>垃圾轨迹污染训练集</td>
+</tr>
+<tr>
+<td>Physical memory</td>
+<td>空间与物体信息的持久组织</td>
+<td>每次任务都从零认识环境</td>
+</tr>
+<tr>
+<td>Skill evolution</td>
+<td>技能版本化与迭代</td>
+<td>改一个技能破坏其他技能</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">适用边界</h3>
+<ul>
+<li><strong>适合</strong>：已经能跑通 Agent → 机器人链路，现在要处理长期运行与治理问题的团队；</li>
+<li><strong>不适合</strong>：还在解决「怎么让机器人动起来」的早期项目——先用 ROS 2 或 robot-control-stack 把链路跑通。</li>
+</ul>
+<hr />
+<h3 id="_4">分层</h3>
+<pre><code class="language-text">Agent / VLA / VLM
+    ↓
+rosclaw Runtime
+    ├── Governed Action    —— 动作提案 → 策略检查 → 审批 → 下发
+    ├── Verified Experience—— 执行结果 → 校验 → 经验库
+    ├── Physical Memory    —— 空间 / 物体 / 事件的持久组织
+    └── Skill Evolution    —— 技能版本化、回归测试、迭代
+    ↓
+ROS / ROS 2 执行层
+    ↓
+机器人本体
+</code></pre>
+<h3 id="_5">为什么要「受治理的动作」</h3>
+<p>Agent 提出的动作与规则系统提出的动作有本质区别：前者是<strong>概率性的</strong>，可能提出从未见过的动作序列。因此执行前需要一道检查层，典型组成：</p>
+<ol>
+<li><strong>安全边界检查</strong>：关节限位、速度上限、碰撞预测；</li>
+<li><strong>权限检查</strong>：这个动作需要什么级别的授权，当前操作者有没有；</li>
+<li><strong>可回滚性检查</strong>：如果这一步做错了，能不能退回来。</li>
+</ol>
+<p>这一层是 rosclaw 与纯 ROS 2 方案最主要的区别。</p>
+<h3 id="rag">物理记忆与 RAG 的关系</h3>
+<p>Physical memory 本质上是<strong>具身版的记忆系统</strong>：不只是文字记录，而是带有空间坐标、物体身份、时间戳的结构化记忆。它与 Embodied-RAG 的思路一致——检索的对象是「机器人去过哪、见过什么、做过什么」，而不是文档片段。</p>
+<hr />
+<ul>
+<li><strong><a href="https://rosclaw.io">rosclaw 官网</a></strong> — 项目定位与四个模块的官方说明，理解设计意图的第一手材料</li>
+<li><strong><a href="https://github.com/syswonder/robonix">robonix</a></strong> — 用 Rust 写的机器人 Agentic 操作系统，可与 rosclaw 在「运行时该做到哪一层」上对照</li>
+<li><strong><a href="https://github.com/automatika-robotics/emos">EMOS</a></strong> — Embodied OS，Go 实现，提供另一种操作系统级抽象</li>
+<li><strong><a href="https://github.com/strands-labs/robots">strands-robots</a></strong> — 用自然语言控制机器人的 Agent 框架，与 rosclaw 在 Agent 接入层上互补</li>
+</ul>
+<hr />
+<h3 id="_6">安装</h3>
+<pre><code class="language-bash">git clone https://github.com/ros-claw/rosclaw.git
+cd rosclaw
+pip install -e .
+</code></pre>
+<h3 id="_7">最小运行示例</h3>
+<pre><code class="language-python">from rosclaw import Runtime
+
+rt = Runtime(config=&quot;configs/minimal.yaml&quot;)
+
+# 1) 注册一个受治理的动作
+@rt.action(requires_approval=True)
+def move_to(x, y, theta):
+    return rt.ros.nav2_goal(x, y, theta)
+
+# 2) Agent 提出动作，运行时先过治理层
+result = rt.invoke(move_to, x=1.0, y=2.0, theta=0.0)
+
+# 3) 经验入库（带校验）
+rt.experience.record(result, verify=True)
+
+# 4) 查询物理记忆
+mem = rt.memory.query(&quot;厨房台面上有哪些物体&quot;)
+</code></pre>
+<h3 id="_8">落地建议</h3>
+<ul>
+<li><strong>先只开治理层</strong>：把动作审批接上是收益最直接、风险最低的一步；</li>
+<li><strong>经验库要有准入标准</strong>：不加校验地全量入库，等价于把噪声写进训练集；</li>
+<li><strong>技能版本化要配回归测试</strong>：没有回归测试的「技能进化」等于随机破坏。</li>
+</ul>
+<hr />
+<h3 id="_9">规模与活跃度</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>230</td>
+</tr>
+<tr>
+<td>主要语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>最近推送</td>
+<td>2026-10-26（活跃）</td>
+</tr>
+<tr>
+<td>创建时间</td>
+<td>2026-03-16</td>
+</tr>
+<tr>
+<td>License</td>
+<td>MIT</td>
+</tr>
+</tbody>
+</table>
+<p>MIT 许可，商用无障碍——这对想在生产环境用的团队是个实质优势。</p>
+<h3 id="_10">成熟度判断</h3>
+<p>项目创建于 2026 年 3 月，属于<strong>较新的项目</strong>，近期推送活跃。采用时应按「早期但活跃」来评估：</p>
+<ul>
+<li><strong>可以</strong>：作为设计参考，理解 Agent 运行时该有哪些层；</li>
+<li><strong>谨慎</strong>：直接用于生产关键路径——治理层本身出 bug 的后果比没有治理层更严重，因为它会给操作者虚假的安全感。</li>
+</ul>
+<h3 id="_11">与其他运行时方案的对比</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>定位</th>
+<th>许可</th>
+<th>侧重</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>rosclaw</strong></td>
+<td>Agent 运行时</td>
+<td>MIT</td>
+<td>治理 / 经验 / 记忆 / 进化</td>
+</tr>
+<tr>
+<td>robonix</td>
+<td>Rust 机器人 Agentic OS</td>
+<td>视实现而定</td>
+<td>运行时性能与安全</td>
+</tr>
+<tr>
+<td>EMOS（automatika）</td>
+<td>Embodied OS（Go）</td>
+<td>MIT</td>
+<td>操作系统层</td>
+</tr>
+<tr>
+<td>horus</td>
+<td>Rust 机器人运行时</td>
+<td>视实现而定</td>
+<td>对标 Android 的底层</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_12">选型建议</h3>
+<ul>
+<li><strong>要治理与记忆语义</strong>：rosclaw 的议题覆盖最全，且 MIT 许可；</li>
+<li><strong>要运行时性能与实时性</strong>：看 Rust 系的 robonix / horus；</li>
+<li><strong>要操作系统级抽象</strong>：EMOS 更合适；</li>
+<li><strong>只是要通信与调度</strong>：直接用 ROS 2，不要引入额外运行时。</li>
+</ul>
+<h3 id="_13">风险提示</h3>
+<p>「受治理的动作」这类机制的价值完全取决于治理规则写得对不对。一个只做权限检查、不做碰撞与安全边界检查的治理层，实际上提供的保护非常有限。采用时应逐条核对它到底检查了什么，而不是只看有没有这个模块。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

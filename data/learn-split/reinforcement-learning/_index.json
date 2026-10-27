@@ -4,7 +4,7 @@
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 60,
-  "lastUpdated": "2026-10-26",
+  "lastUpdated": "2026-10-27T08:50",
   "description": "让机器人通过试错学习最优行为策略。PPO 是四足步态训练的标配，SAC 适合连续动作空间。",
   "prerequisites": [
     "深度学习基础",
@@ -476,9 +476,33 @@
         "十二、工程落地：什么时候值得上这套"
       ],
       "summary": "前面「奖励工程」一节讲了怎么把任务目标写成奖励函数。但那套方法有一个前提——每个任务都要写一次。这在研究里可以接受，在产业里是灾难：一条产线上可能有几十个工位、上百个动作变体，每换一个 SKU 就要重新设计奖励、重新调权重、重新跑几百万步训练。"
+    },
+    {
+      "id": "sec-19",
+      "title": "策略表征解耦的通用 RL 后训练：一套算法如何同时优化高斯、扩散与流匹配策略",
+      "lastUpdated": "2026-10-27T08:50",
+      "chars": 7980,
+      "shortTitle": "策略表征解耦的通用 RL 后训练",
+      "difficulty": "高级",
+      "estimatedMinutes": 26,
+      "isFrontier": true,
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "一、先看清问题的形状：RL 后训练为什么被策略表征绑死",
+        "二、为什么解耦是可能的：策略改进其实发生在「分布」层面",
+        "三、把「在哪采」也一起解耦：DR-APO 的工程形态",
+        "四、真机样本效率：为什么每个百分点都很贵",
+        "五、落地清单与高频坑",
+        "六、一个可运行的统一后训练最小实现",
+        "验证解耦成不成的硬标准",
+        "七、真机导航后训练的完整流水线",
+        "八、能力自检"
+      ],
+      "summary": "真实世界的机器人策略，现在已经很少是「一个高斯分布」了。你在生产线或实验室里会同时遇到三类策略，它们的参数化方式完全不同："
     }
   ],
-  "readingMinutes": 123,
+  "readingMinutes": 134,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 110159
+  "chars": 118139
 }

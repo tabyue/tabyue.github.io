@@ -252,7 +252,7 @@ async function tests() {
     assert.equal(responses[1].status, 404, '/data 缺失文件必须真正返回 404，不能 fallback HTML');
     assert.match(responses[2].type, /text\/html/);
     assert.match(responses[2].text, /id="pg-learn"/);
-    assert.deepEqual(counts, { stages: 7, modules: 32, chapters: 539 });
+    assert.deepEqual(counts, { stages: 7, modules: 32, chapters: 541 });
     for (const m of modules) {
       const ix = indexes[m.id];
       assert.equal(ix.sectionsMeta.length, m.sectionCount, `${m.id} 声明与真实章节数一致`);
@@ -519,7 +519,7 @@ async function tests() {
     }
     assert.deepEqual(await recordProgress(page), before, '筛选不能改变完成进度');
   });
-  await runCase('outline-all-metadata', '全部32模块与539章阅读分钟、难度顺序、前后模块关系', async (page, evidence) => {
+  await runCase('outline-all-metadata', '全部32模块与541章阅读分钟、难度顺序、前后模块关系', async (page, evidence) => {
     await goto(page, '/learn');
     const apiOrder = await page.evaluate(() => window.learnTest.getAllModuleIds().map(m => m.id));
     assert.deepEqual(apiOrder, modules.map(m => m.id));

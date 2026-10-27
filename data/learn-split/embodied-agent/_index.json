@@ -60,7 +60,7 @@
     }
   ],
   "weeklyPlan": "**第1-2周**：Agent 架构设计 + ReAct 实现\n**第3周**：记忆系统 + 技能库\n**第4周**：多Agent协作",
-  "lastUpdated": "2026-10-20T10:20",
+  "lastUpdated": "2026-10-27T08:50",
   "maturity": "growing",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -393,9 +393,38 @@
         "十四、什么时候不该做 Harness 自改进"
       ],
       "summary": "在数字智能领域，Harness 这个词最近被频繁提起，但很少有人给出可操作的定义。我们先把它钉死。"
+    },
+    {
+      "id": "sec-15",
+      "title": "把推理预算花在预演上：具身 Agent 的测试时扩展",
+      "lastUpdated": "2026-10-27T08:50",
+      "chars": 7870,
+      "shortTitle": "测试时扩展与预演式规划",
+      "difficulty": "高级",
+      "estimatedMinutes": 28,
+      "isFrontier": true,
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "一、先把「测试时扩展」这件事说清楚",
+        "二、为什么「拆解得好」不等于「看得远」",
+        "三、预演的三种实现方式与取舍",
+        "四、算力预算作为一个可调旋钮",
+        "五、只执行第一步：MPC 式的误差重置",
+        "六、与失败恢复的配合：一个互补的轻量机制",
+        "七、落地清单与高频坑",
+        "八、一个可运行的预演—验证最小实现",
+        "参数怎么调",
+        "九、成本账：什么时候不该用测试时扩展",
+        "收益与基线失败率正相关",
+        "三类不适合上预演的场景",
+        "一条实用的成本公式",
+        "十、能力自检"
+      ],
+      "summary": "大语言模型领域已经证明了一件反直觉的事：推理时多花算力，能换来准确率。让模型多想几步、多写几种解法再投票，同一个模型在同一道题上的表现可以显著变好。这就是 test-time scaling。"
     }
   ],
-  "readingMinutes": 140,
+  "readingMinutes": 151,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 118866
+  "chars": 126736
 }

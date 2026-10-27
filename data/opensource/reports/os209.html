@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VLA-Corrector：给 VLA 加一个轻量「检测—纠正」头，让动作视界自适应 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">VLA-Corrector：给 VLA 加一个轻量「检测—纠正」头，让动作视界自适应 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="vla-corrector-vla">VLA-Corrector：给 VLA 加一个轻量「检测—纠正」头，让动作视界自适应</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/ZJU-OmniAI/vla-corrector">https://github.com/ZJU-OmniAI/vla-corrector</a>  </p>
+<p><strong>Stars</strong>: 105 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-27  </p>
+<p><strong>组织</strong>: ZJU-OmniAI（浙江大学）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-27</p>
+</blockquote>
+<hr />
+<h3 id="_2">动作视界的困境</h3>
+<p>VLA 输出动作块 $\mathbf{a}_{t:t+H}$，实际执行时常采用<strong>滚动视界</strong>：每执行 $h$ 步（$h &lt; H$）就重新推理一次。</p>
+<p>$H$ 与 $h$ 的取值是个两难：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>取大</th>
+<th>取小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$H$（预测长度）</td>
+<td>动作连贯、抖动小，但后段预测易过时</td>
+<td>响应快，但动作抖动、缺乏连贯</td>
+</tr>
+<tr>
+<td>$h$（执行步长）</td>
+<td>推理次数少、成本低，但环境变化响应慢</td>
+<td>响应快，但推理频率高、延迟敏感</td>
+</tr>
+</tbody>
+</table>
+<p>真实任务里最优值是<strong>随阶段变化</strong>的：接近物体阶段希望连贯（大 $H$、大 $h$），精细对位阶段希望高频校正（小 $h$）。</p>
+<h3 id="vla-corrector">VLA-Corrector 的做法</h3>
+<p>不改训练，不改主体，加一个轻量头：</p>
+<ol>
+<li><strong>Detect</strong>：对当前动作块 $\mathbf{a}_{t:t+H}$ 的每一段（或每一步）估计一个<strong>可信度</strong>；</li>
+<li><strong>Correct</strong>：对低可信度的部分做局部修正；</li>
+<li><strong>Execute</strong>：按修正后的块执行，有效视界<strong>由数据决定</strong>而不是由超参决定。</li>
+</ol>
+<p>关键收益是把「$h$ 设多少」这个拍脑袋的超参，变成模型自己判断的事。</p>
+<h3 id="_3">适用边界</h3>
+<ul>
+<li><strong>适合</strong>：已经部署了基于动作块的 VLA（$\pi_0$ 系列、SmolVLA、LeRobot 生态），想在推理侧提效果；</li>
+<li><strong>不适合</strong>：不输出动作块的单步策略——这类策略本来就没有视界问题。</li>
+</ul>
+<hr />
+<h3 id="_4">数据流</h3>
+<pre><code class="language-text">观测 o_t
+    ↓
+VLA 主干（冻结或轻量微调）
+    ├──→ 动作块 a_{t:t+H}
+    └──→ 中间表征 h_t
+              ↓
+        Detect Head（轻量）
+              ↓
+        每步可信度 c_{t}, ..., c_{t+H-1}
+              ↓
+        Correct Head（轻量）
+              ↓
+        修正后的动作块 ã_{t:t+H}
+              ↓
+        执行前 k 步（k 由可信度决定），重新推理
+</code></pre>
+<h3 id="_5">两个头为什么可以很轻</h3>
+<p>它们读的是 VLA <strong>已有的中间表征</strong> $h_t$，而不是重新编码观测。因此额外参数量极小，额外计算量也主要是一次小 MLP 的前向。</p>
+<p>这与本站已收录的 <strong>Backtrack</strong>（arXiv 2610.32941）思路同源：VLA 的内部表征里其实已经包含了「这一步靠不靠谱」的信息，只是没有被显式读出来。</p>
+<h3 id="_6">为什么叫「自适应动作视界」</h3>
+<p>传统滚动视界用固定 $h$。VLA-Corrector 让实际执行步数由可信度决定：</p>
+<p>$$
+k = \max { j : c_{t+j} &gt; \tau }
+$$</p>
+<p>可信度高就多执行几步（省推理），可信度掉下来就早点重算（保准确）。</p>
+<hr />
+<ul>
+<li><strong><a href="https://zju-omniai.github.io/vla-corrector/">VLA-Corrector 项目页</a></strong> — NeurIPS 2026 的方法说明与可视化，包括可信度曲线的典型形态</li>
+<li><strong><a href="https://arxiv.org/abs/2610.32941">Backtrack</a></strong> — 同为「读 VLA 内部表征做轻量推理侧增强」，失败检测与回溯，可与本项目对照阅读</li>
+<li><strong><a href="https://github.com/huggingface/lerobot">LeRobot</a></strong> — 动作块策略的主流实现生态，VLA-Corrector 的主要挂载对象</li>
+<li><strong><a href="https://arxiv.org/abs/2610.21306">SmolVLA / VLA-Δ</a></strong> — 流匹配动作专家与状态转移接口，理解动作块生成机制的参考</li>
+</ul>
+<hr />
+<h3 id="_7">安装</h3>
+<pre><code class="language-bash">git clone https://github.com/ZJU-OmniAI/vla-corrector.git
+cd vla-corrector
+pip install -r requirements.txt
+</code></pre>
+<h3 id="vla">挂载到已有 VLA</h3>
+<pre><code class="language-python">from vla_corrector import DetectCorrectHead
+from lerobot import load_policy
+
+policy = load_policy(&quot;smolvla&quot;)            # 你的冻结 VLA
+head = DetectCorrectHead(policy.hidden_size, horizon=policy.action_horizon)
+
+# 推理循环
+obs = env.reset()
+while not done:
+    actions, hidden = policy.forward_with_hidden(obs)   # 拿到中间表征
+    corrected, conf = head(actions, hidden)             # 检测 + 纠正
+    k = int((conf &gt; 0.7).sum())                         # 按可信度决定执行步数
+    for a in corrected[:max(k, 1)]:
+        obs, done = env.step(a)
+</code></pre>
+<h3 id="_8">落地建议</h3>
+<ul>
+<li><strong>先只开 detect，不开 correct</strong>：看可信度曲线的形状是否合理（接近阶段高、接触阶段低），再决定是否启用纠正；</li>
+<li><strong>阈值 tau 要在真机上调</strong>：仿真里的可信度分布通常比真机更集中，直接搬阈值会误判；</li>
+<li><strong>与 chuncked 推理基础设施配合</strong>：本站 ai-infra 模块的「Chunked VLA 推理基础设施」一节讲的是同一问题的系统侧视角，可以对照阅读。</li>
+</ul>
+<hr />
+<h3 id="_9">规模与活跃度</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>105</td>
+</tr>
+<tr>
+<td>主要语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>最近推送</td>
+<td>2026-10-26（活跃）</td>
+</tr>
+<tr>
+<td>创建时间</td>
+<td>2026-07-02</td>
+</tr>
+<tr>
+<td>License</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>收录</td>
+<td>NeurIPS 2026</td>
+</tr>
+</tbody>
+</table>
+<p>Apache-2.0 许可，有正式会议收录与项目页，可信度高于纯 README 型开源。</p>
+<h3 id="_10">收益来源</h3>
+<p>这个方法的收益有两部分，部署时应分别衡量：</p>
+<ol>
+<li><strong>准确率收益</strong>：低可信段被纠正，减少「拿着过时预测硬执行」导致的失败；</li>
+<li><strong>效率收益</strong>：高可信段可以多执行几步，降低推理频率——在端侧部署时这部分往往比准确率更值钱。</li>
+</ol>
+<h3 id="_11">需要注意</h3>
+<ul>
+<li>可信度是<strong>模型自己估的</strong>，需要验证它是否与真实执行成败相关（画校准曲线）。若两者无关，自适应视界就失去了依据；</li>
+<li>纠正头如果训练不当，可能引入新的抖动——应对比「纠正后 vs 不纠正」的 jerk 指标。</li>
+</ul>
+<hr />
+<h3 id="_12">与相邻方案对照</h3>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>层次</th>
+<th>是否需重训</th>
+<th>解决什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>固定滚动视界</td>
+<td>推理策略</td>
+<td>否</td>
+<td>基线</td>
+</tr>
+<tr>
+<td><strong>VLA-Corrector</strong></td>
+<td><strong>推理侧轻量头</strong></td>
+<td><strong>否</strong></td>
+<td><strong>视界自适应 + 局部纠正</strong></td>
+</tr>
+<tr>
+<td>Backtrack</td>
+<td>推理侧轻量头</td>
+<td>否（只用 outcome label 训小头）</td>
+<td>失败检测 + 回溯重试</td>
+</tr>
+<tr>
+<td>一步生成策略（一致性蒸馏）</td>
+<td>训练侧</td>
+<td>是</td>
+<td>消除动作块</td>
+</tr>
+<tr>
+<td>Chunked 推理基础设施</td>
+<td>系统侧</td>
+<td>否</td>
+<td>降低块间停顿</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_13">选型建议</h3>
+<ul>
+<li><strong>已部署动作块 VLA、想低成本提效</strong>：VLA-Corrector 是最轻的切入点；</li>
+<li><strong>长程失败多、需要恢复</strong>：看 Backtrack；</li>
+<li><strong>端侧延迟是硬约束</strong>：考虑一步生成策略（但要承担重训成本）；</li>
+<li><strong>系统层面块间停顿明显</strong>：看 Chunked 推理基础设施的方案。</li>
+</ul>
+<p>这几条路线并不互斥，实际部署常组合使用。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

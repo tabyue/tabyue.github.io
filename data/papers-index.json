@@ -1,6 +1,156 @@
 {
- "lastUpdated": "2026-10-26T08:40",
+ "lastUpdated": "2026-10-27T08:40",
  "papers": [
+  {
+   "id": "p276",
+   "title": "If at First You Don't Succeed, Backtrack: Lightweight Recovery for Frozen VLAs",
+   "authors": "Thomas Landeg, Thierry Tambe",
+   "venue": "arXiv 2610.32941（cs.RO / cs.LG）",
+   "date": "2026-10-23",
+   "arxiv": "https://arxiv.org/abs/2610.32941",
+   "github": "",
+   "tags": [
+    "Backtrack",
+    "冻结VLA",
+    "失败检测",
+    "失败恢复",
+    "参数高效",
+    "LIBERO-Long",
+    "MetaWorld",
+    "回溯重试"
+   ],
+   "tldr": "**问题**：VLA 模型在操作任务上表现不错，但一旦自己的动作把它带进**训练数据几乎没覆盖的状态**，就会变得脆弱。从这类失败中恢复通常需要三条路之一：**恢复示教**、**策略重训**，或**推理时再挂一个额外模型**。三者都贵。\n\n**方法 Backtrack**：一个面向**冻结 VLA** 的轻量失败检测与恢复机制，三者都不需要。\n\n1. 一个**小的失败预测头**，只用冻结策略的**结果标注 rollout**训练，读取 VLA **已有的内部表征**，估计当前 episode 会不会失败；\n2. 当预测失败概率超过阈值时，控制器**暂停策略**、**回溯手臂刚做过的运动**，把控制权交还给**未改动的策略**，让它从一个更早的构型重试；\n3. 该预测头只给策略增加 **0.48%—0.88%** 的参数量。\n\n**结果**：在 LIBERO 上覆盖三个 VLA、两种动作生成族（流匹配动作专家 SmolVLA 与 $\\pi_{0.5}$，自回归 $\\pi_0$-FAST）。在三者都最容易失败的 **LIBERO-Long** 上，各策略失败率降低 **19%—48%**，成功率最高提升 **7.4 个百分点**；在三个较短套件上（控制成功率已 85%—99%）效果较小。MetaWorld 上用 SmolVLA 测试的 12 组控制器配置全部优于无辅助策略。",
+   "category": "具身智能",
+   "difficulty": "中级",
+   "keyInsights": [
+    "「冻结 VLA + 0.5% 参数的小头」这个组合的工程价值极高：不需要重训、不需要额外推理模型，意味着可以**当天就部署到已有系统上**。",
+    "失败预测头读的是 VLA **已有的内部表征**——这说明 VLA 其实「知道」自己要失败了，只是没有把这个信息用起来。这是一个很值得深挖的发现。",
+    "「回溯手臂刚做过的运动」是一个极其朴素的恢复动作，却能把失败率降 19%—48%。说明长程失败里很大一部分是**进入死状态**而不是能力不足。",
+    "在 MetaWorld 上 12 组控制器配置全部优于基线，说明这个机制对阈值/回溯长度等超参不敏感——工程上很友好。"
+   ],
+   "impact": "最实用的失败恢复往往最朴素：先判断要失败，再把动作倒回去重来。0.5% 的参数量换 19%—48% 的失败率下降。",
+   "addedDate": "2026-10-27"
+  },
+  {
+   "id": "p275",
+   "title": "ViT-H: Generative Video-To-Humanoid Control with Motion Tracking Feedback",
+   "authors": "Zimo He, Tianyi Bian, Zizhong Yang, Hongjie Li, Nan Jiang, Jieming Cui, Baoxiong Jia, Yizhou Wang, Siyuan Huang, Yixin Zhu",
+   "venue": "arXiv 2610.32966（cs.RO / cs.CV）",
+   "date": "2026-10-23",
+   "arxiv": "https://arxiv.org/abs/2610.32966",
+   "github": "https://awfuact.github.io/vit-h/",
+   "tags": [
+    "ViT-H",
+    "视频到人形控制",
+    "扩散生成",
+    "运动跟踪反馈",
+    "DPO 后训练",
+    "Unitree G1",
+    "实时遥操作",
+    "重定向"
+   ],
+   "tldr": "**问题**：从单目人类视频学习人形控制，是获取多样全身行为的可扩展路径。但现有的 **reconstruction—retargeting—tracking** 流水线有个系统级瓶颈：三个阶段**分别优化**，谁也不知道下游能不能执行；而且无法用下游跟踪反馈**直接优化参考运动的可执行性**。\n\n**方法 ViT-H**：一个 **generation-and-tracking** 范式。\n\n1. 用扩散模型**直接从视频生成人形参考运动**，绕过人类运动重建与重定向两个中间阶段；\n2. 用**运动跟踪的结果**对生成器做 **DPO（直接偏好优化）后训练**——哪个参考运动跟踪得好，就偏好哪个；\n3. 提出**自回归变体**，实现延迟低于 400 ms 的实时人形视频遥操作。\n\n**结果**：在 Unitree G1 上，运动质量与可执行性两方面均超越现有最优的重建—重定向—跟踪流水线；模型规模、预训练与后训练数据规模上均呈现良好扩展性；运动跟踪反馈在不同跟踪器上一致提升可执行性。",
+   "category": "具身智能",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把「重建 + 重定向」这两个中间阶段整个删掉，是这条流水线最有价值的简化——中间阶段各自的误差会累积，删掉它们等于同时删掉了误差来源。",
+    "用**跟踪结果**做 DPO 后训练是核心巧思：跟踪成功率本身就是一个天然的偏好标签，不需要人工标注偏好数据。",
+    "自回归变体做到 400 ms 以内延迟，把视频遥操作从「离线生成」推进到「可实时操作」，这是产品形态上的跨越。",
+    "可执行性（executability）被单列为一个优化目标，而不是隐含在运动质量里——这是从「看起来对」转向「真的能做」的关键。"
+   ],
+   "impact": "运动跟踪反馈第一次成为生成器的训练信号：「能不能跟踪上」直接反过来教「该怎么生成」，比堆重建精度有效得多。",
+   "addedDate": "2026-10-27"
+  },
+  {
+   "id": "p274",
+   "title": "RynnUnify: Towards Unified Embodied Brain",
+   "authors": "Minghao Zhu, Bohan Hou, Kun Xiang, Zixuan Wang, Yinzhou Tang, Yifei Yang, Zhikai Wang, Tianyi Zhang, Kehan Li, Haoyu Zhao, Siteng Huang, Leigang Qu, Sicong Leng, Dongchi Huang, Mingxiu Chen, Shijian Lu, Yue Wang, Xiaodan Liang, Zhenyu Zeng, Deli Zhao, Chengju Liu, Jianfei Yang, Xin Li",
+   "venue": "arXiv 2610.32965（cs.RO）",
+   "date": "2026-10-23",
+   "arxiv": "https://arxiv.org/abs/2610.32965",
+   "github": "",
+   "tags": [
+    "RynnUnify",
+    "统一具身大脑",
+    "视频语言交错推理",
+    "视觉规划",
+    "世界动作扩展",
+    "Rynn-VP",
+    "Rynn-GEU",
+    "RoboCasa365"
+   ],
+   "tldr": "**问题**：具身理解（空间推理、物理预测、grounding）与**长程视觉规划**通常被当作两件事分别建模。但真实任务里它们是一体的：要规划「接下来会发生什么」，必须先理解「现在是什么」。\n\n**方法 RynnUnify**：一个 **16B 统一具身模型**，通过**交错的视频—语言推理**把强具身理解与长程视觉规划结合起来。在此之上做了两个扩展：\n\n1. **agentic extension**：用强化学习训练模型**选择性地**使用视频预测来推理未观测状态与交互结果，而不是每次都生成视频；\n2. **world-action extension**：把理解与预测能力**翻译成机器人控制**。\n\n同时提出两个评测：**Rynn-VP**（长程视觉规划）与 **Rynn-GEU**（预期推理）。\n\n**结果**：在参评的统一多模态模型中取得最高平均具身理解分数；Rynn-VP 总分相比 Cosmos 3 Nano 提升 **9.75 分**；agentic extension 在 Rynn-GEU 上相比直接推理平均提升 **6.0 分**；world-action extension 在 20 个 RoboCasa365 复合任务上达到 **51.5%** 成功率，三个真机任务平均 **46.7%**。",
+   "category": "具身智能",
+   "difficulty": "中级",
+   "keyInsights": [
+    "「统一」不是把三个头堆在一起，而是让理解与预测共享同一套交错推理——这篇的关键设计是**视频—语言交错**，而不是多任务微调。",
+    "agentic extension 用 RL 学「什么时候该生成视频」非常关键：视频生成很贵，无脑全生成会让推理成本失控，学会选择性使用才是工程上可用的形态。",
+    "同时给出两个新基准（Rynn-VP / Rynn-GEU）比只刷旧榜更有价值——长程视觉规划此前缺少合适的量化口径。",
+    "16B 规模 + 真机 46.7% 的组合说明「统一大脑」路线已经从概念演示走到可部署区间。"
+   ],
+   "impact": "把理解、预测与控制放进同一个 16B 模型，并用 RL 学会「何时该想象」——统一具身大脑第一次有了可验证的工程形态。",
+   "addedDate": "2026-10-27"
+  },
+  {
+   "id": "p273",
+   "title": "RoboCoach: World Models as Active Coaches for Compositional Robot Skills",
+   "authors": "Jiajun Liu, Yifan Chen, Yichao Liu, Jiayi Zhang, Ruoqu Chen, Shaoxuan Xie, Guocai Yao, Mengdi Xu, Sen Cui, Changshui Zhang",
+   "venue": "arXiv 2609.39685（cs.RO / cs.AI）",
+   "date": "2026-09-30",
+   "arxiv": "https://arxiv.org/abs/2609.39685",
+   "github": "https://github.com/RoboCoach-AI/CoachWorld",
+   "tags": [
+    "RoboCoach",
+    "世界模型",
+    "主动教练",
+    "子技能定位",
+    "示教采集",
+    "数据闭环",
+    "自改进",
+    "组合泛化"
+   ],
+   "tldr": "**问题**：长程操作会在大量任务组合中复用同一批子技能。想靠追加**端到端示教**来提升这些组合，代价极高。一个实用的自改进系统必须同时回答两件事：**下一步该教什么**，以及**这份监督该施加到哪里**。\n\n**方法 ROBOCOACH**：一个世界模型引导的 coaching 框架，用**想象出的失败**来指导示教请求与专家更新。其 **RIDI 循环（Route—Imagine—Diagnose—Improve）**：\n\n1. **Route**：在共享的动作条件世界模型 **COACHWORLD** 中，把任务路由给一组可复用的技能专家依次执行；\n2. **Imagine**：让这套组合在世界模型里跑一遍，而不是上真机；\n3. **Diagnose**：一个进度判据（progress judge）记录**第一个没能完成的任务子步骤**；\n4. **Improve**：汇总记录，据此决定采集哪种子技能示教、更新哪些专家适配器。\n\n**结果**：想象成功率与真机部署成功率在 22 组「任务—策略」对上相关性 **rho = 0.840**；只追加 **150 条子任务示教**，Franka 成功率 13.3% → **75.0%**，AgileX 40.0% → **83.8%**；教练过的专家迁移到 4 个留出组合平均 **35.0%**，而用均匀采集示教更新的共享策略为 **0%**。",
+   "category": "具身智能",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把「失败属于哪个子技能」变成**可查询对象**——这是长程任务数据闭环里最实用的一步，比笼统重训整条路线省得多。",
+    "rho = 0.840 的相关性是这篇论文最硬的证据：它意味着世界模型的想象结果可以**替代真机做诊断**，从而把采集决策的成本降到几乎为零。",
+    "150 条定向示教换来 60 个百分点的提升，而均匀采集同样预算下迁移组合为 0%——定向 vs 均匀的差距是数量级的。",
+    "模块化专家 + 适配器更新的组合，让「更新谁」成为一个离散决策，从而可以被世界模型的诊断直接驱动。"
+   ],
+   "impact": "自改进系统的瓶颈从来不是「能不能学」，而是「该学什么」。RoboCoach 把这个问题交给了世界模型，并给出了可量化的答案。",
+   "addedDate": "2026-10-27"
+  },
+  {
+   "id": "p272",
+   "title": "ParallelWorld: Test-Time Scaling for Agentic Embodied Reasoning",
+   "authors": "Min Chen, Shengjun Zhang, Yuxin Li, Zhang Zhang, Xin Fei, Chong Xia, Yueqi Duan",
+   "venue": "arXiv 2608.22971（cs.AI / cs.CV）",
+   "date": "2026-10-13",
+   "arxiv": "https://arxiv.org/abs/2608.22971",
+   "github": "https://github.com/AgenticEI/ParallelWorld",
+   "tags": [
+    "ParallelWorld",
+    "测试时扩展",
+    "具身推理",
+    "分支剪枝",
+    "verifier",
+    "ESI-Bench",
+    "LIBERO-Pro",
+    "自适应视界"
+   ],
+   "tldr": "**问题**：端到端模型在感知与局部控制上已经很强，但扩展到**多阶段长程任务**仍然困难。Agentic 具身系统用高层规划器组织感知、推理与可执行技能，但现有框架通常是「生成动作就直接执行」——**没有显式模拟不同动作序列会如何塑造未来的观察与任务进展**，于是 agent 在考虑长期后果之前就已经对次优交互做出了承诺。\n\n**方法 ParallelWorld**：一个**自适应视界**的测试时扩展框架，把 agentic 具身推理建立在「动作后果的前瞻模拟」上。\n\n1. **并行预演**：设计 agent 系统在承诺动作之前，并行模拟并评估多条候选轨迹；\n2. **verifier 剪枝**：验证器按任务目标评估中间状态转移，动态剪掉没有希望的分支并引导后续扩展；\n3. **执行—重规划**：基于评估出的长程结果选择一条轨迹，**只执行其中第一个动作**，再依据新观察重新规划。\n\n**结果**：在 ESI-Bench 与 LIBERO-Pro 上，主动空间推理与语言条件操作任务成功率从 **56% 提升到 83%**。",
+   "category": "具身智能",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把 test-time scaling 从「多想几遍」升级为「多预演几种未来」，是这条思路在具身场景中最干净的落地方式。",
+    "verifier 做的是**相对比较**而非绝对打分——不要求世界模型预演得多准，只要求它能分出好坏，这大幅降低了对生成质量的依赖。",
+    "「只执行第一个动作就重新规划」是 MPC 式的重规划闭环，把预演误差限制在单步内，避免长程累积漂移。",
+    "自适应视界意味着算力可以按任务难度分配，而不是固定搜索深度——这是把推理预算真正变成可调旋钮的关键。"
+   ],
+   "impact": "具身 Agent 终于有了属于自己的「推理期算力换准确率」范式。它的价值不在预演精度，而在把分支筛选变成一个可工程化的模块。",
+   "addedDate": "2026-10-27"
+  },
   {
    "id": "p271",
    "title": "Skeleton-Grounded Latent Action Model for Robot World Models (SkeLAM)",
@@ -7073,5 +7223,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 245
+ "totalItems": 250
 }
