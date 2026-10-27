@@ -114,6 +114,13 @@
 - 校验：sync + sitemap（539 章节）+ health_check + verify_learn_structure **首轮即 ALL OK**；已 push（e02d86c..f6d4837），远程 HEAD 已核对一致。
 - 新坑：① `huggingface.co/papers/date/<date>` 返回的可能是邻近几天的列表（本轮要 10-25 拿到 10-23），按 upvote 挑完仍要逐个 WebFetch arXiv 核对；② **`gh api repos/<x> --jq "多字段"` 在 PowerShell 内联报 `accepts 1 arg(s), received 2`**（jq 表达式含空格/引号被参数拆分），批量核验 repo 一律写 .py 用 subprocess；③ **resources 有独立 category 体系且 health_check 不校验**，新增资源用 `Counter(...).most_common(1)` 取现存众数最稳（本轮=学术资源）；④ 同日 6 条新闻要刻意错开主题才不撞 3-gram 查重。
 
+### 2026-10-27 08:18—09:15
+- 投稿箱：无新投稿。开工时工作树干净、HEAD==origin/main（b2c3bc6）。
+- 数据：新闻 +10（n529—n538）、论文 +5（p272—p276，含 detail）、开源 +4（os206—os209，含 detail + 报告页）、招聘 +6（j267—j272）、资源新增 r021（四足与轮足机器人技术资源）。
+- 学习：reinforcement-learning「策略表征解耦的通用 RL 后训练」（8.0K，tier3，联动云深处 DR-APO）；embodied-agent「把推理预算花在预演上：具身 Agent 的测试时扩展」（7.9K，tier3，联动 ParallelWorld / Backtrack / VLA-Corrector）。
+- 校验：sync + sitemap（541 章节）+ health_check + verify_learn_structure **首轮即 ALL OK**；unittest 34/34、node UI 32/32（修 fix 后）。已 push（b2c3bc6..74c5bf3），远程 HEAD 已核对一致。
+- 新坑：① **`tools/test_learn_ui.cjs` 硬编码章节总数**（`chapters: 539` + 用例名「539章」）——新增学习章节后必 FAIL，需同步改数字（539→541），这不是真 bug；② 二次深化脚本末尾写报告文件时若 shell 同时 `Out-File` 同名文件会 PermissionError（JSON 已写盘，只是报告没落），换文件名即可；③ PowerShell `>` 输出是 UTF-16，解析 node JSON 要 utf-16 解码 + `s[s.find('{'):]`；④ 单次写入正文只有 4.2K 偏薄，用「在『能力自检』小节前插入新小节 + 序号顺延」二次追加到 ~8K。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
