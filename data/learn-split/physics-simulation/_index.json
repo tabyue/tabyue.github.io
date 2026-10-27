@@ -1,7 +1,7 @@
 {
   "id": "physics-simulation",
   "name": "物理仿真引擎",
-  "lastUpdated": "2026-10-26",
+  "lastUpdated": "2026-10-27",
   "stage": "阶段五：仿真与 Sim-to-Real",
   "importance": "核心",
   "estimatedHours": 40,
@@ -67,8 +67,8 @@
     {
       "id": "sec-01",
       "title": "MuJoCo",
-      "lastUpdated": "2026-10-26",
-      "chars": 12983,
+      "lastUpdated": "2026-10-27",
+      "chars": 12987,
       "shortTitle": "MuJoCo",
       "difficulty": "入门",
       "estimatedMinutes": 13,
@@ -93,13 +93,13 @@
     {
       "id": "sec-02",
       "title": "物理仿真基础：刚体动力学、碰撞检测与数值积分",
-      "lastUpdated": "2026-04-28T19:38",
-      "chars": 3204,
+      "lastUpdated": "2026-10-27",
+      "chars": 5900,
       "shortTitle": "物理仿真基础",
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 7,
       "headings": [
         "1. 牛顿-欧拉方程",
         "2. 碰撞检测",
@@ -107,20 +107,21 @@
         "4. 数值积分方法",
         "5. 仿真步长的选择",
         "6. 物理引擎内部循环",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "在使用 MuJoCo、Isaac Sim 之前，必须理解物理引擎内部的基本原理——刚体动力学方程如何求解、碰撞如何检测和处理、数值积分方法如何影响仿真精度。"
     },
     {
       "id": "sec-03",
       "title": "MuJoCo 深入：从建模到高效仿真",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 4382,
+      "lastUpdated": "2026-10-27",
+      "chars": 7317,
       "shortTitle": "MuJoCo 深入",
       "difficulty": "中级",
       "estimatedMinutes": 5,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 8,
       "headings": [
         "1. MJCF 建模完整指南",
         "2. 几何体类型与碰撞",
@@ -131,15 +132,16 @@
         "接触模型调参",
         "6. 可视化与录屏",
         "7. 性能优化",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "MuJoCo 是当前机器人仿真的事实标准——Google DeepMind 收购后完全开源。本节深入讲解 MJCF 建模和 MuJoCo 的高级特性。"
     },
     {
       "id": "sec-04",
       "title": "NVIDIA Isaac Lab",
-      "lastUpdated": "",
-      "chars": 4647,
+      "lastUpdated": "2026-10-27",
+      "chars": 4651,
       "shortTitle": "NVIDIA Isaac Lab",
       "difficulty": "中级",
       "estimatedMinutes": 5,
@@ -176,14 +178,14 @@
     {
       "id": "sec-06",
       "title": "仿真基准与性能对比：MuJoCo vs Isaac vs Genesis",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 2848,
+      "lastUpdated": "2026-10-27",
+      "chars": 4087,
       "shortTitle": "仿真基准与性能对比",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 1,
-      "readingMinutes": 3,
+      "readingMinutes": 4,
       "headings": [
         "仿真器选型与性能对比",
         "1. 主流仿真器全景",
@@ -193,15 +195,16 @@
         "5. Genesis 的优势（2025 新秀）",
         "6. 选型决策树",
         "7. 迁移常见痛点",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "机器人仿真器选择直接决定了项目效率——选错会导致数月延误。本节系统对比主流仿真器。"
     },
     {
       "id": "sec-07",
       "title": "场景构建与资产管理",
-      "lastUpdated": "",
-      "chars": 5784,
+      "lastUpdated": "2026-10-27",
+      "chars": 5792,
       "shortTitle": "场景构建与资产管理",
       "difficulty": "中级",
       "estimatedMinutes": 7,
@@ -221,20 +224,21 @@
     {
       "id": "sec-08",
       "title": "仿真环境设计：任务构建与域随机化",
-      "lastUpdated": "2026-04-30T10:22",
-      "chars": 3196,
+      "lastUpdated": "2026-10-27",
+      "chars": 4606,
       "shortTitle": "仿真环境设计",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "tier": 1,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "1. 仿真环境的核心要素",
         "2. 域随机化（Domain Randomization）",
         "3. 奖励函数设计",
         "4. 并行仿真",
         "5. 场景资产管理",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "物理引擎是工具，如何设计好的仿真环境才是核心能力。本节讲解任务环境构建的方法论和域随机化技术。"
     },
@@ -263,34 +267,35 @@
     {
       "id": "sec-10",
       "title": "可微分仿真与基于梯度的轨迹优化",
-      "lastUpdated": "2026-04-26T22:21",
-      "chars": 2069,
+      "lastUpdated": "2026-10-27",
+      "chars": 3410,
       "shortTitle": "可微分仿真与基于梯度的轨迹优化",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 4,
       "headings": [
         "可微分物理仿真：用梯度优化一切",
         "为什么可微分仿真很重要？",
         "Genesis引擎：可微分仿真实战",
         "可微分仿真的关键挑战",
         "仿真器可微分性对比",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "传统仿真器（MuJoCo、Isaac Sim）是“黑盒”——给输入得输出，但无法计算“如果改变参数X，输出会怎么变”。可微分仿真打破了这个限制：整个物理仿真过程对所有参数可微，可以直接用梯度下降优化。"
     },
     {
       "id": "sec-11",
       "title": "可微分仿真：基于梯度的轨迹优化新范式",
-      "lastUpdated": "2026-05-06T20:14",
-      "chars": 3703,
+      "lastUpdated": "2026-10-27",
+      "chars": 5688,
       "shortTitle": "可微分仿真",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 7,
       "headings": [
         "可微分仿真：从梯度到优化",
         "1. 什么是可微分仿真？",
@@ -304,15 +309,16 @@
         "6. 可微仿真 + RL 混合",
         "7. 局限性",
         "8. 工程建议",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "传统物理仿真器是\"黑盒\"——你输入控制，它输出轨迹。可微分仿真让仿真器变成\"白盒\"——可以反向传播梯度，直接对参数/轨迹做基于梯度的优化。"
     },
     {
       "id": "sec-12",
       "title": "接触动力学与约束求解器：仿真里「东西为什么不会穿过去」",
-      "lastUpdated": "2026-10-12T08:30",
-      "chars": 8675,
+      "lastUpdated": "2026-10-27",
+      "chars": 8663,
       "shortTitle": "接触动力学与约束求解器",
       "difficulty": "高级",
       "estimatedMinutes": 11,
@@ -519,7 +525,7 @@
       "summary": "前面讨论接触动力学时，默认的场景是机械臂抓一个方块：接触点个位数，求解器跑得很稳。这个默认设定在灵巧操作里不成立。"
     }
   ],
-  "readingMinutes": 140,
+  "readingMinutes": 154,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 120045
+  "chars": 131655
 }

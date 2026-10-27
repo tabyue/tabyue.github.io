@@ -47,7 +47,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：遥操作系统搭建 + 相机选型\n**第2周**：相机标定 + 手眼标定实战\n**第3周**：数据格式与标准 (RLDS/LeRobot)\n**第4周**：数据增强 + 自动化采集管线\n**第5周**：数据质量筛选 + DAgger 迭代采集",
-  "lastUpdated": "2026-10-26",
+  "lastUpdated": "2026-10-27",
   "maturity": "comprehensive",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -119,8 +119,8 @@
     {
       "id": "sec-04",
       "title": "数据增强",
-      "lastUpdated": "",
-      "chars": 10834,
+      "lastUpdated": "2026-10-27",
+      "chars": 10837,
       "shortTitle": "数据增强",
       "difficulty": "中级",
       "estimatedMinutes": 12,
@@ -160,13 +160,13 @@
     {
       "id": "sec-06",
       "title": "大规模数据工程与自动标注",
-      "lastUpdated": "2026-10-20T10:20",
-      "chars": 21419,
+      "lastUpdated": "2026-10-27",
+      "chars": 22096,
       "shortTitle": "大规模数据工程与自动标注",
       "difficulty": "高级",
       "estimatedMinutes": 24,
       "tier": 2,
-      "readingMinutes": 24,
+      "readingMinutes": 25,
       "headings": [
         "从百条到百万条：构建生产级机器人数据管道",
         "为什么数据规模如此关键？",
@@ -175,7 +175,8 @@
         "自动语言标注：让LLM为机器人数据写指令",
         "仿真数据生成：用数字孪生扩展数据规模",
         "数据版本管理与血缘追踪",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "2025-2026年具身智能领域最重要的趋势之一是数据工程从研究附属品升级为独立核心能力。Open X-Embodiment（100万+轨迹）、AGIBOT WORLD 2026（600万+轨迹）等大规模数据集的发布，证明了“数据即护城河”。"
     },
@@ -206,34 +207,35 @@
     {
       "id": "sec-08",
       "title": "众包数据采集与质量控制平台设计",
-      "lastUpdated": "2026-04-27T11:30",
-      "chars": 3682,
+      "lastUpdated": "2026-10-27",
+      "chars": 5207,
       "shortTitle": "众包数据采集与质量控制平台设计",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "为什么需要众包数据采集？",
         "Open X-Embodiment 的启示",
         "众包采集平台架构",
         "数据质量自动检查",
         "众包采集的激励与质量控制",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "单个实验室的数据采集能力有限（1台机器人、1个场景）。要训练泛化能力强的 VLA 模型，需要多场景、多机器人、多操作员的大规模数据。"
     },
     {
       "id": "sec-09",
       "title": "光学动捕第三源：HiPHI 如何把人体状态变成可学原语",
-      "lastUpdated": "2026-10-26",
-      "chars": 6364,
+      "lastUpdated": "2026-10-27",
+      "chars": 7805,
       "shortTitle": "光学动捕第三源",
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 8,
+      "readingMinutes": 10,
       "headings": [
         "0. 这一节补哪块缺口",
         "1. 三种数据源分别缺什么",
@@ -243,7 +245,8 @@
         "5. 数据卡最小字段（写进仓库，不要写在 Slack）",
         "6. 最小可用流水线（科研）",
         "7. 和本模块其他数据源怎么拼",
-        "8. 练习"
+        "8. 练习",
+        "参考答案"
       ],
       "summary": "本模块已经覆盖遥操作、LeRobot / RLDS、增强、自动标注、相机标定、质量筛选、人体到机器人的 Retargeting 和众包。缺的是 2026-08 才公开、但很快会变成默认引用的第三种数据源：高精度光学动捕。"
     },
@@ -273,7 +276,7 @@
       "summary": "本节讲具身数据采集中最容易被低估、也最容易返工的一块：手部姿态。相机能买到标定好的，动捕能租到，但手——尤其是带接触的手——至今没有便宜又准的通用方案。本节从「第一人称 vs 多视角」两种采集哲学讲起，拆解手部姿态为什么难，给出传感器选型对照、时间同步的工程做法、以及一套可运行的质量打分代码。"
     }
   ],
-  "readingMinutes": 145,
+  "readingMinutes": 150,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 128020
+  "chars": 131666
 }

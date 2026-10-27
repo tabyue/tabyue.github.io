@@ -60,15 +60,15 @@
     }
   ],
   "weeklyPlan": "**第1-2周**：Agent 架构设计 + ReAct 实现\n**第3周**：记忆系统 + 技能库\n**第4周**：多Agent协作",
-  "lastUpdated": "2026-10-27T08:50",
+  "lastUpdated": "2026-10-27",
   "maturity": "growing",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
       "title": "Agent架构设计",
-      "lastUpdated": "2026-10-20T10:20",
-      "chars": 16037,
+      "lastUpdated": "2026-10-27",
+      "chars": 16053,
       "shortTitle": "Agent架构设计",
       "difficulty": "入门",
       "estimatedMinutes": 18,
@@ -152,50 +152,52 @@
     {
       "id": "sec-05",
       "title": "MCP协议与LLM工具调用：构建机器人能力接口",
-      "lastUpdated": "2026-04-26T22:21",
-      "chars": 3149,
+      "lastUpdated": "2026-10-27",
+      "chars": 4652,
       "shortTitle": "MCP协议与LLM工具调用",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "MCP：让LLM发现和调用机器人能力的标准协议",
         "为什么需要MCP？",
         "MCP Server 实现",
         "LLM + MCP 的 ReAct 循环",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "Model Context Protocol (MCP) 是2024-2025年兴起的标准化协议，让LLM通过统一接口发现和调用外部工具。在具身智能中，MCP让LLM可以像调用API一样控制机器人。"
     },
     {
       "id": "sec-06",
       "title": "长期记忆与经验回放：让Agent积累知识",
-      "lastUpdated": "2026-04-27T12:01",
-      "chars": 4457,
+      "lastUpdated": "2026-10-27",
+      "chars": 5708,
       "shortTitle": "长期记忆与经验回放",
       "difficulty": "高级",
       "estimatedMinutes": 5,
       "tier": 2,
-      "readingMinutes": 5,
+      "readingMinutes": 7,
       "headings": [
         "为什么具身Agent需要长期记忆？",
         "记忆系统架构",
         "实现：向量数据库记忆系统",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "当前VLA/Agent系统是无状态的——每次任务从零开始，不记住之前的经验。但真实世界中的机器人需要："
     },
     {
       "id": "sec-07",
       "title": "LLM驱动的自进化操作Agent：从Code-as-Policy到长短期反思",
-      "lastUpdated": "2026-04-27T23:30",
-      "chars": 8117,
+      "lastUpdated": "2026-10-27",
+      "chars": 9995,
       "shortTitle": "LLM驱动的自进化操作Agent",
       "difficulty": "高级",
       "estimatedMinutes": 9,
       "tier": 2,
-      "readingMinutes": 9,
+      "readingMinutes": 11,
       "headings": [
         "从静态代码生成到动态自进化",
         "长短期反思架构",
@@ -203,24 +205,26 @@
         "短期反思 vs 长期反思对比",
         "与其他LLM操作方法对比",
         "前沿方向",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "传统的LLM驱动操作（如Code as Policies、VoxPoser）是一次性的——LLM根据任务描述生成代码，执行一次，成功或失败就结束了。这种模式有两个根本缺陷："
     },
     {
       "id": "sec-08",
       "title": "具身安全约束与人机安全交互协议",
-      "lastUpdated": "2026-04-28T12:03",
-      "chars": 3088,
+      "lastUpdated": "2026-10-27",
+      "chars": 3815,
       "shortTitle": "具身安全约束与人机安全交互协议",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "为什么安全是最高优先级？",
         "三层安全架构",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "与人共处的机器人必须保证人身安全。ISO 15066定义了协作机器人的安全标准："
     },
@@ -247,14 +251,14 @@
     {
       "id": "sec-10",
       "title": "整体式 VLA vs 分层 LLM+Skill：具身智能体架构选型与统一隐空间融合",
-      "lastUpdated": "2026-04-30T01:12",
-      "chars": 11508,
+      "lastUpdated": "2026-10-27",
+      "chars": 12986,
       "shortTitle": "整体式 VLA vs 分层…",
       "difficulty": "高级",
       "estimatedMinutes": 14,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 14,
+      "readingMinutes": 16,
       "headings": [
         "为什么这一章重要",
         "1. 三条技术路线的精确定义",
@@ -266,6 +270,7 @@
         "7. 架构选型决策树",
         "8. 常见工程陷阱与破解",
         "9. 练习题",
+        "参考答案",
         "10. 延伸阅读"
       ],
       "summary": "2026 年 4 月，ICLR 收录的 WholeBodyVLA 在智元 Agibot X2 上首次让一个人形机器人端到端走完 100+ 米、跨房间完成拾取放置；同一周，教育部把「具身智能」列为 38 个新增本科专业之一，放到 9 所高校首批招生。这两条新闻放在一起，本质上是在说同一件事：具身智能体的系统架构正在经历从「手工分层」到「端到端统一」，再到「分层"
@@ -424,7 +429,7 @@
       "summary": "大语言模型领域已经证明了一件反直觉的事：推理时多花算力，能换来准确率。让模型多想几步、多写几种解法再投票，同一个模型在同一道题上的表现可以显著变好。这就是 test-time scaling。"
     }
   ],
-  "readingMinutes": 151,
+  "readingMinutes": 161,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 126736
+  "chars": 133589
 }

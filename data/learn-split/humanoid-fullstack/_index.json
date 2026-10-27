@@ -1,7 +1,7 @@
 {
   "id": "humanoid-fullstack",
   "name": "人形机器人全栈项目",
-  "lastUpdated": "2026-10-26",
+  "lastUpdated": "2026-10-27",
   "stage": "阶段六：项目实战",
   "importance": "高级实战",
   "estimatedHours": 100,
@@ -56,14 +56,14 @@
     {
       "id": "sec-01",
       "title": "人形机器人系统架构：从设计到全栈集成",
-      "lastUpdated": "2026-10-20T15:40",
-      "chars": 5388,
+      "lastUpdated": "2026-10-27",
+      "chars": 9633,
       "shortTitle": "人形机器人系统架构",
       "difficulty": "入门",
       "estimatedMinutes": 22,
       "isBrief": true,
       "tier": 0,
-      "readingMinutes": 7,
+      "readingMinutes": 12,
       "headings": [
         "1. 人形机器人的技术栈",
         "2. 主要人形机器人平台",
@@ -76,21 +76,22 @@
         "全身控制的求解：从优先级到 QP",
         "感知系统的时间同步（最容易被低估的工程量）",
         "一套最小可运行的人形仿真验证",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "人形机器人是具身智能的终极形态——30+ 自由度的全身协调、双足行走、双手操作、多模态感知、自然语言交互。本节系统讲解人形机器人的全栈技术。"
     },
     {
       "id": "sec-02",
       "title": "人形机器人产业生态：玩家、商业模式与技术路线",
-      "lastUpdated": "2026-05-06T20:16",
-      "chars": 2766,
+      "lastUpdated": "2026-10-27",
+      "chars": 3876,
       "shortTitle": "人形机器人产业生态",
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "1. 全球主要玩家",
         "2. 技术路线对比",
@@ -103,20 +104,21 @@
         "6. 市场预测",
         "7. 投资与并购热点",
         "8. 入行建议",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "2024-2026 年是人形机器人从实验室走向商业化的关键期。本节梳理全球玩家、技术路线和商业模式。"
     },
     {
       "id": "sec-03",
       "title": "人形机器人的运动学与逆运动学",
-      "lastUpdated": "2026-04-30T11:07",
-      "chars": 3006,
+      "lastUpdated": "2026-10-27",
+      "chars": 6018,
       "shortTitle": "人形机器人的运动学与逆运动学",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 7,
       "headings": [
         "人形机器人运动学",
         "1. 浮基系统",
@@ -125,34 +127,36 @@
         "4. 人形 IK：多任务优先级",
         "5. 质心（CoM）雅可比",
         "6. 实用工具：Pinocchio",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "人形机器人比普通机械臂复杂得多——浮基（floating base）、闭链、多末端、欠驱动——本节系统讲解人形运动学。"
     },
     {
       "id": "sec-04",
       "title": "人形机器人仿真环境搭建：Humanoid Gym实战",
-      "lastUpdated": "2026-04-27T14:46",
-      "chars": 4050,
+      "lastUpdated": "2026-10-27",
+      "chars": 5567,
       "shortTitle": "人形机器人仿真环境搭建",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 4,
+      "readingMinutes": 7,
       "headings": [
         "为什么从仿真开始？",
         "主流人形仿真环境",
         "Humanoid Gym 快速上手",
         "训练Pipeline",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "人形机器人硬件昂贵（$50K-$500K），摔倒可能损坏。仿真是零成本、零风险的训练和调试环境。"
     },
     {
       "id": "sec-05",
       "title": "步态规划与控制",
-      "lastUpdated": "",
-      "chars": 8871,
+      "lastUpdated": "2026-10-27",
+      "chars": 8874,
       "shortTitle": "步态规划与控制",
       "difficulty": "中级",
       "estimatedMinutes": 10,
@@ -209,13 +213,13 @@
     {
       "id": "sec-08",
       "title": "人形机器人的感知-决策-执行一体化",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 4237,
+      "lastUpdated": "2026-10-27",
+      "chars": 6985,
       "shortTitle": "人形机器人的感知-决策-执行一体化",
       "difficulty": "高级",
       "estimatedMinutes": 5,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 9,
       "headings": [
         "1. 人形机器人的\"大脑\"架构",
         "2. 多尺度时间协同",
@@ -224,20 +228,21 @@
         "5. 决策系统：VLA 或分层",
         "6. 执行系统：安全与鲁棒",
         "7. 部署案例：Tesla Optimus Gen 3",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "人形机器人不只是\"双足行走的机器臂\"，而是一个复杂的智能系统。本节讲解从感知到执行的完整 pipeline。"
     },
     {
       "id": "sec-09",
       "title": "人形机器人的强化学习训练框架",
-      "lastUpdated": "2026-05-06T20:14",
-      "chars": 3486,
+      "lastUpdated": "2026-10-27",
+      "chars": 4945,
       "shortTitle": "人形机器人的强化学习训练框架",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "1. 为什么 RL 适合人形？",
         "2. 任务设计",
@@ -246,7 +251,8 @@
         "5. 训练加速：GPU 大规模并行",
         "6. Teacher-Student 蒸馏完整流程",
         "7. 部署到真机的关键",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "传统模型驱动方法（MPC + WBC）需要精确建模——但人形机器人有 30+ DOF 和复杂接触动力学。RL 提供了\"无需精确模型\"的替代路线。"
     },
@@ -294,13 +300,13 @@
     {
       "id": "sec-12",
       "title": "灵巧手操作与指尖力控：让人形机器人拥有精细操作能力",
-      "lastUpdated": "2026-04-27T00:45",
-      "chars": 3253,
+      "lastUpdated": "2026-10-27",
+      "chars": 4755,
       "shortTitle": "灵巧手操作与指尖力控",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "为什么灵巧手是人形机器人的终极挑战？",
         "灵巧手硬件方案",
@@ -308,7 +314,8 @@
         "灵巧操作的控制层级",
         "指尖力控制",
         "灵巧操作的学习方法",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "人类80%的操作任务需要手指级别的精细控制。当前大部分人形机器人只有简单的平行夹爪，能抓取但无法做精细操作（开瓶盖、按按钮、使用工具）。"
     },
@@ -349,13 +356,13 @@
     {
       "id": "sec-14",
       "title": "工业部署与量产：从Demo到规模化落地",
-      "lastUpdated": "2026-10-20T10:20",
-      "chars": 15837,
+      "lastUpdated": "2026-10-27",
+      "chars": 17114,
       "shortTitle": "工业部署与量产",
       "difficulty": "高级",
       "estimatedMinutes": 18,
       "tier": 2,
-      "readingMinutes": 18,
+      "readingMinutes": 20,
       "headings": [
         "人形机器人工业部署：从「能跑」到「能用」",
         "为什么实验室Demo ≠ 可部署产品？",
@@ -364,7 +371,8 @@
         "量产工程关键技术",
         "量产质检与测试流程",
         "数据驱动的持续改进",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "前面的章节解决了「如何让机器人动起来」的问题。但从一台实验室Demo到数千台机器人在真实产线/电站/仓库中稳定运行，中间隔着一整个工程化与量产的鸿沟。2026年，随着国家电网68亿采购计划、智元进厂龙旗产线、宇树5500台出货等里程碑事件，人形机器人正式进入「部署态元年」。"
     },
@@ -545,26 +553,27 @@
     {
       "id": "sec-21",
       "title": "从展台到工站：铁大 98% 与工信部标准尺子",
-      "lastUpdated": "2026-10-26",
-      "chars": 5173,
+      "lastUpdated": "2026-10-27",
+      "chars": 7210,
       "shortTitle": "从展台到工站",
       "difficulty": "高级",
       "estimatedMinutes": 7,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 7,
+      "readingMinutes": 10,
       "headings": [
         "0. 万台之后，尺子换成什么",
         "1. 铁大：先下厂，再首展",
         "2. 差那一个点，为什么比「再高 10 个自由度」贵",
         "3. 指南：能力分级和整机身份证",
         "4. 全栈清单：展台演示 vs 工站转正",
-        "5. 练习"
+        "5. 练习",
+        "参考答案"
       ],
       "summary": "2026 万台元年 写的是订单和产能：Hyundai 2.5 万台 Atlas、天机 Q1 在手 1 万台力控双臂、智元成都下线。那是 5 月的故事，问的是「谁能造出来」。"
     }
   ],
-  "readingMinutes": 160,
+  "readingMinutes": 187,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 139703
+  "chars": 158613
 }

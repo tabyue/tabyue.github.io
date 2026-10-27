@@ -48,7 +48,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：安装配置 + 基础通信（topic/service/action）\n**第2周**：TF2 + URDF + RViz 可视化\n**第3周**：Nav2 导航或 MoveIt2 运动规划\n**第4周**：集成项目（自主导航小车 or 机械臂抓取）\n**第5周**：ros2_control 硬件抽象——编写自定义 HardwareInterface 连接真实电机",
-  "lastUpdated": "2026-10-22T08:55",
+  "lastUpdated": "2026-10-27",
   "maturity": "comprehensive",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -77,13 +77,13 @@
     {
       "id": "sec-02",
       "title": "ROS2 通信机制深度解析：DDS、QoS 与生命周期",
-      "lastUpdated": "2026-04-30T10:32",
-      "chars": 3852,
+      "lastUpdated": "2026-10-27",
+      "chars": 9311,
       "shortTitle": "ROS2 通信机制深度解析",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 4,
+      "readingMinutes": 10,
       "headings": [
         "1. ROS2 架构层次",
         "2. DDS 核心概念",
@@ -91,20 +91,21 @@
         "4. 节点生命周期（Lifecycle Nodes）",
         "5. TF2 坐标变换",
         "6. 性能调优",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "从 ROS1 到 ROS2，最大的变化是底层通信从自定义 TCPROS 换成了工业级的 DDS（Data Distribution Service）。理解 DDS 才能调好 ROS2 的性能。"
     },
     {
       "id": "sec-03",
       "title": "ROS2 Launch 系统与参数管理",
-      "lastUpdated": "2026-04-30T10:32",
-      "chars": 4104,
+      "lastUpdated": "2026-10-27",
+      "chars": 10697,
       "shortTitle": "ROS2 Launch 系统与参数管理",
       "difficulty": "入门",
       "estimatedMinutes": 5,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 12,
       "headings": [
         "1. Launch 文件基础",
         "2. 参数管理",
@@ -112,20 +113,21 @@
         "4. 命名空间与重映射",
         "5. Launch 事件与条件",
         "6. 最佳实践",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "一个机器人系统需要同时启动十几个节点——手动一个个启动不现实。Launch 系统是 ROS2 的\"编排器\"。"
     },
     {
       "id": "sec-04",
       "title": "ROS2 高级主题：Action、Service 与 Executor",
-      "lastUpdated": "2026-04-30T11:07",
-      "chars": 5922,
+      "lastUpdated": "2026-10-27",
+      "chars": 12185,
       "shortTitle": "ROS2 高级主题",
       "difficulty": "中级",
       "estimatedMinutes": 6,
       "tier": 1,
-      "readingMinutes": 6,
+      "readingMinutes": 13,
       "headings": [
         "1. Service（同步请求-响应）",
         "2. Action（长时任务 + 反馈 + 可取消）",
@@ -133,7 +135,8 @@
         "4. 参数服务器与动态重配置",
         "5. 自定义消息类型",
         "6. ROS2 调试工具",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "Topic 适合数据流，但对于\"执行一个任务\"\"查询一个值\"等场景，需要 Service 和 Action。Executor 则决定了节点如何调度回调。"
     },
@@ -181,8 +184,8 @@
     {
       "id": "sec-07",
       "title": "Nav2 与 MoveIt2",
-      "lastUpdated": "",
-      "chars": 8978,
+      "lastUpdated": "2026-10-27",
+      "chars": 9193,
       "shortTitle": "Nav2 与 MoveIt2",
       "difficulty": "中级",
       "estimatedMinutes": 10,
@@ -196,7 +199,7 @@
         "练习",
         "参考答案"
       ],
-      "summary": "Nav2 是 ROS2 中移动机器人（轮式/四足）的标准导航框架，实现从 A 点到 B 点的自主导航。"
+      "summary": "移动底盘要回答「怎么从 A 点走到 B 点」，机械臂要回答「末端怎么无碰撞地到达目标位姿」。ROS2 生态分别用 Nav2 和 MoveIt2 解决这两个问题：二者都通过 Action 接口对外提供服务（Nav2 的 NavigateToPose、MoveIt2 的 MoveGroup），内部都是「环境建模 → 规划 → 轨迹执行」的分层结构，并用插件机制替"
     },
     {
       "id": "sec-08",
@@ -229,51 +232,53 @@
     {
       "id": "sec-09",
       "title": "DDS通信调优与QoS策略选择",
-      "lastUpdated": "2026-04-28T12:06",
-      "chars": 3209,
+      "lastUpdated": "2026-10-27",
+      "chars": 5434,
       "shortTitle": "DDS通信调优与QoS策略选择",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 6,
       "headings": [
         "DDS是ROS2的通信基础",
         "QoS策略选择指南",
         "QoS不匹配 = 收不到消息",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "ROS2底层使用DDS(Data Distribution Service)中间件进行通信。不同的QoS(Quality of Service)配置直接影响数据传输的可靠性和延迟。"
     },
     {
       "id": "sec-10",
       "title": "Lifecycle节点与生产级ROS2系统设计",
-      "lastUpdated": "2026-04-26T22:21",
-      "chars": 3032,
+      "lastUpdated": "2026-10-27",
+      "chars": 7306,
       "shortTitle": "Lifecycle节点与生产级ROS2系统设…",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 8,
       "headings": [
         "从Demo到产品：ROS2 Lifecycle节点",
         "Lifecycle节点的状态机",
         "为什么机器人需要Lifecycle？",
         "Lifecycle节点实现",
         "生产级ROS2系统设计模式",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "实验室的ROS2节点用 ros2 run 启动，Ctrl+C 停止——简单粗暴。但生产环境需要优雅的状态管理：节点启动时初始化硬件、运行时监控健康状态、停止时安全释放资源。Lifecycle节点提供了这个能力。"
     },
     {
       "id": "sec-11",
       "title": "Launch文件与多机器人系统部署",
-      "lastUpdated": "2026-04-27T12:01",
-      "chars": 4113,
+      "lastUpdated": "2026-10-27",
+      "chars": 7700,
       "shortTitle": "Launch文件与多机器人系统部署",
       "difficulty": "高级",
       "estimatedMinutes": 5,
       "tier": 2,
-      "readingMinutes": 5,
+      "readingMinutes": 9,
       "headings": [
         "ROS2 Launch系统",
         "Launch文件类型",
@@ -281,20 +286,21 @@
         "多机器人部署",
         "Namespace隔离",
         "参数管理",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "ROS2的Launch系统用于启动和配置复杂的多节点系统。一个机器人系统可能需要同时启动20+个节点（驱动、感知、规划、控制、可视化），手动逐个启动不现实。"
     },
     {
       "id": "sec-12",
       "title": "ROS2 实战架构：从单机到 Fleet",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 3989,
+      "lastUpdated": "2026-10-27",
+      "chars": 8155,
       "shortTitle": "ROS2 实战架构",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 9,
       "headings": [
         "1. ROS2 项目结构",
         "2. 单机器人架构",
@@ -303,21 +309,22 @@
         "5. ROS2 与云的桥接",
         "6. Fleet 管理系统",
         "7. 生产环境清单",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "\"写个 Hello World\"和\"搭建生产机器人系统\"之间有巨大鸿沟。本节讲解现实中 ROS2 架构的演进和最佳实践。"
     },
     {
       "id": "sec-13",
       "title": "ROS2 在 VLA 时代的角色：把通用具身大模型嵌入 ros2_control 与 micro-ROS 闭环",
-      "lastUpdated": "2026-05-07T16:55",
-      "chars": 11877,
+      "lastUpdated": "2026-10-27",
+      "chars": 19459,
       "shortTitle": "ROS2 在 VLA 时代的角色",
       "difficulty": "高级",
       "estimatedMinutes": 13,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 13,
+      "readingMinutes": 22,
       "headings": [
         "1. 为什么 VLA 时代 ROS2 还会更重要",
         "2. VLA 节点的 ROS2 接口设计",
@@ -333,7 +340,8 @@
         "7. 可追溯：rosbag2 + 策略指纹满足合规",
         "8. 工程陷阱与最佳实践",
         "9. 联动本站",
-        "10. 练习"
+        "10. 练习",
+        "参考答案"
       ],
       "summary": "2024 年起 VLA（Vision-Language-Action）大模型——OpenVLA、π0、GR00T、RDT-1B、HY-Embodied、VLOA 等——把\"端到端神经策略\"做成了机器人的新标配。一个直觉是：\"既然神经网络直接输出关节扭矩或末端位姿，那 ROS2 这种基于话题/服务的中间件还有用吗？\""
     },
@@ -429,7 +437,7 @@
       "summary": "先把问题具体化。一台人形机器人上同时跑着这些模块，它们对时间的要求完全不同："
     }
   ],
-  "readingMinutes": 137,
+  "readingMinutes": 183,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 122907
+  "chars": 163271
 }

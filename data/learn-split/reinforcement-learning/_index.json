@@ -4,7 +4,7 @@
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 60,
-  "lastUpdated": "2026-10-27T08:50",
+  "lastUpdated": "2026-10-27",
   "description": "让机器人通过试错学习最优行为策略。PPO 是四足步态训练的标配，SAC 适合连续动作空间。",
   "prerequisites": [
     "深度学习基础",
@@ -55,13 +55,13 @@
     {
       "id": "sec-01",
       "title": "强化学习数学基础：概率、动态规划与值函数",
-      "lastUpdated": "2026-10-26",
-      "chars": 5551,
+      "lastUpdated": "2026-10-27",
+      "chars": 7140,
       "shortTitle": "强化学习数学基础",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 5,
+      "readingMinutes": 7,
       "headings": [
         "1. 概率论回顾（RL 视角）",
         "2. 马尔可夫决策过程（MDP）形式化",
@@ -72,15 +72,16 @@
         "值迭代（Value Iteration）",
         "5. 从 DP 到 RL：当模型未知时",
         "6. 策略梯度定理",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "在学习 PPO、SAC 等具体算法之前，必须先建立 RL 的数学基础——概率论的应用、值函数的定义、动态规划的思想。"
     },
     {
       "id": "sec-02",
       "title": "MDP 与 Bellman 方程",
-      "lastUpdated": "",
-      "chars": 8199,
+      "lastUpdated": "2026-10-27",
+      "chars": 8202,
       "shortTitle": "MDP 与 Bellman 方程",
       "difficulty": "入门",
       "estimatedMinutes": 9,
@@ -125,13 +126,13 @@
     {
       "id": "sec-04",
       "title": "策略优化算法：从 TRPO 到 PPO 的完整推导",
-      "lastUpdated": "2026-04-30T10:32",
-      "chars": 4408,
+      "lastUpdated": "2026-10-27",
+      "chars": 5985,
       "shortTitle": "策略优化算法",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "1. 策略梯度的问题",
         "2. 信赖域方法（TRPO）",
@@ -139,7 +140,8 @@
         "4. GAE（Generalized Advantage Estimation）",
         "5. PPO 完整训练循环",
         "6. PPO 超参数调优",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "PPO 是当前机器人 RL 的默认算法——但为什么是 PPO？它解决了什么问题？本节从 TRPO 的动机出发，完整推导 PPO。"
     },
@@ -187,14 +189,13 @@
     {
       "id": "sec-07",
       "title": "Sim-to-Real：从仿真到真机的完整方法论",
-      "lastUpdated": "2026-04-30T11:07",
-      "chars": 2645,
+      "lastUpdated": "2026-10-27",
+      "chars": 8865,
       "shortTitle": "Sim-to-Real",
       "difficulty": "高级",
       "estimatedMinutes": 3,
-      "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 11,
       "headings": [
         "1. Sim-to-Real gap 的来源",
         "2. 四种 Sim-to-Real 策略",
@@ -203,7 +204,13 @@
         "5. Teacher-Student 蒸馏",
         "6. Anymal 的成功案例",
         "7. 实战检查清单",
-        "练习题"
+        "8. RL 视角：域随机化到底在优化什么",
+        "9. 最小例子：名义最优与鲁棒最优",
+        "10. 特权信息蒸馏：把 teacher 的「知道」变成 student 的「推断」",
+        "11. 常见误区",
+        "12. 与相邻章节的关系",
+        "练习题",
+        "参考答案"
       ],
       "summary": "RL 的最大挑战不是在仿真中训练，而是让仿真学到的策略在真机上工作。本节系统讲解 Sim-to-Real 的完整方法论。"
     },
@@ -230,33 +237,33 @@
     {
       "id": "sec-09",
       "title": "离线强化学习（Offline RL）：从历史数据中学习策略",
-      "lastUpdated": "2026-04-27T00:42",
-      "chars": 3248,
+      "lastUpdated": "2026-10-27",
+      "chars": 4567,
       "shortTitle": "离线强化学习",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 5,
       "headings": [
         "为什么需要离线RL？",
         "离线RL的核心挑战：分布偏移",
         "主流离线RL算法",
         "离线RL在机器人中的应用",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "传统RL（在线RL）需要与环境不断交互来收集数据——对机器人来说，这意味着真实硬件上的数百万次试错，成本极高且危险。"
     },
     {
       "id": "sec-10",
       "title": "RL 在具身智能中的现代实践",
-      "lastUpdated": "2026-05-06T20:14",
-      "chars": 2593,
+      "lastUpdated": "2026-10-27",
+      "chars": 8500,
       "shortTitle": "RL 在具身智能中的现代实践",
       "difficulty": "高级",
       "estimatedMinutes": 3,
-      "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 10,
       "headings": [
         "1. 现代具身 RL 技术栈",
         "2. 典型应用模式",
@@ -270,20 +277,26 @@
         "6. 调参与监控",
         "7. 硬件资源规划",
         "8. 著名项目案例",
-        "练习题"
+        "9. 关键公式：PPO 训练中每个数在算什么",
+        "10. 大规模并行的两个工程细节",
+        "11. 两种混合范式的目标函数",
+        "12. 常见误区",
+        "13. 与相邻章节的关系",
+        "练习题",
+        "参考答案"
       ],
       "summary": "2025 年，RL 在机器人领域已经从\"理论研究\"走向\"工业落地\"。本节梳理当前最实用的 RL 技术栈和典型应用模式。"
     },
     {
       "id": "sec-11",
       "title": "机器人 RL 实战：从仿真训练到真机部署",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 4376,
+      "lastUpdated": "2026-10-27",
+      "chars": 5691,
       "shortTitle": "机器人 RL 实战",
       "difficulty": "高级",
       "estimatedMinutes": 5,
       "tier": 2,
-      "readingMinutes": 5,
+      "readingMinutes": 7,
       "headings": [
         "机器人 RL 实战完整流程",
         "1. 任务设计",
@@ -294,7 +307,8 @@
         "6. 训练过程",
         "7. 评估与部署",
         "8. 真机常见坑",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "从理论到实战——本节讲解如何从零训练一个能工作的机器人 RL 策略，以四足机器人行走为例。"
     },
@@ -348,15 +362,14 @@
     {
       "id": "sec-14",
       "title": "RL 的前沿与未来：从 RLHF 到具身世界模型",
-      "lastUpdated": "2026-05-06T20:16",
-      "chars": 2744,
+      "lastUpdated": "2026-10-27",
+      "chars": 7950,
       "shortTitle": "RL 的前沿与未来",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isFrontier": true,
-      "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 9,
       "headings": [
         "1. RLHF：对齐大语言模型",
         "2. RLEF：环境反馈",
@@ -367,7 +380,12 @@
         "7. 可信赖 RL",
         "8. RL 的未来展望",
         "9. 学习路径建议",
-        "练习题"
+        "10. RLHF 的数学：从偏好到策略",
+        "11. 模型驱动 RL、约束 RL 与 MARL 的三条关键结论",
+        "12. 常见误区",
+        "13. 与相邻章节的关系",
+        "练习题",
+        "参考答案"
       ],
       "summary": "2025 年的 RL 早已超越 Atari 游戏——LLM 训练、机器人具身、世界模型...本节梳理 RL 在前沿的几条主线。"
     },
@@ -428,14 +446,14 @@
     {
       "id": "sec-17",
       "title": "轨迹级信用别名：Temporal GRPO 把 VLA-RL 的优势写回阶段",
-      "lastUpdated": "2026-08-25T11:20",
-      "chars": 3667,
+      "lastUpdated": "2026-10-27",
+      "chars": 5234,
       "shortTitle": "轨迹级信用别名",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "0. 为什么这一节接在 VLA-RL 后面",
         "1. 信用别名到底错在哪",
@@ -445,15 +463,16 @@
         "2.3 只和「进入了同一阶段」的轨迹比",
         "3. 数字怎么读（不要和 LIBERO 刷榜横比）",
         "4. 落地时先问三个问题",
-        "5. 练习"
+        "5. 练习",
+        "参考答案"
       ],
       "summary": "上一节 VLA-RL 把共识写死了：预训练 VLA 是模仿学习的天花板，结果驱动的在线后训练是突破天花板的路径。业界已经在用 GRPO / SimpleVLA-RL 做这件事——采一组完整轨迹，用最终成功失败算一条组内相对优势，再写回整条动作序列。"
     },
     {
       "id": "sec-18",
       "title": "无监督技能发现与行为基础模型：FB 表示、BFM-Zero 与 I-BFM — 零奖励下如何学出可零样本切换的一族行为",
-      "lastUpdated": "2026-10-16T08:45",
-      "chars": 8018,
+      "lastUpdated": "2026-10-27",
+      "chars": 8022,
       "shortTitle": "无监督技能发现与行为基础模型",
       "difficulty": "高级",
       "estimatedMinutes": 15,
@@ -502,7 +521,7 @@
       "summary": "真实世界的机器人策略，现在已经很少是「一个高斯分布」了。你在生产线或实验室里会同时遇到三类策略，它们的参数化方式完全不同："
     }
   ],
-  "readingMinutes": 134,
+  "readingMinutes": 164,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 118139
+  "chars": 142846
 }

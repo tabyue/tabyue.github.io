@@ -50,6 +50,7 @@ python tools/sync_learn_split.py      # learn 有改动时
 python tools/build_sitemap.py         # 章节数变化时
 python tools/health_check.py          # 必须 ALL OK
 python tools/verify_learn_structure.py # 必须 ALL OK（结构守卫，查 health_check 查不到的）
+python tools/audit_learn_content.py   # 正文体检：硬缺陷 F1/F2/F3/F4/F9/F10 必须 0；新增练习必须带「### 参考答案」
 ```
 health_check 覆盖：JSON 解析 / id 唯一 / 内容查重 / category 白名单 / totalItems / 开源详情+报告页 / 论文 detail+keyInsights / learn-split 一致性 / 全量章节内链 / ASCII 双引号
 - **收尾清理临时脚本必须用 `git rm`，不能只 `Remove-Item`**：`git add -A` 会把根目录 `_*.py` 临时脚本一起提交进仓库（2026-10-20 中招）。保留 `_add_two.py` / `_cv_sec.md` / `_desktop_sec.md`（历史 tracked，误删过）
@@ -77,6 +78,7 @@ health_check 覆盖：JSON 解析 / id 唯一 / 内容查重 / category 白名�
   - `tools/fix_learn_links.py`：按「链接文字 ↔ 目标章节标题」修内链。重排只保证索引不越界，**不保证指向正确**，首跑修了 170 处历史错位
   - `tools/verify_learn_structure.py`：结构守卫（元数据/difficulty 口径/tier 单调/前沿位置/标题规范/重复标题/内链/split 同步）
 - **内链章节号是 1-based**：`/learn/<mod>/N` 的 N 从 1 起（前端 `parseRoute: secIdx=n-1`），`/mod/0` 是错的。health_check 原先把 N 当 0-based 下标（既漏放 `/0` 又误报末章），2026-10-22 已修为 `1 <= N <= len`
+- **2026-10-27 正文质量基线**：全部 541 章练习均有参考答案（`### 参考答案` + 每题 `**N. 简称**` 独占一行，答案正文不用粗体），答案卡只包到下一个同级/更高级标题。表格单元格内禁止 `|`（站点按 `|` 切分且不识别 `\|`），范数/绝对值用 `\lVert \rVert`、`\lvert \rvert`、条件概率用 `\mid`；KaTeX 0.16.9 不支持 `\dddot`、`^\*`、`\sigma_\max`（写 `_{\max}`）。体检脚本需要 node + `~/.workbuddy/binaries/node/workspace/node_modules/katex`。
 - **2026-10-26 浏览时长口径已分离**：保留源 `estimatedMinutes` 不覆盖；`sync_learn_split.py` 派生 `readingMinutes`（中文400字/分、英文220词/分、代码900字符/分）到章节索引/模块/目录。前端统一显示「浏览约N分钟（不含练习）」；`estimatedHours` 另标含练习建议投入，不代表掌握程度。不要再盲跑 `--resync-minutes`。
 - **2026-10-26 学习体验重构**：7阶段/32模块/539章，章节标题顺序全部保持。`learning-path.modules[].id` 为真实英文ID；旧中文URL仅作alias；同步脚本自动更新id/sectionCount/chars/readingMinutes/lastUpdated。进度key和缓存统一canonical ID，无损合并旧记录；`sections`仅手动完成、`visitedSections/lastSection`负责访问和续读，禁止打开即算完成或再次清空进度。
 - 新模块导学字段 `learningObjectives[]/studyGuide[]/prerequisites[]`；guide和前置支持Markdown内链。搜索读取split的headings/summary，不全量下载正文。守卫新增目录计数/派生时长/搜索元数据和导学内链检查；`normalize_learn`不能将`/0`静默改成大纲，不能修改围栏代码中的链接。

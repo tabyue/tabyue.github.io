@@ -252,7 +252,12 @@ async function tests() {
     assert.equal(responses[1].status, 404, '/data 缺失文件必须真正返回 404，不能 fallback HTML');
     assert.match(responses[2].type, /text\/html/);
     assert.match(responses[2].text, /id="pg-learn"/);
-    assert.deepEqual(counts, { stages: 7, modules: 32, chapters: 541 });
+    // 计数取自真实数据：允许自动化每天追加章节，但目录声明、分片与源文件必须三方一致
+    const sourceChapters = fs.readdirSync(path.join(ROOT, 'data', 'learn')).filter(f => f.endsWith('.json'))
+      .reduce((n, f) => n + readJSON(`data/learn/${f}`).sections.length, 0);
+    assert.ok(counts.stages >= 1 && counts.modules >= 1, '学习路径不能为空');
+    assert.equal(counts.chapters, sourceChapters, '分片章节总数必须等于源文件章节总数');
+    assert.equal(counts.chapters, modules.reduce((n, m) => n + m.sectionCount, 0), '目录 sectionCount 合计必须等于分片总数');
     for (const m of modules) {
       const ix = indexes[m.id];
       assert.equal(ix.sectionsMeta.length, m.sectionCount, `${m.id} 声明与真实章节数一致`);
@@ -519,7 +524,7 @@ async function tests() {
     }
     assert.deepEqual(await recordProgress(page), before, '筛选不能改变完成进度');
   });
-  await runCase('outline-all-metadata', '全部32模块与541章阅读分钟、难度顺序、前后模块关系', async (page, evidence) => {
+  await runCase('outline-all-metadata', `全部${counts.modules}模块与${counts.chapters}章阅读分钟、难度顺序、前后模块关系`, async (page, evidence) => {
     await goto(page, '/learn');
     const apiOrder = await page.evaluate(() => window.learnTest.getAllModuleIds().map(m => m.id));
     assert.deepEqual(apiOrder, modules.map(m => m.id));

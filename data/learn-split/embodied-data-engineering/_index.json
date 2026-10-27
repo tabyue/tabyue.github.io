@@ -61,15 +61,15 @@
     }
   ],
   "weeklyPlan": "**第1周**：数据集全景+格式标准\n**第2周**：数据采集系统搭建\n**第3周**：数据质量工程+清洗\n**第4周**：合成数据+增强\n**第5周**：数据闭环实战",
-  "lastUpdated": "2026-10-17T08:30",
+  "lastUpdated": "2026-10-27",
   "maturity": "growing",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
       "title": "具身数据集全景图",
-      "lastUpdated": "",
-      "chars": 9102,
+      "lastUpdated": "2026-10-27",
+      "chars": 9114,
       "shortTitle": "具身数据集全景图",
       "difficulty": "入门",
       "estimatedMinutes": 10,
@@ -88,13 +88,13 @@
     {
       "id": "sec-02",
       "title": "数据工程基础：从原始数据到可用数据集",
-      "lastUpdated": "2026-04-28T19:38",
-      "chars": 5729,
+      "lastUpdated": "2026-10-27",
+      "chars": 7802,
       "shortTitle": "数据工程基础",
       "difficulty": "入门",
       "estimatedMinutes": 6,
       "tier": 0,
-      "readingMinutes": 6,
+      "readingMinutes": 9,
       "headings": [
         "1. 数据的生命周期",
         "2. 文件格式选型",
@@ -102,27 +102,29 @@
         "4. 数据清洗核心流程",
         "5. ETL 管道（Extract-Transform-Load）",
         "6. 数据探索与可视化",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "具身智能的数据工程不是从采集机器人数据开始的——首先要掌握通用的数据处理技能。本节从零建立数据工程的基础能力。"
     },
     {
       "id": "sec-03",
       "title": "机器人演示数据的采集策略与遥操作系统",
-      "lastUpdated": "2026-04-30T10:22",
-      "chars": 4040,
+      "lastUpdated": "2026-10-27",
+      "chars": 5230,
       "shortTitle": "机器人演示数据的采集策略与遥操作系统",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "1. 遥操作系统分类",
         "2. Leader-Follower 架构（ALOHA 方案）",
         "3. 数据采集策略",
         "4. 数据质量控制",
         "5. 数据规模参考",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "具身智能的数据不像互联网数据可以爬取——必须靠人类在真实物理环境中操控机器人来收集。本节系统讲解遥操作(Teleoperation)系统的设计和采集策略。"
     },
@@ -149,13 +151,13 @@
     {
       "id": "sec-05",
       "title": "数据标注与众包：构建高质量机器人数据集的方法论",
-      "lastUpdated": "2026-04-28T19:38",
-      "chars": 3216,
+      "lastUpdated": "2026-10-27",
+      "chars": 5060,
       "shortTitle": "数据标注与众包",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "1. 机器人数据标注的特殊性",
         "2. 标注类型",
@@ -163,7 +165,8 @@
         "4. 质量控制",
         "5. 成本优化",
         "6. 标注平台推荐",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "机器人学习需要的不仅是\"有数据\"，更需要\"有标签的好数据\"。本节系统讲解标注方法论、质量控制和成本优化。"
     },
@@ -189,13 +192,13 @@
     {
       "id": "sec-07",
       "title": "数据集格式标准：LeRobot/RLDS/Open-X-Embodiment",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 4794,
+      "lastUpdated": "2026-10-27",
+      "chars": 6271,
       "shortTitle": "数据集格式标准",
       "difficulty": "中级",
       "estimatedMinutes": 5,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 7,
       "headings": [
         "机器人数据集格式标准",
         "1. 为什么需要标准格式？",
@@ -205,7 +208,8 @@
         "5. 从原始数据到标准格式",
         "6. 数据版本管理",
         "7. 数据质量指标",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "具身智能领域正在形成标准化的数据格式——本节讲解主流数据集格式的设计思想和实际使用。"
     },
@@ -251,14 +255,14 @@
     {
       "id": "sec-10",
       "title": "数据闭环与主动学习：从部署到持续改进",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 2766,
+      "lastUpdated": "2026-10-27",
+      "chars": 3713,
       "shortTitle": "数据闭环与主动学习",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "1. 数据闭环架构",
         "2. 应回传什么数据？",
@@ -268,7 +272,8 @@
         "6. 安全的数据回传",
         "7. 再训练触发策略",
         "8. 实战架构：Tesla Autopilot 启示",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "\"一次训练、一次部署\"已经过时——现代机器人系统需要数据闭环：部署的机器人持续回传数据，模型持续改进。"
     },
@@ -294,52 +299,54 @@
     {
       "id": "sec-12",
       "title": "数据安全、隐私与合成数据合规",
-      "lastUpdated": "2026-04-27T00:45",
-      "chars": 2375,
+      "lastUpdated": "2026-10-27",
+      "chars": 3100,
       "shortTitle": "数据安全、隐私与合成数据合规",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 4,
       "headings": [
         "为什么数据隐私对具身智能重要？",
         "数据合规框架",
         "隐私保护技术路线",
         "合成数据的合规优势",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "机器人部署在家庭、医院、工厂等敏感环境中，采集的数据包含： - 视觉数据：人脸、家居环境、个人物品 - 行为数据：日常习惯、健康状态 - 空间数据：房屋布局、办公室结构"
     },
     {
       "id": "sec-13",
       "title": "大规模数据集版本管理与DVC实战",
-      "lastUpdated": "2026-04-27T14:46",
-      "chars": 3601,
+      "lastUpdated": "2026-10-27",
+      "chars": 4798,
       "shortTitle": "大规模数据集版本管理与DVC实战",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 5,
       "headings": [
         "为什么机器人数据需要版本管理？",
         "DVC核心概念",
         "DVC + LeRobot 数据管线",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "机器人训练数据动辄几百GB（图像+深度+关节），Git无法处理大文件。DVC (Data Version Control) 专门解决这个问题——用Git管理元数据，用云存储管理实际数据。"
     },
     {
       "id": "sec-14",
       "title": "演示数据的分布覆盖分析与短板诊断：从 BeTTER 启示看数据质量",
-      "lastUpdated": "2026-05-04T08:00",
-      "chars": 10616,
+      "lastUpdated": "2026-10-27",
+      "chars": 11634,
       "shortTitle": "演示数据的分布覆盖分析与短板诊断",
       "difficulty": "中级",
       "estimatedMinutes": 13,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 13,
+      "readingMinutes": 15,
       "headings": [
         "演示数据分布覆盖与短板诊断",
         "1. 为什么要做数据覆盖分析？",
@@ -358,7 +365,8 @@
         "7. 从诊断到改进：典型案例",
         "8. 把数据诊断嵌入 CI/CD",
         "9. 前沿：从数据驱动到数据生成",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "想象一下这个场景：你花两周采了 200 条桌面抓取演示，训练出一个 ACT 策略，在验证集上 loss 很低，真机测试却只有 30% 成功率。你心里可能想：\"是不是模型不够大？\"——但真正的问题往往出在数据上。"
     },
@@ -422,8 +430,8 @@
     {
       "id": "sec-17",
       "title": "训练场、数据闭环与跨本体底座：2026 年具身数据基础设施的工程形态",
-      "lastUpdated": "2026-10-09T08:30",
-      "chars": 8846,
+      "lastUpdated": "2026-10-27",
+      "chars": 8847,
       "shortTitle": "训练场、数据闭环与跨本体底座",
       "difficulty": "中级",
       "estimatedMinutes": 11,
@@ -478,7 +486,7 @@
       "summary": "具身数据工程在 2026 年遇到了一个结构性矛盾：最丰富的数据源（人类视频）和能直接训练机器人的数据（机器人轨迹）之间，隔着一道很贵的翻译工序。互联网上有近乎无限的人类操作视频，但机器人需要的不是视频，而是「在给定初始条件下，关节/末端应该怎么走，且走完物理上成立」。"
     }
   ],
-  "readingMinutes": 125,
+  "readingMinutes": 140,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 108488
+  "chars": 118972
 }

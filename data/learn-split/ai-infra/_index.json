@@ -1,7 +1,7 @@
 {
   "id": "ai-infra",
   "name": "AI Infra 具身基础设施",
-  "lastUpdated": "2026-10-26",
+  "lastUpdated": "2026-10-27",
   "stage": "阶段六：系统工程与部署",
   "importance": "核心",
   "estimatedHours": 30,
@@ -104,13 +104,13 @@
     {
       "id": "sec-02",
       "title": "GPU 算力栈：从数据中心到机器人本体的端到端路径",
-      "lastUpdated": "2026-10-26",
-      "chars": 5682,
+      "lastUpdated": "2026-10-27",
+      "chars": 8044,
       "shortTitle": "GPU 算力栈",
       "difficulty": "中级",
       "estimatedMinutes": 6,
       "tier": 0,
-      "readingMinutes": 6,
+      "readingMinutes": 9,
       "headings": [
         "一、为什么要把算力栈作为整合章节？",
         "二、四层算力栈的硬件清单",
@@ -122,20 +122,21 @@
         "六、网络与通信：跨层级延迟从哪来？",
         "七、成本：100 台机器人 fleet 的算力月预算",
         "八、动手练习",
-        "九、扩展阅读"
+        "九、扩展阅读",
+        "参考答案"
       ],
       "summary": "具身 AI 的算力栈是异构 + 多层级的——单看任何一个模块都看不到全貌："
     },
     {
       "id": "sec-03",
       "title": "具身算力芯片选型：NVIDIA vs 国产六雄（昇腾 / 海光 / 寒武纪 / 摩尔 / 沐曦 / 地平线）",
-      "lastUpdated": "2026-05-11T20:00",
-      "chars": 6329,
+      "lastUpdated": "2026-10-27",
+      "chars": 8305,
       "shortTitle": "具身算力芯片选型",
       "difficulty": "高级",
       "estimatedMinutes": 6,
       "tier": 1,
-      "readingMinutes": 6,
+      "readingMinutes": 9,
       "headings": [
         "一、为什么具身 AI 工程师必须懂算力芯片选型？",
         "二、四层算力栈的芯片选型决策树",
@@ -150,15 +151,16 @@
         "六、PyTorch 代码跨芯片兼容写法",
         "七、本节学习目标",
         "八、扩展阅读",
-        "九、动手练习"
+        "九、动手练习",
+        "参考答案"
       ],
       "summary": "算力是具身 AI Infra 的物理基础——同一个 VLA 模型在 H100 vs 昇腾 910B vs Jetson Thor 上，性能 / 成本 / 部署难度差异巨大。但中美芯片管制 + 国产化浪潮让这个问题变得紧迫："
     },
     {
       "id": "sec-04",
       "title": "分布式训练（DDP / FSDP / DeepSpeed ZeRO）",
-      "lastUpdated": "2026-10-20T10:20",
-      "chars": 3729,
+      "lastUpdated": "2026-10-27",
+      "chars": 3731,
       "shortTitle": "分布式训练",
       "difficulty": "中级",
       "estimatedMinutes": 14,
@@ -203,8 +205,8 @@
     {
       "id": "sec-06",
       "title": "模型量化与压缩：从 FP16 到 INT4 的工程取舍",
-      "lastUpdated": "2026-10-20T10:20",
-      "chars": 3211,
+      "lastUpdated": "2026-10-27",
+      "chars": 3254,
       "shortTitle": "模型量化与压缩",
       "difficulty": "中级",
       "estimatedMinutes": 14,
@@ -227,13 +229,13 @@
     {
       "id": "sec-07",
       "title": "推理引擎栈：vLLM / SGLang / Triton 在具身场景的特殊适配",
-      "lastUpdated": "2026-05-11T16:00",
-      "chars": 5120,
+      "lastUpdated": "2026-10-27",
+      "chars": 6508,
       "shortTitle": "推理引擎栈",
       "difficulty": "高级",
       "estimatedMinutes": 5,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 7,
       "headings": [
         "一、为什么要选合适的推理引擎？",
         "二、四大推理引擎选型决策表",
@@ -246,20 +248,21 @@
         "六、TensorRT-LLM + Custom Plugin 极致性能",
         "七、最终选型决策树",
         "八、动手练习",
-        "九、扩展阅读"
+        "九、扩展阅读",
+        "参考答案"
       ],
       "summary": "VLA 推理与 LLM 推理有四个本质差异，导致 LLM 圈成熟的推理栈不能照搬："
     },
     {
       "id": "sec-08",
       "title": "KV-Cache + 动作 Chunk Batching：VLA 推理的特殊优化",
-      "lastUpdated": "2026-10-26",
-      "chars": 4636,
+      "lastUpdated": "2026-10-27",
+      "chars": 6209,
       "shortTitle": "KV-Cache + 动作 Chunk…",
       "difficulty": "高级",
       "estimatedMinutes": 5,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 7,
       "headings": [
         "一、VLA 推理的时间预算",
         "二、KV-Cache 帧间复用",
@@ -274,20 +277,21 @@
         "五、FlashAttention v3 + 算子融合",
         "六、完整端到端推理优化路径",
         "七、动手练习",
-        "八、扩展阅读"
+        "八、扩展阅读",
+        "参考答案"
       ],
       "summary": "30Hz 实时控制 → 每帧推理预算 33ms。一个标准 7B VLA（如 OpenVLA）的时间分布："
     },
     {
       "id": "sec-09",
       "title": "多机器人 Model Serving：Ray Serve / KServe / 自研中间件对比",
-      "lastUpdated": "2026-05-11T16:00",
-      "chars": 4106,
+      "lastUpdated": "2026-10-27",
+      "chars": 6526,
       "shortTitle": "多机器人 Model Serving",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 7,
       "headings": [
         "一、规模拐点：1 台 → 100 台 → 10000 台",
         "二、Ray Serve：多模型路由的瑞士军刀",
@@ -305,20 +309,21 @@
         "六、选型决策树",
         "七、成本预算（参考数字）",
         "八、动手练习",
-        "九、扩展阅读"
+        "九、扩展阅读",
+        "参考答案"
       ],
       "summary": "机器人 fleet 规模决定 infra 设计："
     },
     {
       "id": "sec-10",
       "title": "数据流水线全景：从遥操采集到训练就绪的端到端管道",
-      "lastUpdated": "2026-05-11T16:10",
-      "chars": 6368,
+      "lastUpdated": "2026-10-27",
+      "chars": 8164,
       "shortTitle": "数据流水线全景",
       "difficulty": "中级",
       "estimatedMinutes": 6,
       "tier": 1,
-      "readingMinutes": 6,
+      "readingMinutes": 9,
       "headings": [
         "一、为什么数据流水线是具身 AI 的命门？",
         "二、数据流水线的 5 阶段全景图",
@@ -338,7 +343,8 @@
         "九、产线案例：智元 + 鹿明 + 维他动力的数据策略对比",
         "十、数据规模 vs 模型性能",
         "十一、动手练习",
-        "十二、扩展阅读"
+        "十二、扩展阅读",
+        "参考答案"
       ],
       "summary": "LLM 时代，数据是从互联网爬来的；具身 AI 时代，数据必须从物理世界产生——人手把着机器人示教，或机器人自己在仿真/真机里 rollout。"
     },
@@ -368,14 +374,13 @@
     {
       "id": "sec-12",
       "title": "数据闭环与主动学习",
-      "lastUpdated": "2026-10-20T10:20",
-      "chars": 2790,
+      "lastUpdated": "2026-10-27",
+      "chars": 8031,
       "shortTitle": "数据闭环与主动学习",
       "difficulty": "中级",
       "estimatedMinutes": 14,
-      "isBrief": true,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 11,
       "headings": [
         "🔗 本节内容已在其他模块详细讲解",
         "闭环不是「多采点数据」，是「采对数据」",
@@ -383,6 +388,15 @@
         "为什么「失败优先」在具身场景特别有效",
         "别忘了保留一份固定的评测集",
         "闭环节奏",
+        "基础设施视角：闭环里真正流动的四样东西",
+        "闭环周期的分解",
+        "上行带宽：为什么必须事件触发",
+        "触发条件：把「什么时候重训」写成可审计的规则",
+        "存储与版本：让每个模型都能回答「我是用什么数据训出来的」",
+        "算力调度：重训、评测、推理抢同一池 GPU",
+        "最小可运行示例：上行量、触发节奏与算力账",
+        "常见误区",
+        "与相邻章节的关系",
         "跳转入口",
         "为什么放在 AI Infra 模块？"
       ],
@@ -391,13 +405,13 @@
     {
       "id": "sec-13",
       "title": "平台工程基础：从单机器人到 fleet 管理的工程演进",
-      "lastUpdated": "2026-05-11T16:10",
-      "chars": 6775,
+      "lastUpdated": "2026-10-27",
+      "chars": 8616,
       "shortTitle": "平台工程基础",
       "difficulty": "中级",
       "estimatedMinutes": 7,
       "tier": 1,
-      "readingMinutes": 7,
+      "readingMinutes": 10,
       "headings": [
         "一、为什么平台工程对具身 AI 是关键？",
         "二、平台工程的演进阶段",
@@ -415,7 +429,8 @@
         "七、安全合规",
         "八、平台工程的成熟度评估",
         "九、动手练习",
-        "十、扩展阅读（platform-engineering 模块全部章节）"
+        "十、扩展阅读（platform-engineering 模块全部章节）",
+        "参考答案"
       ],
       "summary": "机器人不是 SaaS 软件——它是物理设备。这意味着："
     },
@@ -555,8 +570,8 @@
     {
       "id": "sec-19",
       "title": "触觉感知基础设施：从硬件到 Touch Dreaming 的全栈工程",
-      "lastUpdated": "2026-05-14T16:35",
-      "chars": 6978,
+      "lastUpdated": "2026-10-27",
+      "chars": 7180,
       "shortTitle": "触觉感知基础设施",
       "difficulty": "高级",
       "estimatedMinutes": 7,
@@ -715,14 +730,14 @@
     {
       "id": "sec-24",
       "title": "双频异步 VLA 推理基础设施：从 chunk 边界抖动到 Guide Action 掩码回写（NebulaVLA 2026-08 精读）",
-      "lastUpdated": "2026-08-24T19:40",
-      "chars": 12936,
+      "lastUpdated": "2026-10-27",
+      "chars": 15893,
       "shortTitle": "双频异步 VLA 推理基础设施",
       "difficulty": "高级",
       "estimatedMinutes": 15,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 15,
+      "readingMinutes": 19,
       "headings": [
         "0. 为什么这一节单独立项",
         "1. 异构双频：从「快慢系统」口号到数据流契约",
@@ -752,12 +767,13 @@
         "6. chunk 边界四种解法的横向对比",
         "7. 部署 checklist",
         "8. 局限与开放问题",
-        "9. 课后思考题"
+        "9. 课后思考题",
+        "参考答案"
       ],
       "summary": "本模块 sec-22 Chunked VLA 推理基础设施 已经讲过 chunk size 的取舍，但留了一个没答完的问题："
     }
   ],
-  "readingMinutes": 145,
+  "readingMinutes": 175,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 132817
+  "chars": 154618
 }

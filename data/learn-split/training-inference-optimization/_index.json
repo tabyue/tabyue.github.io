@@ -1,7 +1,7 @@
 {
   "id": "training-inference-optimization",
   "name": "模型训练与推理优化",
-  "lastUpdated": "2026-10-22T08:55",
+  "lastUpdated": "2026-10-27",
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 50,
@@ -66,13 +66,13 @@
     {
       "id": "sec-01",
       "title": "深度学习训练基础：从反向传播到优化器",
-      "lastUpdated": "2026-04-28T19:38",
-      "chars": 3898,
+      "lastUpdated": "2026-10-27",
+      "chars": 6657,
       "shortTitle": "深度学习训练基础",
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 6,
       "headings": [
         "1. 前向传播",
         "2. 损失函数",
@@ -81,27 +81,29 @@
         "5. 学习率调度",
         "6. 训练稳定性技巧",
         "7. 显存分析",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "在讨论分布式训练、量化压缩之前，必须先理解训练的基本机制——前向传播、损失计算、反向传播和参数更新。"
     },
     {
       "id": "sec-02",
       "title": "GPU 架构与 CUDA 编程入门",
-      "lastUpdated": "2026-04-29T15:05",
-      "chars": 3751,
+      "lastUpdated": "2026-10-27",
+      "chars": 5577,
       "shortTitle": "GPU 架构与 CUDA 编程入门",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "1. CPU vs GPU 架构",
         "2. NVIDIA GPU 层次结构",
         "3. CUDA 编程基础",
         "4. 显存管理",
         "5. 性能分析工具",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "深度学习训练的速度取决于 GPU。理解 GPU 架构才能写出高效的训练/推理代码，也才能理解为什么某些操作慢、显存为什么不够。"
     },
@@ -129,14 +131,14 @@
     {
       "id": "sec-04",
       "title": "模型并行与流水线并行：突破单卡显存限制",
-      "lastUpdated": "2026-10-20T15:40",
-      "chars": 6054,
+      "lastUpdated": "2026-10-27",
+      "chars": 8055,
       "shortTitle": "模型并行与流水线并行",
       "difficulty": "中级",
       "estimatedMinutes": 22,
       "isBrief": true,
       "tier": 1,
-      "readingMinutes": 7,
+      "readingMinutes": 9,
       "headings": [
         "1. 三种并行对比",
         "2. 数据并行（DP / DDP / FSDP）",
@@ -149,7 +151,8 @@
         "三种并行的通信量对比",
         "组合时的配置顺序",
         "一个自检清单",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "当模型太大放不进单张 GPU 时（7B+ 参数的 VLA 模型），需要将模型切分到多张 GPU 上。本节讲解三种并行策略。"
     },
@@ -198,8 +201,8 @@
     {
       "id": "sec-07",
       "title": "端侧推理部署",
-      "lastUpdated": "",
-      "chars": 7122,
+      "lastUpdated": "2026-10-27",
+      "chars": 7284,
       "shortTitle": "端侧推理部署",
       "difficulty": "中级",
       "estimatedMinutes": 8,
@@ -212,19 +215,18 @@
         "练习",
         "参考答案"
       ],
-      "summary": "1. 在 Jetson 上部署一个 YOLO 检测器，测量 FPS"
+      "summary": "注：价格为不同时期的参考价。2026 年 7 月 NVIDIA 上调了 Jetson 全线售价（如 AGX Thor 开发套件调至 5499 美元、AGX Orin 开发套件由 1999 美元调至 3499 美元），选型以官方当期报价为准。"
     },
     {
       "id": "sec-08",
       "title": "推理优化全景：从量化到 Serving",
-      "lastUpdated": "2026-04-30T10:22",
-      "chars": 2460,
+      "lastUpdated": "2026-10-27",
+      "chars": 9016,
       "shortTitle": "推理优化全景",
       "difficulty": "中级",
       "estimatedMinutes": 3,
-      "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 9,
       "headings": [
         "1. 推理优化层次",
         "2. 量化（Quantization）",
@@ -232,7 +234,16 @@
         "4. KV-Cache 与 PagedAttention",
         "5. Serving 框架对比",
         "6. 机器人推理的特殊需求",
-        "练习题"
+        "7. 延迟构成拆解：用 Roofline 判断瓶颈",
+        "8. 量化：PTQ 与 QAT、权重与激活、INT8 与 INT4",
+        "9. KV cache 的显存账与 PagedAttention",
+        "10. 批处理：静态 batching 与 continuous batching",
+        "11. 投机解码：期望收益怎么算",
+        "12. 机器人例子：控制频率约束下怎么取舍",
+        "13. 常见误区",
+        "14. 与相邻章节的关系",
+        "练习题",
+        "参考答案"
       ],
       "summary": "训练完成后，模型需要以最低延迟、最高吞吐量服务。本节系统讲解推理优化的完整技术栈。"
     },
@@ -261,33 +272,34 @@
     {
       "id": "sec-10",
       "title": "CUDA编程基础与自定义算子优化",
-      "lastUpdated": "2026-04-27T00:45",
-      "chars": 3149,
+      "lastUpdated": "2026-10-27",
+      "chars": 5149,
       "shortTitle": "CUDA编程基础与自定义算子优化",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "为什么机器人工程师需要了解CUDA？",
         "CUDA编程模型",
         "机器人场景的CUDA优化目标",
         "PyTorch自定义CUDA扩展",
         "TensorRT部署优化",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "机器人上的VLA/感知模型运行在GPU上(Jetson Orin等)。当标准PyTorch算子无法满足实时性要求时，需要编写自定义CUDA kernel来加速关键路径。"
     },
     {
       "id": "sec-11",
       "title": "LoRA 与 PEFT：大模型高效微调完整指南",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 3646,
+      "lastUpdated": "2026-10-27",
+      "chars": 5353,
       "shortTitle": "LoRA 与 PEFT",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "LoRA 与 PEFT 完整指南",
         "1. 为什么需要 PEFT？",
@@ -297,39 +309,41 @@
         "5. QLoRA：4-bit 量化 + LoRA",
         "6. VLA 专用的 PEFT 设计",
         "7. 超参数与性能对照",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "7B+ VLA 模型全参数微调需要几百 GB 显存——PEFT（Parameter-Efficient Fine-Tuning）技术让普通用户也能微调大模型。"
     },
     {
       "id": "sec-12",
       "title": "模型蒸馏与VLA轻量化部署",
-      "lastUpdated": "2026-04-27T14:46",
-      "chars": 3951,
+      "lastUpdated": "2026-10-27",
+      "chars": 5154,
       "shortTitle": "模型蒸馏与VLA轻量化部署",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "为什么需要模型蒸馏？",
         "蒸馏的三种范式",
         "VLA蒸馏Pipeline",
         "端侧部署优化组合",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "VLA模型越来越大(7B-34B参数)，但机器人端侧算力有限(Jetson Orin 275 TOPS)。模型蒸馏将大模型(Teacher)的知识压缩到小模型(Student)中。"
     },
     {
       "id": "sec-13",
       "title": "VLA 实时推理工程化：FlashAttention、KV Cache、Async Chunked Action 与端到端延迟预算",
-      "lastUpdated": "2026-05-05T06:10",
-      "chars": 12801,
+      "lastUpdated": "2026-10-27",
+      "chars": 14739,
       "shortTitle": "VLA 实时推理工程化",
       "difficulty": "高级",
       "estimatedMinutes": 13,
       "tier": 2,
-      "readingMinutes": 13,
+      "readingMinutes": 16,
       "headings": [
         "1. 先算账：VLA 推理时间到底花在哪？",
         "2. 为什么机器人需要不止 10Hz？控制论视角的延迟预算",
@@ -350,20 +364,21 @@
         "8. 实战：从 OpenVLA 到真机部署的完整脚本",
         "9. 工程陷阱清单",
         "10. 延伸阅读",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "VLA（Vision-Language-Action）模型落地真机的最后一公里，不是精度，是延迟。论文里 94% 的成功率在机器人上跑崩，往往是推理延迟 250ms 把 30Hz 闭环拖成了 4Hz，导致姿态误差发散。本节把一次 VLA 推理拆解到微秒级，讲透 FlashAttention、KV Cache、PagedAttention、Speculativ"
     },
     {
       "id": "sec-14",
       "title": "实战：训练 VLA 模型的完整流程",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 4371,
+      "lastUpdated": "2026-10-27",
+      "chars": 5734,
       "shortTitle": "实战：训练 VLA 模型的完整流程",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "1. VLA 模型架构概览",
         "2. 数据准备",
@@ -372,7 +387,8 @@
         "5. 评估",
         "6. 部署优化",
         "7. 常见问题与排查",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "VLA（Vision-Language-Action）模型是具身智能的前沿方向。本节以 OpenVLA 为例讲解从数据到部署的完整训练流程。"
     },
@@ -428,8 +444,8 @@
     {
       "id": "sec-17",
       "title": "VLA 推理效率的三条路线：视觉 Token 剪枝 × 脉冲化 × 动作分词",
-      "lastUpdated": "2026-10-08T16:30",
-      "chars": 10433,
+      "lastUpdated": "2026-10-27",
+      "chars": 10436,
       "shortTitle": "VLA 推理效率的三条路线",
       "difficulty": "高级",
       "estimatedMinutes": 14,
@@ -483,7 +499,7 @@
       "summary": "在讨论任何加速技巧之前，先把约束摆清楚。机器人闭环里，策略的输出频率直接决定它能控制什么样的动态："
     }
   ],
-  "readingMinutes": 133,
+  "readingMinutes": 157,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 120951
+  "chars": 142469
 }

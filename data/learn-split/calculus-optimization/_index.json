@@ -60,15 +60,15 @@
     }
   ],
   "weeklyPlan": "**第1-2周**：多元微积分复习，重做梯度和 Jacobian 练习题（MIT 18.02 讲义）\n**第3周**：凸集、凸函数、凸优化问题建模（Boyd Ch1-3）\n**第4周**：对偶理论、KKT 条件（Boyd Ch4-5）\n**第5周**：梯度下降、牛顿法、L-BFGS 实现与对比\n**第6周**：CVXPY 实践，解一个机器人轨迹优化问题",
-  "lastUpdated": "2026-10-26",
+  "lastUpdated": "2026-10-27",
   "maturity": "comprehensive",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
       "title": "实数的完备性与极限理论：数列、级数、函数空间",
-      "lastUpdated": "2026-04-28T16:00",
-      "chars": 6217,
+      "lastUpdated": "2026-10-27",
+      "chars": 6235,
       "shortTitle": "实数的完备性与极限理论",
       "difficulty": "入门",
       "estimatedMinutes": 6,
@@ -93,8 +93,8 @@
     {
       "id": "sec-02",
       "title": "微积分的数学基础：极限、连续、可微的本质",
-      "lastUpdated": "2026-04-28T16:00",
-      "chars": 8751,
+      "lastUpdated": "2026-10-27",
+      "chars": 8756,
       "shortTitle": "微积分的数学基础",
       "difficulty": "入门",
       "estimatedMinutes": 7,
@@ -123,8 +123,8 @@
     {
       "id": "sec-03",
       "title": "一元微分学的完整理论：导数、微分法则、隐函数、高阶",
-      "lastUpdated": "2026-04-28T16:00",
-      "chars": 7356,
+      "lastUpdated": "2026-10-27",
+      "chars": 7350,
       "shortTitle": "一元微分学的完整理论",
       "difficulty": "入门",
       "estimatedMinutes": 5,
@@ -151,8 +151,8 @@
     {
       "id": "sec-04",
       "title": "积分理论：Riemann 积分、重积分、换元、Fubini",
-      "lastUpdated": "2026-04-28T16:00",
-      "chars": 6395,
+      "lastUpdated": "2026-10-27",
+      "chars": 6403,
       "shortTitle": "积分理论",
       "difficulty": "入门",
       "estimatedMinutes": 5,
@@ -274,8 +274,8 @@
     {
       "id": "sec-09",
       "title": "凸优化基础",
-      "lastUpdated": "",
-      "chars": 7048,
+      "lastUpdated": "2026-10-27",
+      "chars": 7067,
       "shortTitle": "凸优化基础",
       "difficulty": "入门",
       "estimatedMinutes": 8,
@@ -316,8 +316,8 @@
     {
       "id": "sec-11",
       "title": "约束优化理论：KKT 条件、对偶理论、Slater 条件",
-      "lastUpdated": "2026-04-28T16:00",
-      "chars": 5195,
+      "lastUpdated": "2026-10-27",
+      "chars": 5204,
       "shortTitle": "约束优化理论",
       "difficulty": "高级",
       "estimatedMinutes": 4,
@@ -364,13 +364,13 @@
     {
       "id": "sec-13",
       "title": "机器人轨迹优化实战（CVXPY/CasADi）",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 3767,
+      "lastUpdated": "2026-10-27",
+      "chars": 8068,
       "shortTitle": "机器人轨迹优化实战",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 8,
       "headings": [
         "从理论到实践：用优化工具解决真实机器人问题",
         "为什么机器人需要轨迹优化？",
@@ -379,6 +379,7 @@
         "CasADi：非线性轨迹优化与MPC",
         "工具选型指南",
         "练习",
+        "参考答案",
         "iLQR / DDP：非线性轨迹优化",
         "时间最优轨迹",
         "练习补充"
@@ -410,19 +411,20 @@
     {
       "id": "sec-15",
       "title": "二阶锥规划(SOCP)与机器人力分配",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 2826,
+      "lastUpdated": "2026-10-27",
+      "chars": 5330,
       "shortTitle": "二阶锥规划",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 6,
       "headings": [
         "超越线性规划：二阶锥规划",
         "SOCP标准形式",
         "多接触力分配",
         "练习",
+        "参考答案",
         "二阶锥约束的几何意义",
         "机器人力分配详解",
         "练习补充"
@@ -432,37 +434,43 @@
     {
       "id": "sec-16",
       "title": "变分法初步：泛函极值与最优轨迹",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 2543,
+      "lastUpdated": "2026-10-27",
+      "chars": 9035,
       "shortTitle": "变分法初步",
       "difficulty": "高级",
       "estimatedMinutes": 3,
-      "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 8,
       "headings": [
-        "变分法：从“点的极值”到“函数的极值”",
+        "变分法：从「点的极值」到「函数的极值」",
         "一、泛函与变分",
         "二、Euler-Lagrange 方程",
+        "2.1 推导",
+        "2.2 三个常用推广",
         "三、经典例子",
-        "四、带约束的变分问题",
-        "五、Hamiltonian 与 Pontryagin 极大原理",
-        "六、数值变分法",
-        "七、练习"
+        "四、机器人中的例子：最小 jerk 轨迹",
+        "numpy 验证：离散直接法收敛到五次多项式",
+        "五、带约束的变分问题",
+        "六、Hamiltonian 与 Pontryagin 极大原理",
+        "七、数值变分法",
+        "八、常见误区",
+        "九、与相邻章节的关系",
+        "十、练习",
+        "参考答案"
       ],
       "summary": "普通微积分求函数 $f(x)$ 的极值。变分法求泛函 $J[y] = \\int F(x, y, y') dx$ 的极值——这里未知量不是一个数，而是一整条曲线 $y(x)$。"
     },
     {
       "id": "sec-17",
       "title": "动力系统与稳定性：从相图到 Lyapunov",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 2642,
+      "lastUpdated": "2026-10-27",
+      "chars": 4443,
       "shortTitle": "动力系统与稳定性",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 4,
       "headings": [
         "动力系统：微积分遇见控制论",
         "一、常微分方程（ODE）基础",
@@ -471,20 +479,21 @@
         "四、Lyapunov 稳定性理论",
         "五、离散动力系统",
         "六、混沌与分岔（初步）",
-        "七、练习"
+        "七、练习",
+        "参考答案"
       ],
       "summary": "动力系统研究“随时间演化的状态”——机器人的位姿、电机的转速、神经网络训练的损失曲线——都是动力系统。"
     },
     {
       "id": "sec-18",
       "title": "自动微分与随机优化：深度学习的数学引擎",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 3140,
+      "lastUpdated": "2026-10-27",
+      "chars": 5246,
       "shortTitle": "自动微分与随机优化",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "从手算梯度到计算图",
         "一、三种求导方式",
@@ -495,7 +504,8 @@
         "六、方差缩减与现代优化器",
         "七、梯度估计的方差与偏差",
         "八、非凸优化的现代理解",
-        "九、练习"
+        "九、练习",
+        "参考答案"
       ],
       "summary": "深度学习之所以能训练数十亿参数的网络，靠的是两个技术：自动微分（AD）算梯度、随机梯度下降（SGD）做优化。它们各有深刻的数学基础。"
     },
@@ -533,7 +543,7 @@
       "summary": "在机器人学和深度学习中，经常遇到以下形式的期望计算："
     }
   ],
-  "readingMinutes": 99,
+  "readingMinutes": 114,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 105337
+  "chars": 122594
 }

@@ -60,7 +60,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：RealSense 配置 + Open3D 点云处理\n**第2-3周**：点云分割/聚类/配准\n**第4-5周**：6DoF 位姿估计\n**第6周**：SLAM 入门 + RTAB-Map 实践\n**第7周**：NeRF/3DGS 原理与 Nerfstudio 实践",
-  "lastUpdated": "2026-10-20T11:40",
+  "lastUpdated": "2026-10-27",
   "maturity": "growing",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -173,13 +173,13 @@
     {
       "id": "sec-06",
       "title": "NeRF 与 3D Gaussian Splatting 在机器人中的应用",
-      "lastUpdated": "2026-04-22T19:28",
-      "chars": 12731,
+      "lastUpdated": "2026-10-27",
+      "chars": 14402,
       "shortTitle": "NeRF 与 3D Gaussian…",
       "difficulty": "高级",
       "estimatedMinutes": 14,
       "tier": 2,
-      "readingMinutes": 14,
+      "readingMinutes": 16,
       "headings": [
         "超越点云：神经 3D 表示的崛起",
         "NeRF：神经辐射场原理",
@@ -190,39 +190,44 @@
         "3. 语义NeRF与机器人交互",
         "4. 3DGS 用于机器人 Sim-to-Real",
         "NeRF/3DGS 的局限与工程考量",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "传统点云是离散的 3D 表示，有固有局限：稀疏、无法表示连续表面、从单一视角观测时存在大量遮挡区域。近年来，神经辐射场（NeRF） 和 3D 高斯溅射（3D Gaussian Splatting, 3DGS） 两大技术革命性地改变了 3D 场景表示，并正在深刻影响机器人领域。"
     },
     {
       "id": "sec-07",
       "title": "透明/反光物体的深度感知与补全",
-      "lastUpdated": "2026-04-27T14:43",
-      "chars": 2822,
+      "lastUpdated": "2026-10-27",
+      "chars": 8331,
       "shortTitle": "透明/反光物体的深度感知与补全",
       "difficulty": "高级",
       "estimatedMinutes": 3,
-      "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 11,
       "headings": [
         "深度相机的致命弱点",
         "问题根源",
+        "失效机理拆解",
         "解决方案",
-        "练习"
+        "方法谱系",
+        "评测指标",
+        "抓取工程实践",
+        "练习",
+        "参考答案"
       ],
-      "summary": "结构光和ToF深度相机在透明物体（玻璃杯、塑料瓶）和反光物体（金属件、镜面）上会产生严重的深度缺失或错误。这在机器人抓取中是高频问题——厨房场景中30%+物体涉及透明/反光。"
+      "summary": "结构光和ToF深度相机在透明物体（玻璃杯、塑料瓶）和反光物体（金属件、镜面）上会产生严重的深度缺失或错误。这在机器人抓取中是高频问题——厨房、实验室、零售货架里玻璃器皿、塑料包装和金属件随处可见，而它们恰好是主动深度传感最不擅长的材质。"
     },
     {
       "id": "sec-08",
       "title": "多视角视觉融合与主动感知（Active Perception）",
-      "lastUpdated": "2026-04-27T16:05",
-      "chars": 11073,
+      "lastUpdated": "2026-10-27",
+      "chars": 11826,
       "shortTitle": "多视角视觉融合与主动感知",
       "difficulty": "高级",
       "estimatedMinutes": 12,
       "tier": 2,
-      "readingMinutes": 12,
+      "readingMinutes": 14,
       "headings": [
         "为什么单一视角不够？",
         "多视角感知的数学基础",
@@ -230,7 +235,8 @@
         "主动感知（Active Perception）",
         "多视角融合在不同机器人系统中的应用",
         "设计多视角系统的工程考量",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "机器人操作中的一个核心痛点是视觉遮挡——手指抓取物体时恰好挡住了腕部相机的视野，精密操作时看不清关键接触点。2026年arXiv论文FingerViP(2604.21331)首次系统性地提出通过指尖微型相机解决这一问题，开辟了多视角感知的新范式。"
     },
@@ -281,14 +287,14 @@
     {
       "id": "sec-10",
       "title": "语言引导3D场景理解：3D-LLM与LEO",
-      "lastUpdated": "2026-04-27T00:45",
-      "chars": 4537,
+      "lastUpdated": "2026-10-27",
+      "chars": 6376,
       "shortTitle": "语言引导3D场景理解",
       "difficulty": "高级",
       "estimatedMinutes": 5,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 5,
+      "readingMinutes": 7,
       "headings": [
         "为什么需要语言引导的3D理解？",
         "从2D VLM到3D场景理解",
@@ -297,7 +303,8 @@
         "3D特征提取：从点云到Token",
         "开放词汇3D检测",
         "前沿工作",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "传统3D视觉只做几何处理（分割、检测、重建），不理解语义。但机器人需要理解'把红色的杯子放到微波炉里面'——这需要将语言与3D空间紧密绑定。"
     },
@@ -343,7 +350,7 @@
       "summary": "点云告诉你物体表面在哪里。这是一件很基础、也很不够用的事。"
     }
   ],
-  "readingMinutes": 130,
+  "readingMinutes": 144,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 112171
+  "chars": 121943
 }

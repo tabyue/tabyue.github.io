@@ -4,7 +4,7 @@
   "stage": "阶段六：项目实战",
   "importance": "进阶实战",
   "estimatedHours": 50,
-  "lastUpdated": "2026-10-20T15:40",
+  "lastUpdated": "2026-10-27",
   "description": "构建一个能在室内自主导航的移动机器人。从 SLAM 建图到 Nav2 导航的完整实战。",
   "prerequisites": [
     "ROS2",
@@ -99,14 +99,14 @@
     {
       "id": "sec-03",
       "title": "定位技术：从 AMCL 到视觉-惯性里程计",
-      "lastUpdated": "2026-10-20T15:40",
-      "chars": 4645,
+      "lastUpdated": "2026-10-27",
+      "chars": 7041,
       "shortTitle": "定位技术",
       "difficulty": "中级",
       "estimatedMinutes": 22,
       "isBrief": true,
       "tier": 0,
-      "readingMinutes": 6,
+      "readingMinutes": 9,
       "headings": [
         "机器人定位技术",
         "1. 定位问题分类",
@@ -120,20 +120,21 @@
         "激光、视觉还是融合",
         "一个最小可运行的 EKF 融合",
         "定位出问题时的排查顺序",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "导航的第一步是知道\"我在哪\"——定位（Localization）是所有后续决策的基础。本节系统讲解移动机器人定位技术。"
     },
     {
       "id": "sec-04",
       "title": "全局与局部路径规划算法",
-      "lastUpdated": "2026-04-29T15:05",
-      "chars": 3570,
+      "lastUpdated": "2026-10-27",
+      "chars": 8398,
       "shortTitle": "全局与局部路径规划算法",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 4,
+      "readingMinutes": 10,
       "headings": [
         "路径规划算法",
         "1. 全局规划：图搜索",
@@ -145,7 +146,8 @@
         "3. 算法对比",
         "4. ROS2 Nav2 导航栈",
         "5. 路径平滑",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "有了地图，下一步是在地图上找到从起点到终点的路径。本节系统讲解全局规划（找路径）和局部规划（避障行走）。"
     },
@@ -235,13 +237,13 @@
     {
       "id": "sec-09",
       "title": "状态估计与贝叶斯滤波：导航系统的“隐形大脑”",
-      "lastUpdated": "2026-05-03T09:45",
-      "chars": 13592,
+      "lastUpdated": "2026-10-27",
+      "chars": 18919,
       "shortTitle": "状态估计与贝叶斯滤波",
       "difficulty": "中级",
       "estimatedMinutes": 14,
       "tier": 2,
-      "readingMinutes": 14,
+      "readingMinutes": 20,
       "headings": [
         "1. 为什么“状态估计”是移动机器人最底层的问题",
         "2. 状态空间模型：把物理规律写成两条方程",
@@ -256,6 +258,7 @@
         "11. 状态估计 vs SLAM vs VIO：终于可以画出一张完整图",
         "12. 工程检查清单（上车前对照一遍）",
         "13. 练习题",
+        "参考答案",
         "14. 延伸阅读与下一步"
       ],
       "summary": "你手里的机器人能动、能看、能建图，但它的所有“知识”都只是“对世界的带噪声观测”："
@@ -263,13 +266,13 @@
     {
       "id": "sec-10",
       "title": "MPPI控制器：从DWA到模型预测路径积分",
-      "lastUpdated": "2026-04-27T14:40",
-      "chars": 11157,
+      "lastUpdated": "2026-10-27",
+      "chars": 14146,
       "shortTitle": "MPPI控制器",
       "difficulty": "高级",
       "estimatedMinutes": 12,
       "tier": 2,
-      "readingMinutes": 12,
+      "readingMinutes": 16,
       "headings": [
         "为什么需要MPPI？",
         "DWA vs MPPI 核心区别",
@@ -279,41 +282,43 @@
         "Nav2 中使用 MPPI",
         "MPPI vs DWB 实测对比",
         "GPU 加速 MPPI",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "DWA（Dynamic Window Approach）是Nav2默认的局部规划器，简单可靠但有局限：速度空间离散采样导致动作不够平滑、前瞻时间短容易陷入局部最优、难以处理复杂的非凸约束。MPPI（Model Predictive Path Integral）是Nav2 Humble开始引入的新一代局部控制器，通过蒙特卡洛采样+路径积分的方式实现更优的局部导"
     },
     {
       "id": "sec-11",
       "title": "语义导航与视觉-语言导航（VLN）",
-      "lastUpdated": "2026-04-26T22:21",
-      "chars": 2791,
+      "lastUpdated": "2026-10-27",
+      "chars": 4814,
       "shortTitle": "语义导航与视觉-语言导航",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 6,
       "headings": [
         "超越点到点导航：理解语义的导航",
         "语义导航的三个层级",
         "语义地图构建",
         "VLN（视觉-语言导航）前沿",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "传统导航：“去坐标(3.2, 1.5)”——需要精确的地图坐标。 语义导航：“去厨房拿杯水”——需要理解语义（厨房在哪？水在哪？）。"
     },
     {
       "id": "sec-12",
       "title": "社交导航与动态环境避障",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 2891,
+      "lastUpdated": "2026-10-27",
+      "chars": 7376,
       "shortTitle": "社交导航与动态环境避障",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 8,
       "headings": [
         "1. 传统避障 vs 社交导航",
         "2. 社交距离（Proxemics）",
@@ -323,21 +328,22 @@
         "6. 动态障碍处理",
         "7. 社交导航的评估指标",
         "8. 主要数据集",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "室内服务机器人、送餐机器人、商场导购——这些场景中机器人和人共享空间。\"能避开人\"只是基本要求，真正的挑战是让人觉得机器人不烦人——这就是社交导航。"
     },
     {
       "id": "sec-13",
       "title": "多机器人协同导航：从分布式规划到蜂群",
-      "lastUpdated": "2026-04-30T11:07",
-      "chars": 2002,
+      "lastUpdated": "2026-10-27",
+      "chars": 5991,
       "shortTitle": "多机器人协同导航",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 7,
       "headings": [
         "1. 多机器人系统的层次",
         "2. 碰撞避免：RVO / ORCA",
@@ -345,27 +351,29 @@
         "4. 编队控制",
         "5. 蜂群智能",
         "6. 协同 SLAM",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "单个机器人是\"点\"，多机器人是\"系统\"——从 2 台到 100 台协同，面临着全新的挑战。"
     },
     {
       "id": "sec-14",
       "title": "多机器人协同SLAM与任务调度",
-      "lastUpdated": "2026-04-27T12:01",
-      "chars": 3834,
+      "lastUpdated": "2026-10-27",
+      "chars": 5843,
       "shortTitle": "多机器人协同SLAM与任务调度",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 7,
       "headings": [
         "从单机到多机",
         "多机器人SLAM架构",
         "地图融合关键技术",
         "任务调度算法",
         "冲突避免",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "单台移动机器人建图慢、覆盖有限。多机器人协同可以并行探索，大幅提高效率，但带来新的挑战：地图融合、任务分配、冲突避免。"
     },
@@ -494,7 +502,7 @@
       "summary": "在前面几节里，我们把导航系统拆成了定位、建图、规划、控制这些模块，每个模块都有成熟的算法与工程实现。但当任务从「从 A 点走到 B 点」变成「去厨房把昨天放在抽屉里的那把螺丝刀拿来」，成功率会断崖式下跌。"
     }
   ],
-  "readingMinutes": 131,
+  "readingMinutes": 165,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 113911
+  "chars": 141957
 }

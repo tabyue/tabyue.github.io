@@ -53,7 +53,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：NumPy 向量化运算 + Matplotlib 可视化，实现一个卡尔曼滤波器\n**第2周**：PyTorch 基础，训练一个 MNIST 分类器，学会用 Wandb 记录实验",
-  "lastUpdated": "2026-10-13T10:36",
+  "lastUpdated": "2026-10-27",
   "maturity": "comprehensive",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -84,13 +84,13 @@
     {
       "id": "sec-02",
       "title": "控制流与函数：从 if 到 lambda 的完整指南",
-      "lastUpdated": "2026-04-28T17:11",
-      "chars": 3911,
+      "lastUpdated": "2026-10-27",
+      "chars": 6795,
       "shortTitle": "控制流与函数",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 4,
+      "readingMinutes": 8,
       "headings": [
         "程序的骨架：控制流",
         "一、条件语句",
@@ -100,20 +100,21 @@
         "五、Lambda 与高阶函数",
         "六、递归",
         "七、迭代器与生成器（为下一节“高级特性”铺路）",
-        "八、练习"
+        "八、练习",
+        "参考答案"
       ],
       "summary": "程序不只是从上到下执行——需要判断（if）、循环（for/while）、跳转（break/continue/return）来构建复杂逻辑。"
     },
     {
       "id": "sec-03",
       "title": "面向对象编程：类、继承、多态与 Python 对象协议",
-      "lastUpdated": "2026-04-28T17:11",
-      "chars": 5353,
+      "lastUpdated": "2026-10-27",
+      "chars": 9413,
       "shortTitle": "面向对象编程",
       "difficulty": "入门",
       "estimatedMinutes": 6,
       "tier": 0,
-      "readingMinutes": 6,
+      "readingMinutes": 10,
       "headings": [
         "OOP：组织复杂系统的工具",
         "一、类的基本定义",
@@ -123,20 +124,21 @@
         "五、属性与描述符",
         "六、组合 vs 继承",
         "七、Mixin 与多重继承",
-        "八、练习"
+        "八、练习",
+        "参考答案"
       ],
       "summary": "机器人系统有 关节(Joint)、连杆(Link)、传感器(Sensor)、控制器(Controller)——每种都有自己的数据和行为。面向对象编程（OOP）让你用类把相关数据和函数打包，用继承复用代码，用多态写出灵活的接口。"
     },
     {
       "id": "sec-04",
       "title": "模块、包与标准库：组织代码与高效复用",
-      "lastUpdated": "2026-04-28T17:11",
-      "chars": 3485,
+      "lastUpdated": "2026-10-27",
+      "chars": 6674,
       "shortTitle": "模块、包与标准库",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 4,
+      "readingMinutes": 7,
       "headings": [
         "从单文件到工程",
         "一、模块（Module）",
@@ -145,20 +147,21 @@
         "四、虚拟环境与依赖管理",
         "五、标准库精选",
         "六、if __name__ == '__main__' 的意义",
-        "七、练习"
+        "七、练习",
+        "参考答案"
       ],
       "summary": "小脚本可以一个 .py 搞定。但机器人项目有成百上千个文件——需要模块和包来组织代码，需要虚拟环境来管理依赖，需要标准库来避免重复造轮子。"
     },
     {
       "id": "sec-05",
       "title": "异常处理与文件 I/O：健壮的 Python 程序",
-      "lastUpdated": "2026-04-28T17:11",
-      "chars": 4435,
+      "lastUpdated": "2026-10-27",
+      "chars": 8088,
       "shortTitle": "异常处理与文件 I/O",
       "difficulty": "入门",
       "estimatedMinutes": 5,
       "tier": 0,
-      "readingMinutes": 5,
+      "readingMinutes": 9,
       "headings": [
         "程序会出错——关键是怎么处理",
         "一、异常基础",
@@ -168,7 +171,8 @@
         "五、文件 I/O",
         "六、日志系统（logging）",
         "七、EAFP vs LBYL",
-        "八、练习"
+        "八、练习",
+        "参考答案"
       ],
       "summary": "传感器掉线、文件不存在、网络超时、数据格式错误——机器人系统时时刻刻面对异常。Python 的异常机制让你优雅地处理错误而非崩溃。"
     },
@@ -283,13 +287,13 @@
     {
       "id": "sec-11",
       "title": "科学计算实战：从数据到可视化的完整工具链",
-      "lastUpdated": "2026-04-30T11:07",
-      "chars": 5094,
+      "lastUpdated": "2026-10-27",
+      "chars": 8123,
       "shortTitle": "科学计算实战",
       "difficulty": "入门",
       "estimatedMinutes": 6,
       "tier": 2,
-      "readingMinutes": 6,
+      "readingMinutes": 9,
       "headings": [
         "Python 科学计算实战",
         "1. NumPy：一切的基础",
@@ -298,27 +302,29 @@
         "4. Matplotlib：数据可视化",
         "5. Jupyter Notebook 工作流",
         "6. 性能优化技巧",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "NumPy / SciPy / Pandas / Matplotlib 是 Python 科学计算的四大支柱。本节通过机器人场景的实际案例串起这些工具。"
     },
     {
       "id": "sec-12",
       "title": "asyncio异步编程与ROS2集成",
-      "lastUpdated": "2026-04-26T22:21",
-      "chars": 3718,
+      "lastUpdated": "2026-10-27",
+      "chars": 5572,
       "shortTitle": "asyncio异步编程与ROS2集成",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 7,
       "headings": [
         "为什么机器人编程需要异步？",
         "Python asyncio 基础",
         "asyncio + ROS2 集成",
         "实战模式：生产者-消费者 + asyncio.Queue",
         "异步 vs 多线程 vs 多进程",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "机器人系统中有大量I/O等待操作： - 等待相机图像（30Hz采集，每帧33ms） - 等待网络响应（VLA云端推理，100-500ms） - 等待传感器数据（IMU中断、力传感器轮询） - 等待用户输入（语音指令、远程控制）"
     },
@@ -362,36 +368,38 @@
     {
       "id": "sec-14",
       "title": "Pydantic数据建模与机器人配置管理",
-      "lastUpdated": "2026-04-27T12:01",
-      "chars": 3132,
+      "lastUpdated": "2026-10-27",
+      "chars": 5865,
       "shortTitle": "Pydantic数据建模与机器人配置管理",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 7,
       "headings": [
         "为什么需要Pydantic？",
         "Pydantic vs 字典",
         "机器人项目配置管理",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "机器人项目有大量配置（URDF路径、相机参数、控制频率、模型路径等），用字典传来传去容易出错（拼写错误、类型错误、缺少字段）。Pydantic 用 Python 类型注解定义数据模型，自动验证和转换。"
     },
     {
       "id": "sec-15",
       "title": "并行计算：multiprocessing与Ray加速数据处理",
-      "lastUpdated": "2026-04-28T12:06",
-      "chars": 2171,
+      "lastUpdated": "2026-10-27",
+      "chars": 4214,
       "shortTitle": "并行计算",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "Python的GIL困境与解决方案",
         "方案对比",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "Python的全局解释器锁(GIL)限制了多线程的CPU并行。机器人数据处理（图像增强、点云处理、轨迹计算）需要真正的并行加速。"
     },
@@ -420,7 +428,7 @@
       "summary": "2026 年开源 VLA 基座迎来井喷：高德 ABot-M0 600 万轨迹、生数 Motus 跨本体统一、ICLR 2026 D2E 1B 参数 96.6% LIBERO，背后都是同一个故事——数据工程比模型架构更难。"
     }
   ],
-  "readingMinutes": 115,
+  "readingMinutes": 141,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 102925
+  "chars": 126370
 }

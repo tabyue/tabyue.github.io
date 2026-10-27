@@ -4,7 +4,7 @@
   "stage": "阶段四：AI 大脑",
   "importance": "前沿",
   "estimatedHours": 40,
-  "lastUpdated": "2026-10-26",
+  "lastUpdated": "2026-10-27",
   "description": "结合视觉理解、语言指令和动作生成的端到端模型。VLA 是具身智能的前沿方向。",
   "prerequisites": [
     "能解释图像特征、token、自注意力和监督训练；可补学 [CNN 架构](/learn/deep-learning/1)、[Transformer](/learn/deep-learning/2) 与 [反向传播](/learn/deep-learning/5)。",
@@ -148,19 +148,20 @@
     {
       "id": "sec-04",
       "title": "VLA评估基准与系统性测试方法",
-      "lastUpdated": "2026-04-27T14:43",
-      "chars": 3555,
+      "lastUpdated": "2026-10-27",
+      "chars": 5323,
       "shortTitle": "VLA评估基准与系统性测试方法",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "为什么需要标准化评估？",
         "主流评估基准",
         "系统性评估框架",
         "评估最佳实践",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "VLA领域缺乏统一的评估标准，不同论文用不同的任务、机器人、指标，结果难以横向对比。"
     },
@@ -188,14 +189,14 @@
     {
       "id": "sec-06",
       "title": "VLA 训练三阶段完整配方：从 VLM 预训练到 Mid-training 到动作精调",
-      "lastUpdated": "2026-04-30T07:30",
-      "chars": 11343,
+      "lastUpdated": "2026-10-27",
+      "chars": 13384,
       "shortTitle": "VLA 训练三阶段完整配方",
       "difficulty": "高级",
       "estimatedMinutes": 13,
       "isFrontier": true,
       "tier": 2,
-      "readingMinutes": 13,
+      "readingMinutes": 16,
       "headings": [
         "本节关注的问题",
         "1. 三阶段范式总览",
@@ -211,7 +212,8 @@
         "8. 常见工程陷阱（2026 年最新）",
         "9. 动手练习",
         "10. 延伸阅读",
-        "本节小结"
+        "本节小结",
+        "参考答案"
       ],
       "summary": "过去两年 VLA（Vision-Language-Action）研究大多默认一条简单路径：拿一个开源 VLM（PaliGemma / Qwen-VL / LLaVA） → 直接在机器人动作数据上 fine-tune → 得到 VLA。这条路径简单粗暴，但从 2026 年上半年开始，越来越多实证工作发现它存在两个被严重低估的缺陷："
     },
@@ -264,24 +266,31 @@
     {
       "id": "sec-09",
       "title": "GR00T N1与人形机器人VLA部署实战",
-      "lastUpdated": "2026-04-26T22:21",
-      "chars": 2620,
+      "lastUpdated": "2026-10-27",
+      "chars": 9008,
       "shortTitle": "GR00T N1与人形机器人VLA部署实战",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isFrontier": true,
-      "isBrief": true,
       "tier": 3,
-      "readingMinutes": 3,
+      "readingMinutes": 11,
       "headings": [
         "NVIDIA GR00T N1：专为人形机器人设计的VLA",
+        "直觉：为什么人形需要「快慢两套脑子」",
         "GR00T N1 架构",
+        "动作头的训练目标",
+        "数据金字塔",
         "与其他VLA模型的对比",
         "人形VLA部署的挑战",
         "部署Pipeline代码框架",
-        "练习"
+        "端侧推理延迟预算拆解",
+        "部署检查清单",
+        "常见误区",
+        "与相邻章节的关系",
+        "练习",
+        "参考答案"
       ],
-      "summary": "GR00T N1 是NVIDIA于2026年初发布的人形机器人基础模型，基于Cosmos-Reason2骨干网络，专门针对人形机器人的全身控制场景设计。作为早期版本已在Isaac Lab中开放使用。"
+      "summary": "GR00T N1 是 NVIDIA 于 2025 年 3 月发布的人形机器人通用基础模型（技术报告 arXiv:2503.14734），开放了 GR00T-N1-2B 权重与训练/微调代码（Isaac-GR00T 仓库）。此后又有 N1.5、N1.6 等迭代；据官方仓库的 release notes，N1.6 起 System 2 改用 Cosmos-Rea"
     },
     {
       "id": "sec-10",
@@ -480,14 +489,14 @@
     {
       "id": "sec-16",
       "title": "VLA 世界模型工程范式跃迁：单 token 视觉带宽 × LoRA 紧凑适配（OneWM-VLA 2026-05 反直觉精读）",
-      "lastUpdated": "2026-05-13T03:28",
-      "chars": 6778,
+      "lastUpdated": "2026-10-27",
+      "chars": 8137,
       "shortTitle": "VLA 世界模型工程范式跃迁",
       "difficulty": "高级",
       "estimatedMinutes": 7,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 7,
+      "readingMinutes": 9,
       "headings": [
         "🔥 核心问题：VLA 世界模型为什么需要\"瘦身\"",
         "🏗️ Adaptive Attention Pooling：单 token 是怎么压出来的",
@@ -497,7 +506,8 @@
         "🚀 与门户已有内容的联动",
         "🛠️ 工程落地清单（如果你想跑 OneWM-VLA）",
         "📚 延伸阅读",
-        "💡 课后思考题"
+        "💡 课后思考题",
+        "参考答案"
       ],
       "summary": "🎯 学习目标：掌握\"单视觉 token 世界模型 + LoRA 紧凑适配\"这一 2026 年 5 月最新工程范式，理解为什么\"视觉带宽不是 VLA 长程能力上限\"——并能用 200 行代码把 π₀ 私有化适配到自己的任务。"
     },
@@ -533,14 +543,14 @@
     {
       "id": "sec-18",
       "title": "World Action Model v2 三件套：HarmoWAM × FFDC × OneWM-VLA — 后 VLA 时代的「世界 + 行动」联合范式深度精读",
-      "lastUpdated": "2026-10-26",
-      "chars": 7617,
+      "lastUpdated": "2026-10-27",
+      "chars": 8977,
       "shortTitle": "World Action Model v2…",
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 8,
+      "readingMinutes": 10,
       "headings": [
         "学习目标",
         "为什么需要 WAM：VLA 的三个根本短板",
@@ -564,7 +574,8 @@
         "三件套合谋：WAM v2 范式三角",
         "落地决策树：你的项目应该用 VLA、Joint WAM、还是 HarmoWAM？",
         "自检练习",
-        "延伸阅读"
+        "延伸阅读",
+        "参考答案"
       ],
       "summary": "1. 理解 VLA → WAM 的范式跃迁是什么、为什么从 2026 年 Q2 开始集中爆发 2. 掌握 WAM 的两条流派路线：Imagine-then-Execute vs Joint Modeling 的优劣权衡 3. 解构 2026-05 三篇标杆工作：HarmoWAM（双专家协同）、FFDC（自适应执行）、OneWM-VLA（视觉带宽压缩） 4. "
     },
@@ -713,14 +724,14 @@
     {
       "id": "sec-23",
       "title": "VLA 后训练三大瓶颈与 2026 Q2 最新对策（多任务遗忘 / 力觉缺失 / 时空近视）",
-      "lastUpdated": "2026-06-01T08:00",
-      "chars": 9306,
+      "lastUpdated": "2026-10-27",
+      "chars": 10845,
       "shortTitle": "VLA 后训练三大瓶颈与 2026 Q2…",
       "difficulty": "高级",
       "estimatedMinutes": 11,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 11,
+      "readingMinutes": 13,
       "headings": [
         "23.1 为什么这一节重要？",
         "23.2 瓶颈 1 — 多任务灾难性遗忘的根源与 DyGRO-VLA 的 MoRR 解法",
@@ -741,7 +752,8 @@
         "23.5 三件套的协同：构建下一代 VLA 后训练 stack",
         "23.6 实战练习",
         "23.7 进阶研究方向",
-        "23.8 延伸阅读"
+        "23.8 延伸阅读",
+        "参考答案"
       ],
       "summary": "回到本模块前面 22 节构筑的 VLA 知识体系，你已经掌握了： - 架构演进：RT-2 → OpenVLA → π / GR00T → Qwen-VLA → WALL-WM 的完整线索 - 训练范式：SFT → RL → 后训练（PPO / DPO / Flow Matching） - 数据生态：OXE / DROID / RoboMIND / Daimo"
     },
@@ -797,8 +809,8 @@
     {
       "id": "sec-26",
       "title": "VLA 的因果可解释性：动作条件接口在哪里，推理预算该怎么花",
-      "lastUpdated": "2026-10-21T09:10",
-      "chars": 9287,
+      "lastUpdated": "2026-10-27",
+      "chars": 9299,
       "shortTitle": "VLA 因果可解释性",
       "difficulty": "高级",
       "estimatedMinutes": 20,
@@ -826,7 +838,7 @@
       "summary": "前面 25 节讲的都是怎么把 VLA 训得更强：更好的架构（分层、双系统、世界动作模型）、更好的数据（触觉、人类视频、合成数据）、更好的后训练（RL、量化、进度引导）。这一节换一个角度："
     }
   ],
-  "readingMinutes": 266,
+  "readingMinutes": 285,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 235671
+  "chars": 250138
 }

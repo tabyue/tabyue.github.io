@@ -54,20 +54,20 @@
     }
   ],
   "weeklyPlan": "**第1-2周**：OpenCV 图像处理 + 相机标定\n**第3周**：YOLO 目标检测训练与部署\n**第4-5周**：SAM 分割 + 6DoF 位姿估计\n**第6周**：集成到机器人抓取 Pipeline",
-  "lastUpdated": "2026-10-20T11:15",
+  "lastUpdated": "2026-10-27",
   "maturity": "foundation",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
       "title": "计算机视觉基础：从图像处理到深度学习检测",
-      "lastUpdated": "2026-04-30T10:32",
-      "chars": 3004,
+      "lastUpdated": "2026-10-27",
+      "chars": 5308,
       "shortTitle": "计算机视觉基础",
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 6,
       "headings": [
         "1. 图像的数学表示",
         "2. 相机模型",
@@ -75,7 +75,8 @@
         "4. 深度学习目标检测",
         "5. 6D 物体位姿估计",
         "6. 机器人视觉的特殊需求",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "机器人的\"眼睛\"是相机，但原始像素需要经过处理才能变成有用的信息。本节从图像处理基础讲起。"
     },
@@ -103,8 +104,8 @@
     {
       "id": "sec-03",
       "title": "目标检测 (YOLO/DETR)",
-      "lastUpdated": "",
-      "chars": 10158,
+      "lastUpdated": "2026-10-27",
+      "chars": 10186,
       "shortTitle": "目标检测",
       "difficulty": "中级",
       "estimatedMinutes": 11,
@@ -116,9 +117,7 @@
         "YOLO 系列",
         "DETR（DEtection TRansformer）",
         "在机器人中怎么用？",
-        "单张图片推理",
-        "解析结果",
-        "实时视频检测",
+        "Grounding DINO（开放词汇检测）",
         "SAM (Segment Anything)",
         "机器人视觉 Pipeline",
         "目标检测模型选择指南",
@@ -179,18 +178,19 @@
     {
       "id": "sec-06",
       "title": "开放词汇检测与Grounding：让机器人理解任意物体描述",
-      "lastUpdated": "2026-04-27T14:43",
-      "chars": 3128,
+      "lastUpdated": "2026-10-27",
+      "chars": 4335,
       "shortTitle": "开放词汇检测与Grounding",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "tier": 1,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "传统检测 vs 开放词汇检测",
         "Grounding DINO",
         "机器人中的应用Pipeline",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "Grounding DINO 是当前最强的开放词汇检测器，将DINO检测器与语言-视觉对齐结合："
     },
@@ -244,13 +244,13 @@
     {
       "id": "sec-08",
       "title": "3D 视觉与点云处理：从深度图到 SLAM",
-      "lastUpdated": "2026-04-30T11:07",
-      "chars": 3326,
+      "lastUpdated": "2026-10-27",
+      "chars": 4892,
       "shortTitle": "3D 视觉与点云处理",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "1. 3D 数据表示",
         "2. 点云基础操作",
@@ -259,15 +259,16 @@
         "5. 抓取点生成",
         "6. 3D 场景理解",
         "7. NeRF 与 Gaussian Splatting（前沿）",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "机器人操作需要 3D 理解——抓取点在哪？物体的朝向？周围有什么障碍？这些都依赖 3D 视觉。"
     },
     {
       "id": "sec-09",
       "title": "姿态估计",
-      "lastUpdated": "",
-      "chars": 8026,
+      "lastUpdated": "2026-10-27",
+      "chars": 8036,
       "shortTitle": "姿态估计",
       "difficulty": "中级",
       "estimatedMinutes": 9,
@@ -286,34 +287,35 @@
     {
       "id": "sec-10",
       "title": "视觉伺服与闭环抓取控制",
-      "lastUpdated": "2026-04-27T11:30",
-      "chars": 2804,
+      "lastUpdated": "2026-10-27",
+      "chars": 3985,
       "shortTitle": "视觉伺服与闭环抓取控制",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "什么是视觉伺服？",
         "两大范式",
         "IBVS 核心公式",
         "闭环抓取Pipeline",
         "深度学习+视觉伺服",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "视觉伺服（Visual Servoing） 是用视觉反馈实时调整机器人运动的控制方法。与开环控制（先看一眼再执行）不同，视觉伺服在执行过程中持续使用相机反馈来修正运动误差。"
     },
     {
       "id": "sec-11",
       "title": "视觉伺服与 6D 物体位姿估计",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 3422,
+      "lastUpdated": "2026-10-27",
+      "chars": 4706,
       "shortTitle": "视觉伺服与 6D 物体位姿估计",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "视觉伺服与 6D 位姿估计",
         "1. 6D 位姿估计的输入输出",
@@ -323,21 +325,22 @@
         "5. 视觉伺服（Visual Servoing）",
         "6. 实时性能",
         "7. 机器人应用的最佳实践",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "对机器人操作来说，\"看到物体\"只是第一步——还要知道精确的 6D 位姿（位置 3 + 朝向 3）才能抓取。"
     },
     {
       "id": "sec-12",
       "title": "事件相机（Event Camera）原理与机器人应用",
-      "lastUpdated": "2026-04-23T22:33",
-      "chars": 11316,
+      "lastUpdated": "2026-10-27",
+      "chars": 13564,
       "shortTitle": "事件相机",
       "difficulty": "高级",
       "estimatedMinutes": 13,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 13,
+      "readingMinutes": 16,
       "headings": [
         "事件相机：超越帧的视觉革命",
         "帧相机 vs 事件相机",
@@ -351,21 +354,22 @@
         "深度学习处理事件数据",
         "事件相机 vs 传统相机选型指南",
         "前沿趋势",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "2026年4月，Sony AI的乒乓球机器人Ace登上Nature封面，其核心视觉传感器正是事件相机。这种生物启发的传感器正在彻底改变机器人在高速、高动态范围场景中的感知能力。"
     },
     {
       "id": "sec-13",
       "title": "VLA 时代的视觉数据引擎：数据配方、跨本体对齐与标注自动化",
-      "lastUpdated": "2026-05-01T05:50",
-      "chars": 3795,
+      "lastUpdated": "2026-10-27",
+      "chars": 5702,
       "shortTitle": "VLA 时代的视觉数据引擎",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 4,
+      "readingMinutes": 7,
       "headings": [
         "1. 四层数据基础设施",
         "2. 数据源对比与现状",
@@ -375,7 +379,8 @@
         "6. 视觉侧的数据质量指标",
         "7. 数据管线工程化：HDF5 / WebDataset / LeRobot",
         "8. 未来方向",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "2026 年 VLA 社区有一个重要的共识切换——模型竞争逐渐让位于\"数据引擎\"之争。arXiv 2604.23001《Vision-Language-Action in Robotics: A Survey of Datasets, Benchmarks, and Data Engines》系统性地把这件事讲透了：数据基础设施分四层，每一层都有自己的工程分"
     },
@@ -445,7 +450,7 @@
       "summary": "目标检测的输出是一个框，分割的输出是一个掩码。这两样东西对机器人来说都不够用。"
     }
   ],
-  "readingMinutes": 127,
+  "readingMinutes": 144,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 113669
+  "chars": 125404
 }

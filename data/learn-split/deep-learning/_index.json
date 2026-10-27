@@ -5,7 +5,7 @@
   "importance": "核心",
   "estimatedHours": 60,
   "description": "CNN、Transformer、注意力机制是所有现代具身智能算法的基石。",
-  "lastUpdated": "2026-10-14T09:30",
+  "lastUpdated": "2026-10-27",
   "prerequisites": [
     "Python 编程",
     "线性代数",
@@ -148,8 +148,8 @@
     {
       "id": "sec-05",
       "title": "反向传播与自动微分",
-      "lastUpdated": "2026-04-21T19:44",
-      "chars": 10907,
+      "lastUpdated": "2026-10-27",
+      "chars": 10883,
       "shortTitle": "反向传播与自动微分",
       "difficulty": "中级",
       "estimatedMinutes": 12,
@@ -173,13 +173,13 @@
     {
       "id": "sec-06",
       "title": "自监督表征学习与机器人视觉表征：对比学习、掩码建模与 JEPA",
-      "lastUpdated": "2026-10-14T09:30",
-      "chars": 8483,
+      "lastUpdated": "2026-10-27",
+      "chars": 10957,
       "shortTitle": "自监督表征学习与机器人视觉表征",
       "difficulty": "中级",
       "estimatedMinutes": 24,
       "tier": 1,
-      "readingMinutes": 11,
+      "readingMinutes": 14,
       "headings": [
         "为什么要读这一节：机器人的视觉是从「无标注数据」里长出来的",
         "1. 表征到底要学到什么",
@@ -191,7 +191,8 @@
         "7. 常见误区",
         "8. 小结与练习",
         "9. 两阶段还是端到端：表征与策略怎么接",
-        "10. 实践选型清单（2026）"
+        "10. 实践选型清单（2026）",
+        "参考答案"
       ],
       "summary": "前面几节我们默认一个前提——模型要学什么，数据里就标了什么：分类有类别标签，检测有框， 生成有配对样本。到了机器人这里，这个前提直接崩塌。一台机械臂一天采集 8 小时视频， 里面没有一张图被标注过「这是杯子把手」「此时夹持力 3.2 N」「这一步失败了」。 靠人工标注既贵又慢，而且很多中间量（接触力、物体可动性、任务进度）根本标不出来。"
     },
@@ -219,8 +220,8 @@
     {
       "id": "sec-08",
       "title": "Flow Matching：从扩散模型到机器人策略生成的新范式",
-      "lastUpdated": "2026-04-29T11:48",
-      "chars": 7411,
+      "lastUpdated": "2026-10-27",
+      "chars": 7415,
       "shortTitle": "Flow Matching",
       "difficulty": "高级",
       "estimatedMinutes": 8,
@@ -244,13 +245,13 @@
     {
       "id": "sec-09",
       "title": "接触丰富操作与力-位混合控制",
-      "lastUpdated": "2026-04-26T09:37",
-      "chars": 5356,
+      "lastUpdated": "2026-10-27",
+      "chars": 7865,
       "shortTitle": "接触丰富操作与力-位混合控制",
       "difficulty": "高级",
       "estimatedMinutes": 6,
       "tier": 2,
-      "readingMinutes": 6,
+      "readingMinutes": 9,
       "headings": [
         "为什么需要力控制？",
         "经典力控制理论回顾",
@@ -259,41 +260,43 @@
         "阻抗控制与柔顺行为",
         "VLA 力控制前沿",
         "接触丰富操作的训练数据挑战",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "前面学习的所有深度学习模型——CNN 提取视觉特征、Transformer 做序列推理、扩散模型生成动作——最终都需要输出控制指令让机器人执行。当前主流 VLA 模型（RT-2、π₀、OpenVLA 等）几乎全部基于纯位置控制：模型输出目标位置/关节角度，由底层 PD 控制器跟踪执行。"
     },
     {
       "id": "sec-10",
       "title": "神经网络可解释性与机器人安全决策",
-      "lastUpdated": "2026-04-27T11:33",
-      "chars": 3935,
+      "lastUpdated": "2026-10-27",
+      "chars": 5583,
       "shortTitle": "神经网络可解释性与机器人安全决策",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 7,
       "headings": [
         "为什么可解释性对机器人至关重要？",
         "可解释性方法分类",
         "Grad-CAM：CNN的决策可视化",
         "VLA注意力可解释性",
         "安全决策框架",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "深度学习模型是黑箱——我们不知道 VLA 为什么选择某个动作。在自动驾驶、医疗机器人、家庭服务机器人等安全敏感场景中，这是不可接受的。"
     },
     {
       "id": "sec-11",
       "title": "Mixture-of-Transformers (MoT) 与稀疏 MoE：端侧 VLA 的参数-算力解耦之路",
-      "lastUpdated": "2026-05-03T17:05",
-      "chars": 12353,
+      "lastUpdated": "2026-10-27",
+      "chars": 15691,
       "shortTitle": "Mixture-of-Transformer…",
       "difficulty": "高级",
       "estimatedMinutes": 14,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 14,
+      "readingMinutes": 18,
       "headings": [
         "为什么要读这一节：端侧 VLA 的\"参数-算力解耦\"困境",
         "1. 前置知识回顾：为什么稠密 Transformer 端侧扛不住",
@@ -306,12 +309,13 @@
         "8. 与经典稠密架构的定量对比",
         "9. 何时不要用 MoT",
         "10. 练习与自检",
-        "延伸阅读"
+        "延伸阅读",
+        "参考答案"
       ],
       "summary": "在前面几节里，我们把深度学习的\"模型规模\"和\"计算量\"当成同一个东西：参数越多，FLOPs 越多，推理越慢。这个假设在云端训练时是成立的，在 CV 任务中也大致成立。但 2026 年当 VLA（Vision-Language-Action）模型要落到机器人本体上时，这个假设被现实无情打破。"
     }
   ],
-  "readingMinutes": 121,
+  "readingMinutes": 134,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 107964
+  "chars": 117913
 }

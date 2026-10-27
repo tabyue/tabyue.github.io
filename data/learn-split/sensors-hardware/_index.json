@@ -1,7 +1,7 @@
 {
   "id": "sensors-hardware",
   "name": "传感器与硬件接口",
-  "lastUpdated": "2026-10-20T15:40",
+  "lastUpdated": "2026-10-27",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 40,
@@ -67,13 +67,13 @@
     {
       "id": "sec-01",
       "title": "电子学基础：电路原理、信号调理与接口协议",
-      "lastUpdated": "2026-04-28T19:07",
-      "chars": 3302,
+      "lastUpdated": "2026-10-27",
+      "chars": 5715,
       "shortTitle": "电子学基础",
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 6,
       "headings": [
         "1. 基本电路定律",
         "2. 模拟信号与数字信号",
@@ -81,21 +81,22 @@
         "4. 常用通信接口",
         "5. 信号调理",
         "6. 接地与噪声抑制",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "传感器输出的是电信号（电压/电流/电阻变化）。要正确读取和使用这些信号，必须理解基本的电路原理和信号处理。"
     },
     {
       "id": "sec-02",
       "title": "电源系统设计：电池选型、电源管理与安全保护",
-      "lastUpdated": "2026-10-20T15:40",
-      "chars": 4704,
+      "lastUpdated": "2026-10-27",
+      "chars": 6510,
       "shortTitle": "电源系统设计",
       "difficulty": "入门",
       "estimatedMinutes": 22,
       "isBrief": true,
       "tier": 0,
-      "readingMinutes": 6,
+      "readingMinutes": 9,
       "headings": [
         "1. 电池类型对比",
         "2. 电池容量计算",
@@ -107,20 +108,21 @@
         "配电架构与三道保护",
         "接地与噪声：为什么传感器读数随电机启停跳变",
         "上电时序：一个常被忽略的可靠性细节",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "机器人的所有传感器、电机、计算单元都需要电——电源系统是最容易被忽视但最容易出问题的部分。"
     },
     {
       "id": "sec-03",
       "title": "传感器标定与误差分析：从原始数据到可靠测量",
-      "lastUpdated": "2026-04-28T19:07",
-      "chars": 4175,
+      "lastUpdated": "2026-10-27",
+      "chars": 5821,
       "shortTitle": "传感器标定与误差分析",
       "difficulty": "入门",
       "estimatedMinutes": 5,
       "tier": 0,
-      "readingMinutes": 5,
+      "readingMinutes": 7,
       "headings": [
         "1. 误差的分类",
         "2. 标定流程",
@@ -128,7 +130,8 @@
         "4. 滤波技术",
         "5. Allan 方差（IMU 噪声特性分析）",
         "6. 不确定度评估",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "传感器出厂参数只是标称值——实际使用中，温度、老化、安装方式都会影响精度。标定（Calibration）是将原始数据转化为可靠物理量的关键步骤。"
     },
@@ -156,14 +159,14 @@
     {
       "id": "sec-05",
       "title": "LiDAR 技术深入：2D/3D LiDAR 与固态激光雷达",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 2836,
+      "lastUpdated": "2026-10-27",
+      "chars": 5063,
       "shortTitle": "LiDAR 技术深入",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 1,
-      "readingMinutes": 3,
+      "readingMinutes": 6,
       "headings": [
         "1. LiDAR 基本原理",
         "2. LiDAR 技术路线",
@@ -175,15 +178,16 @@
         "5. 点云处理基础",
         "6. LiDAR 在机器人中的应用",
         "7. LiDAR vs 深度相机对比",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "从扫地机器人到自动驾驶，LiDAR 是最精准的距离传感器。本节系统讲解 LiDAR 原理和选型。"
     },
     {
       "id": "sec-06",
       "title": "IMU 与惯性导航",
-      "lastUpdated": "",
-      "chars": 4452,
+      "lastUpdated": "2026-10-27",
+      "chars": 4463,
       "shortTitle": "IMU 与惯性导航",
       "difficulty": "中级",
       "estimatedMinutes": 5,
@@ -193,7 +197,7 @@
         "IMU 基本原理",
         "核心器件",
         "关键性能参数",
-        "常用芯片：MPU-6050（入门）、ICM-42688-P（宇树）、BMI088（无人机PX4）、ADIS16470（高精度）",
+        "常用芯片",
         "推荐硬件采购",
         "练习",
         "参考答案"
@@ -203,36 +207,36 @@
     {
       "id": "sec-07",
       "title": "视觉传感器选型指南",
-      "lastUpdated": "",
-      "chars": 2598,
+      "lastUpdated": "2026-10-27",
+      "chars": 3650,
       "shortTitle": "视觉传感器选型指南",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 1,
-      "readingMinutes": 3,
+      "readingMinutes": 4,
       "headings": [
         "相机类型全景",
         "RGB 相机",
         "深度相机（RGB-D）",
-        "事件相机 — 每像素独立检测亮度变化，微秒级时间分辨率，140dB 动态范围",
-        "热红外相机 — 8-14μm 热辐射检测，夜间导航（FLIR Lepton $200）",
+        "事件相机与热红外相机",
+        "深度图处理演示",
         "选型决策树",
         "练习",
-        "参考答案见上方代码"
+        "参考答案"
       ],
-      "summary": ""
+      "summary": "- 事件相机：每像素独立检测亮度变化，微秒级时间分辨率，140dB 动态范围 - 热红外相机：检测 8-14μm 热辐射，用于夜间导航（如 FLIR Lepton，约 200 美元）"
     },
     {
       "id": "sec-08",
       "title": "相机系统设计：从图像传感器到计算摄影",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 3460,
+      "lastUpdated": "2026-10-27",
+      "chars": 5680,
       "shortTitle": "相机系统设计",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "tier": 1,
-      "readingMinutes": 3,
+      "readingMinutes": 6,
       "headings": [
         "1. 图像传感器原理",
         "CMOS vs CCD",
@@ -242,20 +246,21 @@
         "4. 相机标定深入",
         "5. 深度感知技术对比",
         "6. 多相机系统",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "相机是机器人最重要的感知设备。从传感器原理到标定、从单目到多目——本节系统讲解相机系统的完整技术栈。"
     },
     {
       "id": "sec-09",
       "title": "触觉与力传感器：机器人的\"皮肤\"",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 3153,
+      "lastUpdated": "2026-10-27",
+      "chars": 4980,
       "shortTitle": "触觉与力传感器",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "1. 为什么触觉对机器人至关重要？",
         "2. 力/力矩传感器（F/T Sensor）",
@@ -266,7 +271,8 @@
         "阵列式触觉（Skin）",
         "4. 电流/力矩估计（无传感器力控）",
         "5. 触觉在学习中的应用",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "视觉告诉机器人物体在哪——但抓起来多重、软硬如何、是否打滑？这些只有触觉能回答。本节系统讲解触觉和力传感的技术谱系。"
     },
@@ -318,35 +324,33 @@
     {
       "id": "sec-12",
       "title": "编码器与电机反馈",
-      "lastUpdated": "",
-      "chars": 3496,
+      "lastUpdated": "2026-10-27",
+      "chars": 3502,
       "shortTitle": "编码器与电机反馈",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "tier": 1,
-      "readingMinutes": 3,
+      "readingMinutes": 4,
       "headings": [
         "编码器类型",
-        "光电编码器 — 分辨率14-19bit，±0.01°，怕灰尘（Renishaw/Heidenhain）",
-        "磁编码器 — 12-14bit，±0.1°，耐用便宜（AS5047P, AS5600 $2）",
         "推荐硬件采购",
         "绝对式 vs 增量式",
         "关节力矩估计（无力矩传感器时）",
         "练习",
         "参考答案"
       ],
-      "summary": "2/3. 修改 MotorPID target 为 sin(t)，对比不同 CPR 值"
+      "summary": "- 光电编码器：分辨率 14-19bit，精度约 ±0.01°，怕灰尘（Renishaw/Heidenhain） - 磁编码器：12-14bit，精度约 ±0.1°，耐用便宜（AS5047P、AS5600，后者约 2 美元）"
     },
     {
       "id": "sec-13",
       "title": "传感器数据融合：从互补滤波到因子图",
-      "lastUpdated": "2026-04-29T15:05",
-      "chars": 4315,
+      "lastUpdated": "2026-10-27",
+      "chars": 6379,
       "shortTitle": "传感器数据融合",
       "difficulty": "中级",
       "estimatedMinutes": 5,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 7,
       "headings": [
         "1. 融合的层次",
         "2. 互补滤波（最简单的融合）",
@@ -354,7 +358,8 @@
         "4. 因子图优化（GTSAM / g2o）",
         "5. 传感器选型与融合方案对比",
         "6. 时间同步——融合的前提",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "单个传感器总有局限——IMU 漂移、相机遮挡、LiDAR 稀疏。融合多传感器才能获得鲁棒的状态估计。"
     },
@@ -430,20 +435,21 @@
     {
       "id": "sec-16",
       "title": "多传感器时间同步与硬件触发",
-      "lastUpdated": "2026-04-27T11:33",
-      "chars": 3797,
+      "lastUpdated": "2026-10-27",
+      "chars": 5504,
       "shortTitle": "多传感器时间同步与硬件触发",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "为什么时间同步至关重要？",
         "时间同步三大方案",
         "软件时间戳（最简单）",
         "硬件触发方案",
         "ROS2 时间同步",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "机器人系统同时使用多种传感器（相机30Hz、LiDAR10Hz、IMU200Hz、关节编码器1000Hz），它们的数据必须精确时间对齐才能融合使用。"
     },
@@ -539,7 +545,7 @@
       "summary": "选相机时，你有一套成熟的指标体系：分辨率、帧率、视场角、信噪比、接口。参数摆在 datasheet 上，厂商之间可以横向比较，选型基本是查表。"
     }
   ],
-  "readingMinutes": 135,
+  "readingMinutes": 157,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 118641
+  "chars": 135620
 }

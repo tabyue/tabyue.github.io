@@ -4,7 +4,7 @@
   "stage": "阶段一：数学与编程基础",
   "importance": "重要",
   "estimatedHours": 40,
-  "lastUpdated": "2026-10-26",
+  "lastUpdated": "2026-10-27",
   "description": "机器人底层控制、实时系统、ROS2 核心节点通常用 C++ 编写。不需要精通所有 C++ 特性，但智能指针、多线程和 CMake 是必须掌握的。",
   "prerequisites": [
     "基础编程经验"
@@ -54,13 +54,13 @@
     {
       "id": "sec-01",
       "title": "C++ 语言基础：编译模型与类型系统",
-      "lastUpdated": "2026-04-28T17:11",
-      "chars": 4201,
+      "lastUpdated": "2026-10-27",
+      "chars": 6711,
       "shortTitle": "C++ 语言基础",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 4,
+      "readingMinutes": 7,
       "headings": [
         "C++ 在机器人中的地位",
         "一、从源码到可执行文件",
@@ -70,20 +70,21 @@
         "五、const 与 constexpr",
         "六、类型转换",
         "七、Hello World 到 ROS2 Node",
-        "八、练习"
+        "八、练习",
+        "参考答案"
       ],
       "summary": "Python 快速开发，C++ 高性能执行——两者在机器人学中各有其位。ROS2 核心用 C++ 写、MuJoCo/Pinocchio/Drake 都是 C++、实时控制器只能用 C/C++。学 C++ 不是“可选”，而是“必须”。"
     },
     {
       "id": "sec-02",
       "title": "指针、引用与内存模型：C++ 的核心难点",
-      "lastUpdated": "2026-04-28T17:11",
-      "chars": 3426,
+      "lastUpdated": "2026-10-27",
+      "chars": 5519,
       "shortTitle": "指针、引用与内存模型",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "为什么 C++ 需要指针和引用",
         "一、栈（Stack）vs 堆（Heap）",
@@ -93,21 +94,22 @@
         "五、动态内存管理（new/delete）",
         "六、数组与 C 字符串",
         "七、内存布局与对齐",
-        "八、练习"
+        "八、练习",
+        "参考答案"
       ],
       "summary": "Python 的一切都是引用——你从不直接管理内存。C++ 给你完全的内存控制权：栈 vs 堆、指针算术、引用传递——这是 C++ 高性能的根源，也是 bug 的温床。"
     },
     {
       "id": "sec-03",
       "title": "函数与作用域：重载、内联、头文件、命名空间",
-      "lastUpdated": "2026-04-28T17:11",
-      "chars": 2908,
+      "lastUpdated": "2026-10-27",
+      "chars": 5350,
       "shortTitle": "函数与作用域",
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 6,
       "headings": [
         "C++ 的函数比 Python 复杂得多",
         "一、函数重载（Overloading）",
@@ -117,20 +119,21 @@
         "五、命名空间（Namespace）",
         "六、链接（Linkage）",
         "七、Lambda（C++11+）",
-        "八、练习"
+        "八、练习",
+        "参考答案"
       ],
       "summary": "Python 函数只有一种。C++ 函数有重载、默认参数、内联、模板、constexpr、lambda——理解它们需要先理解 C++ 的编译模型。"
     },
     {
       "id": "sec-04",
       "title": "面向对象编程：类、构造/析构、拷贝/移动、继承多态",
-      "lastUpdated": "2026-04-28T17:11",
-      "chars": 4926,
+      "lastUpdated": "2026-10-27",
+      "chars": 8930,
       "shortTitle": "面向对象编程",
       "difficulty": "入门",
       "estimatedMinutes": 5,
       "tier": 0,
-      "readingMinutes": 5,
+      "readingMinutes": 10,
       "headings": [
         "C++ OOP：比 Python 复杂 10 倍但控制力 100 倍",
         "一、类的基本结构",
@@ -139,20 +142,21 @@
         "四、继承",
         "五、虚函数表（vtable）机制",
         "六、运算符重载",
-        "七、练习"
+        "七、练习",
+        "参考答案"
       ],
       "summary": "Python 的 OOP 靠 duck typing 和 GC 简化了一切。C++ 的 OOP 必须处理资源生命周期——构造、拷贝、移动、析构四件套。"
     },
     {
       "id": "sec-05",
       "title": "STL 容器与算法：vector、map、迭代器、Lambda",
-      "lastUpdated": "2026-04-28T17:11",
-      "chars": 4941,
+      "lastUpdated": "2026-10-27",
+      "chars": 8447,
       "shortTitle": "STL 容器与算法",
       "difficulty": "入门",
       "estimatedMinutes": 5,
       "tier": 0,
-      "readingMinutes": 5,
+      "readingMinutes": 10,
       "headings": [
         "STL：C++ 的标准“工具箱”",
         "一、序列容器",
@@ -161,21 +165,22 @@
         "四、STL 算法精选",
         "五、string 与 string_view",
         "六、容器选择指南",
-        "七、练习"
+        "七、练习",
+        "参考答案"
       ],
       "summary": "STL（Standard Template Library）提供了通用的容器（数据结构）和算法，是 C++ 程序员每天使用的核心工具。掌握 STL 是写出高效现代 C++ 的前提。"
     },
     {
       "id": "sec-06",
       "title": "智能指针与现代内存管理：告别 new/delete",
-      "lastUpdated": "2026-04-28T17:11",
-      "chars": 2814,
+      "lastUpdated": "2026-10-27",
+      "chars": 6037,
       "shortTitle": "智能指针与现代内存管理",
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 7,
       "headings": [
         "原始指针的问题",
         "一、unique_ptr（独占所有权）",
@@ -185,7 +190,8 @@
         "五、Rule of Zero（现代 C++ 黄金法则）",
         "六、工厂模式 + unique_ptr",
         "七、与 ROS2 的集成",
-        "八、练习"
+        "八、练习",
+        "参考答案"
       ],
       "summary": "前面讲过 new/delete 的四种常见 bug。智能指针（C++11）用 RAII 自动管理堆内存——对象离开作用域时自动释放，从根源消除内存泄漏。"
     },
@@ -259,13 +265,13 @@
     {
       "id": "sec-10",
       "title": "C++ 模板与泛型编程：类型安全的通用代码",
-      "lastUpdated": "2026-04-30T10:32",
-      "chars": 3918,
+      "lastUpdated": "2026-10-27",
+      "chars": 8590,
       "shortTitle": "C++ 模板与泛型编程",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 10,
       "headings": [
         "1. 函数模板",
         "2. 类模板",
@@ -273,7 +279,8 @@
         "4. 模板特化",
         "5. CRTP（Curiously Recurring Template Pattern）",
         "6. C++20 Concepts（现代约束）",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "模板是 C++ 最强大也最复杂的特性——STL 容器、Eigen 矩阵库、ROS2 消息类型都建立在模板之上。"
     },
@@ -342,13 +349,13 @@
     {
       "id": "sec-14",
       "title": "C++ 并发编程：线程、锁与无锁数据结构",
-      "lastUpdated": "2026-04-30T11:07",
-      "chars": 4446,
+      "lastUpdated": "2026-10-27",
+      "chars": 10089,
       "shortTitle": "C++ 并发编程",
       "difficulty": "中级",
       "estimatedMinutes": 5,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 12,
       "headings": [
         "1. std::thread 基础",
         "2. 数据共享与竞争",
@@ -357,39 +364,41 @@
         "5. 原子操作",
         "6. 无锁数据结构",
         "7. 实时系统的并发注意事项",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "机器人系统是天生的并发场景——感知线程、控制线程、规划线程、通信线程同时运行。本节讲解 C++ 并发编程的核心知识。"
     },
     {
       "id": "sec-15",
       "title": "协程(Coroutines)与异步I/O在ROS2中的应用",
-      "lastUpdated": "2026-04-28T12:06",
-      "chars": 2542,
+      "lastUpdated": "2026-10-27",
+      "chars": 4642,
       "shortTitle": "协程(Coroutines)与异步I…",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 6,
       "headings": [
         "C++20协程简介",
         "协程 vs 线程",
         "简单协程示例",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "协程(Coroutine)是可以暂停和恢复的函数。在机器人中，协程可以简化异步传感器读取和多任务协调的代码。"
     },
     {
       "id": "sec-16",
       "title": "C++ 性能优化：从微基准到 SIMD",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 3744,
+      "lastUpdated": "2026-10-27",
+      "chars": 7127,
       "shortTitle": "C++ 性能优化",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 8,
       "headings": [
         "1. 测量先于优化",
         "2. 编译器优化",
@@ -399,28 +408,30 @@
         "6. 移动语义与完美转发",
         "7. 常量传播与内联",
         "8. 机器人中的性能场景",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "C++ 的核心优势是性能。但\"写 C++\"不等于\"快\"——本节讲解真正让 C++ 代码跑得飞快的技术。"
     },
     {
       "id": "sec-17",
       "title": "实时系统编程与RT-Linux配置",
-      "lastUpdated": "2026-04-27T11:30",
-      "chars": 2830,
+      "lastUpdated": "2026-10-27",
+      "chars": 5543,
       "shortTitle": "实时系统编程与RT-Linux配置",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 6,
       "headings": [
         "为什么机器人需要实时系统？",
         "实时 vs 非实时",
         "RT-Linux 配置",
         "C++ 实时编程规范",
         "ROS2 实时配置",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "机器人的控制循环必须在严格的时间约束内完成： - 电机控制: 1kHz (每1ms必须发出指令) - 力控制: 500Hz-1kHz (2ms内响应接触力) - 视觉处理: 30-60Hz (可以不实时)"
     },
@@ -487,14 +498,14 @@
     {
       "id": "sec-20",
       "title": "C++ 端侧 ML 推理：把 VLA 模型塞进机器人本体",
-      "lastUpdated": "2026-05-01T05:50",
-      "chars": 6984,
+      "lastUpdated": "2026-10-27",
+      "chars": 9641,
       "shortTitle": "C++ 端侧 ML 推理",
       "difficulty": "高级",
       "estimatedMinutes": 7,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 7,
+      "readingMinutes": 11,
       "headings": [
         "1. 为什么端侧推理必须用 C++",
         "2. 常用推理运行时（C++ API）",
@@ -505,12 +516,13 @@
         "7. 不同 XPU 的 C++ 选型（对照 p111 论文）",
         "8. 工程陷阱清单",
         "9. 延伸阅读",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "在具身智能真实落地中，VLA（Vision-Language-Action）模型不会跑在云端 H100 上——机器人需要在本体侧的 Jetson Orin/Thor、昇腾 Atlas、Apple M4、高通 QCS8550 等 XPU 上做 20-50Hz 的实时推理。此时 Python + PyTorch 的启动开销、GIL、内存冗余都变得不可接受，C++"
     }
   ],
-  "readingMinutes": 111,
+  "readingMinutes": 160,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 102811
+  "chars": 141757
 }

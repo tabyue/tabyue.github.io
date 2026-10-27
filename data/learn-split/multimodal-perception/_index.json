@@ -42,7 +42,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：触觉传感器原理 + DIGIT 上手\n**第2周**：力传感器接口 + 阻抗控制\n**第3周**：深度相机选型 + RGBD 处理管线\n**第4周**：多传感器融合实验\n**第5周**：多模态表征学习 + 对比预训练",
-  "lastUpdated": "2026-10-21T09:20",
+  "lastUpdated": "2026-10-27",
   "maturity": "growing",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -149,19 +149,20 @@
     {
       "id": "sec-06",
       "title": "触觉伺服：用触觉反馈引导精细操作",
-      "lastUpdated": "2026-04-28T12:06",
-      "chars": 2715,
+      "lastUpdated": "2026-10-27",
+      "chars": 3622,
       "shortTitle": "触觉伺服",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "什么是触觉伺服？",
         "触觉伺服的优势场景",
         "GelSight触觉伺服",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "类似视觉伺服用图像反馈控制运动，触觉伺服(Tactile Servoing)用触觉传感器的反馈来引导机器人进行精细操作——特别是在视觉无法观测的场景（如手指下方被遮挡的接触面）。"
     },
@@ -311,7 +312,7 @@
       "summary": "前面几节讲的是传感器与表征——触觉、力/力矩、深度、多模态融合、表征学习。这一节补上一个常被跳过、却直接决定策略能否执行对的环节：Grounding（定位/接地）。"
     }
   ],
-  "readingMinutes": 134,
+  "readingMinutes": 136,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 116872
+  "chars": 117779
 }

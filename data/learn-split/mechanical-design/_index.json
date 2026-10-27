@@ -1,7 +1,7 @@
 {
   "id": "mechanical-design",
   "name": "机械设计基础",
-  "lastUpdated": "2026-10-26",
+  "lastUpdated": "2026-10-27",
   "stage": "阶段二：机器人学基础",
   "importance": "重要",
   "estimatedHours": 30,
@@ -48,14 +48,14 @@
     {
       "id": "sec-01",
       "title": "机器人 CAD 设计流程：从概念到制造",
-      "lastUpdated": "2026-04-30T10:58",
-      "chars": 2913,
+      "lastUpdated": "2026-10-27",
+      "chars": 3912,
       "shortTitle": "机器人 CAD 设计流程",
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "1. 设计流程概览",
         "2. CAD 软件对比",
@@ -64,20 +64,21 @@
         "5. 装配（Assembly）",
         "6. 工程图与加工",
         "7. 制造工艺选择",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "一个机器人从想法到能动的实物，CAD 设计贯穿始终。本节讲解从概念草图到加工图纸的完整流程。"
     },
     {
       "id": "sec-02",
       "title": "机械设计的工程基础：材料力学与强度设计",
-      "lastUpdated": "2026-04-28T19:01",
-      "chars": 3662,
+      "lastUpdated": "2026-10-27",
+      "chars": 5273,
       "shortTitle": "机械设计的工程基础",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 4,
+      "readingMinutes": 5,
       "headings": [
         "1. 应力与应变",
         "2. 梁的弯曲——机械臂连杆的核心力学",
@@ -85,20 +86,21 @@
         "4. 强度设计与安全系数",
         "5. 疲劳分析——为什么机器人会\"累坏\"",
         "6. 有限元分析（FEA）快速入门",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "机器人的机械设计不是拍脑袋画图——每个结构尺寸背后都有力学计算。本节从最基础的材料力学讲起，建立\"载荷→应力→强度校核→安全系数\"的完整设计链条。"
     },
     {
       "id": "sec-03",
       "title": "机构学基础：自由度、连杆机构与传动原理",
-      "lastUpdated": "2026-04-28T19:01",
-      "chars": 3486,
+      "lastUpdated": "2026-10-27",
+      "chars": 5079,
       "shortTitle": "机构学基础",
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "1. 自由度分析",
         "2. 常见运动副",
@@ -113,40 +115,42 @@
         "同步带传动",
         "5. 力的传递与效率",
         "6. 机器人关节设计实例",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "机械设计不仅是画零件图——首先要理解\"机构\"如何将运动和力从一处传递到另一处。本节从自由度分析讲起，覆盖机器人设计中最常用的机构原理。"
     },
     {
       "id": "sec-04",
       "title": "公差与装配：尺寸链、配合与GD&T基础",
-      "lastUpdated": "2026-04-28T19:01",
-      "chars": 3030,
+      "lastUpdated": "2026-10-27",
+      "chars": 4311,
       "shortTitle": "公差与装配",
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "1. 基本概念",
         "2. 尺寸链分析",
         "3. GD&T 基础（几何尺寸与公差）",
         "4. 3D 打印件的公差特殊考虑",
         "5. 装配策略",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "图纸上标 10mm 的孔，实际能做到 10.000mm 吗？不能。公差（Tolerance）就是允许的制造偏差范围。理解公差才能设计出可制造、可装配的机器人。"
     },
     {
       "id": "sec-05",
       "title": "热设计与散热：电机热管理与温控策略",
-      "lastUpdated": "2026-04-28T19:01",
-      "chars": 3868,
+      "lastUpdated": "2026-10-27",
+      "chars": 5746,
       "shortTitle": "热设计与散热",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "1. 热学基础",
         "2. 电机热模型",
@@ -154,7 +158,8 @@
         "4. 温控策略",
         "5. 常见热设计错误",
         "6. 人形机器人的热挑战",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "机器人运行时，电机是最大的热源。过热会导致电机效率下降、磁铁退磁、编码器漂移甚至烧毁。本节讲解机器人热设计的基本原理和实用方法。"
     },
@@ -200,13 +205,13 @@
     {
       "id": "sec-08",
       "title": "滚珠丝杠与直线传动：从选型计算到预紧调整的工程设计",
-      "lastUpdated": "2026-05-01T13:15",
-      "chars": 12689,
+      "lastUpdated": "2026-10-27",
+      "chars": 15385,
       "shortTitle": "滚珠丝杠与直线传动",
       "difficulty": "中级",
       "estimatedMinutes": 14,
       "tier": 1,
-      "readingMinutes": 14,
+      "readingMinutes": 17,
       "headings": [
         "1. 直线传动四大方案对比",
         "2. 滚珠丝杠的工作原理与关键参数",
@@ -235,6 +240,7 @@
         "9. 十大工程陷阱（踩过的坑）",
         "10. 前沿趋势：直驱与丝杠的边界",
         "练习题",
+        "参考答案",
         "延伸阅读"
       ],
       "summary": "机器人里大部分注意力给了旋转关节（电机 + 减速器）——但直线运动同样无处不在：桌面臂 Z 轴升降、移动底盘举升机构、夹具张合、3D 打印喷头、料盘进给、SCARA 第三轴、Cartesian 机械手…… 需要毫米级定位精度 + 几十到几千牛推力 + 小体积。这一节我们从工程第一性原理讲清楚直线传动的四大方案，重点吃透滚珠丝杠（ball screw）——它是"
@@ -242,13 +248,13 @@
     {
       "id": "sec-09",
       "title": "机器人关节模组与驱动器选型",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 3004,
+      "lastUpdated": "2026-10-27",
+      "chars": 4943,
       "shortTitle": "机器人关节模组与驱动器选型",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "tier": 1,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "1. 关节模组的核心组成",
         "2. 电机选型",
@@ -261,24 +267,26 @@
         "三环控制（机器人标配）",
         "6. 主流开源关节驱动器",
         "7. 商用关节模组推荐",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "机器人的核心是关节——电机 + 减速器 + 编码器 + 驱动器的组合。本节讲解关节模组的完整设计方法论。"
     },
     {
       "id": "sec-10",
       "title": "关节模组选型与电机-减速器匹配计算",
-      "lastUpdated": "2026-04-28T12:03",
-      "chars": 3702,
+      "lastUpdated": "2026-10-27",
+      "chars": 5176,
       "shortTitle": "关节模组选型与电机-减速器匹配计算",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "关节是机器人的核心零件",
         "选型计算流程",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "关节模组 = 电机 + 减速器 + 编码器 + 驱动器，是机器人成本和性能的决定因素。"
     },
@@ -344,14 +352,14 @@
     {
       "id": "sec-14",
       "title": "3D打印快速原型与结构仿真验证",
-      "lastUpdated": "2026-10-20T15:40",
-      "chars": 6085,
+      "lastUpdated": "2026-10-27",
+      "chars": 6915,
       "shortTitle": "3D打印快速原型与结构仿真验证",
       "difficulty": "中级",
       "estimatedMinutes": 22,
       "isBrief": true,
       "tier": 1,
-      "readingMinutes": 8,
+      "readingMinutes": 9,
       "headings": [
         "3D打印在机器人研发中的角色",
         "主流3D打印技术对比",
@@ -362,27 +370,29 @@
         "影响强度的打印参数，按收益排序",
         "有限元仿真：边界条件才是难点",
         "从打印到验证的迭代流程",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "3D打印是机器人快速原型（Rapid Prototyping）的核心工具。从学术实验室到创业公司，几乎所有机器人的非标结构件都先用3D打印验证。"
     },
     {
       "id": "sec-15",
       "title": "线缆管理与机器人防护设计",
-      "lastUpdated": "2026-04-27T12:01",
-      "chars": 3012,
+      "lastUpdated": "2026-10-27",
+      "chars": 3853,
       "shortTitle": "线缆管理与机器人防护设计",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "tier": 1,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "为什么线缆管理是机器人设计的隐藏难题？",
         "线缆管理三原则",
         "内走线 vs 外走线",
         "IP防护等级",
         "密封设计要点",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "一个典型的6轴机械臂有 10-20 根线缆（电机线、编码器线、力传感器线、相机线、末端工具线），这些线缆需要跟随关节运动数万次而不断裂。"
     },
@@ -512,7 +522,7 @@
       "summary": "2026 年是「工业人形机器人量产元年」— 天机智能 10 亿元 B+B+ 轮（高瓴美团领投）/ 现代汽车 25,000 台 Atlas 全球部署 / Figure BotQ 工厂每小时一台 F.03 / 智元成都基地 200 台「成都造」远征 A3 下线 — 这些里程碑事件共同宣告：人形机器人正从「实验室原型」转向「工厂产线」。本节系统讲解工业级人形机器人"
     }
   ],
-  "readingMinutes": 123,
+  "readingMinutes": 142,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 106581
+  "chars": 121723
 }

@@ -60,7 +60,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：概率基础、条件概率、贝叶斯定理（MIT 6.041 前 5 讲 + Think Bayes Ch1-3）\n**第2周**：高斯分布、MLE/MAP 估计、GMM（Bishop Ch2）\n**第3周**：卡尔曼滤波推导 + Python 实现（Probabilistic Robotics Ch3）\n**第4周**：粒子滤波 + 蒙特卡洛方法（Probabilistic Robotics Ch4 + 编程实践）",
-  "lastUpdated": "2026-10-13T10:36",
+  "lastUpdated": "2026-10-27",
   "maturity": "comprehensive",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -97,8 +97,8 @@
     {
       "id": "sec-02",
       "title": "随机变量与分布：离散、连续、常见分布家族",
-      "lastUpdated": "2026-04-28T16:00",
-      "chars": 7675,
+      "lastUpdated": "2026-10-27",
+      "chars": 7681,
       "shortTitle": "随机变量与分布",
       "difficulty": "入门",
       "estimatedMinutes": 6,
@@ -147,8 +147,8 @@
     {
       "id": "sec-04",
       "title": "期望、方差与矩：从积分到矩母函数",
-      "lastUpdated": "2026-04-28T16:00",
-      "chars": 6129,
+      "lastUpdated": "2026-10-27",
+      "chars": 6138,
       "shortTitle": "期望、方差与矩",
       "difficulty": "入门",
       "estimatedMinutes": 4,
@@ -173,8 +173,8 @@
     {
       "id": "sec-05",
       "title": "多维随机变量：联合分布、条件、协方差矩阵与多元高斯",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 5705,
+      "lastUpdated": "2026-10-27",
+      "chars": 5708,
       "shortTitle": "多维随机变量",
       "difficulty": "入门",
       "estimatedMinutes": 5,
@@ -278,7 +278,7 @@
     {
       "id": "sec-09",
       "title": "假设检验与置信区间：Neyman-Pearson、t 检验、置信度",
-      "lastUpdated": "2026-04-28T17:22",
+      "lastUpdated": "2026-10-27",
       "chars": 5191,
       "shortTitle": "假设检验与置信区间",
       "difficulty": "中级",
@@ -309,14 +309,14 @@
     {
       "id": "sec-10",
       "title": "随机过程初步：马尔可夫链、鞅与 Poisson 过程",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 2693,
+      "lastUpdated": "2026-10-27",
+      "chars": 4556,
       "shortTitle": "随机过程初步",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 1,
-      "readingMinutes": 3,
+      "readingMinutes": 4,
       "headings": [
         "从“一次”到“序列”：随机过程",
         "一、随机过程定义",
@@ -326,7 +326,8 @@
         "五、Poisson 过程",
         "六、布朗运动（Wiener 过程）",
         "七、MCMC 采样",
-        "八、练习"
+        "八、练习",
+        "参考答案"
       ],
       "summary": "前几节讲的是静态随机变量。但机器人实时运行在时间序列中——传感器数据流、状态轨迹、控制信号——都是随机过程。"
     },
@@ -394,17 +395,18 @@
     {
       "id": "sec-14",
       "title": "隐马尔可夫模型(HMM)与机器人行为识别",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 3538,
+      "lastUpdated": "2026-10-27",
+      "chars": 5969,
       "shortTitle": "隐马尔可夫模型",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 7,
       "headings": [
         "HMM在机器人中的应用",
         "HMM三要素",
         "练习",
+        "参考答案",
         "HMM 三大问题的算法",
         "CRF 与 HMM 的对比",
         "应用实例",
@@ -415,8 +417,8 @@
     {
       "id": "sec-15",
       "title": "集中不等式：从 Chebyshev 到亚高斯尾界",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 2527,
+      "lastUpdated": "2026-10-27",
+      "chars": 4121,
       "shortTitle": "集中不等式",
       "difficulty": "高级",
       "estimatedMinutes": 3,
@@ -434,20 +436,21 @@
         "七、McDiarmid 不等式（有界差分）",
         "八、矩阵集中不等式",
         "九、集中不等式在 ML 中的角色",
-        "十、练习"
+        "十、练习",
+        "参考答案"
       ],
       "summary": "大数定律说样本均值趋近期望。但更精确的问题是：偏离多少的概率有多小？ 集中不等式给出定量回答——它是统计学习理论、在线学习、强化学习泛化理论的数学基础。"
     },
     {
       "id": "sec-16",
       "title": "高斯过程回归（GPR）在机器人中的应用",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 4358,
+      "lastUpdated": "2026-10-27",
+      "chars": 6821,
       "shortTitle": "高斯过程回归",
       "difficulty": "高级",
       "estimatedMinutes": 5,
       "tier": 2,
-      "readingMinutes": 5,
+      "readingMinutes": 8,
       "headings": [
         "高斯过程：函数空间上的贝叶斯推断",
         "为什么机器人需要高斯过程？",
@@ -456,6 +459,7 @@
         "贝叶斯优化：GPR的杀手级应用",
         "GPR在机器人中的典型应用",
         "练习",
+        "参考答案",
         "核函数选择指南",
         "高维 GP 的可扩展方法",
         "练习补充"
@@ -465,19 +469,20 @@
     {
       "id": "sec-17",
       "title": "贝叶斯优化与超参数调优",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 4381,
+      "lastUpdated": "2026-10-27",
+      "chars": 7469,
       "shortTitle": "贝叶斯优化与超参数调优",
       "difficulty": "高级",
       "estimatedMinutes": 5,
       "tier": 2,
-      "readingMinutes": 5,
+      "readingMinutes": 8,
       "headings": [
         "为什么需要贝叶斯优化？",
         "核心思想",
         "高斯过程代理模型",
         "采集函数",
         "练习",
+        "参考答案",
         "采集函数对比",
         "多目标贝叶斯优化",
         "Optuna/BoTorch 实战",
@@ -488,15 +493,15 @@
     {
       "id": "sec-18",
       "title": "信息几何初步：Fisher 信息、KL 散度与自然梯度",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 2652,
+      "lastUpdated": "2026-10-27",
+      "chars": 5215,
       "shortTitle": "信息几何初步",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isFrontier": true,
       "isBrief": true,
       "tier": 3,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "概率分布空间上的“几何”",
         "一、统计流形",
@@ -507,12 +512,13 @@
         "六、$\\alpha$-散度与 $f$-散度",
         "七、Wasserstein 距离（最优传输）",
         "八、指数族上的信息几何",
-        "九、练习"
+        "九、练习",
+        "参考答案"
       ],
       "summary": "普通几何研究欧几里得空间的距离和角度。信息几何把概率分布族 $\\{p_\\theta\\}$ 视为“统计流形”，用 Fisher 信息矩阵作为黎曼度量——让“两个分布的距离”有了严格定义。"
     }
   ],
-  "readingMinutes": 105,
+  "readingMinutes": 117,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 107143
+  "chars": 121163
 }

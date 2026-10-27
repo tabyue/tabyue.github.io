@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-27T08:50",
+ "lastUpdated": "2026-10-27",
  "stages": [
   {
    "id": "foundation",
@@ -10,7 +10,7 @@
     {
      "name": "线性代数",
      "importance": "核心",
-     "lastUpdated": "2026-10-26",
+     "lastUpdated": "2026-10-27",
      "description": "矩阵运算、特征值分解、SVD 分解是理解机器人运动学和计算机视觉的基石",
      "topics": [
       {
@@ -45,12 +45,12 @@
      "id": "linear-algebra",
      "sectionCount": 18,
      "readingMinutes": 109,
-     "chars": 119015
+     "chars": 119352
     },
     {
      "name": "微积分与优化",
      "importance": "核心",
-     "lastUpdated": "2026-10-26",
+     "lastUpdated": "2026-10-27",
      "description": "梯度、Hessian 矩阵、拉格朗日乘子法是机器学习和控制优化的理论基础",
      "topics": [
       {
@@ -84,13 +84,13 @@
      "maturity": "comprehensive",
      "id": "calculus-optimization",
      "sectionCount": 19,
-     "readingMinutes": 99,
-     "chars": 105337
+     "readingMinutes": 114,
+     "chars": 122594
     },
     {
      "name": "概率与统计",
      "importance": "核心",
-     "lastUpdated": "2026-10-13T10:36",
+     "lastUpdated": "2026-10-27",
      "description": "贝叶斯推断、高斯过程、蒙特卡洛方法是机器人感知和决策的数学语言",
      "topics": [
       {
@@ -124,8 +124,8 @@
      "maturity": "comprehensive",
      "id": "probability-statistics",
      "sectionCount": 18,
-     "readingMinutes": 105,
-     "chars": 107143
+     "readingMinutes": 117,
+     "chars": 121163
     },
     {
      "name": "Python 编程与科学计算",
@@ -161,17 +161,17 @@
      ],
      "howTo": "不要系统学Python！直接上手写代码。从NumPy矩阵运算开始（实现矩阵乘法、SVD），逐步过渡到PyTorch（实现一个简单CNN）。2周内要做出一个能跑的小项目。",
      "weeklyPlan": "第1周：NumPy向量化运算+Matplotlib可视化，实现一个卡尔曼滤波器 | 第2周：PyTorch基础，训练一个MNIST分类器",
-     "lastUpdated": "2026-10-13T10:36",
+     "lastUpdated": "2026-10-27",
      "maturity": "comprehensive",
      "id": "python-scientific-computing",
      "sectionCount": 16,
-     "readingMinutes": 115,
-     "chars": 102925
+     "readingMinutes": 141,
+     "chars": 126370
     },
     {
      "name": "C++ 编程基础",
      "importance": "重要",
-     "lastUpdated": "2026-10-26",
+     "lastUpdated": "2026-10-27",
      "description": "机器人底层控制、实时系统、ROS2 核心节点通常用 C++ 编写",
      "topics": [
       {
@@ -201,13 +201,13 @@
      "maturity": "comprehensive",
      "id": "cpp-fundamentals",
      "sectionCount": 20,
-     "readingMinutes": 111,
-     "chars": 102811
+     "readingMinutes": 160,
+     "chars": 141757
     },
     {
      "name": "AI 与机器人学术英语",
      "importance": "工具",
-     "lastUpdated": "2026-10-20T10:20",
+     "lastUpdated": "2026-10-27",
      "description": "面向 AI/机器人方向的工程英语：读 arXiv、写 paper、跟会议报告、过英文面试、术语精读。14 节系统化（基础→读写听说→面试→沟通→90 天计划），不教通用英语只补领域刚需。",
      "topics": [
       {
@@ -257,8 +257,8 @@
      "maturity": "comprehensive",
      "id": "academic-english",
      "sectionCount": 16,
-     "readingMinutes": 89,
-     "chars": 98085
+     "readingMinutes": 99,
+     "chars": 106780
     }
    ]
   },
@@ -271,7 +271,7 @@
     {
      "name": "机器人运动学",
      "importance": "核心",
-     "lastUpdated": "2026-10-13T10:36",
+     "lastUpdated": "2026-10-27",
      "description": "理解机器人如何描述和计算关节与末端执行器的位置、速度关系",
      "topics": [
       {
@@ -305,13 +305,13 @@
      "maturity": "growing",
      "id": "robot-kinematics",
      "sectionCount": 17,
-     "readingMinutes": 115,
-     "chars": 106189
+     "readingMinutes": 132,
+     "chars": 123024
     },
     {
      "name": "机器人动力学",
      "importance": "核心",
-     "lastUpdated": "2026-10-26",
+     "lastUpdated": "2026-10-27",
      "description": "理解力、力矩与运动的关系，是控制器设计的物理基础",
      "topics": [
       {
@@ -341,8 +341,8 @@
      "maturity": "growing",
      "id": "robot-dynamics",
      "sectionCount": 16,
-     "readingMinutes": 124,
-     "chars": 110020
+     "readingMinutes": 143,
+     "chars": 129013
     },
     {
      "name": "控制理论",
@@ -377,17 +377,17 @@
      ],
      "howTo": "先做一个倒立摆PID控制（1周上手），再学LQR稳定倒立摆（感受最优控制的威力），然后学MPC（Drake库有现成示例），最后学阻抗控制（用MuJoCo仿真接触任务）。",
      "weeklyPlan": "第1周：PID控制+倒立摆实验 | 第2周：状态空间法+能控性分析 | 第3周：LQR设计+Riccati方程 | 第4-5周：MPC原理与Drake实现 | 第6周：阻抗控制+接触任务仿真",
-     "lastUpdated": "2026-10-20T15:40",
+     "lastUpdated": "2026-10-27",
      "maturity": "growing",
      "id": "control-theory",
      "sectionCount": 18,
-     "readingMinutes": 131,
-     "chars": 115822
+     "readingMinutes": 172,
+     "chars": 151091
     },
     {
      "name": "机械设计基础",
      "importance": "重要",
-     "lastUpdated": "2026-10-26",
+     "lastUpdated": "2026-10-27",
      "description": "了解机器人硬件构造，包括驱动器、传感器、结构设计",
      "topics": [
       {
@@ -417,13 +417,13 @@
      "maturity": "growing",
      "id": "mechanical-design",
      "sectionCount": 19,
-     "readingMinutes": 123,
-     "chars": 106581
+     "readingMinutes": 142,
+     "chars": 121723
     },
     {
      "name": "传感器与硬件接口",
      "importance": "核心",
-     "lastUpdated": "2026-10-20T15:40",
+     "lastUpdated": "2026-10-27",
      "description": "系统学习激光雷达、IMU、触觉传感器、力传感器、编码器等核心传感器的原理、选型和编程接口",
      "topics": [
       {
@@ -462,13 +462,13 @@
      "maturity": "growing",
      "id": "sensors-hardware",
      "sectionCount": 19,
-     "readingMinutes": 135,
-     "chars": 118641
+     "readingMinutes": 157,
+     "chars": 135620
     },
     {
      "name": "ROS2 机器人操作系统",
      "importance": "必备",
-     "lastUpdated": "2026-10-22T08:55",
+     "lastUpdated": "2026-10-27",
      "description": "ROS2 是机器人软件开发的事实标准框架",
      "topics": [
       {
@@ -499,8 +499,8 @@
      "maturity": "comprehensive",
      "id": "ros2",
      "sectionCount": 16,
-     "readingMinutes": 137,
-     "chars": 122907
+     "readingMinutes": 183,
+     "chars": 163271
     }
    ]
   },
@@ -513,7 +513,7 @@
     {
      "name": "计算机视觉基础",
      "importance": "核心",
-     "lastUpdated": "2026-10-20T11:15",
+     "lastUpdated": "2026-10-27",
      "description": "图像处理、特征提取、目标检测是机器人感知环境的第一步",
      "topics": [
       {
@@ -544,13 +544,13 @@
      "maturity": "foundation",
      "id": "computer-vision",
      "sectionCount": 15,
-     "readingMinutes": 127,
-     "chars": 113669
+     "readingMinutes": 144,
+     "chars": 125404
     },
     {
      "name": "3D 视觉与点云",
      "importance": "核心",
-     "lastUpdated": "2026-10-20T11:40",
+     "lastUpdated": "2026-10-27",
      "description": "深度感知和 3D 理解是机器人在真实世界中操作的关键",
      "topics": [
       {
@@ -585,8 +585,8 @@
      "maturity": "growing",
      "id": "3d-vision-pointcloud",
      "sectionCount": 11,
-     "readingMinutes": 130,
-     "chars": 112171
+     "readingMinutes": 144,
+     "chars": 121943
     },
     {
      "name": "多模态感知",
@@ -613,12 +613,12 @@
      ],
      "howTo": "从视觉+力觉融合开始（成本低：RealSense+腕部F/T传感器），做一个根据接触力调整抓取力度的实验。",
      "weeklyPlan": "第1周：触觉传感器原理+GelSight/DIGIT了解 | 第2周：力传感器接口+阻抗控制 | 第3周：多模态融合实验",
-     "lastUpdated": "2026-10-21T09:20",
+     "lastUpdated": "2026-10-27",
      "maturity": "growing",
      "id": "multimodal-perception",
      "sectionCount": 10,
-     "readingMinutes": 134,
-     "chars": 116872
+     "readingMinutes": 136,
+     "chars": 117779
     }
    ]
   },
@@ -631,7 +631,7 @@
     {
      "name": "深度学习基础",
      "importance": "核心",
-     "lastUpdated": "2026-10-14T09:30",
+     "lastUpdated": "2026-10-27",
      "description": "CNN、Transformer、注意力机制是所有现代具身智能算法的基石",
      "topics": [
       {
@@ -661,13 +661,13 @@
      "maturity": "growing",
      "id": "deep-learning",
      "sectionCount": 11,
-     "readingMinutes": 121,
-     "chars": 107964
+     "readingMinutes": 134,
+     "chars": 117913
     },
     {
      "name": "强化学习",
      "importance": "核心",
-     "lastUpdated": "2026-10-27T08:50",
+     "lastUpdated": "2026-10-27",
      "description": "让机器人通过试错学习最优行为策略的核心方法",
      "topics": [
       {
@@ -702,13 +702,13 @@
      "maturity": "growing",
      "id": "reinforcement-learning",
      "sectionCount": 19,
-     "readingMinutes": 134,
-     "chars": 118139
+     "readingMinutes": 164,
+     "chars": 142846
     },
     {
      "name": "模仿学习",
      "importance": "核心",
-     "lastUpdated": "2026-10-26",
+     "lastUpdated": "2026-10-27",
      "description": "从人类演示中学习机器人技能，是当前最实用的机器人学习范式",
      "topics": [
       {
@@ -743,13 +743,13 @@
      "maturity": "growing",
      "id": "imitation-learning",
      "sectionCount": 18,
-     "readingMinutes": 148,
-     "chars": 128761
+     "readingMinutes": 173,
+     "chars": 144319
     },
     {
      "name": "VLA 模型 (Vision-Language-Action)",
      "importance": "前沿",
-     "lastUpdated": "2026-10-26",
+     "lastUpdated": "2026-10-27",
      "description": "结合视觉理解、语言指令和动作生成的端到端模型",
      "topics": [
       {
@@ -792,13 +792,13 @@
      "maturity": "comprehensive",
      "id": "vla-models",
      "sectionCount": 26,
-     "readingMinutes": 266,
-     "chars": 235671
+     "readingMinutes": 285,
+     "chars": 250138
     },
     {
      "name": "世界模型与LLM+机器人",
      "importance": "前沿",
-     "lastUpdated": "2026-10-26",
+     "lastUpdated": "2026-10-27",
      "description": "让机器人具备常识推理和物理世界理解能力",
      "topics": [
       {
@@ -829,8 +829,8 @@
      "maturity": "comprehensive",
      "id": "world-models-llm",
      "sectionCount": 14,
-     "readingMinutes": 154,
-     "chars": 130991
+     "readingMinutes": 172,
+     "chars": 143254
     }
    ]
   },
@@ -843,7 +843,7 @@
     {
      "name": "物理仿真引擎",
      "importance": "核心",
-     "lastUpdated": "2026-10-26",
+     "lastUpdated": "2026-10-27",
      "description": "仿真环境是训练和验证具身智能算法的核心基础设施",
      "topics": [
       {
@@ -874,13 +874,13 @@
      "maturity": "foundation",
      "id": "physics-simulation",
      "sectionCount": 18,
-     "readingMinutes": 140,
-     "chars": 120045
+     "readingMinutes": 154,
+     "chars": 131655
     },
     {
      "name": "Sim-to-Real 迁移",
      "importance": "核心",
-     "lastUpdated": "2026-10-23T08:55",
+     "lastUpdated": "2026-10-27",
      "description": "把仿真中训练好的策略成功部署到真实机器人上",
      "topics": [
       {
@@ -906,8 +906,8 @@
      "maturity": "growing",
      "id": "sim-to-real",
      "sectionCount": 14,
-     "readingMinutes": 143,
-     "chars": 119317
+     "readingMinutes": 151,
+     "chars": 124525
     },
     {
      "name": "具身数据工程",
@@ -947,17 +947,17 @@
      ],
      "howTo": "从下载Open X-Embodiment子集开始,分析数据分布;搭建UMI/Gello采集系统;实现清洗Pipeline;用MuJoCo生成合成数据;最后跑一轮完整的数据闭环实验。",
      "weeklyPlan": "第1周：数据集全景+格式标准 | 第2周：采集系统搭建 | 第3周：质量工程+清洗 | 第4周：合成数据+增强 | 第5周：数据闭环实战",
-     "lastUpdated": "2026-10-17T08:30",
+     "lastUpdated": "2026-10-27",
      "maturity": "growing",
      "id": "embodied-data-engineering",
      "sectionCount": 18,
-     "readingMinutes": 125,
-     "chars": 108488
+     "readingMinutes": 140,
+     "chars": 118972
     },
     {
      "name": "数据采集与管理",
      "importance": "重要",
-     "lastUpdated": "2026-10-26",
+     "lastUpdated": "2026-10-27",
      "description": "高质量的训练数据是具身智能成功的关键",
      "topics": [
       {
@@ -988,8 +988,8 @@
      "maturity": "comprehensive",
      "id": "data-collection",
      "sectionCount": 10,
-     "readingMinutes": 145,
-     "chars": 128020
+     "readingMinutes": 150,
+     "chars": 131666
     }
    ]
   },
@@ -1002,7 +1002,7 @@
     {
      "name": "AI Infra 具身基础设施",
      "importance": "核心",
-     "lastUpdated": "2026-10-26",
+     "lastUpdated": "2026-10-27",
      "description": "把分散在「训练优化 / 平台工程 / 云边端 / 数据工程」四个模块的核心章节串成完整学习地图，并补充具身领域专属的前沿主题（vLLM/SGLang 适配、动作 chunk batching、多机器人 model serving）",
      "topics": [
       {
@@ -1046,13 +1046,13 @@
      "maturity": "growing",
      "id": "ai-infra",
      "sectionCount": 24,
-     "readingMinutes": 145,
-     "chars": 132817
+     "readingMinutes": 175,
+     "chars": 154618
     },
     {
      "name": "模型训练与推理优化",
      "importance": "核心",
-     "lastUpdated": "2026-10-22T08:55",
+     "lastUpdated": "2026-10-27",
      "description": "分布式训练、模型压缩量化、端侧推理部署，让大模型能跑在真实机器人上",
      "topics": [
       {
@@ -1084,13 +1084,13 @@
      "maturity": "foundation",
      "id": "training-inference-optimization",
      "sectionCount": 18,
-     "readingMinutes": 133,
-     "chars": 120951
+     "readingMinutes": 157,
+     "chars": 142469
     },
     {
      "name": "云边端协同",
      "importance": "重要",
-     "lastUpdated": "2026-10-20T15:40",
+     "lastUpdated": "2026-10-27",
      "description": "云端大模型思考、边缘计算感知、端侧实时控制的三层协同，让机器人既聪明又快",
      "topics": [
       {
@@ -1116,13 +1116,13 @@
      "weeklyPlan": "第1-2周：架构设计+Jetson入门 | 第3周：边缘部署 | 第4周：实时优化",
      "id": "cloud-edge-collaboration",
      "sectionCount": 11,
-     "readingMinutes": 126,
-     "chars": 109771
+     "readingMinutes": 131,
+     "chars": 114302
     },
     {
      "name": "具身智能平台工程",
      "importance": "重要",
-     "lastUpdated": "2026-10-20T15:40",
+     "lastUpdated": "2026-10-27",
      "description": "数据版本管理、实验追踪、自动化测试、容器化部署的全流程工程实践",
      "topics": [
       {
@@ -1144,8 +1144,8 @@
      "weeklyPlan": "第1-2周：MLOps搭建 | 第3周：CI/CD | 第4周：Docker部署",
      "id": "platform-engineering",
      "sectionCount": 19,
-     "readingMinutes": 129,
-     "chars": 113173
+     "readingMinutes": 171,
+     "chars": 147362
     }
    ]
   },
@@ -1158,7 +1158,7 @@
     {
      "name": "桌面级机械臂项目",
      "importance": "入门实战",
-     "lastUpdated": "2026-10-20T15:40",
+     "lastUpdated": "2026-10-27",
      "description": "用低成本机械臂（如 SO-100/Koch v1.1）完成基本的抓取任务",
      "topics": [
       {
@@ -1184,13 +1184,13 @@
      "maturity": "foundation",
      "id": "desktop-arm-project",
      "sectionCount": 20,
-     "readingMinutes": 125,
-     "chars": 110788
+     "readingMinutes": 153,
+     "chars": 130907
     },
     {
      "name": "移动机器人导航项目",
      "importance": "进阶实战",
-     "lastUpdated": "2026-10-20T15:40",
+     "lastUpdated": "2026-10-27",
      "description": "构建一个能在室内自主导航的移动机器人",
      "topics": [
       {
@@ -1216,13 +1216,13 @@
      "maturity": "comprehensive",
      "id": "mobile-robot-navigation",
      "sectionCount": 17,
-     "readingMinutes": 131,
-     "chars": 113911
+     "readingMinutes": 165,
+     "chars": 141957
     },
     {
      "name": "人形机器人全栈项目",
      "importance": "高级实战",
-     "lastUpdated": "2026-10-26",
+     "lastUpdated": "2026-10-27",
      "description": "参与或构建一个人形机器人的完整软件栈",
      "topics": [
       {
@@ -1254,13 +1254,13 @@
      "maturity": "comprehensive",
      "id": "humanoid-fullstack",
      "sectionCount": 21,
-     "readingMinutes": 160,
-     "chars": 139703
+     "readingMinutes": 187,
+     "chars": 158613
     },
     {
      "name": "具身Agent系统",
      "importance": "高级实战",
-     "lastUpdated": "2026-10-27T08:50",
+     "lastUpdated": "2026-10-27",
      "description": "整合LLM+感知+规划+执行，构建一个能理解语言指令并自主完成任务的具身Agent",
      "topics": [
       {
@@ -1282,8 +1282,8 @@
      "weeklyPlan": "第1-2周：Agent架构+ReAct | 第3-4周：集成视觉感知 | 第5-6周：多Agent协作",
      "id": "embodied-agent",
      "sectionCount": 15,
-     "readingMinutes": 151,
-     "chars": 126736
+     "readingMinutes": 161,
+     "chars": 133589
     }
    ]
   }

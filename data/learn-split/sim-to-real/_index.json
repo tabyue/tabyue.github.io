@@ -1,7 +1,7 @@
 {
   "id": "sim-to-real",
   "name": "Sim-to-Real 迁移",
-  "lastUpdated": "2026-10-23T08:55",
+  "lastUpdated": "2026-10-27",
   "stage": "阶段五：仿真与 Sim-to-Real",
   "importance": "核心",
   "estimatedHours": 40,
@@ -81,8 +81,8 @@
     {
       "id": "sec-02",
       "title": "System Identification",
-      "lastUpdated": "",
-      "chars": 8845,
+      "lastUpdated": "2026-10-27",
+      "chars": 8849,
       "shortTitle": "System Identification",
       "difficulty": "中级",
       "estimatedMinutes": 10,
@@ -139,13 +139,13 @@
     {
       "id": "sec-05",
       "title": "Real-to-Sim自动化建模：从真实世界到仿真",
-      "lastUpdated": "2026-04-27T00:45",
-      "chars": 3251,
+      "lastUpdated": "2026-10-27",
+      "chars": 4121,
       "shortTitle": "Real-to-Sim自动化建模",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 5,
       "headings": [
         "什么是Real-to-Sim？",
         "为什么需要Real-to-Sim？",
@@ -153,7 +153,8 @@
         "3D场景重建技术",
         "物理参数自动辨识",
         "前沿工作",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "传统 Sim-to-Real 是在仿真中训练然后部署到真实。Real-to-Sim 反过来——把真实场景自动化地重建到仿真中，构建高保真的虚拟环境。"
     },
@@ -181,31 +182,32 @@
     {
       "id": "sec-07",
       "title": "自适应Domain Randomization：从固定随机化到学习随机化",
-      "lastUpdated": "2026-04-27T14:43",
-      "chars": 3036,
+      "lastUpdated": "2026-10-27",
+      "chars": 3873,
       "shortTitle": "自适应Domain Randomizatio…",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 5,
       "headings": [
         "DR的核心困境",
         "三种自适应DR方法",
         "ADR (Automatic Domain Randomization)",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "传统Domain Randomization (DR) 的参数范围靠人工设定： - 范围太窄 → 不覆盖真实值 → 迁移失败 - 范围太宽 → 策略过于保守 → 性能下降"
     },
     {
       "id": "sec-08",
       "title": "领域不变特征学习：让策略\"看不见\"仿真与真实的差别",
-      "lastUpdated": "2026-04-29T17:50",
-      "chars": 10133,
+      "lastUpdated": "2026-10-27",
+      "chars": 12290,
       "shortTitle": "领域不变特征学习",
       "difficulty": "中级",
       "estimatedMinutes": 11,
       "tier": 2,
-      "readingMinutes": 11,
+      "readingMinutes": 14,
       "headings": [
         "1. 为什么特征对齐很重要？",
         "2. 分布对齐的三种范式",
@@ -214,7 +216,8 @@
         "5. 矩匹配式对齐：CORAL",
         "6. 实战对比：三种 Sim-to-Real 方法的性能地图",
         "7. 前沿方向：从像素对齐到表征对齐",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "前面几节我们讲了数据侧的 Sim-to-Real 方法（Domain Randomization、System ID、Real-to-Sim 自动建模）和监督侧的方法（Teacher-Student 蒸馏、自适应 DR）。但这些方法的本质都是：暴力扩大仿真分布，让真实分布被仿真分布包住。"
     },
@@ -243,8 +246,8 @@
     {
       "id": "sec-10",
       "title": "人体动作重定向与 Real-to-Sim 数据引擎：从 IK/MPC 到生成式流形采样",
-      "lastUpdated": "2026-10-11T08:30",
-      "chars": 7454,
+      "lastUpdated": "2026-10-27",
+      "chars": 7462,
       "shortTitle": "人体动作重定向与 Real-to-Sim…",
       "difficulty": "高级",
       "estimatedMinutes": 11,
@@ -316,14 +319,14 @@
     {
       "id": "sec-12",
       "title": "3DGS 高吞吐量仿真：GS-Playground 范式与视觉中心 RL 工业级训练",
-      "lastUpdated": "2026-05-07T20:05",
-      "chars": 6161,
+      "lastUpdated": "2026-10-27",
+      "chars": 7493,
       "shortTitle": "3DGS 高吞吐量仿真",
       "difficulty": "高级",
       "estimatedMinutes": 8,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 8,
+      "readingMinutes": 10,
       "headings": [
         "为什么 Sim-to-Real 长期卡在“看不真”和“训不快”的二难",
         "GS-Playground：把视觉 RL 推进到工业级训练区间",
@@ -336,7 +339,8 @@
         "学习路径建议",
         "与其他模块的联动",
         "关键论文与资源",
-        "思考题"
+        "思考题",
+        "参考答案"
       ],
       "summary": "经过前面 9 节，我们已经把 Sim-to-Real 的工具箱基本梳理完毕——Domain Randomization、System Identification、Teacher-Student 蒸馏、视觉域迁移、Real2Sim 闭环、Gap 定量诊断……每一种方法都从某个侧面试图缝合仿真与真实之间的鸿沟。但这些方法都隐含一个前提假设：仿真器本身的视觉保真"
     },
@@ -402,7 +406,7 @@
       "summary": "本节讨论一个在团队里反复出现的困惑：我们把真实场景重建得很像了，为什么策略真机上照样挂？ 答案通常不在渲染质量，而在 Real2Sim 产物本身缺少工程属性——改不动、测不准、不可回归。本节把它当成软件工程问题来讲，并给出可落地的评判标准与一套最小回归框架。"
     }
   ],
-  "readingMinutes": 143,
+  "readingMinutes": 151,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 119317
+  "chars": 124525
 }

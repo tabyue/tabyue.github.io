@@ -1,7 +1,7 @@
 {
   "id": "platform-engineering",
   "name": "具身智能平台工程",
-  "lastUpdated": "2026-10-20T15:40",
+  "lastUpdated": "2026-10-27",
   "stage": "阶段六：项目实战",
   "importance": "重要",
   "estimatedHours": 40,
@@ -62,14 +62,14 @@
     {
       "id": "sec-01",
       "title": "Linux 基础与命令行：机器人工程师的必备技能",
-      "lastUpdated": "2026-10-20T15:40",
-      "chars": 5666,
+      "lastUpdated": "2026-10-27",
+      "chars": 7585,
       "shortTitle": "Linux 基础与命令行",
       "difficulty": "入门",
       "estimatedMinutes": 22,
       "isBrief": true,
       "tier": 0,
-      "readingMinutes": 7,
+      "readingMinutes": 9,
       "headings": [
         "1. 为什么机器人用 Linux？",
         "2. 文件系统与目录结构",
@@ -78,25 +78,25 @@
         "5. 包管理",
         "6. 环境变量与配置",
         "为什么机器人几乎只用 Linux",
-        "systemd：把你的程序变成\"开机就跑、挂了自动重启\"",
+        "systemd：把你的程序变成「开机就跑、挂了自动重启」",
         "udev：让串口设备有固定名字",
-        "排查\"卡\"的问题：一套固定流程",
+        "排查「卡」的问题：一套固定流程",
         "一个实用的排查工具箱",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "机器人软件栈（ROS2、PyTorch、ONNX Runtime）几乎全部运行在 Linux 上。本节从零讲起，让没有 Linux 经验的人也能上手。"
     },
     {
       "id": "sec-02",
       "title": "网络基础与分布式系统原理",
-      "lastUpdated": "2026-04-28T19:38",
-      "chars": 2835,
+      "lastUpdated": "2026-10-27",
+      "chars": 8052,
       "shortTitle": "网络基础与分布式系统原理",
       "difficulty": "入门",
       "estimatedMinutes": 3,
-      "isBrief": true,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 10,
       "headings": [
         "1. OSI 七层模型与 TCP/IP",
         "2. TCP vs UDP：机器人通信的选择",
@@ -104,21 +104,27 @@
         "4. 分布式系统核心挑战",
         "5. 消息队列与异步通信",
         "6. 安全通信",
-        "练习题"
+        "7. 延迟从哪里来：一条消息的时间账",
+        "8. 可靠传输的代价：队头阻塞",
+        "9. DDS 发现与 ROS_DOMAIN_ID",
+        "10. 时钟同步：原理与误差来源",
+        "常见误区",
+        "与相邻章节的关系",
+        "练习题",
+        "参考答案"
       ],
       "summary": "机器人系统本质上是分布式系统——多个节点（传感器、控制器、规划器）通过网络通信协作。理解网络基础是构建可靠机器人平台的前提。"
     },
     {
       "id": "sec-03",
       "title": "Docker 与容器化部署：机器人软件的标准化交付",
-      "lastUpdated": "2026-04-28T19:07",
-      "chars": 2881,
+      "lastUpdated": "2026-10-27",
+      "chars": 8177,
       "shortTitle": "Docker 与容器化部署",
       "difficulty": "入门",
       "estimatedMinutes": 3,
-      "isBrief": true,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 9,
       "headings": [
         "1. Docker 核心概念",
         "2. ROS2 + Docker 标准 Dockerfile",
@@ -126,21 +132,29 @@
         "4. Docker Compose 多服务编排",
         "5. 机器人场景的 Docker 特殊需求",
         "6. CI/CD 集成",
-        "练习题"
+        "7. 镜像分层与构建缓存",
+        "8. 用数字看分层的价值：OTA 拉取量",
+        "9. 多阶段构建：构建工具留在构建阶段",
+        "10. 容器的本质与实时性",
+        "11. 多架构镜像：x86 与 Jetson",
+        "常见误区",
+        "与相邻章节的关系",
+        "练习题",
+        "参考答案"
       ],
-      "summary": "\"在我机器上能跑\"——这句话在机器人团队协作中是最大的坑。Docker 容器化让环境一致、部署可重复。"
+      "summary": "「在我机器上能跑」——这句话在机器人团队协作中是最大的坑。Docker 容器化让环境一致、部署可重复。"
     },
     {
       "id": "sec-04",
       "title": "Kubernetes 与机器人集群管理基础",
-      "lastUpdated": "2026-10-20T15:40",
-      "chars": 5862,
+      "lastUpdated": "2026-10-27",
+      "chars": 7278,
       "shortTitle": "Kubernetes 与机器人集群管理基础",
       "difficulty": "中级",
       "estimatedMinutes": 22,
       "isBrief": true,
       "tier": 1,
-      "readingMinutes": 7,
+      "readingMinutes": 8,
       "headings": [
         "1. K8s 核心概念",
         "2. 为什么机器人集群需要 K8s？",
@@ -154,21 +168,21 @@
         "GPU 调度",
         "四个高频坑",
         "更轻的替代方案",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "当机器人从 1 台变成 100 台，手动管理不再可行。Kubernetes（K8s）是管理容器化应用集群的事实标准。"
     },
     {
       "id": "sec-05",
       "title": "微服务架构与 gRPC：机器人后端设计",
-      "lastUpdated": "2026-04-30T10:22",
-      "chars": 2694,
+      "lastUpdated": "2026-10-27",
+      "chars": 8955,
       "shortTitle": "微服务架构与 gRPC",
       "difficulty": "中级",
       "estimatedMinutes": 3,
-      "isBrief": true,
       "tier": 1,
-      "readingMinutes": 3,
+      "readingMinutes": 10,
       "headings": [
         "1. 单体 vs 微服务",
         "2. 机器人平台的典型微服务拆分",
@@ -176,9 +190,15 @@
         "4. Protobuf 定义示例",
         "5. 数据库选型",
         "6. 部署与监控",
-        "练习题"
+        "7. HTTP/2 与四种 RPC 模式",
+        "8. Deadline、重试与幂等",
+        "9. Schema 演进规则",
+        "常见误区",
+        "与相邻章节的关系",
+        "练习题",
+        "参考答案"
       ],
-      "summary": "当机器人系统从\"一台设备\"扩展到\"一个平台\"时，需要后端服务支撑：任务调度、模型管理、数据存储、监控告警。微服务架构是标准选择。"
+      "summary": "当机器人系统从「一台设备」扩展到「一个平台」时，需要后端服务支撑：任务调度、模型管理、数据存储、监控告警。微服务架构是标准选择。"
     },
     {
       "id": "sec-06",
@@ -205,24 +225,25 @@
     {
       "id": "sec-07",
       "title": "可观测性（Observability）：日志、指标与追踪",
-      "lastUpdated": "2026-04-30T11:07",
-      "chars": 3626,
+      "lastUpdated": "2026-10-27",
+      "chars": 5190,
       "shortTitle": "可观测性",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
-        "可观测性：机器人系统的\"体检\"",
+        "可观测性：机器人系统的「体检」",
         "1. 三大支柱",
         "2. 结构化日志",
         "3. 指标类型",
         "4. 分布式追踪",
         "5. 告警（Alerting）",
         "6. Dashboard 设计原则",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
-      "summary": "当机器人出问题时，\"log 里有什么？CPU 多少？哪个调用慢？\"——可观测性的三大支柱回答这些问题。"
+      "summary": "当机器人出问题时，「log 里有什么？CPU 多少？哪个调用慢？」——可观测性的三大支柱回答这些问题。"
     },
     {
       "id": "sec-08",
@@ -249,13 +270,13 @@
     {
       "id": "sec-09",
       "title": "CI/CD 与机器人软件自动化部署",
-      "lastUpdated": "2026-04-30T11:33",
-      "chars": 4229,
+      "lastUpdated": "2026-10-27",
+      "chars": 5713,
       "shortTitle": "CI/CD 与机器人软件自动化部署",
       "difficulty": "中级",
       "estimatedMinutes": 5,
       "tier": 2,
-      "readingMinutes": 5,
+      "readingMinutes": 6,
       "headings": [
         "1. CI/CD 对机器人开发的意义",
         "2. GitHub Actions 机器人 CI 示例",
@@ -264,30 +285,32 @@
         "5. 部署流水线",
         "6. 自动化回归测试",
         "7. 发布管理",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
-      "summary": "\"在我机器上能跑\" → \"在 100 台机器人上都能跑\"。CI/CD（持续集成 / 持续部署）让这个跨越成为可能。"
+      "summary": "「在我机器上能跑」 → 「在 100 台机器人上都能跑」。CI/CD（持续集成 / 持续部署）让这个跨越成为可能。"
     },
     {
       "id": "sec-10",
       "title": "Observability 可观测性：日志、指标、追踪三支柱与机器人数据回放",
-      "lastUpdated": "2026-04-29T04:20",
-      "chars": 8820,
+      "lastUpdated": "2026-10-27",
+      "chars": 11238,
       "shortTitle": "Observability 可观测性",
       "difficulty": "中级",
       "estimatedMinutes": 10,
       "tier": 2,
-      "readingMinutes": 10,
+      "readingMinutes": 13,
       "headings": [
         "1. 可观测性三支柱：Logs / Metrics / Traces",
         "2. 结构化日志：从 print 到可查询",
         "3. 高频遥测的采样与下采样",
         "4. OpenTelemetry：跨进程 Trace 贯穿机器人软件栈",
         "5. 机器人特有第四支柱：传感器数据回放",
-        "6. SLO/SLI/SLA：把'体验'翻译成可观测的数字",
-        "7. 从可观测性到'智能根因分析'",
+        "6. SLO/SLI/SLA：把「体验」翻译成可观测的数字",
+        "7. 从可观测性到「智能根因分析」",
         "8. 工程落地清单",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "很多团队把 Monitoring（监控）和 Observability（可观测性）混为一谈。两者的本质区别："
     },
@@ -359,39 +382,48 @@
     {
       "id": "sec-14",
       "title": "功能安全与合规（ISO 13482/IEC 61508）",
-      "lastUpdated": "2026-04-26T22:21",
-      "chars": 2468,
+      "lastUpdated": "2026-10-27",
+      "chars": 8119,
       "shortTitle": "功能安全与合规",
       "difficulty": "高级",
       "estimatedMinutes": 3,
-      "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 11,
       "headings": [
         "机器人功能安全：从Demo到产品的必经之路",
         "核心标准体系",
         "安全完整性等级（SIL）",
         "人形机器人的安全架构",
-        "ISO 15066 人机协作安全限值",
-        "练习"
+        "ISO/TS 15066 人机协作安全限值",
+        "功能安全的基本概念",
+        "危害分析与风险评估流程",
+        "性能等级 PL 与风险图",
+        "冗余架构：共因失效决定上限",
+        "速度与分离监控（SSM）的保护间距",
+        "ISO 13482 与学习型组件",
+        "常见误区",
+        "与相邻章节的关系",
+        "练习",
+        "参考答案"
       ],
       "summary": "实验室的机器人Demo崩溃了重启就好，但部署在工厂/医院/家庭的机器人如果出错，后果可能是人身伤害。功能安全确保机器人在故障情况下仍然安全。"
     },
     {
       "id": "sec-15",
       "title": "机器人Fleet管理与远程运维平台",
-      "lastUpdated": "2026-04-27T12:01",
-      "chars": 3941,
+      "lastUpdated": "2026-10-27",
+      "chars": 4673,
       "shortTitle": "机器人Fleet管理与远程运维平台",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "什么是Fleet管理？",
         "Fleet管理核心功能",
         "Fleet管理架构",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "当部署的机器人从1台变成100台、1000台时，需要统一的Fleet管理平台来监控、更新和运维。"
     },
@@ -447,14 +479,14 @@
     {
       "id": "sec-18",
       "title": "具身 AI 安全工程：从感知到行动的全链路威胁建模与防御",
-      "lastUpdated": "2026-05-07T07:30",
-      "chars": 10189,
+      "lastUpdated": "2026-10-27",
+      "chars": 12420,
       "shortTitle": "具身 AI 安全工程",
       "difficulty": "高级",
       "estimatedMinutes": 12,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 12,
+      "readingMinutes": 15,
       "headings": [
         "具身 AI 安全工程：全链路威胁建模与防御",
         "1. 为什么具身 AI 的安全问题与传统 AI 安全不同？",
@@ -471,7 +503,8 @@
         "7. 合规审计报告模板",
         "8. 参考资源（综述配套 GitHub 收藏夹）",
         "练习题",
-        "延伸阅读"
+        "延伸阅读",
+        "参考答案"
       ],
       "summary": "2026 年 5 月 6 日，arXiv 上线了 51 页的《Safety in Embodied AI: A Survey of Risks, Attacks, and Defenses》（2605.02900，30+ 作者，400+ 参考文献，配套 Awesome-Embodied-AI-Safety GitHub 仓库）。这是首份覆盖具身 AI 全链路"
     },
@@ -505,7 +538,7 @@
       "summary": "机器人学习这两年有一个不太被讨论、但严重消耗工程时间的痛点：把 N 个策略接到 M 套评测环境上。朴素做法需要 N×M 份适配代码，而且每一份都可能悄悄出错——这些错误不报错，只是让成功率低几个百分点，你会误以为是自己的方法不如人。"
     }
   ],
-  "readingMinutes": 129,
+  "readingMinutes": 171,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 113173
+  "chars": 147362
 }

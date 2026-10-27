@@ -4,7 +4,7 @@
   "stage": "阶段五：仿真与 Sim-to-Real",
   "importance": "重要",
   "estimatedHours": 30,
-  "lastUpdated": "2026-10-20T15:40",
+  "lastUpdated": "2026-10-27",
   "description": "机器人系统中云端大模型、边缘计算和端侧控制的协同架构。让大脑在云端思考，小脑在本地反应。",
   "prerequisites": [
     "模型训练与推理优化",
@@ -83,8 +83,8 @@
     {
       "id": "sec-02",
       "title": "边缘AI与实时计算",
-      "lastUpdated": "2026-10-20T10:20",
-      "chars": 15751,
+      "lastUpdated": "2026-10-27",
+      "chars": 15754,
       "shortTitle": "边缘AI与实时计算",
       "difficulty": "中级",
       "estimatedMinutes": 17,
@@ -197,8 +197,8 @@
     {
       "id": "sec-07",
       "title": "MCP 协议：LLM 与机器人的标准化接口",
-      "lastUpdated": "2026-04-20T11:38",
-      "chars": 9747,
+      "lastUpdated": "2026-10-27",
+      "chars": 9744,
       "shortTitle": "MCP 协议",
       "difficulty": "中级",
       "estimatedMinutes": 11,
@@ -221,50 +221,52 @@
     {
       "id": "sec-08",
       "title": "数字孪生与实时同步：构建机器人的虚拟镜像",
-      "lastUpdated": "2026-04-27T00:42",
-      "chars": 3816,
+      "lastUpdated": "2026-10-27",
+      "chars": 5404,
       "shortTitle": "数字孪生与实时同步",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "什么是数字孪生？",
         "数字孪生的三个层级",
         "核心技术组件",
         "NVIDIA Omniverse 数字孪生架构",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "数字孪生（Digital Twin） 是物理机器人在虚拟世界中的实时镜像。物理机器人的每一个动作、每一个传感器读数，都同步映射到虚拟模型中。"
     },
     {
       "id": "sec-09",
       "title": "WebRTC远程遥操与低延迟视频传输",
-      "lastUpdated": "2026-04-27T14:43",
-      "chars": 3414,
+      "lastUpdated": "2026-10-27",
+      "chars": 5017,
       "shortTitle": "WebRTC远程遥操与低延迟视频传输",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 6,
       "headings": [
         "为什么需要远程遥操？",
         "延迟要求",
         "WebRTC遥操架构",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "远程遥操作（Teleoperation）让操作员可以在千里之外控制机器人。应用场景：危险环境（核电站/深海）、远程医疗手术、远程数据采集（分布式众包）。"
     },
     {
       "id": "sec-10",
       "title": "联邦学习与隐私保护：多机器人协同训练的数据治理",
-      "lastUpdated": "2026-04-28T12:08",
-      "chars": 9456,
+      "lastUpdated": "2026-10-27",
+      "chars": 10796,
       "shortTitle": "联邦学习与隐私保护",
       "difficulty": "中级",
       "estimatedMinutes": 11,
       "tier": 2,
-      "readingMinutes": 11,
+      "readingMinutes": 12,
       "headings": [
         "1. 为什么机器人需要联邦学习",
         "1.1 量产部署的数据困境",
@@ -282,7 +284,8 @@
         "5.2 通信优化",
         "5.3 2026年工程最佳实践清单",
         "6. 前沿方向",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "随着具身智能从单机Demo进入千台级量产部署（2026年星动纪元、银河通用、宇树等已实现），一个关键问题浮出水面：多台机器人在不同场景中采集的操作数据如何安全地汇聚起来训练更好的模型？ 联邦学习(Federated Learning, FL)为这个问题提供了系统化的解决方案——让模型参数而非原始数据流动，在保护数据隐私的同时实现协同训练。"
     },
@@ -322,7 +325,7 @@
       "summary": "2026 年 5 月初，两个看似独立但实际深度相关的发布同时改写了机器人云边端协同的行业基准："
     }
   ],
-  "readingMinutes": 126,
+  "readingMinutes": 131,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 109771
+  "chars": 114302
 }

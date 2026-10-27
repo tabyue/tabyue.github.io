@@ -508,8 +508,8 @@ html[data-theme="light"] .modal-overlay{background:rgba(15,17,21,.45)}
 .answer-card{border-color:rgba(48,209,88,.2)}
 .answer-card .exercise-header{background:rgba(48,209,88,.04);color:var(--sl)}
 .answer-body{padding:16px 20px}
-.answer-body strong{display:block;margin:18px 0 10px;padding:10px 14px;background:var(--accent-subtle);border-radius:10px;border-left:3px solid var(--p);font-size:.88rem;color:var(--t1)}
-.answer-body strong:first-child{margin-top:0}
+.answer-body strong.ans-label{display:block;margin:18px 0 10px;padding:10px 14px;background:var(--accent-subtle);border-radius:10px;border-left:3px solid var(--p);font-size:.88rem;color:var(--t1)}
+.answer-body strong.ans-label:first-child{margin-top:0}
 /* Learning progress */
 .progress-bar{height:3px;background:var(--bd);border-radius:2px;margin-top:12px;overflow:hidden;position:relative}
 .progress-fill{height:100%;border-radius:2px;transition:width .6s cubic-bezier(.4,0,.2,1)}
@@ -2462,9 +2462,13 @@ function renderMd(t,learnHeadings=false){
             return`<div class="exercise-card"><div class="exercise-header"><span class="exercise-icon">✏️</span> 练习</div>${items}</div>`;
         });
     }
-    if(h.includes('<h4>参考答案</h4>')){
-        h=h.replace(/<h4>参考答案<\/h4>([\s\S]*)/,(_,content)=>{
-            return`<div class="exercise-card answer-card"><div class="exercise-header"><span class="exercise-icon">💡</span> 参考答案</div><div class="answer-body">${content||''}</div></div>`;
+    if(h.includes('<h4>参考答案')){
+        // 答案卡只包住本节：遇到同级或更高级标题（学习正文 ### → h4、## → h3、# → h2）即结束，
+        // 避免把答案后面的延伸阅读、下一节正文也收进卡片。同一章可有多处答案。
+        h=h.replace(/<h4>(参考答案[^<]*)<\/h4>([\s\S]*?)(?=<h[234][\s>]|$)/g,(_,title,content)=>{
+            // 只有「1. xxx」「练习2：」「Q3」这类题号开头的粗体才是题目标签，其余粗体保持行内强调
+            content=(content||'').replace(/<strong>((?:(?:练习|题|Q)\s*\d+(?:\s*[-—:：.、)）]|\s)|\d+(?:\s*\/\s*\d+)*\s*[\.、:：)）])[^<]*)<\/strong>/g,'<strong class="ans-label">$1</strong>');
+            return`<div class="exercise-card answer-card"><div class="exercise-header"><span class="exercise-icon">💡</span> ${title}</div><div class="answer-body">${content}</div></div>`;
         });
     }
     return h;

@@ -42,7 +42,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：世界模型概念+经典论文\n**第2周**：LLM+机器人论文\n**第3周**：前沿跟踪",
-  "lastUpdated": "2026-10-26",
+  "lastUpdated": "2026-10-27",
   "maturity": "comprehensive",
   "sectionsMeta": [
     {
@@ -155,13 +155,13 @@
     {
       "id": "sec-06",
       "title": "VLMVLA训练范式：预训练、中间训练与微调",
-      "lastUpdated": "2026-04-23T15:46",
-      "chars": 3702,
+      "lastUpdated": "2026-10-27",
+      "chars": 4797,
       "shortTitle": "VLMVLA训练范式",
       "difficulty": "中级",
       "estimatedMinutes": 5,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 6,
       "headings": [
         "从 VLM 到 VLA：训练流程中的分布鸿沟",
         "三阶段训练范式",
@@ -170,7 +170,8 @@
         "对比其他训练范式",
         "实验对照框架",
         "请记住的核心观点",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "当前 VLA 模型的标准训练流程是：拿一个预训练好的 VLM（如 PaliGemma、Qwen-VL），然后在机器人操作数据上微调，让它学会输出动作。但这里有一个被忽视的问题——数据分布鸿沟。"
     },
@@ -197,31 +198,32 @@
     {
       "id": "sec-08",
       "title": "具身常识图谱：构建机器人的知识骨架",
-      "lastUpdated": "2026-04-27T14:46",
-      "chars": 4804,
+      "lastUpdated": "2026-10-27",
+      "chars": 5490,
       "shortTitle": "具身常识图谱",
       "difficulty": "中级",
       "estimatedMinutes": 5,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 7,
       "headings": [
         "为什么机器人需要知识图谱？",
         "具身常识图谱的三层结构",
         "LLM + 知识图谱 协同",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "LLM有隐式的常识知识，但不够结构化。机器人需要可查询、可推理、可更新的结构化知识。"
     },
     {
       "id": "sec-09",
       "title": "自回归视频世界模型：从 VideoGPT 到 V-JEPA 2 与 Cosmos",
-      "lastUpdated": "2026-04-29T17:50",
-      "chars": 7989,
+      "lastUpdated": "2026-10-27",
+      "chars": 9799,
       "shortTitle": "自回归视频世界模型",
       "difficulty": "中级",
       "estimatedMinutes": 9,
       "tier": 1,
-      "readingMinutes": 9,
+      "readingMinutes": 11,
       "headings": [
         "1. 把世界建模转化为\"下一帧预测\"",
         "2. 视觉 Tokenizer：VQ-VAE 与 MAGVIT 路线",
@@ -230,20 +232,21 @@
         "5. 机器人策略闭环：从世界模型到 MPC",
         "6. 三代技术对比",
         "7. 对具身智能工程师的启示",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "前面第 4 节我们讲了视频世界模型的语义掩码范式（MWM），那一节聚焦在\"把像素重建换成语义预测\"的思想转变。这一节我们沿另一条主线往下挖：把世界建模视为 token 序列的自回归预测，从 VideoGPT（2021）到 Meta V-JEPA 2（2025）到 NVIDIA Cosmos（2026），看这一范式是如何一步步走向机器人策略闭环的。"
     },
     {
       "id": "sec-10",
       "title": "双引擎世界模型：决策引擎(WAM) + 数据引擎(Creator) 的闭环架构",
-      "lastUpdated": "2026-05-01T20:28",
-      "chars": 12632,
+      "lastUpdated": "2026-10-27",
+      "chars": 14603,
       "shortTitle": "双引擎世界模型",
       "difficulty": "中级",
       "estimatedMinutes": 15,
       "tier": 1,
-      "readingMinutes": 15,
+      "readingMinutes": 18,
       "headings": [
         "背景：2026 年 4 月底 MagicLab 在硅谷发布 Magic-Mix",
         "1. 为什么\"双引擎\"？从单模型困境讲起",
@@ -253,30 +256,35 @@
         "5. 与其他世界模型的定位差异",
         "6. 工程落地的五个陷阱",
         "7. 延伸阅读",
-        "练习"
+        "练习",
+        "参考答案"
       ],
       "summary": "2026 年 4 月 30 日，魔法原子（MagicLab）在其发起的首届全球具身智能峰会（GEIS，Silicon Valley）上发布了新一代具身世界模型 Magic-Mix。与 NVIDIA Cosmos、Meta V-JEPA 2、ACE Kairos 这些\"偏研究 / 偏基础平台\"的工作相比，Magic-Mix 的定位非常直接——它是一个面向量产具"
     },
     {
       "id": "sec-11",
       "title": "腕部单目的持久世界状态：AtlasVLA 把记忆从时间缓存拉回空间地图",
-      "lastUpdated": "2026-10-26",
-      "chars": 2449,
+      "lastUpdated": "2026-10-27",
+      "chars": 6555,
       "shortTitle": "腕部单目的持久世界状态",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isFrontier": true,
-      "isBrief": true,
       "tier": 2,
-      "readingMinutes": 3,
+      "readingMinutes": 9,
       "headings": [
+        "背景：为什么偏偏是腕部单目",
         "为什么反应式 VLA 在腕部单目下会忘事",
         "双记忆分别管什么",
+        "通俗解释：按「在哪」存，而不是按「何时」存",
+        "玩具示例：物体离开视野后仍在地图里",
         "数字该怎么读",
         "和「视频世界模型」不是一条路",
-        "工程上什么时候该用"
+        "在本模块中的位置",
+        "工程上什么时候该用",
+        "常见误区"
       ],
-      "summary": "看完 π₀.5 双层架构 和 MemoryVLA 之后，很容易觉得「记忆」已经是 VLA 标配。2026-08 的 AtlasVLA（p181，arXiv 2608.06729）把这个问题拆成了两个不同的洞："
+      "summary": "真实部署里，「只有一个腕部相机」往往不是研究者的选择，而是约束：第三人称相机要额外支架和标定，换个工位就得重装；移动操作平台上头部相机经常被手臂自己挡住；而腕部相机跟着末端走，近距离细节最清楚、视角也和动作最一致。代价是视野窄、一直在动——任务相关的物体大部分时间不在画面里。"
     },
     {
       "id": "sec-12",
@@ -311,14 +319,14 @@
     {
       "id": "sec-13",
       "title": "JEPA 潜空间世界动作模型：不重建像素的控制与规划，从表征坍缩到各向同性约束（LeWAM）",
-      "lastUpdated": "2026-10-18T08:30",
-      "chars": 7380,
+      "lastUpdated": "2026-10-27",
+      "chars": 8583,
       "shortTitle": "JEPA 潜空间世界动作模型",
       "difficulty": "高级",
       "estimatedMinutes": 42,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 11,
+      "readingMinutes": 13,
       "headings": [
         "像素重建是一笔昂贵的税",
         "JEPA 的基本形式",
@@ -335,6 +343,7 @@
         "补充二：训练数据配方",
         "补充三：失败模式诊断表",
         "补充四：练习题",
+        "参考答案",
         "补充五：与相邻模块的接口"
       ],
       "summary": "本模块前面讨论的视频世界模型有一个共同动作：预测未来的像素。无论是扩散模型逐帧去噪，还是自回归模型逐 token 生成，模型都要把未来画面的每一个细节重建出来。"
@@ -342,14 +351,14 @@
     {
       "id": "sec-14",
       "title": "世界模型作为自改进的引擎：从预测未来到改进改进的过程",
-      "lastUpdated": "2026-10-26T08:40",
-      "chars": 9830,
+      "lastUpdated": "2026-10-27",
+      "chars": 11222,
       "shortTitle": "世界模型作为自改进的引擎",
       "difficulty": "高级",
       "estimatedMinutes": 56,
       "isFrontier": true,
       "tier": 3,
-      "readingMinutes": 13,
+      "readingMinutes": 15,
       "headings": [
         "为什么「预测未来」还不够",
         "三层改进：行为、过程、递归",
@@ -365,12 +374,13 @@
         "世界模型误差在闭环里怎么累积",
         "从这里再往前一步",
         "与相邻模块的接口",
-        "练习题"
+        "练习题",
+        "参考答案"
       ],
       "summary": "前面几节把世界模型讲成了一台预测机器：给定当前观测 $o_t$ 与动作序列 $a_{t:t+k}$，输出未来观测 $\\hat{o}_{t+k}$。这个定义没错，但它把世界模型的用途说窄了。"
     }
   ],
-  "readingMinutes": 154,
+  "readingMinutes": 172,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 130991
+  "chars": 143254
 }
