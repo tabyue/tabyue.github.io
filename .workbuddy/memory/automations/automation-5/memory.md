@@ -121,6 +121,13 @@
 - 校验：sync + sitemap（541 章节）+ health_check + verify_learn_structure **首轮即 ALL OK**；unittest 34/34、node UI 32/32（修 fix 后）。已 push（b2c3bc6..74c5bf3），远程 HEAD 已核对一致。
 - 新坑：① **`tools/test_learn_ui.cjs` 硬编码章节总数**（`chapters: 539` + 用例名「539章」）——新增学习章节后必 FAIL，需同步改数字（539→541），这不是真 bug；② 二次深化脚本末尾写报告文件时若 shell 同时 `Out-File` 同名文件会 PermissionError（JSON 已写盘，只是报告没落），换文件名即可；③ PowerShell `>` 输出是 UTF-16，解析 node JSON 要 utf-16 解码 + `s[s.find('{'):]`；④ 单次写入正文只有 4.2K 偏薄，用「在『能力自检』小节前插入新小节 + 序号顺延」二次追加到 ~8K。
 
+### 2026-10-28 08:10—09:05
+- 投稿箱：无新投稿。开工时工作树干净、HEAD==origin/main（f91a838）。
+- 数据：新闻 +10（n539—n548）、论文 +5（p277—p281，含 detail）、开源 +4（os210—os213，含 detail + 报告页）、招聘 +6（j273—j278）、资源新增 r022（具身 Agent 框架与 Harness 生态）+ r001 扩充。
+- 学习：embodied-data-engineering「轨迹的可学性：为什么成功的示教未必是有用的监督」（7.3K，tier3，联动 p280 Trajectory2Gym）；platform-engineering「把机器人能力暴露给 Agent：工具粒度、接口完备性与调用治理」（8.1K，tier3，联动 p279 RoboHarness + os213 RAI）。
+- 校验：sync + sitemap（543 章节）+ health_check + verify_learn_structure **首轮即 ALL OK**；unittest 34/34、node UI 32/32。已 push（f91a838..1975a8b），远程 HEAD 已核对一致。
+- 新坑：① **PowerShell 不支持 heredoc（`<<'EOF'`）**，整行直接 ParserError 且 `git add` 也不会执行——提交信息要先 `Write` 成 `_msg.txt` 再 `git commit -F _msg.txt`，用完删掉（且 `git add` 要显式写 `git add data sitemap.xml`，别用 `git add -A` 把 `_msg.txt` 带进去）。② **`gh api repos/<r>` 输出含非 GBK 字符时 PowerShell 管道会 UnicodeEncodeError**（本轮 lucidrains/pi-zero-pytorch 的 `π₀`）——批量核验 repo 的脚本里给 `subprocess.run` 加 `encoding='utf-8'`，并在主流程设 `$env:PYTHONIOENCODING='utf-8'`；诊断脚本 print 中文标题也会踩同一个坑。③ **本轮候选命中率约 50%**：中科慧灵 A++、智元 110 台吉尼斯、NVIDIA Isaac/Agile ONE SN、商务部 22.6%、六项人形国标、GDPS 闭幕 EIBench、RoboDojo 六榜、云深处五项成果、宇树 H2-X 全部已在库。④ 单靠 WebSearch 凑不够 10 条互不重复的新闻，需要「融资 / 政策 / 地方行动 / 全球（英文源）」四个方向各搜一轮才够。⑤ 学习正文初版只有 6.2K/6.9K 偏薄，用「在 `### 八、常见坑` 前插入两个新小节 + 把八→十、九→十一顺延」二次追加到 7.3K/8.1K，幂等且不影响小目录结构。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
