@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="深圳第一产业为什么只占 0.1%？造手机、送快递、盖楼房分别属于哪个产业？鲜花、煤炭、集装箱该用什么交通方式？地理互动馆第 10 课，对应湘教版八年级上册第四章。">
+<meta property="og:title" content="地理互动馆 · 中国的产业与交通">
+<meta property="og:description" content="三次产业、因地制宜的农业、工业基地和五种交通方式。">
+<title>中国的产业与交通 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="economy.js"></script>
+</head>
+<body data-module="economy">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 10 课 <span>/</span> 湘教版八上 第四章</p><h1>中国的产业与交通</h1><p class="subtitle">从田里的水稻到深圳的手机，再到盐田港的集装箱。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="三次产业结构">
+<h2>三次产业结构比一比（2024 年）</h2>
+<p class="panel-sub">各产业增加值占地区生产总值的比重。</p>
+<svg id="ind" viewBox="0 0 420 220" role="img" aria-label="全国、广州、深圳三次产业结构堆积条形图"></svg>
+<p class="source">来源：国家统计局、深圳市统计局 2024 年统计公报；广州数据引自澳门统计暨普查局“粤港澳大湾区统计专页”（广东省统计局）。</p>
+</section>
+<div class="settings">
+<section class="readout"><div class="readout-head"><h2>三次产业怎么分</h2></div><ul style="margin:10px 0 0;padding-left:18px;font-size:12.5px;line-height:1.9;color:#40594b"><li><b>第一产业</b>：农业（种植业、林业、畜牧业、渔业）。</li><li><b>第二产业</b>：工业（采矿、制造、电力燃气水）和建筑业。</li><li><b>第三产业</b>：服务业，如交通运输、商业、金融、教育、信息服务。</li></ul><p class="lead" id="ind-text"></p></section>
+<section class="info-card"><h3>深圳的产业</h3><ul><li>2024 年地区生产总值 3.68 万亿元，第二产业 37.8%、第三产业 62.1%。</li><li>高技术制造业增加值占规模以上工业的 58.2%，电子信息、新能源汽车是支柱。</li><li>国家高新技术企业超过 2.5 万家（广东省地方志办公室）。</li></ul></section>
+</div>
+</div>
+<section class="section" aria-label="归类练习"><h2>它属于哪个产业？ <span id="act-score"></span></h2>
+<div class="card panel"><div class="choice-list" id="act-list"></div></div>
+</section>
+<section class="section" aria-label="农业"><h2>农业：因地制宜</h2>
+<div class="two-col"><div class="card panel"><h2>这块地适合发展什么？</h2><div class="choice-list" id="farm-list" style="margin-top:10px"></div></div>
+<div class="stack"><div class="info-card"><h3>南方和北方</h3><ul><li>北方以旱地为主，主要粮食作物是小麦、玉米。</li><li>南方以水田为主，主要粮食作物是水稻，俗称“南稻北麦”。</li></ul></div>
+<div class="info-card"><h3>四大牧区</h3><p>内蒙古、新疆、西藏、青海是我国四大牧区，草场辽阔，以畜牧业为主。</p></div></div></div>
+</section>
+<section class="section" aria-label="工业"><h2>工业：沿海多，内陆少</h2>
+<div class="two-col"><div class="card panel"><table class="compare"><thead><tr><th>工业基地</th><th>特点</th></tr></thead><tbody>
+<tr><td>辽中南</td><td>重工业为主，钢铁、机械、石化发达，资源丰富。</td></tr>
+<tr><td>京津唐</td><td>北方最大的综合性工业基地，科技力量雄厚。</td></tr>
+<tr><td>沪宁杭</td><td>全国最大的综合性工业基地，工业门类齐全。</td></tr>
+<tr><td>珠江三角洲</td><td>以轻工业和电子信息等高新技术产业为主，外向型经济明显，深圳在这里。</td></tr></tbody></table></div>
+<div class="info-card"><h3>高新技术产业</h3><p>知识、技术密集，产品更新快。多分布在高等院校和科研机构集中、交通便利的地方，比如北京中关村、深圳。</p></div></div>
+</section>
+<section class="section" aria-label="交通"><h2>五种交通运输方式</h2>
+<div class="two-col"><div class="card panel"><table class="compare tight" id="mode-table"><thead><tr><th>方式</th><th>速度</th><th>运量</th><th>运费</th><th>特点</th></tr></thead><tbody>
+<tr><td>铁路</td><td>较快</td><td>较大</td><td>较低</td><td>连续性好，适合大宗、长途内陆运输</td></tr>
+<tr><td>公路</td><td>较快</td><td>较小</td><td>较高</td><td>机动灵活，可“门到门”，适合短途</td></tr>
+<tr><td>水路</td><td>慢</td><td>大</td><td>低</td><td>适合大宗、笨重、远距离货物</td></tr>
+<tr><td>航空</td><td>最快</td><td>小</td><td>高</td><td>适合急需、贵重、易腐、量小的货物</td></tr>
+<tr><td>管道</td><td>连续</td><td>大</td><td>低</td><td>专门输送油、气、水，损耗小</td></tr></tbody></table></div>
+<div class="card panel"><h2>选一选：怎么运最合适？ <span id="tr-score" class="small-label"></span></h2><p class="lead" style="font-size:15px;font-weight:650;min-height:44px" id="tr-q"></p><div class="option-grid" id="tr-options" style="grid-template-columns:repeat(5,1fr)"></div><div class="feedback" id="tr-feedback" role="status" aria-live="polite"></div><button class="secondary" id="tr-next" hidden>下一题</button></div></div>
+</section>
+<div class="learning-grid">
+<section class="knowledge"><h2>深圳的交通</h2><div class="card facts">
+<div class="fact"><div><h3>港口</h3><p>2024 年深圳港集装箱吞吐量约 3340 万标箱，是世界级集装箱枢纽港之一，盐田港、蛇口港等港区连接全球航线。</p></div></div>
+<div class="fact"><div><h3>城市轨道</h3><p>2024 年末深圳地铁运营线路 18 条，约 595 千米，全年轨道交通客运量约 31 亿人次（深圳市 2024 年统计公报）。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 建筑业属于第二产业</h3><p>盖楼房、修桥修路属于建筑业，归入第二产业；采矿也是第二产业。别看它们“在室外干活”就以为是第一产业。</p></aside></section>
+<section class="quiz" aria-label="产业交通小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>考考同学：深圳第一产业占多少？</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>地理互动馆 · 第 10 课</p><p>数据来源见各图注；工业基地与交通方式特点按初中教材常用表述整理。</p><p>免登录 · 不收集位置 · 不保存学习记录</p></footer>
+</main>
+</body></html>

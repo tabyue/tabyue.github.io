@@ -7,7 +7,11 @@ const MODULES=[
  {id:'terrain',href:'terrain.html',no:3,title:'地图与地形',short:'地图与地形'},
  {id:'climate',href:'climate.html',no:4,title:'天气与气候',short:'天气与气候'},
  {id:'water',href:'water.html',no:5,title:'水循环与河流',short:'水循环与河流'},
- {id:'regions',href:'regions.html',no:6,title:'中国与世界地理',short:'中国与世界'}
+ {id:'regions',href:'regions.html',no:6,title:'中国与世界地理',short:'中国与世界'},
+ {id:'bayarea',href:'bayarea.html',no:7,title:'粤港澳大湾区与深圳',short:'大湾区与深圳'},
+ {id:'china',href:'china.html',no:8,title:'中国的疆域与人口',short:'疆域与人口'},
+ {id:'hazards',href:'hazards.html',no:9,title:'天气预报与自然灾害',short:'天气与灾害'},
+ {id:'economy',href:'economy.html',no:10,title:'中国的产业与交通',short:'产业与交通'}
 ];
 const $=id=>document.getElementById(id);
 const current=document.body.dataset.module||'';

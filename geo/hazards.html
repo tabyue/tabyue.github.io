@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="台风黄色预警为什么停课？风向风力标怎么读？回南天墙上为什么“出汗”？地理互动馆第 9 课，对应湘教版七年级上册 5.1 与八年级上册 2.4。">
+<meta property="og:title" content="地理互动馆 · 天气预报与自然灾害">
+<meta property="og:description" content="读懂深圳的预警信号、天气符号和回南天。">
+<title>天气预报与自然灾害 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="hazards.js"></script>
+</head>
+<body data-module="hazards">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 9 课 <span>/</span> 湘教版七上 5.1 · 八上 2.4</p><h1>天气预报与自然灾害</h1><p class="subtitle">看懂预警信号和天气符号，台风、暴雨、回南天来了心里有数。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="深圳预警信号">
+<h2>深圳发预警，今天要不要上学？</h2>
+<p class="panel-sub">选一种预警信号，看它的含义和学校安排。</p>
+<div class="toggle-row"><span class="small-label">台风</span><div class="chips small" id="ty-chips"></div></div>
+<div class="toggle-row" style="margin-top:8px"><span class="small-label">暴雨</span><div class="chips small" id="rs-chips"></div></div>
+<svg id="signal" viewBox="0 0 420 170" role="img" aria-label="预警信号示意" style="margin-top:12px"></svg>
+<p class="note">图标为示意，正式图标以深圳市气象局发布为准。</p>
+</section>
+<div class="settings">
+<section class="readout" aria-label="预警含义">
+<div class="readout-head"><h2 id="sig-title">台风黄色预警</h2><span class="badge" id="sig-school">中小学停课</span></div>
+<p class="lead" id="sig-meaning"></p>
+<p class="note" id="sig-tip"></p>
+<p class="source">来源：深圳市气象局“预警信号”现行含义与防御指引。停课时未出门的学生不必到校，途中的学生就近到安全场所暂避，具体按教育部门指引执行。</p>
+</section>
+<section class="card panel"><h2>风有多大？</h2><p class="panel-sub">拖动风速，看风力等级和热带气旋等级。</p>
+<div class="control"><div class="control-heading"><label for="wind-ms">风速</label><output id="wind-out">33 米/秒</output></div><input id="wind-ms" type="range" min="0" max="65" step="0.5" value="33"><div class="ruler"><span>0</span><span></span><span>65 米/秒</span></div></div>
+<div class="stat-grid"><div class="stat"><span>风力等级</span><strong id="force-out">—</strong></div><div class="stat"><span>热带气旋等级</span><strong id="grade-out" style="font-size:18px">—</strong></div></div>
+<p class="source">依据：国家标准《风力等级》GB/T 28591、《热带气旋等级》GB/T 19201（按底层中心附近最大平均风速）。</p></section>
+</div>
+</div>
+<section class="section" aria-label="天气符号"><h2>常用天气符号</h2>
+<div class="two-col"><div class="card panel"><div class="sym-grid" id="sym-grid"></div><p class="note">符号为示意，个别画法可能与课本图例略有不同。</p></div>
+<div class="card panel figure"><h2>风向风力标</h2><p class="panel-sub">风向杆指向风吹来的方向；风尾一长线表示 2 级，一短线表示 1 级。</p><svg id="vane" viewBox="0 0 260 200" role="img" aria-label="风向风力标示意"></svg>
+<div class="chips small" id="dir-chips" style="margin-top:6px"></div>
+<div class="control" style="margin-top:10px"><div class="control-heading"><label for="vane-force">风力</label><output id="vane-out">3 级</output></div><input id="vane-force" type="range" min="1" max="12" step="1" value="3"></div>
+<p class="lead" id="vane-text"></p></div></div>
+</section>
+<section class="section" aria-label="空气质量"><h2>空气质量指数（AQI）</h2>
+<div class="two-col"><div class="card panel"><div class="control"><div class="control-heading"><label for="aqi">AQI</label><output id="aqi-out">45</output></div><input id="aqi" type="range" min="0" max="400" step="1" value="45"></div><div class="aqi-scale" id="aqi-scale"></div><div class="stat-grid"><div class="stat"><span>级别</span><strong id="aqi-level">—</strong></div><div class="stat"><span>类别</span><strong id="aqi-name">—</strong></div></div><p class="lead" id="aqi-advice"></p><p class="source">依据：《环境空气质量指数（AQI）技术规定》HJ 633-2012。</p></div>
+<div class="info-card"><h3>深圳的空气</h3><p>2024 年深圳空气质量优良天数比例为 97.0%，PM2.5 年均浓度 17.3 微克/立方米（深圳市 2024 年统计公报）。<br>空气质量是天气预报的常见内容：AQI 数值越大，污染越重。</p></div></div>
+</section>
+<section class="section" aria-label="回南天"><h2>深圳的“回南天”：墙壁为什么会“出汗”</h2>
+<div class="two-col"><div class="card panel figure"><svg id="dew" viewBox="0 0 420 190" role="img" aria-label="回南天结露示意"></svg>
+<div class="control"><div class="control-heading"><label for="air-t">室外空气温度</label><output id="air-out">22℃</output></div><input id="air-t" type="range" min="5" max="32" step="0.5" value="22"></div>
+<div class="control"><div class="control-heading"><label for="air-rh">相对湿度</label><output id="rh-out">95%</output></div><input id="air-rh" type="range" min="30" max="100" step="1" value="95"></div>
+<div class="control"><div class="control-heading"><label for="wall-t">墙面、地面温度</label><output id="wall-out">16℃</output></div><input id="wall-t" type="range" min="0" max="30" step="0.5" value="16"></div></div>
+<div class="stack"><section class="readout"><div class="stat-grid"><div class="stat"><span>露点温度</span><strong id="dp-out">—</strong></div><div class="stat"><span>墙面会不会结露</span><strong id="cond-out" style="font-size:18px">—</strong></div></div><p class="lead" id="dew-text"></p></section>
+<div class="info-card"><h3>为什么在春天</h3><p>冬末春初（多在 2—4 月），冷空气刚走，南方来的暖湿气流就到了。屋里的墙面、地砖还是凉的，暖湿空气一碰到它们，温度降到露点以下，水汽就凝结成水珠。<br><b>怎么办：</b>关好门窗，减少潮湿空气进屋；开空调抽湿或用除湿机。</p></div></div></div>
+</section>
+<section class="section" aria-label="中国的自然灾害"><h2>中国的自然灾害：什么时候、哪里多发？ <span id="dz-score"></span></h2>
+<div class="two-col"><div class="card panel"><div class="choice-list" id="dz-list"></div></div>
+<div class="info-card"><h3>遇到灾害怎么办</h3><ul><li><b>台风：</b>留在室内，远离门窗和玻璃幕墙，不去海边。</li><li><b>暴雨：</b>不走低洼路段、地下通道，不靠近河道和边坡。</li><li><b>雷电：</b>不在大树下、电线杆下避雨，远离水面和空旷高地。</li><li><b>地震：</b>室内就近“伏地、遮挡、手抓牢”，震后有序撤离到空旷地带，不乘电梯。</li></ul></div></div>
+</section>
+<div class="learning-grid">
+<section class="knowledge"><h2>记住这几点</h2><div class="card facts">
+<div class="fact"><div><h3>天气预报讲什么</h3><p>阴晴、气温、降水、风向风力，还有空气质量。卫星云图上，绿色表示陆地，蓝色表示海洋，白色表示云区，白色越浓云越厚。</p></div></div>
+<div class="fact"><div><h3>我国自然灾害的特点</h3><p>种类多、分布广、发生频繁。气象灾害（台风、暴雨洪涝、干旱、寒潮）和地质灾害（地震、滑坡、泥石流）都很常见。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 暴雨黄色预警不停课</h3><p>深圳暴雨预警只有<b>红色</b>才停课；台风预警则是<b>黄色及以上</b>停课。别把两种信号的规则弄混。</p></aside></section>
+<section class="quiz" aria-label="天气灾害小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>链接会带上当前选中的预警信号。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>地理互动馆 · 第 9 课</p><p>预警信号含义以深圳市气象局最新发布为准；露点按 Magnus 公式估算。</p><p>免登录 · 不收集位置 · 不保存学习记录</p></footer>
+</main>
+</body></html>

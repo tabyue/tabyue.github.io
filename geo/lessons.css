@@ -94,3 +94,23 @@
 @media(max-width:680px){.course-nav{padding:0 16px;margin-top:10px}.two-col{grid-template-columns:1fr;gap:14px}.panel{padding:16px 16px}.stat strong{font-size:20px}.readout .stat strong{font-size:22px}.section{margin-top:26px}.hub-hero{padding:24px 4px 18px}.hub-hero h1{font-size:30px}.hub-grid{grid-template-columns:1fr;gap:12px}.choice-row{flex-direction:column;align-items:stretch}.choice-row .chips{justify-content:flex-end}.pager a{padding:11px 13px}.bar-item{grid-template-columns:50px 1fr 58px}}
 .option-grid.single{grid-template-columns:1fr}
 .option-grid.single button{text-align:left;padding:12px 14px}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media(max-width:860px){.trio{grid-template-columns:1fr}}
+.sym-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.sym-grid figure{margin:0;background:#f6f8f2;border-radius:12px;padding:8px 4px 6px;text-align:center}
+.sym-grid svg{width:100%;max-width:64px;height:auto;display:block;margin:0 auto}
+.sym-grid figcaption{font-size:12px;color:#40594b;margin-top:2px}
+.aqi-scale{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px;margin:12px 0 4px}
+.aqi-scale span{color:#fff;font-size:11px;font-weight:600;text-align:center;padding:6px 2px;border-radius:6px;line-height:1.3}
+.aqi-scale small{display:block;font-weight:400;font-size:9.5px;opacity:.9}
+@media(max-width:680px){.sym-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.aqi-scale span{font-size:10px;padding:5px 1px}}
+.compare.tight th,.compare.tight td:not(:last-child){white-space:nowrap}
+.cover{width:100%;border-collapse:collapse;font-size:12.5px}
+.cover th{font-size:11px;color:var(--muted);font-weight:500;text-align:left;padding:8px 6px;border-bottom:1px solid #e4e9df}
+.cover td{padding:9px 6px;border-bottom:1px solid #eef1ea;vertical-align:top;line-height:1.6}
+.cover td:first-child{white-space:nowrap;color:var(--muted)}
+.cover .st{white-space:nowrap;font-weight:650}
+.cover .ok{color:#2f6a4a}.cover .part{color:#9c6334}.cover .todo{color:#8b9784}
+.cover a{color:var(--green);text-decoration:underline;text-underline-offset:2px}
+.cover-sum{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 12px}
+.cover-sum span{font-size:12px;border-radius:10px;padding:5px 10px;background:#eef2e8}

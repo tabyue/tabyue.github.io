@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="深圳在粤港澳大湾区：跨海通道把车程缩短多少？深港澳谁的人口最密？哪些城市属于“9+2”？地理互动馆第 7 课，对应湘教版八年级下册第七章。">
+<meta property="og:title" content="地理互动馆 · 粤港澳大湾区与深圳">
+<meta property="og:description" content="从深圳出发，看懂大湾区的内外联系。">
+<title>粤港澳大湾区与深圳 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="bayarea.js"></script>
+</head>
+<body data-module="bayarea">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 7 课 <span>/</span> 湘教版八下 第七章</p><h1>粤港澳大湾区与深圳</h1><p class="subtitle">两种制度、三个关税区、11 座城市。从深圳出发，看大湾区怎样连成一片。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="大湾区交通联系示意">
+<h2>跨海通道：珠江口东西两岸连起来了</h2>
+<p class="panel-sub">示意关系图，只表示城市在珠江口东岸或西岸，不表示真实位置与边界。点选一条通道。</p>
+<svg id="net" viewBox="0 0 420 334" role="img" aria-label="大湾区城市与跨海通道示意关系图"></svg>
+<div class="chips small" id="cross-chips" style="margin-top:10px"></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="通道信息">
+<div class="readout-head"><h2 id="cross-title">深中通道</h2><span class="badge" id="cross-open">2024 年 6 月通车</span></div>
+<p class="lead" id="cross-route"></p>
+<div class="bar-list" id="cross-bars" style="margin-top:12px"></div>
+<p class="source" id="cross-src"></p>
+</section>
+<section class="info-card"><h3>大湾区有多大</h3><ul id="gba-facts"></ul></section>
+</div>
+</div>
+<section class="section" aria-label="深港澳广对比"><h2>深圳、广州、香港、澳门比一比 <span>2024 年官方统计</span></h2>
+<div class="two-col"><div class="card panel"><div class="chips small" id="metric-chips"><button data-m="density" aria-pressed="true">人口密度</button><button data-m="pop">人口</button><button data-m="area">土地面积</button></div><div class="bar-list" id="city-bars" style="margin-top:14px"></div><p class="source">来源：深圳市统计局、广东省统计局、香港特区政府统计处、澳门特区政府统计暨普查局。人口口径略有不同：内地城市为年末常住人口，香港为年底人口，澳门为年终人口。</p></div>
+<div class="info-card"><h3 id="metric-title">人口密度 = 人口 ÷ 面积</h3><p id="metric-text"></p></div></div>
+</section>
+<section class="section" aria-label="9+2 城市"><h2>哪些城市属于“9+2”？ <span id="pick-score"></span></h2>
+<div class="card panel"><p class="panel-sub">把属于粤港澳大湾区的城市都点亮，再点“检查”。</p><div class="order-pick" id="city-pick"></div><button class="primary" id="pick-check" style="margin-top:8px">检查</button><div class="feedback" id="pick-feedback" role="status" aria-live="polite"></div></div>
+</section>
+<section class="section" aria-label="港澳与深圳"><h2>香港、澳门与深圳</h2>
+<div class="trio" id="trio">
+<div class="info-card"><h3>香港特别行政区：国际枢纽</h3><ul><li>1997 年 7 月 1 日回归祖国，由香港岛、九龙和新界组成。</li><li>国际金融、贸易、航运中心，也是国际航空枢纽；2024 年是世界第七大贸易体。</li><li>土地少、人口多，山地多平地少，城市沿海湾和山脚密集分布。</li></ul></div>
+<div class="info-card"><h3>澳门特别行政区：旅游文化</h3><ul><li>1999 年 12 月 20 日回归祖国，由澳门半岛、氹仔、路环等组成。</li><li>中西文化交融，“澳门历史城区”2005 年列入《世界遗产名录》。</li><li>定位为世界旅游休闲中心，是世界上人口密度最高的地区之一。</li></ul></div>
+<div class="info-card"><h3>深圳：我们的家乡</h3><ul id="sz-facts"></ul></div>
+</div>
+</section>
+<div class="learning-grid">
+<section class="knowledge"><h2>记住这几点</h2><div class="card facts">
+<div class="fact"><div><h3>“9+2”城市群</h3><p>广东省的广州、深圳、珠海、佛山、惠州、东莞、中山、江门、肇庆 9 市，加上香港、澳门两个特别行政区。</p></div></div>
+<div class="fact"><div><h3>两种制度、三个关税区</h3><p>“一国两制”下，内地与港澳实行不同制度，内地、香港、澳门分属三个关税区。大湾区建设要让人员、货物、资金、信息更便捷地流动。</p></div></div>
+<div class="fact"><div><h3>内外联系</h3><p>对内：跨海通道、高铁、城际轨道让城市之间“一小时生活圈”逐步形成；对外：深圳、广州、香港的港口和机场连接世界。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 人口最多 ≠ 人口最密</h3><p>广州人口最多，但面积也大；澳门人口最少，却因为面积只有约 33 平方千米，成了人口密度最高的地方。比较“密度”一定要用人口除以面积。</p></aside></section>
+<section class="quiz" aria-label="大湾区小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>链接会带上当前选中的通道。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>地理互动馆 · 第 7 课</p><p>城市关系图为示意图，不是地图；本页不绘制任何地图轮廓与边界。数据来源见各图注。</p><p>免登录 · 不收集位置 · 不保存学习记录</p></footer>
+</main>
+</body></html>
