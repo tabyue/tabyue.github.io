@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="点一点我国地势的三级阶梯，用实测数据对比南方和北方，给七大洲按面积排序，认识洲界与聚落选址。地理互动馆第 6 课。">
+<meta property="og:title" content="地理互动馆 · 中国与世界地理">
+<meta property="og:description" content="三级阶梯、南方北方、七大洲四大洋——用数据和剖面看懂中国与世界。">
+<title>中国与世界地理 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="regions.js"></script>
+</head>
+<body data-module="regions">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 6 课 <span>/</span> 区域地理</p><h1>中国与世界地理</h1><p class="subtitle">从我国西高东低的地势，到七大洲四大洋，用剖面和数据看懂区域差异。</p></div>
+<div class="map-link"><svg viewBox="0 0 34 34" aria-hidden="true"><rect x="3" y="6" width="28" height="22" rx="3" fill="#eef3e8" stroke="#8ea489"/><path d="M3 12l9-3 10 3 9-3M12 9v19M22 12v16" fill="none" stroke="#8ea489"/></svg><div><a href="http://bzdt.ch.mnr.gov.cn/" target="_blank" rel="noopener">需要看中国或世界地图？用自然资源部「标准地图服务」</a><p>本页不绘制国界和地图轮廓。中国、世界的政区与地形地图请查阅带审图号的官方标准地图，可免费浏览和下载。</p></div></div>
+<div class="workbench" style="margin-top:18px">
+<section class="card panel figure" aria-label="我国地势三级阶梯">
+<h2>我国地势：西高东低，呈三级阶梯</h2>
+<p class="panel-sub">点剖面上的任意一级，看它的海拔、地形区和分界线。</p>
+<svg id="steps" viewBox="0 0 520 262" role="img" aria-label="我国地势三级阶梯剖面示意"></svg>
+<div class="chips small" id="step-chips" style="margin-top:10px"><button data-step="0" aria-pressed="true">第一级</button><button data-step="1">第二级</button><button data-step="2">第三级</button></div>
+<p class="note">示意剖面，自西向东概括三级阶梯的高差，纵向夸大、横向不按比例，不对应某条真实路线。</p>
+</section>
+<div class="settings">
+<section class="readout" aria-label="阶梯说明">
+<div class="readout-head"><h2 id="step-title">第一级阶梯</h2><span class="badge" id="step-alt">平均海拔 4000 米以上</span></div>
+<p class="lead" id="step-areas"></p>
+<p class="lead" id="step-border" style="margin-top:10px"></p>
+</section>
+<section class="info-card"><h3>地势西高东低，有什么影响</h3><ul><li>许多大河自西向东流入海洋，沟通了东西交通。</li><li>来自海洋的湿润气流可以深入内地，带来降水。</li><li>阶梯交界处河流落差大，蕴藏丰富的水能。</li></ul></section>
+</div>
+</div>
+<section class="section" aria-label="南方与北方"><h2>秦岭—淮河：南方与北方 <span>北京 vs 深圳 实测</span></h2>
+<div class="two-col"><div class="card panel"><table class="compare"><thead><tr><th></th><th>北方（北京）</th><th>南方（深圳）</th></tr></thead><tbody id="ns-table"></tbody></table><p class="source">北京、深圳数据为 1991–2020 气候标准值，同第 4 课。</p></div>
+<div class="info-card"><h3>秦岭—淮河一线大致是</h3><ul><li>1 月 0℃ 等温线经过的地方；</li><li>年降水量 800 毫米等降水量线经过的地方；</li><li>暖温带与亚热带的分界；</li><li>湿润区与半湿润区的分界。</li></ul><p style="margin-top:8px">所以北方冬季河流会结冰，耕地以旱地为主；南方河流冬季不结冰，耕地以水田为主。</p></div></div>
+</section>
+<section class="section" aria-label="七大洲四大洋"><h2>七大洲四大洋 <span>三分陆地，七分海洋</span></h2>
+<div class="two-col"><div class="card panel"><h2>按面积从大到小，依次点七大洲</h2><p class="panel-sub">点错了会提示；全部点完后显示面积。</p><div class="order-pick" id="cont-pick"></div><p class="order-result" id="cont-result" role="status" aria-live="polite"></p><div class="bar-list" id="cont-bars" hidden></div><button class="text-button" id="cont-reveal" style="margin:10px 0 0">直接看答案</button></div>
+<div class="stack"><section class="card panel"><h2>四大洋面积</h2><div class="bar-list" id="ocean-bars" style="margin-top:12px"></div><div class="stat-grid"><div class="stat"><span>海洋约占</span><strong>71<small>%</small></strong></div><div class="stat"><span>陆地约占</span><strong>29<small>%</small></strong></div></div><p class="source">面积数据（万平方千米）采用人教版地理教科书数值。</p></section></div></div>
+</section>
+<section class="section" aria-label="大洲的分界"><h2>大洲之间以什么为界？ <span id="border-score"></span></h2>
+<div class="card panel"><div class="choice-list" id="border-list"></div></div>
+</section>
+<section class="section" aria-label="人口与聚落"><h2>人口与聚落</h2>
+<div class="two-col"><div class="card panel figure"><h2>村庄建在哪里最合适？</h2><p class="panel-sub">点图中 A、B、C 三个位置中的一个。</p><svg id="settle" viewBox="0 0 420 210" role="application" aria-label="聚落选址：点选 A、B 或 C"></svg><div class="feedback" id="settle-feedback" role="status" aria-live="polite"></div></div>
+<div class="stack"><div class="info-card"><h3>人口</h3><ul><li>2022 年 11 月，世界人口突破 80 亿（联合国）。</li><li>世界人口稠密区：亚洲东部和南部、欧洲西部、北美洲东部。</li><li>我国是世界上人口最多的国家之一，2020 年第七次全国人口普查约 14.1 亿人；人口分布东多西少，大致以黑龙江黑河—云南腾冲一线为界。</li></ul></div>
+<div class="info-card"><h3>聚落</h3><p>聚落分城市和乡村。它们多分布在地势平坦、水源充足、土壤肥沃、交通便利的地方，比如平原和河流沿岸。</p></div></div></div>
+</section>
+<div class="learning-grid">
+<section class="knowledge"><h2>容易混的概念</h2><div class="card facts">
+<div class="fact"><div><h3>大陆与大洲</h3><p>大陆是面积广大的陆地；大洲是大陆和它附近的岛屿合起来。亚欧大陆上有亚洲和欧洲两个大洲。</p></div></div>
+<div class="fact"><div><h3>阶梯与海拔</h3><p>判断属于哪一级阶梯，看它在哪两条分界线之间，而不是只看某一点的海拔。四川盆地底部海拔约 500 米，但它属于第二级阶梯。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 地图要用官方标准地图</h3><p>国界、海岸线和岛屿的画法有国家标准。做作业、出板报需要地图时，请使用自然资源部标准地图服务中带审图号的地图，不要随手描画或使用来源不明的图片。</p></aside></section>
+<section class="quiz" aria-label="区域地理小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一页</h3><p>链接会带上当前选中的阶梯。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>地理互动馆 · 第 6 课</p><p>本页不含地图轮廓与国界；剖面与选址图为示意图。地图请查阅自然资源部标准地图服务。</p><p>免登录 · 不收集位置 · 不保存学习记录</p></footer>
+</main>
+</body></html>

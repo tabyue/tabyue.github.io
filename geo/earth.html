@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动经纬仪，亲手找到地球上的一个点；打开昼夜，看晨昏线和东早西晚。地理互动馆第 1 课。">
+<meta property="og:title" content="地理互动馆 · 地球与经纬网">
+<meta property="og:description" content="两组线，把地球上的位置说清楚。旋转地球、调整经纬度、观察昼夜交替。">
+<title>地球与经纬网 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="earth.js"></script>
+</head>
+<body data-module="earth">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 1 课 <span>/</span> 认识地球</p><h1>地球与经纬网</h1><p class="subtitle">两组线，把地球上的位置说清楚；转一转，看昼夜怎么交替。</p></div>
+<div class="workbench">
+<section class="instrument card" aria-label="互动经纬仪">
+<div class="segmented" role="group" aria-label="选择显示的线"><button class="selected" data-mode="both" aria-pressed="true">经纬网</button><button data-mode="meridians" aria-pressed="false">只看经线</button><button data-mode="parallels" aria-pressed="false">只看纬线</button></div>
+<div class="globe-stage" id="stage" role="group" tabindex="0" aria-label="互动地球：左右拖动旋转；方向键调整观察方向，Home 复位">
+<svg id="globe" viewBox="0 0 400 350" role="img" aria-label="数学经纬网球体，不含地图疆界">
+<defs><radialGradient id="ball" cx="30%" cy="23%" r="83%"><stop stop-color="#fbfff4"/><stop offset=".42" stop-color="#e6eedb"/><stop offset=".78" stop-color="#aabfa8"/><stop offset="1" stop-color="#7d9982"/></radialGradient><linearGradient id="metal" x2="1" y2="1"><stop stop-color="#edf0e1"/><stop offset=".4" stop-color="#b8c4ad"/><stop offset=".72" stop-color="#748b78"/><stop offset="1" stop-color="#dce5d2"/></linearGradient><linearGradient id="base" x2="0" y2="1"><stop stop-color="#e1e7d7"/><stop offset="1" stop-color="#a6b8a2"/></linearGradient><radialGradient id="glow"><stop stop-color="#e6eedf"/><stop offset="1" stop-color="#f7f9f4" stop-opacity="0"/></radialGradient><filter id="shadow" x="-50%" y="-100%" width="200%" height="300%"><feGaussianBlur stdDeviation="6"/></filter><clipPath id="clip"><circle cx="194" cy="160" r="112"/></clipPath></defs>
+<ellipse cx="194" cy="170" rx="177" ry="165" fill="url(#glow)"/>
+<g id="stand"></g><g id="axis-back"></g><circle cx="194" cy="160" r="112" fill="url(#ball)" stroke="#82987e" stroke-width="1"/>
+<g clip-path="url(#clip)"><g id="grid-meridians"></g><g id="grid-parallels"></g><path id="prime" fill="none" stroke="#526f50" stroke-width="1.7"/><path id="equator" fill="none" stroke="#526f50" stroke-width="1.7"/><path id="night" fill="#1f3a40" fill-opacity=".42"/><path id="terminator" fill="none" stroke="#e9b26b" stroke-width="1.6" stroke-dasharray="5 4"/><path id="select-lon" fill="none" stroke="#b97342" stroke-width="2.5"/><path id="select-lat" fill="none" stroke="#b97342" stroke-width="2.5"/></g>
+<g id="pole-labels"></g><g id="dn-labels"></g><g id="point"><circle r="9" fill="#fff8eb"/><circle r="4" fill="#b97342" stroke="white" stroke-width="1.4"/><text x="13" y="-6" fill="#263d31" font-size="14" font-weight="700">P</text></g>
+</svg>
+<div class="occluded" id="occluded" hidden>点 P 在背面 <button id="locate">转到正面</button></div>
+</div>
+<div class="legend"><span><i class="dot"></i>选中经纬线</span><span><i class="rule"></i><span id="legend-reference">赤道 / 本初子午线</span></span><span id="legend-night" hidden><i class="rule" style="background:#e9b26b"></i>晨昏线</span></div>
+<div class="instrument-actions"><span class="drag-hint">↔ 左右拖动旋转</span><div><button id="daynight" aria-pressed="false">昼夜</button><button id="spin" aria-pressed="false">自动旋转</button><button id="reset-view">复位</button></div></div>
+<div class="daynight-panel" id="daynight-panel" hidden>
+<div class="control-heading"><label for="bj-time">北京时间</label><output id="bj-output" for="bj-time">12:00</output></div>
+<input id="bj-time" type="range" min="0" max="24" step="0.5" value="12" aria-label="北京时间">
+<div class="ruler"><span>0:00</span><span>12:00</span><span>24:00</span></div>
+<p class="note">以春分、秋分日为例（太阳直射赤道），不计均时差。打开「自动旋转」可以看时间流逝。</p>
+</div>
+<p class="mode-hint" id="mode-hint">橙色两线的交点，就是点 P。</p>
+</section>
+<div class="settings">
+<section class="readout" aria-label="所选坐标">
+<div class="readout-head"><h2>选中的点 P</h2><span id="hemispheres" class="badge">北半球 · 东半球</span></div>
+<div class="coordinates"><div><span>经度</span><strong id="lon-readout">120°E</strong></div><div><span>纬度</span><strong id="lat-readout">30°N</strong></div></div>
+<p id="coordinate-description" aria-live="polite">东经 120° 与北纬 30° 的交点。</p>
+<p id="time-readout" class="lead" hidden></p>
+</section>
+<section class="card controls" aria-label="调整经纬度">
+<div class="control"><div class="control-heading"><label for="longitude">调整经度</label><output id="lon-output" for="longitude">120°E</output></div><input id="longitude" type="range" min="-180" max="180" step="1" value="120" aria-label="经度，负数西经，正数东经"><div class="ruler"><span>180°W</span><span>0°</span><span>180°E</span></div></div>
+<div class="control"><div class="control-heading"><label for="latitude">调整纬度</label><output id="lat-output" for="latitude">30°N</output></div><input id="latitude" type="range" min="-90" max="90" step="1" value="30" aria-label="纬度，负数南纬，正数北纬"><div class="ruler"><span>90°S</span><span>赤道 0°</span><span>90°N</span></div></div>
+<div class="precise"><details><summary>精确输入坐标</summary><form id="coordinate-form"><label>经度<input id="lon-number" type="number" min="-180" max="180" step="1" value="120" required></label><label>纬度<input id="lat-number" type="number" min="-90" max="90" step="1" value="30" required></label><button type="submit">定位</button></form><p>东经、北纬填正数；西经、南纬填负数。</p></details></div>
+<div class="presets" aria-label="示例坐标"><button data-lon="0" data-lat="0">原点 (0°, 0°)</button><button data-lon="114" data-lat="23">深圳附近</button><button data-lon="-10" data-lat="30">西经也在东半球？</button><button data-lon="170" data-lat="30">东经也在西半球？</button></div>
+</section>
+</div>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>看懂这两组线</h2><div class="card facts"><div class="fact"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16" fill="#eff4e8"/><path d="M18 7Q2 18 18 29M18 7Q34 18 18 29" fill="none" stroke="#728869" stroke-width="1.3"/></svg><div><h3>经线</h3><p>连接南北两极的半圆，指示南北方向。所有经线长度相等。</p></div></div><div class="fact"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16" fill="#eff4e8"/><ellipse cx="18" cy="18" rx="12" ry="5" fill="none" stroke="#728869" stroke-width="1.3"/></svg><div><h3>纬线</h3><p>与赤道平行的圆圈，指示东西方向。赤道最长，向两极逐渐缩短，两极各缩为一点。</p></div></div><div class="fact"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16" fill="#eff4e8"/><path d="M8 20a10 6 0 0 0 20 0" fill="none" stroke="#728869" stroke-width="1.3"/><path d="M25 17l3 3-4 1" fill="none" stroke="#728869" stroke-width="1.3"/></svg><div><h3>地球自转</h3><p>绕地轴自西向东转，从北极上空看呈逆时针，从南极上空看呈顺时针，周期约一天。带来昼夜交替，以及“东早西晚”的时间差异：经度每差 15°，地方时相差 1 小时。</p></div></div><div class="fact compact"><div><h3>度数从哪里开始？</h3><p>本初子午线是 0° 经线，向东、西各计至 180°；赤道是 0° 纬线，向北、南各计至 90°。</p></div></div></div>
+<aside class="pitfall"><h3><span>!</span> 别把东经当成东半球</h3><p>东西半球以 <b>20°W 和 160°E</b> 组成的经线圈为界；不是按 0° 经线划分。赤道是南北半球的分界。</p></aside></section>
+<section class="quiz" aria-label="坐标小练习"><h2>动手试一试 <span id="quiz-step">1 / 4</span></h2><div class="card quiz-card"><span class="small-label">用上面的滑块和按钮完成挑战</span><h3 id="quiz-title">找到赤道上的一个点</h3><p id="quiz-description">经度可以任意选，想一想：纬度应该是多少？</p><button class="primary" id="check-answer">检查当前状态</button><div id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button><button class="text-button" id="go-controls">回到经纬度滑块 ↑</button></div><div class="share-card"><h3>一起把地理看明白</h3><p>分享当前坐标，让好友看到同一个点。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>地理互动馆 · 第 1 课</p><p>数学经纬网示意，不含地图疆界。拖动只改变观察视角。</p><p>免登录 · 不收集位置 · 不保存学习记录</p></footer>
+</main>
+<noscript><p>此网页需要启用 JavaScript 才能旋转地球和调整坐标。</p></noscript>
+</body></html>

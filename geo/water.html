@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="点一点水循环的每个环节：蒸发、水汽输送、降水、地表径流、下渗、地下径流；看分水岭怎样划分流域，长江、黄河上中下游各有什么特点。地理互动馆第 5 课。">
+<meta property="og:title" content="地理互动馆 · 水循环与河流">
+<meta property="og:description" content="一滴水从海洋到陆地再回到海洋，要走哪些路？">
+<title>水循环与河流 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="water.js"></script>
+</head>
+<body data-module="water">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 5 课 <span>/</span> 陆地水</p><h1>水循环与河流</h1><p class="subtitle">一滴水从海洋到陆地，再回到海洋，要走哪些路？</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="水循环示意图">
+<h2>水循环示意图</h2>
+<p class="panel-sub">点图中的箭头或下面的按钮，看每个环节在做什么。</p>
+<div class="chips small" id="cycle-chips"><button data-cycle="all" aria-pressed="true" class="selected">全部环节</button><button data-cycle="sealand">海陆间循环</button><button data-cycle="sea">海上内循环</button><button data-cycle="land">陆地内循环</button></div>
+<svg id="cycle" viewBox="0 0 520 340" role="img" aria-label="水循环示意图" style="margin-top:10px"></svg>
+<div class="chips small" id="process-chips" style="margin-top:10px"></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="环节说明">
+<div class="readout-head"><h2 id="process-title">水循环</h2><span class="badge" id="process-badge">共 8 个环节</span></div>
+<p class="lead" id="process-text" aria-live="polite">水在海洋、大气、陆地之间不停地运动和转化，这个过程叫水循环。太阳辐射提供能量，地球引力让水落下、向低处流。</p>
+</section>
+<section class="info-card"><h3>三种水循环</h3><ul><li><b>海陆间循环</b>：海洋水蒸发 → 水汽输送到陆地上空 → 降水 → 地表径流、地下径流流回海洋。它使陆地上的水不断得到补充和更新。</li><li><b>海上内循环</b>：海面蒸发 → 降水落回海洋。参与的水量最大。</li><li><b>陆地内循环</b>：陆面蒸发、植物蒸腾 → 降水落回陆地。</li></ul></section>
+</div>
+</div>
+<section class="section" aria-label="人类活动与水循环"><h2>人类活动影响哪个环节？ <span id="hu-score"></span></h2>
+<div class="card panel"><div class="choice-list" id="hu-list"></div></div>
+</section>
+<section class="section" aria-label="分水岭与流域"><h2>分水岭与流域</h2>
+<div class="two-col"><div class="card panel figure"><p class="panel-sub">在山坡上任意点一下，“下一滴雨”。看它流进哪条河。</p><svg id="divide" viewBox="0 0 420 210" role="application" aria-label="分水岭剖面：点按放一滴雨" tabindex="0" style="touch-action:manipulation"></svg></div>
+<div class="stack"><section class="readout"><div class="readout-head"><h2>这滴雨</h2><span class="badge" id="drop-badge">还没落下</span></div><p class="lead" id="drop-text">点左图的山坡试试。</p></section>
+<div class="info-card"><h3>概念</h3><p><b>流域</b>：一条河流及其支流汇集降水的整个区域。<br><b>分水岭</b>：相邻两个流域之间的分界，通常是山脊。落在分水岭两侧的雨水，会流进不同的河流。</p></div></div></div>
+</section>
+<section class="section" aria-label="长江与黄河"><h2>长江与黄河：上、中、下游</h2>
+<div class="two-col"><div class="card panel figure"><div class="chips small" id="river-chips"><button data-river="yangtze" aria-pressed="true">长江</button><button data-river="yellow">黄河</button></div>
+<svg id="river" viewBox="0 0 420 224" role="img" aria-label="河流纵剖面示意" style="margin-top:10px"></svg>
+<div class="chips small" id="reach-chips" style="margin-top:8px"><button data-reach="0" aria-pressed="true">上游</button><button data-reach="1">中游</button><button data-reach="2">下游</button></div>
+<p class="note">纵剖面为示意：横向按各河段长度比例绘制，纵向只表示地势高低，不按比例。</p></div>
+<div class="stack"><section class="readout"><div class="readout-head"><h2 id="reach-title">长江上游</h2><span class="badge" id="reach-range">源头—宜昌</span></div><p class="lead" id="reach-text"></p></section>
+<div class="info-card"><h3 id="river-title">长江</h3><p id="river-text"></p></div></div></div>
+</section>
+<div class="learning-grid">
+<section class="knowledge"><h2>记住这几点</h2><div class="card facts">
+<div class="fact"><div><h3>动力从哪来</h3><p>太阳辐射让水蒸发、让大气运动；地球引力让水汽凝结后降落，让地表水和地下水向低处流。</p></div></div>
+<div class="fact"><div><h3>河流与地形</h3><p>河流多发育在山谷中，沿地势由高向低流。我国地势西高东低，长江、黄河都自西向东流入海洋。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 地下水也会“流”</h3><p>下渗的水并没有停下，而是形成地下径流，慢慢补给河流或流入海洋。所以连续多日不下雨，很多河流也不会立刻断流。</p></aside></section>
+<section class="quiz" aria-label="水循环小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div class="option-grid" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一页</h3><p>链接会带上当前选中的河流和河段。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>地理互动馆 · 第 5 课</p><p>水循环图与河流纵剖面为示意图，不是地图。</p><p>免登录 · 不收集位置 · 不保存学习记录</p></footer>
+</main>
+</body></html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="在等高线地形图上拖动剖面线，实时画出地形剖面；认识山峰、山脊、山谷、鞍部，用比例尺算实地距离。地理互动馆第 3 课。">
+<meta property="og:title" content="地理互动馆 · 地图与地形">
+<meta property="og:description" content="拖一条线，就能看到山的侧面。等高线、比例尺、地形部位，一页讲透。">
+<title>地图与地形 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="terrain.js"></script>
+</head>
+<body data-module="terrain">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 3 课 <span>/</span> 地图</p><h1>地图与地形</h1><p class="subtitle">等高线把高低起伏画在平面上。拖一条线，就能看到山的侧面。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="等高线地形图">
+<h2>等高线地形图</h2>
+<p class="panel-sub">拖动橙色端点 A、B 画剖面线；点地图任意处可读海拔。</p>
+<svg id="map" viewBox="0 0 500 350" role="application" aria-label="等高线地形图，可拖动剖面线端点" tabindex="0" style="touch-action:none;border-radius:12px"></svg>
+<div class="toggle-row" style="margin-top:12px"><span class="small-label">等高距</span><div class="chips small" id="interval-chips"><button data-interval="50">50 米</button><button data-interval="100" aria-pressed="true" class="selected">100 米</button></div><div class="chips small"><button id="tint-toggle" aria-pressed="true" class="selected">分层设色</button></div></div>
+<div class="toggle-row" style="margin-top:10px"><span class="small-label">地形部位</span><div class="chips small" id="feature-chips"><button data-f="peakA">山峰</button><button data-f="ridge">山脊</button><button data-f="valley">山谷</button><button data-f="saddle">鞍部</button><button data-f="steep">陡坡</button><button data-f="gentle">缓坡</button><button data-f="cliff">陡崖</button></div></div>
+<p id="feature-text" class="lead" aria-live="polite">选一个地形部位，看它在等高线图上长什么样。</p>
+</section>
+<div class="settings">
+<section class="readout" aria-label="地形剖面">
+<div class="readout-head"><h2>剖面 A—B</h2><span class="badge" id="vx-badge">垂直放大</span></div>
+<svg id="profile" class="figure" viewBox="0 0 400 204" role="img" aria-label="沿 A—B 的地形剖面图" style="display:block;width:100%;margin-top:10px"></svg>
+<div class="stat-grid"><div class="stat"><span>实地距离</span><strong id="dist-readout">—</strong></div><div class="stat"><span>剖面最高点</span><strong id="max-readout">—</strong></div><div class="stat"><span>A 点海拔</span><strong id="a-readout">—</strong></div><div class="stat"><span>B 点海拔</span><strong id="b-readout">—</strong></div></div>
+<p id="probe-text" class="lead">点地图任意处，读出那里的海拔。</p>
+</section>
+<section class="card panel" aria-label="比例尺换算">
+<h2>比例尺换算</h2>
+<p class="panel-sub">实地距离 = 图上距离 ÷ 比例尺。</p>
+<div class="precise" style="margin-top:4px;border:0;padding:0"><form id="scale-form" onsubmit="return false"><label>图上距离（厘米）<input id="map-cm" type="number" min="0.1" max="100" step="0.1" value="3"></label><label>比例尺<select id="scale-select" style="font-size:16px;padding:8px;border:1px solid #cbd8c4;border-radius:8px;background:#fafcf7;color:var(--ink)"><option value="50000">1 : 50 000</option><option value="100000" selected>1 : 100 000</option><option value="1000000">1 : 1 000 000</option></select></label></form></div>
+<div class="stat-grid"><div class="stat wide"><span>实地距离</span><strong id="real-readout">3 千米</strong></div></div>
+<p class="note" id="scale-note"></p>
+</section>
+</div>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>读懂等高线</h2><div class="card facts">
+<div class="fact"><div><h3>海拔与相对高度</h3><p>海拔是某地高出海平面的垂直距离；相对高度是两地海拔之差。图中主峰海拔约 <b id="fact-peak">—</b> 米，比鞍部高出约 <b id="fact-rel">—</b> 米。</p></div></div>
+<div class="fact"><div><h3>同线等高，密陡疏缓</h3><p>同一条等高线上各点海拔相同。等高线越密，坡越陡；越稀疏，坡越缓。图中次峰东坡比西坡陡得多。</p></div></div>
+<div class="fact"><div><h3>山脊与山谷</h3><p>等高线向海拔<b>低</b>处凸出的是山脊，向海拔<b>高</b>处凸出的是山谷。山谷里常有河流发育；山脊常是分水岭。</p></div></div>
+<div class="fact"><div><h3>比例尺</h3><p>有数字式、线段式、文字式三种。比例尺越大，表示的范围越小，内容越详细。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 陡崖和鞍部别弄混</h3><p>陡崖是<b>多条等高线重合</b>的地方，地面近乎垂直；鞍部是<b>两个山峰之间相对低洼</b>的部位，是两组闭合等高线之间的“马鞍”。</p></aside></section>
+<section class="quiz" aria-label="地形小练习"><h2>动手试一试 <span id="quiz-step">1 / 4</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-hint">在左边的地图上操作</span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div class="option-grid" id="quiz-options" hidden><button data-value="east">东坡</button><button data-value="west">西坡</button></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这条剖面</h3><p>链接会带上 A、B 两点的位置。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>地理互动馆 · 第 3 课</p><p>地形为教学用合成地形，不对应真实地点。图幅约 10 千米 × 7 千米。</p><p>免登录 · 不收集位置 · 不保存学习记录</p></footer>
+</main>
+</body></html>

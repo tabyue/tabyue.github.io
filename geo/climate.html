@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="用深圳、北京、新加坡、开罗、罗马、伦敦的实测数据读气温曲线和降水柱状图，判断六种气候类型；再看地形雨、海陆差异和季风。地理互动馆第 4 课。">
+<meta property="og:title" content="地理互动馆 · 天气与气候">
+<meta property="og:description" content="六座城市的真实气候图：一眼看出“雨热同期”和“冬雨夏干”。">
+<title>天气与气候 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="climate.js"></script>
+</head>
+<body data-module="climate">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 4 课 <span>/</span> 天气与气候</p><h1>天气与气候</h1><p class="subtitle">一张气温曲线加降水柱状图，就能读出一个地方的气候。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="气温曲线与降水柱状图">
+<h2>气温曲线和降水柱状图</h2>
+<p class="panel-sub">折线是各月平均气温（左轴），柱子是各月降水量（右轴）。六座城市刻度相同，可以直接比较。</p>
+<div class="chips small" id="city-chips"></div>
+<svg id="chart" viewBox="0 0 420 300" role="img" aria-label="气候图" style="margin-top:10px"></svg>
+<p class="source" id="chart-source"></p>
+</section>
+<div class="settings">
+<section class="readout" aria-label="读图结果">
+<div class="readout-head"><h2 id="city-title">深圳</h2><span class="badge" id="city-where">中国广东</span></div>
+<div class="stat-grid"><div class="stat"><span>最热月</span><strong id="hot-readout">—</strong></div><div class="stat"><span>最冷月</span><strong id="cold-readout">—</strong></div><div class="stat"><span>年温差</span><strong id="range-readout">—</strong></div><div class="stat"><span>年降水量</span><strong id="total-readout">—</strong></div></div>
+<button class="primary" id="reveal" style="margin-top:12px">看看是哪种气候</button>
+<div id="type-box" hidden><p class="lead" style="font-size:15px;font-weight:650;margin-top:14px" id="type-name"></p><p class="lead" id="type-trait" style="margin-top:2px"></p><ul id="type-reasons" style="margin:10px 0 0;padding-left:18px;font-size:12px;line-height:1.85;color:#40594b"></ul></div>
+</section>
+<section class="info-card"><h3>读图口诀：以温定带，以水定型</h3><ul><li>先看气温：冬季冷不冷（最冷月在 0℃ 以上还是以下）、夏季热不热、年温差大不大。</li><li>再看降水：一年总共多少，集中在哪几个月——夏季多雨还是冬季多雨，还是全年都差不多。</li></ul></section>
+</div>
+</div>
+<section class="section" aria-label="天气还是气候"><h2>天气还是气候？ <span id="wc-score"></span></h2>
+<div class="two-col"><div class="card panel"><div class="choice-list" id="wc-list"></div></div>
+<div class="info-card"><h3>怎么区分</h3><p><b>天气</b>是某地短时间内的大气状况，变化快，比如“今天下午有雷阵雨”。<br><b>气候</b>是某地多年的天气平均状况，相对稳定，比如“深圳夏季高温多雨”。<br>看到“今天、明天、这几天”多半说天气；看到“常年、四季、夏季多雨”多半说气候。</p></div></div>
+</section>
+<section class="section" aria-label="地形对气候的影响"><h2>地形：山越高越冷，迎风坡多雨</h2>
+<div class="two-col"><div class="card panel figure"><svg id="mountain" viewBox="0 0 420 240" role="img" aria-label="地形雨与气温垂直变化示意"></svg>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="peak-h">山顶海拔</label><output id="peak-output">3000 米</output></div><input id="peak-h" type="range" min="500" max="5000" step="100" value="3000"><div class="ruler"><span>500 米</span><span></span><span>5000 米</span></div></div>
+<div class="control"><div class="control-heading"><label for="base-t">山脚气温</label><output id="base-output">26℃</output></div><input id="base-t" type="range" min="0" max="35" step="1" value="26"><div class="ruler"><span>0℃</span><span></span><span>35℃</span></div></div></div>
+<div class="stack"><section class="readout"><div class="stat-grid"><div class="stat"><span>山顶气温</span><strong id="top-t">—</strong></div><div class="stat"><span>降温幅度</span><strong id="drop-t">—</strong></div></div><p class="lead" id="mountain-text"></p></section>
+<div class="info-card"><h3>两条规律</h3><ul><li>海拔每升高 100 米，气温约下降 0.6℃（对流层中的平均值）。所以“人间四月芳菲尽，山寺桃花始盛开”。</li><li>暖湿气流遇到山地被迫抬升，温度降低、水汽凝结，在<b>迎风坡</b>形成较多降水；翻过山顶后气流下沉，<b>背风坡</b>降水少。</li></ul></div></div></div>
+</section>
+<section class="section" aria-label="海陆差异与季风"><h2>海陆差异与季风</h2>
+<div class="two-col"><div class="card panel figure"><svg id="monsoon" viewBox="0 0 420 230" role="img" aria-label="海陆热力差异与季风示意"></svg>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="month">月份</label><output id="month-output">7 月</output></div><input id="month" type="range" min="1" max="12" step="1" value="7"><div class="ruler"><span>1 月</span><span>7 月</span><span>12 月</span></div></div>
+<p class="note">图中气温为示意曲线，只表达“陆地升温降温快、海洋慢”，不代表实测值。</p></div>
+<div class="stack"><section class="readout"><div class="readout-head"><h2 id="wind-title">夏季风</h2><span class="badge" id="wind-badge">海洋 → 陆地</span></div><p class="lead" id="wind-text"></p></section>
+<div class="info-card"><h3>为什么风会随季节换向</h3><p>海水比热容大，升温、降温都慢；陆地升温、降温都快。夏季陆地比海洋热，风从海洋吹向陆地，带来充足水汽；冬季陆地比海洋冷，风从陆地吹向海洋，寒冷干燥。我国东部是典型的季风气候区，深圳的“雨热同期”就来自夏季风。</p></div></div></div>
+</section>
+<div class="learning-grid">
+<section class="knowledge"><h2>六种气候类型</h2><div class="card panel"><table class="compare" id="type-table"><thead><tr><th>气候类型</th><th>特点</th><th>本课例子</th></tr></thead><tbody></tbody></table></div>
+<aside class="pitfall"><h3><span>!</span> 地中海气候是“雨热不同期”</h3><p>季风气候夏季多雨（雨热同期）；地中海气候正好相反，<b>夏季炎热干燥、冬季温和多雨</b>。看降水柱子高在冬季还是夏季，一眼就能分开。</p></aside></section>
+<section class="quiz" aria-label="气候图盲测"><h2>气候图盲测 <span id="quiz-step">1 / 6</span></h2><div class="card quiz-card"><span class="small-label">隐去城市名，只看图判断</span><svg id="quiz-chart" class="figure" viewBox="0 0 420 300" role="img" aria-label="盲测气候图" style="display:block;width:100%;margin:10px 0 4px"></svg><div class="option-grid" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一张</button></div><div class="share-card"><h3>分享这座城市的气候图</h3><p>链接会带上当前选中的城市。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>地理互动馆 · 第 4 课</p><p>气候数据：各国气象部门 1991–2020 气候标准值（整理自维基百科气候数据表）。地形与季风图为示意。</p><p>免登录 · 不收集位置 · 不保存学习记录</p></footer>
+</main>
+</body></html>
