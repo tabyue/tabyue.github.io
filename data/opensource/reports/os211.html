@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EmbodiedLab：测「为求知而行动」的具身基准——机器人自己动手做实验并读出结果 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">EmbodiedLab：测「为求知而行动」的具身基准——机器人自己动手做实验并读出结果 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="embodiedlab">EmbodiedLab：测「为求知而行动」的具身基准——机器人自己动手做实验并读出结果</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/HexaFuture/EmbodiedLab">https://github.com/HexaFuture/EmbodiedLab</a>  </p>
+<p><strong>Stars</strong>: 13 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-28  </p>
+<p><strong>组织</strong>: HexaFuture（合作：清华大学、新加坡国立大学等）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-28</p>
+</blockquote>
+<hr />
+<h3 id="_2">从「为改变而行动」到「为求知而行动」</h3>
+<p>现有具身评测分成两半，中间有个明显的空档：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>代表</th>
+<th>测什么</th>
+<th>缺什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Manipulation 基准</td>
+<td>RoboCasa 等</td>
+<td>acting to change：把场景改成给定目标状态</td>
+<td>目标状态是给定的，不需要「发现」</td>
+</tr>
+<tr>
+<td>科学发现基准</td>
+<td>各类 agent 基准</td>
+<td>knowing：推断未知量</td>
+<td>把物理实验替换成符号动作或数值查询</td>
+</tr>
+</tbody>
+</table>
+<p>真实世界里这两件事 inseparable。要知道一根线是否带电、泵为什么不启动，Agent 必须先动手交互去取数据。</p>
+<p>EmbodiedLab 填的就是这个空档：<strong>acting to know</strong>。</p>
+<h3 id="_3">怎么做到「不可预知但可精确评分」</h3>
+<p>这是整个基准最关键的设计。选择<strong>定量科学实验</strong>作为载体：</p>
+<ul>
+<li>每个实例<strong>重新采样系统参数</strong>（比如电阻阻值、溶液浓度），所以 Agent 不可能从训练数据里背出答案；</li>
+<li>但实验有确定的物理答案，所以评分是精确的，而不是靠人打分或 LLM 裁判。</li>
+</ul>
+<p>这一招同时解决了开放式实验「难以自动评测」与封闭式实验「可以背答案」两个问题。</p>
+<h3 id="_4">规模与环境</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>仿真底座</td>
+<td>NVIDIA Isaac Sim</td>
+</tr>
+<tr>
+<td>机器人</td>
+<td>Franka Panda + 两指夹爪</td>
+</tr>
+<tr>
+<td>相机</td>
+<td>3 个（2 固定 + 1 腕部）</td>
+</tr>
+<tr>
+<td>实验台</td>
+<td>14 个</td>
+</tr>
+<tr>
+<td>学科</td>
+<td>5（力学 / 电学 / 光学 / 热学 / 化学）</td>
+</tr>
+<tr>
+<td>实验数</td>
+<td>30（基础 + 进阶）</td>
+</tr>
+</tbody>
+</table>
+<p>进阶实验需要序贯实验设计或模型辨识——不是照着固定步骤做一遍就行。</p>
+<hr />
+<h3 id="_5">三级接口：用来定位瓶颈</h3>
+<pre><code class="language-text">T0  原生控制
+    Agent 拿到：像素 + 关节状态
+    Agent 自己写：感知 + 运动规划 + 操作代码
+
+T1  + 特权感知
+    额外提供：真值深度 + 无碰撞运动规划
+    剥离掉：感知与规划的难度
+
+T2  + 蒸馏技能
+    额外提供：grasp / place / press 等基础技能库
+    剥离掉：底层操作执行难度
+</code></pre>
+<p>同一个模型在 T0 / T1 / T2 上的分数差，直接告诉你是哪一层拖了后腿：</p>
+<ul>
+<li>T1 比 T0 高很多 → 瓶颈在感知与规划；</li>
+<li>T2 比 T1 高很多 → 瓶颈在底层操作执行；</li>
+<li>三级都不高 → 瓶颈在任务理解与实验设计本身。</li>
+</ul>
+<p>这个诊断设计是 EmbodiedLab 比起「给一个总分」的基准最实用的部分。</p>
+<h3 id="_6">评分三件套</h3>
+<p>一次实验被判成功需要<strong>同时</strong>满足：</p>
+<ol>
+<li>提交正确数值答案，在容差内；</li>
+<li>给出仪器读数作为证据（读数是 episode 中真实记录的，不是事后编的）；</li>
+<li><strong>把实验台恢复原状</strong>（关掉加热器、把工具放回去）。</li>
+</ol>
+<p>第 3 条特别值得注意：它把「执行不留烂摊子」变成了硬指标，而这恰恰是很多具身系统评测里被忽略、但在真实部署中很致命的能力。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.35385">EmbodiedLab  arXiv 2610.35385</a></strong> — 主论文，19 页技术报告</li>
+<li><strong><a href="https://hexafuture.ai/benchmarks/embodiedlab/">EmbodiedLab 基准主页</a></strong> — 官方项目页</li>
+<li><strong><a href="https://arxiv.org/abs/2610.14018">RoboHarness  arXiv 2610.14018</a></strong> — 同样是「harness 决定成败」的结论，可对照阅读</li>
+<li><strong><a href="https://arxiv.org/abs/2610.34370">ThinkLocoManip  arXiv 2610.34370</a></strong> — 腿足移动操作的 agentic harness，长程恢复相关</li>
+<li><strong><a href="https://github.com/StanfordVL/BEHAVIOR-1K">BEHAVIOR-1K</a></strong> — 人类日常活动具身基准，另一个长程评测参照</li>
+</ul>
+<hr />
+<h3 id="_7">环境依赖</h3>
+<p>项目基于 NVIDIA Isaac Sim（基础镜像），另依赖：</p>
+<ul>
+<li><strong>SAM3</strong>（Meta，SAM License；权重在 Hugging Face 上需要申请）</li>
+<li><strong>NVIDIA cuRobo</strong>（NVIDIA Source Code License）</li>
+</ul>
+<pre><code class="language-bash">git clone https://github.com/HexaFuture/EmbodiedLab.git
+cd EmbodiedLab
+pip install -e .
+</code></pre>
+<h3 id="trial">跑一个 trial</h3>
+<pre><code class="language-bash">python -m embodiedlab trial docs/assets/
+</code></pre>
+<p>（这里的 <code>trial</code> 是 README 里给出的 trial runner 入口。）</p>
+<h3 id="agent">接入自己的 Agent</h3>
+<ol>
+<li>选定接口层级（建议先从 T0 开始，跑通后再逐级放开做诊断）；</li>
+<li>Agent 接收任务卡（只有目标与实验台，不提供步骤）与相机观测；</li>
+<li>Agent 输出 Python 代码控制机器人、读取仪器、记录证据；</li>
+<li>评测脚本检查答案 + 证据读数 + 台面复位三项。</li>
+</ol>
+<h3 id="_8">引用</h3>
+<pre><code class="language-bibtex">@article{gao2026embodiedlab,
+  title  = {{EmbodiedLab}: Benchmarking Embodied Agents That Act to Know},
+  author = {Gao, Hongcheng and Zheng, Zelin and Zhou, Alex and others},
+  journal= {arXiv preprint arXiv:2610.35385},
+  year   = {2026}
+}
+</code></pre>
+<hr />
+<h3 id="t0">主要结果（T0 原生控制）</h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>T0 成功率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claude Opus 5.5</td>
+<td>43.3%</td>
+</tr>
+<tr>
+<td>GPT-6 Astra</td>
+<td>40.0%</td>
+</tr>
+<tr>
+<td>最弱模型</td>
+<td>&lt;= 10%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>即使最强 Agent，成功率也不到一半。</strong></p>
+<h3 id="_9">失败分布比总分更有信息</h3>
+<p>论文的关键发现是：对<strong>每一个</strong> Agent，多数失败发生在<strong>与实验台的交互环节</strong>，而不是抽象推理环节。典型故障：</p>
+<ul>
+<li>抓取滑脱；</li>
+<li>仪表数字看错一位；</li>
+<li>台面没恢复原状导致后续步骤失效。</li>
+</ul>
+<p>也就是说：<strong>假设常常是对的，手常常是笨的。</strong></p>
+<h3 id="vs">技能 vs 感知，谁更值钱</h3>
+<p>操作技能（T2）对<strong>弱</strong> Agent 的帮助大于感知与运动规划（T1）。这个结论对资源分配有直接指导意义：弱模型缺的首先是可靠的底层操作原语，与其继续堆感知模块，不如先给它一套能用的 grasp / place / press。</p>
+<h3 id="_10">仓库现状</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>13</td>
+</tr>
+<tr>
+<td>主要语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>License</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>论文</td>
+<td>arXiv 2610.35385（19 页，10 图，9 表）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_11">已知局限</h3>
+<ul>
+<li>受控仿真环境，与混乱的真实实验室有距离；</li>
+<li>长程协调、仪表精细读数、噪声下的多步稳定交互仍是主要难点。</li>
+</ul>
+<hr />
+<h3 id="_12">与相邻基准对照</h3>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>核心测什么</th>
+<th>是否要求物理交互</th>
+<th>评分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RoboCasa / LIBERO</td>
+<td>达成给定目标状态</td>
+<td>是</td>
+<td>状态匹配</td>
+</tr>
+<tr>
+<td>BEHAVIOR-1K</td>
+<td>人类日常活动长程任务</td>
+<td>是</td>
+<td>谓词满足度</td>
+</tr>
+<tr>
+<td>科学发现 agent 基准</td>
+<td>推断与实验设计</td>
+<td><strong>否</strong>（符号动作 / 数值查询）</td>
+<td>答案正确</td>
+</tr>
+<tr>
+<td><strong>EmbodiedLab</strong></td>
+<td><strong>通过交互发现未知结果</strong></td>
+<td><strong>是</strong></td>
+<td><strong>答案 + 证据 + 复位</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="_13">这个基准适合谁</h3>
+<ul>
+<li><strong>做具身 Agent 分层设计的团队</strong>：T0/T1/T2 是现成的瓶颈诊断工具。</li>
+<li><strong>做科学发现 Agent 的团队</strong>：把符号实验拉回物理交互，检验「会不会真的动手」。</li>
+<li><strong>做长程执行的团队</strong>：台面复位这条硬指标可以借用到自己的评测里。</li>
+</ul>
+<h3 id="_14">高频坑</h3>
+<ul>
+<li><strong>直接看总分</strong>：一定要分层看，T0 与 T2 的差值才是信息所在。</li>
+<li><strong>忽略证据读数要求</strong>：Agent 猜对答案但没有记录读数，仍然判失败。这一点在做自己的实验类评测时非常值得抄。</li>
+<li><strong>把仿真结果外推到真实实验室</strong>：论文自己也声明了这是受控设置。</li>
+</ul>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

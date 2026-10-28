@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAI：厂商中立的 Physical AI agentic 框架，把大模型 Agent 接到 ROS 2 机器人上 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">RAI：厂商中立的 Physical AI agentic 框架，把大模型 Agent 接到 ROS 2 机器人上 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="rai-physical-ai-agentic-agent-ros-2">RAI：厂商中立的 Physical AI agentic 框架，把大模型 Agent 接到 ROS 2 机器人上</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/RobotecAI/rai">https://github.com/RobotecAI/rai</a>  </p>
+<p><strong>Stars</strong>: 610 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-28  </p>
+<p><strong>组织</strong>: RobotecAI  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-28</p>
+</blockquote>
+<hr />
+<h3 id="harness">Harness 讨论里被忽略的那一层</h3>
+<p>具身 Agent 的论文与演示大多假设「Agent 能直接调用机器人的能力」。但真到 ROS 2 系统上，这句话要解决一堆具体问题：</p>
+<ul>
+<li>能力散落在<strong>话题（topic）、服务（service）、Action、参数服务器</strong>里，没有统一的工具描述；</li>
+<li>观测是相机图像、点云、关节状态，<strong>不是 LLM 能直接吃下的格式</strong>；</li>
+<li>任务要能被打断、澄清、接管，需要<strong>对话与任务上下文管理</strong>。</li>
+</ul>
+<p><strong>RAI</strong> 是一个<strong>厂商中立（vendor agnostic）的 agentic 框架</strong>，专门做这层适配。</p>
+<h3 id="_2">为什么这层值得单独存在</h3>
+<p>RoboHarness（arXiv 2610.14018）证明了<strong>接口设计能决定成败</strong>：不训练任何模型，只给 LLM 一套视觉—几何控制面板，Qwen3.8-Flash-Next 在 BEHAVIOR Challenge 2025 上就超过了最强 VLA。</p>
+<p>但 RoboHarness 的实现绑定特定本体。RAI 的价值在于<strong>厂商中立</strong>——同一套 Agent 逻辑可以换不同机器人跑。</p>
+<h3 id="_3">适用方向</h3>
+<ul>
+<li>已经在 ROS 2 上有机器人、想快速接入大模型 Agent 做任务编排与交互的团队；</li>
+<li>多本体并存、希望 Agent 逻辑复用的场景；</li>
+<li>想研究「Agent 该调用哪些粒度能力」的团队——框架能让你快速换工具粒度做对照实验。</li>
+</ul>
+<hr />
+<h3 id="_4">分层</h3>
+<pre><code class="language-text">用户 / 上层任务
+       |
+  Agent（大模型）
+       |  工具调用
+  RAI 适配层
+       |  观测适配（图像 / 点云 / 状态 -&gt; 多模态输入）
+       |  能力包装（topic / service / action -&gt; 工具）
+       |  上下文管理（对话、任务状态、中断与接管）
+       |
+  ROS 2 机器人系统
+</code></pre>
+<h3 id="_5">三个核心职责</h3>
+<ol>
+<li><strong>能力包装</strong>：把 ROS 2 的各类接口包装成 Agent 可调用、带自然语言描述的工具。关键是描述要写得让模型知道「什么时候该用」，而不只是「怎么调」。</li>
+<li><strong>观测适配</strong>：把相机图像、点云、机器人状态转成多模态模型能消化的格式。点云尤其麻烦——直接塞进 LLM 没有意义，通常需要先降维或投影成图像。</li>
+<li><strong>上下文管理</strong>：维护对话与任务上下文，支持人机交互中的澄清与接管。这一条在真实部署里比前两条更容易被低估。</li>
+</ol>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/RobotecAI/rai">RAI 仓库</a></strong> — 官方代码与文档</li>
+<li><strong><a href="https://arxiv.org/abs/2610.14018">RoboHarness  arXiv 2610.14018</a></strong> — 「harness 比模型更重要」的极端案例，强烈建议对照阅读</li>
+<li><strong><a href="https://arxiv.org/abs/2610.34370">ThinkLocoManip  arXiv 2610.34370</a></strong> — 多工具域编排的设计参考</li>
+<li><strong><a href="https://arxiv.org/abs/2209.07753">Code as Policies</a></strong> — LLM 写机器人策略代码的开创工作</li>
+<li><strong><a href="https://docs.ros.org/">ROS 2 官方文档</a></strong> — 底座系统的权威参考</li>
+</ul>
+<hr />
+<h3 id="_6">安装</h3>
+<pre><code class="language-bash">git clone https://github.com/RobotecAI/rai.git
+cd rai
+pip install -e .
+</code></pre>
+<h3 id="_7">概念性接入骨架</h3>
+<pre><code class="language-python">from rai import RAIAgent, ROS2Connector
+
+connector = ROS2Connector()
+
+# 1. 把 ROS 2 接口声明为工具（描述写给模型看，不是写给人看）
+connector.register_tool(
+    name=&quot;move_arm_to_pose&quot;,
+    ros_type=&quot;action&quot;,
+    target=&quot;/arm_controller/follow_joint_trajectory&quot;,
+    description=&quot;把机械臂末端移动到指定位姿。用于需要精确放置的场景，&quot;
+                &quot;不适合需要力控的接触式任务。&quot;,
+)
+
+# 2. 声明观测源
+connector.register_observation(name=&quot;head_camera&quot;, ros_topic=&quot;/camera/color/image_raw&quot;)
+connector.register_observation(name=&quot;joint_states&quot;, ros_topic=&quot;/joint_states&quot;)
+
+# 3. 起 Agent
+agent = RAIAgent(connector=connector, model=&quot;gpt-6-luna&quot;)
+agent.run(task=&quot;把桌上的红色杯子放到托盘里&quot;)
+</code></pre>
+<h3 id="_8">接入自己的机器人</h3>
+<ol>
+<li>列出机器人暴露的所有 ROS 2 接口，挑出真正需要给 Agent 的那部分；</li>
+<li>为每个工具写「什么时候该用」的自然语言描述——这一步决定调用成功率；</li>
+<li>确认观测格式（图像编码、点云降采样策略）；</li>
+<li>先在仿真里跑通，再上真机。</li>
+</ol>
+<hr />
+<h3 id="_9">仓库现状</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>610</td>
+</tr>
+<tr>
+<td>主要语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>License</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>维护方</td>
+<td>RobotecAI</td>
+</tr>
+</tbody>
+</table>
+<p>Apache-2.0 许可 + 600 星量级 + 活跃维护，作为生产环境候选的可信度不错。</p>
+<h3 id="_10">收益来源</h3>
+<p>RAI 这类框架的价值不在「提升某个基准分数」，而在<strong>降低多本体接入成本</strong>：</p>
+<ul>
+<li>Agent 逻辑一次写、多本体复用；</li>
+<li>工具粒度可以快速调整做对照实验；</li>
+<li>与 ROS 2 生态的既有资产（导航、MoveIt、各类驱动）直接打通。</li>
+</ul>
+<h3 id="_11">成本</h3>
+<ul>
+<li>多一层适配会引入延迟，高频控制回路不适合走 Agent；</li>
+<li>工具描述的质量直接决定调用成功率，这部分是人工成本；</li>
+<li>观测适配（尤其点云）需要根据任务定制，不是开箱即用。</li>
+</ul>
+<hr />
+<h3 id="_12">与相邻框架对照</h3>
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>定位</th>
+<th>是否绑定本体</th>
+<th>底座</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RAI</strong></td>
+<td><strong>Agentic 框架</strong></td>
+<td><strong>否（厂商中立）</strong></td>
+<td><strong>ROS 2</strong></td>
+</tr>
+<tr>
+<td>RoboHarness</td>
+<td>Agent 控制面板</td>
+<td>论文实现绑定具体本体</td>
+<td>自有栈</td>
+</tr>
+<tr>
+<td>Code-as-Policies</td>
+<td>LLM 写策略代码</td>
+<td>否</td>
+<td>需预定义 API</td>
+</tr>
+<tr>
+<td>rosclaw</td>
+<td>Physical AI 运行时</td>
+<td>否</td>
+<td>ROS 2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_13">选型建议</h3>
+<ul>
+<li><strong>已有 ROS 2 机器人、想接大模型</strong>：RAI 是最直接的选择。</li>
+<li><strong>想验证「harness 能不能超过 VLA」</strong>：看 RoboHarness，它的结论更激进。</li>
+<li><strong>需要 1 kHz 级运控</strong>：不要走 Agent 层，这一层只适合任务编排与秒级决策。</li>
+</ul>
+<h3 id="_14">高频坑</h3>
+<ul>
+<li><strong>工具描述只写参数、不写适用场景</strong>：模型会乱调。描述里必须写「什么时候不该用」。</li>
+<li><strong>把高频控制塞进 Agent</strong>：规划与运控要分层，Agent 只负责编排。</li>
+<li><strong>点云直接喂模型</strong>：先降采样或投影成图像，否则既浪费 token 又没有效果。</li>
+</ul>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

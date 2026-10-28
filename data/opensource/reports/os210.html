@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RynnVLA-Latent：用 3D 接地的潜动作把 3 万小时异构视频变成 VLA 预训练监督 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">RynnVLA-Latent：用 3D 接地的潜动作把 3 万小时异构视频变成 VLA 预训练监督 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="rynnvla-latent-3d-3-vla">RynnVLA-Latent：用 3D 接地的潜动作把 3 万小时异构视频变成 VLA 预训练监督</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/alibaba-damo-academy/RynnVLA-Latent">https://github.com/alibaba-damo-academy/RynnVLA-Latent</a>  </p>
+<p><strong>Stars</strong>: 9 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-28  </p>
+<p><strong>组织</strong>: 阿里巴巴 DAMO Academy / 香港具身智能实验室 / 香港中文大学  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-28</p>
+</blockquote>
+<hr />
+<h3 id="_2">为什么需要潜动作接口</h3>
+<p>VLA 的预训练数据是瓶颈中的瓶颈。带动作标签的机器人示教昂贵且覆盖面窄，而人类视频与网络视频虽然覆盖广，却没有对应的机器人指令。更麻烦的是不同本体的<strong>控制空间互不兼容</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>本体</th>
+<th>动作维度</th>
+<th>坐标系</th>
+<th>语义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单臂 6-DoF</td>
+<td>7（6 关节 + 夹爪）</td>
+<td>基座坐标系</td>
+<td>关节角 / 末端位姿</td>
+</tr>
+<tr>
+<td>双臂移动操作</td>
+<td>20+</td>
+<td>底盘 + 双臂</td>
+<td>含底盘速度与躯干高度</td>
+</tr>
+<tr>
+<td>灵巧手</td>
+<td>20+ 每手</td>
+<td>手部坐标系</td>
+<td>手指关节 / 肌腱驱动</td>
+</tr>
+</tbody>
+</table>
+<p>这三类数据无法直接池在同一个「预测原生动作」的目标下。</p>
+<p><strong>潜动作（latent action）</strong>提供的是一个中间接口：它编码的是「观测之间发生了什么变化」，不依赖任何具体本体的控制定义。先在潜动作空间上做大规模预训练，再用少量本体数据把潜动作映射到该本体的实际动作，就把「数据规模」与「本体兼容」解耦了。</p>
+<h3 id="_3">三个让潜动作不塌方的设计</h3>
+<ol>
+<li><strong>残差未来特征预测</strong>：预测未来特征相对当前的残差，而不是绝对特征。绝对预测会让模型倾向于记住场景外观（「厨房大概长这样」），残差则迫使它关注变化量。</li>
+<li><strong>相机补偿的 3D 流监督</strong>：用相机运动补偿后的三维流做监督。不补偿的话，第一人称视频里相机一动，像素全变，模型会以为「世界发生了大变化」。</li>
+<li><strong>相机运动解耦</strong>：显式把 ego-motion 与场景变化分离。这一条与第 2 条配合，是这类方法能否 work 的分水岭。</li>
+</ol>
+<h3 id="_4">数据规模</h3>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入视频</td>
+<td>3.01 万小时（人类 + 机器人 + 仿真）</td>
+</tr>
+<tr>
+<td>产出潜动作描述子</td>
+<td>7.4552 亿条</td>
+</tr>
+<tr>
+<td>策略规模</td>
+<td>4B</td>
+</tr>
+<tr>
+<td>动作生成方式</td>
+<td>流匹配（flow matching）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_5">两阶段数据流</h3>
+<pre><code class="language-text">阶段一：RynnLAM（学潜动作，与本体无关）
+    视频帧序列 {o_t, o_t+1, ...}
+        -&gt; 视觉编码器
+        -&gt; 残差未来特征预测头
+        -&gt; 相机补偿 3D 流监督 + 相机运动解耦
+        -&gt; 连续潜动作 z_t
+
+阶段二：RynnVLA-Latent（学策略，再适配本体）
+    (观测 o_t, 语言指令 l)
+        -&gt; 预训练主干
+        -&gt; 流匹配预测潜动作块 z_t:t+H
+        -&gt; 动作专家适配到具体本体动作 a_t:t+H
+</code></pre>
+<p>关键点在于<strong>阶段一完全不需要机器人动作标签</strong>，所以人类视频这种「量大但没有控制指令」的数据能被真正利用起来。</p>
+<h3 id="_6">为什么用流匹配而不是自回归</h3>
+<p>潜动作是连续向量，用离散 token 自回归会引入量化损失；流匹配直接在连续空间建模分布，且天生支持一次预测一个动作块（chunk），与 VLA 里通行的 action chunk 执行方式一致。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.34356">RynnVLA-Latent  arXiv 2610.34356</a></strong> — 主论文，含表征消融与数据规模曲线</li>
+<li><strong><a href="https://alibaba-damo-academy.github.io/RynnVLA-Latent.github.io">RynnVLA-Latent 项目页</a></strong> — 可视化与结果展示</li>
+<li><strong><a href="https://huggingface.co/collections/Alibaba-DAMO-Academy/rynnvla-latent">Hugging Face Collection</a></strong> — 模型权重</li>
+<li><strong><a href="https://github.com/RoboTwin-Platform/RoboTwin">RoboTwin 2.0</a></strong> — 双臂评测基准，本工作的评测平台之一</li>
+<li><strong><a href="https://github.com/Lifelong-Robot-Learning/LIBERO">LIBERO</a></strong> — 终身机器人学习基准，本工作报告 98.8% 的平台</li>
+</ul>
+<hr />
+<h3 id="_7">获取代码与权重</h3>
+<pre><code class="language-bash">git clone https://github.com/alibaba-damo-academy/RynnVLA-Latent.git
+cd RynnVLA-Latent
+pip install -r requirements.txt
+</code></pre>
+<p>权重在 Hugging Face 与 ModelScope 两个 Collection 上都放了：</p>
+<ul>
+<li>Hugging Face：<code>Alibaba-DAMO-Academy/rynnvla-latent</code></li>
+<li>ModelScope：<code>DAMO_Academy/RynnVLA-Latent</code></li>
+</ul>
+<h3 id="_8">最小推理骨架</h3>
+<pre><code class="language-python">import torch
+from rynnvla_latent import RynnVLALatent, load_processor
+
+processor = load_processor(&quot;rynnvla-latent-4b&quot;)
+policy = RynnVLALatent.from_pretrained(&quot;rynnvla-latent-4b&quot;).cuda().eval()
+
+batch = processor(
+    images=[obs[&quot;head&quot;], obs[&quot;wrist&quot;]],
+    instruction=&quot;pick up the red cup and place it on the plate&quot;,
+).to(&quot;cuda&quot;)
+
+with torch.no_grad():
+    # 先出潜动作块，再由动作专家映射到本体动作空间
+    latent_chunk = policy.predict_latent_chunk(batch)   # [1, H, D_latent]
+    actions = policy.action_expert.decode(
+        latent_chunk, embodiment=&quot;single_arm_7dof&quot;
+    )                                                   # [1, H, D_action]
+
+robot.execute(actions[0, :h].cpu().numpy())   # 滚动视界：只执行前 h 步
+</code></pre>
+<h3 id="_9">接入自己的本体</h3>
+<ol>
+<li>用自有示教数据（几十到几百条即可）微调 <code>action_expert</code>，主干保持冻结；</li>
+<li>定义本体的 embodiment 描述（关节数、坐标系、动作语义）；</li>
+<li>在目标基准或真机上跑滚动视界评测，先扫 <code>H</code> 与 <code>h</code> 的组合再谈调参。</li>
+</ol>
+<hr />
+<h3 id="_10">基准成绩（论文报告）</h3>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>成功率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LIBERO</td>
+<td>98.8%</td>
+</tr>
+<tr>
+<td>LIBERO-Plus</td>
+<td>84.7%（无基准特化适配）</td>
+</tr>
+<tr>
+<td>VLABench（五赛道平均）</td>
+<td>51.9%</td>
+</tr>
+<tr>
+<td>RoboTwin 2.0（双臂平均）</td>
+<td>88.6%</td>
+</tr>
+</tbody>
+</table>
+<p>真机方面，在灵巧手与移动夹爪两类平台上的 6 个任务中取得对比方法里最高的成功率。</p>
+<h3 id="_11">怎么读这些数字</h3>
+<ul>
+<li><strong>LIBERO-Plus 的 84.7% 标注了「无基准特化适配」</strong>，这是这组数字里最有价值的一个限定——它说明分数来自通用预训练而非测试时针对性调整。</li>
+<li><strong>VLABench 只有 51.9%</strong>，与 LIBERO 的 98.8% 落差很大。两个基准的任务分布差异大，读分时必须连同基准一起读，不要只记一个「SOTA」数字。</li>
+<li>论文给了<strong>表征消融与数据规模曲线</strong>，这是判断自己该投多少算力做潜动作预训练的实用依据。</li>
+</ul>
+<h3 id="_12">仓库现状</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>9</td>
+</tr>
+<tr>
+<td>主要语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>License</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>创建时间</td>
+<td>2026-10（随论文同步放出）</td>
+</tr>
+</tbody>
+</table>
+<p>仓库很新，star 数低不代表质量低——它跟着 arXiv 2610.34356 一起发布，可信度来自论文与 DAMO Academy 的背书。</p>
+<hr />
+<h3 id="_13">与相邻方案对照</h3>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>是否需要原生动作标签</th>
+<th>跨本体方式</th>
+<th>预训练数据来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>直接 VLA 预训练（RT-2 / OpenVLA 路线）</td>
+<td>是</td>
+<td>各自训练或用统一动作空间</td>
+<td>机器人示教</td>
+</tr>
+<tr>
+<td>离散潜动作 token 化</td>
+<td>否</td>
+<td>先离散再映射</td>
+<td>视频</td>
+</tr>
+<tr>
+<td><strong>RynnVLA-Latent</strong></td>
+<td><strong>否</strong></td>
+<td><strong>连续 3D 接地潜动作 + 动作专家适配</strong></td>
+<td><strong>人类 / 机器人 / 仿真视频</strong></td>
+</tr>
+<tr>
+<td>世界模型辅助（预测未来帧再出动作）</td>
+<td>部分</td>
+<td>依赖本体特定的视频预测</td>
+<td>机器人数据为主</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_14">选型建议</h3>
+<ul>
+<li><strong>手上几乎没有带标签示教、但有大量人类视频</strong>：潜动作路线是最直接的资产化方案。</li>
+<li><strong>已有大量高质量本体示教</strong>：先跑论文的数据规模曲线判断边际收益，潜动作预训练的增益可能在数据量足够后迅速饱和。</li>
+<li><strong>多本体并存</strong>：把预训练与本体适配解耦，是这个路线相对「每个本体训一个 VLA」最大的工程价值。</li>
+</ul>
+<h3 id="_15">高频坑</h3>
+<ul>
+<li><strong>ego-motion 污染</strong>：用第一人称数据但没有做相机运动解耦，潜动作会退化成「相机怎么动」。验证方法是把相机固定后再看潜动作是否还有信息量。</li>
+<li><strong>把 LIBERO 分数当成通用能力</strong>：98.8% 已接近饱和，区分度很低。要看差异请用 LIBERO-Plus 或 VLABench。</li>
+<li><strong>动作专家微调过拟合</strong>：本体适配阶段数据少，容易把主干的通用能力覆盖掉。建议冻结主干、只训动作专家。</li>
+</ul>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

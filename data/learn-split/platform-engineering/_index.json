@@ -1,7 +1,7 @@
 {
   "id": "platform-engineering",
   "name": "具身智能平台工程",
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-10-28T08:30",
   "stage": "阶段六：项目实战",
   "importance": "重要",
   "estimatedHours": 40,
@@ -536,9 +536,37 @@
         "扩展自检"
       ],
       "summary": "机器人学习这两年有一个不太被讨论、但严重消耗工程时间的痛点：把 N 个策略接到 M 套评测环境上。朴素做法需要 N×M 份适配代码，而且每一份都可能悄悄出错——这些错误不报错，只是让成功率低几个百分点，你会误以为是自己的方法不如人。"
+    },
+    {
+      "id": "sec-20",
+      "title": "把机器人能力暴露给 Agent：工具粒度、接口完备性与调用治理",
+      "lastUpdated": "2026-10-28T08:30",
+      "chars": 8148,
+      "shortTitle": "能力暴露与工具治理",
+      "difficulty": "高级",
+      "estimatedMinutes": 9,
+      "isFrontier": true,
+      "tier": 3,
+      "readingMinutes": 13,
+      "headings": [
+        "一、为什么这是一个独立的工程问题",
+        "二、工具粒度：粗了不听话，细了调不动",
+        "三、接口完备性：最小且够用",
+        "四、描述即接口：写给模型看的那句话",
+        "五、调用治理：超时、幂等、可回滚",
+        "六、观测适配：把机器人状态变成模型能消化的输入",
+        "七、评测与回归：工具调用成功率怎么测",
+        "八、从单个机器人到 Fleet：能力暴露层的复用边界",
+        "九、与 agentic harness 的关系：谁该拥有策略",
+        "十、常见坑",
+        "十一、能力自检",
+        "练习",
+        "参考答案"
+      ],
+      "summary": "当机器人系统开始接入大模型 Agent，会出现一个不在传统机器人软件栈里的新问题：机器人的能力该怎么暴露给 Agent。"
     }
   ],
-  "readingMinutes": 171,
+  "readingMinutes": 184,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 147362
+  "chars": 155510
 }

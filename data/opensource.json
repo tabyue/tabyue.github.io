@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-27T08:40",
+ "lastUpdated": "2026-10-28T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,124 @@
   }
  ],
  "projects": [
+  {
+   "id": "os213",
+   "name": "RAI：厂商中立的 Physical AI agentic 框架，把大模型 Agent 接到 ROS 2 机器人上",
+   "github": "https://github.com/RobotecAI/rai",
+   "organization": "RobotecAI",
+   "org": "RobotecAI",
+   "category": "ai-agent-framework",
+   "description": "**RAI** 是一个**厂商中立（vendor agnostic）的 agentic 框架**，用于 Physical AI 机器人，核心职责是把大模型 Agent 与 ROS 2 机器人系统接起来。\n\n**它解决的是一层很具体的工程问题**：具身 Agent 的论文与演示大多假设「Agent 能直接调用机器人的能力」，但真到 ROS 2 系统上，能力散落在话题、服务、Action、参数服务器里，观测也不是 LLM 能直接吃下的格式。RAI 提供这层适配：\n- 把 ROS 2 的接口包装成 Agent 可调用的工具；\n- 把相机图像、点云、机器人状态转成多模态模型能消化的观测；\n- 管理对话与任务上下文，支持人机交互中的澄清与接管。\n\n**为什么值得关注**：这一层正是「harness」讨论中最容易被忽略的部分。RoboHarness 证明了接口设计能决定成败，但它的实现绑定特定本体；RAI 的价值在于**厂商中立**——同一套 Agent 逻辑可以换不同机器人跑。\n\n**适用方向**：已经在 ROS 2 上有机器人、想快速接入大模型 Agent 做任务编排与交互的团队。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "厂商中立，不绑定特定机器人本体",
+    "把 ROS 2 话题 / 服务 / Action 包装为 Agent 工具",
+    "多模态观测适配（图像、点云、机器人状态）",
+    "对话与任务上下文管理，支持人机交互",
+    "Apache-2.0 许可，Python 实现"
+   ],
+   "stars": 610,
+   "tags": [
+    "RAI",
+    "ROS 2",
+    "Agentic Framework",
+    "Physical AI",
+    "厂商中立",
+    "具身 Agent",
+    "工具编排"
+   ],
+   "addedDate": "2026-10-28"
+  },
+  {
+   "id": "os212",
+   "name": "InternVLA-A-series：把理解、生成与动作统一到同一个机器人基座模型",
+   "github": "https://github.com/InternRobotics/InternVLA-A-series",
+   "organization": "InternRobotics（上海人工智能实验室体系）",
+   "org": "InternRobotics",
+   "category": "ai-model",
+   "description": "**InternVLA-A1** 的定位是**统一理解、生成与动作**的机器人基座模型。\n\n当前 VLA 路线普遍是「预训练 VLM + 动作头」的两段式：视觉语言主干负责理解，动作专家负责输出。这个结构的问题在于，模型对「接下来会发生什么」的隐式预测能力没有被显式用起来——而世界模型 / 视频生成方向的进展恰好提供了这部分能力。\n\nA-series 的思路是把**理解（understanding）、生成（generation）与动作（action）**放进同一套建模目标：\n- **理解**：多模态指令与场景语义解析；\n- **生成**：对未来的视觉演变做预测，作为动作的辅助监督；\n- **动作**：输出可执行的机器人控制序列。\n\n把生成纳入训练目标的收益是，模型被迫学到「动作会导致观测如何变化」的因果结构，而不是只拟合示教里的动作分布。\n\n**适用方向**：需要一套模型同时做语义理解与操作控制的场景，以及想研究「生成式监督能否改善动作泛化」的团队。",
+   "language": "Python",
+   "license": "未声明",
+   "features": [
+    "理解 / 生成 / 动作三合一建模目标",
+    "面向机器人基座模型的统一架构",
+    "可用作 VLA 路线的对照实现",
+    "由 InternRobotics 维护，与 Intern 系列多模态模型同源"
+   ],
+   "stars": 571,
+   "tags": [
+    "InternVLA",
+    "VLA",
+    "统一建模",
+    "理解—生成—动作",
+    "机器人基座模型",
+    "多模态"
+   ],
+   "addedDate": "2026-10-28"
+  },
+  {
+   "id": "os211",
+   "name": "EmbodiedLab：测「为求知而行动」的具身基准——机器人自己动手做实验并读出结果",
+   "github": "https://github.com/HexaFuture/EmbodiedLab",
+   "organization": "HexaFuture（合作：清华大学、新加坡国立大学等）",
+   "org": "HexaFuture",
+   "category": "data-tools",
+   "description": "**定位**：现有具身评测要么测「acting to change」（把场景改成给定目标状态），要么测「knowing」但把物理实验替换成符号动作或数值查询。EmbodiedLab 测的是**「acting to know」**——通过交互去发现一个事先无法知道的结果。\n\n**怎么做到可自动评分**：选择**定量科学实验**作为载体。每个实例重新采样系统参数，因此结果无法预先知道，却可以精确评分。\n\n**规模与环境**：Isaac Sim 中的物理仿真实验室，Franka Panda 两指夹爪操作 **14 个实验台**，覆盖力学、电学、光学、热学、化学 **5 个学科**共 **30 个实验**，配三个相机（两个固定 + 一个腕部）。\n\n**三级接口用于诊断瓶颈**：\n- **T0**：原生控制，Agent 要自己从像素与关节状态写感知与运动规划；\n- **T1**：加真值深度与无碰撞运动规划；\n- **T2**：再加从最强 Agent 蒸馏出的操作技能（grasp / place / press）。\n\n**评分三件套**：提交正确数值答案（在容差内）+ 给出仪器读数作为证据 + **把实验台恢复原状**。\n\n**结果**：6 个前沿模型配各自开发者的 coding agent，T0 下即使最强 Agent 成功率也不到一半；对每个 Agent，多数失败发生在与实验台的交互环节。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "30 个定量科学实验 / 5 学科 / 14 个实验台，基于 Isaac Sim",
+    "每个实例重新采样参数：结果不可预知但可精确评分",
+    "T0 / T1 / T2 三级接口，用于定位感知、规划、操作哪个是瓶颈",
+    "答案 + 证据读数 + 台面复位 三元评分标准",
+    "四个能力维度分项分析",
+    "Apache-2.0 许可（依赖 NVIDIA Isaac Sim、Meta SAM3、NVIDIA cuRobo）"
+   ],
+   "stars": 13,
+   "tags": [
+    "具身评测",
+    "Act to Know",
+    "科学实验",
+    "Isaac Sim",
+    "Franka Panda",
+    "基准",
+    "LLM Agent",
+    "机器人操作"
+   ],
+   "addedDate": "2026-10-28"
+  },
+  {
+   "id": "os210",
+   "name": "RynnVLA-Latent：用 3D 接地的潜动作把 3 万小时异构视频变成 VLA 预训练监督",
+   "github": "https://github.com/alibaba-damo-academy/RynnVLA-Latent",
+   "organization": "阿里巴巴 DAMO Academy / 香港具身智能实验室 / 香港中文大学",
+   "org": "Alibaba-DAMO-Academy",
+   "category": "ai-model",
+   "description": "**要解决的问题**：VLA 规模化被两件事卡住——带动作标签的示教数据太贵，以及不同本体的控制空间互不兼容（维度、坐标系、语义全不一样）。人类视频与网络视频覆盖广得多，但没有对应的机器人指令，不能直接池进同一个「预测原生动作」的目标。\n\n**核心思路**：先学一个**与本体无关的潜动作接口**，再适配到具体机器人。\n- **RynnLAM** 从视觉转移中学习连续、3D 接地的潜动作，不需要原生控制信号；\n- 三个关键设计：残差未来特征预测（学「变了什么」而非「长什么样」）、相机补偿的 3D 流监督（逼表示捕捉操控相关运动）、相机运动解耦（防止 ego-motion 污染潜动作）；\n- 应用到 **3.01 万小时**人类 / 机器人 / 仿真视频，产出 **7.4552 亿**条潜动作描述子；\n- **RynnVLA-Latent** 再用流匹配从视觉观测与语言预测潜动作块，最后把主干与动作专家适配到具体本体的动作空间。\n\n**成绩**：4B 策略在 LIBERO 98.8%、LIBERO-Plus 84.7%（无基准特化适配）、VLABench 五赛道平均 51.9%、RoboTwin 2.0 双臂平均 88.6%；灵巧手与移动夹爪平台的 6 个真机任务上取得对比方法最高成功率。\n\n**仓库内容**：推理与训练代码、模型权重（Hugging Face 与 ModelScope 双 Collection）。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "3D 接地潜动作学习，不需要原生机器人动作标签",
+    "残差未来特征预测 + 相机补偿 3D 流监督 + 相机运动解耦",
+    "3.01 万小时异构视频 → 7.4552 亿条潜动作描述子",
+    "流匹配预测潜动作块，再适配到具体本体动作空间",
+    "4B 规模策略，覆盖 LIBERO / LIBERO-Plus / VLABench / RoboTwin 2.0",
+    "灵巧手与移动夹爪双平台真机验证"
+   ],
+   "stars": 9,
+   "tags": [
+    "潜动作",
+    "VLA 预训练",
+    "3D 流",
+    "流匹配",
+    "跨本体",
+    "LIBERO",
+    "RoboTwin 2.0",
+    "DAMO Academy"
+   ],
+   "addedDate": "2026-10-28"
+  },
   {
    "id": "os209",
    "name": "VLA-Corrector：给 VLA 加一个轻量「检测—纠正」头，让动作视界自适应",
@@ -5048,5 +5166,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 196
+ "totalItems": 200
 }

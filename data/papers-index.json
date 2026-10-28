@@ -1,6 +1,156 @@
 {
- "lastUpdated": "2026-10-27T08:40",
+ "lastUpdated": "2026-10-28T08:30",
  "papers": [
+  {
+   "id": "p281",
+   "title": "ThinkLocoManip: A Whole-Body Control Agentic Harness for Legged Loco-Manipulation",
+   "authors": "Nuo Chen, Shizeng Zhang, Yujie Yang, Jinghong Wang, Zhenyang Qu, Xiao-Ming Wu, Yunfei Guo, 等",
+   "venue": "arXiv 2610.34370（cs.RO）",
+   "date": "2026-10-25",
+   "arxiv": "https://arxiv.org/abs/2610.34370",
+   "github": "",
+   "tags": [
+    "ThinkLocoManip",
+    "移动操作",
+    "腿足机器人",
+    "Agentic Harness",
+    "交错推理与行动",
+    "Keyframe Thinking",
+    "全身控制",
+    "长程任务"
+   ],
+   "tldr": "**两类现有范式的短板**：直接动作生成（端到端策略）难泛化到多样真实环境与长程任务；plan-then-act（先分解再逐步执行）因为推理与执行分离，一旦观测推翻初始计划或出现执行错误就很脆弱。\n\n**ThinkLocoManip** 采用**交错推理与行动（interleaved reasoning-and-acting）**范式：Agent 持续推理当前状态、执行动作、观察结果、调整策略。\n\n**工具编排**：harness 编排感知、导航、操作、运动四个工具域的专门工具。与既有机器人 agentic harness 最大的区别是**显式把运动（locomotion）作为一个工具域**纳入 Agent 的推理与执行——腿足机器人的「走到哪」本身就是需要推理的决策，而不是底层控制器自动完成的事。共集成 **11 个工具与 5 个技能**，技能同时管域内工具用法与跨域协调。\n\n**长程失败恢复**：提出 **Keyframe Thinking** 机制，保留关键执行上下文，支持高效错误恢复。\n\n**结果**：真机实验中整体成功率 **77%**，超过最强 plan-then-act 基线（37.1%）的两倍，绝对提升近 40 个百分点。",
+   "category": "具身 Agent / 移动操作",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把 locomotion 提升为 Agent 的一个推理域，是这篇最本质的贡献。在腿足平台上「如何走过去」与「如何操作」高度耦合（站位决定可达性），把它藏进底层控制器会丢掉大量决策空间。",
+    "77% vs 37.1% 的差距主要来自长程交互中的错误恢复能力，而不是单步动作质量——这提示长程任务的评测应该单独统计「失败后是否恢复」而不是只看最终成功率。",
+    "Keyframe Thinking 保留关键帧上下文而不是完整历史，是长上下文 Agent 在机器人上落地时绕开 token 预算的现实做法。",
+    "技能层同时管「域内工具用法」与「跨域协调」——这个双层设计对应的是移动操作里最常见的失败：每一步都对，但站位与抓取的时序配合错了。"
+   ],
+   "impact": "为腿足移动操作提供了一个可对照的系统范式：11 工具 + 5 技能 + Keyframe Thinking，并用 77% vs 37.1% 的真机对比量化了「交错推理与行动」相对「先计划后执行」的优势。对做轮式/四足 + 机械臂复合本体的团队，工具域划分与跨域技能设计可以直接借用；对做具身 Agent 框架的团队，locomotion-as-a-tool 是一个值得照搬的接口设计决策。",
+   "addedDate": "2026-10-28"
+  },
+  {
+   "id": "p280",
+   "title": "Trajectory2Gym: Decision-Grounded Compositional Interaction Synthesis for Tool-Use Agents",
+   "authors": "Yihao Hu, Zhihao Wen, Yitong Lin, Siyuan Lu, Pan Wang, Wei Wu, Jiang-Ming Yang, Tao Lin",
+   "venue": "arXiv 2610.33568（cs.CL）",
+   "date": "2026-10-24",
+   "arxiv": "https://arxiv.org/abs/2610.33568",
+   "github": "",
+   "tags": [
+    "Trajectory2Gym",
+    "轨迹监督",
+    "组合覆盖",
+    "决策依据",
+    "工具调用",
+    "Tau1/Tau2/BFCL",
+    "父归一化 SFT",
+    "Qwen3"
+   ],
+   "tldr": "**反直觉的起点**：成功的工具调用轨迹**未必是有用的监督**。即使交互成功，也可能没覆盖到多步依赖，或者包含那些在决策时刻 Agent 可见信息并不足以支撑的动作。\n\n**两个耦合要求**：\n1. **组合覆盖（compositional coverage）**：重要的观测—动作依赖必须被表示出来。在 34,772 条已认证候选里，**40.9% 最多只含两个受监督决策**，只有 **10.0%** 含「真实错误之后的已认证决策」。\n2. **决策依据（decision grounding）**：每个被监督的动作必须由 Agent 可见的交互历史支撑。采集者可能用了 Agent 没见过的标识符；API 会同样爽快地接受一个过时的两件商品换货请求，就像接受用户最终只确认的台灯换货一样。\n\n**方法**：Trajectory2Gym 围绕**支撑不足的组合结构**去构造可执行交互，并只从这些交互的实际执行中**取有依据的决策**作为监督。结构支撑选择负责分配经验，**父归一化监督微调**把「语义交互」而非「单条样本」作为训练权重的单位。\n\n**结果**：在 5 个 Qwen3 规模上全面改善 Tau1、Tau2 与 BFCL，三榜等权均值提升 **16.9—29.8 个百分点**，在有状态与多轮交互上增益最大。",
+   "category": "具身 Agent / 数据合成",
+   "difficulty": "中级",
+   "keyInsights": [
+    "「成功 ≠ 可学」这个判据值得直接搬到具身数据管线里：一条成功的示教轨迹可能 90% 的动作都是无信息量的惯性和，只有少数几步真正由观测决定——按轨迹条数计费的数据采集恰恰稀释了这些关键步。",
+    "40.9% 的候选最多只有两个受监督决策、只有 10% 包含真实错误后的决策：这说明**按任务完成度过滤**的通行做法系统性丢掉了最难也最有价值的组合结构。",
+    "父归一化 SFT 的消融增益最大（约 8.04 分）——把「语义交互」当训练权重单位，而不是让长轨迹天然占据更多梯度。这个 trick 对任何长度不均的轨迹数据集都适用。",
+    "局限要记住：与之前 checkpoint 的比较不是算力匹配的，归因要谨慎；有些有用动作因为「私下获知」或「被拒绝」而无法认证；后续步的依赖状态路径覆盖仍不完整。"
+   ],
+   "impact": "把「轨迹生成」重新定义为「刻意构造可学的交互经验」，而不是「收集成功的轨迹」。对做具身数据闭环的团队，这套「先检查决策是否有依据、再按结构分配经验」的两步过滤可以直接加进现有管线，代价不大但能显著改变数据的信息密度。需要留意本文的实验域是工具调用（Tau/BFCL）而非机器人本体，迁移到具身操作时监督信号的定义要重新设计。",
+   "addedDate": "2026-10-28"
+  },
+  {
+   "id": "p279",
+   "title": "RoboHarness: A Simple Harness Outperforms VLA and World Action Models",
+   "authors": "Bince Qu, Wei Chen, Bo Zhang（浙江大学）",
+   "venue": "arXiv 2610.14018（cs.RO）",
+   "date": "2026-09-29",
+   "arxiv": "https://arxiv.org/abs/2610.14018",
+   "github": "https://github.com/BinceQu/RoboHarness",
+   "tags": [
+    "RoboHarness",
+    "Harness",
+    "视觉几何控制面板",
+    "关键点约束",
+    "光流跟踪",
+    "BEHAVIOR Challenge",
+    "不训练模型",
+    "Qwen3.8"
+   ],
+   "tldr": "**主张**：主流路线（VLA、世界动作模型 WAM）要大量机器人动作数据加额外后训练，而这类数据很难覆盖真实世界多样的物体、场景与任务。作者认为 **coding agent 有能力实现通用具身操作，缺的只是一套简单而有效的机器人 harness**。\n\n**设计**：不训练任何模型。让通用 LLM（Qwen3.8-Flash-Next、Qwen3.8-27B、GPT-6-luna）通过工具控制机器人。关键洞察是**用空间定位（grounding）做桥梁**：VLM 不擅长直接推理 3D 空间关系，但能在 2D 图像上相当准确地点出关键点——所以让 LLM 负责「点点」，3D 几何交给系统去算。\n\n**两阶段操作**：先把夹爪与物体建立接触/抓取关系；再带着手中物体去满足与另一物体之间的几何关系（如钥匙对准锁孔）。两阶段都能用关键点约束表达，作者给出了**完备性证明**来说明这套工具集「最小且完备」。\n\n**流程**：LLM 在头部相机图像上选点 → 光流逐帧跟踪 → 查深度图 → 反投影到机器人坐标系（x 前、y 左、z 上，在 R1 Pro 与 ARX X5 等不同本体上通用）→ 持续把坐标与距离返回给 LLM。系统采样候选动作，剔除逆运动学不可解或不可达的，再规划轨迹执行，并暴露增量式底层微调工具用于修正与恢复。\n\n**结果**：在 BEHAVIOR Challenge 2025 前 10 个任务上，Qwen3.8-Flash-Next + RoboHarness 取得 **44.539%** 的汇总得分，高于最强 VLA 结果 Galaxea G0.5 的 34.838%。",
+   "category": "具身 Agent / Harness",
+   "difficulty": "中级",
+   "keyInsights": [
+    "「不训练任何模型」是这篇最有冲击力的地方：如果一层 harness 就能让通用 LLM 超过专门训练的 VLA，那么大量动作数据采集与后训练的投入产出比需要重新评估。",
+    "让 VLM 在 2D 图像上点关键点、把 3D 几何交给系统——这个分工比让模型直接输出 3D 坐标稳健得多，是可复用的接口设计原则。",
+    "「最小且完备」的工具集有显式完备性证明，而不是靠经验堆函数。这与 Code-as-Policies / ASPIRE 那类「能力上限由预定义函数决定」的路线拉开差距。",
+    "结果要带着条件读：5 次 rollout 取均值、人工写的任务专属 prompt、每任务单独的仿真步数上限、无微调；且个别任务（can meat 0.0000、挂圣诞装饰 0.2222）低于 π0.5 与 RLC。"
+   ],
+   "impact": "为「具身 Agent 该怎么分层」提供了一个极端而清晰的对照样本：把动作生成从模型里拿掉，全部交给 harness + 几何求解。工程上最可直接借鉴的是 track_object 这条链路（点选 → 光流 → 深度 → 反投影 → 持续回传坐标），几乎可以做进任何已有的机器人软件栈。需要注意论文自己也提示了仓库 provenance 说明与表格数值存在两处不一致，44.539% 应归给论文表格而非逐实例核对后的分数。",
+   "addedDate": "2026-10-28"
+  },
+  {
+   "id": "p278",
+   "title": "RynnVLA-Latent: Scaling Robotic Manipulation Foundation Models with 3D-Grounded Latent Actions",
+   "authors": "Haoyu Zhao, Xingyue Zhao, Zhian Su, Bohan Hou, Yinzhou Tang, Fengyi Wang, Kehan Li, Yuming Jiang, 等（DAMO Academy / 香港具身智能实验室 / CUHK）",
+   "venue": "arXiv 2610.34356（cs.RO）",
+   "date": "2026-10-25",
+   "arxiv": "https://arxiv.org/abs/2610.34356",
+   "github": "https://github.com/alibaba-damo-academy/RynnVLA-Latent",
+   "tags": [
+    "RynnVLA-Latent",
+    "潜动作",
+    "RynnLAM",
+    "3D流监督",
+    "流匹配",
+    "跨本体预训练",
+    "LIBERO",
+    "RoboTwin 2.0"
+   ],
+   "tldr": "**瓶颈**：VLA 规模化受制于两件事——带动作标签的示教数据稀缺，以及不同本体的控制空间互不兼容（维度、坐标系、语义都不一样）。人类视频和网络视频覆盖广但没有对应的机器人指令，不能直接池在同一个「预测原生动作」的目标下。\n\n**核心 RynnLAM**：从视觉转移中学习**连续、3D 接地的潜动作**，不需要原生机器人控制信号。三个关键设计：\n1. **残差未来特征预测**——预测的是相对当前的残差而非绝对特征，避免模型只记住场景外观；\n2. **相机补偿的 3D 流监督**——用相机运动补偿后的三维流做监督，逼表示去捕捉「与操控相关的运动」；\n3. **相机运动解耦**——把「相机自己在动」与「场景在变」分开，否则 ego-motion 会污染潜动作。\n\n**规模**：对 **3.01 万小时**人类 / 机器人 / 仿真视频应用 RynnLAM，产出 **7.4552 亿**条潜动作描述子。RynnVLA-Latent 再用流匹配从视觉观测与语言预测潜动作块，最后把预训练主干与动作专家适配到具体本体的动作空间。\n\n**结果**：4B 策略在 LIBERO 上 **98.8%**、LIBERO-Plus **84.7%**（无基准特化适配）、VLABench 五赛道平均 **51.9%**、RoboTwin 2.0 双臂平均 **88.6%**；在灵巧手与移动夹爪两类平台上的 6 个真机任务中也取得对比方法里最高的成功率。",
+   "category": "VLA / 潜动作预训练",
+   "difficulty": "高级",
+   "keyInsights": [
+    "潜动作（latent action）的真正价值不是「无标签预训练」这个名头，而是**提供了一个跨本体的监督接口**：先在视觉转移上学通用的「发生了什么变化」，再适配到具体本体的动作空间，绕开了控制空间不兼容这个硬约束。",
+    "相机运动解耦是这类方法能不能 work 的分水岭。第一人称人类视频里相机几乎一直在动，不补偿的话模型学到的潜动作大部分是 ego-motion 而不是手部操控。",
+    "残差未来特征预测 vs 绝对特征预测：前者把「场景长什么样」与「场景怎么变了」分开，是防止表征退化为外观记忆的关键。",
+    "84.7% 的 LIBERO-Plus 分数标注为「无基准特化适配」——这个限定词很重要。刷榜型方法常靠测试时针对性调整拿分，而潜动作路线的卖点是通用预训练后的零适配迁移。"
+   ],
+   "impact": "给出了一条不依赖原生动作标签的 VLA 规模化路径：把 3 万小时异构交互视频转成 7.45 亿条潜动作描述子，证明「先学通用变化、再适配本体」的路线在 LIBERO / VLABench / RoboTwin 2.0 与真机上都能兑现。对数据稀缺团队，潜动作是把人类视频资产化的可操作方案；对已有原生动作数据的团队，更值得关注的是论文里的表征消融与数据规模曲线，用来判断自己该投入多少到潜动作预训练。",
+   "addedDate": "2026-10-28"
+  },
+  {
+   "id": "p277",
+   "title": "EmbodiedLab: Benchmarking Embodied Agents That Act to Know",
+   "authors": "Hongcheng Gao, Zelin Zheng, Alex Zhou, Jay Zhu, Shijia Ge, Yazhe Wang, 等 21 人（含 Bryan Hooi, Yinpeng Dong, Wentao Zhang）",
+   "venue": "arXiv 2610.35385（cs.RO，技术报告 19 页）",
+   "date": "2026-10-26",
+   "arxiv": "https://arxiv.org/abs/2610.35385",
+   "github": "https://github.com/HexaFuture/EmbodiedLab",
+   "tags": [
+    "EmbodiedLab",
+    "Act to Know",
+    "具身评测基准",
+    "科学实验",
+    "Isaac Sim",
+    "Franka Panda",
+    "T0/T1/T2 接口",
+    "仪器读数"
+   ],
+   "tldr": "**问题**：现有具身评测要么测「acting to change」——把场景改成给定目标状态（RoboCasa 那一类），要么测「knowing」——但把物理实验替换成符号动作或数值查询（科学发现基准）。真实世界里这两件事 inseparable：要知道一根线是否带电、泵为什么不启动，Agent 必须先动手交互去取数据。\n\n**EmbodiedLab**：Isaac Sim 中的物理仿真实验室，Franka Panda 两指夹爪操作 14 个实验台，5 个学科（力学 / 电学 / 光学 / 热学 / 化学）共 30 个定量实验。每个实例**重新采样系统参数**，因此结果无法预先知道，却可以精确评分。\n\n**三级接口用于诊断**：T0 原生控制（自己写感知与运动规划）、T1 加真值深度与无碰撞运动规划、T2 再加从最强 Agent 蒸馏出的操作技能（grasp / place / press）。\n\n**结果**：6 个前沿模型配各自开发者的 coding agent，T0 下**即使最强 Agent 成功率也不到一半**（Claude Opus 5.5 43.3%、GPT-6 Astra 40.0%，最弱仅 10%）。对**每个** Agent，多数失败发生在与实验台的交互环节；操作技能对弱 Agent 的帮助大于感知与运动规划。",
+   "category": "具身评测 / 具身 Agent",
+   "difficulty": "中级",
+   "keyInsights": [
+    "把「为求知而行动」从哲学讨论变成可打分的基准，关键设计是**每个实例重新采样参数**——结果既不可预知又能精确评分，这一招解决了开放式实验难以自动评测的老问题。",
+    "失败分布比总分更有信息量：**几乎所有失败都发生在物理回路（抓取滑脱、读数看错、台面没复位），而不是抽象推理**。这说明当前瓶颈在具身执行层，不在语言模型的推理能力。",
+    "T2 蒸馏技能对**弱** Agent 的提升大于 T1 的感知与规划——说明弱模型的短板首先是没有可靠的底层操作原语，补齐原语比补齐感知更划算。",
+    "评测要求「提交正确答案 + 给出仪器读数作为证据 + 把实验台恢复原状」三项同时满足，这个三件套可以直接借用到任何需要长程具身执行的评测设计里。"
+   ],
+   "impact": "对做具身 Agent 的团队，EmbodiedLab 提供了一把把「推理」与「执行」分开量的尺子：同一批任务在 T0/T1/T2 三个接口层级上跑，差值直接告诉你该投感知、该投规划还是该投操作原语。对做科学发现 Agent 的方向，它把「符号化实验」拉回到真实物理交互，是最接近「AI 自己动手做实验」的可复现基准之一。局限也清楚：仍是受控仿真，与混乱的真实实验室有距离；长程协调、仪表精细读数、噪声下的多步稳定交互仍是主要难点。",
+   "addedDate": "2026-10-28"
+  },
   {
    "id": "p276",
    "title": "If at First You Don't Succeed, Backtrack: Lightweight Recovery for Frozen VLAs",
@@ -7223,5 +7373,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 250
+ "totalItems": 255
 }

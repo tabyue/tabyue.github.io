@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InternVLA-A-series：把理解、生成与动作统一到同一个机器人基座模型 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">InternVLA-A-series：把理解、生成与动作统一到同一个机器人基座模型 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="internvla-a-series">InternVLA-A-series：把理解、生成与动作统一到同一个机器人基座模型</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/InternRobotics/InternVLA-A-series">https://github.com/InternRobotics/InternVLA-A-series</a>  </p>
+<p><strong>Stars</strong>: 571 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-10-28  </p>
+<p><strong>组织</strong>: InternRobotics（上海人工智能实验室体系）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-28</p>
+</blockquote>
+<hr />
+<h3 id="vla">三段式 VLA 的隐含假设</h3>
+<p>当前主流 VLA 基本是「预训练 VLM + 动作头」：</p>
+<pre><code class="language-text">观测 + 语言指令 -&gt; VLM 主干 -&gt; 特征 -&gt; 动作头 -&gt; 动作
+</code></pre>
+<p>这个结构有个没有被显式利用的能力：模型其实对「接下来画面会怎么变」有隐式预测能力，但训练目标里没有要求它把这件事说清楚。</p>
+<p>而世界模型 / 视频生成方向的进展恰好提供了这部分能力。</p>
+<h3 id="internvla-a1">InternVLA-A1 的主张</h3>
+<p>把<strong>理解（understanding）、生成（generation）与动作（action）</strong>放进同一套建模目标：</p>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>训练目标</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>理解</td>
+<td>多模态指令解析、场景语义</td>
+<td>知道要做什么</td>
+</tr>
+<tr>
+<td>生成</td>
+<td>预测未来视觉演变</td>
+<td>逼模型学「动作会导致观测如何变化」</td>
+</tr>
+<tr>
+<td>动作</td>
+<td>输出可执行控制序列</td>
+<td>真正动手</td>
+</tr>
+</tbody>
+</table>
+<p>把生成纳入目标的收益是：模型被迫学到<strong>因果结构</strong>，而不是只拟合示教里的动作分布。
+直觉上，只拟合动作分布容易学到「在这个场景下人类通常这么动」的相关性；而要求预测后果，则必须理解「这么动会把物体推到哪」。</p>
+<h3 id="_2">适用方向</h3>
+<ul>
+<li>需要一套模型同时做语义理解与操作控制的场景；</li>
+<li>想研究「生成式监督能否改善动作泛化」的团队；</li>
+<li>作为「纯动作头 VLA」路线的对照实现。</li>
+</ul>
+<hr />
+<h3 id="_3">三合一目标下的训练流</h3>
+<pre><code class="language-text">                 观测 o_t + 语言 l
+                        |
+                  共享主干（多模态）
+                 /      |       \
+        理解目标    生成目标    动作目标
+     （语义对齐） （未来帧预测）（动作序列）
+</code></pre>
+<p>三个目标共享主干、各自有轻量头。设计要点：</p>
+<ol>
+<li><strong>生成目标不是最终产物</strong>：预测未来帧是为了给主干提供因果结构的监督信号，部署时可以不跑生成头，不增加推理开销。</li>
+<li><strong>动作目标仍是主目标</strong>：生成是辅助监督，不能反客为主——否则模型会变成视频生成模型而动作质量下降。</li>
+<li><strong>理解目标保留 VLM 的通用性</strong>：不要在机器人数据上训到忘了通用语义。</li>
+</ol>
+<h3 id="_4">与「世界模型 + 策略」两段式的区别</h3>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>生成部分</th>
+<th>如何服务动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>世界模型 + 规划</td>
+<td>独立模型，先预测后规划</td>
+<td>显式在预测里搜索</td>
+</tr>
+<tr>
+<td><strong>理解—生成—动作统一</strong></td>
+<td>共享主干的辅助头</td>
+<td>隐式改善表征</td>
+</tr>
+</tbody>
+</table>
+<p>前者的收益是显式可用（能真的做预演），代价是多一次前向；后者的收益是表征质量，代价是收益不够显式、不好量化。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/InternRobotics/InternVLA-A-series">InternVLA-A-series 仓库</a></strong> — 官方代码与模型</li>
+<li><strong><a href="https://arxiv.org/abs/2610.34356">RynnVLA-Latent  arXiv 2610.34356</a></strong> — 另一条规模化路线（潜动作预训练），可对照</li>
+<li><strong><a href="https://arxiv.org/abs/2610.14018">RoboHarness  arXiv 2610.14018</a></strong> — 完全不训练动作模型的对照路线</li>
+<li><strong><a href="https://github.com/RoboTwin-Platform/RoboTwin">RoboTwin 2.0</a></strong> — 常用双臂评测平台</li>
+</ul>
+<hr />
+<h3 id="_5">安装</h3>
+<pre><code class="language-bash">git clone https://github.com/InternRobotics/InternVLA-A-series.git
+cd InternVLA-A-series
+pip install -r requirements.txt
+</code></pre>
+<h3 id="_6">最小推理骨架</h3>
+<pre><code class="language-python">import torch
+from internvla import InternVLA
+
+model = InternVLA.from_pretrained(&quot;InternVLA-A1&quot;).cuda().eval()
+
+batch = model.build_input(
+    image=obs[&quot;head&quot;],
+    instruction=&quot;put the apple into the bowl&quot;,
+)
+
+with torch.no_grad():
+    out = model(batch)
+    actions = out.actions              # [1, H, D_action]
+    # 生成头只在训练/分析时开，部署可关掉
+    # future = out.future_frames
+
+robot.execute(actions[0, :h].cpu().numpy())
+</code></pre>
+<h3 id="_7">想验证「生成监督有没有用」</h3>
+<p>推荐做一个最小消融：</p>
+<ol>
+<li>同一批示教数据训两个版本：开生成头 / 关生成头；</li>
+<li>在<strong>训练分布外</strong>的任务上评测（分布内差距通常很小，看不出区别）；</li>
+<li>重点看失败模式是否变化——生成监督的价值往往体现在「遇到未见过的物体摆放」时。</li>
+</ol>
+<hr />
+<h3 id="_8">仓库现状</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stars</td>
+<td>571</td>
+</tr>
+<tr>
+<td>主要语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>License</td>
+<td>未声明</td>
+</tr>
+<tr>
+<td>维护方</td>
+<td>InternRobotics</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_9">选型时的注意事项</h3>
+<ul>
+<li><strong>License 字段为空</strong>：商用前必须向维护方确认授权，不要假设是 MIT / Apache。</li>
+<li><strong>基准成绩需以仓库与论文为准</strong>：本条目的描述侧重架构主张，具体分数请以官方 README 与论文表格为准。</li>
+<li><strong>适合作为对照而非首选</strong>：如果你的目标是尽快拿到一个能跑的策略，成熟的纯动作头 VLA 集成成本更低；如果你的目标是研究生成式监督的价值，这个仓库更有参考价值。</li>
+</ul>
+<hr />
+<h3 id="_10">与相邻路线对照</h3>
+<table>
+<thead>
+<tr>
+<th>路线</th>
+<th>代表</th>
+<th>生成部分</th>
+<th>代价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>纯动作头 VLA</td>
+<td>OpenVLA / pi0 系</td>
+<td>无</td>
+<td>泛化依赖数据规模</td>
+</tr>
+<tr>
+<td><strong>理解—生成—动作</strong></td>
+<td><strong>InternVLA-A1</strong></td>
+<td><strong>共享主干辅助头</strong></td>
+<td><strong>训练复杂度上升</strong></td>
+</tr>
+<tr>
+<td>世界动作模型 WAM</td>
+<td>一系列 WAM 工作</td>
+<td>与主模型深度融合</td>
+<td>训练与推理成本最高</td>
+</tr>
+<tr>
+<td>潜动作预训练</td>
+<td>RynnVLA-Latent</td>
+<td>无（学潜动作）</td>
+<td>需要大量无标签视频</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_11">高频坑</h3>
+<ul>
+<li><strong>生成目标盖过动作目标</strong>：多任务权重没调好时，模型会变成视频生成器。监控指标要同时看动作误差与生成误差。</li>
+<li><strong>在分布内评测</strong>：生成监督的收益主要体现在分布外，分布内做消融容易得出「没用」的错误结论。</li>
+<li><strong>忽略推理开销</strong>：虽然部署可以不跑生成头，但训练时的显存与算力开销是实打实的。</li>
+</ul>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
