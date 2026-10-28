@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="点一点深圳湾红树林的食物网，数食物链、看能量一级一级变少、拿走一种生物看看会怎样。生物互动馆第 6 课。">
+<meta property="og:title" content="生物互动馆 · 深圳湾的生态系统">
+<title>深圳湾的生态系统 · 生物互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="bio.css">
+<script defer src="common.js"></script>
+<script defer src="eco.js"></script>
+</head>
+<body data-module="eco">
+<header class="topbar"><a class="brand" href="index.html" aria-label="生物互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 17.5C6.5 10.5 10.5 6 18 6c0 7.5-4.5 11.5-11.5 11.5z"/><path d="M6.5 17.5l7-7"/></svg><span>生物互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 6 课 <span>/</span> 八年级上册 · 第五单元 生物与环境</p><h1>深圳湾的生态系统</h1><p class="subtitle">福田红树林的滩涂上，红树、藻类、螃蟹、小鱼和冬天飞来的黑脸琵鹭，靠“吃与被吃”连成一张网。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="食物网">
+<h2>红树林里的食物网（简化）</h2>
+<p class="panel-sub">箭头从“被吃的”指向“吃它的”。点任意一种生物看看。</p>
+<svg id="web" viewBox="0 0 400 330" role="img" aria-label="深圳湾红树林食物网"></svg>
+<h2 style="margin-top:12px">一共有这些食物链</h2>
+<p class="panel-sub">点一条，右边会算出能量怎么一级一级传下去。</p>
+<div class="chain-list" id="chains"></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="选中的生物">
+<div class="readout-head"><h2 id="sel-name">选一种生物</h2><span class="badge" id="sel-role">—</span></div>
+<div class="stat-grid"><div class="stat"><span>在几条食物链里</span><strong id="r-chains">—</strong></div><div class="stat"><span>营养级</span><strong id="r-level" style="font-size:19px">—</strong></div></div>
+<p class="lead" id="sel-text">点左边食物网里的一种生物。</p>
+<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="ghost-btn" id="remove" type="button" disabled>拿走这种生物</button><button class="ghost-btn" id="restore" type="button" hidden>全部放回来</button></div>
+<ul class="effect-list" id="effects" hidden></ul>
+</section>
+<section class="card panel" aria-label="能量流动">
+<h2>能量一级一级往下传</h2>
+<p class="panel-sub" id="py-sub">先在左边选一条食物链。</p>
+<div id="pyramid"></div>
+<div class="control" style="margin-top:14px"><div class="control-heading"><label for="eff">每传一级留下</label><output id="eff-out">10%</output></div><input id="eff" type="range" min="10" max="20" step="1" value="10"><div class="ruler"><span>10%</span><span>15%</span><span>20%</span></div></div>
+<p class="note">另外 80%～90% 的能量，在每一级生物的呼吸作用里散失了，或者留在没被吃掉的部分里。有毒物质却正好相反，越往后<b>积累得越多</b>（生物富集）。</p>
+</section>
+</div>
+</div>
+
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>生态系统由什么组成</h3><p><b>生物部分</b>：生产者（植物、藻类，能制造有机物）、消费者（动物）、分解者（细菌、真菌，把动植物遗体分解成无机物）。<b>非生物部分</b>：阳光、空气、水、温度、土壤（滩涂泥沙）等。</p></div></div>
+<div class="fact"><div><h3>怎么写食物链</h3><p>从<b>生产者</b>开始，箭头指向吃它的动物，到最高级消费者为止。食物链里<b>没有分解者，也没有阳光、水这些非生物部分</b>。许多食物链交织在一起就是食物网。</p></div></div>
+<div class="fact"><div><h3>能量流动和物质循环</h3><p>能量来自<b>太阳</b>，沿食物链<b>单向流动、逐级递减</b>，每一级大约只有 10%～20% 传给下一级，所以食物链一般不超过 4～5 级。物质（如碳）则在生物和环境之间<b>循环往复</b>。</p></div></div>
+<div class="fact"><div><h3>自我调节能力是有限的</h3><p>某种生物少了一些，生态系统能慢慢恢复平衡；但如果破坏太严重，比如围海填滩、过度捕捞、污水直排，就可能恢复不了。<b>生物圈</b>是地球上最大的生态系统，是所有生物共同的家。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 食物链常见写错的地方</h3><p><b>错</b>　阳光 → 红树 → 相手蟹（阳光不能写进去）<br><b>错</b>　红树 → 相手蟹 → 白鹭 → 细菌（分解者不能写进去）<br><b>错</b>　白鹭 → 相手蟹 → 红树（箭头反了）<br><b>对</b>　红树 → 相手蟹 → 白鹭</p></aside>
+<aside class="analogy"><h3><i>打个比方</i> 能量像接力传水</h3><p>第一个人桶里有 10 升水，每传给下一个人都会洒掉大半，只剩 1 到 2 升。传到第四个人，就只剩一小口了。所以吃“下面”的生物的动物数量多，站在最顶端的黑脸琵鹭、白鹭数量最少。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>分享这张食物网</h3><p>链接会带上你选的生物和食物链。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>生物互动馆 · 第 6 课</p><p>食物网根据深圳湾红树林常见物种简化而成，真实的食物关系更复杂；黑脸琵鹭是国家一级保护野生动物，每年冬天到深圳湾越冬。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

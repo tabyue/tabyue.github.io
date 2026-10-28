@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="换目镜物镜、调光圈和反光镜、移动玻片，看懂显微镜的放大倍数和倒像；点一点植物细胞和动物细胞的结构。生物互动馆第 1 课。">
+<meta property="og:title" content="生物互动馆 · 显微镜与细胞">
+<title>显微镜与细胞 · 生物互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="bio.css">
+<script defer src="common.js"></script>
+<script defer src="cell.js"></script>
+</head>
+<body data-module="cell">
+<header class="topbar"><a class="brand" href="index.html" aria-label="生物互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 17.5C6.5 10.5 10.5 6 18 6c0 7.5-4.5 11.5-11.5 11.5z"/><path d="M6.5 17.5l7-7"/></svg><span>生物互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 1 课 <span>/</span> 七年级上册 · 第一单元 生物和细胞</p><h1>显微镜与细胞</h1><p class="subtitle">细胞太小，眼睛看不见。先学会用显微镜，再看看细胞里都有什么。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="显微镜视野">
+<h2>显微镜的视野</h2>
+<p class="panel-sub">这是你从目镜里看到的圆形视野。换镜头、调光、调焦，看看画面怎么变。</p>
+<svg id="field" viewBox="0 0 400 300" role="img" aria-label="显微镜视野"></svg>
+<div class="ctl-row"><span>装片</span><div class="chips small" id="sp-chips"></div></div>
+<div class="ctl-row"><span>目镜</span><div class="chips small" id="eye-chips"></div></div>
+<div class="ctl-row"><span>物镜</span><div class="chips small" id="obj-chips"></div></div>
+<div class="ctl-row"><span>光圈</span><div class="chips small" id="ap-chips"></div></div>
+<div class="ctl-row"><span>反光镜</span><div class="chips small" id="mir-chips"></div></div>
+<div class="control" style="margin-top:14px"><div class="control-heading"><label for="focus">细准焦螺旋（调清楚）</label><output id="focus-out">清晰</output></div><input id="focus" type="range" min="0" max="100" step="1" value="56"><div class="ruler"><span>镜筒下降</span><span></span><span>镜筒上升</span></div></div>
+</section>
+
+<div class="settings">
+<section class="readout" aria-label="读数">
+<div class="readout-head"><h2>现在看到的</h2><span class="badge" id="mag-badge">100 倍</span></div>
+<div class="stat-grid">
+<div class="stat"><span>放大倍数</span><strong id="r-mag">100<small>×</small></strong></div>
+<div class="stat"><span>视野里的细胞</span><strong id="r-count">—</strong></div>
+<div class="stat"><span>视野亮度</span><strong id="r-light">—</strong></div>
+<div class="stat"><span>物像在视野的</span><strong id="r-pos">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card controls" aria-label="移动玻片">
+<div class="control-heading" style="margin-bottom:10px"><span>移动玻片</span><output style="color:var(--muted);font-weight:400;font-size:11px">按箭头，玻片往那个方向移</output></div>
+<div style="display:flex;gap:18px;align-items:center">
+<div class="pad" id="pad"><span></span><button data-d="0,-1" aria-label="玻片向上移">↑</button><span></span><button data-d="-1,0" aria-label="玻片向左移">←</button><button class="c" data-d="0,0" aria-label="玻片回到原位">复位</button><button data-d="1,0" aria-label="玻片向右移">→</button><span></span><button data-d="0,1" aria-label="玻片向下移">↓</button><span></span></div>
+<p class="note" style="margin:0;flex:1">注意观察：你把玻片往<b>左</b>推，视野里的像却往<b>右</b>跑。这是因为显微镜里看到的是<b>倒像</b>。</p>
+</div>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="细胞结构">
+<h2>细胞里有什么</h2>
+<p class="panel-sub">点细胞的各个部分，看看它是干什么的。</p>
+<div class="chips small" id="cell-chips" style="margin-bottom:8px"></div>
+<svg id="cellfig" viewBox="0 0 400 240" role="img" aria-label="细胞结构示意图"></svg>
+</section>
+<div class="stack">
+<section class="info-card part-info" id="part-info" aria-live="polite"><h3>点一点左边的细胞</h3><p>每个部分都有自己的工作。试试先点“细胞核”。</p></section>
+<section class="card panel">
+<h2>植物细胞和动物细胞比一比</h2>
+<table class="compare"><tr><th></th><th>植物细胞</th><th>动物细胞</th></tr>
+<tr><td>细胞壁</td><td>有</td><td>没有</td></tr>
+<tr><td>细胞膜、细胞质、细胞核</td><td>有</td><td>有</td></tr>
+<tr><td>液泡</td><td>有，常常很大</td><td>一般没有大液泡</td></tr>
+<tr><td>叶绿体</td><td>绿色部分才有</td><td>没有</td></tr>
+<tr><td>线粒体</td><td>有</td><td>有</td></tr></table>
+</section>
+</div>
+</div>
+
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>放大倍数怎么算</h3><p>放大倍数 = <b>目镜倍数 × 物镜倍数</b>。倍数越大，细胞看起来越大，但看到的范围越小、细胞个数越少，视野也越暗。</p></div></div>
+<div class="fact"><div><h3>显微镜里是倒像</h3><p>看到的像和实物比，上下颠倒、左右也颠倒，相当于转了 180°。所以物像偏在哪边，就把玻片往<b>哪边</b>移，像才会回到中央。</p></div></div>
+<div class="fact"><div><h3>从低倍换到高倍</h3><p>先在低倍镜下把要看的东西移到视野中央 → 转动转换器换高倍物镜 → 视野变暗，用<b>大光圈、凹面镜</b>调亮 → 只调<b>细准焦螺旋</b>让它变清楚。</p></div></div>
+<div class="fact"><div><h3>做临时装片</h3><p>口诀：擦、滴、撕（刮）、展、盖、染、吸。看洋葱表皮滴<b>清水</b>；看人的口腔上皮细胞要滴<b>生理盐水</b>，保持细胞原来的形状。盖盖玻片时一边先接触水滴再慢慢放下，避免产生气泡。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 两个常见的坑</h3><p>① 物像在左下方，要把玻片往<b>左下方</b>移，不是往右上方。② 洋葱鳞片叶内表皮细胞是植物细胞，但它<b>没有叶绿体</b>：叶绿体只在植物的绿色部分才有。</p></aside>
+<aside class="analogy"><h3><i>打个比方</i> 细胞像一座小工厂</h3><p>细胞膜是大门的门卫，细胞核是厂长办公室（存着图纸），叶绿体是太阳能发电站，线粒体是锅炉房，细胞质是车间，植物细胞的细胞壁就是工厂的围墙。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>分享这个视野</h3><p>链接会带上你选的镜头、光线和玻片位置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>生物互动馆 · 第 1 课</p><p>视野按“目镜 × 物镜”真实比例缩放（10×10 时视野直径约 1.8 毫米）；亮度和清晰度是示意。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

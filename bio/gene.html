@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="选爸爸妈妈的基因组成，用遗传方格算出孩子是双眼皮还是单眼皮的可能性，再模拟生 100 个孩子看看；生男生女到底由谁决定。生物互动馆第 7 课。">
+<meta property="og:title" content="生物互动馆 · 遗传与变异">
+<title>遗传与变异 · 生物互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="bio.css">
+<script defer src="common.js"></script>
+<script defer src="gene.js"></script>
+</head>
+<body data-module="gene">
+<header class="topbar"><a class="brand" href="index.html" aria-label="生物互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 17.5C6.5 10.5 10.5 6 18 6c0 7.5-4.5 11.5-11.5 11.5z"/><path d="M6.5 17.5l7-7"/></svg><span>生物互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 7 课 <span>/</span> 八年级下册 · 第六单元 生命的延续和发展</p><h1>遗传与变异</h1><p class="subtitle">孩子像爸爸妈妈，是因为基因从亲代传给了子代。可为什么双眼皮的爸妈，也会生出单眼皮的孩子？</p></div>
+
+<div class="workbench">
+<section class="card panel" aria-label="遗传方格">
+<h2>遗传方格</h2>
+<p class="panel-sub">每个人体细胞里的基因是<b>成对</b>的；生殖细胞（精子、卵细胞）里只有<b>一个</b>。大写字母代表显性基因，小写代表隐性基因。</p>
+<div class="ctl-row"><span>性状</span><div class="chips small" id="trait-chips"></div></div>
+<div class="ctl-row"><span>爸爸</span><div class="chips small" id="dad-chips"></div></div>
+<div class="ctl-row"><span>妈妈</span><div class="chips small" id="mom-chips"></div></div>
+<div class="punnett" id="punnett" style="margin-top:16px"></div>
+<p class="note" style="text-align:center">横着是爸爸的精子，竖着是妈妈的卵细胞，每个格子是一种可能的孩子，四种机会相等。</p>
+</section>
+<div class="settings">
+<section class="readout" aria-label="孩子的可能">
+<div class="readout-head"><h2>每生一个孩子</h2><span class="badge" id="g-badge">—</span></div>
+<div class="stat-grid"><div class="stat"><span id="dom-label">双眼皮</span><strong id="r-dom">—</strong></div><div class="stat"><span id="rec-label">单眼皮</span><strong id="r-rec">—</strong></div></div>
+<div class="ratio" id="ratio"><i id="bar-dom" style="background:#8fae8a"></i><i id="bar-rec" style="background:#e3b483"></i></div>
+<div class="ratio-legend"><span id="geno"></span></div>
+<p class="lead" id="g-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="模拟">
+<h2>真的生 100 个会怎样？</h2>
+<p class="panel-sub">概率是“平均来说”。点按钮随机模拟，看看实际数字和概率差多少。</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="big-btn" id="sim1" type="button">生 1 个</button><button class="ghost-btn" id="sim100" type="button">再生 100 个</button><button class="ghost-btn" id="simreset" type="button">清零</button></div>
+<div class="stat-grid" style="margin-top:12px"><div class="stat"><span id="sim-dom-label">双眼皮</span><strong id="s-dom">0</strong></div><div class="stat"><span id="sim-rec-label">单眼皮</span><strong id="s-rec">0</strong></div></div>
+<p class="note" id="sim-note">还没开始。</p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="性别决定">
+<h2>生男生女，由谁决定？</h2>
+<p class="panel-sub">人的体细胞里有 23 对染色体，其中 1 对是<b>性染色体</b>：女性是 XX，男性是 XY。</p>
+<svg id="sex" viewBox="0 0 400 220" role="img" aria-label="人的性别决定示意图"></svg>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button class="big-btn" id="sex1" type="button">随机来一次</button><button class="ghost-btn" id="sex100" type="button">模拟 100 个家庭</button></div>
+</section>
+<div class="stack">
+<section class="readout" aria-label="性别结果">
+<div class="readout-head"><h2>结果</h2><span class="badge" id="sex-badge">每胎都是 50%</span></div>
+<div class="stat-grid"><div class="stat"><span>男孩</span><strong id="s-boy">0</strong></div><div class="stat"><span>女孩</span><strong id="s-girl">0</strong></div></div>
+<p class="lead" id="sex-text">妈妈的卵细胞只有一种（都含 X）；爸爸的精子有两种：含 X 的和含 Y 的，数量相等。</p>
+</section>
+<aside class="analogy"><h3><i>打个比方</i> 基因像一套说明书</h3><p><b>染色体</b>像一本本书（在细胞核里，由 DNA 和蛋白质组成），<b>DNA</b> 是书里长长的文字，<b>基因</b>是其中有用的一段段说明，告诉身体“眼皮长成什么样”。爸爸妈妈各给你一套，所以每个基因你都有两份。</p></aside>
+</div>
+</div>
+
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>性状和相对性状</h3><p>生物的形态、结构、生理特征叫<b>性状</b>。同一种性状的不同表现叫<b>相对性状</b>，比如双眼皮和单眼皮、能卷舌和不能卷舌、豌豆的高茎和矮茎。</p></div></div>
+<div class="fact"><div><h3>显性和隐性</h3><p>一对基因里只要有一个<b>显性基因</b>（如 A），就表现显性性状；只有两个都是<b>隐性基因</b>（aa）才表现隐性性状。所以 Aa 的人看起来是双眼皮，却“藏着”单眼皮的基因。</p></div></div>
+<div class="fact"><div><h3>遗传和变异</h3><p>子代像亲代叫<b>遗传</b>，子代和亲代、子代之间不一样叫<b>变异</b>。遗传物质改变引起的变异<b>能遗传</b>（如杂交水稻、太空育种）；只是环境引起的变异<b>不能遗传</b>（如晒黑的皮肤）。</p></div></div>
+<div class="fact"><div><h3>为什么禁止近亲结婚</h3><p>近亲带有<b>相同隐性致病基因</b>的可能性大，结婚后孩子得隐性遗传病（如白化病）的机会明显增加。我国法律禁止直系血亲和三代以内的旁系血亲结婚。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 前一胎不影响下一胎</h3><p>已经生了一个男孩，下一个孩子是女孩的概率还是 <b>50%</b>，不会因为“该轮到女孩了”而变大。同样，Aa × Aa 的爸妈生过一个单眼皮孩子，下一个孩子是单眼皮的概率仍然是 <b>1/4</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>分享这道遗传题</h3><p>链接会带上你选的性状和爸妈的基因。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>生物互动馆 · 第 7 课</p><p>双眼皮、卷舌等常被用作课本里的单基因遗传例子；真实的人类性状往往受多个基因和环境共同影响。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

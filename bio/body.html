@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="选一个起点和终点，看血液带着药物、葡萄糖、氧气在心脏和血管里怎么走；拖一拖，看淀粉、蛋白质、脂肪在消化道哪里被消化。生物互动馆第 4 课。">
+<meta property="og:title" content="生物互动馆 · 消化与血液循环">
+<title>消化与血液循环 · 生物互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="bio.css">
+<script defer src="common.js"></script>
+<script defer src="body.js"></script>
+</head>
+<body data-module="body">
+<header class="topbar"><a class="brand" href="index.html" aria-label="生物互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 17.5C6.5 10.5 10.5 6 18 6c0 7.5-4.5 11.5-11.5 11.5z"/><path d="M6.5 17.5l7-7"/></svg><span>生物互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 4 课 <span>/</span> 七年级下册 · 第四单元 人体生理与健康（一）</p><h1>消化与血液循环</h1><p class="subtitle">吃进去的饭在消化道里被拆小、吸收，再由血液送到全身。血液是怎么在身体里转圈的？</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="血液循环">
+<h2>血液循环路线图</h2>
+<p class="panel-sub">示意图里，心脏的左右和你自己的左右相反（像面对面看别人的心脏）。</p>
+<svg id="circ" viewBox="0 0 400 440" role="img" aria-label="血液循环示意图"></svg>
+<div class="legend-inline"><span><i style="background:#cf5a4a"></i>动脉血（含氧多，鲜红）</span><span><i style="background:#7a6fb4"></i>静脉血（含氧少，暗红）</span></div>
+</section>
+
+<div class="settings">
+<section class="card controls" aria-label="选择路线">
+<div class="control-heading">从哪里出发？</div>
+<div class="chips small" id="from-chips" style="margin-top:10px"></div>
+<div class="control-heading" style="margin-top:16px">要送到哪里？</div>
+<div class="chips small" id="to-chips" style="margin-top:10px"></div>
+<div style="display:flex;gap:8px;margin-top:16px"><button class="big-btn" id="play" type="button">▶ 让血液流起来</button><button class="ghost-btn" id="color-toggle" type="button" aria-pressed="true">按血液成分上色</button></div>
+</section>
+<section class="readout" aria-label="路线读数">
+<div class="readout-head"><h2>这一趟</h2><span class="badge" id="loop-badge">—</span></div>
+<div class="stat-grid"><div class="stat"><span>经过心脏</span><strong id="r-heart">—</strong></div><div class="stat"><span>现在流到</span><strong id="r-now" style="font-size:18px">—</strong></div></div>
+<div class="steps" id="steps"></div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="消化曲线">
+<h2>食物在哪里被消化</h2>
+<p class="panel-sub">纵轴是“还没被消化的营养物质”有多少。拖动下面的滑块，沿着消化道往下走。</p>
+<div class="chips small" id="nut-chips" style="margin-bottom:6px"></div>
+<svg id="dig" viewBox="0 0 400 236" role="img" aria-label="三种营养物质在消化道中的消化曲线"></svg>
+<div class="control"><div class="control-heading"><label for="pos">走到</label><output id="pos-out">口腔</output></div><input id="pos" type="range" min="0" max="100" step="1" value="5"></div>
+</section>
+<div class="stack">
+<section class="readout" aria-label="消化读数">
+<div class="readout-head"><h2 id="organ-name">口腔</h2><span class="badge" id="juice-badge">唾液</span></div>
+<div class="stat-grid" style="grid-template-columns:1fr 1fr 1fr"><div class="stat"><span>淀粉</span><strong id="r-starch">—</strong></div><div class="stat"><span>蛋白质</span><strong id="r-protein">—</strong></div><div class="stat"><span>脂肪</span><strong id="r-fat">—</strong></div></div>
+<p class="lead" id="organ-text"></p>
+</section>
+<section class="info-card"><h3>最后被拆成什么</h3><ul><li><b>淀粉</b> → 先变成麦芽糖 → 最后变成<b>葡萄糖</b></li><li><b>蛋白质</b> → 最后变成<b>氨基酸</b></li><li><b>脂肪</b> → 先被胆汁乳化成小颗粒 → 最后变成<b>甘油和脂肪酸</b></li></ul><p style="margin-top:8px">这些小分子主要在<b>小肠</b>被吸收进血液。水、无机盐和维生素不用消化，可以直接被吸收。</p></section>
+</div>
+</div>
+
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>两条循环路线</h3><p><b>体循环</b>：左心室 → 主动脉 → 全身各级动脉 → 全身毛细血管 → 各级静脉 → 上、下腔静脉 → 右心房。血液把氧气送给细胞，由动脉血变成静脉血。<br><b>肺循环</b>：右心室 → 肺动脉 → 肺部毛细血管 → 肺静脉 → 左心房。血液在肺里拿到氧气，由静脉血变成动脉血。</p></div></div>
+<div class="fact"><div><h3>心脏和血管</h3><p>心脏有四个腔，<b>左心室壁最厚</b>，因为它要把血液泵到全身。心房和心室之间、心室和动脉之间有<b>瓣膜</b>，保证血液只能向一个方向流。动脉把血从心脏运走，静脉把血运回心脏，毛细血管最细，红细胞只能单行通过。</p></div></div>
+<div class="fact"><div><h3>小肠为什么最会吸收</h3><p>小肠很长，内壁有许多<b>皱襞和小肠绒毛</b>，大大增加了吸收面积；绒毛壁和里面的毛细血管壁都只有<b>一层细胞</b>，营养物质很容易进入血液。</p></div></div>
+<div class="fact"><div><h3>血液的成分</h3><p>血液由<b>血浆</b>和血细胞组成。<b>红细胞</b>运输氧气，<b>白细胞</b>吞噬病菌，<b>血小板</b>帮助止血和凝血。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> “动脉血”不是“动脉里的血”</h3><p>动脉血、静脉血看的是<b>含氧多少</b>，不是看在哪种血管里。<b>肺动脉里流的是静脉血，肺静脉里流的是动脉血。</b>另外，胆汁里<b>没有消化酶</b>，它只是把脂肪乳化成小颗粒。</p></aside>
+<aside class="analogy"><h3><i>打个比方</i> 血液循环像深圳的快递网</h3><p>心脏是转运中心，动脉是送货的主干道，毛细血管是进小区的最后一百米，静脉是回程的路。肺是“进货仓”，在这里装上氧气；小肠是“食品仓”，在这里装上营养；肾是“回收站”，把废物筛出去。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>分享这条路线</h3><p>链接会带上你选的起点和终点。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>生物互动馆 · 第 4 课</p><p>循环图为教学示意，省略了肝门静脉等细节（小肠吸收的营养其实先经过肝脏，再进入下腔静脉）；消化曲线为课本常见示意曲线。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

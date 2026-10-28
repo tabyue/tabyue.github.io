@@ -1,0 +1,103 @@
+/* 生物互动馆 · 本站新增组件 */
+.brand svg{stroke:var(--green)}
+.analogy{background:#eef4f6;border-radius:18px;padding:16px 18px;margin-top:15px;color:#3b5a63}
+.analogy h3{font-size:13px;margin:0 0 6px;color:#2f5864;display:flex;gap:7px;align-items:center}
+.analogy h3 i{font-style:normal;font-size:10px;background:#d6e6ea;border-radius:8px;padding:2px 7px;color:#2f5864}
+.analogy p{font-size:12px;line-height:1.9;margin:0}
+.fact b,.info-card b{color:var(--ink);font-weight:650}
+.panel h2+.panel-sub{margin-top:2px}
+.figure-gap{height:14px}
+.ctl-row{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.ctl-row>span{font-size:12px;color:var(--muted);min-width:56px}
+.ctl-row .chips{flex:1}
+.pad{display:grid;grid-template-columns:repeat(3,38px);grid-template-rows:repeat(3,34px);gap:4px}
+.pad button{background:#f0f4e9;border-radius:9px;color:var(--green);font-size:14px}
+.pad button:active{background:#dbe7d4}
+.pad .c{background:transparent;font-size:10px;color:var(--muted)}
+.big-btn{background:var(--green);color:#fff;border-radius:11px;padding:10px 16px;font-size:13px;min-height:40px}
+.big-btn:hover{background:#2d5745}
+.ghost-btn{background:#f0f4e9;color:var(--green);border-radius:11px;padding:10px 14px;font-size:12px;min-height:40px}
+.part-info{min-height:84px}
+.part-info h3{font-size:14px;margin:0 0 6px;color:var(--green)}
+.part-info p{font-size:12px;line-height:1.85;margin:0;color:#40594b}
+/* 检索表 */
+.key-list{list-style:none;margin:0;padding:0;font-size:12.5px}
+.key-item{border-radius:12px;padding:8px 10px;margin:0 0 6px;background:#f7f9f3;border:1px solid #edf1e8;transition:background .2s,border-color .2s,opacity .2s}
+.key-item .q{font-size:11px;color:var(--muted);margin-bottom:5px}
+.key-item .opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.key-item .opts button{text-align:left;font-size:12px;line-height:1.55;padding:8px 10px;border-radius:9px;background:#fff;border:1px solid #e3e9dc;color:#3f5546;min-height:40px}
+.key-item .opts button:hover{border-color:#b9cdb0}
+.key-item .opts button .to{display:block;font-size:10.5px;color:#8a9a82;margin-top:3px}
+.key-item.active{background:#fff;border-color:#b9cdb0;box-shadow:0 2px 10px #2a3f2a0d}
+.key-item.passed{opacity:.75}
+.key-item .opts button.picked{background:#dfecd8;border-color:#a9c69c;color:#2f5a44;font-weight:600}
+.key-item .opts button.nope{background:#f8eadb;border-color:#e9cfae;color:#8b5d33}
+.key-item.waiting{opacity:.38}
+.key-item.waiting button{pointer-events:none}
+.result-card{border-radius:14px;background:#ecf4e6;padding:12px 14px;font-size:12.5px;line-height:1.8;color:#2f5a44;margin-top:8px}
+.result-card b{font-size:15px}
+/* 分类阶梯 */
+.tax{width:100%;border-collapse:separate;border-spacing:0 5px;font-size:12.5px}
+.tax th{font-size:11px;color:var(--muted);font-weight:500;text-align:left;padding:0 8px}
+.tax td{padding:9px 10px;background:#f4f6f0;color:#56694f}
+.tax td:first-child{border-radius:10px 0 0 10px;color:var(--muted);width:52px;font-weight:600}
+.tax td:last-child{border-radius:0 10px 10px 0}
+.tax tr.same td{background:#dfecd8;color:#2f5a44}
+.tax tr.same td:first-child{color:#2f5a44}
+.tax tr.lowest td{background:var(--green);color:#fff}
+.tax tr.lowest td:first-child{color:#d6e7cf}
+.pick-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pick-row label{font-size:11px;color:var(--muted);display:block;margin-bottom:6px}
+select{font:inherit;font-size:14px;width:100%;padding:9px 10px;border-radius:10px;border:1px solid #cbd8c4;background:#fafcf7;color:var(--ink)}
+/* 路线步骤 */
+.steps{display:flex;flex-wrap:wrap;gap:5px 4px;margin-top:12px;font-size:11.5px;line-height:1.5}
+.steps span{padding:4px 8px;border-radius:8px;background:#f0f3eb;color:#7b8a74;transition:background .2s,color .2s}
+.steps span.on{background:#f3dcd6;color:#8f3b2c}
+.steps span.on.v{background:#dedcef;color:#4a4386}
+.steps span.heart{font-weight:650}
+.steps i{font-style:normal;color:#b7c2b0;align-self:center}
+/* 反射弧 */
+.part-toggle{display:flex;flex-wrap:wrap;gap:6px}
+.part-toggle button{font-size:12px;padding:8px 11px;border-radius:10px;background:#f0f4e9;color:#4c6247;min-height:36px}
+.part-toggle button[aria-pressed="true"]{background:#f6e2cc;color:#8b5d33;text-decoration:line-through}
+.verdict-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.verdict{border-radius:14px;padding:12px 14px;background:#f4f6f0}
+.verdict span{display:block;font-size:11px;color:var(--muted)}
+.verdict strong{font-size:20px;letter-spacing:-.3px}
+.verdict.yes{background:#e3efdc}.verdict.yes strong{color:#2f5a44}
+.verdict.no{background:#f8eadb}.verdict.no strong{color:#9c6334}
+/* 遗传方格 */
+.punnett{display:grid;grid-template-columns:54px 1fr 1fr;gap:6px;max-width:330px;margin:6px auto 0}
+.punnett div{border-radius:12px;display:flex;align-items:center;justify-content:center;min-height:62px;font-size:20px;font-weight:650;letter-spacing:.5px;flex-direction:column}
+.punnett .h{background:transparent;font-size:16px;color:var(--orange);min-height:34px}
+.punnett .h small,.punnett .cell small{font-size:10.5px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:2px}
+.punnett .cell{background:#f0f4e9;color:#2f5a44}
+.punnett .cell.rec{background:#f8eadb;color:#8b5d33}
+.punnett .corner{background:transparent;font-size:10px;color:var(--muted);font-weight:500}
+.ratio{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:8px 0 4px;background:#eef1ea}
+.ratio i{display:block;height:100%;transition:width .35s}
+.ratio-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+.ratio-legend b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+/* 食物链 */
+.chain-list{display:flex;flex-direction:column;gap:6px}
+.chain-list button{text-align:left;font-size:12px;line-height:1.6;padding:9px 12px;border-radius:11px;background:#f7f9f3;border:1px solid #edf1e8;color:#455d48}
+.chain-list button[aria-pressed="true"]{background:#e3efdc;border-color:#bcd5b0;color:#2f5a44;font-weight:600}
+.chain-list button.dim{opacity:.4}
+.pyramid-row{display:grid;grid-template-columns:72px 1fr 78px;gap:8px;align-items:center;font-size:11.5px;margin-top:6px}
+.pyramid-row .track{height:16px;background:#f0f3eb;border-radius:8px;overflow:hidden}
+.pyramid-row .fill{height:100%;border-radius:8px;transition:width .35s}
+.pyramid-row em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.pyramid-row span{color:#455d48;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.effect-list{margin:8px 0 0;padding-left:18px;font-size:12px;line-height:1.85;color:#40594b}
+.small-tag{display:inline-block;font-size:10px;border-radius:8px;padding:2px 7px;background:#e6eedd;color:#5f7259;margin-left:6px;vertical-align:1px}
+.node{cursor:pointer}
+.node:focus-visible{outline:none}
+.node:focus-visible rect{stroke:var(--orange);stroke-width:2.4}
+@media(max-width:680px){.key-item .opts{grid-template-columns:1fr}.pick-row{gap:8px}.verdict strong{font-size:17px}.punnett div{min-height:54px;font-size:18px}}
+/* 首页“怎么用”卡片 */
+.hub-tip{background:#f3f6ee;border-style:dashed}
+.hub-tip:hover{transform:none;box-shadow:none}
+.hub-tip ul{list-style:none;padding-left:0}
+.hub-tip li{margin-bottom:4px}
+.hub-tip li b{color:var(--green)}
+@media(min-width:861px){.hub-tip{grid-column:span 2}}
