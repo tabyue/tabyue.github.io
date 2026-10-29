@@ -63,6 +63,14 @@ Instance.prototype.applyType=function(){
  if(!this.map)return;
  const t={normal:window.TMAP_NORMAL_MAP,terrain:window.TMAP_TERRAIN_MAP,hybrid:window.TMAP_HYBRID_MAP}[this.type];
  if(t)this.map.setMapType(t);
+ // 叠加天地图官方「全球境界」图层（国界、省界），小比例尺下也能看清国界
+ try{
+  if(this.border)this.map.removeLayer(this.border);
+  if(CFG.tk&&T.TileLayer){
+   this.border=new T.TileLayer('https://t0.tianditu.gov.cn/ibo_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ibo&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}&tk='+CFG.tk,{minZoom:1,maxZoom:18,zIndex:6});
+   this.map.addLayer(this.border);
+  }
+ }catch(e){this.border=null;}
 };
 Instance.prototype.draw=function(){
  const map=this.map,g=this.group();
