@@ -128,6 +128,13 @@
 - 校验：sync + sitemap（543 章节）+ health_check + verify_learn_structure **首轮即 ALL OK**；unittest 34/34、node UI 32/32。已 push（f91a838..1975a8b），远程 HEAD 已核对一致。
 - 新坑：① **PowerShell 不支持 heredoc（`<<'EOF'`）**，整行直接 ParserError 且 `git add` 也不会执行——提交信息要先 `Write` 成 `_msg.txt` 再 `git commit -F _msg.txt`，用完删掉（且 `git add` 要显式写 `git add data sitemap.xml`，别用 `git add -A` 把 `_msg.txt` 带进去）。② **`gh api repos/<r>` 输出含非 GBK 字符时 PowerShell 管道会 UnicodeEncodeError**（本轮 lucidrains/pi-zero-pytorch 的 `π₀`）——批量核验 repo 的脚本里给 `subprocess.run` 加 `encoding='utf-8'`，并在主流程设 `$env:PYTHONIOENCODING='utf-8'`；诊断脚本 print 中文标题也会踩同一个坑。③ **本轮候选命中率约 50%**：中科慧灵 A++、智元 110 台吉尼斯、NVIDIA Isaac/Agile ONE SN、商务部 22.6%、六项人形国标、GDPS 闭幕 EIBench、RoboDojo 六榜、云深处五项成果、宇树 H2-X 全部已在库。④ 单靠 WebSearch 凑不够 10 条互不重复的新闻，需要「融资 / 政策 / 地方行动 / 全球（英文源）」四个方向各搜一轮才够。⑤ 学习正文初版只有 6.2K/6.9K 偏薄，用「在 `### 八、常见坑` 前插入两个新小节 + 把八→十、九→十一顺延」二次追加到 7.3K/8.1K，幂等且不影响小目录结构。
 
+### 2026-10-29 08:10—09:35
+- 投稿箱：无新投稿。开工时工作树干净、HEAD==origin/main（402d879）。
+- 数据：新闻 +10（n549—n558）、论文 +5（p282—p286，含 detail）、开源 +4（os214—os217，含 detail + 报告页）、招聘 +6（j279—j284）、资源新增 r023（全身数据、人类视频与数据标注引擎）。
+- 学习：humanoid-fullstack「无本体数据时代的全身基座模型」（7.6K，tier3，联动 λ0 / os215 / n550）；imitation-learning「反事实回滚：让世界模型成为策略的纠错教练」（7.1K，tier3，联动 Rollback p283 + Flora n557）。
+- 校验：sync + sitemap（**545 章节**）+ health_check + verify_learn_structure **首轮即 ALL OK**；unittest 34/34、node UI 32/32。已 push（402d879→284dc26），远程 HEAD 已核对一致。
+- 新坑：① **`gh api search/repositories` 走 subprocess 会挂死**（6 查询脚本跑 8 分钟无输出）。改用 urllib 直连 `api.github.com/search/repositories` + `Bearer $(gh auth token)`，4 查询秒回——**以后批量搜 GitHub 一律用 urllib**；② **本仓库会被另一个自动化并行推送**（remote 多了 /geo/ /bio/ 互动课件 4 个提交），push 被拒时 `git fetch <url> main` + `git rebase FETCH_HEAD` 再推；③ **learning-path.json 在 `data/` 根**（旧坑复现），且 lp bump 必须放在「章节已存在则跳过」分支之外，否则幂等重跑时 lastUpdated 不更新；④ 外层 `r'''` 时代码块 docstring 必须用 `"""`（用 `'''` 报 `IndentationError: unexpected indent`）；⑤ 新增章节 `estimatedMinutes` 用 `round(chars/400)`，别用 ~113 字/分钟的老口径。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
