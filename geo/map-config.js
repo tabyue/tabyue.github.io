@@ -14,7 +14,7 @@
  */
 (function(){
 'use strict';
-var tk='请到天地图开放平台申请自己的 key 并替换此占位符';
+var tk='93bc5160f5b33dcf7b76999ee0e756d7'; // 浏览器端 key，白名单 www.tabyue.com（2026-10-29 用户提供）
 var ok=/^[0-9a-zA-Z]{32}$/.test(tk);
 window.GEO_MAP_CONFIG={provider:'tianditu',enabled:ok};
 if(ok&&document.readyState==='loading'){
