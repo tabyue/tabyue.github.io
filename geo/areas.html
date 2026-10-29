@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="东南亚、南亚、西亚、欧洲西部、北极和南极：在天地图上找到每个地区的关键地点，对照位置、地形、气候和产业特征。地理互动馆第 15 课，对应湘教版七年级下册第八章。">
+<meta property="og:title" content="地理互动馆 · 了解地区">
+<meta property="og:description" content="五个地区，一张地图看懂位置和特征。">
+<title>了解地区 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script src="map-config.js"></script>
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="mapdata.js"></script>
+<script defer src="geomap.js"></script>
+<script defer src="areas.js"></script>
+</head>
+<body data-module="areas">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 15 课 <span>/</span> 湘教版七下 第八章</p><h1>了解地区</h1><p class="subtitle">选一个地区，地图跳到那里。先找位置，再看地形、气候和产业。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="地区地图">
+<h2>五个地区，一张地图</h2>
+<p class="panel-sub">点地区切换地图；点下面的地点可以在图上定位。</p>
+<div class="chips" id="area-chips"></div>
+<div class="geo-map" id="area-map" data-preset="areas" data-group="sea"></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="地区特征">
+<div class="readout-head"><h2 id="area-title">东南亚</h2><span class="badge" id="area-sec">8.1</span></div>
+<div class="chips small" id="area-keys" style="margin:4px 0 10px"></div>
+<ul class="fact-list">
+<li><b>位置</b><span id="a-pos"></span></li>
+<li><b>地形</b><span id="a-terrain"></span></li>
+<li><b>气候</b><span id="a-climate"></span></li>
+<li><b>人文与产业</b><span id="a-feature"></span></li>
+</ul>
+<p class="source">内容依据湘教版（2024）七年级下册第八章。</p>
+</section>
+</div>
+</div>
+<section class="card panel" aria-label="极地方向"><h2>从极点往下看：东西南北怎么判断？</h2><p class="panel-sub">普通地图把两极拉得很宽，看两极要用极地视图。下图只画经纬网和科考站位置。</p>
+<div class="chips" id="pole-chips"><button data-p="n" aria-pressed="true">北极（俯视北极点）</button><button data-p="s" aria-pressed="false">南极（俯视南极点）</button></div>
+<div class="two-col" style="margin-top:10px;align-items:center">
+<svg id="polar" viewBox="0 0 300 300" role="img" aria-label="极地经纬网示意"></svg>
+<div><p class="lead" id="pole-text" style="font-size:14px"></p><ul class="fact-list" id="pole-list"></ul></div>
+</div>
+</section>
+<section class="card panel" aria-label="特征归属"><h2>这是哪个地区的特征？</h2><p class="panel-sub">每条只能选一次，选完马上告诉你对错。</p>
+<div class="choice-list" id="clue-list"></div>
+<p class="feedback" id="clue-score" role="status" aria-live="polite"></p>
+</section>
+<section class="quiz" aria-label="了解地区小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>链接会带上当前选中的地区。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+</main>
+</body></html>

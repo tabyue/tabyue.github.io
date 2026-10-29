@@ -11,8 +11,11 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="lessons.css">
+<script src="map-config.js"></script>
 <script defer src="model.js"></script>
 <script defer src="common.js"></script>
+<script defer src="mapdata.js"></script>
+<script defer src="geomap.js"></script>
 <script defer src="regions.js"></script>
 </head>
 <body data-module="regions">
@@ -60,6 +63,7 @@
 <div class="fact"><div><h3>阶梯与海拔</h3><p>判断属于哪一级阶梯，看它在哪两条分界线之间，而不是只看某一点的海拔。四川盆地底部海拔约 500 米，但它属于第二级阶梯。</p></div></div>
 </div>
 <aside class="pitfall"><h3><span>!</span> 地图要用官方标准地图</h3><p>国界、海岸线和岛屿的画法有国家标准。做作业、出板报需要地图时，请使用自然资源部标准地图服务中带审图号的地图，不要随手描画或使用来源不明的图片。</p></aside></section>
+<section class="card panel" aria-label="地图"><h2>洲界在地图上的位置</h2><p class="panel-sub">七大洲之间靠海峡、运河和山脉分界。点地点在地图上定位，对照上面的洲界练习。</p><div class="geo-map" id="lesson-map" data-preset="regions"></div></section>
 <section class="quiz" aria-label="区域地理小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一页</h3><p>链接会带上当前选中的阶梯。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
 </div>
 <nav class="pager" id="pager" aria-label="上一课与下一课"></nav>

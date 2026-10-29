@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="日本、埃及、俄罗斯、法国、美国、澳大利亚：在天地图上看位置，比较首都、面积、人口，再玩一局线索猜国家。地理互动馆第 16 课，对应湘教版七年级下册第九章。">
+<meta property="og:title" content="地理互动馆 · 走近国家">
+<meta property="og:description" content="六个国家，看地图、比数据、猜国家。">
+<title>走近国家 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script src="map-config.js"></script>
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="mapdata.js"></script>
+<script defer src="geomap.js"></script>
+<script defer src="countries.js"></script>
+</head>
+<body data-module="countries">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 16 课 <span>/</span> 湘教版七下 第九章</p><h1>走近国家</h1><p class="subtitle">六个国家，先在地图上找到它，再看它的地形、气候和产业有什么特点。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="国家地图">
+<h2>选一个国家</h2>
+<p class="panel-sub">地图会跳到这个国家，图上标出首都和主要地理事物。</p>
+<div class="chips" id="c-chips"></div>
+<div class="geo-map" id="c-map" data-preset="countries" data-group="jp"></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="国家概况">
+<div class="readout-head"><h2 id="c-title">日本</h2><span class="badge" id="c-sec">七下 9.1</span></div>
+<div class="stat-grid"><div class="stat"><span>首都</span><strong id="c-capital">—</strong></div><div class="stat"><span>面积</span><strong id="c-area" style="font-size:16px">—</strong></div><div class="stat"><span>人口</span><strong id="c-pop" style="font-size:16px">—</strong></div></div>
+<ul class="fact-list" style="margin-top:8px">
+<li><b>位置</b><span id="c-pos"></span></li>
+<li><b>地形</b><span id="c-terrain"></span></li>
+<li><b>气候</b><span id="c-climate"></span></li>
+<li><b>经济与人文</b><span id="c-economy"></span></li>
+</ul>
+<p class="source">人口为各国官方统计机构 2025—2026 年估计的约数；面积采用我国地理教材常用数据，法国为本土面积。</p>
+</section>
+</div>
+</div>
+<section class="card panel" aria-label="线索猜国家"><h2>线索猜国家 <span class="muted" id="g-score" style="font-size:13px;font-weight:500"></span></h2><p class="panel-sub">线索一条一条给。猜得越早得分越高：第 1 条就猜对得 4 分，看完 4 条才猜对得 1 分。</p>
+<ol class="fact-list" id="g-clues" style="list-style:decimal;padding-left:20px"></ol>
+<div class="chips" id="g-options" style="margin-top:10px"></div>
+<div class="feedback" id="g-feedback" role="status" aria-live="polite"></div>
+<div style="display:flex;gap:8px;margin-top:8px"><button class="secondary" id="g-more">再给一条线索</button><button class="secondary" id="g-next" hidden>下一个国家</button></div>
+</section>
+<section class="card panel" aria-label="六国对比"><h2>六国一览</h2><p class="panel-sub">点表头可以按面积或人口排序。</p>
+<div style="overflow-x:auto"><table class="compare tight" id="c-table"></table></div>
+</section>
+<section class="quiz" aria-label="走近国家小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>链接会带上当前选中的国家。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+</main>
+</body></html>

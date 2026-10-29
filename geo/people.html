@@ -11,8 +11,11 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="lessons.css">
+<script src="map-config.js"></script>
 <script defer src="model.js"></script>
 <script defer src="common.js"></script>
+<script defer src="mapdata.js"></script>
+<script defer src="geomap.js"></script>
 <script defer src="people.js"></script>
 </head>
 <body data-module="people">
@@ -63,6 +66,7 @@
 </div>
 <p class="source">对比数据为世界银行与联合国近年口径的约数，用于教学示意。中国是最大的发展中国家。</p>
 </section>
+<section class="card panel" aria-label="地图"><h2>人口稠密区和稀疏区在哪里</h2><p class="panel-sub">切换到影像图，能看出人口稠密区大多是平原和沿海地区，稀疏区多是沙漠、雨林和冰原。</p><div class="geo-map" id="lesson-map" data-preset="people"></div></section>
 <section class="quiz" aria-label="居民文化小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>链接会带上当前选择的出生率和死亡率。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
 <nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
 </main>

@@ -11,8 +11,11 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="lessons.css">
+<script src="map-config.js"></script>
 <script defer src="model.js"></script>
 <script defer src="common.js"></script>
+<script defer src="mapdata.js"></script>
+<script defer src="geomap.js"></script>
 <script defer src="china.js"></script>
 </head>
 <body data-module="china">
@@ -65,6 +68,7 @@
 <div class="fact"><div><h3>行政区划分三级</h3><p>我国的行政区划基本分为省级、县级、乡级三级。</p></div></div>
 </div>
 <aside class="pitfall"><h3><span>!</span> 简称别写错</h3><p>贵州简称“黔”或“贵”，不是“桂”；广西才是“桂”。甘肃简称“甘”或“陇”，陕西简称“陕”或“秦”，江西简称“赣”。</p></aside></section>
+<section class="card panel" aria-label="地图"><h2>在地图上看中国的四至</h2><p class="panel-sub">地图上的国界和南海诸岛等均由天地图按国家标准提供。</p><div class="geo-map" id="lesson-map" data-preset="china"></div></section>
 <section class="quiz" aria-label="疆域小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>和同学比一比，谁先把 34 个省级行政区记熟。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
 </div>
 <nav class="pager" id="pager" aria-label="上一课与下一课"></nav>

@@ -11,8 +11,11 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="lessons.css">
+<script src="map-config.js"></script>
 <script defer src="model.js"></script>
 <script defer src="common.js"></script>
+<script defer src="mapdata.js"></script>
+<script defer src="geomap.js"></script>
 <script defer src="plates.js"></script>
 </head>
 <body data-module="plates">
@@ -49,6 +52,7 @@
 <div class="choice-list" id="bound-list"></div>
 <p class="feedback" id="bound-score" role="status" aria-live="polite"></p>
 </section>
+<section class="card panel" aria-label="地图"><h2>板块边界在哪里？</h2><p class="panel-sub">这些山脉、海沟、裂谷和火山岛，大多数都在板块交界处。默认是地形图，可以切换成影像图看看。</p><div class="geo-map" id="lesson-map" data-preset="plates"></div></section>
 <section class="quiz" aria-label="板块运动小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>链接会带上当前选中的边界类型与时间。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
 <nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
 </main>

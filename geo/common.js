@@ -15,7 +15,9 @@ const MODULES=[
  {id:'plates',href:'plates.html',no:11,title:'海陆变迁与板块运动',short:'板块运动'},
  {id:'people',href:'people.html',no:12,title:'世界的居民与文化',short:'居民与文化'},
  {id:'resources',href:'resources.html',no:13,title:'中国的自然资源',short:'自然资源'},
- {id:'zones',href:'zones.html',no:14,title:'中国的地域差异与区域发展',short:'地域差异'}
+ {id:'zones',href:'zones.html',no:14,title:'中国的地域差异与区域发展',short:'地域差异'},
+ {id:'areas',href:'areas.html',no:15,title:'了解地区',short:'了解地区'},
+ {id:'countries',href:'countries.html',no:16,title:'走近国家',short:'走近国家'}
 ];
 const $=id=>document.getElementById(id);
 const current=document.body.dataset.module||'';

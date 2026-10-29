@@ -129,3 +129,38 @@
 .dev-row .fl{height:100%;width:0;background:#5f97ae;border-radius:6px;transition:width .6s ease}
 .dev-row .fl.alt{background:#c58a4f}
 @media(max-width:680px){.dev-row{grid-template-columns:1fr}.dev-row .pair{grid-template-columns:1fr 1fr}}
+/* ---------- 地图（天地图） ---------- */
+.geo-map{margin-top:12px}
+.map-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;min-height:6px}
+.map-types{display:flex;gap:6px}
+.map-types button{font:inherit;font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid #d6dfcf;background:#fff;color:#40594b;cursor:pointer}
+.map-types button[aria-pressed="true"]{background:#2f5d46;border-color:#2f5d46;color:#fff}
+.map-status{font-size:11px;color:var(--muted)}
+.map-canvas{position:relative;height:320px;border-radius:14px;overflow:hidden;background:#e8eef0;border:1px solid #dfe6da}
+.geo-map.is-fallback .map-canvas{height:auto;background:#f6f8f2;border-style:dashed}
+.map-fallback{padding:16px 16px 14px}
+.mf-title{margin:0 0 4px;font-weight:700;color:#40594b;font-size:14px}
+.mf-sub{margin:0;font-size:12.5px;line-height:1.7;color:var(--muted)}
+.mf-sub a,.map-credit a{color:var(--green);text-decoration:underline;text-underline-offset:2px}
+.map-list{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.map-list li{background:#f7f9f3;border:1px solid #edf1e8;border-radius:11px;padding:7px 9px}
+.map-list li.on{background:#fbf1e6;border-color:#efd8bd}
+.map-list button{all:unset;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;width:100%}
+.map-list button:focus-visible{outline:2px solid #2f5d46;outline-offset:3px;border-radius:6px}
+.map-list i{width:8px;height:8px;border-radius:50%;flex:none}
+.map-list b{font-size:12.5px;color:#203b35}
+.map-list span{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.map-list em{display:block;font-style:normal;font-size:11px;color:#6f8268;margin-top:2px;line-height:1.45}
+.map-credit{font-size:11px;color:var(--muted);margin:8px 0 0}
+.gm-icon{background:none!important;border:0!important}
+.gm-pin{position:relative;width:14px;height:14px}
+.gm-pin i{position:absolute;inset:2px;border-radius:50%;background:var(--c);box-shadow:0 0 0 2px #fff,0 1px 4px rgba(0,0,0,.35)}
+.gm-pin span{position:absolute;left:16px;top:-3px;white-space:nowrap;font-size:12px;font-weight:700;color:#1f3a30;background:rgba(255,255,255,.92);padding:1px 6px;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.gm-pin.on i{inset:0;box-shadow:0 0 0 3px #fff,0 0 0 5px var(--c)}
+.gm-pin.on span{background:#fff7ec;color:#7a4520}
+@media(max-width:680px){.map-canvas{height:280px}.map-list{grid-template-columns:1fr}}
+.gm-pin.side-l span{left:auto;right:16px}
+.gm-pin.side-b span{left:50%;top:15px;transform:translateX(-50%)}
+.gm-pin.side-t span{left:50%;top:auto;bottom:15px;transform:translateX(-50%)}
+@media(max-width:680px){.gm-pin.k-route:not(.on) span{display:none}}
+.gm-pin.gm-hide span{visibility:hidden}

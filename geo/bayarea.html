@@ -11,8 +11,11 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="lessons.css">
+<script src="map-config.js"></script>
 <script defer src="model.js"></script>
 <script defer src="common.js"></script>
+<script defer src="mapdata.js"></script>
+<script defer src="geomap.js"></script>
 <script defer src="bayarea.js"></script>
 </head>
 <body data-module="bayarea">
@@ -58,6 +61,7 @@
 <div class="fact"><div><h3>内外联系</h3><p>对内：跨海通道、高铁、城际轨道让城市之间“一小时生活圈”逐步形成；对外：深圳、广州、香港的港口和机场连接世界。</p></div></div>
 </div>
 <aside class="pitfall"><h3><span>!</span> 人口最多 ≠ 人口最密</h3><p>广州人口最多，但面积也大；澳门人口最少，却因为面积只有约 33 平方千米，成了人口密度最高的地方。比较“密度”一定要用人口除以面积。</p></aside></section>
+<section class="card panel" aria-label="地图"><h2>在地图上找到 9+2 城市</h2><p class="panel-sub">香港、澳门和广东 9 个城市环绕珠江口。虚线是港珠澳大桥和深中通道的大致走向。</p><div class="geo-map" id="lesson-map" data-preset="bayarea"></div></section>
 <section class="quiz" aria-label="大湾区小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>链接会带上当前选中的通道。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
 </div>
 <nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
