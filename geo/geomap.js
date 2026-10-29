@@ -27,7 +27,6 @@ function Instance(el){
  el.innerHTML='<div class="map-head"><div class="map-types" role="group" aria-label="底图类型"></div><span class="map-status"></span></div><div class="map-canvas"></div><div class="map-foot"></div>';
  this.canvas=el.querySelector('.map-canvas');this.foot=el.querySelector('.map-foot');
  if(this.preset.height)this.canvas.style.height=this.preset.height+'px';
- if(this.preset.height)this.canvas.style.height=this.preset.height+'px';
  this.status=el.querySelector('.map-status');this.types=el.querySelector('.map-types');
  this.foot.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(b)this.focus(Number(b.dataset.i));});
  if(tdtReady()){try{this.initMap();}catch(err){this.map=null;this.fail=String(err&&err.message||err);}}
@@ -60,8 +59,6 @@ Instance.prototype.fit=function(){
  const dx=Math.max(x1-x0,.4),dy=Math.max(y1-y0,.3);
  const px=g.padX!=null?g.padX:.08;
  this.map.setViewport([new T.LngLat(Math.max(-179,x0-dx*px),Math.max(-84,y0-dy*.3)),new T.LngLat(Math.min(179,x1+dx*px),Math.min(84,y1+dy*.22))]);
- // 天地图境界图层在 2 级及以下没有数据；需要显示国界的图设 minZoom:3
- if(g.minZoom&&this.map.getZoom&&this.map.getZoom()<g.minZoom)this.map.centerAndZoom(new T.LngLat(g.center[0],g.center[1]),g.minZoom);
  // 天地图境界图层在 2 级及以下没有数据；需要显示国界的图设 minZoom:3
  if(g.minZoom&&this.map.getZoom&&this.map.getZoom()<g.minZoom)this.map.centerAndZoom(new T.LngLat(g.center[0],g.center[1]),g.minZoom);
 };
