@@ -4,7 +4,7 @@
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 50,
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-10-29T08:30",
   "description": "从人类演示中学习机器人技能。Diffusion Policy 和 ACT 是当前最实用的模仿学习算法。",
   "prerequisites": [
     "能用 Tensor、Dataset、DataLoader 和优化器完成监督训练；可补学 [PyTorch 深度学习](/learn/python-scientific-computing/8) 与 [反向传播与自动微分](/learn/deep-learning/5)。",
@@ -515,9 +515,33 @@
         "十三、如果你只有一台机器人"
       ],
       "summary": "到目前为止，本模块讲的大多数方法——行为克隆、DAgger、Diffusion Policy、ACT、VLA——共享同一个前提：先有人类演示，再让策略去拟合它。这条路线在过去几年里非常有效，但它有一个绕不开的结构性上限。"
+    },
+    {
+      "id": "sec-19",
+      "title": "反事实回滚：让世界模型成为策略的纠错教练",
+      "lastUpdated": "2026-10-29T08:30",
+      "chars": 7125,
+      "shortTitle": "反事实回滚与过程奖励",
+      "difficulty": "高级",
+      "estimatedMinutes": 18,
+      "isFrontier": true,
+      "tier": 3,
+      "readingMinutes": 10,
+      "headings": [
+        "一、模仿学习的纠错了，但纠错数据仍然来自人",
+        "二、被浪费的能力：世界模型能回到过去",
+        "三、三个设计选择",
+        "四、为什么这对模仿学习特别重要",
+        "五、与过程奖励的关系：把「哪一步错了」标出来",
+        "六、动手：把回滚写在自己的训练循环里",
+        "七、常见坑与排查顺序",
+        "八、能力自检清单",
+        "参考答案"
+      ],
+      "summary": "到目前为止，本模块讲过的方法——行为克隆、DAgger、Diffusion Policy、ACT、VLA——共享同一个结构性上限：策略只在演示数据支撑的状态区域里可靠，一旦执行漂移就回不来。"
     }
   ],
-  "readingMinutes": 173,
+  "readingMinutes": 183,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 144319
+  "chars": 151444
 }
