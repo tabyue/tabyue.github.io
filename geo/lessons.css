@@ -164,3 +164,15 @@
 .gm-pin.side-t span{left:50%;top:auto;bottom:15px;transform:translateX(-50%)}
 @media(max-width:680px){.gm-pin.k-route:not(.on) span{display:none}}
 .gm-pin.gm-hide span{visibility:hidden}
+.np-row{display:grid;grid-template-columns:minmax(0,1.3fr) 1fr 74px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #eef1ea}
+.np-row:last-of-type{border-bottom:0}
+.np-name b{display:block;font-size:13px}
+.np-name span{font-size:11px;color:var(--muted);line-height:1.45}
+.np-row .trk{height:12px;background:#f0f3eb;border-radius:6px;overflow:hidden}
+.np-row .fl{height:100%;background:#4f7a48;border-radius:6px}
+.np-row em{font-style:normal;font-size:12px;text-align:right;color:#40594b;font-variant-numeric:tabular-nums}
+#w-bins button.correct{outline:3px solid #4f7a48}
+#w-bins button.wrong{outline:3px solid #b0472e}
+@media(max-width:680px){.np-row{grid-template-columns:1fr 64px}.np-row .trk{grid-column:1/-1;order:3}}
+.np-row em{white-space:nowrap}
+@media(max-width:680px){.np-row{grid-template-columns:1fr 86px}}

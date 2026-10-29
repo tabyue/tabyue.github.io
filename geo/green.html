@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="第一批国家公园在哪里？深圳垃圾怎么分？什么做法符合可持续发展？地理互动馆第 20 课，对应湘教版八年级下册第九章。">
+<meta property="og:title" content="地理互动馆 · 建设永续发展的美丽中国">
+<meta property="og:description" content="国家公园、深圳垃圾分类、人地协调。">
+<title>建设永续发展的美丽中国 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script src="map-config.js"></script>
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="mapdata.js"></script>
+<script defer src="geomap.js"></script>
+<script defer src="green.js"></script>
+</head>
+<body data-module="green">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 20 课 <span>/</span> 湘教版八下 第九章</p><h1>建设永续发展的美丽中国</h1><p class="subtitle">国家公园、垃圾分类、双碳目标：可持续发展落在每一片山林，也落在你家楼下的垃圾桶。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="国家公园地图">
+<h2>第一批国家公园在哪里</h2>
+<p class="panel-sub">2021 年 10 月正式设立 5 个国家公园，保护面积约 23 万平方千米。</p>
+<div class="geo-map" id="g-map" data-preset="green"></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="国家公园面积">
+<div class="readout-head"><h2>五个国家公园</h2><span class="badge">2021 年设立</span></div>
+<div id="np-bars"></div>
+<p class="source">来源：国家林业和草原局（国家公园管理局）。三江源国家公园面积约占五个合计的 82%。</p>
+</section>
+</div>
+</div>
+<section class="card panel" aria-label="垃圾分类"><h2>深圳垃圾分类，你分得对吗？ <span class="muted" id="w-score" style="font-size:13px;font-weight:500"></span></h2><p class="panel-sub">深圳生活垃圾分为可回收物、有害垃圾、厨余垃圾、其他垃圾四类。看到物品，点它该去的桶。</p>
+<p class="lead" id="w-item" style="font-size:20px;font-weight:700;text-align:center;margin:12px 0"></p>
+<div class="option-grid" id="w-bins" style="grid-template-columns:repeat(2,minmax(0,1fr))"></div>
+<div class="feedback" id="w-feedback" role="status" aria-live="polite"></div>
+<button class="secondary" id="w-next" hidden>下一件</button>
+<p class="source">依据《深圳市生活垃圾分类管理条例》（2020 年 9 月 1 日起施行）。个别物品的归类以所在小区的分类指引为准。</p>
+</section>
+<section class="card panel" aria-label="人地协调"><h2>这样做，可持续吗？</h2><p class="panel-sub">判断每种做法是否符合可持续发展。</p>
+<div class="choice-list" id="pr-list"></div>
+<p class="feedback" id="pr-score" role="status" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="时间线"><h2>美丽中国的时间线</h2><ol class="fact-list" id="tl"></ol></section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>分享给同学，比比谁的垃圾分类全对。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+</main>
+</body></html>

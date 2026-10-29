@@ -5,7 +5,7 @@ const G=window.Geo,Site=window.Site,$=Site.$;
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const CS=G.COUNTRIES,byId=id=>CS.find(c=>c.id===id);
 // 排序用的数值（与 model.js 文字口径一致）：面积 万平方千米，人口 亿
-const NUM={jp:[37.8,1.23,'亚洲'],eg:[100,1.09,'非洲（地跨亚、非）'],ru:[1709.8,1.46,'欧洲、亚洲'],fr:[55,0.69,'欧洲'],us:[937,3.42,'北美洲'],au:[769,0.279,'大洋洲']};
+const NUM={jp:[37.8,1.23,'亚洲'],eg:[100,1.09,'非洲（地跨亚、非）'],ru:[1709.8,1.46,'欧洲、亚洲'],fr:[55,0.69,'欧洲'],us:[937,3.42,'北美洲'],au:[769,0.279,'大洋洲'],br:[851,2.14,'南美洲']};
 const fromHash=new URLSearchParams(location.hash.replace(/^#/,'')).get('c');
 const state={c:byId(fromHash)?fromHash:'jp',sort:null};
 
@@ -14,7 +14,7 @@ $('c-chips').innerHTML=CS.map(c=>'<button data-c="'+c.id+'">'+c.name+'</button>'
 function showCountry(){
  const c=byId(state.c),i=CS.indexOf(c);
  for(const b of $('c-chips').querySelectorAll('button'))b.setAttribute('aria-pressed',String(b.dataset.c===c.id));
- $('c-title').textContent=c.name;$('c-sec').textContent='七下 9.'+(i+1);
+ $('c-title').textContent=c.name;$('c-sec').textContent=c.sec==='探究'?'七下第九章 探究':'七下 9.'+(i+1);
  $('c-capital').textContent=c.capital;$('c-area').textContent=c.area;$('c-pop').textContent=c.pop;
  $('c-pos').textContent=c.pos;$('c-terrain').textContent=c.terrain;$('c-climate').textContent=c.climate;$('c-economy').textContent=c.economy;
  const m=window.GeoMap&&GeoMap.get('c-map');if(m)m.show(c.id);

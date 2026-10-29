@@ -17,7 +17,11 @@ const MODULES=[
  {id:'resources',href:'resources.html',no:13,title:'中国的自然资源',short:'自然资源'},
  {id:'zones',href:'zones.html',no:14,title:'中国的地域差异与区域发展',short:'地域差异'},
  {id:'areas',href:'areas.html',no:15,title:'了解地区',short:'了解地区'},
- {id:'countries',href:'countries.html',no:16,title:'走近国家',short:'走近国家'}
+ {id:'countries',href:'countries.html',no:16,title:'走近国家',short:'走近国家'},
+ {id:'continents',href:'continents.html',no:17,title:'认识大洲',short:'认识大洲'},
+ {id:'northeast',href:'northeast.html',no:18,title:'东北地区',short:'东北地区'},
+ {id:'places',href:'places.html',no:19,title:'区域地理环境与未来图景',short:'京台新黔'},
+ {id:'green',href:'green.html',no:20,title:'建设永续发展的美丽中国',short:'美丽中国'}
 ];
 const $=id=>document.getElementById(id);
 const current=document.body.dataset.module||'';
@@ -94,6 +98,31 @@ function optionQuiz(container,{answer,onAnswer}){
  return ()=>{for(const o of buttons)o.classList.remove('correct','wrong');};
 }
 
-window.Site={MODULES,$,S,esc,svgPoint,setRange,pressed,replaceHash,reduce,optionQuiz,
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+// 配对题：items=[[题干,答案值]]，options=[[值,显示名]]；每行只能答一次
+function matchRows(listId,scoreId,items,options,explain){
+ const list=$(listId);let done=0,right=0;
+ list.innerHTML=items.map(([t],i)=>'<div class="choice-row" data-i="'+i+'" style="flex-direction:column;align-items:stretch"><p><b>'+esc(t)+'</b></p><div class="chips small" style="flex-wrap:wrap;justify-content:flex-start">'+(typeof options==='function'?options(i):options).map(([v,l])=>'<button data-v="'+esc(v)+'">'+esc(l)+'</button>').join('')+'</div><p class="verdict" hidden></p></div>').join('');
+ for(const row of list.querySelectorAll('.choice-row')){
+  const [t,ans]=items[Number(row.dataset.i)];
+  for(const b of row.querySelectorAll('button'))b.addEventListener('click',()=>{
+   if(row.dataset.done)return;row.dataset.done='1';done++;
+   const ok=b.dataset.v===String(ans);if(ok)right++;
+   row.classList.add(ok?'correct':'wrong');pressed(row.querySelector('.chips'),b);
+   const v=row.querySelector('.verdict');v.hidden=false;v.textContent=(ok?'✓ ':'✗ ')+explain(t,ans,ok);
+   $(scoreId).textContent=done===items.length?'答对 '+right+' / '+items.length:'已答 '+done+' / '+items.length;
+  });
+ }
+}
+// 三题小测验：qs=[{title,opts:[[v,l]],answer,yes,no}]
+function runQuiz(qs){
+ let qi=0;
+ const show=()=>{const q=qs[qi];$('quiz-title').textContent=q.title;$('quiz-step').textContent=(qi+1)+' / '+qs.length;
+  $('quiz-options').innerHTML=shuffle(q.opts).map(([v,l])=>'<button data-value="'+v+'">'+esc(l)+'</button>').join('');$('quiz-feedback').textContent='';$('quiz-feedback').className='feedback';$('next-question').hidden=true;
+  optionQuiz($('quiz-options'),{answer:q.answer,onAnswer:ok=>{$('quiz-feedback').textContent=ok?q.yes:q.no;$('quiz-feedback').className='feedback '+(ok?'success':'retry');$('next-question').hidden=!ok;$('next-question').textContent=qi===qs.length-1?'完成，再练一次':'下一题';}});};
+ $('next-question').addEventListener('click',()=>{qi=(qi+1)%qs.length;show();});
+ show();
+}
+window.Site={MODULES,$,S,esc,svgPoint,setRange,pressed,replaceHash,reduce,optionQuiz,shuffle,matchRows,runQuiz,
  setShareState(fn){stateHook=fn;},openShare,copyLink};
 })();

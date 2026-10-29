@@ -166,3 +166,16 @@ $('check-answer').addEventListener('click',()=>{const q=qs[qi];if(q.type!=='chec
 $('next-question').addEventListener('click',()=>{qi=(qi+1)%qs.length;showQ();});
 showQ();scaleCalc();drawMap();drawProfile();
 })();
+
+/* ---------- 选对地图（七上第一章） ---------- */
+(function(){
+'use strict';
+const Site=window.Site;
+const CASES=[['从深圳北站坐地铁去莲花山公园，看怎么换乘','城市交通图（电子地图）'],['想知道青藏高原有多高、地势怎么起伏','分层设色地形图'],
+ ['查找全国各省级行政区的位置和行政中心','政区图'],['去杭州西湖游玩，找景点和游览路线','旅游图'],
+ ['了解深圳一年中哪个月降水最多','气候资料图（气温曲线和降水柱状图）'],['看台风云团现在移动到了哪里','卫星云图'],
+ ['比较一个小区内楼栋的精确位置','大比例尺地图'],['在一张图上看全世界的海陆分布','小比例尺地图']];
+const ALL=CASES.map(c=>c[1]);
+const items=Site.shuffle(CASES).slice(0,6);
+Site.matchRows('mt-list','mt-score',items,i=>Site.shuffle([items[i][1],...Site.shuffle(ALL.filter(x=>x!==items[i][1])).slice(0,2)]).map(x=>[x,x]),(t,ans)=>'用'+ans+'。');
+})();
