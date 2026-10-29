@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="喜马拉雅山为什么还在长高？红海为什么在变宽？拖动时间滑块，看板块挤压隆起成山、张裂裂谷成海。地理互动馆第 11 课，对应湘教版七年级上册第三章。">
+<meta property="og:title" content="地理互动馆 · 海陆变迁与板块运动">
+<meta property="og:description" content="拖动时间轴，看山脉怎么隆起、海洋怎么张开。">
+<title>海陆变迁与板块运动 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="plates.js"></script>
+</head>
+<body data-module="plates">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 11 课 <span>/</span> 湘教版七上 第三章</p><h1>海陆变迁与板块运动</h1><p class="subtitle">大陆会漂移，海底会扩张——拖动时间轴，看山怎么隆起、海怎么张开。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="板块边界剖面">
+<h2>两块板块的相遇：隆起成山，还是裂开成海？</h2>
+<p class="panel-sub">选边界类型，拖动时间轴，看地形怎么变化。</p>
+<div class="toggle-row"><div class="chips" id="type-chips"></div></div>
+<div class="control" style="margin-top:10px"><div class="control-heading"><label for="era">时间</label><output id="era-out">现在</output></div><input id="era" type="range" min="-1" max="2" step="0.02" value="1"><div class="ruler"><span>6500 万年前</span><span>现在</span><span>5000 万年后</span></div></div>
+<svg id="section" viewBox="0 0 420 240" role="img" aria-label="板块边界剖面示意" style="margin-top:10px"></svg>
+</section>
+<div class="settings">
+<section class="readout" aria-label="当前读数">
+<div class="readout-head"><h2 id="bound-title">消亡边界（碰撞挤压）</h2><span class="badge" id="bound-badge">山脉</span></div>
+<p class="lead" id="bound-text"></p>
+<p class="note" id="bound-case"></p>
+<p class="source">剖面为教学示意图。板块边界分为消亡边界（碰撞挤压）与生长边界（张裂），喜马拉雅山脉属于前者，红海属于后者。</p>
+</section>
+<section class="card panel"><h2>六大板块</h2><p class="panel-sub">一般来说，板块内部比较稳定；板块与板块交界的地带，地壳比较活跃。</p>
+<ul class="fact-list" id="plate-list"></ul>
+<p class="source">名称与范围依据湘教版（2024）七年级上册第三章。</p>
+</section>
+</div>
+</div>
+<section class="card panel" aria-label="海陆变迁的证据"><h2>海陆变迁的证据</h2><p class="panel-sub">点开每一条，看现象背后的解释。这些证据共同说明：海陆的分布不是从来如此的。</p>
+<div class="choice-list" id="drift-list"></div>
+<p class="source">魏格纳 1912 年提出大陆漂移学说；20 世纪 60 年代海底扩张与板块构造学说进一步解释了其动力来源。</p>
+</section>
+<section class="card panel" aria-label="判断边界类型"><h2>是挤压，还是张裂？</h2><p class="panel-sub">逐条判断这些地理现象发生在哪类边界。</p>
+<div class="choice-list" id="bound-list"></div>
+<p class="feedback" id="bound-score" role="status" aria-live="polite"></p>
+</section>
+<section class="quiz" aria-label="板块运动小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>链接会带上当前选中的边界类型与时间。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+</main>
+</body></html>

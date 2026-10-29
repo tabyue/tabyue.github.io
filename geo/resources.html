@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="中国耕地 19.18 亿亩、人均只有 1.36 亩；水资源八成在南方、耕地六成在北方——水土矛盾怎么解？南水北调调了多少水？地理互动馆第 13 课，对应湘教版八年级上册第三章。">
+<meta property="og:title" content="地理互动馆 · 中国的自然资源">
+<meta property="og:description" content="看清水土矛盾，理解为什么要南水北调、节约每一寸土地。">
+<title>中国的自然资源 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="resources.js"></script>
+</head>
+<body data-module="resources">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 13 课 <span>/</span> 湘教版八上 第三章</p><h1>中国的自然资源</h1><p class="subtitle">地大物博，但一平均到每个人头上就紧张了——看懂"总量丰富、人均不足"。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="水土矛盾">
+<h2>水土矛盾：水在南，地在北</h2>
+<p class="panel-sub">两条对比条，一眼看懂我国水土资源错配。</p>
+<svg id="mismatch" viewBox="0 0 420 210" role="img" aria-label="水土资源分布对比" style="margin-top:8px"></svg>
+<p class="note" style="margin-top:6px">南水北调把长江流域的水调往北方。东、中线一期工程已累计调水 830 亿立方米以上，直接受益人口超过 1.95 亿。</p>
+</section>
+<div class="settings">
+<section class="readout" aria-label="资源国情">
+<div class="readout-head"><h2>资源国情</h2><span class="badge">总量丰富 · 人均不足</span></div>
+<p class="lead">自然资源总量居世界前列，但人口 14 亿，一平均就远低于世界平均水平。</p>
+<div id="pc-rows"></div>
+<p class="source">来源：第三次全国国土调查（2019 年底）、水利部、国家林草局。</p>
+</section>
+<section class="card panel"><h2>土地利用类型（三调）</h2><p class="panel-sub">点击切换排序方式，看我国土地的家底。</p>
+<div class="chips small" id="land-chips"><button data-k="area" aria-pressed="true">按面积</button><button data-k="type">按类型</button></div>
+<svg id="land-bars" viewBox="0 0 420 200" role="img" aria-label="土地利用构成" style="margin-top:8px"></svg>
+<p class="source">第三次全国国土调查（2019 年 12 月 31 日标准时点）。耕地中旱地占 50.3%，64% 的耕地分布在秦岭—淮河以北。</p>
+</section>
+</div>
+</div>
+<section class="card panel" aria-label="可再生与非可再生"><h2>可再生，还是用一点少一点？</h2><p class="panel-sub">逐项判断：哪些资源能在较短时间内更新、再生或循环使用？</p>
+<div class="choice-list" id="res-list"></div>
+<p class="feedback" id="res-score" role="status" aria-live="polite"></p>
+<p class="source">可再生资源也要珍惜利用——如果遭到破坏或过度开采，可再生资源也会枯竭。</p>
+</section>
+<section class="card panel" aria-label="能源结构"><h2>能源与新能源</h2><p class="panel-sub">2025 年底，风电与太阳能发电装机合计 18.4 亿千瓦，历史性超过火电。</p>
+<svg id="power" viewBox="0 0 420 170" role="img" aria-label="2025 年底发电装机构成" style="margin-top:8px"></svg>
+<p class="source">来源：国家能源局 2025 年全国电力统计。每 10 度电中约 4 度是可再生能源发电。</p>
+</section>
+<section class="quiz" aria-label="自然资源小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>链接会带上当前的土地排序方式。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+</main>
+</body></html>

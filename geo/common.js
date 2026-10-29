@@ -11,7 +11,11 @@ const MODULES=[
  {id:'bayarea',href:'bayarea.html',no:7,title:'粤港澳大湾区与深圳',short:'大湾区与深圳'},
  {id:'china',href:'china.html',no:8,title:'中国的疆域与人口',short:'疆域与人口'},
  {id:'hazards',href:'hazards.html',no:9,title:'天气预报与自然灾害',short:'天气与灾害'},
- {id:'economy',href:'economy.html',no:10,title:'中国的产业与交通',short:'产业与交通'}
+ {id:'economy',href:'economy.html',no:10,title:'中国的产业与交通',short:'产业与交通'},
+ {id:'plates',href:'plates.html',no:11,title:'海陆变迁与板块运动',short:'板块运动'},
+ {id:'people',href:'people.html',no:12,title:'世界的居民与文化',short:'居民与文化'},
+ {id:'resources',href:'resources.html',no:13,title:'中国的自然资源',short:'自然资源'},
+ {id:'zones',href:'zones.html',no:14,title:'中国的地域差异与区域发展',short:'地域差异'}
 ];
 const $=id=>document.getElementById(id);
 const current=document.body.dataset.module||'';

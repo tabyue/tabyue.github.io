@@ -385,6 +385,144 @@ function parseNumber(hash,key,min,max){
  const v=Number(raw);return Number.isFinite(v)&&v>=min&&v<=max?v:null;
 }
 
+/* ---------- 海陆变迁与板块运动（第 11 课） ---------- */
+// 六大板块与两类边界（湘教版七上第三章）
+const PLATES=[
+ {name:'亚欧板块',note:'含欧洲和亚洲大部，与多个板块相邻'},
+ {name:'太平洋板块',note:'唯一几乎全为海洋的板块'},
+ {name:'美洲板块',note:'含南北美洲及邻近海洋'},
+ {name:'非洲板块',note:'含非洲大陆及周边海域'},
+ {name:'印度洋板块',note:'含印度半岛、阿拉伯半岛和澳大利亚大陆'},
+ {name:'南极洲板块',note:'以南极大陆为中心'}
+];
+const BOUNDARY_CASES=[
+ {name:'喜马拉雅山脉持续升高',type:'converge',why:'亚欧板块与印度洋板块碰撞挤压，古地中海消失，山脉仍在抬升'},
+ {name:'红海在不断扩张',type:'diverge',why:'非洲板块与印度洋板块张裂，几千万年后可能成为新的大洋'},
+ {name:'地中海在不断缩小',type:'converge',why:'亚欧板块与非洲板块相互挤压，古地中海只剩残存海域'},
+ {name:'东非大裂谷不断加宽',type:'diverge',why:'板块张裂下陷，是海洋的"胚胎期"'},
+ {name:'日本多火山地震',type:'converge',why:'位于亚欧板块与太平洋板块交界处，大洋板块俯冲到大陆板块之下'},
+ {name:'冰岛多火山',type:'diverge',why:'位于大西洋中脊（生长边界），岩浆上涌形成火山岛'},
+ {name:'安第斯山脉高峻绵长',type:'converge',why:'南极洲板块（纳斯卡板块）与美洲板块碰撞挤压'},
+ {name:'大西洋中脊的海岭',type:'diverge',why:'板块张裂处岩浆上涌，海底不断向两侧扩展'}
+];
+// 板块边界剖面动画：t=0（远古）→ 1（现在）→ 2（未来），返回地形高度序列
+function plateProfile(type,t){
+ // type: converge 挤压（山脉隆起）/ diverge 张裂（裂谷变海）
+ // 输出 41 个采样点的高度（0 基准）
+ const N=41,h=new Array(N).fill(0);
+ const c=(N-1)/2;
+ for(let i=0;i<N;i++){
+  const x=i-c;
+  if(type==='converge'){
+   // 褶皱山脉：以中心为最高、两侧波状衰减，幅度随 t 增大
+   const amp=Math.max(0,t)*38;
+   h[i]=amp*Math.exp(-x*x/(2*3.2*3.2))+amp*.24*Math.exp(-((x-8)**2)/(2*2*2))+amp*.24*Math.exp(-((x+8)**2)/(2*2*2));
+   if(t<0)h[i]+=t*10*Math.exp(-x*x/(2*6*6)); // 远古：浅海沉积层
+  }else{
+   // 张裂：中心下陷成谷，幅度随 t 增大；t>1 后谷里灌水成海
+   const amp=Math.min(1.4,Math.max(0,t));
+   h[i]=-amp*30*Math.exp(-x*x/(2*4.4*4.4))+amp*7*Math.exp(-((x-9)**2)/(2*3*3))+amp*7*Math.exp(-((x+9)**2)/(2*3*3));
+  }
+ }
+ return h;
+}
+// 海陆变迁的化石/遗迹证据
+const DRIFT_EVIDENCE=[
+ {q:'喜马拉雅山上发现海洋生物化石',a:'这里曾是古地中海的一部分，板块碰撞使海底抬升成山'},
+ {q:'台湾海峡海底发现古森林遗迹',a:'这里曾是陆地，后因海面上升或地壳下沉被海水淹没'},
+ {q:'南美和非洲海岸线轮廓、古老地层相吻合',a:'两块大陆曾经连在一起（魏格纳大陆漂移学说的重要证据）'},
+ {q:'南极洲地下发现煤层',a:'煤层由古代森林形成，说明南极洲曾经位于温暖纬度，后来漂移到了极地'}
+];
+
+/* ---------- 世界的居民与文化（第 12 课） ---------- */
+// 人口数据：联合国《世界人口展望 2024》
+const WORLD_POP={total:82.3,year:2025,growth:0.85,births:132,deaths:63,peak:103,peakYear:2084,
+ tfr:2.2,lifeExp:73.5,top:[['印度',14.64],['中国',14.16],['美国',3.47]]};
+// 世界人口增长时间轴（亿人）
+const POP_HISTORY=[[1650,5.5],[1830,10],[1930,20],[1960,30],[1974,40],[1987,50],[1999,60],[2011,70],[2022,80],[2025,82.3],[2084,103]];
+// 人口稠密区与稀疏区
+const POP_DENSE=[['东亚（中国东部、日本、朝鲜半岛）','农业历史悠久、工商业发达'],['南亚（印度、孟加拉国等）','世界人口最稠密地区之一，农耕历史久'],
+ ['西欧','工业革命最早，经济发达'],['北美东部（美国东北部、加拿大东南部）','工商业与城市集中']];
+const POP_SPARSE=[['撒哈拉沙漠等干旱地区','极端干旱，水源匮乏'],['亚马孙热带雨林','气候湿热，原始丛林密布'],
+ ['亚洲、北美高纬寒带','终年严寒'],['青藏高原等地势高峻地区','高寒缺氧'],['南极洲','无人定居大陆']];
+// 自然增长率（千分率，2023 前后联合国/世界银行口径，教学用约数）
+const POP_RATES=[['世界',10.2,7.3],['尼日尔',46,9],['印度',16.9,7.2],['中国',6.39,7.87],['日本',5.9,12.9],['德国',8.8,12.2],['意大利',6.7,12.1]];
+// 三大人种
+const RACES=[
+ {name:'白色人种（欧罗巴人种）',skin:'肤色浅淡',hair:'头发波状、呈浅色',nose:'鼻梁高、嘴唇薄',dist:'欧洲、北美洲、大洋洲、非洲北部及亚洲西部、南部'},
+ {name:'黄色人种（蒙古人种）',skin:'皮肤呈淡黄色或棕黄色',hair:'头发黑直',nose:'面部扁平、鼻梁中等',dist:'东亚（中国、日本、朝鲜半岛、蒙古等），美洲印第安人也属黄色人种'},
+ {name:'黑色人种（尼格罗人种）',skin:'肤色黝黑',hair:'头发卷曲',nose:'嘴唇较厚',dist:'撒哈拉以南非洲，美洲的黑人多为奴隶贸易迁入的后裔'}
+];
+// 六大语言与使用人数（约数：母语+部分使用者口径有差异，教学用概数）
+const LANGUAGES=[['汉语','世界使用人数最多的语言（母语约 9.4 亿人），主要在中国、东南亚华人社区'],
+ ['英语','世界流传最广的语言，约 60 国官方语言，国际交往通用'],
+ ['法语','主要在法国、非洲西部与中部、加拿大部分地区'],
+ ['俄语','俄罗斯及中亚部分地区通用'],
+ ['西班牙语','西班牙和拉丁美洲多数国家'],
+ ['阿拉伯语','西亚和北非阿拉伯国家']];
+const RELIGIONS=[
+ {name:'基督教',origin:'西亚（巴勒斯坦地区）',dist:'欧洲、美洲、大洋洲',followers:'世界信徒最多的宗教'},
+ {name:'伊斯兰教',origin:'西亚（阿拉伯半岛）',dist:'西亚、北非、中亚、东南亚部分地区',followers:'教徒称穆斯林'},
+ {name:'佛教',origin:'古印度（今尼泊尔一带）',dist:'东亚、东南亚（泰国、缅甸等为上座部佛教）',followers:'世界第三大宗教'}];
+// 发展差异（数据为 2023-2024 年世界银行/联合国口径约数，教学用）
+const DEV_COMPARE=[
+ {k:'人均国民总收入（美元，约）',dev:'4 万以上',deving:'约 1.3 万以下',dv:40,dv2:13},
+ {k:'产业结构',dev:'第三产业为主（60% 以上）',deving:'第一、二产业比重较高',dv:70,dv2:40},
+ {k:'城市化率（%，约）',dev:'80 以上',deving:'约 52',dv:80,dv2:52},
+ {k:'医疗与教育水平',dev:'普及、水平高',deving:'多数国家仍在发展中',dv:85,dv2:45}];
+const DEV_EXAMPLES={
+ dev:['美国','日本','德国','法国','英国','澳大利亚'],
+ deving:['中国','印度','巴西','尼日利亚','埃及','越南']};
+
+/* ---------- 中国的自然资源（第 13 课） ---------- */
+// 国土三调（2019 年底，自然资源部）单位：万公顷→换算亿亩
+const LAND_TYPES=[['耕地',19.18],['园地',3.03],['林地',42.62],['草地',39.68],['湿地',3.52],['城镇村及工矿用地',5.30]];
+// 中国人均资源 vs 世界平均（教材与官方公报常用口径）
+const PER_CAPITA=[
+ {k:'耕地（亩/人）',cn:1.36,world:3.4,src:'第三次全国国土调查'},
+ {k:'水资源（立方米/人，多年平均）',cn:2000,world:8000,src:'水利部'},
+ {k:'森林面积（公顷/人）',cn:0.16,world:0.6,src:'国家林草局'}];
+// 水资源：南 81% 北 19%（多年平均，水利部口径）；耕地：64% 在秦岭-淮河以北（三调）
+const WATER_LAND={waterS:81,waterN:19,landN:64,landS:36,
+ total2024:31123,use2024:5928,useAgri:'61.6%',snwd:'830 亿立方米以上（东、中线一期累计调水，惠及 1.95 亿人）'};
+// 可再生 / 非可再生资源分类
+const RES_CLASSIFY=[
+ ['阳光','re'],['土地','re'],['水','re'],['森林','re'],['草原','re'],['鱼虾','re'],
+ ['煤炭','non'],['石油','non'],['天然气','non'],['铁矿','non'],['铜矿','non']];
+// 新能源（国家能源局 2025 年底）
+const POWER_2025=[
+ {k:'太阳能发电',v:12.0,color:'#f4c56b'},{k:'风电',v:6.4,color:'#5f97ae'},
+ {k:'水电',v:4.5,color:'#4f8197'},{k:'火电',v:15.4,color:'#b0663a',note:'2025 年风光装机历史性超过火电'}];
+
+/* ---------- 中国的地域差异与区域发展（第 14 课） ---------- */
+// 四大地理区域（湘教版八下第五章）
+const FOUR_ZONES=[
+ {name:'北方地区',key:'黑土地、黄土地，旱地农业',line:'与南方地区以秦岭—淮河一线为界',climate:'温带季风气候为主，冬季寒冷干燥'},
+ {name:'南方地区',key:'水田农业，鱼米之乡',line:'与北方地区以秦岭—淮河一线为界',climate:'亚热带、热带季风气候，湿热'},
+ {name:'西北地区',key:'干旱——最突出的自然特征',line:'与北方地区以 400 毫米年等降水量线（大兴安岭—阴山—贺兰山）为界',climate:'温带大陆性气候，降水自东向西递减'},
+ {name:'青藏地区',key:'高寒——最突出的自然特征',line:'与其他区域以第一、二级阶梯分界线（昆仑山—祁连山—横断山）为界',climate:'高原山地气候，太阳辐射强、气温低'}];
+// 西北地区景观递变（自东向西）
+const NW_SEQUENCE=['草原','荒漠草原','荒漠'];
+// 黄土高原水土流失因果链
+const LOESS_CHAIN=[
+ {step:'土质疏松，多垂直裂隙',tag:'自然'},
+ {step:'夏季暴雨集中',tag:'自然'},
+ {step:'地表植被破坏（过垦过牧）',tag:'人为'},
+ {step:'流水侵蚀加剧',tag:'结果'},
+ {step:'地表千沟万壑',tag:'结果'}];
+const LOESS_FIX=[['缓坡地','修建梯田，种植耐旱作物'],['陡坡地','退耕还林还草，植树种草'],['沟道','打坝淤地，拦蓄泥沙'],['坡脚','修筑挡土坝等工程措施']];
+// 长江经济带（2026 年 1 月国新办发布会：十年成效）
+const YANGTZE_BELT={provinces:11,gdpShare:47.3,gdpShare2014:42.2,landShare:'约 21%',popShare:'约 43%',
+ waterQuality:'干流水质全线 Ⅱ 类，优良水质断面 96.5%',income:'居民人均可支配收入十年从 2.3 万元提高到 4.4 万元',
+ throughput:'干线港口货物吞吐量 42 亿吨，稳居世界内河第一',cities:['上海','江苏','浙江','安徽','江西','湖北','湖南','重庆','四川','云南','贵州']};
+// 区域发展案例卡
+const REGION_CASES=[
+ {name:'东北三省',pos:'纬度最高、冬季漫长',agri:'黑土肥沃，"北大仓"春小麦、玉米、大豆',ind:'重工业基地（钢、机械、石油），振兴东北老工业基地'},
+ {name:'黄土高原',pos:'沟壑纵横、水土流失最严重',agri:'治理：梯田、淤地坝、退耕还林还草',ind:'煤炭资源丰富'},
+ {name:'长江三角洲',pos:'鱼米之乡、通江达海',agri:'水田农业发达',ind:'全国最大城市群，综合实力最强'},
+ {name:'香港·澳门·深圳所在的粤港澳大湾区',pos:'改革开放前沿、外向型经济',agri:'—',ind:'国际科技创新中心，世界级制造业'}];
+
+
 const API={rad,deg,clamp,mod,normLon,longitudeText,latitudeText,hemispheres,description,camVec,toScreen,project,visiblePath,meridian,parallel,
  subsolarLongitude,localTime,timeText,sunDot,nightShape,
  sunPosition,daysInYear,dayOfYear,dateOf,declinationOn,seasonMarkers,dayLength,noonAltitude,hoursText,directSunDates,
@@ -394,6 +532,10 @@ const API={rad,deg,clamp,mod,normLon,longitudeText,latitudeText,hemispheres,desc
  GBA,GBA_CITIES,density,CROSSINGS,SZ_2024,
  PROVINCES,LAND_NEIGHBORS,SEA_NEIGHBORS,NOT_NEIGHBORS,EXTREMES,sunriseGapMinutes,POPULATION,naturalGrowth,ETHNIC_TOP,FESTIVALS,
  WIND_FLOOR,windForce,cycloneGrade,SZ_WARNINGS,AQI_LEVELS,aqiLevel,dewPoint,
- INDUSTRY,ACTIVITIES,TRANSPORT_MODES,TRANSPORT_CASES};
+ INDUSTRY,ACTIVITIES,TRANSPORT_MODES,TRANSPORT_CASES,
+ PLATES,BOUNDARY_CASES,plateProfile,DRIFT_EVIDENCE,
+ WORLD_POP,POP_HISTORY,POP_DENSE,POP_SPARSE,POP_RATES,RACES,LANGUAGES,RELIGIONS,DEV_COMPARE,DEV_EXAMPLES,
+ LAND_TYPES,PER_CAPITA,WATER_LAND,RES_CLASSIFY,POWER_2025,
+ FOUR_ZONES,NW_SEQUENCE,LOESS_CHAIN,LOESS_FIX,YANGTZE_BELT,REGION_CASES};
 if(typeof module==='object'&&module.exports)module.exports=API;else root.Geo=API;
 })(typeof globalThis!=='undefined'?globalThis:this);

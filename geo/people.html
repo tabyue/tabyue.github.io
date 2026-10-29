@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="世界人口什么时候突破 80 亿？自然增长率怎么算？三大人种、六大语言、三大宗教分布在哪里？拖动出生率死亡率，看人口怎么变。地理互动馆第 12 课，对应湘教版七年级第四、六章。">
+<meta property="og:title" content="地理互动馆 · 世界的居民与文化">
+<meta property="og:description" content="拖动出生率和死亡率，看世界人口怎么增长。">
+<title>世界的居民与文化 · 地理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<script defer src="model.js"></script>
+<script defer src="common.js"></script>
+<script defer src="people.js"></script>
+</head>
+<body data-module="people">
+<header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 12 课 <span>/</span> 湘教版七上 第四、六章</p><h1>世界的居民与文化</h1><p class="subtitle">人口为什么爆炸式增长又慢下来？人种、语言、宗教与发展差异一课看完。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="世界人口增长">
+<h2>世界人口 300 年：从 5 亿到 80 亿</h2>
+<p class="panel-sub">绿色曲线是联合国估计的历史；最后一段是到 2084 年峰值的预测。</p>
+<svg id="pop" viewBox="0 0 420 230" role="img" aria-label="世界人口增长曲线" style="margin-top:8px"></svg>
+<div class="control" style="margin-top:10px"><div class="control-heading"><label for="birth">出生率</label><output id="birth-out">10.2 ‰</output></div><input id="birth" type="range" min="1" max="50" step="0.1" value="10.2"><div class="ruler"><span>1‰</span><span>50‰</span></div></div>
+<div class="control" style="margin-top:6px"><div class="control-heading"><label for="death">死亡率</label><output id="death-out">7.3 ‰</output></div><input id="death" type="range" min="1" max="50" step="0.1" value="7.3"><div class="ruler"><span>1‰</span><span>50‰</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="自然增长率读数">
+<div class="readout-head"><h2>自然增长率</h2><span class="badge" id="growth-badge">增长</span></div>
+<p class="lead"><output id="growth-out">2.9‰</output><span class="muted" style="font-size:14px">＝ 出生率 − 死亡率</span></p>
+<p class="note" id="growth-note"></p>
+<p class="source">2025 年世界人口约 82.3 亿，年增约 0.85%。数据来源：联合国《世界人口展望 2024》修订版。</p>
+</section>
+<section class="card panel"><h2>人口大国（2025 年）</h2>
+<ul class="fact-list" id="pop-top"></ul>
+<p class="note" style="margin-top:8px">人口前两位的国家合计约占世界 35%。印度于 2023 年超过中国，成为世界第一人口大国。</p>
+</section>
+</div>
+</div>
+<section class="card panel" aria-label="人口分布"><h2>哪里人挤人，哪里没人烟？</h2><p class="panel-sub">中低纬度的沿海平原是人口稠密区；极端干旱、湿热、严寒和高寒地区人口稀少。</p>
+<div class="two-col">
+<div><h3 style="font-size:13.5px;color:#2f6a4a">四大人口稠密区</h3><ul class="fact-list" id="dense-list"></ul></div>
+<div><h3 style="font-size:13.5px;color:#8a6a2c">人口稀疏区</h3><ul class="fact-list" id="sparse-list"></ul></div>
+</div>
+</section>
+<section class="card panel" aria-label="人种语言宗教"><h2>三大人种 · 六大语言 · 三大宗教</h2><p class="panel-sub">人种按体质特征划分，无优劣之分；语言和宗教是文化的重要载体。</p>
+<ul class="fact-list" id="race-list"></ul>
+<p class="note" style="margin-top:8px">⚠ 人种只有外貌差异，没有高低贵贱。任何种族歧视的言行都是错误的。</p>
+<div class="two-col" style="margin-top:12px">
+<div><h3 style="font-size:13.5px;color:#2f6377">六大语言（均为联合国工作语言）</h3><ul class="fact-list" id="lang-list"></ul></div>
+<div><h3 style="font-size:13.5px;color:#7a4520">三大宗教</h3><ul class="fact-list" id="rel-list"></ul></div>
+</div>
+</section>
+<section class="card panel" aria-label="发展差异"><h2>发达国家与发展中国家</h2><p class="panel-sub">按发展水平，世界国家分为发达国家和发展中国家。发展中国家主要分布在南半球和北半球南部，"南南合作""南北对话"由此得名。</p>
+<div id="dev-rows"></div>
+<div class="two-col" style="margin-top:12px">
+<div><h3 style="font-size:13.5px;color:#2f6a4a">发达国家（部分）</h3><p class="note" id="dev-list"></p></div>
+<div><h3 style="font-size:13.5px;color:#9c6334">发展中国家（部分）</h3><p class="note" id="deving-list"></p></div>
+</div>
+<p class="source">对比数据为世界银行与联合国近年口径的约数，用于教学示意。中国是最大的发展中国家。</p>
+</section>
+<section class="quiz" aria-label="居民文化小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>链接会带上当前选择的出生率和死亡率。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button></div></section>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+</main>
+</body></html>
