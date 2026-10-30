@@ -202,3 +202,18 @@ input[type=range] { width: 100%; }
 .cube-grid button[aria-pressed=true] { background: #9fb4d8; border-color: #6f8ab8; }
 
 p.part-info { font-size: 13px; line-height: 1.62; color: var(--ink, #273043); margin: 8px 0 0; }
+
+
+/* —— 楷体只用于正文叙述；数字、公式、图内文字仍用无衬线体，保证清晰 —— */
+.bignum, .stat strong, .frac, var, .v, .formula, .radical,
+td.n, th, table.compare, table.steps,
+input, output, select, textarea, button,
+.quiz-nav .dot, .lv, .badge, .cover-sum,
+svg text, svg tspan {
+  font-family: var(--font-ui);
+}
+/* 标题和导语用楷体更有味道，但要稍稍加粗以免发虚 */
+h1, h2, h3, .page-heading .subtitle, .lead {
+  font-family: var(--font-kai);
+  letter-spacing: .01em;
+}

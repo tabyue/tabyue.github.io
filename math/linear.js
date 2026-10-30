@@ -19,15 +19,16 @@
       S('text', { x: ax.X(6.4), y: ax.Y(k * 6.4) - 5, 'font-size': 10, fill: '#8d95a6', 'text-anchor': 'end', text: 'y = ' + M.fmt(k) + 'x' }, L);
     }
     S('path', { d: M.curve(ax, function (x) { return k * x + b; }), fill: 'none', stroke: '#2f5aa8', 'stroke-width': 2.6 }, L);
-    /* 与 y 轴交点 */
+    /* 与 y 轴交点：标签放左侧，避开右边「向右 1 格」那组标注 */
     S('circle', { cx: ax.X(0), cy: ax.Y(b), r: 5, fill: '#c2603f', stroke: '#fff', 'stroke-width': 1.6 }, L);
-    S('text', { x: ax.X(0) + 8, y: ax.Y(b) - 7, 'font-size': 10.5, fill: '#a4492b', text: '(0, ' + M.fmt(b) + ')' }, L);
+    S('text', { x: ax.X(0) - 9, y: ax.Y(b) - 7, 'text-anchor': 'end', 'font-size': 10.5, fill: '#a4492b', text: '(0, ' + M.fmt(b) + ')' }, L);
     /* 与 x 轴交点 */
     if (k !== 0) {
       var x0 = -b / k;
       if (x0 >= ax.xmin && x0 <= ax.xmax) {
         S('circle', { cx: ax.X(x0), cy: ax.Y(0), r: 5, fill: '#3f7d6a', stroke: '#fff', 'stroke-width': 1.6 }, L);
-        S('text', { x: ax.X(x0), y: ax.Y(0) + 17, 'text-anchor': 'middle', 'font-size': 10.5, fill: '#2f6a57', text: '(' + M.fmt(x0, 2) + ', 0)' }, L);
+        /* 再往下一行，避开 x 轴自己的刻度数字 */
+        S('text', { x: ax.X(x0) + 6, y: ax.Y(0) + 30, 'font-size': 10.5, fill: '#2f6a57', text: '(' + M.fmt(x0, 2) + ', 0)' }, L);
       }
     }
     /* 画出「每向右 1 格，上升 k 格」 */
@@ -35,8 +36,7 @@
       var x1 = 1, y1 = k * x1 + b;
       S('line', { x1: ax.X(0), y1: ax.Y(b), x2: ax.X(1), y2: ax.Y(b), stroke: '#c2603f', 'stroke-width': 1.4 }, L);
       S('line', { x1: ax.X(1), y1: ax.Y(b), x2: ax.X(1), y2: ax.Y(y1), stroke: '#c2603f', 'stroke-width': 1.4 }, L);
-      S('text', { x: ax.X(0.5), y: ax.Y(b) + 13, 'text-anchor': 'middle', 'font-size': 9.5, fill: '#a4492b', text: '右 1' }, L);
-      S('text', { x: ax.X(1) + 5, y: ax.Y((b + y1) / 2) + 3, 'font-size': 9.5, fill: '#a4492b', text: (k > 0 ? '上 ' : '下 ') + M.fmt(Math.abs(k)) }, L);
+      S('text', { x: ax.X(1) + 5, y: ax.Y((b + y1) / 2) + 3, 'font-size': 9.5, fill: '#a4492b', text: '右 1 格，' + (k > 0 ? '上 ' : '下 ') + M.fmt(Math.abs(k)) + ' 格' }, L);
     }
 
     M.$('#fn-expr').innerHTML = 'y = ' + (k === 1 ? '' : (k === -1 ? '−' : M.fmt(k))) + 'x' + (b === 0 ? '' : M.sign(b));
