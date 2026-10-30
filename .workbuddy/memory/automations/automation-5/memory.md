@@ -135,6 +135,13 @@
 - 校验：sync + sitemap（**545 章节**）+ health_check + verify_learn_structure **首轮即 ALL OK**；unittest 34/34、node UI 32/32。已 push（402d879→284dc26），远程 HEAD 已核对一致。
 - 新坑：① **`gh api search/repositories` 走 subprocess 会挂死**（6 查询脚本跑 8 分钟无输出）。改用 urllib 直连 `api.github.com/search/repositories` + `Bearer $(gh auth token)`，4 查询秒回——**以后批量搜 GitHub 一律用 urllib**；② **本仓库会被另一个自动化并行推送**（remote 多了 /geo/ /bio/ 互动课件 4 个提交），push 被拒时 `git fetch <url> main` + `git rebase FETCH_HEAD` 再推；③ **learning-path.json 在 `data/` 根**（旧坑复现），且 lp bump 必须放在「章节已存在则跳过」分支之外，否则幂等重跑时 lastUpdated 不更新；④ 外层 `r'''` 时代码块 docstring 必须用 `"""`（用 `'''` 报 `IndentationError: unexpected indent`）；⑤ 新增章节 `estimatedMinutes` 用 `round(chars/400)`，别用 ~113 字/分钟的老口径。
 
+### 2026-10-30 08:17—09:10
+- 投稿箱：无新投稿。开工时工作树干净、HEAD==origin/main（e4de6a9）。
+- 数据：新闻 +10（n559—n568）、论文 +5（p287—p291，含 detail）、开源 +4（os218—os221，含 detail + 报告页）、招聘 +6（j285—j290）、资源新增 r024（开放世界评测 / 双臂采集 / 数据集可观测性，category 取众数「学术资源」）。
+- 学习：sim-to-real「分布外鲁棒性工程：把『见过什么』变成可检索的运动先验」（7.4K，tier3，联动 p287 R2A + p290 S2 + HandUMI）；training-inference-optimization「未来监督的两级开关：JAM、前瞻损失与训练期专用预测头」（7.4K，tier3，联动 p288 JAM + LeWAM + INTACT-JEPA）。
+- 校验：sync + sitemap（**547 章节**）+ health_check + verify_learn_structure **首轮即 ALL OK**；unittest 34/34、node UI 32/32。已 push（fd8918d→d50e431），远程 HEAD 已核对一致。
+- 新坑：① **push 被抢先推送的 geo 提交挡住**（另一个自动化并行），`git fetch <url> main` + `git rebase FETCH_HEAD` 解决；② **rebase 在空 GIT_CONFIG_GLOBAL 下报 `unable to auto-detect email address`**——push 用的空 cfg trick 会清掉 identity，rebase 必须补 `-c user.name=tabyue -c user.email=tabyue@tencent.com`（commit 不受影响）；③ rebase 失败留下 `.git/rebase-merge` 会让后续 rebase 直接中止且 HEAD detached，先 `git rebase --abort` 回到 main（原提交在 reflog 里安全）再重来；④ `papers-index.json` 有 `arxiv: null` 的条目，查重必须 `x.get('arxiv') or ''`；⑤ `test_learn_ui.cjs` 的章节数已改成动态计算，新增章节后**不再需要**改硬编码数字；⑥ 论文发现仍靠 `huggingface.co/papers/date/<date>`，一次拿 2—3 个候选后再逐个 WebFetch arXiv 核对（本轮 R2A 与 JAM 同日 13:28/13:29 提交）。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
