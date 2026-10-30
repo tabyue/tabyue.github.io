@@ -123,6 +123,64 @@ function runQuiz(qs){
  $('next-question').addEventListener('click',()=>{qi=(qi+1)%qs.length;show();});
  show();
 }
-window.Site={MODULES,$,S,esc,svgPoint,setRange,pressed,replaceHash,reduce,optionQuiz,shuffle,matchRows,runQuiz,
+/* —— 知识自测：独立于各课原有的互动练习，统一用 kq- 前缀的一套 DOM ——
+   每题 {level:'base'|'mid'|'trap', title, desc, options:[], answer, hint, explain}
+   做对变绿、做错变红，可点题号跳题；全部做完按「第一次作答」给成绩。 */
+const LEVELS={base:['基础','lv-base'],mid:['提高','lv-mid'],trap:['易错','lv-trap']};
+function knowledgeQuiz(items){
+ const card=$('kq-card'); if(!card||!items||!items.length)return;
+ let i=0; const first=[],solved=[];
+ const nav=document.createElement('div'); nav.className='quiz-nav'; card.insertBefore(nav,card.firstChild);
+ const badge=document.createElement('span'); badge.className='lv';
+ const label=$('kq-label'); if(label&&label.parentNode)label.parentNode.insertBefore(badge,label.nextSibling);
+ const result=document.createElement('div'); result.className='quiz-result'; result.hidden=true; result.setAttribute('role','status'); card.appendChild(result);
+ const renderNav=()=>{nav.innerHTML='';items.forEach((q,k)=>{
+   const b=document.createElement('button'); b.type='button'; b.textContent=String(k+1);
+   b.className='dot'+(k===i?' on':'')+(solved[k]?' ok':(first[k]===false?' bad':''));
+   b.setAttribute('aria-label','第 '+(k+1)+' 题'+(solved[k]?'（已答对）':''));
+   b.addEventListener('click',()=>{i=k;show();}); nav.appendChild(b);});};
+ const summary=()=>{let good=0;const weak=[];
+   items.forEach((q,k)=>{if(first[k])good++;else weak.push(q);});
+   const n=items.length;
+   const tip=good===n?'全部一次做对，这一课掌握得很扎实。'
+    :good>=n-2?'只有少数几题卡了一下，把下面这几题再想一遍就好。'
+    :'错得有点多，建议回到上面的模型重新动手试一遍，再来做题。';
+   result.hidden=false;
+   result.innerHTML='<h4>本课自测：一次做对 '+good+' / '+n+'</h4><p>'+tip+'</p>'+
+    (weak.length?'<p class="weak">需要再看的：'+weak.map(q=>'<span>'+(LEVELS[q.level]?LEVELS[q.level][0]+'·':'')+q.title+'</span>').join('')+'</p>':'');};
+ const pass=(msg)=>{const fb=$('kq-feedback');
+   fb.className='feedback success'; fb.innerHTML='答对了！'+(msg||'');
+   if(first[i]===undefined)first[i]=true; solved[i]=true;
+   const nb=$('kq-next'); nb.hidden=false; renderNav();
+   if(items.every((_,k)=>solved[k])){summary();nb.textContent='重新做一遍';nb.dataset.restart='1';}
+   else{nb.textContent=i<items.length-1?'下一题':'回到还没做的题';delete nb.dataset.restart;}};
+ const show=()=>{const q=items[i];
+   $('kq-step').textContent=(i+1)+' / '+items.length;
+   $('kq-title').textContent=q.title;
+   $('kq-desc').innerHTML=q.desc||'';
+   if(label)label.textContent='选一个答案';
+   const lv=LEVELS[q.level];
+   if(lv){badge.hidden=false;badge.textContent=lv[0];badge.className='lv '+lv[1];}else badge.hidden=true;
+   const fb=$('kq-feedback'); fb.textContent=''; fb.className='feedback';
+   $('kq-next').hidden=true; result.hidden=true;
+   const box=$('kq-options'); box.innerHTML='';
+   box.className='option-grid'+(q.options.some(o=>o.length>9)?' single':'');
+   shuffle(q.options.map((o,k)=>[k,o])).forEach(([k,o])=>{
+     const b=document.createElement('button'); b.type='button'; b.innerHTML=o; b.dataset.k=String(k);
+     b.addEventListener('click',()=>{
+       [...box.querySelectorAll('button')].forEach(x=>x.classList.remove('correct','wrong'));
+       if(k===q.answer){b.classList.add('correct');pass(q.explain);}
+       else{b.classList.add('wrong');if(first[i]===undefined)first[i]=false;
+         fb.className='feedback retry'; fb.innerHTML=q.hint||'再想想，可以回到上面的模型里看看。'; renderNav();}});
+     box.appendChild(b);});
+   renderNav();};
+ $('kq-next').addEventListener('click',()=>{const nb=$('kq-next');
+   if(nb.dataset.restart){first.length=0;solved.length=0;i=0;delete nb.dataset.restart;}
+   else{let next=-1;for(let k=1;k<=items.length;k++){const j=(i+k)%items.length;if(!solved[j]){next=j;break;}}
+    i=next>=0?next:(i+1)%items.length;}
+   show();});
+ show();
+}
+window.Site={MODULES,$,S,esc,svgPoint,setRange,pressed,replaceHash,reduce,optionQuiz,shuffle,matchRows,runQuiz,knowledgeQuiz,
  setShareState(fn){stateHook=fn;},openShare,copyLink};
 })();

@@ -159,3 +159,15 @@ updateCoordinates(state.lon,state.lat,false);
 if(state.dn){const t=state.t;setDayNight(true);updateTime(t);}else{Site.setRange($('bj-time'),state.t,G.timeText(state.t));}
 paint();
 })();
+
+/* —— 知识自测（自动生成，勿手改） —— */
+Site.knowledgeQuiz([
+ {level:'base',title:'赤道的纬度是多少？',desc:'它是南北半球的分界线。',options:['0°','90°','180°','23.5°'],answer:0,hint:'纬度的起点。',explain:'赤道是 <b>0° 纬线</b>，也是最长的纬线。纬度最大到 90°（南北极点）。'},
+ {level:'base',title:'经线指示什么方向？',desc:'经线连接南北两极。',options:['南北方向','东西方向','西北方向','随位置而变'],answer:0,hint:'它从北极连到南极。',explain:'经线指示<b>南北</b>，纬线指示<b>东西</b>。这组对应最容易记反。'},
+ {level:'base',title:'地球自转一周大约多久？',desc:'自转产生昼夜交替。',options:['24 小时','365 天','12 小时','30 天'],answer:0,hint:'一天的长度。',explain:'自转约 <b>24 小时</b>（一天）→ 昼夜交替；公转约 365 天（一年）→ 四季更替。'},
+ {level:'mid',title:'东西半球的分界线是？',desc:'不是 0° 和 180°。',options:['20°W 和 160°E','0° 和 180°','赤道','南北回归线'],answer:0,hint:'为了不把一个大洲劈成两半。',explain:'以 <b>20°W 和 160°E</b> 划分，避免把非洲、欧洲分到两个半球。用 0° 和 180° 是最经典的错误。'},
+ {level:'mid',title:'所有经线的长度有什么特点？',desc:'想想经线是什么形状。',options:['都相等','赤道上的最长','越靠两极越长','没有规律'],answer:0,hint:'每条经线都是半圆。',explain:'所有经线<b>等长</b>；纬线则<b>赤道最长</b>、向两极变短，到极点成为一点。'},
+ {level:'mid',title:'某地位于 40°N、116°E，在哪个半球？',desc:'分别判断南北和东西。',options:['北半球、东半球','北半球、西半球','南半球、东半球','南半球、西半球'],answer:0,hint:'N 是北纬；东西半球要和 20°W、160°E 比。',explain:'N → <b>北半球</b>；116°E 在 20°W 以东、160°E 以西 → <b>东半球</b>。这是北京的大致位置。'},
+ {level:'mid',title:'为什么东边的城市先迎来日出？',desc:'和自转方向有关。',options:['地球自西向东自转','地球自东向西自转','东边海拔高','东边离太阳近'],answer:0,hint:'谁先转到向阳面？',explain:'地球<b>自西向东</b>自转，东边先转到向阳侧，所以<b>东早西晚</b>。深圳比乌鲁木齐早见日出。'},
+ {level:'trap',title:'纬度越高，纬线越长还是越短？',desc:'上面转动地球看纬线圈的变化。',options:['越短，极点缩成一个点','越长','不变','先长后短'],answer:0,hint:'赤道最长，往两极怎么变？',explain:'纬度越高纬线<b>越短</b>，极点处缩成一点。注意<b>经线才都一样长</b>——这个差别年年考。'}
+]);
