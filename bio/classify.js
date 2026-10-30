@@ -1,4 +1,4 @@
-/* 第 2 课 · 生物的分类 */
+/* 第 4 课 · 生物的分类 */
 (function () {
   'use strict';
   var B = window.Bio, H = B.html;

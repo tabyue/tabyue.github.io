@@ -1,4 +1,4 @@
-/* 第 9 课 · 植物、动物与微生物的类群 */
+/* 第 3 课 · 植物、动物与微生物的类群 */
 (function () {
   'use strict';
   var B = window.Bio, H = B.html;

@@ -1,4 +1,4 @@
-/* 第 15 课 · 生物的生殖和发育 */
+/* 第 14 课 · 生物的生殖和发育 */
 (function () {
   'use strict';
   var B = window.Bio, H = B.html;

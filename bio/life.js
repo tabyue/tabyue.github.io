@@ -1,4 +1,4 @@
-/* 第 8 课 · 生物的特征与细胞分裂 */
+/* 第 1 课 · 生物的特征与细胞分裂 */
 (function () {
   'use strict';
   var B = window.Bio, S = B.svg, H = B.html;

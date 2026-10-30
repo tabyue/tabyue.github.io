@@ -1,4 +1,4 @@
-/* 第 3 课 · 光合作用与呼吸作用 */
+/* 第 6 课 · 光合作用与呼吸作用 */
 (function () {
   'use strict';
   var B = window.Bio, S = B.svg;

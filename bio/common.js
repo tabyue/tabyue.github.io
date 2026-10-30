@@ -3,21 +3,21 @@
   'use strict';
 
   var LESSONS = [
-    { id: 'cell', file: 'cell.html', no: 1, title: '显微镜与细胞', book: '七上' },
-    { id: 'classify', file: 'classify.html', no: 2, title: '生物的分类', book: '七上' },
-    { id: 'plant', file: 'plant.html', no: 3, title: '光合作用与呼吸作用', book: '七下' },
-    { id: 'body', file: 'body.html', no: 4, title: '消化与血液循环', book: '七下' },
-    { id: 'nerve', file: 'nerve.html', no: 5, title: '反射与眼睛', book: '八上' },
-    { id: 'eco', file: 'eco.html', no: 6, title: '深圳湾的生态系统', book: '八上' },
-    { id: 'gene', file: 'gene.html', no: 7, title: '遗传与变异', book: '八下' },
-    { id: 'life', file: 'life.html', no: 8, title: '生物的特征与细胞分裂', book: '七上' },
-    { id: 'groups', file: 'groups.html', no: 9, title: '植物、动物与微生物', book: '七上' },
-    { id: 'grow', file: 'grow.html', no: 10, title: '植物的一生与蒸腾作用', book: '七下' },
-    { id: 'human', file: 'human.html', no: 11, title: '生殖、青春期与营养', book: '七下' },
-    { id: 'breath', file: 'breath.html', no: 12, title: '呼吸与废物排出', book: '七下' },
-    { id: 'move', file: 'move.html', no: 13, title: '运动、听觉与激素', book: '八上' },
-    { id: 'health', file: 'health.html', no: 14, title: '健康地生活', book: '八上' },
-    { id: 'repro', file: 'repro.html', no: 15, title: '生物的生殖和发育', book: '八下' },
+    { id: 'life', file: 'life.html', no: 1, title: '生物的特征与细胞分裂', book: '七上' },
+    { id: 'cell', file: 'cell.html', no: 2, title: '显微镜与细胞', book: '七上' },
+    { id: 'groups', file: 'groups.html', no: 3, title: '植物、动物与微生物', book: '七上' },
+    { id: 'classify', file: 'classify.html', no: 4, title: '生物的分类', book: '七上' },
+    { id: 'grow', file: 'grow.html', no: 5, title: '植物的一生与蒸腾作用', book: '七下' },
+    { id: 'plant', file: 'plant.html', no: 6, title: '光合作用与呼吸作用', book: '七下' },
+    { id: 'human', file: 'human.html', no: 7, title: '生殖、青春期与营养', book: '七下' },
+    { id: 'body', file: 'body.html', no: 8, title: '消化与血液循环', book: '七下' },
+    { id: 'breath', file: 'breath.html', no: 9, title: '呼吸与废物排出', book: '七下' },
+    { id: 'nerve', file: 'nerve.html', no: 10, title: '反射与眼睛', book: '八上' },
+    { id: 'move', file: 'move.html', no: 11, title: '运动、听觉与激素', book: '八上' },
+    { id: 'health', file: 'health.html', no: 12, title: '健康地生活', book: '八上' },
+    { id: 'eco', file: 'eco.html', no: 13, title: '深圳湾的生态系统', book: '八上' },
+    { id: 'repro', file: 'repro.html', no: 14, title: '生物的生殖和发育', book: '八下' },
+    { id: 'gene', file: 'gene.html', no: 15, title: '遗传与变异', book: '八下' },
     { id: 'evolve', file: 'evolve.html', no: 16, title: '进化与多样性保护', book: '八下' }
   ];
 

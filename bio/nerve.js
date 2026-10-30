@@ -1,4 +1,4 @@
-/* 第 5 课 · 反射与眼睛 */
+/* 第 10 课 · 反射与眼睛 */
 (function () {
   'use strict';
   var B = window.Bio, S = B.svg;

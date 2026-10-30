@@ -1,4 +1,4 @@
-/* 第 4 课 · 消化与血液循环 */
+/* 第 8 课 · 消化与血液循环 */
 (function () {
   'use strict';
   var B = window.Bio, S = B.svg;

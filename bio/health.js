@@ -1,4 +1,4 @@
-/* 第 14 课 · 健康地生活 */
+/* 第 12 课 · 健康地生活 */
 (function () {
   'use strict';
   var B = window.Bio;

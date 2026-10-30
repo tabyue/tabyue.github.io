@@ -1,4 +1,4 @@
-/* 第 11 课 · 人的生殖、青春期与营养 */
+/* 第 7 课 · 人的生殖、青春期与营养 */
 (function () {
   'use strict';
   var B = window.Bio, H = B.html;

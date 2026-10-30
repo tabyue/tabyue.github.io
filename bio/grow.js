@@ -1,4 +1,4 @@
-/* 第 10 课 · 植物的一生与蒸腾作用 */
+/* 第 5 课 · 植物的一生与蒸腾作用 */
 (function () {
   'use strict';
   var B = window.Bio, S = B.svg;

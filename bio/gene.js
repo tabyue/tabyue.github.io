@@ -1,4 +1,4 @@
-/* 第 7 课 · 遗传与变异 */
+/* 第 15 课 · 遗传与变异 */
 (function () {
   'use strict';
   var B = window.Bio, S = B.svg, H = B.html;

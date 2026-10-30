@@ -1,4 +1,4 @@
-/* 第 13 课 · 运动、听觉与激素调节 */
+/* 第 11 课 · 运动、听觉与激素调节 */
 (function () {
   'use strict';
   var B = window.Bio, S = B.svg, H = B.html;

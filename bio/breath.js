@@ -1,4 +1,4 @@
-/* 第 12 课 · 人体的呼吸与废物排出 */
+/* 第 9 课 · 人体的呼吸与废物排出 */
 (function () {
   'use strict';
   var B = window.Bio, S = B.svg, H = B.html;

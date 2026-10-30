@@ -1,4 +1,4 @@
-/* 第 1 课 · 显微镜与细胞 */
+/* 第 2 课 · 显微镜与细胞 */
 (function () {
   'use strict';
   var B = window.Bio, S = B.svg;
