@@ -1,7 +1,7 @@
 /* 地理互动馆 · 多课程共享组件（叠加在 style.css 之上） */
 .course-nav{max-width:1040px;margin:4px auto 0;padding:0 26px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .course-nav::-webkit-scrollbar{display:none}
-.course-nav a{flex:none;font-size:12px;padding:7px 13px;border-radius:16px;background:#eef2e8;color:#5f7259;white-space:nowrap}
+.course-nav a{flex:none;font-size:12px;padding:7px 13px;border-radius:16px;background:#edf1f7;color:#5d6b85;white-space:nowrap}
 .course-nav a b{font-weight:600;color:#8a9a82;margin-right:5px}
 .course-nav a[aria-current="page"]{background:var(--green);color:#fff}
 .course-nav a[aria-current="page"] b{color:#cfe0c8}
@@ -11,7 +11,7 @@
 .figure svg{display:block;width:100%;height:auto;overflow:visible;user-select:none;-webkit-user-select:none}
 .figure text{font-family:inherit}
 .chips{display:flex;flex-wrap:wrap;gap:7px}
-.chips button{font-size:12px;padding:8px 12px;border-radius:10px;background:#f0f4e9;color:#56694f;min-height:36px}
+.chips button{font-size:12px;padding:8px 12px;border-radius:10px;background:#eef2f8;color:#56694f;min-height:36px}
 .chips button[aria-pressed="true"],.chips button.selected{background:var(--green);color:#fff}
 .chips.small button{font-size:11px;padding:6px 10px;min-height:32px}
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin:14px 0 6px}
@@ -40,11 +40,11 @@
 .choice-row.wrong{background:#fbf1e6;border-color:#efd8bd}
 .choice-row .verdict{font-size:11px;margin-top:4px;color:var(--muted)}
 .option-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
-.option-grid button{font-size:12.5px;padding:11px 10px;border-radius:11px;background:#f0f4e9;color:#455d48;min-height:42px;text-align:center;line-height:1.4}
-.option-grid button.correct{background:#d9ead1;color:#2f5a44;font-weight:600}
+.option-grid button{font-size:12.5px;padding:11px 10px;border-radius:11px;background:#eef2f8;color:#455d48;min-height:42px;text-align:center;line-height:1.4}
+.option-grid button.correct{background:#d9ead1;color:#2f4473;font-weight:600}
 .option-grid button.wrong{background:#f6e2cc;color:#8b5d33}
 .feedback{font-size:12px;line-height:1.85;margin-top:10px;min-height:1px}
-.feedback.success{color:#396b57}.feedback.retry{color:#9c6334}
+.feedback.success{color:#2f5aa8}.feedback.retry{color:#9c6334}
 .compare{width:100%;border-collapse:collapse;font-size:12px}
 .compare th,.compare td{padding:9px 8px;text-align:left;border-bottom:1px solid #edf0e8;line-height:1.6;vertical-align:top}
 .compare th{font-size:11px;color:var(--muted);font-weight:500}
@@ -65,13 +65,13 @@
 .toggle-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .bar-list{display:flex;flex-direction:column;gap:8px}
 .bar-item{display:grid;grid-template-columns:56px 1fr 64px;gap:9px;align-items:center;font-size:12px}
-.bar-item .track{height:14px;background:#f0f3eb;border-radius:7px;overflow:hidden}
-.bar-item .fill{height:100%;background:#8fae8a;border-radius:7px}
+.bar-item .track{height:14px;background:#eef1f6;border-radius:7px;overflow:hidden}
+.bar-item .fill{height:100%;background:#8aa3cc;border-radius:7px}
 .bar-item.ocean .fill{background:#7fa6b3}
 .bar-item em{font-style:normal;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
 .order-pick{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 6px}
-.order-pick button{font-size:12px;padding:8px 12px;border-radius:10px;background:#f0f4e9;color:#4c6247;min-height:36px}
-.order-pick button[disabled]{background:#dbe8d3;color:#2f5a44;opacity:1}
+.order-pick button{font-size:12px;padding:8px 12px;border-radius:10px;background:#eef2f8;color:#4a5a78;min-height:36px}
+.order-pick button[disabled]{background:#dae3f3;color:#2f4473;opacity:1}
 .order-result{font-size:12px;color:var(--muted);min-height:20px}
 .hub-hero{padding:34px 0 26px}
 .hub-hero h1{font-size:40px}
@@ -84,7 +84,7 @@
 .hub-card ul{margin:0 0 14px;padding-left:16px;font-size:12px;color:var(--muted);line-height:1.85;flex:1}
 .hub-card .go{font-size:12.5px;color:var(--green);font-weight:600}
 .hub-promise{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.hub-promise span{font-size:11px;color:#5f7259;background:#e6eedd;border-radius:12px;padding:5px 10px}
+.hub-promise span{font-size:11px;color:#5d6b85;background:#e6edf7;border-radius:12px;padding:5px 10px}
 .legend-inline{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:8px}
 .legend-inline i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:5px;vertical-align:middle}
 .svg-hit{cursor:pointer}

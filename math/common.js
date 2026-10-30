@@ -335,20 +335,49 @@
 
   /* —— 小练习引擎 ——
      { title, desc, label, button, setup(), check() -> {ok, msg} }   检查模型当前状态
-     { title, desc, label, options:[...], answer, hint, explain }     选择题（选项每次打乱） */
+     { title, desc, label, options:[...], answer, hint, explain }     选择题（选项每次打乱）
+     可选 level: 'base' 基础 / 'mid' 提高 / 'trap' 易错（专考本课那个坑） */
+  var LEVELS = { base: ['基础', 'lv-base'], mid: ['提高', 'lv-mid'], trap: ['易错', 'lv-trap'] };
+
   function quiz(items) {
-    var i = 0, done = 0;
+    var i = 0;
+    var first = [];    /* 每题「第一次作答」对不对，用来算自测分 */
+    var solved = [];   /* 每题最终是否答对 */
     var stepEl = $('#quiz-step'), titleEl = $('#quiz-title'), descEl = $('#quiz-description'), labelEl = $('#quiz-label');
     var optsEl = $('#quiz-options'), checkBtn = $('#check-answer'), fb = $('#quiz-feedback'), nextBtn = $('#next-question');
     if (!titleEl) return;
+    var card = titleEl.parentNode;
+
+    /* 题号导航：做过的题变色，可以直接跳回去重做 */
+    var nav = html('div', { class: 'quiz-nav' });
+    card.insertBefore(nav, card.firstChild);
+    var badge = html('span', { class: 'lv', hidden: 'hidden' });
+    if (labelEl && labelEl.parentNode) labelEl.parentNode.insertBefore(badge, labelEl.nextSibling);
+    var result = html('div', { class: 'quiz-result', hidden: 'hidden', role: 'status' }, card);
+
+    function renderNav() {
+      nav.innerHTML = '';
+      items.forEach(function (q, k) {
+        var cls = 'dot';
+        if (k === i) cls += ' on';
+        if (solved[k]) cls += ' ok'; else if (first[k] === false) cls += ' bad';
+        var d = html('button', { type: 'button', class: cls, text: String(k + 1), 'aria-label': '第 ' + (k + 1) + ' 题' + (solved[k] ? '（已答对）' : '') }, nav);
+        d.addEventListener('click', function () { i = k; show(); });
+      });
+    }
+
     function show() {
       var q = items[i];
       stepEl.textContent = (i + 1) + ' / ' + items.length;
       titleEl.textContent = q.title;
       descEl.innerHTML = q.desc || '';
       if (labelEl) labelEl.textContent = q.label || (q.options ? '选一个答案' : '在上面的模型里动手操作');
+      var lv = LEVELS[q.level];
+      if (lv) { badge.hidden = false; badge.textContent = lv[0]; badge.className = 'lv ' + lv[1]; }
+      else badge.hidden = true;
       fb.textContent = ''; fb.className = 'feedback';
       nextBtn.hidden = true;
+      result.hidden = true;
       if (q.options) {
         checkBtn.hidden = true;
         optsEl.hidden = false; optsEl.innerHTML = '';
@@ -361,7 +390,13 @@
           b.addEventListener('click', function () {
             $$('button', optsEl).forEach(function (x) { x.classList.remove('correct', 'wrong'); });
             if (k === q.answer) { b.classList.add('correct'); pass(q.explain); }
-            else { b.classList.add('wrong'); fb.className = 'feedback retry'; fb.textContent = q.hint || '再想想，可以回到上面的模型里试一试。'; }
+            else {
+              b.classList.add('wrong');
+              if (first[i] === undefined) first[i] = false;
+              fb.className = 'feedback retry';
+              fb.innerHTML = q.hint || '再想想，可以回到上面的模型里试一试。';
+              renderNav();
+            }
           });
         });
       } else {
@@ -370,20 +405,70 @@
         checkBtn.textContent = q.button || '检查我的操作';
         if (q.setup) q.setup();
       }
+      renderNav();
     }
+
     function pass(msg) {
       fb.className = 'feedback success';
       fb.innerHTML = '答对了！' + (msg || '');
-      done = Math.max(done, i + 1);
+      if (first[i] === undefined) first[i] = true;
+      solved[i] = true;
       nextBtn.hidden = false;
-      nextBtn.textContent = i < items.length - 1 ? '下一题' : '再从第 1 题做一遍';
+      renderNav();
+      var all = items.every(function (_, k) { return solved[k]; });
+      if (all) {
+        /* 全部做完：留在原地把成绩显示出来，按钮变成重做 */
+        summary();
+        nextBtn.textContent = '重新做一遍';
+        nextBtn.dataset.restart = '1';
+      } else {
+        nextBtn.textContent = i < items.length - 1 ? '下一题' : '回到还没做的题';
+        delete nextBtn.dataset.restart;
+      }
     }
+
+    function summary() {
+      var good = 0, weak = [];
+      items.forEach(function (q, k) {
+        if (first[k]) good++; else weak.push(q);
+      });
+      var n = items.length;
+      var tip;
+      if (good === n) tip = '全部一次做对，这一课掌握得很扎实。';
+      else if (good >= n - 2) tip = '只有少数几题卡了一下，回头把下面这几题再想一遍就好。';
+      else tip = '错得有点多，建议回到上面的模型重新动手试一遍，再来做题。';
+      result.hidden = false;
+      result.innerHTML = '<h4>本课自测：一次做对 ' + good + ' / ' + n + '</h4><p>' + tip + '</p>' +
+        (weak.length ? '<p class="weak">需要再看的：' + weak.map(function (q) {
+          return '<span>' + (LEVELS[q.level] ? LEVELS[q.level][0] + '·' : '') + q.title + '</span>';
+        }).join('') + '</p>' : '');
+    }
+
     checkBtn.addEventListener('click', function () {
       var r = items[i].check();
       if (r.ok) pass(r.msg);
-      else { fb.className = 'feedback retry'; fb.innerHTML = r.msg || '还差一点，再调一调。'; }
+      else {
+        if (first[i] === undefined) first[i] = false;
+        fb.className = 'feedback retry';
+        fb.innerHTML = r.msg || '还差一点，再调一调。';
+        renderNav();
+      }
     });
-    nextBtn.addEventListener('click', function () { i = (i + 1) % items.length; show(); });
+    nextBtn.addEventListener('click', function () {
+      if (nextBtn.dataset.restart) {
+        first = []; solved = []; i = 0;
+        delete nextBtn.dataset.restart;
+      } else {
+        /* 优先跳到还没做对的题，而不是机械地 +1 */
+        var next = -1, k;
+        for (k = 1; k <= items.length; k++) {
+          var j = (i + k) % items.length;
+          if (!solved[j]) { next = j; break; }
+        }
+        i = next >= 0 ? next : (i + 1) % items.length;
+      }
+      show();
+    });
     show();
   }
 
