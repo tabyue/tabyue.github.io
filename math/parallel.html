@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动两条直线的夹角，看同位角、内错角、同旁内角在平行与不平行时的区别；理解对顶角相等与邻补角互补。数学互动馆第 8 课，对应北师大版七年级下册第二章。">
+<meta property="og:title" content="数学互动馆 · 相交线与平行线">
+<title>相交线与平行线 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="parallel.js"></script>
+</head>
+<body data-module="parallel">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 8 课 <span>/</span> 七年级下册 第二章</p><h1>相交线与平行线</h1><p class="subtitle">拖一下就知道：先有平行才有角相等，反过来用就是判定。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="三线八角">
+<h2>两条直线被第三条截</h2>
+<p class="panel-sub">粉色圈住的就是当前这组角。把倾斜角调成 0，两条线就平行了。</p>
+<svg id="pl-fig" viewBox="0 0 320 200" role="img" aria-label="三线八角"></svg>
+<div class="ctl-row"><span>看哪组角</span><div class="chips small" id="pl-chips"></div></div>
+<div class="control" style="margin-top:10px"><div class="control-heading"><label for="pl-tilt">直线 b 的倾斜角</label><output id="pl-par">a ∥ b</output></div><input id="pl-tilt" type="range" min="-28" max="28" step="1" value="0"></div>
+<div class="control" style="margin-top:10px"><div class="control-heading"><label for="pl-cut">截线的角度</label><output>25° ~ 85°</output></div><input id="pl-cut" type="range" min="25" max="85" step="1" value="58"></div>
+<div class="toggle-row" style="margin-top:10px"><button class="secondary" id="pl-snap" type="button">变成平行</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="角的关系">
+<div class="readout-head"><h2 id="pl-name">同位角</h2><span class="badge">位置特征</span></div>
+<p class="note" id="pl-pos"></p>
+<table class="compare" id="pl-table"><thead><tr><th>这一对</th><th>度数</th><th>关系</th></tr></thead><tbody></tbody></table>
+<p class="lead" id="pl-text" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="对顶角">
+<h2>对顶角与邻补角</h2>
+<p class="panel-sub">转动其中一条直线，看红角和绿角怎么变。</p>
+<svg id="vt-fig" viewBox="0 0 300 190" role="img" aria-label="两条相交直线"></svg>
+<div class="control"><div class="control-heading"><label for="vt-range">其中一个角</label><output id="vt-a">50°</output></div><input id="vt-range" type="range" min="5" max="175" step="1" value="50"></div>
+</section>
+<section class="readout" aria-label="规律">
+<div class="readout-head"><h2>永远成立的两条</h2><span class="badge">邻补角 <span id="vt-b">130°</span></span></div>
+<p class="lead" id="vt-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 像两条铁轨和一根枕木</h3><p>两条铁轨平行，枕木斜着横过去，它和每条铁轨形成的角完全一样——这就是同位角相等。要是一条铁轨歪了，角立刻就不一样了。</p></aside>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>先认位置，再谈大小</h3><p>同位角在截线同旁、被截线同侧（像字母 F）；内错角在截线两旁、两线之间（像字母 Z）；同旁内角在截线同旁、两线之间（像字母 U）。</p></div></div>
+<div class="fact"><div><h3>平行是前提</h3><p>只有两直线平行，同位角、内错角才相等，同旁内角才互补。不平行时这些关系全都不成立。</p></div></div>
+<div class="fact"><div><h3>性质与判定方向相反</h3><p>由平行推角相等是<b>性质</b>；由角相等推平行是<b>判定</b>。做题时先看题目给了什么。</p></div></div>
+<div class="fact"><div><h3>对顶角永远相等</h3><p>两条直线相交，对顶角相等、邻补角互补，这与平行无关，任何时候都成立。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>把性质和判定说反。「两直线平行，同位角相等」是性质；「同位角相等，两直线平行」是判定。写证明时，条件里有平行就用性质，要证平行就用判定。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这张三线八角图发出去</h3><p>链接会记住你调的角度。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 8 课</p><p>图中角度实时按解析几何计算；平行时两条被截线的倾角相同。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

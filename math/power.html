@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="把幂展开成一个个因数，直观看懂同底数幂相乘、幂的乘方、同底数幂相除；用面积拼图证明完全平方公式和平方差公式。数学互动馆第 7 课，对应北师大版七年级下册第一章。">
+<meta property="og:title" content="数学互动馆 · 幂的运算与整式乘除">
+<title>幂的运算与整式乘除 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="power.js"></script>
+</head>
+<body data-module="power">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 7 课 <span>/</span> 七年级下册 第一章</p><h1>幂的运算与整式乘除</h1><p class="subtitle">指数为什么相加？把 a 一个一个数出来就明白了。乘法公式也能用面积图看出来。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="幂的运算">
+<h2>把 a 一个一个数出来</h2>
+<p class="panel-sub">每个小方块代表一个 a。看看指数到底是怎么来的。</p>
+<svg id="pw-fig" viewBox="0 0 320 125" role="img" aria-label="幂的展开示意"></svg>
+<div class="ctl-row"><span>哪条法则</span><div class="chips small" id="pw-chips"></div></div>
+<div class="control" style="margin-top:10px"><div class="control-heading"><label for="pw-m">m</label><output id="pw-law">aᵐ · aⁿ = aᵐ⁺ⁿ</output></div><input id="pw-m" type="range" min="1" max="6" step="1" value="3"></div>
+<div class="control" style="margin-top:10px"><div class="control-heading"><label for="pw-n">n</label><output>1 ~ 6</output></div><input id="pw-n" type="range" min="1" max="6" step="1" value="2"></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="结果">
+<div class="readout-head"><h2 id="pw-name">同底数幂相乘</h2><span class="badge">底数不变</span></div>
+<p class="formula" id="pw-expr"></p>
+<p class="lead" id="pw-tip" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="面积拼图">
+<h2>用面积看乘法公式</h2>
+<svg id="ar-fig" viewBox="0 0 300 230" role="img" aria-label="面积拼图"></svg>
+<div class="chips small" id="ar-chips" style="margin-top:8px"></div>
+<div class="control" style="margin-top:10px"><div class="control-heading"><label for="ar-a">a</label><output>1 ~ 8</output></div><input id="ar-a" type="range" min="1" max="8" step="1" value="5"></div>
+<div class="control" style="margin-top:10px"><div class="control-heading"><label for="ar-b">b</label><output>1 ~ 8</output></div><input id="ar-b" type="range" min="1" max="8" step="1" value="3"></div>
+</section>
+<section class="readout" aria-label="公式验证">
+<div class="readout-head"><h2>两边算一算</h2><span class="badge">面积相等</span></div>
+<p class="formula" id="ar-law"></p>
+<p class="lead" id="ar-calc" aria-live="polite"></p>
+<p class="note" id="ar-tip"></p>
+<aside class="analogy"><h3><i>打个比方</i> 指数像数袋子里的糖</h3><p>a³ 是一袋 3 颗糖，a⁴ 是一袋 4 颗。两袋倒一起当然是 7 颗（指数相加）。但「3 颗糖 + 3 颗糖」是 6 颗糖，不会变成 3×3 颗——加法和乘法是两回事。</p></aside>
+</section>
+</div>
+
+<div class="section">
+<section class="card panel" aria-label="幂的运算配对">
+<h2>算出结果，配对</h2>
+<div class="choice-list" id="pm-list"></div>
+<p class="note">得分：<b id="pm-score">已答 0 / 6</b></p>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>指数就是「几个因数相乘」</h3><p>a³ 表示 3 个 a 相乘。所有幂的法则都能从这句话推出来，记不住法则时就展开数一数。</p></div></div>
+<div class="fact"><div><h3>乘法指数加，乘方指数乘</h3><p>aᵐ·aⁿ = aᵐ⁺ⁿ（合并个数）；(aᵐ)ⁿ = aᵐⁿ（n 组每组 m 个）；aᵐ÷aⁿ = aᵐ⁻ⁿ（约掉）。</p></div></div>
+<div class="fact"><div><h3>完全平方公式有中间项</h3><p>(a+b)² = a² + 2ab + b²。面积图上一共四块，中间两块长方形就是 2ab。</p></div></div>
+<div class="fact"><div><h3>平方差公式反过来最有用</h3><p>(a+b)(a−b) = a² − b²。算 102 × 98 这类题时，写成 (100+2)(100−2) 可以心算。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>a³ + a³ 写成 a⁶。加法是合并同类项，结果是 2a³；只有<b>乘法</b>才把指数相加。另外 (2a)³ = 8a³，系数也要乘方，不能只写 2a³。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这张面积图发给同学</h3><p>链接会记住你调的 a 和 b。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 7 课</p><p>面积图中每一格代表 1 个单位长度；初中阶段同底数幂相除要求 m > n。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

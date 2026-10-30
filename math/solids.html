@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="点一点常见几何体，看它的面、棱、顶点和展开图；用小方块搭出主视图、左视图、俯视图；比较平行投影与中心投影。数学互动馆第 1 课，对应北师大版七年级上册第一章与九年级上册第五章。">
+<meta property="og:title" content="数学互动馆 · 立体图形与三视图">
+<title>立体图形与三视图 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="solids.js"></script>
+</head>
+<body data-module="solids">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 1 课 <span>/</span> 七年级上册 第一章 · 九年级上册 第五章</p><h1>立体图形与三视图</h1><p class="subtitle">搭几个小方块，三个视图立刻跟着变。再看看太阳和路灯下的影子有什么不一样。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="几何体示意">
+<h2>常见的几何体</h2>
+<p class="panel-sub">点一个几何体，看它由什么面围成。虚线是被挡住的棱。</p>
+<svg id="bd-fig" viewBox="0 0 240 170" role="img" aria-label="几何体示意图"></svg>
+<div class="ctl-row"><span>选几何体</span><div class="chips small" id="bd-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="几何体数据">
+<div class="readout-head"><h2 id="bd-name">正方体</h2><span class="badge" id="bd-kind">柱体</span></div>
+<div class="stat-grid">
+<div class="stat"><span>面数 F</span><strong id="bd-f">—</strong></div>
+<div class="stat"><span>棱数 E</span><strong id="bd-e">—</strong></div>
+<div class="stat"><span>顶点数 V</span><strong id="bd-v">—</strong></div>
+</div>
+<p class="lead" id="bd-euler" aria-live="polite"></p>
+<table class="compare"><tbody>
+<tr><td>展开图</td><td id="bd-net">—</td></tr>
+<tr><td>可能的截面</td><td id="bd-cut">—</td></tr>
+</tbody></table>
+<p class="note" id="bd-note"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="搭小方块">
+<h2>搭小方块，看三视图</h2>
+<p class="panel-sub">点格子加一层（最多 3 层，点到第 4 次清零）。上面一排靠后，下面一排靠前。</p>
+<svg id="bl-fig" viewBox="0 0 230 175" role="img" aria-label="小方块搭成的几何体"></svg>
+<div class="cube-grid" id="bl-grid" style="grid-template-columns:repeat(3,30px)" role="group" aria-label="俯视的摆放网格"></div>
+<div class="toggle-row" style="margin-top:10px;justify-content:center"><button class="secondary" id="bl-clear" type="button">全部清空</button></div>
+</section>
+<section class="card panel" aria-label="三视图">
+<h2>三个视图</h2>
+<p class="panel-sub">蓝格表示那个位置看得见方块。</p>
+<div class="stat-grid" style="grid-template-columns:repeat(3,1fr);margin-top:4px">
+<div class="stat"><span>主视图（从前看）</span><svg id="v-front" viewBox="0 0 72 72" role="img" aria-label="主视图"></svg></div>
+<div class="stat"><span>左视图（从左看）</span><svg id="v-side" viewBox="0 0 72 72" role="img" aria-label="左视图"></svg></div>
+<div class="stat"><span>俯视图（从上看）</span><svg id="v-top" viewBox="0 0 72 72" role="img" aria-label="俯视图"></svg></div>
+</div>
+<div class="stat-grid" style="margin-top:12px">
+<div class="stat"><span>一共用了</span><strong id="bl-total">—</strong></div>
+<div class="stat"><span>最高</span><strong id="bl-high">—</strong></div>
+</div>
+<p class="lead" id="bl-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="影子">
+<h2>太阳下和路灯下的影子</h2>
+<p class="panel-sub">两根杆子一根高 56、一根高 36（示意长度）。拖滑块改变光源位置。</p>
+<svg id="lt-fig" viewBox="0 0 300 170" role="img" aria-label="两根杆子的影子"></svg>
+<div class="ctl-row"><span>光源</span><div class="chips small" id="lt-chips"></div></div>
+<div class="control" style="margin-top:12px"><div class="control-heading"><label for="lt-range">光源位置</label><output id="lt-kind">平行投影</output></div><input id="lt-range" type="range" min="10" max="230" step="2" value="60"></div>
+</section>
+<section class="readout" aria-label="影长比较">
+<div class="readout-head"><h2>影长 ÷ 物高</h2><span class="badge">两根杆子分别算</span></div>
+<p class="bignum" id="lt-ratio">—</p>
+<p class="lead" id="lt-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 三视图像三张照片</h3><p>想象你绕着一堆积木拍三张照片：正面一张、左边一张、头顶一张。照片只记下轮廓，看不出后面藏了什么。所以三张照片一样，积木堆却可能不一样。</p></aside>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>主视图看「列」，左视图看「排」</h3><p>主视图是每一列最高几层，左视图是每一排最高几层，俯视图只看哪个位置有方块。三个视图相同的几何体可能有好几种搭法。</p></div></div>
+<div class="fact"><div><h3>多面体满足欧拉公式</h3><p>顶点 − 棱 + 面 = 2。圆柱、圆锥、球有曲面，不是多面体，这个公式对它们不适用。</p></div></div>
+<div class="fact"><div><h3>展开图不唯一</h3><p>一个正方体有 11 种不同的展开图。反过来，给一张展开图要判断能不能折成正方体，得看折起来会不会重叠。</p></div></div>
+<div class="fact"><div><h3>平行投影才能测高</h3><p>太阳光近似平行，同一时刻影长与物高成正比，可以用标杆测旗杆；灯光是中心投影，这个比例不成立。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>看到主视图是「2 1 2」就以为方块个数唯一——其实只要每列最高层数对得上，后面藏多少方块都行。三视图只能确定轮廓，不能完全确定一个几何体。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>搭好了发给同学猜</h3><p>链接会记住你搭的方块，让同学猜猜三视图。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 1 课</p><p>几何体的面、棱、顶点数均按课本定义；曲面体不适用欧拉公式。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

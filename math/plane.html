@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动点 C 理解线段中点与 AC+CB=AB；转动角看度分秒、余角补角与角平分线；拖 n 看正多边形的对角线条数与内角和公式。数学互动馆第 4 课，对应北师大版七年级上册第四章。">
+<meta property="og:title" content="数学互动馆 · 线、角与基本平面图形">
+<title>线、角与基本平面图形 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="plane.js"></script>
+</head>
+<body data-module="plane">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 4 课 <span>/</span> 七年级上册 第四章</p><h1>线、角与基本平面图形</h1><p class="subtitle">拖动线段上的点看中点，转动射线看余角补角，再用一个滑块看正多边形的内角和。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="线段">
+<h2>线段 AB 上的点 C</h2>
+<p class="panel-sub">拖动红点 C（每格 0.5），看 AC 和 CB 怎么变。</p>
+<svg id="sg-fig" viewBox="0 0 340 100" role="application" aria-label="线段 AB 与点 C"></svg>
+<div class="stat-grid" style="margin-top:8px">
+<div class="stat"><span>AC</span><strong id="sg-ac">—</strong></div>
+<div class="stat"><span>CB</span><strong id="sg-cb">—</strong></div>
+<div class="stat"><span>AC + CB</span><strong id="sg-sum">—</strong></div>
+<div class="stat"><span>C 是否中点</span><strong id="sg-mid">—</strong></div>
+</div>
+<p class="lead" id="sg-text" aria-live="polite"></p>
+</section>
+<div class="settings">
+<section class="card panel figure" aria-label="角">
+<h2>转动这个角</h2>
+<svg id="ag-fig" viewBox="0 0 300 175" role="img" aria-label="角 AOB"></svg>
+<div class="control"><div class="control-heading"><label for="ag-range">∠AOB 的度数</label><output id="ag-kind">锐角</output></div><input id="ag-range" type="range" min="0" max="180" step="0.5" value="55"></div>
+<div class="toggle-row" style="margin-top:8px" id="ag-presets">
+<button class="secondary" type="button" data-a="30">30°</button>
+<button class="secondary" type="button" data-a="45">45°</button>
+<button class="secondary" type="button" data-a="90">90°</button>
+<button class="secondary" type="button" data-a="120">120°</button>
+<label style="font-size:12px;display:flex;gap:5px;align-items:center;margin-left:auto"><input type="checkbox" id="ag-bis">画角平分线</label>
+</div>
+<div class="stat-grid" style="margin-top:10px">
+<div class="stat"><span>度数</span><strong id="ag-deg">—</strong></div>
+<div class="stat"><span>度分秒</span><strong id="ag-dms">—</strong></div>
+<div class="stat"><span>余角</span><strong id="ag-comp">—</strong></div>
+<div class="stat"><span>补角</span><strong id="ag-supp">—</strong></div>
+</div>
+<p class="lead" id="ag-text" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="正多边形">
+<h2>正 n 边形</h2>
+<p class="panel-sub">虚线是从一个顶点出发的所有对角线。</p>
+<svg id="pg-fig" viewBox="0 0 300 215" role="img" aria-label="正多边形与对角线"></svg>
+<div class="control"><div class="control-heading"><label for="pg-range">边数 n</label><output id="pg-n">6</output></div><input id="pg-range" type="range" min="3" max="12" step="1" value="6"></div>
+</section>
+<section class="readout" aria-label="多边形数据">
+<div class="readout-head"><h2>算一算</h2><span class="badge" id="pg-outer">360°</span></div>
+<div class="stat-grid">
+<div class="stat"><span>一个顶点出发</span><strong id="pg-diag1">—</strong></div>
+<div class="stat"><span>对角线总数</span><strong id="pg-diag">—</strong></div>
+<div class="stat"><span>分成三角形</span><strong id="pg-tri">—</strong></div>
+<div class="stat"><span>内角和</span><strong id="pg-inner">—</strong></div>
+<div class="stat"><span>每个内角</span><strong id="pg-each">—</strong></div>
+</div>
+<p class="formula" id="pg-formula"></p>
+<p class="lead" id="pg-note" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 外角和像绕操场走一圈</h3><p>沿着多边形的边走一圈回到起点，每到一个拐角就转一个外角，走完正好转了一整圈——360°。边数再多也还是一圈，所以外角和与 n 无关。</p></aside>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>两点之间线段最短</h3><p>这是「两点间的距离」的定义依据。而「两点确定一条直线」说的是直线的性质，别混在一起。</p></div></div>
+<div class="fact"><div><h3>中点把线段分成相等两段</h3><p>C 是 AB 中点 ⟺ AC = CB = ½AB ⟺ AB = 2AC。不管 C 在哪，AC + CB = AB 总成立。</p></div></div>
+<div class="fact"><div><h3>补角比余角大 90°</h3><p>余角 = 90° − 角，补角 = 180° − 角。两者相差永远是 90°，与原来的角多大无关。</p></div></div>
+<div class="fact"><div><h3>内角和看三角形个数</h3><p>n 边形被对角线分成 n − 2 个三角形，所以内角和 = (n − 2) × 180°；外角和永远是 360°。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>以为对角线总数就是 n − 3。n − 3 只是<b>一个顶点</b>出发的条数；每个顶点都连，每条又被数了两次，所以总数是 n(n − 3) ÷ 2。六边形是 9 条，不是 3 条。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个角发给同学</h3><p>链接会记住角的度数和多边形的边数。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 4 课</p><p>余角与补角都指正角；度分秒为六十进制，1° = 60′，1′ = 60″。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

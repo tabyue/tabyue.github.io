@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="在坐标系里对同一个图形做轴对称、平移、旋转，看对应点坐标的变化规律；数一数常见图形各有几条对称轴，分清轴对称与中心对称。数学互动馆第 11 课，对应北师大版七年级下册第五章与八年级下册第三章。">
+<meta property="og:title" content="数学互动馆 · 轴对称、平移与旋转">
+<title>轴对称、平移与旋转 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="symmetry.js"></script>
+</head>
+<body data-module="symmetry">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 11 课 <span>/</span> 七年级下册 第五章 · 八年级下册 第三章</p><h1>轴对称、平移与旋转</h1><p class="subtitle">同一个图形，翻一下、推一下、转一下，坐标各有各的变法。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="三种变换">
+<h2>翻一下、推一下、转一下</h2>
+<p class="panel-sub">灰色虚线是原图，蓝色是变换后的。红虚线连着三组对应点。</p>
+<svg id="tf-fig" viewBox="0 0 330 240" role="img" aria-label="图形变换"></svg>
+<div class="ctl-row"><span>做哪种变换</span><div class="chips small" id="tf-chips"></div></div>
+<div id="tf-flip"><div class="ctl-row" style="margin-top:8px"><span>对称轴</span><div class="chips small" id="tf-axis"></div></div></div>
+<div id="tf-move" hidden>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="tf-tx">左右平移</label><output>−6 ~ 6</output></div><input id="tf-tx" type="range" min="-6" max="6" step="1" value="3"></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="tf-ty">上下平移</label><output>−4 ~ 4</output></div><input id="tf-ty" type="range" min="-4" max="4" step="1" value="0"></div>
+</div>
+<div id="tf-turn" hidden>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="tf-rot">绕原点旋转</label><output>−180° ~ 180°</output></div><input id="tf-rot" type="range" min="-180" max="180" step="15" value="90"></div>
+</div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="坐标变化">
+<div class="readout-head"><h2 id="tf-name">轴对称（翻折）</h2><span class="badge">对应点坐标</span></div>
+<table class="compare" id="tf-table"><thead><tr><th>原来</th><th>变换后</th></tr></thead><tbody></tbody></table>
+<p class="formula" id="tf-rule"></p>
+<p class="lead" id="tf-keep" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="对称轴条数">
+<h2>有几条对称轴</h2>
+<p class="panel-sub">红虚线是对称轴，绿点是对称中心。</p>
+<svg id="ax-fig" viewBox="0 0 220 185" role="img" aria-label="图形的对称轴"></svg>
+<div class="chips small" id="ax-chips" style="margin-top:8px"></div>
+</section>
+<section class="readout" aria-label="对称性">
+<div class="readout-head"><h2 id="ax-name">正方形</h2><span class="badge">对称轴 <span id="ax-n">4 条</span></span></div>
+<div class="stat-grid">
+<div class="stat"><span>是中心对称图形吗</span><strong id="ax-center">是</strong></div>
+</div>
+<p class="lead" id="ax-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 翻折像照镜子，旋转像转方向盘</h3><p>照镜子时你举右手，镜中人举的是左手——方向反了，这是轴对称。转方向盘时整个车身一起转，没有反过来，这是旋转。平移则像推一个箱子，方向一点没变。</p></aside>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>三种变换都不改变形状大小</h3><p>轴对称、平移、旋转后，图形的边长和角度都不变，这叫全等变换。只有位置或方向变了。</p></div></div>
+<div class="fact"><div><h3>坐标规律要记牢</h3><p>关于 x 轴：(x, y) → (x, −y)；关于 y 轴：(x, y) → (−x, y)；关于原点：(x, y) → (−x, −y)；关于 y = x：(x, y) → (y, x)。</p></div></div>
+<div class="fact"><div><h3>平移看对应点连线</h3><p>平移后所有对应点的连线互相平行且相等，方向、长度都一样。</p></div></div>
+<div class="fact"><div><h3>轴对称 ≠ 中心对称</h3><p>平行四边形是中心对称但不是轴对称；等腰三角形是轴对称但不是中心对称；长方形两者都是。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>把「关于原点对称」和「关于某条轴对称」搞混。关于原点是<b>两个坐标都变号</b>，关于 x 轴只变纵坐标，关于 y 轴只变横坐标。答题前先问自己：对称的是点还是轴？</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个变换发给同学</h3><p>链接会记住你选的变换和参数。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 11 课</p><p>图形为不对称的「F 形」，便于看出翻折后的方向变化。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="用匀速行驶模型对照表格、关系式与图象三种表示；读三张真实情境的折线图，说出其中发生了什么。数学互动馆第 12 课，对应北师大版七年级下册第六章。">
+<meta property="og:title" content="数学互动馆 · 变量之间的关系">
+<title>变量之间的关系 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="variable.js"></script>
+</head>
+<body data-module="variable">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 12 课 <span>/</span> 七年级下册 第六章</p><h1>变量之间的关系</h1><p class="subtitle">表格、关系式、图象说的是同一件事。学会看图，就能把一段故事读出来。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="图象">
+<h2>一个关系，三种说法</h2>
+<p class="panel-sub">调速度看线的陡缓，调时间看那个点在哪。</p>
+<svg id="rl-fig" viewBox="0 0 330 200" role="img" aria-label="路程随时间变化的图象"></svg>
+<div class="control"><div class="control-heading"><label for="rl-v">速度（km/时）</label><output id="rl-s">120 km</output></div><input id="rl-v" type="range" min="20" max="120" step="10" value="60"></div>
+<div class="control" style="margin-top:10px"><div class="control-heading"><label for="rl-t">时间（时）</label><output id="rl-t-out">2 时</output></div><input id="rl-t" type="range" min="0" max="5" step="0.5" value="2"></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="三种表示">
+<div class="readout-head"><h2>关系式</h2><span class="badge">最精确</span></div>
+<p class="formula" id="rl-expr"></p>
+<table class="compare" id="rl-table"><thead><tr><th>时间 t</th><th>路程 s</th></tr></thead><tbody></tbody></table>
+<div class="stat-grid" style="margin-top:8px">
+<div class="stat"><span>自变量</span><strong id="rl-indep">t（时间）</strong></div>
+<div class="stat"><span>因变量</span><strong id="rl-dep">s（路程）</strong></div>
+</div>
+<p class="lead" id="rl-text" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="看图说故事">
+<h2>看图说故事</h2>
+<p class="panel-sub">这条折线里藏着一段经历。</p>
+<svg id="sy-fig" viewBox="0 0 330 200" role="img" aria-label="情境折线图"></svg>
+<div class="chips small" id="sy-chips" style="margin-top:8px"></div>
+</section>
+<section class="readout" aria-label="读图">
+<div class="readout-head"><h2>这张图在说什么</h2><span class="badge">读图三看</span></div>
+<p class="lead" id="sy-tell" aria-live="polite"></p>
+<p class="note" id="sy-key"></p>
+<aside class="analogy"><h3><i>打个比方</i> 图象像心电图</h3><p>医生不看每一个具体数字，一眼扫过去看的是「哪里陡、哪里平、哪里往下掉」。读函数图象也一样，先看形状，再去抠数值。</p></aside>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>谁被谁决定，谁就是因变量</h3><p>路程由时间决定，所以时间是自变量、路程是因变量；速度在这个过程中不变，是常量。</p></div></div>
+<div class="fact"><div><h3>三种表示各有长处</h3><p>表格给出具体数值，关系式最精确、能算任意一点，图象最能看出变化趋势。</p></div></div>
+<div class="fact"><div><h3>图象越陡，变化越快</h3><p>同样的时间里纵坐标变化更大，说明变化速度更快。水平段表示没有变化。</p></div></div>
+<div class="fact"><div><h3>下降不等于「慢」</h3><p>折线下降说明因变量在<b>减小</b>——在路程图里就是往回走，在水深图里就是水在变少。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>把「图象水平」误读成「速度不变地前进」。水平意味着离家距离<b>没有变化</b>，也就是停住了。真正的匀速前进是一条向上的斜线。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这张图象发给同学</h3><p>让同学看图讲讲发生了什么。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 12 课</p><p>模型为匀速行驶的理想情形；看图说故事三例分别为步行、往返与放水。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

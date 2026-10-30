@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖滑块给代数式求值，比较 −x² 与 (−x)²；把若干项按同类项归类并合并；用火柴棒搭正方形，推出 3n+1 的通项公式。数学互动馆第 3 课，对应北师大版七年级上册第三章。">
+<meta property="og:title" content="数学互动馆 · 代数式与整式加减">
+<title>代数式与整式加减 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="algebra.js"></script>
+</head>
+<body data-module="algebra">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 3 课 <span>/</span> 七年级上册 第三章</p><h1>代数式与整式加减</h1><p class="subtitle">把同类项归到一起才能合并。再用一个滑块，看火柴棒规律怎么变成一个式子。</p></div>
+<div class="workbench">
+<section class="card panel" aria-label="代数式求值">
+<h2>代数式求值</h2>
+<p class="panel-sub">拖动滑块改变 x，所有式子的值一起变。</p>
+<div class="control"><div class="control-heading"><label for="ev-range">x 的值</label><output id="ev-x">3</output></div><input id="ev-range" type="range" min="-5" max="5" step="0.5" value="3"></div>
+<table class="compare" id="ev-table"><thead><tr><th>代数式</th><th>代入</th><th>值</th></tr></thead><tbody></tbody></table>
+<p class="lead" id="ev-tip" aria-live="polite"></p>
+</section>
+<div class="settings">
+<section class="card panel figure" aria-label="火柴棒规律">
+<h2>火柴棒搭正方形</h2>
+<p class="panel-sub">红色是竖着的火柴。拖滑块看搭 n 个正方形要几根。</p>
+<svg id="st-fig" viewBox="0 0 300 110" role="img" aria-label="一排正方形"></svg>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="st-range">搭几个正方形</label><output id="st-count">13 根</output></div><input id="st-range" type="range" min="1" max="12" step="1" value="4"></div>
+<p class="formula" id="st-formula"></p>
+<p class="note" id="st-other"></p>
+</section>
+</div>
+</div>
+
+<div class="section">
+<section class="card panel" aria-label="合并同类项">
+<h2>把同类项归到一起</h2>
+<p class="panel-sub">先点一个项选中它，再点下面对应的框。只有同类项才能合并。</p>
+<div class="chips small" id="mg-pool" style="margin-top:10px;min-height:40px"></div>
+<div class="stat-grid" style="grid-template-columns:repeat(3,1fr);margin-top:12px">
+<div class="stat"><span><var>a</var> 项</span><div id="mg-a" role="button" tabindex="0" style="min-height:34px;font-size:13px;cursor:pointer"></div><p class="note" id="mg-res-a" style="margin-top:6px"></p></div>
+<div class="stat"><span><var>a</var><sup>2</sup> 项</span><div id="mg-a2" role="button" tabindex="0" style="min-height:34px;font-size:13px;cursor:pointer"></div><p class="note" id="mg-res-a2" style="margin-top:6px"></p></div>
+<div class="stat"><span><var>b</var> 项</span><div id="mg-b" role="button" tabindex="0" style="min-height:34px;font-size:13px;cursor:pointer"></div><p class="note" id="mg-res-b" style="margin-top:6px"></p></div>
+</div>
+<p class="lead" id="mg-verdict" aria-live="polite"></p>
+<div class="toggle-row" style="margin-top:8px"><button class="secondary" id="mg-reset" type="button">重新归类</button></div>
+<aside class="analogy"><h3><i>打个比方</i> 同类项像同一种水果</h3><p>3 个苹果加 2 个苹果是 5 个苹果，但 3 个苹果加 2 个梨只能写成「3 个苹果 + 2 个梨」，没法合成一个数。字母就是水果的名字。</p></aside>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>同类项要「字母和指数都相同」</h3><p>a² 与 −a² 是同类项，a² 与 a³ 不是。系数相不相同没关系。</p></div></div>
+<div class="fact"><div><h3>合并就是把系数相加</h3><p>3a + (−2a) + 7a = (3 − 2 + 7)a = 8a，字母部分一个字都不改。</p></div></div>
+<div class="fact"><div><h3>括号前是负号要全变号</h3><p>−3(x − 1) = −3x + 3。去括号时括号里<b>每一项</b>都要乘，一项都不能漏。</p></div></div>
+<div class="fact"><div><h3>用字母表示规律</h3><p>先找「每次增加多少」，那就是 n 的系数；再用第 1 项反推常数。火柴棒每次加 3、第 1 个用 4，所以是 3n + 1。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>搭 10 个正方形时直接算 10 × 4 = 40 根。相邻两个正方形共用一条竖边，被重复数了，正确是 3 × 10 + 1 = 31 根。遇到「拼接」类规律，一定要想想哪里重复了。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这道归类题发给同学</h3><p>看谁能一次把所有同类项都归对。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 3 课</p><p>同类项的定义：所含字母相同，并且相同字母的指数也相同。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>
