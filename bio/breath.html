@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拉动膈肌看钟罩模型怎样模拟呼吸运动，比较吸入和呼出的气体，一站一站看尿液怎样形成。生物互动馆第 12 课，对应人教版七年级下册第四单元。">
+<meta property="og:title" content="生物互动馆 · 人体的呼吸与废物排出">
+<title>人体的呼吸与废物排出 · 生物互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="bio.css">
+<script defer src="common.js"></script>
+<script defer src="breath.js"></script>
+</head>
+<body data-module="breath">
+<header class="topbar"><a class="brand" href="index.html" aria-label="生物互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 17.5C6.5 10.5 10.5 6 18 6c0 7.5-4.5 11.5-11.5 11.5z"/><path d="M6.5 17.5l7-7"/></svg><span>生物互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 12 课 <span>/</span> 七年级下册 · 第四单元 人体生理与健康（一）</p><h1>人体的呼吸与废物排出</h1><p class="subtitle">吸气时胸廓为什么会扩大？呼出的气体里还有氧气吗？肾脏每天“过滤”了多少液体？</p></div>
+<div class="workbench">
+<section class="card panel" aria-label="呼吸运动模型">
+<h2>钟罩模型：吸气还是呼气？</h2>
+<p class="panel-sub">玻璃钟罩代表胸廓，气球代表肺，底部橡皮膜代表<b>膈</b>。拖动滑块，向下拉橡皮膜。</p>
+<label class="small-label" for="br-range">膈的位置 <output id="br-out"></output></label>
+<input id="br-range" type="range" min="0" max="100" value="70">
+<svg id="br-svg" viewBox="0 0 400 230" role="img" aria-label="呼吸运动钟罩模型" style="margin-top:8px"></svg>
+</section>
+<div class="settings">
+<section class="readout" aria-label="呼吸运动读数">
+<div class="readout-head"><h2 id="br-title">吸气</h2><span class="badge" id="br-badge">—</span></div>
+<ul class="fact-list" id="br-list"></ul>
+</section>
+<section class="card panel" aria-label="气体成分">
+<h2>吸入和呼出的气体，差在哪？</h2>
+<p class="panel-sub">各成分的体积分数（%）。</p>
+<div id="gas-bars"></div>
+<p class="source">数据为初中教材常用的近似值。呼出气体里仍有约 16% 的氧气，所以口对口人工呼吸是有效的。</p>
+</section>
+</div>
+</div>
+<div class="section two-col">
+<section class="card panel" aria-label="尿的形成">
+<h2>尿液是怎样形成的</h2>
+<p class="panel-sub">血液流经肾单位，先过滤、再重吸收。点每一站看看哪些物质留了下来。</p>
+<div class="chips small" id="ur-chips"></div>
+<table class="compare" id="ur-table" style="margin-top:12px"></table>
+<p class="part-info" id="ur-text" aria-live="polite"></p>
+</section>
+<div class="stack"><aside class="analogy"><h3><i>打个比方</i> 肾单位像“先倒后捡”的筛子</h3><p>肾小球像一张筛子，先把血浆里的水、葡萄糖、无机盐、尿素都“倒”进肾小囊，只留下血细胞和大分子蛋白质；肾小管再把有用的东西“捡”回来——全部葡萄糖、大部分水和部分无机盐。剩下的就是尿液。</p></aside></div>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>呼吸道</h3><p>鼻、咽、喉、气管、支气管组成呼吸道，是气体进出肺的通道。鼻腔里的鼻毛、黏膜和丰富的毛细血管能让吸入的空气变得<b>清洁、湿润、温暖</b>。咽是食物和气体的共同通道。</p></div></div>
+<div class="fact"><div><h3>呼吸运动</h3><p>吸气时：肋间肌和膈肌<b>收缩</b>，胸廓扩大，肺随之扩张，肺内气压低于外界，气体进入肺。呼气时：肋间肌和膈肌<b>舒张</b>，胸廓缩小，肺回缩，肺内气压高于外界，气体排出。</p></div></div>
+<div class="fact"><div><h3>肺内的气体交换</h3><p>肺泡数量多、外面包绕着丰富的毛细血管，肺泡壁和毛细血管壁都只由<b>一层细胞</b>构成。氧气从肺泡扩散进入血液，二氧化碳从血液扩散进入肺泡。</p></div></div>
+<div class="fact"><div><h3>尿的形成</h3><p>肾单位由肾小球、肾小囊和肾小管组成。经过肾小球的<b>过滤</b>作用形成原尿，人体每天形成原尿约 180 升；经过肾小管的<b>重吸收</b>作用形成尿液，每天排出约 1.5 升。排尿能排出废物，还能调节体内水和无机盐的平衡。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 呼出的气体里，氧气仍是二氧化碳的 4 倍</h3><p>很多同学以为呼出的全是二氧化碳。其实呼出气体中氧气约 16%，二氧化碳只有约 4%，含量最多的始终是<b>氮气</b>（约 78%）。只是二氧化碳比吸入时多了一百多倍。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>分享这一课</h3><p>链接会带上钟罩模型里膈的位置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>生物互动馆 · 第 12 课</p><p>钟罩模型只能模拟膈的运动，不能模拟肋骨的运动。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

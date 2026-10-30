@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="区分有性生殖和无性生殖，用荔枝做一次嫁接，一步步看家蚕、蝗虫、青蛙和鸟的发育过程。生物互动馆第 15 课，对应人教版八年级下册第六单元第一章。">
+<meta property="og:title" content="生物互动馆 · 生物的生殖和发育">
+<title>生物的生殖和发育 · 生物互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="bio.css">
+<script defer src="common.js"></script>
+<script defer src="repro.js"></script>
+</head>
+<body data-module="repro">
+<header class="topbar"><a class="brand" href="index.html" aria-label="生物互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 17.5C6.5 10.5 10.5 6 18 6c0 7.5-4.5 11.5-11.5 11.5z"/><path d="M6.5 17.5l7-7"/></svg><span>生物互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 15 课 <span>/</span> 八年级下册 · 第六单元 生命的延续和发展</p><h1>生物的生殖和发育</h1><p class="subtitle">有的生物靠种子，有的靠一段枝条就能繁殖；蚕要变成蛹，蝗虫却不用；蝌蚪又是怎么变成青蛙的？</p></div>
+<div class="workbench">
+<section class="card panel" aria-label="发育过程">
+<h2>它们是怎样长大的</h2>
+<p class="panel-sub">选一种动物，点每个阶段看说明。</p>
+<div class="chips small" id="dv-chips"></div>
+<div class="steps" id="dv-steps" style="font-size:13px"></div>
+<div class="result-card" id="dv-info"></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="发育类型">
+<div class="readout-head"><h2 id="dv-title">—</h2><span class="badge" id="dv-badge">—</span></div>
+<p class="lead" id="dv-text"></p>
+</section>
+<section class="card panel" aria-label="嫁接">
+<h2>给荔枝做一次嫁接</h2>
+<p class="panel-sub">把一种荔枝的枝条（<b>接穗</b>）接到另一株荔枝（<b>砧木</b>）上，两者的<b>形成层</b>要紧密结合。</p>
+<div class="ctl-row"><span>砧木</span><div class="chips small" id="gf-stock"></div></div>
+<div class="ctl-row"><span>接穗</span><div class="chips small" id="gf-scion"></div></div>
+<div class="result-card" id="gf-result"></div>
+</section>
+</div>
+</div>
+<div class="section two-col">
+<section class="card panel" aria-label="有性还是无性">
+<h2>有性生殖还是无性生殖？ <span class="muted" id="sx-score" style="font-size:12px;font-weight:500"></span></h2>
+<p class="panel-sub">关键看有没有经过<b>两性生殖细胞</b>（精子和卵细胞）的结合。</p>
+<div class="choice-list" id="sx-list"></div>
+</section>
+<div class="stack"><aside class="analogy"><h3><i>打个比方</i> 无性生殖像“复印”，有性生殖像“混搭”</h3><p>扦插、嫁接得到的后代，遗传物质和母体几乎一样，像复印件，能保持优良品种的特性；有性生殖时，后代的遗传物质一半来自父方、一半来自母方，像把两副牌混在一起，后代更多样，更能适应变化的环境。</p></aside></div>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>有性生殖和无性生殖</h3><p>经过两性生殖细胞结合形成受精卵，由受精卵发育成新个体，叫<b>有性生殖</b>（如种子繁殖）。不经过两性生殖细胞结合，由母体直接产生新个体，叫<b>无性生殖</b>（如扦插、嫁接、压条、组织培养、马铃薯块茎繁殖）。</p></div></div>
+<div class="fact"><div><h3>嫁接</h3><p>接上去的芽或枝叫接穗，被接的植物叫砧木。嫁接成功的关键是让接穗和砧木的<b>形成层</b>紧密结合。结出的果实保持<b>接穗</b>的性状。</p></div></div>
+<div class="fact"><div><h3>昆虫的发育</h3><p><b>完全变态</b>：卵 → 幼虫 → 蛹 → 成虫，幼虫和成虫差别很大（如家蚕、蝴蝶、蜜蜂、蚊、蝇）。<b>不完全变态</b>：卵 → 若虫 → 成虫，没有蛹期（如蝗虫、蟋蟀、蝉）。</p></div></div>
+<div class="fact"><div><h3>两栖动物和鸟</h3><p>青蛙在水中体外受精，发育经过受精卵 → 蝌蚪 → 幼蛙 → 成蛙，属于<b>变态发育</b>，生殖和发育离不开水。鸟类体内受精，卵壳和卵壳膜起保护作用，<b>胚盘</b>里含有细胞核，是进行胚胎发育的部位。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 试管婴儿是有性生殖</h3><p>试管婴儿只是精子和卵细胞在体外完成受精，之后胚胎还要移植到母体子宫内发育，仍然经过了两性生殖细胞的结合，属于<b>有性生殖</b>；而克隆羊“多莉”没有经过受精，属于<b>无性生殖</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>分享这一课</h3><p>链接会带上你选的动物和嫁接组合。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>生物互动馆 · 第 15 课</p><p>荔枝品种只用于说明嫁接原理；生产上嫁接还要考虑砧木和接穗的亲和性。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

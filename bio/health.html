@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="把预防传染病的措施归类，认识人体的三道防线和计划免疫，跟着节拍练习心肺复苏的按压频率。生物互动馆第 14 课，对应人教版八年级上册第七章。">
+<meta property="og:title" content="生物互动馆 · 健康地生活">
+<title>健康地生活 · 生物互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="bio.css">
+<script defer src="common.js"></script>
+<script defer src="health.js"></script>
+</head>
+<body data-module="health">
+<header class="topbar"><a class="brand" href="index.html" aria-label="生物互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 17.5C6.5 10.5 10.5 6 18 6c0 7.5-4.5 11.5-11.5 11.5z"/><path d="M6.5 17.5l7-7"/></svg><span>生物互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 14 课 <span>/</span> 八年级上册 · 第四单元 人体生理与健康（二）</p><h1>健康地生活</h1><p class="subtitle">传染病怎样预防？身体有哪几道防线？有人突然倒地，我们能做什么？</p></div>
+<div class="workbench">
+<section class="card panel" aria-label="心肺复苏练习">
+<h2>心肺复苏：按压节奏练一练</h2>
+<p class="panel-sub">跟着节拍，在下面的按钮上连续点按。成人胸外按压的频率是<b>每分钟 100—120 次</b>，每按 30 次进行 2 次人工呼吸。</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="ghost-btn" id="cpr-metro" type="button" aria-pressed="false">打开节拍提示</button><button class="ghost-btn" id="cpr-reset" type="button">重新开始</button></div>
+<button class="big-btn" id="cpr-tap" type="button" style="width:100%;min-height:120px;margin-top:12px;font-size:18px">按压</button>
+<p class="note">这里只练习节奏。真正的心肺复苏要接受正规培训，遇到紧急情况先确认环境安全，立即拨打 <b>120</b>。</p>
+</section>
+<div class="settings">
+<section class="readout" aria-label="按压读数">
+<div class="readout-head"><h2 id="cpr-title">还没开始</h2><span class="badge" id="cpr-badge">目标 100—120 次/分</span></div>
+<div class="stat-grid"><div class="stat"><span>当前频率</span><strong id="cpr-rate">—</strong></div><div class="stat"><span>本轮按压</span><strong id="cpr-count">0 / 30</strong></div></div>
+<p class="lead" id="cpr-text">连续点按至少 4 次，就能算出你的按压频率。</p>
+</section>
+<aside class="analogy"><h3><i>打个比方</i> 疫苗像一张“通缉令”</h3><p>疫苗是减毒、灭活或者只保留部分成分的病原体，不会让人生病，却能让免疫系统“看清”病原体的样子，产生抗体并留下记忆。以后真正的病原体来了，身体能更快认出并消灭它。</p></aside>
+</div>
+</div>
+<div class="section two-col">
+<section class="card panel" aria-label="预防传染病">
+<h2>这项措施属于哪一类？ <span class="muted" id="pv-score" style="font-size:12px;font-weight:500"></span></h2>
+<p class="panel-sub">传染病流行要有三个环节：传染源、传播途径、易感人群。预防措施就是针对这三个环节。</p>
+<div class="choice-list" id="pv-list"></div>
+</section>
+<section class="card panel" aria-label="三道防线">
+<h2>这是第几道防线？ <span class="muted" id="df-score" style="font-size:12px;font-weight:500"></span></h2>
+<p class="panel-sub">第一、二道防线人人生来就有，对多种病原体都有防御作用；第三道防线出生后才逐渐建立，只针对某一种病原体。</p>
+<div class="choice-list" id="df-list"></div>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>传染病的三个环节</h3><p>能散播病原体的人或动物是<b>传染源</b>；病原体离开传染源到达健康人的途径是<b>传播途径</b>（如空气飞沫、饮食、蚊虫叮咬）；对某种传染病缺乏免疫力的人是<b>易感人群</b>。</p></div></div>
+<div class="fact"><div><h3>三道防线</h3><p>第一道：皮肤和黏膜。第二道：体液中的杀菌物质（如溶菌酶）和吞噬细胞。这两道属于<b>非特异性免疫</b>。第三道：免疫器官和免疫细胞，淋巴细胞受抗原刺激产生<b>抗体</b>，属于<b>特异性免疫</b>。</p></div></div>
+<div class="fact"><div><h3>计划免疫</h3><p>按照国家免疫规划给儿童接种疫苗。目前国家免疫规划疫苗有乙肝疫苗、卡介苗、脊灰疫苗、百白破疫苗、麻腮风疫苗等 14 种，可以预防 15 种传染病。</p></div></div>
+<div class="fact"><div><h3>安全用药与急救</h3><p>药物分<b>处方药</b>（凭医生处方购买，标 Rx）和<b>非处方药</b>（标 OTC）。用药前看清说明书和有效期。心肺复苏：胸外按压深度 5—6 厘米、频率每分钟 100—120 次，按压与人工呼吸比例 30 : 2；有 AED 时尽快使用。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 抗生素不能治感冒</h3><p>普通感冒、流感大多是<b>病毒</b>引起的，抗生素只对细菌起作用，对病毒无效。滥用抗生素还会让细菌产生耐药性。另外，深圳夏秋季要防<b>登革热</b>：它通过伊蚊叮咬传播，清除积水、防蚊灭蚊就是切断传播途径。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>分享这一课</h3><p>把心肺复苏的节奏练习发给同学。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>生物互动馆 · 第 14 课</p><p>心肺复苏参数依据中国红十字会公开的急救培训要点；本页不能代替正规急救培训。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

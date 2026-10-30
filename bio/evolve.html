@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="用桦尺蛾模拟自然选择，按顺序排列植物和脊椎动物的进化历程，配对保护生物多样性的措施。生物互动馆第 16 课，对应人教版八年级下册第六单元第三、四章。">
+<meta property="og:title" content="生物互动馆 · 生物的进化与多样性保护">
+<title>生物的进化与多样性保护 · 生物互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="bio.css">
+<script defer src="common.js"></script>
+<script defer src="evolve.js"></script>
+</head>
+<body data-module="evolve">
+<header class="topbar"><a class="brand" href="index.html" aria-label="生物互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 17.5C6.5 10.5 10.5 6 18 6c0 7.5-4.5 11.5-11.5 11.5z"/><path d="M6.5 17.5l7-7"/></svg><span>生物互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 16 课 <span>/</span> 八年级下册 · 第六单元 生命的延续和发展</p><h1>生物的进化与多样性保护</h1><p class="subtitle">桦尺蛾为什么在工厂附近变黑了？生物是按什么顺序出现的？我们又该怎样保护生物多样性？</p></div>
+<div class="workbench">
+<section class="card panel" aria-label="自然选择模拟">
+<h2>桦尺蛾的颜色会变吗？</h2>
+<p class="panel-sub">桦尺蛾白天停在树干上，鸟会吃掉容易被看到的那些。选择环境，点“过一代”。</p>
+<div class="ctl-row"><span>环境</span><div class="chips small" id="ev-env"></div></div>
+<svg id="ev-svg" viewBox="0 0 400 190" role="img" aria-label="树干上的桦尺蛾" style="margin-top:10px"></svg>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button class="big-btn" id="ev-gen" type="button">过一代</button><button class="ghost-btn" id="ev-gen10" type="button">再过 10 代</button><button class="ghost-btn" id="ev-reset" type="button">回到开始</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="种群读数">
+<div class="readout-head"><h2 id="ev-title">第 0 代</h2><span class="badge" id="ev-badge">—</span></div>
+<div class="stat-grid"><div class="stat"><span>深色</span><strong id="ev-dark">—</strong></div><div class="stat"><span>浅色</span><strong id="ev-light">—</strong></div></div>
+<div class="ratio" style="margin-top:8px"><i id="ev-bar-d" style="background:#4a4a46"></i><i id="ev-bar-l" style="background:#e6dfcf"></i></div>
+<p class="lead" id="ev-text"></p>
+<p class="note">模型按“被吃掉的比例”的平均情况计算，表示变化趋势。</p>
+</section>
+<aside class="analogy"><h3><i>打个比方</i> 自然选择像一场“捉迷藏”</h3><p>鸟是“找的人”，桦尺蛾是“藏的人”。和树干颜色接近的藏得好，活下来生下后代，后代也是这种颜色；藏不好的被吃掉了。一代代下去，藏得好的颜色就越来越多。变异是本来就有的，环境只是把适应的那些“选”了出来。</p></aside>
+</div>
+</div>
+<div class="section two-col">
+<section class="card panel" aria-label="进化历程">
+<h2>按出现的先后排一排</h2>
+<p class="panel-sub">从最早出现的开始，依次点击。</p>
+<div class="chips small" id="od-chips"></div>
+<div class="chips" id="od-pick" style="margin-top:10px"></div>
+<p class="feedback" id="od-result" role="status" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="保护生物多样性">
+<h2>这是哪一种保护措施？ <span class="muted" id="pt-score" style="font-size:12px;font-weight:500"></span></h2>
+<p class="panel-sub">生物多样性包括<b>物种多样性、遗传多样性和生态系统多样性</b>。</p>
+<div class="choice-list" id="pt-list"></div>
+</section>
+</div>
+<section class="card panel section" aria-label="生态安全">
+<h2>生态安全：它是“外来入侵者”吗？ <span class="muted" id="iv-score" style="font-size:12px;font-weight:500"></span></h2>
+<p class="panel-sub">八年级上册「生态安全」：外来物种进入新环境后，如果没有天敌、繁殖很快，就可能排挤本地物种、破坏生态平衡。下面这些在深圳都能见到。</p>
+<div class="choice-list" id="iv-list"></div>
+<p class="source">发现疑似红火蚁蚁巢不要徒手触碰；不要随意放生宠物龟、福寿螺等外来物种。</p>
+</section>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>生命的起源</h3><p>原始地球上没有生命。原始大气在闪电、紫外线等作用下形成简单的有机物，汇集到原始海洋中，经过漫长的演变，最终形成原始生命。<b>原始海洋</b>是原始生命的摇篮。</p></div></div>
+<div class="fact"><div><h3>进化的证据和历程</h3><p><b>化石</b>是研究进化最直接、最重要的证据。生物进化的总体趋势：从简单到复杂、从低等到高等、从水生到陆生。植物：藻类 → 苔藓 → 蕨类 → 种子植物；脊椎动物：鱼 → 两栖动物 → 爬行动物 → 鸟和哺乳动物。</p></div></div>
+<div class="fact"><div><h3>自然选择</h3><p>达尔文认为：生物普遍有<b>过度繁殖</b>的倾向，个体间存在<b>生存斗争</b>，生物都有<b>遗传和变异</b>，适应环境的个体生存下来并繁殖后代，不适应的被淘汰，这就是<b>适者生存</b>。人类起源于森林古猿，直立行走是进化发展的基础。</p></div></div>
+<div class="fact"><div><h3>保护生物多样性</h3><p>建立<b>自然保护区</b>是最有效的措施（就地保护）；把濒危物种迁出原地进行特殊保护和管理（迁地保护）；建立种质资源库保存种子和遗传资源；制定法律法规，如《中华人民共和国野生动物保护法》。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 变异不是“为了适应”才产生的</h3><p>不是因为树干变黑，桦尺蛾才“想办法”变黑。深色的变异本来就存在，只是在干净的树干上很容易被鸟发现；树干被熏黑后，深色的反而不容易被发现，存活和繁殖的机会更大。<b>环境起的是选择作用</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>分享这一课</h3><p>链接会带上你选的环境和代数。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>生物互动馆 · 第 16 课</p><p>桦尺蛾模拟为简化模型，生存率是为了展示趋势设定的。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

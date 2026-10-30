@@ -9,7 +9,16 @@
     { id: 'body', file: 'body.html', no: 4, title: '消化与血液循环', book: '七下' },
     { id: 'nerve', file: 'nerve.html', no: 5, title: '反射与眼睛', book: '八上' },
     { id: 'eco', file: 'eco.html', no: 6, title: '深圳湾的生态系统', book: '八上' },
-    { id: 'gene', file: 'gene.html', no: 7, title: '遗传与变异', book: '八下' }
+    { id: 'gene', file: 'gene.html', no: 7, title: '遗传与变异', book: '八下' },
+    { id: 'life', file: 'life.html', no: 8, title: '生物的特征与细胞分裂', book: '七上' },
+    { id: 'groups', file: 'groups.html', no: 9, title: '植物、动物与微生物', book: '七上' },
+    { id: 'grow', file: 'grow.html', no: 10, title: '植物的一生与蒸腾作用', book: '七下' },
+    { id: 'human', file: 'human.html', no: 11, title: '生殖、青春期与营养', book: '七下' },
+    { id: 'breath', file: 'breath.html', no: 12, title: '呼吸与废物排出', book: '七下' },
+    { id: 'move', file: 'move.html', no: 13, title: '运动、听觉与激素', book: '八上' },
+    { id: 'health', file: 'health.html', no: 14, title: '健康地生活', book: '八上' },
+    { id: 'repro', file: 'repro.html', no: 15, title: '生物的生殖和发育', book: '八下' },
+    { id: 'evolve', file: 'evolve.html', no: 16, title: '进化与多样性保护', book: '八下' }
   ];
 
   var NS = 'http://www.w3.org/2000/svg';
@@ -113,7 +122,7 @@
       pager.innerHTML = '';
       if (i > 0) html('a', { href: LESSONS[i - 1].file, html: '← 上一课<strong>' + LESSONS[i - 1].title + '</strong>' }, pager);
       if (i >= 0 && i < LESSONS.length - 1) html('a', { class: 'next', href: LESSONS[i + 1].file, html: '下一课 →<strong>' + LESSONS[i + 1].title + '</strong>' }, pager);
-      else html('a', { class: 'next', href: 'index.html', html: '回到首页 →<strong>全部七课</strong>' }, pager);
+      else html('a', { class: 'next', href: 'index.html', html: '回到首页 →<strong>全部 ' + LESSONS.length + ' 课</strong>' }, pager);
     }
   }
 
@@ -186,8 +195,13 @@
         checkBtn.hidden = true;
         optsEl.hidden = false; optsEl.innerHTML = '';
         optsEl.className = 'option-grid' + (q.options.some(function (o) { return o.length > 9; }) ? ' single' : '');
-        q.options.forEach(function (o, k) {
+        // 每次出题打乱选项顺序，避免正确答案总在同一位置；k 仍是原始下标
+        var order = q.options.map(function (o, k) { return k; });
+        if (!q.keepOrder) order = shuffle(order);
+        order.forEach(function (k) {
+          var o = q.options[k];
           var b = html('button', { type: 'button', text: o }, optsEl);
+          b.dataset.k = String(k);
           b.addEventListener('click', function () {
             $$('button', optsEl).forEach(function (x) { x.classList.remove('correct', 'wrong'); });
             if (k === q.answer) { b.classList.add('correct'); pass(q.explain); }
@@ -217,7 +231,35 @@
     show();
   }
 
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+
+  /* —— 配对题：items=[[题干, 答案值, 说明?]]，options=[[值, 显示名]] 或 function(i) —— */
+  function match(listSel, scoreSel, items, options, explain) {
+    var list = $(listSel), done = 0, right = 0;
+    list.innerHTML = '';
+    items.forEach(function (it, i) {
+      var row = html('div', { class: 'choice-row', 'data-i': String(i), style: 'flex-direction:column;align-items:stretch' }, list);
+      html('p', { html: '<b>' + it[0] + '</b>' }, row);
+      var box = html('div', { class: 'chips small', style: 'flex-wrap:wrap;justify-content:flex-start' }, row);
+      var verdict = html('p', { class: 'verdict', hidden: 'hidden' }, row);
+      var opts = typeof options === 'function' ? options(i) : options;
+      opts.forEach(function (o) {
+        var b = html('button', { type: 'button', text: o[1], 'aria-pressed': 'false' }, box);
+        b.dataset.v = o[0];
+        b.addEventListener('click', function () {
+          if (row.dataset.done) return;
+          row.dataset.done = '1'; done++;
+          var ok = b.dataset.v === String(it[1]); if (ok) right++;
+          row.classList.add(ok ? 'correct' : 'wrong'); b.setAttribute('aria-pressed', 'true');
+          verdict.hidden = false;
+          verdict.textContent = (ok ? '✓ ' : '✗ ') + (explain ? explain(it, ok) : '');
+          $(scoreSel).textContent = done === items.length ? '答对 ' + right + ' / ' + items.length : '已答 ' + done + ' / ' + items.length;
+        });
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () { renderNav(); bindShare(); });
 
-  window.Bio = { LESSONS: LESSONS, svg: svg, html: html, $: $, $$: $$, clamp: clamp, lerp: lerp, getState: getState, setState: setState, bindRange: bindRange, paintRange: paintRange, chips: chips, quiz: quiz };
+  window.Bio = { LESSONS: LESSONS, svg: svg, html: html, $: $, $$: $$, clamp: clamp, lerp: lerp, getState: getState, setState: setState, bindRange: bindRange, paintRange: paintRange, chips: chips, quiz: quiz, shuffle: shuffle, match: match };
 })();

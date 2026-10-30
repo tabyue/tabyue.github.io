@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="一步步看从受精到分娩的过程，认识青春期的变化，配对营养缺乏症，再配一份午餐对照中国居民平衡膳食宝塔（2022）。生物互动馆第 11 课，对应人教版七年级下册第四单元。">
+<meta property="og:title" content="生物互动馆 · 人的生殖、青春期与营养">
+<title>人的生殖、青春期与营养 · 生物互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="bio.css">
+<script defer src="common.js"></script>
+<script defer src="human.js"></script>
+</head>
+<body data-module="human">
+<header class="topbar"><a class="brand" href="index.html" aria-label="生物互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 17.5C6.5 10.5 10.5 6 18 6c0 7.5-4.5 11.5-11.5 11.5z"/><path d="M6.5 17.5l7-7"/></svg><span>生物互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 11 课 <span>/</span> 七年级下册 · 第四单元 人体生理与健康（一）</p><h1>人的生殖、青春期与营养</h1><p class="subtitle">每个人都从一个受精卵开始。长大的路上，青春期会发生哪些变化？身体需要的营养又从哪里来？</p></div>
+<div class="workbench">
+<section class="card panel" aria-label="生命的起点">
+<h2>从一个受精卵到出生</h2>
+<p class="panel-sub">点“下一步”，按顺序看。</p>
+<div class="steps" id="rp-steps"></div>
+<div class="result-card" id="rp-info"></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="ghost-btn" id="rp-prev" type="button">← 上一步</button><button class="big-btn" id="rp-next" type="button">下一步 →</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="青春期">
+<div class="readout-head"><h2>青春期的变化</h2><span class="badge">约 10—20 岁</span></div>
+<ul class="fact-list" id="pb-list"></ul>
+</section>
+<aside class="analogy"><h3><i>打个比方</i> 胎盘像一个“交换站”</h3><p>胎儿不吃饭、不呼吸空气，所需的营养和氧气都靠<b>胎盘</b>从妈妈的血液里换过来，产生的二氧化碳等废物也从这里交给妈妈排出。脐带就是连着交换站的“管道”。</p></aside>
+</div>
+</div>
+<div class="section two-col">
+<section class="card panel" aria-label="配一份午餐">
+<h2>配一份午餐 <span class="muted" id="ln-score" style="font-size:12px;font-weight:500"></span></h2>
+<p class="panel-sub">点选你想吃的，看看这份午餐的营养搭配怎么样。</p>
+<div class="chips small" id="ln-chips" style="flex-wrap:wrap"></div>
+<div class="result-card" id="ln-result" style="margin-top:10px"></div>
+<p class="source">评价依据《中国居民膳食指南（2022）》：食物多样，谷类为主；多吃蔬果、奶类、大豆；适量吃鱼禽蛋瘦肉；少盐少油，控糖。</p>
+</section>
+<section class="card panel" aria-label="营养缺乏">
+<h2>缺了什么会得这种病？ <span class="muted" id="df-score" style="font-size:12px;font-weight:500"></span></h2>
+<p class="panel-sub">维生素和无机盐需要量很少，作用却很大。</p>
+<div class="choice-list" id="df-list"></div>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>生殖系统</h3><p>男性的主要生殖器官是<b>睾丸</b>，产生精子并分泌雄性激素；女性的主要生殖器官是<b>卵巢</b>，产生卵细胞并分泌雌性激素。</p></div></div>
+<div class="fact"><div><h3>受精和怀孕</h3><p>精子和卵细胞在<b>输卵管</b>里结合形成受精卵。受精卵一边分裂一边移动，最后附着在<b>子宫</b>内膜上，这就是怀孕。胎儿通过胎盘、脐带从母体获得营养和氧气。怀孕到第 38 周左右，胎儿发育成熟，从阴道产出，叫分娩。</p></div></div>
+<div class="fact"><div><h3>六类营养物质</h3><p>糖类、脂肪、蛋白质能提供能量，其中<b>糖类</b>是最主要的供能物质，蛋白质是建造和修复身体的重要原料；水、无机盐、维生素不提供能量，但都不可缺少。膳食纤维被称为“第七类营养素”。</p></div></div>
+<div class="fact"><div><h3>平衡膳食</h3><p>按《中国居民平衡膳食宝塔（2022）》：每天谷类 200—300 克，蔬菜 300—500 克，水果 200—350 克，奶类 300—500 克，盐不超过 5 克，烹调油 25—30 克，饮水 1500—1700 毫升。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 青春期长身高，不能只靠“吃得多”</h3><p>青春期身高突增，需要的是<b>蛋白质、钙和维生素</b>，再加上充足睡眠和运动。只吃高能量的油炸食品、喝含糖饮料，长的往往是体重而不是身高。另外，青春期出现的心理变化也很正常，可以多和家长、老师、同学沟通。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>分享这一课</h3><p>链接会带上你配的这份午餐。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>生物互动馆 · 第 11 课</p><p>膳食推荐量为《中国居民膳食指南（2022）》中 2 岁以上健康人群的一般建议，具体因人而异。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

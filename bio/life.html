@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="判断哪些是生物，看细胞怎样分裂、分化，比较动物体和植物体的结构层次。生物互动馆第 8 课，对应人教版七年级上册第一单元。">
+<meta property="og:title" content="生物互动馆 · 生物的特征与细胞分裂">
+<title>生物的特征与细胞分裂 · 生物互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="bio.css">
+<script defer src="common.js"></script>
+<script defer src="life.js"></script>
+</head>
+<body data-module="life">
+<header class="topbar"><a class="brand" href="index.html" aria-label="生物互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 17.5C6.5 10.5 10.5 6 18 6c0 7.5-4.5 11.5-11.5 11.5z"/><path d="M6.5 17.5l7-7"/></svg><span>生物互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 8 课 <span>/</span> 七年级上册 · 第一单元 生物和细胞</p><h1>生物的特征与细胞分裂</h1><p class="subtitle">什么才算生物？一个受精卵怎么变成几十万亿个细胞，又怎么排成组织、器官和系统？</p></div>
+<div class="workbench">
+<section class="card panel" aria-label="细胞分裂">
+<h2>细胞分裂一步一步看</h2>
+<p class="panel-sub">先选动物细胞还是植物细胞，再点“下一步”。</p>
+<div class="ctl-row"><span>细胞</span><div class="chips small" id="div-kind"></div></div>
+<svg id="div-svg" viewBox="0 0 400 200" role="img" aria-label="细胞分裂过程示意" style="margin-top:10px"></svg>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button class="ghost-btn" id="div-prev" type="button">← 上一步</button><button class="big-btn" id="div-next" type="button">下一步 →</button></div>
+<p class="part-info" id="div-text" aria-live="polite"></p>
+</section>
+<div class="settings">
+<section class="readout" aria-label="分裂次数">
+<div class="readout-head"><h2>分裂几次？</h2><span class="badge" id="n-badge">—</span></div>
+<label class="small-label" for="n-range">连续分裂次数</label>
+<input id="n-range" type="range" min="0" max="10" step="1" value="3">
+<div class="stat-grid" style="margin-top:8px"><div class="stat"><span>细胞个数</span><strong id="n-cells">—</strong></div><div class="stat"><span>每个细胞的染色体</span><strong id="n-chr">46 条</strong></div></div>
+<p class="lead" id="n-text"></p>
+</section>
+<aside class="analogy"><h3><i>打个比方</i> 细胞分裂像复印一套说明书</h3><p>分裂前，细胞核里的染色体先<b>复制一份</b>，就像把整套说明书复印一遍；分裂时两套说明书平均分给两个新细胞。所以新细胞和原来的细胞染色体<b>数目相同、内容相同</b>。</p></aside>
+</div>
+</div>
+<div class="section two-col">
+<section class="card panel" aria-label="结构层次">
+<h2>从细胞到生物体</h2>
+<p class="panel-sub">动物体和植物体的结构层次差一层。点每一层看例子。</p>
+<div class="ctl-row"><span>生物</span><div class="chips small" id="lv-kind"></div></div>
+<div class="steps" id="lv-steps" style="font-size:13px"></div>
+<div class="result-card" id="lv-info"></div>
+</section>
+<section class="card panel" aria-label="是不是生物">
+<h2>这是生物吗？ <span class="muted" id="lf-score" style="font-size:12px;font-weight:500"></span></h2>
+<p class="panel-sub">生物能呼吸、能生长和繁殖、能排出废物、对刺激有反应、需要营养，除病毒外都由细胞构成。</p>
+<div class="choice-list" id="lf-list"></div>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>生物的特征</h3><p>生物的生活需要营养；能进行呼吸；能排出体内产生的废物；能对外界刺激作出反应；能生长和繁殖；有遗传和变异的特性。除病毒以外，生物都由<b>细胞</b>构成。</p></div></div>
+<div class="fact"><div><h3>细胞分裂</h3><p>一个细胞分成两个细胞。先是细胞核一分为二，再是细胞质分成两份。动物细胞从中部向内凹陷，缢裂成两个；植物细胞在中央形成新的<b>细胞膜和细胞壁</b>。</p></div></div>
+<div class="fact"><div><h3>细胞分化</h3><p>分裂产生的细胞在形态、结构和功能上发生变化，形成不同的<b>组织</b>。动物有上皮组织、肌肉组织、结缔组织、神经组织；植物有分生组织、保护组织、营养组织、输导组织等。</p></div></div>
+<div class="fact"><div><h3>结构层次</h3><p>动物体：细胞 → 组织 → 器官 → <b>系统</b> → 动物体。植物体：细胞 → 组织 → 器官 → 植物体，<b>没有系统</b>。绿色开花植物有根、茎、叶、花、果实、种子六大器官。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 会动的不一定是生物</h3><p>钟乳石会“长大”、机器人会动、电脑病毒会“复制”，但它们都不能进行呼吸、不需要营养，不是生物。反过来，<b>病毒</b>没有细胞结构，却能在活细胞里繁殖，属于生物。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>分享这一课</h3><p>链接会带上你选的细胞类型和分裂次数。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>生物互动馆 · 第 8 课</p><p>细胞分裂示意图为简化模型，只表示主要变化顺序。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>
