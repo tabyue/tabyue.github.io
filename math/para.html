@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="调邻边比和夹角，在一个图形里看遍平行四边形、矩形、菱形、正方形，对照各自独有的性质；逐条检验哪些条件能判定平行四边形；拖动顶点验证三角形中位线定理。数学互动馆第 23 课，对应北师大版八年级下册第六章与九年级上册第一章。">
+<meta property="og:title" content="数学互动馆 · 平行四边形与特殊平行四边形">
+<title>平行四边形与特殊平行四边形 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="para.js"></script>
+</head>
+<body data-module="para">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 23 课 <span>/</span> 八年级下册 第六章 · 九年级上册 第一章</p><h1>平行四边形与特殊平行四边形</h1><p class="subtitle">两个滑块就能走遍平行四边形、矩形、菱形和正方形，顺便看清它们的关系。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="可变四边形">
+<h2>一个会变身的四边形</h2>
+<p class="panel-sub">红绿虚线是两条对角线，黑点是它们的交点。</p>
+<svg id="sh-fig" viewBox="0 0 300 200" role="img" aria-label="平行四边形"></svg>
+<div class="control"><div class="control-heading"><label for="sh-ratio">邻边比</label><output>1 ~ 2.6</output></div><input id="sh-ratio" type="range" min="1" max="2.6" step="0.1" value="1.7"></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="sh-ang">夹角</label><output>30° ~ 90°</output></div><input id="sh-ang" type="range" min="30" max="90" step="1" value="62"></div>
+<div class="toggle-row" style="margin-top:10px" id="sh-presets">
+<button class="secondary" type="button" data-r="1.7" data-a="62">平行四边形</button>
+<button class="secondary" type="button" data-r="1.7" data-a="90">矩形</button>
+<button class="secondary" type="button" data-r="1" data-a="62">菱形</button>
+<button class="secondary" type="button" data-r="1" data-a="90">正方形</button>
+</div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="性质">
+<div class="readout-head"><h2 id="sh-name">一般平行四边形</h2><span class="badge">邻边 <span id="sh-sides">—</span></span></div>
+<div class="stat-grid">
+<div class="stat"><span>内角</span><strong id="sh-ang-out" style="font-size:14px">—</strong></div>
+<div class="stat"><span>对角线 AC</span><strong id="sh-d1">—</strong></div>
+<div class="stat"><span>对角线 BD</span><strong id="sh-d2">—</strong></div>
+</div>
+<ul class="cond-list" id="sh-props"></ul>
+<p class="lead" id="sh-text" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="判定条件">
+<h2>这个条件够不够</h2>
+<svg id="jd-fig" viewBox="0 0 240 155" role="img" aria-label="判定条件示意"></svg>
+<div class="chips small" id="jd-chips" style="margin-top:8px"></div>
+<p class="note" style="margin-top:8px">条件：<b id="jd-cond">两组对边分别平行</b></p>
+<p class="bignum" id="jd-ok">能判定 ✓</p>
+<p class="lead" id="jd-why" aria-live="polite"></p>
+</section>
+<section class="card panel figure" aria-label="中位线">
+<h2>三角形中位线</h2>
+<p class="panel-sub">D、E 分别是 AB、AC 的中点。拖动顶点 A。</p>
+<svg id="md-fig" viewBox="0 0 300 180" role="img" aria-label="三角形中位线"></svg>
+<div class="control"><div class="control-heading"><label for="md-range">顶点 A 的位置</label><output>DE : BC = <span id="md-ratio">0.5</span></output></div><input id="md-range" type="range" min="70" max="240" step="2" value="150"></div>
+<div class="stat-grid" style="margin-top:8px">
+<div class="stat"><span>中位线 DE</span><strong id="md-de">—</strong></div>
+<div class="stat"><span>底边 BC</span><strong id="md-bc">—</strong></div>
+</div>
+<p class="lead" id="md-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 像一个家族的族谱</h3><p>平行四边形是爷爷，矩形和菱形是两个儿子，各自继承了爷爷全部性质又多出一条；正方形是孙子，同时继承了两个儿子的全部。所以正方形的性质最多、条件也最严。</p></aside>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>平行四边形的三条性质</h3><p>对边平行且相等、对角相等邻角互补、对角线互相平分。这三条所有平行四边形都有。</p></div></div>
+<div class="fact"><div><h3>矩形多一条：对角线相等</h3><p>矩形 = 平行四边形 + 一个直角。它的对角线相等并且互相平分。</p></div></div>
+<div class="fact"><div><h3>菱形多两条：垂直、平分对角</h3><p>菱形 = 平行四边形 + 一组邻边相等。对角线互相垂直，并且各自平分一组对角。</p></div></div>
+<div class="fact"><div><h3>正方形两边都占</h3><p>正方形既是矩形又是菱形，矩形和菱形的性质它全都有。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>把「一组对边平行，另一组对边相等」当成判定条件。<b>等腰梯形</b>正好满足它却不是平行四边形。正确说法是「一组对边<b>平行且相等</b>」——必须是同一组对边同时满足两个条件。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个四边形发给同学</h3><p>链接会记住你调的邻边比和夹角。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 23 课</p><p>对角线长度按实际坐标计算；判定条件的反例均为真实可构造的图形。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

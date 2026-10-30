@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动相似比，看周长比等于相似比而面积比等于相似比的平方；逐条检验哪些条件能判定三角形相似；用标杆影长算出够不着的树高。数学互动馆第 26 课，对应北师大版九年级上册第四章。">
+<meta property="og:title" content="数学互动馆 · 图形的相似">
+<title>图形的相似 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="similar.js"></script>
+</head>
+<body data-module="similar">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 26 课 <span>/</span> 九年级上册 第四章</p><h1>图形的相似</h1><p class="subtitle">边长放大 3 倍，面积可是放大 9 倍。这一步最容易算错。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="相似比">
+<h2>放大以后，什么变了几倍</h2>
+<svg id="rt-fig" viewBox="0 0 300 180" role="img" aria-label="两个相似三角形"></svg>
+<div class="control"><div class="control-heading"><label for="rt-range">相似比</label><output>1 ~ 3</output></div><input id="rt-range" type="range" min="1" max="3" step="0.1" value="1.6"></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="比值">
+<div class="readout-head"><h2>各变几倍</h2><span class="badge">相似比 <span id="rt-k">1.6</span></span></div>
+<div class="stat-grid">
+<div class="stat"><span>对应边、周长</span><strong id="rt-per">—</strong></div>
+<div class="stat"><span>面积</span><strong id="rt-area">—</strong></div>
+</div>
+<p class="lead" id="rt-text" aria-live="polite"></p>
+<p class="note" id="rt-note"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="判定">
+<h2>这个条件能判定相似吗</h2>
+<svg id="jd-fig" viewBox="0 0 240 155" role="img" aria-label="相似判定示意"></svg>
+<div class="chips small" id="jd-chips" style="margin-top:8px"></div>
+<p class="note" style="margin-top:8px">条件：<b id="jd-cond">两角分别相等（AA）</b></p>
+<p class="bignum" id="jd-ok">一定相似 ✓</p>
+<p class="lead" id="jd-why" aria-live="polite"></p>
+</section>
+<section class="card panel figure" aria-label="测高">
+<h2>用标杆量出树有多高</h2>
+<svg id="ms-fig" viewBox="0 0 260 185" role="img" aria-label="标杆与树的影子"></svg>
+<div class="control"><div class="control-heading"><label for="ms-stick">标杆高（m）</label><output>树高 <span id="ms-h">9 m</span></output></div><input id="ms-stick" type="range" min="0.8" max="3" step="0.1" value="1.5"></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="ms-shadow">标杆影长（m）</label><output>1 ~ 5</output></div><input id="ms-shadow" type="range" min="1" max="5" step="0.5" value="2"></div>
+<p id="ms-eq" style="font-size:13px;line-height:2;margin-top:8px"></p>
+<p class="lead" id="ms-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 像照片放大</h3><p>把一张照片等比放大两倍，每条边都变两倍，但要用的相纸是原来的<b>四倍</b>——这就是面积比等于相似比平方最直观的感受。</p></aside>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>相似 = 形状相同</h3><p>对应角相等、对应边成比例。大小可以不同，这是相似和全等的区别。</p></div></div>
+<div class="fact"><div><h3>判定三招</h3><p>AA（两角相等）最常用；SAS（两边成比例且<b>夹角</b>相等）；SSS（三边成比例）。</p></div></div>
+<div class="fact"><div><h3>周长比 = 相似比，面积比 = 相似比的平方</h3><p>对应高、中线、角平分线的比也都等于相似比。</p></div></div>
+<div class="fact"><div><h3>相似能测够不着的高度</h3><p>同一时刻阳光平行，物体与影子构成相似三角形，于是「标杆高 : 标杆影 = 树高 : 树影」。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>相似比 2 : 3 时把面积比也写成 2 : 3。面积比是相似比的<b>平方</b>，应该是 4 : 9。反过来，已知面积比 4 : 9 求周长比，要<b>开方</b>得 2 : 3。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个相似比发给同学</h3><p>问问他面积变成几倍。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 26 课</p><p>测高模型中树影长固定 12 米，同一时刻阳光视为平行光。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

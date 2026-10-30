@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动极端值，直观比较平均数与中位数的抗干扰能力；用箱线图读出五数概括，比较两组数据的集中与分散程度。数学互动馆第 18 课，对应北师大版八年级上册第六章（含新教材的箱线图）。">
+<meta property="og:title" content="数学互动馆 · 数据的分析">
+<title>数据的分析 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="data2.js"></script>
+</head>
+<body data-module="data2">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 18 课 <span>/</span> 八年级上册 第六章</p><h1>数据的分析</h1><p class="subtitle">把老板的工资往上拖，看看「人均收入」是怎么被一个人拉高的。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="收入分布">
+<h2>9 个人的月收入</h2>
+<p class="panel-sub">每个点是一个人（红点是老板）。拖滑块改变老板的收入。</p>
+<svg id="st-fig" viewBox="0 0 330 170" role="img" aria-label="收入分布与平均数中位数"></svg>
+<div class="control"><div class="control-heading"><label for="st-range">老板的月收入（千元）</label><output id="st-boss">9 千元</output></div><input id="st-range" type="range" min="5" max="60" step="1" value="9"></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="四个统计量">
+<div class="readout-head"><h2>四个统计量</h2><span class="badge">同一组数据</span></div>
+<div class="stat-grid">
+<div class="stat"><span>平均数</span><strong id="st-mean">—</strong></div>
+<div class="stat"><span>中位数</span><strong id="st-med">—</strong></div>
+<div class="stat"><span>众数</span><strong id="st-mode">—</strong></div>
+<div class="stat"><span>方差</span><strong id="st-var">—</strong></div>
+</div>
+<p class="lead" id="st-text" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="箱线图">
+<h2>箱线图：五个数看懂一组数据</h2>
+<svg id="bx-fig" viewBox="0 0 330 165" role="img" aria-label="两个班成绩的箱线图"></svg>
+<div class="chips small" id="bx-chips" style="margin-top:8px"></div>
+</section>
+<section class="readout" aria-label="五数概括">
+<div class="readout-head"><h2 id="bx-name">甲班</h2><span class="badge">四分位距 <span id="bx-iqr">—</span></span></div>
+<div class="stat-grid">
+<div class="stat"><span>最小值</span><strong id="bx-min">—</strong></div>
+<div class="stat"><span>Q₁</span><strong id="bx-q1">—</strong></div>
+<div class="stat"><span>中位数</span><strong id="bx-med">—</strong></div>
+<div class="stat"><span>Q₃</span><strong id="bx-q3">—</strong></div>
+<div class="stat"><span>最大值</span><strong id="bx-max">—</strong></div>
+</div>
+<p class="lead" id="bx-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 像班级合影里的姚明</h3><p>如果班级平均身高 1.65 米，来了个 2.26 米的人，平均身高一下子涨了好几厘米，但「站中间那位同学」的身高几乎没变——这就是平均数和中位数的区别。</p></aside>
+</section>
+</div>
+
+<div class="section">
+<section class="card panel" aria-label="该用哪个统计量">
+<h2>这种情况该用哪个</h2>
+<div class="choice-list" id="ch-list"></div>
+<p class="note">得分：<b id="ch-score">已答 0 / 6</b></p>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>平均数怕极端值</h3><p>一个特别大的数就能把平均数拉高。报道收入、房价时常用中位数，就是这个原因。</p></div></div>
+<div class="fact"><div><h3>中位数看位置，众数看频次</h3><p>中位数是排序后正中间的数；众数是出现次数最多的数，可能不止一个，也可能没有。</p></div></div>
+<div class="fact"><div><h3>方差衡量整齐程度</h3><p>方差越小，数据越集中、越稳定。平均数相同时，就靠方差分高下。</p></div></div>
+<div class="fact"><div><h3>箱线图用五个数概括</h3><p>最小值、Q₁、中位数、Q₃、最大值。箱子装着中间 50% 的数据，箱子越短越集中。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>看到「平均工资 1 万」就以为大多数人挣 1 万。只要有少数高收入者，平均数就会远高于大多数人的实际水平。<b>有极端值时要看中位数</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这组数据发给同学</h3><p>链接会记住你拖到的位置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 18 课</p><p>四分位数采用线性插值法计算；两班成绩为教学用示例数据。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

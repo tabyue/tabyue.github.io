@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="调 k 看双曲线落在哪两个象限，拖点验证矩形面积恒等于 |k|；用「路程一定时速度与时间」理解反比例的实际含义。数学互动馆第 27 课，对应北师大版九年级上册第六章。">
+<meta property="og:title" content="数学互动馆 · 反比例函数">
+<title>反比例函数 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="inverse.js"></script>
+</head>
+<body data-module="inverse">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 27 课 <span>/</span> 九年级上册 第六章</p><h1>反比例函数</h1><p class="subtitle">沿曲线拖动那个点，围出来的矩形面积始终不变——这就是 k 的几何意义。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="双曲线">
+<h2>双曲线与那个不变的矩形</h2>
+<svg id="hy-fig" viewBox="0 0 330 250" role="img" aria-label="反比例函数图象"></svg>
+<div class="control"><div class="control-heading"><label for="hy-k">k</label><output id="hy-expr">y = 6/x</output></div><input id="hy-k" type="range" min="-12" max="12" step="1" value="6"></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="hy-x">点 P 的横坐标</label><output>−8 ~ 8</output></div><input id="hy-x" type="range" min="-8" max="8" step="1" value="2"></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="性质">
+<div class="readout-head"><h2>这条双曲线</h2><span class="badge" id="hy-quad">第一、三象限</span></div>
+<div class="stat-grid">
+<div class="stat"><span>矩形面积 |xy|</span><strong id="hy-area" style="font-size:14px">—</strong></div>
+</div>
+<p class="note">增减性：<b id="hy-trend">—</b></p>
+<p class="lead" id="hy-text" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="行程">
+<h2>路程一定时，速度与时间</h2>
+<p class="panel-sub">深圳到某地 360 公里。</p>
+<svg id="tp-fig" viewBox="0 0 330 200" role="img" aria-label="速度与时间的反比例图象"></svg>
+<div class="control"><div class="control-heading"><label for="tp-range">速度</label><output id="tp-v">60 km/时</output></div><input id="tp-range" type="range" min="20" max="180" step="10" value="60"></div>
+</section>
+<section class="readout" aria-label="读数">
+<div class="readout-head"><h2>要开多久</h2><span class="badge" id="tp-expr">t = 360/v</span></div>
+<div class="stat-grid">
+<div class="stat"><span>需要时间</span><strong id="tp-t">—</strong></div>
+</div>
+<p class="lead" id="tp-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 像分蛋糕</h3><p>一个蛋糕分给越多人，每人分到的越少，人数 × 每份 = 整个蛋糕（定值）。这就是反比例。不管怎么分，乘积始终是那一个蛋糕——正如矩形面积始终是 |k|。</p></aside>
+</section>
+</div>
+
+<div class="section">
+<section class="card panel" aria-label="分类">
+<h2>正比例、反比例还是都不是</h2>
+<div class="choice-list" id="cm-list"></div>
+<p class="note">得分：<b id="cm-score">已答 0 / 8</b></p>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>形式是 y = k/x（k ≠ 0）</h3><p>也可以写成 xy = k。x 和 y 都不能取 0，图象永远碰不到坐标轴。</p></div></div>
+<div class="fact"><div><h3>k 的正负决定象限</h3><p>k > 0 在第一、三象限；k < 0 在第二、四象限。</p></div></div>
+<div class="fact"><div><h3>k 的几何意义</h3><p>图象上任一点向两轴作垂线，围成的矩形面积恒等于 <b>|k|</b>，与点的位置无关。</p></div></div>
+<div class="fact"><div><h3>增减性要加前提</h3><p>k > 0 时「<b>在每一支上</b>」y 随 x 增大而减小。跨过 y 轴比较大小是错的。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>说「k &gt; 0 时 y 随 x 增大而减小」却漏掉「在每一支上」。取 x = −1 得 y = −6，取 x = 1 得 y = 6，x 变大了 y 也变大了——因为跨过了两支。比较大小前先确认两点<b>在不在同一支上</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这条双曲线发给同学</h3><p>链接会记住你调的 k 和点的位置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 27 课</p><p>行程模型取路程 360 km；反比例函数的 x、y 均不能取 0。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

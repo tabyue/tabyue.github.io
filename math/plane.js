@@ -20,7 +20,7 @@
       cPos = Math.round(M.clamp(seg.ix(p.x), 0, 10) * 2) / 2;
       showSeg(); e.preventDefault();
     }
-    el.addEventListener('pointerdown', function (e) { down = true; el.setPointerCapture && el.setPointerCapture(e.pointerId); go(e); });
+    el.addEventListener('pointerdown', function (e) { down = true; try { el.setPointerCapture(e.pointerId); } catch (err) {} go(e); });
     el.addEventListener('pointermove', function (e) { if (down) go(e); });
     el.addEventListener('pointerup', function () { down = false; });
     el.addEventListener('keydown', function (e) {

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="用树状图和表格两种方式列举两步试验的全部结果并计算概率；通过摸球估计袋中白球个数，体会用频率估计概率的实际用法。数学互动馆第 25 课，对应北师大版九年级上册第三章。">
+<meta property="og:title" content="数学互动馆 · 概率的进一步认识">
+<title>概率的进一步认识 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="prob2.js"></script>
+</head>
+<body data-module="prob2">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 25 课 <span>/</span> 九年级上册 第三章</p><h1>概率的进一步认识</h1><p class="subtitle">两步试验要把所有结果列全。「正反」和「反正」是两种，不是一种。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="列举结果">
+<h2>把所有结果列出来</h2>
+<p class="panel-sub">红色的就是符合要求的结果。</p>
+<svg id="tr-fig" viewBox="0 0 270 200" role="img" aria-label="树状图或表格"></svg>
+<div class="ctl-row"><span>场景</span><div class="chips small" id="tr-chips"></div></div>
+<div class="ctl-row" style="margin-top:8px"><span>看法</span><div class="chips small" id="tr-view"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="概率">
+<div class="readout-head"><h2>算概率</h2><span class="badge">要求：<span id="tr-want">两枚一样</span></span></div>
+<div class="stat-grid">
+<div class="stat"><span>所有结果</span><strong id="tr-all">—</strong></div>
+<div class="stat"><span>符合的</span><strong id="tr-hit">—</strong></div>
+</div>
+<p class="formula" id="tr-p"></p>
+<p class="lead" id="tr-text" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="摸球估计">
+<h2>袋里有多少白球</h2>
+<p class="panel-sub">袋里共 400 个球，白球个数未知。摸一个记一次再放回去。</p>
+<svg id="es-fig" viewBox="0 0 330 200" role="img" aria-label="白球频率折线"></svg>
+<div class="toggle-row" style="margin-top:10px">
+<button class="secondary" id="es-10" type="button">摸 10 次</button>
+<button class="primary" id="es-100" type="button">摸 100 次</button>
+<button class="secondary" id="es-reset" type="button">重来</button>
+</div>
+</section>
+<section class="readout" aria-label="估计结果">
+<div class="readout-head"><h2>估一估</h2><span class="badge">共 400 个球</span></div>
+<div class="stat-grid">
+<div class="stat"><span>摸了几次</span><strong id="es-n">0</strong></div>
+<div class="stat"><span>白球几次</span><strong id="es-w">0</strong></div>
+<div class="stat"><span>频率</span><strong id="es-p">—</strong></div>
+<div class="stat"><span>估计白球</span><strong id="es-est">—</strong></div>
+</div>
+<p class="lead" id="es-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 像查池塘里有多少鱼</h3><p>不可能把鱼全捞出来数。先捞 100 条做记号放回，再捞 100 条看其中有几条带记号——带记号的比例，就能反推出整池鱼的总数。</p></aside>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>两步试验用树状图或表格</h3><p>两种工具都能把结果列全。结果较多时表格更清楚，步骤较多时树状图更直观。</p></div></div>
+<div class="fact"><div><h3>顺序不同算两种</h3><p>抛两枚硬币有四种等可能结果：正正、正反、反正、反反。把「正反」和「反正」合并会算错。</p></div></div>
+<div class="fact"><div><h3>概率 = 符合的 ÷ 全部</h3><p>前提是列出的每种结果<b>等可能</b>。</p></div></div>
+<div class="fact"><div><h3>频率可以估计概率</h3><p>概率算不出来时，就做大量重复试验，用稳定下来的频率去估计它。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>抛两枚硬币时认为「一正一反」的概率是 1/3（以为只有正正、反反、一正一反三种）。其实「一正一反」包含<b>两种</b>结果，概率是 2/4 = 1/2，比另外两种都大。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个树状图发给同学</h3><p>链接会记住你选的场景。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 25 课</p><p>摸球模型中袋内共 400 个球、白球 60 个，模拟结果每次不同。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

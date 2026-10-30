@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="在平面直角坐标系里拖点，看坐标与象限、到两轴的距离、关于 x 轴 y 轴和原点的对称点；比较「坐标」与「方向加距离」两种定位方式。数学互动馆第 15 课，对应北师大版八年级上册第三章。">
+<meta property="og:title" content="数学互动馆 · 位置与坐标">
+<title>位置与坐标 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="coord.js"></script>
+</head>
+<body data-module="coord">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 15 课 <span>/</span> 八年级上册 第三章</p><h1>位置与坐标</h1><p class="subtitle">拖动一个点，坐标、象限、到两轴的距离和三个对称点一起跟着变。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="坐标系">
+<h2>拖动点 P</h2>
+<p class="panel-sub">直接拖，或点中坐标系后用方向键移动。</p>
+<svg id="pt-fig" viewBox="0 0 330 250" role="application" aria-label="平面直角坐标系"></svg>
+<div class="toggle-row" style="margin-top:8px" id="pt-presets">
+<button class="secondary" type="button" data-x="3" data-y="2">(3, 2)</button>
+<button class="secondary" type="button" data-x="-3" data-y="5">(−3, 5)</button>
+<button class="secondary" type="button" data-x="2" data-y="-3">(2, −3)</button>
+<button class="secondary" type="button" data-x="0" data-y="4">(0, 4)</button>
+<label style="font-size:12px;display:flex;gap:5px;align-items:center;margin-left:auto"><input type="checkbox" id="pt-sym" checked>显示对称点</label>
+</div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="点的信息">
+<div class="readout-head"><h2 id="pt-coord">(3, 2)</h2><span class="badge" id="pt-quad">第一象限</span></div>
+<div class="stat-grid">
+<div class="stat"><span>到 x 轴的距离</span><strong id="pt-dx">—</strong></div>
+<div class="stat"><span>到 y 轴的距离</span><strong id="pt-dy">—</strong></div>
+</div>
+<p class="note" id="pt-syms"></p>
+<p class="lead" id="pt-text" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="方向与距离">
+<h2>另一种定位：方向 + 距离</h2>
+<p class="panel-sub">以市民中心为原点。</p>
+<svg id="sp-fig" viewBox="0 0 300 215" role="img" aria-label="方位示意图"></svg>
+<div class="chips small" id="sp-chips" style="margin-top:8px"></div>
+</section>
+<section class="readout" aria-label="两种说法">
+<div class="readout-head"><h2>两种说法</h2><span class="badge">都要两个数据</span></div>
+<div class="stat-grid">
+<div class="stat"><span>用坐标</span><strong id="sp-xy">—</strong></div>
+<div class="stat"><span>用方向和距离</span><strong id="sp-dir" style="font-size:13px">—</strong></div>
+</div>
+<p class="lead" id="sp-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 像电影院找座位</h3><p>「8 排 12 号」就是一组坐标——先说排（纵），再说号（横），顺序固定才不会坐错。坐标系只是把这件事推广到了整个平面，还允许负数。</p></aside>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>坐标有顺序</h3><p>(a, b) 先横后纵，(3, 2) 和 (2, 3) 是两个不同的点。</p></div></div>
+<div class="fact"><div><h3>到轴的距离看另一个坐标</h3><p>到 x 轴的距离是 |纵坐标|，到 y 轴的距离是 |横坐标|。这两个最容易记反。</p></div></div>
+<div class="fact"><div><h3>象限逆时针编号</h3><p>右上第一、左上第二、左下第三、右下第四。<b>坐标轴上的点不属于任何象限</b>。</p></div></div>
+<div class="fact"><div><h3>三种对称一起记</h3><p>关于 x 轴 (x, −y)；关于 y 轴 (−x, y)；关于原点 (−x, −y)。谁变号看对称的是谁。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>把「点 P 到 x 轴的距离」算成横坐标。想象从点垂直落到 x 轴，走的是<b>竖直方向</b>，长度当然是纵坐标的绝对值。记一句话：到谁的距离，就看<b>另一个</b>坐标。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个点发给同学</h3><p>链接会记住点 P 的坐标。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 15 课</p><p>方位示意图以市民中心为原点，坐标为示意值，非真实经纬度。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

@@ -35,7 +35,7 @@
     }
     el.addEventListener('pointerdown', function (e) {
       down = true;
-      el.setPointerCapture && el.setPointerCapture(e.pointerId);
+      try { el.setPointerCapture(e.pointerId); } catch (err) {}
       go(e, true);
     });
     el.addEventListener('pointermove', function (e) { if (down) go(e, false); });

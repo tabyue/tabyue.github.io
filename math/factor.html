@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="对照整式乘法理解因式分解的方向；逐类掌握提公因式、平方差、完全平方；用面积图看懂 x²+6x+9 为什么等于 (x+3)²。数学互动馆第 21 课，对应北师大版八年级下册第四章。">
+<meta property="og:title" content="数学互动馆 · 因式分解">
+<title>因式分解 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="factor.js"></script>
+</head>
+<body data-module="factor">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 21 课 <span>/</span> 八年级下册 第四章</p><h1>因式分解</h1><p class="subtitle">因式分解就是整式乘法倒着走：把加起来的几块重新拼成一个整体。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="分解与乘法">
+<h2>和差 ⇄ 乘积</h2>
+<svg id="fc-fig" viewBox="0 0 300 92" role="img" aria-label="因式分解与整式乘法互为逆运算"></svg>
+<div class="chips small" id="fc-chips" style="margin-top:8px"></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="这一类">
+<div class="readout-head"><h2 id="fc-name">提公因式</h2><span class="badge">怎么看出来</span></div>
+<p class="formula"><span class="step" id="fc-raw"></span><span class="step" style="color:#2f6a4a">= <span id="fc-out"></span></span></p>
+<p class="lead" id="fc-how" aria-live="polite"></p>
+<p class="note" id="fc-check"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="面积图">
+<h2>面积图看完全平方</h2>
+<p class="panel-sub">四块拼成一个边长 (x + 3) 的正方形。</p>
+<svg id="ar-fig" viewBox="0 0 260 210" role="img" aria-label="完全平方的面积图"></svg>
+<div class="control"><div class="control-heading"><label for="ar-range">x 的值</label><output>1 ~ 7</output></div><input id="ar-range" type="range" min="1" max="7" step="1" value="3"></div>
+</section>
+<section class="readout" aria-label="验算">
+<div class="readout-head"><h2>两边算一算</h2><span class="badge">拼图不说谎</span></div>
+<p class="lead" id="ar-calc" aria-live="polite"></p>
+<p class="note" id="ar-text"></p>
+<aside class="analogy"><h3><i>打个比方</i> 像把零钱换成整钞</h3><p>整式乘法是把 100 元换成一堆零钱（展开成好多项），因式分解则是把零钱重新换回整钞（写成几个因式相乘）。换回整钞后，约分、解方程都方便得多。</p></aside>
+</section>
+</div>
+
+<div class="section">
+<section class="card panel" aria-label="该用哪个方法">
+<h2>该用哪个方法</h2>
+<div class="choice-list" id="fm-list"></div>
+<p class="note">得分：<b id="fm-score">已答 0 / 8</b></p>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>结果必须是乘积</h3><p>因式分解的右边从头到尾是在做乘法。写成「乘积 + 1」就不是因式分解。</p></div></div>
+<div class="fact"><div><h3>先提公因式</h3><p>任何题目先看有没有公因式，系数取最大公约数，字母取最低次幂，<b>一次提到最大</b>。</p></div></div>
+<div class="fact"><div><h3>两项想平方差，三项想完全平方</h3><p>a² − b² = (a+b)(a−b)；a² ± 2ab + b² = (a±b)²。套公式前先验中间项是不是 2ab。</p></div></div>
+<div class="fact"><div><h3>分解到底</h3><p>提完公因式后括号里往往还能继续分解，必须进行到<b>每个因式都不能再分</b>为止。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>以为 x² + 9 能分解成 (x+3)²。(x+3)² = x² + 6x + 9，多了中间项；而平方<b>和</b> x² + 9 在实数范围内<b>根本不能分解</b>。只有平方<b>差</b>才有公式。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这道分解题发给同学</h3><p>看谁能一眼看出该用哪个公式。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 21 课</p><p>分解到每个因式都不能再分为止；x² + 9 在实数范围内不可分解。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

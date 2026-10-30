@@ -31,34 +31,107 @@
 
   var bodyId = st.b || 'cube';
 
+  /* ---------- 三维投影 ----------
+     先绕 y 轴转 yaw、再绕 x 轴转 pitch，然后正交投影。
+     凸多面体用背面剔除决定哪些面看得见：法向量朝向观察者的才画。
+     一条棱只要属于某个可见面就是实线，否则是被挡住的虚线。 */
+  var YAW = 34 * Math.PI / 180, PITCH = 20 * Math.PI / 180;
+
+  function rot(p) {
+    var x = p[0] * Math.cos(YAW) + p[2] * Math.sin(YAW);
+    var z = -p[0] * Math.sin(YAW) + p[2] * Math.cos(YAW);
+    var y = p[1] * Math.cos(PITCH) - z * Math.sin(PITCH);
+    return [x, y, p[1] * Math.sin(PITCH) + z * Math.cos(PITCH)];
+  }
+  function sub(a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
+  function cross(a, b) { return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; }
+  function dot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+
+  /* 几何体的三维顶点与面（面上的顶点按环绕顺序给出，朝向自动判定） */
+  function mesh(id) {
+    var i, V = [], F = [];
+    if (id === 'cube' || id === 'cuboid') {
+      var a = id === 'cube' ? 1 : 1.45, b = id === 'cube' ? 1 : 0.86, c = id === 'cube' ? 1 : 0.78;
+      V = [[-a, -b, -c], [a, -b, -c], [a, b, -c], [-a, b, -c], [-a, -b, c], [a, -b, c], [a, b, c], [-a, b, c]];
+      F = [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [2, 3, 7, 6], [1, 2, 6, 5], [0, 3, 7, 4]];
+    } else if (id === 'prism3') {
+      /* 三棱柱：横截面是三角形，沿 z 方向拉伸 */
+      var h = 1.15, w = 1.25, d = 1.0;
+      V = [[0, h, -d], [-w, -h * 0.7, -d], [w, -h * 0.7, -d],
+           [0, h, d], [-w, -h * 0.7, d], [w, -h * 0.7, d]];
+      F = [[0, 1, 2], [3, 4, 5], [0, 1, 4, 3], [1, 2, 5, 4], [2, 0, 3, 5]];
+    } else if (id === 'pyr4') {
+      /* 四棱锥：底面是正方形，顶点在正上方 */
+      var e = 1.15, hh = 1.35;
+      V = [[-e, -hh * 0.55, -e], [e, -hh * 0.55, -e], [e, -hh * 0.55, e], [-e, -hh * 0.55, e], [0, hh, 0]];
+      F = [[0, 1, 2, 3], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]];
+    }
+    return { V: V, F: F };
+  }
+
+  function drawPoly(s, id) {
+    var S = M.svg, m = mesh(id), V = m.V, F = m.F;
+    var P = V.map(rot);
+    /* 自动缩放，使图形填满画布 */
+    var xs = P.map(function (p) { return p[0]; }), ys = P.map(function (p) { return p[1]; });
+    var minx = Math.min.apply(null, xs), maxx = Math.max.apply(null, xs);
+    var miny = Math.min.apply(null, ys), maxy = Math.max.apply(null, ys);
+    var k = Math.min(150 / (maxx - minx), 118 / (maxy - miny));
+    var ox = 120 - (minx + maxx) / 2 * k, oy = 86 + (miny + maxy) / 2 * k;
+    function px(i) { return [ox + P[i][0] * k, oy - P[i][1] * k]; }
+
+    /* 背面剔除：法向量指向观察者（+z）的面才可见 */
+    var vis = F.map(function (f) {
+      var n = cross(sub(P[f[1]], P[f[0]]), sub(P[f[2]], P[f[1]]));
+      /* 法向量要朝外：与「面心 − 体心」同向 */
+      var cen = [0, 0, 0];
+      f.forEach(function (i) { cen[0] += P[i][0] / f.length; cen[1] += P[i][1] / f.length; cen[2] += P[i][2] / f.length; });
+      if (dot(n, cen) < 0) { n = [-n[0], -n[1], -n[2]]; }
+      return n[2] > 0;
+    });
+
+    /* 棱：属于任一可见面就是实线，否则虚线 */
+    var edge = {};
+    F.forEach(function (f, fi) {
+      for (var i = 0; i < f.length; i++) {
+        var a = f[i], b = f[(i + 1) % f.length], key = Math.min(a, b) + '-' + Math.max(a, b);
+        edge[key] = edge[key] || { a: Math.min(a, b), b: Math.max(a, b), vis: false };
+        if (vis[fi]) edge[key].vis = true;
+      }
+    });
+    /* 可见面从远到近画 */
+    var order = [];
+    F.forEach(function (f, fi) {
+      if (!vis[fi]) return;
+      var z = 0;
+      f.forEach(function (i) { z += P[i][2] / f.length; });
+      order.push({ f: f, z: z });
+    });
+    order.sort(function (p, q) { return p.z - q.z; });
+    var FILL = ['#eaeff8', '#dde5f3', '#cfdaee', '#f2f5fb', '#e4ebf6'];
+    order.forEach(function (o, i) {
+      S('polygon', {
+        points: o.f.map(function (idx) { var p = px(idx); return M.fmt(p[0], 1) + ',' + M.fmt(p[1], 1); }).join(' '),
+        fill: FILL[i % FILL.length], stroke: '#3a5a93', 'stroke-width': 1.8, 'stroke-linejoin': 'round'
+      }, s);
+    });
+    /* 被挡住的棱画在最上面，按课本习惯用虚线表示「看不见但确实存在」 */
+    for (var key in edge) {
+      if (edge[key].vis) continue;
+      var p1 = px(edge[key].a), p2 = px(edge[key].b);
+      S('line', { x1: M.fmt(p1[0], 1), y1: M.fmt(p1[1], 1), x2: M.fmt(p2[0], 1), y2: M.fmt(p2[1], 1), stroke: '#8795b5', 'stroke-width': 1.4, 'stroke-dasharray': '5 4' }, s);
+    }
+  }
+
   function drawBody(b) {
     var s = M.$('#bd-fig'), g;
     s.innerHTML = '';
     var S = M.svg;
-    /* 简笔示意：可见棱实线、被挡住的棱虚线 */
-    function dash(d) { return S('path', { d: d, fill: 'none', stroke: '#8795b5', 'stroke-width': 1.4, 'stroke-dasharray': '4 4' }, g); }
+    function dash(d) { return S('path', { d: d, fill: 'none', stroke: '#8795b5', 'stroke-width': 1.4, 'stroke-dasharray': '5 4' }, g); }
     function solid(d, fill) { return S('path', { d: d, fill: fill || 'none', stroke: '#3a5a93', 'stroke-width': 1.8, 'stroke-linejoin': 'round' }, g); }
     g = S('g', {}, s);
-    if (b.id === 'cube' || b.id === 'cuboid') {
-      var w = b.id === 'cube' ? 70 : 100, h = 70, dx = 30, dy = -24;
-      var x = 50, y = 130;
-      solid('M' + x + ' ' + y + 'h' + w + 'v' + -h + 'h' + -w + 'z', '#eaeff8');
-      solid('M' + (x + w) + ' ' + y + 'l' + dx + ' ' + dy + 'v' + -h + 'l' + -dx + ' ' + -dy, '#dde5f3');
-      solid('M' + x + ' ' + (y - h) + 'l' + dx + ' ' + dy + 'h' + w + 'l' + -dx + ' ' + -dy, '#f2f5fb');
-      dash('M' + x + ' ' + y + 'l' + dx + ' ' + dy + 'h' + w);
-      dash('M' + (x + dx) + ' ' + (y + dy) + 'v' + -h);
-    } else if (b.id === 'prism3') {
-      solid('M60 130h90l-26-84h-38z', '#eaeff8');
-      solid('M150 130l28-22-26-84-28 22z', '#dde5f3');
-      solid('M60 130l28-22h90l-28 22z', '#f2f5fb');
-      dash('M60 130l28-22v0');
-      dash('M88 108l26 84');
-    } else if (b.id === 'pyr4') {
-      solid('M70 132h100l-24-18H94z', '#e4ebf6');
-      solid('M70 132l50-86 50 86', '#eaeff8');
-      solid('M120 46l26 68', '#dde5f3');
-      dash('M94 114h52');
-      dash('M120 46v68');
+    if (b.id === 'cube' || b.id === 'cuboid' || b.id === 'prism3' || b.id === 'pyr4') {
+      drawPoly(g, b.id);
     } else if (b.id === 'cyl') {
       solid('M62 56h116v66H62z', '#eaeff8');
       M.svg('ellipse', { cx: 120, cy: 56, rx: 58, ry: 15, fill: '#f2f5fb', stroke: '#3a5a93', 'stroke-width': 1.8 }, g);

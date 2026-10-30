@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖 k 和 b 看直线怎么转怎么移，读出与坐标轴的交点和增减性；拖两个点用待定系数法求出表达式；用话费套餐比较理解交点的实际意义。数学互动馆第 16 课，对应北师大版八年级上册第四章。">
+<meta property="og:title" content="数学互动馆 · 一次函数">
+<title>一次函数 · 数学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="math.css">
+<script defer src="common.js"></script>
+<script defer src="linear.js"></script>
+</head>
+<body data-module="linear">
+<header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 16 课 <span>/</span> 八年级上册 第四章</p><h1>一次函数</h1><p class="subtitle">k 管陡不陡，b 管高不高。调一调就记住了，不用背。</p></div>
+<div class="workbench">
+<section class="card panel figure" aria-label="一次函数图象">
+<h2>y = kx + b</h2>
+<p class="panel-sub">红色直角标出「向右 1 格，上升 k 格」。</p>
+<svg id="fn-fig" viewBox="0 0 330 250" role="img" aria-label="一次函数图象"></svg>
+<div class="control"><div class="control-heading"><label for="fn-k">k（斜率）</label><output id="fn-expr">y = 1.5x + 1</output></div><input id="fn-k" type="range" min="-4" max="4" step="0.5" value="1.5"></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="fn-b">b（截距）</label><output>−6 ~ 6</output></div><input id="fn-b" type="range" min="-6" max="6" step="1" value="1"></div>
+<div class="toggle-row" style="margin-top:8px"><label style="font-size:12px;display:flex;gap:5px;align-items:center"><input type="checkbox" id="fn-ref">同时显示 y = kx</label></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="直线的信息">
+<div class="readout-head"><h2>这条直线</h2><span class="badge" id="fn-quad">第 一、二、三 象限</span></div>
+<div class="stat-grid">
+<div class="stat"><span>k</span><strong id="fn-k-out">—</strong></div>
+<div class="stat"><span>b</span><strong id="fn-b-out">—</strong></div>
+<div class="stat"><span>与 y 轴交于</span><strong id="fn-cross">—</strong></div>
+<div class="stat"><span>与 x 轴交于</span><strong id="fn-zero">—</strong></div>
+</div>
+<p class="note">增减性：<b id="fn-trend">—</b></p>
+<p class="lead" id="fn-text" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="两点定线">
+<h2>两点确定一条直线</h2>
+<p class="panel-sub">拖动 A、B 两个点，表达式自动求出来。</p>
+<svg id="tw-fig" viewBox="0 0 330 240" role="application" aria-label="拖动两点求一次函数"></svg>
+</section>
+<section class="readout" aria-label="待定系数法">
+<div class="readout-head"><h2>待定系数法</h2><span class="badge" id="tw-expr">y = x + 1</span></div>
+<p class="formula" id="tw-steps" style="text-align:left"></p>
+<p class="lead" id="tw-note" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="话费套餐">
+<h2>两种套餐哪个划算</h2>
+<p class="panel-sub">蓝：月租 18 元 + 0.1 元/条　红：无月租 + 0.25 元/条</p>
+<svg id="pl-fig" viewBox="0 0 330 200" role="img" aria-label="两种套餐的话费图象"></svg>
+<div class="control"><div class="control-heading"><label for="pl-range">这个月发多少条</label><output id="pl-n">150 条</output></div><input id="pl-range" type="range" min="0" max="400" step="10" value="150"></div>
+</section>
+<section class="readout" aria-label="比较">
+<div class="readout-head"><h2>各要多少钱</h2><span class="badge" id="pl-better">套餐一便宜</span></div>
+<div class="stat-grid">
+<div class="stat"><span>套餐一</span><strong id="pl-c1">—</strong></div>
+<div class="stat"><span>套餐二</span><strong id="pl-c2">—</strong></div>
+</div>
+<p class="lead" id="pl-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> k 像坡度，b 像起点海拔</h3><p>爬山时，坡度（k）决定走一步升多高，起点海拔（b）决定你从多高开始。坡度一样但起点不同的两条路，永远平行、永不相交。</p></aside>
+</section>
+</div>
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>k 决定方向和陡缓</h3><p>k > 0 时 y 随 x 增大而增大（上升），k < 0 时下降；|k| 越大越陡。k 就是「向右 1 格升几格」。</p></div></div>
+<div class="fact"><div><h3>b 决定上下平移</h3><p>b 是直线与 y 轴交点的纵坐标。y = kx + b 就是把 y = kx 上下平移 b 个单位。</p></div></div>
+<div class="fact"><div><h3>象限由 k、b 的符号决定</h3><p>k>0 b>0 过一二三；k>0 b<0 过一三四；k<0 b>0 过一二四；k<0 b<0 过二三四。</p></div></div>
+<div class="fact"><div><h3>待定系数法要几个点</h3><p>一次函数有 k、b 两个待定系数，所以需要<b>两个</b>点；正比例函数只有 k，一个点就够。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>把 k 当成「直线与 x 轴的夹角度数」。k 是<b>比值</b>（上升量 ÷ 水平量），不是角度。k = 1 时夹角 45°，但 k = 2 时夹角并不是 90°。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这条直线发给同学</h3><p>链接会记住你调的 k 和 b。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>数学互动馆 · 第 16 课</p><p>话费套餐为示意数据，用于说明两条直线交点的实际含义。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

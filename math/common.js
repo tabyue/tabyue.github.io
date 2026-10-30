@@ -14,7 +14,25 @@
     { id: 'prob1', file: 'prob1.html', no: 9, title: '概率初步', book: '七下' },
     { id: 'triangle', file: 'triangle.html', no: 10, title: '三角形与全等', book: '七下' },
     { id: 'symmetry', file: 'symmetry.html', no: 11, title: '轴对称、平移与旋转', book: '七下' },
-    { id: 'variable', file: 'variable.html', no: 12, title: '变量之间的关系', book: '七下' }
+    { id: 'variable', file: 'variable.html', no: 12, title: '变量之间的关系', book: '七下' },
+    { id: 'pythag', file: 'pythag.html', no: 13, title: '勾股定理', book: '八上' },
+    { id: 'real', file: 'real.html', no: 14, title: '实数与二次根式', book: '八上' },
+    { id: 'coord', file: 'coord.html', no: 15, title: '位置与坐标', book: '八上' },
+    { id: 'linear', file: 'linear.html', no: 16, title: '一次函数', book: '八上' },
+    { id: 'system', file: 'system.html', no: 17, title: '二元一次方程组', book: '八上' },
+    { id: 'data2', file: 'data2.html', no: 18, title: '数据的分析', book: '八上' },
+    { id: 'proof', file: 'proof.html', no: 19, title: '证明与三角形的证明', book: '八上' },
+    { id: 'inequal', file: 'inequal.html', no: 20, title: '不等式与不等式组', book: '八下' },
+    { id: 'factor', file: 'factor.html', no: 21, title: '因式分解', book: '八下' },
+    { id: 'fraction', file: 'fraction.html', no: 22, title: '分式与分式方程', book: '八下' },
+    { id: 'para', file: 'para.html', no: 23, title: '平行四边形与特殊平行四边形', book: '八下' },
+    { id: 'quad', file: 'quad.html', no: 24, title: '一元二次方程', book: '九上' },
+    { id: 'prob2', file: 'prob2.html', no: 25, title: '概率的进一步认识', book: '九上' },
+    { id: 'similar', file: 'similar.html', no: 26, title: '图形的相似', book: '九上' },
+    { id: 'inverse', file: 'inverse.html', no: 27, title: '反比例函数', book: '九上' },
+    { id: 'trig', file: 'trig.html', no: 28, title: '直角三角形的边角关系', book: '九下' },
+    { id: 'quadfun', file: 'quadfun.html', no: 29, title: '二次函数', book: '九下' },
+    { id: 'circle', file: 'circle.html', no: 30, title: '圆', book: '九下' }
   ];
 
   var NS = 'http://www.w3.org/2000/svg';
@@ -204,7 +222,7 @@
     function go(e) { var p = svgPoint(el, e); onMove(ax.ix(p.x), ax.iy(p.y)); }
     handle.style.cursor = 'grab';
     handle.addEventListener('pointerdown', function (e) {
-      on = true; handle.setPointerCapture && handle.setPointerCapture(e.pointerId);
+      on = true; try { handle.setPointerCapture(e.pointerId); } catch (err) {}
       handle.style.cursor = 'grabbing'; go(e); e.preventDefault();
     });
     handle.addEventListener('pointermove', function (e) { if (on) { go(e); e.preventDefault(); } });
