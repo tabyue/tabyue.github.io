@@ -266,10 +266,16 @@
     var nav = $('#course-nav');
     if (nav) {
       nav.innerHTML = '';
-      html('a', { href: 'index.html', html: '<b>首页</b>全部课程' }, nav);
+      /* 首页胶囊不放进滚动区，否则当前课一居中它就被挤出去了 */
+      html('a', { class: 'nav-home', href: 'index.html', html: '<b>首页</b><span>全部 ' + LESSONS.length + ' 课</span>' }, nav);
+      var track = html('div', { class: 'nav-scroll' }, nav);
       LESSONS.forEach(function (l) {
-        var a = html('a', { href: l.file, html: '<b>' + l.no + '</b>' + l.title }, nav);
-        if (l.id === id) { a.setAttribute('aria-current', 'page'); setTimeout(function () { a.scrollIntoView({ block: 'nearest', inline: 'center' }); }, 0); }
+        var a = html('a', { href: l.file, html: '<b>' + l.no + '</b>' + l.title }, track);
+        if (l.id === id) {
+          a.setAttribute('aria-current', 'page');
+          /* 只滚导航自己，不要用 scrollIntoView 连带滚动整页 */
+          setTimeout(function () { track.scrollLeft = Math.max(0, a.offsetLeft - track.clientWidth / 2 + a.clientWidth / 2); }, 0);
+        }
       });
     }
     var pager = $('#pager');

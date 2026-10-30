@@ -52,8 +52,11 @@ function replaceHash(h){try{history.replaceState(null,'',h?('#'+h):location.path
 
 /* 课程导航与翻页 */
 const nav=$('course-nav');
-if(nav)nav.innerHTML=MODULES.map(m=>'<a href="'+m.href+'"'+(m.id===current?' aria-current="page"':'')+'><b>'+m.no+'</b>'+m.short+'</a>').join('');
-if(nav){const cur=nav.querySelector('[aria-current]');if(cur&&cur.scrollIntoView)requestAnimationFrame(()=>{nav.scrollLeft=Math.max(0,cur.offsetLeft-nav.clientWidth/2+cur.clientWidth/2);});}
+/* 首页胶囊钉在左侧（不进滚动区），课程列表单独横向滚动 */
+if(nav)nav.innerHTML='<a class="nav-home" href="index.html"><b>首页</b><span>全部 '+MODULES.length+' 课</span></a>'+
+ '<div class="nav-scroll">'+MODULES.map(m=>'<a href="'+m.href+'"'+(m.id===current?' aria-current="page"':'')+'><b>'+m.no+'</b>'+m.short+'</a>').join('')+'</div>';
+if(nav){const track=nav.querySelector('.nav-scroll'),cur=nav.querySelector('[aria-current]');
+ if(track&&cur)requestAnimationFrame(()=>{track.scrollLeft=Math.max(0,cur.offsetLeft-track.clientWidth/2+cur.clientWidth/2);});}
 const pager=$('pager'),idx=MODULES.findIndex(m=>m.id===current);
 if(pager&&idx>=0){
  const prev=MODULES[idx-1],next=MODULES[idx+1];

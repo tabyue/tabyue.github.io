@@ -94,3 +94,31 @@
 @media(max-width:680px){.course-nav{padding:0 16px;margin-top:10px}.two-col{grid-template-columns:1fr;gap:14px}.panel{padding:16px 16px}.stat strong{font-size:20px}.readout .stat strong{font-size:22px}.section{margin-top:26px}.hub-hero{padding:24px 4px 18px}.hub-hero h1{font-size:30px}.hub-grid{grid-template-columns:1fr;gap:12px}.choice-row{flex-direction:column;align-items:stretch}.choice-row .chips{justify-content:flex-end}.pager a{padding:11px 13px}.bar-item{grid-template-columns:50px 1fr 58px}}
 .option-grid.single{grid-template-columns:1fr}
 .option-grid.single button{text-align:left;padding:12px 14px}
+
+/* 课程导航：首页钉住 + 吸顶 */
+.course-nav{
+  position: sticky; top: 0; z-index: 6;
+  background: var(--bg);
+  padding-top: 7px; padding-bottom: 8px;
+  align-items: center; overflow: visible;
+  box-shadow: 0 7px 12px -11px #1f2a3a55;
+}
+.course-nav .nav-home{ flex: none; background: var(--soft); color: var(--green); font-weight: 600; }
+.course-nav .nav-home b{ color: var(--green); opacity: .72; }
+.course-nav .nav-scroll{
+  position: relative; flex: 1; min-width: 0;
+  display: flex; gap: 8px;
+  overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  /* 紧挨首页胶囊的那半截课程胶囊渐隐，免得看起来像被切断 */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16px);
+  mask-image: linear-gradient(to right, transparent 0, #000 16px);
+}
+.course-nav .nav-scroll::-webkit-scrollbar{ display: none; }
+/* 锚点滚动时别被吸顶的导航盖住 */
+html{ scroll-padding-top: 58px; }
+/* 窄屏寸土寸金，首页胶囊只留两个字，把宽度让给课程列表 */
+@media (max-width: 680px){
+  .course-nav{ padding-top: 6px; padding-bottom: 7px; }
+  .course-nav .nav-home span{ display: none; }
+  .course-nav .nav-home b{ margin-right: 0; }
+}
