@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="lessons.css">
 <script defer src="model.js"></script>
 <script defer src="common.js"></script>
+<script src="map-config.js" data-tdt-api="off"></script>
+<script defer src="globe-map.js"></script>
 <script defer src="earth.js"></script>
 </head>
 <body data-module="earth">
@@ -24,17 +26,18 @@
 <section class="instrument card" aria-label="互动经纬仪">
 <div class="segmented" role="group" aria-label="选择显示的线"><button class="selected" data-mode="both" aria-pressed="true">经纬网</button><button data-mode="meridians" aria-pressed="false">只看经线</button><button data-mode="parallels" aria-pressed="false">只看纬线</button></div>
 <div class="globe-stage" id="stage" role="group" tabindex="0" aria-label="互动地球：左右拖动旋转；方向键调整观察方向，Home 复位">
-<svg id="globe" viewBox="0 0 400 350" role="img" aria-label="数学经纬网球体，不含地图疆界">
+<canvas id="globe-map" aria-hidden="true" hidden></canvas>
+<svg id="globe" viewBox="0 0 400 350" role="img" aria-label="经纬网球体">
 <defs><radialGradient id="ball" cx="30%" cy="23%" r="83%"><stop stop-color="#fbfff4"/><stop offset=".42" stop-color="#e6eedb"/><stop offset=".78" stop-color="#aabfa8"/><stop offset="1" stop-color="#7d9982"/></radialGradient><linearGradient id="metal" x2="1" y2="1"><stop stop-color="#edf0e1"/><stop offset=".4" stop-color="#b8c4ad"/><stop offset=".72" stop-color="#748b78"/><stop offset="1" stop-color="#dce5d2"/></linearGradient><linearGradient id="base" x2="0" y2="1"><stop stop-color="#e1e7d7"/><stop offset="1" stop-color="#a6b8a2"/></linearGradient><radialGradient id="glow"><stop stop-color="#e6eedf"/><stop offset="1" stop-color="#f7f9f4" stop-opacity="0"/></radialGradient><filter id="shadow" x="-50%" y="-100%" width="200%" height="300%"><feGaussianBlur stdDeviation="6"/></filter><clipPath id="clip"><circle cx="194" cy="160" r="112"/></clipPath></defs>
-<ellipse cx="194" cy="170" rx="177" ry="165" fill="url(#glow)"/>
-<g id="stand"></g><g id="axis-back"></g><circle cx="194" cy="160" r="112" fill="url(#ball)" stroke="#82987e" stroke-width="1"/>
+<ellipse id="halo" cx="194" cy="170" rx="177" ry="165" fill="url(#glow)"/>
+<g id="stand"></g><g id="axis-back"></g><circle id="ball-face" cx="194" cy="160" r="112" fill="url(#ball)" stroke="#82987e" stroke-width="1"/>
 <g clip-path="url(#clip)"><g id="grid-meridians"></g><g id="grid-parallels"></g><path id="prime" fill="none" stroke="#526f50" stroke-width="1.7"/><path id="equator" fill="none" stroke="#526f50" stroke-width="1.7"/><path id="night" fill="#1f3a40" fill-opacity=".42"/><path id="terminator" fill="none" stroke="#e9b26b" stroke-width="1.6" stroke-dasharray="5 4"/><path id="select-lon" fill="none" stroke="#b97342" stroke-width="2.5"/><path id="select-lat" fill="none" stroke="#b97342" stroke-width="2.5"/></g>
 <g id="pole-labels"></g><g id="dn-labels"></g><g id="point"><circle r="9" fill="#fff8eb"/><circle r="4" fill="#b97342" stroke="white" stroke-width="1.4"/><text x="13" y="-6" fill="#263d31" font-size="14" font-weight="700">P</text></g>
 </svg>
 <div class="occluded" id="occluded" hidden>点 P 在背面 <button id="locate">转到正面</button></div>
 </div>
 <div class="legend"><span><i class="dot"></i>选中经纬线</span><span><i class="rule"></i><span id="legend-reference">赤道 / 本初子午线</span></span><span id="legend-night" hidden><i class="rule" style="background:#e9b26b"></i>晨昏线</span></div>
-<div class="instrument-actions"><span class="drag-hint">↔ 左右拖动旋转</span><div><button id="daynight" aria-pressed="false">昼夜</button><button id="spin" aria-pressed="false">自动旋转</button><button id="reset-view">复位</button></div></div>
+<div class="instrument-actions"><span class="drag-hint">↔ 左右拖动旋转</span><div><button id="realmap" aria-pressed="false" hidden>真实地图</button><button id="daynight" aria-pressed="false">昼夜</button><button id="spin" aria-pressed="false">自动旋转</button><button id="reset-view">复位</button></div></div>
 <div class="daynight-panel" id="daynight-panel" hidden>
 <div class="control-heading"><label for="bj-time">北京时间</label><output id="bj-output" for="bj-time">12:00</output></div>
 <input id="bj-time" type="range" min="0" max="24" step="0.5" value="12" aria-label="北京时间">
@@ -42,6 +45,7 @@
 <p class="note">以春分、秋分日为例（太阳直射赤道），不计均时差。打开「自动旋转」可以看时间流逝。</p>
 </div>
 <p class="mode-hint" id="mode-hint">橙色两线的交点，就是点 P。</p>
+<p class="source" id="globe-source" hidden>球面底图：天地图世界海陆底图（国家地理信息公共服务平台）。</p>
 </section>
 <div class="settings">
 <section class="readout" aria-label="所选坐标">
@@ -107,7 +111,7 @@
 </div>
 </section>
 <nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
-<footer><p>地理互动馆 · 第 2 课</p><p>数学经纬网示意，不含地图疆界。拖动只改变观察视角。</p><p>免登录 · 不收集位置 · 不保存学习记录</p></footer>
+<footer><p>地理互动馆 · 第 2 课</p><p>球面底图取自天地图（国家地理信息公共服务平台）世界海陆底图，本站不自行绘制任何海岸线或疆界；点「只看经纬网」可切回纯示意球体。拖动只改变观察视角。</p><p>免登录 · 不收集位置 · 不保存学习记录</p></footer>
 </main>
 <noscript><p>此网页需要启用 JavaScript 才能旋转地球和调整坐标。</p></noscript>
 </body></html>

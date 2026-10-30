@@ -296,3 +296,9 @@ html{ scroll-padding-top: 58px; }
   .course-nav .nav-home span{ display: none; }
   .course-nav .nav-home b{ margin-right: 0; }
 }
+
+/* 地球仪真实底图 */
+/* 画布是绝对定位的，默认会压过静态的 SVG；把 SVG 也提成定位元素压回去，
+   否则经纬网、橙色选中线和点 P 全被底图盖住。 */
+#globe-map{ z-index:0; border-radius:50%; }
+#globe{ position:relative; z-index:1; }

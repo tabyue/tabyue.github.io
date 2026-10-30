@@ -17,7 +17,10 @@
 var tk='93bc5160f5b33dcf7b76999ee0e756d7'; // 浏览器端 key，白名单 www.tabyue.com（2026-10-29 用户提供）
 var ok=/^[0-9a-zA-Z]{32}$/.test(tk);
 window.GEO_MAP_CONFIG={provider:'tianditu',enabled:ok,tk:ok?tk:''};
-if(ok&&document.readyState==='loading'){
+// 只用瓦片、不用天地图 JS API 的页面（如地球仪贴图）写 data-tdt-api="off"，
+// 免得白白加载几百 KB 的地图库；key 仍然只存这一处。
+var me=document.currentScript,wantApi=!me||me.getAttribute('data-tdt-api')!=='off';
+if(ok&&wantApi&&document.readyState==='loading'){
  document.write('<script src="https://api.tianditu.gov.cn/api?v=4.0&tk='+tk+'"><\/script>');
 }
 })();

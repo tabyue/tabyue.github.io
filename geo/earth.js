@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 const G=window.Geo,Site=window.Site,$=Site.$,ns='http://www.w3.org/2000/svg';
-const state={lon:120,lat:30,mode:'both',viewLon:80,viewLat:18,spinning:false,dn:false,t:12};
+const state={lon:120,lat:30,mode:'both',viewLon:80,viewLat:18,spinning:false,dn:false,t:12,map:false};
 const h0=location.hash,restored=G.parseCoordinates(h0);
 if(restored){state.lon=restored.lon;state.lat=restored.lat;state.viewLon=G.normLon(state.lon-28);state.viewLat=G.clamp(state.lat*.65,-65,65);}
 if(G.parseNumber(h0,'dn',0,1)===1){state.dn=true;const t=G.parseNumber(h0,'t',0,24);if(t!==null)state.t=Math.round(t*2)/2;}
@@ -62,6 +62,7 @@ function paint(){
  $('pole-labels').innerHTML=poles;
  svg.setAttribute('aria-label','经纬网球体，点 P 位于'+G.longitudeText(state.lon)+'、'+G.latitudeText(state.lat)+(p.z<0?'，当前在背面':'')+(state.dn?'；北京时间 '+G.timeText(state.t):''));
  stage.dataset.viewLon=state.viewLon.toFixed(2);
+ paintMap(cam);
 }
 function pointToFront(){stopSpin();state.viewLon=G.normLon(state.lon-28);state.viewLat=G.clamp(state.lat*.65,-65,65);queuePaint();}
 function hashState(){return 'lon='+state.lon+'&lat='+state.lat+(state.dn?'&dn=1&t='+state.t:'');}
@@ -97,6 +98,29 @@ function setDayNight(on){
  if(on){stopSpin();state.viewLon=G.normLon(sunLon()+35);state.viewLat=12;}
  timeReadout();updateHash();queuePaint();resetQuizFeedback();
 }
+/* —— 真实海陆底图（天地图官方瓦片，不自绘任何疆界） —— */
+const mapCanvas=$('globe-map'),mapBtn=$('realmap'),GM=window.GlobeMap;
+function paintMap(cam){
+ if(!state.map||!GM||!GM.ready())return;
+ GM.render(mapCanvas,cam,state.spinning||!!drag);
+}
+function setRealMap(on){
+ state.map=on&&!!GM&&GM.ready();
+ mapCanvas.hidden=!state.map;
+ $('ball-face').setAttribute('fill',state.map?'none':'url(#ball)');
+ $('halo').style.display=state.map?'none':'';
+ if(mapBtn){mapBtn.setAttribute('aria-pressed',String(state.map));mapBtn.textContent=state.map?'真实地图':'只看经纬网';}
+ const srcNote=$('globe-source');if(srcNote)srcNote.hidden=!state.map;
+ svg.setAttribute('aria-label',state.map?'地球仪，球面是天地图世界海陆底图，叠加经纬网':'经纬网球体');
+ queuePaint();
+}
+if(GM){
+ /* 画布要正好盖住球面 */
+ const bx=GM.box;
+ mapCanvas.style.cssText='position:absolute;pointer-events:none;left:'+bx.left+'%;top:'+bx.top+'%;width:'+bx.width+'%;height:'+bx.height+'%';
+ GM.load(ok=>{if(!ok)return;if(mapBtn)mapBtn.hidden=false;setRealMap(true);});
+ if(mapBtn)mapBtn.addEventListener('click',()=>setRealMap(!state.map));
+}
 $('daynight').addEventListener('click',()=>setDayNight(!state.dn));
 $('bj-time').addEventListener('input',e=>updateTime(Number(e.target.value)));
 $('longitude').addEventListener('input',e=>updateCoordinates(Number(e.target.value),state.lat));
@@ -117,7 +141,7 @@ stage.addEventListener('pointermove',e=>{
  const dx=e.clientX-drag.x;if(Math.abs(e.clientX-drag.start)>5){drag.moved=true;stage.classList.add('is-dragging');}
  if(drag.moved){state.viewLon=G.normLon(state.viewLon-dx*300/stage.clientWidth);queuePaint();}drag.x=e.clientX;
 });
-function endDrag(){drag=null;stage.classList.remove('is-dragging');}
+function endDrag(){const was=!!drag;drag=null;stage.classList.remove('is-dragging');if(was)queuePaint();/* 拖动时用的是低清缓冲，松手要补一帧高清 */}
 stage.addEventListener('pointerup',endDrag);stage.addEventListener('pointercancel',endDrag);stage.addEventListener('lostpointercapture',endDrag);
 stage.addEventListener('keydown',e=>{
  if(e.target!==stage)return;
@@ -127,7 +151,7 @@ stage.addEventListener('keydown',e=>{
 $('locate').addEventListener('click',pointToFront);$('reset-view').addEventListener('click',pointToFront);
 // 自动旋转：地球自西向东转，表面向画面右侧移动。开昼夜时按“1 秒 = 1 小时”推进北京时间。
 let frame=0,last=0,visible=true;
-function stopSpin(){state.spinning=false;$('spin').textContent='自动旋转';$('spin').setAttribute('aria-pressed','false');cancelAnimationFrame(frame);frame=0;last=0;}
+function stopSpin(){const was=state.spinning;state.spinning=false;$('spin').textContent='自动旋转';$('spin').setAttribute('aria-pressed','false');cancelAnimationFrame(frame);frame=0;last=0;if(was)queuePaint();/* 同上，停转后补高清 */}
 function tick(time){
  if(!state.spinning||!visible||document.hidden){frame=0;last=0;return;}
  const dt=last?Math.min((time-last)/1000,.05):0;last=time;
