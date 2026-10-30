@@ -111,7 +111,7 @@ for(const b of document.querySelectorAll('[data-mode]'))b.addEventListener('clic
  queuePaint();
 });
 let drag=null;
-stage.addEventListener('pointerdown',e=>{if(e.target.closest('button')||e.isPrimary===false)return;stopSpin();drag={id:e.pointerId,x:e.clientX,start:e.clientX,moved:false};stage.setPointerCapture(e.pointerId);});
+stage.addEventListener('pointerdown',e=>{if(e.target.closest('button')||e.isPrimary===false)return;stopSpin();drag={id:e.pointerId,x:e.clientX,start:e.clientX,moved:false};try{stage.setPointerCapture(e.pointerId);}catch(err){}});
 stage.addEventListener('pointermove',e=>{
  if(!drag||drag.id!==e.pointerId)return;
  const dx=e.clientX-drag.x;if(Math.abs(e.clientX-drag.start)>5){drag.moved=true;stage.classList.add('is-dragging');}

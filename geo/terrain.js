@@ -109,7 +109,7 @@ const toUnits=e=>{const p=Site.svgPoint(svg,e);return {x:G.clamp(p.x/K,0,W),y:G.
 svg.addEventListener('pointerdown',e=>{
  const h=e.target.closest('[data-handle]');
  drag={id:e.pointerId,handle:h?h.dataset.handle:null,start:toUnits(e),moved:false};
- svg.setPointerCapture(e.pointerId);
+ try{svg.setPointerCapture(e.pointerId);}catch(err){}
 });
 svg.addEventListener('pointermove',e=>{
  if(!drag||drag.id!==e.pointerId)return;const p=toUnits(e);
