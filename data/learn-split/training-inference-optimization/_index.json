@@ -1,7 +1,7 @@
 {
   "id": "training-inference-optimization",
   "name": "模型训练与推理优化",
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-10-30T08:30",
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 50,
@@ -497,9 +497,36 @@
         "能力自检清单"
       ],
       "summary": "在讨论任何加速技巧之前，先把约束摆清楚。机器人闭环里，策略的输出频率直接决定它能控制什么样的动态："
+    },
+    {
+      "id": "sec-19",
+      "title": "未来监督的两级开关：JAM、前瞻损失与训练期专用预测头",
+      "lastUpdated": "2026-10-30T08:30",
+      "chars": 7428,
+      "shortTitle": "未来监督的两级开关：JAM",
+      "difficulty": "高级",
+      "estimatedMinutes": 19,
+      "isFrontier": true,
+      "tier": 3,
+      "readingMinutes": 10,
+      "headings": [
+        "一个被长期混淆的争论",
+        "JAM：动作损失 + 前瞻损失",
+        "前瞻损失在算什么",
+        "为什么能省 73% 的算力",
+        "两级开关：训练期与推理期",
+        "效果与边界",
+        "一个可运行的最小实现",
+        "高频坑",
+        "与相关路线的关系：潜空间未来监督是一整个家族",
+        "把前瞻损失接进现有训练管线",
+        "一条容易漏的监控",
+        "能力自检清单"
+      ],
+      "summary": "「VLA 好还是世界动作模型（WAM）好」是 2026 年具身领域最热闹的争论之一。但这场争论有一个前提问题：二者之间其实捆着三个可以分别决定的选择，把它们混在一起谈，任何结论都不可比。"
     }
   ],
-  "readingMinutes": 157,
+  "readingMinutes": 167,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 142469
+  "chars": 149897
 }

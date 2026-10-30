@@ -1,7 +1,7 @@
 {
   "id": "sim-to-real",
   "name": "Sim-to-Real 迁移",
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-10-30T08:30",
   "stage": "阶段五：仿真与 Sim-to-Real",
   "importance": "核心",
   "estimatedHours": 40,
@@ -404,9 +404,37 @@
         "能力自检清单"
       ],
       "summary": "本节讨论一个在团队里反复出现的困惑：我们把真实场景重建得很像了，为什么策略真机上照样挂？ 答案通常不在渲染质量，而在 Real2Sim 产物本身缺少工程属性——改不动、测不准、不可回归。本节把它当成软件工程问题来讲，并给出可落地的评判标准与一套最小回归框架。"
+    },
+    {
+      "id": "sec-15",
+      "title": "分布外鲁棒性工程：把「见过什么」变成可检索的运动先验",
+      "lastUpdated": "2026-10-30T08:30",
+      "chars": 7382,
+      "shortTitle": "分布外鲁棒性：可检索运动先验",
+      "difficulty": "高级",
+      "estimatedMinutes": 18,
+      "isFrontier": true,
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "先把问题说清楚：分布外到底偏在哪一层",
+        "换个思路：绕开不可靠的模态，而不是修好它",
+        "第一步：把示教重新组织成运动基元图",
+        "第二步：在线定位当前执行位置",
+        "第三步：逐维度门控融合",
+        "什么时候检索会失效",
+        "一个最小可实现版本",
+        "不跑真机也能排序模型：表征对齐作为离线代理",
+        "决策表：面对分布外该走哪条路",
+        "高频坑",
+        "三条路线的代价对照",
+        "自己算一个表征对齐度",
+        "能力自检清单"
+      ],
+      "summary": "Sim-to-Real 这一路走下来，我们习惯把失败归咎于「仿真不像真机」，于是拼命做域随机化、做 Real2Sim 重建、做系统辨识。但真机部署之后还会遇到另一类失败：场景没换、机器人没换、任务没换，只是背景多了一个没见过的物体、桌面换了一种纹理、光照挪了半米，成功率就掉一大截。这类失败不是 sim-to-real gap，而是分布外（OOD）视觉偏移。"
     }
   ],
-  "readingMinutes": 151,
+  "readingMinutes": 162,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 124525
+  "chars": 131907
 }

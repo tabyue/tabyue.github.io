@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>embodied-first-exam：物理世界里的第一份「代码 Agent 考试」，冻结机器人任务、用程序作答并在沙箱中验证 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">embodied-first-exam：物理世界里的第一份「代码 Agent 考试」，冻结机器人任务、用程序作答并在沙箱中验证 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="embodied-first-exam-agent">embodied-first-exam：物理世界里的第一份「代码 Agent 考试」，冻结机器人任务、用程序作答并在沙箱中验证</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/mll-lab-nu/embodied-first-exam">https://github.com/mll-lab-nu/embodied-first-exam</a>  </p>
+<p><strong>Stars</strong>: 214 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-10-30  </p>
+<p><strong>组织</strong>: mll-lab-nu  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-30</p>
+</blockquote>
+<hr />
+<p>这个项目的定位很特别：它不是给机器人学习算法用的，而是给<strong>写代码控制机器人</strong>的 Agent 用的。随着 LLM Agent 在软件工程任务上逼近人类，「Agent 能不能控制物理系统」成了下一个自然的问题，但一直没有可比的评测床——各家自建环境和指标，结果无法横向比较。embodied-first-exam 的做法是把已有的机器人基准任务冻结成一套试题，规定答案形式为程序，然后在一个与答题环境隔离的沙箱里执行并判定，从而把评测变成标准化流程。</p>
+<hr />
+<p>三层结构。①<strong>任务层</strong>：从多个公开机器人基准套件中选取任务并冻结参数（场景、物体、初始状态、成功判据），保证不同时间、不同 Agent 面对的是同一道题。②<strong>答题层</strong>：Agent 输出一段可执行的控制程序（而不是动作序列），程序在运行时读取观测、调用机器人能力接口、完成任务。③<strong>验证层</strong>：程序被送进独立沙箱执行，沙箱提供仿真或真机后端与统一成功判据，返回通过与失败原因。Harbor 作为承载平台，负责任务分发、沙箱生命周期与结果汇总。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.34649">RobotAgentBench: Towards Open-world Robot Autonomy</a></strong> — 开放世界机器人 Agent 基准，五维度评测（任务发现/情境推理/操作/失败恢复/鲁棒性）。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.31670">Sensorimotor Alignment</a></strong> — 免训练的离线代理指标，可在昂贵评测前筛模型。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.37215">Retrieve to Act</a></strong> — 测试时几何检索提升 VLA 分布外鲁棒性。</li>
+</ul>
+<hr />
+<p>典型流程：准备 Harbor 运行环境并拉取任务集；把待测 Agent 接入「读取任务描述 → 输出程序」的接口；调用评测入口提交答案，平台在沙箱中跑程序并返回每个任务的通过与否与失败原因；汇总得到总分与各维度细分。最小验证是先跑一个已知答案的样例任务，确认沙箱与判据工作正常，再接入真实 Agent。</p>
+<hr />
+<p>项目本身不报告 Agent 排行榜，其价值在于提供可复现的评测协议。可关注的指标是：任务通过率（总体与分套件）、程序首次通过率（反映 Agent 的一次成型能力）、以及失败类型分布（语法/接口错误 vs 语义/规划错误）。后者往往比总分更能指导改进方向。</p>
+<hr />
+<p>与 RobotAgentBench（arXiv 2610.34649）相比：后者是<strong>家庭开放场景下的机器人 Agent 基准</strong>，强调任务发现与情境推理，场景丰富但搭建成本高；embodied-first-exam 更<strong>轻量、更标准化</strong>，答案是程序、验证在沙箱，适合快速比较不同代码 Agent。与 LIBERO / RoboTwin 这类操作基准相比：它们评测的是<strong>策略模型</strong>的成功率，不考察「自己决定做什么、把决策写成程序」的能力。三者是互补关系，分别对应策略、Agent、代码 Agent 三个层次。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

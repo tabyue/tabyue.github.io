@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeWAM：用 JEPA 做端到端的世界与动作建模，把潜空间预测与动作生成放进同一套权重 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">LeWAM：用 JEPA 做端到端的世界与动作建模，把潜空间预测与动作生成放进同一套权重 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="lewam-jepa">LeWAM：用 JEPA 做端到端的世界与动作建模，把潜空间预测与动作生成放进同一套权重</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/MinghaoFu/lewam">https://github.com/MinghaoFu/lewam</a>  </p>
+<p><strong>Stars</strong>: 345 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-10-30  </p>
+<p><strong>组织</strong>: MinghaoFu  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-30</p>
+</blockquote>
+<hr />
+<p>世界模型路线有一个长期的两难：预测未来画面信息完整但极贵，预测抽象的潜状态便宜但难以评估是否真的学到了有用的东西。JEPA 提供了折中——在表征空间做预测，用冻结的目标编码器提供预测目标以规避表征坍缩。LeWAM 把这个思路推到具身控制：同一个潜空间既服务于「未来会怎样」，也服务于「现在该做什么」。</p>
+<hr />
+<p>核心是编码器—预测器—目标编码器的三元结构：在线编码器把当前观测与机器人状态映射到潜表征；预测器在潜空间里推演未来（可选地以动作为条件）；目标编码器（通常为在线编码器的指数移动平均或独立的冻结预训练模型）给出未来观测的潜目标，预测损失在这个潜空间上计算。动作读出头从同一表征输出动作块。因为预测发生在表征空间，训练和推理都不需要图像解码器。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.37219">JAM: Vision-Language-Action or World-Action? Just Action Models</a></strong> — 用前瞻损失替代视觉生成损失，在线训练 FLOPs 降 73%。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.29997 相关">INTACT-JEPA</a></strong> — 同构意图到动作学习，免搜索的世界模型（github.com/zju3dv/INTACT-JEPA）。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.31670">Sensorimotor Alignment</a></strong> — 免训练的表征对齐指标，可用于判断潜表征是否真的对齐了运动结构。</li>
+</ul>
+<hr />
+<p>上手路线：准备带未来观测的训练数据（与 JAM 类似，需要记录 $f_{1:T}$）；用目标编码器离线或在线产生未来潜目标；训练预测器与动作头；推理时只跑编码器 + 动作头，预测器可丢弃或保留用于规划。最小验证：先在一个短程任务上确认潜预测损失能稳定下降且不坍缩（检查潜表征的方差与秩）。</p>
+<hr />
+<p>关注三类指标：潜预测的稳定性和是否坍缩（表征方差、有效秩）、动作成功率（与纯 VLA 基线对照）、以及训练/推理算力对比生成式 WAM。JEPA 类方法的常见失败模式是目标编码器选择不当导致预测任务退化为常数解。</p>
+<hr />
+<p>与像素级生成式 WAM（如各类 video-diffusion 路线）相比：LeWAM 省掉解码器，训练与推理成本大幅下降，但难以直观检查「想象出来的未来」长什么样，可解释性弱。与 JAM（arXiv 2610.37219）相比：两者都主张用冻结编码器给出未来目标、不生成像素，但 JAM 更强调「损失形式的解耦」与训练后丢弃预测头（推理零开销），LeWAM 更强调 JEPA 框架下世界与动作的端到端统一。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

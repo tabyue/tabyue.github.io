@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HandUMI：面向任意双臂机器人的同步双臂数据采集与重定向开源软件，含标定、QA、回放与遥操作 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">HandUMI：面向任意双臂机器人的同步双臂数据采集与重定向开源软件，含标定、QA、回放与遥操作 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="handumiqa">HandUMI：面向任意双臂机器人的同步双臂数据采集与重定向开源软件，含标定、QA、回放与遥操作</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/murobotics-ai/handumi-sw">https://github.com/murobotics-ai/handumi-sw</a>  </p>
+<p><strong>Stars</strong>: 80 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-10-30  </p>
+<p><strong>组织</strong>: murobotics-ai  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-10-30</p>
+</blockquote>
+<hr />
+<p>双臂数据是具身操作从「单手抓取」走向「双手协作」的必经门槛，而它的采集难度不是单臂的两倍，而是量级上的差距：同步性、坐标系一致性、以及人类到机器人的构型映射，每一环都能让整批数据报废。HandUMI 的价值在于它不满足于「记录两路关节角」，而是把标定、QA、回放与重定向都做成管线里的一等公民，让采集流程可复现、可审计。</p>
+<hr />
+<p>按采集生命周期组织：①<strong>标定</strong>：完成双臂基座相对位姿、时间同步与传感器—机器人坐标关系的标定，输出标定参数供后续环节复用；②<strong>采集/遥操作</strong>：以同步方式记录双臂状态与传感器流，支持遥操作示教；③<strong>QA</strong>：在入库前对数据做质量检查（同步偏差、丢帧、奇异位形、超限等），拦截坏数据而不是事后清理；④<strong>重定向</strong>：把人类示教或源本体的动作映射到目标双臂机器人的可达构型；⑤<strong>回放</strong>：把处理后的轨迹回放到机器人或仿真中验证可行性。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.34186">HuGe</a></strong> — 用 2000 小时第一视角人类 + 机器人数据预训练人形通用 VLA，伪本体感觉 + 手臂重渲染消解 gap。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.33568">Trajectory2Gym</a></strong> — 决策接地的组合式交互轨迹转换。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.37215">Retrieve to Act</a></strong> — 把成功示教组织成可检索的运动基元图。</li>
+</ul>
+<hr />
+<p>典型流程：先按文档完成双臂标定并保存参数；配置目标机器人的描述文件（URDF 等）与关节限幅；用遥操作接口采一小批样本，跑 QA 检查同步偏差与位形合法性；通过后启用重定向把样本映射到目标本体并在仿真中回放验证；确认无误后再批量采集。建议先用 5—10 条样本走完全链路，再放大规模。</p>
+<hr />
+<p>选型时应关注三类指标：时间同步精度（决定左右手配合能否被学到）、重定向后的构型可行率（有多少人类动作在目标机器人上可达）、以及 QA 的拦截率与误杀率。后两者共同决定了「采集一小时能用多少分钟」。</p>
+<hr />
+<p>与 LeRobot（Hugging Face 的机器人学习栈）相比：LeRobot 覆盖数据集格式、模型与部署，偏通用；HandUMI 专注<strong>双臂采集与重定向</strong>这一段，深度更细（标定 + QA + 回放一体）。与手亿科技这类腕带+IMU 的第一视角人类数据采集方案相比：后者采集的是<strong>人类手部</strong>数据、本体无关、规模大，但需要跨本体迁移；HandUMI 直接产出机器人可执行的双臂轨迹。两者是数据金字塔的不同层，可组合使用。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
