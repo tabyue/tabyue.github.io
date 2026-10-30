@@ -1,4 +1,4 @@
-/* 第 13 课：中国的自然资源 */
+/* 第 14 课：中国的自然资源 */
 (function(){
 'use strict';
 const G=window.Geo,Site=window.Site,$=Site.$,{path:P,line:L,circle:C,text:T,rect:R}=Site.S;

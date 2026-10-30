@@ -1,4 +1,4 @@
-/* 第 18 课：东北地区（湘教版八下第六章） */
+/* 第 17 课：东北地区（湘教版八下第六章） */
 (function(){
 'use strict';
 const G=window.Geo,Site=window.Site,$=Site.$,{path:P,text:T,rect:R}=Site.S;

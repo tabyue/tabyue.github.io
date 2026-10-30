@@ -1,4 +1,4 @@
-/* 第 12 课：世界的居民与文化 */
+/* 第 6 课：世界的居民与文化 */
 (function(){
 'use strict';
 const G=window.Geo,Site=window.Site,$=Site.$,{path:P,line:L,circle:C,text:T,rect:R}=Site.S;

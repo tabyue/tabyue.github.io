@@ -1,4 +1,4 @@
-/* 第 14 课：中国的地域差异与区域发展 */
+/* 第 16 课：中国的地域差异与区域发展 */
 (function(){
 'use strict';
 const G=window.Geo,Site=window.Site,$=Site.$,{path:P,line:L,circle:C,text:T,rect:R}=Site.S;

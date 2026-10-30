@@ -1,4 +1,4 @@
-/* 第 17 课：认识大洲（湘教版七下第七章） */
+/* 第 9 课：认识大洲（湘教版七下第七章） */
 (function(){
 'use strict';
 const G=window.Geo,Site=window.Site,$=Site.$,{line:L,text:T,rect:R}=Site.S;

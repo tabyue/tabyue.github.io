@@ -1,4 +1,4 @@
-/* 第 11 课：海陆变迁与板块运动 */
+/* 第 5 课：海陆变迁与板块运动 */
 (function(){
 'use strict';
 const G=window.Geo,Site=window.Site,$=Site.$,{path:P,line:L,circle:C,text:T,rect:R,arrow:A}=Site.S;

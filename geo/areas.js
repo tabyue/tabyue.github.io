@@ -1,4 +1,4 @@
-/* 第 15 课：了解地区（湘教版七下第八章） */
+/* 第 10 课：了解地区（湘教版七下第八章） */
 (function(){
 'use strict';
 const G=window.Geo,Site=window.Site,$=Site.$,{path:P,line:L,circle:C,text:T,rect:R}=Site.S;
