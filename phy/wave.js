@@ -333,7 +333,7 @@
       var p = place[emode][k];
       tokenBtn(k, p === 'a' ? la : p === 'b' ? lb : pool);
     });
-    if (!pool.children.length) L.html('span', { text: '全部放好了，点“检查分类”。', style: 'font-size:12px;color:var(--muted);align-self:center' }, pool);
+    if (!pool.children.length) L.html('span', { text: '全部放好了，点“检查分类”。', style: 'font-size:14px;color:var(--muted);align-self:center' }, pool);
     L.$('#bin-a').textContent = '放进「' + m.a + '」';
     L.$('#bin-b').textContent = '放进「' + m.b + '」';
     L.$('#sort-note').textContent = m.note;

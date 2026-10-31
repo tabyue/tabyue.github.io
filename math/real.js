@@ -68,7 +68,7 @@
       var tr = M.html('tr', {}, tb);
       M.html('td', { html: r[0] }, tr);
       M.html('td', { class: 'n', html: '<b>' + r[1] + '</b>' }, tr);
-      M.html('td', { html: '<span class="note" style="font-size:11px">' + r[2] + '</span>' }, tr);
+      M.html('td', { html: '<span class="note" style="font-size:13px">' + r[2] + '</span>' }, tr);
     });
     M.$('#kd-x').textContent = M.fmt(xv);
     M.$('#kd-text').innerHTML = xv < 0

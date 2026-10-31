@@ -130,7 +130,7 @@
       var li = H('li', { class: 'key-item' }, full);
       ['a', 'b'].forEach(function (side) {
         var nx = node[side][1];
-        H('div', { style: 'font-size:12px;line-height:1.75;color:#455d48', html: '<b style="color:var(--orange)">' + num[k] + side + '</b>　' + node[side][0] + ' …… ' + (LEAF[nx] ? '<b>' + LEAF[nx] + '</b>' : '见 ' + num[nx]) }, li);
+        H('div', { style: 'font-size:14px;line-height:1.75;color:#455d48', html: '<b style="color:var(--orange)">' + num[k] + side + '</b>　' + node[side][0] + ' …… ' + (LEAF[nx] ? '<b>' + LEAF[nx] + '</b>' : '见 ' + num[nx]) }, li);
       });
     });
   })();

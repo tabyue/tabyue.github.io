@@ -26,7 +26,7 @@
 <p class="panel-sub">拖动滑块（或直接在波谱上点、拖），波长变短，频率就变高。上面的波形只是示意，不按真实比例。</p>
 <svg id="spec" viewBox="0 0 400 240" role="application" aria-label="电磁波谱，可拖动选择波长"></svg>
 <div class="control"><div class="control-heading"><label for="lam-in">波长 λ</label><output id="lam-out">12.2 cm</output></div><input id="lam-in" type="range" min="-3" max="12" step="0.01" value="0.91"><div class="ruler"><span>波长长 · 频率低</span><span></span><span>波长短 · 频率高</span></div></div>
-<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">直接跳到</span><div class="chips small" id="band-chips"></div></div>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap"><span style="font-size:14px;color:var(--muted)">直接跳到</span><div class="chips small" id="band-chips"></div></div>
 </section>
 <div class="settings">
 <section class="readout" aria-label="这种电磁波">
@@ -34,7 +34,7 @@
 <div class="stat-grid">
 <div class="stat"><span>波长 λ</span><strong id="lam-v">—</strong></div>
 <div class="stat"><span>频率 f</span><strong id="f-v">—</strong></div>
-<div class="stat wide"><span>典型应用</span><strong id="use-v" style="font-size:17px">—</strong></div>
+<div class="stat wide"><span>典型应用</span><strong id="use-v" style="font-size:18.5px">—</strong></div>
 </div>
 <p class="formula" id="formula"></p>
 <p class="lead" id="spec-text" aria-live="polite"></p>
@@ -65,7 +65,7 @@
 </section>
 <section class="readout" aria-label="真空罩读数">
 <div class="readout-head"><h2>罩外的你</h2><span class="badge" id="jar-badge">未来电</span></div>
-<div class="stat-grid"><div class="stat"><span>听到的铃声</span><strong id="snd-v" style="font-size:19px">—</strong></div><div class="stat"><span>手机收到来电</span><strong id="sig-v" style="font-size:19px">—</strong></div></div>
+<div class="stat-grid"><div class="stat"><span>听到的铃声</span><strong id="snd-v" style="font-size:20.5px">—</strong></div><div class="stat"><span>手机收到来电</span><strong id="sig-v" style="font-size:20.5px">—</strong></div></div>
 <p class="lead" id="jar-text" aria-live="polite"></p>
 <aside class="analogy"><h3><i>打个比方</i> 声音要人传话，电磁波自己会跑</h3><p>声音像排队传话，要靠空气分子一个碰一个往外传；空气抽走了，<b>没人传话</b>，声音就出不去。电磁波不需要“传话的人”，在空无一物的太空里照样跑得飞快。所以宇航员在舱外不能直接喊话，要靠无线电通话。</p></aside>
 </section>
@@ -75,8 +75,8 @@
 <section class="card panel" aria-label="能源分类">
 <h2>给能源分分类</h2>
 <p class="panel-sub">先选分类方法。点一个能源（它会变色），再点下面的一个篮子把它放进去；放错了再点它，换个篮子就行。</p>
-<div class="ctl-row" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">分类方法</span><div class="chips small" id="emode-chips"></div></div>
-<p style="font-size:11.5px;color:var(--muted);margin:12px 0 6px">待分类</p>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="font-size:14px;color:var(--muted)">分类方法</span><div class="chips small" id="emode-chips"></div></div>
+<p style="font-size:13.5px;color:var(--muted);margin:12px 0 6px">待分类</p>
 <div class="chips small" id="pool" style="min-height:36px"></div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
 <div style="border:1px dashed #cfc6e0;border-radius:14px;padding:10px;min-height:120px"><button type="button" class="ghost-btn" id="bin-a" style="width:100%">放进「一次能源」</button><div class="chips small" id="list-a" style="margin-top:8px"></div></div>

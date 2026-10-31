@@ -65,7 +65,7 @@ const INLAND=[
 function drawInland(){
  const c=INLAND[state.inland];
  $('inland-out').textContent=['较近','较远','最深居内陆'][state.inland];
- $('inland-cards').innerHTML='<div class="choice-row correct" style="margin-bottom:8px"><b style="font-size:15px">'+c.name+'</b></div><p class="note">'+c.rain+' · '+c.desc+'。</p><p class="note" style="margin-top:4px">成因：深居内陆、距海遥远，加之山岭阻挡，湿润气流难以到达。</p>';
+ $('inland-cards').innerHTML='<div class="choice-row correct" style="margin-bottom:8px"><b style="font-size:17px">'+c.name+'</b></div><p class="note">'+c.rain+' · '+c.desc+'。</p><p class="note" style="margin-top:4px">成因：深居内陆、距海遥远，加之山岭阻挡，湿润气流难以到达。</p>';
 }
 $('inland').addEventListener('input',e=>{state.inland=Number(e.target.value);drawInland();});
 

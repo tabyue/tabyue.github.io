@@ -51,9 +51,9 @@
       var r = row[0] * Math.PI / 180;
       var tr = M.html('tr', {}, tb);
       M.html('td', { class: 'n', text: row[0] + '°' }, tr);
-      M.html('td', { class: 'n', html: row[1] + '<span class="note" style="font-size:10px"> ≈' + M.fmt(Math.sin(r), 3) + '</span>' }, tr);
-      M.html('td', { class: 'n', html: row[2] + '<span class="note" style="font-size:10px"> ≈' + M.fmt(Math.cos(r), 3) + '</span>' }, tr);
-      M.html('td', { class: 'n', html: row[3] + '<span class="note" style="font-size:10px"> ≈' + M.fmt(Math.tan(r), 3) + '</span>' }, tr);
+      M.html('td', { class: 'n', html: row[1] + '<span class="note" style="font-size:12px"> ≈' + M.fmt(Math.sin(r), 3) + '</span>' }, tr);
+      M.html('td', { class: 'n', html: row[2] + '<span class="note" style="font-size:12px"> ≈' + M.fmt(Math.cos(r), 3) + '</span>' }, tr);
+      M.html('td', { class: 'n', html: row[3] + '<span class="note" style="font-size:12px"> ≈' + M.fmt(Math.tan(r), 3) + '</span>' }, tr);
     });
     M.$('#sp-text').innerHTML = '这三个角的值必须<b>背下来</b>。记忆法：sin 30°、sin 45°、sin 60° 依次是 ' +
       M.sqrt(1) + '/2、' + M.sqrt(2) + '/2、' + M.sqrt(3) + '/2，分子里的数依次是 1、2、3；cos 正好反过来。';

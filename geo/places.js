@@ -6,7 +6,7 @@ const PL=G.PLACES8,byId=id=>PL.find(p=>p.id===id);
 const fromHash=new URLSearchParams(location.hash.replace(/^#/,'')).get('p');
 const state={p:byId(fromHash)?fromHash:'bj'};
 
-$('p-chips').innerHTML=PL.map(p=>'<button data-p="'+p.id+'">'+p.name+'</button>').join('')+'<a class="chip-link" href="zones.html" style="align-self:center;font-size:12px;color:var(--green);text-decoration:underline;text-underline-offset:2px;margin-left:4px">黄土高原 → 第 16 课</a>';
+$('p-chips').innerHTML=PL.map(p=>'<button data-p="'+p.id+'">'+p.name+'</button>').join('')+'<a class="chip-link" href="zones.html" style="align-self:center;font-size:14px;color:var(--green);text-decoration:underline;text-underline-offset:2px;margin-left:4px">黄土高原 → 第 16 课</a>';
 function show(){
  const p=byId(state.p);
  for(const b of $('p-chips').querySelectorAll('button'))b.setAttribute('aria-pressed',String(b.dataset.p===p.id));

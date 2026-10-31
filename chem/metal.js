@@ -162,7 +162,7 @@
     L.$('#react-badge').textContent = rx ? '能反应' : '不反应';
     L.$('#react-pos').textContent = M.idx === X.idx ? '同一种金属' : metal + ' 在 ' + symOf(X.idx) + (M.idx < X.idx ? ' 前' : ' 后');
     L.$('#react-type').textContent = rx ? '置换反应' : '不发生反应';
-    L.$('#react-eq').innerHTML = rx ? eqn(rx.eq) : '<span style="color:#8a8f8e;font-size:13px">不发生反应，没有化学方程式</span>';
+    L.$('#react-eq').innerHTML = rx ? eqn(rx.eq) : '<span style="color:#8a8f8e;font-size:15px">不发生反应，没有化学方程式</span>';
     var t;
     if (prog === 0 && !running) {
       t = rx ? '按活动性顺序，' + M.name + '<b>能</b>和' + X.label + '反应。点“开始反应”看看现象。'
@@ -230,7 +230,7 @@
         var key = m + '|' + s, cur = m === metal && s === sol, done = tested[key], ok = !!RX[m + s];
         var mark = done ? (ok ? '✓' : '✗') : '·';
         var col = done ? (ok ? '#2c736f' : '#a4492b') : '#9aa6a5';
-        h += '<td style="padding:4px 2px"><button type="button" data-m="' + m + '" data-s="' + s + '" aria-label="' + METALS[m].name + '和' + SOLS[s].label.replace(/<[^>]+>/g, '') + (done ? (ok ? '：能反应' : '：不反应') : '：还没做') + '" style="width:100%;min-height:28px;border-radius:7px;font-size:13px;font-weight:700;color:' + col + ';background:' + (cur ? '#def2f0' : 'transparent') + ';outline:' + (cur ? '1.5px solid #2c736f' : 'none') + '">' + mark + '</button></td>';
+        h += '<td style="padding:4px 2px"><button type="button" data-m="' + m + '" data-s="' + s + '" aria-label="' + METALS[m].name + '和' + SOLS[s].label.replace(/<[^>]+>/g, '') + (done ? (ok ? '：能反应' : '：不反应') : '：还没做') + '" style="width:100%;min-height:28px;border-radius:7px;font-size:15px;font-weight:700;color:' + col + ';background:' + (cur ? '#def2f0' : 'transparent') + ';outline:' + (cur ? '1.5px solid #2c736f' : 'none') + '">' + mark + '</button></td>';
       });
       h += '</tr>';
     });

@@ -96,14 +96,28 @@
   L.bindRange(dIn, function (v) { dist = v; last = 'loud'; drawWave(); });
   L.chips(L.$('#tone-chips'), [{ label: '音叉', value: 'fork' }, { label: '长笛', value: 'flute' }, { label: '钢琴', value: 'piano' }, { label: '小提琴', value: 'violin' }], tone, function (v) { tone = v; last = 'timbre'; drawWave(); });
 
-  // 听一听：用浏览器自带的声音合成，不需要任何音频文件
+  // 听一听：用浏览器自带的声音合成，不需要任何音频文件。三个模型共用一个音频上下文
   var ac = null, playBtn = L.$('#wave-play');
-  playBtn.addEventListener('click', function () {
+  function audio() {
     var AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) { playBtn.textContent = '这个浏览器不能播放声音'; playBtn.disabled = true; return; }
+    if (!AC) return null;
+    if (!ac) ac = new AC();
+    if (ac.state === 'suspended') ac.resume();
+    return ac;
+  }
+  /* 一声“啪”：短促的噪声脉冲，vol 越小越轻，用于回声 */
+  function clap(at, vol) {
+    var len = Math.floor(ac.sampleRate * 0.09), buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
+    for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
+    var src = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+    src.buffer = buf; f.type = 'bandpass'; f.frequency.value = 1800; f.Q.value = 0.8;
+    g.gain.value = vol;
+    src.connect(f); f.connect(g); g.connect(ac.destination);
+    src.start(at);
+  }
+  playBtn.addEventListener('click', function () {
+    if (!audio()) { playBtn.textContent = '这个浏览器不能播放声音'; playBtn.disabled = true; return; }
     try {
-      if (!ac) ac = new AC();
-      if (ac.state === 'suspended') ac.resume();
       var h = TONES[tone].h, re = new Float32Array(h.length + 1), im = new Float32Array(h.length + 1);
       for (var n = 0; n < h.length; n++) im[n + 1] = h[n];
       var osc = ac.createOscillator(), g = ac.createGain(), now = ac.currentTime;
@@ -189,6 +203,13 @@
   L.chips(L.$('#med-chips'), [{ label: '空气 15 ℃', value: 'air' }, { label: '水', value: 'water' }, { label: '钢', value: 'steel' }], med, function (v) { med = v; updEcho(); });
   L.$('#echo-go').addEventListener('click', function () {
     stopEcho();
+    try {
+      if (audio()) {
+        var now = ac.currentTime + 0.02;
+        clap(now, 0.9);                 // 发出的声音
+        clap(now + et, 0.35);           // 经过 t 秒，听到较轻的回声
+      }
+    } catch (e) {}
     if (L.REDUCED) { pulse = 1; drawEcho(); return; }
     var el = 0;
     pulse = 0;
@@ -276,13 +297,39 @@
   }
   var pumpIn = L.$('#pump-in'), ringBtn = L.$('#ring-btn');
   pumpIn.value = pump;
-  L.bindRange(pumpIn, function (v) { pump = v; drawJar(); jarReadout(); });
-  function stopRing() { ringing = false; if (ringAnim) { ringAnim.stop(); ringAnim = null; } ringBtn.textContent = '让电铃响起来'; drawJar(); jarReadout(); }
+  L.bindRange(pumpIn, function (v) { pump = v; drawJar(); jarReadout(); updBell(); });
+  /* 电铃声：两个略带金属感的音叠在一起，每秒被小锤敲约 14 下；总音量跟着罩里剩下的空气变 */
+  var bell = null;
+  function bellVol() { return 0.22 * Math.pow(1 - pump / 100, 1.6); }
+  function startBell() {
+    if (!audio()) return;
+    try {
+      var master = ac.createGain(), trem = ac.createGain(), lfo = ac.createOscillator(), lfoAmp = ac.createGain();
+      master.gain.value = 0;
+      master.gain.setTargetAtTime(bellVol(), ac.currentTime, 0.05);
+      trem.gain.value = 0.55;
+      lfo.frequency.value = 14; lfoAmp.gain.value = 0.45;
+      lfo.connect(lfoAmp); lfoAmp.connect(trem.gain);
+      var oscs = [[1250, 'triangle', 1], [2680, 'sine', 0.35]].map(function (o) {
+        var osc = ac.createOscillator(), g = ac.createGain();
+        osc.type = o[1]; osc.frequency.value = o[0]; g.gain.value = o[2];
+        osc.connect(g); g.connect(trem); osc.start(); return osc;
+      });
+      trem.connect(master); master.connect(ac.destination); lfo.start();
+      bell = { master: master, stop: function () { var t = ac.currentTime; master.gain.setTargetAtTime(0, t, 0.04); setTimeout(function () { oscs.concat([lfo]).forEach(function (o) { try { o.stop(); } catch (e) {} }); master.disconnect(); }, 300); } };
+    } catch (e) { bell = null; }
+  }
+  function stopBell() { if (bell) { bell.stop(); bell = null; } }
+  function updBell() { if (bell) bell.master.gain.setTargetAtTime(bellVol(), ac.currentTime, 0.08); }
+  function stopRing() { ringing = false; stopBell(); if (ringAnim) { ringAnim.stop(); ringAnim = null; } ringBtn.textContent = '让电铃响起来'; drawJar(); jarReadout(); }
   ringBtn.addEventListener('click', function () {
     if (ringing) { stopRing(); return; }
     ringing = true; ringBtn.textContent = '关掉电铃'; jarReadout();
+    startBell();
     ringAnim = L.loop(function (dt) { ph += dt; if (jarVisible) drawJar(); });
   });
+  /* 离开页面或切到后台时把铃声关掉，免得一直响 */
+  document.addEventListener('visibilitychange', function () { if (document.hidden && ringing) stopRing(); });
   if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { jarVisible = es[0].isIntersecting; }).observe(jar);
 
   function save() { L.setState({ f: fq, a: amp, d: dist, tn: tone, m: med, e: et, p: pump }); }

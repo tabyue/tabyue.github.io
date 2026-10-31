@@ -59,7 +59,7 @@
     ].forEach(function (p) {
       var li = M.html('li', { class: p[1] ? 'yes' : 'no' }, ul);
       M.html('i', { text: p[1] ? '✓' : '✗' }, li);
-      M.html('span', { html: p[0] + '<span class="note" style="font-size:11px"> · ' + p[2] + '</span>' }, li);
+      M.html('span', { html: p[0] + '<span class="note" style="font-size:13px"> · ' + p[2] + '</span>' }, li);
     });
     M.$('#sh-text').innerHTML = isSq
       ? '四边相等 + 四角都是直角，这是<b>正方形</b>——它<b>既是矩形又是菱形</b>，同时拥有两边的全部性质。'

@@ -1,44 +1,44 @@
 /* 生物互动馆 · 本站新增组件 */
 .brand svg{stroke:var(--green)}
 .analogy{background:#eef4f6;border-radius:18px;padding:16px 18px;margin-top:15px;color:#3b5a63}
-.analogy h3{font-size:13px;margin:0 0 6px;color:#2f5864;display:flex;gap:7px;align-items:center}
-.analogy h3 i{font-style:normal;font-size:10px;background:#d6e6ea;border-radius:8px;padding:2px 7px;color:#2f5864}
-.analogy p{font-size:12px;line-height:1.9;margin:0}
+.analogy h3{font-size:15px;margin:0 0 6px;color:#2f5864;display:flex;gap:7px;align-items:center}
+.analogy h3 i{font-style:normal;font-size:12px;background:#d6e6ea;border-radius:8px;padding:2px 7px;color:#2f5864}
+.analogy p{font-size:14px;line-height:1.9;margin:0}
 .fact b,.info-card b{color:var(--ink);font-weight:650}
 .panel h2+.panel-sub{margin-top:2px}
 .figure-gap{height:14px}
 .ctl-row{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
-.ctl-row>span{font-size:12px;color:var(--muted);min-width:56px}
+.ctl-row>span{font-size:14px;color:var(--muted);min-width:56px}
 .ctl-row .chips{flex:1}
 .pad{display:grid;grid-template-columns:repeat(3,38px);grid-template-rows:repeat(3,34px);gap:4px}
-.pad button{background:#f0f4e9;border-radius:9px;color:var(--green);font-size:14px}
+.pad button{background:#f0f4e9;border-radius:9px;color:var(--green);font-size:16px}
 .pad button:active{background:#dbe7d4}
-.pad .c{background:transparent;font-size:10px;color:var(--muted)}
-.big-btn{background:var(--green);color:#fff;border-radius:11px;padding:10px 16px;font-size:13px;min-height:40px}
+.pad .c{background:transparent;font-size:12px;color:var(--muted)}
+.big-btn{background:var(--green);color:#fff;border-radius:11px;padding:10px 16px;font-size:15px;min-height:40px}
 .big-btn:hover{background:#2d5745}
-.ghost-btn{background:#f0f4e9;color:var(--green);border-radius:11px;padding:10px 14px;font-size:12px;min-height:40px}
+.ghost-btn{background:#f0f4e9;color:var(--green);border-radius:11px;padding:10px 14px;font-size:14px;min-height:40px}
 .part-info{min-height:84px}
-.part-info h3{font-size:14px;margin:0 0 6px;color:var(--green)}
-.part-info p{font-size:12px;line-height:1.85;margin:0;color:#40594b}
+.part-info h3{font-size:16px;margin:0 0 6px;color:var(--green)}
+.part-info p{font-size:14px;line-height:1.85;margin:0;color:#40594b}
 /* 检索表 */
-.key-list{list-style:none;margin:0;padding:0;font-size:12.5px}
+.key-list{list-style:none;margin:0;padding:0;font-size:14.5px}
 .key-item{border-radius:12px;padding:8px 10px;margin:0 0 6px;background:#f7f9f3;border:1px solid #edf1e8;transition:background .2s,border-color .2s,opacity .2s}
-.key-item .q{font-size:11px;color:var(--muted);margin-bottom:5px}
+.key-item .q{font-size:13px;color:var(--muted);margin-bottom:5px}
 .key-item .opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.key-item .opts button{text-align:left;font-size:12px;line-height:1.55;padding:8px 10px;border-radius:9px;background:#fff;border:1px solid #e3e9dc;color:#3f5546;min-height:40px}
+.key-item .opts button{text-align:left;font-size:14px;line-height:1.55;padding:8px 10px;border-radius:9px;background:#fff;border:1px solid #e3e9dc;color:#3f5546;min-height:40px}
 .key-item .opts button:hover{border-color:#b9cdb0}
-.key-item .opts button .to{display:block;font-size:10.5px;color:#8a9a82;margin-top:3px}
+.key-item .opts button .to{display:block;font-size:12.5px;color:#8a9a82;margin-top:3px}
 .key-item.active{background:#fff;border-color:#b9cdb0;box-shadow:0 2px 10px #2a3f2a0d}
 .key-item.passed{opacity:.75}
 .key-item .opts button.picked{background:#dfecd8;border-color:#a9c69c;color:#2f5a44;font-weight:600}
 .key-item .opts button.nope{background:#f8eadb;border-color:#e9cfae;color:#8b5d33}
 .key-item.waiting{opacity:.38}
 .key-item.waiting button{pointer-events:none}
-.result-card{border-radius:14px;background:#ecf4e6;padding:12px 14px;font-size:12.5px;line-height:1.8;color:#2f5a44;margin-top:8px}
-.result-card b{font-size:15px}
+.result-card{border-radius:14px;background:#ecf4e6;padding:12px 14px;font-size:14.5px;line-height:1.8;color:#2f5a44;margin-top:8px}
+.result-card b{font-size:17px}
 /* 分类阶梯 */
-.tax{width:100%;border-collapse:separate;border-spacing:0 5px;font-size:12.5px}
-.tax th{font-size:11px;color:var(--muted);font-weight:500;text-align:left;padding:0 8px}
+.tax{width:100%;border-collapse:separate;border-spacing:0 5px;font-size:14.5px}
+.tax th{font-size:13px;color:var(--muted);font-weight:500;text-align:left;padding:0 8px}
 .tax td{padding:9px 10px;background:#f4f6f0;color:#56694f}
 .tax td:first-child{border-radius:10px 0 0 10px;color:var(--muted);width:52px;font-weight:600}
 .tax td:last-child{border-radius:0 10px 10px 0}
@@ -47,10 +47,10 @@
 .tax tr.lowest td{background:var(--green);color:#fff}
 .tax tr.lowest td:first-child{color:#d6e7cf}
 .pick-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.pick-row label{font-size:11px;color:var(--muted);display:block;margin-bottom:6px}
-select{font:inherit;font-size:14px;width:100%;padding:9px 10px;border-radius:10px;border:1px solid #cbd8c4;background:#fafcf7;color:var(--ink)}
+.pick-row label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+select{font:inherit;font-size:16px;width:100%;padding:9px 10px;border-radius:10px;border:1px solid #cbd8c4;background:#fafcf7;color:var(--ink)}
 /* 路线步骤 */
-.steps{display:flex;flex-wrap:wrap;gap:5px 4px;margin-top:12px;font-size:11.5px;line-height:1.5}
+.steps{display:flex;flex-wrap:wrap;gap:5px 4px;margin-top:12px;font-size:13.5px;line-height:1.5}
 .steps span{padding:4px 8px;border-radius:8px;background:#f0f3eb;color:#7b8a74;transition:background .2s,color .2s}
 .steps span.on{background:#f3dcd6;color:#8f3b2c}
 .steps span.on.v{background:#dedcef;color:#4a4386}
@@ -58,42 +58,42 @@ select{font:inherit;font-size:14px;width:100%;padding:9px 10px;border-radius:10p
 .steps i{font-style:normal;color:#b7c2b0;align-self:center}
 /* 反射弧 */
 .part-toggle{display:flex;flex-wrap:wrap;gap:6px}
-.part-toggle button{font-size:12px;padding:8px 11px;border-radius:10px;background:#f0f4e9;color:#4c6247;min-height:36px}
+.part-toggle button{font-size:14px;padding:8px 11px;border-radius:10px;background:#f0f4e9;color:#4c6247;min-height:36px}
 .part-toggle button[aria-pressed="true"]{background:#f6e2cc;color:#8b5d33;text-decoration:line-through}
 .verdict-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
 .verdict{border-radius:14px;padding:12px 14px;background:#f4f6f0}
-.verdict span{display:block;font-size:11px;color:var(--muted)}
-.verdict strong{font-size:20px;letter-spacing:-.3px}
+.verdict span{display:block;font-size:13px;color:var(--muted)}
+.verdict strong{font-size:21.5px;letter-spacing:-.3px}
 .verdict.yes{background:#e3efdc}.verdict.yes strong{color:#2f5a44}
 .verdict.no{background:#f8eadb}.verdict.no strong{color:#9c6334}
 /* 遗传方格 */
 .punnett{display:grid;grid-template-columns:54px 1fr 1fr;gap:6px;max-width:330px;margin:6px auto 0}
-.punnett div{border-radius:12px;display:flex;align-items:center;justify-content:center;min-height:62px;font-size:20px;font-weight:650;letter-spacing:.5px;flex-direction:column}
-.punnett .h{background:transparent;font-size:16px;color:var(--orange);min-height:34px}
-.punnett .h small,.punnett .cell small{font-size:10.5px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:2px}
+.punnett div{border-radius:12px;display:flex;align-items:center;justify-content:center;min-height:62px;font-size:21.5px;font-weight:650;letter-spacing:.5px;flex-direction:column}
+.punnett .h{background:transparent;font-size:18px;color:var(--orange);min-height:34px}
+.punnett .h small,.punnett .cell small{font-size:12.5px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:2px}
 .punnett .cell{background:#f0f4e9;color:#2f5a44}
 .punnett .cell.rec{background:#f8eadb;color:#8b5d33}
-.punnett .corner{background:transparent;font-size:10px;color:var(--muted);font-weight:500}
+.punnett .corner{background:transparent;font-size:12px;color:var(--muted);font-weight:500}
 .ratio{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:8px 0 4px;background:#eef1ea}
 .ratio i{display:block;height:100%;transition:width .35s}
-.ratio-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+.ratio-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px;color:var(--muted)}
 .ratio-legend b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 /* 食物链 */
 .chain-list{display:flex;flex-direction:column;gap:6px}
-.chain-list button{text-align:left;font-size:12px;line-height:1.6;padding:9px 12px;border-radius:11px;background:#f7f9f3;border:1px solid #edf1e8;color:#455d48}
+.chain-list button{text-align:left;font-size:14px;line-height:1.6;padding:9px 12px;border-radius:11px;background:#f7f9f3;border:1px solid #edf1e8;color:#455d48}
 .chain-list button[aria-pressed="true"]{background:#e3efdc;border-color:#bcd5b0;color:#2f5a44;font-weight:600}
 .chain-list button.dim{opacity:.4}
-.pyramid-row{display:grid;grid-template-columns:72px 1fr 78px;gap:8px;align-items:center;font-size:11.5px;margin-top:6px}
+.pyramid-row{display:grid;grid-template-columns:72px 1fr 78px;gap:8px;align-items:center;font-size:13.5px;margin-top:6px}
 .pyramid-row .track{height:16px;background:#f0f3eb;border-radius:8px;overflow:hidden}
 .pyramid-row .fill{height:100%;border-radius:8px;transition:width .35s}
 .pyramid-row em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
 .pyramid-row span{color:#455d48;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.effect-list{margin:8px 0 0;padding-left:18px;font-size:12px;line-height:1.85;color:#40594b}
-.small-tag{display:inline-block;font-size:10px;border-radius:8px;padding:2px 7px;background:#e6eedd;color:#5f7259;margin-left:6px;vertical-align:1px}
+.effect-list{margin:8px 0 0;padding-left:18px;font-size:14px;line-height:1.85;color:#40594b}
+.small-tag{display:inline-block;font-size:12px;border-radius:8px;padding:2px 7px;background:#e6eedd;color:#5f7259;margin-left:6px;vertical-align:1px}
 .node{cursor:pointer}
 .node:focus-visible{outline:none}
 .node:focus-visible rect{stroke:var(--orange);stroke-width:2.4}
-@media(max-width:680px){.key-item .opts{grid-template-columns:1fr}.pick-row{gap:8px}.verdict strong{font-size:17px}.punnett div{min-height:54px;font-size:18px}}
+@media(max-width:680px){.key-item .opts{grid-template-columns:1fr}.pick-row{gap:8px}.verdict strong{font-size:18.5px}.punnett div{min-height:54px;font-size:19.5px}}
 /* 首页“怎么用”卡片 */
 .hub-tip{background:#f3f6ee;border-style:dashed}
 .hub-tip:hover{transform:none;box-shadow:none}
@@ -105,12 +105,12 @@ select{font:inherit;font-size:14px;width:100%;padding:9px 10px;border-radius:10p
 .fact-list{list-style:none;margin:0;padding:0}
 .fact-list li{padding:8px 0;border-bottom:1px solid #eef1ea;display:flex;flex-direction:column;gap:2px}
 .fact-list li:last-child{border-bottom:0}
-.fact-list b{font-size:13px;color:#203b35}
-.fact-list span{font-size:12px;color:var(--muted);line-height:1.7}
+.fact-list b{font-size:15px;color:#203b35}
+.fact-list span{font-size:14px;color:var(--muted);line-height:1.7}
 .steps span[role=button]:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 input[type=range]{width:100%}
 .small-label output{color:var(--ink);font-weight:600;margin-left:4px}
-p.part-info{font-size:13px;line-height:1.85;color:#40594b;min-height:56px;margin:10px 0 0}
+p.part-info{font-size:15px;line-height:1.85;color:#40594b;min-height:56px;margin:10px 0 0}
 
 
 /* —— 数字、公式、图内文字统一用无衬线体（正文也已改为无衬线体，楷体在小字号下会显得发虚、和数字对不齐） —— */
@@ -127,7 +127,7 @@ svg text, svg tspan {
   width: 26px; height: 26px; padding: 0;
   border-radius: 8px; border: 1px solid var(--line, #e2e5dd);
   background: #fff; color: var(--muted, #6f7685);
-  font-size: 12px; font-variant-numeric: tabular-nums; cursor: pointer;
+  font-size: 14px; font-variant-numeric: tabular-nums; cursor: pointer;
   transition: background .15s, color .15s, border-color .15s;
 }
 .quiz-nav .dot.on { border-color: #2f5aa8; color: #2f5aa8; font-weight: 700; box-shadow: 0 0 0 2px #e4ebf8; }
@@ -137,7 +137,7 @@ svg text, svg tspan {
 /* 难度徽章 */
 .lv {
   display: inline-block; margin-left: 7px; padding: 2px 8px;
-  border-radius: 9px; font-size: 10.5px; font-weight: 600; letter-spacing: .02em;
+  border-radius: 9px; font-size: 12.5px; font-weight: 600; letter-spacing: .02em;
 }
 .lv-base { background: #e7efe6; color: #3d6b38; }
 .lv-mid { background: #e4ebf8; color: #2f5aa8; }
@@ -148,46 +148,46 @@ svg text, svg tspan {
   margin-top: 14px; padding: 12px 14px;
   background: #eef1f7; border-radius: 13px;
 }
-.quiz-result h4 { margin: 0 0 5px; font-size: 13.5px; color: #2f4473; }
-.quiz-result p { margin: 0; font-size: 12.5px; line-height: 1.75; color: #4a5568; }
+.quiz-result h4 { margin: 0 0 5px; font-size: 15.5px; color: #2f4473; }
+.quiz-result p { margin: 0; font-size: 14.5px; line-height: 1.75; color: #4a5568; }
 .quiz-result .weak { margin-top: 7px; display: flex; flex-wrap: wrap; gap: 5px; }
 .quiz-result .weak span {
   background: #fff; border-radius: 8px; padding: 3px 9px;
-  font-size: 11.5px; color: #a4492b;
+  font-size: 13.5px; color: #a4492b;
 }
 
 /* 中考怎么考 */
 .exam-card { background: #fdf6ec; border-radius: 18px; padding: 16px 18px; margin-top: 15px; color: #6b4f2a; }
-.exam-card h3 { font-size: 13px; margin: 0 0 8px; color: #8a5a22; display: flex; gap: 7px; align-items: center; }
-.exam-card h3 i { font-style: normal; font-size: 10px; background: #f3e2c7; border-radius: 8px; padding: 2px 7px; color: #8a5a22; white-space: nowrap; flex: none; }
+.exam-card h3 { font-size: 15px; margin: 0 0 8px; color: #8a5a22; display: flex; gap: 7px; align-items: center; }
+.exam-card h3 i { font-style: normal; font-size: 12px; background: #f3e2c7; border-radius: 8px; padding: 2px 7px; color: #8a5a22; white-space: nowrap; flex: none; }
 .exam-card ul { margin: 0; padding-left: 18px; }
-.exam-card li { font-size: 12.5px; line-height: 1.85; margin: 4px 0; }
+.exam-card li { font-size: 14.5px; line-height: 1.85; margin: 4px 0; }
 .exam-card b { color: #8a5a22; }
 .exam-card .q {
   margin-top: 10px; padding: 10px 12px; background: #fff;
-  border-radius: 11px; font-size: 12.5px; line-height: 1.8; color: #5a4a35;
+  border-radius: 11px; font-size: 14.5px; line-height: 1.8; color: #5a4a35;
 }
 .exam-card .q b { color: #a4492b; }
 
 /* 想明白为什么 */
 .derive-card { background: #eaf0f6; border-radius: 18px; padding: 16px 18px; margin-top: 15px; color: #39485b; }
-.derive-card h3 { font-size: 13px; margin: 0 0 8px; color: #2f4a68; display: flex; gap: 7px; align-items: center; }
-.derive-card h3 i { font-style: normal; font-size: 10px; background: #d5e1ee; border-radius: 8px; padding: 2px 7px; color: #2f4a68; white-space: nowrap; flex: none; }
-.derive-card .derive-lead { font-size: 12.5px; line-height: 1.85; margin: 0 0 11px; color: #4c5e73; }
+.derive-card h3 { font-size: 15px; margin: 0 0 8px; color: #2f4a68; display: flex; gap: 7px; align-items: center; }
+.derive-card h3 i { font-style: normal; font-size: 12px; background: #d5e1ee; border-radius: 8px; padding: 2px 7px; color: #2f4a68; white-space: nowrap; flex: none; }
+.derive-card .derive-lead { font-size: 14.5px; line-height: 1.85; margin: 0 0 11px; color: #4c5e73; }
 .derive-card ol { margin: 0; padding: 0; list-style: none; counter-reset: dv; }
 .derive-card ol > li { position: relative; padding-left: 27px; margin: 0 0 10px; counter-increment: dv; }
 .derive-card ol > li::before {
   content: counter(dv); position: absolute; left: 0; top: 0;
   width: 19px; height: 19px; border-radius: 50%; background: #fff;
-  color: #2f4a68; font-size: 11px; line-height: 19px; text-align: center;
+  color: #2f4a68; font-size: 13px; line-height: 19px; text-align: center;
   font-family: var(--font-ui);
 }
-.derive-card ol > li h4 { font-size: 12.5px; font-weight: 650; margin: 0 0 3px; color: #2f4a68; }
-.derive-card ol > li p { font-size: 12.5px; line-height: 1.85; margin: 0; color: #4c5e73; }
+.derive-card ol > li h4 { font-size: 14.5px; font-weight: 650; margin: 0 0 3px; color: #2f4a68; }
+.derive-card ol > li p { font-size: 14.5px; line-height: 1.85; margin: 0; color: #4c5e73; }
 .derive-card b { color: #2f4a68; font-weight: 650; }
 .derive-card .derive-end {
   margin: 12px 0 0; padding: 10px 12px; background: #fff;
-  border-radius: 11px; font-size: 12.5px; line-height: 1.8; color: #39485b;
+  border-radius: 11px; font-size: 14.5px; line-height: 1.8; color: #39485b;
 }
 .derive-card .derive-end > b:first-child {
   color: #a4492b; margin-right: 5px;

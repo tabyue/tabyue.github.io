@@ -258,7 +258,7 @@
   for (var k = 1; k <= 20; k++) (function (k) {
     var el = EL[k], ps = pos(k);
     var b = L.html('button', { type: 'button', 'aria-pressed': String(k === z), 'aria-label': el[1] + ' ' + el[0] + '，原子序数 ' + k,
-      html: '<small style="display:block;font-size:9.5px;opacity:.75">' + k + '</small><b style="display:block;font-size:15px;font-family:var(--font-ui)">' + el[0] + '</b><span style="display:block;font-size:10px">' + el[1] + '</span>' }, grid);
+      html: '<small style="display:block;font-size:11.5px;opacity:.75">' + k + '</small><b style="display:block;font-size:17px;font-family:var(--font-ui)">' + el[0] + '</b><span style="display:block;font-size:12px">' + el[1] + '</span>' }, grid);
     b.style.cssText = 'grid-row:' + ps[0] + ';grid-column:' + ps[1] + ';padding:4px 0;border-radius:9px;background:' + CAT[el[4]][1] + ';color:#1f302e;line-height:1.25;min-height:54px;border:2px solid transparent;font-family:var(--font-ui)';
     b.addEventListener('click', function () { z = k; showPT(); });
     cells[k] = b;

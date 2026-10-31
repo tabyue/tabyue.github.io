@@ -524,7 +524,7 @@
     L.$('#cox-badge').textContent = gas === 'co2' ? 'CO₂' : 'CO';
     var showResult = cp >= 1 || (ex === 'candle' && gas === 'co');
     L.$('#cox-phen').textContent = showResult ? r[0] : cp > 0 ? '实验进行中…' : '点“开始实验”';
-    L.$('#cox-eq').innerHTML = showResult && r[1] ? eq(r[1]) : showResult ? '<span style="font-size:13px;color:var(--muted)">这一步不需要写化学方程式</span>' : '<span style="font-size:13px;color:var(--muted)">实验做完后显示</span>';
+    L.$('#cox-eq').innerHTML = showResult && r[1] ? eq(r[1]) : showResult ? '<span style="font-size:15px;color:var(--muted)">这一步不需要写化学方程式</span>' : '<span style="font-size:15px;color:var(--muted)">实验做完后显示</span>';
     L.$('#cox-eq').hidden = false;
     L.$('#cox-text').innerHTML = showResult ? r[2] : '现在用的是 <b>' + (gas === 'co2' ? '二氧化碳' : '一氧化碳') + '</b>，实验：' + EXPS[ex] + '。先猜猜会发生什么，再点“开始实验”。';
     L.$('#cox-run').textContent = cp >= 1 ? '再做一次' : cp > 0 ? '实验中…' : '开始实验';

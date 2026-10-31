@@ -77,17 +77,17 @@
   }
 
   var termsEl = L.$('#bal-terms'), valEls = [];
-  var BTN = 'width:34px;height:22px;border-radius:7px;background:#e6f2f1;color:#2c736f;font-size:15px;line-height:1;font-weight:700;padding:0';
+  var BTN = 'width:34px;height:22px;border-radius:7px;background:#e6f2f1;color:#2c736f;font-size:17px;line-height:1;font-weight:700;padding:0';
   function buildTerms() {
     termsEl.innerHTML = ''; valEls = [];
     var r = RX[rxKey];
     species().forEach(function (sp, i) {
-      if (i > 0) L.html('span', { text: i === r.L.length ? '⟶' : '+', 'aria-hidden': 'true', style: 'font-size:17px;color:#8a9796;padding:0 2px' }, termsEl);
+      if (i > 0) L.html('span', { text: i === r.L.length ? '⟶' : '+', 'aria-hidden': 'true', style: 'font-size:18.5px;color:#8a9796;padding:0 2px' }, termsEl);
       var box = L.html('div', { style: 'display:flex;flex-direction:column;align-items:center;gap:3px;background:#f4f7f6;border:1px solid var(--line);border-radius:12px;padding:4px 6px' }, termsEl);
       var plus = L.html('button', { type: 'button', text: '+', 'aria-label': '增加 ' + sp.f + ' 前的化学计量数', style: BTN }, box);
       var mid = L.html('div', { style: 'display:flex;align-items:baseline;gap:2px;font-family:var(--font-ui)' }, box);
-      valEls[i] = L.html('b', { style: 'font-size:19px;color:#c2603f;min-width:12px;text-align:right;font-variant-numeric:tabular-nums' }, mid);
-      L.html('span', { html: L.chem(sp.f), style: 'font-size:17px' }, mid);
+      valEls[i] = L.html('b', { style: 'font-size:20.5px;color:#c2603f;min-width:12px;text-align:right;font-variant-numeric:tabular-nums' }, mid);
+      L.html('span', { html: L.chem(sp.f), style: 'font-size:18.5px' }, mid);
       var minus = L.html('button', { type: 'button', text: '−', 'aria-label': '减少 ' + sp.f + ' 前的化学计量数', style: BTN }, box);
       plus.addEventListener('click', function () { setCoef(i, coef[i] + 1); });
       minus.addEventListener('click', function () { setCoef(i, coef[i] - 1); });

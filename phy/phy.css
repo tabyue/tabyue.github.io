@@ -2,12 +2,12 @@
 
 /* 打个比方 */
 .analogy { background: #f1eff6; border-radius: 18px; padding: 16px 18px; margin-top: 15px; color: #4b425e; }
-.analogy h3 { font-size: 13px; margin: 0 0 6px; color: #473969; display: flex; gap: 7px; align-items: center; }
-.analogy h3 i { font-style: normal; font-size: 10px; background: #e1ddeb; border-radius: 8px; padding: 2px 7px; color: #473969; }
-.analogy p { font-size: 12px; line-height: 1.9; margin: 0; }
+.analogy h3 { font-size: 15px; margin: 0 0 6px; color: #473969; display: flex; gap: 7px; align-items: center; }
+.analogy h3 i { font-style: normal; font-size: 12px; background: #e1ddeb; border-radius: 8px; padding: 2px 7px; color: #473969; }
+.analogy p { font-size: 14px; line-height: 1.9; margin: 0; }
 
 /* 步骤条：解方程、推理过程 */
-.steps { display: flex; flex-wrap: wrap; gap: 5px 4px; margin-top: 12px; font-size: 11.5px; line-height: 1.5; }
+.steps { display: flex; flex-wrap: wrap; gap: 5px 4px; margin-top: 12px; font-size: 13.5px; line-height: 1.5; }
 .steps span { padding: 4px 8px; border-radius: 8px; background: #f0eff3; color: #807b8c; transition: background .2s, color .2s; }
 .steps span.on { background: #e4def1; color: #5a4097; font-weight: 600; }
 .steps span.done { background: #e7efe6; color: #43704f; }
@@ -42,7 +42,7 @@
   padding: 10px 12px;
   background: var(--surface-2, #f1f3ee);
   border-radius: 12px;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 2.05;
   text-align: center;
   overflow-x: auto;
@@ -54,7 +54,7 @@
 .formula .step + .step { margin-top: 2px; }
 .formula .why {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted, #777282);
   line-height: 1.5;
   margin-top: -2px;
@@ -74,7 +74,7 @@ svg .pt:focus-visible circle { stroke: #5a4097; stroke-width: 3; }
 table.compare, table.steps {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 15px;
   margin-top: 10px;
 }
 table.compare th, table.compare td, table.steps th, table.steps td {
@@ -84,7 +84,7 @@ table.compare th, table.compare td, table.steps th, table.steps td {
   vertical-align: top;
 }
 table.compare th, table.steps th {
-  font-size: 11.5px;
+  font-size: 13.5px;
   color: var(--muted, #777282);
   font-weight: 600;
   white-space: nowrap;
@@ -98,7 +98,7 @@ table.steps tr.on td { background: #f3f0f9; }
   width: 26px; height: 26px; padding: 0;
   border-radius: 8px; border: 1px solid var(--line, #e2e5dd);
   background: #fff; color: var(--muted, #777282);
-  font-size: 12px; font-variant-numeric: tabular-nums; cursor: pointer;
+  font-size: 14px; font-variant-numeric: tabular-nums; cursor: pointer;
   transition: background .15s, color .15s, border-color .15s;
 }
 .quiz-nav .dot.on { border-color: #5a4097; color: #5a4097; font-weight: 700; box-shadow: 0 0 0 2px #ebe7f5; }
@@ -108,7 +108,7 @@ table.steps tr.on td { background: #f3f0f9; }
 /* 难度徽章 */
 .lv {
   display: inline-block; margin-left: 7px; padding: 2px 8px;
-  border-radius: 9px; font-size: 10.5px; font-weight: 600; letter-spacing: .02em;
+  border-radius: 9px; font-size: 12.5px; font-weight: 600; letter-spacing: .02em;
 }
 .lv-base { background: #e7efe6; color: #3d6b38; }
 .lv-mid { background: #ebe7f5; color: #5a4097; }
@@ -119,30 +119,30 @@ table.steps tr.on td { background: #f3f0f9; }
   margin-top: 14px; padding: 12px 14px;
   background: #f1eff6; border-radius: 13px;
 }
-.quiz-result h4 { margin: 0 0 5px; font-size: 13.5px; color: #473969; }
-.quiz-result p { margin: 0; font-size: 12.5px; line-height: 1.75; color: #554e64; }
+.quiz-result h4 { margin: 0 0 5px; font-size: 15.5px; color: #473969; }
+.quiz-result p { margin: 0; font-size: 14.5px; line-height: 1.75; color: #554e64; }
 .quiz-result .weak { margin-top: 7px; display: flex; flex-wrap: wrap; gap: 5px; }
 .quiz-result .weak span {
   background: #fff; border-radius: 8px; padding: 3px 9px;
-  font-size: 11.5px; color: #a4492b;
+  font-size: 13.5px; color: #a4492b;
 }
 
 /* 中考怎么考 */
 .exam-card { background: #fdf6ec; border-radius: 18px; padding: 16px 18px; margin-top: 15px; color: #6b4f2a; }
-.exam-card h3 { font-size: 13px; margin: 0 0 8px; color: #8a5a22; display: flex; gap: 7px; align-items: center; }
-.exam-card h3 i { font-style: normal; font-size: 10px; background: #f3e2c7; border-radius: 8px; padding: 2px 7px; color: #8a5a22; white-space: nowrap; flex: none; }
+.exam-card h3 { font-size: 15px; margin: 0 0 8px; color: #8a5a22; display: flex; gap: 7px; align-items: center; }
+.exam-card h3 i { font-style: normal; font-size: 12px; background: #f3e2c7; border-radius: 8px; padding: 2px 7px; color: #8a5a22; white-space: nowrap; flex: none; }
 .exam-card ul { margin: 0; padding-left: 18px; }
-.exam-card li { font-size: 12.5px; line-height: 1.85; margin: 4px 0; }
+.exam-card li { font-size: 14.5px; line-height: 1.85; margin: 4px 0; }
 .exam-card b { color: #8a5a22; }
 .exam-card .q {
   margin-top: 10px; padding: 10px 12px; background: #fff;
-  border-radius: 11px; font-size: 12.5px; line-height: 1.8; color: #5a4a35;
+  border-radius: 11px; font-size: 14.5px; line-height: 1.8; color: #5a4a35;
 }
 .exam-card .q b { color: #a4492b; }
 
 /* 首页覆盖统计 */
 .cover-sum { display: flex; gap: 10px; flex-wrap: wrap; margin: 6px 0 12px; }
-.cover-sum span { font-size: 12px; border-radius: 10px; padding: 5px 10px; background: #f1eff6; }
+.cover-sum span { font-size: 14px; border-radius: 10px; padding: 5px 10px; background: #f1eff6; }
 #cover-table a { color: #5a4097; text-decoration: underline; text-underline-offset: 2px; }
 #cover-table td:first-child { white-space: nowrap; color: var(--muted, #777282); }
 
@@ -160,12 +160,12 @@ input[type=range] { width: 100%; }
 
 /* 计算器式的大数字读数 */
 .bignum {
-  font-size: 22px;
+  font-size: 23.5px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   color: #5a4097;
 }
-.bignum small { font-size: 13px; font-weight: 500; color: var(--muted, #777282); margin-left: 2px; }
+.bignum small { font-size: 15px; font-weight: 500; color: var(--muted, #777282); margin-left: 2px; }
 
 /* 判定条件清单：对/错用颜色区分 */
 .cond-list { list-style: none; margin: 8px 0 0; padding: 0; }
@@ -176,7 +176,7 @@ input[type=range] { width: 100%; }
   padding: 6px 8px;
   border-radius: 9px;
   line-height: 1.55;
-  font-size: 13.5px;
+  font-size: 15.5px;
 }
 .cond-list li.yes { background: #eaf4ec; }
 .cond-list li.no { background: #fbeeea; }
@@ -201,7 +201,7 @@ input[type=range] { width: 100%; }
 }
 .cube-grid button[aria-pressed=true] { background: #b3a7d0; border-color: #8979ae; }
 
-p.part-info { font-size: 13px; line-height: 1.62; color: var(--ink, #312b3f); margin: 8px 0 0; }
+p.part-info { font-size: 15px; line-height: 1.62; color: var(--ink, #312b3f); margin: 8px 0 0; }
 
 
 /* —— 数字、公式、图内文字统一用无衬线体（正文也已改为无衬线体，楷体在小字号下会显得发虚、和数字对不齐） —— */
@@ -214,23 +214,23 @@ svg text, svg tspan {
 }
 /* 想明白为什么 */
 .derive-card { background: #eeecf4; border-radius: 18px; padding: 16px 18px; margin-top: 15px; color: #453e56; }
-.derive-card h3 { font-size: 13px; margin: 0 0 8px; color: #433760; display: flex; gap: 7px; align-items: center; }
-.derive-card h3 i { font-style: normal; font-size: 10px; background: #ded8eb; border-radius: 8px; padding: 2px 7px; color: #433760; white-space: nowrap; flex: none; }
-.derive-card .derive-lead { font-size: 12.5px; line-height: 1.85; margin: 0 0 11px; color: #5a516e; }
+.derive-card h3 { font-size: 15px; margin: 0 0 8px; color: #433760; display: flex; gap: 7px; align-items: center; }
+.derive-card h3 i { font-style: normal; font-size: 12px; background: #ded8eb; border-radius: 8px; padding: 2px 7px; color: #433760; white-space: nowrap; flex: none; }
+.derive-card .derive-lead { font-size: 14.5px; line-height: 1.85; margin: 0 0 11px; color: #5a516e; }
 .derive-card ol { margin: 0; padding: 0; list-style: none; counter-reset: dv; }
 .derive-card ol > li { position: relative; padding-left: 27px; margin: 0 0 10px; counter-increment: dv; }
 .derive-card ol > li::before {
   content: counter(dv); position: absolute; left: 0; top: 0;
   width: 19px; height: 19px; border-radius: 50%; background: #fff;
-  color: #433760; font-size: 11px; line-height: 19px; text-align: center;
+  color: #433760; font-size: 13px; line-height: 19px; text-align: center;
   font-family: var(--font-ui);
 }
-.derive-card ol > li h4 { font-size: 12.5px; font-weight: 650; margin: 0 0 3px; color: #433760; }
-.derive-card ol > li p { font-size: 12.5px; line-height: 1.85; margin: 0; color: #5a516e; }
+.derive-card ol > li h4 { font-size: 14.5px; font-weight: 650; margin: 0 0 3px; color: #433760; }
+.derive-card ol > li p { font-size: 14.5px; line-height: 1.85; margin: 0; color: #5a516e; }
 .derive-card b { color: #433760; font-weight: 650; }
 .derive-card .derive-end {
   margin: 12px 0 0; padding: 10px 12px; background: #fff;
-  border-radius: 11px; font-size: 12.5px; line-height: 1.8; color: #453e56;
+  border-radius: 11px; font-size: 14.5px; line-height: 1.8; color: #453e56;
 }
 .derive-card .derive-end > b:first-child {
   color: #a4492b; margin-right: 5px;
@@ -242,16 +242,16 @@ svg text, svg tspan {
 
 /* —— 物理/化学站补充 —— */
 .ctl-row { display: flex; gap: 10px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
-.ctl-row > span { font-size: 12px; color: var(--muted); min-width: 52px; }
+.ctl-row > span { font-size: 14px; color: var(--muted); min-width: 52px; }
 table.compare tr.on td { background: var(--soft); color: var(--green); font-weight: 600; }
 .verdict-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
 .verdict-box { border-radius: 14px; padding: 12px 14px; background: #f4f4f1; }
-.verdict-box span { display: block; font-size: 11px; color: var(--muted); }
-.verdict-box strong { font-size: 19px; }
+.verdict-box span { display: block; font-size: 13px; color: var(--muted); }
+.verdict-box strong { font-size: 20.5px; }
 .verdict-box.yes { background: #e6f1e8; } .verdict-box.yes strong { color: #2f6a4a; }
 .verdict-box.no { background: #fbeee6; } .verdict-box.no strong { color: #a4492b; }
-.big-btn { background: var(--green); color: #fff; border-radius: 11px; padding: 10px 16px; font-size: 13px; min-height: 40px; }
-.ghost-btn { background: var(--soft); color: var(--green); border-radius: 11px; padding: 10px 14px; font-size: 12px; min-height: 40px; }
+.big-btn { background: var(--green); color: #fff; border-radius: 11px; padding: 10px 16px; font-size: 15px; min-height: 40px; }
+.ghost-btn { background: var(--soft); color: var(--green); border-radius: 11px; padding: 10px 14px; font-size: 14px; min-height: 40px; }
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
 sub, sup { font-family: var(--font-ui); font-size: .72em; }
 

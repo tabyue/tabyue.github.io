@@ -32,10 +32,10 @@
 <section class="readout" aria-label="判断结果">
 <div class="readout-head"><h2>这个现象</h2><span class="badge" id="case-badge">待判断</span></div>
 <div class="stat-grid">
-<div class="stat"><span>你的判断</span><strong id="case-verdict" style="font-size:19px">—</strong></div>
-<div class="stat"><span>生成新物质了吗</span><strong id="case-new" style="font-size:19px">—</strong></div>
-<div class="stat wide"><span>看到的现象</span><strong id="case-sign" style="font-size:16px">—</strong></div>
-<div class="stat wide"><span>全部 11 个现象</span><strong id="case-score" style="font-size:16px">—</strong></div>
+<div class="stat"><span>你的判断</span><strong id="case-verdict" style="font-size:20.5px">—</strong></div>
+<div class="stat"><span>生成新物质了吗</span><strong id="case-new" style="font-size:20.5px">—</strong></div>
+<div class="stat wide"><span>看到的现象</span><strong id="case-sign" style="font-size:18px">—</strong></div>
+<div class="stat wide"><span>全部 11 个现象</span><strong id="case-score" style="font-size:18px">—</strong></div>
 </div>
 <p class="lead" id="case-text" aria-live="polite"></p>
 </section>
@@ -58,7 +58,7 @@
 </section>
 <section class="readout" aria-label="量筒读数结果">
 <div class="readout-head"><h2>这次读数</h2><span class="badge" id="cyl-badge">平视</span></div>
-<div class="stat-grid"><div class="stat"><span>读到的体积</span><strong id="read-v">—</strong></div><div class="stat"><span>实际体积</span><strong id="true-v">—</strong></div><div class="stat wide"><span>读数</span><strong id="err-v" style="font-size:18px">—</strong></div></div>
+<div class="stat-grid"><div class="stat"><span>读到的体积</span><strong id="read-v">—</strong></div><div class="stat"><span>实际体积</span><strong id="true-v">—</strong></div><div class="stat wide"><span>读数</span><strong id="err-v" style="font-size:19.5px">—</strong></div></div>
 <p class="lead" id="cyl-text" aria-live="polite"></p>
 <aside class="analogy"><h3><i>打个比方</i> 坐副驾驶看仪表盘</h3><p>坐在副驾驶从侧面看司机面前的速度表，读到的数和司机正对着看的不一样。量筒也是这样：眼睛高了（<b>俯视</b>），视线斜着往下，穿过的是更高的刻度，<b>读数偏大</b>；眼睛低了（<b>仰视</b>），<b>读数偏小</b>。只有平视，眼睛、刻度和凹液面最低处才在一条水平线上。</p></aside>
 </section>
@@ -69,7 +69,7 @@
 <h2>酒精灯：哪层火焰最热</h2>
 <p class="panel-sub">把火柴梗平放进火焰约 1 秒再取出，看哪一段烧得最黑。切到“给液体加热”，看看试管里的液体该装多少。</p>
 <svg id="lamp" viewBox="0 0 400 240" role="img" aria-label="酒精灯和火焰"></svg>
-<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">实验</span><div class="chips small" id="lamp-mode"></div></div>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><span style="font-size:14px;color:var(--muted)">实验</span><div class="chips small" id="lamp-mode"></div></div>
 <div id="flame-ctl">
 <div class="control"><div class="control-heading"><label for="stick-in">火柴梗离灯芯的高度</label><output id="stick-out">中间</output></div><input id="stick-in" type="range" min="1" max="9" step="1" value="5"><div class="ruler"><span>贴近灯芯</span><span></span><span>靠近火焰顶端</span></div></div>
 <div class="btn-row"><button type="button" class="big-btn" id="stick-btn">把火柴梗平放进火焰约 1 秒</button><button type="button" class="ghost-btn" id="cap-btn">盖上灯帽</button><button type="button" class="ghost-btn" id="blow-btn">用嘴吹灭</button></div>
@@ -80,7 +80,7 @@
 </section>
 <section class="readout" aria-label="酒精灯读数">
 <div class="readout-head"><h2>观察结果</h2><span class="badge" id="lamp-badge">外焰温度最高</span></div>
-<div class="stat-grid"><div class="stat"><span id="lamp-ka">碳化最重的位置</span><strong id="lamp-a" style="font-size:18px">—</strong></div><div class="stat"><span id="lamp-kb">酒精灯</span><strong id="lamp-b" style="font-size:18px">—</strong></div></div>
+<div class="stat-grid"><div class="stat"><span id="lamp-ka">碳化最重的位置</span><strong id="lamp-a" style="font-size:19.5px">—</strong></div><div class="stat"><span id="lamp-kb">酒精灯</span><strong id="lamp-b" style="font-size:19.5px">—</strong></div></div>
 <p class="lead" id="lamp-text" aria-live="polite"></p>
 </section>
 </div>

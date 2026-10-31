@@ -48,9 +48,9 @@
   var box = B.$('#gas-bars');
   GAS.forEach(function (g) {
     var row = H('div', { style: 'margin:8px 0' }, box);
-    H('div', { html: '<b style="font-size:12.5px">' + g[0] + '</b>', style: 'margin-bottom:4px' }, row);
+    H('div', { html: '<b style="font-size:14.5px">' + g[0] + '</b>', style: 'margin-bottom:4px' }, row);
     [['吸入', g[1], '#7fb3c4'], ['呼出', g[2], '#c58a4f']].forEach(function (x) {
-      var line = H('div', { style: 'display:grid;grid-template-columns:36px 1fr 52px;gap:8px;align-items:center;font-size:11.5px;color:#5d6f63;margin:2px 0' }, row);
+      var line = H('div', { style: 'display:grid;grid-template-columns:36px 1fr 52px;gap:8px;align-items:center;font-size:13.5px;color:#5d6f63;margin:2px 0' }, row);
       H('span', { text: x[0] }, line);
       var tr = H('div', { style: 'height:10px;background:#f0f3eb;border-radius:5px;overflow:hidden' }, line);
       H('div', { style: 'height:100%;border-radius:5px;background:' + x[2] + ';width:' + Math.max(1.2, x[1] / 78 * 100) + '%' }, tr);

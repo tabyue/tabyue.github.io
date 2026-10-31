@@ -26,7 +26,7 @@
 <p class="panel-sub">左右拖动蜡烛（或用下面的滑块），三条特殊光线会实时画出像在哪里。</p>
 <svg id="bench" viewBox="0 0 400 250" role="application" aria-label="光具座，可拖动蜡烛改变物距"></svg>
 <div class="control"><div class="control-heading"><label for="u-in">物距 u（蜡烛到透镜）</label><output id="u-out">30 cm</output></div><input id="u-in" type="range" min="4" max="58" step="0.5" value="30"><div class="ruler"><span>4 cm</span><span>31 cm</span><span>58 cm</span></div></div>
-<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">焦距 f</span><div class="chips small" id="f-chips"></div></div>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap"><span style="font-size:14px;color:var(--muted)">焦距 f</span><div class="chips small" id="f-chips"></div></div>
 </section>
 <div class="settings">
 <section class="readout" aria-label="成像结果">
@@ -34,7 +34,7 @@
 <div class="stat-grid">
 <div class="stat"><span>像距 v</span><strong id="v-out">—</strong></div>
 <div class="stat"><span>像的大小</span><strong id="m-out">—</strong></div>
-<div class="stat wide"><span>像的性质</span><strong id="kind-out" style="font-size:19px">—</strong></div>
+<div class="stat wide"><span>像的性质</span><strong id="kind-out" style="font-size:20.5px">—</strong></div>
 </div>
 <p class="lead" id="lens-text" aria-live="polite"></p>
 </section>
@@ -57,12 +57,12 @@
 <h2>凸透镜会聚，凹透镜发散</h2>
 <p class="panel-sub">一束平行光射向透镜。换透镜、改厚薄，看光线怎么走。</p>
 <svg id="beam" viewBox="0 0 400 200" role="img" aria-label="平行光通过透镜"></svg>
-<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:6px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">透镜</span><div class="chips small" id="type-chips"></div></div>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:6px;flex-wrap:wrap"><span style="font-size:14px;color:var(--muted)">透镜</span><div class="chips small" id="type-chips"></div></div>
 <div class="control" style="margin-top:8px"><div class="control-heading"><label for="thick-in">镜片中间和边缘的厚度差</label><output id="thick-out">中等</output></div><input id="thick-in" type="range" min="1" max="5" step="1" value="3"><div class="ruler"><span>很薄</span><span></span><span>很厚</span></div></div>
 </section>
 <section class="readout" aria-label="透镜读数">
 <div class="readout-head"><h2>这块透镜</h2><span class="badge" id="beam-badge">会聚</span></div>
-<div class="stat-grid"><div class="stat"><span>焦距</span><strong id="beam-f">—</strong></div><div class="stat"><span>焦点</span><strong id="beam-kind" style="font-size:18px">—</strong></div></div>
+<div class="stat-grid"><div class="stat"><span>焦距</span><strong id="beam-f">—</strong></div><div class="stat"><span>焦点</span><strong id="beam-kind" style="font-size:19.5px">—</strong></div></div>
 <p class="lead" id="beam-text" aria-live="polite"></p>
 <aside class="analogy"><h3><i>打个比方</i> 透镜像一群排队拐弯的人</h3><p>光从空气进入玻璃再出来都会拐弯，拐向镜片<b>厚的那一边</b>。凸透镜中间厚，所以光都往中间拐，聚到一点；凹透镜边上厚，光往外拐，散开了。镜片越“鼓”，拐得越狠，焦距越短。</p></aside>
 </section>

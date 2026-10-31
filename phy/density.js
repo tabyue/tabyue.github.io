@@ -107,9 +107,9 @@
   var wBox = L.$('#weights'), wLabels = [];
   BOX.forEach(function (b, k) {
     var grp = L.html('div', { style: 'display:flex;align-items:center;gap:3px;background:#f2eff7;border-radius:10px;padding:3px 5px' }, wBox);
-    var minus = L.html('button', { type: 'button', text: '−', 'aria-label': '取下一个 ' + b[0] + ' g 砝码', style: 'min-width:28px;min-height:30px;border-radius:8px;background:#fff;color:#5a4097;font-size:15px' }, grp);
-    wLabels[k] = L.html('span', { style: 'font-size:11.5px;color:#4b425e;min-width:52px;text-align:center;font-variant-numeric:tabular-nums' }, grp);
-    var plus = L.html('button', { type: 'button', text: '+', 'aria-label': '加一个 ' + b[0] + ' g 砝码', style: 'min-width:28px;min-height:30px;border-radius:8px;background:#fff;color:#5a4097;font-size:15px' }, grp);
+    var minus = L.html('button', { type: 'button', text: '−', 'aria-label': '取下一个 ' + b[0] + ' g 砝码', style: 'min-width:28px;min-height:30px;border-radius:8px;background:#fff;color:#5a4097;font-size:17px' }, grp);
+    wLabels[k] = L.html('span', { style: 'font-size:13.5px;color:#4b425e;min-width:52px;text-align:center;font-variant-numeric:tabular-nums' }, grp);
+    var plus = L.html('button', { type: 'button', text: '+', 'aria-label': '加一个 ' + b[0] + ' g 砝码', style: 'min-width:28px;min-height:30px;border-radius:8px;background:#fff;color:#5a4097;font-size:17px' }, grp);
     minus.addEventListener('click', function () { if (cnt[k] > 0) { cnt[k]--; drawBal(); } });
     plus.addEventListener('click', function () { if (cnt[k] < b[1]) { cnt[k]++; drawBal(); } });
   });
