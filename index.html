@@ -715,8 +715,8 @@ body:has(#pg-learn.active) #inboxFab{display:none!important}
 }
     
 /* 初中互动馆入口 */
-.lab-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
-@media (max-width:1180px){.lab-grid{grid-template-columns:repeat(3,1fr)}}
+.lab-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
+@media (max-width:1280px){.lab-grid{grid-template-columns:repeat(4,1fr)}}
 .lab-card{display:flex;flex-direction:column;gap:6px;padding:22px 20px 18px;border-radius:var(--r);background:var(--lab-bg);border:1px solid color-mix(in srgb,var(--lab) 18%,transparent);text-decoration:none;color:var(--t1);transition:transform .3s cubic-bezier(.25,.1,.25,1),box-shadow .3s}
 .lab-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px color-mix(in srgb,var(--lab) 18%,transparent)}
 .lab-n{font-size:.78rem;font-weight:600;color:var(--lab);letter-spacing:.02em}
@@ -805,7 +805,7 @@ body:has(#pg-learn.active) #inboxFab{display:none!important}
         <div class="quick-card" onclick="go('jobs')"><div class="qc-icon">💼</div><div class="qc-title">人才生态</div><div class="qc-desc">社招 · 校招 · 实习，具身智能行业岗位全景</div></div>
     </div>
     <div class="home-latest home-labs" id="homeLabs">
-        <div class="home-latest-title">初中互动馆 <span class="home-latest-sub">深圳初中六科 · 按课本编排 · 每课都能动手做 · 免登录</span></div>
+        <div class="home-latest-title">初中互动馆 <span class="home-latest-sub">深圳初中六科 + 古诗文 · 按课本编排 · 每课都能动手做 · 免登录</span></div>
         <div class="lab-grid">
             <a class="lab-card" href="/geo/" style="--lab:#396b57;--lab-bg:#eaf1e8"><span class="lab-n">20 课</span><span class="lab-name">地理互动馆</span><span class="lab-desc">转地球仪看经纬网，拖太阳看昼夜和四季</span><span class="lab-go">进入 →</span></a>
             <a class="lab-card" href="/bio/" style="--lab:#55803a;--lab-bg:#eef4e4"><span class="lab-n">16 课</span><span class="lab-name">生物互动馆</span><span class="lab-desc">拆细胞、看光合作用，模拟遗传和反射</span><span class="lab-go">进入 →</span></a>
@@ -813,6 +813,7 @@ body:has(#pg-learn.active) #inboxFab{display:none!important}
             <a class="lab-card" href="/phy/" style="--lab:#5a4097;--lab-bg:#eeeaf6"><span class="lab-n">21 课</span><span class="lab-name">物理互动馆</span><span class="lab-desc">凸透镜成像、浮力、电路、四冲程汽油机</span><span class="lab-go">进入 →</span></a>
             <a class="lab-card" href="/chem/" style="--lab:#2c736f;--lab-bg:#eaf6f6"><span class="lab-n">11 课</span><span class="lab-name">化学互动馆</span><span class="lab-desc">配平方程式、比金属活动性、滴定画 pH 曲线</span><span class="lab-go">进入 →</span></a>
             <a class="lab-card" href="/history/" style="--lab:#7d4d3c;--lab-bg:#f5eeeb"><span class="lab-n">26 课</span><span class="lab-name">历史互动馆</span><span class="lab-desc">拖时间轴学纪年，排大事先后，走丝绸之路</span><span class="lab-go">进入 →</span></a>
+            <a class="lab-card" href="/guwen/" style="--lab:#43606d;--lab-bg:#edf1f3"><span class="lab-n">64 篇</span><span class="lab-name">古诗文小站</span><span class="lab-desc">课标古诗词曲和课内文言文：默写、易错字、字词、断句</span><span class="lab-go">进入 →</span></a>
         </div>
     </div>
     <div class="home-latest">

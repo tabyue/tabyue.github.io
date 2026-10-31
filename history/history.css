@@ -264,3 +264,53 @@ table.compare tr.on td { background: var(--soft); color: var(--green); font-weig
 .order-list button.bad { background: #fbeee6; border-color: #e9c9b3; }
 .order-list button .yr { margin-left: auto; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .tl-wrap svg { cursor: pointer; }
+
+/* —— 对应新教材 —— */
+.covers { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; flex-wrap: wrap; }
+.covers-label { flex: none; font-size: 13px; font-weight: 700; color: var(--green); background: var(--soft); border-radius: 999px; padding: 4px 10px; }
+.covers-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.covers-list span { font-size: 13px; color: #5a4a42; background: #fff; border: 1px solid #eadfd8; border-radius: 999px; padding: 3px 10px; }
+/* —— 大题训练 —— */
+.essay-card { background: #fff; border: 1px solid #eadfd8; border-radius: 18px; padding: 20px 22px; }
+.essay-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.essay-head h2 { margin: 0; font-size: 21px; }
+.essay-head h2 i { font-style: normal; font-size: 14px; color: #fff; background: var(--green); border-radius: 7px; padding: 2px 8px; margin-right: 6px; vertical-align: 2px; }
+.essay-score { font-size: 14px; color: var(--muted); }
+.essay-lead { font-size: 15px; color: #5a4a42; line-height: 1.8; margin: 8px 0 4px; }
+.essay-part { border-top: 1px dashed #e6d8cf; margin-top: 16px; padding-top: 14px; }
+.essay-ask { font-size: 16px; line-height: 1.8; color: #352a26; font-weight: 600; }
+.essay-ask em { font-style: normal; font-weight: 400; color: var(--muted); font-size: 14px; }
+.essay-type { display: inline-block; font-size: 12.5px; font-weight: 700; color: #a4492b; background: #fbeee6; border-radius: 6px; padding: 1px 7px; margin-right: 8px; vertical-align: 2px; }
+.essay-tipbtn, .essay-go { font-size: 14px; border-radius: 10px; padding: 7px 12px; margin-top: 8px; min-height: 38px; }
+.essay-tipbtn { background: transparent; color: var(--green); border: 1px solid #d9c4b7; }
+.essay-go { background: var(--green); color: #fff; margin-left: 6px; }
+.essay-tip { font-size: 14.5px; line-height: 1.8; background: #fbf7f2; border-radius: 10px; padding: 9px 12px; margin: 8px 0 0; color: #5a4a42; }
+.essay-input { display: block; width: 100%; box-sizing: border-box; margin-top: 10px; font: inherit; font-size: 15px; line-height: 1.7; border: 1px solid #e0d2c8; border-radius: 12px; padding: 10px 12px; background: #fffdfb; resize: vertical; }
+.essay-input:focus { outline: 2px solid #d9b8a6; border-color: transparent; }
+.essay-result { margin-top: 10px; }
+.essay-warn { font-size: 13.5px; color: #a4492b; margin: 0 0 6px; }
+.essay-points { display: flex; flex-direction: column; gap: 6px; }
+.essay-point { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.7; padding: 8px 10px; border-radius: 10px; background: #f8f4f1; cursor: pointer; }
+.essay-point input { margin-top: 5px; width: 17px; height: 17px; accent-color: #7d4d3c; flex: none; }
+.essay-point em { font-style: normal; font-size: 13px; color: var(--muted); margin-left: 4px; }
+.essay-point.on { background: #e8f1e6; }
+.essay-model { margin-top: 10px; font-size: 15px; line-height: 1.85; background: #fbf7f2; border-left: 4px solid #b88a6a; border-radius: 10px; padding: 10px 12px; color: #4a3a32; }
+.essay-sum { margin-top: 18px; font-size: 16px; color: #4a3a32; background: var(--soft); border-radius: 12px; padding: 10px 14px; }
+.essay-sum b { font-size: 22px; color: var(--green); }
+
+/* —— 课本逐课要点 —— */
+.kp-table td:first-child { width: 34%; font-weight: 600; color: #4a3a32; }
+.kp-table td { font-size: 14.5px; line-height: 1.75; vertical-align: top; }
+.kp-no { display: block; font-size: 12.5px; font-weight: 500; color: var(--muted); }
+.kp-hide .kp-table td:last-child { color: transparent; background: repeating-linear-gradient(-45deg, #f3ebe6 0 6px, #f8f3ef 6px 12px); border-radius: 6px; }
+.kp-hide .kp-table td:last-child * { color: transparent !important; }
+@media (max-width: 560px) { .kp-table td:first-child { width: 40%; } }
+
+/* —— 大题怎么答 —— */
+.step-h { font-size: 16px; margin: 18px 0 8px; color: var(--green); }
+.method-steps { margin: 0 0 10px; padding-left: 22px; font-size: 15px; line-height: 1.85; color: #4a3a32; }
+.essay-head a { font-size: 14px; color: var(--green); text-decoration: none; border-bottom: 1px solid #d9c4b7; }
+.method-entry { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; background: #fff; border: 1px solid #eadfd8; border-left: 5px solid var(--green); border-radius: 16px; padding: 16px 20px; text-decoration: none; color: #352a26; }
+.method-entry b { font-size: 18px; color: var(--green); }
+.method-entry span { font-size: 14.5px; color: #5a4a42; line-height: 1.7; }
+.method-entry em { font-style: normal; font-weight: 700; color: var(--green); white-space: nowrap; }

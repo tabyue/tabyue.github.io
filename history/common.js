@@ -18,7 +18,7 @@
     { id: 'prc', file: 'prc.html', no: 13, title: '新中国的成立与社会主义建设', book: '八下' },
     { id: 'reform', file: 'reform.html', no: 14, title: '改革开放与中国特色社会主义', book: '八下' },
     { id: 'newera', file: 'newera.html', no: 15, title: '中国特色社会主义进入新时代', book: '八下' },
-    { id: 'ancient', file: 'ancient.html', no: 16, title: '文明的产生与古代亚非文明', book: '九上' },
+    { id: 'ancient', file: 'ancient.html', no: 16, title: '文明的产生和古代亚非文明', book: '九上' },
     { id: 'europe', file: 'europe.html', no: 17, title: '古代欧洲文明', book: '九上' },
     { id: 'medieval', file: 'medieval.html', no: 18, title: '中古时期的欧洲、亚洲、非洲和美洲', book: '九上' },
     { id: 'modern', file: 'modern.html', no: 19, title: '走向近代：文艺复兴与新航路', book: '九上' },
@@ -268,8 +268,23 @@
   }
 
   /* —— 课程目录与翻页 —— */
+  /* 每课对应的新教材课目：由 tools/textbook/history.md 自动生成，不要手改 */
+  var COVERS = {"prehistory": ["七上第1课 远古时期的人类活动", "七上第2课 原始农业与史前社会", "七上第3课 中华文明的起源", "七上第21课 活动课 从考古发现看中华文明的起源"], "xiashang": ["七上第4课 夏商西周王朝的更替", "七上第5课 动荡变化中的春秋时期", "七上第6课 战国时期的社会变革", "七上第7课 百家争鸣", "七上第8课 夏商周时期的科技与文化"], "qinhan": ["七上第9课 秦统一中国", "七上第10课 秦末农民大起义", "七上第11课 西汉建立和“文景之治”", "七上第12课 大一统王朝的巩固", "七上第13课 东汉的兴衰", "七上第14课 丝绸之路的开通与经营西域", "七上第15课 秦汉时期的科技与文化"], "sanguo": ["七上第16课 三国鼎立", "七上第17课 西晋的短暂统一和北方各族的内迁", "七上第18课 东晋南朝政治和江南地区开发", "七上第19课 北朝政治和北方民族大交融", "七上第20课 三国两晋南北朝时期的科技与文化"], "suitang": ["七下第1课 隋朝统一与灭亡", "七下第2课 唐朝建立与“贞观之治”", "七下第3课 开元盛世", "七下第4课 安史之乱与唐朝衰亡", "七下第5课 隋唐时期的民族交往与交融", "七下第6课 隋唐时期的中外文化交流", "七下第7课 隋唐时期的科技与文化"], "songyuan": ["七下第8课 北宋的政治", "七下第9课 辽、西夏与北宋并立", "七下第10课 金与南宋的对峙", "七下第11课 元朝的建立与统一", "七下第12课 辽宋夏金元时期经济的繁荣", "七下第13课 辽宋夏金元时期的对外交流", "七下第14课 辽宋夏金元时期的科技与文化"], "mingqing": ["七下第15课 明朝的统治", "七下第16课 明朝的对外关系", "七下第17课 明朝的灭亡和清朝的建立", "七下第18课 清朝的边疆治理", "七下第19课 清朝君主专制的强化", "七下第20课 明清时期社会经济的发展", "七下第21课 明清时期的科技与文化", "七下第22课 活动课 我国传统节日的起源和传承"], "lateqing": ["八上第1课 鸦片战争", "八上第2课 第二次鸦片战争", "八上第3课 太平天国运动", "八上第4课 洋务运动和边疆危机", "八上第5课 甲午中日战争与列强瓜分中国狂潮", "八上第6课 戊戌变法", "八上第7课 义和团运动和八国联军侵华"], "xinhai": ["八上第8课 中国同盟会", "八上第9课 辛亥革命", "八上第10课 帝制复辟与军阀割据"], "newdemo": ["八上第11课 五四运动", "八上第12课 中国共产党诞生", "八上第13课 国共合作与北伐战争", "八上第14课 毛泽东开辟井冈山道路", "八上第15课 中国工农红军长征与遵义会议"], "antijapan": ["八上第16课 从九一八事变到西安事变", "八上第17课 七七事变与全民族抗战", "八上第18课 全民族抗战中的正面战场和敌后战场", "八上第19课 抗日战争的胜利"], "liberation": ["八上第20课 国民党挑起内战", "八上第21课 人民解放战争的胜利", "八上第22课 活动课 探寻红色文化的历史基因"], "prc": ["八下第1课 中华人民共和国成立", "八下第2课 巩固人民民主政权", "八下第3课 社会主义制度的建立", "八下第4课 独立自主的和平外交", "八下第5课 艰辛探索与曲折发展", "八下第6课 社会主义建设的巨大成就和先锋模范", "八下第7课 国防现代化起步和外交工作新突破"], "reform": ["八下第8课 伟大的历史转折", "八下第9课 改革开放的起步", "八下第10课 改革开放和社会主义现代化建设的全面展开", "八下第11课 社会主义初级阶段基本路线", "八下第12课 加快改革开放和社会主义现代化建设步伐", "八下第13课 中国特色社会主义事业取得新成就", "八下第14课 国防和外交工作新局面"], "newera": ["八下第15课 开始全面建设小康社会", "八下第16课 夺取全面建设小康社会新胜利", "八下第17课 推进国防军队建设和外交工作", "八下第18课 擘画中国梦宏伟蓝图", "八下第19课 决胜全面建成小康社会", "八下第20课 维护国家安全和推进祖国统一", "八下第21课 构建人类命运共同体与中国特色大国外交", "八下第22课 实现第一个百年奋斗目标", "八下第23课 开启全面建设社会主义现代化国家新征程", "八下第24课 活动课 新时代社会生活的巨大变化"], "ancient": ["九上第1课 从原始社会到奴隶社会", "九上第2课 古代两河流域", "九上第3课 古代埃及", "九上第4课 古代印度"], "europe": ["九上第5课 古代希腊", "九上第6课 古代罗马"], "medieval": ["九上第7课 法兰克王国和西欧封建制度", "九上第8课 西欧的城市和大学", "九上第9课 拜占庭帝国", "九上第10课 封建时代的日本", "九上第11课 阿拉伯帝国", "九上第12课 中古时期的非洲和美洲"], "modern": ["九上第13课 西欧经济社会发展与文艺复兴运动", "九上第14课 探寻新航路", "九上第15课 早期殖民掠夺"], "revolution": ["九上第16课 英国资产阶级革命", "九上第17课 美国的独立", "九上第18课 法国大革命和拿破仑帝国"], "industry1": ["九上第19课 第一次工业革命", "九上第20课 马克思主义的诞生", "九上第21课 第一国际和巴黎公社", "九上第22课 活动课 唱响《国际歌》"], "expand": ["九下第1课 殖民地人民的反抗斗争", "九下第2课 俄国的改革", "九下第3课 美国内战", "九下第4课 日本明治维新"], "industry2": ["九下第5课 第二次工业革命", "九下第6课 工业化国家的社会变化", "九下第7课 近代科学与文化"], "ww1": ["九下第8课 第一次世界大战", "九下第9课 一战后的国际关系", "九下第10课 列宁与十月革命", "九下第11课 苏联的社会主义建设", "九下第12课 亚非拉民族民主运动的高涨"], "ww2": ["九下第13课 资本主义经济大危机", "九下第14课 法西斯国家的侵略扩张", "九下第15课 第二次世界大战"], "postwar": ["九下第16课 冷战的发生与两极格局的形成", "九下第17课 二战后资本主义国家的变化", "九下第18课 社会主义的曲折发展与奋起", "九下第19课 亚非拉国家的成长", "九下第20课 当代世界发展的基本特点", "九下第21课 和平发展合作共赢的历史潮流", "九下第22课 活动课 时事溯源"]};
+
+  /* 页面标题下自动加一条“对应课本”，列出本课覆盖的新教材课目 */
+  function renderCovers() {
+    var id = document.body.dataset.module, list = COVERS[id], head = $('.page-heading');
+    if (!list || !head || $('.covers')) return;
+    var box = html('div', { class: 'covers' });
+    html('span', { class: 'covers-label', text: '对应新教材' }, box);
+    var ul = html('div', { class: 'covers-list' }, box);
+    list.forEach(function (t) { html('span', { text: t }, ul); });
+    head.appendChild(box);
+  }
+
   function renderNav() {
     var id = document.body.dataset.module;
+    renderCovers();
     var nav = $('#course-nav');
     if (nav) {
       nav.innerHTML = '';
@@ -639,6 +654,105 @@
     return { reset: function () { picked = []; delete container.dataset.done; btns.forEach(function (b) { b.classList.remove('ok', 'bad'); b.querySelector('.yr').hidden = true; }); paint(); }, done: function () { return !!container.dataset.done; } };
   }
 
+  /* —— 逐课要点：keypoints(container, ['要点…', …])
+     顺序与条数必须和本课 COVERS（对应的新教材课目）一一对应，少一条就在控制台报错，方便检查覆盖是否齐全 */
+  function keypoints(container, items) {
+    var root = typeof container === 'string' ? $(container) : container;
+    var id = document.body.dataset.module, list = COVERS[id] || [];
+    if (!root) return;
+    if (items.length !== list.length) console.error('keypoints 条数 ' + items.length + ' 与对应课目 ' + list.length + ' 不一致');
+    root.innerHTML = '';
+    var card = html('div', { class: 'card panel kp-card' }, root);
+    html('h2', { text: '课本逐课要点' }, card);
+    html('p', { class: 'panel-sub', text: '按新教材的课目顺序，每一课最该记住的内容。复习时可以先遮住右边，自己说一说。' }, card);
+    var tb = html('table', { class: 'compare kp-table' }, html('div', { style: 'overflow-x:auto' }, card));
+    var body = html('tbody', {}, tb);
+    list.forEach(function (t, i) {
+      var tr = html('tr', {}, body);
+      var m = t.match(/^(\S+?第\d+课) (.+)$/);
+      html('td', { html: m ? '<span class="kp-no">' + m[1] + '</span>' + m[2] : t }, tr);
+      html('td', { html: items[i] || '<span style="color:#a4492b">待补</span>' }, tr);
+    });
+    var btn = html('button', { type: 'button', class: 'ghost-btn', text: '遮住右边，自测一下', style: 'margin-top:10px' }, card);
+    btn.addEventListener('click', function () { card.classList.toggle('kp-hide'); btn.textContent = card.classList.contains('kp-hide') ? '显示要点' : '遮住右边，自测一下'; });
+  }
+
+  /* —— 大题（材料题）训练 ——
+     essay(container, {
+       title: '题目主题', score: 16,
+       materials: [{ label: '材料一', text: '…', src: '——据统编版教材整理' }],
+       parts: [{
+         ask: '(1) 根据材料一，概括……', score: 4, type: 'sum'（sum 概括 / why 原因 / effect 影响意义 / fact 用史实说明 / compare 比较 / essay 小论文）,
+         points: [{ t: '采分点：……', s: 2 }],   // 采分点，学生自己勾，分值相加 = 自评分
+         model: '参考答案……'
+       }]
+     })
+     流程：读材料 → 每问先自己写（可以只在脑子里想）→ 点“对照采分点”→ 勾出自己答到的 → 得自评分。不保存任何内容。 */
+  var ESSAY_TIPS = {
+    sum: '概括题：答案在材料里。先圈关键词，再用自己的话分点写，一个意思一点，不要照抄整句。',
+    why: '原因题：从材料找直接原因，再结合所学补根本原因；可以按政治、经济、思想文化、外部因素几个角度想。',
+    effect: '影响/意义题：先说“对谁”（对本国、对世界、对后世），再说积极的一面；题目问“影响”时，消极面也要考虑。',
+    fact: '用史实说明：写具体的时间、人物、事件，一条史实对应一个观点，不能只写空话。',
+    compare: '比较题：先找相同点，再找不同点；不同点要“对着写”，比如“前者……，后者……”。',
+    essay: '小论文：观点一句话（正确、明确）→ 两三条史实论证（史论结合）→ 一句结论回扣观点。8 分题，观点 2 分、史实论证 4 分、结论和条理 2 分是常见给分思路。'
+  };
+  var ESSAY_TYPE = { sum: '概括', why: '原因', effect: '影响意义', fact: '用史实说明', compare: '比较', essay: '小论文' };
+  function essay(container, q) {
+    var root = typeof container === 'string' ? $(container) : container;
+    if (!root) return;
+    root.innerHTML = '';
+    var card = html('div', { class: 'essay-card' }, root);
+    var total = q.parts.reduce(function (a, p) { return a + p.score; }, 0);
+    html('div', { class: 'essay-head', html: '<h2><i>大题训练</i> ' + q.title + '</h2><span class="essay-score">共 ' + total + ' 分 · <a href="method.html">大题怎么答 →</a></span>' }, card);
+    html('p', { class: 'essay-lead', html: '深圳中考历史后半卷是 2 道非选择题，共 36 分。先读材料，每一问自己写一写，再点“对照采分点”，勾出你答到的点，看看能拿几分。' }, card);
+    q.materials.forEach(function (m) {
+      html('div', { class: 'source-card', html: '<p><b>' + m.label + '</b>　' + m.text + '</p>' + (m.src ? '<cite>' + m.src + '</cite>' : '') }, card);
+    });
+    var got = [];
+    var sumEl;
+    q.parts.forEach(function (p, k) {
+      got[k] = 0;
+      var box = html('div', { class: 'essay-part' }, card);
+      html('div', { class: 'essay-ask', html: '<span class="essay-type">' + (ESSAY_TYPE[p.type] || '作答') + '</span>' + p.ask + '<em>（' + p.score + ' 分）</em>' }, box);
+      if (p.type && ESSAY_TIPS[p.type]) {
+        var tipBtn = html('button', { type: 'button', class: 'essay-tipbtn', text: '怎么答' }, box);
+        var tip = html('p', { class: 'essay-tip', text: ESSAY_TIPS[p.type] }, box);
+        tip.hidden = true;
+        tipBtn.addEventListener('click', function () { tip.hidden = !tip.hidden; tipBtn.textContent = tip.hidden ? '怎么答' : '收起'; });
+      }
+      var ta = html('textarea', { class: 'essay-input', rows: p.type === 'essay' ? 6 : 3, placeholder: p.type === 'essay' ? '观点：……\n论证：①……②……\n结论：……' : '在这里写下你的答案（不会保存）' }, box);
+      var go = html('button', { type: 'button', class: 'essay-go', text: '对照采分点' }, box);
+      var res = html('div', { class: 'essay-result' }, box);
+      res.hidden = true;
+      var list = html('div', { class: 'essay-points' }, res);
+      p.points.forEach(function (pt, j) {
+        var lab = html('label', { class: 'essay-point' }, list);
+        var cb = html('input', { type: 'checkbox' }, lab);
+        html('span', { html: pt.t + ' <em>' + pt.s + ' 分</em>' }, lab);
+        cb.addEventListener('change', function () {
+          got[k] = 0;
+          Array.prototype.forEach.call(list.querySelectorAll('input'), function (c, jj) { if (c.checked) got[k] += p.points[jj].s; });
+          got[k] = Math.min(got[k], p.score);
+          lab.classList.toggle('on', cb.checked);
+          paint();
+        });
+      });
+      html('div', { class: 'essay-model', html: '<b>参考答案</b>　' + p.model }, res);
+      go.addEventListener('click', function () {
+        res.hidden = !res.hidden;
+        go.textContent = res.hidden ? '对照采分点' : '收起采分点';
+        var w = res.querySelector('.essay-warn');
+        if (!res.hidden && !ta.value.trim() && !w) res.insertBefore(html('p', { class: 'essay-warn', text: '还没写也没关系，但先自己想一遍再对照，记得更牢。' }), list);
+      });
+    });
+    sumEl = html('div', { class: 'essay-sum' }, card);
+    function paint() {
+      var g = got.reduce(function (a, b) { return a + b; }, 0);
+      sumEl.innerHTML = '自评得分 <b>' + g + '</b> / ' + total + (g === total ? '　全部答到，漂亮！' : g >= total * 0.6 ? '　大部分答到了，看看漏了哪几点。' : g > 0 ? '　对照参考答案，把漏掉的点补进笔记。' : '');
+    }
+    paint();
+  }
+
   document.addEventListener('DOMContentLoaded', function () { renderNav(); bindShare(); });
 
   window.Lab = {
@@ -648,6 +762,6 @@
     axes: axes, curve: curve, svgPoint: svgPoint, drag: drag, numline: numline,
     quiz: quiz, match: match, shuffle: shuffle,
     arrow: arrow, loop: loop, qty: qty, chem: chem, REDUCED: REDUCED,
-    yr: yr, yrShort: yrShort, century: century, span: span, timeline: timeline, order: order, SITE: '历史互动馆'
+    yr: yr, yrShort: yrShort, century: century, span: span, timeline: timeline, order: order, essay: essay, keypoints: keypoints, COVERS: COVERS, SITE: '历史互动馆'
   };
 })();
