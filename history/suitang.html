@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份看隋唐三百多年的兴衰；开一条运粮船走完大运河的四段；一级级登上科举制的台阶。历史互动馆第 5 课，对应统编版七年级下册第一单元。">
+<meta property="og:title" content="历史互动馆 · 隋唐：繁荣与开放">
+<title>隋唐：繁荣与开放 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="suitang.js"></script>
+</head>
+<body data-module="suitang">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 5 课 <span>/</span> 七年级下册 第一单元</p><h1>隋唐：繁荣与开放</h1><p class="subtitle">隋朝只有 37 年，却挖通了大运河、开创了科举制；唐朝接过来，造就了“贞观之治”和“开元盛世”，长安成了当时世界上最大的城市之一。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="隋唐时间轴">
+<h2>隋唐三百年时间轴</h2>
+<p class="panel-sub">拖动滑块选一个年份，或者点时间轴上的事件，看看这一年在“盛”还是在“衰”。</p>
+<svg id="tl" viewBox="0 0 400 244" role="img" aria-label="隋唐时期大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">618 年</output></div><input id="year-in" type="range" min="570" max="920" step="1" value="618"><div class="ruler"><span>570</span><span>745</span><span>920</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="这一年的读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="dyn-badge">唐</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>处在哪个阶段</span><strong id="r-phase" style="font-size:18px">—</strong></div>
+<div class="stat wide"><span>这一年前后发生了什么</span><strong id="r-event" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="唐朝前期的三段好时光">
+<h2>唐朝前期的三段好时光</h2>
+<table class="compare" id="era-table"><tbody>
+<tr data-from="627" data-to="649"><td>贞观之治</td><td>唐太宗在位（627—649 年）。虚心纳谏（重用敢提意见的魏征），任用贤才，减轻百姓负担，完善三省六部制。</td></tr>
+<tr data-from="690" data-to="705"><td>武则天</td><td>我国历史上唯一的女皇帝（690 年称帝）。重视发展生产，破格用人，“上承贞观之治，下启开元盛世”。</td></tr>
+<tr data-from="713" data-to="741"><td>开元盛世</td><td>唐玄宗统治前期（开元年间 713—741 年）。整顿吏治，提倡节俭，发展生产，唐朝达到全盛。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="隋朝大运河示意">
+<h2>开一条运粮船，走完大运河</h2>
+<p class="panel-sub">示意图，只表示节点和连接顺序，不表示实际地理位置和疆域。点一段河道或下面的按钮。</p>
+<svg id="canal" viewBox="0 0 400 280" role="img" aria-label="隋朝大运河节点示意"></svg>
+<div class="ctl-row"><span>选一段</span><div class="chips small" id="canal-chips"></div></div>
+<div class="btn-row"><button class="big-btn" id="boat-go" type="button">从余杭出发，运粮北上</button><button class="ghost-btn" id="boat-reset" type="button">回到余杭</button></div>
+</section>
+<section class="readout" aria-label="河段信息">
+<div class="readout-head"><h2 id="cn-name">大运河全线</h2><span class="badge" id="cn-badge">四段</span></div>
+<div class="stat-grid">
+<div class="stat"><span>从哪到哪</span><strong id="cn-route" style="font-size:17px">—</strong></div>
+<div class="stat"><span>连通哪两条水系</span><strong id="cn-river" style="font-size:17px">—</strong></div>
+<div class="stat wide"><span>运粮船现在在</span><strong id="cn-boat" style="font-size:17px">—</strong></div>
+</div>
+<p class="lead" id="cn-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="科举制的形成与完善">
+<h2>科举制：一级一级搭起来的台阶</h2>
+<p class="panel-sub">点一级台阶，或按“下一级”，看从隋文帝到唐玄宗，科举制是怎么一步步完善的。</p>
+<svg id="kj" viewBox="0 0 400 236" role="img" aria-label="科举制发展阶梯示意"></svg>
+<div class="btn-row"><button class="big-btn" id="kj-next" type="button">下一级</button><button class="ghost-btn" id="kj-reset" type="button">回到起点</button></div>
+</section>
+<section class="readout" aria-label="这一级做了什么">
+<div class="readout-head"><h2 id="kj-name">隋文帝</h2><span class="badge" id="kj-badge">隋</span></div>
+<div class="stat-grid">
+<div class="stat wide"><span>做了什么</span><strong id="kj-did" style="font-size:17px">—</strong></div>
+<div class="stat wide"><span>意味着什么</span><strong id="kj-mean" style="font-size:17px">—</strong></div>
+</div>
+<p class="lead" id="kj-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 从“看家世”到“看成绩”</h3><p>以前选官像班里选班干部只看<b>家里是谁</b>：出身名门就能当，普通人家再有本事也轮不上。科举制像改成<b>统一考试</b>：谁都能报名，按成绩录取。这样朝廷能选到更多有本事的人，选人的权力也收回到了中央。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 开元盛世之后，唐朝为什么急转直下</h3>
+<p class="derive-lead">安史之乱是唐朝由盛转衰的转折点。把原因、经过、结果连起来，就能看清“盛极而衰”是怎么发生的。</p>
+<ol>
+<li><h4>皇帝变了</h4><p>唐玄宗前期励精图治，开创了开元盛世；后期却满足于太平，沉溺享乐，不再用心处理政事。</p></li>
+<li><h4>朝政坏了</h4><p>他先后重用李林甫、杨国忠等人，这些人排斥贤能、专权误国，朝政越来越腐败。</p></li>
+<li><h4>边疆将领的权力太大</h4><p>唐朝在边疆设节度使，他们手里有兵、有钱、有地方权力。安禄山一人兼任三镇节度使，兵力比中央还强。</p></li>
+<li><h4>叛乱爆发</h4><p>755 年，安禄山和史思明起兵叛乱，史称“安史之乱”。叛军攻占洛阳、长安，战乱到 763 年才平定，北方经济遭到严重破坏，人口大量减少。</p></li>
+<li><h4>乱后留下“藩镇割据”</h4><p>平叛过程中节度使越来越多，有的不听中央命令，形成藩镇割据；后来又有宦官专权。唐末爆发农民起义，907 年朱温灭唐。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>安史之乱的根源是<b>唐玄宗后期政治腐败</b>和<b>节度使权力膨胀</b>；它使唐朝<b>由盛转衰</b>，此后藩镇割据的局面一直延续到唐朝灭亡。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>隋朝：短命却影响深远</h3><p>581 年杨坚（隋文帝）建立隋朝，定都长安；589 年灭陈，结束了南北朝长期分裂的局面。从 605 年起隋炀帝开凿<b>大运河</b>，以洛阳为中心，北达涿郡，南至余杭。隋炀帝暴政引发农民起义，618 年隋朝灭亡。</p></div></div>
+<div class="fact"><div><h3>唐朝：从贞观之治到开元盛世</h3><p>618 年李渊建立唐朝，定都长安。唐太宗开创<b>“贞观之治”</b>；武则天“上承贞观之治，下启开元盛世”；唐玄宗前期出现<b>“开元盛世”</b>。三省六部制隋朝创立、唐朝完善，科举制隋朝创立、唐朝完善。</p></div></div>
+<div class="fact"><div><h3>民族交往与交融</h3><p>吐蕃是藏族的祖先。641 年<b>文成公主</b>入吐蕃，嫁给吐蕃首领松赞干布，带去了中原的生产技术和文化；后来唐与吐蕃会盟，立了“唐蕃会盟碑”。唐朝还设置安西都护府、北庭都护府，管理西域。</p></div></div>
+<div class="fact"><div><h3>中外交流与科技文化</h3><p>日本派遣<b>遣唐使</b>学习唐朝制度文化；鉴真六次东渡，754 年到达日本；玄奘贞观初年西行天竺取经，著有《大唐西域记》。隋朝李春设计<b>赵州桥</b>；唐朝发明雕版印刷术，868 年的《金刚经》是世界上现存最早、标有确切日期的雕版印刷品；李白、杜甫、白居易是著名诗人。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① 大运河的中心是<b>洛阳</b>，不是长安，也不是北京。② 隋文帝开始分科考试，<b>隋炀帝设进士科</b>才标志科举制正式诞生。③ 殿试和武举都是<b>武则天</b>开创的。④ 赵州桥是<b>隋朝</b>李春设计的，不是唐朝。⑤ 鉴真是<b>东渡日本</b>传法，玄奘是<b>西行天竺</b>取经，方向别弄反。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份、河段和科举台阶。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：隋朝建立、统一、灭亡，唐朝建立，安史之乱爆发与平定，常让你排顺序、判断属于哪个世纪。</li>
+<li><b>示意图题</b>：给出大运河示意图，问中心在哪、南北两端是哪里、某一段连接了哪两条河。</li>
+<li><b>制度演变</b>：科举制从创立到完善的过程，以及它和以前选官方式的区别、对后世的影响。</li>
+<li><b>史料题</b>：给一段关于唐太宗或唐玄宗的材料，判断反映的是哪个治世、有哪些措施。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料大意：唐玄宗晚年自以为天下太平、没什么可担心的了，便深居宫中追求享乐，把朝政交给李林甫处理。结合所学，说说安史之乱爆发的原因和影响。<br><b>怎么想</b>　材料里“追求享乐”“把朝政交给别人”说的是唐玄宗后期<b>怠于政事、政治腐败</b>，再补上课本里的另一条原因：<b>节度使权力过大</b>。影响写两层：社会经济遭到严重破坏；唐朝<b>由盛转衰</b>，出现藩镇割据。<b>先从材料找原因，再联系课本补全</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 5 课</p><p>年代与史实依据统编版历史教科书；大运河为节点连接示意，不表示实际地理位置和疆域。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

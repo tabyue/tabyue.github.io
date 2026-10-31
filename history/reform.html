@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份走一遍 1978—2001 年的改革开放大事；从深圳经济特区出发，一层层推开对外开放格局；对比家庭联产承包责任制实行前后，看收成怎么分。历史互动馆第 14 课，对应统编版八年级下册第三、四单元。">
+<meta property="og:title" content="历史互动馆 · 改革开放与中国特色社会主义">
+<title>改革开放与中国特色社会主义 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="reform.js"></script>
+</head>
+<body data-module="reform">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 14 课 <span>/</span> 八年级下册 第三、四单元</p><h1>改革开放与中国特色社会主义</h1><p class="subtitle">1980 年，深圳成为我国最早的经济特区之一。从这里出发，对外开放由沿海一步步推向内地；香港、澳门也先后回到祖国怀抱。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="1978—2001 年时间轴">
+<h2>1978—2001 大事时间轴</h2>
+<p class="panel-sub">拖动下面的滑块选一个年份，或者点时间轴上的事件。</p>
+<svg id="tl" viewBox="0 0 400 260" role="img" aria-label="1978 年至 2001 年大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">1978 年</output></div><input id="year-in" type="range" min="1978" max="2001" step="1" value="1978"><div class="ruler"><span>1978</span><span>2001</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="年份读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="cent-badge">20 世纪</span></div>
+<div class="stat-grid">
+<div class="stat"><span>改革开放以来</span><strong id="r-since">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这一年前后发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="一国两制">
+<h2>“一国两制”：含义与实践</h2>
+<p class="panel-sub" style="margin-bottom:0">滑到 1997 年或 1999 年，对应的一行会亮起来；也可以点“香港”“澳门”两行跳到那一年。</p>
+<table class="compare"><tbody>
+<tr id="row-one"><td>一国</td><td>一个国家：中华人民共和国。</td></tr>
+<tr id="row-two"><td>两制</td><td>国家的主体坚持社会主义制度，香港、澳门、台湾保持原有的资本主义制度长期不变。</td></tr>
+<tr id="row-hk" tabindex="0" style="cursor:pointer"><td>香港</td><td>1997 年 7 月 1 日，中国政府恢复对香港行使主权，香港特别行政区成立。</td></tr>
+<tr id="row-mo" tabindex="0" style="cursor:pointer"><td>澳门</td><td>1999 年 12 月 20 日，中国政府恢复对澳门行使主权，澳门特别行政区成立。</td></tr>
+<tr id="row-tw"><td>台湾</td><td>台湾是中国领土不可分割的一部分。“一国两制”最初是为解决台湾问题提出的，首先运用于解决香港、澳门问题。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="深圳之窗：对外开放格局">
+<h2>深圳之窗：对外开放一层层推开</h2>
+<p class="panel-sub">从最里面的经济特区出发，按“向外推进一层”，或者点右边的台阶。圆圈只表示开放的先后层次，<b>示意，不表示实际地理位置和疆域</b>。</p>
+<svg id="open" viewBox="0 0 400 240" role="img" aria-label="对外开放格局分层示意"></svg>
+<div class="btn-row"><button class="big-btn" id="open-go" type="button">向外推进一层</button><button class="ghost-btn" id="open-reset" type="button">回到起点</button></div>
+</section>
+<section class="readout" aria-label="开放层次说明">
+<div class="readout-head"><h2 id="o-name">经济特区</h2><span class="badge" id="o-badge">1980 年</span></div>
+<div class="stat-grid">
+<div class="stat"><span>开放到第几层</span><strong id="o-step">—</strong></div>
+<div class="stat"><span>开放方向</span><strong style="font-size:20px">由沿海到内地</strong></div>
+</div>
+<p class="lead" id="o-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 先在一个班试点</h3><p>学校想推行一种新的学习方法，往往先在一两个班<b>试点</b>，效果好、经验足了，再推广到全年级、全校。经济特区就像对外开放最早的“试点班”：先试先行，积累经验，再一层层往外推广。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="家庭联产承包责任制前后对比">
+<h2>农村改革：承包到户前后有什么不同</h2>
+<p class="panel-sub">切换“改革前”和“实行承包制后”，再按“秋收分粮”，看看收成怎么分。</p>
+<svg id="farm" viewBox="0 0 400 230" role="img" aria-label="家庭联产承包责任制实行前后对比示意"></svg>
+<div class="ctl-row"><span>时期</span><div class="chips small" id="farm-chips"></div></div>
+<div class="btn-row"><button class="ghost-btn" id="harvest-btn" type="button">秋收分粮</button></div>
+</section>
+<section class="readout" aria-label="承包制对比">
+<div class="readout-head"><h2 id="f-name">家庭联产承包责任制</h2><span class="badge" id="f-badge">改革后</span></div>
+<div class="stat-grid">
+<div class="stat"><span>土地归谁</span><strong style="font-size:18px">集体所有</strong></div>
+<div class="stat"><span>谁来经营</span><strong id="f-who" style="font-size:18px">—</strong></div>
+<div class="stat wide"><span>收成怎么分</span><strong id="f-share" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="f-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 对外开放为什么从深圳这样的经济特区开始</h3>
+<p class="derive-lead">这是这一课离我们最近的一个“为什么”。顺着时间捋一遍，就能明白“由沿海到内地”的格局是怎么形成的。</p>
+<ol>
+<li><h4>先有决策</h4><p>1978 年 12 月，中共十一届三中全会作出实行改革开放的伟大决策。可是对外开放怎么开、从哪里开，需要先找地方试一试。</p></li>
+<li><h4>选在哪里</h4><p>1980 年，在深圳、珠海、汕头、厦门设立经济特区。深圳紧靠香港，珠海紧靠澳门，汕头、厦门华侨多，便于引进外资和技术。</p></li>
+<li><h4>“特”在哪里</h4><p>经济特区实行特殊的经济政策和灵活的措施，吸引外资，引进先进技术和管理经验，成为对外开放的<b>窗口</b>。</p></li>
+<li><h4>深圳的变化</h4><p>深圳从一个边陲小镇，发展成为现代化城市。特区的经验证明，对外开放这条路走得通。</p></li>
+<li><h4>一层层推广</h4><p>1984 年开放 14 个沿海港口城市，1985 年起开辟沿海经济开放区，1990 年开发开放上海浦东，20 世纪 90 年代以后开放逐步扩展到内地。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>对外开放走的是“先试点、再推广”的路，逐步形成了“<b>经济特区—沿海开放城市—沿海经济开放区—内地</b>”全方位、多层次、宽领域的对外开放格局。深圳经济特区，正是这个格局最早的窗口之一。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>伟大的历史转折</h3><p>1978 年 12 月，中共<b>十一届三中全会</b>召开：重新确立解放思想、实事求是的思想路线，把党和国家的工作中心转移到经济建设上来，作出实行改革开放的伟大决策。它是新中国成立以来党的历史上具有深远意义的伟大转折，开启了改革开放和社会主义现代化建设新时期。</p></div></div>
+<div class="fact"><div><h3>经济体制改革</h3><p>改革从农村开始：安徽凤阳县小岗村的农民率先把土地承包到户，后来<b>家庭联产承包责任制</b>在全国农村推行。城市经济体制改革以国有企业改革为中心环节。1992 年初邓小平发表南方谈话；同年中共十四大明确，经济体制改革的目标是建立<b>社会主义市场经济体制</b>。</p></div></div>
+<div class="fact"><div><h3>对外开放格局</h3><p><b>1980 年</b>设立深圳、珠海、汕头、厦门经济特区，1988 年设立海南经济特区；<b>1984 年</b>开放 14 个沿海港口城市；1985 年起开辟沿海经济开放区；1990 年开发开放上海浦东。<b>2001 年</b>我国加入世界贸易组织。</p></div></div>
+<div class="fact"><div><h3>“一国两制”与港澳回归</h3><p>“一国两制”最初是为解决台湾问题提出的，首先运用于解决香港、澳门问题。<b>1997 年 7 月 1 日</b>中国政府恢复对香港行使主权，<b>1999 年 12 月 20 日</b>恢复对澳门行使主权。台湾是中国领土不可分割的一部分。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>承包制没有改变土地集体所有</b>：变的是经营方式和分配方式，土地不是分给农民私有。② <b>1980 年</b>设经济特区，<b>1984 年</b>开放 14 个沿海港口城市，别记混。③ 港澳回归的规范说法是中国政府<b>恢复行使主权</b>。④ 2000 年属于 20 世纪，<b>2001 年</b>才是 21 世纪第一年。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份、开放层次和对比状态。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：把十一届三中全会、设立经济特区、开放 14 个沿海港口城市、南方谈话、港澳回归、加入世界贸易组织排先后，或判断属于哪个世纪。</li>
+<li><b>家乡的历史</b>：深圳经济特区 1980 年设立，是对外开放的窗口，常结合深圳的变化考对外开放的格局和作用。</li>
+<li><b>对比题</b>：家庭联产承包责任制实行前后，什么没变（土地集体所有），什么变了（经营方式、分配方式）。</li>
+<li><b>“一国两制”</b>：含义是什么，最初为解决什么问题提出，首先在哪里实践，港澳回归的准确日期。</li>
+</ul>
+<div class="q"><b>典型设问</b>　“交够国家的，留足集体的，剩下都是自己的。”这句话反映的是哪一项改革？这项改革起了什么作用？<br><b>怎么想</b>　“交国家、留集体、剩自己”说的是农户承包土地以后怎么分收成，对应<b>家庭联产承包责任制</b>。作用从农民身上找：<b>调动了农民的生产积极性，解放了农村生产力</b>，促进了农业发展。如果题目问土地归谁，别忘了答“仍归集体所有”。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 14 课</p><p>年代与史实依据统编版历史教科书；对外开放格局为分层示意，不表示实际地理位置和疆域。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

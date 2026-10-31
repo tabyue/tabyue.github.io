@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份走一遍 1915—1936 年的大事；一步步推进五四运动，看主力怎样从学生变成工人；沿着长征示意线路从瑞金走到会宁。历史互动馆第 10 课，对应统编版八年级上册第四、五单元。">
+<meta property="og:title" content="历史互动馆 · 新民主主义革命的兴起">
+<title>新民主主义革命的兴起 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="newdemo.js"></script>
+</head>
+<body data-module="newdemo">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 10 课 <span>/</span> 八年级上册 第四、五单元</p><h1>新民主主义革命的兴起</h1><p class="subtitle">从一本杂志、一场学生游行开始，到中国共产党诞生、人民军队建立，再到两万五千里长征——二十多年里，中国革命找到了新的方向。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="新民主主义革命兴起时间轴">
+<h2>1915—1936 年大事时间轴</h2>
+<p class="panel-sub">拖动滑块选一个年份，或者点时间轴上的事件。1927 年有两件大事。</p>
+<svg id="tl" viewBox="0 0 400 262" role="img" aria-label="1915 年到 1936 年大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">1919 年</output></div><input id="year-in" type="range" min="1915" max="1936" step="1" value="1919"><div class="ruler"><span>1915</span><span>1925</span><span>1936</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="年份读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="era-badge">新民主主义革命时期</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这一年发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="1927 到 1928 年">
+<h2>1927—1928：走上自己的路</h2>
+<table class="compare" id="road-table"><tbody>
+<tr data-id="nanchang"><td>南昌起义<br>1927 年 8 月 1 日</td><td>打响武装反抗国民党反动派的第一枪，标志着中国共产党独立领导革命战争、创建人民军队和武装夺取政权的开始。</td></tr>
+<tr data-id="qiushou"><td>秋收起义<br>1927 年 9 月</td><td>起义部队进攻长沙受挫后转向农村，到达井冈山，创建第一个农村革命根据地。</td></tr>
+<tr data-id="huishi"><td>井冈山会师<br>1928 年 4 月</td><td>南昌起义保留下来的部分部队到达井冈山，与秋收起义部队会师，组成工农革命军第四军（后改称红四军）。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="五四运动阶段推进器">
+<h2>五四运动：从学生到工人</h2>
+<p class="panel-sub">按“推进到下一阶段”，看参加的人、中心城市和斗争方式怎么变。</p>
+<svg id="ms" viewBox="0 0 400 226" role="img" aria-label="五四运动各阶段参加力量示意"></svg>
+<div class="steps" id="ms-steps"></div>
+<div class="btn-row"><button class="big-btn" id="ms-next" type="button">推进到下一阶段</button><button class="ghost-btn" id="ms-reset" type="button">回到起因</button></div>
+</section>
+<section class="readout" aria-label="五四运动阶段">
+<div class="readout-head"><h2 id="ms-name">起因</h2><span class="badge" id="ms-badge">1919 年</span></div>
+<div class="stat-grid">
+<div class="stat"><span>中心城市</span><strong id="ms-city" style="font-size:20px">—</strong></div>
+<div class="stat"><span>主力</span><strong id="ms-main" style="font-size:20px">—</strong></div>
+<div class="stat wide"><span>斗争方式</span><strong id="ms-way" style="font-size:17px">—</strong></div>
+</div>
+<p class="lead" id="ms-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="长征示意线路">
+<h2>沿着长征示意线路走一遍</h2>
+<p class="panel-sub">这是示意线路，不是地图，只表示先后顺序。点一个站点，或者按“出发”一站站走。</p>
+<svg id="march" viewBox="0 0 400 236" role="img" aria-label="红军长征经过的主要节点示意"></svg>
+<div class="btn-row"><button class="big-btn" id="march-go" type="button">从瑞金出发</button><button class="ghost-btn" id="march-reset" type="button">回到瑞金</button></div>
+</section>
+<section class="readout" aria-label="长征站点">
+<div class="readout-head"><h2 id="mc-name">瑞金</h2><span class="badge" id="mc-badge">1934 年 10 月</span></div>
+<div class="stat-grid">
+<div class="stat"><span>第几站</span><strong id="mc-no" style="font-size:20px">—</strong></div>
+<div class="stat"><span>关键词</span><strong id="mc-key" style="font-size:17px">—</strong></div>
+</div>
+<p class="lead" id="mc-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 迷路的登山队</h3><p>长征刚开始，红军像一支在暴风雪里<b>按错误路线硬走</b>的登山队，湘江一仗就折损了一大半。到了遵义，大家停下来开会，<b>换上熟悉山路、判断正确的人来指挥</b>。之后的路一样险——赤水、金沙江、大渡河、雪山草地——但队伍走对了方向，终于走到了终点。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么说遵义会议是“生死攸关的转折点”</h3>
+<p class="derive-lead">长征里最常考的就是遵义会议。把会议前后红军的处境对比一下，“转折”两个字就好理解了。</p>
+<ol>
+<li><h4>长征是被迫的</h4><p>由于“左”倾错误的军事指挥，第五次反“围剿”失败。1934 年 10 月，中央红军被迫撤离根据地，开始长征。</p></li>
+<li><h4>会前损失惨重</h4><p>突破湘江时，红军由出发时的 8 万多人锐减到 3 万多人，处境极其危险。</p></li>
+<li><h4>会议纠正了错误</h4><p>1935 年 1 月，红军攻占贵州遵义，中共中央在这里召开政治局扩大会议，集中解决了当时具有决定意义的军事和组织问题，肯定了正确的军事主张。</p></li>
+<li><h4>会后转危为安</h4><p>红军四渡赤水、巧渡金沙江、强渡大渡河、飞夺泸定桥，又爬雪山、过草地，摆脱了敌人的围追堵截。</p></li>
+<li><h4>最终胜利会师</h4><p>1935 年 10 月中央红军到达陕北吴起镇；1936 年 10 月三大主力会宁会师，长征胜利结束。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>遵义会议在极其危急的情况下，挽救了党、挽救了红军、挽救了中国革命，是党的历史上一个生死攸关的转折点。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>新文化运动</h3><p>1915 年陈独秀在上海创办《青年杂志》（后改名《新青年》），新文化运动兴起。代表人物有陈独秀、李大钊、胡适、鲁迅等。它提倡<b>民主和科学</b>，反对专制和迷信；提倡新道德、新文学，反对旧道德、旧文学。俄国十月革命后，李大钊开始宣传马克思主义。</p></div></div>
+<div class="fact"><div><h3>五四运动</h3><p>1919 年巴黎和会上中国外交失败，5 月 4 日北京学生游行示威；6 月起上海工人罢工，<b>工人阶级</b>成为运动主力；6 月 28 日中国代表拒绝在和约上签字。它是一次彻底的反帝反封建的爱国运动，是中国新民主主义革命的开端。</p></div></div>
+<div class="fact"><div><h3>中国共产党诞生与国民革命</h3><p>1921 年 7 月，中共一大在上海召开，最后一天转移到浙江嘉兴南湖的游船上，中国共产党诞生。1924 年国民党一大在广州召开，标志着<b>第一次国共合作</b>正式形成；同年创办黄埔军校。1926 年北伐开始。1927 年国共合作破裂，国民革命失败。</p></div></div>
+<div class="fact"><div><h3>开辟革命新道路与长征</h3><p>1927 年 8 月 1 日<b>南昌起义</b>；9 月湘赣边界秋收起义，随后创建井冈山革命根据地；1928 年 4 月井冈山会师。1934 年 10 月长征开始，1935 年 1 月<b>遵义会议</b>，1936 年 10 月三大主力会宁会师，长征胜利结束。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① 五四运动后期的主力是<b>工人阶级</b>，中心从北京转到<b>上海</b>，不是一直由学生领头。② “第一枪”是南昌起义；“第一个农村革命根据地”是秋收起义后建立的井冈山根据地，别混。③ 长征胜利结束的标志是 <b>1936 年</b>三大主力会宁会师；1935 年到达吴起镇的只是中央红军。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份、五四阶段和长征站点。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：新文化运动、五四运动、中共一大、北伐、南昌起义、遵义会议排先后，或者判断某一年发生了什么。</li>
+<li><b>意义题</b>：南昌起义、中共诞生、遵义会议、长征胜利各自的意义，用教材的关键词作答。</li>
+<li><b>比较题</b>：五四运动和以前的斗争相比有什么新特点——工人阶级登上政治舞台，彻底反帝反封建。</li>
+<li><b>线路题</b>：给出长征途经的几个节点或事件，按先后排序。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料：游行队伍喊出“外争主权，内除国贼”“取消二十一条”的口号。这反映的是哪一历史事件？这一事件后期出现了什么新变化？<br><b>怎么想</b>　“外争主权，内除国贼”是 1919 年<b>五四运动</b>的口号。新变化看 6 月：上海工人罢工，运动中心转到上海，<b>工人阶级代替学生成为主力</b>，开始登上政治舞台。<b>先从口号认出事件，再按阶段说变化</b>，答案就有层次。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 10 课</p><p>年代与史实依据统编版历史教科书；长征为站点先后示意，不表示实际地理位置和路线；五四运动参加力量为示意，不表示实际人数。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

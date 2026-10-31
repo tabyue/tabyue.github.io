@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动 1640—1815 年时间轴，对比英美法三国的文献和政体；拖滑块看《权利法案》怎样一条条限制英国国王。历史互动馆第 20 课，对应统编版九年级上册第六单元。">
+<meta property="og:title" content="历史互动馆 · 资本主义制度的初步确立">
+<title>资本主义制度的初步确立 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="revolution.js"></script>
+</head>
+<body data-module="revolution">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 20 课 <span>/</span> 九年级上册 第六单元</p><h1>资本主义制度的初步确立</h1><p class="subtitle">英国保留了国王，美国不设国王，法国处死了国王，后来又迎来了皇帝。三条不同的路，都在回答同一个问题：权力该由谁来管。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="1640 到 1815 年时间轴">
+<h2>1640—1815 年时间轴</h2>
+<p class="panel-sub">拖动年份，或者点事件。棕色是英国，蓝色是美国，红色是法国；也可以只看一个国家。</p>
+<svg id="tl" viewBox="0 0 400 276" role="img" aria-label="英美法三国革命大事时间轴"></svg>
+<div class="ctl-row"><span>只看</span><div class="chips small" id="tl-chips"></div></div>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">1689 年</output></div><input id="year-in" type="range" min="1640" max="1815" step="1" value="1689"><div class="ruler"><span>1640</span><span>1730</span><span>1815</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="这一年读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="tl-badge">英国</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这一年前后发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="世纪小规则">
+<h2>看时间轴的两个提醒</h2>
+<table class="compare"><tbody>
+<tr><td>世纪</td><td>1640 年属于 17 世纪，1789 年属于 18 世纪：世纪数比年份前两位多 1。</td></tr>
+<tr><td>先后</td><td>英国最早，接着是美国，然后是法国。美国的独立战争还影响了法国。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="三国革命对比器">
+<h2>三国革命对比器</h2>
+<p class="panel-sub">选一个国家，看它走过的路，右边的表格会高亮它的文献和政体。</p>
+<svg id="cmp" viewBox="0 0 400 236" role="img" aria-label="所选国家从革命开始到确立政体的路线"></svg>
+<div class="ctl-row"><span>国家</span><div class="chips small" id="cmp-chips"></div></div>
+</section>
+<section class="readout" aria-label="三国对比表">
+<div class="readout-head"><h2 id="cmp-name">英国</h2><span class="badge" id="cmp-badge">君主立宪制</span></div>
+<table class="compare" id="cmp-table"><thead><tr><th>国家</th><th>关键文献</th><th>确立的制度</th></tr></thead><tbody>
+<tr data-c="en"><td>英国</td><td>《权利法案》</td><td>君主立宪制</td></tr>
+<tr data-c="us"><td>美国</td><td>《独立宣言》<br>1787 年宪法</td><td>联邦制共和国，三权分立</td></tr>
+<tr data-c="fr"><td>法国</td><td>《人权宣言》<br>《拿破仑法典》</td><td>1792 年共和国，1804 年帝国</td></tr>
+</tbody></table>
+<p class="lead" id="cmp-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="英国国王权力滑块示意">
+<h2>国王的权力被一条条拿走</h2>
+<p class="panel-sub">向右拖动滑块，看《权利法案》的主要规定怎样限制国王。条形长短只是示意，不是真实数据。</p>
+<svg id="pow" viewBox="0 0 400 216" role="img" aria-label="国王与议会权力对比示意"></svg>
+<div class="control"><div class="control-heading"><label for="pow-in">落实《权利法案》的规定</label><output id="pow-out">0 条</output></div><input id="pow-in" type="range" min="0" max="4" step="1" value="0"><div class="ruler"><span>法案之前</span><span>法案之后</span></div></div>
+</section>
+<section class="readout" aria-label="王权读数">
+<div class="readout-head"><h2 id="pow-name">《权利法案》之前</h2><span class="badge" id="pow-badge">君主专制</span></div>
+<div class="stat-grid">
+<div class="stat"><span>国王能自己决定</span><strong id="pow-king">4<small>件</small></strong></div>
+<div class="stat"><span>国王还在吗</span><strong id="pow-still" style="font-size:20px">还在</strong></div>
+</div>
+<p class="lead" id="pow-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 老板和董事会</h3><p>以前的国王像一个说一不二的老板，定规矩、收钱、招人全凭自己。《权利法案》以后，老板的位子还在，但这些大事都要<b>董事会（议会）</b>点头。所以英国<b>留下了国王，却用法律管住了国王</b>，这就是君主立宪制。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么三个国家都要闹革命</h3>
+<p class="derive-lead">三国情况不同，背后的道理却相通。把它们放在一起看，这一单元就串起来了。</p>
+<ol>
+<li><h4>新的力量长大了</h4><p>新航路开辟后，工商业越来越发达，资产阶级（靠办工场、做生意致富的人）有了钱，也想要说话的权利。</p></li>
+<li><h4>旧制度挡了路</h4><p>英国国王专断、随意征税；法国有森严的等级制度，第三等级要纳税却没有政治权利；北美殖民地则受英国压制，经济发展受限。</p></li>
+<li><h4>冲突终于爆发</h4><p>英国国王和议会对抗，北美人民拿起武器反抗英国，巴黎人民攻占巴士底狱。</p></li>
+<li><h4>用文件把成果写下来</h4><p>《权利法案》《独立宣言》和 1787 年宪法、《人权宣言》，都用文字说明权力从哪里来、应该受什么限制。</p></li>
+<li><h4>各自找到了制度</h4><p>英国确立君主立宪制，美国建立联邦制共和国，法国几经反复，《拿破仑法典》巩固了革命成果。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>三国革命的共同原因，是旧的统治阻碍了资本主义发展。结果都不再由一个人说了算，资本主义制度得以初步确立。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>英国：留下国王</h3><p>1640 年革命开始，1649 年国王查理一世被处死。1688 年“光荣革命”，1689 年议会通过《权利法案》，限制王权，<b>君主立宪制</b>逐步确立。</p></div></div>
+<div class="fact"><div><h3>美国：赶走宗主国</h3><p>1775 年莱克星顿枪声打响独立战争，华盛顿任大陆军总司令。1776 年《独立宣言》发表，标志美国诞生；1783 年英国承认美国独立；1787 年宪法确立<b>联邦制</b>和<b>三权分立</b>。</p></div></div>
+<div class="fact"><div><h3>法国：反复中前进</h3><p>1789 年攻占巴士底狱，大革命爆发，同年通过《人权宣言》。1792 年成立第一共和国。1804 年拿破仑称帝，颁布《拿破仑法典》。1815 年他在滑铁卢战败。</p></div></div>
+<div class="fact"><div><h3>三权分立是什么</h3><p>立法权归国会，行政权归总统，司法权归最高法院，三者互相制约。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>文献别配错</b>：《权利法案》是英国的，《独立宣言》是美国的，《人权宣言》是法国的。② <b>美国诞生看 1776 年</b>，1783 年是英国承认独立，1787 年是制定宪法。③ <b>英国还有国王</b>，它不是共和国。④ 拿破仑称帝了，但《拿破仑法典》<b>仍巩固了革命成果</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份、国家和滑块位置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>文献配国家</b>：给一段文献内容，判断属于哪个国家，再说它的作用。</li>
+<li><b>时序排列</b>：把三国的大事排先后，或者判断某件事发生在哪个世纪。</li>
+<li><b>制度比较</b>：比较英国和美国的政治制度，先看有没有国王，再看权力怎么分。</li>
+<li><b>人物评价</b>：评价拿破仑，要写他对内巩固革命成果，也要写他后期对外战争的扩张性。</li>
+</ul>
+<div class="q"><b>典型设问</b>　《权利法案》规定，未经议会同意，国王不能征税、不能在和平时期维持常备军。这反映了英国政治的什么变化？<br><b>怎么想</b>　抓住“未经议会同意”和“不能”：国王的权力<b>被法律限制</b>，议会的权力增强。再联系结论：<b>为君主立宪制的确立奠定了法律基础</b>。注意别答成“废除了国王”。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 20 课</p><p>年代与史实依据统编版历史教科书；王权滑块的条形长短为示意，不是真实数据。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

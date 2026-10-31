@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份走一遍 1840—1901 年的晚清大事；用条约对比器比较《南京条约》《北京条约》《马关条约》《辛丑条约》，看社会性质怎样一步步加深；对比洋务运动和戊戌变法。历史互动馆第 8 课，对应统编版八年级上册第一、二单元。">
+<meta property="og:title" content="历史互动馆 · 晚清：内忧外患与救亡图存">
+<title>晚清：内忧外患与救亡图存 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="lateqing.js"></script>
+</head>
+<body data-module="lateqing">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 8 课 <span>/</span> 八年级上册 第一、二单元</p><h1>晚清：内忧外患与救亡图存</h1><p class="subtitle">从 1840 年到 1901 年，一份份不平等条约把中国一步步拖进半殖民地半封建社会；也是在这六十年里，中国人开始学技术、改制度，寻找救国的路。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="晚清时间轴">
+<h2>1840—1901 年大事时间轴</h2>
+<p class="panel-sub">拖动滑块选一个年份，或者点时间轴上的事件。</p>
+<svg id="tl" viewBox="0 0 400 262" role="img" aria-label="1840 年到 1901 年晚清大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">1840 年</output></div><input id="year-in" type="range" min="1840" max="1901" step="1" value="1840"><div class="ruler"><span>1840</span><span>1870</span><span>1901</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="年份读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="era-badge">两次鸦片战争时期</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这一年前后发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="半殖民地半封建社会">
+<h2>“半殖民地半封建”是什么意思</h2>
+<table class="compare"><tbody>
+<tr><td>半殖民地</td><td>中国名义上还是独立国家，但领土、关税等主权一块块被列强破坏，越来越受列强控制。</td></tr>
+<tr><td>半封建</td><td>自给自足的自然经济逐渐解体，出现了资本主义因素，但封建剥削仍然占统治地位。</td></tr>
+<tr><td>一条主线</td><td>列强侵略一步步加深，中国人民不断抗争，先进的中国人不断探索救国道路。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="不平等条约对比器">
+<h2>不平等条约对比器</h2>
+<p class="panel-sub">先选一个条约，再选“看哪一项”，下面的表把四个条约放在一起比。</p>
+<svg id="deep" viewBox="0 0 400 150" role="img" aria-label="半殖民地化程度示意进度条"></svg>
+<div class="ctl-row"><span>条约</span><div class="chips small" id="tr-chips"></div></div>
+<div class="ctl-row"><span>看哪一项</span><div class="chips small" id="asp-chips"></div></div>
+<table class="compare" id="tr-table"><thead><tr><th>条约</th><th id="asp-head">割地</th></tr></thead><tbody></tbody></table>
+</section>
+<section class="readout" aria-label="条约详情">
+<div class="readout-head"><h2 id="tr-name">《南京条约》</h2><span class="badge" id="tr-badge">1842 年 · 中英</span></div>
+<div class="stat-grid">
+<div class="stat" id="s-land"><span>割地</span><strong id="tr-land" style="font-size:16px">—</strong></div>
+<div class="stat" id="s-money"><span>赔款</span><strong id="tr-money" style="font-size:16px">—</strong></div>
+<div class="stat wide" id="s-port"><span>开放通商口岸</span><strong id="tr-port" style="font-size:16px">—</strong></div>
+<div class="stat wide" id="s-other"><span>其他</span><strong id="tr-other" style="font-size:15px;font-weight:600">—</strong></div>
+</div>
+<p class="lead" id="tr-text" aria-live="polite"></p>
+<p class="lead" id="tr-note" style="font-size:14px;margin-top:8px"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="洋务运动与戊戌变法">
+<h2>救亡图存：从学技术到改制度</h2>
+<p class="panel-sub">切换两次探索，按“下一步”看背景、主张、措施和结果。</p>
+<svg id="stair" viewBox="0 0 400 210" role="img" aria-label="学习西方的三个层次示意"></svg>
+<div class="ctl-row"><span>探索</span><div class="chips small" id="plan-chips"></div></div>
+<div class="steps" id="plan-steps"></div>
+<div class="btn-row"><button class="big-btn" id="plan-next" type="button">下一步</button><button class="ghost-btn" id="plan-reset" type="button">从头看</button></div>
+</section>
+<section class="readout" aria-label="探索对比">
+<div class="readout-head"><h2 id="plan-name">洋务运动</h2><span class="badge" id="plan-badge">19 世纪 60—90 年代</span></div>
+<div class="stat-grid">
+<div class="stat"><span>学习西方什么</span><strong id="plan-learn" style="font-size:18px">—</strong></div>
+<div class="stat"><span>结局</span><strong id="plan-end" style="font-size:16px">—</strong></div>
+<div class="stat wide"><span>代表人物</span><strong id="plan-who" style="font-size:16px">—</strong></div>
+<div class="stat wide"><span>目的 / 口号</span><strong id="plan-aim" style="font-size:16px">—</strong></div>
+</div>
+<p class="lead" id="plan-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 旧电脑跑不动了</h3><p>洋务运动像给一台旧电脑<b>换新硬件</b>：加内存、换风扇（买机器、造枪炮），系统却还是老的。戊戌变法发现光换硬件不够，想<b>升级操作系统</b>（改政治制度），可电脑的管理员（以慈禧太后为首的顽固派）不同意，一百多天就被强行“恢复出厂设置”。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 学技术、改制度，为什么都没能救中国</h3>
+<p class="derive-lead">这是第二单元最核心的“为什么”。把两次探索放在一条线上看，就明白后来为什么会走向革命。</p>
+<ol>
+<li><h4>先是被打醒</h4><p>鸦片战争失败后，林则徐、魏源等人开始“睁眼看世界”，魏源提出“师夷长技以制夷”，意思是学习西方的长处来抵抗西方。</p></li>
+<li><h4>洋务派只学技术</h4><p>洋务派办工厂、造枪炮、建海军，但不改变清朝的政治制度。1894 年甲午中日战争爆发，北洋舰队最终全军覆没，“自强”“求富”的目标落空。</p></li>
+<li><h4>维新派想改制度</h4><p>甲午战败让康有为、梁启超等人看到：只学技术不够，必须学习西方的政治制度，实行君主立宪。1898 年光绪帝支持变法。</p></li>
+<li><h4>可改革靠的是没有实权的皇帝</h4><p>真正掌权的是以慈禧太后为首的顽固势力。变法只进行了 103 天就被政变推翻，谭嗣同等六人被杀。</p></li>
+<li><h4>列强的侵略还在加深</h4><p>1900 年八国联军侵华，1901 年《辛丑条约》签订，清政府完全成为“洋人的朝廷”。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>靠清政府自己“学技术”行不通，在清朝统治下“改制度”的改良道路也行不通。越来越多的人认识到要推翻清朝，这就引出了下一课的辛亥革命。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>两次鸦片战争</h3><p>1840 年英国发动<b>鸦片战争</b>，它是中国近代史的开端；1842 年签订《南京条约》，中国开始沦为半殖民地半封建社会。1856—1860 年英法发动<b>第二次鸦片战争</b>，英法联军火烧圆明园，清政府被迫签订《天津条约》《北京条约》。</p></div></div>
+<div class="fact"><div><h3>太平天国运动</h3><p>1851 年洪秀全在广西桂平金田村发动起义，建号“太平天国”；1853 年定都天京（今南京），颁布《天朝田亩制度》；1864 年天京陷落，太平天国运动失败。</p></div></div>
+<div class="fact"><div><h3>洋务运动和边疆危机</h3><p>19 世纪 60—90 年代，洋务派以“自强”“求富”为口号学习西方技术。同一时期边疆危机严重：左宗棠收复新疆，1884 年新疆建省；1885 年台湾建省，刘铭传任首任巡抚。</p></div></div>
+<div class="fact"><div><h3>甲午战争到辛丑条约</h3><p>1894 年甲午中日战争爆发，黄海海战中邓世昌英勇牺牲；1895 年《马关条约》签订，列强随后掀起瓜分中国的狂潮。1898 年戊戌变法；1900 年义和团兴起、八国联军侵华；1901 年《辛丑条约》签订。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>“开始沦为”</b>对应鸦片战争和《南京条约》，<b>“完全沦为”</b>对应《辛丑条约》，别弄反。② 香港岛是《南京条约》割让给英国，九龙司地方一区是《北京条约》割让给英国；1997 年中国政府恢复对香港行使主权。③ 《马关条约》中日本割占台湾，1945 年台湾回归中国。④ 《辛丑条约》<b>没有割地</b>，但赔款最多。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份、条约和探索。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：给出鸦片战争、太平天国、甲午战争、戊戌变法、八国联军侵华等事件，排先后顺序，或者判断属于 19 世纪还是 20 世纪。</li>
+<li><b>条约辨认</b>：给出割地、赔款、开埠等条款，判断是哪个条约；再说它对中国社会性质的影响（开始沦为、进一步加深、大大加深、完全沦为）。</li>
+<li><b>比较题</b>：洋务运动和戊戌变法，常从“学习西方的哪一层面、代表人物、结果”三个角度比较。</li>
+<li><b>认识题</b>：从洋务运动到戊戌变法的失败中，你得到什么启示？要联系“只学技术不够、改良道路走不通”来答。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料：某条约规定，日本割占辽东半岛、台湾全岛及所有附属各岛屿、澎湖列岛；中国赔偿日本军费白银二亿两；开放沙市、重庆、苏州、杭州为商埠；允许日本在通商口岸开设工厂。这是哪个条约？对中国产生了什么影响？<br><b>怎么想</b>　“日本”“二亿两”“开设工厂”锁定是 1895 年的<b>《马关条约》</b>。影响按教材答：大大加深了中国半殖民地化的程度。<b>先从条款里找国家和数字认出条约，再答影响</b>，这类题就不会丢分。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 8 课</p><p>年代与史实依据统编版历史教科书；社会性质进度条只是示意加深的先后，不是精确数值。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

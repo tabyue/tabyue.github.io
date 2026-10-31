@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="按月拖动 1945—1949 年时间轴；在甘特图里对比辽沈、淮海、平津三大战役的时间与结果；一步步推进战略防御、反攻、决战到渡江。历史互动馆第 12 课，对应统编版八年级上册第七单元。">
+<meta property="og:title" content="历史互动馆 · 人民解放战争">
+<title>人民解放战争 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="liberation.js"></script>
+</head>
+<body data-module="liberation">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 12 课 <span>/</span> 八年级上册 第七单元</p><h1>人民解放战争</h1><p class="subtitle">从 1946 年全面内战爆发，到 1949 年 4 月南京解放，只用了不到三年。人民解放军是怎样一步步从防御走向胜利的？</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="解放战争时间轴">
+<h2>1945—1949 时间轴</h2>
+<p class="panel-sub">滑块每格是一个月。拖动它，或者点时间轴上的事件。</p>
+<svg id="tl" viewBox="0 0 400 250" role="img" aria-label="1945 至 1949 年大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="mon-in">选一个月份</label><output id="mon-out">1945 年 8 月</output></div><input id="mon-in" type="range" min="23347" max="23397" step="1" value="23347"><div class="ruler"><span>1945.8</span><span>1947</span><span>1949.10</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="阶段读数">
+<div class="readout-head"><h2>这个月</h2><span class="badge" id="phase-badge">争取和平</span></div>
+<div class="stat-grid">
+<div class="stat"><span>全面内战已经打了</span><strong id="r-war" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这个月前后发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="解放战争的阶段">
+<h2>解放战争怎么分阶段</h2>
+<table class="compare"><tbody>
+<tr id="ph-0"><td>战略防御</td><td class="n">1946.6—1947.6</td><td>国民党军队进攻解放区</td></tr>
+<tr id="ph-1"><td>战略反攻</td><td class="n">1947.6 底起</td><td>挺进大别山揭开序幕</td></tr>
+<tr id="ph-2"><td>战略决战</td><td class="n">1948.9—1949.1</td><td>辽沈、淮海、平津三大战役</td></tr>
+<tr id="ph-3"><td>渡江战役</td><td class="n">1949.4</td><td>4 月 23 日解放南京</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="三大战役对比">
+<h2>三大战役：谁先谁后，各打下了哪里</h2>
+<p class="panel-sub">横条的长短就是战役持续的时间。点一根横条，或者用下面的按钮切换。</p>
+<svg id="gantt" viewBox="0 0 400 230" role="img" aria-label="三大战役起止时间对比图"></svg>
+<div class="ctl-row"><span>战役</span><div class="chips small" id="bt-chips"></div></div>
+</section>
+<section class="readout" aria-label="战役信息">
+<div class="readout-head"><h2 id="bt-name">辽沈战役</h2><span class="badge" id="bt-badge">第 1 场</span></div>
+<div class="stat-grid">
+<div class="stat"><span>时间</span><strong id="bt-time" style="font-size:16px">—</strong></div>
+<div class="stat"><span>历时</span><strong id="bt-days">—</strong></div>
+<div class="stat wide"><span>主要地区 · 参战部队</span><strong id="bt-where" style="font-size:16px">—</strong></div>
+</div>
+<p class="lead" id="bt-text" aria-live="polite"></p>
+<table class="compare" style="margin-top:12px"><tbody>
+<tr id="cmp-ls"><td>辽沈</td><td>东北全境解放</td></tr>
+<tr id="cmp-hh"><td>淮海</td><td>长江中下游以北的广大地区获得解放</td></tr>
+<tr id="cmp-pj"><td>平津</td><td>北平和平解放，华北地区基本解放</td></tr>
+</tbody></table>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="战略阶段推进">
+<h2>从防御到渡江：主动权怎样转过来</h2>
+<p class="panel-sub">按“下一阶段”往前推，看箭头方向和战场位置怎么变。示意，不表示实际地理位置和疆域。</p>
+<svg id="stage" viewBox="0 0 400 210" role="img" aria-label="解放战争战略阶段示意"></svg>
+<div class="steps" id="stage-steps"></div>
+<div class="btn-row"><button class="big-btn" id="stage-next" type="button">下一阶段 →</button><button class="ghost-btn" id="stage-reset" type="button">回到开始</button></div>
+</section>
+<section class="readout" aria-label="阶段说明">
+<div class="readout-head"><h2 id="sg-name">战略防御</h2><span class="badge" id="sg-badge">1946.6—1947.6</span></div>
+<div class="stat-grid">
+<div class="stat"><span>谁在进攻</span><strong id="sg-who" style="font-size:18px">—</strong></div>
+<div class="stat"><span>战场主要在</span><strong id="sg-where" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="sg-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 下棋先吃“车马炮”</h3><p>战略防御时，解放军不计较一城一地的得失，就像下棋不心疼丢几个“兵”，而是专门找机会吃掉对方的“车马炮”（歼灭敌人的有生力量）。对方的主力越打越少，棋盘上的主动权就慢慢转到自己这边，最后三大战役一口气吃掉了对方的主力。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么说淮海战役的胜利是“小车推出来的”</h3>
+<p class="derive-lead">打仗不只靠前线的士兵，还要靠后方源源不断的粮食、弹药和担架。</p>
+<ol>
+<li><h4>打仗拼的是人力物力</h4><p>大兵团作战，每天要吃大量的粮食，要运弹药、抬伤员。光靠军队自己运，远远不够。</p></li>
+<li><h4>农民分到了土地</h4><p>解放区开展土地改革。1947 年，中国共产党公布《中国土地法大纲》，废除封建性及半封建性剥削的土地制度，实行耕者有其田。</p></li>
+<li><h4>保卫胜利果实</h4><p>分到土地的农民，为了保住自己的土地，踊跃参军，积极支援前线。</p></li>
+<li><h4>小车推上前线</h4><p>淮海战役中，大批民工推着独轮小车，把粮食、弹药送到前线，再把伤员抬下来。陈毅（时任华东野战军司令员）说：“淮海战役的胜利，是人民群众用小车推出来的。”</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>人民群众的支持，是人民解放战争取得胜利的重要原因；土地改革让农民和战争的胜负紧紧连在一起。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>重庆谈判与内战爆发</h3><p>抗战胜利后，为争取和平，1945 年 8 月毛泽东等中共代表赴重庆与国民党谈判，10 月 10 日签订<b>《双十协定》</b>。1946 年 6 月，国民党军队大举围攻<b>中原解放区</b>，全面内战爆发。</p></div></div>
+<div class="fact"><div><h3>从战略防御到战略反攻</h3><p>人民解放军先进行战略防御，以歼灭敌人有生力量为主要目标。1947 年 6 月底，刘伯承、邓小平率领晋冀鲁豫野战军主力<b>千里跃进大别山</b>，揭开了战略反攻（也称战略进攻）的序幕。</p></div></div>
+<div class="fact"><div><h3>三大战役</h3><p>1948 年 9 月到 1949 年 1 月，人民解放军发起<b>辽沈、淮海、平津</b>三大战役，基本上消灭了国民党军队的主力，加速了全国解放的进程。</p></div></div>
+<div class="fact"><div><h3>渡江战役</h3><p>1949 年 4 月 21 日人民解放军发起渡江战役，<b>4 月 23 日解放南京</b>，统治中国 22 年的国民党政权覆灭。1949 年 10 月 1 日中华人民共和国成立（下一课讲）。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① 国民党政权覆灭的标志是<b>南京解放</b>（1949 年 4 月），不是新中国成立。② 三大战役<b>辽沈最先</b>，淮海和平津有一段时间同时进行。③ 挺进大别山是<b>战略反攻</b>的序幕，不属于三大战役。④ 平津战役里天津是攻克的，<b>北平是和平解放</b>的。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的月份、战役和阶段。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：重庆谈判、全面内战、挺进大别山、三大战役、渡江战役排先后，或者对应到战略阶段。</li>
+<li><b>标志与意义</b>：全面内战爆发的标志、战略反攻的序幕、国民党政权覆灭的标志，常放在一起考。</li>
+<li><b>三大战役</b>：给出“东北全境解放”“北平和平解放”等结果，判断是哪场战役；说出三大战役的共同意义。</li>
+<li><b>材料题</b>：从“支前”“土地改革”等材料，分析人民解放战争胜利的原因。</li>
+</ul>
+<div class="q"><b>典型设问</b>　“淮海战役的胜利，是人民群众用小车推出来的。”这句话反映了什么？人民群众为什么这样支持人民解放军？<br><b>怎么想</b>　“小车推出来”说的是民工推车运粮、送弹药、抬伤员，反映了<b>人民群众的支援是胜利的重要原因</b>。原因要联系土地改革：1947 年公布《中国土地法大纲》，农民分到土地，为保卫胜利果实踊跃参军支前。<b>先解读材料，再找政策原因</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 12 课</p><p>年代与史实依据统编版历史教科书；战略阶段图为示意，不表示实际地理位置和疆域。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份看三国、两晋、南北朝怎样更替，哪些政权同时并存；给北魏孝文帝改革的措施分类；一环环展开江南开发的因果链；点作品找到魏晋南北朝的科技文化名人。历史互动馆第 4 课，对应统编版七年级上册第四单元。">
+<meta property="og:title" content="历史互动馆 · 三国两晋南北朝：分立与交融">
+<title>三国两晋南北朝：分立与交融 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="sanguo.js"></script>
+</head>
+<body data-module="sanguo">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 4 课 <span>/</span> 七年级上册 第四单元</p><h1>三国两晋南北朝：分立与交融</h1><p class="subtitle">从赤壁之战到隋朝统一，近四百年里政权分分合合；可正是在这段分立的日子里，各民族越走越近，江南也被开发起来。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="三国两晋南北朝时间轴">
+<h2>近四百年的分与合</h2>
+<p class="panel-sub">拖动下面的滑块选一个年份，或者点时间轴上的事件。右边会列出这一年同时存在的政权。</p>
+<svg id="tl" viewBox="0 0 400 250" role="img" aria-label="三国两晋南北朝政权更替时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">208 年</output></div><input id="year-in" type="range" min="190" max="600" step="1" value="208"><div class="ruler"><span>190</span><span>395</span><span>600</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="政权读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="dyn-badge">东汉末年</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这一年同时存在的政权</span><strong id="r-reg" style="font-size:17px">—</strong></div>
+<div class="stat wide"><span>这一年前后发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="四个阶段">
+<h2>分与合的四个阶段</h2>
+<table class="compare"><tbody id="era-table">
+<tr><td>三国</td><td>220—280 年。魏、蜀、吴三国鼎立。</td></tr>
+<tr><td>西晋</td><td>266—316 年。280 年灭吴，短暂统一。</td></tr>
+<tr><td>东晋</td><td>317—420 年。南方是东晋，北方多个政权并立（十六国）。</td></tr>
+<tr><td>南北朝</td><td>420—589 年。南朝宋、齐、梁、陈；北朝以北魏为代表。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel" aria-label="孝文帝改革分类">
+<h2>孝文帝改革：每条措施属于哪一类</h2>
+<p class="panel-sub">北魏孝文帝是鲜卑族建立的北魏的皇帝。每行点一个类别，点了就判，不能改。<b id="xw-score">已答 0 / 7</b></p>
+<div class="choice-list" id="xw-list"></div>
+<div class="btn-row"><button class="ghost-btn" id="xw-reset" type="button">重新分一遍</button></div>
+</section>
+<section class="readout" aria-label="改革分类结果">
+<div class="readout-head"><h2>分类结果</h2><span class="badge" id="xw-badge">答对 0 / 7</span></div>
+<div class="stat-grid">
+<div class="stat wide"><span>你分到“迁都”的</span><strong id="xw-qd" style="font-size:16px">—</strong></div>
+<div class="stat wide"><span>你分到“改鲜卑旧俗”的</span><strong id="xw-fs" style="font-size:16px">—</strong></div>
+<div class="stat wide"><span>你分到“学汉族制度礼法”的</span><strong id="xw-zd" style="font-size:16px">—</strong></div>
+</div>
+<p class="lead" id="xw-text" aria-live="polite"></p>
+<h3 style="margin:16px 0 0;font-size:15px;color:#583d34">改革前后对照（分对的会高亮）</h3>
+<table class="compare"><thead><tr><th>方面</th><th>改革前</th><th>改革后</th></tr></thead><tbody id="xw-cmp">
+<tr><td>都城</td><td>平城</td><td>洛阳</td></tr>
+<tr><td>语言</td><td>鲜卑语</td><td>朝廷上说汉语</td></tr>
+<tr><td>服饰</td><td>鲜卑服装</td><td>汉族服装</td></tr>
+<tr><td>姓氏</td><td>拓跋等鲜卑姓</td><td>元等汉姓</td></tr>
+</tbody></table>
+<aside class="analogy"><h3><i>打个比方</i> 全家搬到新城市</h3><p>一家人从北方小城搬到大城市：先<b>搬家</b>（迁都），再<b>入乡随俗</b>——学说当地话、穿当地衣服、起个当地名字、和本地人结亲家（改旧俗），最后连<b>家规</b>也照当地好的规矩来定（学制度礼法）。过上两三代，大家已经分不清谁是“外来的”了，这就是<b>交融</b>。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="江南开发因果链">
+<h2>江南为什么得到开发</h2>
+<p class="panel-sub">按“下一环”，一步步展开这条因果链。这是因果示意，不表示实际地理位置和疆域。</p>
+<svg id="jn" viewBox="0 0 400 236" role="img" aria-label="江南开发原因、结果和影响的因果链"></svg>
+<p class="lead" id="jn-text" aria-live="polite"></p>
+<div class="btn-row"><button class="big-btn" id="jn-next" type="button">下一环</button><button class="ghost-btn" id="jn-reset" type="button">从头再来</button></div>
+</section>
+<section class="card panel" aria-label="科技文化名人">
+<h2>点一部作品，找到它的作者</h2>
+<p class="panel-sub">表格里对应的人物会高亮，下面有详细说明。</p>
+<div class="chips small" id="ren-chips"></div>
+<table class="compare"><thead><tr><th>人物</th><th>时代</th><th>领域</th></tr></thead><tbody id="ren-table"></tbody></table>
+<p class="lead" id="ren-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 北魏孝文帝为什么要迁都洛阳、推行改革</h3>
+<p class="derive-lead">这一单元的关键词是“交融”。孝文帝改革是最典型的例子，把原因一层层拆开就好记了。</p>
+<ol>
+<li><h4>北魏统一了北方</h4><p>北魏是鲜卑族拓跋部建立的政权，439 年统一黄河流域。它统治的地区，汉族人口多，农耕经济发达。</p></li>
+<li><h4>老办法管不好新地方</h4><p>鲜卑族原来以游牧为主，原有的制度和习俗，很难有效治理中原的农耕地区。</p></li>
+<li><h4>都城平城太偏北</h4><p>平城离中原远，不便控制黄河流域，也不方便学习汉族的先进文化。</p></li>
+<li><h4>孝文帝下决心改革</h4><p>494 年迁都洛阳，接着推行说汉语、穿汉服、改汉姓、与汉族通婚、采用汉族官制律令等措施。</p></li>
+<li><h4>鲜卑和汉族越来越近</h4><p>语言、服饰、姓氏、婚姻都接近了，两族在生活中互相学习、互相影响。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>孝文帝改革顺应了民族交融的趋势，<b>加速了北方民族交融</b>，促进了北魏的发展。各民族在交往中互相学习、走向融合，这是三国两晋南北朝时期的重要特点。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>三国鼎立</h3><p>200 年官渡之战，曹操打败袁绍，逐渐统一北方；208 年<b>赤壁之战</b>，孙权、刘备联军大败曹军，奠定三国鼎立的基础。220 年曹丕称帝，国号魏，定都洛阳；221 年刘备称帝，史称蜀，定都成都；222 年孙权称王，229 年称帝，国号吴，定都建业。</p></div></div>
+<div class="fact"><div><h3>从西晋到东晋</h3><p>266 年司马炎建立<b>西晋</b>，280 年灭吴统一全国，但统一时间很短。317 年司马睿在建康建立<b>东晋</b>。383 年<b>淝水之战</b>，东晋以少胜多打败前秦。</p></div></div>
+<div class="fact"><div><h3>南北朝与孝文帝改革</h3><p>420 年起，南方先后是宋、齐、梁、陈，合称<b>南朝</b>；439 年北魏统一黄河流域。孝文帝 494 年迁都洛阳，推行一系列改革，加速了北方<b>民族交融</b>。589 年隋灭陈，南北重归统一。</p></div></div>
+<div class="fact"><div><h3>江南开发与科技文化</h3><p>北方人口大量南迁，带来劳动力和先进技术，<b>江南得到开发</b>。祖冲之把圆周率精确到小数点后第七位；贾思勰著《齐民要术》；郦道元著《水经注》；王羲之被尊为“书圣”；顾恺之擅长人物画。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① 赤壁之战只是<b>奠定基础</b>，220—222 年魏、蜀、吴相继建立，三国鼎立局面才形成。② 西晋 <b>266 年建立、280 年统一</b>，两个年份别记混。③ 孝文帝是从<b>平城</b>迁都<b>洛阳</b>；东晋和南朝的都城是<b>建康</b>（今南京）。④ 江南开发只是为经济重心南移<b>奠定基础</b>，经济重心南移到南宋才最终完成。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份、因果链展开到哪一环和选中的作品。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：三国 → 西晋 → 东晋（北方十六国）→ 南北朝 → 隋，常考排先后、判断某一年属于哪个政权。</li>
+<li><b>措施与作用</b>：孝文帝改革的措施和作用，常问“下列哪项属于改革措施”“改革产生了什么影响”。</li>
+<li><b>原因题</b>：江南开发的原因，答题要点是人口南迁带来劳动力和技术、自然条件优越、社会相对安定。</li>
+<li><b>人物成就</b>：祖冲之、贾思勰、郦道元、王羲之、顾恺之与成就对应，常和其他朝代的人物混在一起考。</li>
+</ul>
+<div class="q"><b>典型设问</b>　北魏孝文帝说：“今欲断诸北语，一从正音。”（《魏书》）这反映了孝文帝改革的哪项措施？有什么作用？<br><b>怎么想</b>　“北语”指鲜卑语，“正音”指汉语，整句意思是不再说鲜卑语、一律改说汉语，对应<b>在朝廷中使用汉语</b>。作用往大处写：有利于学习汉族先进文化，<b>加速了北方民族交融</b>。<b>先把文言里的关键词换成白话，再对应课本措施</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 4 课</p><p>年代与史实依据统编版历史教科书；江南开发图为因果关系示意，不表示实际地理位置和疆域。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

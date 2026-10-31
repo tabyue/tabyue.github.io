@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份看明清两朝怎样管辖台湾、东北、西藏；逐项看废丞相、军机处等措施怎样让皇权越来越集中；跟着郑和船队一站站航行到非洲东海岸。历史互动馆第 7 课，对应统编版七年级下册第三单元。">
+<meta property="og:title" content="历史互动馆 · 明清（至鸦片战争前）">
+<title>明清（至鸦片战争前） · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="mingqing.js"></script>
+</head>
+<body data-module="mingqing">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 7 课 <span>/</span> 七年级下册 第三单元</p><h1>明清（至鸦片战争前）</h1><p class="subtitle">郑和的船队远航到了非洲东海岸，清朝把台湾、西藏、新疆的管辖都落到了实处；可皇帝的权力越抓越紧，国门也越关越紧。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="明清时间轴">
+<h2>明清近五百年时间轴</h2>
+<p class="panel-sub">拖动滑块选一个年份，或者点时间轴上的事件。右边的表会跟着亮起相关的一行。</p>
+<svg id="tl" viewBox="0 0 400 256" role="img" aria-label="明清时期大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">1368 年</output></div><input id="year-in" type="range" min="1350" max="1850" step="1" value="1368"><div class="ruler"><span>1350</span><span>1600</span><span>1850</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="这一年的读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="dyn-badge">明</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这一年前后发生了什么</span><strong id="r-event" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="清朝巩固统一多民族国家">
+<h2>清朝怎样巩固统一多民族国家</h2>
+<table class="compare" id="bj-table"><tbody>
+<tr data-k="tw"><td>台湾</td><td>1662 年郑成功打败荷兰殖民者，收复台湾；1683 年清军进入台湾；1684 年设台湾府，隶属福建省，加强了中央对台湾的管辖。</td></tr>
+<tr data-k="db"><td>东北</td><td>康熙帝时两次雅克萨之战，抗击沙俄侵略。1689 年中俄签订《尼布楚条约》，从法律上肯定了黑龙江和乌苏里江流域包括库页岛在内的广大地区都是中国的领土。</td></tr>
+<tr data-k="xz"><td>西藏</td><td>清朝册封达赖喇嘛和班禅额尔德尼；1727 年设驻藏大臣，代表中央与达赖、班禅共同管理西藏事务。</td></tr>
+<tr data-k="xj"><td>新疆</td><td>乾隆帝时平定准噶尔部叛乱和大小和卓叛乱，设伊犁将军，加强对新疆地区的管辖。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="君主专制的强化">
+<h2>皇帝的权力是怎样一步步收紧的</h2>
+<p class="panel-sub">先看明朝三项、再看清朝两项，点一项措施看它改变了什么。措施一项项叠加，“皇权集中程度”就一格格涨上去。</p>
+<svg id="zz" viewBox="0 0 400 240" role="img" aria-label="明清加强君主专制措施示意"></svg>
+<div class="ctl-row"><span>措施</span><div class="chips small" id="zz-chips"></div></div>
+</section>
+<section class="readout" aria-label="措施与作用">
+<div class="readout-head"><h2 id="zz-name">废丞相</h2><span class="badge" id="zz-badge">明太祖</span></div>
+<div class="stat-grid">
+<div class="stat wide"><span>具体怎么做</span><strong id="zz-act" style="font-size:16px">—</strong></div>
+<div class="stat"><span>作用</span><strong id="zz-eff" style="font-size:16px">—</strong></div>
+<div class="stat"><span>带来的问题</span><strong id="zz-cost" style="font-size:16px">—</strong></div>
+</div>
+<p class="lead" id="zz-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 老板越管越细</h3><p>明太祖<b>废丞相</b>，像老板把总经理辞了，各部门经理直接向他汇报；<b>锦衣卫</b>像老板派人暗中盯着员工；清朝的<b>军机处</b>像老板身边的秘书组，只负责记录和传话，不能自己拿主意。大事小事全由老板一个人说了算，员工也越来越不敢说真话。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="郑和下西洋">
+<h2>跟着郑和船队下西洋</h2>
+<p class="panel-sub">这是示意线路，只表示船队经过的先后，不是地图。点一个站点，或者按“起航”一站站走。</p>
+<svg id="road" viewBox="0 0 400 220" role="img" aria-label="郑和下西洋沿途站点示意"></svg>
+<div class="btn-row"><button class="big-btn" id="road-go" type="button">从刘家港起航</button><button class="ghost-btn" id="road-reset" type="button">回到刘家港</button></div>
+</section>
+<section class="readout" aria-label="站点信息">
+<div class="readout-head"><h2 id="st-name">刘家港</h2><span class="badge" id="st-badge">起点</span></div>
+<p class="lead" id="st-text" aria-live="polite"></p>
+<div class="stat-grid" style="margin-top:12px">
+<div class="stat"><span>船队带出去</span><strong style="font-size:16px">丝绸、瓷器、茶叶、漆器</strong></div>
+<div class="stat"><span>换回来</span><strong style="font-size:16px">香料、宝石、象牙等</strong></div>
+<div class="stat wide"><span>和欧洲航海家比</span><strong style="font-size:16px">比哥伦布到达美洲（1492 年）早 87 年</strong></div>
+</div>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 清朝为什么要“闭关”，又带来了什么</h3>
+<p class="derive-lead">闭关锁国是这一单元最常考的“原因 + 影响”题。一步步拆开，答题时就不会漏。</p>
+<ol>
+<li><h4>觉得不需要外国货</h4><p>中国以自给自足的自然经济为主，男耕女织，日常所需基本能自己解决。清朝统治者认为“天朝”物产丰富，用不着和外国做买卖。</p></li>
+<li><h4>担心领土主权受到侵犯</h4><p>新航路开辟以后，西方殖民者到东方扩张势力，在中国东南沿海活动。清政府担心国家领土主权受到侵犯。</p></li>
+<li><h4>害怕危及自己的统治</h4><p>统治者还害怕沿海人民和外国人来往多了，会联合起来反抗清朝的统治。</p></li>
+<li><h4>于是严格限制对外贸易</h4><p>1757 年，清政府下令只开放广州一处对外通商，由朝廷特许的“广州十三行”统一经营对外贸易。这是<b>严格限制</b>，不是完全禁止。</p></li>
+<li><h4>一时自卫，长期落后</h4><p>它对西方殖民者的侵略活动起过一定的<b>自卫作用</b>；但中国与世界隔绝，看不到世界形势的变化，错失了向西方学习先进科学技术的机会。而 18 世纪 60 年代，英国已经开始了工业革命。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>闭关锁国的根源是<b>自给自足的自然经济</b>和维护统治的需要；它虽有一定的自卫作用，却使中国<b>逐渐落伍于世界潮流</b>。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>明朝的建立与君主专制强化</h3><p>1368 年朱元璋（明太祖）建立明朝，定都应天（今南京）。明太祖<b>废除丞相</b>，由六部直接对皇帝负责；设<b>锦衣卫</b>监视官员和百姓；科举实行<b>八股取士</b>，只从四书五经出题，按固定格式作文。明成祖时迁都北京。</p></div></div>
+<div class="fact"><div><h3>郑和下西洋与戚继光抗倭</h3><p>1405—1433 年，郑和率船队七次下西洋，从刘家港出发，到过亚非 30 多个国家和地区，<b>最远到达非洲东海岸和红海沿岸</b>，增进了中国与亚非国家的友好往来。明朝中期，戚继光在东南沿海抗击倭寇（日本的海盗武装集团），基本解除了倭患。</p></div></div>
+<div class="fact"><div><h3>清朝巩固统一多民族国家</h3><p>1644 年李自成攻入北京，明朝灭亡；同年清军入关，后定都北京。1662 年郑成功收复台湾；1684 年清朝设<b>台湾府</b>，隶属福建省。1689 年中俄签订《尼布楚条约》。1727 年设<b>驻藏大臣</b>。乾隆帝时平定大小和卓叛乱，设伊犁将军。</p></div></div>
+<div class="fact"><div><h3>清朝君主专制强化与闭关锁国</h3><p>雍正帝设<b>军机处</b>，军机大臣跪受笔录，君主专制达到顶峰；康熙、雍正、乾隆三朝大兴<b>文字狱</b>，禁锢思想。1757 年只开放广州一处对外通商，由广州十三行统一经营对外贸易。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① 台湾的三个年份别混：<b>1662 年</b>郑成功从<b>荷兰殖民者</b>手中收复台湾；<b>1683 年</b>清朝统一台湾；<b>1684 年</b>设台湾府，隶属<b>福建省</b>。② 废丞相的是<b>明太祖</b>，设军机处的是清朝<b>雍正帝</b>。③ 驻藏大臣是<b>清朝</b>设的；元朝管理西藏地区的是宣政院。④ 闭关锁国是<b>严格限制</b>对外贸易，不是完全断绝，广州还能通商。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份、措施和船队走到的站点。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：把 1662 年、1683 年、1684 年和台湾有关的三件事排先后，或判断《尼布楚条约》、设驻藏大臣属于哪个世纪。</li>
+<li><b>措施与作用</b>：明清加强君主专制的措施，常问哪一项属于政治制度（废丞相、设军机处），哪一项属于思想控制（八股取士、文字狱）。</li>
+<li><b>史料题</b>：给出乾隆帝给英国国王的信、广州十三行的材料，问反映了什么政策、原因是什么。</li>
+<li><b>评价题</b>：郑和下西洋的意义；闭关锁国要<b>一分为二</b>：有一定自卫作用，但使中国逐渐落伍于世界潮流。</li>
+</ul>
+<div class="q"><b>典型设问</b>　1793 年英国派使团来华，要求扩大通商。乾隆帝在给英国国王的信中说：“天朝物产丰盈，无所不有，原不藉外夷货物以通有无。”这句话反映了清朝实行什么政策？根本原因是什么？<br><b>怎么想</b>　“不藉外夷货物”就是不需要外国的货物，对应<b>闭关锁国</b>（严格限制对外贸易）。根本原因从经济找：<b>自给自足的自然经济</b>占主导地位。还可以补充：担心领土主权受到侵犯，害怕沿海人民和外国人交往危及统治。<b>先从材料找关键词，再联系课本的原因</b>，就答全了。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 7 课</p><p>年代与史实依据统编版历史教科书；郑和下西洋为站点先后示意，不表示实际地理位置和疆域。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

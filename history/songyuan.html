@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份看辽、宋、夏、金、元哪些政权同时存在；亲手推行宋初的四项措施，看中央集权的利与弊；一步步推动经济重心从北方移到南方。历史互动馆第 6 课，对应统编版七年级下册第二单元。">
+<meta property="og:title" content="历史互动馆 · 辽宋夏金元：民族关系与社会变化">
+<title>辽宋夏金元：民族关系与社会变化 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="songyuan.js"></script>
+</head>
+<body data-module="songyuan">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 6 课 <span>/</span> 七年级下册 第二单元</p><h1>辽宋夏金元：民族关系与社会变化</h1><p class="subtitle">三百多年里，好几个政权同时并立，时而打仗、时而议和；最后元朝完成统一。同一时期，经济重心悄悄从北方移到了南方。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="政权并立时间轴">
+<h2>谁和谁同时存在：政权并立时间轴</h2>
+<p class="panel-sub">拖动滑块，竖线穿过的色条就是这一年并立的政权。只画了本课学的主要政权。</p>
+<svg id="tl" viewBox="0 0 400 300" role="img" aria-label="辽宋夏金元政权并立时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">1005 年</output></div><input id="year-in" type="range" min="900" max="1300" step="1" value="1005"><div class="ruler"><span>900</span><span>1100</span><span>1300</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="这一年的读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="dyn-badge">—</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>同时存在的主要政权</span><strong id="r-reg" style="font-size:18px">—</strong></div>
+<div class="stat wide"><span>这一年前后发生了什么</span><strong id="r-event" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="元朝怎样管理辽阔的国土">
+<h2>元朝怎样管理辽阔的国土</h2>
+<table class="compare" id="yuan-table"><tbody>
+<tr><td>中书省</td><td>中央最高行政机构，下设六部。山东、山西、河北一带称“腹里”，直属中书省。</td></tr>
+<tr><td>行省</td><td>“行中书省”的简称，是地方最高行政机构，下设路、府、州、县。“省”作为行政区一直沿用到今天。</td></tr>
+<tr><td>宣政院</td><td>管理全国佛教事务和西藏地区的军政事务。中央政府对西藏正式行使行政管辖。</td></tr>
+<tr><td>澎湖巡检司</td><td>管辖澎湖和琉球（今台湾），这是中央政府首次在台湾地区正式建立行政机构。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="宋初加强中央集权">
+<h2>当一回宋太祖：把权力收回中央</h2>
+<p class="panel-sub">唐末五代武将专权，几十年换了好几个朝代。逐项推行下面四项措施，看权力往哪里走。</p>
+<svg id="cz" viewBox="0 0 400 236" role="img" aria-label="宋初中央与地方权力示意"></svg>
+<div class="ctl-row"><span>推行</span><div class="chips small" id="cz-chips"></div></div>
+<div class="source-card"><p>惟稍夺其权，制其钱谷，收其精兵，则天下自安矣。</p><cite>—— 宋初大臣赵普对宋太祖说的话，见李焘《续资治通鉴长编》</cite></div>
+</section>
+<section class="readout" aria-label="权力归属">
+<div class="readout-head"><h2 id="cz-name">宋太祖刚即位</h2><span class="badge" id="cz-badge">已推行 0 / 4</span></div>
+<div class="stat-grid">
+<div class="stat"><span>兵权在谁手里</span><strong id="cz-bing" style="font-size:17px">—</strong></div>
+<div class="stat"><span>地方长官是谁</span><strong id="cz-guan" style="font-size:17px">—</strong></div>
+<div class="stat"><span>谁来牵制地方长官</span><strong id="cz-tong" style="font-size:17px">—</strong></div>
+<div class="stat"><span>地方的钱归谁</span><strong id="cz-cai" style="font-size:17px">—</strong></div>
+</div>
+<p class="lead" id="cz-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 总部怕分店“坐大”</h3><p>一家连锁店总部吃过分店长造反的亏，于是：把各店的<b>保安队</b>调回总部；店长换成只会管账的人，<b>三年一轮岗</b>；再派一个<b>副店长</b>互相盯着；营业额<b>全部上交</b>总部。分店再也闹不起来了——可办事要层层请示，人越来越多，开销越来越大，遇到外敌也打不过。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="经济重心南移">
+<h2>经济重心南移：天平怎么慢慢倒向南方</h2>
+<p class="panel-sub">点下面的步骤或按“下一步”，看北方和南方的分量怎样变化。天平只是示意，不代表具体数据。</p>
+<svg id="nm" viewBox="0 0 400 226" role="img" aria-label="经济重心南移天平示意"></svg>
+<div class="steps" id="nm-steps"></div>
+<div class="btn-row"><button class="big-btn" id="nm-next" type="button">下一步</button><button class="ghost-btn" id="nm-reset" type="button">回到起点</button></div>
+</section>
+<section class="readout" aria-label="这一步说明">
+<div class="readout-head"><h2 id="nm-name">起点</h2><span class="badge" id="nm-badge">秦汉时期</span></div>
+<div class="stat-grid">
+<div class="stat"><span>北方（黄河流域）</span><strong id="nm-n" style="font-size:17px">—</strong></div>
+<div class="stat"><span>南方（长江流域）</span><strong id="nm-s" style="font-size:17px">—</strong></div>
+</div>
+<p class="lead" id="nm-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 打打停停几百年，为什么说民族关系在“发展”</h3>
+<p class="derive-lead">这是单元标题里的关键词。只看战争会觉得一团乱，把“战—和—交流—统一”连起来看，就明白了。</p>
+<ol>
+<li><h4>多个政权并立</h4><p>契丹建辽，党项建西夏，女真建金，它们和北宋、南宋先后同时存在。这些政权都仿照中原制度治理国家，还创制了自己的文字。</p></li>
+<li><h4>有战争，也有议和</h4><p>1005 年宋辽订立“澶渊之盟”，1044 年宋夏议和，1141 年宋金达成“绍兴和议”。议和后边境往往能保持较长时间的和平。</p></li>
+<li><h4>和平带来交流</h4><p>宋与辽、西夏、金在边境设立“榷场”（政府管理的贸易市场），北方的马、羊和南方的茶、丝织品互通有无，经济上越来越离不开彼此。</p></li>
+<li><h4>文化上互相学习</h4><p>辽“因俗而治”，用汉人的制度管汉人；金的女真人学习汉文化；北方各族与汉族杂居相处，逐渐交融。</p></li>
+<li><h4>元朝完成大统一</h4><p>1279 年元朝完成统一，结束了长期多个政权并立的局面。元朝推行行省制度，设宣政院、澎湖巡检司，各族联系更加紧密。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>这一时期政权分立、战和交替，但各族之间的<b>经济交流和文化交融一直在加深</b>，最终在元朝实现统一，统一多民族国家得到进一步发展。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>政权并立与和战</h3><p>916 年耶律阿保机建契丹政权（后改称辽），960 年赵匡胤建立北宋，1038 年元昊建西夏，1115 年阿骨打建金。宋辽“澶渊之盟”（1005 年），宋给辽<b>岁币</b>；宋夏和议（1044 年），宋给西夏<b>岁赐</b>。1127 年金灭北宋，赵构建立南宋；1141 年宋金“绍兴和议”。</p></div></div>
+<div class="fact"><div><h3>北宋加强中央集权与重文轻武</h3><p>宋太祖收回将领兵权，派<b>文臣担任知州</b>并三年一换，设<b>通判</b>分知州的权力，设<b>转运使</b>把地方财赋收归中央。好处是社会安定、武将难以割据；坏处是军队战斗力减弱、官员冗余、财政负担加重，形成“积贫积弱”。</p></div></div>
+<div class="fact"><div><h3>经济重心南移与宋代科技</h3><p>北宋从越南引进<b>占城稻</b>；南宋时有“苏湖熟，天下足”的说法，<b>经济重心南移完成</b>。北宋前期四川出现的“交子”是世界上最早的纸币。北宋毕昇发明<b>活字印刷术</b>；指南针开始用于航海；火药广泛用于制造武器。</p></div></div>
+<div class="fact"><div><h3>元朝的统一与统治</h3><p>1206 年铁木真建立蒙古政权，被尊为“成吉思汗”。1271 年忽必烈定国号为元；1276 年元军攻占临安，南宋灭亡；1279 年元朝攻灭南宋残部，完成统一。元朝推行<b>行省制度</b>，设宣政院管理西藏地区，设澎湖巡检司管辖澎湖和琉球（今台湾）。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① “澶渊之盟”是<b>北宋与辽</b>，不是宋与西夏或金。② 经济重心南移<b>唐朝中后期开始，南宋时完成</b>。③ 元朝管理西藏的是<b>宣政院</b>；驻藏大臣是<b>清朝</b>设的。④ 活字印刷术是<b>毕昇</b>发明的，沈括在《梦溪笔谈》里<b>记载</b>了它。⑤ 1276 年<b>南宋灭亡</b>，1279 年<b>元朝完成统一</b>，两个年份别混。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份、推行的措施和南移步骤。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：辽、北宋、西夏、金、南宋、元的建立顺序，某一年哪几个政权并立，常配合年代尺考查。</li>
+<li><b>措施与影响</b>：宋初加强中央集权的措施，以及“重文轻武”的积极和消极影响，要会一分为二地评价。</li>
+<li><b>原因类题</b>：经济重心南移的原因，从“北方战乱、人口南迁、南方安定、自然条件好、技术进步”几方面答。</li>
+<li><b>制度意义</b>：元朝行省制度的作用；宣政院、澎湖巡检司说明了什么。表述要和课本一致。</li>
+</ul>
+<div class="q"><b>典型设问</b>　宋初大臣赵普说：“惟稍夺其权，制其钱谷，收其精兵，则天下自安矣。”宋太祖分别采取了哪些措施来落实这三句话？这些措施带来了什么影响？<br><b>怎么想</b>　三句话逐一对应：“夺其权”→派文臣任知州、设通判；“制其钱谷”→设转运使，地方财赋收归中央；“收其精兵”→收回将领兵权，精兵归中央。影响要<b>两面写</b>：加强了中央集权、社会安定；但也造成军队战斗力减弱、官员冗余、财政负担加重。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 6 课</p><p>年代与史实依据统编版历史教科书；政权并立图和南移天平都是示意，不表示实际地理位置、疆域和具体数据。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

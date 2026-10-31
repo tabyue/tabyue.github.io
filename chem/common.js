@@ -516,7 +516,8 @@
     var last = performance.now(), t0 = last, stop = false;
     function tick(now) {
       if (stop) return;
-      var dt = Math.min(0.05, (now - last) / 1000); last = now;
+      /* 第一帧的时间戳可能比 performance.now() 早一点，dt 会是负数；夹在 0～0.05 秒之间 */
+      var dt = Math.max(0, Math.min(0.05, (now - last) / 1000)); last = now;
       if (fn(dt, (now - t0) / 1000) === false || REDUCED) return;
       requestAnimationFrame(tick);
     }

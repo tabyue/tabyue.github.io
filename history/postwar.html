@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动冷战时间轴，切换世界格局从两极到多极化的示意图，配对联合国与世贸组织，再用天平辨析经济全球化的利弊。历史互动馆第 26 课，对应统编版九年级下册第五、六单元。">
+<meta property="og:title" content="历史互动馆 · 二战后的世界与和平发展">
+<title>二战后的世界与和平发展 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="postwar.js"></script>
+</head>
+<body data-module="postwar">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 26 课 <span>/</span> 九年级下册 第五、六单元</p><h1>二战后的世界与和平发展</h1><p class="subtitle">二战刚结束，美苏就从盟友变成对手，世界对峙了四十多年。冷战结束后，世界朝着多极化走去，各国的经济也越连越紧。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="冷战时间轴">
+<h2>冷战与战后世界时间轴</h2>
+<p class="panel-sub">拖动下面的滑块选一个年份，或者点时间轴上的事件。下面的色带是当时的世界格局。</p>
+<svg id="tl" viewBox="0 0 400 240" role="img" aria-label="1945 年到 2005 年大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">1947 年</output></div><input id="year-in" type="range" min="1945" max="2005" step="1" value="1947"><div class="ruler"><span>1945</span><span>1975</span><span>2005</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="年份读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="era-badge">两极形成</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这一年前后发生了什么</span><strong id="r-event" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="美苏两大阵营对照">
+<h2>两大阵营怎么对着干</h2>
+<table class="compare" id="bloc-table"><thead><tr><th>方面</th><th>美国一方</th><th>苏联一方</th></tr></thead><tbody>
+<tr data-k="pol"><td>政治</td><td>杜鲁门主义（1947）</td><td>共产党和工人党情报局（1947）</td></tr>
+<tr data-k="eco"><td>经济</td><td>马歇尔计划（1947 年提出）</td><td>经济互助委员会（1949）</td></tr>
+<tr data-k="mil"><td>军事</td><td>北约（1949）</td><td>华约（1955）</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="世界格局示意">
+<h2>世界格局：从两极到多极化</h2>
+<p class="panel-sub">切换三个时期，再点圆圈看说明。这是关系示意图，不是地图。</p>
+<svg id="pole" viewBox="0 0 400 270" role="img" aria-label="世界主要力量关系示意图"></svg>
+<div class="ctl-row"><span>时期</span><div class="chips small" id="pole-chips"></div></div>
+</section>
+<section class="readout" aria-label="格局读数">
+<div class="readout-head"><h2 id="p-name">—</h2><span class="badge" id="p-badge">—</span></div>
+<div class="stat-grid">
+<div class="stat wide"><span>这个时期的世界格局</span><strong id="p-shape" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="p-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 从两个班长到班委会</h3><p>两极格局像全班只有<b>两个班长</b>，同学都得站队，两边互相较劲。多极化像慢慢变成了<b>班委会</b>：有一个说话最响的，还有几个有实力的委员，大事越来越需要商量。不过这个过程还没有完成，所以教材说的是“趋势”。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="联合国与世贸组织配对">
+<h2>联合国和世贸组织配对</h2>
+<p class="panel-sub">每一条说的是哪个组织？选错了可以再选。</p>
+<div class="ctl-row" style="margin:0 0 10px"><span class="badge" id="org-badge">已配对 0 / 8</span></div>
+<div id="org-list" style="display:flex;flex-direction:column;gap:8px"></div>
+</section>
+<section class="readout figure" aria-label="经济全球化利弊天平">
+<div class="readout-head"><h2>经济全球化天平</h2><span class="badge" id="glob-badge">已放 0 / 6</span></div>
+<p style="font-size:13.5px;line-height:1.7;margin:6px 0 8px;color:var(--muted)">判断每条说法是有利影响还是不利影响，放上天平。</p>
+<svg id="scale" viewBox="0 0 400 150" role="img" aria-label="利弊天平示意"></svg>
+<div id="glob-list" style="display:flex;flex-direction:column;gap:8px;margin-top:8px"></div>
+<p class="lead" id="glob-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 两极格局为什么会走向多极化</h3>
+<p class="derive-lead">这两个单元的主线就是世界格局的变化。按下面五步想，事件就串起来了。</p>
+<ol>
+<li><h4>战后只剩两个超级大国</h4><p>二战后美国实力最强，苏联军事力量强大。两国社会制度和意识形态对立，美国又想称霸世界，昔日盟友走向对抗。</p></li>
+<li><h4>冷战让世界分成两边</h4><p>1947 年杜鲁门主义出台，标志冷战开始。冷战指除直接武装冲突以外的各种敌对活动。1949 年北约、1955 年华约成立，两极对峙格局形成。</p></li>
+<li><h4>新力量慢慢长起来</h4><p>西欧走向联合，日本经济快速发展。中国的国际地位提高，亚非拉国家纷纷独立，第三世界兴起。两极格局受到冲击。</p></li>
+<li><h4>苏联解体，两极结束</h4><p>苏联长期积累的问题没有解决，改革又遭遇失败。1991 年底苏联解体，两极格局结束。这是社会主义发展中的严重挫折，但不等于社会主义的失败。</p></li>
+<li><h4>走向多极化</h4><p>美国成为唯一的超级大国，但无法一家说了算。欧盟、日本、俄罗斯、中国等力量都在发挥作用。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>格局变化的根本原因是各国实力对比发生了变化。今天的世界正朝着多极化趋势发展，和平与发展是时代的主题。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>冷战与两极格局</h3><p>1947 年<b>杜鲁门主义</b>标志冷战开始，同年提出马歇尔计划。1949 年北约、1955 年华约成立，形成两极对峙。1991 年<b>苏联解体</b>，两极格局结束。</p></div></div>
+<div class="fact"><div><h3>资本主义和社会主义的变化</h3><p>战后资本主义国家调整政策，经济较快发展。西欧走向联合，1993 年欧盟成立；日本成为经济大国。苏联多次改革未能成功，东欧发生剧变。</p></div></div>
+<div class="fact"><div><h3>亚非拉国家的新发展</h3><p>亚非拉国家纷纷走向独立。1955 年万隆会议是亚非国家团结合作的标志；1960 年有 17 个非洲国家独立，这一年被称为“非洲独立年”；1999 年底巴拿马收回运河主权。</p></div></div>
+<div class="fact"><div><h3>两大组织与全球化</h3><p><b>联合国</b> 1945 年成立，中华人民共和国 1971 年恢复合法席位。<b>世贸组织</b> 1995 年成立，中国 2001 年加入。经济全球化<b>既是机遇，也是挑战</b>。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① 冷战开始的标志是杜鲁门主义，<b>不是</b>马歇尔计划。② 冷战不等于没有战争，局部地区仍有热战，比如朝鲜战争。③ 中国 1971 年是<b>恢复</b>联合国合法席位，不是第一次加入。④ 多极化是<b>趋势</b>，并没有最终形成；现在美国仍是唯一的超级大国。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份和世界格局时期。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>标志事件</b>：冷战开始、两极形成、两极结束分别以什么为标志，是最常见的问法。</li>
+<li><b>格局变化</b>：按时间说出两极到多极化的过程，以及背后的实力变化。</li>
+<li><b>国际组织</b>：联合国和世贸组织的成立时间、作用，以及中国与它们的关系。</li>
+<li><b>辩证看问题</b>：说出经济全球化的利和弊，以及我们应该怎么应对。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料概述：1991 年以后，美国成为唯一的超级大国，欧盟、日本、俄罗斯、中国等力量也在国际事务中发挥越来越大的作用。这反映了世界格局的什么趋势？<br><b>怎么想</b>　抓住“唯一的超级大国”和“多种力量都在发挥作用”两个信息，答案是世界格局向<b>多极化</b>方向发展。注意写“趋势”，不要写成多极格局已经形成。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 26 课</p><p>年代与史实依据统编版历史教科书；世界格局图为关系示意，圆圈大小和位置不表示实际国力、地理位置和疆域。本课不画地图。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

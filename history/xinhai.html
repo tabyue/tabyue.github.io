@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份走一遍从兴中会到张勋复辟的大事并排出先后；把同盟会纲领和三民主义一一配对；一步步展开辛亥革命的因果链，看清它的意义和局限。历史互动馆第 9 课，对应统编版八年级上册第三单元。">
+<meta property="og:title" content="历史互动馆 · 辛亥革命与中华民国建立">
+<title>辛亥革命与中华民国建立 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="xinhai.js"></script>
+</head>
+<body data-module="xinhai">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 9 课 <span>/</span> 八年级上册 第三单元</p><h1>辛亥革命与中华民国建立</h1><p class="subtitle">1912 年，延续两千多年的君主专制制度结束了。可是没过几年，又有人想当皇帝——这场革命到底成功了没有？</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="辛亥革命时间轴">
+<h2>从兴中会到张勋复辟</h2>
+<p class="panel-sub">拖动滑块选一个年份，或者点时间轴上的事件。1912 年一年里有三件大事。</p>
+<svg id="tl" viewBox="0 0 400 250" role="img" aria-label="1894 年到 1917 年大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">1911 年</output></div><input id="year-in" type="range" min="1890" max="1920" step="1" value="1911"><div class="ruler"><span>1890</span><span>1905</span><span>1920</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="年份读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="era-badge">清朝末年</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这一年发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="排序">
+<h2>排一排：谁先谁后</h2>
+<p class="panel-sub" style="margin-bottom:0">按发生的先后依次点击，点错了可以再点一次取消。</p>
+<div id="ord"></div>
+<p class="lead" id="ord-msg" style="font-size:14px;margin-top:8px" aria-live="polite"></p>
+<div class="btn-row" style="margin-top:6px"><button class="ghost-btn" id="ord-reset" type="button">打乱重来</button></div>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="三民主义配对">
+<h2>同盟会纲领配三民主义</h2>
+<p class="panel-sub">给左边每一句纲领选一个“主义”，图上会连线；三句都选完自动判对错。</p>
+<svg id="pair" viewBox="0 0 400 190" role="img" aria-label="同盟会纲领与三民主义连线图"></svg>
+<div id="pair-rows"></div>
+<div class="btn-row"><button class="ghost-btn" id="pair-reset" type="button">清空重配</button></div>
+</section>
+<section class="readout" aria-label="三民主义">
+<div class="readout-head"><h2>三民主义</h2><span class="badge" id="pair-badge">已配 0 / 3</span></div>
+<div class="stat-grid">
+<div class="stat wide"><span>民族主义</span><strong id="m-nz" style="font-size:16px">—</strong></div>
+<div class="stat wide"><span>民权主义</span><strong id="m-nq" style="font-size:16px">—</strong></div>
+<div class="stat wide"><span>民生主义</span><strong id="m-ns" style="font-size:16px">—</strong></div>
+</div>
+<p class="lead" id="pair-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="辛亥革命因果链">
+<h2>辛亥革命因果链</h2>
+<p class="panel-sub">按“下一步”从背景一路展开到意义和局限，也可以直接点步骤条。</p>
+<svg id="chain" viewBox="0 0 400 236" role="img" aria-label="辛亥革命背景、经过、结果、意义与局限示意"></svg>
+<div class="steps" id="chain-steps"></div>
+<div class="btn-row"><button class="big-btn" id="chain-next" type="button">下一步</button><button class="ghost-btn" id="chain-reset" type="button">从头看</button></div>
+</section>
+<section class="readout" aria-label="因果链说明">
+<div class="readout-head"><h2 id="ch-name">背景</h2><span class="badge" id="ch-badge">1911 年以前</span></div>
+<div class="stat-grid">
+<div class="stat wide"><span>关键人物</span><strong id="ch-who" style="font-size:17px">—</strong></div>
+</div>
+<p class="lead" id="ch-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 班长是怎么来的</h3><p>君主专制像一个班的班长<b>永远由一家人当</b>，想怎么管就怎么管，还要传给儿子。民主共和像班长<b>由全班选出来</b>，有任期，还得遵守大家定的班规（《临时约法》）。辛亥革命把“世袭班长”赶下了台，从此谁想再当“世袭班长”，全班都不答应——可班里欺负人的高年级（列强）和收保护费的老规矩（封建势力）还在。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 辛亥革命是成功了，还是失败了</h3>
+<p class="derive-lead">考试最爱问“辛亥革命的意义”和“局限”。把成功和失败分开看，两头都答得出来。</p>
+<ol>
+<li><h4>改良走不通，只能革命</h4><p>戊戌变法失败、《辛丑条约》签订后，越来越多的人认识到：清政府已经成为“洋人的朝廷”，只有推翻它，中国才有出路。</p></li>
+<li><h4>有了组织和纲领</h4><p>孙中山先建立兴中会，1905 年又成立中国同盟会，提出三民主义。革命有了统一的政党和指导思想。</p></li>
+<li><h4>成功的一面</h4><p>武昌起义后，中华民国成立、清帝退位，<b>两千多年的君主专制制度结束了</b>。袁世凯称帝、张勋复辟都很快失败，说明民主共和观念已经深入人心。</p></li>
+<li><h4>失败的一面</h4><p>革命果实被袁世凯窃取，列强的侵略和封建势力的统治都还在，中国<b>半殖民地半封建社会的性质没有改变</b>，反帝反封建的任务没有完成。</p></li>
+<li><h4>于是寻找新的出路</h4><p>先进的中国人开始从思想文化上找原因，这就引出了下一课的新文化运动和五四运动。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>辛亥革命是一次伟大的资产阶级民主革命：它推翻了清朝统治，结束了君主专制制度，使民主共和观念深入人心；但它没有改变中国半殖民地半封建社会的性质。答题时<b>意义和局限要分开写</b>。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>孙中山与中国同盟会</h3><p>1894 年孙中山在檀香山建立<b>兴中会</b>，这是第一个资产阶级革命团体。1905 年在日本东京成立<b>中国同盟会</b>，这是第一个全国性的资产阶级革命政党，纲领是“驱除鞑虏，恢复中华，创立民国，平均地权”，孙中山把它阐发为三民主义。</p></div></div>
+<div class="fact"><div><h3>武昌起义与中华民国成立</h3><p>1911 年 10 月 10 日<b>武昌起义</b>爆发，许多省份宣布独立。1912 年 1 月 1 日孙中山在南京就任临时大总统，<b>中华民国成立</b>；2 月 12 日清帝退位，清朝统治结束。</p></div></div>
+<div class="fact"><div><h3>《中华民国临时约法》</h3><p>1912 年 3 月颁布，规定中华民国主权属于国民全体，是中国历史上第一部具有资产阶级共和国宪法性质的法典。同月，袁世凯在北京就任临时大总统，窃取了辛亥革命的果实。</p></div></div>
+<div class="fact"><div><h3>帝制复辟与军阀割据</h3><p>1915 年袁世凯接受日本“二十一条”的大部分要求，年底宣布恢复帝制，遭到全国反对，1916 年被迫取消帝制，不久病死。1917 年张勋拥立溥仪复辟，12 天后失败。此后北洋军阀分裂为皖系、直系、奉系等，割据混战。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① 辛亥革命结束的是<b>君主专制制度</b>，不是“封建社会”，更没有结束半殖民地半封建社会。② <b>袁世凯称帝</b>是自己当皇帝（1915 年），<b>张勋复辟</b>是拥立清朝末代皇帝溥仪（1917 年）。③ 兴中会是第一个资产阶级革命<b>团体</b>，同盟会是第一个全国性的资产阶级革命<b>政党</b>。④ 中华民国成立在前（1 月 1 日），清帝退位在后（2 月 12 日）。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份、配对和因果链进度。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：兴中会、同盟会、武昌起义、中华民国成立、袁世凯称帝、张勋复辟排先后；1911 年为什么叫“辛亥”。</li>
+<li><b>纲领与思想</b>：同盟会纲领的四句话分别对应三民主义的哪一项，常以选择题出现。</li>
+<li><b>评价题</b>：辛亥革命的意义和局限，要“一分为二”地答，不能只写一面。</li>
+<li><b>辨析题</b>：袁世凯称帝和张勋复辟的区别；《临时约法》的性质。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料：“驱除鞑虏，恢复中华，创立民国，平均地权。”这是哪个组织的纲领？其中“创立民国”对应三民主义中的哪一项？<br><b>怎么想</b>　这四句话是 1905 年成立的<b>中国同盟会</b>的纲领。“驱除鞑虏，恢复中华”是民族主义，“创立民国”是<b>民权主义</b>，“平均地权”是民生主义。<b>先认出组织，再一句一句对应三民主义</b>，就不会张冠李戴。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 9 课</p><p>年代与史实依据统编版历史教科书；因果链为结构示意，帮助理解前因后果。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

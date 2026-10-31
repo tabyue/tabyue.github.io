@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份走一遍 2003—2022 年的重大事件和科技成就；把神舟、嫦娥、北斗、复兴号、港珠澳大桥连到所属领域；把载人航天的几大步排好先后。历史互动馆第 15 课，对应统编版八年级下册第五、六、七单元。">
+<meta property="og:title" content="历史互动馆 · 中国特色社会主义进入新时代">
+<title>中国特色社会主义进入新时代 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="newera.js"></script>
+</head>
+<body data-module="newera">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 15 课 <span>/</span> 八年级下册 第五、六、七单元</p><h1>中国特色社会主义进入新时代</h1><p class="subtitle">从神舟五号把中国人第一次送上太空，到中国空间站全面建成；从北京奥运会到北京冬奥会。这一课用时间轴和成就配对，把这些大事串起来。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="2003—2022 年时间轴">
+<h2>2003—2022 大事时间轴</h2>
+<p class="panel-sub">拖动下面的滑块选一个年份，或者点时间轴上的事件。2008、2020、2022 年各有两件大事。</p>
+<svg id="tl" viewBox="0 0 400 250" role="img" aria-label="2003 年至 2022 年大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">2003 年</output></div><input id="year-in" type="range" min="2003" max="2022" step="1" value="2003"><div class="ruler"><span>2003</span><span>2012</span><span>2022</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="年份读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="per-badge">21 世纪</span></div>
+<div class="stat-grid">
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat"><span>属于哪个领域</span><strong id="r-field" style="font-size:19px">—</strong></div>
+<div class="stat wide"><span>这一年发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="五类大事">
+<h2>按领域看这些大事</h2>
+<table class="compare" id="field-table"><tbody>
+<tr data-f="space"><td>载人航天</td><td>神舟五号、神舟七号、神舟九号、中国空间站</td></tr>
+<tr data-f="moon"><td>月球探测</td><td>嫦娥一号、嫦娥四号、嫦娥五号</td></tr>
+<tr data-f="nav"><td>卫星导航</td><td>北斗三号全球卫星导航系统</td></tr>
+<tr data-f="traffic"><td>交通工程</td><td>复兴号动车组、港珠澳大桥</td></tr>
+<tr data-f="sport"><td>体育盛会</td><td>2008 年北京奥运会、2022 年北京冬奥会</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="科技成就与领域配对">
+<h2>成就配对：它属于哪个领域</h2>
+<p class="panel-sub">先点左边一项成就，再点右边的领域，就能连上线。有一个领域要连两项。六项都连对，年份会全部亮出来。</p>
+<svg id="pair" viewBox="0 0 400 250" role="img" aria-label="科技成就与所属领域配对图"></svg>
+<div class="btn-row"><button class="ghost-btn" id="pair-reset" type="button">清空重连</button></div>
+</section>
+<section class="readout" aria-label="成就说明">
+<div class="readout-head"><h2 id="a-name">神舟五号</h2><span class="badge" id="a-badge">—</span></div>
+<div class="stat-grid">
+<div class="stat"><span>连对了几项</span><strong id="a-score">—</strong></div>
+<div class="stat"><span>这一项属于</span><strong id="a-field" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="a-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 学游泳要一步步来</h3><p>学游泳，先要能下水、再安全上岸；接着学换气、学转身；最后才能在水里待很久。载人航天也是这样一步步来的：先把航天员送上太空再安全接回来，再练出舱、对接，最后建成<b>空间站</b>，让航天员长期在太空工作和生活。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="大事排序">
+<h2>排一排：谁先谁后</h2>
+<p class="panel-sub">先选一组，再按你认为的先后顺序依次点击。点满后自动判对错，并亮出年份。</p>
+<div class="ctl-row"><span>选一组</span><div class="chips small" id="ord-chips"></div></div>
+<div id="ord"></div>
+<div class="btn-row"><button class="ghost-btn" id="ord-reset" type="button">重新排</button></div>
+</section>
+<section class="readout" aria-label="排序结果">
+<div class="readout-head"><h2 id="ord-name">载人航天这条线</h2><span class="badge" id="ord-badge">还没排</span></div>
+<div class="stat-grid">
+<div class="stat"><span>排对了几项</span><strong id="ord-score">—</strong></div>
+<div class="stat"><span>最早的一项</span><strong id="ord-first" style="font-size:17px">—</strong></div>
+</div>
+<p class="lead" id="ord-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 中国空间站为什么要分好几步才建成</h3>
+<p class="derive-lead">空间站不是一下子造出来的。把载人航天的几大步按时间排好，就能看出每一步都在为下一步做准备。</p>
+<ol>
+<li><h4>先定好路线</h4><p>1992 年，我国载人航天工程启动，定下“三步走”：先发射载人飞船，再突破出舱和交会对接、发射空间实验室，最后建造空间站。</p></li>
+<li><h4>第一步：送上去，接回来</h4><p>2003 年，神舟五号载人飞船发射成功。航天员杨利伟在太空飞行约 21 小时后安全返回，成为第一个进入太空的中国人。</p></li>
+<li><h4>第二步：学会出舱</h4><p>2008 年，神舟七号飞行，航天员翟志刚完成了中国人第一次太空出舱活动。</p></li>
+<li><h4>第二步：学会对接</h4><p>2012 年，神舟九号与天宫一号完成载人交会对接；2016 年又发射了天宫二号空间实验室。</p></li>
+<li><h4>第三步：建空间站</h4><p>2021 年天和核心舱发射；2022 年问天、梦天两个实验舱先后对接，中国空间站全面建成。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>空间站是一步步练出来的：能上能回 → 能出舱 → 能对接 → 能长期驻留。前一步的本领是后一步的基础，从 1992 年启动到 2022 年建成，用了 30 年。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>载人航天</h3><p><b>2003 年</b>神舟五号发射成功，杨利伟成为第一个进入太空的中国人，我国成为世界上第三个独立掌握载人航天技术的国家。2008 年神舟七号实现中国人首次太空出舱；<b>2022 年</b>中国空间站全面建成。</p></div></div>
+<div class="fact"><div><h3>探月与导航</h3><p>嫦娥工程是我国的探月工程：2007 年嫦娥一号发射；2019 年嫦娥四号在月球背面软着陆；2020 年嫦娥五号带回月球样品。北斗是我国自己的卫星导航系统，<b>2020 年</b>北斗三号全球卫星导航系统建成开通。</p></div></div>
+<div class="fact"><div><h3>交通工程</h3><p>复兴号是我国自主研发的高速动车组，2017 年在京沪高铁正式运营。<b>2018 年</b>，连接香港、珠海、澳门的<b>港珠澳大桥</b>开通，三地之间的往来更加方便。</p></div></div>
+<div class="fact"><div><h3>体育盛会</h3><p><b>2008 年</b>北京举办第 29 届夏季奥运会；<b>2022 年</b>北京又举办第 24 届冬季奥运会。北京成为世界上第一个既举办过夏季奥运会、又举办过冬季奥运会的城市，被称为“双奥之城”。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>名字和领域别配错</b>：神舟是载人飞船，嫦娥是探月，北斗是卫星导航，复兴号是高铁动车组。② <b>神舟五号不是第一艘神舟飞船</b>，它是第一艘<b>载人</b>的神舟飞船。③ 北京 2008 年办的是<b>夏季</b>奥运会，2022 年是<b>冬季</b>奥运会。④ 嫦娥四号是在月球<b>背面</b>着陆，带回月球样品的是<b>嫦娥五号</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份、配对和排序分组。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：把神舟五号、北京奥运会、港珠澳大桥开通、北京冬奥会等事件排先后，或者根据年份找事件。</li>
+<li><b>成就识别</b>：给出神舟、嫦娥、北斗、空间站、复兴号等成就，判断它属于哪个领域、大约在哪一年。</li>
+<li><b>材料题</b>：给一段介绍某项成就的材料，问它是哪项成就、有什么意义，答题要抓住“第一次”“自主”这类关键词。</li>
+<li><b>家乡相关</b>：港珠澳大桥连接香港、珠海、澳门，常和粤港澳大湾区一带的变化一起出现。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料大意：2003 年 10 月，航天员杨利伟乘坐飞船进入太空，在太空飞行约 21 小时后安全返回。这艘飞船叫什么？这次飞行有什么意义？<br><b>怎么想</b>　第一问从年份和人物锁定：2003 年、杨利伟，是<b>神舟五号</b>。第二问按课本答：杨利伟成为第一个进入太空的中国人，我国成为世界上<b>第三个</b>独立掌握载人航天技术的国家。<b>先用年份和人物认出成就，再说“第一次”的意义</b>，就答全了。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 15 课</p><p>年代与史实依据统编版历史教科书；配对图和排序题只表示领域归类与年份先后。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

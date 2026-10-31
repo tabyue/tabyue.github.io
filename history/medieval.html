@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份，同时看西欧、拜占庭、阿拉伯、日本和同期中国在做什么；点开西欧封建等级，弄懂“我的附庸的附庸不是我的附庸”；一步步看城市怎样争得自治。历史互动馆第 18 课，对应统编版九年级上册第三、四单元。">
+<meta property="og:title" content="历史互动馆 · 中古时期的欧洲、亚洲、非洲和美洲">
+<title>中古时期的欧洲、亚洲、非洲和美洲 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="medieval.js"></script>
+</head>
+<body data-module="medieval">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 18 课 <span>/</span> 九年级上册 第三、四单元</p><h1>中古时期的欧洲、亚洲、非洲和美洲</h1><p class="subtitle">西罗马灭亡后的一千年里，西欧在城堡和庄园里过日子，日本向唐朝学习，阿拉伯商人把东西方连在一起。同一年，世界各地在发生什么？</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="中古世界时间轴">
+<h2>中古世界一千年</h2>
+<p class="panel-sub">拖动滑块选一个年份，或者点时间轴上的事件。下面的色带是同一时期的中国朝代。</p>
+<svg id="tl" viewBox="0 0 400 240" role="img" aria-label="中古时期世界大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">476 年</output></div><input id="year-in" type="range" min="400" max="1500" step="1" value="476"><div class="ruler"><span>400</span><span>950</span><span>1500</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="年份读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="cent-badge">5 世纪</span></div>
+<div class="stat-grid">
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat"><span>同期的中国</span><strong id="r-china" style="font-size:18px">—</strong></div>
+<div class="stat wide"><span>这一年前后发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="这一年的世界">
+<h2>同一年，世界各地</h2>
+<table class="compare" id="world"><tbody>
+<tr data-r="west"><td>西欧</td><td id="w-west">—</td></tr>
+<tr data-r="byz"><td>拜占庭</td><td id="w-byz">—</td></tr>
+<tr data-r="arab"><td>阿拉伯</td><td id="w-arab">—</td></tr>
+<tr data-r="japan"><td>日本</td><td id="w-japan">—</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="西欧封建等级">
+<h2>西欧封建等级：谁听谁的</h2>
+<p class="panel-sub">点任意一层，看它得到什么、要尽什么义务。再按下面的按钮，看国王能不能越级指挥骑士。</p>
+<svg id="feud" viewBox="0 0 400 260" role="img" aria-label="西欧封君封臣等级示意"></svg>
+<div class="btn-row"><button class="big-btn" id="fd-demo" type="button">国王直接命令骑士出兵</button></div>
+</section>
+<section class="readout" aria-label="等级说明">
+<div class="readout-head"><h2 id="fd-name">国王</h2><span class="badge" id="fd-badge">第 1 层</span></div>
+<div class="stat-grid">
+<div class="stat"><span>得到什么</span><strong id="fd-get" style="font-size:17px">—</strong></div>
+<div class="stat"><span>要尽什么义务</span><strong id="fd-duty" style="font-size:17px">—</strong></div>
+</div>
+<p class="lead" id="fd-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 层层分包的工程</h3><p>大老板把工程包给甲，甲又把一部分分包给乙。乙只跟甲签了合同，只对甲负责；大老板想越过甲直接指挥乙，乙可以说：“我跟你没签合同。”西欧的封君和封臣就是这样<b>一层管一层</b>，所以国王的权力其实很有限。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel" aria-label="文明成就配对">
+<h2>这是哪里的成就</h2>
+<p class="panel-sub">每行点一个地区，点了就判，不能改。<b id="match-score">已答 0 / 8</b></p>
+<div class="choice-list" id="match-list"></div>
+</section>
+<section class="card panel" aria-label="城市怎样获得自治">
+<h2>从庄园到自治城市</h2>
+<p class="panel-sub">西欧城市一开始建在封建主的领地上。按“下一步”，看市民怎样争得自治。</p>
+<div class="steps" id="city-steps"></div>
+<div class="source-card"><p id="city-text"></p></div>
+<div class="btn-row"><button class="big-btn" id="city-next" type="button">下一步</button><button class="ghost-btn" id="city-reset" type="button">从头再来</button></div>
+<table class="compare" id="city-table"><thead><tr><th></th><th>庄园</th><th>自治城市</th></tr></thead><tbody>
+<tr><td>谁说了算</td><td>领主</td><td>市民选出的市政官员</td></tr>
+<tr><td>人身自由</td><td>农奴没有</td><td>市民有</td></tr>
+<tr><td>主要干什么</td><td>种地，自给自足</td><td>手工业和商业</td></tr>
+<tr><td>打官司</td><td>领主主持的庄园法庭</td><td>城市自己的法庭</td></tr>
+</tbody></table>
+<p class="panel-sub" style="margin-top:8px">走到“获得自治”这一步，表格会亮起来。</p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 阿拉伯人为什么被称为东西方文化交流的桥梁</h3>
+<p class="derive-lead">中古时期的世界并不是各过各的。把阿拉伯人做的事一件件拆开，就能看懂这座“桥”是怎么搭起来的。</p>
+<ol>
+<li><h4>地处东西方之间</h4><p>8 世纪中期，阿拉伯帝国已经成为地跨亚、非、欧三洲的大帝国，正好夹在中国、印度和欧洲之间。</p></li>
+<li><h4>商人四处往来</h4><p>阿拉伯商人从陆路和海路往来于中国、印度、非洲和欧洲，货物和知识跟着他们一起流动。</p></li>
+<li><h4>向东方学习</h4><p>8 世纪中期，中国的造纸术传到了阿拉伯；印度人创造的数字也被阿拉伯人学去、加以改进。</p></li>
+<li><h4>保存希腊罗马的学问</h4><p>阿拉伯学者把古希腊的哲学、医学、数学等著作翻译成阿拉伯文，很多古典学问因此保存了下来。</p></li>
+<li><h4>再传到欧洲</h4><p>这些知识后来经阿拉伯人传入欧洲。今天全世界通用的“阿拉伯数字”，其实是印度人创造、阿拉伯人传播的。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>阿拉伯人凭着横跨三洲的位置和发达的商业，一边吸收东方的发明，一边保存古典文化，再把它们传给欧洲，成了沟通东西方文化的<b>桥梁</b>。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>西欧封建等级</h3><p>476 年西罗马帝国灭亡后，日耳曼人建立了许多王国，486 年克洛维建立<b>法兰克王国</b>。843 年《凡尔登条约》把帝国一分为三。西欧实行<b>封君封臣制度</b>：国王 → 大封建主 → 小封建主（骑士），层层分封，“我的附庸的附庸不是我的附庸”；最底层的<b>农奴</b>没有人身自由。</p></div></div>
+<div class="fact"><div><h3>城市与大学</h3><p>大约从 11 世纪起，西欧城市兴起。市民通过<b>赎买或武装斗争</b>获得自治权，可以选举市政官员、设立城市法庭。城市里出现了大学，意大利的<b>博洛尼亚大学</b>、法国的<b>巴黎大学</b>是欧洲最早的一批大学。</p></div></div>
+<div class="fact"><div><h3>拜占庭与阿拉伯</h3><p><b>拜占庭帝国</b>就是东罗马帝国，6 世纪查士丁尼下令编纂法典（《查士丁尼法典》），1453 年被奥斯曼土耳其灭亡。阿拉伯半岛在 7 世纪前期统一，8 世纪中期成为地跨亚、非、欧三洲的<b>阿拉伯帝国</b>。</p></div></div>
+<div class="fact"><div><h3>日本、非洲和美洲</h3><p>646 年日本<b>大化改新</b>，学习唐朝制度，建立以天皇为中心的中央集权国家，逐步走向封建社会。非洲南部留下了石头砌成的大津巴布韦古城遗址。美洲的<b>玛雅人</b>创造了象形文字和精确的历法。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① “<b>我的附庸的附庸不是我的附庸</b>”：封臣只对直接封君负责，国王管不到骑士，这和中国的中央集权正好相反。② <b>阿拉伯数字是印度人创造的</b>，阿拉伯人只是把它传到欧洲。③ <b>拜占庭帝国 = 东罗马帝国</b>，灭亡于 1453 年，不是 476 年。④ 大化改新学习的是中国<b>唐朝</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份和等级。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：476 西罗马灭亡、486 法兰克王国建立、646 大化改新、1453 拜占庭灭亡，常让你排先后，或和同期的中国朝代对应（大化改新时是唐朝）。</li>
+<li><b>制度特点</b>：西欧封君封臣制度的特点是“我的附庸的附庸不是我的附庸”，常和中国的郡县制、中央集权作比较。</li>
+<li><b>改革与学习</b>：大化改新学习唐朝，使日本逐步走向封建社会，体现了中日文化交流。</li>
+<li><b>文化交流</b>：阿拉伯人在东西方之间的“桥梁”作用；阿拉伯数字、造纸术西传。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料：7 世纪中期，日本进行改革，把贵族私有的土地和部民收归国家；政治上仿照唐朝制度，建立以天皇为中心的中央集权国家。这次改革叫什么？它说明了什么？<br><b>怎么想</b>　“7 世纪中期”“仿照唐朝”锁定 646 年的<b>大化改新</b>。说明：日本积极学习先进的中国文化，改革使日本逐步走向封建社会。<b>先用时间和关键词锁定事件，再从“学谁、结果怎样”两方面作答</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 18 课</p><p>年代与史实依据统编版历史教科书；封建等级图是结构示意，不表示人数比例和实际地理位置。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

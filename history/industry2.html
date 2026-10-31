@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份把蒸汽时代和电气时代的发明排到一条线上；切换两次工业革命，看动力从蒸汽换成电力和内燃机；一步步推出城市化带来的问题和应对；给牛顿、达尔文、贝多芬等人配上成就。历史互动馆第 23 课，对应统编版九年级下册第二单元。">
+<meta property="og:title" content="历史互动馆 · 第二次工业革命和近代科学文化">
+<title>第二次工业革命和近代科学文化 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="industry2.js"></script>
+</head>
+<body data-module="industry2">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 23 课 <span>/</span> 九年级下册 第二单元</p><h1>第二次工业革命和近代科学文化</h1><p class="subtitle">从烧煤的蒸汽机到一按开关就亮的电灯，只隔了一百来年。电灯、电话、汽车、飞机，都是这一百来年里出现的。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="两次工业革命发明时间轴">
+<h2>从蒸汽到电：发明时间轴</h2>
+<p class="panel-sub">赭红色是第一次工业革命的发明，青色是第二次的。拖动滑块或点一个发明。</p>
+<svg id="tl" viewBox="0 0 400 240" role="img" aria-label="1760 年到 1910 年重要发明时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">1876 年</output></div><input id="year-in" type="range" min="1760" max="1910" step="1" value="1876"><div class="ruler"><span>1760</span><span>1835</span><span>1910</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="发明读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="gen-badge">第二次工业革命</span></div>
+<div class="stat-grid">
+<div class="stat"><span>课本上怎么说这几年</span><strong id="r-dec" style="font-size:20px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这一年前后的发明</span><strong id="r-inv" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="年代的读法">
+<h2>“××世纪××年代”怎么读</h2>
+<table class="compare"><tbody>
+<tr id="row-1760"><td>18 世纪 60 年代</td><td>1760—1769 年。第一次工业革命从这时的英国开始。</td></tr>
+<tr id="row-1870"><td>19 世纪 70 年代</td><td>1870—1879 年。第二次工业革命从这时开始。</td></tr>
+<tr id="row-1900"><td>世纪之交</td><td>1900 年是 19 世纪的最后一年，1901 年才是 20 世纪的第一年。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="两次工业革命动力链">
+<h2>动力从哪来，送到哪去</h2>
+<p class="panel-sub">切换两次工业革命，按“开动机器”看动力怎么流动。点任意一个方框看说明。</p>
+<svg id="pw" viewBox="0 0 400 240" role="img" aria-label="两次工业革命能源、动力与用途示意"></svg>
+<div class="ctl-row"><span>哪一次</span><div class="chips small" id="pw-chips"></div></div>
+<div class="btn-row"><button class="big-btn" id="pw-run" type="button">开动机器</button></div>
+</section>
+<section class="readout" aria-label="两次工业革命对比">
+<div class="readout-head"><h2 id="pw-name">第二次工业革命</h2><span class="badge" id="pw-badge">电气时代</span></div>
+<div class="stat-grid">
+<div class="stat"><span>开始时间</span><strong id="pw-time" style="font-size:18px">—</strong></div>
+<div class="stat"><span>主要动力</span><strong id="pw-power" style="font-size:18px">—</strong></div>
+<div class="stat"><span>在哪里发生</span><strong id="pw-where" style="font-size:16px">—</strong></div>
+<div class="stat"><span>突出特点</span><strong id="pw-feat" style="font-size:16px">—</strong></div>
+</div>
+<p class="lead" id="pw-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 自己烧水和接通水管</h3><p>蒸汽机像<b>每家自己烧一锅水</b>：哪里要动力，就得在哪里放锅炉、堆煤，又笨又重。电力像<b>接通了自来水管</b>：发电厂集中发电，电线把电送到工厂和家里，一插就能用。内燃机则像<b>随身带的小水壶</b>，轻便，装在汽车、飞机上也带得动。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="城市化因果链">
+<h2>工厂进城以后：一条因果链</h2>
+<p class="panel-sub">按“下一步”一环一环往下推，也可以点已经出现的方框回看。</p>
+<svg id="ct" viewBox="0 0 400 220" role="img" aria-label="工业化与城市化因果链示意"></svg>
+<p class="lead" id="ct-text" aria-live="polite"></p>
+<div class="btn-row"><button class="big-btn" id="ct-next" type="button">下一步</button><button class="ghost-btn" id="ct-reset" type="button">从头开始</button></div>
+</section>
+<section class="readout" aria-label="近代科学文化配对">
+<div class="readout-head"><h2>科学文化名人配对</h2><span class="badge" id="sc-score">已答 0 / 6</span></div>
+<p class="lead" style="margin-top:0">给每个人点一个代表成就，点了就不能改。</p>
+<div class="choice-list" id="sc-list"></div>
+<div class="btn-row"><button class="ghost-btn" id="sc-reset" type="button">重新配一遍</button></div>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 电力凭什么取代蒸汽，开启“电气时代”</h3>
+<p class="derive-lead">两次工业革命都在换“动力”。弄懂电力强在哪里，就明白为什么说第二次工业革命是又一次巨大飞跃。</p>
+<ol>
+<li><h4>蒸汽机的毛病</h4><p>蒸汽机又大又重，要就地烧煤，动力只能在工厂里用皮带传来传去，搬不走、分不开。</p></li>
+<li><h4>科学先走了一步</h4><p>1831 年英国科学家法拉第发现了电磁感应现象，人们才知道“动”能变成“电”。有了这个原理，才造得出发电机。这就是<b>科学和技术紧密结合</b>。</p></li>
+<li><h4>电能送到远方</h4><p>发电机发出的电，通过电线送到很远的地方，一座电厂能供许多工厂和家庭使用。电动机再把电变回动力，小工厂也用得起。</p></li>
+<li><h4>电改变了生活</h4><p>电灯照亮夜晚，电话让人隔着很远也能说话，电车方便了出行。</p></li>
+<li><h4>内燃机让机器“跑起来”</h4><p>内燃机比蒸汽机轻便，装到车上、飞机上，于是有了汽车和飞机，也带动了石油工业。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>电力和内燃机让动力<b>能远送、能变小、能随车走</b>，生产力又一次大飞跃，人类从“蒸汽时代”进入<b>“电气时代”</b>。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>第二次工业革命</h3><p>19 世纪 70 年代开始。1866 年德国人<b>西门子</b>制成发电机，电力逐渐广泛应用，人类进入<b>“电气时代”</b>。美国人<b>贝尔</b>发明电话，<b>爱迪生</b>发明电灯；德国人<b>卡尔·本茨</b>制成内燃机汽车；1903 年美国<b>莱特兄弟</b>的飞机试飞成功。</p></div></div>
+<div class="fact"><div><h3>两次工业革命的不同</h3><p>第一次从 18 世纪 60 年代的<b>英国</b>开始，靠蒸汽，发明多来自工匠的实践经验；第二次在几个国家<b>同时发生</b>，靠电力和内燃机，<b>科学与技术紧密结合</b>。第二次工业革命中出现了垄断组织。</p></div></div>
+<div class="fact"><div><h3>工业化国家的社会变化</h3><p>工厂集中在城市，大量农村人口进城，<b>城市化</b>加快。随之出现住房拥挤、环境污染、贫富分化等问题。各国改善城市公共设施，德国率先建立社会保险制度。</p></div></div>
+<div class="fact"><div><h3>近代科学与文化</h3><p>科学：<b>牛顿</b>经典力学、<b>达尔文</b>生物进化论（1859 年《物种起源》）、<b>爱因斯坦</b>相对论。文艺：德国音乐家<b>贝多芬</b>（被称为“乐圣”）、荷兰画家<b>梵高</b>《向日葵》、俄国作家<b>列夫·托尔斯泰</b>《战争与和平》。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>“18 世纪 60 年代”是 1760—1769 年</b>，不是 1860 年代；第二次工业革命是 <b>19 世纪 70 年代</b>。② “蒸汽时代”配瓦特改良蒸汽机，“电气时代”配电力的广泛应用，别配反。③ 电话是<b>贝尔</b>，电灯是<b>爱迪生</b>，汽车是<b>卡尔·本茨</b>，飞机是<b>莱特兄弟</b>。④ 相对论是<b>爱因斯坦</b>，经典力学才是牛顿。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份和是哪一次工业革命。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>比较题</b>：两次工业革命的时间、动力、进入的时代、特点，常列表考，也常问“相同点”（都推动生产力发展，都改变了人们的生活）。</li>
+<li><b>发明配对</b>：发明家和发明对应，或者给一件发明问属于哪次工业革命。</li>
+<li><b>时空观念</b>：“××世纪××年代”换算成具体年份，是这一课最常见的失分点。</li>
+<li><b>材料题</b>：从材料里读出城市化带来的问题和应对办法，联系今天的城市生活。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料描述：19 世纪后期，一些工业城市里工厂烟囱林立，工人一家挤在狭小潮湿的房子里，街道污水横流。这反映了工业化带来了什么问题？政府和社会可以怎么应对？<br><b>怎么想</b>　先从材料里找关键词：“烟囱”→<b>环境污染</b>，“挤在狭小的房子”→<b>住房拥挤</b>，“污水”→<b>卫生条件差</b>。应对按课本答：改善城市规划和公共设施（自来水、下水道），建立<b>社会保障制度</b>。<b>问题从材料找，措施从课本找</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 23 课</p><p>年代与史实依据统编版历史教科书；动力链和因果链为示意图。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份看 19 世纪五六十年代世界和中国同时在发生什么；替俄国、美国、日本扫除挡在资本主义面前的障碍；把明治维新的措施分到政治、经济、社会生活三类。历史互动馆第 22 课，对应统编版九年级下册第一单元。">
+<meta property="og:title" content="历史互动馆 · 殖民地人民的反抗与资本主义扩展">
+<title>殖民地人民的反抗与资本主义扩展 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="expand.js"></script>
+</head>
+<body data-module="expand">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 22 课 <span>/</span> 九年级下册 第一单元</p><h1>殖民地人民的反抗与资本主义扩展</h1><p class="subtitle">1861 年这一年，俄国废除农奴制，美国打响内战，中国开始办洋务。几年后日本也开始了明治维新——世界在同一时间“换挡”。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="1850—1875 年横向时间轴">
+<h2>同一时间，世界和中国在干什么</h2>
+<p class="panel-sub">赭红色是世界上的事，青色是同一时期中国的事。拖动滑块或点事件，右边会把两边对照着列出来。</p>
+<svg id="tl" viewBox="0 0 400 270" role="img" aria-label="1850 年到 1875 年世界与中国大事横向时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">1861 年</output></div><input id="year-in" type="range" min="1850" max="1875" step="1" value="1861"><div class="ruler"><span>1850</span><span>1862</span><span>1875</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="横向对照读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="dec-badge">19 世纪 60 年代</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>世界上</span><strong id="r-world" style="font-size:18px">—</strong></div>
+<div class="stat wide"><span>同一时期的中国</span><strong id="r-cn" style="font-size:18px;color:#2f6470">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="殖民地人民的反抗">
+<h2>殖民地人民的反抗</h2>
+<table class="compare"><tbody>
+<tr><td>拉丁美洲</td><td>海地人民在杜桑·卢维杜尔领导下起义，1804 年海地独立，成为拉丁美洲第一个独立的国家。玻利瓦尔（被誉为“解放者”）等人领导了更大范围的独立战争，到 19 世纪 20 年代，拉美大部分地区获得独立。</td></tr>
+<tr><td>印度</td><td>1857—1859 年，印度民族大起义反抗英国殖民统治，章西女王是起义中的女英雄。起义虽然失败，但沉重打击了英国的殖民统治。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="三场变革对比器">
+<h2>三场变革：搬走挡路的“大石头”</h2>
+<p class="panel-sub">选一个国家，看它的资本主义被什么挡住了路，再按“扫除障碍”。示意图，不表示实际地理位置。</p>
+<svg id="rf" viewBox="0 0 400 250" role="img" aria-label="俄国、美国、日本三场变革对比示意"></svg>
+<div class="ctl-row"><span>国家</span><div class="chips small" id="rf-chips"></div></div>
+<div class="ctl-row"><span>看哪方面</span><div class="chips small" id="asp-chips"></div></div>
+<div class="btn-row"><button class="big-btn" id="rf-go" type="button">扫除障碍</button><button class="ghost-btn" id="rf-reset" type="button">全部复原</button></div>
+</section>
+<section class="readout" aria-label="变革详情">
+<div class="readout-head"><h2 id="rf-name">俄国 1861 年改革</h2><span class="badge" id="rf-badge">1861 年</span></div>
+<div class="stat-grid">
+<div class="stat"><span>用什么方式</span><strong id="rf-way" style="font-size:18px">—</strong></div>
+<div class="stat"><span>挡路的障碍</span><strong id="rf-bar" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="rf-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 三辆车，三块石头</h3><p>工业革命以后，资本主义像一辆想加速的车。俄国路上横着<b>农奴制</b>，美国南方挡着<b>黑人奴隶制</b>，日本前面是<b>幕府统治</b>。俄国和日本是“司机自己下车搬石头”（自上而下的改革），美国是南北两边“打了一架”才把石头掀翻（内战）。方法不同，结果一样：路通了。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="明治维新措施分类">
+<h2>明治维新的措施，各归哪一类</h2>
+<p class="panel-sub">每条措施点一个类别，点了就不能改，想重来按下面的按钮。</p>
+<div class="choice-list" id="mj-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px"></div>
+<div class="btn-row"><button class="ghost-btn" id="mj-reset" type="button">重新分一遍</button></div>
+</section>
+<section class="readout" aria-label="分类结果">
+<div class="readout-head"><h2>分类结果</h2><span class="badge" id="mj-score">已答 0 / 6</span></div>
+<div class="stat-grid">
+<div class="stat"><span>你分到“政治”的</span><strong id="mj-zz" style="font-size:16px">—</strong></div>
+<div class="stat"><span>你分到“经济”的</span><strong id="mj-jj" style="font-size:16px">—</strong></div>
+<div class="stat wide"><span>你分到“社会生活”的</span><strong id="mj-sh" style="font-size:16px">—</strong></div>
+</div>
+<p class="lead" id="mj-text" aria-live="polite">记口诀：<b>政治废藩、经济殖产、社会开化</b>。分完后看看哪一类最多——日本最着急的，是把经济和工业搞上去。</p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么三个国家几乎同时“动手术”</h3>
+<p class="derive-lead">1861—1868 年，俄、美、日先后发生大变革。不是巧合，背后是同一股力量在推。</p>
+<ol>
+<li><h4>工业革命让资本主义要“扩张”</h4><p>第一次工业革命以后，机器生产需要大量<b>自由劳动力</b>、原料和市场。谁的旧制度把人捆住，谁就跟不上。</p></li>
+<li><h4>俄国：农奴被拴在土地上</h4><p>农奴不能自由离开地主，工厂招不到工人。克里米亚战争失败，又暴露了俄国的落后。</p></li>
+<li><h4>美国：一国两种制度</h4><p>北方发展工商业，南方用黑人奴隶经营种植园。北方要劳动力和市场，南方要扩大奴隶制，矛盾最终爆发成内战。</p></li>
+<li><h4>日本：国门被打开</h4><p>幕府统治、闭关锁国。1853 年美国舰队用武力打开日本国门，民族危机加深，倒幕派推翻幕府，开始明治维新。</p></li>
+<li><h4>方法不同，方向相同</h4><p>俄、日是<b>自上而下的改革</b>，美国是<b>内战</b>。改得都不彻底：俄国留下农奴制残余，日本留下大量封建残余。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>这三场变革的共同作用是：<b>扫除了资本主义发展的障碍</b>，让资本主义制度在更大范围内扩展开来。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>殖民地人民的反抗</h3><p>拉丁美洲：1804 年<b>海地</b>独立，是拉美第一个独立国家；<b>玻利瓦尔</b>被誉为“解放者”。亚洲：1857—1859 年<b>印度民族大起义</b>反抗英国殖民统治，章西女王英勇作战。</p></div></div>
+<div class="fact"><div><h3>俄国 1861 年改革</h3><p>沙皇<b>亚历山大二世</b>签署法令，<b>废除农奴制</b>：农奴获得人身自由，可以赎买份地，但赎金很高。俄国走上资本主义道路，但保留了大量农奴制残余。</p></div></div>
+<div class="fact"><div><h3>美国内战（1861—1865 年）</h3><p>根本原因是南北两种经济制度的矛盾。总统<b>林肯</b>领导北方，1862 年颁布《宅地法》和<b>《解放黑人奴隶宣言》</b>，1865 年北方胜利。内战维护了国家统一，废除了奴隶制，被看作美国的第二次资产阶级革命。</p></div></div>
+<div class="fact"><div><h3>日本明治维新（1868 年起）</h3><p>政治上<b>废藩置县</b>；经济上允许土地买卖、改革税制、<b>殖产兴业</b>；社会生活上提倡<b>文明开化</b>、发展近代教育。日本走上资本主义道路，成为亚洲强国，但后来走上对外侵略扩张的道路。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>美国内战 ≠ 独立战争</b>：独立战争是摆脱英国殖民统治、建立美国；内战是 1861—1865 年南北之战，领导人是林肯。② 宣言在 <b>1862 年</b>颁布，北方在 <b>1865 年</b>胜利，别记混。③ 俄国改革和明治维新都是<b>自上而下的改革</b>，都不彻底。④ 印度民族大起义反抗的是<b>英国</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份和国家。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：19 世纪 60 年代前后同时发生的事（俄国改革、美国内战、明治维新、中国洋务运动）常放在一起考，要能横向对照。</li>
+<li><b>比较题</b>：俄国改革与明治维新的相同点——都是自上而下的改革，都使国家走上资本主义道路，都保留了封建残余。</li>
+<li><b>措施归类</b>：明治维新哪一项属于政治、经济或社会生活方面。</li>
+<li><b>意义题</b>：三场变革的共同作用——为资本主义发展扫除障碍。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料说：日本政府派人到欧美考察，回国后创办近代工厂、修铁路，并鼓励民间投资办企业。这反映了明治维新哪方面的措施？日本因此走上了什么道路？<br><b>怎么想</b>　“创办工厂、鼓励办企业”是<b>经济</b>方面，对应<b>殖产兴业</b>。结果要两面答：日本走上<b>资本主义道路</b>，成为亚洲强国；但保留大量封建残余，后来<b>走上对外侵略扩张道路</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 22 课</p><p>年代与史实依据统编版历史教科书；三场变革对比图为示意，不表示实际地理位置和疆域。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

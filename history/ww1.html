@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="按月拖动 1913—1923 年的时间轴，看一战怎样爆发、转折和结束；切换阶段看两大军事集团怎样站队、意大利为什么换了边；一步步推出中国在巴黎和会上的遭遇；对比苏俄的战时共产主义和新经济政策。历史互动馆第 24 课，对应统编版九年级下册第三单元。">
+<meta property="og:title" content="历史互动馆 · 第一次世界大战和战后初期的世界">
+<title>第一次世界大战和战后初期的世界 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="ww1.js"></script>
+</head>
+<body data-module="ww1">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 24 课 <span>/</span> 九年级下册 第三单元</p><h1>第一次世界大战和战后初期的世界</h1><p class="subtitle">一声枪响，把几十个国家拖进了四年多的战争。打完以后，战胜国坐下来重新分配世界，中国虽然是战胜国，却连自己的山东都没要回来。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="一战与战后初期时间轴">
+<h2>1913—1923：按月看的时间轴</h2>
+<p class="panel-sub">滑块一格是一个月。拖动它，或者点时间轴上的事件。</p>
+<svg id="tl" viewBox="0 0 400 240" role="img" aria-label="1913 年到 1923 年大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="month-in">选一个月份</label><output id="month-out">1919 年 5 月</output></div><input id="month-in" type="range" min="0" max="131" step="1" value="76"><div class="ruler"><span>1913 年初</span><span>1918 年中</span><span>1923 年末</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="月份读数">
+<div class="readout-head"><h2>这个月</h2><span class="badge" id="ph-badge">战后初期</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个年代</span><strong id="r-dec" style="font-size:20px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这个月前后发生了什么</span><strong id="r-ev" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="一战的四个节点">
+<h2>记住四个节点</h2>
+<table class="compare"><tbody>
+<tr id="row-start"><td>爆发</td><td>1914 年 6 月萨拉热窝事件是导火线；7 月奥匈帝国对塞尔维亚宣战，大战爆发。</td></tr>
+<tr id="row-turn"><td>转折</td><td>1917 年美国参战，加入协约国一方；俄国爆发十月革命，后来退出战争。</td></tr>
+<tr id="row-end"><td>结束</td><td>1918 年 11 月德国投降，协约国获胜，一战结束。</td></tr>
+<tr id="row-after"><td>战后安排</td><td>1919 年巴黎和会、1921—1922 年华盛顿会议，形成凡尔赛—华盛顿体系。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+<div class="section two-col">
+<section class="card panel figure" aria-label="两大军事集团关系图">
+<h2>两大军事集团：谁和谁站一队</h2>
+<p class="panel-sub">上面一队是同盟国，下面一队是协约国。切换阶段，看谁换了边、谁加进来；按“看三对主要矛盾”，再点红线看说明。</p>
+<svg id="al" viewBox="0 0 400 240" role="img" aria-label="三国同盟与三国协约关系示意"></svg>
+<div class="ctl-row"><span>阶段</span><div class="chips small" id="al-chips"></div></div>
+<div class="btn-row"><button class="ghost-btn" id="al-conf" type="button">看三对主要矛盾</button></div>
+</section>
+<section class="readout" aria-label="集团与国家说明">
+<div class="readout-head"><h2 id="al-name">1914 年以前</h2><span class="badge" id="al-badge">结成两大集团</span></div>
+<div class="stat-grid">
+<div class="stat"><span>同盟国一方</span><strong id="al-cp" style="font-size:16px">—</strong></div>
+<div class="stat"><span>协约国一方</span><strong id="al-ep" style="font-size:16px">—</strong></div>
+</div>
+<p class="lead" id="al-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 两伙互相担保的人</h3><p>两大军事集团像两伙<b>签了“一人有事、全伙出手”约定</b>的人。本来只是奥匈和塞尔维亚两家吵架，可塞尔维亚背后有俄国，奥匈背后有德国，俄国又和法国、英国是一伙……一个拉一个，<b>两家的冲突就变成了整个欧洲的战争</b>。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="巴黎和会与中国">
+<h2>巴黎和会与中国：一步步推下去</h2>
+<p class="panel-sub">按“下一步”推出中国的遭遇，也可以点已经出现的方框回看。</p>
+<svg id="pc" viewBox="0 0 400 230" role="img" aria-label="中国参战到华盛顿会议的因果链示意"></svg>
+<p class="lead" id="pc-text" aria-live="polite"></p>
+<div class="btn-row"><button class="big-btn" id="pc-next" type="button">下一步</button><button class="ghost-btn" id="pc-reset" type="button">从头开始</button></div>
+</section>
+<section class="readout" aria-label="苏俄两种经济政策">
+<div class="readout-head"><h2 id="sv-name">新经济政策</h2><span class="badge" id="sv-badge">1921 年起</span></div>
+<p class="lead" style="margin-top:0">十月革命后，苏俄先后实行了两种很不一样的政策。切换看看，农民手里的粮食怎么分。</p>
+<div class="ctl-row"><span>政策</span><div class="chips small" id="sv-chips"></div></div>
+<svg id="sv" viewBox="0 0 400 104" role="img" aria-label="农民收获的粮食怎么分配示意"></svg>
+<div class="btn-row" style="margin:4px 0 10px"><button class="ghost-btn" id="sv-more" type="button">如果农民多种一些</button></div>
+<div class="stat-grid">
+<div class="stat"><span>粮食怎么收</span><strong id="sv-grain" style="font-size:16px">—</strong></div>
+<div class="stat"><span>能不能自由买卖</span><strong id="sv-trade" style="font-size:16px">—</strong></div>
+<div class="stat wide"><span>企业归谁</span><strong id="sv-biz" style="font-size:16px">—</strong></div>
+</div>
+<p class="lead" id="sv-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 萨拉热窝的一声枪响，为什么能变成世界大战</h3>
+<p class="derive-lead">考试最爱问“根本原因”和“导火线”的区别。把原因一层层拆开，就不会混。</p>
+<ol>
+<li><h4>强国之间发展不平衡</h4><p>19 世纪末 20 世纪初，美国、德国经济发展很快，超过了老牌的英国、法国。后起的德国殖民地少，要求<b>重新瓜分世界</b>。</p></li>
+<li><h4>矛盾越积越多</h4><p>英国和德国争夺海上霸权和殖民地，这是<b>最主要的矛盾</b>；法国想收回被德国夺走的阿尔萨斯和洛林；俄国和奥匈帝国争夺巴尔干半岛。</p></li>
+<li><h4>结成两大军事集团</h4><p>1882 年德、奥匈、意结成<b>三国同盟</b>；1907 年英、法、俄形成<b>三国协约</b>。双方拼命扩军备战，欧洲分成了两个敌对阵营。</p></li>
+<li><h4>巴尔干成了“火药桶”</h4><p>巴尔干半岛（在欧洲东南部）民族矛盾复杂，大国又在这里争夺势力范围，一点火星就可能引爆。</p></li>
+<li><h4>枪声点燃了导火线</h4><p>1914 年 6 月 28 日，奥匈帝国皇位继承人斐迪南大公在萨拉热窝被塞尔维亚青年刺杀。7 月 28 日奥匈对塞尔维亚宣战，德、俄、法、英等国相继卷入。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>一战的<b>根本原因</b>是帝国主义国家政治经济发展不平衡、争夺世界霸权；萨拉热窝事件只是<b>导火线</b>。两大军事集团让局部冲突迅速扩大成世界大战。这是一场帝国主义战争，双方都是为了争霸。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>第一次世界大战（1914—1918）</h3><p>导火线是 1914 年<b>萨拉热窝事件</b>。1916 年德法之间的<b>凡尔登战役</b>伤亡惨重，被称为“凡尔登绞肉机”。意大利 1915 年转到协约国一方；1917 年美国参战。1918 年 11 月德国投降，协约国获胜。</p></div></div>
+<div class="fact"><div><h3>十月革命与苏联成立</h3><p>1917 年 11 月 7 日（俄历 10 月 25 日），<b>列宁</b>领导彼得格勒武装起义，十月革命胜利，建立了<b>世界上第一个社会主义国家</b>。1922 年底，俄罗斯、乌克兰、白俄罗斯、外高加索联邦等联合成立<b>苏联</b>。</p></div></div>
+<div class="fact"><div><h3>战时共产主义和新经济政策</h3><p>为应对国内战争和外国武装干涉，苏俄从 1918 年起实行<b>战时共产主义</b>：余粮收集制、企业收归国有、取消自由贸易、实物配给。战后农民不满，1921 年改行<b>新经济政策</b>：以<b>粮食税</b>代替余粮收集制，允许多种经济成分并存和自由贸易。</p></div></div>
+<div class="fact"><div><h3>凡尔赛—华盛顿体系</h3><p>1919 年<b>巴黎和会</b>被英、法、美操纵，签订《凡尔赛条约》。中国作为战胜国，收回山东权益的要求被拒绝，引发<b>五四运动</b>。1921—1922 年<b>华盛顿会议</b>签订《九国公约》，使中国又回到几个帝国主义国家共同支配的局面。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① 萨拉热窝事件是<b>导火线</b>，不是根本原因。② <b>意大利</b>原是三国同盟成员，但一战中站到了<b>协约国</b>一方。③ 中国是<b>战胜国</b>，却没能在巴黎和会上收回山东，中国代表<b>拒绝签字</b>。④ 第一个社会主义国家诞生于 <b>1917 年十月革命</b>，苏联成立是 1922 年。⑤ <b>粮食税</b>是新经济政策，<b>余粮收集制</b>是战时共产主义，别配反。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的月份、阶段和政策。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：1917 年同时有美国参战和十月革命，1919 年有巴黎和会和五四运动，常考排先后、找“同一年”的事。</li>
+<li><b>原因辨析</b>：分清一战的根本原因、导火线，以及两大军事集团在战争爆发中的作用。</li>
+<li><b>中外关联</b>：巴黎和会上中国外交失败，直接引发五四运动，九年级的世界史和八年级的中国史在这里连起来考。</li>
+<li><b>比较题</b>：战时共产主义和新经济政策在粮食、企业、贸易上有什么不同，为什么要改。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料概述：1921 年，苏俄宣布以粮食税代替余粮收集制，农民交完税后剩下的粮食归自己，可以拿到市场上出售。这一政策调整的原因是什么？说明了什么道理？<br><b>怎么想</b>　原因从前后对比找：战时共产主义在战争时期保证了前线供应，但<b>战后继续实行，农民生产积极性下降、不满情绪增加</b>，经济困难。粮食税让农民“多种多得”，调动了积极性，经济逐渐恢复。道理：<b>政策要从本国实际情况出发，随形势变化而调整</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 24 课</p><p>年代与史实依据统编版历史教科书；两大集团关系图、因果链和粮食分配图都是示意图，不表示实际地理位置和疆域，也不表示具体数量。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

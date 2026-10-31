@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="在“每格十倍”的时间轴上拖动，看元谋人、北京人、山顶洞人离今天有多远；对比北京人、河姆渡、半坡怎么住、用什么、吃什么；把考古实物和传说分一分类。历史互动馆第 1 课，对应统编版七年级上册第一单元。">
+<meta property="og:title" content="历史互动馆 · 史前时期与中华文明起源">
+<title>史前时期与中华文明起源 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="prehistory.js"></script>
+</head>
+<body data-module="prehistory">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 1 课 <span>/</span> 七年级上册 第一单元</p><h1>史前时期与中华文明起源</h1><p class="subtitle">如果把元谋人到今天压缩成一天，秦始皇统一中国发生在最后两分钟。前面那漫长的“一整天”，祖先是怎么过的？</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="远古人类时间轴">
+<h2>远古人类时间轴（距今）</h2>
+<p class="panel-sub">拖动滑块往“今天”走，或者点时间轴上的名字。上面的按钮可以换一种刻度看看。</p>
+<svg id="tl" viewBox="0 0 400 240" role="img" aria-label="从元谋人到秦统一的距今时间轴"></svg>
+<div class="ctl-row"><span>刻度</span><div class="chips small" id="scale-chips"></div></div>
+<div class="control"><div class="control-heading"><label for="n-in">往回数多少年</label><output id="n-out">距今约 170 万年</output></div><input id="n-in" type="range" min="0" max="1000" step="1" value="24"><div class="ruler"><span>距今 200 万年</span><span>距今 1000 年</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="距今读数">
+<div class="readout-head"><h2>这个时候</h2><span class="badge" id="era-badge">旧石器时代</span></div>
+<div class="stat-grid">
+<div class="stat"><span>距离今天</span><strong id="r-n" style="font-size:22px">—</strong></div>
+<div class="stat"><span>压缩成一天的话</span><strong id="r-clock" style="font-size:22px">—</strong></div>
+<div class="stat wide"><span>这附近有谁 / 有什么</span><strong id="r-who" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="读距今的小规则">
+<h2>读“距今”的三条小规则</h2>
+<table class="compare"><tbody>
+<tr><td>距今</td><td>从今天往回数多少年。数字越大越早，距今 170 万年比距今 3 万年早得多。</td></tr>
+<tr><td>约</td><td>远古的年代是科学家用测年方法推算出来的，都要带“约”，不能写成哪一年。</td></tr>
+<tr><td>每格十倍</td><td>这条轴往左每走一大格，时间就多 10 倍。切到“真实比例”就知道为什么要这样画。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="三处遗址对比">
+<h2>住哪里、用什么、吃什么</h2>
+<p class="panel-sub">切换三处遗址，比一比他们的房子、工具和食物。</p>
+<svg id="site" viewBox="0 0 400 230" role="img" aria-label="北京人、河姆渡、半坡的房屋工具食物示意"></svg>
+<div class="ctl-row"><span>遗址</span><div class="chips small" id="site-chips"></div></div>
+</section>
+<section class="readout" aria-label="遗址信息">
+<div class="readout-head"><h2 id="site-name">河姆渡</h2><span class="badge" id="site-badge">浙江余姚</span></div>
+<div class="stat-grid">
+<div class="stat"><span>时代</span><strong id="site-age" style="font-size:18px">—</strong></div>
+<div class="stat"><span>所在地区</span><strong id="site-area" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="site-text" aria-live="polite"></p>
+<table class="compare" id="site-table" style="margin-top:10px"><thead><tr><th></th><th>房屋</th><th>主要食物来源</th></tr></thead><tbody>
+<tr data-k="bj"><td>北京人</td><td>住山洞</td><td>采集、狩猎</td></tr>
+<tr data-k="hmd"><td>河姆渡</td><td>干栏式房屋</td><td>种水稻</td></tr>
+<tr data-k="bp"><td>半坡</td><td>半地穴式房屋</td><td>种粟</td></tr>
+</tbody></table>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel" aria-label="史料分类">
+<h2>这是“证据”还是“故事”？</h2>
+<p class="panel-sub">给每一条材料选一个类别，选了就不能改；想重来按最下面的按钮。</p>
+<div class="choice-list" id="src-list"></div>
+<div class="btn-row"><button class="ghost-btn" id="src-reset" type="button">重新分类</button></div>
+</section>
+<section class="readout" aria-label="分类结果">
+<div class="readout-head"><h2>分类成绩</h2><span class="badge" id="src-score">已答 0 / 7</span></div>
+<div class="stat-grid">
+<div class="stat"><span>一手史料</span><strong style="font-size:16px">当时留下的实物、遗迹</strong></div>
+<div class="stat"><span>二手史料</span><strong style="font-size:16px">后人研究、复原、改写</strong></div>
+<div class="stat wide"><span>传说</span><strong style="font-size:16px">口口相传，有历史的影子，但不等于信史</strong></div>
+</div>
+<p class="lead">研究史前历史，最可靠的证据是考古发掘出来的实物。传说可以给我们线索，但要靠考古来证实。</p>
+<div class="source-card"><p>西汉的司马迁在《史记》里写了黄帝、尧、舜的事迹。可他生活的年代，离传说中的黄帝已经过去两千多年了，他依据的主要是前人留下的记载和流传的说法。</p><cite>概述，不是原文。想一想：《史记》对黄帝的记载，算不算黄帝时代的一手史料？</cite></div>
+<aside class="analogy"><h3><i>打个比方</i> 侦探破案</h3><p>考古实物像<b>案发现场的物证</b>：一颗稻谷、一根骨针，摆在那里不会说谎。传说像好多年以后<b>街坊们传的故事</b>：可能有真事的影子，但越传越走样。博物馆的复原图像<b>侦探根据物证画的推理图</b>，很有用，但已经是后人加工过的了。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么说中华文明有五千多年历史</h3>
+<p class="derive-lead">没有文字记载，怎么知道五千多年前已经进入文明？答案藏在考古发现里。</p>
+<ol>
+<li><h4>先看“文明”的标准</h4><p>学者一般看几件事：农业发展、有了剩余产品；人群分出高低贵贱；出现城市；出现王权和国家。</p></li>
+<li><h4>农业让人定居下来</h4><p>河姆渡、半坡的居民种稻、种粟，盖房子住下来，还饲养家畜。粮食多了，就有了剩余。</p></li>
+<li><h4>剩余带来了分化</h4><p>一些遗址的墓葬里，有的随葬品很多，有的几乎没有，说明出现了贫富分化，有人地位高、有人地位低。</p></li>
+<li><h4>良渚古城摆出了证据</h4><p>浙江杭州的良渚古城遗址距今约 5300～4300 年，有城墙、宫殿基址、大型水利工程、高等级大墓和玉琮等礼器，说明已经有了掌握大权的统治者。</p></li>
+<li><h4>各地都在发生变化</h4><p>黄河流域、长江流域、辽河流域等地都发现了类似的遗址，像满天星斗；它们相互交流，逐渐汇聚到一起。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>考古实物证明，五千多年前中华大地已经进入文明阶段；良渚古城遗址就是实证中华五千多年文明史的重要遗址。黄帝、尧、舜、禹的传说反映了这段历史的影子，但要靠考古来证明。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>三种远古人类</h3><p><b>元谋人</b>（云南元谋，距今约 170 万年）是我国境内已知最早的古人类。<b>北京人</b>（北京周口店，距今约 70 万～20 万年）会制造和使用打制石器，会使用天然火。<b>山顶洞人</b>（周口店，距今约 3 万年）会磨制骨针、缝制衣服，还有穿孔的装饰品。</p></div></div>
+<div class="fact"><div><h3>两处原始农耕遗址</h3><p><b>河姆渡</b>（浙江余姚，长江流域，距今约 7000 年）：种水稻，住<b>干栏式房屋</b>，用骨耜翻土。<b>半坡</b>（陕西西安，黄河流域）：种粟，住<b>半地穴式房屋</b>，会制作彩陶。他们都使用磨制石器，过定居生活。</p></div></div>
+<div class="fact"><div><h3>中华文明的起源</h3><p>良渚古城遗址（距今约 5300～4300 年）有城墙、宫殿、水利工程和玉琮等礼器，2019 年列入《世界遗产名录》。各地文明像满天星斗，相互交流，汇聚成多元一体的中华文明。</p></div></div>
+<div class="fact"><div><h3>传说与史实</h3><p>炎帝、黄帝被尊为“人文初祖”，尧、舜、禹的禅让和大禹治水都是<b>传说</b>。传说有历史的影子，但不能直接当作信史，要用考古发现去印证。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>北京人用的是天然火</b>，不是自己钻木取火。② <b>河姆渡在南方</b>（种稻、干栏式），<b>半坡在北方</b>（种粟、半地穴式），别记反。③ <b>距今</b>数字越大越早，和公元前一样要倒着数。④ 传说不等于史实，<b>考古实物</b>才是最可靠的一手史料。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年代、刻度和遗址。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：给出元谋人、北京人、山顶洞人等，按时间先后排列；记住“距今”数字越大越早。</li>
+<li><b>比较题</b>：河姆渡和半坡在地区、作物、房屋上的不同，以及为什么不同（自然环境不同）。</li>
+<li><b>史料实证</b>：判断一则材料是考古实物还是传说、是一手还是二手史料，说明哪一种更可靠。</li>
+<li><b>文明起源</b>：用良渚古城遗址等考古发现，说明中华文明有五千多年历史、多元一体。</li>
+</ul>
+<div class="q"><b>典型设问</b>　某遗址出土了大量炭化稻谷、骨耜，还发现了下部用木桩架空的房屋遗迹。这是哪一处遗址？这种房屋和当地环境有什么关系？<br><b>怎么想</b>　稻谷 + 骨耜 + 架空的房子，锁定<b>河姆渡</b>（长江流域）。南方气候温暖潮湿、多雨，<b>干栏式房屋</b>把房子架高，可以防潮、通风，还能防野兽。<b>先从实物找特征，再联系自然环境说原因</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 1 课</p><p>年代与史实依据统编版历史教科书；远古年代均为约数，遗址图为示意，不表示实际地理位置。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

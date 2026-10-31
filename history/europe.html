@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份，看罗马怎样从共和国变成帝国、又怎样分裂；选一个雅典人的身份，看他能不能走进公民大会；给希腊罗马的文化成就配对、给大事排序。历史互动馆第 17 课，对应统编版九年级上册第二单元。">
+<meta property="og:title" content="历史互动馆 · 古代欧洲文明">
+<title>古代欧洲文明 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="europe.js"></script>
+</head>
+<body data-module="europe">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 17 课 <span>/</span> 九年级上册 第二单元</p><h1>古代欧洲文明</h1><p class="subtitle">雅典人发明了“由公民投票决定大事”，罗马人写下了影响欧洲两千年的法律。可在雅典，能投票的只是少数人。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="罗马时间轴">
+<h2>罗马千年：从共和国到帝国</h2>
+<p class="panel-sub">拖动滑块选一个年份，或者点时间轴上的事件，看罗马当时是什么政体。</p>
+<svg id="tl" viewBox="0 0 400 240" role="img" aria-label="古希腊与古罗马大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">公元前 509 年</output></div><input id="year-in" type="range" min="-600" max="500" step="1" value="-509"><div class="ruler"><span>前 600</span><span>公元元年</span><span>500</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="罗马读数">
+<div class="readout-head"><h2>这一年的罗马</h2><span class="badge" id="era-badge">共和国</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这一年前后发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="罗马政体对比">
+<h2>罗马由谁说了算</h2>
+<table class="compare" id="rome-table"><tbody>
+<tr data-e="king"><td>王政时代</td><td>由国王统治。公元前 509 年，罗马人赶走国王，建立共和国。</td></tr>
+<tr data-e="rep"><td>共和国</td><td>不设国王。最高官职是两名<b>执政官</b>，任期一年；<b>元老院</b>由贵族组成，权力很大。</td></tr>
+<tr data-e="emp"><td>帝国</td><td>屋大维被授予“奥古斯都”称号，保留共和的外壳，实际独揽大权，叫<b>元首制</b>。</td></tr>
+<tr data-e="split"><td>东西分治</td><td>395 年帝国分裂为东、西两部分；476 年西罗马帝国灭亡，东罗马帝国继续存在。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="雅典公民大会资格模拟">
+<h2>雅典：谁能走进公民大会</h2>
+<p class="panel-sub">选一个身份，看他（她）能闯过几道关。这是伯利克里时代的资格示意，只表示条件，不表示人数。</p>
+<svg id="ath" viewBox="0 0 400 230" role="img" aria-label="雅典公民大会资格关卡示意"></svg>
+<div class="ctl-row"><span>身份</span><div class="chips small" id="ath-chips"></div></div>
+</section>
+<section class="readout" aria-label="资格读数">
+<div class="readout-head"><h2 id="ath-name">成年男性公民</h2><span class="badge" id="ath-badge">能参加</span></div>
+<div class="stat-grid">
+<div class="stat"><span>卡在哪一关</span><strong id="ath-gate" style="font-size:18px">—</strong></div>
+<div class="stat"><span>有资格的人在居民中</span><strong style="font-size:18px">只是少数</strong></div>
+</div>
+<ul class="cond-list" id="ath-cond"></ul>
+<p class="lead" id="ath-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 只给一部分人发选票的班会</h3><p>想象一个班开会决定大事，规定只有<b>男生、而且家长都是本校的人</b>才能举手投票。投票的人之间很平等，一人一票、轮流当班干部；可女生、转学生、旁听的人都只能在门外看。雅典民主就是这样：<b>对公民很民主，但公民只是少数</b>。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel" aria-label="希腊罗马文化成就配对">
+<h2>文化成就配对：希腊还是罗马</h2>
+<p class="panel-sub">每行点一个答案，点了就判，不能改。<b id="match-score">已答 0 / 7</b></p>
+<div class="choice-list" id="match-list"></div>
+</section>
+<section class="card panel" aria-label="大事排序">
+<h2>给大事排排队</h2>
+<p class="panel-sub">按发生的先后，从早到晚依次点击。点错了可以再点一次取消。</p>
+<div id="order-box"></div>
+<p class="lead" id="order-msg" aria-live="polite">从最早的那件开始点。</p>
+<div class="btn-row"><button class="ghost-btn" id="order-reset" type="button">打乱重来</button></div>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 罗马为什么从共和国走向了帝国</h3>
+<p class="derive-lead">罗马共和国存在了近 500 年，最后却变成了一个人说了算。原因要从“越打越大”说起。</p>
+<ol>
+<li><h4>共和国靠对外战争不断扩张</h4><p>罗马先统一了意大利半岛，又不断向外征战，控制的地方越来越大，掠夺来大量土地、财富和奴隶。</p></li>
+<li><h4>财富集中到少数人手里</h4><p>贵族和富人用奴隶经营大庄园，许多普通农民破产失去土地，贫富差距越拉越大。</p></li>
+<li><h4>奴隶起义和内乱接连发生</h4><p>奴隶受到残酷压迫。公元前 73 年爆发了<b>斯巴达克起义</b>，沉重打击了罗马的统治；同时，掌握军队的将领们互相争权。</p></li>
+<li><h4>老制度管不住这么大的国家</h4><p>一年一换的执政官、贵族把持的元老院，应付不了庞大的地盘和接连的危机。恺撒一度独揽大权，公元前 44 年被刺杀。</p></li>
+<li><h4>屋大维建立元首制</h4><p>恺撒的养子屋大维打败对手，公元前 27 年被授予“奥古斯都”（意为“神圣的”“至尊的”）称号。他保留元老院等共和机构的外壳，实际上大权独揽。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>是对外扩张带来的贫富分化、奴隶起义和将领争权，让共和制度难以为继，罗马从<b>共和国</b>走向了<b>帝国</b>。帝国名义上仍有共和机构，实际是一人统治。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>希腊城邦与雅典民主</h3><p>古希腊由许多独立的<b>城邦</b>组成，雅典和斯巴达最有名。伯利克里执政时期（公元前 5 世纪中后期），雅典民主政治进入“黄金时代”：<b>公民大会</b>是最高权力机构，大多数官职向全体公民开放，抽签产生。</p></div></div>
+<div class="fact"><div><h3>希腊文化</h3><p><b>荷马史诗</b>包括《伊利亚特》和《奥德赛》。哲学家苏格拉底、柏拉图、亚里士多德是三代师生：苏格拉底教柏拉图，柏拉图教亚里士多德。帕特农神庙是古希腊建筑的代表。</p></div></div>
+<div class="fact"><div><h3>罗马从共和国到帝国</h3><p>公元前 509 年建立<b>罗马共和国</b>；公元前 27 年屋大维获得“奥古斯都”称号，建立<b>元首制</b>，罗马进入帝国时代。395 年帝国分裂为东、西两部分，476 年<b>西罗马帝国灭亡</b>。</p></div></div>
+<div class="fact"><div><h3>罗马法</h3><p>约公元前 450 年颁布的<b>《十二铜表法》</b>是罗马第一部成文法，限制了贵族随意解释法律。后来罗马法不断完善，对后世欧洲的法律影响深远。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① 雅典民主是<b>成年男性公民</b>的民主，妇女、外邦人、奴隶都没有政治权利，有资格的只是少数。② 罗马“共和国”不是人人平等，实权在<b>贵族</b>和元老院手里。③ <b>395 年分裂、476 年西罗马灭亡</b>，别把两个年份对调；东罗马（拜占庭）还要再存在近千年。④ 《十二铜表法》是罗马的，《汉谟拉比法典》是古巴比伦的。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份和身份。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>雅典民主的特点与局限</b>：常问“公民大会是什么机构”“谁能参加”。答局限一定要写：只有<b>成年男性公民</b>享有，是少数人的民主。</li>
+<li><b>罗马政体演变</b>：共和国（前 509）→ 帝国（前 27，屋大维）→ 分裂（395）→ 西罗马灭亡（476）。常和中国同期的朝代一起排先后。</li>
+<li><b>法律与文化</b>：《十二铜表法》的作用、罗马法的影响；荷马史诗、苏格拉底、亚里士多德分别是什么。</li>
+<li><b>比较题</b>：古希腊民主政治和同时期中国的君主专制有什么不同，从“谁掌握最高权力”去比。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料：在伯利克里时代，雅典的大多数官职向全体公民开放，用抽签的办法产生，担任公职还能领取津贴。有人说这是“人民的统治”。你同意吗？<br><b>怎么想</b>　先肯定：公民通过公民大会决定国家大事、抽签任官，公民之间比较平等，这是民主的体现。再指出局限：“全体公民”只包括成年男性公民，妇女、外邦人、奴隶被排除在外，所以是<b>少数人的民主</b>。<b>先说进步，再说局限</b>，这样答就全面了。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 17 课</p><p>年代与史实依据统编版历史教科书；公民大会资格图只表示条件，不表示人数比例，也不表示实际地理位置。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

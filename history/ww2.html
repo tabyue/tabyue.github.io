@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="一步步推动 1929 年大危机的连锁反应，给罗斯福新政的措施分类，再按月份拖动二战时间轴，对照同一时间的中国战场。历史互动馆第 25 课，对应统编版九年级下册第四单元。">
+<meta property="og:title" content="历史互动馆 · 经济大危机和第二次世界大战">
+<title>经济大危机和第二次世界大战 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="ww2.js"></script>
+</head>
+<body data-module="ww2">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 25 课 <span>/</span> 九年级下册 第四单元</p><h1>经济大危机和第二次世界大战</h1><p class="subtitle">1929 年纽约股市的一场暴跌，把世界推进了大危机。有的国家选择改革，有的国家走上法西斯道路，十年后，人类迎来了规模空前的大战。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="二战时间轴">
+<h2>二战时间轴：世界和中国同框</h2>
+<p class="panel-sub">拖动滑块按月份前进，或者点时间轴上的事件。绿色是中国战场，棕色是世界其他战场。</p>
+<svg id="tl" viewBox="0 0 400 236" role="img" aria-label="1937 年到 1945 年大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="month-in">选一个月份</label><output id="month-out">1939 年 9 月</output></div><input id="month-in" type="range" min="0" max="104" step="1" value="32"><div class="ruler"><span>1937 年 1 月</span><span>1941 年</span><span>1945 年 9 月</span></div></div>
+<div class="ctl-row"><span>显示</span><div class="chips small" id="view-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="时间读数">
+<div class="readout-head"><h2>这个月</h2><span class="badge" id="phase-badge">爆发与扩大</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>世界：最近的一件大事</span><strong id="r-world" style="font-size:18px">—</strong></div>
+<div class="stat wide"><span>同一时间的中国战场</span><strong id="r-china" style="font-size:18px;color:#2f6a4a">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="战争阶段对照">
+<h2>两条战线对照看</h2>
+<table class="compare" id="phase-table"><thead><tr><th>阶段</th><th>世界</th><th>中国</th></tr></thead><tbody>
+<tr data-p="0"><td>爆发前</td><td>法西斯扩张，英法绥靖</td><td>七七事变后全民族抗战</td></tr>
+<tr data-p="1"><td>爆发与扩大</td><td>波兰、苏德、太平洋相继开战</td><td>进入相持阶段，1942 年签署《联合国家宣言》</td></tr>
+<tr data-p="2"><td>转折</td><td>斯大林格勒战役</td><td>继续牵制和抗击大量日军</td></tr>
+<tr data-p="3"><td>反攻与胜利</td><td>诺曼底登陆，德、日投降</td><td>1944 年起局部反攻，1945 年取得胜利</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="大危机连锁反应">
+<h2>大危机连锁反应推进器</h2>
+<p class="panel-sub">每按一次“推一下”，危机就传到下一环。先看不干预时会怎样，再切到“国家干预”，看新政怎么一环环修。</p>
+<svg id="chain" viewBox="0 0 400 262" role="img" aria-label="股市崩溃、银行倒闭、工厂关门、工人失业、购买力下降的循环示意"></svg>
+<div class="ctl-row"><span>政府</span><div class="chips small" id="mode-chips"></div></div>
+<div class="btn-row"><button class="big-btn" id="chain-go" type="button">推一下</button><button class="ghost-btn" id="chain-reset" type="button">从头再来</button></div>
+</section>
+<section class="readout" aria-label="连锁反应读数">
+<div class="readout-head"><h2 id="c-name">股市崩溃</h2><span class="badge" id="c-badge">第 1 环</span></div>
+<div class="stat-grid">
+<div class="stat"><span>现在走到</span><strong id="c-round" style="font-size:18px">—</strong></div>
+<div class="stat"><span>经济景气（示意）</span><strong id="c-gauge" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="c-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 一排倒下的多米诺骨牌</h3><p>大危机像<b>绕成圈的多米诺骨牌</b>：工厂倒了，工人没钱；工人没钱，东西卖不掉；东西卖不掉，又有工厂倒下。没人出手，这个圈就一直转。罗斯福新政相当于政府伸手<b>扶住几块牌</b>，让连锁反应慢慢停下来。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="罗斯福新政分类">
+<h2>罗斯福新政分类台</h2>
+<p class="panel-sub">罗斯福是 1933 年就任的美国总统。给下面每项措施选一个类别，选错了可以再选。</p>
+<div id="deal-list" style="display:flex;flex-direction:column;gap:8px"></div>
+</section>
+<section class="readout" aria-label="新政分类读数与排序">
+<div class="readout-head"><h2>新政的核心</h2><span class="badge" id="deal-badge">已归类 0 / 5</span></div>
+<p class="lead" id="deal-text" aria-live="polite"></p>
+<h3 style="font-size:15px;margin:16px 0 0">排一排：从危机到战争结束</h3>
+<p style="font-size:13.5px;line-height:1.7;margin:4px 0 0;color:var(--muted)">按时间从早到晚依次点击，点错了可以按下面的按钮重排。</p>
+<div id="order"></div>
+<p class="lead" id="order-msg" aria-live="polite"></p>
+<div class="btn-row"><button class="ghost-btn" id="order-reset" type="button">重新排</button></div>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 一场经济危机，怎么变成了世界大战</h3>
+<p class="derive-lead">经济、政治、战争是连着的。顺着下面五步想，这一单元就串起来了。</p>
+<ol>
+<li><h4>危机砸中所有资本主义国家</h4><p>1929 年危机从美国爆发，很快席卷整个资本主义世界。它范围广、时间长、破坏性大，工厂倒闭，大批工人失业。</p></li>
+<li><h4>各国走了不同的路</h4><p>美国通过罗斯福新政，在资本主义制度内部做调整。德国、日本却走上法西斯道路，想靠对外扩张转嫁危机。</p></li>
+<li><h4>两个战争策源地形成</h4><p>希特勒 1933 年在德国上台，形成欧洲战争策源地。日本军部势力加强，形成亚洲战争策源地。意大利早在 1922 年就由墨索里尼建立了法西斯统治。</p></li>
+<li><h4>绥靖政策助长了侵略</h4><p>英法想牺牲别国来保全自己。1938 年慕尼黑协定把捷克斯洛伐克的苏台德区割给德国，侵略者的胃口反而越来越大。</p></li>
+<li><h4>战争爆发，同盟形成</h4><p>1939 年德国突袭波兰，二战全面爆发。1942 年 26 国签署《联合国家宣言》，世界反法西斯同盟形成，最终取得胜利。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>大危机是催化剂，法西斯的侵略扩张是战争的直接祸根，绥靖政策又起了纵容作用。正义的力量团结起来，才赢得了胜利。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>1929—1933 年经济大危机</h3><p>1929 年 10 月从美国纽约股市暴跌开始，蔓延到整个资本主义世界。特点是<b>范围广、时间长、破坏性大</b>。</p></div></div>
+<div class="fact"><div><h3>罗斯福新政（1933 年起）</h3><p>以整顿金融开始，还调整工业和农业、以工代赈、建立社会保障。特点是<b>加强国家对经济的干预和指导</b>，缓和了危机，开创了国家干预经济的新模式。</p></div></div>
+<div class="fact"><div><h3>二战的关键节点</h3><p>1939 年 9 月 1 日德国突袭波兰；1941 年 6 月苏德战争、12 月太平洋战争爆发；1942 年 1 月《联合国家宣言》；1942—1943 年<b>斯大林格勒战役</b>是重要转折点；1944 年 6 月诺曼底登陆；1945 年 5 月德国投降、8 月日本宣布投降、9 月 2 日签署投降书。</p></div></div>
+<div class="fact"><div><h3>中国的贡献</h3><p>中国战场是<b>世界反法西斯战争的东方主战场</b>，牵制和抗击了大量日军，为反法西斯战争的胜利作出了巨大贡献。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① 《联合国家宣言》（1942 年）标志反法西斯同盟形成，<b>不是</b>联合国成立（1945 年）。② 新政调整的是经济政策，<b>没有改变资本主义制度</b>。③ 太平洋战争爆发使战争规模扩大，斯大林格勒战役才是转折。④ 日本 8 月宣布投降，9 月 2 日才签署投降书。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的月份和连锁反应的进度。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：给出二战大事排先后，或者问某个事件的历史地位，比如转折点、同盟形成的标志。</li>
+<li><b>措施归类</b>：给一项新政措施，判断属于金融、工业、农业还是社会保障方面。</li>
+<li><b>横向联系</b>：把中国抗战放进世界反法西斯战争里看，说出中国战场的地位和作用。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料概述：1933 年起，美国政府颁布法令整顿银行、调整工农业生产，又兴建大型公共工程，让失业者参加劳动并获得工资。这些措施的共同特点是什么？<br><b>怎么想</b>　几项措施都是<b>政府出手</b>管经济，所以特点是加强<b>国家对经济的干预和指导</b>。如果再问作用，就答缓和了危机、开创了新模式，同时要注意它没有改变资本主义制度。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 25 课</p><p>年代与史实依据统编版历史教科书；连锁反应图和“经济景气”长条只是示意，不是真实统计数据。本课不画地图。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

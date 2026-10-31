@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="点开工业革命发明链，看一项发明怎样逼出下一项；切换手工工场和工厂；拖动时间轴，理清《共产党宣言》、第一国际和巴黎公社。历史互动馆第 21 课，对应统编版九年级上册第七单元。">
+<meta property="og:title" content="历史互动馆 · 第一次工业革命与马克思主义">
+<title>第一次工业革命与马克思主义 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="industry1.js"></script>
+</head>
+<body data-module="industry1">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 21 课 <span>/</span> 九年级上册 第七单元</p><h1>第一次工业革命与马克思主义</h1><p class="subtitle">一台纺纱机引出了蒸汽机，蒸汽机又引出了火车。机器改变了生产，也造就了工人这个庞大的群体，他们的命运催生了一种新的理论。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="工业革命发明链">
+<h2>发明链：解决一个问题，又冒出新需求</h2>
+<p class="panel-sub">点一个发明，或按“下一环”。看它解决了什么，又逼出了什么。</p>
+<svg id="chain" viewBox="0 0 400 248" role="img" aria-label="珍妮机、蒸汽机、汽船、机车和铁路的连锁关系"></svg>
+<div class="btn-row"><button class="big-btn" id="chain-next" type="button">下一环</button><button class="ghost-btn" id="chain-reset" type="button">回到起点</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="发明读数">
+<div class="readout-head"><h2 id="inv-name">珍妮机</h2><span class="badge" id="inv-badge">1765 年前后</span></div>
+<div class="stat-grid">
+<div class="stat wide"><span>解决了什么问题</span><strong id="inv-solve" style="font-size:16.5px;line-height:1.55">—</strong></div>
+<div class="stat wide"><span>又带来了什么需求</span><strong id="inv-need" style="font-size:16.5px;line-height:1.55">—</strong></div>
+</div>
+<p class="lead" id="inv-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="发明对比表">
+<h2>谁发明了什么</h2>
+<table class="compare" id="inv-table"><thead><tr><th>人物</th><th>成果</th><th>时间</th></tr></thead><tbody>
+<tr data-i="0"><td>哈格里夫斯</td><td>珍妮机</td><td>1765 年前后</td></tr>
+<tr data-i="1"><td>瓦特</td><td>改良蒸汽机</td><td>1785 年投入使用</td></tr>
+<tr data-i="2"><td>富尔顿</td><td>汽船</td><td>1807 年</td></tr>
+<tr data-i="3"><td>史蒂芬孙</td><td>蒸汽机车</td><td>1814 年</td></tr>
+<tr data-i="4"><td>英国</td><td>第一条铁路通车</td><td>1825 年</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="手工工场与工厂对比">
+<h2>手工工场和工厂：差在哪里</h2>
+<p class="panel-sub">切换两种生产方式，再选一个角度，看图和右边的读数怎么变。</p>
+<svg id="fac" viewBox="0 0 400 214" role="img" aria-label="手工工场与工厂生产方式示意"></svg>
+<div class="ctl-row"><span>方式</span><div class="chips small" id="fac-chips"></div></div>
+<div class="ctl-row"><span>角度</span><div class="chips small" id="dim-chips"></div></div>
+</section>
+<section class="readout" aria-label="生产方式读数">
+<div class="readout-head"><h2 id="fac-name">手工工场</h2><span class="badge" id="fac-badge">靠手和工具</span></div>
+<div class="stat-grid">
+<div class="stat wide"><span id="dim-label">动力</span><strong id="dim-val" style="font-size:18px;line-height:1.5">—</strong></div>
+</div>
+<table class="compare" id="dim-table"><thead><tr><th>角度</th><th>手工工场</th><th>工厂</th></tr></thead><tbody id="dim-body"></tbody></table>
+<aside class="analogy"><h3><i>打个比方</i> 手作小店和中央工厂</h3><p>手工工场像奶茶手作店：师傅们分工合作，靠的还是一双双手。工厂像大型中央工厂：一套动力带动整排机器，工人跟着机器的节奏干活。产量猛增，但工人也得<b>听机器和时钟的</b>。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="工人运动与马克思主义时间轴">
+<h2>从工人反抗到巴黎公社</h2>
+<p class="panel-sub">拖动年份或点事件，看工人运动和马克思主义怎样一步步发展。</p>
+<svg id="tl" viewBox="0 0 400 236" role="img" aria-label="1830 到 1880 年工人运动大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">1848 年</output></div><input id="year-in" type="range" min="1830" max="1880" step="1" value="1848"><div class="ruler"><span>1830</span><span>1855</span><span>1880</span></div></div>
+</section>
+<section class="readout" aria-label="这一年读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="r-badge">19 世纪</span></div>
+<div class="stat-grid">
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat"><span>事件</span><strong id="r-event" style="font-size:17px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+<h3 style="font-size:15px;margin:14px 0 2px">排一排：点击，按从早到晚的顺序</h3>
+<div id="ord"></div>
+<div class="btn-row"><button class="ghost-btn" id="ord-reset" type="button">重新排</button></div>
+<p class="lead" id="ord-msg" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么工业革命之后会诞生马克思主义</h3>
+<p class="derive-lead">机器和思想看起来没有关系，其实是一根链条上的两环。</p>
+<ol>
+<li><h4>机器造就了工厂</h4><p>工厂越办越大，社会财富迅速增长，人口也向城市集中。</p></li>
+<li><h4>社会分成了两大阶级</h4><p>工业资产阶级拥有工厂和机器，工业无产阶级只能靠出卖劳动力为生。</p></li>
+<li><h4>工人的日子很苦</h4><p>工作时间长，工资低，环境差，连童工也很普遍。矛盾越积越深。</p></li>
+<li><h4>工人开始反抗</h4><p>法国里昂工人起义、英国宪章运动、德意志西里西亚纺织工人起义相继发生，但都缺少科学理论指导。</p></li>
+<li><h4>理论应运而生</h4><p>马克思和恩格斯总结工人运动经验，1848 年发表《共产党宣言》，这标志着马克思主义诞生。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>马克思主义不是凭空出现的：工业革命带来了工人阶级和他们的斗争，斗争需要理论指导，理论又反过来推动了第一国际和巴黎公社的实践。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>工业革命从英国开始</h3><p>18 世纪 60 年代，工业革命首先在英国的棉纺织业开始。珍妮机是开端的标志性发明；瓦特改良的蒸汽机 1785 年投入使用，人类进入<b>蒸汽时代</b>。</p></div></div>
+<div class="fact"><div><h3>交通运输的变化</h3><p>1807 年美国人富尔顿的汽船试航成功，1814 年英国人史蒂芬孙发明蒸汽机车，1825 年世界上第一条铁路在英国通车。</p></div></div>
+<div class="fact"><div><h3>马克思主义诞生</h3><p>1848 年《共产党宣言》发表，标志着<b>马克思主义诞生</b>。它指出资本主义必然灭亡、社会主义必然胜利，号召全世界无产者联合起来。</p></div></div>
+<div class="fact"><div><h3>第一国际和巴黎公社</h3><p>1864 年第一国际（国际工人协会）在伦敦成立。1871 年巴黎人民起义，建立<b>巴黎公社</b>，这是世界上第一个无产阶级政权，前后只存在 72 天。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>瓦特是改良蒸汽机</b>，不是发明蒸汽机，他之前已经有蒸汽机。② 工业革命<b>从棉纺织业开始</b>，不是从蒸汽机开始。③ 富尔顿是<b>汽船</b>，史蒂芬孙是<b>机车</b>，别配反。④ 巴黎公社是第一个<b>无产阶级政权</b>，不是第一个社会主义国家。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的发明、生产方式和年份。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>人物配成就</b>：瓦特、富尔顿、史蒂芬孙配发明，再问属于哪个领域。</li>
+<li><b>因果关系</b>：说明发明之间怎样互相推动，用“问题—发明—新需求”来答。</li>
+<li><b>影响评价</b>：工业革命的影响要写两面，生产力大发展，也带来阶级矛盾和城市问题。</li>
+<li><b>标志判断</b>：《共产党宣言》标志马克思主义诞生，巴黎公社是第一个无产阶级政权，常以材料出现。</li>
+</ul>
+<div class="q"><b>典型设问</b>　有人说“蒸汽机的轰鸣声带来的不只是机器的转动”。结合所学，说说工业革命带来了哪些社会变化。<br><b>怎么想</b>　先写生产：生产力大幅提高，<b>工厂</b>成为主要生产组织形式。再写社会：城市兴起，形成<b>工业资产阶级和工业无产阶级</b>两大对立阶级。最后写后果：工人运动兴起，促成了马克思主义诞生。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 21 课</p><p>年代与史实依据统编版历史教科书；工厂和发明链为结构示意，不表示真实比例。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

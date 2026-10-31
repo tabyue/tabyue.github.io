@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="切换四大文明古国，对比各自依托的大河、文字和代表成就；拖动“距今”时间尺，从露西一路走到文字出现；一环环展开“大河孕育文明”的因果链。历史互动馆第 16 课，对应统编版九年级上册第一单元。">
+<meta property="og:title" content="历史互动馆 · 文明的产生与古代亚非文明">
+<title>文明的产生与古代亚非文明 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="ancient.js"></script>
+</head>
+<body data-module="ancient">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 16 课 <span>/</span> 九年级上册 第一单元</p><h1>文明的产生与古代亚非文明</h1><p class="subtitle">人类走了大约 300 万年，才在几条大河边点亮最早的文明之光：泥板上的楔形文字、尼罗河畔的金字塔、恒河边的佛陀，还有黄河边的甲骨文。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="四大文明古国对比器">
+<h2>四大文明古国对比器</h2>
+<p class="panel-sub">在下面选一个文明，看它靠哪条大河、留下了什么。这是示意图，不是地图。</p>
+<svg id="civ" viewBox="0 0 400 250" role="img" aria-label="四大文明古国依托的大河与代表成就示意"></svg>
+<div class="ctl-row"><span>文明</span><div class="chips small" id="civ-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="文明读数">
+<div class="readout-head"><h2 id="civ-name">古代埃及</h2><span class="badge" id="civ-badge">大河文明</span></div>
+<div class="stat-grid">
+<div class="stat"><span>依托的大河</span><strong id="civ-river" style="font-size:18px">—</strong></div>
+<div class="stat"><span>文字</span><strong id="civ-script" style="font-size:18px">—</strong></div>
+<div class="stat wide"><span>代表成就</span><strong id="civ-feat" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="civ-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="四大文明对比表">
+<h2>一张表记住四大文明</h2>
+<table class="compare" id="civ-table"><thead><tr><th>文明</th><th>大河</th><th>文字 · 标志成就</th></tr></thead><tbody>
+<tr data-c="meso"><td>两河流域</td><td>幼发拉底河<br>底格里斯河</td><td>楔形文字<br>《汉谟拉比法典》</td></tr>
+<tr data-c="egypt"><td>古代埃及</td><td>尼罗河</td><td>象形文字<br>金字塔</td></tr>
+<tr data-c="india"><td>古代印度</td><td>印度河<br>恒河</td><td>印章文字<br>种姓制度、佛教</td></tr>
+<tr data-c="china"><td>古代中国</td><td>黄河<br>长江</td><td>甲骨文<br>青铜器</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="距今时间尺">
+<h2>从露西到文字：距今时间尺</h2>
+<p class="panel-sub">时间太长，普通时间轴放不下，这里每往右一大格，时间就缩短到十分之一。拖动滑块，或点上面的事件。</p>
+<svg id="deep" viewBox="0 0 400 236" role="img" aria-label="从距今约 300 万年到今天的时间尺"></svg>
+<div class="control"><div class="control-heading"><label for="deep-in">往回看多少年</label><output id="deep-out">距今约 300 万年</output></div><input id="deep-in" type="range" min="0" max="1000" step="1" value="0"><div class="ruler"><span>300 万年前</span><span>1 万年前</span><span>100 年前</span></div></div>
+</section>
+<section class="readout" aria-label="距今读数">
+<div class="readout-head"><h2>这个时间点</h2><span class="badge" id="deep-badge">露西</span></div>
+<div class="stat-grid">
+<div class="stat"><span>换成公元纪年</span><strong id="deep-year" style="font-size:18px">—</strong></div>
+<div class="stat"><span>人类历史若是一天，现在是</span><strong id="deep-clock">—</strong></div>
+</div>
+<p class="lead" id="deep-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 把 300 万年压进一天</h3><p>从露西算起，人类走过的约 300 万年如果压缩成<b>一天 24 小时</b>：凌晨 0 点露西出现，农业要到 23 点 55 分之后才出现，文字直到<b>最后两三分钟</b>才诞生。我们课本里学的“有文字记载的历史”，只是这一天快结束时的一小段。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="大河与文明因果链">
+<h2>为什么早期文明都在大河边</h2>
+<p class="panel-sub">按“下一环”，一步步展开这条因果链。</p>
+<svg id="chain" viewBox="0 0 400 200" role="img" aria-label="大河孕育文明的因果链"></svg>
+<p class="lead" id="chain-text" aria-live="polite"></p>
+<div class="btn-row"><button class="big-btn" id="chain-next" type="button">下一环</button><button class="ghost-btn" id="chain-reset" type="button">从头再来</button></div>
+</section>
+<section class="card panel" aria-label="古代成就配对">
+<h2>成就配对：它属于哪个文明</h2>
+<p class="panel-sub">每行点一个文明，点了就判，不能改。<b id="match-score">已答 0 / 6</b></p>
+<div class="choice-list" id="match-list"></div>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 人人平等的原始社会，怎么变成了有奴隶主的国家</h3>
+<p class="derive-lead">这是第 1 课的核心：国家不是一下子冒出来的，是生产发展一步步“逼”出来的。</p>
+<ol>
+<li><h4>一开始，大家一起干、一起分</h4><p>原始社会工具很简陋，一个人打不到猎物，只能集体劳动、平均分配。东西刚够吃，没有剩余，也就没有贫富。</p></li>
+<li><h4>工具进步，粮食有了剩余</h4><p>人们学会种庄稼、养牲畜，后来又用上金属工具，一个家庭也能种出多于自己吃的粮食，剩余产品出现了。</p></li>
+<li><h4>剩余产品被少数人占有</h4><p>部落首领、有力量的家族把多出来的东西据为己有，<b>私有制</b>产生，贫富分化越来越大。</p></li>
+<li><h4>打仗抓来的俘虏变成奴隶</h4><p>以前俘虏养不起就杀掉；有了剩余后，留着他们干活更划算。社会分成了<b>奴隶主</b>和<b>奴隶</b>两大阶级。</p></li>
+<li><h4>需要一套机器来维持秩序</h4><p>奴隶主要管住奴隶、保护财产，就建立军队、官吏、法律和监狱，这就是<b>国家</b>。《汉谟拉比法典》维护的正是奴隶主的利益。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>生产力发展 → 剩余产品 → 私有制 → 阶级 → 国家。人类由此从原始社会进入<b>奴隶社会</b>，最早的国家出现在土地肥沃的大河流域。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>人类起源与国家产生</h3><p>在非洲埃塞俄比亚发现的南方古猿化石“露西”，距今约 300 万年，已经能<b>直立行走</b>。随着生产力发展，出现私有制和阶级，人类从原始社会进入<b>奴隶社会</b>，产生了国家。</p></div></div>
+<div class="fact"><div><h3>古代两河流域</h3><p>“两河”是<b>幼发拉底河和底格里斯河</b>。苏美尔人创造了写在泥板上的<b>楔形文字</b>。约公元前 18 世纪，古巴比伦国王汉谟拉比统一两河流域，颁布《汉谟拉比法典》，这是迄今已知的世界上第一部比较完备的成文法典。</p></div></div>
+<div class="fact"><div><h3>古代埃及</h3><p>依托<b>尼罗河</b>。国王称“法老”，掌握最高权力。<b>金字塔</b>是法老的陵墓，胡夫金字塔最大。古埃及人创造了<b>象形文字</b>，还根据尼罗河泛滥和天象制定了太阳历。</p></div></div>
+<div class="fact"><div><h3>古代印度</h3><p>依托<b>印度河、恒河</b>。雅利安人进入后形成<b>种姓制度</b>：婆罗门、刹帝利、吠舍、首陀罗，等级森严、世代相袭。公元前 6 世纪，<b>乔达摩·悉达多</b>（后被尊称为释迦牟尼）创立<b>佛教</b>。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>“阿拉伯数字”是古代印度人发明的</b>，阿拉伯人只是把它传到了欧洲。② 种姓制度里第一等级是<b>婆罗门</b>（祭司），国王和武士属于第二等级<b>刹帝利</b>。③ 楔形文字属于两河流域，象形文字属于埃及，别把“楔”和“象”对调。④ 佛教产生于<b>古印度</b>，不是中国。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的文明和时间点。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>成就归属</b>：给出楔形文字、金字塔、种姓制度、《汉谟拉比法典》等，判断属于哪个文明。用上面那张对比表一行一行记最稳。</li>
+<li><b>共同特点</b>：问四大文明古国有什么共同点，答“都产生在<b>大河流域</b>”，再说原因：水源充足、土地肥沃、便于农业生产。</li>
+<li><b>史料题</b>：给出法典条文的大意或种姓制度的规定，问反映了什么。抓住“等级不平等”“维护奴隶主/上层利益”这两个关键词。</li>
+<li><b>时空观念</b>：会用“距今”和“公元前”两种方式表示时间，世纪不要算错。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料：古印度的规定中，不同等级的人职业世代相传，不同等级之间不能通婚，低等级的人不能从事高等级的职业。这反映了什么制度？它有什么影响？<br><b>怎么想</b>　“世代相传”“不能通婚”是<b>种姓制度</b>的特征。影响从两面答：它维护了婆罗门、刹帝利等上层的统治；但等级森严、限制了社会流动，阻碍了社会发展。<b>先认出制度，再分正反说影响</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 16 课</p><p>史实依据统编版历史教科书；对比器与因果链均为示意图，不表示实际地理位置和疆域。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

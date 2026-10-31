@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份走一遍 1949—1976 年的大事；给农业、手工业、资本主义工商业配上改造方式；逐年推进“一五”计划，点亮鞍钢、一汽、沈飞和武汉长江大桥。历史互动馆第 13 课，对应统编版八年级下册第一、二单元。">
+<meta property="og:title" content="历史互动馆 · 新中国的成立与社会主义建设">
+<title>新中国的成立与社会主义建设 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="prc.js"></script>
+</head>
+<body data-module="prc">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 13 课 <span>/</span> 八年级下册 第一、二单元</p><h1>新中国的成立与社会主义建设</h1><p class="subtitle">从 1949 年开国大典，到 1956 年社会主义制度基本建立，再到“两弹一星”的成就，新中国在一穷二白的基础上一步步建设起来。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="1949—1976 年时间轴">
+<h2>1949—1976 大事时间轴</h2>
+<p class="panel-sub">拖动下面的滑块选一个年份，或者点时间轴上的事件。</p>
+<svg id="tl" viewBox="0 0 400 270" role="img" aria-label="1949 年至 1976 年大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">1949 年</output></div><input id="year-in" type="range" min="1949" max="1976" step="1" value="1949"><div class="ruler"><span>1949</span><span>1976</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="年份读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="per-badge">过渡时期</span></div>
+<div class="stat-grid">
+<div class="stat"><span>新中国成立后</span><strong id="r-since">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这一年前后发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="过渡时期的总任务">
+<h2>过渡时期的总任务</h2>
+<p class="panel-sub" style="margin-bottom:0">1953 年提出过渡时期总路线，常被概括为“一化三改”。滑到对应年份，相关的一行会亮起来。</p>
+<table class="compare"><tbody>
+<tr id="row-yh"><td>一化</td><td>逐步实现国家的社会主义工业化：1953—1957 年实施第一个五年计划。</td></tr>
+<tr id="row-sg"><td>三改</td><td>逐步实现对农业、手工业和资本主义工商业的社会主义改造，1956 年底基本完成。</td></tr>
+<tr id="row-rd"><td>根本政治制度</td><td>人民代表大会制度。1954 年第一届全国人民代表大会召开，通过第一部宪法。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="三大改造配对">
+<h2>三大改造：谁用什么方式改</h2>
+<p class="panel-sub">给每个改造对象选一种方式，图上会连线。三个都选对，看看改造带来了什么变化。</p>
+<svg id="trans" viewBox="0 0 400 230" role="img" aria-label="三大改造对象与方式连线图"></svg>
+<div class="ctl-row"><span style="min-width:104px">农业</span><div class="chips small" id="c-agr"></div></div>
+<div class="ctl-row"><span style="min-width:104px">手工业</span><div class="chips small" id="c-hand"></div></div>
+<div class="ctl-row"><span style="min-width:104px">资本主义工商业</span><div class="chips small" id="c-cap"></div></div>
+<div class="btn-row"><button class="ghost-btn" id="trans-reset" type="button">清空重选</button></div>
+</section>
+<section class="readout" aria-label="三大改造说明">
+<div class="readout-head"><h2 id="t-name">三大改造</h2><span class="badge" id="t-badge">1953—1956 年</span></div>
+<div class="stat-grid">
+<div class="stat"><span>选对了几个</span><strong id="t-score">0 / 3</strong></div>
+<div class="stat"><span>基本完成</span><strong style="font-size:20px">1956 年底</strong></div>
+</div>
+<p class="lead" id="t-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="一五计划成就">
+<h2>逐年推进“一五”计划</h2>
+<p class="panel-sub">按“推进一年”，看 1953—1957 年间一项项建设成就亮起来；也可以直接点某一项。</p>
+<svg id="plan" viewBox="0 0 400 230" role="img" aria-label="第一个五年计划建设成就示意"></svg>
+<div class="btn-row"><button class="big-btn" id="plan-go" type="button">推进一年</button><button class="ghost-btn" id="plan-reset" type="button">回到 1953 年</button></div>
+</section>
+<section class="readout" aria-label="成就说明">
+<div class="readout-head"><h2 id="p-name">第一个五年计划</h2><span class="badge" id="p-badge">1953—1957 年</span></div>
+<div class="stat-grid">
+<div class="stat"><span>计划进行到</span><strong id="p-year">—</strong></div>
+<div class="stat"><span>已经亮起的成就</span><strong id="p-count">—</strong></div>
+</div>
+<p class="lead" id="p-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 盖楼先打地基</h3><p>钢铁、机器、汽车、飞机，是用来造其他东西的“工具”，就像盖楼要先打的<b>地基</b>。新中国成立时工业基础很薄弱，所以“一五”计划先集中力量发展<b>重工业</b>，地基打牢了，后面的楼才能一层层往上盖。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么说 1956 年社会主义制度在我国基本建立</h3>
+<p class="derive-lead">这是这两个单元最核心的一个结论。按时间顺着捋一遍，就知道它是怎么来的。</p>
+<ol>
+<li><h4>起点：一个落后的农业国</h4><p>新中国成立时，工业基础非常薄弱。经过土地改革，农民分到了土地，国民经济逐步恢复。</p></li>
+<li><h4>1953 年定下总任务</h4><p>党提出过渡时期总路线：一边搞社会主义工业化（“一化”），一边对农业、手工业、资本主义工商业进行社会主义改造（“三改”）。</p></li>
+<li><h4>“一化”：第一个五年计划</h4><p>1953—1957 年集中力量发展重工业，鞍钢、一汽、沈飞、武汉长江大桥等一批成果相继建成，计划超额完成。</p></li>
+<li><h4>“三改”：三种对象，两种方式</h4><p>农业和手工业走<b>合作化</b>道路；资本主义工商业采取<b>和平赎买</b>政策，通过公私合营逐步改造。</p></li>
+<li><h4>1956 年底基本完成</h4><p>生产资料私有制转变为社会主义公有制。1954 年的宪法和人民代表大会制度，也已经为国家定下了制度框架。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>1956 年底三大改造基本完成，标志着<b>社会主义制度在我国基本建立</b>，我国从此进入社会主义初级阶段。同年召开的中共八大提出，要集中力量发展社会生产力。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>新中国成立与巩固</h3><p>1949 年 9 月，中国人民政治协商会议第一届全体会议通过起临时宪法作用的《共同纲领》；<b>10 月 1 日</b>举行开国大典。1950 年 10 月中国人民志愿军赴朝作战，1953 年 7 月朝鲜停战协定签字，抗美援朝战争取得胜利。1950 年颁布土地改革法，到 1952 年底，除部分少数民族地区外，全国大陆基本完成土地改革。</p></div></div>
+<div class="fact"><div><h3>“一五”计划（1953—1957）</h3><p>基本任务是集中主要力量发展<b>重工业</b>。鞍山钢铁公司三大工程建成投产，长春第一汽车制造厂生产出第一辆国产汽车，沈阳飞机制造厂试制成功我国第一架喷气式飞机，武汉长江大桥建成通车。到 1957 年底计划超额完成，我国开始改变工业落后的面貌。</p></div></div>
+<div class="fact"><div><h3>第一部宪法与三大改造</h3><p>1954 年第一届全国人民代表大会通过《中华人民共和国宪法》，这是我国<b>第一部社会主义类型的宪法</b>。1953—1956 年进行三大改造，1956 年底基本完成，<b>社会主义制度在我国基本建立</b>。</p></div></div>
+<div class="fact"><div><h3>探索中的成就与挫折</h3><p>1956 年中共八大提出集中力量发展社会生产力。<b>1964 年</b>第一颗原子弹爆炸成功，1967 年第一颗氢弹爆炸成功，<b>1970 年</b>第一颗人造地球卫星“东方红一号”发射成功。1966—1976 年的“文化大革命”，使党、国家和人民遭到新中国成立以来最严重的挫折和损失。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>改造方式别配错</b>：农业、手工业走合作化道路，资本主义工商业是和平赎买、公私合营。② <b>两个时间段</b>：“一五”计划是 1953—1957 年，三大改造是 1953—1956 年。③ <b>第一部宪法是 1954 年</b>，1949 年的《共同纲领》只是起临时宪法作用。④ 原子弹 <b>1964 年</b>，人造卫星 <b>1970 年</b>，不要记反。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份、配对和计划进度。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：把新中国成立、抗美援朝、“一五”计划、第一部宪法、三大改造基本完成等事件排先后，或者判断某件事发生在哪一年。</li>
+<li><b>成就识别</b>：给出鞍钢、一汽、沈飞、武汉长江大桥、原子弹、人造卫星等成就，判断是不是“一五”计划期间的成果。</li>
+<li><b>意义题</b>：土地改革、抗美援朝、1954 年宪法、三大改造的意义，答题要用课本里的关键词。</li>
+<li><b>易混点</b>：三大改造的对象和方式、《共同纲领》和第一部宪法，常出在选择题里。</li>
+</ul>
+<div class="q"><b>典型设问</b>　材料大意：1950 年颁布的土地改革法规定，废除地主阶级封建剥削的土地所有制，实行农民的土地所有制。这次土地改革有什么历史意义？<br><b>怎么想</b>　抓住材料里“废除……实行……”这对关键词，再按课本回答：彻底摧毁了我国存在两千多年的<b>封建土地制度</b>；农民成了土地的主人；解放了农村生产力，为国家的工业化建设创造了条件。<b>先说“废除了什么”，再说“谁得到了什么”，最后说对生产的作用</b>，层次就清楚了。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 13 课</p><p>年代与史实依据统编版历史教科书；“一五”成就图只表示年份先后，不表示实际地理位置。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

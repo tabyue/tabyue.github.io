@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份看夏、商、西周到春秋战国怎样更替，弄懂年份前面的“约”；一项项推行商鞅变法的措施，看秦国怎样变强；把孔子、孟子、老子、墨子、韩非和他们的主张配对。历史互动馆第 2 课，对应统编版七年级上册第二单元。">
+<meta property="og:title" content="历史互动馆 · 夏商周：从王朝更替到百家争鸣">
+<title>夏商周：从王朝更替到百家争鸣 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="xiashang.js"></script>
+</head>
+<body data-module="xiashang">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 2 课 <span>/</span> 七年级上册 第二单元</p><h1>夏商周：从王朝更替到百家争鸣</h1><p class="subtitle">从约 4000 年前的夏朝到秦统一，王朝换了三次，诸侯争了五百多年，思想家们也争出了影响后世两千多年的学说。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="夏商周时间轴">
+<h2>从夏朝到秦统一：一千八百多年</h2>
+<p class="panel-sub">拖动下面的滑块选一个年份，或者点时间轴上的事件。带“约”的年份是推定的。</p>
+<svg id="tl" viewBox="0 0 400 240" role="img" aria-label="夏商周到战国时期大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">约 公元前 1046 年</output></div><input id="year-in" type="range" min="-2100" max="-200" step="1" value="-1046"><div class="ruler"><span>前 2100</span><span>前 1150</span><span>前 200</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="年代读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="dyn-badge">西周</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这一年前后发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="夏商周年代表">
+<h2>五段时期，各从哪年到哪年</h2>
+<table class="compare"><tbody id="era-table">
+<tr><td>夏</td><td>约前 2070—约前 1600 年。我国历史上第一个王朝。</td></tr>
+<tr><td>商</td><td>约前 1600—约前 1046 年。约前 1300 年盘庚迁殷。</td></tr>
+<tr><td>西周</td><td>约前 1046—前 771 年。定都镐京，实行分封制。</td></tr>
+<tr><td>春秋</td><td>前 770—前 476 年。东周的前半段，诸侯争霸。</td></tr>
+<tr><td>战国</td><td>前 475—前 221 年。东周的后半段，七雄兼并。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="商鞅变法对比器">
+<h2>商鞅变法：一项项推行，看秦国怎么变</h2>
+<p class="panel-sub">点下面的措施按钮，推行或撤回。条形图的长短只是示意，不是真实统计数据。</p>
+<svg id="sy" viewBox="0 0 400 230" role="img" aria-label="商鞅变法前后秦国状况示意"></svg>
+<div class="chips small" id="sy-btns" style="margin-top:10px"></div>
+<div class="btn-row"><button class="big-btn" id="sy-all" type="button">四项全部推行</button><button class="ghost-btn" id="sy-reset" type="button">回到变法前</button></div>
+</section>
+<section class="readout" aria-label="变法读数">
+<div class="readout-head"><h2 id="sy-name">变法前的秦国</h2><span class="badge" id="sy-badge">已推行 0 / 4</span></div>
+<div class="stat-grid">
+<div class="stat"><span>刚推行的一项</span><strong id="sy-last" style="font-size:18px">—</strong></div>
+<div class="stat"><span>秦国的国力</span><strong id="sy-power" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="sy-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 从“看出身”到“看积分”</h3><p>变法前的秦国像一家<b>看出身</b>的老公司：好位置都给老板的亲戚，普通员工干多干少一个样。商鞅改成<b>积分制</b>：多打粮、多织布就加分（免徭役），上阵立功就升级（授爵位和田宅），没本事的“亲戚”不再白拿好处；各地的店长（县令）由老板直接派。人人有奔头，公司自然强了。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel" aria-label="百家争鸣配对">
+<h2>百家争鸣：这个主张是谁提出的</h2>
+<p class="panel-sub">每行点一个人物，点了就判，不能改。<b id="bj-score">已答 0 / 5</b></p>
+<div class="choice-list" id="bj-list"></div>
+<div class="btn-row"><button class="ghost-btn" id="bj-reset" type="button">重新配对</button></div>
+</section>
+<section class="readout" aria-label="诸子百家一览">
+<div class="readout-head"><h2>诸子百家一览</h2><span class="badge" id="bj-badge">答对 0 / 5</span></div>
+<table class="compare"><thead><tr><th>学派</th><th>人物</th><th>一句话记住</th></tr></thead><tbody id="bj-table"></tbody></table>
+<p class="lead" id="bj-text" aria-live="polite"></p>
+<h3 style="margin:18px 0 0;font-size:15px;color:#583d34">这一时期还要认得的科技文化</h3>
+<table class="compare"><tbody>
+<tr><td>甲骨文</td><td>商朝刻在龟甲、兽骨上的文字，我国已知最早的成熟文字。</td></tr>
+<tr><td>后母戊鼎</td><td>商朝青铜器，是目前已知中国古代最重的青铜器。</td></tr>
+<tr><td>《诗经》</td><td>我国第一部诗歌总集。</td></tr>
+<tr><td>屈原</td><td>战国时楚国诗人，代表作《离骚》。</td></tr>
+<tr><td>都江堰</td><td>战国时秦国蜀郡守李冰主持修建，至今仍在发挥作用。</td></tr>
+</tbody></table>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 春秋战国为什么会出现“百家争鸣”</h3>
+<p class="derive-lead">思想不会凭空冒出来。顺着“生产—社会—人才—思想”这条线往下推，就能想明白。</p>
+<ol>
+<li><h4>生产工具变了</h4><p>春秋时期出现了铁农具和牛耕，战国时用得更广。荒地被大量开垦，私人开垦的田地越来越多。</p></li>
+<li><h4>旧秩序松动了</h4><p>周王室衰微，分封制和井田制逐渐瓦解。诸侯争霸、互相兼并，整个社会处在大变革之中。</p></li>
+<li><h4>各国急需人才</h4><p>谁有富国强兵的办法，诸侯就重用谁。商鞅就是投奔秦孝公之后，才有机会主持变法的。</p></li>
+<li><h4>读书人多了、敢说了</h4><p>孔子兴办私学，“士”这个阶层活跃起来。他们对“怎样治理国家、怎样做人”提出各不相同的看法。</p></li>
+<li><h4>各家互相辩论</h4><p>儒、道、墨、法等各家著书讲学，互相批评，也互相吸收，形成了“百家争鸣”的局面。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>百家争鸣是春秋战国<b>社会大变革在思想文化上的反映</b>。它是我国思想文化的一个繁荣时期，儒家、道家、法家等思想对后世影响深远。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>夏商西周的更替</h3><p>约公元前 2070 年，禹建立<b>夏朝</b>，这是我国历史上第一个王朝；禹死后儿子启继位，<b>世袭制</b>代替了禅让制。约公元前 1600 年商汤灭夏建立<b>商朝</b>。约公元前 1046 年，周武王在牧野之战中打败商纣王，建立<b>西周</b>，定都镐京，实行分封制。</p></div></div>
+<div class="fact"><div><h3>动荡变化的春秋</h3><p>公元前 770 年周平王东迁洛邑，东周开始。东周分<b>春秋</b>（前 770—前 476 年）和<b>战国</b>（前 475—前 221 年）。春秋时周王室衰微，诸侯争霸，齐桓公任用管仲改革，打出“尊王攘夷”的旗号，成为第一个霸主。</p></div></div>
+<div class="fact"><div><h3>战国的社会变革</h3><p>齐、楚、燕、韩、赵、魏、秦并称<b>战国七雄</b>。公元前 356 年，商鞅在秦孝公支持下开始变法，秦国发展成为战国后期最富强的国家。秦国蜀郡守李冰主持修建<b>都江堰</b>，至今仍在发挥作用。</p></div></div>
+<div class="fact"><div><h3>思想与科技文化</h3><p>孔子创立<b>儒家</b>学派，兴办私学，主张“有教无类”，言行被弟子编成《论语》；老子是<b>道家</b>创始人；韩非是<b>法家</b>代表人物。商朝的<b>甲骨文</b>是我国已知最早的成熟文字；<b>《诗经》</b>是我国第一部诗歌总集。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>世袭制从启开始</b>，不是从禹开始。② <b>东周不等于战国</b>：东周从公元前 770 年开始，包括春秋和战国两段。③ 公元前的年份数字越大越早：前 770 年比前 475 年早。④ “民贵君轻”是<b>孟子</b>的主张，不是孔子；“兼爱”“非攻”是<b>墨子</b>的主张。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份和推行了哪些措施。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：给几个年份或事件排先后，或判断属于哪个时期。记住夏、商、西周的年份要带“约”，东周包括春秋和战国。</li>
+<li><b>措施与作用</b>：商鞅变法的内容和作用最常考，还常和后面的“秦统一”连起来问“秦国为什么能统一”。</li>
+<li><b>史料题</b>：给《论语》《孟子》里的一句话，判断是哪一家、哪个人的主张。先抓关键词（仁、民贵、兼爱、法），再对号入座。</li>
+<li><b>原因题</b>：百家争鸣出现的原因、春秋战国社会变革的表现，答题从“经济—政治—思想”三层去想。</li>
+</ul>
+<div class="q"><b>典型设问</b>　“为田开阡陌封疆，而赋税平。”（《史记·商君列传》）这则材料反映的是商鞅变法的哪项内容？它有什么作用？<br><b>怎么想</b>　“阡陌”是田间的小路，也是井田的界线，“开阡陌”就是打破井田的界线，对应<b>废井田，国家承认土地私有，允许自由买卖</b>。作用从结果找：农民生产积极性提高，秦国经济发展，为秦统一奠定了基础。<b>先把材料里的关键词“翻译”成课本措施，再写作用</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 2 课</p><p>年代与史实依据统编版历史教科书；夏、商、西周的年代为推定年代，标“约”；商鞅变法图中的长短只是示意，不是统计数据。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

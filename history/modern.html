@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="切换四位航海家，看航线一段段开出去；打开原因和条件，推出新航路的影响；给文艺复兴人物配作品，走一遍三角贸易。历史互动馆第 19 课，对应统编版九年级上册第五单元。">
+<meta property="og:title" content="历史互动馆 · 走向近代：文艺复兴与新航路">
+<title>走向近代：文艺复兴与新航路 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="modern.js"></script>
+</head>
+<body data-module="modern">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 19 课 <span>/</span> 九年级上册 第五单元</p><h1>走向近代：文艺复兴与新航路</h1><p class="subtitle">先是人的想法变了，接着船开出去了。短短一百多年，原本互相隔绝的大洲被航线连了起来，代价也随之而来。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="四位航海家航线对比">
+<h2>四位航海家：谁走到了哪里</h2>
+<p class="panel-sub">选一位航海家，看他的船队怎么走。可以按“再开一次”重看。</p>
+<svg id="nv" viewBox="0 0 400 250" role="img" aria-label="新航路示意节点图"></svg>
+<p class="note">示意节点图，不表示实际地理位置和疆域，线路只表示经过的先后。</p>
+<div class="ctl-row"><span>航海家</span><div class="chips small" id="nv-chips"></div></div>
+<div class="btn-row"><button class="big-btn" id="nv-go" type="button">再开一次</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="航海家读数">
+<div class="readout-head"><h2 id="nv-name">迪亚士</h2><span class="badge" id="nv-badge">1487 年</span></div>
+<div class="stat-grid">
+<div class="stat"><span>替哪国航行</span><strong id="nv-who" style="font-size:20px">—</strong></div>
+<div class="stat"><span>往哪边走</span><strong id="nv-dir" style="font-size:20px">—</strong></div>
+<div class="stat wide"><span>到达哪里</span><strong id="nv-arr" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="nv-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="四位航海家对比表">
+<h2>一张表记住四个人</h2>
+<table class="compare" id="nv-table"><thead><tr><th>航海家</th><th>时间</th><th>替谁航行</th><th>到达</th></tr></thead><tbody>
+<tr data-n="dias"><td>迪亚士</td><td>1487 年</td><td>葡萄牙</td><td>好望角</td></tr>
+<tr data-n="colu"><td>哥伦布</td><td>1492 年</td><td>西班牙</td><td>美洲</td></tr>
+<tr data-n="gama"><td>达·伽马</td><td>1497—1498 年</td><td>葡萄牙</td><td>印度</td></tr>
+<tr data-n="mage"><td>麦哲伦船队</td><td>1519—1522 年</td><td>西班牙</td><td>环球一周</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="新航路开辟的因果链">
+<h2>因果链：想去，还得能去</h2>
+<p class="panel-sub">打开四个因素，凑齐后按“看影响”，把这条因果链走完。</p>
+<svg id="chain" viewBox="0 0 400 262" role="img" aria-label="新航路开辟的原因、条件和影响"></svg>
+<div class="ctl-row"><span>因素</span><div class="chips small" id="fac-chips"></div></div>
+<div class="btn-row"><button class="big-btn" id="fac-go" type="button">看影响</button><button class="ghost-btn" id="fac-reset" type="button">全部关掉</button></div>
+</section>
+<section class="readout" aria-label="因果链读数">
+<div class="readout-head"><h2>船队能出发吗</h2><span class="badge" id="fac-badge">还不能</span></div>
+<div class="stat-grid">
+<div class="stat"><span>想去（原因）</span><strong id="fac-want">0 / 2</strong></div>
+<div class="stat"><span>能去（条件）</span><strong id="fac-can">0 / 2</strong></div>
+</div>
+<p class="lead" id="fac-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 想去，还得能去</h3><p>你想去远方的朋友家取一笔钱（<b>寻金热</b>），原来那条路又被人设卡收费（<b>商路受阻</b>），这是“想去”。可光想没用，还得有一辆靠谱的车（<b>造船和航海技术</b>），并且相信换条路也能到（<b>地圆学说</b>），这是“能去”。两边凑齐，才会真的动身。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="三角贸易示意">
+<h2>三角贸易：一趟船，三段生意</h2>
+<p class="panel-sub">按“下一段”沿三点走一圈，看每段船上运的是什么。</p>
+<svg id="tri" viewBox="0 0 400 236" role="img" aria-label="欧洲、非洲、美洲三点循环的三角贸易示意"></svg>
+<p class="note">示意图，三个点只表示贸易路线的先后，不表示实际地理位置和疆域。</p>
+<div class="btn-row"><button class="big-btn" id="tri-go" type="button">下一段</button></div>
+<div class="stat-grid" style="margin-top:12px">
+<div class="stat"><span id="tri-leg">这一段</span><strong id="tri-from" style="font-size:18px">—</strong></div>
+<div class="stat"><span>船上运的</span><strong id="tri-cargo" style="font-size:16px">—</strong></div>
+</div>
+<p class="lead" id="tri-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="文艺复兴人物作品配对">
+<h2>文艺复兴：人物配作品</h2>
+<p class="panel-sub">给每个人选出他的代表作，选后马上判断对错。<span id="ren-score">已答 0 / 3</span></p>
+<div class="choice-list" id="ren-list"></div>
+<div class="btn-row"><button class="ghost-btn" id="ren-reset" type="button">重新配一次</button></div>
+<div class="source-card"><p>三部作品题材不同，都把目光从神转向<b>现实中的人</b>，这就是<b>人文主义</b>：肯定人的价值和尊严，追求现实生活的幸福。</p></div>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么说世界从此开始连成一个整体</h3>
+<p class="derive-lead">这是本单元最常考的影响题。按航线一步步想，就不用硬背。</p>
+<ol>
+<li><h4>原来各大洲联系很少</h4><p>亚欧非之间有陆路和海路往来，但美洲和它们几乎没有联系，世界像几座互不相通的“孤岛”。</p></li>
+<li><h4>向东的路通了</h4><p>迪亚士到达好望角，达·伽马接着绕过去到达印度，欧洲和亚洲之间有了一条直达的海路。</p></li>
+<li><h4>向西的路也通了</h4><p>哥伦布到达美洲，美洲从此和欧洲、非洲连了起来。</p></li>
+<li><h4>东西两头接上了</h4><p>麦哲伦船队环球一周，证明海洋是连通的，地球确实是圆的。</p></li>
+<li><h4>人和货物动起来了</h4><p>欧洲的主要商路从地中海转到大西洋沿岸，玉米、马铃薯等美洲作物也传到各地。同时，殖民掠夺和黑奴贸易给亚非美人民带来深重灾难。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>新航路的开辟打破了各地区相对孤立的状态，世界<b>开始</b>连成一个整体。“连起来”既带来了交流，也带来了掠夺，评价时两面都要说。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>文艺复兴与人文主义</h3><p>14 世纪，文艺复兴首先兴起于意大利，后来扩展到欧洲其他地区。它的核心是<b>人文主义</b>。代表人物：但丁（《神曲》）、达·芬奇（《蒙娜丽莎》）、莎士比亚（《哈姆雷特》）。</p></div></div>
+<div class="fact"><div><h3>新航路开辟的原因和条件</h3><p>原因：欧洲人的<b>寻金热</b>；奥斯曼帝国控制传统商路，<b>商路受阻</b>。条件：<b>造船和航海技术</b>进步；<b>地圆学说</b>流行；葡萄牙、西班牙王室支持。</p></div></div>
+<div class="fact"><div><h3>四次关键航行</h3><p>迪亚士 1487 年到达好望角；哥伦布 1492 年到达美洲；达·伽马 1497—1498 年到达印度；麦哲伦船队 1519—1522 年完成首次环球航行。</p></div></div>
+<div class="fact"><div><h3>早期殖民掠夺</h3><p>葡萄牙、西班牙最早向海外掠夺，荷兰、英国随后崛起。欧洲殖民者在亚非美抢夺财富，还贩卖黑人奴隶，形成<b>三角贸易</b>。这些财富促进了欧洲资本主义发展，却给被掠夺地区带来深重灾难。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>哥伦布到的是美洲</b>，他自己却以为到了亚洲，所以把当地人叫“印第安人”。② <b>麦哲伦本人没有走完全程</b>，他 1521 年死在菲律宾，是船队完成了环球航行。③ <b>到达印度的是达·伽马</b>，迪亚士只到好望角。④ 文艺复兴<b>不是简单复古</b>，而是借古典文化宣传人文主义。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的航海家和打开的因素。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>人物与成就</b>：航海家配航线、文艺复兴人物配作品，注意每个人到底走到了哪里。</li>
+<li><b>原因与条件</b>：把新航路开辟的因素分成“为什么想去”和“凭什么能去”。</li>
+<li><b>影响评价</b>：既写世界开始连成一个整体，也写殖民掠夺带来的灾难，不能只写一面。</li>
+<li><b>概念理解</b>：文艺复兴的核心是人文主义，常让你从作品或主张里找依据。</li>
+</ul>
+<div class="q"><b>典型设问</b>　结合所学，说说新航路的开辟对世界历史产生了哪些影响。<br><b>怎么想</b>　先写最重要的一句：世界<b>开始</b>连成一个整体。再写欧洲：主要商路转到大西洋沿岸，促进了资本主义发展。最后写亚非美：遭受殖民掠夺，黑人被贩卖。<b>积极和消极两面都写</b>，答案才完整。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 19 课</p><p>年代与史实依据统编版历史教科书；航线和三角贸易均为节点示意，不表示实际地理位置和疆域。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

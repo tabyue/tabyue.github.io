@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="按月拖动 1931—1945 年时间轴，看局部抗战怎样走向全民族抗战；切换战略阶段，对比正面战场和敌后战场；给抗战大事排先后。历史互动馆第 11 课，对应统编版八年级上册第六单元。">
+<meta property="og:title" content="历史互动馆 · 中华民族的抗日战争">
+<title>中华民族的抗日战争 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="antijapan.js"></script>
+</head>
+<body data-module="antijapan">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 11 课 <span>/</span> 八年级上册 第六单元</p><h1>中华民族的抗日战争</h1><p class="subtitle">从 1931 年的九一八事变到 1945 年日本投降，中国人民进行了 14 年抗战，这是近代以来中国反抗外敌入侵第一次取得完全胜利。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="十四年抗战时间轴">
+<h2>十四年抗战时间轴</h2>
+<p class="panel-sub">滑块每格是一个月。拖动它，或者点时间轴上的事件。</p>
+<svg id="tl" viewBox="0 0 400 262" role="img" aria-label="1931 至 1945 年抗日战争大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="mon-in">选一个月份</label><output id="mon-out">1931 年 9 月</output></div><input id="mon-in" type="range" min="23178" max="23351" step="1" value="23180"><div class="ruler"><span>1931 年</span><span>1938 年</span><span>1945 年</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="时期读数">
+<div class="readout-head"><h2>这个月</h2><span class="badge" id="phase-badge">局部抗战</span></div>
+<div class="stat-grid">
+<div class="stat"><span>处在 14 年抗战的</span><strong id="r-nth" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这个月前后发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="十四年抗战分两段">
+<h2>14 年抗战分两段</h2>
+<table class="compare"><tbody>
+<tr id="ph-0"><td>局部抗战</td><td>1931 年九一八事变起，东北、华北等地军民奋起抵抗。</td></tr>
+<tr id="ph-1"><td>全民族抗战</td><td>1937 年七七事变起，到 1945 年日本投降，共 8 年。</td></tr>
+<tr id="ph-2"><td>胜利</td><td>1945 年 9 月 3 日定为中国人民抗日战争胜利纪念日。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="正面战场与敌后战场">
+<h2>两个战场：怎样一起抗击日军</h2>
+<p class="panel-sub">先选一个阶段，再点图里的战役，看它属于哪个战场。</p>
+<svg id="bf" viewBox="0 0 400 270" role="img" aria-label="正面战场与敌后战场结构示意"></svg>
+<div class="ctl-row"><span>阶段</span><div class="chips small" id="stage-chips"></div></div>
+</section>
+<section class="readout" aria-label="战役信息">
+<div class="readout-head"><h2 id="bt-name">淞沪会战</h2><span class="badge" id="bt-badge">1937 年</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个战场</span><strong id="bt-side" style="font-size:18px">—</strong></div>
+<div class="stat"><span>主要力量</span><strong id="bt-who" style="font-size:16px">—</strong></div>
+</div>
+<p class="lead" id="bt-text" aria-live="polite"></p>
+<p class="lead" id="stage-text" style="margin-top:8px"></p>
+<aside class="analogy"><h3><i>打个比方</i> 前门和后院</h3><p>日军像闯进家里的强盗。<b>正面战场</b>是在前门硬顶，组织大会战挡住它往里冲；<b>敌后战场</b>是在它占了的地方，从背后不停地袭扰、拆它的“补给线”。前后一起用力，强盗就进退两难。把前门和后院连在一起的，就是<b>抗日民族统一战线</b>。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="抗战大事排序">
+<h2>给抗战大事排先后</h2>
+<p class="panel-sub">按发生的先后依次点击，点满 6 个自动判对错。点错了可以再点一下取消。</p>
+<div id="ord"></div>
+<div class="btn-row"><button class="ghost-btn" id="ord-reset" type="button">打乱重来</button></div>
+</section>
+<section class="readout" aria-label="排序结果与胜利日期">
+<div class="readout-head"><h2>排序结果</h2><span class="badge" id="ord-badge">还没排</span></div>
+<p class="lead" id="ord-text" aria-live="polite">先想想：哪件事是 14 年抗战的起点？哪件事标志着全民族抗战开始？</p>
+<p class="lead" style="margin-top:14px"><b>1945 年要分清的几个日子</b></p>
+<table class="compare" style="margin-top:6px"><tbody>
+<tr><td class="n">1945.8.15</td><td>日本宣布无条件投降</td></tr>
+<tr><td class="n">1945.9.2</td><td>日本签署投降书</td></tr>
+<tr><td class="n">1945.9.3</td><td>抗日战争胜利纪念日</td></tr>
+<tr><td class="n">1945.10.25</td><td>中国政府在台北接受日军投降，台湾回归中国</td></tr>
+</tbody></table>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 抗日战争的胜利为什么意义这么大</h3>
+<p class="derive-lead">把它放回整个中国近代史里看，就明白分量在哪。</p>
+<ol>
+<li><h4>近代以来屡战屡败</h4><p>从鸦片战争开始，中国在反抗外国侵略的战争中一次次失败，被迫签订了许多不平等条约，割地赔款。</p></li>
+<li><h4>这一次是全民族一起上</h4><p>抗日民族统一战线把各党派、各阶层、各民族团结起来，正面战场和敌后战场相互配合，中国共产党发挥了中流砥柱作用。</p></li>
+<li><h4>坚持了整整 14 年</h4><p>从 1931 年到 1945 年，中国军民付出了巨大的牺牲，牵制和消耗了日军大量兵力。</p></li>
+<li><h4>第一次完全胜利</h4><p>1945 年日本投降。这是近代以来中国反抗外敌入侵第一次取得完全胜利的民族解放战争，被日本侵占的台湾也回归中国。</p></li>
+<li><h4>也帮了全世界</h4><p>中国战场是世界反法西斯战争的东方主战场，中国人民为世界反法西斯战争的胜利作出了重大贡献。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>抗战胜利洗刷了近代以来抗击外来侵略屡战屡败的民族耻辱，台湾回归中国，中国在世界上的地位也大大提高。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>局部抗战开始</h3><p>1931 年 9 月 18 日，日本制造<b>九一八事变</b>，侵占东北，中国人民抗日战争由此开始。1935 年北平学生发起<b>一二·九运动</b>，掀起抗日救亡新高潮。1936 年 12 月<b>西安事变</b>（东北军、西北军将领张学良、杨虎城发动的兵谏）和平解决，十年内战基本结束。</p></div></div>
+<div class="fact"><div><h3>全民族抗战与正面战场</h3><p>1937 年 7 月 7 日<b>七七事变</b>（卢沟桥事变）标志全民族抗战开始。同年 9 月国共第二次合作正式形成，抗日民族统一战线正式建立。正面战场有淞沪会战、台儿庄战役等。1937 年 12 月日军制造<b>南京大屠杀</b>，遇难同胞 30 万以上。</p></div></div>
+<div class="fact"><div><h3>敌后战场</h3><p>中国共产党领导的八路军、新四军深入敌后，建立抗日根据地。1937 年 9 月<b>平型关大捷</b>，1940 年<b>百团大战</b>。战略相持阶段，敌后战场逐渐成为抗日的主战场。</p></div></div>
+<div class="fact"><div><h3>胜利与意义</h3><p>1945 年 8 月 15 日日本宣布无条件投降，9 月 2 日签署投降书，<b>9 月 3 日</b>为抗战胜利纪念日。这是近代以来中国反抗外敌入侵第一次取得完全胜利，台湾回归中国。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>14 年和 8 年</b>：14 年抗战从 1931 年算起；8 年是 1937 年起的全民族抗战。② 九一八事变是抗战<b>起点</b>，七七事变是<b>全民族抗战</b>开始。③ 8 月 15 日宣布投降、9 月 2 日签字、<b>9 月 3 日</b>是纪念日。④ 平型关大捷是八路军打的；台儿庄战役在正面战场。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的月份、阶段和战役。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：给出九一八、七七、西安事变等，排先后或判断属于局部抗战还是全民族抗战。</li>
+<li><b>标志与意义</b>：抗战的起点、全民族抗战开始的标志、西安事变和平解决的意义，常换着说法考。</li>
+<li><b>两个战场</b>：给一场战役，判断是正面战场还是敌后战场；说出两个战场的关系是相互配合。</li>
+<li><b>胜利意义</b>：从“中国历史”和“世界历史”两个角度答，别漏了台湾回归中国。</li>
+</ul>
+<div class="q"><b>典型设问</b>　某纪念展分六个单元：九一八事变、西安事变、七七事变、平型关大捷、台儿庄战役、日本投降。展览为什么从 1931 年讲起？平型关大捷和台儿庄战役分别属于哪个战场？<br><b>怎么想</b>　1931 年九一八事变是<b>中国人民抗日战争的起点</b>，所以是 14 年抗战。平型关大捷是八路军打的，属于<b>敌后战场</b>一方；台儿庄战役由国民党军队进行，属于<b>正面战场</b>。<b>先抓年份定阶段，再看是谁打的定战场</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 11 课</p><p>年代与史实依据统编版历史教科书；两个战场为结构示意，不表示实际地理位置和疆域。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动年份学会公元纪年和世纪换算；对比分封制和郡县制，看秦朝为什么要这样改；沿着丝绸之路一站站走到大秦。历史互动馆第 3 课，对应统编版七年级上册第三单元。">
+<meta property="og:title" content="历史互动馆 · 秦汉：大一统国家的建立">
+<title>秦汉：大一统国家的建立 · 历史互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="history.css">
+<script defer src="common.js"></script>
+<script defer src="qinhan.js"></script>
+</head>
+<body data-module="qinhan">
+<header class="topbar"><a class="brand" href="index.html" aria-label="历史互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M4 20h16M10 9h4"/></svg><span>历史互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 3 课 <span>/</span> 七年级上册 第三单元</p><h1>秦汉：大一统国家的建立</h1><p class="subtitle">秦朝只存在了 15 年，却定下了中国两千多年的政治框架；汉朝接着把它巩固下来，还打通了通往西方的丝绸之路。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="秦汉时间轴">
+<h2>秦汉四百年时间轴</h2>
+<p class="panel-sub">拖动下面的滑块选一个年份，或者点时间轴上的事件。</p>
+<svg id="tl" viewBox="0 0 400 236" role="img" aria-label="秦汉时期大事时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="year-in">选一个年份</label><output id="year-out">公元前 221 年</output></div><input id="year-in" type="range" min="-250" max="240" step="1" value="-221"><div class="ruler"><span>前 250</span><span>公元元年</span><span>240</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="纪年读数">
+<div class="readout-head"><h2>这一年</h2><span class="badge" id="dyn-badge">秦</span></div>
+<div class="stat-grid">
+<div class="stat"><span>属于哪个世纪</span><strong id="r-cent" style="font-size:22px">—</strong></div>
+<div class="stat"><span>距离今天（2026 年）</span><strong id="r-ago">—</strong></div>
+<div class="stat wide"><span>这一年前后发生了什么</span><strong id="r-event" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="r-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="纪年小规则">
+<h2>纪年的三条小规则</h2>
+<table class="compare"><tbody>
+<tr><td>公元前</td><td>数字越大，离现在越远。公元前 221 年比公元前 202 年早 19 年。</td></tr>
+<tr><td>世纪</td><td>每 100 年一个世纪。1～100 年是 1 世纪，所以 1900 年属于 19 世纪。</td></tr>
+<tr><td>没有 0 年</td><td>公元前 1 年的下一年就是公元 1 年。跨过公元元年算年数要少算 1。</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="分封制与郡县制">
+<h2>分封制和郡县制：权力往哪里流</h2>
+<p class="panel-sub">切换两种制度，再按“传到第三代”，看看地方还听不听中央的。</p>
+<svg id="sys" viewBox="0 0 400 230" role="img" aria-label="分封制与郡县制结构示意"></svg>
+<div class="ctl-row"><span>制度</span><div class="chips small" id="sys-chips"></div></div>
+<div class="btn-row"><button class="ghost-btn" id="gen-btn" type="button">传到第三代会怎样</button></div>
+</section>
+<section class="readout" aria-label="制度对比">
+<div class="readout-head"><h2 id="sys-name">郡县制</h2><span class="badge" id="sys-badge">秦朝推行</span></div>
+<div class="stat-grid">
+<div class="stat"><span>地方长官怎么来</span><strong id="sys-who" style="font-size:18px">—</strong></div>
+<div class="stat"><span>能不能传给儿子</span><strong id="sys-heir" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="sys-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 加盟店和直营店</h3><p>分封制像<b>加盟店</b>：总部把一块地盘交给店主，店主自己说了算，还能传给儿子，几代以后跟总部就不亲了。郡县制像<b>直营店</b>：店长是总部派来的，干得不好随时换，也不能把店传给家人，总部说一句，全国的店都照做。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="丝绸之路">
+<h2>沿着丝绸之路走一趟</h2>
+<p class="panel-sub">这是示意线路，不是地图，只表示先后顺序。点一个站点，或者按“出发”一站站走。</p>
+<svg id="road" viewBox="0 0 400 210" role="img" aria-label="丝绸之路沿线站点示意"></svg>
+<div class="btn-row"><button class="big-btn" id="road-go" type="button">从长安出发</button><button class="ghost-btn" id="road-reset" type="button">回到长安</button></div>
+</section>
+<section class="readout" aria-label="站点信息">
+<div class="readout-head"><h2 id="st-name">长安</h2><span class="badge" id="st-badge">起点</span></div>
+<p class="lead" id="st-text" aria-live="polite"></p>
+<div class="stat-grid" style="margin-top:12px">
+<div class="stat"><span>从中国运出去</span><strong style="font-size:16px">丝绸、漆器、铁器</strong></div>
+<div class="stat"><span>传入中国</span><strong style="font-size:16px">葡萄、苜蓿、石榴、胡萝卜、良马</strong></div>
+</div>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 秦朝那么强，为什么 15 年就亡了</h3>
+<p class="derive-lead">这是这一单元最常考的“为什么”。把原因一层层拆开，就不用死背。</p>
+<ol>
+<li><h4>统一是大功劳</h4><p>秦灭六国，结束了春秋战国几百年的分裂。郡县制、统一文字、货币、度量衡，让全国“说同一种话、用同一种钱、量同一把尺”，后来的朝代都照着用。</p></li>
+<li><h4>但老百姓的负担太重</h4><p>修长城、修骊山陵墓、修阿房宫、北击匈奴、南征百越，同时进行。青壮年男子大量被征去服徭役和兵役，很多地方田地没人种。</p></li>
+<li><h4>法律又特别严</h4><p>秦朝的刑罚非常残酷，稍有过失就会被重罚，连坐还会牵连亲属。百姓“动辄得咎”，心里积满了怨气。</p></li>
+<li><h4>一件小事点燃了大火</h4><p>公元前 209 年，陈胜、吴广等九百多人被征发去渔阳戍边，在大泽乡遇雨误期。按秦法误期要被处死，他们干脆起义，“天下云集响应”。</p></li>
+<li><h4>汉初吸取了教训</h4><p>西汉建立后实行休养生息：减轻赋税徭役、提倡节俭，到文帝、景帝时出现了“文景之治”。汉武帝再用推恩令、尊崇儒术、盐铁官营等措施巩固了大一统。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>秦亡的根本原因是<b>暴政</b>（赋役繁重、刑罚严酷），而不是制度本身不好——郡县制等制度被汉朝继承，一直影响到后世。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>秦统一与巩固统一的措施</h3><p>公元前 221 年秦统一六国，建立中国历史上第一个统一的多民族封建国家。政治上创立<b>皇帝制度</b>，中央设三公九卿，地方推行<b>郡县制</b>；经济文化上统一文字（小篆）、货币（圆形方孔半两钱）、度量衡；还北击匈奴、修筑长城，南征百越、开凿灵渠。</p></div></div>
+<div class="fact"><div><h3>秦末农民起义与西汉建立</h3><p>公元前 209 年陈胜、吴广在大泽乡起义，这是我国历史上第一次大规模农民起义。秦朝在公元前 207 年灭亡；公元前 202 年刘邦建立西汉，定都长安。</p></div></div>
+<div class="fact"><div><h3>汉武帝巩固大一统</h3><p>政治上颁布<b>推恩令</b>削弱诸侯王；思想上“罢黜百家，尊崇儒术”，在长安兴办太学；经济上把铸币权收归中央，统一铸造五铢钱，实行<b>盐铁官营</b>；军事上派卫青、霍去病北击匈奴。</p></div></div>
+<div class="fact"><div><h3>丝绸之路与秦汉文化</h3><p>张骞两次出使西域（公元前 138 年、公元前 119 年），公元前 60 年西汉设<b>西域都护</b>，新疆地区正式归中央管辖。东汉蔡伦改进造纸术，张仲景著《伤寒杂病论》，华佗发明麻沸散，司马迁著我国第一部纪传体通史《史记》。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>① <b>公元前的年份数字越大越早</b>：公元前 221 年比公元前 202 年早。② <b>世纪不要算错</b>：公元前 221 年属于公元前 3 世纪；1900 年属于 19 世纪，不是 20 世纪。③ <b>造纸术不是蔡伦发明的</b>，西汉已经有纸，蔡伦是<b>改进</b>了造纸术。④ 西域都护设在<b>西汉</b>，不是东汉。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这一页发给同学</h3><p>链接会记住你选的年份和制度。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考历史满分 70 分，闭卷笔试 60 分钟</h3>
+<ul>
+<li><b>时空观念</b>：给出几个年份或事件，排先后顺序，或者判断属于哪个世纪、哪个朝代。纪年法是整个初中历史的基本功。</li>
+<li><b>措施与作用</b>：秦始皇巩固统一的措施、汉武帝巩固大一统的措施，常考“哪一项属于思想/经济/政治方面”。</li>
+<li><b>史料题</b>：给一段材料（如《史记·陈涉世家》“天下苦秦久矣”），问反映了什么、原因是什么。答题要先从材料里找关键词，再联系所学。</li>
+<li><b>比较题</b>：分封制和郡县制的区别，常从“官员怎么产生、能否世袭、对中央集权的作用”三个角度比较。</li>
+</ul>
+<div class="q"><b>典型设问</b>　“汉兴七十余年之间……太仓之粟陈陈相因，充溢露积于外，至腐败不可食。”这段材料描述的是哪一时期的景象？其出现的原因是什么？<br><b>怎么想</b>　“汉兴七十余年”“粮仓满得放不下”说明经济恢复、国家富足，对应西汉的<b>文景之治</b>。原因从政策找：汉初统治者吸取秦亡教训，<b>休养生息</b>，减轻赋税徭役、重视农业、提倡节俭。<b>先从材料锁定时期，再写政策原因</b>，这类题就答全了。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>历史互动馆 · 第 3 课</p><p>年代与史实依据统编版历史教科书；丝绸之路为站点先后示意，不表示实际地理位置和疆域。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>
