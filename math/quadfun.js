@@ -1,4 +1,4 @@
-/* 第 29 课 · 二次函数（北师大版九下第二章） */
+/* 第 26 课 · 二次函数（北师大版九上第五章） */
 (function () {
   'use strict';
   var M = window.Mx, st = M.getState();

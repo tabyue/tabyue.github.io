@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="math.css">
 <script defer src="common.js"></script>
 <script defer src="data2.js"></script>
+<script defer src="textbook.js"></script>
+<script defer src="zhenti.js"></script>
+<script defer src="extras.js"></script>
 </head>
 <body data-module="data2">
 <header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
@@ -87,7 +90,8 @@
 <section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
 <div class="fact"><div><h3>平均数怕极端值</h3><p>一个特别大的数就能把平均数拉高。报道收入、房价时常用中位数，就是这个原因。</p></div></div>
 <div class="fact"><div><h3>中位数看位置，众数看频次</h3><p>中位数是排序后正中间的数；众数是出现次数最多的数，可能不止一个，也可能没有。</p></div></div>
-<div class="fact"><div><h3>方差衡量整齐程度</h3><p>方差越小，数据越集中、越稳定。平均数相同时，就靠方差分高下。</p></div></div>
+<div class="fact"><div><h3>方差衡量整齐程度</h3><p>方差越小，数据越集中、越稳定。平均数相同时，就靠方差分高下。方差的算术平方根叫<b>标准差</b>（s = √s²），它和方差一样反映数据波动的大小，而且单位和原数据相同。</p></div></div>
+<div class="fact"><div><h3>百分位数</h3><p>一组由小到大排列的数据里，处于 p% 位置的数据叫第 p 百分位数，记为 p% 分位数（mₚ）。中位数就是 m₅₀。m₂₅、m₅₀、m₇₅ 把数据分成个数相等的四部分，分别叫下四分位数、中位数、上四分位数，统称四分位数（上面箱线图里的 Q₁、Q₃ 就是 m₂₅、m₇₅）。求法：先从小到大排列，m₅₀ 是中位数，m₂₅ 是前半部分数据的中位数，m₇₅ 是后半部分数据的中位数（数据个数是奇数时，前后两半都不含正中间那个数）。读法：14 岁男生身高 m₉₀ = 175.1 cm，表示有 90% 的 14 岁男生身高小于或等于 175.1 cm。</p></div></div>
 <div class="fact"><div><h3>箱线图用五个数概括</h3><p>最小值、Q₁、中位数、Q₃、最大值。箱子装着中间 50% 的数据，箱子越短越集中。</p></div></div>
 </div>
 <aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>看到「平均工资 1 万」就以为大多数人挣 1 万。只要有少数高收入者，平均数就会远高于大多数人的实际水平。<b>有极端值时要看中位数</b>。</p></aside>
@@ -109,6 +113,6 @@
 </section>
 
 <nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
-<footer><p>数学互动馆 · 第 18 课</p><p>四分位数采用线性插值法计算；两班成绩为教学用示例数据。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+<footer><p>数学互动馆 · 第 18 课</p><p>四分位数按教材的求法计算：下四分位数是前半部分数据的中位数，上四分位数是后半部分数据的中位数；两班成绩为教学用示例数据。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
 </main>
 </body></html>

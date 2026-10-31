@@ -14,6 +14,9 @@
 <script defer src="model.js"></script>
 <script defer src="common.js"></script>
 <script defer src="hazards.js"></script>
+<script defer src="textbook.js"></script>
+<script defer src="zhenti.js"></script>
+<script defer src="extras.js"></script>
 </head>
 <body data-module="hazards">
 <header class="topbar"><a class="brand" href="index.html" aria-label="地理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><span>地理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
@@ -83,13 +86,13 @@
 <!--/derive-->
 <div class="learning-grid">
 <section class="knowledge"><h2>记住这几点</h2><div class="card facts">
-<div class="fact"><div><h3>天气预报讲什么</h3><p>阴晴、气温、降水、风向风力，还有空气质量。卫星云图上，绿色表示陆地，蓝色表示海洋，白色表示云区，白色越浓云越厚。</p></div></div>
+<div class="fact"><div><h3>天气预报讲什么</h3><p>阴晴、气温、降水、风向风力，还有空气质量。卫星云图上，绿色表示陆地，蓝色表示海洋，白色表示云区，白色越浓云越厚。没有预报也能看云识天气：高而薄的卷云、零散的小块积云多是晴天；云层越来越低、越来越厚，往往要下雨；浓黑高耸的积雨云常带来雷阵雨。</p></div></div>
 <div class="fact"><div><h3>我国自然灾害的特点</h3><p>种类多、分布广、发生频繁。气象灾害（台风、暴雨洪涝、干旱、寒潮）和地质灾害（地震、滑坡、泥石流）都很常见。</p></div></div>
+<div class="fact" data-xfact><div><h3>预警信号颜色越深越危险</h3><p>我国气象预警一般按<b>蓝、黄、橙、红</b>由轻到重排列。红色最高级，台风或暴雨红色预警时深圳会停课停工。</p></div></div>
+<div class="fact" data-xfact><div><h3>我国主要气象灾害</h3><p>台风（东南沿海夏秋）、暴雨洪涝（东部季风区夏季）、干旱（华北春旱、长江流域伏旱）、寒潮（冬半年大范围降温）。</p></div></div>
 </div>
 <aside class="pitfall"><h3><span>!</span> 暴雨黄色预警不停课</h3><p>深圳暴雨预警只有<b>红色</b>才停课；台风预警则是<b>黄色及以上</b>停课。别把两种信号的规则弄混。</p></aside></section>
 <section class="quiz" aria-label="天气灾害小练习"><h2>动手试一试 <span id="quiz-step">1 / 3</span></h2><div class="card quiz-card"><span class="small-label">选一个答案</span><h3 id="quiz-title"></h3><div class="option-grid single" id="quiz-options"></div><div class="feedback" id="quiz-feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div><div class="share-card"><h3>分享这一课</h3><p>链接会带上当前选中的预警信号。</p><button data-share="copy">复制链接，发给微信好友 <span>↗</span></button>
-<div class="fact" data-xfact><div><h3>预警信号颜色越深越危险</h3><p>我国气象预警一般按<b>蓝、黄、橙、红</b>由轻到重排列。红色最高级，台风或暴雨红色预警时深圳会停课停工。</p></div></div>
-<div class="fact" data-xfact><div><h3>我国主要气象灾害</h3><p>台风（东南沿海夏秋）、暴雨洪涝（东部季风区夏季）、干旱（华北春旱、长江流域伏旱）、寒潮（冬半年大范围降温）。</p></div></div>
 </div></section>
 </div>
 <div class="section">

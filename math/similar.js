@@ -1,4 +1,4 @@
-/* 第 26 课 · 图形的相似（北师大版九上第四章） */
+/* 第 25 课 · 图形的相似（北师大版九上第三章） */
 (function () {
   'use strict';
   var M = window.Mx, st = M.getState();

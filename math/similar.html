@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f5f6f0">
-<meta name="description" content="拖动相似比，看周长比等于相似比而面积比等于相似比的平方；逐条检验哪些条件能判定三角形相似；用标杆影长算出够不着的树高。数学互动馆第 26 课，对应北师大版九年级上册第四章。">
+<meta name="description" content="拖动相似比，看周长比等于相似比而面积比等于相似比的平方；逐条检验哪些条件能判定三角形相似；用标杆影长算出够不着的树高。数学互动馆第 25 课，对应北师大版九年级上册第三章。">
 <meta property="og:title" content="数学互动馆 · 图形的相似">
 <title>图形的相似 · 数学互动馆</title>
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -13,12 +13,15 @@
 <link rel="stylesheet" href="math.css">
 <script defer src="common.js"></script>
 <script defer src="similar.js"></script>
+<script defer src="textbook.js"></script>
+<script defer src="zhenti.js"></script>
+<script defer src="extras.js"></script>
 </head>
 <body data-module="similar">
 <header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
 <nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
 <main>
-<div class="page-heading"><p class="eyebrow">第 26 课 <span>/</span> 九年级上册 第四章</p><h1>图形的相似</h1><p class="subtitle">边长放大 3 倍，面积可是放大 9 倍。这一步最容易算错。</p></div>
+<div class="page-heading"><p class="eyebrow">第 25 课 <span>/</span> 九年级上册 第三章</p><h1>图形的相似</h1><p class="subtitle">边长放大 3 倍，面积可是放大 9 倍。这一步最容易算错。</p></div>
 <div class="workbench">
 <section class="card panel figure" aria-label="相似比">
 <h2>放大以后，什么变了几倍</h2>
@@ -76,10 +79,12 @@
 <!--/derive-->
 <div class="learning-grid">
 <section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>成比例线段</h3><p>四条线段 a、b、c、d 中，如果 a : b = c : d（即 a/b = c/d），这四条线段就叫成比例线段。比例的基本性质：a/b = c/d 时 ad = bc，反过来也成立。点 C 把 AB 分成 AC、BC（AC &gt; BC），若 AC/AB = BC/AC，就说 C 是 AB 的黄金分割点，这个比是 (√5−1)/2 ≈ 0.618。</p></div></div>
 <div class="fact"><div><h3>相似 = 形状相同</h3><p>对应角相等、对应边成比例。大小可以不同，这是相似和全等的区别。</p></div></div>
 <div class="fact"><div><h3>判定三招</h3><p>AA（两角相等）最常用；SAS（两边成比例且<b>夹角</b>相等）；SSS（三边成比例）。</p></div></div>
 <div class="fact"><div><h3>周长比 = 相似比，面积比 = 相似比的平方</h3><p>对应高、中线、角平分线的比也都等于相似比。</p></div></div>
 <div class="fact"><div><h3>相似能测够不着的高度</h3><p>同一时刻阳光平行，物体与影子构成相似三角形，于是「标杆高 : 标杆影 = 树高 : 树影」。</p></div></div>
+<div class="fact"><div><h3>位似是特殊的相似</h3><p>两个相似多边形，如果每组对应顶点的连线都经过同一点 O，且对应点到 O 的距离之比都等于相似比 k，它们就叫位似图形，O 叫位似中心，k 也叫位似比。位似图形的对应边互相平行（或在同一直线上）。在坐标系中以原点为位似中心、位似比为 k 时，点 (x, y) 的对应点是 (kx, ky)（两图形在原点同侧）或 (−kx, −ky)（在原点两侧）。</p></div></div>
 </div>
 <aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>相似比 2 : 3 时把面积比也写成 2 : 3。面积比是相似比的<b>平方</b>，应该是 4 : 9。反过来，已知面积比 4 : 9 求周长比，要<b>开方</b>得 2 : 3。</p></aside>
 </section>
@@ -100,6 +105,6 @@
 </section>
 
 <nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
-<footer><p>数学互动馆 · 第 26 课</p><p>测高模型中树影长固定 12 米，同一时刻阳光视为平行光。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+<footer><p>数学互动馆 · 第 25 课</p><p>测高模型中树影长固定 12 米，同一时刻阳光视为平行光。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
 </main>
 </body></html>

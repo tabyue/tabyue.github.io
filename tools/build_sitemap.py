@@ -29,6 +29,10 @@ SECTIONS = [
     ('/glossary', 'weekly', '0.6'),
 ]
 
+# 初中互动馆（静态页）：每站首页 + 各课页面
+STUDY_SITES = ['geo', 'bio', 'math', 'phy', 'chem', 'history', 'guwen']
+STUDY_SKIP = {'404.html'}
+
 
 def url_entry(loc, lastmod, changefreq, priority):
     return (f'  <url>\n'
@@ -81,10 +85,25 @@ def main():
                 out.append(url_entry(f'/learn/{mod}/{i}', sec_lastmod, 'weekly', '0.6'))
                 sec_count += 1
 
+    # 4) 初中互动馆：扫描各站目录下的 html（以文件修改日期作 lastmod）
+    study_count = 0
+    for site in STUDY_SITES:
+        d = os.path.join(ROOT, site)
+        if not os.path.isdir(d):
+            continue
+        for name in sorted(os.listdir(d)):
+            if not name.endswith('.html') or name in STUDY_SKIP:
+                continue
+            fp = os.path.join(d, name)
+            lastmod = date.fromtimestamp(os.path.getmtime(fp)).isoformat()
+            loc = f'/{site}/' if name == 'index.html' else f'/{site}/{name}'
+            out.append(url_entry(loc, lastmod, 'weekly', '0.7' if name == 'index.html' else '0.6'))
+            study_count += 1
+
     out.append('</urlset>\n')
     sitemap_path = os.path.join(ROOT, 'sitemap.xml')
     open(sitemap_path, 'w', encoding='utf-8').write(''.join(out))
-    print(f'sitemap.xml: {len(SECTIONS)} sections + {learn_count} modules + {sec_count} chapters')
+    print(f'sitemap.xml: {len(SECTIONS)} sections + {learn_count} modules + {sec_count} chapters + {study_count} study pages')
 
     # robots.txt
     robots_path = os.path.join(ROOT, 'robots.txt')

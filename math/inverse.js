@@ -1,4 +1,4 @@
-/* 第 27 课 · 反比例函数（北师大版九上第六章） */
+/* 第 29 课 · 反比例函数（北师大版九下第二章） */
 (function () {
   'use strict';
   var M = window.Mx, st = M.getState();

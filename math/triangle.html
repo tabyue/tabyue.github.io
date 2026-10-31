@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="math.css">
 <script defer src="common.js"></script>
 <script defer src="triangle.js"></script>
+<script defer src="textbook.js"></script>
+<script defer src="zhenti.js"></script>
+<script defer src="extras.js"></script>
 </head>
 <body data-module="triangle">
 <header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
@@ -75,6 +78,8 @@
 <div class="fact"><div><h3>内角和永远是 180°</h3><p>不管三角形多大多扁，三个内角加起来都是 180°。所以已知两角就能求第三角。</p></div></div>
 <div class="fact"><div><h3>判定全等有四招</h3><p>SSS、SAS、ASA、AAS。直角三角形还多一招 HL（斜边和一条直角边）。</p></div></div>
 <div class="fact"><div><h3>SSA 和 AAA 不行</h3><p>SSA 可能画出两个不同的三角形；AAA 只能说明形状相同、大小可以不同，那是相似。</p></div></div>
+<div class="fact"><div><h3>尺规作图：作线段、作角</h3><p>只用<b>无刻度的直尺和圆规</b>作图。作线段等于 a：画射线 OP，以 O 为圆心、a 为半径画弧交 OP 于 A，OA 即为所求。作角等于 ∠AOB：以 O 为圆心任取半径画弧，交两边于 C、D；画射线 O′A′，以 O′ 为圆心、同样半径画弧交 O′A′ 于 C′；再以 C′ 为圆心、CD 为半径画弧，交前弧于 D′，画射线 O′D′，∠A′O′D′ 就等于 ∠AOB。依据是 SSS。</p></div></div>
+<div class="fact"><div><h3>尺规作图：角平分线、垂直平分线</h3><p>作 ∠AOB 的平分线：以 O 为圆心、适当长为半径画弧交两边于 M、N；再分别以 M、N 为圆心、大于 ½MN 的同样长度为半径画弧，两弧在角内交于 P，射线 OP 即为所求（依据 SSS）。作线段 AB 的垂直平分线：分别以 A、B 为圆心、大于 ½AB 的同样长度为半径画弧，两弧交于 C、D，直线 CD 即为所求（C、D 到 A、B 距离相等）。</p></div></div>
 </div>
 <aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>SAS 里的角必须是两边的<b>夹角</b>。如果角不在两边之间（变成 SSA），就可能画出两个不同的三角形，不能判定全等。写证明时一定要检查角的位置。</p></aside>
 </section>

@@ -63,11 +63,11 @@
 
   function five(a) {
     var s = a.slice().sort(function (p, q) { return p - q; }), n = s.length;
-    function q(p) {
-      var pos = (n - 1) * p, lo = Math.floor(pos), hi = Math.ceil(pos);
-      return s[lo] + (s[hi] - s[lo]) * (pos - lo);
-    }
-    return { min: s[0], q1: q(0.25), med: q(0.5), q3: q(0.75), max: s[n - 1] };
+    /* 按北师大版八上第六章的求法：m₅₀ 是中位数；m₂₅ 是前半部分数据的中位数，m₇₅ 是后半部分数据的中位数
+       （n 为奇数时，前后两半都不含正中间那个数） */
+    function med(arr) { var k = arr.length, h = Math.floor(k / 2); return k % 2 ? arr[h] : (arr[h - 1] + arr[h]) / 2; }
+    var half = Math.floor(n / 2);
+    return { min: s[0], q1: med(s.slice(0, half)), med: med(s), q3: med(s.slice(n - half)), max: s[n - 1] };
   }
 
   function showBox() {

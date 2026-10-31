@@ -8,7 +8,7 @@ footer p { margin: 0; }
 .gw-text, .bk-q, .ci-s, .dn-row, .gw-f { font-family: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", "SimSun", serif; }
 
 /* 首页 */
-.gw-tools { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 4px; }
+.gw-tools { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 4px; }
 .gw-tool { display: flex; flex-direction: column; gap: 4px; padding: 16px 18px; border-radius: 18px; background: var(--soft); border: 1px solid #dde6ea; text-decoration: none; color: var(--ink); }
 .gw-tool b { font-size: 18px; color: var(--green); }
 .gw-tool span { font-size: 14px; color: var(--muted); line-height: 1.6; }
@@ -22,6 +22,7 @@ footer p { margin: 0; }
 .gw-k { font-size: 12px; color: var(--green); font-weight: 600; }
 .gw-a { font-size: 13px; color: var(--muted); }
 .gw-f { font-size: 14.5px; color: #4a5458; margin-top: 4px; line-height: 1.6; }
+@media (max-width: 900px) { .gw-tools { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 640px) { .gw-tools { grid-template-columns: 1fr; } .gw-list { grid-template-columns: 1fr 1fr; } .gw-item { padding: 12px; } .gw-f { font-size: 13.5px; } }
 
 /* 单篇 */
@@ -106,3 +107,9 @@ textarea.bk-in { display: block; margin-top: 8px; resize: vertical; }
 @media (max-width: 640px) { .dn-row { font-size: 20px; } .dn-g { width: 18px; } }
 
 .exam-card .q { margin-top: 10px; }
+
+/* 真题 */
+.gw-zt-year { margin: 0 0 4px; font-size: 22px; color: var(--green); }
+.gw-zt-h { margin: 14px 0 4px; font-size: 16px; color: #4a5458; }
+.gw-zt-badge { color: #b5523a; text-decoration: none; font-weight: 600; }
+.from a { color: var(--green); }

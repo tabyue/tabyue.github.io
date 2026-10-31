@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="math.css">
 <script defer src="common.js"></script>
 <script defer src="circle.js"></script>
+<script defer src="textbook.js"></script>
+<script defer src="zhenti.js"></script>
+<script defer src="extras.js"></script>
 </head>
 <body data-module="circle">
 <header class="topbar"><a class="brand" href="index.html" aria-label="数学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M6 20V9m6 11V4m6 16v-7"/></svg><span>数学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
@@ -86,9 +89,11 @@
 <!--/derive-->
 <div class="learning-grid">
 <section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>垂径定理</h3><p>垂直于弦的直径平分这条弦，并且平分弦所对的弧。推论：平分弦（不是直径）的直径垂直于这条弦，并且平分弦所对的弧。计算时连半径：半径 r、弦心距 d、半弦长构成直角三角形，r² = d² + (弦长/2)²。例如 r = 5、d = 3，半弦长 4，弦长 8。</p></div></div>
 <div class="fact"><div><h3>圆周角是圆心角的一半</h3><p>同弧（或等弧）所对的圆周角相等，都等于圆心角的一半。</p></div></div>
 <div class="fact"><div><h3>直径所对的圆周角是直角</h3><p>反过来，90° 的圆周角所对的弦一定是直径。常用来证直角或找直径。</p></div></div>
 <div class="fact"><div><h3>d 与 r 比大小定位置</h3><p>d < r 相交、d = r 相切、d > r 相离。切点处<b>半径垂直于切线</b>。</p></div></div>
+<div class="fact"><div><h3>切线长定理</h3><p>从圆外一点 P 引 ⊙O 的两条切线，切点为 A、B，线段 PA、PB 的长叫切线长。定理：<b>PA = PB</b>，并且 PO 平分 ∠APB。理由：连 OA、OB，OA ⊥ PA、OB ⊥ PB，OA = OB，PO 公共，由 HL 得 △OAP ≌ △OBP。</p></div></div>
 <div class="fact"><div><h3>弧长和扇形面积按比例算</h3><p>圆心角占 n/360，弧长就占周长的 n/360，面积占圆面积的 n/360。扇形面积也等于 ½lr。</p></div></div>
 </div>
 <aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>弧长公式写成 nπr²/180、面积写成 nπr/360——两个公式<b>记串了</b>。不用硬背：先算这个扇形占整圆的几分之几，再乘周长 2πr 或面积 πr²，怎么都不会错。</p></aside>

@@ -27,11 +27,11 @@
     { id: 'fraction', file: 'fraction.html', no: 22, title: '分式与分式方程', book: '八下' },
     { id: 'para', file: 'para.html', no: 23, title: '平行四边形与特殊平行四边形', book: '八下' },
     { id: 'quad', file: 'quad.html', no: 24, title: '一元二次方程', book: '九上' },
-    { id: 'prob2', file: 'prob2.html', no: 25, title: '概率的进一步认识', book: '九上' },
-    { id: 'similar', file: 'similar.html', no: 26, title: '图形的相似', book: '九上' },
-    { id: 'inverse', file: 'inverse.html', no: 27, title: '反比例函数', book: '九上' },
+    { id: 'similar', file: 'similar.html', no: 25, title: '图形的相似', book: '九上' },
+    { id: 'quadfun', file: 'quadfun.html', no: 26, title: '二次函数', book: '九上' },
+    { id: 'prob2', file: 'prob2.html', no: 27, title: '概率的进一步认识', book: '九上' },
     { id: 'trig', file: 'trig.html', no: 28, title: '直角三角形的边角关系', book: '九下' },
-    { id: 'quadfun', file: 'quadfun.html', no: 29, title: '二次函数', book: '九下' },
+    { id: 'inverse', file: 'inverse.html', no: 29, title: '反比例函数', book: '九下' },
     { id: 'circle', file: 'circle.html', no: 30, title: '圆', book: '九下' }
   ];
 
@@ -515,7 +515,34 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded', function () { renderNav(); bindShare(); });
+  /* 图里的文字标签被挤到画布外时（极端参数下），自动挪回画布内；只处理直接写了 x、y 且所在分组没有变换的 text */
+  function keepTextsIn(svg) {
+    var vb = svg.viewBox && svg.viewBox.baseVal, sr = svg.getBoundingClientRect();
+    if (!vb || !vb.width || !sr.width) return;
+    var k = vb.width / sr.width, pad = 2;
+    Array.prototype.forEach.call(svg.querySelectorAll('text'), function (t) {
+      if (t.parentNode !== svg && t.parentNode.getAttribute && t.parentNode.getAttribute('transform')) return;
+      if (t.getAttribute('transform') || !t.hasAttribute('x') || !t.hasAttribute('y')) return;
+      var r = t.getBoundingClientRect();
+      if (!r.width) return;
+      var x0 = (r.left - sr.left) * k + vb.x, x1 = x0 + r.width * k, y0 = (r.top - sr.top) * k + vb.y, y1 = y0 + r.height * k;
+      var dx = x0 < vb.x + pad ? vb.x + pad - x0 : x1 > vb.x + vb.width - pad ? vb.x + vb.width - pad - x1 : 0;
+      var dy = y0 < vb.y + pad ? vb.y + pad - y0 : y1 > vb.y + vb.height - pad ? vb.y + vb.height - pad - y1 : 0;
+      if (dx) t.setAttribute('x', (parseFloat(t.getAttribute('x')) + dx).toFixed(1));
+      if (dy) t.setAttribute('y', (parseFloat(t.getAttribute('y')) + dy).toFixed(1));
+    });
+  }
+  function watchFigures() {
+    if (!window.MutationObserver) return;
+    Array.prototype.forEach.call(document.querySelectorAll('.figure svg, svg[id$="-fig"]'), function (svg) {
+      var queued = false;
+      var run = function () { queued = false; keepTextsIn(svg); };
+      new MutationObserver(function () { if (!queued) { queued = true; requestAnimationFrame(run); } }).observe(svg, { childList: true, subtree: true });
+      run();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () { renderNav(); bindShare(); setTimeout(watchFigures, 0); });
 
   window.Mx = {
     LESSONS: LESSONS, svg: svg, html: html, $: $, $$: $$, clamp: clamp, lerp: lerp,

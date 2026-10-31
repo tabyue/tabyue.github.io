@@ -123,7 +123,7 @@
     el('div', { class: 'hub-promise', html: '<span>40 首古诗词曲</span><span>24 篇文言文</span><span>写错的字标红</span><span>免登录、不保存记录</span>' }, hero);
 
     var tools = el('section', { class: 'gw-tools' }, app);
-    [['#/drill', '随机默写', '像考试一样，6 个空，给上句写下句'], ['#/hard', '易错字', '把最容易写错的字单独练'], ['#/theme/思乡', '按主题默写', '思乡、送别、志向……理解性默写']].forEach(function (t) {
+    [['#/zhenti', '深圳中考真题', '2024—2026 年的默写和课内文言文原题'], ['#/drill', '随机默写', '像考试一样，6 个空，给上句写下句'], ['#/hard', '易错字', '把最容易写错的字单独练'], ['#/theme/思乡', '按主题默写', '思乡、送别、志向……理解性默写']].forEach(function (t) {
       el('a', { class: 'gw-tool', href: t[0], html: '<b>' + t[1] + '</b><span>' + t[2] + '</span><em>开始 →</em>' }, tools);
     });
 
@@ -181,7 +181,8 @@
     var idx = GW.indexOf(p);
     el('a', { class: 'gw-back', href: '#/', text: '← 全部篇目' }, app);
     var head = el('div', { class: 'page-heading' }, app);
-    el('p', { class: 'eyebrow', html: kindName(p.kind) + ' <span>/</span> ' + p.themes.join('、') }, head);
+    var ztYears = ZT.filter(function (z) { return z.piece === p.id; }).map(function (z) { return z.year; }).filter(function (y, i, a) { return a.indexOf(y) === i; }).sort().reverse();
+    el('p', { class: 'eyebrow', html: kindName(p.kind) + ' <span>/</span> ' + p.themes.join('、') + (ztYears.length ? ' <span>/</span> <a class="gw-zt-badge" href="#/zhenti">深圳中考考过 ' + ztYears.join('、') + '</a>' : '') }, head);
     el('h1', { text: p.title }, head);
     el('p', { class: 'subtitle', text: p.dyn + ' · ' + p.author }, head);
     var tabs = el('div', { class: 'chips gw-tabs', role: 'tablist' }, app);
@@ -417,6 +418,64 @@
     el('p', { class: 'note', text: '题库共 ' + pool.length + ' 个易错字，每次随机抽 10 个。' }, body);
   }
 
+
+  /* ---------- 深圳中考真题 ---------- */
+  var ZT = window.GWZT || [];
+  function zhenti() {
+    document.title = '深圳中考真题 · 古诗文小站';
+    app.innerHTML = '';
+    el('a', { class: 'gw-back', href: '#/', text: '← 全部篇目' }, app);
+    var head = el('div', { class: 'page-heading' }, app);
+    el('h1', { text: '深圳中考真题' }, head);
+    el('p', { class: 'subtitle', text: '2024—2026 年深圳中考语文里的古诗文默写和课内文言文小题，按年份排。默写写完马上标出错字。' }, head);
+    var years = ZT.map(function (z) { return z.year; }).filter(function (y, i, a) { return a.indexOf(y) === i; }).sort().reverse();
+    years.forEach(function (y) {
+      var body = el('section', { class: 'card panel gw-body', style: 'margin-top:14px' }, app);
+      var mo = ZT.filter(function (z) { return z.year === y && z.type === 'mo'; });
+      var wen = ZT.filter(function (z) { return z.year === y && z.type === 'wen'; });
+      el('h2', { class: 'gw-zt-year', text: y + ' 年' }, body);
+      if (mo.length) {
+        el('h3', { class: 'gw-zt-h', text: '古诗文默写（' + mo.length + ' 空）' }, body);
+        batch(body, mo.map(function (z) {
+          var p = BY[z.piece];
+          return { q: esc(z.q).replace(/＿＿＿/g, '<span class="gap">＿＿＿＿</span>'), ans: z.ans, hard: p ? p.hard : [], from: p ? '<a href="#/p/' + p.id + '/read">《' + esc(shortTitle(p)) + '》</a>' : '' };
+        }));
+      }
+      if (wen.length) {
+        el('h3', { class: 'gw-zt-h', text: '课内文言文' }, body);
+        wen.forEach(function (z) {
+          var p = BY[z.piece];
+          var c = el('div', { class: 'ci' }, body);
+          el('div', { class: 'from', html: (z.no || '') + (p ? '　<a href="#/p/' + p.id + '/read">《' + esc(shortTitle(p)) + '》</a>' : '') }, c);
+          el('div', { class: 'ci-s', html: esc(z.stem).replace(/\n/g, '<br>') }, c);
+          var m = el('div', { class: 'ci-m', html: '<b>答案</b>　' + esc(z.answer) + (z.explain ? '<br><b>解析</b>　' + esc(z.explain) : '') });
+          m.hidden = true;
+          if (z.options && z.options.length) {
+            var row = el('div', { class: 'ci-opts' }, c), done = false;
+            z.options.forEach(function (o, i) {
+              var L = 'ABCD'.charAt(i);
+              var b = el('button', { type: 'button', text: L + '. ' + o }, row);
+              b.addEventListener('click', function () {
+                if (done) return; done = true;
+                var ok = String(z.answer).charAt(0) === L;
+                b.classList.add(ok ? 'ok' : 'no');
+                if (!ok) Array.prototype.forEach.call(row.children, function (x, k) { if ('ABCD'.charAt(k) === String(z.answer).charAt(0)) x.classList.add('ok'); });
+                m.hidden = false;
+              });
+            });
+          } else {
+            el('textarea', { class: 'bk-in', rows: 2, placeholder: '先自己写一写（不会保存）' }, c);
+          }
+          c.appendChild(m);
+          var b2 = el('button', { type: 'button', class: 'ci-btn', text: '看答案' }, c);
+          b2.addEventListener('click', function () { m.hidden = !m.hidden; b2.textContent = m.hidden ? '看答案' : '收起'; });
+        });
+      }
+    });
+    el('p', { class: 'note', text: '说明：深圳不公开发布考试原卷，这里按网上流传的考后整理卷收录；2025 年只找到整理和回忆版本，个别措辞可能与原卷有出入。答案都对照过两处以上公开解析。只收课内篇目，课外文言文和开放题没有收。' }, app);
+    window.scrollTo(0, 0);
+  }
+
   /* ---------- 按主题 ---------- */
   function themeView(t) {
     if (THEMES.indexOf(t) < 0) t = '思乡';
@@ -449,6 +508,7 @@
     if (h[0] === 'p') piece(h[1], h[2]);
     else if (h[0] === 'drill') drill();
     else if (h[0] === 'hard') hardDrill();
+    else if (h[0] === 'zhenti') zhenti();
     else if (h[0] === 'theme') themeView(h[1]);
     else home();
   }

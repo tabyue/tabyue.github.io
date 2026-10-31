@@ -1,4 +1,4 @@
-/* 第 25 课 · 概率的进一步认识（北师大版九上第三章） */
+/* 第 27 课 · 概率的进一步认识（北师大版九上第六章） */
 (function () {
   'use strict';
   var M = window.Mx, st = M.getState();
