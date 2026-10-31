@@ -178,7 +178,7 @@
 @media(max-width:680px){.np-row{grid-template-columns:1fr 86px}}
 
 
-/* —— 楷体只用于正文叙述；数字、公式、图内文字仍用无衬线体，保证清晰 —— */
+/* —— 数字、公式、图内文字统一用无衬线体（正文也已改为无衬线体，楷体在小字号下会显得发虚、和数字对不齐） —— */
 .bignum, .stat strong, .frac, var, .v, .formula, .radical,
 td.n, th, table.compare, table.steps,
 input, output, select, textarea, button,
@@ -186,13 +186,6 @@ input, output, select, textarea, button,
 svg text, svg tspan {
   font-family: var(--font-ui);
 }
-/* 标题和导语用楷体更有味道，但要稍稍加粗以免发虚 */
-h1, h2, h3, .page-heading .subtitle, .lead {
-  font-family: var(--font-kai);
-  letter-spacing: .01em;
-}
-
-
 /* 练习区：题号导航 */
 .quiz-nav { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
 .quiz-nav .dot {

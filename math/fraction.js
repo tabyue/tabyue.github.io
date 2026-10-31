@@ -37,7 +37,7 @@
     });
     var isBad = Math.abs(denVal(f.id, xv)) < 1e-9;
     S('circle', { cx: nl.X(xv), cy: nl.y, r: 6, fill: isBad ? '#c2603f' : '#2f5aa8', stroke: '#fff', 'stroke-width': 2 }, L);
-    S('text', { x: nl.X(xv), y: nl.y + 24, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 700, fill: isBad ? '#a4492b' : '#2f5aa8', text: 'x=' + M.fmt(xv) }, L);
+    S('text', { x: nl.X(xv), y: nl.y + 39, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 700,  /* 放在刻度数字下面，避免压住刻度 */ fill: isBad ? '#a4492b' : '#2f5aa8', text: 'x=' + M.fmt(xv) }, L);
 
     M.$('#df-expr').innerHTML = '<span class="frac"><i>' + f.num + '</i><i>' + f.den + '</i></span>';
     M.$('#df-den').textContent = M.fmt(denVal(f.id, xv));

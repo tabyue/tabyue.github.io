@@ -17,7 +17,7 @@
 .frac {
   display: inline-flex;
   flex-direction: column;
-  vertical-align: -0.52em;
+  vertical-align: middle;  /* 分数线对齐到小写字母中线，不受字体基线影响 */
   text-align: center;
   margin: 0 .12em;
   line-height: 1.12;
@@ -204,7 +204,7 @@ input[type=range] { width: 100%; }
 p.part-info { font-size: 13px; line-height: 1.62; color: var(--ink, #1f302e); margin: 8px 0 0; }
 
 
-/* —— 楷体只用于正文叙述；数字、公式、图内文字仍用无衬线体，保证清晰 —— */
+/* —— 数字、公式、图内文字统一用无衬线体（正文也已改为无衬线体，楷体在小字号下会显得发虚、和数字对不齐） —— */
 .bignum, .stat strong, .frac, var, .v, .formula, .radical,
 td.n, th, table.compare, table.steps,
 input, output, select, textarea, button,
@@ -212,12 +212,6 @@ input, output, select, textarea, button,
 svg text, svg tspan {
   font-family: var(--font-ui);
 }
-/* 标题和导语用楷体更有味道，但要稍稍加粗以免发虚 */
-h1, h2, h3, .page-heading .subtitle, .lead {
-  font-family: var(--font-kai);
-  letter-spacing: .01em;
-}
-
 /* 想明白为什么 */
 .derive-card { background: #ebf5f4; border-radius: 18px; padding: 16px 18px; margin-top: 15px; color: #2d413f; }
 .derive-card h3 { font-size: 13px; margin: 0 0 8px; color: #274946; display: flex; gap: 7px; align-items: center; }
@@ -260,3 +254,6 @@ table.compare tr.on td { background: var(--soft); color: var(--green); font-weig
 .ghost-btn { background: var(--soft); color: var(--green); border-radius: 11px; padding: 10px 14px; font-size: 12px; min-height: 40px; }
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
 sub, sup { font-family: var(--font-ui); font-size: .72em; }
+
+/* 公式块即使写成 <span class="formula"> 也按块级显示，避免背景框和下面的说明行被拆开 */
+span.formula { display: block; }

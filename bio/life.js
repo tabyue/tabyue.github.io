@@ -80,6 +80,7 @@
   var lvPick = 0;
   B.chips(B.$('#lv-kind'), [{ label: '动物（人）', value: 'animal' }, { label: '植物（荔枝）', value: 'plant' }], lvKind, function (v) { lvKind = v; lvPick = 0; drawLv(); save(); });
   function drawLv() {
+    if (lvPick >= LEVELS[lvKind].length) lvPick = 0;  /* 动物 5 层、植物 4 层，切换后防越界 */
     var box = B.$('#lv-steps'); box.innerHTML = '';
     LEVELS[lvKind].forEach(function (l, i) {
       if (i) H('i', { text: '→' }, box);
