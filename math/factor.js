@@ -54,7 +54,8 @@
   function showArea() {
     var s = M.$('#ar-fig');
     s.innerHTML = '';
-    var S = M.svg, unit = 20, ox = 26, oy = 20;
+    var S = M.svg, ox = 26, oy = 20;
+    var unit = Math.min(20, 160 / (xv + 3));  /* x 较大时整体缩小，放得进画布 */
     var X = xv * unit, B = 3 * unit;
     S('rect', { x: ox, y: oy, width: X, height: X, fill: '#cfdaee', stroke: '#5d7cb0', 'stroke-width': 1.4 }, s);
     S('rect', { x: ox + X, y: oy, width: B, height: X, fill: '#e8dcc8', stroke: '#5d7cb0', 'stroke-width': 1.4 }, s);

@@ -89,7 +89,8 @@
         S('line', { x1: 128, y1: 52, x2: x, y2: 126, stroke: i ? '#c2603f' : '#3f7d6a', 'stroke-width': 2.2 }, s);
         S('circle', { cx: x, cy: 126, r: 4, fill: i ? '#c2603f' : '#3f7d6a' }, s);
       });
-      S('text', { x: 30, y: 150, 'font-size': 10.5, fill: '#a4492b', text: '同样的两边一对角，第三点有两个位置 → 画出两个不同的三角形' }, s);
+      S('text', { x: 12, y: 146, 'font-size': 10.5, fill: '#a4492b', text: '同样的两边一对角，第三点有两个位置' }, s);
+      S('text', { x: 12, y: 160, 'font-size': 10.5, fill: '#a4492b', text: '→ 能画出两个不同的三角形' }, s);
     } else {
       var p1 = tri(28, 120, 1, '#3a5a93', '#eaeff8');
       var p2 = tri(140, 120, 1, '#3f7d6a', '#e8f0e6');

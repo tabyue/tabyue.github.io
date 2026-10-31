@@ -27,7 +27,8 @@
           fill: '#f0d4cb', opacity: .55, stroke: '#c2603f', 'stroke-width': 1.3, 'stroke-dasharray': '4 3'
         }, L);
         S('circle', { cx: ax.X(px), cy: ax.Y(py), r: 6, fill: '#c2603f', stroke: '#fff', 'stroke-width': 2 }, L);
-        S('text', { x: ax.X(px) + 9, y: ax.Y(py) - 8, 'font-size': 10.5, 'font-weight': 700, fill: '#a4492b', text: '(' + M.fmt(px) + ', ' + M.fmt(py, 2) + ')' }, L);
+        var right = px > 4;  /* 点靠右边时标签放到点的左侧，避免被裁掉 */
+        S('text', { x: ax.X(px) + (right ? -9 : 9), y: ax.Y(py) - 8, 'text-anchor': right ? 'end' : 'start', 'font-size': 10.5, 'font-weight': 700, fill: '#a4492b', text: '(' + M.fmt(px) + ', ' + M.fmt(py, 2) + ')' }, L);
       }
     }
     M.$('#hy-expr').innerHTML = 'y = <span class="frac"><i>' + M.fmt(k) + '</i><i>x</i></span>';

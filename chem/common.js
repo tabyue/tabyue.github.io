@@ -175,20 +175,31 @@
     return { X: X, Y: Y, ix: ix, iy: iy, layer: svg('g', {}, el), el: el, w: w, h: h, xmin: xmin, xmax: xmax, ymin: ymin, ymax: ymax };
   }
 
-  /* 函数作图：返回 path 的 d。跳过无定义与跨出画布的点（反比例函数在 x=0 断开） */
+  /* 函数作图：返回 path 的 d。曲线在 y 方向精确裁到坐标系的上下边界，不会画出坐标区；
+     相邻两点跳变超过一个坐标范围时视为间断（反比例函数在 x=0 处断开），不连线 */
   function curve(ax, fn, from, to, steps) {
     from = from === undefined ? ax.xmin : from;
     to = to === undefined ? ax.xmax : to;
     steps = steps || 240;
-    var d = '', pen = false, pad = (ax.ymax - ax.ymin) * 0.6;
+    var lo = ax.ymin, hi = ax.ymax, d = '', pen = false, prev = null;
+    function P(x, y) { return fmt(ax.X(x), 2) + ' ' + fmt(ax.Y(y), 2); }
+    function inside(y) { return y >= lo && y <= hi; }
     for (var i = 0; i <= steps; i++) {
       var x = from + (to - from) * i / steps, y = fn(x);
-      if (!isFinite(y) || y > ax.ymax + pad || y < ax.ymin - pad) { pen = false; continue; }
-      d += (pen ? 'L' : 'M') + fmt(ax.X(x), 2) + ' ' + fmt(ax.Y(y), 2);
-      pen = true;
+      if (!isFinite(y)) { pen = false; prev = null; continue; }
+      if (prev) {
+        var a = inside(prev.y), b = inside(y);
+        if (Math.abs(y - prev.y) > (hi - lo)) { pen = false; }
+        else if (a && b) { d += (pen ? '' : 'M' + P(prev.x, prev.y)) + 'L' + P(x, y); pen = true; }
+        else if (a && !b) { var e1 = y > hi ? hi : lo, t1 = (e1 - prev.y) / (y - prev.y); d += (pen ? '' : 'M' + P(prev.x, prev.y)) + 'L' + P(prev.x + (x - prev.x) * t1, e1); pen = false; }
+        else if (!a && b) { var e2 = prev.y > hi ? hi : lo, t2 = (e2 - prev.y) / (y - prev.y); d += 'M' + P(prev.x + (x - prev.x) * t2, e2) + 'L' + P(x, y); pen = true; }
+        else pen = false;
+      }
+      prev = { x: x, y: y };
     }
     return d;
   }
+
 
   /* 画布坐标：把指针事件换算成 viewBox 里的坐标 */
   function svgPoint(el, evt) {

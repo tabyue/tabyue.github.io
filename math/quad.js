@@ -93,7 +93,8 @@
     var w = (-4 + Math.sqrt(d)) / 2;
     var s = M.$('#ap-fig');
     s.innerHTML = '';
-    var S = M.svg, k = 11, ox = 24, oy = 22;
+    var S = M.svg, ox = 44, oy = 18;
+    var k = Math.min(11, 200 / (w + 4), 104 / w);  /* 面积大时整体缩小；左边留出“宽”标签的位置 */
     S('rect', { x: ox, y: oy, width: (w + 4) * k, height: w * k, fill: '#eaeff8', stroke: '#3a5a93', 'stroke-width': 2 }, s);
     S('text', { x: ox + (w + 4) * k / 2, y: oy + w * k / 2 + 4, 'text-anchor': 'middle', 'font-size': 12, fill: '#2f4473', text: M.fmt(area) + ' m²' }, s);
     S('text', { x: ox + (w + 4) * k / 2, y: oy + w * k + 16, 'text-anchor': 'middle', 'font-size': 10.5, fill: '#4a5568', text: '长 ' + M.fmt(w + 4, 2) + ' m' }, s);

@@ -91,7 +91,8 @@
     var p = drawn ? whiteSeen / drawn : 0;
     var est = drawn ? Math.round(p * TOTAL) : 0;
     var ax = M.axes(M.$('#es-fig'), {
-      xmin: 0, xmax: Math.max(50, drawn), ymin: 0, ymax: 0.4,
+      /* 刚开始摸几次时频率可能是 0.5、1，纵轴上限跟着放大，折线不会冲出坐标区 */
+      xmin: 0, xmax: Math.max(50, drawn), ymin: 0, ymax: Math.max(0.4, Math.ceil(Math.max.apply(null, trail.map(function (q) { return q[1]; }).concat([0])) * 10) / 10),
       xstep: Math.max(10, Math.round(Math.max(50, drawn) / 5)), ystep: 0.1,
       labelStep: Math.max(10, Math.round(Math.max(50, drawn) / 5)), ylabelStep: 0.1,
       left: 36, bottom: 24, top: 10, xlabel: '摸的次数', ylabel: '白球频率'

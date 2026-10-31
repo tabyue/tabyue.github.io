@@ -241,7 +241,8 @@
     var leafFill = '#86b874', coverFill = '#86b874';
     if (k >= 3) { leafFill = '#efe4b6'; coverFill = '#efe4b6'; }
     if (k >= 4) { leafFill = '#5d5f9e'; coverFill = skipped ? '#7b77a8' : '#d9b56a'; }
-    if (k === 0) S('rect', { x: -150, y: -105, width: 400, height: 210, fill: '#2c3540', rx: 12 }, svg).parentNode.insertBefore(svg.lastChild, svg.firstChild);
+    /* 暗处理：整张画布铺成暗色背景。rect 直接加在 svg 上，坐标用画布坐标，并插到最底层 */
+    if (k === 0) svg.insertBefore(S('rect', { x: 0, y: 0, width: 400, height: 210, fill: '#2c3540', rx: 12 }), svg.firstChild);
     if (k === 2) {
       var sun = S('g', { transform: 'translate(200,-70)' }, g);
       S('circle', { r: 14, fill: '#f4c56b' }, sun);

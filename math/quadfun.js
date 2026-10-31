@@ -74,10 +74,11 @@
     /* 画出围栏示意 */
     var s2 = M.$('#ar-plot');
     s2.innerHTML = '';
-    var k = 5.4, ox = 20, oy = 100;
+    var ox = 34, oy = 22;
+    var k = Math.min(5.4, 250 / Math.max(1, FENCE - 2 * wid), 104 / Math.max(1, wid));  /* 墙在上，长方形往下长，并按大小缩放 */
     var len = FENCE - 2 * wid;
     M.svg('line', { x1: 10, y1: oy, x2: 290, y2: oy, stroke: '#8795b5', 'stroke-width': 4 }, s2);
-    M.svg('text', { x: 12, y: oy - 6, 'font-size': 9.5, fill: '#6b7385', text: '墙' }, s2);
+    M.svg('text', { x: 12, y: oy - 6, 'font-size': 9.5, fill: '#6b7385', text: '墙' }, s2);  /* 墙画在上方 */
     M.svg('rect', { x: ox, y: oy, width: len * k, height: wid * k, fill: '#eaeff8', stroke: '#3a5a93', 'stroke-width': 2 }, s2);
     M.svg('text', { x: ox + len * k / 2, y: oy + wid * k / 2 + 4, 'text-anchor': 'middle', 'font-size': 11, fill: '#2f4473', text: M.fmt(area) + ' m²' }, s2);
     M.svg('text', { x: ox + len * k / 2, y: oy + wid * k + 14, 'text-anchor': 'middle', 'font-size': 9.5, fill: '#4a5568', text: '长 ' + M.fmt(len) + ' m' }, s2);

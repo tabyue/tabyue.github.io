@@ -43,8 +43,9 @@ function drawLand(){
  if(state.sort==='type'){const order=['耕地','园地','林地','草地','湿地','城镇村及工矿用地'];data=order.map(k=>G.LAND_TYPES.find(d=>d[0]===k));}
  else data.sort((a,b)=>b[1]-a[1]);
  let s=R(0,0,420,200,'#f6f8f2',12);
- const x0=118,x1=396,y0=12,rowH=30;
- const max=data[0][1];
+ // 右边留出数值标签的位置；按类型排序时第一项不一定最大，所以用真正的最大值
+ const x0=118,x1=340,y0=12,rowH=30;
+ const max=Math.max.apply(null,data.map(d=>d[1]));
  data.forEach(([name,v],i)=>{
   const y=y0+i*rowH,w=(x1-x0)*v/max;
   s+=T(x0-8,y+16,name,11.5,'#40594b',500,'end');

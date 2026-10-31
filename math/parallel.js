@@ -19,6 +19,13 @@
     var s = M.$('#pl-fig');
     s.innerHTML = '';
     var S = M.svg, W = 320, y1 = 54, y2 = 142, cx = 160;
+    /* 截线与直线 b 的夹角 = cut − tilt。它太小时截线几乎和 b 平行，交点会跑到很远（角度甚至变成负数），
+       所以把 b 的倾角限制在让这个夹角不小于 30° 的范围内 */
+    var tMax = cut - 30, tMin = cut - 150;
+    if (tilt > tMax || tilt < tMin) {
+      tilt = M.clamp(tilt, tMin, tMax);
+      var tr0 = M.$('#pl-tilt'); if (tr0) { tr0.value = tilt; M.paintRange(tr0); }
+    }
     var tr = tilt * Math.PI / 180, cr = cut * Math.PI / 180;
     /* 直线 a 水平；直线 b 倾斜 tilt；截线 c 过中心，与水平成 cut */
     function lineB(x) { return y2 + (x - cx) * Math.tan(tr); }
@@ -37,7 +44,10 @@
     var topY = 8, botY = 190;
     S('line', { x1: cx + (topY - 110) * dx, y1: topY, x2: cx + (botY - 110) * dx, y2: botY, stroke: '#c2603f', 'stroke-width': 2.2 }, s);
     S('text', { x: W - 8, y: y1 - 6, 'text-anchor': 'end', 'font-size': 11, fill: '#3a5a93', 'font-style': 'italic', text: 'a' }, s);
-    S('text', { x: W - 8, y: lineB(W - 10) - 6, 'text-anchor': 'end', 'font-size': 11, fill: '#3a5a93', 'font-style': 'italic', text: 'b' }, s);
+    /* b 的标签：从右往左找线 b 上第一个既在画布内、又离 a 足够远的位置 */
+    var bx = W - 10;
+    while (bx > 30 && !(lineB(bx) > y1 + 22 && lineB(bx) < 184)) bx -= 6;
+    S('text', { x: bx + 2, y: lineB(bx) - 6, 'text-anchor': bx > W - 20 ? 'end' : 'middle', 'font-size': 11, fill: '#3a5a93', 'font-style': 'italic', text: 'b' }, s);
     S('text', { x: cx + (botY - 110) * dx + 6, y: botY - 2, 'font-size': 11, fill: '#c2603f', 'font-style': 'italic', text: 'c' }, s);
 
     /* 八个角的度数：截线与 a 成 cut，与 b 成 cut − tilt */

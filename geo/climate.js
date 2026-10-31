@@ -67,7 +67,8 @@ function drawMountain(){
  const h=Number($('peak-h').value),t0=Number($('base-t').value),top=G.temperatureAtAltitude(t0,h);
  Site.setRange($('peak-h'),h,h+' 米');Site.setRange($('base-t'),t0,t0+'℃');
  $('peak-output').textContent=h+' 米';$('base-output').textContent=t0+'℃';
- const g=196,peakY=g-34-h/5000*150,px=236,mid=(g+peakY)/2;
+ // 最高 5000 米时山顶标签仍留在画布内
+ const g=196,peakY=g-34-h/5000*136,px=236,mid=(g+peakY)/2;
  let s='<defs>'+A('wind','#6b97a6')+'</defs>';
  s+=R(0,g,124,44,'#9cc0cc')+T(10,g+26,'海洋',12,'#2f6377',600);
  s+=P('M118 '+g+'C160 '+(g-6)+' '+(px-70)+' '+(peakY+34)+' '+px+' '+peakY+'C'+(px+46)+' '+(peakY+30)+' '+(px+110)+' '+(g-8)+' 420 '+(g-2)+'L420 240L118 240Z','#8a9f7e',1.2,'#dfe7d3');

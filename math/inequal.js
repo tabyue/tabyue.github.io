@@ -8,11 +8,13 @@
   var opMode = st.o || 'mul';
 
   function showProp() {
-    var nl = M.numline(M.$('#pr-fig'), { min: -20, max: 20, step: 2, labelStep: 10, y: 44 });
-    var S = M.svg, L = nl.layer;
     var a2, b2, sym2;
     if (opMode === 'add') { a2 = a + c; b2 = b + c; sym2 = a2 < b2 ? '<' : (a2 > b2 ? '>' : '='); }
     else { a2 = a * c; b2 = b * c; sym2 = a2 < b2 ? '<' : (a2 > b2 ? '>' : '='); }
+    /* 乘一个数后可能超出 ±20，数轴范围跟着放大（取 10 的倍数，两端各留一格） */
+    var R = Math.max(20, Math.ceil((Math.max(Math.abs(a), Math.abs(b), Math.abs(a2), Math.abs(b2)) + 4) / 10) * 10);
+    var nl = M.numline(M.$('#pr-fig'), { min: -R, max: R, step: R / 10, labelStep: R / 2, y: 44, pad: 34 });
+    var S = M.svg, L = nl.layer;
     [[a, b, 28, '#8d95a6', '原来'], [a2, b2, 72, '#2f5aa8', '变换后']].forEach(function (g) {
       S('line', { x1: nl.X(g[0]), y1: g[2], x2: nl.X(g[1]), y2: g[2], stroke: g[3], 'stroke-width': 2, opacity: .5 }, L);
       [[g[0], 'a'], [g[1], 'b']].forEach(function (p, i) {

@@ -59,7 +59,11 @@
   function showArea() {
     var s = M.$('#ar-fig');
     s.innerHTML = '';
-    var S = M.svg, unit = 22, ox = 20, oy = 20;
+    var S = M.svg, ox = 20, oy = 20;
+    /* 单位长度随 a、b 自动缩放，图形始终放得进 300×230 的画布 */
+    var unit = formula === 'sq'
+      ? Math.min(22, 180 / (uu + vv))
+      : Math.min(22, 230 / (Math.max(uu, vv) + 24 / 22 + (uu + vv) * 0.62 + 1), 190 / Math.max(uu, vv));
     var A = uu * unit, B = vv * unit;
     if (formula === 'sq') {
       /* (a+b)² = a² + 2ab + b² */
