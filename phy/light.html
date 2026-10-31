@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动光源改变入射角，看反射角怎样始终等于入射角，对比镜面反射和漫反射；拖动蜡烛看平面镜里的虚像；让光射进水和玻璃，看折射光怎样偏折、水底为什么看起来变浅。物理互动馆第 4 课，对应人教版八年级上册第四章。">
+<meta property="og:title" content="物理互动馆 · 光现象">
+<title>光现象 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="light.js"></script>
+</head>
+<body data-module="light">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 4 课 <span>/</span> 八年级上册 第四章</p><h1>光现象</h1><p class="subtitle">照镜子、看倒影、筷子在水里“折断”，背后只有几条简单的规矩。拖一拖光线，自己把规矩找出来。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="光的反射">
+<h2>光的反射：入射角和反射角</h2>
+<p class="panel-sub">拖动左上方的光源（或用滑块）改变入射角。虚线是<b>法线</b>：过入射点、垂直于镜面的线，角度都从它量起。</p>
+<svg id="refl" viewBox="0 0 400 250" role="application" aria-label="光的反射，可拖动光源改变入射角"></svg>
+<div class="control"><div class="control-heading"><label for="i-in">入射角 i（入射光线与法线的夹角）</label><output id="i-out">40°</output></div><input id="i-in" type="range" min="0" max="80" step="1" value="40"><div class="ruler"><span>0°</span><span>40°</span><span>80°</span></div></div>
+<div class="ctl-row"><span>反射面</span><div class="chips small" id="mode-chips"></div></div>
+<div class="ctl-row"><span>光的方向</span><div class="chips small" id="dir-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="反射读数">
+<div class="readout-head"><h2>量一量这两个角</h2><span class="badge" id="refl-badge">镜面反射</span></div>
+<div class="stat-grid">
+<div class="stat"><span>入射角 i</span><strong id="rl-i">—</strong></div>
+<div class="stat"><span>反射角 r</span><strong id="rl-r">—</strong></div>
+<div class="stat"><span>入射光线与镜面的夹角</span><strong id="rl-m">—</strong></div>
+<div class="stat"><span>反射光线与入射光线的夹角</span><strong id="rl-ir">—</strong></div>
+</div>
+<p class="lead" id="refl-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="反射定律">
+<h2>光的反射定律</h2>
+<p class="panel-sub" style="margin-bottom:4px">每一条都可以在左边的图里验证。</p>
+<ul class="cond-list" id="law-list"></ul>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="平面镜成像">
+<h2>平面镜成像：镜子里的蜡烛在哪儿</h2>
+<p class="panel-sub">左右拖动蜡烛。实线是真实的光，镜子后面的虚线是眼睛“以为”光走过的路。</p>
+<svg id="mirror" viewBox="0 0 400 240" role="application" aria-label="平面镜成像，可拖动蜡烛改变到镜面的距离"></svg>
+<div class="control"><div class="control-heading"><label for="d-in">蜡烛到镜面的距离</label><output id="d-out">10 cm</output></div><input id="d-in" type="range" min="2" max="20" step="0.5" value="10"><div class="ruler"><span>2 cm</span><span>11 cm</span><span>20 cm</span></div></div>
+<div class="ctl-row"><span>蜡烛</span><div class="chips small" id="h-chips"></div></div>
+</section>
+<section class="readout" aria-label="平面镜成像读数">
+<div class="readout-head"><h2>像和蜡烛比一比</h2><span class="badge" id="mir-badge">虚像</span></div>
+<div class="stat-grid">
+<div class="stat"><span>物距（蜡烛到镜面）</span><strong id="mr-u">—</strong></div>
+<div class="stat"><span>像距（像到镜面）</span><strong id="mr-v">—</strong></div>
+<div class="stat"><span>蜡烛高</span><strong id="mr-h">—</strong></div>
+<div class="stat"><span>像高</span><strong id="mr-h2">—</strong></div>
+<div class="stat wide"><span>像的性质</span><strong id="mr-kind" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="mir-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="光的折射">
+<h2>光的折射：从空气斜射进水里</h2>
+<p class="panel-sub">先看光路，再切到“水中筷子”和“看水底”，用同一条规律解释两个怪现象。</p>
+<svg id="refr" viewBox="0 0 400 250" role="application" aria-label="光的折射，可拖动光源改变入射角"></svg>
+<div class="ctl-row" style="margin-top:6px"><span>看什么</span><div class="chips small" id="rmode-chips"></div></div>
+<div class="ctl-row"><span>介质</span><div class="chips small" id="n-chips"></div></div>
+<div class="control" id="ri-ctl" style="margin-top:8px"><div class="control-heading"><label for="ri-in">入射角 i</label><output id="ri-out">45°</output></div><input id="ri-in" type="range" min="0" max="80" step="1" value="45"><div class="ruler"><span>0°</span><span>40°</span><span>80°</span></div></div>
+</section>
+<section class="readout" aria-label="折射读数">
+<div class="readout-head"><h2>光拐了多少</h2><span class="badge" id="rf-badge">空气 → 水</span></div>
+<div class="stat-grid">
+<div class="stat"><span id="rf-l1">入射角 i</span><strong id="rf-i">—</strong></div>
+<div class="stat"><span id="rf-l2">折射角 r</span><strong id="rf-r">—</strong></div>
+<div class="stat wide"><span id="rf-l3">光线偏折了</span><strong id="rf-dev">—</strong></div>
+</div>
+<p class="lead" id="rf-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 一排人从水泥地走进沙滩</h3><p>一排人手拉手斜着从水泥地走向沙滩，先踩进沙子的那一头先慢下来，整排人就会<b>拐向法线</b>。光在空气里跑得快，在水和玻璃里跑得慢，所以斜着射进去也会拐弯；正对着走进去（垂直入射），两头同时变慢，就不拐弯。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 镜子里的像为什么离镜子一样远</h3>
+<p class="derive-lead">“像距等于物距”不用死背，用反射定律和眼睛的一个“习惯”就能推出来。</p>
+<ol>
+<li><h4>从烛焰顶端取两条光</h4><p>烛焰上一点发出的光射向四面八方，我们只挑两条射到镜子上的。每条光到了镜面都按反射定律拐回来：<b>反射角等于入射角</b>。</p></li>
+<li><h4>眼睛只认直线</h4><p>反射光进入眼睛后，大脑默认光是<b>沿直线</b>传过来的，于是顺着反射光往回找，找到镜子后面去了。</p></li>
+<li><h4>两条反向延长线交于一点</h4><p>把两条反射光线向镜后反向延长，它们交在一点，眼睛就觉得烛焰顶端“在那里”。这一点就是像。</p></li>
+<li><h4>左右对称</h4><p>因为两个角相等，每条延长线和原来的入射光线关于镜面<b>左右对称</b>，交点也就和烛焰顶端对称：到镜面距离相等，连线垂直于镜面。烛焰上每一点都这样，整根蜡烛的像就和蜡烛一样大。</p></li>
+<li><h4>为什么叫虚像</h4><p>镜子后面根本没有光到达，只是反向延长线的交点，所以在镜后放光屏<b>接不到</b>像，这就是虚像。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>平面镜成像的特点“等大、等距、连线垂直、虚像”可以合成一句话：<b>像和物关于镜面对称</b>。作图时直接找对称点，再用虚线画出像就行。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>光沿直线传播</h3><p>光在<b>同种均匀介质</b>中沿直线传播（介质就是光走过的物质，如空气、水、玻璃）。影子、日食月食、<b>小孔成像</b>都是证据。小孔成的是<b>倒立的实像</b>，像的形状和孔的形状无关，只和物体有关。</p></div></div>
+<div class="fact"><div><h3>光跑得有多快</h3><p>光在真空中的速度 c = 3×10<sup>8</sup> m/s，在空气中差不多也是这么快，在水和玻璃里慢一些。打雷时先看到闪电后听到雷声，就是因为光速远大于声速。“光年”是光一年走的距离，是<b>长度</b>单位。</p></div></div>
+<div class="fact"><div><h3>两种反射，同一条定律</h3><p>光滑表面发生<b>镜面反射</b>，平行光反射后仍然平行，所以黑板会“反光”看不清字；粗糙表面发生<b>漫反射</b>，光射向各个方向，我们才能从各个角度看到书本。两种反射都遵守反射定律。</p></div></div>
+<div class="fact"><div><h3>折射和色散</h3><p>光从空气斜射入水或玻璃，<b>折射角小于入射角</b>；垂直射入时方向不变。太阳光（白光）经过三棱镜，分解成<b>红、橙、黄、绿、蓝、靛、紫</b>七种色光，叫光的色散，彩虹就是这样形成的。色光的三原色是红、绿、蓝。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>入射角是入射光线与<b>法线</b>的夹角，不是与镜面的夹角。题目说“光线与镜面成 30°”，入射角是 <b>60°</b>。另外，人走近镜子，像<b>不会变大</b>，觉得变大只是因为离得近、看起来的角度大了。光的反射和折射中，<b>光路都是可逆的</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个光路发给同学</h3><p>链接会记住入射角、蜡烛位置和介质。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，光现象常在选择题、作图题和实验题里出现</h3>
+<ul>
+<li><b>选择题</b>：给一组生活现象，分辨属于哪一类。影子、小孔成像是<b>直线传播</b>；倒影、照镜子是<b>反射</b>；筷子“折断”、池水变浅、海市蜃楼是<b>折射</b>；彩虹是<b>色散</b>。</li>
+<li><b>作图题</b>：根据反射定律画反射光线并标出反射角；用对称法画平面镜成的像（像用虚线）；画光从空气斜射入水中的折射光线，记住折射光线<b>更靠近法线</b>。</li>
+<li><b>实验题</b>：探究平面镜成像的特点。常问：为什么用薄玻璃板代替平面镜（能看到后面，便于<b>确定像的位置</b>）；为什么用两支相同的蜡烛（比较像和物的<b>大小</b>）；光屏上接不到像说明什么（是<b>虚像</b>）。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（物理 10 分）。做光学实验时要会画法线、用量角器量角度，并把数据如实记录下来。</li>
+</ul>
+<div class="q"><b>典型设问</b>　一束光与平面镜成 30° 角射到镜面上，反射角是多少度？反射光线与入射光线的夹角是多少度？<br><b>怎么想</b>　先画法线。光线与镜面成 30°，与法线就成 90° − 30° = <b>60°</b>，所以入射角 60°，反射角也是 <b>60°</b>；两条光线的夹角是 60° + 60° = <b>120°</b>。<b>凡是角度题，第一步都是画法线</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 4 课</p><p>折射角按折射定律计算（水的折射率取 1.33，玻璃取 1.5），初中不要求掌握这个公式；漫反射用几块朝向不同的小镜面示意。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

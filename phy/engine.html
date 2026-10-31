@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="转动曲轴看四冲程汽油机怎样吸气、压缩、做功、排气，对比柴油机的压燃式；调转速算每秒做功几次，换燃料、调效率看能量都去了哪里。物理互动馆第 14 课，对应人教版九年级全一册第十四章。">
+<meta property="og:title" content="物理互动馆 · 内能的利用">
+<title>内能的利用 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="engine.js"></script>
+</head>
+<body data-module="engine">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 14 课 <span>/</span> 九年级全一册 第十四章</p><h1>内能的利用</h1><p class="subtitle">汽车能跑，靠的是燃料烧出来的内能。转一转曲轴，看活塞在汽缸里走的四趟，哪一趟才真正在出力。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="四冲程汽油机">
+<h2>四冲程内燃机：转一转曲轴</h2>
+<p class="panel-sub">拖动滑块转动曲轴，或者点“播放”。曲轴转两圈（720°），活塞上下各走两趟，完成一个工作循环。</p>
+<svg id="engine" viewBox="0 0 400 260" role="img" aria-label="内燃机汽缸剖面图，随曲轴转角变化"></svg>
+<div class="control"><div class="control-heading"><label for="ang-in">曲轴转角 θ</label><output id="ang-out">0°</output></div><input id="ang-in" type="range" min="0" max="720" step="5" value="0"><div class="ruler"><span>0°</span><span>360°（第一圈转完）</span><span>720°</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="play-btn" aria-pressed="false">播放</button><button type="button" class="ghost-btn" id="reset-btn">回到起点</button></div>
+<div class="ctl-row"><span>机型</span><div class="chips small" id="type-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="当前冲程">
+<div class="readout-head"><h2>汽缸里正在发生</h2><span class="badge" id="stroke-badge">吸气冲程</span></div>
+<div class="stat-grid">
+<div class="stat"><span>进气门</span><strong id="inv-out">—</strong></div>
+<div class="stat"><span>排气门</span><strong id="exv-out">—</strong></div>
+<div class="stat"><span>活塞运动</span><strong id="piston-out">—</strong></div>
+<div class="stat"><span>飞轮</span><strong id="turn-out">—</strong></div>
+<div class="stat wide"><span>能量转化</span><strong id="energy-out" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="engine-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="四个冲程一览">
+<h2>四个冲程一览</h2>
+<p class="panel-sub" style="margin-bottom:4px">当前冲程会高亮。认冲程的窍门：先看气门开没开，再看活塞往哪走。</p>
+<table class="compare" id="stroke-table"><thead><tr><th>冲程</th><th>进气门</th><th>排气门</th><th>活塞</th><th>能量转化</th></tr></thead><tbody>
+<tr data-s="0"><td>吸气</td><td>开</td><td>关</td><td>向下</td><td>—</td></tr>
+<tr data-s="1"><td>压缩</td><td>关</td><td>关</td><td>向上</td><td>机械能→内能</td></tr>
+<tr data-s="2"><td>做功</td><td>关</td><td>关</td><td>向下</td><td>内能→机械能</td></tr>
+<tr data-s="3"><td>排气</td><td>关</td><td>开</td><td>向上</td><td>—</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="转速与做功次数">
+<h2>转速换算：1 秒里做功几次</h2>
+<p class="panel-sub">把 1 秒钟摊开成一条长带子。拖动转速，数一数飞轮转了几圈、走了几个冲程、做了几次功。</p>
+<svg id="timeline" viewBox="0 0 400 200" role="img" aria-label="1 秒内飞轮转动、冲程和做功次数的时间轴"></svg>
+<div class="control"><div class="control-heading"><label for="rpm-in">飞轮转速</label><output id="rpm-out">1800 r/min</output></div><input id="rpm-in" type="range" min="1200" max="3000" step="120" value="1800"><div class="ruler"><span>1200 r/min</span><span>2100 r/min</span><span>3000 r/min</span></div></div>
+</section>
+<section class="readout" aria-label="转速换算结果">
+<div class="readout-head"><h2>每秒钟</h2><span class="badge">2 圈 = 1 个循环 = 4 个冲程 = 做功 1 次</span></div>
+<div class="stat-grid">
+<div class="stat"><span>飞轮转</span><strong id="rps-out">—</strong></div>
+<div class="stat"><span>工作循环</span><strong id="cyc-out">—</strong></div>
+<div class="stat"><span>冲程</span><strong id="strk-out">—</strong></div>
+<div class="stat"><span>对外做功</span><strong id="work-out">—</strong></div>
+</div>
+<p class="lead" id="rpm-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="热值与热机效率">
+<h2>燃料的能量都去哪儿了</h2>
+<p class="panel-sub">选燃料、定质量、调效率。左边是燃料完全燃烧放出的全部热量，右边是它的去向（各项损失的比例是示意值）。</p>
+<svg id="flow" viewBox="0 0 400 230" role="img" aria-label="热机能量流向图"></svg>
+<div class="ctl-row"><span>燃料</span><div class="chips small" id="fuel-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="m-in">燃料质量 m</label><output id="m-out">0.5 kg</output></div><input id="m-in" type="range" min="0.1" max="2" step="0.1" value="0.5"><div class="ruler"><span>0.1 kg</span><span></span><span>2 kg</span></div></div>
+<div class="control"><div class="control-heading"><label for="eta-in">热机效率 η</label><output id="eta-out">25%</output></div><input id="eta-in" type="range" min="10" max="50" step="1" value="25"><div class="ruler"><span>10%</span><span>30%</span><span>50%</span></div></div>
+</section>
+<section class="readout" aria-label="热量计算">
+<div class="readout-head"><h2>算一算</h2><span class="badge" id="fuel-badge">汽油</span></div>
+<div class="stat-grid">
+<div class="stat"><span>热值 q</span><strong id="q-out">—</strong></div>
+<div class="stat"><span>完全燃烧放热 Q放 = mq</span><strong id="Q-out">—</strong></div>
+<div class="stat"><span>有用功 W = ηQ放</span><strong id="W-out">—</strong></div>
+<div class="stat"><span>损失掉的能量</span><strong id="loss-out">—</strong></div>
+</div>
+<p class="lead" id="fuel-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 热机效率像零花钱的去向</h3><p>燃料放出的热量好比你领到 100 元，真正买到想要的书（有用功）只花了 30 元，剩下的被车费（废气）、饮料（散热）、零碎开销（摩擦）花掉了。钱一分没凭空消失，加起来还是 100 元——这就是<b>能量守恒</b>；可买书那部分永远不可能是 100 元，所以<b>效率总小于 1</b>。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 只有一个冲程出力，发动机凭什么一直转</h3>
+<p class="derive-lead">四个冲程里三个都在“干杂活”，把来龙去脉理一遍，转速题和效率题就都通了。</p>
+<ol>
+<li><h4>内能怎样推动活塞</h4><p>高温高压的燃气膨胀，把活塞往下推，这就是气体<b>对外做功</b>。做功后燃气的内能减少、温度降低，减少的内能变成了活塞的机械能。烧开水时水蒸气把壶盖顶起来，是同一个道理。</p></li>
+<li><h4>为什么要先压缩再点火</h4><p>压缩冲程里活塞对气体做功，气体内能增大、温度升高（<b>机械能→内能</b>）。气体先被压紧，燃烧后压强更大，推活塞的力也更大。柴油机压得更狠，空气温度能超过柴油的燃点，所以喷进柴油就自己烧起来，不用火花塞。</p></li>
+<li><h4>其余三个冲程靠飞轮</h4><p>飞轮很重，转起来就停不下来（惯性大）。做功冲程里它被“推”一把，存下的动能再带着曲轴完成排气、吸气、压缩三个冲程。</p></li>
+<li><h4>2 圈、4 冲程、做功 1 次</h4><p>曲轴每转<b>半圈</b>，活塞从一端走到另一端，就是一个冲程。四个冲程要转 2 圈，其中只做功 1 次。所以“每秒做功次数 = 每秒转数 ÷ 2”。</p></li>
+<li><h4>效率为什么总小于 1</h4><p>排出的废气还很烫，带走大量内能；汽缸要靠冷却系统散热；零件之间有摩擦；燃料也未必烧得完全。<b>能量守恒</b>：这些去向加起来等于燃料放出的总能量，做有用功的那份当然比总量少。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>判断冲程看“气门 + 活塞方向”，算次数记住“2 圈 1 循环、做功 1 次”，谈效率先想“能量守恒，有用的只是其中一份”。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>热机与四个冲程</h3><p>热机把<b>内能转化为机械能</b>。四冲程内燃机一个工作循环包括吸气、压缩、做功、排气四个冲程，活塞往复 2 次、曲轴转 2 圈、对外做功 1 次。<b>压缩冲程：机械能→内能；做功冲程：内能→机械能。</b></p></div></div>
+<div class="fact"><div><h3>汽油机和柴油机</h3><p>汽油机顶部有<b>火花塞</b>，吸入汽油和空气的混合物，靠电火花点燃（点燃式）；柴油机顶部是<b>喷油嘴</b>，吸气冲程只吸空气，压缩末喷入柴油自行燃烧（<b>压燃式</b>）。柴油机压缩程度更大，效率更高，多用于卡车、轮船。</p></div></div>
+<div class="fact"><div><h3>热值</h3><p>某种燃料<b>完全燃烧</b>放出的热量与其质量之比，叫热值，单位 J/kg（气体常用 J/m³）。<b>Q放 = mq</b>。汽油约 4.6×10<sup>7</sup> J/kg，意思是 1 kg 汽油完全燃烧放出 4.6×10<sup>7</sup> J 的热量。</p></div></div>
+<div class="fact"><div><h3>效率与能量守恒</h3><p>热机效率 <b>η = W有用 / Q放</b>，汽油机约 20%～30%，柴油机约 30%～45%。能量不会凭空产生或消失，只会转化或转移，总量不变。跨学科实践“制作简易热机模型”（如加热试管里的水，让喷出的蒸汽吹动叶轮）也是内能→机械能。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p><b>热值只由燃料种类决定</b>，跟燃料多少、烧没烧完全、放出了多少热量都无关：半瓶汽油和一桶汽油热值一样。烧不完全只是<b>实际放出的热量变少</b>。另外别把压缩冲程和做功冲程的能量方向弄反：活塞<b>往上压</b>气体是机械能变内能，燃气<b>往下推</b>活塞才是内能变机械能。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这台发动机发给同学</h3><p>链接会记住曲轴转角、机型、转速和燃料设置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，热机这一章常和上一章的比热容连在一起考</h3>
+<ul>
+<li><b>选择题</b>：给一张汽缸图，看气门开闭和活塞运动方向判断是哪个冲程、发生了什么能量转化；或者判断关于热值、热机效率的说法对不对。</li>
+<li><b>填空题</b>：飞轮转速换算，求每秒完成几个冲程、对外做功几次。</li>
+<li><b>计算题</b>：先用 Q放 = mq 求燃料放出的热量，再用 Q吸 = cmΔt 求水吸收的热量，最后求炉子或热水器的效率 η = Q吸 / Q放。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（物理 10 分）。涉及加热的实验要规范使用酒精灯，用灯帽盖灭，不能用嘴吹。</li>
+</ul>
+<div class="q"><b>典型设问</b>　某单缸四冲程汽油机飞轮转速为 3000 r/min，它 1 s 内完成几个冲程，对外做功几次？<br><b>怎么想</b>　先把单位换成每秒：3000 r/min = 50 r/s。2 圈完成 1 个工作循环，50 圈就是 <b>25 个循环</b>；每个循环 4 个冲程、做功 1 次，所以 1 s 内完成 <b>100 个冲程，做功 25 次</b>。最常见的错误是把“转数”直接当成“做功次数”。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 14 课</p><p>内燃机按理想四冲程画：气门在冲程交界瞬间开闭，动画大大放慢；能量损失的分配比例为示意值。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

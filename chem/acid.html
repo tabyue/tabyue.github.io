@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="给胃液、柠檬汁、肥皂水滴石蕊或酚酞看颜色，学会用 pH 试纸的正确方法；向滴有酚酞的氢氧化钠溶液里逐滴加盐酸，画出 pH 曲线；任选两种溶液混合，判断能否发生复分解反应。化学互动馆第 10 课，对应人教版九年级下册第十单元。">
+<meta property="og:title" content="化学互动馆 · 常见的酸、碱、盐">
+<title>常见的酸、碱、盐 · 化学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="chem.css">
+<script defer src="common.js"></script>
+<script defer src="acid.js"></script>
+</head>
+<body data-module="acid">
+<header class="topbar"><a class="brand" href="index.html" aria-label="化学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.4 9.2A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.8L14 9V3"/><path d="M7.5 15h9"/></svg><span>化学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 10 课 <span>/</span> 九年级下册 第十单元</p><h1>常见的酸、碱、盐</h1><p class="subtitle">柠檬是酸的，肥皂水摸着滑溜溜。滴一滴指示剂，溶液是酸是碱，颜色会直接告诉你。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="溶液的酸碱性">
+<h2>酸碱检测台：指示剂和 pH</h2>
+<p class="panel-sub">选一种生活中的物质，再选一种指示剂。图中的 pH 是常见的<b>近似范围</b>，实际会随浓度、产地、品牌不同而有出入。</p>
+<svg id="ph-lab" viewBox="0 0 400 250" role="img" aria-label="烧杯中的溶液、指示剂颜色和 pH 色带"></svg>
+<div class="ctl-row"><span>物质</span><div class="chips small" id="sub-chips"></div></div>
+<div class="ctl-row"><span>检测方法</span><div class="chips small" id="ind-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="检测结果">
+<div class="readout-head"><h2>这种溶液</h2><span class="badge" id="ph-badge">酸性</span></div>
+<div class="stat-grid">
+<div class="stat"><span>pH（近似）</span><strong id="ph-val">—</strong></div>
+<div class="stat"><span>酸碱性</span><strong id="ph-kind">—</strong></div>
+<div class="stat wide"><span>看到的颜色</span><strong id="ind-out" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="ph-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="pH 试纸的用法">
+<h2>pH 试纸怎么用才对</h2>
+<p class="panel-sub" style="margin-bottom:8px">点一种做法，看看规不规范、读数会不会跑偏。</p>
+<div class="chips small" id="method-chips"></div>
+<div class="verdict-row"><div class="verdict-box yes" id="method-box"><span>这样操作</span><strong id="method-ok">规范</strong></div><div class="verdict-box"><span>试纸读数</span><strong id="paper-out">—</strong></div></div>
+<p class="lead" id="method-text" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="中和反应">
+<h2>中和反应：给氢氧化钠溶液滴盐酸</h2>
+<p class="panel-sub">烧杯里是滴了酚酞的氢氧化钠溶液。拖动滑块或点“逐滴加入”，右边同步画出 pH 的变化。</p>
+<svg id="neu" viewBox="0 0 400 240" role="img" aria-label="烧杯与 pH 随盐酸体积变化的曲线"></svg>
+<div class="control"><div class="control-heading"><label for="v-in">加入稀盐酸的体积</label><output id="v-out">0 mL</output></div><input id="v-in" type="range" min="0" max="40" step="0.5" value="0"><div class="ruler"><span>0 mL</span><span>20 mL</span><span>40 mL</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="drip-btn">逐滴加入</button><button type="button" class="ghost-btn" id="neu-reset">重置</button></div>
+</section>
+<section class="readout" aria-label="中和反应读数">
+<div class="readout-head"><h2>烧杯里</h2><span class="badge" id="neu-badge">还没加酸</span></div>
+<div class="stat-grid">
+<div class="stat"><span>pH</span><strong id="neu-ph">—</strong></div>
+<div class="stat"><span>溶液颜色</span><strong id="neu-color">—</strong></div>
+<div class="stat"><span>温度</span><strong id="neu-temp">—</strong></div>
+<div class="stat"><span>溶质（不计酚酞）</span><strong id="neu-solute" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="neu-text" aria-live="polite"></p>
+<div class="formula" style="font-size:14px;line-height:1.9">NaOH + HCl = NaCl + H<sub>2</sub>O<span class="why">中和反应：酸和碱作用生成盐和水</span><span class="step">Al(OH)<sub>3</sub> + 3HCl = AlCl<sub>3</sub> + 3H<sub>2</sub>O</span><span class="why">用含氢氧化铝的药物治疗胃酸过多；农业上用熟石灰 Ca(OH)<sub>2</sub> 改良酸性土壤</span></div>
+<aside class="analogy"><h3><i>打个比方</i> 中和就是酸和碱“配对”变成水</h3><p>盐酸里有很多 H<sup>+</sup>，氢氧化钠溶液里有很多 OH<sup>−</sup>。每滴进一滴酸，就有一批 H<sup>+</sup> 找到 OH<sup>−</sup>，手拉手变成水分子；剩下的 Na<sup>+</sup> 和 Cl<sup>−</sup> 留在水里，就是食盐水。OH<sup>−</sup> 正好配对完时溶液呈中性；再多加，H<sup>+</sup> 没人配对，溶液就变酸了。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="复分解反应">
+<h2>复分解反应：两种溶液倒在一起</h2>
+<p class="panel-sub">各选一种溶液倒进烧杯，看会不会冒泡、出沉淀，右边三盏灯表示有没有生成沉淀、气体或水。</p>
+<svg id="mix" viewBox="0 0 400 230" role="img" aria-label="两支试管中的溶液倒入烧杯后的现象"></svg>
+<div class="ctl-row"><span>溶液甲</span><div class="chips small" id="a-chips"></div></div>
+<div class="ctl-row"><span>溶液乙</span><div class="chips small" id="b-chips"></div></div>
+<div class="btn-row"><button type="button" class="ghost-btn" id="mix-btn">再倒一次</button></div>
+</section>
+<section class="readout" aria-label="复分解反应结果">
+<div class="readout-head"><h2>会不会反应</h2><span class="badge" id="mix-badge">能反应</span></div>
+<div class="stat-grid">
+<div class="stat"><span>组合</span><strong id="mix-type">—</strong></div>
+<div class="stat"><span>生成了</span><strong id="mix-sign">—</strong></div>
+<div class="stat wide"><span>化学方程式</span><strong id="mix-eq" style="font-size:16px;line-height:1.6">—</strong></div>
+</div>
+<p class="lead" id="mix-text" aria-live="polite"></p>
+<p class="note">判断口诀：先交换成分，再看产物里有没有<b>沉淀、气体或水</b>，三者有其一，反应才能发生。</p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么复分解反应非要有沉淀、气体或水</h3>
+<p class="derive-lead">两种溶液倒在一起，有的冒泡、有的变浑浊、有的毫无动静。背后的判断标准其实只有一条。</p>
+<ol>
+<li><h4>溶液里游着的是离子</h4><p>酸、碱、盐溶在水里，会分成带电的小颗粒，叫<b>离子</b>。氯化钠溶液里游着 Na<sup>+</sup> 和 Cl<sup>−</sup>，硫酸铜溶液里游着 Cu<sup>2+</sup> 和 SO<sub>4</sub><sup>2−</sup>。</p></li>
+<li><h4>混合就是“交换舞伴”</h4><p>两种化合物互相交换成分，生成另外两种化合物：AB + CD = AD + CB，这就是<b>复分解反应</b>。中和反应也属于这一类。</p></li>
+<li><h4>交换后都还溶着，等于没反应</h4><p>氯化钠和硝酸钾混合，交换后是硝酸钠和氯化钾，它们都易溶于水，离子照样各游各的，和混合前没有区别，所以<b>不反应</b>。</p></li>
+<li><h4>有离子“抱团离开”，反应才算发生</h4><p>Cu<sup>2+</sup> 和 OH<sup>−</sup> 抱成 Cu(OH)<sub>2</sub> 沉下去；碳酸根遇到 H<sup>+</sup> 变成水和 CO<sub>2</sub> 跑出来；H<sup>+</sup> 和 OH<sup>−</sup> 结合成水。溶液里的离子真的减少了，反应才真正发生。</p></li>
+<li><h4>判断三步走</h4><p>先交换成分写出产物，再查课本附录的溶解性表看有没有沉淀，最后看有没有气体或水。碱和盐、盐和盐反应，<b>反应物还要都可溶</b>。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>能不能发生复分解反应，就看交换后有没有沉淀、气体或水把离子“带走”。三样都没有，倒在一起也只是一杯混合溶液。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>pH 和指示剂</h3><p>pH 的范围通常是 0～14。pH &lt; 7 显酸性，越小酸性越强；pH = 7 显中性；pH &gt; 7 显碱性，越大碱性越强。紫色石蕊溶液<b>遇酸变红、遇碱变蓝</b>；无色酚酞溶液<b>遇酸不变色、遇碱变红</b>。</p></div></div>
+<div class="fact"><div><h3>两种浓酸</h3><p>浓盐酸有<b>挥发性</b>，打开瓶盖瓶口会出现白雾；浓硫酸有<b>吸水性</b>，可作干燥剂，还有强烈的腐蚀性。稀释浓硫酸要<b>酸入水、沿器壁、慢慢倒、不断搅</b>，绝不能把水倒进浓硫酸里。</p></div></div>
+<div class="fact"><div><h3>两种常见的碱</h3><p>氢氧化钠俗称火碱、烧碱、苛性钠，溶于水时放出大量热。它会吸收空气中的水分而<b>潮解</b>，还会与 CO<sub>2</sub> 反应变质：2NaOH + CO<sub>2</sub> = Na<sub>2</sub>CO<sub>3</sub> + H<sub>2</sub>O，所以要<b>密封保存</b>。氢氧化钙俗称熟石灰、消石灰。</p></div></div>
+<div class="fact"><div><h3>常见的盐</h3><p>氯化钠（食盐）、碳酸钠（纯碱、苏打）、碳酸氢钠（小苏打）、碳酸钙（石灰石、大理石的主要成分）都属于盐。碳酸盐遇到稀盐酸会放出 CO<sub>2</sub>，可以用来检验碳酸根。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>能使酚酞变红的溶液一定显碱性，但<b>不一定是碱</b>：纯碱 Na<sub>2</sub>CO<sub>3</sub> 是盐，它的溶液也显碱性。同样，生成盐和水的反应<b>不一定是中和反应</b>，比如 CO<sub>2</sub> + 2NaOH = Na<sub>2</sub>CO<sub>3</sub> + H<sub>2</sub>O，反应物里没有酸。测 pH 时既不能把试纸伸进溶液，也不能先把试纸润湿。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个实验发给同学</h3><p>链接会记住你选的物质、指示剂、加入盐酸的体积和两种溶液。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中化学占 50 分，酸碱盐是推断题和实验探究题的常客</h3>
+<ul>
+<li><b>选择题</b>：根据 pH 判断酸碱性和指示剂颜色；判断几种物质能否在同一溶液中大量共存——本质就是看它们会不会生成沉淀、气体或水。</li>
+<li><b>图像题</b>：中和反应的 pH 曲线和温度曲线。先看起点 pH 判断是“酸加进碱”还是“碱加进酸”，再说出某一点溶液里有哪些溶质。</li>
+<li><b>实验探究题</b>：氢氧化钠有没有变质，就是检验有没有 Na<sub>2</sub>CO<sub>3</sub>（加足量稀盐酸看有没有气泡，或加 CaCl<sub>2</sub> 溶液看有没有白色沉淀）；中和反应后溶质成分的猜想与验证。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（化学 10 分）。用 pH 试纸、胶头滴管时按规范来：瓶塞倒放，滴管垂直悬空，试纸保持干燥。</li>
+</ul>
+<div class="q"><b>典型设问</b>　向滴有酚酞的氢氧化钠溶液中逐滴加入稀盐酸，溶液由红色变为无色。小明据此说“两者恰好完全反应”，对吗？<br><b>怎么想</b>　不一定。酚酞在中性和酸性溶液里<b>都是无色</b>，也可能盐酸已经过量。取少量反应后的溶液，加入锌粒或碳酸钠，有气泡说明盐酸过量；也可以用 pH 试纸测，pH = 7 才说明恰好完全反应。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>化学互动馆 · 第 10 课</p><p>pH 取教材与生活中的近似值；中和曲线按两种溶液浓度相同估算，温度变化只作示意；指示剂颜色按教材口径简化。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

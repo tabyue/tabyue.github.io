@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="在家庭电路图上用试电笔找火线、找出接错的地方；逐个打开家电，看干路电流多大时空气开关会跳闸，再演示一次短路；判断几种情景会不会触电。物理互动馆第 19 课，对应人教版九年级全一册第十九章。">
+<meta property="og:title" content="物理互动馆 · 家庭电路与安全用电">
+<title>家庭电路与安全用电 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="home.js"></script>
+</head>
+<body data-module="home">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 19 课 <span>/</span> 九年级全一册 第十九章</p><h1>家庭电路与安全用电</h1><p class="subtitle">家里插座的电压是 220 V，远远超过对人体安全的电压。会认火线、会看保险、会判断触电，是“生活用电”这一章最实在的本领。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="家庭电路与试电笔">
+<h2>家庭电路：用试电笔找火线</h2>
+<p class="panel-sub">点图上带虚线圈的位置，把试电笔笔尖放上去（也可以用 Tab 键选中再按回车）。记得按下“手接触笔尾金属体”，否则测了也白测。</p>
+<svg id="house" viewBox="0 0 400 260" role="application" aria-label="家庭电路图：进户线、电能表、总开关、保险装置、电灯、开关和三孔插座"></svg>
+<div class="ctl-row"><span>电路</span><div class="chips small" id="wire-chips"></div></div>
+<div class="btn-row"><button type="button" class="ghost-btn" id="sw-btn">闭合灯的开关</button><button type="button" class="ghost-btn" id="finger-btn" aria-pressed="false">手接触笔尾金属体：否</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="试电笔读数">
+<div class="readout-head"><h2>试电笔</h2><span class="badge" id="pen-badge">还没测</span></div>
+<div class="stat-grid">
+<div class="stat wide"><span>笔尖接触的位置</span><strong id="pen-at" style="font-size:18px">—</strong></div>
+<div class="stat"><span>这里和火线相连吗</span><strong id="pen-live" style="font-size:18px">—</strong></div>
+<div class="stat"><span>电灯</span><strong id="lamp-state" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="pen-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="找错误">
+<h2>找错误</h2>
+<p class="panel-sub" id="fault-sub">切换到“找错误”的电路，再点下面你认为<b>接错了</b>的地方。</p>
+<div class="chips small" id="fault-btns"></div>
+<ul class="cond-list" id="fault-list"></ul>
+<p class="note" id="fault-note"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="电流过大">
+<h2>电流过大会怎样</h2>
+<p class="panel-sub">家里的用电器都是并联的，打开得越多，干路电流越大：I = P总 ÷ U。这里的空气开关额定电流按 32 A 举例。</p>
+<svg id="over" viewBox="0 0 400 240" role="img" aria-label="家庭电路中多个用电器并联，干路上有保护装置"></svg>
+<div class="chips small" id="app-btns" style="margin-top:10px"></div>
+<div class="ctl-row"><span>保护装置</span><div class="chips small" id="dev-chips"></div></div>
+<div class="btn-row"><button type="button" class="ghost-btn" id="short-btn">制造短路</button><button type="button" class="big-btn" id="reset-btn">排除故障后复位</button><button type="button" class="ghost-btn" id="off-btn">全部关掉</button></div>
+</section>
+<section class="readout" aria-label="干路读数">
+<div class="readout-head"><h2>干路</h2><span class="badge" id="ov-badge">正常</span></div>
+<div class="stat-grid">
+<div class="stat"><span>打开的用电器总功率</span><strong id="ov-p">—</strong></div>
+<div class="stat"><span>干路电流</span><strong id="ov-i">—</strong></div>
+<div class="stat"><span>32 A 允许的最大总功率</span><strong id="ov-max">—</strong></div>
+<div class="stat"><span>电路状态</span><strong id="ov-state" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="ov-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="会不会触电">
+<h2>会不会触电</h2>
+<p class="panel-sub">先选一个情景，自己判断，再看解释。红色虚线是电流流过的路径。</p>
+<svg id="shock" viewBox="0 0 400 220" role="img" aria-label="触电情景示意图"></svg>
+<div class="chips small" id="sc-chips" style="margin-top:10px"></div>
+<div class="btn-row"><button type="button" class="big-btn" id="guess-yes">我认为：会触电</button><button type="button" class="ghost-btn" id="guess-no">我认为：不会触电</button></div>
+</section>
+<section class="readout" aria-label="判断结果">
+<div class="readout-head"><h2>判断结果</h2><span class="badge" id="sc-score">已判断 0 / 7</span></div>
+<div class="verdict-row">
+<div class="verdict-box" id="v-mine"><span>你的判断</span><strong>—</strong></div>
+<div class="verdict-box" id="v-real"><span>实际情况</span><strong>？</strong></div>
+</div>
+<p class="lead" id="sc-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 火线是“高处”，大地是“低处”</h3><p>把电压想成水位差：火线像高高的水塔，零线和大地像地面，水位差 220 V。人体就像一根水管，只有一头接着“水塔”、另一头接着“地面”，水才会从人身上冲过去。小鸟两只脚站在同一根线上，两只脚都在“水塔顶上”，中间没有落差，就没有水流过。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 火线为什么危险，开关为什么要接在火线上</h3>
+<p class="derive-lead">家庭电路里所有安全规定，都能从“电流必须有一条完整的路”推出来。</p>
+<ol>
+<li><h4>火线、零线和大地</h4><p>火线和零线之间的电压是 220 V。零线在供电的地方和大地相连，所以<b>零线和大地之间电压几乎为零</b>，而火线和大地之间也有 220 V。</p></li>
+<li><h4>什么时候会触电</h4><p>人体是导体。只有人体把<b>火线和大地</b>（或者火线和零线）连起来，电流才会从人身上流过。一般只有不高于 36 V 的电压对人体才是安全的，220 V 远远超过它。</p></li>
+<li><h4>试电笔为什么不电人</h4><p>试电笔里，笔尖、一个阻值很大的电阻、氖管、笔尾金属体串在一起。手按住笔尾，电流经过笔、人体流入大地；因为那个电阻很大，电流<b>小到人感觉不到</b>，却足够让氖管发光。手不碰笔尾，就没有通路，氖管不亮。</p></li>
+<li><h4>开关为什么接在火线上</h4><p>开关接在火线和电灯之间，断开时电灯就和火线断开了，灯座上不再带电，换灯泡才安全。开关接在零线上，灯虽然灭了，灯座却<b>仍然连着火线</b>。</p></li>
+<li><h4>金属外壳为什么要接地</h4><p>用三脚插头和三孔插座，把洗衣机、电冰箱的金属外壳和大地连起来。万一内部漏电，电流沿地线流入大地，人碰外壳时几乎没有电流流过人体，漏电保护器也会迅速切断电源。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>安全用电只有一个核心：不要让人体成为火线和大地（或零线）之间的通路。记住“不接触低压带电体，不靠近高压带电体”。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>家庭电路的组成</h3><p>进户线（火线、零线）→ 电能表 → 总开关 → 保险装置 → 用电器和插座。家庭电路电压是 <b>220 V</b>，各用电器之间、插座之间都是<b>并联</b>的；开关和它控制的电灯串联，并且接在<b>火线</b>一侧。</p></div></div>
+<div class="fact"><div><h3>插座与地线</h3><p>三孔插座“<b>左零右火上接地</b>”。有金属外壳的用电器要用三脚插头，最长的那只脚连着外壳，插入时先接地、拔出时后断开地线。</p></div></div>
+<div class="fact"><div><h3>电流过大的原因与保护</h3><p>原因有两个：<b>短路</b>，或者<b>用电器总功率过大</b>。空气开关在电流过大时自动断开，排除故障后可以复位；保险丝用电阻较大、熔点较低的材料，熔断后要换同规格的，<b>不能用铜丝、铁丝代替</b>。漏电保护器在有电流“漏”到地里（比如有人触电）时迅速切断电路。</p></div></div>
+<div class="fact"><div><h3>触电与急救</h3><p>人站在地上碰到火线，是<b>单线触电</b>；人同时碰到火线和零线，是<b>双线触电</b>。发现有人触电，要<b>先切断电源</b>，或者用干燥的木棍等绝缘体挑开电线，绝不能直接用手去拉。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>用试电笔时手<b>必须接触笔尾金属体</b>，但<b>绝不能碰笔尖金属体</b>。站在干燥木凳上只碰火线不触电，不等于“站在木凳上就安全”：另一只手一碰到零线、墙或别人，马上就会触电。空气开关跳闸后，要先找出是短路还是功率过大，排除故障再复位。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个电路发给同学</h3><p>链接会记住电路接法、开关状态、打开的家电和选中的触电情景。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，安全用电常识和家庭电路作图是本章的基本题型</h3>
+<ul>
+<li><b>选择题</b>：判断哪种做法符合安全用电；试电笔的正确用法；保险丝熔断、空气开关跳闸的原因。</li>
+<li><b>作图题</b>：把电灯、开关、三孔插座正确接入家庭电路：开关接火线，螺口灯泡的螺旋套接零线，插座左零右火上接地。</li>
+<li><b>故障分析</b>：用试电笔检测各处氖管是否发光，判断电路哪里断路或短路。</li>
+<li><b>计算题</b>：由空气开关的额定电流和电压求最多能同时使用多大总功率（P = UI），判断还能不能再接一个大功率用电器。</li>
+</ul>
+<div class="q"><b>典型设问</b>　某家庭电路的空气开关额定电流是 20 A，正在工作的用电器总功率是 2000 W，还能再接入一台 2500 W 的电热水器同时使用吗？<br><b>怎么想</b>　能承受的最大总功率 P = UI = 220 V × 20 A = 4400 W。再接上电热水器，总功率是 2000 W + 2500 W = 4500 W &gt; 4400 W，<b>不能同时使用</b>，否则空气开关会跳闸。也可以算电流：4500 W ÷ 220 V ≈ 20.5 A &gt; 20 A，结论一样。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 19 课</p><p>电路图为示意，空气开关额定电流 32 A、各家电功率都是示例值；真实的空气开关在轻微过载时要过一会儿才断开，这里简化为一超过就跳闸。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

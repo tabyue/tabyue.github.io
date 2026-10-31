@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="转动金刚石、石墨、C60 的结构模型，接上电路看谁能导电；自己挑药品、发生装置和收集方法制取二氧化碳，再验满、检验；把 CO 和 CO2 分别做石蕊、阶梯蜡烛、石灰水、点燃、还原氧化铜实验。化学互动馆第 6 课，对应人教版九年级上册第六单元。">
+<meta property="og:title" content="化学互动馆 · 碳和碳的氧化物">
+<title>碳和碳的氧化物 · 化学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="chem.css">
+<script defer src="common.js"></script>
+<script defer src="carbon.js"></script>
+</head>
+<body data-module="carbon">
+<header class="topbar"><a class="brand" href="index.html" aria-label="化学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.4 9.2A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.8L14 9V3"/><path d="M7.5 15h9"/></svg><span>化学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 6 课 <span>/</span> 九年级上册 第六单元</p><h1>碳和碳的氧化物</h1><p class="subtitle">钻石和铅笔芯都是碳做的；CO 和 CO<sub>2</sub> 只差一个氧原子，一个能灭火，一个会中毒。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="碳单质的结构">
+<h2>同是碳原子，排法不一样</h2>
+<p class="panel-sub">切换三种碳单质，按住图形拖动（或用方向键）转着看；接上电路，试试谁能导电。</p>
+<div class="ctl-row" style="margin-top:0"><span>碳单质</span><div class="chips small" id="allo-chips"></div></div>
+<svg id="allo" viewBox="0 0 400 250" role="application" tabindex="0" aria-label="碳单质结构模型，可拖动或用方向键旋转" style="touch-action:none"></svg>
+<div class="btn-row"><button class="ghost-btn" id="allo-spin" type="button">暂停旋转</button><button class="ghost-btn" id="allo-circuit" type="button" aria-pressed="false">接入电路测导电</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="这种碳单质">
+<div class="readout-head"><h2>这种碳单质</h2><span class="badge" id="allo-badge">石墨</span></div>
+<div class="stat-grid">
+<div class="stat"><span>硬度</span><strong id="allo-hard" style="font-size:19px">—</strong></div>
+<div class="stat"><span>导电性</span><strong id="allo-cond" style="font-size:19px">—</strong></div>
+<div class="stat wide"><span>主要用途</span><strong id="allo-use" style="font-size:16px;line-height:1.5">—</strong></div>
+</div>
+<p class="lead" id="allo-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="三种碳单质对比">
+<h2>三种碳单质对比</h2>
+<p class="panel-sub" style="margin-bottom:4px">当前选中的一行会高亮。</p>
+<table class="compare" id="allo-table"><thead><tr><th>物质</th><th>构成</th><th>硬度</th><th>导电性</th></tr></thead><tbody>
+<tr data-r="diamond"><td>金刚石</td><td>碳原子，立体网状</td><td>天然最硬</td><td>不导电</td></tr>
+<tr data-r="graphite"><td>石墨</td><td>碳原子，层状</td><td>很软，滑腻</td><td>良好</td></tr>
+<tr data-r="c60"><td>C<sub>60</sub></td><td>C<sub>60</sub> 分子，足球状</td><td>—</td><td>很差</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="二氧化碳的实验室制取">
+<h2>组装一套制二氧化碳的装置</h2>
+<p class="panel-sub">依次选药品、发生装置、收集方法，再选收集后要做的事，点“开始制取”。</p>
+<div class="ctl-row" style="margin-top:0"><span>药品</span><div class="chips small" id="rg-chips"></div></div>
+<div class="ctl-row"><span>发生装置</span><div class="chips small" id="gen-chips"></div></div>
+<div class="ctl-row"><span>收集方法</span><div class="chips small" id="col-chips"></div></div>
+<div class="ctl-row"><span>收集后</span><div class="chips small" id="test-chips"></div></div>
+<svg id="rig" viewBox="0 0 400 220" role="img" aria-label="二氧化碳制取装置示意图" style="margin-top:10px"></svg>
+<div class="btn-row"><button class="big-btn" id="rig-run" type="button">开始制取</button><button class="ghost-btn" id="rig-reset" type="button">重来</button></div>
+</section>
+<section class="readout" aria-label="装置检查">
+<div class="readout-head"><h2>这套方案行不行</h2><span class="badge" id="rig-badge">—</span></div>
+<ul class="cond-list" id="rig-checks"></ul>
+<div class="formula" id="rig-eq" style="font-size:14px"></div>
+<p class="lead" id="rig-text" aria-live="polite" style="margin-top:10px"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="一氧化碳和二氧化碳对比实验">
+<h2>CO 和 CO<sub>2</sub>：只差一个氧原子</h2>
+<p class="panel-sub">先选气体，再选实验，点“开始实验”看现象。两种气体换着做，对比最清楚。</p>
+<div class="ctl-row" style="margin-top:0"><span>气体</span><div class="chips small" id="gas-chips"></div></div>
+<div class="ctl-row"><span>实验</span><div class="chips small" id="cox-chips"></div></div>
+<svg id="cox" viewBox="0 0 400 230" role="img" aria-label="气体性质实验示意图" style="margin-top:10px"></svg>
+<div class="btn-row"><button class="big-btn" id="cox-run" type="button">开始实验</button><button class="ghost-btn" id="cox-reset" type="button">重来</button></div>
+</section>
+<section class="readout" aria-label="实验现象">
+<div class="readout-head"><h2>看到了什么</h2><span class="badge" id="cox-badge">CO₂</span></div>
+<div class="stat-grid"><div class="stat wide"><span>现象</span><strong id="cox-phen" style="font-size:17px;line-height:1.5">—</strong></div></div>
+<div class="formula" id="cox-eq" style="font-size:14px"></div>
+<p class="lead" id="cox-text" aria-live="polite" style="margin-top:10px"></p>
+<aside class="analogy"><h3><i>打个比方</i> 碳原子有两只“手”</h3><p>把碳原子想成一个有两只手、想牵氧原子的小人。CO<sub>2</sub> 两只手都牵满了氧，再也抓不住别的氧，所以它<b>不能燃烧</b>，也夺不走氧化铜里的氧。CO 只牵了一个，还空着一只手，见到氧就想抓：在空气里抓氧气，就是燃烧；碰到氧化铜，就把里面的氧抢过来，这就是<b>还原性</b>。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 二氧化碳为什么这样制、这样收</h3>
+<p class="derive-lead">实验室制气体有一套固定的思路。想通 CO<sub>2</sub> 这一个，制别的气体也会了。</p>
+<ol>
+<li><h4>先挑药品：快慢合适、气体要纯</h4><p>大理石（或石灰石）和稀盐酸，原料便宜，反应不快不慢。换成稀硫酸，生成的硫酸钙微溶于水，会裹住大理石让反应停下；换成浓盐酸，它挥发出的氯化氢混进气体里；换成碳酸钠粉末，反应太猛，来不及收集。</p></li>
+<li><h4>看状态和条件，定发生装置</h4><p>反应物是<b>固体 + 液体</b>，<b>常温</b>就能反应，所以选固液常温型（锥形瓶 + 长颈漏斗）。加热高锰酸钾制氧气是“固体 + 加热”，才用试管加酒精灯那套。</p></li>
+<li><h4>长颈漏斗要插到液面以下</h4><p>漏斗下端伸进液体里，液体把它“封”住，生成的气体就只能从导管走，不会从漏斗口跑掉。这叫<b>液封</b>。</p></li>
+<li><h4>看密度和溶解性，定收集方法</h4><p>CO<sub>2</sub> 的密度比空气大，会沉在瓶底，所以用<b>向上排空气法</b>，导管要伸到瓶底附近；它能溶于水，所以一般不用排水法。</p></li>
+<li><h4>检验和验满是两回事</h4><p><b>检验</b>是确认“是不是 CO<sub>2</sub>”：通入澄清石灰水，变浑浊就是。<b>验满</b>是确认“满没满”：燃着的木条放在<b>瓶口</b>，熄灭就满了。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>选装置只问四个问题：反应物什么状态？要不要加热？气体比空气轻还是重？能不能溶于水？答案一出来，装置就定了。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>碳单质的多样性</h3><p>金刚石、石墨、C<sub>60</sub> 都由碳元素组成，是三种不同的单质。它们物理性质差别很大，是因为<b>碳原子的排列方式不同</b>；化学性质相似，充分燃烧都生成 CO<sub>2</sub>。石墨在一定条件下变成金刚石，是化学变化。</p></div></div>
+<div class="fact"><div><h3>碳的化学性质</h3><p>常温下化学性质不活泼，所以用墨写的字画能保存很久。可燃性：氧气充足时 <span data-eq="C + O2 =点燃= CO2"></span>，不充足时 <span data-eq="2C + O2 =点燃= 2CO"></span>。还原性：<span data-eq="C + 2CuO =高温= 2Cu + CO2↑"></span>。</p></div></div>
+<div class="fact"><div><h3>二氧化碳</h3><p>密度比空气大，能溶于水；不能燃烧、也不支持燃烧，可用来灭火；和水反应生成碳酸；能使澄清石灰水变浑浊。固体叫干冰，升华吸热，可用于人工降雨。它是光合作用的原料，太多会加剧温室效应。</p></div></div>
+<div class="fact"><div><h3>一氧化碳</h3><p>难溶于水，密度比空气略小。能燃烧，火焰呈蓝色，可作燃料；有还原性，可用于冶炼金属；<b>有毒</b>，极易与血液中的血红蛋白结合，使血红蛋白不能很好地与氧气结合。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>验满时燃着的木条要放在集气瓶<b>口</b>，不能伸进瓶里：瓶里只要有一点 CO<sub>2</sub>，木条伸进去就可能熄灭，说明不了满没满。CO<sub>2</sub> 通入紫色石蕊溶液变红，使石蕊变红的是生成的<b>碳酸</b>，不是 CO<sub>2</sub> 本身。CO 难溶于水，在煤炉边放一盆水<b>防不了</b>煤气中毒。制 CO<sub>2</sub> 不用稀硫酸、不用浓盐酸、不用碳酸钠粉末，三个理由要分清。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这套装置发给同学</h3><p>链接会记住你选的碳单质、制取装置和对比实验。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中化学占 50 分，CO<sub>2</sub> 的制取和性质是实验题的常客</h3>
+<ul>
+<li><b>选择题</b>：把碳单质的性质和用途对上号，比如“石墨作电极”对应导电性、“金刚石裁玻璃”对应硬度大；或者比较 CO 和 CO<sub>2</sub> 的性质。</li>
+<li><b>实验题</b>：给出一排仪器，选发生装置和收集装置并说出理由；写出制取 CO<sub>2</sub> 的化学方程式；说出长颈漏斗下端为什么要伸到液面以下。</li>
+<li><b>探究题</b>：CO 还原氧化铜，问现象、先通气还是先加热、尾气怎样处理。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（化学 10 分），组装仪器、检查装置气密性、取用块状固体和液体，这些基本操作要亲手练熟。</li>
+</ul>
+<div class="q"><b>典型设问</b>　用向上排空气法收集 CO<sub>2</sub>，怎样证明已经集满？为什么不能把燃着的木条伸进瓶里？<br><b>怎么想</b>　把燃着的木条放在<b>集气瓶口</b>，木条熄灭就说明满了。CO<sub>2</sub> 比空气重，是从瓶底往上“堆”的，瓶口最后才有 CO<sub>2</sub>；木条伸进瓶里，遇到下面的 CO<sub>2</sub> 就灭了，这时瓶子可能还没满。<b>验满看瓶口，检验用石灰水</b>，答题时别把两件事写混。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>化学互动馆 · 第 6 课</p><p>结构模型只画了晶体的一小块，原子间距按比例示意；装置图为示意，未画铁架台等支撑仪器的全部细节。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="调两辆车的速度、换参照物，看 s–t 图象怎样随运动画出来；用刻度尺读长度练估读；让小车滑下斜面，测前半程、后半程和全程的平均速度。物理互动馆第 1 课，对应人教版八年级上册第一章。">
+<meta property="og:title" content="物理互动馆 · 机械运动">
+<title>机械运动 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="motion.js"></script>
+</head>
+<body data-module="motion">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 1 课 <span>/</span> 八年级上册 第一章</p><h1>机械运动</h1><p class="subtitle">坐在地铁里，你说自己没动，站台上的人说你跑得飞快——谁说得对？两个人都对，关键看拿什么当参照。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="两辆车的运动">
+<h2>两辆车赛跑：速度和 s–t 图象</h2>
+<p class="panel-sub">调好甲、乙两车的速度，按“开始”。上面看车怎么跑，下面同步画出路程–时间图象。</p>
+<svg id="road" viewBox="0 0 400 112" role="img" aria-label="公路上的甲车和乙车"></svg>
+<svg id="st" viewBox="0 0 400 200" role="img" aria-label="两车的路程-时间图象" style="margin-top:6px"></svg>
+<div class="control"><div class="control-heading"><label for="va-in">甲车速度</label><output id="va-out">5 m/s</output></div><input id="va-in" type="range" min="1" max="10" step="0.5" value="5"><div class="ruler"><span>1 m/s</span><span>5.5 m/s</span><span>10 m/s</span></div></div>
+<div class="control"><div class="control-heading"><label for="vb-in">乙车速度</label><output id="vb-out">8 m/s</output></div><input id="vb-in" type="range" min="0" max="10" step="0.5" value="8"><div class="ruler"><span>0</span><span>5 m/s</span><span>10 m/s</span></div></div>
+<div class="control"><div class="control-heading"><label for="t-in">时间 t</label><output id="t-out">0 s</output></div><input id="t-in" type="range" min="0" max="10" step="0.1" value="0"><div class="ruler"><span>0</span><span>5 s</span><span>10 s</span></div></div>
+<div class="ctl-row"><span>参照物</span><div class="chips small" id="ref-chips"></div></div>
+<div class="btn-row"><button class="big-btn" id="car-play" type="button">开始</button><button class="ghost-btn" id="car-reset" type="button">重置</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="两车读数">
+<div class="readout-head"><h2>此刻的读数</h2><span class="badge" id="car-badge">乙车快</span></div>
+<div class="stat-grid">
+<div class="stat"><span>甲车速度</span><strong id="va-stat">—</strong></div>
+<div class="stat"><span>乙车速度</span><strong id="vb-stat">—</strong></div>
+<div class="stat"><span>甲车走过的路程</span><strong id="sa-stat">—</strong></div>
+<div class="stat"><span>乙车走过的路程</span><strong id="sb-stat">—</strong></div>
+<div class="stat wide"><span>换个参照物看乙车</span><strong id="rel-stat" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="car-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="常见速度">
+<h2>生活里的速度</h2>
+<p class="panel-sub" style="margin-bottom:4px">1 m/s = 3.6 km/h。和你调的车速比一比。</p>
+<table class="compare" id="speed-table"><thead><tr><th>物体</th><th>m/s</th><th>km/h</th></tr></thead><tbody>
+<tr data-r="walk"><td>人步行</td><td class="n">约 1.1</td><td class="n">约 4</td></tr>
+<tr data-r="bike"><td>骑自行车</td><td class="n">约 5</td><td class="n">约 18</td></tr>
+<tr data-r="car"><td>高速公路上的小汽车</td><td class="n">约 33</td><td class="n">约 120</td></tr>
+<tr data-r="hsr"><td>高铁（时速 350 km）</td><td class="n">约 97</td><td class="n">350</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="刻度尺读数">
+<h2>刻度尺读数：估读到分度值下一位</h2>
+<p class="panel-sub">物体的左端没有对着 0 刻度。下方放大镜帮你看清右端，再用滑块写下物体的长度。</p>
+<svg id="ruler" viewBox="0 0 400 232" role="img" aria-label="刻度尺测量物体长度"></svg>
+<div class="ctl-row"><span>分度值</span><div class="chips small" id="div-chips"></div></div>
+<div class="ctl-row"><span>记录到</span><div class="chips small" id="prec-chips"></div></div>
+<div class="control" style="margin-top:12px"><div class="control-heading"><label for="read-in">你记录的物体长度</label><output id="read-out">0.00 cm</output></div><input id="read-in" type="range" min="0" max="10" step="0.01" value="0"><div class="ruler"><span>0</span><span>5 cm</span><span>10 cm</span></div></div>
+<div class="btn-row"><button class="ghost-btn" id="read-minus" type="button" aria-label="读数减小一格">− 一点</button><button class="ghost-btn" id="read-plus" type="button" aria-label="读数增大一格">+ 一点</button><button class="big-btn" id="ruler-check" type="button">核对读数</button><button class="ghost-btn" id="ruler-new" type="button">换一个物体</button></div>
+</section>
+<section class="readout" aria-label="读数核对">
+<div class="readout-head"><h2>读数核对</h2><span class="badge" id="ruler-badge">待核对</span></div>
+<div class="stat-grid">
+<div class="stat"><span>分度值</span><strong id="ruler-div">—</strong></div>
+<div class="stat"><span>起点读数</span><strong id="ruler-start">—</strong></div>
+<div class="stat"><span>你记录的长度</span><strong id="ruler-you">—</strong></div>
+<div class="stat"><span>参考答案</span><strong id="ruler-ans">—</strong></div>
+</div>
+<p class="lead" id="ruler-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="测量平均速度">
+<h2>小车下斜面：测平均速度</h2>
+<p class="panel-sub">金属片放在哪里，小车就撞到哪里停表。先测前半程，再测全程，后半程的时间用减法算出来。</p>
+<svg id="slope" viewBox="0 0 400 220" role="img" aria-label="斜面、小车、金属片和停表"></svg>
+<div class="ctl-row"><span>斜面坡度</span><div class="chips small" id="slope-chips"></div></div>
+<div class="ctl-row"><span>金属片放在</span><div class="chips small" id="stop-chips"></div></div>
+<div class="btn-row"><button class="big-btn" id="slope-go" type="button">释放小车</button><button class="ghost-btn" id="slope-reset" type="button">清空记录</button></div>
+</section>
+<section class="readout" aria-label="平均速度记录">
+<div class="readout-head"><h2>实验记录</h2><span class="badge" id="slope-badge">还没测</span></div>
+<div class="stat-grid"><div class="stat"><span>停表读数</span><strong id="slope-t">0.00<small>s</small></strong></div><div class="stat"><span>斜面全长</span><strong>80<small>cm</small></strong></div></div>
+<table class="compare" id="slope-table"><thead><tr><th>路段</th><th>路程</th><th>时间</th><th>平均速度</th></tr></thead><tbody>
+<tr data-r="front"><td>前半程</td><td class="n">40 cm</td><td class="n" id="ft">—</td><td class="n" id="fv">—</td></tr>
+<tr data-r="back"><td>后半程</td><td class="n">40 cm</td><td class="n" id="bt">—</td><td class="n" id="bv">—</td></tr>
+<tr data-r="all"><td>全程</td><td class="n">80 cm</td><td class="n" id="at">—</td><td class="n" id="av">—</td></tr>
+</tbody></table>
+<p class="lead" id="slope-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 平均速度像一趟地铁</h3><p>深圳地铁在两站之间跑得飞快，可是进站要减速、到站要停车开门、出站又要慢慢加速。算“平均速度”时，这些快的、慢的、停着的时间全都算进去：<b>总路程 ÷ 总时间</b>。所以它只能说明“整体上有多快”，不能说明某一刻有多快。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么平均速度不能“把速度加起来除以 2”</h3>
+<p class="derive-lead">从“怎么比快慢”出发，一步步走到平均速度。</p>
+<ol>
+<li><h4>比快慢有两种办法</h4><p>百米赛跑是<b>路程相同比时间</b>，用时少的快；看谁 10 秒跑得远是<b>时间相同比路程</b>，跑得远的快。路程和时间都不同时，就要算“每秒走多远”。</p></li>
+<li><h4>于是有了速度</h4><p>路程除以时间，就是单位时间内通过的路程：<b>v = s / t</b>。国际单位是 m/s，生活中常用 km/h。1 km/h = 1000 m ÷ 3600 s，所以 <b>1 m/s = 3.6 km/h</b>。</p></li>
+<li><h4>图象越陡越快</h4><p>匀速直线运动的 s–t 图象是一条过原点的直线。同样过 1 s，快的车多走的路程多，线就往上翘得更厉害，所以<b>直线越陡，速度越大</b>；画成水平线说明路程不变，物体静止。</p></li>
+<li><h4>变速运动只能算平均</h4><p>小车下斜面越走越快，每一刻速度都不同。我们只能问“这一段整体有多快”，就用这一段的<b>总路程除以总时间</b>，叫平均速度。说平均速度时必须讲清是哪一段路程或哪一段时间。</p></li>
+<li><h4>慢的那段“占的时间多”</h4><p>前一半路程 4 m/s、后一半路程 6 m/s，设每一半都是 12 m：前一半用 3 s，后一半用 2 s，总共 24 m 用 5 s，平均 <b>4.8 m/s</b>，不是 5 m/s。慢的那一段花的时间更长，把平均速度往下拉了。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>求平均速度只有一条路：先分别求出总路程和总时间，再相除。千万别直接把几段速度加起来取平均。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>长度和时间的测量</h3><p>长度的国际单位是米（m），时间是秒（s）。用刻度尺先看<b>量程和分度值</b>（相邻两条刻度线代表的长度），读数要<b>估读到分度值的下一位</b>，并写上单位。物体左端没对准 0 刻度时，长度 = 末端读数 − 起点读数。</p></div></div>
+<div class="fact"><div><h3>误差不是错误</h3><p>测量值和真实值之间总有差别，叫<b>误差</b>，只能减小、不能消除，常用<b>多次测量求平均值</b>来减小。读错刻度、不按规则操作造成的是<b>错误</b>，可以避免。</p></div></div>
+<div class="fact"><div><h3>运动和静止是相对的</h3><p>物体位置随时间的变化叫机械运动。判断动没动，先选一个当作“不动”的标准，叫<b>参照物</b>。同一个物体，选的参照物不同，结论可能不同。并排同速行驶的两辆车，以对方为参照物都是静止的。</p></div></div>
+<div class="fact"><div><h3>速度与平均速度</h3><p><b>v = s / t</b>，1 m/s = 3.6 km/h。快慢不变、沿直线的运动叫匀速直线运动。变速运动用<b>平均速度</b>粗略描述，等于总路程除以总时间。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>用分度值 1 mm 的尺测得 2.50 cm，末尾的 <b>0 不能省</b>：它是估读出来的，写成 2.5 cm 就变成只精确到厘米了。另外，测后半程的时间<b>不能</b>让小车从中点由静止释放，因为小车真实经过中点时已经有速度了，应该用“全程时间 − 前半程时间”。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这场赛车发给同学</h3><p>链接会记住两车速度、参照物和刻度尺上的物体。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，速度计算和测平均速度实验是常见考点</h3>
+<ul>
+<li><b>估测题</b>：判断哪个数据符合实际，比如中学生身高约 1.6 m、课桌高约 80 cm、人步行速度约 1.1 m/s。平时多用自己的身体当“尺子”。</li>
+<li><b>读数题</b>：刻度尺、停表读数。刻度尺要估读、要减起点；停表先读小盘（分钟）再读大盘（秒）。</li>
+<li><b>参照物与图象</b>：给出一句话判断参照物；或者给出 s–t、v–t 图象，判断谁快、是否匀速、某时刻相距多远。</li>
+<li><b>实验题</b>：测量小车的平均速度。常问斜面坡度为什么要小（便于测时间）、金属片的作用（让小车停住、方便听到撞击声计时），以及前、后半程和全程平均速度的大小关系。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（物理 10 分），正确使用刻度尺和停表是很多物理实验的基本功。</li>
+</ul>
+<div class="q"><b>典型设问</b>　一辆汽车以 72 km/h 的速度匀速行驶 10 min，通过的路程是多少米？<br><b>怎么想</b>　先统一单位：72 km/h = 72 ÷ 3.6 m/s = 20 m/s，10 min = 600 s。再代公式 s = vt = 20 m/s × 600 s = <b>12000 m</b>（即 12 km）。也可以全用 km 和 h：10 min = 1/6 h，s = 72 km/h × 1/6 h = 12 km。<b>单位先统一，再代入计算</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 1 课</p><p>两车按匀速直线运动计算；斜面上的小车按从静止开始匀加速下滑计算，数据是模拟值。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

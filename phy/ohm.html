@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="换 5 Ω、10 Ω、20 Ω 的定值电阻，移动滑动变阻器读出电压和电流，在 I–U 图上描点连线；用伏安法测电阻求平均值；调 R₁、R₂ 看串联分压、并联分流。物理互动馆第 17 课，对应人教版九年级全一册第十七章。">
+<meta property="og:title" content="物理互动馆 · 欧姆定律">
+<title>欧姆定律 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="ohm.js"></script>
+</head>
+<body data-module="ohm">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 17 课 <span>/</span> 九年级全一册 第十七章</p><h1>欧姆定律</h1><p class="subtitle">电压是推着电流走的“劲儿”，电阻是挡在路上的“坎儿”。电流到底听谁的？换电阻、拖滑片，自己测出来。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="探究电流与电压、电阻的关系">
+<h2>探究电流与电压、电阻的关系</h2>
+<p class="panel-sub">电源电压 6 V。选一个定值电阻 R，拖动滑动变阻器改变 R 两端的电压，按“记录这一点”把数据描到右边的 I–U 图上。</p>
+<svg id="ohm-circ" viewBox="0 0 400 230" role="img" aria-label="电路图：电源、开关、定值电阻、滑动变阻器、电流表和电压表"></svg>
+<div class="ctl-row"><span>定值电阻 R</span><div class="chips small" id="r-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="rp-in">滑动变阻器接入的电阻 R′</label><output id="rp-out">20 Ω</output></div><input id="rp-in" type="range" min="0" max="50" step="0.5" value="20"><div class="ruler"><span>0 Ω</span><span>25 Ω</span><span>50 Ω</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="rec-btn">记录这一点</button><button type="button" class="ghost-btn" id="clear-btn">清空图像</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="电表读数">
+<div class="readout-head"><h2>电表读数</h2><span class="badge" id="ohm-badge">R = 10 Ω</span></div>
+<div class="stat-grid">
+<div class="stat"><span>电压表：R 两端电压 U</span><strong id="u-read">—</strong></div>
+<div class="stat"><span>电流表：电流 I</span><strong id="i-read">—</strong></div>
+<div class="stat"><span>U ÷ I</span><strong id="ui-read">—</strong></div>
+<div class="stat"><span>变阻器分到的电压</span><strong id="up-read">—</strong></div>
+</div>
+<p class="lead" id="ohm-text" aria-live="polite"></p>
+</section>
+<section class="card panel figure" aria-label="I–U 图像">
+<h2>I–U 图像</h2>
+<p class="panel-sub" style="margin-bottom:4px">每种电阻一种颜色，空心圈是现在的读数。描到两个点以上，就连成一条过原点的直线。</p>
+<svg id="iu" viewBox="0 0 400 230" role="img" aria-label="电流随电压变化的图像"></svg>
+<p class="note" id="iu-note"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="伏安法测电阻">
+<h2>伏安法测电阻</h2>
+<p class="panel-sub">电源电压 3 V，变阻器最大 20 Ω。测一个不知道阻值的电阻 Rx，或者换成额定电压 2.5 V 的小灯泡。移动滑片，记下三组数据。</p>
+<svg id="va" viewBox="0 0 400 230" role="img" aria-label="伏安法测电阻电路图"></svg>
+<div class="ctl-row"><span>被测元件</span><div class="chips small" id="va-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="rpv-in">滑动变阻器接入的电阻</label><output id="rpv-out">10 Ω</output></div><input id="rpv-in" type="range" min="0" max="20" step="0.5" value="10"><div class="ruler"><span>0 Ω</span><span>10 Ω</span><span>20 Ω</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="va-rec">记录一组</button><button type="button" class="ghost-btn" id="va-clear">清空表格</button></div>
+</section>
+<section class="readout" aria-label="实验记录">
+<div class="readout-head"><h2>实验记录</h2><span class="badge" id="va-badge">测定值电阻</span></div>
+<div class="stat-grid">
+<div class="stat"><span>电压表示数</span><strong id="va-u">—</strong></div>
+<div class="stat"><span>电流表示数</span><strong id="va-i">—</strong></div>
+<div class="stat wide"><span>这一次算出 R = U ÷ I</span><strong id="va-r">—</strong></div>
+</div>
+<table class="compare"><thead><tr><th>次数</th><th>U / V</th><th>I / A</th><th>R / Ω</th></tr></thead><tbody id="va-body"></tbody></table>
+<p class="lead" id="va-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="串联与并联">
+<h2>串联分压，并联分流</h2>
+<p class="panel-sub">调 R₁、R₂ 和电源电压，切换串联或并联。下面的色条显示电压（串联）或电流（并联）是怎么分的。</p>
+<svg id="sp" viewBox="0 0 400 220" role="img" aria-label="两个电阻串联或并联的电路图"></svg>
+<div class="ctl-row"><span>连接方式</span><div class="chips small" id="sp-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="r1-in">R₁</label><output id="r1-out">10 Ω</output></div><input id="r1-in" type="range" min="1" max="30" step="1" value="10"></div>
+<div class="control"><div class="control-heading"><label for="r2-in">R₂</label><output id="r2-out">20 Ω</output></div><input id="r2-in" type="range" min="1" max="30" step="1" value="20"></div>
+<div class="control"><div class="control-heading"><label for="us-in">电源电压 U</label><output id="us-out">6 V</output></div><input id="us-in" type="range" min="1.5" max="12" step="0.5" value="6"></div>
+</section>
+<section class="readout" aria-label="串并联读数">
+<div class="readout-head"><h2>算一算</h2><span class="badge" id="sp-badge">串联</span></div>
+<div class="stat-grid">
+<div class="stat"><span>总电阻 R</span><strong id="sp-r">—</strong></div>
+<div class="stat"><span>干路电流 I</span><strong id="sp-i">—</strong></div>
+<div class="stat"><span>R₁ 两端电压 U₁</span><strong id="sp-u1">—</strong></div>
+<div class="stat"><span>R₂ 两端电压 U₂</span><strong id="sp-u2">—</strong></div>
+<div class="stat"><span>通过 R₁ 的电流 I₁</span><strong id="sp-i1">—</strong></div>
+<div class="stat"><span>通过 R₂ 的电流 I₂</span><strong id="sp-i2">—</strong></div>
+</div>
+<p class="lead" id="sp-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 电阻像水管里的窄口</h3><p>串联就像把两段细水管<b>接成更长的一段</b>，水要连闯两道窄口，更难流，所以总电阻变大。并联就像在旁边<b>再开一条水管</b>，水多了一条路可走，总电阻变小——哪怕新开的那条很细，也比只有一条路好走。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 串联电阻为什么变大，并联为什么变小</h3>
+<p class="derive-lead">不用死背公式。只用欧姆定律，再加上“串联电流相等、并联电压相等”两条规律，就能自己推出来。</p>
+<ol>
+<li><h4>串联：电流只有一条路</h4><p>同一股电流依次流过 R₁ 和 R₂，所以 <b>I₁ = I₂ = I</b>；电源电压被分成两份，<b>U = U₁ + U₂</b>。</p></li>
+<li><h4>代入欧姆定律</h4><p>U₁ = IR₁，U₂ = IR₂，所以 U = I(R₁ + R₂)。把两个电阻看成一个整体，总电阻 <b>R = U ÷ I = R₁ + R₂</b>。相当于导体变长了，电阻当然变大。</p></li>
+<li><h4>谁电阻大，谁分的电压多</h4><p>U₁ : U₂ = IR₁ : IR₂ = <b>R₁ : R₂</b>。所以把滑动变阻器调大，它分走的电压变多，定值电阻两端的电压就变小。</p></li>
+<li><h4>并联：每条支路电压一样</h4><p>两条支路都直接接在电源两端，<b>U₁ = U₂ = U</b>；干路电流在分岔处分成两股，<b>I = I₁ + I₂</b>。</p></li>
+<li><h4>再代入一次</h4><p>U/R = U/R₁ + U/R₂，两边约掉 U，得到 <b>1/R = 1/R₁ + 1/R₂</b>。相当于导体变粗了，总电阻比任何一个分电阻都小；而且 I₁ : I₂ = R₂ : R₁，电阻小的那条支路电流大。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>“串联分压、并联分流”不是两条新规律，而是欧姆定律分别用在“电流相等”和“电压相等”两种电路里的结果。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>欧姆定律</h3><p>导体中的电流，跟导体两端的电压成正比，跟导体的电阻成反比：<b>I = U/R</b>。U 用伏（V）、R 用欧（Ω）、I 用安（A）；三个量必须是<b>同一段导体、同一时刻</b>的。</p></div></div>
+<div class="fact"><div><h3>电阻是导体自己的性质</h3><p>电阻由导体的材料、长度、横截面积和温度决定，跟它两端有没有电压、有没有电流无关。<b>R = U/I</b> 只是用来计算或测量电阻的办法。</p></div></div>
+<div class="fact"><div><h3>伏安法测电阻</h3><p>原理是 R = U/I：电压表测电压，电流表测电流。连接电路时<b>开关断开</b>，滑片移到<b>阻值最大处</b>。滑动变阻器既保护电路，又能改变电压做多次测量，求平均值减小误差。</p></div></div>
+<div class="fact"><div><h3>串联与并联</h3><p>串联：电流处处相等，<b>R = R₁ + R₂</b>，U₁ : U₂ = R₁ : R₂。并联：各支路电压相等，<b>1/R = 1/R₁ + 1/R₂</b>，I₁ : I₂ = R₂ : R₁，总电阻比最小的那个分电阻还小。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>不能说“电阻跟电压成正比、跟电流成反比”，电阻不归电压和电流管。探究电流与电阻的关系时，换上更大的电阻后，它分到的电压会<b>变大</b>，必须把滑动变阻器的阻值<b>调大</b>，让电压表示数回到原来的值，才算控制住了变量。测小灯泡电阻时，三次结果不一样是因为灯丝温度变了，<b>不能求平均</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个电路发给同学</h3><p>链接会记住你选的电阻、滑片位置和串并联设置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，欧姆定律是电学计算和电学实验的核心</h3>
+<ul>
+<li><b>选择题</b>：动态电路——滑片移动时电流表、电压表示数怎么变；或者看 I–U 图像，判断哪个电阻大（直线越平，电阻越大）。</li>
+<li><b>实验题</b>：探究电流与电压、电阻的关系，常问控制变量、滑动变阻器的作用、换电阻后滑片往哪边移；伏安法测电阻，常问连线、读数、为什么求平均、小灯泡电阻为什么不求平均。</li>
+<li><b>计算题</b>：在串联、并联电路里用 I = U/R 求电流、电压、电阻，关键是先认清“谁和谁串联、谁和谁并联”。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（物理 10 分），用到电流表、电压表时要选对量程，让电流“正进负出”。</li>
+</ul>
+<div class="q"><b>典型设问</b>　探究电流与电阻的关系，电源电压 6 V。先接 5 Ω 电阻，调滑片使电压表示数为 2 V；换成 10 Ω 后，滑动变阻器接入的阻值应调大还是调小？调好后它接入多少欧？<br><b>怎么想</b>　换大电阻后，它分到的电压会超过 2 V，要让变阻器多分一些电压，所以接入阻值要<b>调大</b>。电压保持 2 V 时 I = 2 V ÷ 10 Ω = 0.2 A，变阻器分到 6 V − 2 V = 4 V，接入 R′ = 4 V ÷ 0.2 A = <b>20 Ω</b>。可以在上面的电路里换 10 Ω、把 R′ 调到 20 Ω 验证。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 17 课</p><p>电表按理想电表处理（电流表电阻为零，电压表电阻无穷大）；伏安法读数按电压表精确到 0.1 V、电流表精确到 0.01 A 取整，小灯泡电阻按随电压升高而增大的简化模型计算。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

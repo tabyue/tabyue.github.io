@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="在光具座上拖动蜡烛，看凸透镜成的像怎样从倒立缩小变成倒立放大、再变成正立放大的虚像；比较凸透镜和凹透镜对光的作用。物理互动馆第 5 课，对应人教版八年级上册第五章。">
+<meta property="og:title" content="物理互动馆 · 透镜及其应用">
+<title>透镜及其应用 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="lens.js"></script>
+</head>
+<body data-module="lens">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 5 课 <span>/</span> 八年级上册 第五章</p><h1>透镜及其应用</h1><p class="subtitle">照相机、投影仪、放大镜用的都是凸透镜，区别只在于蜡烛放在哪儿。拖一拖，规律自己就跳出来了。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="凸透镜成像">
+<h2>光具座：凸透镜成像</h2>
+<p class="panel-sub">左右拖动蜡烛（或用下面的滑块），三条特殊光线会实时画出像在哪里。</p>
+<svg id="bench" viewBox="0 0 400 250" role="application" aria-label="光具座，可拖动蜡烛改变物距"></svg>
+<div class="control"><div class="control-heading"><label for="u-in">物距 u（蜡烛到透镜）</label><output id="u-out">30 cm</output></div><input id="u-in" type="range" min="4" max="58" step="0.5" value="30"><div class="ruler"><span>4 cm</span><span>31 cm</span><span>58 cm</span></div></div>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">焦距 f</span><div class="chips small" id="f-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="成像结果">
+<div class="readout-head"><h2>光屏上看到的</h2><span class="badge" id="use-badge">照相机</span></div>
+<div class="stat-grid">
+<div class="stat"><span>像距 v</span><strong id="v-out">—</strong></div>
+<div class="stat"><span>像的大小</span><strong id="m-out">—</strong></div>
+<div class="stat wide"><span>像的性质</span><strong id="kind-out" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="lens-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="成像规律表">
+<h2>成像规律一览</h2>
+<p class="panel-sub" style="margin-bottom:4px">当前所在的一行会高亮。</p>
+<table class="compare" id="rule-table"><thead><tr><th>物距</th><th>像</th><th>像距</th><th>应用</th></tr></thead><tbody>
+<tr data-r="far"><td>u &gt; 2f</td><td>倒立缩小实像</td><td>f &lt; v &lt; 2f</td><td>照相机</td></tr>
+<tr data-r="eq"><td>u = 2f</td><td>倒立等大实像</td><td>v = 2f</td><td>测焦距</td></tr>
+<tr data-r="mid"><td>f &lt; u &lt; 2f</td><td>倒立放大实像</td><td>v &gt; 2f</td><td>投影仪</td></tr>
+<tr data-r="f"><td>u = f</td><td>不成像</td><td>—</td><td>得到平行光</td></tr>
+<tr data-r="near"><td>u &lt; f</td><td>正立放大虚像</td><td>与物同侧</td><td>放大镜</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="透镜对光的作用">
+<h2>凸透镜会聚，凹透镜发散</h2>
+<p class="panel-sub">一束平行光射向透镜。换透镜、改厚薄，看光线怎么走。</p>
+<svg id="beam" viewBox="0 0 400 200" role="img" aria-label="平行光通过透镜"></svg>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:6px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">透镜</span><div class="chips small" id="type-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="thick-in">镜片中间和边缘的厚度差</label><output id="thick-out">中等</output></div><input id="thick-in" type="range" min="1" max="5" step="1" value="3"><div class="ruler"><span>很薄</span><span></span><span>很厚</span></div></div>
+</section>
+<section class="readout" aria-label="透镜读数">
+<div class="readout-head"><h2>这块透镜</h2><span class="badge" id="beam-badge">会聚</span></div>
+<div class="stat-grid"><div class="stat"><span>焦距</span><strong id="beam-f">—</strong></div><div class="stat"><span>焦点</span><strong id="beam-kind" style="font-size:18px">—</strong></div></div>
+<p class="lead" id="beam-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 透镜像一群排队拐弯的人</h3><p>光从空气进入玻璃再出来都会拐弯，拐向镜片<b>厚的那一边</b>。凸透镜中间厚，所以光都往中间拐，聚到一点；凹透镜边上厚，光往外拐，散开了。镜片越“鼓”，拐得越狠，焦距越短。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么 2f 和 f 是两条分界线</h3>
+<p class="derive-lead">规律表不用死背。只用两条最好画的光线，就能自己推出来。</p>
+<ol>
+<li><h4>选两条“不用算”的光线</h4><p>从烛焰顶端发出的光有无数条，但有两条走向最简单：<b>平行于主光轴</b>的光，折射后一定经过另一侧焦点；<b>经过光心</b>的光，方向不变直着穿过去。两条线的交点，就是烛焰顶端的像。</p></li>
+<li><h4>过光心那条线决定了大小</h4><p>过光心的光线把物体和像连成两个“对顶”的三角形，形状一样。所以 <b>像高 ÷ 物高 = 像距 ÷ 物距</b>。像距比物距小，像就缩小；像距比物距大，像就放大。</p></li>
+<li><h4>u = 2f 时左右对称</h4><p>把蜡烛放在 2f 处，整张光路图左右翻过来和原来一模一样，于是像也在另一侧 2f 处，<b>v = u，像和物一样大</b>。比 2f 远，像就跑到 f 和 2f 之间、变小；比 2f 近，像就跑到 2f 以外、变大。</p></li>
+<li><h4>u = f 时光线“追不上”</h4><p>蜡烛正好放在焦点上，从它发出的光经过透镜后变成平行光，两条线永远不相交，<b>不成像</b>。这正是手电筒、探照灯把灯泡放在焦点上的原因。</p></li>
+<li><h4>u &lt; f 时只能往回找</h4><p>蜡烛比焦点还近，透镜的会聚能力不够，出来的光仍然是散开的，在另一侧永远交不到一起。但人眼逆着光看过去，会觉得光是从蜡烛后面某一点发出来的——那就是<b>正立、放大的虚像</b>，光屏接不到。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>口诀“一倍焦距分虚实，二倍焦距分大小；物近像远像变大”，每一句都能用两条光线当场画出来。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>两种透镜</h3><p>中间厚、边缘薄的是<b>凸透镜</b>，对光有会聚作用；中间薄、边缘厚的是<b>凹透镜</b>，对光有发散作用。凸透镜的焦点是实焦点，凹透镜的是虚焦点（反向延长线的交点）。</p></div></div>
+<div class="fact"><div><h3>实像和虚像</h3><p>实像由实际光线会聚而成，<b>能用光屏承接</b>，凸透镜成的实像都是<b>倒立</b>的；虚像是光线反向延长线的交点，光屏接不到，凸透镜成的虚像是<b>正立</b>的。</p></div></div>
+<div class="fact"><div><h3>物近像远像变大</h3><p>成实像时，蜡烛向透镜靠近，像就远离透镜并且变大；蜡烛远离，像就靠近并变小。照相机拍近景时要把镜头往前伸，就是这个道理。</p></div></div>
+<div class="fact"><div><h3>眼睛和眼镜</h3><p>晶状体相当于凸透镜，视网膜相当于光屏，成倒立缩小的实像。<b>近视</b>是像落在视网膜前方，戴<b>凹透镜</b>矫正；<b>远视</b>是像落在视网膜后方，戴<b>凸透镜</b>矫正。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>用手挡住凸透镜的上半部分，光屏上的像<b>不会缺一半</b>，仍然完整，只是变暗了。因为烛焰上每一点发出的光都能穿过透镜剩下的部分，在同一个位置会聚，只是参与会聚的光少了。另外，实验时要把烛焰、透镜、光屏的中心调到<b>同一高度</b>，否则像可能落在光屏外面。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个光路发给同学</h3><p>链接会记住蜡烛的位置和焦距。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，凸透镜成像几乎每年都在实验题或选择题里出现</h3>
+<ul>
+<li><b>选择题</b>：给出物距和焦距，判断像的性质和应用；或者给出“光屏上得到倒立放大的像”，反推焦距的范围。</li>
+<li><b>实验题</b>：探究凸透镜成像规律。常问三件事：为什么要把三者中心调到同一高度；蜡烛烧短后像往哪儿移（往光屏<b>上方</b>移）；在透镜前加一副眼镜后光屏要往哪边移。</li>
+<li><b>作图题</b>：补全过焦点、过光心、平行于主光轴的光线，或画出物体经凸透镜成的像。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（物理 10 分），“探究凸透镜成像规律”是常见考查项目，动手前先找到清晰的像再读数。</li>
+</ul>
+<div class="q"><b>典型设问</b>　蜡烛距凸透镜 30 cm 时，光屏上得到倒立、缩小的清晰像。则该透镜的焦距可能是：A. 10 cm　B. 15 cm　C. 20 cm　D. 30 cm。<br><b>怎么想</b>　倒立缩小说明 u &gt; 2f，即 30 cm &gt; 2f，所以 f &lt; 15 cm，只有 <b>A</b> 符合。注意 B 是“等于 15 cm”，此时 u = 2f 成等大的像，也不对。<b>先由像的性质写出不等式，再解出 f 的范围</b>，这类题就不会错。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 5 课</p><p>光路按薄透镜成像公式 1/u + 1/v = 1/f 计算，作图按光具座比例缩放。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

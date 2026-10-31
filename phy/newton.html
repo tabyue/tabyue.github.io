@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="让小车从斜面同一高度滑到毛巾、棉布、木板和理想光滑面上，推理出牛顿第一定律；调钩码、扭卡片验证二力平衡的条件；用弹簧测力计水平拉木块测滑动摩擦力。物理互动馆第 8 课，对应人教版八年级下册第八章。">
+<meta property="og:title" content="物理互动馆 · 运动和力">
+<title>运动和力 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="newton.js"></script>
+</head>
+<body data-module="newton">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 8 课 <span>/</span> 八年级下册 第八章</p><h1>运动和力</h1><p class="subtitle">小车滑着滑着就停了，是因为“没人推”吗？换几种路面让它滑一滑，答案和你想的正好相反。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="阻力对运动的影响">
+<h2>斜面小车：阻力越小，滑得越远</h2>
+<p class="panel-sub">选一种水平面，点「放手」。小车每次从同一高度由静止滑下，到达水平面时速度都一样，比的只是路面的阻力。</p>
+<svg id="ramp" viewBox="0 0 400 230" role="img" aria-label="小车从斜面滑下，在不同水平面上滑行"></svg>
+<div class="ctl-row"><span>水平面</span><div class="chips small" id="surf-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="h-in">释放高度 h</label><output id="h-out">10 cm</output></div><input id="h-in" type="range" min="5" max="15" step="1" value="10"><div class="ruler"><span>5 cm</span><span>10 cm</span><span>15 cm</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="ramp-go">放手</button><button type="button" class="ghost-btn" id="ramp-reset">放回原处</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="小车读数">
+<div class="readout-head"><h2>这一次实验</h2><span class="badge" id="ramp-badge">毛巾</span></div>
+<div class="stat-grid">
+<div class="stat"><span>到达水平面的速度</span><strong id="v0-out">—</strong></div>
+<div class="stat"><span>此刻速度</span><strong id="vnow-out">—</strong></div>
+<div class="stat"><span>受到的阻力</span><strong id="drag-out">—</strong></div>
+<div class="stat"><span>滑行距离</span><strong id="s-out">—</strong></div>
+</div>
+<p class="lead" id="ramp-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="实验记录">
+<h2>实验记录</h2>
+<p class="panel-sub" style="margin-bottom:4px">同一高度下做过的表面会记下距离。改了高度，记录就清空——变量没控制住，结果不能比。</p>
+<table class="compare" id="run-table"><thead><tr><th>水平面</th><th>阻力</th><th>滑行距离</th></tr></thead><tbody>
+<tr data-s="towel"><td>毛巾</td><td>最大</td><td class="n">—</td></tr>
+<tr data-s="cotton"><td>棉布</td><td>较大</td><td class="n">—</td></tr>
+<tr data-s="wood"><td>木板</td><td>较小</td><td class="n">—</td></tr>
+<tr data-s="ideal"><td>理想光滑面</td><td>零（想象的）</td><td class="n">—</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="二力平衡">
+<h2>二力平衡：小卡片什么时候不动</h2>
+<p class="panel-sub">两边挂钩码拉一张很轻的卡片（卡片重力不计）。改钩码、扭一扭、剪一刀，再点「松手」看结果。每个钩码重 0.5 N。</p>
+<svg id="card" viewBox="0 0 400 230" role="img" aria-label="小卡片两边受到钩码的拉力"></svg>
+<div class="control"><div class="control-heading"><label for="nl-in">左边钩码</label><output id="nl-out">2 个</output></div><input id="nl-in" type="range" min="1" max="5" step="1" value="2"><div class="ruler"><span>1 个</span><span>3 个</span><span>5 个</span></div></div>
+<div class="control"><div class="control-heading"><label for="nr-in">右边钩码</label><output id="nr-out">3 个</output></div><input id="nr-in" type="range" min="1" max="5" step="1" value="3"><div class="ruler"><span>1 个</span><span>3 个</span><span>5 个</span></div></div>
+<div class="control"><div class="control-heading"><label for="tw-in">把卡片扭转</label><output id="tw-out">0°</output></div><input id="tw-in" type="range" min="0" max="45" step="5" value="0"><div class="ruler"><span>不扭</span><span></span><span>45°</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="card-go">松手</button><button type="button" class="ghost-btn" id="cut-btn" aria-pressed="false">剪开卡片</button><button type="button" class="ghost-btn" id="card-reset">按住重来</button></div>
+</section>
+<section class="readout" aria-label="卡片受力">
+<div class="readout-head"><h2>卡片受到的两个力</h2><span class="badge" id="bal-badge">不能静止</span></div>
+<div class="stat-grid">
+<div class="stat"><span>左边拉力 F₁</span><strong id="bal-f1">—</strong></div>
+<div class="stat"><span>右边拉力 F₂</span><strong id="bal-f2">—</strong></div>
+<div class="stat wide"><span>合力（方向相反的两个力：大减小）</span><strong id="bal-net" style="font-size:19px">—</strong></div>
+</div>
+<ul class="cond-list" id="cond-list">
+<li data-c="same"><i></i>作用在同一个物体上</li>
+<li data-c="equal"><i></i>大小相等</li>
+<li data-c="opp"><i></i>方向相反</li>
+<li data-c="line"><i></i>作用在同一条直线上</li>
+</ul>
+<p class="lead" id="bal-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 二力平衡就像势均力敌的拔河</h3><p>两队拉同一根绳，力气一样大、往相反方向、拉在同一条直线上，绳子就停着不动。哪一队力气大一点，绳子就往哪边跑；要是两队拉的不是同一根绳，那就各跑各的了。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="测滑动摩擦力">
+<h2>滑动摩擦力：弹簧测力计水平拉木块</h2>
+<p class="panel-sub">慢慢加大拉力。只有木块做<b>匀速直线运动</b>时，测力计的示数才等于摩擦力。木块重 4 N，每个砝码重 2 N。</p>
+<svg id="fric" viewBox="0 0 400 200" role="img" aria-label="弹簧测力计水平拉动木块"></svg>
+<div class="ctl-row"><span>接触面</span><div class="chips small" id="fs-chips"></div></div>
+<div class="ctl-row"><span>加砝码</span><div class="chips small" id="wt-chips"></div></div>
+<div class="ctl-row"><span>放法</span><div class="chips small" id="lay-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="pull-in">手的拉力 F</label><output id="pull-out">0 N</output></div><input id="pull-in" type="range" min="0" max="6" step="0.1" value="0"><div class="ruler"><span>0</span><span>3 N</span><span>6 N</span></div></div>
+<div class="btn-row"><button type="button" class="ghost-btn" id="fc-reset">放回起点</button></div>
+</section>
+<section class="readout" aria-label="摩擦力读数">
+<div class="readout-head"><h2>测力计与木块</h2><span class="badge" id="fc-badge">静止</span></div>
+<div class="stat-grid">
+<div class="stat"><span>测力计示数</span><strong id="fc-read">—</strong></div>
+<div class="stat"><span id="fc-f-label">摩擦力</span><strong id="fc-f">—</strong></div>
+<div class="stat"><span>对桌面的压力</span><strong id="fc-press">—</strong></div>
+<div class="stat"><span>接触面积</span><strong id="fc-area">—</strong></div>
+</div>
+<p class="lead" id="fc-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 小车停下来，到底是谁的“功劳”</h3>
+<p class="derive-lead">牛顿第一定律没法直接用实验做出来，它是“实验 + 推理”得到的。顺着斜面小车走一遍就懂了。</p>
+<ol>
+<li><h4>先看实验事实</h4><p>同一高度滑下，毛巾、棉布、木板的阻力一个比一个小，小车滑得一个比一个远。模型里 h = 10 cm 时分别约是 25 cm、50 cm、110 cm。</p></li>
+<li><h4>滑得远，说明速度减小得慢</h4><p>三次到达水平面的速度一样，滑得越远，说明速度“掉”得越慢。<b>阻力越小，速度减小得越慢</b>。</p></li>
+<li><h4>推到极限：阻力为零</h4><p>如果路面绝对光滑，一点阻力都没有，速度就一点也不会减小，小车会以同样的速度沿直线一直走下去，也就是<b>匀速直线运动</b>。</p></li>
+<li><h4>为什么说是推理出来的</h4><p>世界上找不到完全没有阻力的路面，这一步只能靠推想。伽利略、笛卡儿等人先后研究，牛顿总结成：一切物体在没有受到力的作用时，总保持静止状态或匀速直线运动状态。</p></li>
+<li><h4>力到底管什么</h4><p>不受力的物体照样能运动，所以<b>运动不需要力来维持</b>；速度变快、变慢或拐弯，才需要力。力是<b>改变物体运动状态</b>的原因。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>小车最后停下，不是因为“没有力推它”，而是因为“有阻力拦它”。把阻力去掉，它会一直走下去。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>牛顿第一定律与惯性</h3><p>物体保持原来运动状态不变的性质叫<b>惯性</b>。一切物体在任何时候都有惯性，惯性大小<b>只与质量有关</b>，质量越大惯性越大，跟速度快慢、受不受力都没关系。</p></div></div>
+<div class="fact"><div><h3>二力平衡</h3><p>物体静止或做匀速直线运动，叫<b>平衡状态</b>。作用在<b>同一物体</b>上的两个力，<b>大小相等、方向相反、作用在同一直线上</b>，这两个力就彼此平衡。</p></div></div>
+<div class="fact"><div><h3>滑动摩擦力</h3><p>压力越大、接触面越粗糙，滑动摩擦力越大；跟接触面积、速度无关。增大摩擦：加大压力、让接触面更粗糙；减小摩擦：减小压力、让接触面更光滑、变滑动为滚动、加润滑油、让接触面分离。</p></div></div>
+<div class="fact"><div><h3>同一直线上二力的合成</h3><p>两个力<b>同向</b>：合力 F = F₁ + F₂，方向不变；<b>反向</b>：合力 F = F₁ − F₂（大减小），方向跟较大的力相同。二力平衡时合力为零。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>惯性不是力，只能说“物体<b>具有</b>惯性”或“<b>由于</b>惯性”，不能说“受到惯性”“惯性力”“惯性的作用”。另外，平衡力和相互作用力都是等大、反向、共线，区别在于：平衡力作用在<b>同一个物体</b>上，相互作用力分别作用在<b>两个物体</b>上。书受到的重力和桌面的支持力是平衡力；书压桌子和桌子托书是相互作用力。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这组实验发给同学</h3><p>链接会记住路面、高度、钩码和拉力的设置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考物理与化学合卷，物理 70 分；力和运动的关系是整个力学的地基</h3>
+<ul>
+<li><b>选择题</b>：用惯性解释生活现象（急刹车人往前倾、拍打衣服除灰尘）；判断一对力是平衡力还是相互作用力；判断“物体受平衡力时处于什么状态”。</li>
+<li><b>实验题</b>：阻力对运动的影响——为什么要从同一高度滑下，结论是怎样推理出来的；探究滑动摩擦力的影响因素——为什么要<b>水平匀速</b>拉，怎样用控制变量法比较。</li>
+<li><b>作图题</b>：画静止或匀速直线运动物体的受力示意图，一对平衡力的线段要画得一样长。</li>
+<li><b>实验操作考试</b>：理化实验操作单独计 20 分（物理 10 分）。用弹簧测力计是基本功：先看量程和分度值，先调零，拉力方向和弹簧轴线一致。</li>
+</ul>
+<div class="q"><b>典型设问</b>　用弹簧测力计水平拉着木块在水平桌面上做匀速直线运动，示数是 3 N。把拉力增大到 5 N，木块受到的摩擦力是多大？<br><b>怎么想</b>　匀速时拉力与摩擦力是一对平衡力，所以滑动摩擦力 f = 3 N。拉力变大后，压力和接触面粗糙程度都没变，滑动摩擦力<b>仍是 3 N</b>，多出的 2 N 让木块加速。<b>滑动摩擦力只看压力和粗糙程度，不看拉力多大</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 8 课</p><p>斜面上的阻力不计，水平面上的阻力按恒定值处理；最大静摩擦力近似看成等于滑动摩擦力；g 取 10 N/kg。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

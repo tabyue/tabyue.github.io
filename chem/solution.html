@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动温度和溶质质量，在 KNO3、NaCl、Ca(OH)2 的溶解度曲线上判断饱和与不饱和，看降温结晶和蒸发结晶；加水稀释算溶质质量分数，看仰视、俯视量水带来的误差，比较 NaOH、NH4NO3、NaCl 溶解时的温度变化。化学互动馆第 9 课，对应人教版九年级下册第九单元。">
+<meta property="og:title" content="化学互动馆 · 溶液">
+<title>溶液 · 化学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="chem.css">
+<script defer src="common.js"></script>
+<script defer src="solution.js"></script>
+</head>
+<body data-module="solution">
+<header class="topbar"><a class="brand" href="index.html" aria-label="化学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.4 9.2A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.8L14 9V3"/><path d="M7.5 15h9"/></svg><span>化学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 9 课 <span>/</span> 九年级下册 第九单元</p><h1>溶液</h1><p class="subtitle">同样是降温，热的硝酸钾溶液里会“长”出一大片晶体，食盐水却几乎没动静。拖一拖温度，答案就在溶解度曲线上。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="溶解度曲线">
+<h2>溶解度曲线：100 g 水里能溶多少</h2>
+<p class="panel-sub">选一种物质，调温度和加进去的溶质。图上的点在曲线<b>下方</b>是不饱和，<b>正好在线上</b>是恰好饱和，在<b>上方</b>说明有固体溶不了。</p>
+<svg id="chart" viewBox="0 0 400 260" role="img" aria-label="硝酸钾、氯化钠、氢氧化钙的溶解度曲线"></svg>
+<div class="ctl-row"><span>溶质</span><div class="chips small" id="sub-chips"></div></div>
+<div class="control" style="margin-top:12px"><div class="control-heading"><label for="t-in">温度</label><output id="t-out">60 ℃</output></div><input id="t-in" type="range" min="0" max="100" step="1" value="60"><div class="ruler"><span>0 ℃</span><span>50 ℃</span><span>100 ℃</span></div></div>
+<div class="control"><div class="control-heading"><label for="m-in">加入溶质的质量</label><output id="m-out">80 g</output></div><input id="m-in" type="range" min="0" max="250" step="1" value="80"><div class="ruler"><span>0 g</span><span id="m-mid">125 g</span><span id="m-max">250 g</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="溶液状态">
+<div class="readout-head"><h2>烧杯里的溶液</h2><span class="badge" id="sat-badge">不饱和</span></div>
+<div class="stat-grid">
+<div class="stat"><span>这个温度的溶解度</span><strong id="sol-s">—</strong></div>
+<div class="stat"><span>已经溶解</span><strong id="sol-d">—</strong></div>
+<div class="stat"><span>杯底的固体</span><strong id="sol-x">—</strong></div>
+<div class="stat"><span>溶质质量分数</span><strong id="sol-w">—</strong></div>
+</div>
+<p class="lead" id="sol-text" aria-live="polite"></p>
+</section>
+<section class="card panel figure" aria-label="结晶演示">
+<h2>烧杯：降温结晶与蒸发结晶</h2>
+<p class="panel-sub">先调成饱和（或接近饱和）的溶液，再试两种方法，比较 KNO<sub>3</sub> 和 NaCl 谁更适合哪一种。</p>
+<svg id="beaker" viewBox="0 0 400 170" role="img" aria-label="烧杯中的溶液和析出的晶体"></svg>
+<div class="btn-row"><button class="big-btn" type="button" id="cool-btn">降温结晶</button><button class="big-btn" type="button" id="evap-btn">蒸发结晶</button><button class="ghost-btn" type="button" id="sol-reset">重置</button></div>
+<p class="note" id="cryst-text" aria-live="polite"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="溶质质量分数与稀释">
+<h2>溶质质量分数与稀释</h2>
+<p class="panel-sub">每个小点代表 1 g 溶解了的 NaCl（按 20 ℃ 计）。调溶质和水，再点“加 50 g 水”，看稀释前后什么没变。</p>
+<svg id="dil" viewBox="0 0 400 220" role="img" aria-label="烧杯中的氯化钠溶液与质量分数柱"></svg>
+<div class="control"><div class="control-heading"><label for="a-in">溶质 NaCl</label><output id="a-out">10 g</output></div><input id="a-in" type="range" min="1" max="40" step="1" value="10"><div class="ruler"><span>1 g</span><span>20 g</span><span>40 g</span></div></div>
+<div class="control"><div class="control-heading"><label for="b-in">水</label><output id="b-out">90 g</output></div><input id="b-in" type="range" min="20" max="300" step="5" value="90"><div class="ruler"><span>20 g</span><span>160 g</span><span>300 g</span></div></div>
+<div class="btn-row"><button class="big-btn" type="button" id="dil-add">加 50 g 水稀释</button><button class="ghost-btn" type="button" id="dil-reset">重置</button></div>
+</section>
+<div class="stack">
+<section class="readout" aria-label="质量分数读数">
+<div class="readout-head"><h2>这杯溶液</h2><span class="badge" id="dil-badge">10%</span></div>
+<div class="stat-grid"><div class="stat"><span>溶液质量</span><strong id="dil-sol">—</strong></div><div class="stat"><span>溶质质量分数</span><strong id="dil-frac">—</strong></div></div>
+<p class="formula" id="dil-formula" style="font-size:14px;margin-top:8px"></p>
+<p class="lead" id="dil-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 稀释就像给糖水兑水</h3><p>一杯糖水里化了 10 块方糖，再兑一杯水，喝起来淡了，可糖还是那 10 块，只是分给了更多的水。所以稀释题抓住<b>溶质质量不变</b>列等式：m<sub>浓</sub> × a% = m<sub>稀</sub> × b%。要算加多少水，就用 m<sub>稀</sub> − m<sub>浓</sub>。</p></aside>
+</section>
+<section class="card panel figure" aria-label="配制溶液">
+<h2>实验活动：配制 50 g 6% 的 NaCl 溶液</h2>
+<div class="steps"><span class="done">① 计算：NaCl 3 g，水 47 g</span><i>→</i><span class="done">② 称量：托盘天平称 3 g NaCl</span><i>→</i><span class="on">③ 量取：50 mL 量筒量 47 mL 水</span><i>→</i><span>④ 溶解：玻璃棒搅拌</span></div>
+<p class="panel-sub" style="margin:10px 0 6px">水的密度按 1 g/mL，47 g 水就是 47 mL。读量筒时视线换一换，读数都是 47 mL，实际量了多少水？</p>
+<svg id="prep" viewBox="0 0 400 150" role="img" aria-label="读量筒刻度时的三种视线"></svg>
+<div class="ctl-row"><span>视线</span><div class="chips small" id="eye-chips"></div></div>
+<div class="verdict-row"><div class="verdict-box" id="prep-wbox"><span>实际量取的水</span><strong id="prep-water">47 mL</strong></div><div class="verdict-box" id="prep-fbox"><span>配好的质量分数</span><strong id="prep-frac">6%</strong></div></div>
+<p class="note" id="prep-text"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="溶解时的温度变化">
+<h2>溶解时的温度变化</h2>
+<p class="panel-sub">烧杯里是 100 g、20 ℃ 的水。选一种物质，点“加入 10 g 并搅拌”，盯着温度计。</p>
+<svg id="heat" viewBox="0 0 400 220" role="img" aria-label="物质溶于水时温度计的变化"></svg>
+<div class="ctl-row"><span>溶质</span><div class="chips small" id="heat-chips"></div></div>
+<div class="btn-row"><button class="big-btn" type="button" id="heat-go">加入 10 g 并搅拌</button><button class="ghost-btn" type="button" id="heat-reset">换一杯水</button></div>
+</section>
+<section class="readout" aria-label="温度读数">
+<div class="readout-head"><h2>温度计读数</h2><span class="badge" id="heat-badge">还没加</span></div>
+<div class="stat-grid"><div class="stat"><span>现在的温度</span><strong id="heat-t">20<small>℃</small></strong></div><div class="stat"><span>比开始时</span><strong id="heat-dt">0<small>℃</small></strong></div></div>
+<p class="lead" id="heat-text" aria-live="polite"></p>
+<p class="note">溶解时同时发生两件事：溶质粒子向水中扩散，要<b>吸收</b>热量；溶质粒子和水分子结合，会<b>放出</b>热量。放出的比吸收的多，温度升高；反过来温度降低；差不多时温度基本不变。</p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 一条曲线读出四件事</h3>
+<p class="derive-lead">溶解度曲线上的每个点都有意思。读懂了，饱和判断、结晶方法、质量分数都能直接推出来。</p>
+<ol>
+<li><h4>溶解度是“100 g 水的座位数”</h4><p>20 ℃ 时 NaCl 的溶解度是 36.0 g，意思是：<b>20 ℃ 时，100 g 水里最多溶解 36.0 g NaCl，这时达到饱和</b>。温度、100 g 溶剂、饱和状态、单位 g，四样缺一不可。</p></li>
+<li><h4>点在哪儿，就是什么溶液</h4><p>曲线上的点表示恰好饱和；曲线下方表示不饱和，还能再溶；曲线上方表示饱和、而且杯底有固体剩下。两条曲线的<b>交点</b>表示这个温度下两种物质的溶解度相等。</p></li>
+<li><h4>曲线陡，用降温结晶</h4><p>KNO<sub>3</sub> 的曲线很陡：60 ℃ 时 100 g 水能溶 110 g，降到 20 ℃ 只能溶 31.6 g，一下子析出 78.4 g 晶体。所以 KNO<sub>3</sub> 里混有少量 NaCl 时，用冷却热饱和溶液的方法提纯 KNO<sub>3</sub>。</p></li>
+<li><h4>曲线平，用蒸发结晶</h4><p>NaCl 的曲线几乎是平的，降温基本析不出来，只能把水蒸发掉，让“座位”变少，海水晒盐就是这样。Ca(OH)<sub>2</sub> 的曲线往下走，温度越高溶得越少，升温反而会析出固体。</p></li>
+<li><h4>饱和溶液的浓度有上限</h4><p>某温度下饱和溶液的溶质质量分数 = S ÷ (100 g + S) × 100%。20 ℃ 时 NaCl 饱和溶液是 36 ÷ 136 ≈ 26.5%，不是 36%。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>看到曲线题，先找到这个温度下的溶解度，再按“100 g 水最多溶多少”去比，饱不饱和、析出多少、质量分数是多少，都能一步算出来。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>什么是溶液</h3><p>一种或几种物质分散到另一种物质里，形成的<b>均一、稳定的混合物</b>。被溶解的叫溶质，能溶解其他物质的叫溶剂。溶液不一定无色（CuSO<sub>4</sub> 溶液是蓝色的）；水是最常用的溶剂，汽油、酒精也能当溶剂。</p></div></div>
+<div class="fact"><div><h3>溶解和乳化</h3><p>汽油能<b>溶解</b>油污，形成溶液；洗涤剂能把油污分散成无数细小的液滴，随水冲走，这叫<b>乳化</b>，得到的乳浊液不是溶液。</p></div></div>
+<div class="fact"><div><h3>溶解度怎么变</h3><p>多数固体的溶解度随温度升高而增大，KNO<sub>3</sub> 增大很多，NaCl 变化很小；少数（如 Ca(OH)<sub>2</sub>）随温度升高而<b>减小</b>。气体的溶解度随温度升高而减小、随压强增大而增大，所以打开汽水瓶盖会冒出大量气泡。</p></div></div>
+<div class="fact"><div><h3>溶质质量分数</h3><p>溶质质量分数 = 溶质质量 ÷ 溶液质量 × 100%，分母是<b>溶液</b>，不是水。稀释前后<b>溶质质量不变</b>。配制溶液四步：计算、称量、量取、溶解，最后装瓶、贴标签。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>说溶解度一定要说全：<b>在一定温度下、100 g 溶剂里、达到饱和状态时</b>溶解的质量。饱和溶液<b>不一定是浓溶液</b>，Ca(OH)<sub>2</sub> 的饱和溶液就很稀；不饱和溶液也不一定稀。<b>均一、稳定的液体不一定是溶液</b>，水和酒精都是纯净物。饱和溶液降温也不一定析出晶体，Ca(OH)<sub>2</sub> 要升温才析出。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这杯溶液发给同学</h3><p>链接会记住你选的溶质、温度、质量和视线。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中化学占 50 分，溶解度曲线和配制溶液是常见考点</h3>
+<ul>
+<li><b>溶解度曲线</b>：读某温度下的溶解度、比较大小、说出交点的意思；判断饱和与不饱和怎么转化、用哪种方法结晶、降温后析出多少、饱和溶液的质量分数是多少。</li>
+<li><b>实验题</b>：配制一定溶质质量分数的溶液。仪器有托盘天平、量筒、烧杯、玻璃棒（搅拌，加快溶解）。误差分析：仰视量水偏小，俯视量水偏大，药品和砝码放反（又用了游码）偏小。</li>
+<li><b>计算题</b>：稀释或浓缩，抓住溶质质量不变；也常和化学方程式结合，求反应后溶液的溶质质量分数。</li>
+<li><b>溶解时吸热放热</b>：常见装置是往水里加物质、旁边连一个 U 形管。NaOH 放热，气体受热膨胀，连容器那一侧液面下降；NH<sub>4</sub>NO<sub>3</sub> 吸热，情况正好相反。</li>
+<li><b>实验操作考试</b>：理化实验操作单独计 20 分，其中化学 10 分。配制溶液是课本里的实验活动，称量、读数的规范动作要练熟。</li>
+</ul>
+<div class="q"><b>典型设问</b>　把 50 g 溶质质量分数为 98% 的浓硫酸稀释成 20% 的稀硫酸，需要加水多少克？<br><b>怎么想</b>　溶质 = 50 g × 98% = 49 g；稀释后溶液 = 49 g ÷ 20% = 245 g；加水 = 245 g − 50 g = <b>195 g</b>。动手时要把<b>浓硫酸沿器壁慢慢注入水中</b>，并用玻璃棒不断搅拌，千万不能把水倒进浓硫酸里。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>化学互动馆 · 第 9 课</p><p>溶解度取教材常用数据，0、20、40、60、80、100 ℃ 之间按平滑曲线估读；溶解时的温度变化按 10 g 溶质溶于 100 g 水、不计散热估算。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

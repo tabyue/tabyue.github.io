@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="调热水温度、给水下白磷通氧气，找出燃烧需要的三个条件；给油锅、森林、酒精灯等六个火场配上灭火原理；调节甲烷的氧气供给，看完全燃烧和不完全燃烧，认识化石燃料和新能源。化学互动馆第 7 课，对应人教版九年级上册第七单元。">
+<meta property="og:title" content="化学互动馆 · 燃烧与能源">
+<title>燃烧与能源 · 化学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="chem.css">
+<script defer src="common.js"></script>
+<script defer src="fire.js"></script>
+</head>
+<body data-module="fire">
+<header class="topbar"><a class="brand" href="index.html" aria-label="化学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.4 9.2A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.8L14 9V3"/><path d="M7.5 15h9"/></svg><span>化学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 7 课 <span>/</span> 九年级上册 第七单元</p><h1>燃烧与能源</h1><p class="subtitle">火要烧起来，三个条件缺一不可；想灭火，拿掉其中一个就够了。本课对应教材单元“能源的合理利用与开发”。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="燃烧条件探究">
+<h2>探究燃烧的条件</h2>
+<p class="panel-sub">烧杯里装热水，上面盖一块薄铜片：铜片左边放白磷、右边放红磷，水底还有一块白磷。调水温、通氧气，看哪里会燃烧。</p>
+<svg id="pho" viewBox="0 0 400 250" role="img" aria-label="燃烧条件探究实验装置"></svg>
+<div class="control"><div class="control-heading"><label for="temp-in">热水温度</label><output id="temp-out">80 ℃</output></div><input id="temp-in" type="range" min="20" max="90" step="1" value="80"><div class="ruler"><span>20 ℃</span><span>55 ℃</span><span>90 ℃</span></div></div>
+<div class="ctl-row"><span>水中白磷</span><div class="chips small" id="o2-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="燃烧情况">
+<div class="readout-head"><h2>哪里在燃烧</h2><span class="badge" id="burn-badge">—</span></div>
+<div class="stat-grid">
+<div class="stat"><span>水温</span><strong id="temp-stat">—</strong></div>
+<div class="stat"><span>燃烧的地方</span><strong id="burn-count">—</strong></div>
+</div>
+<p class="lead" id="burn-text" aria-live="polite"></p>
+<div class="formula" style="font-size:14px"><span data-eq="4P + 5O2 =点燃= 2P2O5"></span></div>
+</section>
+<section class="card panel" aria-label="三个条件对照表">
+<h2>三个条件对照表</h2>
+<p class="panel-sub" style="margin-bottom:4px">三个条件全打 ✓ 才会燃烧。</p>
+<table class="compare" id="cond-table"><thead><tr><th>位置</th><th>可燃物</th><th>接触氧气</th><th>达到着火点</th><th>结果</th></tr></thead><tbody></tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="灭火原理配对">
+<h2>灭火：拿掉三角形的一条边</h2>
+<p class="panel-sub">先选一个火场，再选它用的灭火原理。选对了，右边燃烧三角形的那条边会断开，火就灭了。</p>
+<div class="ctl-row" style="margin-top:0"><span>火场</span><div class="chips small" id="sc-chips"></div></div>
+<svg id="ext" viewBox="0 0 400 230" role="img" aria-label="火场情景与燃烧三角形"></svg>
+<div class="ctl-row"><span>灭火原理</span><div class="chips small" id="pr-chips"></div></div>
+</section>
+<section class="readout" aria-label="灭火结果">
+<div class="readout-head"><h2>灭火记录</h2><span class="badge" id="ext-badge">已扑灭 0 / 6</span></div>
+<p class="lead" id="ext-text" aria-live="polite" style="margin-top:12px"></p>
+<ul class="cond-list" id="ext-list"></ul>
+<aside class="analogy"><h3><i>打个比方</i> 燃烧像一张三条腿的凳子</h3><p>可燃物、氧气、温度达到着火点，是凳子的三条腿，少一条凳子就倒。灭火不用三条腿全砍，<b>砍掉任意一条</b>就行：盖锅盖砍的是“氧气”，砍隔离带砍的是“可燃物”，浇水砍的是“温度”。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="甲烷燃烧">
+<h2>燃气灶：氧气够不够</h2>
+<p class="panel-sub">天然气的主要成分是甲烷。拖动滑块改变进风口，看火焰颜色、锅底和生成物怎样变化。</p>
+<svg id="flame" viewBox="0 0 400 230" role="img" aria-label="燃气灶火焰与锅底"></svg>
+<div class="control"><div class="control-heading"><label for="o2r-in">供给的 O<sub>2</sub> 与 CH<sub>4</sub> 分子个数比</label><output id="o2r-out">2.4</output></div><input id="o2r-in" type="range" min="1" max="3" step="0.1" value="2.4"><div class="ruler"><span>1（进风口很小）</span><span>2</span><span>3（进风口大）</span></div></div>
+</section>
+<div class="stack">
+<section class="readout" aria-label="燃烧结果">
+<div class="readout-head"><h2>燃烧得怎样</h2><span class="badge" id="flame-badge">完全燃烧</span></div>
+<div class="stat-grid">
+<div class="stat"><span>火焰</span><strong id="flame-color" style="font-size:18px">—</strong></div>
+<div class="stat"><span>有害物质</span><strong id="harm-out" style="font-size:18px">—</strong></div>
+<div class="stat wide"><span>生成物</span><strong id="prod-out" style="font-size:17px">—</strong></div>
+</div>
+<div class="formula" id="flame-eq" style="font-size:14px"></div>
+<p class="lead" id="flame-text" aria-live="polite" style="margin-top:10px"></p>
+</section>
+<section class="card panel" aria-label="能源一览">
+<div class="readout-head"><h2 style="margin:0">能源一览</h2><span class="badge" id="energy-badge">—</span></div>
+<div class="chips small" id="energy-chips" style="margin-top:12px;flex-wrap:wrap"></div>
+<p class="part-info" id="energy-info"></p>
+</section>
+</div>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么灭火只有三招</h3>
+<p class="derive-lead">先用对比实验找出燃烧的三个条件，灭火的办法就自己出来了。</p>
+<ol>
+<li><h4>燃烧是什么</h4><p>通常所说的燃烧，是可燃物与氧气发生的一种<b>发光、放热的剧烈的氧化反应</b>。所以先得有能烧的东西，再得有氧气。</p></li>
+<li><h4>着火点是物质自己的“门槛”</h4><p>可燃物燃烧所需的最低温度叫<b>着火点</b>。白磷约 40 ℃，红磷约 240 ℃。它由物质本身决定，一般不会改变。</p></li>
+<li><h4>对比一：白磷和红磷</h4><p>铜片上的白磷和红磷都接触空气，铜片温度也一样。白磷燃烧、红磷不燃烧，区别只在着火点，说明<b>温度要达到着火点</b>。</p></li>
+<li><h4>对比二：铜片上和水里的白磷</h4><p>两块白磷温度相同。铜片上的燃烧，水里的不燃烧；一通氧气，水里的也烧起来了，说明<b>要与氧气接触</b>。</p></li>
+<li><h4>反过来就是灭火</h4><p>三个条件缺一不可，所以灭火只要破坏一个：清除或隔离可燃物、隔绝氧气、使温度降到着火点以下。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>判断一种灭火方法，就问它拿掉了哪条腿；而用水灭火降低的是<b>温度</b>，不是着火点。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>燃烧的条件</h3><p>可燃物、与氧气（或空气）接触、温度达到着火点，三个条件<b>同时满足</b>才能燃烧。实验中热水有两个作用：给铜片上的白磷提供热量，并使水中白磷与氧气隔绝。</p></div></div>
+<div class="fact"><div><h3>灭火的原理</h3><p>破坏任意一个燃烧条件：清除或隔离可燃物，隔绝氧气，使温度降到着火点以下。油锅着火盖锅盖、酒精灯用灯帽盖灭，都是隔绝氧气。</p></div></div>
+<div class="fact"><div><h3>化石燃料</h3><p>煤、石油、天然气是化石燃料，属于<b>不可再生能源</b>。燃料充分燃烧要有足够的空气，并且与空气有足够大的接触面积，比如把煤做成蜂窝煤。正在开发的新能源有氢能、太阳能、风能、地热能、潮汐能等。</p></div></div>
+<div class="fact"><div><h3>爆炸与安全</h3><p>可燃性气体或粉尘在有限空间里遇到明火，会急剧燃烧，可能发生<b>爆炸</b>。所以加油站、面粉厂要严禁烟火；点燃可燃性气体前要先检验纯度。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>着火点是物质本身的属性，一般不能“降低着火点”，只能“使温度降到着火点以下”。发现燃气泄漏，先<b>关闭阀门、开窗通风</b>，不能开灯、开排气扇，也不能在屋里打电话，开关电器产生的电火花可能引起爆炸。油锅着火不能用水浇：油比水轻，会浮在水面上继续燃烧，还会溅出来。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个实验发给同学</h3><p>链接会记住水温、是否通氧气和燃气灶的进风口大小。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中化学占 50 分，燃烧条件的对比实验是探究题的常见素材</h3>
+<ul>
+<li><b>选择题</b>：判断一种灭火方法用的是哪条原理；辨认“禁止烟火”“当心火灾”等安全图标；把能源分成可再生与不可再生。</li>
+<li><b>实验探究</b>：白磷、红磷的对比实验，要说出“哪两个现象对比，得出哪个条件”，还常问热水的作用、装置怎样改进（在密闭装置中进行，防止白烟污染空气）。</li>
+<li><b>填空题</b>：写出甲烷燃烧的化学方程式；说明燃气灶火焰发黄、锅底发黑时该怎么办（调大进风口）。</li>
+<li><b>生活情境</b>：燃气泄漏、电器着火、楼道里堆放杂物等情境下的正确做法。</li>
+</ul>
+<div class="q"><b>典型设问</b>　在探究燃烧条件的实验中，烧杯里的热水起什么作用？<br><b>怎么想</b>　看热水对两处白磷分别做了什么。对铜片上的白磷，热水通过铜片<b>提供热量</b>，使温度达到着火点；对水中的白磷，热水把它和空气隔开，<b>隔绝氧气</b>。两个作用都要答，只写一个会丢分。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>化学互动馆 · 第 7 课</p><p>模型把铜片温度视为与热水温度相同；白磷着火点按 40 ℃、红磷按约 240 ℃ 计；火焰与烟为示意。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

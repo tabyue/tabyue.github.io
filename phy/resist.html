@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="换导线材料、改长度和粗细，用控制变量法找出影响电阻的因素；拖动滑动变阻器的滑片做一盏调光台灯，比较四种接线方法；用电压表测串联、并联电路中的电压规律。物理互动馆第 16 课，对应人教版九年级全一册第十六章。">
+<meta property="og:title" content="物理互动馆 · 电压与电阻">
+<title>电压与电阻 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="resist.js"></script>
+</head>
+<body data-module="resist">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 16 课 <span>/</span> 九年级全一册 第十六章</p><h1>电压与电阻</h1><p class="subtitle">台灯能调亮调暗，靠的是一段长长的电阻丝。先弄清电阻跟什么有关，再亲手做一盏调光台灯。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="影响电阻大小的因素">
+<h2>导线的电阻跟什么有关</h2>
+<p class="panel-sub">把不同的导线接在 M、N 之间。电阻看不见，就看灯的亮度和电流表的示数（电阻越大，电流越小，灯越暗）。</p>
+<svg id="wire" viewBox="0 0 400 240" role="img" aria-label="探究影响电阻因素的电路和待测导线"></svg>
+<div class="ctl-row"><span>材料</span><div class="chips small" id="mat-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="len-in">长度 L</label><output id="len-out">0.5 m</output></div><input id="len-in" type="range" min="0.2" max="1" step="0.1" value="0.5"><div class="ruler"><span>0.2 m</span><span>0.6 m</span><span>1 m</span></div></div>
+<div class="ctl-row"><span>横截面积</span><div class="chips small" id="area-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="这根导线">
+<div class="readout-head"><h2>这根导线</h2><span class="badge" id="r-badge">镍铬合金</span></div>
+<div class="stat-grid">
+<div class="stat"><span>电阻（约）</span><strong id="r-out">—</strong></div>
+<div class="stat"><span>电流表示数</span><strong id="i-out">—</strong></div>
+<div class="stat"><span>灯泡亮度</span><strong id="lamp-out">—</strong></div>
+<div class="stat"><span>和对照导线比</span><strong id="ratio-out">—</strong></div>
+</div>
+<p class="lead" id="wire-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="控制变量检查">
+<h2>控制变量检查</h2>
+<p class="panel-sub" style="margin-bottom:4px">要弄清某一个因素的影响，每次<b>只改一个量</b>，其他量和对照导线保持一样。改动过的那一行会高亮。</p>
+<table class="compare"><thead><tr><th>因素</th><th>对照导线</th><th>现在</th></tr></thead><tbody id="cv-body"></tbody></table>
+<p class="lead" id="cv-out" aria-live="polite"></p>
+<div class="btn-row"><button type="button" class="ghost-btn" id="ref-btn">把现在这根记为对照</button></div>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="滑动变阻器调光台灯">
+<h2>滑动变阻器：做一盏调光台灯</h2>
+<p class="panel-sub">上方是电路图，下方是变阻器实物：瓷筒上绕着电阻丝，金属杆上的滑片 P 可以左右滑。拖动滑片，再换换接线柱，看橙色那段电流路径怎么变。</p>
+<svg id="rheo" viewBox="0 0 400 250" role="application" aria-label="滑动变阻器，可拖动滑片"></svg>
+<div class="control"><div class="control-heading"><label for="p-in">滑片 P 的位置（从 A 端算起）</label><output id="p-out">50%</output></div><input id="p-in" type="range" min="0" max="100" step="1" value="50"><div class="ruler"><span>A 端</span><span>中间</span><span>B 端</span></div></div>
+<div class="ctl-row"><span>接线柱</span><div class="chips small" id="conn-chips"></div></div>
+</section>
+<section class="readout" aria-label="台灯读数">
+<div class="readout-head"><h2>台灯现在</h2><span class="badge" id="rh-badge">一上一下</span></div>
+<div class="stat-grid">
+<div class="stat"><span>接入的电阻</span><strong id="rp-out">—</strong></div>
+<div class="stat"><span>电路中的电流</span><strong id="ip-out">—</strong></div>
+<div class="stat wide"><span>灯泡亮度</span><strong id="lamp2-out" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="rheo-text" aria-live="polite"></p>
+<p class="note">变阻器铭牌“20 Ω 2 A”：最大阻值 20 Ω，允许通过的最大电流 2 A。电源 6 V，灯泡电阻按 10 Ω 计。</p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="串并联电路的电压规律">
+<h2>电压表测 L1、L2 和电源</h2>
+<p class="panel-sub">电压表要<b>并联</b>在被测部分两端。分别测 L1、L2 和电源两端的电压，三个数都记下来再找规律。</p>
+<svg id="volt" viewBox="0 0 400 230" role="img" aria-label="接有电压表的电路图"></svg>
+<div class="ctl-row"><span>连接方式</span><div class="chips small" id="vmode-chips"></div></div>
+<div class="ctl-row"><span>电压表测</span><div class="chips small" id="vpos-chips"></div></div>
+<div class="ctl-row"><span>干电池</span><div class="chips small" id="cell-chips"></div></div>
+<div class="ctl-row"><span>L2 的电阻</span><div class="chips small" id="r2-chips"></div></div>
+</section>
+<section class="readout" aria-label="电压表读数">
+<div class="readout-head"><h2>电压表读数</h2><span class="badge" id="v-badge">串联</span></div>
+<div class="stat-grid">
+<div class="stat"><span>示数</span><strong id="vread-out">—</strong></div>
+<div class="stat"><span>测的是</span><strong id="vwhat-out" style="font-size:16px;line-height:1.5">—</strong></div>
+</div>
+<table class="compare" style="margin-top:6px"><thead><tr><th>测量对象</th><th>记录的读数</th></tr></thead><tbody id="vrec-body"></tbody></table>
+<p class="lead" id="volt-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 电压像水压</h3><p>水管里的水要流动，得有抽水机造出水压；电路里要有电流，得有电源提供<b>电压</b>。串联时水依次流过两台水轮机，总落差被两台<b>分着用</b>，所以 U = U<sub>1</sub> + U<sub>2</sub>；并联时两台水轮机并排接在同一个高低水位之间，<b>落差一样</b>，所以各支路电压相等。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 电阻只跟导体自己有关</h3>
+<p class="derive-lead">电阻就是导体对电流的阻碍作用。想象自由电子在导线里“挤着往前走”，规律就好记了。</p>
+<ol>
+<li><h4>电阻的符号和单位</h4><p>电阻用 R 表示，单位是欧姆（Ω），还有千欧（kΩ）和兆欧（MΩ）：1 kΩ = 1000 Ω，1 MΩ = 10<sup>6</sup> Ω。导体的电阻越大，对电流的阻碍越大。</p></li>
+<li><h4>材料：路好不好走</h4><p>自由电子前进时会不断和导体里的原子“碰撞”。铜里碰得少，镍铬合金里碰得多，所以长短粗细都一样时，<b>镍铬合金的电阻比铜大得多</b>，适合做电阻丝；导线则用铜、铝。</p></li>
+<li><h4>长度：路越长，阻碍越多</h4><p>其他条件相同，导线越长，电子一路上要“闯”的障碍越多，<b>电阻越大</b>。长度变成 2 倍，电阻也变成 2 倍。滑动变阻器正是靠改变接入的电阻丝长度来改变电阻。</p></li>
+<li><h4>横截面积：路越宽，越好走</h4><p>其他条件相同，导线越粗，能并排通过的“车道”越多，<b>电阻越小</b>。所以大功率电器要用粗导线。</p></li>
+<li><h4>和电压、电流无关</h4><p>这些因素全是导体自己的：材料、长度、横截面积，还有温度。不接电源时电阻照样存在；两端电压变大，电流跟着变大，电阻却不变。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>电阻是导体本身的一种性质，由材料、长度、横截面积（和温度）决定，与它两端有没有电压、有没有电流都无关。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>电压</h3><p>电源给用电器两端提供电压，电压使电路中形成电流。单位伏特（V），1 kV = 1000 V，1 V = 1000 mV。<b>一节干电池 1.5 V</b>，<b>家庭电路 220 V</b>，<b>对人体安全的电压不高于 36 V</b>。</p></div></div>
+<div class="fact"><div><h3>电压表与电压规律</h3><p>电压表要<b>并联</b>在被测电路两端，电流“正进负出”，不超量程（0～3 V 分度值 0.1 V，0～15 V 分度值 0.5 V）；它<b>可以直接接在电源两极</b>测电源电压。串联：U = U<sub>1</sub> + U<sub>2</sub>；并联：U = U<sub>1</sub> = U<sub>2</sub>。</p></div></div>
+<div class="fact"><div><h3>电阻</h3><p>电阻是导体本身的性质，大小取决于<b>材料、长度、横截面积</b>，还受温度影响，<b>与电压、电流无关</b>。探究时用<b>控制变量法</b>，用灯的亮暗或电流表示数反映电阻大小（转换法）。</p></div></div>
+<div class="fact"><div><h3>滑动变阻器</h3><p>靠改变<b>接入电路中电阻丝的长度</b>来改变电阻。接线要“<b>一上一下</b>”，闭合开关前滑片移到阻值最大处。跨学科实践“制作简易调光台灯”，可以用铅笔芯或电阻丝加一个能滑动的夹子当变阻器。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>“电压越大电阻越大”“没有电流就没有电阻”都是错的，<b>电阻跟电压、电流无关</b>。滑动变阻器同时接上面两个接线柱，相当于一根<b>导线</b>；同时接下面两个，相当于一个<b>定值电阻</b>（最大阻值）——这两种接法移动滑片都没用。还有，电压表和电流表别接反：电压表要<b>并联</b>，电流表要<b>串联</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这盏台灯发给同学</h3><p>链接会记住导线、滑片位置、接线方式和电压表的设置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，电压表、变阻器是后面欧姆定律和电功率的基本功</h3>
+<ul>
+<li><b>选择题</b>：判断关于电阻的说法（是否与电压、电流有关）；判断滑片移动时接入电阻怎么变、灯变亮还是变暗；判断电压表测的是哪部分电压。</li>
+<li><b>实验题</b>：探究影响导体电阻大小的因素。会问用了什么方法（控制变量法、转换法），选哪两根导线来比较长度或横截面积的影响。</li>
+<li><b>电路分析题</b>：串联电路中两个电压表指针偏转相同，判断它们各用了哪个量程，再求各部分电压。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（物理 10 分）。连接电路时开关断开，电压表并联、正进负出，变阻器一上一下且滑片放在阻值最大处。</li>
+</ul>
+<div class="q"><b>典型设问</b>　L<sub>1</sub>、L<sub>2</sub> 串联，电压表 V<sub>1</sub> 测电源电压、V<sub>2</sub> 测 L<sub>2</sub> 两端电压，闭合开关后两表指针偏转角度相同，V<sub>1</sub> 示数为 6 V。L<sub>1</sub> 两端电压是多少？<br><b>怎么想</b>　总电压一定大于 L<sub>2</sub> 的电压，偏转却相同，说明 V<sub>1</sub> 用 0～15 V 量程、V<sub>2</sub> 用 0～3 V 量程，同一位置读数差 5 倍，所以 U<sub>2</sub> = 6 V ÷ 5 = 1.2 V，<b>U<sub>1</sub> = U − U<sub>2</sub> = 6 V − 1.2 V = 4.8 V</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 16 课</p><p>导线电阻按 20 ℃ 时的材料数据估算（镍铬合金约 1.0×10<sup>-6</sup> Ω·m，铜约 1.7×10<sup>-8</sup> Ω·m）；电源看作理想电源，灯丝电阻看作不随温度变化。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

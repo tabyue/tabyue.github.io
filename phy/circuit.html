@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="点开关、拧灯泡，比较串联和并联电路，看电流的小点怎样流动，演示电源短路的危险；把电流表放到 A、B、C 三处找出电流规律；用摩擦过的玻璃棒、橡胶棒做排斥吸引和验电器实验。物理互动馆第 15 课，对应人教版九年级全一册第十五章。">
+<meta property="og:title" content="物理互动馆 · 电流和电路">
+<title>电流和电路 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="circuit.js"></script>
+</head>
+<body data-module="circuit">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 15 课 <span>/</span> 九年级全一册 第十五章</p><h1>电流和电路</h1><p class="subtitle">一节电源、两个开关、两盏灯，接法不同，结果完全两样。点一点开关，看电流走的是哪条路。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="串联与并联电路">
+<h2>搭电路：串联还是并联</h2>
+<p class="panel-sub">点电路图里的开关（或下面的按钮）。黄色小点表示电流方向：在电源外部从正极出发，经过用电器回到负极。</p>
+<svg id="circ" viewBox="0 0 400 260" role="img" aria-label="电路图，可切换串联和并联"></svg>
+<div class="ctl-row"><span>连接方式</span><div class="chips small" id="mode-chips"></div></div>
+<div class="btn-row"><button type="button" class="ghost-btn" id="s1-btn" aria-pressed="true">S1：闭合</button><button type="button" class="ghost-btn" id="s2-btn" aria-pressed="false">S2：断开</button><button type="button" class="ghost-btn" id="pull-btn" aria-pressed="false">拧下 L2</button><button type="button" class="ghost-btn" id="short-btn" aria-pressed="false" style="color:#a4492b">演示：导线直接接电源两极</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="电路状态">
+<div class="readout-head"><h2>灯亮不亮</h2><span class="badge" id="circ-badge">串联</span></div>
+<div class="stat-grid">
+<div class="stat"><span>灯 L1</span><strong id="l1-out">—</strong></div>
+<div class="stat"><span>灯 L2</span><strong id="l2-out">—</strong></div>
+<div class="stat wide"><span>电路状态</span><strong id="state-out" style="font-size:19px">—</strong></div>
+<div class="stat wide"><span>电流的路径</span><strong id="path-out" style="font-size:14px;line-height:1.6">—</strong></div>
+</div>
+<p class="lead" id="circ-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="串联和并联对比">
+<h2>串联和并联对比</h2>
+<p class="panel-sub" style="margin-bottom:4px">当前的连接方式会高亮。</p>
+<table class="compare" id="mode-table"><thead><tr><th>方式</th><th>电流路径</th><th>开关作用</th><th>一盏灯坏了</th></tr></thead><tbody>
+<tr data-r="s"><td>串联</td><td>只有一条</td><td>位置不影响，一个开关控制全部</td><td>另一盏也不亮</td></tr>
+<tr data-r="p"><td>并联</td><td>两条或更多</td><td>干路开关控制全部，支路开关只管本支路</td><td>另一盏照样亮</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="探究电流规律">
+<h2>电流表放在 A、B、C 三处</h2>
+<p class="panel-sub">电源是两节干电池。甲、乙、丙三种规格的灯对电流的阻碍作用依次增大（下一课会学到这就是“电阻”）。把三处都测一遍，规律自己就出来了。</p>
+<svg id="meter" viewBox="0 0 400 240" role="img" aria-label="接有电流表的电路图和电流表表盘"></svg>
+<div class="ctl-row"><span>连接方式</span><div class="chips small" id="mmode-chips"></div></div>
+<div class="ctl-row"><span>电流表在</span><div class="chips small" id="pos-chips"></div></div>
+<div class="ctl-row"><span>L1 规格</span><div class="chips small" id="r1-chips"></div></div>
+<div class="ctl-row"><span>L2 规格</span><div class="chips small" id="r2-chips"></div></div>
+<div class="ctl-row"><span>量程</span><div class="chips small" id="range-chips"></div><button type="button" class="ghost-btn" id="rev-btn" aria-pressed="false" style="min-height:32px;padding:6px 10px;font-size:11px">把接线柱接反</button></div>
+</section>
+<section class="readout" aria-label="电流表读数">
+<div class="readout-head"><h2>电流表读数</h2><span class="badge" id="m-badge">串联</span></div>
+<div class="stat-grid">
+<div class="stat"><span>示数</span><strong id="reading-out">—</strong></div>
+<div class="stat"><span>测的是</span><strong id="what-out" style="font-size:16px;line-height:1.5">—</strong></div>
+</div>
+<table class="compare" style="margin-top:6px"><thead><tr><th>位置</th><th>记录的读数</th></tr></thead><tbody id="rec-body"></tbody></table>
+<p class="lead" id="meter-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="摩擦起电">
+<h2>两种电荷：排斥还是吸引</h2>
+<p class="panel-sub">左边是用细线吊起来的玻璃棒（从上往下看），已用丝绸摩擦过。选一根摩擦过的棒拿在手里，慢慢靠近它；再用这根棒去接触右边验电器的金属球。</p>
+<svg id="charge" viewBox="0 0 400 230" role="img" aria-label="悬挂的带电玻璃棒和验电器"></svg>
+<div class="ctl-row"><span>手里的棒</span><div class="chips small" id="rod-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="dist-in">把棒靠近吊着的玻璃棒</label><output id="dist-out">较远</output></div><input id="dist-in" type="range" min="0" max="100" step="1" value="30"><div class="ruler"><span>远</span><span></span><span>很近</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="touch-btn">用棒接触验电器的金属球</button><button type="button" class="ghost-btn" id="ground-btn">用手摸一下金属球</button></div>
+</section>
+<section class="readout" aria-label="电荷情况">
+<div class="readout-head"><h2>谁带什么电</h2><span class="badge" id="ch-badge">排斥</span></div>
+<div class="stat-grid">
+<div class="stat"><span>手里的棒</span><strong id="rod-out">—</strong></div>
+<div class="stat"><span>吊着的玻璃棒</span><strong id="hang-out">—</strong></div>
+<div class="stat wide"><span>验电器</span><strong id="es-out" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="charge-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 摩擦起电像抢小球</h3><p>物体里都有带负电的小粒子——电子。两种材料一摩擦，就像两个人抢小球：毛皮“抓”电子抓得松，橡胶棒抓得紧，电子就跑到橡胶棒上。橡胶棒多了电子带<b>负电</b>，毛皮少了电子带<b>正电</b>。电荷没有被创造出来，只是<b>搬了家</b>。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 串联处处相等，并联干路等于支路之和</h3>
+<p class="derive-lead">两条规律其实是一句话：电荷在导线里不会凭空多出来，也不会凭空少掉。</p>
+<ol>
+<li><h4>电流是电荷在“排队走”</h4><p>电荷的<b>定向移动</b>形成电流。物理学规定正电荷定向移动的方向为电流方向。金属导线里真正在动的是带负电的自由电子，它们的移动方向和电流方向<b>相反</b>。</p></li>
+<li><h4>电流的大小看“每秒过去多少”</h4><p>电流表示电流的强弱，可以理解为每秒钟通过导线某一截面的电荷有多少，单位是安培（A），1 A = 1000 mA。</p></li>
+<li><h4>电荷不会在半路堆起来</h4><p>像水管里的水，从一段流进去多少，就从另一段流出来多少。灯泡不会把电流“用掉”，它消耗的是电能。</p></li>
+<li><h4>串联：只有一条路</h4><p>所有电荷都必须依次经过 L1 和 L2，每秒经过 A、B、C 三处的电荷一样多，所以 <b>I<sub>A</sub> = I<sub>B</sub> = I<sub>C</sub></b>。换规格只会让各处电流一起变大或变小。</p></li>
+<li><h4>并联：在路口分成两股</h4><p>干路上的电荷到了分支点，一部分走 L1，一部分走 L2，到另一个路口再合在一起，所以 <b>I = I<sub>1</sub> + I<sub>2</sub></b>。每条支路都直接连着电源两端，断开一条，另一条照常有电流。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>家里的电灯、冰箱、电视都是并联的：关掉电视，电灯照样亮；而控制电灯的开关和电灯是串联的。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>两种电荷</h3><p>丝绸摩擦过的玻璃棒带<b>正电</b>，毛皮摩擦过的橡胶棒带<b>负电</b>。<b>同种电荷相互排斥，异种电荷相互吸引</b>，带电体还能吸引轻小物体。摩擦起电的实质是<b>电子的转移</b>。验电器就是利用同种电荷相互排斥来检验物体是否带电的。</p></div></div>
+<div class="fact"><div><h3>电路的组成与三种状态</h3><p>电路由电源、用电器、开关、导线组成。处处接通叫<b>通路</b>，某处断开叫<b>断路</b>；用导线直接把电源两极连起来叫<b>电源短路</b>，电流很大，会损坏电源，绝对不允许。在电源外部，电流从正极经用电器流向负极。</p></div></div>
+<div class="fact"><div><h3>串联和并联</h3><p>串联只有一条电流路径，开关位置不影响控制作用，用电器相互影响；并联有多条路径，干路开关控制整个电路，支路开关只控制本支路，各支路<b>互不影响</b>。家庭中的用电器是并联的。</p></div></div>
+<div class="fact"><div><h3>电流表与电流规律</h3><p>电流表要<b>串联</b>在被测电路中，电流<b>从“+”接线柱流入、从“−”流出</b>，被测电流不能超过量程（不确定时用大量程试触），<b>绝不能</b>不经用电器直接接在电源两极上。串联：I = I<sub>1</sub> = I<sub>2</sub>；并联：I = I<sub>1</sub> + I<sub>2</sub>。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>串联的两盏灯一亮一暗，<b>通过它们的电流仍然相等</b>，亮暗不同是因为灯的规格不同；“电流经过第一盏灯会被用掉一些”是错的。反过来，测得两盏灯电流相等，<b>也不一定是串联</b>——两盏规格相同的灯并联，电流也相等。另外，带电体能吸引不带电的轻小物体，所以“相互吸引”不能断定两者带异种电荷，只有“相互排斥”才能断定带同种电荷。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个电路发给同学</h3><p>链接会记住连接方式、开关状态和电流表的位置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，识别串并联和电流表接法是电学所有题目的地基</h3>
+<ul>
+<li><b>选择题</b>：根据开关和灯的亮灭判断电路图；判断电流表测的是哪个灯的电流；根据排斥、吸引判断物体带电情况。</li>
+<li><b>作图题</b>：按要求设计电路（如“两灯并联，S1 控制全部，S2 只控制 L2”），或根据实物图画电路图。</li>
+<li><b>实验题</b>：探究串、并联电路中电流的规律。常问：为什么要换用<b>不同规格</b>的灯泡多做几次（避免偶然性，使结论具有普遍性）；指针反偏、偏转太小或超过刻度说明什么。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（物理 10 分）。连接电路时<b>开关要断开</b>，电流表先用大量程试触，检查无误再闭合开关。</li>
+</ul>
+<div class="q"><b>典型设问</b>　两灯并联，电流表 A<sub>1</sub> 测干路电流，A<sub>2</sub> 测 L<sub>2</sub> 的电流，闭合开关后两表指针偏转角度相同。则通过 L<sub>1</sub> 和 L<sub>2</sub> 的电流之比是多少？<br><b>怎么想</b>　干路电流一定比支路大，偏转角度却相同，说明 A<sub>1</sub> 用的是 0～3 A 量程、A<sub>2</sub> 用的是 0～0.6 A 量程，同一位置的读数正好差 <b>5 倍</b>：I = 5I<sub>2</sub>。于是 I<sub>1</sub> = I − I<sub>2</sub> = 4I<sub>2</sub>，<b>I<sub>1</sub> : I<sub>2</sub> = 4 : 1</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 15 课</p><p>电路按理想电源、理想导线和电流表计算，灯丝的阻碍作用看作不变；小点的速度只表示电流大小，不是电子的真实速度。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

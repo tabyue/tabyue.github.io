@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="用加减按钮配平化学方程式、数清左右两边的原子；在天平上做红磷燃烧和碳酸钠与盐酸反应，看质量守不守恒；拖动滑块按“设、写、找、列、求、答”算出生成物质量。化学互动馆第 5 课，对应人教版九年级上册第五单元。">
+<meta property="og:title" content="化学互动馆 · 化学反应的定量关系">
+<title>化学反应的定量关系 · 化学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="chem.css">
+<script defer src="common.js"></script>
+<script defer src="mass.js"></script>
+</head>
+<body data-module="mass">
+<header class="topbar"><a class="brand" href="index.html" aria-label="化学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.4 9.2A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.8L14 9V3"/><path d="M7.5 15h9"/></svg><span>化学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 5 课 <span>/</span> 九年级上册 第五单元</p><h1>化学反应的定量关系</h1><p class="subtitle">反应前后东西变了，可原子一个都没少。数清原子，方程式就能配平，生成多少克也能算出来。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="配平化学方程式">
+<h2>配平小游戏：数一数原子</h2>
+<p class="panel-sub">选一个反应，用 + / − 改每种物质前面的化学计量数。图里每个小圆点是一个原子，左右两边每种原子一样多才算配平。</p>
+<div class="ctl-row" style="margin-top:0"><span>反应</span><div class="chips small" id="rx-chips"></div></div>
+<div id="bal-terms" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;margin:12px 0 10px"></div>
+<svg id="atoms" viewBox="0 0 400 230" role="img" aria-label="反应物和生成物两边各种原子的个数"></svg>
+<div class="btn-row"><button class="ghost-btn" id="bal-hint" type="button">给我一点提示</button><button class="ghost-btn" id="bal-reset" type="button">全部改回 1</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="配平结果">
+<div class="readout-head"><h2>左右两边的原子</h2><span class="badge" id="bal-badge">未配平</span></div>
+<div class="stat-grid">
+<div class="stat"><span>反应物一边原子总数</span><strong id="bal-left">—</strong></div>
+<div class="stat"><span>生成物一边原子总数</span><strong id="bal-right">—</strong></div>
+<div class="stat wide"><span>还没对齐的原子</span><strong id="bal-diff" style="font-size:18px">—</strong></div>
+</div>
+<div class="formula" id="bal-eq"></div>
+<p class="lead" id="bal-text" aria-live="polite" style="margin-top:10px"></p>
+</section>
+<section class="card panel" aria-label="原子个数表">
+<h2>原子个数表</h2>
+<p class="panel-sub" style="margin-bottom:4px">每改一次化学计量数，这张表就重新数一遍。</p>
+<table class="compare" id="atom-table"><thead><tr><th>原子</th><th>反应物一边</th><th>生成物一边</th><th>相等吗</th></tr></thead><tbody></tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="质量守恒天平">
+<h2>天平称一称：质量变了吗</h2>
+<p class="panel-sub">选一个实验，点“开始反应”，看反应结束后天平还平不平。</p>
+<div class="ctl-row" style="margin-top:0"><span>实验</span><div class="chips small" id="exp-chips"></div></div>
+<svg id="scale" viewBox="0 0 400 250" role="img" aria-label="托盘天平，左盘放实验装置，右盘放砝码"></svg>
+<div class="btn-row"><button class="big-btn" id="scale-run" type="button">开始反应</button><button class="ghost-btn" id="scale-reset" type="button">重来</button></div>
+</section>
+<div class="stack">
+<section class="readout" aria-label="天平读数">
+<div class="readout-head"><h2>天平告诉我们</h2><span class="badge" id="scale-badge">平衡</span></div>
+<div class="stat-grid">
+<div class="stat"><span>反应前左盘总质量</span><strong id="m-before">—</strong></div>
+<div class="stat"><span>现在左盘总质量</span><strong id="m-now">—</strong></div>
+<div class="stat wide"><span>变化</span><strong id="m-diff" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="scale-text" aria-live="polite"></p>
+</section>
+<section class="card panel figure" aria-label="分子拆开原子重组">
+<h2>放大到原子：拆开再重组</h2>
+<p class="panel-sub">拖动滑块或点“播放”，看 2 个氢分子和 1 个氧分子怎样变成 2 个水分子。</p>
+<svg id="micro" viewBox="0 0 400 200" role="img" aria-label="氢气与氧气反应生成水的微观过程"></svg>
+<div class="control"><div class="control-heading"><label for="micro-in">反应进行到</label><output id="micro-out">0%</output></div><input id="micro-in" type="range" min="0" max="100" step="1" value="0"><div class="ruler"><span>分子</span><span>原子</span><span>新分子</span></div></div>
+<div class="stat-grid"><div class="stat"><span>H 原子 / O 原子</span><strong id="mi-atoms">4 / 2</strong></div><div class="stat"><span>分子个数</span><strong id="mi-mols">3</strong></div></div>
+<button class="ghost-btn" id="micro-play" type="button">播放</button>
+<p class="note" id="micro-text"></p>
+<aside class="analogy"><h3><i>打个比方</i> 化学反应像拆乐高再拼</h3><p>把两辆乐高小车拆成一块块积木，再拼成一架飞机。积木一块没多、一块没少，每块也没变重，所以总重量不变；可“小车”没了，变成了“飞机”。原子就是积木：<b>原子不变，物质变了</b>。积木块数守恒，拼出来的作品个数却不一定相同，就像分子个数可能会变。</p></aside>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="利用化学方程式计算">
+<h2>按比例算：用多少、生多少</h2>
+<p class="panel-sub">方程式定下了各物质的质量比。拖动滑块改反应物的质量，下面两根条永远一样长，比例也不变。</p>
+<div class="ctl-row" style="margin-top:0"><span>反应</span><div class="chips small" id="calc-chips"></div></div>
+<svg id="calc" viewBox="0 0 400 210" role="img" aria-label="参加反应的物质与生成物的质量条形图"></svg>
+<div class="control"><div class="control-heading"><label for="calc-in" id="calc-label">高锰酸钾的质量</label><output id="calc-out">31.6 g</output></div><input id="calc-in" type="range" min="1" max="40" step="0.1" value="31.6"><div class="ruler"><span id="calc-r0">1 g</span><span></span><span id="calc-r2">40 g</span></div></div>
+</section>
+<section class="readout" aria-label="计算过程">
+<div class="readout-head"><h2>解题六步</h2><span class="badge" id="calc-badge">第 1 步</span></div>
+<div class="stat-grid">
+<div class="stat"><span id="calc-xl">生成氧气的质量</span><strong id="calc-x">—</strong></div>
+<div class="stat"><span>关键质量比</span><strong id="calc-ratio" style="font-size:18px">—</strong></div>
+</div>
+<div class="steps" id="calc-steps"></div>
+<div class="formula" id="calc-work" style="font-size:14px;line-height:1.9"></div>
+<div class="btn-row"><button class="big-btn" id="calc-next" type="button">下一步</button><button class="ghost-btn" id="calc-all" type="button">一次看完</button></div>
+<p class="lead" id="calc-text" aria-live="polite" style="margin-top:10px"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么反应前后质量一定相等</h3>
+<p class="derive-lead">天平只能告诉我们“相等”，原子模型能告诉我们“为什么相等”。</p>
+<ol>
+<li><h4>化学反应就是“拆了重拼”</h4><p>氢气燃烧时，氢分子和氧分子先拆成氢原子和氧原子，原子再重新组合成水分子。原子在化学反应里不会再被拆开，它是<b>化学变化中的最小粒子</b>。</p></li>
+<li><h4>原子的种类不变</h4><p>反应前只有 H 和 O，反应后还是只有 H 和 O，不会凭空冒出碳原子。所以从宏观看，<b>元素种类不变</b>。</p></li>
+<li><h4>原子的数目不变</h4><p>上面的动画里，H 原子从头到尾都是 4 个，O 原子都是 2 个。配平方程式，就是在纸上让左右两边的原子个数对齐。</p></li>
+<li><h4>原子的质量不变</h4><p>每个原子自己的质量不变，个数也不变，加起来的总质量当然不变。这就是质量守恒定律的<b>微观本质</b>。</p></li>
+<li><h4>分子却变了</h4><p>分子种类一定变（氢分子、氧分子变成了水分子）；分子个数可能变，这里是 3 个变成 2 个。所以不能说“分子数目守恒”。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>质量守恒是原子“种类、数目、质量”三不变的必然结果；也正因为质量比是固定的，知道一种物质的质量，就能按方程式算出其他物质的质量。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>质量守恒定律</h3><p><b>参加化学反应</b>的各物质的质量总和，等于反应后<b>生成</b>的各物质的质量总和。它只适用于化学变化；过量剩下、没参加反应的那部分不能算进去。</p></div></div>
+<div class="fact"><div><h3>哪些不变，哪些变</h3><p>一定不变：物质总质量、元素种类和质量（宏观），原子种类、数目、质量（微观）。一定改变：物质种类、分子种类。可能改变：分子数目。</p></div></div>
+<div class="fact"><div><h3>方程式怎么写</h3><p>以客观事实为基础、遵守质量守恒定律。写对化学式 → 配平 → 注明条件（点燃、加热写“△”、高温、催化剂等）→ 反应物里没有气体而生成了气体，标“↑”；溶液里的反应生成了固体，标“↓”。</p></div></div>
+<div class="fact"><div><h3>方程式能读出什么</h3><p>以 <span data-eq="2H2 + O2 =点燃= 2H2O"></span> 为例：氢气和氧气在点燃条件下生成水；每 4 份质量的氢气和 32 份质量的氧气反应，生成 36 份质量的水；分子个数比为 2∶1∶2。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>配平只能改化学式<b>前面</b>的化学计量数，绝不能改右下角的小数字：把 H<sub>2</sub>O 改成 H<sub>2</sub>O<sub>2</sub>，就变成过氧化氢，是另一种物质了。敞口烧杯里碳酸钠和盐酸反应后天平不平衡，<b>不是</b>质量不守恒，而是二氧化碳跑进空气里没被称到；有气体参加或生成的反应，要在<b>密闭容器</b>里验证。另外，10 g 冰融化成 10 g 水是物理变化，不能用质量守恒定律来解释。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这道配平题发给同学</h3><p>链接会记住你选的反应、填的化学计量数和计算用的质量。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中化学占 50 分，方程式和质量守恒是化学计算的基础</h3>
+<ul>
+<li><b>选择题</b>：看微观示意图，判断反应前后哪些粒子变了、哪些没变；或者由“燃烧生成 CO<sub>2</sub> 和 H<sub>2</sub>O”推断这种物质里一定含有哪些元素。</li>
+<li><b>填空题</b>：书写化学方程式。写完逐项检查四件事：化学式对不对、配平没有、条件写了没有、↑↓ 该不该标。</li>
+<li><b>实验探究</b>：验证质量守恒定律的装置为什么要密闭；锥形瓶上的气球有什么用（缓冲瓶内气压，防止橡胶塞被冲开）；敞口实验天平为什么不平衡。</li>
+<li><b>计算题</b>：按“设、写、找、列、求、答”的格式书写。设未知数时 x 后面不带单位；代入方程式的必须是<b>纯净物</b>的质量。</li>
+</ul>
+<div class="q"><b>典型设问</b>　加热 31.6 g 高锰酸钾，完全分解后能得到氧气多少克？<br><b>怎么想</b>　写出 <span data-eq="2KMnO4 =△= K2MnO4 + MnO2 + O2↑"></span>，找到 2 × 158 = 316 份质量的高锰酸钾生成 32 份质量的氧气，列出 316 : 32 = 31.6 g : x，解得 x = 3.2 g。最常丢分的是忘了把高锰酸钾的相对分子质量<b>乘上化学计量数 2</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>化学互动馆 · 第 5 课</p><p>天平读数为示意，忽略气球受到的空气浮力；相对原子质量取 H 1、C 12、O 16、Cl 35.5、K 39、Ca 40、Mn 55。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

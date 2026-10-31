@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="给水通电，看两支玻璃管里的气体按 2 : 1 增长并逐一检验；选阳离子和阴离子，用交叉法写出化学式并检查化合价；一步步沉降、过滤、吸附、蒸馏，再用肥皂水区分硬水和软水。化学互动馆第 4 课，对应人教版九年级上册第四单元。">
+<meta property="og:title" content="化学互动馆 · 自然界的水">
+<title>自然界的水 · 化学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="chem.css">
+<script defer src="common.js"></script>
+<script defer src="water.js"></script>
+</head>
+<body data-module="water">
+<header class="topbar"><a class="brand" href="index.html" aria-label="化学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.4 9.2A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.8L14 9V3"/><path d="M7.5 15h9"/></svg><span>化学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 4 课 <span>/</span> 九年级上册 第四单元</p><h1>自然界的水</h1><p class="subtitle">水天天见，可它到底由什么组成？通一次电，水自己就把答案“拆”给你看。顺便学会用化合价写化学式，再把一杯浑水变干净。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="电解水实验">
+<h2>电解水：通电看气泡</h2>
+<p class="panel-sub">水里加了少量硫酸钠，增强导电性。拖动通电时间（或直接接通电源），再分别检验两支管里的气体。</p>
+<svg id="elec" viewBox="0 0 400 250" role="img" aria-label="电解水实验装置"></svg>
+<div class="control"><div class="control-heading"><label for="time-in">通电时间</label><output id="time-out">0 min</output></div><input id="time-in" type="range" min="0" max="10" step="0.1" value="0"><div class="ruler"><span>0</span><span>5 min</span><span>10 min</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="elec-run">接通电源</button><button type="button" class="ghost-btn" id="test-h">检验负极气体</button><button type="button" class="ghost-btn" id="test-o">检验正极气体</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="电解水读数">
+<div class="readout-head"><h2>两支玻璃管</h2><span class="badge" id="elec-badge">未通电</span></div>
+<div class="stat-grid">
+<div class="stat"><span>负极气体体积</span><strong id="h2-out">—</strong></div>
+<div class="stat"><span>正极气体体积</span><strong id="o2-out">—</strong></div>
+<div class="stat"><span>负极 : 正极</span><strong id="ratio-out">—</strong></div>
+<div class="stat"><span>检验结果</span><strong id="test-out" style="font-size:17px">还没检验</strong></div>
+</div>
+<p class="formula">2H<sub>2</sub>O <span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .3em;line-height:1"><small style="font-size:.62em;margin-bottom:2px">通电</small><span style="display:block;width:2.6em;height:4px;border-top:1.5px solid;border-bottom:1.5px solid"></span></span> 2H<sub>2</sub>↑ + O<sub>2</sub>↑</p>
+<p class="lead" id="elec-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="两极气体对比">
+<h2>正氧负氢，氢二氧一</h2>
+<table class="compare"><thead><tr><th>电极</th><th>气体</th><th>体积</th><th>怎么检验</th></tr></thead><tbody>
+<tr><td>负极</td><td>氢气 H<sub>2</sub></td><td>2 份</td><td>点燃，气体燃烧，产生淡蓝色火焰</td></tr>
+<tr><td>正极</td><td>氧气 O<sub>2</sub></td><td>1 份</td><td>带火星的木条伸入，木条复燃</td></tr>
+</tbody></table>
+<p class="note">实际做实验时，氧气比氢气稍易溶于水，测得的体积比常略大于 2 : 1。</p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="根据化合价写化学式">
+<h2>化合价“交叉法”写化学式</h2>
+<p class="panel-sub">先选一个阳离子（或金属元素），再选一个阴离子（或原子团），看化学式是怎样“交叉、约简”出来的。</p>
+<svg id="fx" viewBox="0 0 400 220" role="img" aria-label="交叉法写化学式的步骤"></svg>
+<div class="ctl-row"><span>正价部分</span><div class="chips small" id="cat-chips"></div></div>
+<div class="ctl-row"><span>负价部分</span><div class="chips small" id="an-chips"></div></div>
+</section>
+<section class="readout" aria-label="化学式结果">
+<div class="readout-head"><h2 id="fx-name">—</h2><span class="badge" id="fx-badge">—</span></div>
+<div class="stat-grid"><div class="stat wide"><span>化学式</span><strong id="fx-formula" class="bignum" style="font-size:30px">—</strong></div><div class="stat wide"><span>检验：正负化合价代数和</span><strong id="fx-sum" style="font-size:17px">—</strong></div></div>
+<p class="lead" id="fx-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 化合价像每个人伸出的手</h3><p>Al 显 +3 价，就像伸出 3 只手；Cl 显 −1 价，只有 1 只手。要让每只手都被握住、一只不剩，1 个 Al 就得拉上 3 个 Cl，写成 AlCl<sub>3</sub>。交叉法就是把“对方有几只手”写成自己的个数，再把能约的约掉。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="净化水">
+<h2>净水四步：把一杯浑水变干净</h2>
+<p class="panel-sub">一步步往下做，看每一步能除掉什么、留下什么。最后加肥皂水看看它是硬水还是软水。</p>
+<div class="steps" id="pure-steps"></div>
+<svg id="pure" viewBox="0 0 400 230" role="img" aria-label="一杯水在净化过程中的变化" style="margin-top:8px"></svg>
+<div class="btn-row"><button type="button" class="big-btn" id="pure-next">下一步</button><button type="button" class="ghost-btn" id="pure-soap">加肥皂水振荡</button><button type="button" class="ghost-btn" id="pure-boil">煮沸</button><button type="button" class="ghost-btn" id="pure-reset">换一杯浑水</button></div>
+</section>
+<section class="readout" aria-label="净水结果">
+<div class="readout-head"><h2>这杯水</h2><span class="badge" id="pure-badge">原水</span></div>
+<div class="stat-grid"><div class="stat"><span>它是</span><strong id="pure-kind" style="font-size:19px">—</strong></div><div class="stat"><span>硬度</span><strong id="pure-hard" style="font-size:19px">—</strong></div></div>
+<ul class="cond-list" id="pure-list"></ul>
+<p class="lead" id="pure-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么说水由氢元素和氧元素组成</h3>
+<p class="derive-lead">电解水只用了水这一种反应物，生成了两种气体。顺着“元素种类不变”往回推，就知道水里有什么。</p>
+<ol>
+<li><h4>先认出两种气体</h4><p>负极的气体能燃烧，产生淡蓝色火焰，是<b>氢气</b>；正极的气体能使带火星的木条复燃，是<b>氧气</b>。</p></li>
+<li><h4>元素在反应前后不会变</h4><p>化学反应只是原子重新组合，元素种类不变。生成物里有氢元素和氧元素，反应物只有水，所以<b>水由氢元素和氧元素组成</b>。</p></li>
+<li><h4>为什么不能说“由氢气和氧气组成”</h4><p>氢气和氧气是反应<b>新生成</b>的物质。水是一种纯净物，里面并没有氢气和氧气，就像面包是烤出来的，不能说面包里“装着”面粉和水。</p></li>
+<li><h4>从微观看 2 : 1</h4><p>2 个水分子分成 4 个氢原子和 2 个氧原子，重新组合成 2 个氢分子和 1 个氧分子。氢分子个数是氧分子的 2 倍，体积也就是 2 倍。每个水分子由 2 个氢原子和 1 个氧原子构成，所以写成 H<sub>2</sub>O。</p></li>
+<li><h4>反过来也成立</h4><p>氢气在氧气中燃烧生成水：2H<sub>2</sub> + O<sub>2</sub> <span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .3em;line-height:1"><small style="font-size:.62em;margin-bottom:2px">点燃</small><span style="display:block;width:2.6em;height:4px;border-top:1.5px solid;border-bottom:1.5px solid"></span></span> 2H<sub>2</sub>O。一个拆、一个合，得出的结论一样。氢气点燃前一定要<b>检验纯度</b>。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>水是由氢元素和氧元素组成的<b>化合物</b>，水分子由氢原子和氧原子构成；氢气、氧气只能说是电解水的产物。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>单质、化合物、氧化物</h3><p>由同种元素组成的纯净物是<b>单质</b>，如 H<sub>2</sub>、O<sub>2</sub>；由不同种元素组成的纯净物是<b>化合物</b>，如 H<sub>2</sub>O。由两种元素组成、其中一种是氧元素的化合物叫<b>氧化物</b>。</p></div></div>
+<div class="fact"><div><h3>化合价的规矩</h3><p>化合物里<b>正负化合价代数和为零</b>；单质里元素的化合价为零。金属一般显正价。Fe 显 +2 价时读作“亚铁”。原子团个数大于 1 要加括号，如 Ca(OH)<sub>2</sub>。</p></div></div>
+<div class="fact"><div><h3>净水方法</h3><p>沉降、过滤只能除去<b>难溶性</b>杂质；活性炭吸附色素和异味；蒸馏能除去可溶性杂质，得到的蒸馏水是<b>纯净物</b>，净化程度最高。</p></div></div>
+<div class="fact"><div><h3>硬水和软水</h3><p>含较多可溶性钙、镁化合物的是硬水。加肥皂水振荡，<b>泡沫少、浮渣多</b>的是硬水。生活中用<b>煮沸</b>降低水的硬度，实验室用蒸馏。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>过滤要做到<b>一贴二低三靠</b>：滤纸紧贴漏斗内壁；滤纸边缘低于漏斗边缘，液面低于滤纸边缘；烧杯口靠玻璃棒，玻璃棒靠三层滤纸一边，漏斗下端靠烧杯内壁。过滤后仍浑浊，多半是<b>滤纸破损</b>或液面高过了滤纸边缘。过滤得到的水<b>仍是混合物</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这几步发给同学</h3><p>链接会记住通电时间、选的离子和净水做到了哪一步。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中化学占 50 分，水的组成和化学式书写常在选择题和填空里出现</h3>
+<ul>
+<li><b>选择题</b>：电解水实验的描述是否正确（哪极是什么气体、体积比、能得出什么结论）；净水方法各能除去什么。</li>
+<li><b>化学用语</b>：根据化合价写化学式，或根据化学式求某元素的化合价；判断物质是单质、化合物还是氧化物。</li>
+<li><b>实验题</b>：过滤操作的要点和“滤液仍浑浊”的原因；用肥皂水区分硬水和软水。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（化学 10 分），过滤这类基本操作要动手练过，玻璃棒的作用是<b>引流</b>。</li>
+</ul>
+<div class="q"><b>典型设问</b>　高铁酸钠（Na<sub>2</sub>FeO<sub>4</sub>）是一种新型净水剂，其中铁元素的化合价是：A. +2　B. +3　C. +6　D. +7。<br><b>怎么想</b>　设铁为 x。钠显 +1，氧显 −2，代数和为零：(+1)×2 + x + (−2)×4 = 0，解得 x = <b>+6</b>，选 <b>C</b>。不要因为“铁常见 +2、+3”就凭印象选，<b>一律列式求</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>化学互动馆 · 第 4 课</p><p>电解水的气体体积按理想的 2 : 1 绘制；净水图里的杂质、钙镁化合物只是示意，实际上可溶性杂质是看不见的。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

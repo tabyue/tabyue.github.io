@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="点燃红磷测定空气里氧气的含量，打开误差开关看结果为什么偏大或偏小；对比加不加二氧化锰时过氧化氢分解的快慢；自己挑发生装置和收集方法制取一瓶氧气。化学互动馆第 2 课，对应人教版九年级上册第二单元。">
+<meta property="og:title" content="化学互动馆 · 空气和氧气">
+<title>空气和氧气 · 化学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="chem.css">
+<script defer src="common.js"></script>
+<script defer src="air.js"></script>
+</head>
+<body data-module="air">
+<header class="topbar"><a class="brand" href="index.html" aria-label="化学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.4 9.2A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.8L14 9V3"/><path d="M7.5 15h9"/></svg><span>化学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 2 课 <span>/</span> 九年级上册 第二单元</p><h1>空气和氧气</h1><p class="subtitle">空气看不见摸不着，可一小块红磷就能把里面的氧气“称”出来。点一次火，再故意做错几次，误差从哪来就清楚了。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="测定空气里氧气的含量">
+<h2>集气瓶：测定空气里氧气的含量</h2>
+<p class="panel-sub">瓶里水面以上的空间已分成 5 等份。点燃红磷后看它燃烧、冷却，再打开止水夹，数一数水进去几份。</p>
+<svg id="jar" viewBox="0 0 400 250" role="img" aria-label="红磷燃烧测定氧气含量的装置"></svg>
+<div class="btn-row"><button type="button" class="big-btn" id="jar-run">点燃红磷，开始实验</button><button type="button" class="ghost-btn" id="jar-reset">重置</button></div>
+<div class="ctl-row"><span>故意出错</span><div class="chips small" id="err-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="测定结果">
+<div class="readout-head"><h2>测定结果</h2><span class="badge" id="jar-badge">未开始</span></div>
+<div class="stat-grid">
+<div class="stat"><span>测得氧气的体积分数</span><strong id="o2-out">—</strong></div>
+<div class="stat"><span>进入瓶中的水</span><strong id="water-out">—</strong></div>
+<div class="stat wide"><span>瓶内气压</span><strong id="p-out" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="jar-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="空气的成分">
+<h2>空气的成分（按体积计算）</h2>
+<p class="panel-sub" style="margin-bottom:10px">空气是由多种气体组成的<b>混合物</b>。下面是体积分数，不是质量分数。</p>
+<div class="bar-list">
+<div class="bar-item"><span>氮气</span><div class="track"><div class="fill" style="width:78%"></div></div><em>约 78%</em></div>
+<div class="bar-item"><span>氧气</span><div class="track"><div class="fill" style="width:21%;background:#d08a6c"></div></div><em>约 21%</em></div>
+<div class="bar-item"><span>稀有气体</span><div class="track"><div class="fill" style="width:0.94%;min-width:3px"></div></div><em>约 0.94%</em></div>
+<div class="bar-item"><span>二氧化碳</span><div class="track"><div class="fill" style="width:0.03%;min-width:2px"></div></div><em>约 0.03%</em></div>
+<div class="bar-item"><span>其他</span><div class="track"><div class="fill" style="width:0.03%;min-width:2px"></div></div><em>约 0.03%</em></div>
+</div>
+<p class="note">氮气化学性质不活泼，可以充进食品包装防腐；稀有气体通电时发出不同颜色的光，可以做霓虹灯。</p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="催化剂对反应速率的影响">
+<h2>二氧化锰：只管快慢，不管多少</h2>
+<p class="panel-sub">两份一样的过氧化氢溶液，一份加二氧化锰，一份不加。拖动时间，比较两条“氧气体积–时间”曲线。</p>
+<svg id="cat" viewBox="0 0 400 230" role="img" aria-label="产生氧气体积随时间变化的曲线"></svg>
+<div class="control"><div class="control-heading"><label for="t-in">反应时间</label><output id="t-out">2 min</output></div><input id="t-in" type="range" min="0" max="30" step="0.5" value="2"><div class="ruler"><span>0</span><span>15 min</span><span>30 min</span></div></div>
+<div class="ctl-row"><span>溶液用量</span><div class="chips small" id="vol-chips"></div><button type="button" class="ghost-btn" id="cat-play">从头播放</button></div>
+</section>
+<section class="readout" aria-label="催化剂读数">
+<div class="readout-head"><h2>两瓶对比</h2><span class="badge" id="cat-badge">加 MnO₂ 的快</span></div>
+<div class="stat-grid"><div class="stat"><span>加二氧化锰</span><strong id="cat-with">—</strong></div><div class="stat"><span>不加二氧化锰</span><strong id="cat-no">—</strong></div><div class="stat wide"><span>二氧化锰的质量（反应前 → 反应后）</span><strong id="cat-mno2" style="font-size:18px">1 g → 1 g</strong></div></div>
+<p class="lead" id="cat-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 催化剂像一座新修的桥</h3><p>从河这边到对岸，原来要绕很远的路，修了桥就快多了。可是要过河的人数没变，桥也不会被人带走。二氧化锰就是这座桥：让过氧化氢分解得<b>更快</b>，但生成的氧气<b>一点也不会多</b>，它自己的质量和化学性质在反应前后也<b>不变</b>。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="制取氧气">
+<h2>制氧台：选装置，收一瓶氧气</h2>
+<p class="panel-sub">先选药品，再配发生装置和收集方法，点“开始制取”。集满后用带火星的木条检验。</p>
+<svg id="prep" viewBox="0 0 400 240" role="img" aria-label="实验室制取氧气的装置"></svg>
+<div class="ctl-row"><span>药品</span><div class="chips small" id="drug-chips"></div></div>
+<div class="ctl-row"><span>发生装置</span><div class="chips small" id="gen-chips"></div></div>
+<div class="ctl-row"><span>收集方法</span><div class="chips small" id="col-chips"></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="prep-run">开始制取</button><button type="button" class="ghost-btn" id="prep-test">用带火星的木条检验</button></div>
+</section>
+<section class="readout" aria-label="制取结果">
+<div class="readout-head"><h2>这套装置</h2><span class="badge" id="prep-badge">待制取</span></div>
+<div class="stat-grid"><div class="stat"><span>发生装置</span><strong id="prep-gen" style="font-size:18px">—</strong></div><div class="stat"><span>收集方法</span><strong id="prep-col" style="font-size:18px">—</strong></div></div>
+<p class="formula" id="prep-eq"></p>
+<p class="lead" id="prep-text" aria-live="polite"></p>
+<div class="ctl-row" style="margin-top:16px"><span>在氧气里烧</span><div class="chips small" id="burn-chips"></div></div>
+<p class="formula" id="burn-eq"></p>
+<p class="lead" id="burn-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么水正好能进去约 1/5</h3>
+<p class="derive-lead">整个实验其实是在“借”大气压量体积。想清楚瓶里的气体少了多少，就知道水会进来多少。</p>
+<ol>
+<li><h4>红磷只吃掉氧气，还不留下气体</h4><p>红磷燃烧：4P + 5O<sub>2</sub> <span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .3em;line-height:1"><small style="font-size:.62em;margin-bottom:2px">点燃</small><span style="display:block;width:2.6em;height:4px;border-top:1.5px solid;border-bottom:1.5px solid"></span></span> 2P<sub>2</sub>O<sub>5</sub>。生成的五氧化二磷是<b>固体</b>小颗粒（就是白烟），不占气体的位置。氮气既不燃烧也不支持燃烧，留在瓶里不动。</p></li>
+<li><h4>燃烧时为什么要夹紧止水夹</h4><p>燃烧放热，瓶里的气体受热膨胀，气压比外面高。止水夹不夹紧，热气体就会从导管跑掉。</p></li>
+<li><h4>冷却后瓶里“空出”一块</h4><p>等装置冷却到室温，氧气已经没了，剩下的气体变少，瓶内气压<b>小于</b>外界大气压。</p></li>
+<li><h4>水来填空</h4><p>打开止水夹，大气压把烧杯里的水压进集气瓶，直到里外气压相等。<b>进入的水的体积 = 被消耗的氧气的体积</b>，约为原来空气的 1/5。</p></li>
+<li><h4>误差只有两个方向</h4><p>氧气没耗尽、外面空气漏进来、气体还热着，瓶里“空出”的就少，结果<b>偏小</b>；瓶里原来的空气（连氮气一起）被热得跑出去一部分，空出的就多，结果<b>偏大</b>。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>选药品有两个条件：只和空气中的氧气反应，并且生成物不是气体。木炭燃烧生成二氧化碳气体，铁丝在空气里不能燃烧，都不能代替红磷。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>氧气的性质</h3><p>通常是无色无味的气体，密度比空气略大，<b>不易溶于水</b>。化学性质比较活泼，能<b>支持燃烧</b>，也能供给呼吸，但它自己<b>不能燃烧</b>，不能当燃料。</p></div></div>
+<div class="fact"><div><h3>两种制法</h3><p>2KMnO<sub>4</sub> <span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .3em;line-height:1"><small style="font-size:.62em;margin-bottom:2px">△</small><span style="display:block;width:2.6em;height:4px;border-top:1.5px solid;border-bottom:1.5px solid"></span></span> K<sub>2</sub>MnO<sub>4</sub> + MnO<sub>2</sub> + O<sub>2</sub>↑；2H<sub>2</sub>O<sub>2</sub> <span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .3em;line-height:1"><small style="font-size:.62em;margin-bottom:2px">MnO<sub>2</sub></small><span style="display:block;width:2.6em;height:4px;border-top:1.5px solid;border-bottom:1.5px solid"></span></span> 2H<sub>2</sub>O + O<sub>2</sub>↑。都是“一变多”的<b>分解反应</b>。</p></div></div>
+<div class="fact"><div><h3>催化剂“一变两不变”</h3><p>能改变别的物质的化学反应<b>速率</b>，而本身的<b>质量</b>和<b>化学性质</b>在反应前后都不变。“改变”可以是加快，也可以是减慢。</p></div></div>
+<div class="fact"><div><h3>检验和验满</h3><p>把带火星的木条<b>伸入瓶中</b>，复燃说明是氧气；用向上排空气法收集时，把它放在<b>瓶口</b>，复燃说明已经集满。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>“空气中氧气约占 21%”说的是<b>体积</b>，不是质量。加二氧化锰只让氧气来得快，<b>不会多</b>。用高锰酸钾制氧并用排水法收集时，结束要<b>先把导管移出水面，再熄灭酒精灯</b>，顺序反了，水会倒吸进热试管使它炸裂。描述现象时说“生成二氧化碳”是结论，不是现象。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这套实验发给同学</h3><p>链接会记住误差开关、反应时间和你搭的装置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中化学占 50 分，空气和氧气是实验题的“老面孔”</h3>
+<ul>
+<li><b>选择题</b>：空气成分和用途；描述硫、木炭、铁丝在氧气中燃烧的现象，注意“白烟”和“白雾”、“现象”和“结论”的区别。</li>
+<li><b>实验题</b>：红磷测氧气含量的误差分析，给一个操作，判断结果偏大还是偏小。</li>
+<li><b>实验题</b>：根据药品和条件选发生装置（固体加热型 / 固液常温型），根据密度和溶解性选收集方法，说出试管口略向下倾斜、放棉花的原因。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（化学 10 分），检查装置气密性、加热、收集气体这些基本操作要亲手练熟。</li>
+</ul>
+<div class="q"><b>典型设问</b>　用红磷测定空气中氧气的含量，测得结果明显小于 1/5，原因可能是：A. 红磷过量　B. 止水夹没有夹紧　C. 装置漏气　D. 点燃红磷后伸入集气瓶太慢。<br><b>怎么想</b>　偏小，说明瓶里“空出”的体积少了。红磷过量能把氧气耗尽，正是实验要求；B、D 都会让瓶内气体跑出去，结果<b>偏大</b>；漏气时冷却阶段外面的空气钻进来，空出的少了，所以选 <b>C</b>。<b>先判断瓶里的气体是多跑了还是多进了</b>，方向就不会错。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>化学互动馆 · 第 2 课</p><p>测定实验中忽略了瓶颈和导管的体积；催化剂曲线为示意，常温下不加二氧化锰时过氧化氢实际分解得更慢。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

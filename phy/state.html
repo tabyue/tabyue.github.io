@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="给冰和蜡加热，拖动时间画出温度–时间曲线，看晶体熔化和水沸腾时的“平台”；点六个箭头认识熔化、凝固、汽化、液化、升华、凝华和身边的例子；练习读零下温度。物理互动馆第 3 课，对应人教版八年级上册第三章。">
+<meta property="og:title" content="物理互动馆 · 物态变化">
+<title>物态变化 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="state.js"></script>
+</head>
+<body data-module="state">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 3 课 <span>/</span> 八年级上册 第三章</p><h1>物态变化</h1><p class="subtitle">回南天墙壁“出汗”、冰棒冒“白气”、衣柜里的樟脑丸越变越小，背后是同一件事：物质在固、液、气之间“搬家”。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="加热曲线">
+<h2>一直加热，温度会怎样变？</h2>
+<p class="panel-sub">用同样大小的火持续加热。拖动时间（或按“开始加热”），左上角看物质的样子，曲线记录它的温度。</p>
+<svg id="heat" viewBox="0 0 400 250" role="img" aria-label="温度随加热时间变化的曲线"></svg>
+<div class="ctl-row"><span>加热的物质</span><div class="chips small" id="sub-chips"></div></div>
+<div class="control" style="margin-top:12px"><div class="control-heading"><label for="time-in">加热时间</label><output id="time-out">0 min</output></div><input id="time-in" type="range" min="0" max="25" step="0.25" value="0"><div class="ruler"><span>0</span><span>12.5 min</span><span>25 min</span></div></div>
+<div class="btn-row"><button class="big-btn" id="heat-play" type="button">开始加热</button><button class="ghost-btn" id="heat-reset" type="button">重置</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="加热读数">
+<div class="readout-head"><h2>此刻的状态</h2><span class="badge" id="state-badge">固态</span></div>
+<div class="stat-grid">
+<div class="stat"><span>加热时间</span><strong id="heat-t">—</strong></div>
+<div class="stat"><span>温度</span><strong id="heat-T">—</strong></div>
+<div class="stat"><span>吸热还是放热</span><strong id="heat-q">吸热</strong></div>
+<div class="stat"><span>温度在</span><strong id="heat-trend">—</strong></div>
+<div class="stat wide"><span>正在发生</span><strong id="heat-phase" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="heat-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="分段说明">
+<h2 id="seg-title">冰的加热过程</h2>
+<p class="panel-sub" style="margin-bottom:4px">当前所在的一段会高亮。</p>
+<table class="compare" id="seg-table"><thead><tr><th>时段</th><th>状态</th><th>温度</th></tr></thead><tbody></tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="六种物态变化">
+<h2>六种物态变化</h2>
+<p class="panel-sub">点一个箭头（或下面的按钮），看它叫什么、吸热还是放热、深圳生活里哪儿见得到。红色箭头吸热，蓝色箭头放热。</p>
+<svg id="phase" viewBox="0 0 400 250" role="group" aria-label="固态、液态、气态之间的六种物态变化"></svg>
+<div class="chips small" id="pc-chips" style="margin-top:8px"></div>
+</section>
+<section class="readout" aria-label="物态变化说明">
+<div class="readout-head"><h2 id="pc-name">熔化</h2><span class="badge" id="pc-badge">吸热</span></div>
+<div class="stat-grid">
+<div class="stat"><span>从哪种状态</span><strong id="pc-from">—</strong></div>
+<div class="stat"><span>变成哪种状态</span><strong id="pc-to">—</strong></div>
+</div>
+<p class="lead" id="pc-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 三种状态像上课、课间和放学</h3><p>固态像<b>上课</b>：同学们坐在固定座位上，只能原地动一动；液态像<b>课间</b>：大家在教室里走来走去，但不出教室；气态像<b>放学</b>：一窝蜂冲出教室，四散跑开。要从“上课”变成“放学”，得先给大家加把劲（<b>吸热</b>）；反过来，大家安静下来、回到座位，就会把多余的劲儿交出来（<b>放热</b>）。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="温度计读数">
+<h2>温度计读数：零上还是零下？</h2>
+<p class="panel-sub">每小格 1 ℃。和实验室里的温度计一样，0 ℃ 下面的数字不带负号、越往下越大。先找到 0 ℃，看液柱顶端在它上面还是下面，再写下读数。</p>
+<svg id="thermo" viewBox="0 0 400 230" role="img" aria-label="一支温度计和它的局部放大"></svg>
+<div class="control"><div class="control-heading"><label for="tm-in">你的读数</label><output id="tm-out">0 ℃</output></div><input id="tm-in" type="range" min="-20" max="40" step="1" value="0"><div class="ruler"><span>−20 ℃</span><span>10 ℃</span><span>40 ℃</span></div></div>
+<div class="btn-row"><button class="ghost-btn" id="tm-minus" type="button" aria-label="读数减 1 ℃">− 1 ℃</button><button class="ghost-btn" id="tm-plus" type="button" aria-label="读数加 1 ℃">+ 1 ℃</button><button class="big-btn" id="tm-check" type="button">核对读数</button><button class="ghost-btn" id="tm-new" type="button">换一个温度</button></div>
+</section>
+<section class="readout" aria-label="温度计读数核对">
+<div class="readout-head"><h2>读数核对</h2><span class="badge" id="tm-badge">待核对</span></div>
+<div class="stat-grid">
+<div class="stat"><span>你的读数</span><strong id="tm-you">—</strong></div>
+<div class="stat"><span>正确读数</span><strong id="tm-ans">—</strong></div>
+<div class="stat wide"><span>读作</span><strong id="tm-say" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="tm-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么冰熔化时一直吸热，温度却不变</h3>
+<p class="derive-lead">看着加热曲线上那段“平台”，一步步想。</p>
+<ol>
+<li><h4>温度表示“动得有多欢”</h4><p>物质由大量很小的粒子组成，它们一直在不停地运动。<b>温度越高，粒子运动越剧烈</b>。平时加热，吸收的热量让粒子动得更欢，温度就升高。</p></li>
+<li><h4>晶体里的粒子排得整整齐齐</h4><p>冰、海波、各种金属是<b>晶体</b>，粒子排成整齐的队列，彼此“手拉着手”，只能在自己的位置附近振动。</p></li>
+<li><h4>到了熔点，热量用来“拆队列”</h4><p>温度升到熔点（冰是 0 ℃）后，再吸收的热量不再让粒子更快，而是用来<b>挣脱彼此的束缚</b>、把整齐的队列拆开。所以这段时间<b>一直吸热，温度却不变</b>，冰和水同时存在。</p></li>
+<li><h4>全部化完，温度才接着升</h4><p>冰全部变成水后，吸收的热量又用来让粒子运动加快，温度重新上升。到了沸点，水内部和表面同时剧烈汽化，热量用来让水变成水蒸气，温度又保持不变，这就是<b>沸腾</b>。</p></li>
+<li><h4>非晶体没有队列可拆</h4><p>蜡、松香、玻璃、沥青是<b>非晶体</b>，粒子本来就排得乱糟糟，加热时一边变软一边升温，曲线上<b>没有平台</b>，也就没有固定的熔点。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>看一条加热曲线有没有“平台”，就能判断是不是晶体；平台对应的温度就是熔点（或沸点），平台的长度就是熔化（或沸腾）持续的时间。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>温度和温度计</h3><p>常用温度计利用<b>液体热胀冷缩</b>工作。摄氏温度规定：标准大气压下冰水混合物为 0 ℃，沸水为 100 ℃。使用时玻璃泡要全部浸入被测液体、不碰容器底和壁；示数稳定后再读，读数时玻璃泡留在液体中，视线与液柱上表面相平。</p></div></div>
+<div class="fact"><div><h3>熔化和凝固</h3><p>固态变液态叫<b>熔化</b>，吸热；液态变固态叫<b>凝固</b>，放热。晶体有固定的<b>熔点</b>，同一种晶体的熔点和凝固点相同；晶体熔化要满足两个条件：<b>温度达到熔点、继续吸热</b>。</p></div></div>
+<div class="fact"><div><h3>蒸发和沸腾</h3><p>汽化有两种方式。<b>蒸发</b>在任何温度下都能发生，只在液体表面进行，比较缓慢，温度越高、表面积越大、表面空气流动越快，蒸发越快；<b>沸腾</b>要达到沸点并继续吸热，在液体内部和表面同时进行，很剧烈，沸腾时温度不变。</p></div></div>
+<div class="fact"><div><h3>液化、升华和凝华</h3><p>气态变液态叫<b>液化</b>，放热，方法有两种：<b>降低温度</b>和<b>压缩体积</b>（液化石油气就是压缩体积装进钢瓶的）。固态直接变气态叫<b>升华</b>，吸热；气态直接变固态叫<b>凝华</b>，放热。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>冰棒、开水上方冒的“白气”<b>不是水蒸气</b>。水蒸气是看不见的，“白气”是空气中（或壶里冒出）的水蒸气遇冷<b>液化</b>成的<b>小水滴</b>。还有：0 ℃ 的冰和 0 ℃ 的水一样冷，温度相同；而水沸腾以后，火开得再大，水温也不会超过沸点。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这条加热曲线发给同学</h3><p>链接会记住加热的物质、时间和你选的物态变化。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，物态变化常以生活现象辨析和实验图象出现</h3>
+<ul>
+<li><b>现象辨析</b>：给出“雾、露、霜、白气、樟脑丸变小”等现象，判断是哪种物态变化、吸热还是放热。先看“原来是什么状态、后来是什么状态”。</li>
+<li><b>图象题</b>：根据熔化或凝固图象，判断是不是晶体、熔点是多少、熔化用了多久、某一时刻处于什么状态。</li>
+<li><b>实验题</b>：探究固体熔化时温度的变化规律（常用水浴加热，让物质受热均匀、升温慢便于记录）；探究水沸腾时温度的变化特点（沸腾前气泡上升时变小，沸腾时气泡上升时变大）。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（物理 10 分），温度计的正确使用和读数是很多热学实验的基本功。</li>
+</ul>
+<div class="q"><b>典型设问</b>　给某固体持续加热，第 2 min 到第 6 min 温度一直保持 48 ℃ 不变，之后温度继续升高。这种物质是晶体还是非晶体？第 4 min 时它处于什么状态？<br><b>怎么想</b>　加热时有一段温度不变的“平台”，说明有固定的熔点，是<b>晶体</b>，熔点 48 ℃（海波就是这样）。第 2 min 开始熔化、第 6 min 熔化结束，第 4 min 正在熔化，处于<b>固液共存态</b>，熔化共用了 4 min。<b>找平台、读温度、看起止时间</b>，图象题就顺了。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 3 课</p><p>加热曲线按恒定加热、冰的比热容约为水的一半、熔化吸热约等于把同质量的水升温 80 ℃ 来示意，水的沸点取 1 标准大气压下的 100 ℃；蜡的曲线只表示趋势。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

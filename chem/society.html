@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="搭一份午餐，看六大营养素齐不齐，配对缺钙、缺铁、缺碘、缺锌会得什么病；把塑料、不锈钢、玻璃钢、羊毛等 12 种材料拖进五个分类箱，用灼烧法鉴别纤维；按深圳四分类投放生活垃圾。化学互动馆第 11 课，对应人教版九年级下册第十一单元。">
+<meta property="og:title" content="化学互动馆 · 化学与社会">
+<title>化学与社会 · 化学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="chem.css">
+<script defer src="common.js"></script>
+<script defer src="society.js"></script>
+</head>
+<body data-module="society">
+<header class="topbar"><a class="brand" href="index.html" aria-label="化学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.4 9.2A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.8L14 9V3"/><path d="M7.5 15h9"/></svg><span>化学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 11 课 <span>/</span> 九年级下册 第十一单元</p><h1>化学与社会</h1><p class="subtitle">午饭吃什么、衣服是什么料、垃圾扔进哪个桶——这些天天遇到的小事，背后都是化学。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="营养餐盘">
+<h2>搭一份午餐：六大营养素</h2>
+<p class="panel-sub">点食物放进餐盘（可以多选，再点一次拿走）。右边会亮出这些食物主要提供的营养素。</p>
+<svg id="plate" viewBox="0 0 400 240" role="img" aria-label="餐盘与六大营养素"></svg>
+<div class="ctl-row"><span>食物</span><div class="chips small" id="food-chips"></div></div>
+<div class="btn-row"><button type="button" class="ghost-btn" id="meal-clear">清空餐盘</button></div>
+<h2 style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line)">这样做安全吗</h2>
+<p class="panel-sub" style="margin-bottom:8px">每行点一个答案，点了就不能改。</p>
+<div class="choice-list" id="safe-list"></div>
+<p class="note" id="safe-score">已答 0 / 4</p>
+</section>
+<div class="settings">
+<section class="readout" aria-label="营养评价">
+<div class="readout-head"><h2>这份午餐</h2><span class="badge" id="meal-badge">还缺营养素</span></div>
+<div class="stat-grid">
+<div class="stat"><span>覆盖的营养素</span><strong id="meal-n">—</strong></div>
+<div class="stat"><span>已选食物</span><strong id="meal-count">—</strong></div>
+<div class="stat wide"><span>还缺</span><strong id="meal-miss" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="meal-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="化学元素与健康">
+<h2>元素与健康：缺了会怎样</h2>
+<p class="panel-sub" style="margin-bottom:8px">每行点一个答案，点了就不能改。</p>
+<div class="choice-list" id="elem-list"></div>
+<p class="note" id="elem-score">已答 0 / 4</p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="材料分类">
+<h2>给材料分分类</h2>
+<p class="panel-sub">先点一种材料，再点它该去的箱子；也可以直接把它拖进箱子。放错了它会弹回来。</p>
+<svg id="mat" viewBox="0 0 400 260" role="application" aria-label="材料卡片与五个分类箱"></svg>
+<div class="btn-row"><button type="button" class="ghost-btn" id="mat-reset">全部倒出来重来</button></div>
+</section>
+<section class="readout" aria-label="材料分类结果">
+<div class="readout-head"><h2>分类结果</h2><span class="badge" id="mat-badge">开始分类</span></div>
+<div class="stat-grid">
+<div class="stat"><span>已分对</span><strong id="mat-ok">—</strong></div>
+<div class="stat"><span>放错的次数</span><strong id="mat-err">—</strong></div>
+</div>
+<p class="lead" id="mat-text" aria-live="polite"></p>
+<div class="ctl-row" style="margin-top:14px"><span>灼烧鉴别</span><div class="chips small" id="burn-chips"></div></div>
+<svg id="burn" viewBox="0 0 400 110" role="img" aria-label="灼烧纤维的现象" style="display:block;width:100%;height:auto;margin-top:8px"></svg>
+<p class="lead" id="burn-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 复合材料像“夹心饼干”</h3><p>饼干脆、夹心软，合在一起比各自单吃都好。玻璃钢就是把很细的<b>玻璃纤维</b>夹进<b>合成树脂（塑料）</b>里：玻璃纤维负责结实，树脂负责把纤维粘牢、又轻又不怕腐蚀。两种不同类别的材料搭伙、取长补短，才叫复合材料。合金只是金属“掺了料”，还是金属。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="深圳生活垃圾分类">
+<h2>深圳垃圾四分类</h2>
+<p class="panel-sub">每次出现一件垃圾，点它该去的桶（也可以拖过去）。深圳生活垃圾分为可回收物、厨余垃圾、有害垃圾、其他垃圾四类。</p>
+<svg id="trash" viewBox="0 0 400 240" role="application" aria-label="待投放的垃圾和四个分类垃圾桶"></svg>
+<div class="btn-row"><button type="button" class="ghost-btn" id="trash-reset">重新开始</button></div>
+</section>
+<section class="readout" aria-label="垃圾分类记录">
+<div class="readout-head"><h2>投放记录</h2><span class="badge" id="trash-badge">开始投放</span></div>
+<div class="stat-grid">
+<div class="stat"><span>已投放</span><strong id="trash-done">—</strong></div>
+<div class="stat"><span>投错的次数</span><strong id="trash-err">—</strong></div>
+</div>
+<p class="lead" id="trash-text" aria-live="polite"></p>
+<p class="note"><b>白色污染</b>指废弃塑料难以降解造成的污染。<b>碳达峰</b>指二氧化碳排放量达到最高点后逐步回落，<b>碳中和</b>指通过植树造林、节能减排等方式把排放的二氧化碳“抵消”掉。我国力争 2030 年前实现碳达峰、2060 年前实现碳中和。</p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么合金是金属材料，玻璃钢却是复合材料</h3>
+<p class="derive-lead">材料的名字常常“骗人”：有机玻璃不是玻璃，玻璃钢也不是钢。分类时别看名字，看它是用什么做的。</p>
+<ol>
+<li><h4>先看是不是金属</h4><p>纯金属和<b>合金</b>都属于金属材料。合金是在金属中加热熔合某些金属或非金属制成的，仍然有金属光泽、能导电导热。不锈钢、铝合金、黄铜都是合金。</p></li>
+<li><h4>再看是不是“烧出来的矿物”</h4><p>陶瓷、玻璃、水泥的主要原料是黏土、石英砂、石灰石等矿物，经高温制成，属于<b>无机非金属材料</b>。</p></li>
+<li><h4>有机高分子分天然和合成</h4><p>棉花、羊毛、天然橡胶是动植物长出来的，叫天然有机高分子材料；塑料、合成纤维、合成橡胶是人用小分子“串”成的长链大分子，叫<b>有机合成材料</b>，也叫三大合成材料。</p></li>
+<li><h4>不同类别的材料“合体”才叫复合</h4><p>玻璃钢 = 玻璃纤维 + 合成树脂；碳纤维复合材料 = 碳纤维 + 树脂；钢筋混凝土 = 钢筋 + 混凝土。它们把不同类别材料的优点合在一起。合金只是不同元素熔在一起，仍属“金属”这一类。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>分类时只问两个问题：它属于金属、无机非金属、有机高分子中的哪一类？是不是由两类以上材料组合而成？名字里的“玻璃”“钢”都不算数。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>六大营养素</h3><p>糖类、油脂、蛋白质、维生素、无机盐和水。<b>糖类</b>是人体主要的供能物质；油脂是重要的供能物质，也是储备能源；蛋白质是构成细胞的基本物质。维生素需要量很少，却能调节新陈代谢、预防疾病：缺维生素 A 会引起夜盲症，缺维生素 C 会引起坏血病。</p></div></div>
+<div class="fact"><div><h3>化学元素与健康</h3><p>钙是常量元素，铁、锌、碘是微量元素。缺钙：幼儿和青少年易患佝偻病，老年人易骨质疏松；缺铁：贫血；缺碘：甲状腺肿大；缺锌：食欲不振、生长迟缓、发育不良。摄入<b>过多也不好</b>，碘过量同样会引起甲状腺肿大。</p></div></div>
+<div class="fact"><div><h3>材料分四大类</h3><p>金属材料（纯金属和合金）、无机非金属材料（陶瓷、玻璃、水泥）、有机高分子材料（天然的棉花、羊毛；合成的塑料、合成纤维、合成橡胶）、复合材料（玻璃钢、碳纤维复合材料）。</p></div></div>
+<div class="fact"><div><h3>减少白色污染</h3><p>减少使用不必要的塑料制品（如自带购物袋）、重复使用塑料制品、使用可降解塑料、回收各种废弃塑料。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p><b>合金属于金属材料，不是复合材料</b>；有机玻璃是塑料，玻璃钢才是复合材料。霉变大米、花生里有<b>黄曲霉毒素</b>，淘洗、煮熟都去不掉，不能吃；亚硝酸钠外观像食盐却有毒；甲醛会破坏蛋白质的结构，不能用来浸泡食品。维生素在体内含量很少，但<b>少≠不重要</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这份午餐发给同学</h3><p>链接会记住你餐盘里的食物、分好的材料和垃圾投放进度。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中化学占 50 分，“化学与社会”常结合生活情境出现在选择题和填空题里</h3>
+<ul>
+<li><b>选择题</b>：判断食物富含哪种营养素、缺哪种元素会得什么病；给几样物品判断属于哪类材料，最爱考合金、玻璃钢、有机玻璃。</li>
+<li><b>填空题</b>：给一份食谱，说缺了哪种营养素、该补什么食物；用灼烧法鉴别羊毛和合成纤维。</li>
+<li><b>环境题</b>：白色污染的成因和防治、垃圾分类投放、低碳生活的做法。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（化学 10 分）。实验结束后废液要倒进指定的废液缸，不能直接倒进水池。</li>
+</ul>
+<div class="q"><b>典型设问</b>　某同学的午餐是：米饭、红烧肉、清蒸鱼、鸡蛋汤。从营养均衡的角度看，还应该补充：A. 炒青菜　B. 牛奶　C. 馒头　D. 炸鸡腿。<br><b>怎么想</b>　米饭提供糖类，红烧肉提供油脂和蛋白质，鱼和鸡蛋提供蛋白质，汤里有水和无机盐，唯独缺<b>维生素</b>。蔬菜、水果富含维生素，选 <b>A</b>。B、D 主要补蛋白质，C 主要补糖类。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>化学互动馆 · 第 11 课</p><p>食物只标出“主要提供”的营养素；垃圾分类按深圳市生活垃圾四分类口径，具体以所在社区的投放指引为准。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="在五个生活情景里判断人有没有做功，拖滑块算功和功率；让过山车从不同高度出发，看动能、重力势能和机械能怎样转化；用钢球撞木块探究动能和质量、速度的关系。物理互动馆第 11 课，对应人教版八年级下册第十一章。">
+<meta property="og:title" content="物理互动馆 · 功和机械能">
+<title>功和机械能 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="energy.js"></script>
+</head>
+<body data-module="energy">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 11 课 <span>/</span> 八年级下册 第十一章</p><h1>功和机械能</h1><p class="subtitle">提着一桶水走了一路，累得手都酸了，物理却说你对水桶一点功都没做。功、功率、动能、势能，一个一个拆开来看。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="判断是否做功">
+<h2>做功了吗：五个生活情景</h2>
+<p class="panel-sub">选一个情景，调力 F、距离 s 和时间 t，点「开始」。红箭头是人施加的力，紫箭头是物体移动的方向。</p>
+<svg id="work" viewBox="0 0 400 240" role="img" aria-label="人对物体施力并使物体移动的情景"></svg>
+<div class="ctl-row"><span>情景</span><div class="chips small" id="w-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="F-in">人施加的力 F</label><output id="F-out">1000 N</output></div><input id="F-in" type="range" min="0" max="1000" step="10" value="1000"><div class="ruler"><span>0</span><span>500 N</span><span>1000 N</span></div></div>
+<div class="control"><div class="control-heading"><label for="s-in">物体移动的距离</label><output id="s-out">2 m</output></div><input id="s-in" type="range" min="0" max="2" step="0.1" value="2"><div class="ruler"><span>0</span><span id="s-r1">1 m</span><span id="s-r2">2 m</span></div></div>
+<div class="control"><div class="control-heading"><label for="t-in">所用时间 t</label><output id="t-out">2 s</output></div><input id="t-in" type="range" min="1" max="20" step="1" value="2"><div class="ruler"><span>1 s</span><span>10 s</span><span>20 s</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="w-go">开始</button><button type="button" class="ghost-btn" id="w-reset">重置</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="做功读数">
+<div class="readout-head"><h2>人对物体做功了吗</h2><span class="badge" id="w-badge">做功</span></div>
+<div class="stat-grid">
+<div class="stat"><span>人施加的力 F</span><strong id="w-F">—</strong></div>
+<div class="stat"><span>沿力的方向移动的距离</span><strong id="w-s">—</strong></div>
+<div class="stat"><span>功 W</span><strong id="w-W">—</strong></div>
+<div class="stat"><span>功率 P</span><strong id="w-P">—</strong></div>
+</div>
+<ul class="cond-list" id="w-cond">
+<li data-c="force"><i></i>有力作用在物体上</li>
+<li data-c="dist"><i></i>物体在这个力的方向上移动了距离</li>
+</ul>
+<div class="formula" id="w-formula"></div>
+<p class="lead" id="w-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="做功情景对照表">
+<h2>三种“不做功”</h2>
+<p class="panel-sub" style="margin-bottom:4px">两个必要因素缺一个就不做功。当前情景会高亮。</p>
+<table class="compare" id="w-table"><thead><tr><th>情景</th><th>有力吗</th><th>沿力方向移动了吗</th><th>做功吗</th></tr></thead><tbody>
+<tr data-r="lift"><td>举起杠铃</td><td>有，向上</td><td>有，向上</td><td>做功</td></tr>
+<tr data-r="carry"><td>提桶水平走</td><td>有，向上</td><td>没有，水平移动</td><td>不做功（力与移动方向垂直）</td></tr>
+<tr data-r="stuck"><td>推箱子没推动</td><td>有</td><td>没有，s = 0</td><td>不做功（劳而无功）</td></tr>
+<tr data-r="ball"><td>足球离脚后飞行</td><td>没有，脚已离开</td><td>有</td><td>不做功（不劳无功）</td></tr>
+<tr data-r="push"><td>推着箱子前进</td><td>有，向前</td><td>有，向前</td><td>做功</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="过山车机械能转化">
+<h2>过山车：动能和势能倒来倒去</h2>
+<p class="panel-sub">上下拖动左边的小车（或用滑块）选释放高度，点「放手」。小车连同乘客质量 200 kg，中间的小山高 4 m。</p>
+<svg id="coaster" viewBox="0 0 400 240" role="application" aria-label="过山车轨道，可拖动小车改变释放高度"></svg>
+<div class="ctl-row"><span>轨道</span><div class="chips small" id="fr-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="H-in">释放高度 h</label><output id="H-out">8 m</output></div><input id="H-in" type="range" min="2" max="10" step="0.5" value="8"><div class="ruler"><span>2 m</span><span>6 m</span><span>10 m</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="co-go">放手</button><button type="button" class="ghost-btn" id="co-reset">放回原处</button></div>
+</section>
+<section class="readout" aria-label="过山车能量读数">
+<div class="readout-head"><h2>小车的能量</h2><span class="badge" id="co-badge">静止</span></div>
+<div class="stat-grid"><div class="stat"><span>离地高度</span><strong id="co-h">—</strong></div><div class="stat"><span>速度</span><strong id="co-v">—</strong></div></div>
+<div class="bar-list" style="margin-top:12px">
+<div class="bar-item"><span>动能</span><div class="track"><div class="fill" id="ek-fill" style="background:#d08a2c;width:0"></div></div><em id="ek-val">0 J</em></div>
+<div class="bar-item"><span>重力势能</span><div class="track"><div class="fill" id="ep-fill" style="background:#7a6aa8;width:0"></div></div><em id="ep-val">0 J</em></div>
+<div class="bar-item"><span>机械能</span><div class="track"><div class="fill" id="em-fill" style="background:#3f8a6a;width:0"></div></div><em id="em-val">0 J</em></div>
+<div class="bar-item"><span>内能增加</span><div class="track"><div class="fill" id="q-fill" style="background:#c2603f;width:0"></div></div><em id="q-val">0 J</em></div>
+</div>
+<p class="lead" id="co-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 机械能像两个口袋里的零花钱</h3><p>动能和重力势能是两个口袋。往下冲，钱从“势能袋”挪到“动能袋”；往上爬，再挪回去，总数不变。有摩擦就像每挪一次都被抽走一点手续费，抽走的钱没消失，变成了轨道和车轮的<b>内能</b>（发热）。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="探究动能大小的影响因素">
+<h2>钢球撞木块：动能和什么有关</h2>
+<p class="panel-sub">选高度和钢球，点「放手」。动能看不见，就看<b>木块被推动多远</b>：推得越远，钢球的动能越大。</p>
+<svg id="ke" viewBox="0 0 400 220" role="img" aria-label="钢球从斜面滚下撞击木块"></svg>
+<div class="ctl-row"><span>释放高度</span><div class="chips small" id="kh-chips"></div></div>
+<div class="ctl-row"><span>钢球</span><div class="chips small" id="km-chips"></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="ke-go">放手</button><button type="button" class="ghost-btn" id="ke-reset">放回原处</button></div>
+</section>
+<section class="readout" aria-label="碰撞读数">
+<div class="readout-head"><h2>这一次碰撞</h2><span class="badge" id="ke-badge">准备</span></div>
+<div class="stat-grid">
+<div class="stat"><span>释放高度</span><strong id="ke-h">—</strong></div>
+<div class="stat"><span>钢球质量</span><strong id="ke-m">—</strong></div>
+<div class="stat"><span>到达水平面的速度</span><strong id="ke-v">—</strong></div>
+<div class="stat"><span>木块被推动的距离</span><strong id="ke-d">—</strong></div>
+</div>
+<table class="compare" id="ke-table" style="margin-top:10px"><thead><tr><th>释放高度</th><th>100 g 钢球</th><th>200 g 钢球</th></tr></thead><tbody>
+<tr data-h="10"><td>10 cm</td><td class="n" data-m="100">—</td><td class="n" data-m="200">—</td></tr>
+<tr data-h="20"><td>20 cm</td><td class="n" data-m="100">—</td><td class="n" data-m="200">—</td></tr>
+<tr data-h="30"><td>30 cm</td><td class="n" data-m="100">—</td><td class="n" data-m="200">—</td></tr>
+</tbody></table>
+<p class="lead" id="ke-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 能量就是“能做多少功”</h3>
+<p class="derive-lead">功和能的单位都是焦耳，这不是巧合。把过山车从头到尾想一遍就明白了。</p>
+<ol>
+<li><h4>有本事做功，就叫有能量</h4><p>物体能够对外做功，就说它具有<b>能量</b>。能做的功越多，能量越大，所以能量的单位也是焦耳。</p></li>
+<li><h4>高处的小车藏着多少功</h4><p>小车重 G = mg = 200 kg × 10 N/kg = 2000 N，从 10 m 高处落到地面，重力做功 W = Gh = 2×10⁴ J。这些功原来就“存”在高处，就是<b>重力势能</b>：质量越大、位置越高，存得越多。</p></li>
+<li><h4>往下冲：势能变动能</h4><p>下坡时高度变小、速度变大，<b>重力势能转化为动能</b>，到最低点速度最大。</p></li>
+<li><h4>往上爬：动能变势能</h4><p>上坡时速度变小、高度变大，<b>动能转化为重力势能</b>。动能用完就停在最高点，再往回走。</p></li>
+<li><h4>没有摩擦，总数不变</h4><p>只有动能和势能互相转化时，<b>机械能保持不变</b>，理想轨道上的小车总能回到出发时的高度，但翻不过比出发点更高的山。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>真实的过山车一次比一次爬得低：克服摩擦做功，一部分机械能变成了内能，但能量的总量没有少。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>功：两个必要因素</h3><p>一是<b>作用在物体上的力</b>，二是物体<b>在这个力的方向上移动的距离</b>，缺一不可。功 W = Fs，单位焦耳（J），1 J = 1 N·m，把两个鸡蛋举高 1 m 做的功大约就是 1 J。</p></div></div>
+<div class="fact"><div><h3>功率：做功的快慢</h3><p>功与做功所用时间之比叫功率，P = W/t，单位瓦特（W），<b>1 W = 1 J/s</b>，1 kW = 1000 W。功率大说明做功<b>快</b>，不一定做功<b>多</b>。</p></div></div>
+<div class="fact"><div><h3>动能和势能</h3><p>物体由于运动具有的能叫<b>动能</b>，质量越大、速度越大，动能越大。<b>重力势能</b>与质量和高度有关；<b>弹性势能</b>与弹性形变的程度有关，弓拉得越开，弹性势能越大。</p></div></div>
+<div class="fact"><div><h3>机械能及其转化</h3><p>动能、重力势能和弹性势能统称<b>机械能</b>。只有动能和势能相互转化时，机械能守恒；有摩擦或空气阻力时，机械能减少，转化为内能。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>算功时 F 和 s 要<b>对应同一个方向</b>：推箱子水平前进，用推力乘距离，不能用箱子的重力。另外，“匀速”不等于“机械能不变”：降落伞匀速下降，速度不变，动能不变，但高度变低，重力势能减小，机械能也就减小了。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这组实验发给同学</h3><p>链接会记住情景、力和距离、过山车高度和钢球的设置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考物理与化学合卷，物理 70 分；功、功率和机械能的转化是力学的常见内容</h3>
+<ul>
+<li><b>选择题</b>：判断力有没有做功；分析滚摆、人造卫星、过山车中动能和势能怎样变化。</li>
+<li><b>计算题</b>：用 W = Fs、P = W/t 求功和功率，常和 G = mg 结合，关键是找准“哪个力、沿它的方向走了多远”。</li>
+<li><b>实验题</b>：探究动能与哪些因素有关：用木块被推动的距离反映动能大小是<b>转换法</b>；从同一高度滚下使速度相同，是<b>控制变量法</b>。</li>
+<li><b>活动题</b>：比一比谁上楼的功率大：测质量 m、楼高 h、时间 t，P = mgh/t，工具是台秤、卷尺和秒表。</li>
+</ul>
+<div class="q"><b>典型设问</b>　小明用 50 N 的水平推力，推着重 200 N 的箱子在水平地面上匀速前进 10 m，用时 20 s。推力做了多少功？功率多大？重力做了多少功？<br><b>怎么想</b>　W = Fs = 50 N × 10 m = 500 J，P = W/t = 500 J ÷ 20 s = 25 W。重力竖直向下，箱子没往下移动，<b>重力做功为 0</b>。最常见的错误是拿 200 N 乘 10 m。<b>先找力，再找沿这个力方向的距离</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 11 课</p><p>g 取 10 N/kg。过山车按质量 200 kg、受恒定阻力计算；钢球看成从光滑斜面滑下（不计滚动和摩擦），木块被推动的距离按与钢球动能成正比处理。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

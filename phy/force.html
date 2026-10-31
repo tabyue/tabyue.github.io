@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="给弹簧测力计挂钩码，看弹簧伸长与拉力成正比、超过量程会怎样；推门时改变力的大小、方向和作用点，比较门转动的效果；在地球和月球上比较同一物体的重力，看重垂线为什么总是竖直的。物理互动馆第 7 课，对应人教版八年级下册第七章。">
+<meta property="og:title" content="物理互动馆 · 力">
+<title>力 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="force.js"></script>
+</head>
+<body data-module="force">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 7 课 <span>/</span> 八年级下册 第七章</p><h1>力</h1><p class="subtitle">推门、拉弹簧、苹果落地，都是“力”在起作用。力看不见，但它的效果看得见、量得出。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="弹簧测力计">
+<h2>弹簧测力计：拉力越大，弹簧伸得越长</h2>
+<p class="panel-sub">往挂钩上挂钩码（g 取 10 N/kg），右边的放大镜帮你看清指针。这只测力计的量程是 0～5 N。</p>
+<svg id="spring" viewBox="0 0 400 260" role="img" aria-label="弹簧测力计挂钩码"></svg>
+<div class="control"><div class="control-heading"><label for="sm-in">钩码的总质量</label><output id="sm-out">200 g</output></div><input id="sm-in" type="range" min="0" max="700" step="20" value="200"><div class="ruler"><span>0 g</span><span>350 g</span><span>700 g</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="测力计读数">
+<div class="readout-head"><h2>测力计读数</h2><span class="badge" id="sp-badge">正常</span></div>
+<div class="stat-grid">
+<div class="stat"><span>钩码质量</span><strong id="sp-m">—</strong></div>
+<div class="stat"><span>拉力 F（读数）</span><strong id="sp-f">—</strong></div>
+<div class="stat"><span>弹簧伸长量 ΔL</span><strong id="sp-dl">—</strong></div>
+<div class="stat"><span>ΔL ÷ F</span><strong id="sp-k">—</strong></div>
+</div>
+<p class="lead" id="sp-text" aria-live="polite"></p>
+</section>
+<section class="card panel figure" aria-label="伸长量与拉力的关系">
+<h2>伸长量 ΔL 和拉力 F 的关系</h2>
+<p class="panel-sub" style="margin-bottom:4px">在弹性限度内，图线是一条过原点的直线。</p>
+<svg id="fl" viewBox="0 0 400 200" role="img" aria-label="伸长量与拉力关系图"></svg>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="推门">
+<h2>力的三要素：怎样推门最省劲</h2>
+<p class="panel-sub">俯视图。选好作用点、方向和大小，点“推一下”，看门转开多少。箭头的起点是作用点，长短表示大小，指向表示方向。</p>
+<svg id="door" viewBox="0 0 400 240" role="img" aria-label="推门示意图（俯视）"></svg>
+<div class="ctl-row" style="margin-top:6px"><span>作用点</span><div class="chips small" id="pt-chips"></div></div>
+<div class="ctl-row"><span>方向</span><div class="chips small" id="dir-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="df-in">推力大小 F</label><output id="df-out">20 N</output></div><input id="df-in" type="range" min="5" max="40" step="1" value="20"><div class="ruler"><span>5 N</span><span>22 N</span><span>40 N</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="push-btn">推一下</button><button type="button" class="ghost-btn" id="close-btn">把门关上</button></div>
+</section>
+<section class="readout" aria-label="推门读数">
+<div class="readout-head"><h2>这一推的效果</h2><span class="badge" id="door-badge">—</span></div>
+<div class="stat-grid">
+<div class="stat"><span>作用点离门轴</span><strong id="dr-d">—</strong></div>
+<div class="stat"><span>推力大小</span><strong id="dr-f">—</strong></div>
+<div class="stat wide"><span>推力方向</span><strong id="dr-dir" style="font-size:18px">—</strong></div>
+<div class="stat wide"><span>转动效果（和最强的推法比）</span><div style="height:14px;background:#f1eff5;border-radius:7px;overflow:hidden;margin-top:6px"><div id="dr-eff" style="height:100%;width:0;background:#a193c3;border-radius:7px;transition:width .2s"></div></div></div>
+</div>
+<p class="lead" id="door-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="重力">
+<h2>重力：G = mg，方向竖直向下</h2>
+<p class="panel-sub">换星球、改质量、把地面倾斜，看重力的大小和方向怎么变。</p>
+<svg id="grav" viewBox="0 0 400 240" role="img" aria-label="斜面上的物体与重垂线"></svg>
+<div class="ctl-row" style="margin-top:6px"><span>在哪儿</span><div class="chips small" id="pl-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="gm-in">物体质量 m</label><output id="gm-out">50 kg</output></div><input id="gm-in" type="range" min="1" max="60" step="1" value="50"><div class="ruler"><span>1 kg</span><span>30 kg</span><span>60 kg</span></div></div>
+<div class="control"><div class="control-heading"><label for="sl-in">地面倾斜角度</label><output id="sl-out">0°</output></div><input id="sl-in" type="range" min="0" max="30" step="1" value="0"><div class="ruler"><span>0°</span><span>15°</span><span>30°</span></div></div>
+</section>
+<section class="readout" aria-label="重力读数">
+<div class="readout-head"><h2>重力有多大</h2><span class="badge" id="gr-badge">地球</span></div>
+<div class="stat-grid">
+<div class="stat"><span>质量 m</span><strong id="gr-m">—</strong></div>
+<div class="stat"><span>g</span><strong id="gr-g">—</strong></div>
+<div class="stat"><span>重力 G = mg</span><strong id="gr-G">—</strong></div>
+<div class="stat"><span>重力方向</span><strong id="gr-dir" style="font-size:18px">竖直向下</strong></div>
+</div>
+<p class="lead" id="gr-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 质量是“有多少东西”，重力是“被拽得多狠”</h3><p>同一个书包带到月球上，里面的书一本没少，<b>质量不变</b>；可月球拽它的力气只有地球的约六分之一，背起来轻多了，这是<b>重力变小</b>了。所以质量用天平测，单位 kg；重力用弹簧测力计测，单位 N。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 弹簧测力计的刻度为什么是均匀的</h3>
+<p class="derive-lead">尺子的刻度均匀很好理解，可测力计量的是力，它的刻度凭什么也是等间距的？</p>
+<ol>
+<li><h4>先做实验</h4><p>给弹簧依次挂 1 N、2 N、3 N 的钩码，记下每次<b>伸长了多少</b>（现在的长度减去原来的长度）。上面这只测力计每挂 1 N 伸长 1.6 cm。</p></li>
+<li><h4>找到规律</h4><p>拉力变成 2 倍，伸长量也变成 2 倍；拉力变成 3 倍，伸长量也变成 3 倍。在弹性限度内，<b>弹簧的伸长量跟受到的拉力成正比</b>。</p></li>
+<li><h4>刻度就该等距</h4><p>既然每多 1 N 就多伸长同样一段，在外壳上每隔这一段刻一条线，标 1、2、3……刻度自然是均匀的。这就是弹簧测力计的原理。</p></li>
+<li><h4>弹性限度是红线</h4><p>拉力太大，弹簧会被拉得“回不去”，伸长量也不再和拉力成正比。所以每只测力计都有<b>量程</b>，被测的力不能超过它。</p></li>
+<li><h4>怎样测出重力</h4><p>把物体挂在测力计下，等它<b>静止</b>后读数，这时测力计的示数就等于物体受到的重力。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>用测力计前要做三件事：看清量程和分度值、检查指针是否指在零刻度线、让拉力方向沿着弹簧的轴线，不让弹簧和外壳摩擦。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>力是物体对物体的作用</h3><p>有力就一定有<b>施力物体</b>和<b>受力物体</b>，单独一个物体不会产生力；不接触的物体之间也可以有力，比如磁铁吸铁钉。物体间力的作用是<b>相互</b>的：手拍桌子，手也会疼。力的单位是牛顿（N），托起两个鸡蛋大约用 1 N。</p></div></div>
+<div class="fact"><div><h3>力的作用效果和三要素</h3><p>力可以使物体<b>发生形变</b>，也可以<b>改变物体的运动状态</b>（速度大小或运动方向变了）。力的<b>大小、方向、作用点</b>叫力的三要素，都会影响力的作用效果。</p></div></div>
+<div class="fact"><div><h3>弹力和弹簧测力计</h3><p>物体受力会发生形变，撤去力后能恢复原状的形变叫弹性形变，由此产生的力叫<b>弹力</b>，压力、拉力、支持力都是弹力。在弹性限度内，弹簧的伸长量与拉力成正比，弹簧测力计就是这样做成的。</p></div></div>
+<div class="fact"><div><h3>重力</h3><p>由于地球的吸引而使物体受到的力叫重力，<b>G = mg</b>，g = 9.8 N/kg（粗略计算可取 10 N/kg），意思是质量为 1 kg 的物体受到的重力是 9.8 N。重力的方向<b>竖直向下</b>，作用点叫<b>重心</b>，形状规则、质量分布均匀的物体，重心在它的几何中心。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>重力的方向是“<b>竖直向下</b>”，不是“垂直向下”：在斜面上，重力仍然指向地心那边，并不垂直于斜面。不能写“1 kg = 9.8 N”，kg 是质量单位，N 是力的单位，两个量不是一回事。弹簧的“<b>伸长量</b>”和“<b>长度</b>”也不要混：成正比的是伸长量。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这组实验发给同学</h3><p>链接会记住钩码质量、推门方式和你在哪个星球。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，“力”是整个力学的入门，常和后面几章合在一起考</h3>
+<ul>
+<li><b>选择题</b>：判断哪些例子说明力的作用是相互的、哪些是改变形状、哪些是改变运动状态；估测常见物体的重力（一名中学生约 500 N，一个苹果约 2 N）。</li>
+<li><b>作图题</b>：画重力的示意图，从重心出发、<b>竖直向下</b>画箭头并标 G；斜面上的物体也一样竖直向下。</li>
+<li><b>实验题</b>：探究弹簧伸长量与拉力的关系、探究重力与质量的关系（G 与 m 的比值不变，图线是过原点的直线）。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（物理 10 分）。用弹簧测力计要先观察量程和分度值、校零，读数时视线与刻度盘垂直。</li>
+</ul>
+<div class="q"><b>典型设问</b>　一名同学的质量是 50 kg，他受到的重力是多少？（g 取 10 N/kg）如果他到了月球上，质量和重力各是多少？<br><b>怎么想</b>　G = mg = 50 kg × 10 N/kg = <b>500 N</b>。到了月球，质量是物体本身的属性，仍是 <b>50 kg</b>；月球上的重力约为地球上的六分之一，约 <b>83 N</b>。<b>计算时 m 一定要用 kg</b>，用 g 代入会差 1000 倍。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 7 课</p><p>测力计按每 1 N 伸长 1.6 cm 绘制；门转开的角度按“力的大小 × 作用点到门轴的距离 × 方向的影响”相对大小示意；月球表面 g 约 1.6 N/kg。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

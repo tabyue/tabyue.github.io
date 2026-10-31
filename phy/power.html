@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="把“220 V 40 W”和“220 V 100 W”两盏灯串联或并联，调电源电压看谁更亮；选家电、调使用时间，算用了几度电；给两段电阻丝通电，比一比谁产生的热量多。物理互动馆第 18 课，对应人教版九年级全一册第十八章。">
+<meta property="og:title" content="物理互动馆 · 电功率">
+<title>电功率 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="power.js"></script>
+</head>
+<body data-module="power">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 18 课 <span>/</span> 九年级全一册 第十八章</p><h1>电功率</h1><p class="subtitle">灯泡上写着 100 W，不代表它此刻就是 100 W。把两盏灯串起来，40 W 的那盏反而更亮——不信就试试。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="额定功率与实际功率">
+<h2>额定功率与实际功率</h2>
+<p class="panel-sub">两盏白炽灯：L₁ 标着“220 V 40 W”，L₂ 标着“220 V 100 W”。按灯丝电阻不变来算，切换连接方式、调电源电压，看谁更亮。</p>
+<svg id="lamp" viewBox="0 0 400 230" role="img" aria-label="两盏灯串联或并联的电路图，灯的光晕大小表示亮度"></svg>
+<div class="ctl-row"><span>连接方式</span><div class="chips small" id="lamp-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="lu-in">电源电压 U</label><output id="lu-out">220 V</output></div><input id="lu-in" type="range" min="0" max="240" step="5" value="220"><div class="ruler"><span>0 V</span><span>120 V</span><span>240 V</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="两盏灯的实际情况">
+<div class="readout-head"><h2>两盏灯此刻</h2><span class="badge" id="lamp-badge">L₁ 更亮</span></div>
+<div class="stat-grid">
+<div class="stat"><span>L₁（40 W）实际功率</span><strong id="p1">—</strong></div>
+<div class="stat"><span>L₂（100 W）实际功率</span><strong id="p2">—</strong></div>
+<div class="stat"><span>L₁ 两端电压</span><strong id="u1">—</strong></div>
+<div class="stat"><span>L₂ 两端电压</span><strong id="u2">—</strong></div>
+<div class="stat"><span>通过 L₁ 的电流</span><strong id="i1">—</strong></div>
+<div class="stat"><span>通过 L₂ 的电流</span><strong id="i2">—</strong></div>
+</div>
+<p class="lead" id="lamp-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="额定与实际对照">
+<h2>铭牌上的数和实际的数</h2>
+<p class="panel-sub" style="margin-bottom:4px">灯丝电阻由铭牌算出：R = U额² ÷ P额。</p>
+<table class="compare"><thead><tr><th>灯</th><th>灯丝电阻</th><th>额定功率</th><th>实际功率</th></tr></thead><tbody>
+<tr id="row-l1"><td>L₁</td><td class="n">1210 Ω</td><td class="n">40 W</td><td class="n" id="t-p1">—</td></tr>
+<tr id="row-l2"><td>L₂</td><td class="n">484 Ω</td><td class="n">100 W</td><td class="n" id="t-p2">—</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="电能表">
+<h2>电能表：用了几度电</h2>
+<p class="panel-sub">选一件家电，调使用时间。电能表的示数会往上走，两次示数之差就是这段时间用的电。1 度电就是 1 kW·h。</p>
+<svg id="meter" viewBox="0 0 400 210" role="img" aria-label="电能表和正在工作的家电"></svg>
+<div class="ctl-row"><span>家电</span><div class="chips small" id="app-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="t-in">使用时间 t</label><output id="t-out">2 h</output></div><input id="t-in" type="range" min="0.1" max="10" step="0.1" value="2"><div class="ruler"><span>0.1 h</span><span>5 h</span><span>10 h</span></div></div>
+</section>
+<section class="readout" aria-label="用电读数">
+<div class="readout-head"><h2>这段时间</h2><span class="badge" id="app-badge">—</span></div>
+<div class="stat-grid">
+<div class="stat"><span>消耗电能 W = Pt</span><strong id="w-kwh">—</strong></div>
+<div class="stat"><span>换成焦耳</span><strong id="w-j" style="font-size:19px">—</strong></div>
+<div class="stat"><span>电能表指示灯闪烁</span><strong id="w-imp">—</strong></div>
+<div class="stat"><span>示意电费</span><strong id="w-fee">—</strong></div>
+</div>
+<p class="note">示意电费按“0.6 元/(kW·h)”这个<b>假设的单价</b>计算，只是为了好算，不是深圳的实际电价。</p>
+<p class="lead" id="app-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 功率像水龙头开多大</h3><p>电功率 P 像水龙头开得多大，表示用电的<b>快慢</b>；电能 W 像接了多少桶水，表示一共用了<b>多少</b>。水龙头开得再大，只开一会儿，接的水也不多；开得小但一直开着，也能接满一大桶。所以 W = Pt，功率和时间都要看。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="焦耳定律实验">
+<h2>焦耳定律：谁产生的热量多</h2>
+<p class="panel-sub">两个密闭容器里装着等量的空气，各有一段电阻丝。电阻丝发热，空气受热膨胀，把 U 形管里的液体往另一边推——液面高度差越大，产生的热量越多。</p>
+<svg id="joule" viewBox="0 0 400 260" role="img" aria-label="两个密闭容器中的电阻丝与 U 形管"></svg>
+<div class="ctl-row"><span>装置</span><div class="chips small" id="j-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="ji-in">电流表示数 I（干路电流）</label><output id="ji-out">1 A</output></div><input id="ji-in" type="range" min="0.5" max="1.5" step="0.1" value="1"><div class="ruler"><span>0.5 A</span><span>1 A</span><span>1.5 A</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="j-run">通电</button><button type="button" class="ghost-btn" id="j-reset">断电并重置</button></div>
+</section>
+<section class="readout" aria-label="电热读数">
+<div class="readout-head"><h2>产生的热量</h2><span class="badge" id="j-badge">未通电</span></div>
+<div class="stat-grid">
+<div class="stat"><span>通电时间 t</span><strong id="j-t">—</strong></div>
+<div class="stat"><span>热量之比 Q左 : Q右</span><strong id="j-ratio">—</strong></div>
+<div class="stat"><span>左边电阻丝 Q左</span><strong id="j-q1">—</strong></div>
+<div class="stat"><span>右边电阻丝 Q右</span><strong id="j-q2">—</strong></div>
+</div>
+<p class="lead" id="j-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 串联时 40 W 的灯为什么反而更亮</h3>
+<p class="derive-lead">“瓦数大的灯更亮”只在正常工作时成立。换个接法，先算电阻，再看实际功率。</p>
+<ol>
+<li><h4>从铭牌算出灯丝电阻</h4><p>P = UI，又有 I = U/R，合起来是 P = U²/R，所以 <b>R = U额² ÷ P额</b>。L₁：220² ÷ 40 = 1210 Ω；L₂：220² ÷ 100 = 484 Ω。额定功率小的灯，灯丝电阻反而大。</p></li>
+<li><h4>亮度只看实际功率</h4><p>灯有多亮，由它此刻的<b>实际功率</b>决定。只有加在灯两端的电压正好等于额定电压时，实际功率才等于铭牌上的额定功率。</p></li>
+<li><h4>串联：电流一样，比电阻</h4><p>串联电流相同，用 <b>P = I²R</b> 比较：R 大的功率大。接在 220 V 上，电流约 0.13 A，L₁ 实际约 20.4 W，L₂ 只有约 8.2 W，<b>40 W 的更亮</b>，两盏都比正常时暗。</p></li>
+<li><h4>并联：电压一样，比电阻的倒数</h4><p>并联电压相同，用 <b>P = U²/R</b> 比较：R 小的功率大。并联在 220 V 上，两盏灯都正常发光，100 W 的更亮。</p></li>
+<li><h4>电流的热效应</h4><p>电流通过电阻丝时，电能转化成内能。对电热丝这样的纯电阻，电能全部变成热：Q = W = UIt = <b>I²Rt</b>。串联时电流和时间相同，电阻大的产生的热量多。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>比亮度先看怎么连：串联比电阻，大的亮；并联也比电阻，小的亮。P = I²R 和 P = U²/R 只适用于纯电阻电路，电动机这类用电器只能用 P = UI 算电功率，用 Q = I²Rt 算它发的热。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>电能与电功</h3><p>电流做了多少功，就有多少电能转化为其他形式的能。单位是焦耳（J），生活中常用千瓦时（kW·h），也就是“度”：<b>1 kW·h = 3.6×10⁶ J</b>。电能表前后两次示数之差，就是这段时间用的电。</p></div></div>
+<div class="fact"><div><h3>电功率</h3><p>表示电流做功的快慢：<b>P = W/t = UI</b>，单位瓦（W）、千瓦（kW）。功率 1 kW 的用电器工作 1 h，用电 1 kW·h。纯电阻电路还可以用 P = I²R = U²/R。</p></div></div>
+<div class="fact"><div><h3>额定功率与实际功率</h3><p>用电器正常工作时的电压叫额定电压，这时的功率叫额定功率。实际电压变了，实际功率跟着变。<b>灯的亮度由实际功率决定</b>。</p></div></div>
+<div class="fact"><div><h3>焦耳定律</h3><p>电流通过导体产生的热量，跟电流的二次方成正比，跟导体的电阻成正比，跟通电时间成正比：<b>Q = I²Rt</b>。电热水壶、电饭锅利用电热；电脑里装风扇散热，是在防止电热带来的危害。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>铭牌上的 40 W 是<b>额定功率</b>，不是任何时候的功率。算实际功率要先用 R = U额²/P额 求出电阻，再用实际电压算。比如把“220 V 40 W”的灯接在 110 V 上，电压变成一半，实际功率是 P = U²/R，变成原来的<b>四分之一</b>（10 W），不是一半（按电阻不变计算）。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这组实验发给同学</h3><p>链接会记住灯的接法、电压、选的家电和使用时间。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，电功率常和欧姆定律一起出综合计算</h3>
+<ul>
+<li><b>选择题</b>：比较两盏灯的亮度、判断实际功率；或者读 I–U 图像，求某一电压下的电功率。</li>
+<li><b>计算题</b>：根据电能表参数（如 3000 imp/(kW·h)）和闪烁次数求用电器功率；多挡位电热器（加热挡、保温挡）求功率和产生的热量。</li>
+<li><b>实验题</b>：测量小灯泡的电功率（原理 P = UI，调滑片使电压表示数等于额定电压时读电流）；探究电热与电流、电阻、时间的关系（控制变量法，用 U 形管液面高度差反映热量多少）。</li>
+<li><b>跨学科实践</b>：为家庭节约用电提建议，要能说清某个做法是减小了功率，还是缩短了时间。</li>
+</ul>
+<div class="q"><b>典型设问</b>　电能表上标有“3000 imp/(kW·h)”。只让电热水壶工作 3 min，电能表指示灯闪烁了 150 次，电热水壶的功率是多少？<br><b>怎么想</b>　闪 3000 次是 1 kW·h，闪 150 次就是 W = 150 ÷ 3000 kW·h = 0.05 kW·h。时间 t = 3 min = 0.05 h，所以 P = W/t = 0.05 kW·h ÷ 0.05 h = <b>1 kW = 1000 W</b>。<b>用 kW·h 和 h 这一套单位</b>算得最快，算完再换成 W。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 18 课</p><p>灯丝电阻按不随温度变化处理；家电功率是常见的示意值，电费单价是假设值；电热实验中把液面高度差按与热量成正比示意。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

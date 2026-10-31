@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="用托盘天平加减砝码、拨游码称出物体质量；在 m–V 图象上比较水、冰、铝、铁的密度；把金属块放进量筒用排水法测体积，算出密度并判断它是什么材料。物理互动馆第 6 课，对应人教版八年级上册第六章。">
+<meta property="og:title" content="物理互动馆 · 质量与密度">
+<title>质量与密度 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="density.js"></script>
+</head>
+<body data-module="density">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 6 课 <span>/</span> 八年级上册 第六章</p><h1>质量与密度</h1><p class="subtitle">一斤铁和一斤棉花哪个重？一样重。可为什么铁块那么小？答案就藏在“密度”里。先学会用天平，再自己测一块金属。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="托盘天平">
+<h2>托盘天平：左物右码</h2>
+<p class="panel-sub">左盘放物体，右盘加减砝码（先大后小），最后拨游码微调，让指针对准分度盘中央。</p>
+<svg id="balance" viewBox="0 0 400 250" role="img" aria-label="托盘天平示意图"></svg>
+<div class="ctl-row" style="margin-top:6px"><span>左盘放</span><div class="chips small" id="obj-chips"></div></div>
+<div class="ctl-row" style="align-items:flex-start"><span style="padding-top:8px">右盘砝码</span><div id="weights" style="display:flex;flex-wrap:wrap;gap:6px;flex:1"></div></div>
+<div class="control" style="margin-top:10px"><div class="control-heading"><label for="rider-in">游码（读它的左边缘，分度值 0.2 g）</label><output id="rider-out">0 g</output></div><input id="rider-in" type="range" min="0" max="5" step="0.2" value="0"><div class="ruler"><span>0 g</span><span>2.5 g</span><span>5 g</span></div></div>
+<div class="btn-row"><button type="button" class="ghost-btn" id="w-clear">砝码全部放回盒里、游码归零</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="天平读数">
+<div class="readout-head"><h2>天平告诉你</h2><span class="badge" id="bal-badge">指针偏左</span></div>
+<div class="stat-grid">
+<div class="stat"><span>右盘砝码总质量</span><strong id="bw-sum">—</strong></div>
+<div class="stat"><span>游码示数</span><strong id="bw-rider">—</strong></div>
+<div class="stat wide"><span>物体的质量 = 砝码 + 游码</span><strong id="bw-m">—</strong></div>
+</div>
+<p class="lead" id="bal-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="天平使用步骤">
+<h2>用天平的四步</h2>
+<p class="panel-sub" style="margin-bottom:4px">左边的天平已经调好平衡，直接从第 3 步开始。</p>
+<ul class="cond-list">
+<li class="yes"><i>1</i><span><b>放</b>：天平放在水平台上，游码拨到标尺左端的零刻度线。</span></li>
+<li class="yes"><i>2</i><span><b>调</b>：调节平衡螺母，指针偏左就往右调（左偏右调），直到指针指在分度盘中央。</span></li>
+<li class="yes"><i>3</i><span><b>称</b>：左物右码，用镊子按“先大后小”加砝码，最后移动游码。<b>称量时不能再动平衡螺母</b>。</span></li>
+<li class="yes"><i>4</i><span><b>读</b>：物体质量 = 砝码总质量 + 游码左边缘对着的刻度值。</span></li>
+</ul>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="质量与体积的关系图象">
+<h2>m–V 图象：同种物质是一条过原点的直线</h2>
+<p class="panel-sub">选一种物质，拖动体积滑块。四条直线都画出来了，越陡的那条，密度越大。</p>
+<svg id="mv" viewBox="0 0 400 240" role="img" aria-label="质量与体积关系图象"></svg>
+<div class="ctl-row" style="margin-top:6px"><span>物质</span><div class="chips small" id="mat-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="v-in">体积 V</label><output id="v-out">20 cm³</output></div><input id="v-in" type="range" min="1" max="40" step="1" value="20"><div class="ruler"><span>1 cm³</span><span>20 cm³</span><span>40 cm³</span></div></div>
+</section>
+<section class="readout" aria-label="图象读数">
+<div class="readout-head"><h2>算一算 m ÷ V</h2><span class="badge" id="mv-badge">水</span></div>
+<div class="stat-grid">
+<div class="stat"><span>体积 V</span><strong id="mv-v">—</strong></div>
+<div class="stat"><span>质量 m</span><strong id="mv-m">—</strong></div>
+<div class="stat"><span>密度 ρ = m / V</span><strong id="mv-rho">—</strong></div>
+<div class="stat"><span>换成国际单位</span><strong id="mv-kg">—</strong></div>
+</div>
+<p class="lead" id="mv-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 密度像“每一颗糖有多重”</h3><p>一袋糖果，装 10 颗还是 20 颗，整袋的质量会变，但<b>每一颗</b>的质量不变。密度说的就是“每 1 cm³ 有多少克”。一块铁切掉一半，质量和体积都少了一半，每 1 cm³ 仍然是 7.9 g，所以密度不变。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="排水法测体积">
+<h2>排水法：量筒测出金属块的体积</h2>
+<p class="panel-sub">先读水的体积 V₁，再把金属块用细线吊着慢慢放进水里，读 V₂。换个视线位置，看读数会不会变。</p>
+<svg id="cyl" viewBox="0 0 400 250" role="img" aria-label="量筒排水法测体积"></svg>
+<div class="ctl-row" style="margin-top:6px"><span>金属块</span><div class="chips small" id="blk-chips"></div></div>
+<div class="ctl-row"><span>读数视线</span><div class="chips small" id="eye-chips"></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="drop-btn">把金属块放进量筒</button></div>
+</section>
+<section class="readout" aria-label="密度计算">
+<div class="readout-head"><h2>算出密度</h2><span class="badge" id="cy-badge">还没放入</span></div>
+<div class="stat-grid">
+<div class="stat"><span>水的体积 V₁</span><strong id="cy-v1">—</strong></div>
+<div class="stat"><span>放入后 V₂</span><strong id="cy-v2">—</strong></div>
+<div class="stat"><span>金属块体积 V = V₂ − V₁</span><strong id="cy-v">—</strong></div>
+<div class="stat"><span>密度 ρ = m / V</span><strong id="cy-rho">—</strong></div>
+<div class="stat wide"><span>按现在的视线，你会读成</span><strong id="cy-read" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="cy-text" aria-live="polite"></p>
+<table class="compare" id="mat-table"><thead><tr><th>物质</th><th>密度 / (g·cm⁻³)</th><th>密度 / (kg·m⁻³)</th></tr></thead><tbody>
+<tr data-r="al"><td>铝</td><td class="n">2.7</td><td class="n">2.7×10³</td></tr>
+<tr data-r="fe"><td>铁</td><td class="n">7.9</td><td class="n">7.9×10³</td></tr>
+<tr data-r="cu"><td>铜</td><td class="n">8.9</td><td class="n">8.9×10³</td></tr>
+<tr data-r="pb"><td>铅</td><td class="n">11.3</td><td class="n">11.3×10³</td></tr>
+</tbody></table>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么说密度是物质的“身份证”</h3>
+<p class="derive-lead">同样是铁，一颗铁钉和一口铁锅质量差很多，凭什么说它们的密度一样？</p>
+<ol>
+<li><h4>把铁块切成两半</h4><p>一块 79 g、10 cm³ 的铁块，切成一样的两半，每半 39.5 g、5 cm³。质量减半，体积也减半。</p></li>
+<li><h4>比值没有变</h4><p>79 ÷ 10 = 7.9，39.5 ÷ 5 = 7.9。不管切多小、拼多大，<b>质量和体积总是同步变</b>，两者的比值不变。</p></li>
+<li><h4>画到图上就是一条直线</h4><p>把不同大小铁块的 (V, m) 画成点，它们都满足 m = 7.9 × V，连起来是一条<b>过原点的直线</b>。这条线的倾斜程度（m 除以 V）就是密度。</p></li>
+<li><h4>换一种物质，线就换了</h4><p>铝的线比铁平，水的线更平。体积相同时，线越陡，质量越大。所以测出密度，就能大致判断物体是什么做的。</p></li>
+<li><h4>状态变了，密度会变</h4><p>同一种物质，状态不同密度可能不同：冰是 0.9 g/cm³，水是 1.0 g/cm³。90 g 的冰化成水，质量还是 90 g，体积却从 100 cm³ 缩成 90 cm³。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>ρ = m / V 只是“算密度”的办法，不是“谁决定密度”。密度由<b>物质种类和状态</b>决定，和这块东西有多大、多重无关。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>质量是物体本身的属性</h3><p>质量表示物体所含物质的多少，符号 m，国际单位是千克（kg），常用克（g）、吨（t）：1 t = 10³ kg，1 kg = 10³ g。把物体压扁、熔化、带上太空，<b>质量都不变</b>。</p></div></div>
+<div class="fact"><div><h3>密度的定义和单位</h3><p>某种物质组成的物体的质量与它的体积之比，叫密度：<b>ρ = m / V</b>。单位 kg/m³ 或 g/cm³，<b>1 g/cm³ = 1×10³ kg/m³</b>。水的密度是 1.0×10³ kg/m³，意思是 1 m³ 的水质量为 1.0×10³ kg。</p></div></div>
+<div class="fact"><div><h3>量筒怎么读</h3><p>先看量程和分度值。读数时视线要与<b>凹液面的底部相平</b>；俯视读数偏大，仰视读数偏小。体积单位换算：1 mL = 1 cm³，1 L = 1 dm³ = 10⁻³ m³。</p></div></div>
+<div class="fact"><div><h3>密度的应用</h3><p>测出密度可以<b>鉴别物质</b>；知道密度和体积可以求质量（m = ρV），知道质量和密度可以求体积（V = m / ρ），比如估算一块大石碑的质量、一桶油的体积。温度也会影响密度：一般物体受热膨胀、密度变小，热空气上升就形成了风；水比较特殊，在 4 ℃ 时密度最大。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>不能说“密度与质量成正比、与体积成反比”，同种物质的密度和质量、体积<b>都无关</b>。测石块密度要<b>先测质量、再测体积</b>，顺序反了，石块沾着水去称，质量偏大，密度也偏大。读游码要读它的<b>左边缘</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这次测量发给同学</h3><p>链接会记住天平上的砝码、游码和你选的金属块。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，测密度是力学实验的基本功</h3>
+<ul>
+<li><b>选择题</b>：判断质量、密度是不是会随形状、状态、位置改变；估测常见物体的质量（一个鸡蛋约 50 g，一名中学生约 50 kg）。</li>
+<li><b>实验题</b>：用天平和量筒测固体或液体的密度。常问天平怎么调平、砝码和游码怎么读、量筒怎么读，以及步骤顺序对结果的影响（偏大还是偏小）。测液体密度的好办法：先称烧杯和液体的总质量，倒一部分进量筒读体积，再称剩下的，两次质量之差就是量筒里液体的质量，烧杯壁上沾的液体就不会带来误差。</li>
+<li><b>计算题</b>：用 ρ = m / V 及其变形求质量或体积；冰化成水、同一个瓶子装水和装酒精、判断铁球是不是空心的。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（物理 10 分）。用天平要用镊子夹砝码、称完把游码拨回零，读量筒时眼睛要和凹液面底部相平。</li>
+</ul>
+<div class="q"><b>典型设问</b>　测小石块密度：天平平衡时右盘有 50 g、20 g、5 g 砝码各一个，游码在 2.4 g 处；量筒中水面从 60 mL 升到 90 mL。小石块的密度是多少？<br><b>怎么想</b>　质量 m = 50 + 20 + 5 + 2.4 = 77.4 g；体积 V = 90 − 60 = 30 mL = 30 cm³；ρ = 77.4 g ÷ 30 cm³ = <b>2.58 g/cm³ = 2.58×10³ kg/m³</b>。<b>先把单位统一成 g 和 cm³ 再除</b>，最后需要时再换成 kg/m³。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 6 课</p><p>天平按“左右质量差”决定指针偏转，只作示意；量筒按 1 小格 2 mL 绘制，金属块大小没有按比例画。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

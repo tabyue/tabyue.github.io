@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="把砖块平放、侧放、竖放压在海绵上，算出压强 p = F/S；移动液体压强计的探头、换液体和容器，看 U 形管高度差怎样随深度和密度变化；向两张纸中间吹气、给机翼送风，看流速大的地方压强小。物理互动馆第 9 课，对应人教版八年级下册第九章。">
+<meta property="og:title" content="物理互动馆 · 压强">
+<title>压强 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="pressure.js"></script>
+</head>
+<body data-module="pressure">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 9 课 <span>/</span> 八年级下册 第九章</p><h1>压强</h1><p class="subtitle">同一块砖，平放、侧放、竖放，压在海绵上的“狠劲”完全不一样。潜水越深耳朵越疼、两张纸一吹反而靠拢，背后也都是压强。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="砖块压海绵">
+<h2>砖块压海绵：压力的作用效果</h2>
+<p class="panel-sub">每块砖长 20 cm、宽 10 cm、厚 5 cm，重 20 N。换放法、加块数，看海绵陷得多深。</p>
+<svg id="brick" viewBox="0 0 400 250" role="img" aria-label="砖块压在海绵上，海绵凹陷"></svg>
+<div class="ctl-row"><span>放法</span><div class="chips small" id="ori-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="n-in">叠放块数</label><output id="n-out">1 块</output></div><input id="n-in" type="range" min="1" max="3" step="1" value="1"><div class="ruler"><span>1 块</span><span>2 块</span><span>3 块</span></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="压强读数">
+<div class="readout-head"><h2>海绵受到的压强</h2><span class="badge" id="br-badge">平放</span></div>
+<div class="stat-grid">
+<div class="stat"><span>压力 F（等于砖的总重）</span><strong id="br-F">—</strong></div>
+<div class="stat"><span>受力面积 S</span><strong id="br-S">—</strong></div>
+<div class="stat wide"><span>压强 p = F / S</span><strong id="br-p">—</strong></div>
+</div>
+<p class="lead" id="br-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="三种放法比较">
+<h2>三种放法比一比</h2>
+<p class="panel-sub" style="margin-bottom:4px">块数相同时，当前放法会高亮。注意面积要换成 m²：1 cm² = 10⁻⁴ m²。</p>
+<table class="compare" id="br-table"><thead><tr><th>放法</th><th>受力面积</th><th>压强</th></tr></thead><tbody>
+<tr data-o="flat"><td>平放</td><td class="n">200 cm² = 0.02 m²</td><td class="n">—</td></tr>
+<tr data-o="side"><td>侧放</td><td class="n">100 cm² = 0.01 m²</td><td class="n">—</td></tr>
+<tr data-o="up"><td>竖放</td><td class="n">50 cm² = 0.005 m²</td><td class="n">—</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="液体压强计">
+<h2>液体压强计：越深压强越大</h2>
+<p class="panel-sub">探头上蒙着橡皮膜，受到的压强越大，U 形管两边液面的高度差越大。U 形管里装的是染了色的水。</p>
+<svg id="probe" viewBox="0 0 400 240" role="img" aria-label="液体压强计的探头放在液体中"></svg>
+<div class="control"><div class="control-heading"><label for="d-in">探头深度 h（从液面往下量）</label><output id="d-out">10 cm</output></div><input id="d-in" type="range" min="0" max="15" step="0.5" value="10"><div class="ruler"><span>0</span><span>7.5 cm</span><span>15 cm</span></div></div>
+<div class="ctl-row"><span>液体</span><div class="chips small" id="liq-chips"></div></div>
+<div class="ctl-row"><span>橡皮膜朝</span><div class="chips small" id="dir-chips"></div></div>
+<div class="ctl-row"><span>容器</span><div class="chips small" id="shape-chips"></div></div>
+</section>
+<section class="readout" aria-label="液体压强读数">
+<div class="readout-head"><h2>探头处的液体压强</h2><span class="badge" id="pr-badge">水</span></div>
+<div class="stat-grid">
+<div class="stat"><span>深度 h</span><strong id="pr-h">—</strong></div>
+<div class="stat"><span>液体密度 ρ</span><strong id="pr-rho">—</strong></div>
+<div class="stat"><span>压强 p = ρgh</span><strong id="pr-p">—</strong></div>
+<div class="stat"><span>U 形管高度差</span><strong id="pr-dh">—</strong></div>
+</div>
+<p class="lead" id="pr-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 液体压强像叠罗汉</h3><p>叠罗汉时最底下的人最吃力，因为头顶上压着的人最多。液体也是一层压着一层，越往下，上面压着的液体越多，压强越大。液体又会流动，所以它不光往下压，还往四面八方挤。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="流体压强与流速">
+<h2>流速与压强：越快的地方压强越小</h2>
+<p class="panel-sub">选一个场景，调好气流速度，点「开始吹气」。看纸往哪边靠、机翼往哪边“飘”。</p>
+<svg id="flow" viewBox="0 0 400 220" role="img" aria-label="气流经过两张纸之间或机翼上下"></svg>
+<div class="ctl-row"><span>场景</span><div class="chips small" id="scene-chips"></div></div>
+<div class="control" style="margin-top:8px"><div class="control-heading"><label for="v-in">气流速度</label><output id="v-out">10 m/s</output></div><input id="v-in" type="range" min="1" max="20" step="1" value="10"><div class="ruler"><span>1 m/s</span><span>10 m/s</span><span>20 m/s</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="flow-go">开始吹气</button></div>
+</section>
+<section class="readout" aria-label="流速与压强读数">
+<div class="readout-head"><h2>哪里快，哪里压强小</h2><span class="badge" id="fl-badge">没吹气</span></div>
+<div class="stat-grid">
+<div class="stat"><span>此刻气流速度</span><strong id="fl-v">—</strong></div>
+<div class="stat"><span>流速大、压强小的地方</span><strong id="fl-low" style="font-size:18px">—</strong></div>
+<div class="stat wide"><span>结果</span><strong id="fl-res" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="fl-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 液体压强为什么是 p = ρgh</h3>
+<p class="derive-lead">公式不用死记，从 p = F/S 出发，想象一根“液柱”就能推出来。</p>
+<ol>
+<li><h4>在深 h 处放一块小平面</h4><p>设这块平面的面积是 S。它正上方压着一根液柱：高 h、底面积 S，一直通到液面。</p></li>
+<li><h4>算出液柱有多重</h4><p>液柱体积 V = Sh，质量 m = ρV = ρSh，重力 G = mg = <b>ρgSh</b>。这个重力就是压在小平面上的压力 F。</p></li>
+<li><h4>再除以面积</h4><p>p = F / S = ρgSh / S = <b>ρgh</b>。面积 S 被约掉了。</p></li>
+<li><h4>公式里少了什么</h4><p>没有容器形状，没有液体总重，也没有面积。所以<b>液体压强只跟液体密度和深度有关</b>，粗杯细杯、水多水少，同一深度压强都一样。</p></li>
+<li><h4>h 要从液面往下量</h4><p>液柱是从这一点一直到<b>液面</b>的，所以深度是到自由液面的竖直距离，不是离容器底的高度。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>拦河坝要修成上窄下宽：越往下水越深、压强越大。只要记住 h 是“从上往下量”，绝大多数液体压强题都不会错。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>压强 p = F / S</h3><p>单位是帕斯卡，简称帕（Pa），1 Pa = 1 N/m²。<b>增大压强</b>：增大压力或减小受力面积，如刀刃磨薄、图钉尖做尖；<b>减小压强</b>：减小压力或增大受力面积，如书包带做宽、铁轨下铺枕木。</p></div></div>
+<div class="fact"><div><h3>液体的压强</h3><p>液体内部向各个方向都有压强；<b>同一深度，各方向压强相等</b>；深度越大，压强越大；深度相同时，液体密度越大，压强越大。p = ρgh。</p></div></div>
+<div class="fact"><div><h3>连通器</h3><p>上端开口、下端连通的容器叫连通器。里面装同一种液体、液体不流动时，各部分液面总是<b>相平</b>的。茶壶、锅炉水位计、船闸都利用了连通器。</p></div></div>
+<div class="fact"><div><h3>大气压与流速</h3><p>马德堡半球实验证明大气压存在；托里拆利实验测出大气压约等于 <b>760 mm</b> 高水银柱产生的压强，约 1.013×10⁵ Pa，叫标准大气压。海拔越高，大气压越低。流体中<b>流速越大的地方压强越小</b>。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>p = ρgh 里的 h 是<b>从液面往下量</b>的竖直距离，不是离容器底的高度，也不是斜着量的长度。另外，液体对容器底的压力<b>不一定</b>等于液体的重力：先用 p = ρgh 求压强，再用 F = pS 求压力，只有直筒形容器两者才相等。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这组实验发给同学</h3><p>链接会记住砖的放法、探头深度、液体和气流速度。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考物理与化学合卷，物理 70 分；压强常和浮力、密度放在一起出综合题</h3>
+<ul>
+<li><b>选择题</b>：判断生活中是增大还是减小压强；用“流速大压强小”解释现象（站台安全线、窗帘往外飘）；比较不同容器中液体对底部的压强。</li>
+<li><b>计算题</b>：固体用 p = F/S，液体用 p = ρgh。最常丢分的是单位：面积 cm² 要换成 m²，深度 cm 要换成 m。</li>
+<li><b>实验题</b>：探究压力的作用效果——用海绵凹陷程度反映效果（转换法）、控制变量；探究液体压强——使用前检查压强计是否漏气，用 U 形管高度差反映压强大小。</li>
+<li><b>实验操作考试</b>：理化实验操作单独计 20 分（物理 10 分），操作时要一边动手一边按要求记录现象和数据。</li>
+</ul>
+<div class="q"><b>典型设问</b>　质量 50 kg 的同学双脚站立，每只鞋底与地面的接触面积是 200 cm²。他对地面的压强是多少？走路时呢？（g 取 10 N/kg）<br><b>怎么想</b>　F = G = mg = 50 kg × 10 N/kg = 500 N。双脚站立 S = 2 × 200 cm² = 0.04 m²，p = 500 N ÷ 0.04 m² = <b>1.25×10⁴ Pa</b>。走路时总有一只脚着地，S 减半，压强变成 <b>2.5×10⁴ Pa</b>。<b>压力不变，面积减半，压强翻倍</b>。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 9 课</p><p>海绵凹陷深度只作示意；压强计按理想情况处理（不计橡皮膜形变）；纸和机翼的弯曲、升力只表示变化趋势；g 取 10 N/kg。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

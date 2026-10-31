@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="在带刻度的杠杆两边挂钩码，看它什么时候在水平位置平衡、读出 F₁l₁ 和 F₂l₂；斜着拉弹簧测力计，看力臂怎样变短、拉力怎样变大；换滑轮组的绕法，算拉力、绳子移动的距离和机械效率。物理互动馆第 12 课，对应人教版八年级下册第十二章。">
+<meta property="og:title" content="物理互动馆 · 简单机械">
+<title>简单机械 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="lever.js"></script>
+</head>
+<body data-module="lever">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 12 课 <span>/</span> 八年级下册 第十二章</p><h1>简单机械</h1><p class="subtitle">一根棍子能撬起大石头，几个轮子能把重物吊上楼。机械帮我们省了力，却从来没帮我们省过功。挂一挂、拉一拉就明白了。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="探究杠杆的平衡条件">
+<h2>杠杆的平衡条件</h2>
+<p class="panel-sub">每个钩码重 0.5 N，相邻两格相距 5 cm。先看杠杆有没有在水平位置平衡，没有就调两端的平衡螺母；再在两边挂钩码。</p>
+<svg id="lever" viewBox="0 0 400 250" role="img" aria-label="支点在中间的杠杆，两边挂着钩码"></svg>
+<div class="control"><div class="control-heading"><label for="nut-in">两端的平衡螺母</label><output id="nut-out">在中间</output></div><input id="nut-in" type="range" min="-2" max="2" step="1" value="0"><div class="ruler"><span>向左拧</span><span>中间</span><span>向右拧</span></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px 14px;margin-top:18px">
+<div class="control" style="margin-top:0"><div class="control-heading"><label for="lc-in">左边钩码个数</label><output id="lc-out">2 个</output></div><input id="lc-in" type="range" min="0" max="6" step="1" value="2"><div class="ruler"><span>0</span><span>6</span></div></div>
+<div class="control" style="margin-top:0"><div class="control-heading"><label for="rc-in">右边钩码个数</label><output id="rc-out">3 个</output></div><input id="rc-in" type="range" min="0" max="6" step="1" value="3"><div class="ruler"><span>0</span><span>6</span></div></div>
+<div class="control" style="margin-top:0"><div class="control-heading"><label for="lp-in">左边挂在第几格</label><output id="lp-out">第 3 格</output></div><input id="lp-in" type="range" min="1" max="6" step="1" value="3"><div class="ruler"><span>1</span><span>6</span></div></div>
+<div class="control" style="margin-top:0"><div class="control-heading"><label for="rp-in">右边挂在第几格</label><output id="rp-out">第 2 格</output></div><input id="rp-in" type="range" min="1" max="6" step="1" value="2"><div class="ruler"><span>1</span><span>6</span></div></div>
+</div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="杠杆读数">
+<div class="readout-head"><h2>两边的“力 × 力臂”</h2><span class="badge" id="lv-badge">平衡</span></div>
+<div class="stat-grid">
+<div class="stat"><span>左边的力 F₁</span><strong id="lv-F1">—</strong></div>
+<div class="stat"><span>右边的力 F₂</span><strong id="lv-F2">—</strong></div>
+<div class="stat"><span>左边力臂 l₁</span><strong id="lv-L1">—</strong></div>
+<div class="stat"><span>右边力臂 l₂</span><strong id="lv-L2">—</strong></div>
+<div class="stat"><span>F₁ × l₁</span><strong id="lv-M1">—</strong></div>
+<div class="stat"><span>F₂ × l₂</span><strong id="lv-M2">—</strong></div>
+</div>
+<p class="lead" id="lv-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="实验记录表">
+<h2>实验记录表</h2>
+<p class="panel-sub" style="margin-bottom:4px">杠杆在水平位置平衡时点「记下这一组」。换不同的钩码和位置，至少记三组。</p>
+<table class="compare" id="rec-table"><thead><tr><th>次数</th><th>F₁ / N</th><th>l₁ / cm</th><th>F₂ / N</th><th>l₂ / cm</th></tr></thead><tbody id="rec-body"></tbody></table>
+<div class="btn-row"><button type="button" class="big-btn" id="rec-add">记下这一组</button><button type="button" class="ghost-btn" id="rec-clear">清空</button></div>
+<p class="lead" id="rec-msg" aria-live="polite" style="margin-top:8px"></p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="力臂">
+<h2>力臂：支点到力的作用线的距离</h2>
+<p class="panel-sub">左边第 3 格挂 4 个钩码（2 N），右边用弹簧测力计往下拉，让杠杆保持水平。拖动测力计下端的拉环（或用滑块）改变拉的方向。</p>
+<svg id="arm" viewBox="0 0 400 230" role="application" aria-label="斜拉弹簧测力计，画出动力臂"></svg>
+<div class="control"><div class="control-heading"><label for="ang-in">拉力偏离竖直方向的角度</label><output id="ang-out">0°</output></div><input id="ang-in" type="range" min="-60" max="60" step="1" value="0"><div class="ruler"><span>向支点歪 60°</span><span>竖直</span><span>向外歪 60°</span></div></div>
+<div class="ctl-row"><span>测力计挂在</span><div class="chips small" id="pos-chips"></div></div>
+</section>
+<section class="readout" aria-label="力臂读数">
+<div class="readout-head"><h2>测力计要用多大的力</h2><span class="badge" id="arm-badge">省力</span></div>
+<div class="stat-grid">
+<div class="stat"><span>动力 F₁（测力计示数）</span><strong id="arm-F">—</strong></div>
+<div class="stat"><span>动力臂 l₁</span><strong id="arm-l1">—</strong></div>
+<div class="stat"><span>阻力 F₂（钩码）</span><strong id="arm-F2">—</strong></div>
+<div class="stat"><span>阻力臂 l₂</span><strong id="arm-l2">—</strong></div>
+</div>
+<p class="lead" id="arm-text" aria-live="polite"></p>
+<table class="compare" id="kind-table"><thead><tr><th>杠杆</th><th>力臂</th><th>特点</th><th>例子</th></tr></thead><tbody>
+<tr data-k="save"><td>省力杠杆</td><td>l₁ &gt; l₂</td><td>省力，费距离</td><td>撬棒、羊角锤、钢丝钳</td></tr>
+<tr data-k="eq"><td>等臂杠杆</td><td>l₁ = l₂</td><td>不省力也不费距离</td><td>天平、定滑轮</td></tr>
+<tr data-k="cost"><td>费力杠杆</td><td>l₁ &lt; l₂</td><td>费力，省距离</td><td>镊子、筷子、钓鱼竿</td></tr>
+</tbody></table>
+<aside class="analogy"><h3><i>打个比方</i> 推门</h3><p>门轴就是支点。手推在门把手上、垂直于门板推，一下就开；推在靠近门轴的地方，或者斜着推，就很费劲。斜着推时，力的作用线离门轴近了，力臂变短，要用更大的力才“转得动”。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="滑轮组">
+<h2>滑轮组：几段绳子吊着动滑轮</h2>
+<p class="panel-sub">选承担物重的绳子段数 n，调物重、动滑轮重和提升高度，点「拉绳提升」看绳子自由端要拉出多长。不计绳重和摩擦。</p>
+<svg id="pul" viewBox="0 0 400 260" role="img" aria-label="滑轮组提升重物"></svg>
+<div class="ctl-row"><span>绳子段数</span><div class="chips small" id="n-chips"></div></div>
+<div class="control"><div class="control-heading"><label for="g-in">物重 G物</label><output id="g-out">12 N</output></div><input id="g-in" type="range" min="4" max="40" step="2" value="12"><div class="ruler"><span>4 N</span><span>22 N</span><span>40 N</span></div></div>
+<div class="control"><div class="control-heading"><label for="gd-in">动滑轮重 G动</label><output id="gd-out">2 N</output></div><input id="gd-in" type="range" min="0.5" max="6" step="0.5" value="2"><div class="ruler"><span>0.5 N</span><span>6 N</span></div></div>
+<div class="control"><div class="control-heading"><label for="h-in">物体提升高度 h</label><output id="h-out">0.2 m</output></div><input id="h-in" type="range" min="0.1" max="0.4" step="0.05" value="0.2"><div class="ruler"><span>0.1 m</span><span>0.4 m</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="lift-go">拉绳提升</button><button type="button" class="ghost-btn" id="lift-reset">放回原处</button></div>
+</section>
+<section class="readout" aria-label="滑轮组读数">
+<div class="readout-head"><h2>力、距离和功</h2><span class="badge" id="pul-badge">n = 2</span></div>
+<div class="stat-grid">
+<div class="stat"><span>拉力 F</span><strong id="pul-F">—</strong></div>
+<div class="stat"><span>绳端移动 s = nh</span><strong id="pul-s">—</strong></div>
+<div class="stat"><span>有用功 W有 = G物h</span><strong id="pul-Wy">—</strong></div>
+<div class="stat"><span>额外功 W额 = G动h</span><strong id="pul-We">—</strong></div>
+<div class="stat"><span>总功 W总 = Fs</span><strong id="pul-Wz">—</strong></div>
+<div class="stat"><span>机械效率 η</span><strong id="pul-eta">—</strong></div>
+</div>
+<p class="lead" id="pul-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么省力就一定费距离</h3>
+<p class="derive-lead">杠杆和滑轮看起来不一样，背后是同一笔账：力 × 距离。</p>
+<ol>
+<li><h4>杠杆转一下，两端走的路不一样长</h4><p>杠杆绕支点转过一个小角度，离支点远的一端走得多，近的一端走得少，<b>走过的距离之比 = 力臂之比</b>，就像圆规画大圆和小圆。</p></li>
+<li><h4>省力杠杆：用小力，走长路</h4><p>平衡时 F₁l₁ = F₂l₂。动力臂是阻力臂的 4 倍，动力只要阻力的 1/4，可手要压下去 4 倍的距离。乘起来，动力做的功和直接搬起重物一样多。</p></li>
+<li><h4>滑轮组：n 段绳子一起分担</h4><p>动滑轮和物体被 n 段绳子吊着，每段拉力都是 F，所以 nF = G物 + G动。物体升高 h，每段绳子都要缩短 h，绳子自由端就得拉出 <b>s = nh</b>。</p></li>
+<li><h4>白白多做的那部分功</h4><p>提物体做的是有用功 W有 = G物h；顺带把动滑轮也提起来、克服摩擦，是额外功。总功 W总 = Fs = W有 + W额，一定比有用功大。</p></li>
+<li><h4>效率就是“有用的占多少”</h4><p>η = W有 ÷ W总。不计绳重和摩擦时，η = G物 ÷ (G物 + G动)，和 n、h 都没关系：物体越重、动滑轮越轻，效率越高。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>使用任何机械都<b>不省功</b>：省了力就要多走距离，省了距离就要多用力。额外功总是存在，机械效率总小于 1。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>杠杆的平衡条件</h3><p>一根硬棒在力的作用下能绕固定点（<b>支点</b>）转动，就是杠杆。平衡条件：<b>动力 × 动力臂 = 阻力 × 阻力臂</b>，即 F₁l₁ = F₂l₂。杆秤、天平都靠它称东西。</p></div></div>
+<div class="fact"><div><h3>三类杠杆</h3><p>l₁ &gt; l₂ 是<b>省力杠杆</b>（撬棒、开瓶器），省力费距离；l₁ &lt; l₂ 是<b>费力杠杆</b>（镊子、筷子），费力省距离；l₁ = l₂ 是<b>等臂杠杆</b>（天平）。</p></div></div>
+<div class="fact"><div><h3>定滑轮、动滑轮、滑轮组</h3><p><b>定滑轮</b>轴不动，实质是等臂杠杆，不省力，但能改变力的方向；<b>动滑轮</b>跟着物体一起动，实质是动力臂为阻力臂 2 倍的杠杆，最多省一半力，不能改变力的方向。滑轮组：F = (G物 + G动) ÷ n，s = nh。</p></div></div>
+<div class="fact"><div><h3>机械效率</h3><p>η = W有 ÷ W总，总小于 1，没有单位，常写成百分数。提高办法：<b>增加物重</b>、<b>减小动滑轮重</b>、加润滑油减小摩擦。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p><b>力臂</b>是支点到力的<b>作用线</b>的垂直距离，不是支点到力的作用点的距离。只有力和杠杆垂直时，两者才相等。另外，平衡螺母只能在挂钩码<b>之前</b>调；机械效率高只说明有用功占的比例大，和省不省力、做功快不快没有关系。本课 g 取 10 N/kg。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这组实验发给同学</h3><p>链接会记住钩码、拉力方向和滑轮组的设置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考物理与化学合卷，物理 70 分；简单机械常和功、功率放在一起考</h3>
+<ul>
+<li><b>选择题</b>：判断生活用具是省力还是费力杠杆；判断定滑轮、动滑轮的特点；比较不同滑轮组的拉力和机械效率。</li>
+<li><b>作图题</b>：画力臂（从支点向力的作用线作垂线）；画使杠杆平衡的最小动力（连支点和作用点，作这条线的垂线）；按要求给滑轮组绕线。</li>
+<li><b>实验题</b>：探究杠杆的平衡条件，常问为什么先调到水平平衡（便于读力臂）、为什么要做多次（找普遍规律）；测滑轮组机械效率，要<b>竖直匀速</b>拉动测力计。</li>
+<li><b>计算题</b>：滑轮组求拉力、绳端移动距离、有用功、总功、机械效率，有时再求功率。</li>
+<li><b>实验操作考试</b>：理化实验操作单独计 20 分（物理 10 分），弹簧测力计先调零，读数时视线与刻度板垂直。</li>
+</ul>
+<div class="q"><b>典型设问</b>　自制杆秤的秤钩到提纽 4 cm，秤砣质量 0.5 kg。挂上一袋米，秤砣移到离提纽 24 cm 处杆秤水平平衡，这袋米的质量是多少？（不计秤杆自重）<br><b>怎么想</b>　提纽是支点。G米 × 4 cm = G砣 × 24 cm，两边的 g 约掉，m米 = 0.5 kg × 24 ÷ 4 = <b>3 kg</b>。<b>先找支点，再分别找两个力和各自的力臂</b>，杠杆题就有了方向。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 12 课</p><p>每个钩码 50 g，g 取 10 N/kg；杠杆按质量均匀、支点在中点处理，不平衡时画成转到挡块的位置；滑轮组不计绳重和摩擦。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

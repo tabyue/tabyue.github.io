@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="判断蜡烛燃烧、铁生锈、干冰升华等 11 个生活现象是物理变化还是化学变化，看变化前后有没有新物质；拖动眼睛看量筒俯视、仰视读数偏大还是偏小；把火柴梗放进酒精灯火焰，找出温度最高的外焰。化学互动馆第 1 课，对应人教版九年级上册第一单元。">
+<meta property="og:title" content="化学互动馆 · 走进化学世界">
+<title>走进化学世界 · 化学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="chem.css">
+<script defer src="common.js"></script>
+<script defer src="intro.js"></script>
+</head>
+<body data-module="intro">
+<header class="topbar"><a class="brand" href="index.html" aria-label="化学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.4 9.2A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.8L14 9V3"/><path d="M7.5 15h9"/></svg><span>化学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 1 课 <span>/</span> 九年级上册 第一单元</p><h1>走进化学世界</h1><p class="subtitle">蜡烛熔化和蜡烛燃烧，看起来都是蜡烛在变，一个是物理变化，一个是化学变化。分清它们，只要问一句：有没有变出新东西？</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="物理变化还是化学变化">
+<h2>物理变化还是化学变化</h2>
+<p class="panel-sub">选一个现象，先自己判断，再看“变化后”的微观示意：粒子还是原来那些，还是变出了新的？</p>
+<svg id="change" viewBox="0 0 400 240" role="img" aria-label="变化前后的微观示意"></svg>
+<div class="chips small" id="case-chips" style="margin-top:10px"></div>
+<div class="btn-row"><button type="button" class="big-btn" id="judge-phy">物理变化</button><button type="button" class="big-btn" id="judge-chem">化学变化</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="判断结果">
+<div class="readout-head"><h2>这个现象</h2><span class="badge" id="case-badge">待判断</span></div>
+<div class="stat-grid">
+<div class="stat"><span>你的判断</span><strong id="case-verdict" style="font-size:19px">—</strong></div>
+<div class="stat"><span>生成新物质了吗</span><strong id="case-new" style="font-size:19px">—</strong></div>
+<div class="stat wide"><span>看到的现象</span><strong id="case-sign" style="font-size:16px">—</strong></div>
+<div class="stat wide"><span>全部 11 个现象</span><strong id="case-score" style="font-size:16px">—</strong></div>
+</div>
+<p class="lead" id="case-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="性质还是变化">
+<h2>说的是性质，还是变化？</h2>
+<p class="panel-sub" style="margin-bottom:8px">“能、易、会”往往在说本领（性质），“了、正在”往往在说过程（变化）。给每句话选一个。</p>
+<div class="choice-list" id="prop-list"></div>
+<p class="note" id="prop-score">已答 0 / 6</p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="量筒读数">
+<h2>量筒读数：眼睛放在哪儿</h2>
+<p class="panel-sub">上下拖动右边的眼睛（或用滑块），看视线穿过刻度的位置。图中量筒是局部放大的。</p>
+<svg id="cyl" viewBox="0 0 400 240" role="application" aria-label="量筒和视线，可上下拖动眼睛"></svg>
+<div class="control"><div class="control-heading"><label for="eye-in">眼睛的高度（相对凹液面最低处）</label><output id="eye-out">平视</output></div><input id="eye-in" type="range" min="-80" max="80" step="2" value="0"><div class="ruler"><span>低（仰视）</span><span>平</span><span>高（俯视）</span></div></div>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap"><div class="chips small" id="eye-chips"></div><button type="button" class="ghost-btn" id="new-vol">换一份液体</button></div>
+</section>
+<section class="readout" aria-label="量筒读数结果">
+<div class="readout-head"><h2>这次读数</h2><span class="badge" id="cyl-badge">平视</span></div>
+<div class="stat-grid"><div class="stat"><span>读到的体积</span><strong id="read-v">—</strong></div><div class="stat"><span>实际体积</span><strong id="true-v">—</strong></div><div class="stat wide"><span>读数</span><strong id="err-v" style="font-size:18px">—</strong></div></div>
+<p class="lead" id="cyl-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 坐副驾驶看仪表盘</h3><p>坐在副驾驶从侧面看司机面前的速度表，读到的数和司机正对着看的不一样。量筒也是这样：眼睛高了（<b>俯视</b>），视线斜着往下，穿过的是更高的刻度，<b>读数偏大</b>；眼睛低了（<b>仰视</b>），<b>读数偏小</b>。只有平视，眼睛、刻度和凹液面最低处才在一条水平线上。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="酒精灯">
+<h2>酒精灯：哪层火焰最热</h2>
+<p class="panel-sub">把火柴梗平放进火焰约 1 秒再取出，看哪一段烧得最黑。切到“给液体加热”，看看试管里的液体该装多少。</p>
+<svg id="lamp" viewBox="0 0 400 240" role="img" aria-label="酒精灯和火焰"></svg>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">实验</span><div class="chips small" id="lamp-mode"></div></div>
+<div id="flame-ctl">
+<div class="control"><div class="control-heading"><label for="stick-in">火柴梗离灯芯的高度</label><output id="stick-out">中间</output></div><input id="stick-in" type="range" min="1" max="9" step="1" value="5"><div class="ruler"><span>贴近灯芯</span><span></span><span>靠近火焰顶端</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="stick-btn">把火柴梗平放进火焰约 1 秒</button><button type="button" class="ghost-btn" id="cap-btn">盖上灯帽</button><button type="button" class="ghost-btn" id="blow-btn">用嘴吹灭</button></div>
+</div>
+<div id="heat-ctl" hidden>
+<div class="control"><div class="control-heading"><label for="liq-in">试管里液体的量（占试管容积）</label><output id="liq-out">20 %</output></div><input id="liq-in" type="range" min="5" max="60" step="5" value="20"><div class="ruler"><span>5 %</span><span>1/3 ≈ 33 %</span><span>60 %</span></div></div>
+</div>
+</section>
+<section class="readout" aria-label="酒精灯读数">
+<div class="readout-head"><h2>观察结果</h2><span class="badge" id="lamp-badge">外焰温度最高</span></div>
+<div class="stat-grid"><div class="stat"><span id="lamp-ka">碳化最重的位置</span><strong id="lamp-a" style="font-size:18px">—</strong></div><div class="stat"><span id="lamp-kb">酒精灯</span><strong id="lamp-b" style="font-size:18px">—</strong></div></div>
+<p class="lead" id="lamp-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 怎样判断“有没有新物质”</h3>
+<p class="derive-lead">化学变化的本质是生成了新物质。可新物质看不见摸不着，怎么确认？</p>
+<ol>
+<li><h4>什么叫新物质</h4><p>和原来的物质<b>组成或结构不同、性质也不同</b>的物质。蜡烛燃烧后生成的二氧化碳和水，与石蜡完全不是一回事。</p></li>
+<li><h4>用实验找证据</h4><p>在蜡烛火焰上方罩一个干冷的烧杯，内壁出现水雾，说明生成了<b>水</b>；把内壁涂有澄清石灰水的烧杯罩在火焰上方，石灰水变浑浊，说明生成了<b>二氧化碳</b>。</p></li>
+<li><h4>现象只是线索</h4><p>化学变化常伴随发光、放热、变色、放出气体、生成沉淀。这些现象提醒我们“可能有新物质”，但不能当作判断依据，最后还是要看<b>有没有新物质</b>。</p></li>
+<li><h4>化学变化里一定有物理变化</h4><p>蜡烛燃烧时，石蜡先受热熔化（物理变化），再燃烧（化学变化）。反过来，物理变化中不一定有化学变化。</p></li>
+<li><h4>性质和变化不是一回事</h4><p>性质是物质的“本领”，变化是正在发生的“过程”。“酒精能燃烧”说的是本领，是<b>化学性质</b>；“酒精燃烧了”说的是过程，是<b>化学变化</b>。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>判断时先问一句：变化后有没有出现原来没有的物质？再看这句话是在说本领，还是在说过程。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>两种变化</h3><p>没有生成其他物质的变化叫<b>物理变化</b>，如冰融化、酒精挥发；生成其他物质的变化叫<b>化学变化</b>（又叫化学反应），如蜡烛燃烧、铁生锈。两者的本质区别是<b>有没有新物质生成</b>。</p></div></div>
+<div class="fact"><div><h3>两种性质</h3><p>物质在化学变化中表现出来的性质叫<b>化学性质</b>，如可燃性、稳定性；不需要发生化学变化就表现出来的叫<b>物理性质</b>，如颜色、状态、气味、熔点、沸点、硬度、密度。</p></div></div>
+<div class="fact"><div><h3>量筒和滴管</h3><p>量筒要放平，视线与量筒内液体<b>凹液面的最低处</b>保持水平再读数。快到所需刻度时，改用胶头滴管滴加。量筒<b>不能加热</b>，也不能用作反应容器。</p></div></div>
+<div class="fact"><div><h3>酒精灯与加热</h3><p>用火柴点燃，<b>禁止用燃着的酒精灯去点另一只</b>；用<b>灯帽盖灭</b>，不能用嘴吹。给试管里的液体加热：液体不超过试管容积的 <b>1/3</b>，试管夹夹在距管口约 1/3 处，试管倾斜约 45°，先预热，管口不对着自己和别人。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>现象不等于本质。发光、放热、变色、产生气体或沉淀，常常伴随化学变化，但<b>有这些现象不一定是化学变化</b>：灯泡通电发光放热、水烧开冒气泡，都是物理变化。另外，带“能、易、会、可以”的说法，一般说的是<b>性质</b>，不是变化。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这节实验课发给同学</h3><p>链接会记住你选的现象、眼睛的高度和试管里液体的量。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中化学占 50 分，第一单元的内容几乎都藏在选择题和实验操作里</h3>
+<ul>
+<li><b>选择题</b>：判断物理变化还是化学变化，常结合诗句、传统工艺和生活情景，比如粮食酿酒、烧制陶瓷是化学变化，纺纱织布、雕刻木头是物理变化。</li>
+<li><b>性质辨析</b>：区分物理性质和化学性质，以及“性质”和“变化”两种说法。</li>
+<li><b>实验基本操作</b>：看图判断操作对不对，如量筒读数、点燃和熄灭酒精灯、给试管里的液体加热、倾倒液体。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（化学 10 分），取用药品、量取液体、加热这些基本操作要做得规范。</li>
+</ul>
+<div class="q"><b>典型设问</b>　用量筒量取液体，先仰视读数为 20 mL，倒出一部分后，俯视读数为 12 mL。实际倒出液体的体积是：A. 等于 8 mL　B. 大于 8 mL　C. 小于 8 mL　D. 无法确定。<br><b>怎么想</b>　仰视读数偏小，实际体积<b>大于</b> 20 mL；俯视读数偏大，剩下的实际<b>小于</b> 12 mL。大的减小的，倒出的一定大于 8 mL，选 <b>B</b>。<b>先把每次读数还原成真实体积的范围，再相减</b>，这类题就不会绕晕。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>化学互动馆 · 第 1 课</p><p>微观示意只表示“粒子变没变”，不代表真实大小和数量；量筒读数按视线穿过刻度的位置计算，偏差被适当放大便于观察。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

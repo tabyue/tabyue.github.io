@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="加减质子、中子、电子，亲手搭出前 20 号元素的原子和离子，看结构示意图怎么画；调温度看氨分子跑多快、酚酞溶液多久变红；点开元素周期表前 20 号查名称、符号和类别。化学互动馆第 3 课，对应人教版九年级上册第三单元。">
+<meta property="og:title" content="化学互动馆 · 物质构成的奥秘">
+<title>物质构成的奥秘 · 化学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="chem.css">
+<script defer src="common.js"></script>
+<script defer src="atom.js"></script>
+</head>
+<body data-module="atom">
+<header class="topbar"><a class="brand" href="index.html" aria-label="化学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.4 9.2A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.8L14 9V3"/><path d="M7.5 15h9"/></svg><span>化学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 3 课 <span>/</span> 九年级上册 第三单元</p><h1>物质构成的奥秘</h1><p class="subtitle">原子小到一亿个排成一行也才 1 厘米左右，可它里面还有更小的东西。亲手搭几个原子，“质子数决定元素”这句话就不用背了。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="原子组装台">
+<h2>原子组装台</h2>
+<p class="panel-sub">加减质子、中子、电子。改质子数就换了一种元素（中子数、电子数会自动配成这种元素最常见的原子）；再单独加减电子，就能做出离子。</p>
+<svg id="atom" viewBox="0 0 400 250" role="img" aria-label="原子模型与原子结构示意图"></svg>
+<div class="ctl-row"><span>质子</span><button type="button" class="ghost-btn" id="p-dec" aria-label="减少一个质子">−</button><output id="p-out" class="bignum" style="min-width:34px;text-align:center">11</output><button type="button" class="ghost-btn" id="p-inc" aria-label="增加一个质子">+</button></div>
+<div class="ctl-row"><span>中子</span><button type="button" class="ghost-btn" id="n-dec" aria-label="减少一个中子">−</button><output id="n-out" class="bignum" style="min-width:34px;text-align:center">12</output><button type="button" class="ghost-btn" id="n-inc" aria-label="增加一个中子">+</button></div>
+<div class="ctl-row"><span>电子</span><button type="button" class="ghost-btn" id="e-dec" aria-label="减少一个电子">−</button><output id="e-out" class="bignum" style="min-width:34px;text-align:center">11</output><button type="button" class="ghost-btn" id="e-inc" aria-label="增加一个电子">+</button></div>
+<div class="ctl-row"><span>快速搭</span><div class="chips small" id="preset-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="组装结果">
+<div class="readout-head"><h2>你搭出了</h2><span class="badge" id="atom-badge">原子</span></div>
+<div class="stat-grid">
+<div class="stat"><span>元素</span><strong id="el-out">—</strong></div>
+<div class="stat"><span>核电荷数（原子序数）</span><strong id="z-out">—</strong></div>
+<div class="stat"><span>相对原子质量</span><strong id="mass-out">—</strong></div>
+<div class="stat"><span>这个微粒</span><strong id="kind-out">—</strong></div>
+<div class="stat wide"><span>核外电子排布（从里到外）</span><strong id="shell-out" style="font-size:19px">—</strong></div>
+</div>
+<p class="lead" id="atom-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="构成原子的粒子">
+<h2>构成原子的三种粒子</h2>
+<table class="compare"><thead><tr><th>粒子</th><th>在哪儿</th><th>电性</th><th>相对质量</th></tr></thead><tbody>
+<tr><td>质子</td><td>原子核里</td><td>带 1 个单位正电荷</td><td>约为 1</td></tr>
+<tr><td>中子</td><td>原子核里</td><td>不带电</td><td>约为 1</td></tr>
+<tr><td>电子</td><td>核外，分层排布</td><td>带 1 个单位负电荷</td><td>约为质子的 1/1836</td></tr>
+</tbody></table>
+<p class="note">原子中：核电荷数 = 质子数 = 核外电子数，正负电荷相等，所以原子整体不显电性。</p>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="分子在不断运动">
+<h2>看不见的“搬家”：氨分子在运动</h2>
+<p class="panel-sub">大烧杯罩住 A（浓氨水）和 B（酚酞溶液），C 放在外面作对照。调温度，看氨分子跑多快、B 多久变红。</p>
+<svg id="mol" viewBox="0 0 400 230" role="img" aria-label="浓氨水使酚酞溶液变红的实验"></svg>
+<div class="control"><div class="control-heading"><label for="temp-in">温度</label><output id="temp-out">20 ℃</output></div><input id="temp-in" type="range" min="5" max="60" step="1" value="20"><div class="ruler"><span>5 ℃</span><span>60 ℃</span></div></div>
+<div class="btn-row"><button type="button" class="ghost-btn" id="mol-reset">重新开始</button><button type="button" class="ghost-btn" id="mol-skip">直接看结果</button></div>
+</section>
+<section class="readout" aria-label="分子运动读数">
+<div class="readout-head"><h2>实验现象</h2><span class="badge" id="mol-badge">B 还没变色</span></div>
+<div class="stat-grid"><div class="stat"><span>氨分子运动</span><strong id="speed-out" style="font-size:19px">—</strong></div><div class="stat"><span>已经过</span><strong id="time-out">—</strong></div><div class="stat"><span>B 烧杯</span><strong id="b-out" style="font-size:19px">—</strong></div><div class="stat"><span>C 烧杯（对照）</span><strong id="c-out" style="font-size:19px">无色</strong></div></div>
+<p class="lead" id="mol-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 下课铃响后的走廊</h3><p>氨分子像下课后冲出教室的同学：没人指挥，各自乱跑、互相碰撞，但总有人会跑进隔壁教室。天越热（温度越高），大家跑得越欢，隔壁教室就越快被“占领”。酚酞溶液像隔壁的门卫，一见氨分子进来就举起<b>红牌</b>。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="元素周期表前 20 号">
+<h2>元素周期表：前 20 号</h2>
+<p class="panel-sub">点一个元素，看它在周期表单元格里的四个信息。颜色区分金属、非金属和稀有气体。</p>
+<div id="pt-grid" style="display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;margin-top:4px"></div>
+<div class="legend-inline"><span><i style="background:#e6b48f"></i>金属</span><span><i style="background:#86c0b0"></i>非金属</span><span><i style="background:#a8a3d6"></i>稀有气体</span></div>
+<svg id="pt-cell" viewBox="0 0 400 130" role="img" aria-label="元素周期表单元格各部分的含义" style="margin-top:10px"></svg>
+</section>
+<section class="readout" aria-label="元素信息">
+<div class="readout-head"><h2 id="pt-name">—</h2><span class="badge" id="pt-badge">—</span></div>
+<div class="stat-grid"><div class="stat"><span>原子序数</span><strong id="pt-z">—</strong></div><div class="stat"><span>相对原子质量</span><strong id="pt-mass">—</strong></div><div class="stat wide"><span>原子的核外电子排布</span><strong id="pt-shell" style="font-size:19px">—</strong></div></div>
+<p class="lead" id="pt-text" aria-live="polite"></p>
+<div class="btn-row"><button type="button" class="big-btn" id="pt-build">放到组装台上看看</button></div>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么说“质子数决定元素种类”</h3>
+<p class="derive-lead">把原子拆开看一看，再看看化学反应到底动了原子的哪一部分。</p>
+<ol>
+<li><h4>原子里有什么</h4><p>原子由居于中心的<b>原子核</b>和核外<b>电子</b>构成，原子核又由<b>质子</b>和<b>中子</b>构成。不是所有原子都有中子，最常见的氢原子就没有。</p></li>
+<li><h4>为什么原子不带电</h4><p>每个质子带 1 个单位正电荷，每个电子带 1 个单位负电荷，中子不带电。原子里质子数等于电子数，正负抵消。</p></li>
+<li><h4>质量几乎全在原子核上</h4><p>电子的质量只有质子的约 1/1836，可以忽略。所以<b>相对原子质量 ≈ 质子数 + 中子数</b>。原子核很小：如果原子有体育场那么大，原子核只有一只蚂蚁那么大。</p></li>
+<li><h4>化学反应只动外层电子</h4><p>钠原子失去最外层 1 个电子变成 Na<sup>+</sup>，氯原子得到 1 个电子变成 Cl<sup>−</sup>。电子数变了，<b>质子数没变</b>，所以 Na<sup>+</sup> 还是钠元素。</p></li>
+<li><h4>分子可分，原子不可分</h4><p>氧化汞受热分解：2HgO <span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .3em;line-height:1"><small style="font-size:.62em;margin-bottom:2px">△</small><span style="display:block;width:2.6em;height:4px;border-top:1.5px solid;border-bottom:1.5px solid"></span></span> 2Hg + O<sub>2</sub>↑。氧化汞分子分成汞原子和氧原子，汞原子直接聚成金属汞，氧原子两两结合成氧分子。原子只是<b>重新组合</b>，种类和个数都没变。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>化学变化里质子数从来不变，用它来给原子“分类”最可靠：质子数相同的一类原子就是同一种元素；最外层电子数则决定了原子容易得电子还是失电子。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>三种“砖块”</h3><p>物质由<b>分子、原子、离子</b>构成。水、氧气由分子构成；铁、氦气、金刚石由原子直接构成；氯化钠由 Na<sup>+</sup> 和 Cl<sup>−</sup> 构成。</p></div></div>
+<div class="fact"><div><h3>分子的性质</h3><p>质量和体积都很小；总在<b>不断运动</b>，温度越高运动越快；分子之间<b>有间隔</b>，热胀冷缩、气体容易压缩都是间隔在变，分子本身大小不变。</p></div></div>
+<div class="fact"><div><h3>元素</h3><p>质子数（即核电荷数）相同的一类原子的总称。元素只讲<b>种类</b>，不讲个数。地壳中含量最多的前四位：氧、硅、铝、铁。</p></div></div>
+<div class="fact"><div><h3>元素符号“一大二小”</h3><p>只有一个字母时大写，如 H、O；有两个字母时第一个大写、第二个小写，如 Na、Cl。Co 是钴元素，CO 却是一氧化碳。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>可以说“水由氢元素和氧元素组成”“一个水分子由两个氢原子和一个氧原子构成”，但<b>不能</b>说“水由两个氢元素和一个氧元素组成”。判断原子还是离子，比较<b>质子数和电子数</b>：相等是原子，质子多是阳离子，电子多是阴离子。相对原子质量是个比值，单位是“1”，不写“g”。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这个原子发给同学</h3><p>链接会记住你搭的质子、中子、电子数和选中的元素。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中化学占 50 分，微粒观点和化学用语几乎每卷都有</h3>
+<ul>
+<li><b>选择题</b>：用分子观点解释现象，如“墙内开花墙外香”是分子在运动，“热胀冷缩”是分子间隔变化。</li>
+<li><b>结构示意图</b>：看圈内数字和弧线上的数字，判断是原子、阳离子还是阴离子，哪几种属于同种元素，哪种是相对稳定结构。</li>
+<li><b>元素周期表单元格</b>：左上是原子序数，右上是元素符号，中间是名称，下面是相对原子质量（单位是“1”）。</li>
+<li><b>化学用语</b>：分清 2H（2 个氢原子）、H<sub>2</sub>（1 个氢分子含 2 个氢原子）、2H<sub>2</sub>（2 个氢分子）、Mg<sup>2+</sup>（1 个镁离子带 2 个单位正电荷）里数字的意思。</li>
+</ul>
+<div class="q"><b>典型设问</b>　某微粒的结构示意图中，圈内是 +12，核外两层电子分别是 2、8。该微粒是：A. 镁原子　B. 镁离子 Mg<sup>2+</sup>　C. 氖原子　D. 氧离子 O<sup>2−</sup>。<br><b>怎么想</b>　先看圈内：<b>质子数 12 就是镁元素</b>，C、D 直接排除。再数电子：2 + 8 = 10，比质子少 2 个，带 2 个单位正电荷，是阳离子，选 <b>B</b>。很多同学看到“2、8”就以为是氖，忘了元素只由质子数决定。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>化学互动馆 · 第 3 课</p><p>原子模型按“分层排布”的初中口径绘制，原子核被大大放大；分子运动快慢随温度的变化做了夸张处理，便于观察。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

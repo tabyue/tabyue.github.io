@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="拖动滑块走遍电磁波谱，实时用 c = λf 算出频率并看到典型应用；把真空罩里的空气抽走，比较铃声和手机信号；给太阳能、煤、电能等能源分类。物理互动馆第 21 课，对应人教版九年级全一册第二十一、二十二章。">
+<meta property="og:title" content="物理互动馆 · 电磁波与能源">
+<title>电磁波与能源 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="wave.js"></script>
+</head>
+<body data-module="wave">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 21 课 <span>/</span> 九年级全一册 第二十一、二十二章</p><h1>电磁波与能源</h1><p class="subtitle">收音机、手机、遥控器、X 光机，用的都是电磁波，只是波长不一样。顺着波谱走一遍，再看看我们用的电从哪儿来。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="电磁波谱">
+<h2>电磁波谱：从无线电波到 γ 射线</h2>
+<p class="panel-sub">拖动滑块（或直接在波谱上点、拖），波长变短，频率就变高。上面的波形只是示意，不按真实比例。</p>
+<svg id="spec" viewBox="0 0 400 240" role="application" aria-label="电磁波谱，可拖动选择波长"></svg>
+<div class="control"><div class="control-heading"><label for="lam-in">波长 λ</label><output id="lam-out">12.2 cm</output></div><input id="lam-in" type="range" min="-3" max="12" step="0.01" value="0.91"><div class="ruler"><span>波长长 · 频率低</span><span></span><span>波长短 · 频率高</span></div></div>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">直接跳到</span><div class="chips small" id="band-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="这种电磁波">
+<div class="readout-head"><h2>这种电磁波</h2><span class="badge" id="band-badge">微波</span></div>
+<div class="stat-grid">
+<div class="stat"><span>波长 λ</span><strong id="lam-v">—</strong></div>
+<div class="stat"><span>频率 f</span><strong id="f-v">—</strong></div>
+<div class="stat wide"><span>典型应用</span><strong id="use-v" style="font-size:17px">—</strong></div>
+</div>
+<p class="formula" id="formula"></p>
+<p class="lead" id="spec-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="电磁波家族">
+<h2>电磁波家族</h2>
+<p class="panel-sub" style="margin-bottom:4px">按波长从长到短排列，当前所在的一行会高亮。各波段的边界是大致范围。</p>
+<table class="compare" id="band-table"><thead><tr><th>波段</th><th>大致波长</th><th>应用举例</th></tr></thead><tbody>
+<tr data-r="radio"><td>无线电波</td><td>1 m 以上</td><td>广播、电视</td></tr>
+<tr data-r="micro"><td>微波</td><td>1 mm～1 m</td><td>手机、微波炉、雷达</td></tr>
+<tr data-r="ir"><td>红外线</td><td>760 nm～1 mm</td><td>遥控器、测温枪</td></tr>
+<tr data-r="vis"><td>可见光</td><td>400～760 nm</td><td>照明、看见物体</td></tr>
+<tr data-r="uv"><td>紫外线</td><td>10～400 nm</td><td>消毒、验钞</td></tr>
+<tr data-r="x"><td>X 射线</td><td>0.01～10 nm</td><td>医院透视、安检</td></tr>
+<tr data-r="g"><td>γ 射线</td><td>0.01 nm 以下</td><td>放射治疗、探伤</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="真空罩实验">
+<h2>真空罩：铃声和手机信号谁能穿过真空</h2>
+<p class="panel-sub">先给罩里的手机打电话，再慢慢把罩里的空气抽走。听一听铃声，看一看手机屏幕。</p>
+<svg id="jar" viewBox="0 0 400 220" role="img" aria-label="真空罩里的手机"></svg>
+<div class="control"><div class="control-heading"><label for="air-in">罩内剩下的空气</label><output id="air-out">100 %</output></div><input id="air-in" type="range" min="0" max="100" step="5" value="100"><div class="ruler"><span>0（接近真空）</span><span>50 %</span><span>100 %</span></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="call-btn">给罩里的手机打电话</button><button type="button" class="ghost-btn" id="pump-btn">一键抽气</button></div>
+</section>
+<section class="readout" aria-label="真空罩读数">
+<div class="readout-head"><h2>罩外的你</h2><span class="badge" id="jar-badge">未来电</span></div>
+<div class="stat-grid"><div class="stat"><span>听到的铃声</span><strong id="snd-v" style="font-size:19px">—</strong></div><div class="stat"><span>手机收到来电</span><strong id="sig-v" style="font-size:19px">—</strong></div></div>
+<p class="lead" id="jar-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 声音要人传话，电磁波自己会跑</h3><p>声音像排队传话，要靠空气分子一个碰一个往外传；空气抽走了，<b>没人传话</b>，声音就出不去。电磁波不需要“传话的人”，在空无一物的太空里照样跑得飞快。所以宇航员在舱外不能直接喊话，要靠无线电通话。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel" aria-label="能源分类">
+<h2>给能源分分类</h2>
+<p class="panel-sub">先选分类方法。点一个能源（它会变色），再点下面的一个篮子把它放进去；放错了再点它，换个篮子就行。</p>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">分类方法</span><div class="chips small" id="emode-chips"></div></div>
+<p style="font-size:11.5px;color:var(--muted);margin:12px 0 6px">待分类</p>
+<div class="chips small" id="pool" style="min-height:36px"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+<div style="border:1px dashed #cfc6e0;border-radius:14px;padding:10px;min-height:120px"><button type="button" class="ghost-btn" id="bin-a" style="width:100%">放进「一次能源」</button><div class="chips small" id="list-a" style="margin-top:8px"></div></div>
+<div style="border:1px dashed #cfc6e0;border-radius:14px;padding:10px;min-height:120px"><button type="button" class="ghost-btn" id="bin-b" style="width:100%">放进「二次能源」</button><div class="chips small" id="list-b" style="margin-top:8px"></div></div>
+</div>
+<div class="btn-row"><button type="button" class="big-btn" id="sort-check">检查分类</button><button type="button" class="ghost-btn" id="sort-reset">全部放回</button></div>
+<p class="note" id="sort-note"></p>
+</section>
+<div class="stack">
+<section class="readout" aria-label="分类结果">
+<div class="readout-head"><h2>分类结果</h2><span class="badge" id="sort-badge">还没检查</span></div>
+<div class="stat-grid"><div class="stat"><span>已放进篮子</span><strong id="sort-done">—</strong></div><div class="stat"><span>放对了</span><strong id="sort-right">—</strong></div></div>
+<p class="lead" id="sort-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="核裂变与核聚变">
+<h2>核能从哪里来：裂变和聚变</h2>
+<table class="compare"><thead><tr><th></th><th>核裂变</th><th>核聚变</th></tr></thead><tbody>
+<tr><td>怎么变</td><td>较重的原子核分裂成较轻的原子核</td><td>较轻的原子核（如氢核）结合成较重的原子核</td></tr>
+<tr><td>能否控制</td><td>已经能控制，用来发电</td><td>可控核聚变还在研究中</td></tr>
+<tr><td>例子</td><td>核电站（如深圳大鹏新区的大亚湾核电站）、原子弹</td><td>太阳内部、氢弹</td></tr>
+</tbody></table>
+<p class="note">核电站利用的是<b>可控的核裂变</b>。核燃料用一点少一点，核能属于不可再生能源；核废料有放射性，必须妥善处理。</p>
+</section>
+</div>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 为什么波长越短，频率就越高</h3>
+<p class="derive-lead">公式 c = λf 不用死记，想清楚“一秒钟波跑了多远”就够了。</p>
+<ol>
+<li><h4>波长 λ：一个波有多长</h4><p>相邻两个波峰（或两个波谷）之间的距离叫<b>波长</b>，单位是米（m）。</p></li>
+<li><h4>频率 f：一秒钟来几个波</h4><p>一秒钟内经过某一点的完整波的个数叫<b>频率</b>，单位是赫兹（Hz）。1 kHz = 10<sup>3</sup> Hz，1 MHz = 10<sup>6</sup> Hz，1 GHz = 10<sup>9</sup> Hz。</p></li>
+<li><h4>一秒钟跑了多远</h4><p>一秒钟里经过 f 个波，每个波长 λ，波就往前跑了 λ × f 米。一秒钟跑的路程就是波速，所以 <b>c = λf</b>。</p></li>
+<li><h4>c 是个定值</h4><p>不管哪种电磁波，在真空中的速度都是 <b>3×10<sup>8</sup> m/s</b>（和光速一样）。c 不变，λ 和 f 就“此长彼短”：波长越短，频率越高。</p></li>
+<li><h4>不需要介质</h4><p>电磁波能在真空中传播。太阳光穿过真空到达地球，路上大约要 8 分钟；声音却必须靠空气、水、固体这些介质才能传播。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>波谱上从左到右，只是同一种东西的波长越来越短、频率越来越高；用途不同，是因为不同波长的电磁波“性格”不同。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>电磁波</h3><p>导线中电流迅速变化，就会在周围空间激起电磁波。电磁波<b>能在真空中传播</b>，真空中的波速 c = 3×10<sup>8</sup> m/s。光也是一种电磁波。</p></div></div>
+<div class="fact"><div><h3>电磁波传递信息</h3><p>广播、电视、移动通信都靠电磁波传递信息。手机既是无线电<b>发射台</b>，又是<b>接收台</b>。卫星通信用微波，光纤通信用光在光导纤维里传播。</p></div></div>
+<div class="fact"><div><h3>能源怎么分</h3><p>能从自然界直接获取的是<b>一次能源</b>（太阳能、煤、石油等）；要消耗一次能源才能得到的是<b>二次能源</b>（电能、汽油等）。能源源不断得到补充的是<b>可再生能源</b>（太阳能、风能、水能）；短期内不能补充的是<b>不可再生能源</b>（煤、石油、天然气、核能）。</p></div></div>
+<div class="fact"><div><h3>能量转化有方向</h3><p>能量的转化和转移<b>具有方向性</b>：热量会自动从高温物体传到低温物体，反过来却不会自动发生；汽车刹车时机械能变成内能散到空气里，这些内能不会自动变回来再推动汽车。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>“能量是守恒的，为什么还要节约能源？”因为能量转化有<b>方向性</b>：用过之后，能量大多变成散失到周围的内能，总量没少，却<b>很难再被利用</b>。另外别搞混：电能是<b>二次能源</b>；核能是<b>不可再生能源</b>；核电站用的是<b>核裂变</b>，太阳内部是<b>核聚变</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这段波谱发给同学</h3><p>链接会记住你选的波长、罩里的空气和分类方法。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，这两章多以选择题、填空题出现，计算题要特别注意单位换算</h3>
+<ul>
+<li><b>选择题</b>：判断某个设备用的是电磁波还是声波（如倒车雷达用超声波、手机用电磁波）；电磁波能否在真空中传播；不同电磁波的速度是否相同。</li>
+<li><b>计算题</b>：用 c = λf 求波长或频率。先把 kHz、MHz、GHz 换成 Hz，再代入公式。</li>
+<li><b>能源辨析</b>：给出一串能源，分出一次 / 二次、可再生 / 不可再生；判断核电站用的是裂变还是聚变。</li>
+<li><b>情景题</b>：结合太阳能电池、风力发电、新能源汽车等，说出能量是怎样转化的，比如太阳能电池把<b>太阳能转化为电能</b>。</li>
+</ul>
+<div class="q"><b>典型设问</b>　家用微波炉使用的电磁波频率约为 2450 MHz，它的波长大约是多少？<br><b>怎么想</b>　先换单位：2450 MHz = 2.45×10<sup>9</sup> Hz。再由 c = λf 得 λ = c ÷ f = 3×10<sup>8</sup> m/s ÷ 2.45×10<sup>9</sup> Hz ≈ <b>0.12 m</b>，也就是约 12 cm。把滑块拖到微波区域，能看到同样的结果。<b>先统一单位，再代公式</b>，指数部分最容易算错，要多看一眼。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 21 课</p><p>波谱按波长的对数刻度画出，波段边界取教材常见的大致范围；真空罩里的铃声大小只表示相对强弱。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

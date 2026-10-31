@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="在试管实验台上把镁、锌、铁、铜、银放进稀盐酸、稀硫酸和三种盐溶液，看谁能反应、出现什么现象、方程式怎么写；用三支试管找出铁生锈的条件，按正确顺序完成模拟炼铁。化学互动馆第 8 课，对应人教版九年级下册第八单元。">
+<meta property="og:title" content="化学互动馆 · 金属和金属材料">
+<title>金属和金属材料 · 化学互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="chem.css">
+<script defer src="common.js"></script>
+<script defer src="metal.js"></script>
+</head>
+<body data-module="metal">
+<header class="topbar"><a class="brand" href="index.html" aria-label="化学互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5.4 9.2A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.8L14 9V3"/><path d="M7.5 15h9"/></svg><span>化学互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 8 课 <span>/</span> 九年级下册 第八单元</p><h1>金属和金属材料</h1><p class="subtitle">铁钉放进蓝色的硫酸铜溶液，不一会儿就裹上一层红色的铜。谁能把谁“赶出来”，全看金属活动性顺序。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="金属活动性试管实验台">
+<h2>试管实验台：谁能置换谁</h2>
+<p class="panel-sub">选好金属和溶液，点“开始反应”。顶上的活动性顺序条会标出金属（绿）和它的“对手”（橙）：<b>排在前面的才能把后面的换出来</b>。</p>
+<svg id="tube" viewBox="0 0 400 250" role="img" aria-label="试管里金属与溶液的反应"></svg>
+<div class="ctl-row"><span>金属</span><div class="chips small" id="metal-chips"></div></div>
+<div class="ctl-row"><span>溶液</span><div class="chips small" id="sol-chips"></div></div>
+<div class="btn-row"><button class="big-btn" type="button" id="react-go">开始反应</button><button class="ghost-btn" type="button" id="react-reset">换一支新试管</button></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="反应结果">
+<div class="readout-head"><h2>试管里发生了什么</h2><span class="badge" id="react-badge">能反应</span></div>
+<div class="stat-grid">
+<div class="stat"><span>在活动性顺序里</span><strong id="react-pos" style="font-size:18px">—</strong></div>
+<div class="stat"><span>反应类型</span><strong id="react-type" style="font-size:18px">—</strong></div>
+</div>
+<p class="formula" id="react-eq" style="font-size:15px;margin-top:8px"></p>
+<p class="lead" id="react-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="实验记录表">
+<h2>实验记录表</h2>
+<p class="panel-sub" style="margin-bottom:4px">做过的组合会记下来：✓ 能反应，✗ 不反应。点格子可以直接换成那一组。</p>
+<table class="compare" id="rec-table"></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="铁生锈条件的对比实验">
+<h2>铁钉为什么会生锈</h2>
+<p class="panel-sub">三支试管放同样的铁钉，只改变铁钉能碰到的东西。拖动天数，或点“播放两周”。</p>
+<svg id="rust" viewBox="0 0 400 230" role="img" aria-label="三支试管中铁钉的生锈情况"></svg>
+<div class="control"><div class="control-heading"><label for="day-in">放置时间</label><output id="day-out">7 天</output></div><input id="day-in" type="range" min="0" max="14" step="1" value="7"><div class="ruler"><span>0 天</span><span>7 天</span><span>14 天</span></div></div>
+<div class="ctl-row"><span>①号的水</span><div class="chips small" id="water-chips"></div></div>
+<div class="btn-row"><button class="big-btn" type="button" id="rust-play">播放两周</button><button class="ghost-btn" type="button" id="rust-reset">回到第 0 天</button></div>
+</section>
+<section class="readout" aria-label="生锈情况">
+<div class="readout-head"><h2>三根铁钉现在的样子</h2><span class="badge" id="rust-badge">第 7 天</span></div>
+<div class="stat-grid"><div class="stat"><span>① 有水又有空气</span><strong id="rust-1" style="font-size:19px">—</strong></div><div class="stat"><span>② 只有水 · ③ 只有空气</span><strong id="rust-23" style="font-size:19px">—</strong></div></div>
+<p class="lead" id="rust-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 铁锈像海绵，氧化铝像保鲜膜</h3><p>铁锈（主要成分是 Fe<sub>2</sub>O<sub>3</sub>）<b>疏松多孔</b>，像一块吸水的海绵，把水和氧气留在铁的表面，让里面的铁接着锈，不及时除掉，铁会被一点点“吃”穿。铝表面生成的氧化铝薄膜却很<b>致密</b>，像保鲜膜一样紧紧贴住，把氧气挡在外面。所以铝比铁活泼，反而更耐腐蚀。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="实验室模拟炼铁">
+<h2>模拟炼铁：一氧化碳还原氧化铁</h2>
+<p class="panel-sub">按你认为对的顺序点按钮。顺序错了会有提醒，这正是考试最爱问的地方。</p>
+<svg id="iron" viewBox="0 0 400 220" role="img" aria-label="一氧化碳还原氧化铁的实验装置"></svg>
+<div class="btn-row"><button class="ghost-btn" type="button" id="co-on">通入 CO</button><button class="ghost-btn" type="button" id="heat-on">点燃酒精喷灯</button><button class="ghost-btn" type="button" id="heat-off">熄灭酒精喷灯</button><button class="ghost-btn" type="button" id="co-off">停止通 CO</button><button class="ghost-btn" type="button" id="iron-reset">重置</button></div>
+<div class="steps" id="iron-steps"><span>① 先通 CO</span><i>→</i><span>② 再加热</span><i>→</i><span>③ 停止加热</span><i>→</i><span>④ 冷却后再停 CO</span></div>
+</section>
+<div class="stack">
+<section class="readout" aria-label="炼铁读数">
+<div class="readout-head"><h2>玻璃管里</h2><span class="badge" id="iron-badge">准备</span></div>
+<div class="stat-grid"><div class="stat"><span>玻璃管温度</span><strong id="iron-temp" style="font-size:19px">室温</strong></div><div class="stat"><span>Fe<sub>2</sub>O<sub>3</sub> 变成铁</span><strong id="iron-p">0<small>%</small></strong></div></div>
+<p class="formula" style="font-size:15px;margin-top:8px">3CO + Fe<sub>2</sub>O<sub>3</sub><span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .35em;line-height:1"><small style="font-size:.62em">高温</small><span style="display:block;width:2.4em;height:4px;border-top:1.5px solid currentColor;border-bottom:1.5px solid currentColor"></span><small style="font-size:.62em">&nbsp;</small></span>2Fe + 3CO<sub>2</sub></p>
+<p class="lead" id="iron-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="合金和纯金属对比">
+<h2>合金 vs 纯金属</h2>
+<p class="panel-sub">选一组，看互相刻划的结果和熔点。深色条是合金。</p>
+<div class="chips small" id="alloy-chips"></div>
+<div class="bar-list" id="alloy-bars" style="margin-top:12px"></div>
+<p class="note" id="alloy-text"></p>
+</section>
+</div>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 一张顺序表，管住三类反应</h3>
+<p class="derive-lead">金属活动性顺序不是死记的口诀，它是从大量实验里排出来的“本领排行榜”。</p>
+<ol>
+<li><h4>越靠前，越活泼</h4><p>镁条在空气中一点就着，铁丝要在纯氧里才能燃烧，金在高温下也不和氧气反应，所以说“真金不怕火炼”。排在前面的金属更容易和别的物质发生反应。</p></li>
+<li><h4>氢也排进了队伍</h4><p>酸里含有氢。排在 (H) 前面的金属能把酸里的氢换出来，变成氢气冒泡；排在 (H) 后面的铜、银做不到。越靠前冒泡越快：镁 &gt; 锌 &gt; 铁。</p></li>
+<li><h4>前面的换出后面的</h4><p>铁排在铜前面，放进 CuSO<sub>4</sub> 溶液就把铜换出来，自己进入溶液。这种“一种单质和一种化合物反应，生成另一种单质和另一种化合物”的反应叫<b>置换反应</b>。反过来，铜放进 FeSO<sub>4</sub> 溶液就什么也不发生。</p></li>
+<li><h4>铁换出来只到 +2 价</h4><p>铁有 +2、+3 两种化合价。在和酸、和盐溶液的置换反应里，铁只变成 <b>+2 价的亚铁</b>，溶液是浅绿色，所以写 FeCl<sub>2</sub>、FeSO<sub>4</sub>，不能写成 FeCl<sub>3</sub>、Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>。</p></li>
+<li><h4>验证顺序的巧办法</h4><p>比较 Fe、Cu、Ag：可以把 Fe 和 Ag 分别放进 CuSO<sub>4</sub> 溶液（两金夹一盐）；也可以把 Cu 分别放进 FeSO<sub>4</sub> 和 AgNO<sub>3</sub> 溶液（两盐夹一金）。一个反应、一个不反应，顺序就定了。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>判断金属能不能和酸或盐溶液反应，只看一件事：它在顺序表里是不是排在对方（氢，或盐里的那种金属）的<b>前面</b>。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>金属材料 = 纯金属 + 合金</h3><p>合金是在金属中加热熔合某些金属或非金属，制得的具有金属特征的物质，属于<b>混合物</b>。和组成它的纯金属相比，合金一般<b>硬度更大、熔点更低、更耐腐蚀</b>。生铁含碳 2%～4.3%，钢含碳 0.03%～2%。</p></div></div>
+<div class="fact"><div><h3>金属的三类反应</h3><p>和氧气反应：铝在常温下生成致密的氧化铝薄膜（4Al + 3O<sub>2</sub> = 2Al<sub>2</sub>O<sub>3</sub>），所以耐腐蚀。和酸反应：氢前的金属置换出氢气。和盐溶液反应：前面的金属置换出后面的金属。后两类都是置换反应。</p></div></div>
+<div class="fact"><div><h3>工业炼铁</h3><p>原料是铁矿石（如赤铁矿，主要成分 Fe<sub>2</sub>O<sub>3</sub>）、焦炭、石灰石和空气，在高炉里用 CO 把铁还原出来。焦炭燃烧提供热量，并生成还原剂 CO。高炉里得到的是含碳较多的<b>生铁</b>。</p></div></div>
+<div class="fact"><div><h3>防锈和保护金属资源</h3><p>防锈就是破坏生锈条件：保持干燥洁净；涂油、刷漆、烤蓝、镀一层耐腐蚀的金属；做成不锈钢。保护金属资源还要<b>回收利用废旧金属</b>、合理开采矿物、寻找金属的代用品。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>铁和稀盐酸、稀硫酸、CuSO<sub>4</sub> 溶液反应，生成的都是<b>亚铁盐</b>（+2 价，浅绿色），不是 FeCl<sub>3</sub>；铁丝在氧气中燃烧生成的是 <b>Fe<sub>3</sub>O<sub>4</sub></b>，不是 Fe<sub>2</sub>O<sub>3</sub>。另外，合金是<b>混合物</b>，生铁和钢都是铁的合金，它们和纯金属一样都属于<b>金属材料</b>。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这组实验发给同学</h3><p>链接会记住你选的金属、溶液和生锈天数。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中化学占 50 分，金属活动性和铁生锈是实验探究里的常见考点</h3>
+<ul>
+<li><b>选择题</b>：判断金属能否与酸、盐溶液反应，或判断方程式对不对（重点看 FeCl<sub>2</sub> 和 FeCl<sub>3</sub>、气体符号 ↑ 有没有标）。</li>
+<li><b>实验探究</b>：铁生锈的对比实验。要说清“哪两支试管对比，说明需要什么”，以及为什么用煮沸过的蒸馏水（除去水里溶解的氧气）、为什么加植物油（隔绝空气）。</li>
+<li><b>模拟炼铁</b>：先通 CO 再加热（排尽空气，防止加热时爆炸）；结束时先停止加热，继续通 CO 到冷却（防止铁重新被氧化、石灰水倒吸）；尾气要点燃或收集（CO 有毒）。</li>
+<li><b>计算题</b>：含杂质物质的计算，先用“矿石质量 × 纯度”换成纯 Fe<sub>2</sub>O<sub>3</sub> 的质量，再代入方程式。</li>
+<li><b>实验操作考试</b>：理化实验操作单独计 20 分，其中化学 10 分，课本上的金属性质实验要亲手做熟。</li>
+</ul>
+<div class="q"><b>典型设问</b>　要验证 Fe、Cu、Ag 三种金属的活动性顺序，可行的一组试剂是：A. Fe、Ag、CuSO<sub>4</sub> 溶液　B. Cu、Ag、FeSO<sub>4</sub> 溶液　C. Fe、Cu、Ag、稀盐酸　D. Ag、FeSO<sub>4</sub> 溶液、CuSO<sub>4</sub> 溶液。<br><b>怎么想</b>　A 中 Fe 能置换出 Cu，说明 Fe &gt; Cu；Ag 不能，说明 Cu &gt; Ag，顺序全定了，选 <b>A</b>。B 中两种金属都不反应，分不出 Cu 和 Ag 谁强；C 只能看出 Fe 排在氢前；D 中 Ag 和两种溶液都不反应，Fe、Cu 谁强不知道。记住“<b>两金夹一盐，两盐夹一金</b>”。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>化学互动馆 · 第 8 课</p><p>反应现象按教材实验描述；反应快慢、生锈快慢和玻璃管温度只是示意，不代表真实时间。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

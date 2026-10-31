@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="改电流方向和绕线方式，用安培定则判断通电螺线管的 N、S 极；调匝数、电流和铁芯看电磁铁能吸起几枚大头针；让线圈通电转起来、再让它转动发电。物理互动馆第 20 课，对应人教版九年级全一册第二十章。">
+<meta property="og:title" content="物理互动馆 · 电与磁">
+<title>电与磁 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="magnet.js"></script>
+</head>
+<body data-module="magnet">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 20 课 <span>/</span> 九年级全一册 第二十章</p><h1>电与磁</h1><p class="subtitle">电能变出磁，磁也能变出电。电磁铁、电动机、发电机，全是这两句话的应用。动手拨一拨，比背口诀管用。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="通电螺线管">
+<h2>通电螺线管：谁是 N 极？</h2>
+<p class="panel-sub">换电流方向、换绕线方式，看螺线管两端的磁极和周围小磁针怎么变。小磁针涂红的一端是 N 极。</p>
+<svg id="coil" viewBox="0 0 400 250" role="img" aria-label="通电螺线管、电源和周围的小磁针"></svg>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">电流</span><div class="chips small" id="dir-chips"></div></div>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">绕法</span><div class="chips small" id="wind-chips"></div></div>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">开关</span><div class="chips small" id="sw-chips"></div><span style="font-size:12px;color:var(--muted);margin-left:6px">磁感线</span><div class="chips small" id="line-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="螺线管的磁极">
+<div class="readout-head"><h2>用安培定则判断</h2><span class="badge" id="coil-badge">N 极在左端</span></div>
+<div class="stat-grid">
+<div class="stat"><span>N 极</span><strong id="pole-out">—</strong></div>
+<div class="stat"><span>正面导线中的电流</span><strong id="front-out">—</strong></div>
+<div class="stat wide"><span>右手怎么握</span><strong id="hand-out" style="font-size:17px">—</strong></div>
+</div>
+<p class="lead" id="coil-text" aria-live="polite"></p>
+</section>
+<section class="card panel" aria-label="磁极怎样改变">
+<h2>和一开始相比，改了什么</h2>
+<p class="panel-sub" style="margin-bottom:4px">一开始：电流从左端流入、绕法甲。当前情况所在的一行会高亮。</p>
+<table class="compare" id="coil-table"><thead><tr><th>改变</th><th>N 极</th><th>原因</th></tr></thead><tbody>
+<tr data-r="none"><td>都不改</td><td>左端</td><td>四指方向不变</td></tr>
+<tr data-r="dir"><td>只改电流方向</td><td>换到右端</td><td>导线里电流反向</td></tr>
+<tr data-r="wind"><td>只改绕法</td><td>换到右端</td><td>正面导线走向反了</td></tr>
+<tr data-r="both"><td>两个都改</td><td>还在左端</td><td>反了两次等于没反</td></tr>
+</tbody></table>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="电磁铁">
+<h2>电磁铁：磁性强弱由谁决定</h2>
+<p class="panel-sub">调线圈匝数和电流，插上或拔出铁芯，数一数能吸起几枚大头针。电流调到 0 就相当于断电。</p>
+<svg id="em" viewBox="0 0 400 240" role="img" aria-label="电磁铁吸大头针"></svg>
+<div class="control"><div class="control-heading"><label for="n-in">线圈匝数</label><output id="n-out">100 匝</output></div><input id="n-in" type="range" min="50" max="200" step="50" value="100"><div class="ruler"><span>50 匝</span><span>125 匝</span><span>200 匝</span></div></div>
+<div class="control"><div class="control-heading"><label for="i-in">电流 I</label><output id="i-out">0.8 A</output></div><input id="i-in" type="range" min="0" max="1.5" step="0.1" value="0.8"><div class="ruler"><span>0（断电）</span><span>0.75 A</span><span>1.5 A</span></div></div>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">铁芯</span><div class="chips small" id="core-chips"></div></div>
+</section>
+<section class="readout" aria-label="电磁铁读数">
+<div class="readout-head"><h2>这块电磁铁</h2><span class="badge" id="em-badge">有磁性</span></div>
+<div class="stat-grid"><div class="stat"><span>吸起大头针</span><strong id="pin-out">—</strong></div><div class="stat"><span>磁性</span><strong id="mag-out" style="font-size:19px">—</strong></div></div>
+<p class="lead" id="em-text" aria-live="polite"></p>
+<h2 style="font-size:13px;color:var(--green);margin:16px 0 6px">电磁继电器：用小电流控制大电流</h2>
+<div class="figure"><svg id="relay" viewBox="0 0 400 200" role="img" aria-label="电磁继电器原理示意"></svg></div>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">控制电路开关</span><div class="chips small" id="relay-chips"></div></div>
+<p class="lead" id="relay-text" aria-live="polite"></p>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="电动机和发电机">
+<h2>电动机与发电机：同一套装置，两种用法</h2>
+<p class="panel-sub">磁体中间放一个能绕竖直轴转动的线圈。接电源，它自己转；用手摇它转，电流表的指针就会摆。</p>
+<svg id="motor" viewBox="0 0 400 250" role="img" aria-label="磁场中的矩形线圈"></svg>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">当作</span><div class="chips small" id="mode-chips"></div><span style="font-size:12px;color:var(--muted);margin-left:6px">磁极</span><div class="chips small" id="pole-chips"></div></div>
+<div id="motor-ctl">
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">电流方向</span><div class="chips small" id="cur-chips"></div><span style="font-size:12px;color:var(--muted);margin-left:6px">换向器</span><div class="chips small" id="comm-chips"></div></div>
+</div>
+<div id="gen-ctl" hidden>
+<div class="control"><div class="control-heading"><label for="spd-in">摇动的转速</label><output id="spd-out">1 圈/秒</output></div><input id="spd-in" type="range" min="0" max="3" step="0.5" value="1"><div class="ruler"><span>0</span><span>1.5 圈/秒</span><span>3 圈/秒</span></div></div>
+<div class="ctl-row" style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><span style="font-size:12px;color:var(--muted)">电路</span><div class="chips small" id="loop-chips"></div></div>
+</div>
+<div class="btn-row"><button type="button" class="big-btn" id="run-btn">接通电源</button><button type="button" class="ghost-btn" id="reset-btn">重置</button></div>
+</section>
+<section class="readout" aria-label="电动机或发电机读数">
+<div class="readout-head"><h2>这台机器</h2><span class="badge" id="mg-badge">电动机</span></div>
+<div class="stat-grid"><div class="stat"><span>能量转化</span><strong id="mg-energy" style="font-size:18px">—</strong></div><div class="stat"><span id="mg-k">转动方向（俯视）</span><strong id="mg-dir" style="font-size:18px">—</strong></div><div class="stat wide"><span>原理</span><strong id="mg-why" style="font-size:16px">—</strong></div></div>
+<p class="lead" id="mg-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 一对“反着用”的双胞胎</h3><p>玩具里的小电机，接上电池它就转；反过来用手飞快地拧它的转轴，两端接上灵敏电流计，指针也会偏。同一台机器，<b>电→动</b>就是电动机，<b>动→电</b>就是发电机，只是能量换了个方向流。</p></aside>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 通电的线圈为什么会自己转起来</h3>
+<p class="derive-lead">从一根导线开始，一步一步搭出一台电动机。</p>
+<ol>
+<li><h4>电流周围有磁场</h4><p>在小磁针上方平行放一根导线，一通电，小磁针就偏转；电流反向，偏转方向也反过来。这是奥斯特发现的<b>电流的磁效应</b>：电能生磁。</p></li>
+<li><h4>绕成螺线管，磁场叠加</h4><p>把导线一圈圈绕起来，每一圈的磁场叠在一起，外面的磁场就和<b>条形磁体</b>一样，一端 N、一端 S。哪端是 N 由电流方向和绕法共同决定，用安培定则判断。</p></li>
+<li><h4>磁场对电流有力的作用</h4><p>把通电导线放进磁场，导线会被推动。<b>只改电流方向，或只改磁场方向</b>，力就反向；两个一起改，力的方向不变。</p></li>
+<li><h4>线圈两边受力方向相反</h4><p>线圈的 ab 边和 cd 边电流方向相反，受的力也相反，一推一拉，线圈就转了。转到线圈平面和磁感线<b>垂直</b>的位置（平衡位置），两个力在一条直线上，就不再推它转了。</p></li>
+<li><h4>换向器让它一直转</h4><p>每当线圈刚转过平衡位置，<b>换向器</b>就自动把线圈里的电流方向反过来，受力也跟着反向，线圈就能沿原方向继续转下去。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>电动机走的是“电 → 磁 → 力 → 转”。把这条路倒过来，让导体在磁场里切割磁感线，就能“转 → 电”，这就是法拉第发现的电磁感应，也是发电机的原理。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>磁体和磁场</h3><p>磁体有 N、S 两个磁极，<b>同名磁极相互排斥，异名磁极相互吸引</b>。小磁针静止时 N 极所指的方向就是那一点的磁场方向。磁感线是为了描述磁场画出来的<b>假想曲线</b>，磁体外部从 N 极出来、回到 S 极。</p></div></div>
+<div class="fact"><div><h3>地磁场</h3><p>地球本身就是个大磁体。<b>地磁北极在地理南极附近，地磁南极在地理北极附近</b>，所以指南针的 N 极指向地理北方。两组极并不完全重合，我国宋代沈括最早记述了这一现象。</p></div></div>
+<div class="fact"><div><h3>电生磁与电磁铁</h3><p>1820 年丹麦物理学家<b>奥斯特</b>发现通电导线周围有磁场。电磁铁的磁性有无可以用通断电控制；电流越大、匝数越多，磁性越强；插入铁芯，磁性大大增强。</p></div></div>
+<div class="fact"><div><h3>电动机与发电机</h3><p>电动机：通电线圈在磁场中受力转动，<b>电能转化为机械能</b>。发电机：1831 年英国物理学家<b>法拉第</b>发现电磁感应，闭合电路的一部分导体在磁场中做切割磁感线运动时产生感应电流，<b>机械能转化为电能</b>。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p>先看装置里<b>有没有电源</b>：有电源、导线放在磁体中间的，是“磁场对电流的作用”（电动机）；没有电源、接着电流表的，是“电磁感应”（发电机）；导线旁边放小磁针的，是奥斯特实验。另外，电路断开，或者导体顺着磁感线方向运动（没有切割），都<b>不会</b>产生感应电流。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这几个装置发给同学</h3><p>链接会记住螺线管、电磁铁和线圈的设置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳理化合卷中物理占 70 分，电与磁常在作图题和辨认实验装置的选择题里出现</h3>
+<ul>
+<li><b>选择题</b>：给出几幅实验装置图，分辨奥斯特实验、电磁感应实验和“磁场对电流的作用”实验；或者问扬声器、动圈式话筒、电磁起重机分别用了哪个原理。</li>
+<li><b>作图题</b>：用安培定则标出螺线管的 N、S 极、电源的正负极，或者小磁针静止时的指向；画磁感线别忘了标箭头。</li>
+<li><b>实验题</b>：探究影响电磁铁磁性强弱的因素。用吸起大头针的数目来反映磁性强弱（<b>转换法</b>），每次只改一个量、其他量保持不变（<b>控制变量法</b>）。</li>
+<li><b>实验操作考试</b>：深圳理化实验操作单独计 20 分（物理 10 分），连接电路是基本功：连线时开关先断开，电流表要串联、电流从正接线柱流入。</li>
+</ul>
+<div class="q"><b>典型设问</b>　用电池、滑动变阻器和电磁铁串联做实验，把滑片向某一方向移动，使变阻器接入电路的电阻变小。电磁铁吸起的大头针数目会怎样变化？<br><b>怎么想</b>　电阻变小，电压不变，由欧姆定律知<b>电流变大</b>；匝数和铁芯都没变，电流越大磁性越强，所以吸起的大头针<b>变多</b>。这类题的思路链是“电阻 → 电流 → 磁性 → 现象”，一环扣一环往下推。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 20 课</p><p>螺线管磁场按两端两个等效磁极近似画出；电动机、发电机按单匝矩形线圈简化，大头针数目、转速和指针格数只表示相对大小。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>

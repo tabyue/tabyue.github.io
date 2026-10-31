@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f0">
+<meta name="description" content="用弹簧测力计吊着铝块慢慢浸入液体，看示数怎样变化，用溢水杯验证阿基米德原理 F浮 = G排；调物体密度、换液体，看它上浮、悬浮还是下沉；把自制密度计放进不同液体读数。物理互动馆第 10 课，对应人教版八年级下册第十章。">
+<meta property="og:title" content="物理互动馆 · 浮力">
+<title>浮力 · 物理互动馆</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="lessons.css">
+<link rel="stylesheet" href="phy.css">
+<script defer src="common.js"></script>
+<script defer src="buoy.js"></script>
+</head>
+<body data-module="buoy">
+<header class="topbar"><a class="brand" href="index.html" aria-label="物理互动馆首页"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="3.4"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.4" transform="rotate(-60 12 12)"/></svg><span>物理互动馆</span></a><button class="share-button" data-share><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 11v8h14v-8"/></svg>分享</button></header>
+<nav class="course-nav" id="course-nav" aria-label="课程目录"></nav>
+<main>
+<div class="page-heading"><p class="eyebrow">第 10 课 <span>/</span> 八年级下册 第十章</p><h1>浮力</h1><p class="subtitle">万吨钢铁做的轮船能浮在海上，一颗小铁钉却会沉底。浮力到底有多大、东西为什么会浮会沉，动手称一称就清楚了。</p></div>
+
+<div class="workbench">
+<section class="card panel figure" aria-label="称重法测浮力">
+<h2>称重法：浮力 = 重力 − 示数</h2>
+<p class="panel-sub">弹簧测力计吊着铝块（体积 100 cm³，底面 5 cm × 4 cm，高 5 cm）慢慢浸入液体。溢水杯装满液体，被排开的液体流进右边小桶。</p>
+<svg id="weigh" viewBox="0 0 400 260" role="img" aria-label="弹簧测力计吊着铝块浸入溢水杯"></svg>
+<div class="control"><div class="control-heading"><label for="dep-in">铝块下表面浸入的深度</label><output id="dep-out">0 cm</output></div><input id="dep-in" type="range" min="0" max="8" step="0.5" value="0"><div class="ruler"><span>0</span><span>4 cm</span><span>8 cm</span></div></div>
+<div class="ctl-row"><span>液体</span><div class="chips small" id="liq1-chips"></div></div>
+</section>
+<div class="settings">
+<section class="readout" aria-label="称重法读数">
+<div class="readout-head"><h2>测力计和小桶</h2><span class="badge" id="wg-badge">未浸入</span></div>
+<div class="stat-grid">
+<div class="stat"><span>铝块重力 G</span><strong id="wg-G">—</strong></div>
+<div class="stat"><span>测力计示数 F示</span><strong id="wg-F">—</strong></div>
+<div class="stat"><span>浮力 F浮 = G − F示</span><strong id="wg-fb">—</strong></div>
+<div class="stat"><span>排开液体的重力 G排</span><strong id="wg-gp">—</strong></div>
+<div class="stat wide"><span>排开液体的体积 V排</span><strong id="wg-v">—</strong></div>
+</div>
+<p class="lead" id="wg-text" aria-live="polite"></p>
+</section>
+<section class="card panel figure" aria-label="示数和浮力随深度变化">
+<h2>示数、浮力随深度的变化</h2>
+<p class="panel-sub" style="margin-bottom:4px">圆点是现在的位置。拐弯的地方正好是铝块刚好浸没（5 cm）。</p>
+<svg id="fh" viewBox="0 0 400 200" role="img" aria-label="测力计示数和浮力随浸入深度变化的图像"></svg>
+<div class="legend-inline"><span><i style="background:#5a4097"></i>测力计示数 F示</span><span><i style="background:#c2603f"></i>浮力 F浮</span></div>
+</section>
+</div>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="物体的浮沉条件">
+<h2>浮沉条件：上浮、悬浮还是下沉</h2>
+<p class="panel-sub">一个体积 100 cm³ 的实心物块被细杆按在液体中央。调它的密度、换液体，点「松手」看它往哪儿走。</p>
+<svg id="sink" viewBox="0 0 400 240" role="img" aria-label="物块在液体中上浮、悬浮或下沉"></svg>
+<div class="control"><div class="control-heading"><label for="rho-in">物块的密度 ρ物</label><output id="rho-out">0.6 g/cm³</output></div><input id="rho-in" type="range" min="0.2" max="2" step="0.05" value="0.6"><div class="ruler"><span>0.2</span><span>1.1 g/cm³</span><span>2.0</span></div></div>
+<div class="ctl-row"><span>液体</span><div class="chips small" id="liq2-chips"></div></div>
+<div class="btn-row"><button type="button" class="big-btn" id="sink-go">松手</button><button type="button" class="ghost-btn" id="sink-reset">按回液体中央</button></div>
+</section>
+<section class="readout" aria-label="浮沉读数">
+<div class="readout-head"><h2>物块受到的力</h2><span class="badge" id="sk-badge">按住中</span></div>
+<div class="stat-grid">
+<div class="stat"><span>重力 G</span><strong id="sk-G">—</strong></div>
+<div class="stat"><span>浸没时的浮力</span><strong id="sk-Fmax">—</strong></div>
+<div class="stat"><span>此刻的浮力</span><strong id="sk-Fnow">—</strong></div>
+<div class="stat"><span>密度比较</span><strong id="sk-cmp" style="font-size:18px">—</strong></div>
+</div>
+<p class="lead" id="sk-text" aria-live="polite"></p>
+<aside class="analogy"><h3><i>打个比方</i> 和“一样大的那袋水”比体重</h3><p>把物体想成一个形状一模一样的水袋。浸没时，它受到的浮力就等于这袋水的重力。物体比这袋水重，就往下沉；比它轻，就往上浮；一样重，就停在哪儿都行。比体重，其实就是比密度。</p></aside>
+</section>
+</div>
+
+<div class="section two-col">
+<section class="card panel figure" aria-label="自制密度计">
+<h2>自制密度计：漂浮着读数</h2>
+<p class="panel-sub">一根吸管下端塞上配重，总质量 6 g，横截面积 0.5 cm²，竖直漂浮在液体里。拖动滑块换液体，看它浸入多深。</p>
+<svg id="meter" viewBox="0 0 400 240" role="img" aria-label="密度计漂浮在量筒里的液体中"></svg>
+<div class="control"><div class="control-heading"><label for="rl-in">液体密度 ρ液</label><output id="rl-out">1.00 g/cm³</output></div><input id="rl-in" type="range" min="0.8" max="1.2" step="0.01" value="1"><div class="ruler"><span>0.8 酒精</span><span>1.0 水</span><span>1.2</span></div></div>
+</section>
+<section class="readout" aria-label="密度计读数">
+<div class="readout-head"><h2>密度计读数</h2><span class="badge" id="mt-badge">水</span></div>
+<div class="stat-grid">
+<div class="stat"><span>浸入的深度</span><strong id="mt-L">—</strong></div>
+<div class="stat"><span>排开液体的体积</span><strong id="mt-v">—</strong></div>
+<div class="stat"><span>浮力（等于重力）</span><strong id="mt-F">—</strong></div>
+<div class="stat"><span>液面对着的刻度</span><strong id="mt-read">—</strong></div>
+</div>
+<p class="lead" id="mt-text" aria-live="polite"></p>
+</section>
+</div>
+<!--derive-->
+<section class="section">
+<div class="derive-card">
+<h3><i>想明白为什么</i> 浮力从哪来，为什么 F浮 = G排</h3>
+<p class="derive-lead">浮力其实就是上一课的液体压强“上下不平衡”造成的。一步一步看。</p>
+<ol>
+<li><h4>上下表面深度不同</h4><p>铝块浸没后，下表面比上表面更深。由 p = ρgh，下表面受到的液体压强更大。</p></li>
+<li><h4>压力差就是浮力</h4><p>四个侧面受到的压力左右、前后互相抵消；下表面向上的压力大于上表面向下的压力，两者之差竖直向上，这就是浮力：<b>F浮 = F向上 − F向下</b>。</p></li>
+<li><h4>换成“一块水”想一想</h4><p>把铝块换成形状大小完全一样的一块水，这块水在水里静止不动，说明周围的水托它的力正好等于它自己的重力。铝块占的就是这块水的位置，周围的水推它的力一模一样，所以 <b>F浮 = G排 = ρ液 g V排</b>。</p></li>
+<li><h4>浸没以后为什么不变</h4><p>再往下放，上下表面的深度增加得一样多，压力差不变；排开液体的体积也一直是 100 cm³，所以浮力不变。</p></li>
+<li><h4>浮沉看什么</h4><p>浸没时 F浮 = ρ液 g V，G = ρ物 g V，体积相同，比力就是比密度：ρ物 &lt; ρ液 上浮，ρ物 = ρ液 悬浮，ρ物 &gt; ρ液 下沉。</p></li>
+</ol>
+<p class="derive-end"><b>所以</b>浮力只由<b>液体密度</b>和<b>排开液体的体积</b>决定，跟物体浸没后有多深、物体本身是什么材料都没有直接关系。</p>
+</div>
+</section>
+<!--/derive-->
+<div class="learning-grid">
+<section class="knowledge"><h2>要记住的几件事</h2><div class="card facts">
+<div class="fact"><div><h3>浮力和称重法</h3><p>浸在液体（或气体）中的物体受到<b>竖直向上</b>的浮力。称重法：先在空气中测出重力 G，再浸入液体读出示数 F示，<b>F浮 = G − F示</b>。</p></div></div>
+<div class="fact"><div><h3>阿基米德原理</h3><p>浸在液体中的物体受到的浮力，等于它排开的液体所受的重力：<b>F浮 = G排 = ρ液 g V排</b>。“浸在”包括部分浸入和完全浸没，浸没时 V排 = V物。</p></div></div>
+<div class="fact"><div><h3>浮沉条件</h3><p>浸没时：F浮 &gt; G（ρ物 &lt; ρ液）上浮，最后<b>漂浮</b>；F浮 = G（ρ物 = ρ液）<b>悬浮</b>；F浮 &lt; G（ρ物 &gt; ρ液）下沉，最后沉底。漂浮和悬浮都有 F浮 = G。</p></div></div>
+<div class="fact"><div><h3>浮力的应用</h3><p>轮船做成空心，增大 V排；它漂浮，F浮 = G，从江河驶入大海浮力<b>不变</b>，海水密度大，V排 变小，船身上浮一些。潜水艇靠改变<b>自身重力</b>浮沉；气球、飞艇充的是密度比空气小的气体；密度计漂浮，刻度上小下大。</p></div></div>
+</div>
+<aside class="pitfall"><h3><span>!</span> 最容易错的地方</h3><p><b>漂浮</b>和<b>悬浮</b>都是 F浮 = G，但漂浮时物体只有一部分浸入、ρ物 &lt; ρ液；悬浮时物体完全浸没、ρ物 = ρ液，可以停在液体中任意深度。另外，物体<b>浸没以后</b>再往深处放，浮力不变；“越深浮力越大”只在还没浸没、V排 还在增加时成立。本课计算 g 都取 10 N/kg。</p></aside>
+</section>
+<section class="quiz" aria-label="小练习"><h2>动手试一试 <span id="quiz-step">1 / 8</span></h2><div class="card quiz-card"><span class="small-label" id="quiz-label"></span><h3 id="quiz-title"></h3><p id="quiz-description"></p><div id="quiz-options" hidden></div><button class="primary" id="check-answer">检查</button><div id="quiz-feedback" class="feedback" role="status" aria-live="polite"></div><button class="secondary" id="next-question" hidden>下一题</button></div>
+<div class="share-card"><h3>把这组实验发给同学</h3><p>链接会记住浸入深度、物块密度和液体的设置。</p><button data-share="copy">复制链接，发给同学 <span>↗</span></button></div></section>
+</div>
+<section class="section">
+<div class="exam-card">
+<h3><i>中考怎么考</i> 深圳中考物理与化学合卷，物理 70 分；浮力常和压强、密度、二力平衡综合起来考</h3>
+<ul>
+<li><b>选择题</b>：比较几个物体受到的浮力大小。先判断浮沉状态：漂浮、悬浮用 F浮 = G，浸没用 F浮 = ρ液 g V排，不要一上来就套公式。</li>
+<li><b>实验题</b>：探究浮力大小跟哪些因素有关（控制变量，说明与浸没深度无关）；验证阿基米德原理——溢水杯要先<b>装满</b>，先测空小桶的重力，再测小桶和排开液体的总重。</li>
+<li><b>计算题</b>：称重法求浮力，再用 V排 = F浮 ÷（ρ液 g）求体积，进而求物体密度；或用漂浮条件求密度、求排开的体积。</li>
+<li><b>实验操作考试</b>：理化实验操作单独计 20 分（物理 10 分），用到弹簧测力计时要先调零，读数时视线与刻度板垂直。</li>
+</ul>
+<div class="q"><b>典型设问</b>　一个木块漂浮在水面上，露出水面的体积是总体积的 2/5，木块的密度是多少？<br><b>怎么想</b>　漂浮，F浮 = G。浸入水中的体积是 3/5 V，所以 ρ水 g × 3/5 V = ρ木 g V，约掉 g 和 V，得 ρ木 = 3/5 ρ水 = <b>0.6×10³ kg/m³</b>。<b>漂浮时浸入的比例 = ρ物 ÷ ρ液</b>，记住这句能秒杀一类题。</div>
+</div>
+</section>
+
+<nav class="pager" id="pager" aria-label="上一课与下一课"></nav>
+<footer><p>物理互动馆 · 第 10 课</p><p>金属块为铝块（ρ = 2.7 g/cm³，V = 100 cm³）；小桶里按此刻排开的液体显示；浮沉动画只表示运动方向，不按真实快慢；g 取 10 N/kg。</p><p>免登录 · 不收集个人信息 · 不保存学习记录</p></footer>
+</main>
+</body></html>
