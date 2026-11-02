@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-02T08:30",
+ "lastUpdated": "2026-11-02T09:40",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,122 @@
   }
  ],
  "projects": [
+  {
+   "id": "os229",
+   "name": "SO-ARM102：LeRobot 兼容的开源主从遥操作机械臂（SO-ARM100/101 后继），提供 STEP/STL 与 BOM",
+   "github": "https://github.com/roboninecom/SO-ARM102",
+   "organization": "robonine.com",
+   "org": "robonine.com",
+   "category": "hardware",
+   "description": "**SO-ARM102** 是 **SO-ARM100 / SO-ARM101** 的后继开源机械臂，定位是 **LeRobot 兼容的主从（leader-follower）遥操作套件**，用于遥操作与模仿学习数据采集。相比前代，主要改进是**刚性增强**与**平行夹爪**，并提供 **STEP / STL 文件与完整 BOM**。\n\n**为什么这类项目重要**，模仿学习的数据瓶颈不在算法而在采集成本。一套可自建、成本可控、且与 LeRobot 生态直接对接的遥操作臂，把「我能不能自己采数据」这个问题从采购问题变成了周末动手问题。SO 系列之所以成为社区事实标准，正是因为这条链路被打通了。\n\n**适用方向**，个人与小团队做桌面级操作任务的数据采集、模仿学习入门、以及作为低成本真机验证平台。\n\n**许可注意**，仓库采用 **CC-BY-4.0**（硬件设计类项目的常见选择），使用前注意署名要求，与软件类开源协议不是一回事。",
+   "language": "",
+   "license": "CC-BY-4.0",
+   "features": [
+    "LeRobot 兼容的主从遥操作套件",
+    "刚性增强 + 平行夹爪",
+    "提供 STEP / STL 与完整 BOM，可自建",
+    "面向遥操作与模仿学习数据采集",
+    "SO-ARM100 / SO-ARM101 的后继型号"
+   ],
+   "stars": 178,
+   "tags": [
+    "SO-ARM102",
+    "开源机械臂",
+    "遥操作",
+    "LeRobot",
+    "模仿学习",
+    "数据采集",
+    "桌面机械臂"
+   ],
+   "addedDate": "2026-11-02"
+  },
+  {
+   "id": "os228",
+   "name": "Habitat-GS：基于动态高斯泼溅的高保真导航仿真器（ECCV 2026），用真实场景重建缩小视觉 sim-to-real 差距",
+   "github": "https://github.com/zju3dv/habitat-gs",
+   "organization": "zju3dv（浙江大学 CAD&CG 国家重点实验室）",
+   "org": "zju3dv（浙江大学 CAD&CG 国家重点实验室）",
+   "category": "simulation",
+   "description": "**Habitat-GS**（ECCV 2026）是一个**高保真导航仿真器**，核心思路是用**动态高斯泼溅（Dynamic Gaussian Splatting）**重建的真实场景替代传统的手工网格资产，让具身导航智能体在视觉上接近真实世界的观测分布。\n\n**它解决什么问题**，视觉导航的 sim-to-real 差距很大一部分来自渲染保真度：手工建模的场景在光照、材质、高频纹理上与真实环境差异明显，策略在仿真里训得再好，到了真实环境也会因为视觉分布偏移而掉点。用真实采集重建的场景做仿真，可以从数据源头缩小这一差距。\n\n**「动态」是关键**，场景中不只是静态几何——移动的人、开关的门、变化的光照都会影响导航决策。动态高斯泼溅让这些时序变化也能被重建与渲染。\n\n**适用方向**，视觉导航、主动探索、具身问答（EQA）、以及任何对视觉保真度敏感的移动操作研究。",
+   "language": "C++",
+   "license": "未声明",
+   "features": [
+    "动态高斯泼溅重建的真实场景",
+    "高保真渲染缩小视觉 sim-to-real 差距",
+    "支持场景中的动态元素（行人、门、光照）",
+    "面向视觉导航与主动探索任务",
+    "ECCV 2026 论文配套实现"
+   ],
+   "stars": 332,
+   "tags": [
+    "Habitat-GS",
+    "高斯泼溅",
+    "导航仿真",
+    "sim-to-real",
+    "场景重建",
+    "ECCV 2026",
+    "主动探索"
+   ],
+   "addedDate": "2026-11-02"
+  },
+  {
+   "id": "os227",
+   "name": "VAGEN：面向多轮 VLM 智能体的世界模型强化学习框架，把「想象未来」接进视觉 Agent 的训练回路（NeurIPS 2025）",
+   "github": "https://github.com/mll-lab-nu/VAGEN",
+   "organization": "mll-lab-nu（Northwestern University MLL Lab）",
+   "org": "mll-lab-nu（Northwestern University MLL Lab）",
+   "category": "framework",
+   "description": "**VAGEN** 是一个**世界模型强化学习**框架，专门面向**多轮 VLM 智能体**：让视觉语言模型 Agent 在决策前先在潜在空间「想象」未来，再用强化学习优化它的多轮交互策略。项目主页 vagen-ai.github.io，NeurIPS 2025 相关工作。\n\n**为什么需要它**，普通的多轮 VLM Agent 训练面临两个困难：一是奖励稀疏且延迟，一轮对话或一次操作后才有反馈；二是视觉观测维度高，直接在高维观测上做多轮 RL 样本效率极差。世界模型提供了一条中间路径——在潜空间做短期 rollout，把「这一步做完之后世界会变成什么样」变成可微或可采样的中间信号。\n\n**适用方向**，做视觉 Agent、GUI Agent、具身 Agent 的多轮决策优化，以及研究「世界模型 + RL」组合范式的团队。框架定位是 **RL for vision 的通用实现**，不绑定特定机器人本体。",
+   "language": "Python",
+   "license": "MIT",
+   "features": [
+    "世界模型驱动的强化学习",
+    "面向多轮 VLM 智能体的训练回路",
+    "潜空间 rollout 缓解奖励稀疏",
+    "RL for vision 的通用框架实现",
+    "NeurIPS 2025 相关工作，MIT 许可"
+   ],
+   "stars": 518,
+   "tags": [
+    "VAGEN",
+    "世界模型",
+    "强化学习",
+    "VLM智能体",
+    "多轮交互",
+    "潜空间rollout",
+    "NeurIPS 2025"
+   ],
+   "addedDate": "2026-11-02"
+  },
+  {
+   "id": "os226",
+   "name": "BEHAVIOR-1K：斯坦福 VL 实验室的大规模具身 AI 研究平台，1000 项日常活动定义 + 场景资产 + 评测协议成套开放",
+   "github": "https://github.com/StanfordVL/BEHAVIOR-1K",
+   "organization": "StanfordVL（Stanford Vision and Learning Lab）",
+   "org": "StanfordVL（Stanford Vision and Learning Lab）",
+   "category": "simulation",
+   "description": "**BEHAVIOR-1K** 是斯坦福视觉与学习实验室维护的具身 AI 研究平台，核心是一套围绕 **1000 项日常活动（activities）** 构建的**活动定义—场景资产—评测协议**体系，主页在 behavior.stanford.edu。\n\n**它解决什么问题**，具身研究长期缺一个「任务定义本身」的标准：各家自己造任务、自己配场景，结果不同论文的成功率数字几乎不可比。BEHAVIOR-1K 的做法是把日常活动用形式化语言定义清楚（涉及哪些物体、哪些状态变化、哪些前置与后置条件），再配上可复用的场景资产与一致的评测协议，让不同方法能在同一套任务上被比较。\n\n**适合谁**，做长程家务类任务、常识推理、符号—连续混合规划，以及需要大规模任务多样性来评测通用策略的团队。\n\n**与同类平台的关系**，相比 RoboCasa 偏重任务模板与资产规模、IsaacLab 偏重 GPU 并行训练效率，BEHAVIOR-1K 的独特价值在**活动定义的严谨性**——它把「什么是完成」写在形式化定义里，而不是留给人工判定。",
+   "language": "Python",
+   "license": "MIT",
+   "features": [
+    "1000 项日常活动的形式化定义",
+    "可复用的场景与物体资产体系",
+    "统一的评测协议，跨方法可比",
+    "适合长程家务任务与常识推理研究",
+    "MIT 许可，StanfordVL 长期维护"
+   ],
+   "stars": 1785,
+   "tags": [
+    "BEHAVIOR-1K",
+    "StanfordVL",
+    "日常活动",
+    "长程任务",
+    "具身基准",
+    "场景资产",
+    "评测协议"
+   ],
+   "addedDate": "2026-11-02"
+  },
   {
    "id": "os225",
    "name": "FOCA：面向未来的条件化，数据高效的 VLA 适配（ICML 2026）",
@@ -5514,5 +5630,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 212
+ "totalItems": 216
 }

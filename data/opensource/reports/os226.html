@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BEHAVIOR-1K：斯坦福 VL 实验室的大规模具身 AI 研究平台，1000 项日常活动定义 + 场景资产 + 评测协议成套开放 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">BEHAVIOR-1K：斯坦福 VL 实验室的大规模具身 AI 研究平台，1000 项日常活动定义 + 场景资产 + 评测协议成套开放 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="behavior-1k-vl-ai-1000">BEHAVIOR-1K：斯坦福 VL 实验室的大规模具身 AI 研究平台，1000 项日常活动定义 + 场景资产 + 评测协议成套开放</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/StanfordVL/BEHAVIOR-1K">https://github.com/StanfordVL/BEHAVIOR-1K</a>  </p>
+<p><strong>Stars</strong>: 1785 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-02  </p>
+<p><strong>组织</strong>: StanfordVL（Stanford Vision and Learning Lab）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-02</p>
+</blockquote>
+<hr />
+<p>具身智能的一个隐性瓶颈是「任务定义不统一」：两个团队都报「整理房间成功率 60%」，但一个的房间有 5 个物体、另一个有 20 个，一个允许中途失败重试、另一个不允许。这种不可比让基准的价值大打折扣。BEHAVIOR-1K 从任务定义这一层入手，用形式化语言描述每项日常活动，把参与物体、初始条件、目标状态与状态转移都写清楚，再配套场景资产与评测协议，让「完成」这件事变成可判定的。</p>
+<hr />
+<p>平台大致分三层：活动定义层（以形式化语言描述活动，含物体集合、谓词、初始状态与目标状态）、场景与资产层（可复用的 3D 场景与物体模型，支持按需实例化）、评测层（统一的评测协议与指标口径）。研究者在这一套之上接入自己的仿真后端与策略，评测结果在同一口径下可与其他方法比较。1000 项活动的规模为任务多样性提供了基础，使通用策略的泛化能力评测不再依赖少数几个手工任务。</p>
+<hr />
+<ul>
+<li><strong><a href="https://behavior.stanford.edu">BEHAVIOR-1K 项目主页</a></strong> — 活动定义与数据集总入口。</li>
+<li><strong><a href="https://arxiv.org/abs/2406.02523">RoboCasa</a></strong> — 大规模日常任务仿真，可与 BEHAVIOR-1K 的任务定义思路对照。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.34356">EmbodiedLab</a></strong> — 测「为求知而行动」的具身基准，评测取向不同。</li>
+</ul>
+<hr />
+<p>上手路线：先从活动定义入手，挑 3—5 项结构不同（短程抓取 / 中程整理 / 长程多房间）的活动，读它们的定义文件理解谓词与目标状态的写法；再跑通一个随机或启发式策略，确认评测协议能正确判定成功与失败；最后接入自己的策略，按活动族分组报告成功率，不要只报一个聚合数字。注意活动定义本身有学习成本，但这一步省不掉——它决定了你后续所有数字的含义。</p>
+<hr />
+<p>评估在这类平台上的工作应报：按活动家族分组的成功率（而非单一聚合值）、平均完成任务步数、以及失败模式分布（前置条件不满足 / 中途状态被破坏 / 目标状态未达成）。只报一个总数会掩盖长程任务与短程任务的巨大差异。</p>
+<hr />
+<p>与 RoboCasa 相比：RoboCasa 更强调大规模日常任务仿真与资产生成，上手更快、更适合数据生成；BEHAVIOR-1K 更强调活动定义的严谨性与评测可比性。与 IsaacLab 相比：IsaacLab 是训练框架，解决「训得快」；BEHAVIOR-1K 是任务与评测定义，解决「测得准」。与 EmbodiedLab / RobotAgentBench 相比：后两者更偏开放世界自主性与「为求知而行动」，BEHAVIOR-1K 的 1000 项活动则扎根于人类日常生活的真实分布。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

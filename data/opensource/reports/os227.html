@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAGEN：面向多轮 VLM 智能体的世界模型强化学习框架，把「想象未来」接进视觉 Agent 的训练回路（NeurIPS 2025） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">VAGEN：面向多轮 VLM 智能体的世界模型强化学习框架，把「想象未来」接进视觉 Agent 的训练回路（NeurIPS 2025） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="vagen-vlm-agent-neurips-2025">VAGEN：面向多轮 VLM 智能体的世界模型强化学习框架，把「想象未来」接进视觉 Agent 的训练回路（NeurIPS 2025）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/mll-lab-nu/VAGEN">https://github.com/mll-lab-nu/VAGEN</a>  </p>
+<p><strong>Stars</strong>: 518 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-02  </p>
+<p><strong>组织</strong>: mll-lab-nu（Northwestern University MLL Lab）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-02</p>
+</blockquote>
+<hr />
+<p>多轮视觉 Agent 的 RL 训练之难，在于「看—想—做—再看」这条回路每一步都很贵：真实交互慢、视觉观测高维、奖励往往只在最后给一次。VAGEN 的切入点是把世界模型放进这条回路：Agent 不必每一步都真实执行，可以在潜空间里预测未来若干步的结果，用这些预测来稠化奖励信号、降低对真实交互样本的依赖。这让「视觉 Agent 的 RL 训练」从不可行变得可行。</p>
+<hr />
+<p>框架分层为：环境接口层（统一多轮交互的观测/动作协议）、世界模型层（在潜空间做短期 rollout，预测未来观测或状态表征）、策略层（VLM 驱动的 Agent 策略，按轮次产出动作或文本决策）、RL 训练层（用世界模型辅助的信号做策略优化）。关键在于世界模型与策略的解耦——世界模型负责「世界怎么变」，策略负责「我该做什么」，两者可以分别预训练与更新。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.37219">LeWAM</a></strong> — 用 JEPA 做端到端世界与动作建模，与 VAGEN 的解耦路线对照。</li>
+<li><strong><a href="https://github.com/RLinf/RLinf">RLinf</a></strong> — 具身与 Agentic AI 的 RL 基础设施，可与 VAGEN 组合使用。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.29677">Toward Recursive Self-Improvement in Physical AI</a></strong> — 物理 AI 自改进的路线综述，理解世界模型 + RL 的定位。</li>
+</ul>
+<hr />
+<p>上手路线：先在一个简单的视觉任务（如带视觉观测的网格世界或多步 GUI 任务）上跑通基线多轮 Agent，记录样本效率与最终成功率；再接入世界模型模块，对比「有/无潜空间 rollout」两种设置下的学习曲线；关键是分别固定世界模型与策略的更新频率，观察谁先成为瓶颈。注意世界模型的预测 horizon 是核心超参——太短起不到稠化奖励的作用，太长会累积误差反而误导策略。</p>
+<hr />
+<p>评估应报四条：最终任务成功率、达到给定成功率所需的真实交互样本数（这才是样本效率的证明）、世界模型自身的预测误差随 horizon 的退化曲线、以及策略更新与世界模型更新的算力分配。只报最终成功率无法区分「世界模型真的有用」与「只是多训了一会儿」。</p>
+<hr />
+<p>与 RLinf 相比：RLinf 面向具身与 Agentic AI 的大规模分布式 RL 基础设施，解决「训得动、训得快」；VAGEN 专注「视觉多轮决策怎么训得有效」，是算法范式层面的框架。与 LeWAM 相比：LeWAM 用 JEPA 做端到端世界与动作建模，把预测与动作放进同一套权重；VAGEN 保持世界模型与策略解耦，更灵活但需要分别维护。与纯 SFT 路线相比：RL 路线能优化多轮交互中的序贯决策质量，代价是训练复杂度与算力显著上升。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

@@ -4,7 +4,7 @@
   "stage": "阶段四：AI 大脑",
   "importance": "前沿",
   "estimatedHours": 40,
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-11-02T09:40",
   "description": "结合视觉理解、语言指令和动作生成的端到端模型。VLA 是具身智能的前沿方向。",
   "prerequisites": [
     "能解释图像特征、token、自注意力和监督训练；可补学 [CNN 架构](/learn/deep-learning/1)、[Transformer](/learn/deep-learning/2) 与 [反向传播](/learn/deep-learning/5)。",
@@ -836,9 +836,34 @@
         "9. 能力自检清单"
       ],
       "summary": "前面 25 节讲的都是怎么把 VLA 训得更强：更好的架构（分层、双系统、世界动作模型）、更好的数据（触觉、人类视频、合成数据）、更好的后训练（RL、量化、进度引导）。这一节换一个角度："
+    },
+    {
+      "id": "sec-27",
+      "title": "把世界模型的物理先验注入 VLA：PRIME W0 与层次化条件流匹配的三项设计",
+      "lastUpdated": "2026-11-02T09:40",
+      "chars": 6429,
+      "shortTitle": "物理先验注入与层次化条件流匹配",
+      "difficulty": "高级",
+      "estimatedMinutes": 16,
+      "isFrontier": true,
+      "tier": 3,
+      "readingMinutes": 11,
+      "headings": [
+        "一、前馈 VLA 到底丢了什么",
+        "二、PRIME W0 的三项设计",
+        "三、逐层 KV 注入：把 VLM 当成分层特征源",
+        "四、动力学感知条件化：异步子目标 + 历史语义桥",
+        "五、ADM 流匹配：让噪声尊重运动学",
+        "六、四阶段训练与它的代价",
+        "七、PRIME W0 在范式地图上的位置",
+        "八、能力自检清单",
+        "九、练习",
+        "参考答案"
+      ],
+      "summary": "大多数已落地的 VLA 有一个共同的结构性缺陷：它是前馈的。动作只条件化于当前观测与语言指令，既没有显式的历史记忆，也没有利用预训练 VLM 内部的分层表征结构。这一节以 PRIME W0（arXiv 2610.39528）为线索，把「前馈 VLA 该怎么补上下文」这件事拆成三个可独立验证的组件来讲。"
     }
   ],
-  "readingMinutes": 285,
+  "readingMinutes": 296,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 250138
+  "chars": 256567
 }
