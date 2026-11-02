@@ -149,6 +149,13 @@
 - 校验：sync + sitemap（**549 章节 + 132 学习站页面**）+ health_check + verify_learn_structure **首轮即 ALL OK**；unittest 34/34。已 push（388c58d..f47125b），远程 HEAD 已核对一致。
 - 新坑：① **并行自动化会改 `tools/build_sitemap.py` 与 sitemap.xml**（新增 bio/phy 学习站页面），rebase 冲突时**不要手改 sitemap 文本**，重跑 `build_sitemap.py` 再 `git add` 即可（他们的新脚本已支持学习站页面）。② **rebase 冲突解决后 `git rebase --continue` 在本机必失败**（`cannot spawn vim`，设 GIT_EDITOR 为 `true` 也 spawn 失败）。改用：`git commit -F _msg.txt`（带 `-c user.name -c user.email`）→ `git rebase --quit` → `git checkout -B main`。③ `git status -sb` 在显式 URL push 后会误报 ahead 21，`gh api ... commits/main --jq .sha` + `git update-ref` 核对。④ **arXiv API 本轮 4 查询全成功**（`http://export.arxiv.org/api/query`，`search_query=cat:cs.RO AND abs:...` + `sortBy=submittedDate`），一次拿 25 条候选，比 `huggingface.co/papers/date/<d>` 稳且命中率高得多（本轮 HF 日报几乎没给出具身候选）——**论文发现可以改回 arXiv API，只在 429 时降级到 WebFetch arxiv.org/abs**。⑤ 新闻凑数仍需「融资 / 政策 / 地方行动 / 全球英文源 / 大厂产线」五个方向各搜一轮。
 
+### 2026-11-02 09:17—10:10（同日第二轮）
+- 投稿箱：无新投稿。开工时工作树干净、HEAD==origin/main（feee282）。
+- 数据：新闻 +10（n579—n588）、论文 +5（p297—p301，含 detail）、开源 +4（os226—os229，含 detail + 报告页）、招聘 +6（j297—j302）、资源新增 r026（仿真环境 / 基准平台 / 开源硬件，category 取众数「学术资源」）。
+- 学习：data-collection「触觉数据采集经济学」7.4K（联动 p298 TouchBridge + n580）；vla-models「物理先验注入与层次化条件流匹配」6.4K（联动 p300 PRIME W0）。章节 549 → **551**。
+- 校验：sync + sitemap（551 章节 + 132 学习站页面）+ health_check **ALL OK 且 0 警告** + verify_learn_structure ALL OK；unittest 34/34。已 push（feee282..5a62886），远程 HEAD 已核对一致。本轮无并行推送干扰。
+- 新坑：① **`_gh.py` DUP 判定写反**（`'github.com/'+k in exist`，exist 里是完整 URL）→ 要用 `re.search(r'github\.com/([^/]+/[^/?#]+)')` 抽 `owner/repo` 比对。② **二次插入小节撞序号**（新小节写「六」而原章节已有「六」）→ 插入前后都打印 `###` 标题序列复核。③ **`data-collection` 历史章节普遍无 `id` 字段**（vla-models 是 int/str 混用）→ `max(...)` 取到 0 导致新章节 id 写成 1，需 `str(s.get('id')).isdigit()` 过滤 + 无则回退 `len(secs)`。④ **ASCII `"` 做中文引号会被 health_check [10] 报**（本轮 23 处，历史 0 处）→ 交替替换为 「/」 批量修（296 处）+ 重新生成 os 报告页。⑤ **同日两轮更新**：上一轮刚写的全在库，改从「当天新发生事件」切入命中率更高。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
