@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-10-30T08:30",
+ "lastUpdated": "2026-11-02T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,122 @@
   }
  ],
  "projects": [
+  {
+   "id": "os225",
+   "name": "FOCA：面向未来的条件化，数据高效的 VLA 适配（ICML 2026）",
+   "github": "https://github.com/cair-vinuni/FOCA",
+   "organization": "cair-vinuni（VinUniversity CAIR）",
+   "org": "cair-vinuni（VinUniversity CAIR）",
+   "category": "ai-model",
+   "description": "**FOCA**（*Future-Oriented Conditioning for Data-Efficient Vision-Language-Action Adaptation*，ICML 2026）解决的是一个非常工程化的问题：**当你的新任务只有很少的示教时，怎么把预训练 VLA 适配过去而不把原有能力搞坏**。\n\n**问题背景**，预训练 VLA 在新本体、新任务上做微调时，样本效率很差——几十条示教训出来的策略往往不稳定，而更多示教又采不起。更麻烦的是，直接用少量数据做行为克隆会同时引发灾难性遗忘：新任务学会了，通用语言理解与视觉表征被冲掉。\n\n**面向未来的条件化**思路是：不把监督只放在「这一步该出什么动作」上，而是额外让模型对**未来状态**做出正确预测（未来观测、未来目标状态等）。未来预测提供了比单步动作更密集、更平滑的监督信号，使少量示教也能给出稳定的训练梯度。\n\n**适用方向**，只有少量示教但需要快速适配新任务/新本体的团队；研究 VLA 数据高效微调与灾难性遗忘的研究者。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "面向未来的条件化（future-oriented conditioning）",
+    "数据高效的 VLA 适配：少示教下的稳定微调",
+    "缓解行为克隆带来的灾难性遗忘",
+    "ICML 2026 论文配套实现",
+    "Apache-2.0 许可，含模仿学习与世界模型相关组件"
+   ],
+   "stars": 91,
+   "tags": [
+    "FOCA",
+    "数据高效",
+    "VLA适配",
+    "未来条件化",
+    "灾难性遗忘",
+    "ICML 2026",
+    "少样本"
+   ],
+   "addedDate": "2026-11-02"
+  },
+  {
+   "id": "os224",
+   "name": "Foothold Prediction Model：人形机器人的预期性感知（Watch Your Step，ETH 苏黎世 leggedrobotics）",
+   "github": "https://github.com/leggedrobotics/foothold-prediction-model",
+   "organization": "leggedrobotics（ETH Zurich）",
+   "org": "leggedrobotics（ETH Zurich）",
+   "category": "locomotion",
+   "description": "**foothold-prediction-model** 是论文 *Watch Your Step: Anticipated Perception for Humanoid Locomotion* 的官方代码，主题是**让人形机器人在踩下去之前就先「看见」落点**。\n\n**问题**，四足与人形在复杂地形上的运动控制，主流做法是「踩上去—感受到—再调整」的反应式闭环。这在离散台阶、窄梁、松散碎石上很吃亏：等到接触力反馈回来时，身体已经开始失稳。更根本的问题是机载传感器视野有限，脚即将落地的区域经常被自身遮挡或超出视野。\n\n**预期性感知（anticipated perception）**的思路是：不等接触发生，先从历史观测与本体状态**预测出即将落地区域的地形特征**（高度、可踏性、边缘），把它作为额外条件提前喂给运动策略，让策略在摆腿阶段就选对落点与腿长。\n\n**适用方向**，做人形/四足在离散地形、台阶、崎岖地面运动的团队；想把感知预测与 RL 运控结合的研究者；Isaac Lab 用户。",
+   "language": "Python",
+   "license": "MIT",
+   "features": [
+    "人形/腿足机器人的足部落点（foothold）预测模型",
+    "预期性感知：在接触发生前预测落点地形特征",
+    "基于 Isaac Lab 的训练环境，可复现 RL 运控实验",
+    "面向 sim-to-real 的感知型运动控制",
+    "MIT 许可，ETH leggedrobotics 维护"
+   ],
+   "stars": 115,
+   "tags": [
+    "foothold prediction",
+    "预期性感知",
+    "人形运动",
+    "Watch Your Step",
+    "Isaac Lab",
+    "sim-to-real",
+    "腿足机器人"
+   ],
+   "addedDate": "2026-11-02"
+  },
+  {
+   "id": "os223",
+   "name": "ViGAR：重新思考世界动作模型，面向组合式与上下文学习的机器人操作",
+   "github": "https://github.com/DAGroup-PKU/ViGAR",
+   "organization": "DAGroup-PKU（北京大学）",
+   "org": "DAGroup-PKU（北京大学）",
+   "category": "ai-model",
+   "description": "**ViGAR**（*Rethinking World-Action Model for Compositional and In-context Robotic Manipulation*）是北京大学 DAGroup 的官方实现，主题是：**世界动作模型（WAM）到底该把「世界预测」放在什么位置，才能真正帮到操作策略**。\n\n**问题背景**，近一年大量工作把视频生成式世界模型接进 VLA，做法是「先预测未来帧，再据此出动作」。但这条路线有两个隐忧：一是生成未来帧的算力开销大，二是生成出来的未来与当前这一步动作的相关性未经验证。ViGAR 从效率与组合式泛化两个角度重新审视这个结构。\n\n**两个关键词**。一是**组合式（compositional）**：把任务拆成可复用的组合单元，让模型在新任务上重组已有能力；二是**上下文学习（in-context）**：不靠梯度更新，而是把相关经验放进上下文直接条件化策略。\n\n**适用方向**，研究 WAM 架构设计的研究者；想在 RoboTwin 等仿真基准上做长程与组合式任务实验的团队；关注视频生成与动作生成算力分配的工程团队。",
+   "language": "Python",
+   "license": "MIT",
+   "features": [
+    "世界动作模型（WAM）架构实现",
+    "面向组合式（compositional）泛化的操作建模",
+    "支持上下文学习式的任务条件化",
+    "在 RoboTwin 等仿真基准上有实验设置",
+    "MIT 许可，含视频生成与仿真相关组件"
+   ],
+   "stars": 113,
+   "tags": [
+    "ViGAR",
+    "世界动作模型",
+    "WAM",
+    "组合式泛化",
+    "上下文学习",
+    "RoboTwin",
+    "长程操作"
+   ],
+   "addedDate": "2026-11-02"
+  },
+  {
+   "id": "os222",
+   "name": "FPO：流匹配 VLA 策略的强化微调（Flow Policy Optimization，ICRA 2026）",
+   "github": "https://github.com/tuotuoLyu/FPO",
+   "organization": "tuotuoLyu",
+   "org": "tuotuoLyu",
+   "category": "framework",
+   "description": "**FPO（Flow Policy Optimization）** 是论文 *Reinforcement Fine-Tuning of Flow-Matching Policies for Vision-Language-Action Models*（ICRA 2026）的官方实现，解决的是一个越来越现实的问题：**把已经在大规模示教上训好的流匹配 VLA（如 π0）再用强化学习往上推一步**。\n\n**为什么需要它**，模仿学习把策略推到了「像人」的水平，但上限被示教质量锁死。要越过示教上限必须引入奖励信号，而主流 VLA 的输出头已经从离散 token 换成了连续流/扩散，传统的 PPO 式 RL 微调在流匹配策略上并不直接成立——你无法对一条去噪轨迹上的中间步直接套用离散动作的对数概率。\n\n**它的定位**，给出一套可以在流匹配策略上稳定做 RL 微调的目标与实现，覆盖 ALOHA 与 LIBERO 等常用评测环境，基于 JAX 实现，便于与现有大规模训练栈衔接。\n\n**适用方向**，已有流匹配 VLA 权重、想用任务奖励把成功率再抬一档的团队；研究「扩散/流策略能不能被 RL 直接优化」的研究者。",
+   "language": "Python",
+   "license": "MIT",
+   "features": [
+    "流匹配 VLA 策略的强化微调（RL fine-tuning）官方实现",
+    "覆盖 ALOHA、LIBERO 等主流操作评测环境",
+    "JAX 实现，便于接入大规模训练栈",
+    "面向 π0 一类流匹配动作头的策略优化",
+    "MIT 许可，ICRA 2026 论文配套"
+   ],
+   "stars": 106,
+   "tags": [
+    "FPO",
+    "Flow Policy Optimization",
+    "流匹配",
+    "强化微调",
+    "π0",
+    "ICRA 2026",
+    "VLA"
+   ],
+   "addedDate": "2026-11-02"
+  },
   {
    "id": "os221",
    "name": "Calibra：面向机器人模仿学习的数据集可观测性与核心集选择，回答「哪些示教真正有用」",
@@ -5398,5 +5514,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 208
+ "totalItems": 212
 }

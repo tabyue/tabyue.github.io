@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foothold Prediction Model：人形机器人的预期性感知（Watch Your Step，ETH 苏黎世 leggedrobotics） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Foothold Prediction Model：人形机器人的预期性感知（Watch Your Step，ETH 苏黎世 leggedrobotics） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="foothold-prediction-modelwatch-your-stepeth-leggedrobotics">Foothold Prediction Model：人形机器人的预期性感知（Watch Your Step，ETH 苏黎世 leggedrobotics）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/leggedrobotics/foothold-prediction-model">https://github.com/leggedrobotics/foothold-prediction-model</a>  </p>
+<p><strong>Stars</strong>: 115 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-02  </p>
+<p><strong>组织</strong>: leggedrobotics（ETH Zurich）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-02</p>
+</blockquote>
+<hr />
+<p>腿足机器人的运动控制长期分成两派：一派靠本体感知（关节角、IMU、接触力）做高速闭环，反应快但「看不见」前方地形；另一派靠外感知（深度相机、激光雷达）建高程图，看得远但延迟大、且在脚落下前的最后一刻常常失效。预期性感知想补的正是这个最后一刻的空白——在脚触地之前，用已经观测到的历史推断出落点区域的地形属性。</p>
+<hr />
+<p>结构上是一个预测模型加一个运控策略的组合。预测模型以历史观测序列与本体状态为输入，输出即将落地区域的高程/可踏性等特征表示；运控策略（通常是基于 Isaac Lab 训练的 PPO 策略）把这个预测特征作为额外观测项纳入决策，从而在摆腿阶段就调整落点与腿长。训练时预测模型与策略可以分阶段训练，也可以在仿真中联合微调；仿真到真机的关键是让预测延迟与真实传感器延迟对齐。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2404.05695">Humanoid-Gym</a></strong> — 人形 RL 运控与 sim-to-real 的基线参考。</li>
+<li><strong><a href="https://arxiv.org/abs/2109.11978">Learning Agile Locomotion via Adversarial Training</a></strong> — 盲走策略的经典基线，用于对照预测带来的增益。</li>
+<li><strong>[PIM / 感知型运动控制综述类工作]</strong> — 可在站内学习中心「Sim-to-Real 迁移」模块查看相关章节。</li>
+</ul>
+<hr />
+<p>上手路线：先在 Isaac Lab 中跑通平地与离散地形的基线运控策略；再接入落点预测模块，在地形难度递增的课程序列上对比「有预测」与「无预测」的成功率与能耗；真机迁移时务必先测量预测模块的实际推理延迟，并在仿真中把这个延迟显式建模进去，否则仿真里学到的「提前量」在真机上会错位。</p>
+<hr />
+<p>评估要看三类指标：离散地形/台阶上的通过率与失足率、单位距离能耗（预测带来的提前调整应降低而不是抬高能耗）、以及最坏情况延迟下的性能保持率（预测失效时策略应能优雅退化为反应式控制）。只报平地速度没有意义，这条工作的全部价值都在复杂地形上。</p>
+<hr />
+<p>与高程图（elevation map）方案相比：高程图覆盖广但更新慢、对动态与遮挡区域不可靠；落点预测只关心脚即将落下的那一小块，精度与时延都更好，两者是互补而非替代。与纯本体感知的盲走策略相比：盲走鲁棒但对离散地形上限低；加预测后上限显著提高，代价是多一个模块的失效模式，需要设计退化路径。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

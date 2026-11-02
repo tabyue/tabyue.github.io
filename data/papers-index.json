@@ -1,6 +1,146 @@
 {
- "lastUpdated": "2026-10-30T08:30",
+ "lastUpdated": "2026-11-02T08:30",
  "papers": [
+  {
+   "id": "p296",
+   "title": "HiFOR: Hierarchical Foresight with Action-Guided World Grounding for Vision-Language-Action Model",
+   "authors": "Rongxing Ding, Hongyu Qu, Kehong Wu, Xudong Wang, Fan Zhang, Xinguang Xiang, Xiangbo Shu",
+   "venue": "arXiv 2610.40373（cs.CV / cs.RO）",
+   "date": "2026-10-29",
+   "arxiv": "https://arxiv.org/abs/2610.40373",
+   "github": "",
+   "tags": [
+    "HiFOR",
+    "分层前瞻",
+    "世界模型",
+    "动作引导检索",
+    "潜空间检索",
+    "VLA"
+   ],
+   "tldr": "**缺口**，VLA 把视觉感知、语言理解与动作生成连在一起，近期工作进一步引入未来预测以增强对环境动态与任务进展的理解。但已有方法往往把**短期动态**与**长期任务目标分开建模**，并且在把预测的未来直接喂给动作策略时，没有充分考虑这些未来与当前动作需求的相关性。\n\n**三件事**。①**分层前瞻预测（Hierarchical Foresight Prediction）**：通过分层依赖掩码 HDM 联合预测短期状态演化、语义里程碑与最终目标状态，建立跨时间尺度的依赖关系。②**结构感知潜空间世界建模（Structure-Aware Latent World Modeling）**：沿时间尺度、视角与空间三个维度组织未来潜表征，便于细粒度检索。③**动作引导的分解式世界检索（Action-Guided Factorized World Retrieval）**：在去噪过程中根据不断演化的动作表征，自适应地从结构化潜世界检索相关未来信息。\n\n**结果**，在两个仿真基准与六个真实机器人操作任务上验证了有效性。",
+   "category": "VLA / 世界模型",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把「未来预测」从「生成一张未来的图」改成「按时间尺度 / 视角 / 空间三个维度组织成可检索结构」，是被低估的一步。生成式未来好看但不好用，可检索的未来才能精确服务于当前这一步动作。",
+    "HDM 显式建立短期—里程碑—最终目标之间的依赖，解决了现有方法两套预测各说各话的问题：短期预测不知道里程碑要什么，里程碑预测又缺少可达性约束。",
+    "检索发生在去噪过程中而非去噪之前，意味着引导是随动作逐渐成形而动态调整的。这比一次性取一个固定的未来条件更贴合扩散/流匹配的迭代本质。",
+    "「相关性」而非「信息量」成为检索目标，是对当前一大类「把未来帧拼进上下文」做法的直接修正：喂得越多不代表越相关，无关未来会稀释动作条件。"
+   ],
+   "impact": "给出了一个把世界模型的预测结果结构化、并按当前动作需求精确取用的完整架构。对做 VLA + 世界模型的团队，它把「要不要加世界模型」推进到「加进来之后怎么检索才不稀释动作条件」这一层。",
+   "addedDate": "2026-11-02"
+  },
+  {
+   "id": "p295",
+   "title": "Tactus: Tactile & Pose Sensing Glove for Natural Dexterity Data Collection",
+   "authors": "Li Guan, Rachael Granberry, Sahar Aseeri, Sahar Rostami, Taylor Niehues, Sai Dhanooshi Marri 等（大规模合作作者列表）",
+   "venue": "arXiv 2610.39076（cs.RO / cs.AI / cs.AR / cs.LG）",
+   "date": "2026-10-29",
+   "arxiv": "https://arxiv.org/abs/2610.39076",
+   "github": "",
+   "tags": [
+    "Tactus",
+    "触觉手套",
+    "手部姿态",
+    "力标定",
+    "示教采集",
+    "跨硬件基准"
+   ],
+   "tldr": "**缺口**，采集自然的人类操作示教、同时拿到准确的接触力与手部姿态，对灵巧操作策略与世界模型学习都至关重要。但现有可穿戴平台没有一个能同时提供**经过标定的指尖力感知**和**抗遮挡的手部跟踪**，还要保持自然操作不被引擎改变。\n\n**三个协同优化的设计支柱**，①薄而贴合的 3D 针织形态，指尖堆叠厚度仅 **1.5 毫米**，尽量不干扰自然操作；②依据实证接触研究，在操作相关区域 strategically 布置电容式触觉传感器；③IMU 融合的姿态跟踪，在手—物遮挡最严重、数据也最有价值的时候仍保持精度。另配文档化的标定流水线保证跨手套一致性，以及按被试校正的每场次标定。\n\n**首个跨平台定量评测**，作者提出标准化的触觉力回归与手部姿态估计基准协议，并对 Tactus 与两款商用触觉手套做了对比。Tactus 在 95% 置信度下可分辨的最小可检测力为 **0.59 N**，比商用基线低 1.6 至 2.7 倍；跨被试一致性 **0.87**；姿态跟踪在遮挡最重时指尖关键点相对误差维持在 **11.0 毫米**。\n\n**下游验证**，这些联合信号支持物体属性估计、滑移检测，以及对抓取—物体交互的如实记录，产出的示教数据具备接触感知型操作策略与世界模型所需的保真度。",
+   "category": "数据采集硬件 / 触觉感知",
+   "difficulty": "中级",
+   "keyInsights": [
+    "把「不干扰自然操作」当成与传感性能同等重要的设计目标，是这篇硬件论文最清醒的一点。手套越厚，采到的数据越不像真人操作，模型学到的就是戴着厚手套的动作。",
+    "0.59 N 的最小可检测力配合 1.6 至 2.7 倍的基线优势，说明瓶颈不在传感器原理而在布置位置——他们用实证接触研究来决定传感器放哪，这一步容易被跳过。",
+    "在遮挡最重时仍维持 11.0 毫米的指尖关键点误差，这个指标选得对：遮挡恰恰发生在手正在操作物体、数据最有价值的时刻，平均误差会把这个区间抹平。",
+    "首个跨商用平台的定量评测填补了一个真空。此前各家的手套都只在自己的任务上报数，无法横向比较，这直接导致下游团队选硬件只能靠口碑。"
+   ],
+   "impact": "同时解决了触觉力标定与抗遮挡手部姿态这两个长期分离的硬件问题，并建立了首个跨平台定量基准。对做灵巧操作数据采集的团队，它把「买哪双手套」从经验判断变成了可比指标问题。",
+   "addedDate": "2026-11-02"
+  },
+  {
+   "id": "p294",
+   "title": "How Much Should a VLA Trust Its Reasoning? Step-Level Guidance as a Measured Action-Value Function",
+   "authors": "Dabin Seo, Eunhyek Joa",
+   "venue": "arXiv 2610.40002（cs.RO / cs.CV / cs.LG）",
+   "date": "2026-10-29",
+   "arxiv": "https://arxiv.org/abs/2610.40002",
+   "github": "",
+   "tags": [
+    "推理VLA",
+    "CoC-CFG",
+    "无分类器引导",
+    "动作值函数",
+    "自适应引导",
+    "闭环评测"
+   ],
+   "tldr": "**问题转向**，推理型 VLA 先写一段推理轨迹再从中解码动作：轨迹错了动作就错，而看起来正确的轨迹也可能误导规划。已有补救办法问的是「推理对不对」，本文问的是「**它应该以多强的力度影响动作**」。\n\n**方法 CoC-CFG**，在策略的原始上下文与「去掉推理片段的同上下文」之间做无分类器引导（classifier-free guidance）。每个欧拉步用一个权重 $w$ 衰减或放大推理的影响，$w=1$ 时退化为原策略。\n\n**把权重选择当成 MDP**，关键做法是把「这一步用哪个 $w$」视为一个马尔可夫决策过程，其动作值是**测量出来的而不是自举出来的**：固定专家与噪声后，在某一步施加某个 $w$、随后在当前控制器下完成整段规划，就精确返回该 $w$ 的值。Q-adaptive guidance 用小型 critic 拟合这些值，并保守地改进控制器。\n\n**结果**，在 Alpasim 驾驶模拟器中开环优于所有固定权重与在线 RL（SAC、GRPO）；闭环通过 300 个场景中的 262 个，原策略为 252 个。在 Waymo 端到端驾驶基准的留出帧上，前三个阶段优于所有固定权重、四种自适应引导方法、SAC 与 GRPO。隐藏测试集上，冻结的 Alpamayo 1.5 配合 Q-adaptive guidance 取得已发表方法中的新 SOTA：rater feedback score **8.135159**（此前最佳 8.079）。",
+   "category": "VLA 推理 / 测试时控制",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把引导权重的选择建模成 MDP 且「动作值靠测量而非自举」，绕开了引导类方法最常见的自举偏差。固定专家与噪声后一次前向就能拿到精确值，这是很少见的干净设计。",
+    "在专家冻结、噪声固定的前提下测值，本质上是把「引导强度」变成了一个可以离线标定的超参曲线，工程上比在线调 $w$ 现实得多。",
+    "闭环 262/300 对 252/300 这个提升幅度看着不大，但闭环才是真机该看的口径；开环指标好看而闭环不涨是推理型策略的典型陷阱。",
+    "只用一个权重参数（每个欧拉步一个）就能同时覆盖「完全不信推理」到「完全信推理」，比另训一个判别器去筛推理轨迹要轻量得多。"
+   ],
+   "impact": "把「推理该在多大程度上影响动作」从二值判断变成了可测量、可标定的连续控制量，并在驾驶这一闭环敏感场景上验证。对推理型 VLA 的工程落地，它提供了一条不增加模型规模、只增加一步值函数拟合的改进路径。",
+   "addedDate": "2026-11-02"
+  },
+  {
+   "id": "p293",
+   "title": "RoboSeed: Multidimensional Evaluation of Vision-Language-Action and World-Action Models: Capability, Resource Affordability, and Research Evidence",
+   "authors": "Xin Ma, Furong Chen, Xinlong Man, Bo Zhang, Yalong Guo, Haolan Lei, Chaochen Cui, Hongyuan Zhang, Mulin Chen, Yi Wang, Lap-pui Chau, Chuang Yang",
+   "venue": "arXiv 2610.40026（cs.RO）",
+   "date": "2026-10-29",
+   "arxiv": "https://arxiv.org/abs/2610.40026",
+   "github": "https://github.com/PrimitiveX/RoboSeed",
+   "tags": [
+    "RoboSeed",
+    "VLA评测",
+    "世界动作模型",
+    "算力预算",
+    "可复现性",
+    "模型选型"
+   ],
+   "tldr": "**缺口**，选一个机器人动作模型需要四类证据：任务能力、适配成本、部署要求、以及已发表结论的可靠性。只有成功率这一项，对算力预算与目标各不相同的团队几乎没有指导意义。\n\n**五个维度**，RoboSeed 定义了 capability（能力）、downstream training affordability（下游训练可负担性）、deployment affordability（部署可负担性）、locally verified research value（本地验证的研究价值）、reproduction evidence（复现证据）。它把实测数据与审计准则通过固定归一化锚点映射到 0 至 100 的画像，并提供 balanced、training-constrained、deployment-constrained 三种偏好设置。\n\n**刻意不做的事**，接口与协议检查会先判定「这个比较是否恰当」；缺失的测量保持显式缺失，不完整的聚合分直接**不予给出**；用加权输入覆盖率标识证据缺口。作者明确表示，由于服务链路不完整与协议异质，本研究**不给出总体数值排名**。\n\n**实测发现**，应用到代表性 VLA 与 WAM 模型后，结果揭示了骨干网络选择随预算而变、对适配配方高度敏感、以及语言接口与视觉任务接口之间存在差异。评分代码与机器可读证据一并开源。",
+   "category": "评测基准 / 模型选型",
+   "difficulty": "中级",
+   "keyInsights": [
+    "拒绝给出总排名是这个框架最重要的设计。单一分数会让「能力」掩盖「你训不起 / 你部署不起」，而这两项恰恰是学术界与工业界选型的真实分歧点。",
+    "「缺失即显式缺失、不完整就不给聚合分」的做法在评测类工作里非常罕见，但它才是诚实评测的基线——常见的做法是用默认值把洞填平，反而制造了虚假可比性。",
+    "三种偏好设置（balanced / training-constrained / deployment-constrained）把「你的约束是什么」变成了第一等公民，比给一堆裸指标更接近真实决策。",
+    "把 reproduction evidence 单列成一个维度，等于把「这篇论文能不能复现」纳入模型评价体系，对当前大量只放权重不放训练配方的开源是有力的反向激励。"
+   ],
+   "impact": "把机器人动作模型的选型从「看榜单第一名」推进到「按自己的算力与部署约束看多维画像」，并提供了可复现的评分代码与机器可读证据。对资源有限的团队，它把选型决策从拍脑袋变成了可解释的加权问题。",
+   "addedDate": "2026-11-02"
+  },
+  {
+   "id": "p292",
+   "title": "Has GPT-6-Astra Achieved Embodied Intelligence?",
+   "authors": "SenseNova Joint Research Team（Zhongang Cai, Ziang Cao, Tailai Chen, Han Chong Chua, Linjun Dai, Hanming Deng 等，按姓氏字母排序）",
+   "venue": "arXiv 2610.22471（cs.RO / cs.CV / cs.LG）",
+   "date": "2026-10-15",
+   "arxiv": "https://arxiv.org/abs/2610.22471",
+   "github": "https://sensenova.ai/has-gpt-6-astra-achieved-embodied-intelligence",
+   "tags": [
+    "GPT-6-Astra",
+    "具身智能评测",
+    "上下文学习",
+    "System2-System1",
+    "真机部署",
+    "基准设计"
+   ],
+   "tldr": "**问题**，GPT-6-Astra 在机器人操作与导航上展现的能力，已经挑战了「为每个任务和每种本体各训一个专用模型」的常规范式。这份报告问的不是它有多强，而是它的能力对领域意味着什么。\n\n**四层实验**，①在覆盖桌面操作、人形、移动平台、灵巧手的 **12 个代表性基准**上做大规模评测，统一协议允许从训练集示范做上下文学习（ICL）并大幅增加执行步数；②研究具身控制的 agentic harness，识别高层 System 2 推理器（GPT-6-Astra）与低层 System 1 控制器（如 π0.5）闭环协调的代价与收益；③在 **8 种真实机器人配置**上检验部署；④设计下一代具身基准原型。\n\n**结论**，GPT-6-Astra 已大体跨过「具身胜任」的门槛，但**尚未跨过「实用具身智能」的门槛**。真机部署暴露两类实质差距：用于 ICL 的机器人示范采集昂贵；在物理约束下不可能用更长的执行时间换取更高的成功率。未来研究应聚焦 ICL 的泛化性、成本与执行时间、物理状态校验、不可逆失败的恢复、以及长程任务进度的保持。",
+   "category": "前沿模型评测 / 具身Agent",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把「拥有具身能力」和「具备实用具身智能」明确切开，是这份报告最有价值的贡献。前者是基准分数，后者是成本、时间、失败恢复与长期进度的综合。",
+    "「在物理约束下不能用更长执行时间换更高成功率」这一点对 agentic 路线是直接约束：语言模型世界里 think longer 总是有效，机器人世界里每多想一步都在消耗真实时间与能耗。",
+    "System 2 + System 1 闭环协调「昂贵但有效」的判断，给出了当前分层架构的一个可量化权衡点，而不是笼统地说分层好。",
+    "下一代基准原型的设计原则值得抄：任务从真实需求导出、不提供领域内示范、并且用「世界时钟」在 Agent 思考时继续计时——这直接把执行成本写进了评分。"
+   ],
+   "impact": "在 12 个基准上系统量化了一个前沿通用模型的具身能力边界，并给出「能力已到、实用性未到」的清晰判据。对做具身 Agent 的团队，它把注意力从「模型能不能做」转移到「做一次要多久、失败后能不能恢复、长任务能不能保持进度」这三个工程问题上。",
+   "addedDate": "2026-11-02"
+  },
   {
    "id": "p291",
    "title": "RobotAgentBench: Towards Open-world Robot Autonomy",
@@ -7660,5 +7800,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 265
+ "totalItems": 270
 }

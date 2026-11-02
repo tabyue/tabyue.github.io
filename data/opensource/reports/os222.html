@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FPO：流匹配 VLA 策略的强化微调（Flow Policy Optimization，ICRA 2026） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">FPO：流匹配 VLA 策略的强化微调（Flow Policy Optimization，ICRA 2026） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="fpo-vla-flow-policy-optimizationicra-2026">FPO：流匹配 VLA 策略的强化微调（Flow Policy Optimization，ICRA 2026）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/tuotuoLyu/FPO">https://github.com/tuotuoLyu/FPO</a>  </p>
+<p><strong>Stars</strong>: 106 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-02  </p>
+<p><strong>组织</strong>: tuotuoLyu  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-02</p>
+</blockquote>
+<hr />
+<p>VLA 的第一阶段是模仿学习：把人类示教蒸馏进一个动作头。这条路线的好处是稳定、可扩展，坏处是天花板——策略最多学到示教者的水平，示教里没有的成功恢复、力控微调、长尾构型，模型都不会。第二阶段必然是 RL：用任务奖励去探索示教之外的动作空间。但当动作头从离散 token 变成连续流（flow matching）后，如何在这类生成式策略上做策略梯度就成了一个真问题。FPO 给出的正是这一层的答案。</p>
+<hr />
+<p>结构上仍然保留「VLM 骨干 + 流匹配动作专家」的两段式：观测与语言指令经视觉语言模型编码为条件，动作专家以流匹配方式在噪声与动作之间插值并逐步去噪得到动作块。FPO 的关键改动在优化目标——它不去对整条去噪链做难以处理的联合似然，而是构造一个在流匹配结构上可计算的策略改进目标，使得给定轨迹级奖励后可以对动作专家做稳定的梯度更新。工程侧基于 JAX，环境侧对接 ALOHA 与 LIBERO，便于直接复现论文中的对照实验。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2410.24164">π0</a></strong> — 流匹配 VLA 的代表作，FPO 的主要优化对象。</li>
+<li><strong><a href="https://arxiv.org/abs/2303.04137">Diffusion Policy</a></strong> — 扩散/流策略的起点，理解动作块与去噪调度。</li>
+<li><strong><a href="https://arxiv.org/abs/2501.09747">FAST</a></strong> — 动作 tokenization 路线，可作为离散 RL 微调的对照。</li>
+</ul>
+<hr />
+<p>上手路线：先确认你已有的流匹配 VLA 权重与动作块尺寸、噪声调度与 FPO 期望的接口一致；在 LIBERO 这类有明确成功判定的环境里先复现论文的基线成功率；再接入你自己的奖励函数做小规模微调，注意奖励尺度与优势归一化，流策略的 RL 对奖励尺度比离散策略更敏感；最后再做真机迁移。</p>
+<hr />
+<p>评估流策略的 RL 微调要看三条：绝对成功率相对微调基线的提升幅度、达到该提升所需的环境交互步数（样本效率），以及训练后策略的动作平滑度是否退化（RL 很容易把流策略推向高频抖动）。只报成功率提升是不够的，因为 RL 微调常伴随着多样性塌陷——成功率涨了但策略变得脆弱。</p>
+<hr />
+<p>与离散动作 token 上的 RL 微调（如对 FAST 类 tokenizer 做 GRPO）相比：FPO 直接作用于连续流动作头，无需额外做动作离散化，但代价是需要处理流结构上的梯度估计。与纯模仿学习的后训练（如拒绝采样微调、best-of-n 蒸馏）相比：FPO 能探索示教之外的动作，上限更高，但对奖励函数质量和环境并行度要求也更高。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

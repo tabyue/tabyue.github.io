@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ViGAR：重新思考世界动作模型，面向组合式与上下文学习的机器人操作 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">ViGAR：重新思考世界动作模型，面向组合式与上下文学习的机器人操作 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="vigar">ViGAR：重新思考世界动作模型，面向组合式与上下文学习的机器人操作</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/DAGroup-PKU/ViGAR">https://github.com/DAGroup-PKU/ViGAR</a>  </p>
+<p><strong>Stars</strong>: 113 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-02  </p>
+<p><strong>组织</strong>: DAGroup-PKU（北京大学）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-02</p>
+</blockquote>
+<hr />
+<p>世界动作模型的核心假设是：如果模型能预测「我这样动之后世界会变成什么样」，它就能更好地决定现在怎么动。这个假设在直觉上成立，但工程上一直有两个未结清的账：预测未来的算力开销值不值，以及预测出的未来对当前这一步动作到底有多少信息量。ViGAR 的工作正是把这两笔账摆到台面上，并从组合式与上下文学习两个角度给出一种更省、更可复用的结构。</p>
+<hr />
+<p>整体仍是「视觉语言条件 + 未来预测分支 + 动作生成分支」的结构，但 ViGAR 强调把世界预测与动作生成解耦并按需调用：未来预测不再是无条件地每步都跑，而是以可检索、可组合的形式服务于动作条件化。组合式体现在任务被拆成可复用的能力单元，新任务通过重组而非重训获得；上下文学习体现在把相关经验以上下文形式注入，避免为每个新任务做一轮梯度更新。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2610.10528">Long-WAM</a></strong> — 把世界动作模型的上下文长度做上去，与组合式泛化互补。</li>
+<li><strong><a href="https://arxiv.org/abs/2606.00529">WALL-WM</a></strong> — 在事件关节处切分世界动作建模，另一种降低冗余预测的路线。
+-<strong><a href="https://arxiv.org/abs/2604.04607">ForeAct3D</a></strong> — 策略接地的未来世界建模，可与 ViGAR 的条件化方式对照。</li>
+</ul>
+<hr />
+<p>上手路线：先在 RoboTwin 一类仿真基准上跑通基线配置，确认动作空间与观测接口对齐；再逐步打开世界预测分支，对比「开 / 关」两种设置在成功率与推理耗时上的差异，这一步能直接量化未来预测带来的边际收益；最后再尝试组合式与上下文学习设置，检验在未见任务上的重组能力。</p>
+<hr />
+<p>评估 WAM 架构必须同时报两条曲线：成功率 vs 推理算力（含未来预测的开销），以及已见任务 vs 未见组合任务的成功率。只报已见任务成功率会让「加了世界模型」看起来总是划算，而真实价值恰恰体现在未见组合与算力受限的条件下。</p>
+<hr />
+<p>与「先生成未来视频再出动作」的串行 WAM 相比：ViGAR 更强调按需与可组合，目标是降低未来预测的固定开销。与纯 VLA（无世界预测）相比：ViGAR 在需要前瞻判断的任务上更有优势，代价是结构复杂度更高。与检索式方法相比：两者都追求「只取相关的」，只是一个检索未来表征、一个检索过往经验。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

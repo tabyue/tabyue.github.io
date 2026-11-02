@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOCA：面向未来的条件化，数据高效的 VLA 适配（ICML 2026） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">FOCA：面向未来的条件化，数据高效的 VLA 适配（ICML 2026） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="foca-vla-icml-2026">FOCA：面向未来的条件化，数据高效的 VLA 适配（ICML 2026）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/cair-vinuni/FOCA">https://github.com/cair-vinuni/FOCA</a>  </p>
+<p><strong>Stars</strong>: 91 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-02  </p>
+<p><strong>组织</strong>: cair-vinuni（VinUniversity CAIR）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-02</p>
+</blockquote>
+<hr />
+<p>VLA 落地时最常遇到的不是「训不出来」，而是「数据不够还不敢乱训」。一个已经在大规模数据上预训练好的模型，拿到几十条新任务示教上做朴素微调，典型结果有三个：过拟合、泛化塌陷、以及把预训练能力忘掉。FOCA 的切入点很直接——单步动作监督在少量数据下信息密度太低，那就补一个更密的监督源：让模型预测未来。</p>
+<hr />
+<p>模型在标准的 VLA 结构之外增加一个未来条件分支。训练时，给定当前观测与语言指令，模型同时被要求预测动作序列与未来状态表征；未来预测任务提供了更平滑的损失地形，使得在少样本条件下梯度不至于被单步动作的噪声主导。推理时未来分支可以按需裁剪，避免引入额外开销。这种「训练期加重监督、推理期保持轻量」的设计与近期的辅助头思路是一致的。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2501.09747">FAST</a></strong> — 动作 tokenization，理解动作监督的稀疏性来源。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.14704">PRISM</a></strong> — 面向通用 VLA 的精度强化，可与数据高效适配路线对照。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.37219">JAM</a></strong> — 用前瞻损失替代视觉生成损失，与 FOCA 的未来监督思路相近。</li>
+</ul>
+<hr />
+<p>上手路线：先固定一个公开 VLA 基线，在目标任务上用 10 / 20 / 50 条示教分别微调，记录成功率曲线作为基线；再打开未来条件分支，在同样的数据预算下重跑；关键对照是「同样数据量下的成功率」与「在已见任务上的遗忘程度」两条。注意未来预测的horizon 是新的超参，太短没信息量、太长噪声大。</p>
+<hr />
+<p>评估数据高效适配要报三条：不同示教数量下的成功率曲线（这才是「数据高效」的证明）、在原任务上的性能保持率（遗忘程度）、以及推理期的额外开销（未来分支是否可裁剪）。只在单一数据规模上报一次成功率，无法支撑「数据高效」的结论。</p>
+<hr />
+<p>与 LoRA / 部分参数微调相比：FOCA 改变的是监督信号而不是参数子集，两者可叠加。与 Anchor-Align 一类「对齐语言与动作、防遗忘」的方法相比：FOCA 的主目标是数据效率，防遗忘是副产品；Anchor-Align 的主目标正好相反。与世界模型预训练相比：FOCA 的未来预测是适配期的辅助任务，不需要先做一个通用的世界模型。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

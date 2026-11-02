@@ -1,7 +1,7 @@
 {
   "id": "physics-simulation",
   "name": "物理仿真引擎",
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-11-02T08:30",
   "stage": "阶段五：仿真与 Sim-to-Real",
   "importance": "核心",
   "estimatedHours": 40,
@@ -523,9 +523,35 @@
         "练习题"
       ],
       "summary": "前面讨论接触动力学时，默认的场景是机械臂抓一个方块：接触点个位数，求解器跑得很稳。这个默认设定在灵巧操作里不成立。"
+    },
+    {
+      "id": "sec-19",
+      "title": "可编辑、可交互的场景级世界模型：三维代理、场景程序与物理求解的分工",
+      "lastUpdated": "2026-11-02T08:30",
+      "chars": 9423,
+      "shortTitle": "可交互场景级世界模型",
+      "difficulty": "高级",
+      "estimatedMinutes": 24,
+      "isFrontier": true,
+      "tier": 3,
+      "readingMinutes": 15,
+      "headings": [
+        "一、世界模型的两次转向",
+        "二、从「渲染得像」到「改得动」",
+        "三、三维代理：为什么不让神经网络直接记住整个场景",
+        "四、物理层：把质量与摩擦写进场景程序",
+        "五、为什么这件事对机器人是刚需",
+        "六、评估：别只问「画面好不好看」",
+        "七、与仿真器、与视频生成模型的关系",
+        "八、一个可运行的最小场景程序示例",
+        "九、常见坑",
+        "练习题",
+        "参考答案"
+      ],
+      "summary": "过去两年，「世界模型」这个词在具身智能语境里被用了太多次，含义漂移得很厉害。要理解 2026 年这批新工作，先把两次转向讲清楚。"
     }
   ],
-  "readingMinutes": 154,
+  "readingMinutes": 169,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 131655
+  "chars": 141078
 }
