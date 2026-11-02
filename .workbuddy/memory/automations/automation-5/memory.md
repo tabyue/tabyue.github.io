@@ -142,6 +142,13 @@
 - 校验：sync + sitemap（**547 章节**）+ health_check + verify_learn_structure **首轮即 ALL OK**；unittest 34/34、node UI 32/32。已 push（fd8918d→d50e431），远程 HEAD 已核对一致。
 - 新坑：① **push 被抢先推送的 geo 提交挡住**（另一个自动化并行），`git fetch <url> main` + `git rebase FETCH_HEAD` 解决；② **rebase 在空 GIT_CONFIG_GLOBAL 下报 `unable to auto-detect email address`**——push 用的空 cfg trick 会清掉 identity，rebase 必须补 `-c user.name=tabyue -c user.email=tabyue@tencent.com`（commit 不受影响）；③ rebase 失败留下 `.git/rebase-merge` 会让后续 rebase 直接中止且 HEAD detached，先 `git rebase --abort` 回到 main（原提交在 reflog 里安全）再重来；④ `papers-index.json` 有 `arxiv: null` 的条目，查重必须 `x.get('arxiv') or ''`；⑤ `test_learn_ui.cjs` 的章节数已改成动态计算，新增章节后**不再需要**改硬编码数字；⑥ 论文发现仍靠 `huggingface.co/papers/date/<date>`，一次拿 2—3 个候选后再逐个 WebFetch arXiv 核对（本轮 R2A 与 JAM 同日 13:28/13:29 提交）。
 
+### 2026-11-02 08:00—09:10
+- 投稿箱：无新投稿。开工时工作树干净、HEAD==origin/main（d5a1350）。
+- 数据：新闻 +10（n569—n578）、论文 +5（p292—p296，含 detail）、开源 +4（os222—os225，含 detail + 报告页）、招聘 +6（j291—j296）、资源新增 r025（世界模型 / 仿真训练场 / 触觉采集硬件，category 取众数「学术资源」）。
+- 学习：physics-simulation「可编辑、可交互的场景级世界模型：三维代理、场景程序与物理求解的分工」（9.4K，tier3，联动 Mundo / RoboSeed / os224）；sensors-hardware「触觉与手部姿态的一体化采集」（9.8K，tier3，联动 Tactus p295 / OmniGlove Pro）。
+- 校验：sync + sitemap（**549 章节 + 132 学习站页面**）+ health_check + verify_learn_structure **首轮即 ALL OK**；unittest 34/34。已 push（388c58d..f47125b），远程 HEAD 已核对一致。
+- 新坑：① **并行自动化会改 `tools/build_sitemap.py` 与 sitemap.xml**（新增 bio/phy 学习站页面），rebase 冲突时**不要手改 sitemap 文本**，重跑 `build_sitemap.py` 再 `git add` 即可（他们的新脚本已支持学习站页面）。② **rebase 冲突解决后 `git rebase --continue` 在本机必失败**（`cannot spawn vim`，设 GIT_EDITOR 为 `true` 也 spawn 失败）。改用：`git commit -F _msg.txt`（带 `-c user.name -c user.email`）→ `git rebase --quit` → `git checkout -B main`。③ `git status -sb` 在显式 URL push 后会误报 ahead 21，`gh api ... commits/main --jq .sha` + `git update-ref` 核对。④ **arXiv API 本轮 4 查询全成功**（`http://export.arxiv.org/api/query`，`search_query=cat:cs.RO AND abs:...` + `sortBy=submittedDate`），一次拿 25 条候选，比 `huggingface.co/papers/date/<d>` 稳且命中率高得多（本轮 HF 日报几乎没给出具身候选）——**论文发现可以改回 arXiv API，只在 429 时降级到 WebFetch arxiv.org/abs**。⑤ 新闻凑数仍需「融资 / 政策 / 地方行动 / 全球英文源 / 大厂产线」五个方向各搜一轮。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
