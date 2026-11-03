@@ -156,6 +156,13 @@
 - 校验：sync + sitemap（551 章节 + 132 学习站页面）+ health_check **ALL OK 且 0 警告** + verify_learn_structure ALL OK；unittest 34/34。已 push（feee282..5a62886），远程 HEAD 已核对一致。本轮无并行推送干扰。
 - 新坑：① **`_gh.py` DUP 判定写反**（`'github.com/'+k in exist`，exist 里是完整 URL）→ 要用 `re.search(r'github\.com/([^/]+/[^/?#]+)')` 抽 `owner/repo` 比对。② **二次插入小节撞序号**（新小节写「六」而原章节已有「六」）→ 插入前后都打印 `###` 标题序列复核。③ **`data-collection` 历史章节普遍无 `id` 字段**（vla-models 是 int/str 混用）→ `max(...)` 取到 0 导致新章节 id 写成 1，需 `str(s.get('id')).isdigit()` 过滤 + 无则回退 `len(secs)`。④ **ASCII `"` 做中文引号会被 health_check [10] 报**（本轮 23 处，历史 0 处）→ 交替替换为 「/」 批量修（296 处）+ 重新生成 os 报告页。⑤ **同日两轮更新**：上一轮刚写的全在库，改从「当天新发生事件」切入命中率更高。
 
+### 2026-11-03 08:16—09:10
+- 投稿箱：无新投稿。开工时工作树干净、HEAD==origin/main（6196191）。
+- 数据：新闻 +10（n589—n598）、论文 +5（p302—p306，含 detail）、开源 +4（os230—os233，含 detail + 报告页）、招聘 +6（j303—j308）、资源新增 r027（可微仿真 / 一阶策略学习 / 接触动力学，category 众数「学术资源」）。
+- 学习：robot-dynamics「可微接触动力学：为什么一阶梯度终于能在人形全身控制上跑通」7.0K（联动 ∇Mimic + ROOF）；imitation-learning「以物体为中心的技能迁移」6.6K（联动 HandMimicX）。章节 551 → **553**。
+- 校验：sync + sitemap（553 章节 + 132 学习站页面）+ health_check **首轮 ALL OK 且 0 警告** + verify_learn_structure ALL OK；unittest 34/34、node UI 32/32。已 push（6196191..6ddad32），远程 HEAD 已核对一致。本轮无并行推送干扰。
+- 经验：① **无新坑，全流程一次通过**；② arXiv API 4 查询一次拿 100 条候选，是论文发现的最优入口；③ GitHub 批量搜索用 urllib + `Bearer $(gh auth token)`，本轮 5 查询全成功；④ 二次深化套路（主体 → 按 shortTitle 定位插入新小节 → 后续序号顺延）稳定幂等；⑤ `git add data sitemap.xml` 而非 `-A`，避免临时脚本入提交。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
