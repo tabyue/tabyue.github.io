@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpamayo 1 Nano，NVIDIA 开源的 100 亿参数推理型 VLA：把驾驶轨迹与「因果链」推理配对 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Alpamayo 1 Nano，NVIDIA 开源的 100 亿参数推理型 VLA：把驾驶轨迹与「因果链」推理配对 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="alpamayo-1-nanonvidia-100-vla">Alpamayo 1 Nano，NVIDIA 开源的 100 亿参数推理型 VLA：把驾驶轨迹与「因果链」推理配对</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/NVlabs/alpamayo">https://github.com/NVlabs/alpamayo</a>  </p>
+<p><strong>Stars</strong>: 2058 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-03  </p>
+<p><strong>组织</strong>: NVIDIA  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-03</p>
+</blockquote>
+<hr />
+<p>VLA 模型的一个隐性代价是<strong>不可追溯</strong>。策略输入观测、输出动作，中间发生了什么只有激活值知道。在实验室里这不是问题——任务失败了大不了重跑；但在真实部署里，一次事故之后「模型为什么这么做」是必须回答的问题。</p>
+<p>Alpamayo 1 Nano 给出的答案是把推理<strong>显式化</strong>：模型同时输出驾驶轨迹与一条因果链，说明它认为当前决策所依赖的因果关系是什么。这样一旦出问题，可以回溯是哪个环节的因果判断错了。</p>
+<p>NVIDIA 把这个模型以 Apache-2.0 开源、10B 规模，意味着研究团队可以在消费级或单卡 A100 级别硬件上跑起来做研究，而不必依赖闭源 API。</p>
+<hr />
+<p>架构层面可以理解为 <strong>VLM 主干 + 因果推理头 + 动作头</strong> 的三段结构：</p>
+<ol>
+<li><strong>视觉-语言主干</strong>：处理多相机视觉输入与语言指令，产出共享表征。</li>
+<li><strong>因果推理头</strong>：在主干表征之上生成结构化的因果链——即「因为观察到 A、B，所以认为会发生 C，因此应该做 D」这类可检出的中间推理。</li>
+<li><strong>动作头</strong>：以因果链为条件，生成驾驶轨迹。</li>
+</ol>
+<p>关键的架构选择是<strong>因果链是显式中间产物而非隐式副产品</strong>。这让两件事成为可能：一是部署后可以直接读取模型的推理过程做审计；二是训练时可以对推理链本身施加监督，而不只是监督最终轨迹。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/NVlabs/alpamayo">Alpamayo 仓库</a></strong> — NVIDIA 官方开源实现与权重。</li>
+<li><strong><a href="https://github.com/NVlabs/alpamayo1.5">Alpamayo 1.5 Nano</a></strong> — 同系列后续版本，10B 推理型 VLA。</li>
+<li><strong><a href="https://github.com/NVlabs/alpamayo2">Alpamayo 2 Super</a></strong> — 34B 多任务基础模型版本。</li>
+<li><strong><a href="https://github.com/NVlabs/alpamayo-recipes">Alpamayo Recipes</a></strong> — 官方给出的即用型配方与开发者示例。</li>
+</ul>
+<hr />
+<p>上手建议按以下顺序推进：</p>
+<ol>
+<li><strong>先跑通推理</strong>：按仓库 README 准备权重与示例数据，确认能输出轨迹 + 因果链。这一步不要急着改模型。</li>
+<li><strong>检查因果链质量</strong>：拿几个已知场景（比如前车突然减速）看模型给出的因果链是否合理。这是判断模型可用性的关键——轨迹在大多数情况下都「看起来正常」，因果链才是区分点。</li>
+<li><strong>再考虑微调</strong>：如果要迁移到自己的数据上，先看仓库是否提供训练脚本与数据格式说明。10B 模型的微调对显存要求不低，建议先做 LoRA 一类的参数高效方案。</li>
+</ol>
+<p>注意 Apache-2.0 虽允许商用，但仍需保留声明与许可文件；若用于量产系统，还需单独评估安全责任边界。</p>
+<hr />
+<p>评估这类模型不能只看轨迹误差（如 L2 距离、碰撞率）。建议同时看三类指标：</p>
+<ul>
+<li><strong>轨迹指标</strong>：常规的位移误差、碰撞率、舒适度（ jerk / 横向加速度）</li>
+<li><strong>推理指标</strong>：因果链的事实正确性——模型引用的观测是否真实存在、因果推断是否成立</li>
+<li><strong>一致性指标</strong>：因果链与最终轨迹是否自洽——模型说「因为前车减速所以要刹车」，实际输出的却是加速，这种不一致比单纯的轨迹错误更危险</li>
+</ul>
+<p>第三类指标是这类「推理 + 动作」双输出模型特有的，也是它相对于纯端到端模型的额外价值所在。</p>
+<hr />
+<p><strong>对比 OpenVLA / π0 一类通用操作 VLA</strong>：通用 VLA 面向机械臂操作，动作空间是末端位姿或关节角；Alpamayo 面向自动驾驶，动作空间是轨迹。两者的共同点是视觉-语言条件化的动作生成，差异在动作头设计与推理显式化程度。Alpamayo 的因果链输出是它最独特的部分。</p>
+<p><strong>对比纯端到端自动驾驶模型</strong>（如早期 UniAD 一类）：端到端模型不产出可解释中间量，出问题只能整体重训；Alpamayo 的因果链让失败可以定位到具体推理环节。</p>
+<p><strong>对比闭源大模型方案</strong>：闭源方案拿不到权重、也拿不到中间推理；Alpamayo 开源且可商用，适合需要自主可控的研究与工程场景。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

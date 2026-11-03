@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-02T09:40",
+ "lastUpdated": "2026-11-03T08:40",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,125 @@
   }
  ],
  "projects": [
+  {
+   "id": "os233",
+   "name": "cyclotron，基于 Isaac Lab 的人形机器人强化学习训练框架（Asimov 系列本体）",
+   "github": "https://github.com/menloresearch/cyclotron",
+   "organization": "menloresearch",
+   "org": "menloresearch",
+   "category": "framework",
+   "description": "**cyclotron** 是面向 **Asimov 系列人形机器人**的官方强化学习训练框架，构建在 **Isaac Lab** 之上。它把「从零开始搭一个 RL 训练管线」这件事收敛成一套可直接使用的工程脚手架。\n\n**为什么这类框架有价值**，Isaac Lab 本身是通用框架，功能强大但使用门槛不低：任务定义、奖励组装、观测/动作空间配置、域随机化、curriculum、checkpoint 与部署导出都要自己组织。面向特定本体的框架把这些默认值都定好，团队可以把精力放在**任务与奖励设计**上，而不是管线搭建上。\n\n**适用方向**，Asimov 本体的运动控制开发、以及作为 Isaac Lab RL 管线的参考实现（即使不用该本体，工程结构也有借鉴价值）。\n\n**注意**，框架与特定本体绑定，跨本体使用需要替换 URDF / 配置与奖励参数。",
+   "language": "Python",
+   "license": "BSD-3-Clause",
+   "features": [
+    "基于 Isaac Lab 的人形 RL 训练框架",
+    "面向 Asimov 人形本体，默认值已配置",
+    "BSD-3-Clause 开源协议",
+    "覆盖训练到部署的工程链路",
+    "可作为 Isaac Lab 管线参考实现"
+   ],
+   "stars": 133,
+   "tags": [
+    "cyclotron",
+    "Isaac Lab",
+    "强化学习",
+    "人形机器人",
+    "Asimov",
+    "训练框架",
+    "运动控制",
+    "sim-to-real"
+   ],
+   "addedDate": "2026-11-03"
+  },
+  {
+   "id": "os232",
+   "name": "PHUMA，物理可靠的人形机器人运动数据集（CoRL 2026）：让运动数据在动力学上站得住",
+   "github": "https://github.com/DAVIAN-Robotics/PHUMA",
+   "organization": "DAVIAN-Robotics",
+   "org": "DAVIAN-Robotics",
+   "category": "data-tools",
+   "description": "**PHUMA**（**Ph**ysically Reliable **Hu**manoid Locomotion Datasheet / Dataset，CoRL 2026）是面向人形机器人运动的数据集工作，核心诉求是**物理可靠性**——运动数据不仅要看起来像人，还要在**动力学上站得住**。\n\n**为什么这个诉求重要**，人形运动数据的两大来源是（1）人体动作捕捉（MoCap）与（2）从人类视频估计。两者都有一个共性缺陷：**数据只保证运动学合理性，不保证动力学可行性**。一条 MoCap 轨迹重定向到人形机器人上，可能要求的关节力矩超出电机能力、或者需要脚底摩擦系数超过实际值。用这类数据训练，学到的策略在仿真里好看、上真机站不住。\n\n**PHUMA 的定位**就是在数据层面把动力学约束显式化，让训练集本身成为可用监督而不是需要二次过滤的噪声源。\n\n**适用方向**，人形运动跟踪、全身控制策略训练、以及作为运动数据的质量基线。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "物理可靠的人形运动数据集（CoRL 2026）",
+    "在动力学层面校验运动可行性",
+    "Apache-2.0 开源",
+    "面向人形 locomotion 与全身控制",
+    "可作为运动数据质量基线"
+   ],
+   "stars": 248,
+   "tags": [
+    "PHUMA",
+    "人形机器人",
+    "运动数据集",
+    "CoRL 2026",
+    "动力学可行性",
+    "locomotion",
+    "运动跟踪",
+    "数据质量"
+   ],
+   "addedDate": "2026-11-03"
+  },
+  {
+   "id": "os231",
+   "name": "VLAct，以表征为中心的 VLA 持续预训练：不靠堆数据，先修好表征（NeurIPS 2026）",
+   "github": "https://github.com/starVLA/VLAct",
+   "organization": "starVLA",
+   "org": "starVLA",
+   "category": "ai-model",
+   "description": "**VLAct**（NeurIPS 2026）研究的是一个被数据规模叙事掩盖的问题：**VLA 的瓶颈到底是不是数据量**。论文标题 **Beyond Data Scaling: Representation-Centric Continued Pre-training for Vision-Language-Action Models** 直接给出立场——在继续堆数据之前，先把**表征**修好。\n\n**核心主张**，持续预训练（continued pre-training）阶段如果以**表征质量**为目标做设计，而不是简单地在更多机器人轨迹上继续做 next-action prediction，可以在相同数据预算下拿到更好的下游泛化。\n\n**为什么值得关注**，2026 年主流 VLA 工作大多在扩数据（百万小时真机数据、跨本体数据混合）。这条工作提供了一个正交方向：数据规模收益递减时，表征层面的改进可能比再加一倍数据更划算。\n\n**适用方向**，VLA 预训练研究、跨本体泛化、以及数据预算受限团队提升模型效果的工程参考。",
+   "language": "Python",
+   "license": "未声明",
+   "features": [
+    "以表征为中心的持续预训练范式",
+    "NeurIPS 2026 收录",
+    "面向 VLA 的 continued pre-training 方案",
+    "提供项目主页与代码",
+    "与数据规模路线正交互补"
+   ],
+   "stars": 151,
+   "tags": [
+    "VLAct",
+    "VLA",
+    "表征学习",
+    "持续预训练",
+    "NeurIPS 2026",
+    "数据效率",
+    "泛化"
+   ],
+   "addedDate": "2026-11-03"
+  },
+  {
+   "id": "os230",
+   "name": "Alpamayo 1 Nano，NVIDIA 开源的 100 亿参数推理型 VLA：把驾驶轨迹与「因果链」推理配对",
+   "github": "https://github.com/NVlabs/alpamayo",
+   "organization": "NVIDIA",
+   "org": "NVIDIA",
+   "category": "ai-model",
+   "description": "**Alpamayo 1 Nano** 是 NVIDIA 开源的 **10B（100 亿参数）推理型 VLA 模型**，面向自动驾驶场景，核心特点是把**驾驶轨迹输出**与 **Chain-of-Causation（因果链）推理**配对——模型不只是给出「往哪开」，同时给出「为什么这么开」的因果解释链。\n\n**为什么这条路线重要**，VLA 领域长期存在一个结构性缺口：动作输出是端到端的黑盒，出了事故无法追溯决策依据。把因果推理显式接到动作生成上，等于给策略装了一个可审计的中间层。对 embodied AI 而言，这不只适用于自动驾驶——操作类 VLA 同样面临「失败后无法定位是哪一步的因果假设错了」的问题。\n\n**与其他 VLA 的区别**，多数开源 VLA（如 OpenVLA、π0 系列）输出动作分块，推理能力依赖底层 VLM 的隐式表征；Alpamayo 把推理过程显式化为可检出的结构化输出，因此能在部署后做**决策审计**与**失败归因**。\n\n**适用方向**，自动驾驶的端到端策略研究、具身决策的可解释性研究、以及需要动作-理由配对数据的下游任务。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "100 亿参数开源推理型 VLA",
+    "驾驶轨迹 + 因果链推理配对输出",
+    "可审计的决策中间层",
+    "NVIDIA 官方开源权重",
+    "Apache-2.0 协议，可商用"
+   ],
+   "stars": 2058,
+   "tags": [
+    "Alpamayo",
+    "NVIDIA",
+    "VLA",
+    "推理型VLA",
+    "因果链推理",
+    "自动驾驶",
+    "可解释性",
+    "开源权重"
+   ],
+   "addedDate": "2026-11-03"
+  },
   {
    "id": "os229",
    "name": "SO-ARM102：LeRobot 兼容的开源主从遥操作机械臂（SO-ARM100/101 后继），提供 STEP/STL 与 BOM",
@@ -5630,5 +5749,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 216
+ "totalItems": 220
 }

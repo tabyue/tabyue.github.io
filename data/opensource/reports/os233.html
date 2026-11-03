@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cyclotron，基于 Isaac Lab 的人形机器人强化学习训练框架（Asimov 系列本体） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">cyclotron，基于 Isaac Lab 的人形机器人强化学习训练框架（Asimov 系列本体） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="cyclotron-isaac-lab-asimov">cyclotron，基于 Isaac Lab 的人形机器人强化学习训练框架（Asimov 系列本体）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/menloresearch/cyclotron">https://github.com/menloresearch/cyclotron</a>  </p>
+<p><strong>Stars</strong>: 133 · <strong>License</strong>: BSD-3-Clause · <strong>收录日期</strong>: 2026-11-03  </p>
+<p><strong>组织</strong>: menloresearch  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-03</p>
+</blockquote>
+<hr />
+<p>RL 训练的工程复杂度往往被低估。论文里一个 locomotion 策略看起来就是「奖励函数 + PPO」，但实际要跑起来，需要处理：环境注册、本体导入与物理参数标定、观测归一化、动作限幅与平滑、域随机化配置、课程学习调度、分布式采样、日志与 checkpoint、以及最后导出到真机运行时的模型格式转换。</p>
+<p>Isaac Lab 提供了这些能力的组件，但组装方式留给使用者。cyclotron 做的是把这套组装针对 Asimov 本体固化下来——对一个刚开始做人形 RL 的团队，这能省下相当可观的启动时间。</p>
+<hr />
+<p>按 Isaac Lab 的标准分层，框架大致包含：</p>
+<ol>
+<li><strong>本体层</strong>：Asimov 人形的 URDF / USD 描述、关节配置与物理参数</li>
+<li><strong>任务层</strong>：locomotion / 运动跟踪等任务定义，含奖励函数、终止条件、观测与动作空间</li>
+<li><strong>训练层</strong>：PPO（或类似算法）配置、并行环境数、域随机化范围</li>
+<li><strong>导出层</strong>：训练产物导出为可部署格式</li>
+</ol>
+<p>这种分层的价值在于<strong>关注点分离</strong>：换任务只动第 2 层，换本体只动第 1 层，调训练效率只动第 3 层。自己临时搭的管线往往这几层耦合在一起，改一处要动全身。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/menloresearch/cyclotron">cyclotron 仓库</a></strong> — 官方 RL 训练框架。</li>
+<li><strong><a href="https://github.com/isaac-sim/IsaacLab">Isaac Lab</a></strong> — 底层依赖的机器人学习统一框架。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先确认 Isaac Lab 版本</strong>：框架依赖特定版本的 Isaac Lab，版本不匹配是最常见的启动失败原因。先按仓库要求装好依赖再跑。</li>
+<li><strong>跑通自带任务</strong>：先不要改奖励，用框架自带的示例任务跑到能站能走，确认整条链路通。</li>
+<li><strong>再改奖励</strong>：在自己的任务上迭代时，一次只改一个奖励项并观察行为变化。多奖励项同时改，出问题无法归因。</li>
+<li><strong>域随机化最后加</strong>：先在确定性环境里确认策略能学会，再加随机化。一开始就加满随机化会导致策略学不会且无法判断原因。</li>
+</ol>
+<p>BSD-3-Clause 协议，商用友好，注意保留版权声明。</p>
+<hr />
+<p>评估一个 RL 训练框架，看的是工程效率而非算法性能：</p>
+<ul>
+<li><strong>从零到第一个可用策略的时间</strong>：框架的核心价值指标</li>
+<li><strong>并行环境吞吐</strong>：每秒采样步数，决定迭代速度</li>
+<li><strong>sim-to-real 迁移率</strong>：框架提供的域随机化与导出流程是否足够</li>
+<li><strong>可修改性</strong>：改奖励、换任务需要动多少代码</li>
+</ul>
+<p>注意区分「框架能力」与「算法效果」：同一框架下不同奖励设计的效果差异，通常远大于框架之间的差异。</p>
+<hr />
+<p><strong>对比直接用 Isaac Lab</strong>：Isaac Lab 更通用、更灵活，适合多本体多任务的团队；cyclotron 针对 Asimov 做了收敛，上手快但绑定本体。选择取决于是否使用 Asimov 本体。</p>
+<p><strong>对比 ProtoMotions</strong>（NVlabs）：ProtoMotions 是 GPU 加速的仿真与学习框架，更偏研究向，提供多种运动跟踪基线；cyclotron 更偏工程落地，面向特定本体。</p>
+<p><strong>对比 rsl_rl / legged_gym 一类</strong>：这类框架面向四足起家，人形需要额外配置；cyclotron 直接面向人形本体设计。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

@@ -4,7 +4,7 @@
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 50,
-  "lastUpdated": "2026-10-29T08:30",
+  "lastUpdated": "2026-11-03T08:50",
   "description": "从人类演示中学习机器人技能。Diffusion Policy 和 ACT 是当前最实用的模仿学习算法。",
   "prerequisites": [
     "能用 Tensor、Dataset、DataLoader 和优化器完成监督训练；可补学 [PyTorch 深度学习](/learn/python-scientific-computing/8) 与 [反向传播与自动微分](/learn/deep-learning/5)。",
@@ -539,9 +539,35 @@
         "参考答案"
       ],
       "summary": "到目前为止，本模块讲过的方法——行为克隆、DAgger、Diffusion Policy、ACT、VLA——共享同一个结构性上限：策略只在演示数据支撑的状态区域里可靠，一旦执行漂移就回不来。"
+    },
+    {
+      "id": "sec-20",
+      "title": "以物体为中心的技能迁移：把人类视频变成可空间泛化的灵巧操作",
+      "lastUpdated": "2026-11-03T08:50",
+      "chars": 6587,
+      "shortTitle": "以物体为中心的技能迁移",
+      "difficulty": "高级",
+      "estimatedMinutes": 16,
+      "isFrontier": true,
+      "tier": 3,
+      "readingMinutes": 10,
+      "headings": [
+        "一、先看清传统路线的三个硬伤",
+        "二、换一个抽象层：以物体为中心",
+        "三、但仅有物体目标还不够：交互约束",
+        "四、为什么需要 RGB-D 而不是单目 RGB",
+        "五、把这条路线放回整个数据金字塔里",
+        "六、实现要点与高频坑",
+        "七、这条路线的边界",
+        "八、从单条示教到技能：为什么「一次就够」是这条路线的前提",
+        "九、与世界模型和 RL 后训练的关系",
+        "十、能力自检清单",
+        "十一、把这条路线接进你的数据管线"
+      ],
+      "summary": "从人类视频学机器人操作，是具身智能里看起来最容易、实际最难的一条路。容易是因为数据遍地都是；难是因为人手和机器手不是一回事，而且示教只发生在一个具体位置。这一节讲的是一个能同时缓解这两个问题的抽象：把学习目标从手部轨迹搬到物体运动上。"
     }
   ],
-  "readingMinutes": 183,
+  "readingMinutes": 193,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 151444
+  "chars": 158031
 }

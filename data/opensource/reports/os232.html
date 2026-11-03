@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHUMA，物理可靠的人形机器人运动数据集（CoRL 2026）：让运动数据在动力学上站得住 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">PHUMA，物理可靠的人形机器人运动数据集（CoRL 2026）：让运动数据在动力学上站得住 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="phumacorl-2026">PHUMA，物理可靠的人形机器人运动数据集（CoRL 2026）：让运动数据在动力学上站得住</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/DAVIAN-Robotics/PHUMA">https://github.com/DAVIAN-Robotics/PHUMA</a>  </p>
+<p><strong>Stars</strong>: 248 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-03  </p>
+<p><strong>组织</strong>: DAVIAN-Robotics  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-03</p>
+</blockquote>
+<hr />
+<p>人形机器人运动学习的数据来源一直有个尴尬的错位：<strong>最容易拿到的数据（人体动作）与最需要的数据（机器人可执行的运动）不是一回事</strong>。</p>
+<p>人体 MoCap 数据量大、质量高，但它记录的是人的运动。人的质量分布、关节力矩上限、脚底摩擦与机器人完全不同。把这类数据直接重定向后训练，策略会学到「物理上做不到」的动作模式——在仿真里因为动力学参数可以被调得很理想而看似成功，上真机就露馅。</p>
+<p>PHUMA 的工作是在数据集构建阶段就把这个过滤做了，交付的是<strong>已经过动力学校验</strong>的运动数据。对使用者来说，这意味着少一轮「训完发现站不住再回来筛数据」的返工。</p>
+<hr />
+<p>数据集的构建逻辑（按论文定位推断，细节以正文为准）大致包含：</p>
+<ol>
+<li><strong>运动来源</strong>：人体动作数据（MoCap 或视频估计）</li>
+<li><strong>重定向</strong>：映射到目标人形本体的关节空间</li>
+<li><strong>动力学校验</strong>：对每条重定向后的轨迹做可行性检查——关节力矩是否在电机能力内、接触力是否满足摩擦锥、质心是否始终在支撑多边形内（或是否有可行的动态平衡）</li>
+<li><strong>筛选 / 修正</strong>：剔除不可行轨迹，或对不可行段做动力学一致的修正</li>
+</ol>
+<p>第 3 步是数据集的价值所在，也是它与普通重定向数据集的分界线。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/DAVIAN-Robotics/PHUMA">PHUMA 仓库</a></strong> — 数据集与配套代码（CoRL 2026）。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先确认本体匹配</strong>：数据集是针对特定人形本体做动力学校验的，用在不同自由度数或不同质量分布的本体上时，校验结论不直接成立。先确认自己的目标本体与数据集的假设是否一致。</li>
+<li><strong>作为质量基线使用</strong>：即使不直接用 PHUMA 训练，也可以拿它校验自己重定向流程产出的轨迹——如果自己的数据在同样的动力学检查下大量不通过，说明重定向管线有问题。</li>
+<li><strong>对比实验</strong>：用「未过滤数据」与「PHUMA 过滤后数据」各训一个策略，比较仿真成功率与 sim-to-real 迁移率。差距应该主要体现在真机上。</li>
+</ol>
+<p>Apache-2.0 协议，商用与二次分发相对宽松，注意保留声明。</p>
+<hr />
+<p>评估运动数据集的质量，建议看四项：</p>
+<ul>
+<li><strong>动力学通过率</strong>：数据集中多少比例的轨迹通过力矩、摩擦锥、平衡约束检查</li>
+<li><strong>训练出的策略成功率</strong>：最终还是要落到任务上</li>
+<li><strong>sim-to-real 迁移率</strong>：这是物理可靠性的真正试金石——不可行数据训出的策略在仿真里看不出问题</li>
+<li><strong>动作多样性与覆盖度</strong>：过滤会损失数据量，需要在可靠性与覆盖度之间权衡</li>
+</ul>
+<p>只看数据量没意义：一万条物理上站不住的轨迹，不如一千条站得住的。</p>
+<hr />
+<p><strong>对比 LAFAN1 一类 MoCap 数据集</strong>：LAFAN1 是经典的人形运动跟踪基准，40 段动作，优势是通用、被广泛使用、便于横向对比；劣势是不做动力学校验，重定向后可行性需使用者自行保证。PHUMA 补的正是这一环。</p>
+<p><strong>对比从人类视频估计的大规模数据</strong>（如 Humanoid-Video 一类）：视频数据覆盖度远超 MoCap，但位姿估计噪声大、动力学可行性更差。PHUMA 的校验思路可以迁移到这类数据上做后处理。</p>
+<p><strong>对比合成数据</strong>：合成数据在生成时就能保证动力学可行，但多样性与自然度受限。PHUMA 走的是「真实来源 + 后校验」的路线。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
