@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HoloMotion，地平线开源的全身人形控制基础模型 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">HoloMotion，地平线开源的全身人形控制基础模型 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="holomotion">HoloMotion，地平线开源的全身人形控制基础模型</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/HorizonRobotics/HoloMotion">https://github.com/HorizonRobotics/HoloMotion</a>  </p>
+<p><strong>Stars</strong>: 757 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-04  </p>
+<p><strong>组织</strong>: HorizonRobotics  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-04</p>
+</blockquote>
+<hr />
+<p>人形全身控制（whole-body control）的难点在于自由度多、接触状态频繁切换，而且 locomotion 与 manipulation 往往要共享同一套躯干与平衡约束。传统做法按任务切分策略：走路一套、抓取一套、起身一套，切换时容易出现姿态跳变或平衡失守。</p>
+<p>HoloMotion 把「全身运动控制」按<strong>基础模型</strong>的思路组织：用统一表征覆盖多任务，让上层只给目标，不必操心底层怎么维持平衡。这是地平线机器人在具身基座模型方向上的开源动作，对做「上层 VLA + 下层 WBC」分层架构的团队尤其有参考价值——下层接口是否稳定，直接决定上层策略能不能只学任务语义。</p>
+<hr />
+<p>按基础模型类项目的常见分层推断，可理解为：</p>
+<ol>
+<li><strong>输入层</strong>：本体状态（关节角、IMU、接触）、任务指令或参考运动。</li>
+<li><strong>统一表征层</strong>：把不同任务映射到共享的状态—动作潜空间，这是「基础」二字的落点。</li>
+<li><strong>控制层</strong>：输出全身关节目标（位置 / 力矩），兼顾平衡与接触约束。</li>
+<li><strong>部署层</strong>：推理运行时、模型导出与本体适配配置。</li>
+</ol>
+<p><strong>分层架构里它站在哪一层</strong>，本站多个模块都讨论过「整体式 VLA vs 分层」的取舍。HoloMotion 属于分层里的<strong>执行底座</strong>：上层负责理解与规划，它负责把意图变成稳定、连续的全身动作。这种分工的好处是上层换任务不用重训底层，代价是接口设计要非常克制。</p>
+<p><strong>注意</strong>：以上分层是按项目定位与同类工作归纳的工程解读，具体模块划分以仓库实现为准；复现前先读官方 README 与配置文件，不要照搬这里的推断。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/HorizonRobotics/HoloMotion">HoloMotion 仓库</a></strong> — 地平线官方全身人形控制基础模型。</li>
+<li><strong><a href="https://github.com/isaac-sim/IsaacLab">Isaac Lab</a></strong> — 大规模并行 RL 与运动跟踪任务的事实标准环境。</li>
+<li><strong><a href="https://github.com/NVlabs/ProtoMotions">ProtoMotions</a></strong> — GPU 加速的人形运动跟踪基线框架，适合做横向对照。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先确认本体与仿真环境要求</strong>：全身控制基础模型通常绑定特定 URDF / MJCF 与物理参数，本体不匹配是最常见的启动失败原因。</li>
+<li><strong>用仓库提供的权重 / 推理路径先跑通一个任务</strong>：不要一上来复现训练，基础模型类工作的训练数据与算力门槛不低。</li>
+<li><strong>验证多任务切换是否平滑</strong>：这是它相对「按任务切策略」的核心卖点，重点看切换瞬间的姿态与力矩有没有跳变。</li>
+<li><strong>再考虑接上层 VLA / Agent</strong>：把动作接口契约（指令格式、频率、超时与兜底）写清楚再对接，避免上层把底层当黑盒乱调。</li>
+<li><strong>最后才做二次训练</strong>：确认基线可复现、评测脚本能跑通，再动训练配置。</li>
+</ol>
+<p>Apache-2.0 协议，商用友好。</p>
+<hr />
+<p>评估全身控制基础模型，建议看四类指标而非单一成功率：</p>
+<ul>
+<li><strong>多任务覆盖度</strong>：同一套权重能稳定跑多少类任务。</li>
+<li><strong>切换平滑度</strong>：任务切换瞬间的关节力矩突变、姿态跳变幅度。</li>
+<li><strong>扰动恢复</strong>：受推、打滑、负载变化后的回稳时间与失败率。</li>
+<li><strong>部署成本</strong>：控制频率、推理延迟、单卡能否实时。</li>
+</ul>
+<p><strong>注意区分「跟踪精度」与「任务成功率」</strong>：运动跟踪误差小不代表能完成操作任务；反过来，任务成功也可能掩盖了不平滑的动作。两者都要报。</p>
+<p><strong>sim-to-real 落差</strong>在全身控制上尤其显著，真机摩擦、本体柔性、关节温升都会在长时运行时暴露出来，评测务必包含连续运行时长。</p>
+<hr />
+<p><strong>对比按任务切分的 WBC 策略</strong>：后者在单一任务上可以调得很精，但切换逻辑要手写、易出跳变；HoloMotion 追求统一表征覆盖面，代价是单任务极限性能可能不占优。</p>
+<p><strong>对比 TienKung-Lab / cyclotron 一类 IsaacLab 训练框架</strong>（本站 os206 / os233）：那些是<strong>训练脚手架</strong>，帮你从零搭 RL 管线；HoloMotion 是<strong>模型 / 基座</strong>，给的是可直接推理的控制能力。一个解决「怎么训」，一个解决「用什么」。</p>
+<p><strong>对比 ∇Mimic 等一阶可微仿真方法</strong>：可微仿真走的是用解析梯度高效求策略的路线，HoloMotion 走的是大规模预训练统一表征路线，二者是不同技术栈，可在同一评测任务上做对照。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

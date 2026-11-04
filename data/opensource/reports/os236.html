@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PyRUA-Lean，用更少 token 换更高成功率的机器人智能体调用预算裁剪 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">PyRUA-Lean，用更少 token 换更高成功率的机器人智能体调用预算裁剪 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="pyrua-lean-token">PyRUA-Lean，用更少 token 换更高成功率的机器人智能体调用预算裁剪</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/DAGroup-PKU/PyRUA-Lean">https://github.com/DAGroup-PKU/PyRUA-Lean</a>  </p>
+<p><strong>Stars</strong>: 169 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-04  </p>
+<p><strong>组织</strong>: DAGroup-PKU  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-04</p>
+</blockquote>
+<hr />
+<p>RUA（Robot-Use Agent）把大模型当规划器，每一步感知、推理、重试都要走一遍模型调用。上下文越堆越长，成本与延迟同步上升，而长上下文本身还会<strong>稀释关键观测</strong>——这是很多「Agent 越跑越笨」的根因。</p>
+<p>PyRUA-Lean 来自北京大学 DAGroup，主题非常明确：<strong>Fewer Tokens, Better Action</strong> —— 在 GPT-6 Astra 一类前沿模型驱动的机器人智能体上，用 <strong>14% 更高的成功率</strong>换取 <strong>65% 更少的 token</strong> 消耗。它研究的不是怎么把模型变强，而是<strong>上下文与调用预算的治理</strong>：哪些历史该留、哪些工具结果该压缩、什么时候该直接出动作而不是再想一轮。</p>
+<hr />
+<p>按 token 预算治理类工作的常见结构，可大致分为三块：</p>
+<ol>
+<li><strong>上下文构造与裁剪</strong>：决定每轮送进模型的观测帧数、历史步数、工具描述详略。</li>
+<li><strong>工具结果压缩</strong>：把长执行日志、失败轨迹压成结构化摘要，而不是原文堆积。</li>
+<li><strong>决策门控</strong>：判断当前是否已有足够信息直接输出动作，避免无意义的额外推理轮次。</li>
+</ol>
+<p>这三块正好对应一次调用成本的分解：输入 token 由前两块决定，调用轮数由第三块决定。PyRUA-Lean 的收益同时来自两者，这也是「更少 token 反而更高成功率」并不矛盾的原因——<strong>砍掉的是噪声，不是信息</strong>。</p>
+<p><strong>注意</strong>：以上分层是按项目定位归纳的工程解读，具体实现以仓库为准。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/DAGroup-PKU/PyRUA-Lean">PyRUA-Lean 仓库</a></strong> — 官方实现与配置。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.01560">Democratizing Robot-Use Agents（arXiv 2611.01560）</a></strong> — 统一 RUA Harness，理解组件边界的前置阅读。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.41216">TinyAstral（arXiv 2610.41216）</a></strong> — 靠蒸馏降低推理成本的互补路线。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先测自己的基线预算</strong>：在自有任务上统计每 episode 的输入 token、输出 token 与调用轮数，没有基线就无法判断裁剪是否划算。</li>
+<li><strong>一次只改一个裁剪维度</strong>：先改历史帧数，再改工具结果压缩，最后动决策门控。多个维度同时改，成功率掉了无法归因。</li>
+<li><strong>把成功率与 token 一起报</strong>：只报省了多少 token 没有意义，必须证明任务成功率没有下降（本项目还做到了上升）。</li>
+<li><strong>做配对评测</strong>：裁剪前后在<strong>完全相同的 episode</strong> 上对比，否则任务难度差异会淹没收益。</li>
+<li><strong>再和开源 Harness 组合</strong>：可与 uni-robot-agent（p307）的模块化接口、TinyAstral（p308）的蒸馏流程叠加，做 token 层面的对照实验。</li>
+</ol>
+<p>Apache-2.0 协议。</p>
+<hr />
+<p>项目自身的口径：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>任务成功率</td>
+<td><strong>+14%</strong></td>
+</tr>
+<tr>
+<td>token 消耗</td>
+<td><strong>-65%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读这两个数字</strong>，成功率提升与 token 下降同时出现，最可能的机制是上下文噪声被削减后，模型对当前观测的注意力更集中、格式遵循更稳定。这与 uni-robot-agent 强调的「四项通用能力应联合培养」是同一方向的不同切入点。</p>
+<p><strong>评估自己场景时建议补三类指标</strong>：单 episode 端到端延迟（不只是 token）、失败后的重试轮数、以及长程任务（&gt;20 步）上的收益衰减。短任务省下的 token 未必能外推到长程。</p>
+<p><strong>注意</strong>：结论绑定特定 planner 与任务集，换模型或换基准后收益幅度需重新测；把它当成「预算治理」的方法参考，而不是可以直接抄的固定配置。</p>
+<hr />
+<p><strong>对比 uni-robot-agent（p307）</strong>：后者提供统一、可插拔的 Harness 基座，解决「能不能研究与消融」；PyRUA-Lean 专注其中上下文与预算这一个维度，解决「跑得起、跑得久」。二者可叠加。</p>
+<p><strong>对比 TinyAstral（p308）</strong>：TinyAstral 靠蒸馏把能力压进 4B 小模型来降低推理成本，是<strong>换模型</strong>的路线；PyRUA-Lean 不改模型，只改送进去的上下文，是<strong>改输入</strong>的路线。两者正交互补。</p>
+<p><strong>对比简单截断历史</strong>：粗暴截断能省 token 但常掉成功率，因为丢了失败诊断与恢复线索。PyRUA-Lean 的价值在于有选择地保留信息，这也是「更少 token 反而更好」的关键区别。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

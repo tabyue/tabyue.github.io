@@ -1,6 +1,156 @@
 {
- "lastUpdated": "2026-11-03T08:40",
+ "lastUpdated": "2026-11-04T08:30",
  "papers": [
+  {
+   "id": "p307",
+   "title": "Democratizing Robot-Use Agents: A Unified Harness with Open Models",
+   "authors": "Jiarui Yuan, Yuxin Zuo, Xiaoyu Huang, Wenbo Zhang, Kwanyoung Park, Junlin Yang, et al. (28 authors, incl. Pieter Abbeel, Ning Ding, Zhiyuan Liu)",
+   "venue": "arXiv 2611.01560 (cs.RO)",
+   "date": "2026-11-01",
+   "arxiv": "https://arxiv.org/abs/2611.01560",
+   "github": "https://openrua.ai/",
+   "tags": [
+    "uni-robot-agent",
+    "OpenRUA",
+    "Robot-Use Agent",
+    "Harness",
+    "开源权重",
+    "RoboDojo",
+    "Qwen3.8",
+    "能力解耦"
+   ],
+   "tldr": "**问题**，Robot-use Agents（RUA）已展示出有希望的零样本操作能力，但依赖前沿闭源模型，使「进一步训练」这件事几乎无法研究——权重拿不到，Harness 也各家自造，无法做组件级消融。\n\n**方法**，提出 **uni-robot-agent**：一个统一的、支持后续训练的 Harness，把开源权重模型组织成具备竞争力的机器人智能体。设计要点是模块化可插拔与跨环境统一，感知、工具、反馈、记忆、恢复逻辑被拆成可替换组件，因此同一套脚手架能跑不同模型、不同任务环境。\n\n**结果**，在无特权输入（without privileged inputs）的前提下，**开箱即用的 Qwen3.8-Flash-Next 在 RoboDojo 拿到 31.39 分**，超过已发表的 GPT-6 Astra-RoboProbe 结果 28.97，也超过多个 VLA / WAM 基线；在 19 项真实世界任务上表现具竞争力。作者跨模型代际、家族与规模做了系统分析，把有效的机器人使用关联到**四项通用能力**，并据此主张未来 RUA 训练应联合培养这四项，而非只堆操作轨迹。\n\n**为什么重要**，它把「开源模型能不能直接开机器人」从演示问题变成了可训练、可消融的工程问题。",
+   "category": "具身智能体 / Harness",
+   "difficulty": "中级",
+   "keyInsights": [
+    "把闭源依赖识别为研究瓶颈而非性能瓶颈，是这篇的问题定义价值：权重不可得，就无法研究「怎么训练 RUA」，只能在提示词层面打转。",
+    "Harness 与 planner 解耦后，模型换代不必重写整套工具链——这是它跨模型代际、家族、规模做对照实验的前提，也是工程上最可复用的一点。",
+    "「无特权输入」是结果可信度的关键限定：没有额外的状态真值、物体位姿或专家提示，31.39 与 28.97 才在同一口径上可比。",
+    "四项通用能力的结论比分数更值得读：它暗示 RUA 的短板可能不在操作数据规模，而在感知、规划、记忆、纠错这几项基础能力的联合训练。"
+   ],
+   "impact": "为开源权重模型进入机器人智能体研究提供了统一的、可消融的实验基座，把 RUA 从闭源演示推进到可复现、可继续训练的工程范式。",
+   "addedDate": "2026-11-04"
+  },
+  {
+   "id": "p308",
+   "title": "TinyAstral: Transferring Self-Evolving Harnesses to Tiny Generalist Manipulation Agents",
+   "authors": "Kehong Gong, Xiaoxu Zheng, Guanli Hou, Seunghun Lee, Mengqi Guo, Runjia Tan, et al. (incl. Michael Bi Mi)",
+   "venue": "arXiv 2610.41216 (cs.RO, cs.CV)",
+   "date": "2026-10-30",
+   "arxiv": "https://arxiv.org/abs/2610.41216",
+   "github": "https://garfield-kh.github.io/TinyAstral/",
+   "tags": [
+    "TinyAstral",
+    "Harness",
+    "递归自改进",
+    "配对统计检验",
+    "知识蒸馏",
+    "4B学生",
+    "RoboTwin",
+    "推理成本"
+   ],
+   "tldr": "**问题**，基于 VLM 的机器人智能体同时依赖 planner 和它外面的 **Harness**（工具、反馈、记忆与恢复逻辑）。一个自然的问题是：给大模型 Harness 做的改进，能不能搬到一个推理算力低得多的小智能体上？\n\n**方法**，两阶段。第一阶段冻结一个开源权重教师，用**递归自改进（RSI）**演化它的 Harness：让前沿 LLM 智能体阅读教师轨迹并提出 Harness 编辑，**每次编辑只有在通过配对统计检验（paired statistical test）后才被接受**。第二阶段冻结最终 Harness，采集带推理过程与失败恢复的教师轨迹，蒸馏出一个替换教师、跑在同一 Harness 里的小学生模型。\n\n**结果**，在 RoboTwin 上，Harness 演化把教师成功率从 **33.4% 提到 63.6%**，最终 **4B 学生达到 62.8%**。跨四个 Harness 版本，蒸馏出的 4B 学生分数都接近各自对应的教师，且版本越新学生越强——说明 Harness 演化的增益确实能带进紧凑模型；这些增益迁移到其他冻结 planner 时**无需重训**。在相同 episode 上，最终 4B 学生超过开源 4B 智能体、开源 27B 的 SenseNova-RoboRSI，也超过把自家教师放进三个竞品 Harness 的表现；在三个从未用于 RSI 或训练的基准上接近运行同一 Harness 的 552B planner。所测部署 episode 里加速器时间约为教师的 **五分之一**。\n\n**为什么重要**，它给出了一条不靠堆参数、靠改 Harness 再把能力压到端侧的路径，并用配对检验把「自我改进」变成可审计的工程流程。",
+   "category": "具身智能体 / 蒸馏与自改进",
+   "difficulty": "高级",
+   "keyInsights": [
+    "「Harness 是一种可迁移资产」是全文最反直觉也最有价值的判断：改进不写在权重里，而是写在工具与反馈逻辑里，因此可以跨 planner 复用而无需重训。",
+    "用配对统计检验作为 Harness 编辑的准入门槛，把 RSI 从「让 LLM 自由改代码」收敛成有显著性约束的搜索，是自改进类工作里少见的严谨做法。",
+    "教师 63.6% 与 4B 学生 62.8% 几乎持平，说明这类任务的瓶颈更在编排与恢复逻辑，而非规划器参数量。",
+    "552B planner 与 4B 学生在未见基准上接近、但加速器时间相差约 5 倍，是「能力密度」而非「能力上限」的实证，对端侧部署选型的参考意义大于榜单名次。"
+   ],
+   "impact": "证明 Harness 层的递归自改进增益可以蒸馏进小模型并跨冻结 planner 迁移，为低成本通用操作智能体提供了可复现、可审计的训练流程。",
+   "addedDate": "2026-11-04"
+  },
+  {
+   "id": "p309",
+   "title": "WorldFlow: Joint Video and 3D Motion Prediction via Large-Scale Pretraining",
+   "authors": "Yuhao Lu, Jiongxu Chen, Hexiang Wei, Jiajin Wu, Juelin Li, Mingjian Liang, et al. (incl. Lin Shao)",
+   "venue": "arXiv 2610.39278 (cs.CV, cs.AI, cs.RO)",
+   "date": "2026-10-29",
+   "arxiv": "https://arxiv.org/abs/2610.39278",
+   "github": "https://worldflow-rbs.github.io/",
+   "tags": [
+    "WorldFlow",
+    "视频世界模型",
+    "3D轨迹",
+    "位移token",
+    "Mixture-of-Transformers",
+    "rectified flow",
+    "WorldFlowBench",
+    "ADE/FDE"
+   ],
+   "tldr": "**问题**，预测未来物理状态是具身智能的核心难题，但现有路线各有一半缺口：视频世界模型把 3D 动力学留在隐式表征里；基于动作的建模绑死特定机器人构型；3D 运动预测模型只用 flow 监督，物理动力学的学习信号偏弱。\n\n**方法**，提出生成式世界模型 **WorldFlow**，**联合预测未来视频与 query-based 3D 轨迹**。关键设计是把 3D 运动参数化为**与视频网格对齐的连续位移 token**，再用统一的 Mixture-of-Transformers（MoT）骨干在 rectified-flow 目标下对两个模态联合去噪。几何动力学因此被显式写进生成过程，与视觉演化耦合，等于把预训练视频模型里隐含的物理常识解锁出来。\n\n**规模与评测**，在跨仿真与真实域的 **144 万条 object-level 样本**异构混合上训练；提出 **WorldFlowBench**，含 11 个数据源、1678 个评测样本，覆盖仿真与真实交互及空间推理任务。\n\n**结果**，在三个评测集上 WorldFlow 的平均位移误差（ADE）与最终位移误差（FDE）均为学习方法最低。难度最高的 **SpatialCog** 上 ADE 为 **0.060 m**，较最强外部基线降低 **54.2%**；相比只做 flow 的变体，ADE 与 FDE 分别降低 **55.9%** 与 **68.5%**。\n\n**为什么重要**，联合去噪带来的大幅下降说明「显式 3D 几何」本身就是强监督，而不是额外的推理负担。",
+   "category": "世界模型 / 3D 运动预测",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把 3D 轨迹对齐到视频网格再 token 化，是全文的关键工程决策：它让两种模态能在同一个去噪过程里互相约束，避免了后接一个独立 3D 头带来的误差累积。",
+    "相比 flow-only 变体 ADE 降 55.9%、FDE 降 68.5%，是「视频与几何联合监督」有效性的直接消融证据——视觉演化确实在帮几何预测收敛。",
+    "query-based 轨迹而非全局稠密场，把计算集中在被查询的点上，是这套方法能扩到 144 万样本规模的前提。",
+    "SpatialCog 上的 54.2% 提升指向空间推理这类需要几何一致性的任务；对纯外观预测任务，联合建模的边际收益可能没这么大，读结果时要注意任务分布。"
+   ],
+   "impact": "把显式 3D 几何动力学接进生成式视频世界模型，并配套可复现的 WorldFlowBench，为具身世界模型提供了兼顾视觉与几何的统一预训练范式。",
+   "addedDate": "2026-11-04"
+  },
+  {
+   "id": "p310",
+   "title": "History Forcing: Distilling History-Dependent Continuations for Long-Horizon Video World Models",
+   "authors": "Hangyi Kuang, Chengzhi Wang, Yefei He, Weijie Wang, Yuke Zhao, Zhuokun Chen, et al. (incl. Bohan Zhuang)",
+   "venue": "arXiv 2611.02782 (cs.CV)",
+   "date": "2026-11-02",
+   "arxiv": "https://arxiv.org/abs/2611.02782",
+   "github": "https://ziplab.co/History-Forcing-Project-Page/",
+   "tags": [
+    "History Forcing",
+    "长程视频世界模型",
+    "自回归漂移",
+    "在策略蒸馏",
+    "历史残差",
+    "VBench-Long",
+    "场景重入",
+    "物体一致性"
+   ],
+   "tldr": "**问题**，少步自回归视频扩散能高效生成，但**长程 rollout 的一致性**始终难保证，尤其是物体或场景离开视野后再重新出现时——现有蒸馏方法没有充分利用更丰富的历史信息来约束学生当前的预测。\n\n**方法**，提出 **History Forcing**：一个统一的在策略（on-policy）蒸馏框架，用「教师带信息性历史上下文」与「教师不带该上下文」两次预测的**残差**来解耦历史监督，再把残差加权加到蒸馏用的 score 或 velocity 预测上，形成校正目标；让学生对齐这个校正目标，就把长程历史约束注入了自回归生成。历史上下文有两种取法：用漂移累积更少的早期生成 chunk，或用保持场景可见的固定视角教师 rollout（当学生视角移开时仍能看见场景）。\n\n**结果**，在 1.3B 模型中达到当前最优：15s 生成的 VBench 质量分 **85.07**，60s 生成的 VBench-Long 综合分 **79.82**。在「视野外世界建模」评测中，相机转回时场景演化更合理、状态更一致——PlayWorld 的 Evolution Quality 从 2.35 升到 **2.70**，MemoBench 的 Object Consistency 从 58.43 升到 **62.18**。\n\n**为什么重要**，它把「记忆」做成了可计算的梯度信号，而不是外挂一个检索库。",
+   "category": "世界模型 / 长程一致性",
+   "difficulty": "高级",
+   "keyInsights": [
+    "用两次教师预测的残差来隔离「历史带来的那部分信息」，是很干净的解耦：避免了直接把历史帧塞进学生输入导致的分布不匹配。",
+    "「场景离开视野再回来」是比逐帧保真更贴近机器人需求的长程一致性定义——机器人转身后再看桌面，物体不该换位置或变形。",
+    "固定视角教师 rollout 这个设计值得单独记：它相当于给蒸馏过程配了一个不受学生视角影响的「上帝视角」参考，是 on-policy 框架里少见的巧思。",
+    "Evolution Quality 2.35→2.70、Object Consistency 58.43→62.18 的绝对幅度不大，说明长程一致性仍是远未解决的问题，这篇是有效推进而非终结。"
+   ],
+   "impact": "为少步自回归视频世界模型提供了可微的长程历史约束机制，让「重入场景保持一致」从评测痛点变成可优化的训练目标。",
+   "addedDate": "2026-11-04"
+  },
+  {
+   "id": "p311",
+   "title": "When Does Latent Prediction Error Support Physical Surprise Claims in Video World Models?",
+   "authors": "Anton Hristov, Aleksandar Slavov, Vasil Vasilev",
+   "venue": "arXiv 2611.01815 (cs.CV, cs.LG); NeurIPS 2026 World Models in Physical AI Workshop",
+   "date": "2026-11-01",
+   "arxiv": "https://arxiv.org/abs/2611.01815",
+   "github": "",
+   "tags": [
+    "物理surprise",
+    "预测误差",
+    "IntPhys2",
+    "V-JEPA2",
+    "Physion++",
+    "Kubric",
+    "评测陷阱",
+    "世界模型"
+   ],
+   "tldr": "**问题**，视频世界模型的预测误差常被直接当作**物理惊讶（physical surprise）**——误差大就说明发生了违反物理的事件。但同样的误差也可能来自外观变化、静态内容、运动幅度或单纯的预测难度。这篇系统追问：预测误差到底在什么条件下才能支撑物理惊讶的断言？\n\n**方法**，提出一个三层评测框架：分离「冻结表征里含有什么」「表征如何组织外观差异与物理差异」「什么会改变模型自身的预测误差」。在 **IntPhys2**（物理可能 / 不可能事件基准）上比较潜空间预测、掩码像素重建与简单视觉统计三类表征；再看潜空间几何；最后在动作条件模型、**Physion++** 视频片段与 **Kubric** 仿真渲染上检验误差行为。\n\n**结果**，外观仍然容易被解码出来，而 V-JEPA2 只暴露出**有限**的关于事件可能与否的信息。潜空间几何上，外观变化引起的位移相对视频间差异更小、方向跨场景更一致、且在更深层与物理变化的重叠更少。动作条件模型里，错误动作确实抬高预测误差，但**外观变化同样产生显著响应**。在 Physion++ 中，重复单帧可能比原片段产生更高误差，而全程改变颜色反而可能降低误差；用 Kubric 生成的**不可能事件误差可能低于可能事件**，固定阈值还会把大量可能事件误判为不可能。\n\n**结论**，一个模型可以既表征了物理信息、又对错误动作有反应，但其原生预测误差**并不能可靠度量物理惊讶**。这是一篇评测方法的证伪性工作。",
+   "category": "世界模型 / 评测与物理一致性",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把「预测误差」和「物理惊讶」区分开，是很多世界模型评测、异常检测与主动数据采集工作的隐含前提被直接掀翻：误差高不等于违反物理。",
+    "重复单帧比原视频误差更高、改变颜色反而误差更低，这两个反例极具说服力——它们说明误差主要被低级视觉统计量支配。",
+    "V-JEPA2 只暴露有限的物理可能 / 不可能信息，提示当前自监督视频表征的物理 grounding 仍很弱，不能靠换更大表征绕过。",
+    "对工程实践的直接影响：用固定阈值做「物理异常」触发或数据筛选前，必须先在 IntPhys2 / Physion++ 这类基准上做校准，并显式控制外观与运动混杂变量。"
+   ],
+   "impact": "为视频世界模型的物理一致性评测划定了可信边界，指出原生预测误差不足以支撑物理惊讶断言，直接影响以误差为信号的主动探索、异常检测与数据筛选流程。",
+   "addedDate": "2026-11-04"
+  },
   {
    "id": "p306",
    "title": "ROOF: Learning Humanoid Fall Recovery under Overhead Constraints",
@@ -8103,5 +8253,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 280
+ "totalItems": 285
 }

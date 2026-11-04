@@ -163,6 +163,14 @@
 - 校验：sync + sitemap（553 章节 + 132 学习站页面）+ health_check **首轮 ALL OK 且 0 警告** + verify_learn_structure ALL OK；unittest 34/34、node UI 32/32。已 push（6196191..6ddad32），远程 HEAD 已核对一致。本轮无并行推送干扰。
 - 经验：① **无新坑，全流程一次通过**；② arXiv API 4 查询一次拿 100 条候选，是论文发现的最优入口；③ GitHub 批量搜索用 urllib + `Bearer $(gh auth token)`，本轮 5 查询全成功；④ 二次深化套路（主体 → 按 shortTitle 定位插入新小节 → 后续序号顺延）稳定幂等；⑤ `git add data sitemap.xml` 而非 `-A`，避免临时脚本入提交。
 
+### 2026-11-04 08:00—09:00
+- 投稿箱：无新投稿（`gh issue list --state open` 返回 `[]`）。开工 `git status -sb` 显示 ahead 1，但 `gh api repos/tabyue/tabyue.github.io/commits/main --jq .sha` 与本地 HEAD 同为 `daa3b75` —— **ahead 1 是 origin/main 引用陈旧的假象**，不是真的未推送提交。
+- 数据：新闻 +10（n599—n608）、论文 +5（p307—p311，含 detail）、开源 +4（os234—os237，含 detail + 报告页）、招聘 +6（j309—j314）、资源新增 r028 + r001 扩充。
+- 学习：**本轮改为「深化已有 tier1 薄章」而非 append 新前沿章节**（用户长期任务明确要正文讲解、基础背景、可运行代码，且 MEMORY 记着「优先补 tier0/1」）。`probability-statistics#9` 假设检验与置信区间 5191→11132 字（配对设计 / 配对 t / McNemar / FWER / Bonferroni-BH / 效应量与样本量，联动 p308、p311）；`computer-vision#8` 3D 视觉与点云处理 4892→10357 字（针孔反投影推导 / 深度误差传播 / 场景流与网格对齐位移 token / Kabsch / ADE-FDE，联动 p309、p310）。章节数仍 553，sitemap 不变。
+- 顺手修历史硬缺陷：`embodied-data-engineering#19` 的 `\centernot\implies` 改为 `\not\implies`（KaTeX 0.16.9 不支持 centernot；`\not\implies`、`\nRightarrow`、`\not\Rightarrow` 经 node+katex 实测均可）。
+- 校验：`health_check` **首轮 ALL OK 且 0 告警**、`verify_learn_structure` ALL OK、`audit_learn_content` 硬缺陷全 0、unittest 34/34、node UI 32/32。已 push。
+- 新坑：① **PowerShell 数组切片 `1..0` 陷阱** —— 批量循环里 `$arg[1..($arg.Length-1)]` 对无参数脚本会返回 `@($null,$arg[0])`，把脚本名当多余参数传给 python，导致 normalize/health/audit 报 usage 错、sync 只处理 0 个模块并显示 `[skip] src not found`。校验脚本一律显式逐条 `& python tools/xxx.py` 调用，别写泛型循环。② **`audit_learn_content.py` 与 unittest 都会校验 `section['chars'] == len(content)`**，改正文必须同步 chars（本轮顺手修公式时漏了，unittest 挂 1 项）。③ **PowerShell 管道中文 mojibake**：先设 `[Console]::OutputEncoding = [System.Text.Encoding]::UTF8` + `$env:PYTHONIOENCODING='utf-8'`，或干脆让 Python 自己写 UTF-8 报告文件。④ 本轮 arXiv API 4 查询全 429，仍按 11-02 经验降级 HF Daily Papers + `WebFetch arxiv.org/abs/<id>`。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期

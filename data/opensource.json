@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-03T08:40",
+ "lastUpdated": "2026-11-04T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,123 @@
   }
  ],
  "projects": [
+  {
+   "id": "os234",
+   "name": "OpenArm，面向接触丰富场景的全开源人形机械臂（硬件 + 固件 + 控制栈整体开放）",
+   "github": "https://github.com/enactic/openarm",
+   "organization": "enactic",
+   "org": "enactic",
+   "category": "hardware",
+   "description": "**OpenArm** 是 enactic 开源的**全开源人形机械臂**项目，定位是给物理 AI 研究与接触丰富（contact-rich）场景部署提供一套可复现、可自行加工的硬件底座。\n\n**为什么这类项目稀缺**，机器人学习复现实验的最大障碍常常不是算法，而是本体：商用机械臂价格高、接口封闭、力控细节不公开，导致同一篇论文的结论换一台臂就对不上。OpenArm 把机械设计、BOM、固件与控制接口整体开放，等于把「本体」也纳入可版本控制、可 diff 的实验变量。\n\n**适用方向**，双臂 / 单臂接触丰富操作、力控与阻抗控制研究、遥操作数据采集、以及作为 VLA / 模仿学习策略的真机验证平台。项目主语言为 MDX（文档与硬件说明为主），实际部署会涉及 C++ / Python 控制栈。\n\n**注意**，机械臂是硬件项目，复现需要加工能力与装配调试；仓库 star 数高不等于上手成本低，先评估加工与供应链条件。",
+   "language": "MDX",
+   "license": "Apache-2.0",
+   "features": [
+    "机械设计、BOM 与固件整体开源",
+    "面向接触丰富操作与力控研究",
+    "可自行加工与改装，本体成为可版本控制的实验变量",
+    "适配遥操作数据采集与真机策略验证",
+    "Apache-2.0 协议，商用友好"
+   ],
+   "stars": 3671,
+   "tags": [
+    "OpenArm",
+    "开源硬件",
+    "人形机械臂",
+    "力控",
+    "接触丰富操作",
+    "遥操作",
+    "数据采集",
+    "Apache-2.0"
+   ],
+   "addedDate": "2026-11-04"
+  },
+  {
+   "id": "os235",
+   "name": "HoloMotion，地平线开源的全身人形控制基础模型",
+   "github": "https://github.com/HorizonRobotics/HoloMotion",
+   "organization": "HorizonRobotics",
+   "org": "HorizonRobotics",
+   "category": "ai-model",
+   "description": "**HoloMotion** 是地平线机器人（HorizonRobotics）开源的**人形全身控制基础模型**（A Foundation Model for Whole-Body Humanoid Control），把「全身运动控制」按基础模型的思路组织，而不是为每个任务单独训一个策略。\n\n**为什么值得关注**，人形全身控制的难点在于自由度多、接触状态频繁切换、且 locomotion 与 manipulation 往往要共享同一套躯干与平衡约束。传统做法按任务切分策略，切换时容易出现姿态跳变；基础模型路线试图用统一表征覆盖多任务，让上层只需给出目标而不用管底层怎么保持平衡。\n\n**适用方向**，人形机器人运动控制研究、全身跟踪与遥操作、以及作为上层 VLA / 具身 Agent 的动作执行底座。项目以 Python 为主，Apache-2.0 协议。\n\n**注意**，基础模型类工作对训练数据与算力要求较高，直接复现训练成本不低；建议先用仓库提供的权重 / 推理路径验证，再决定是否做二次训练。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "面向人形全身控制的基础模型",
+    "统一表征覆盖多任务，减少策略切换跳变",
+    "可作为 VLA / 具身 Agent 的动作执行底座",
+    "Apache-2.0 协议",
+    "地平线机器人官方开源"
+   ],
+   "stars": 757,
+   "tags": [
+    "HoloMotion",
+    "地平线",
+    "全身控制",
+    "基础模型",
+    "人形机器人",
+    "locomotion",
+    "动作执行底座"
+   ],
+   "addedDate": "2026-11-04"
+  },
+  {
+   "id": "os236",
+   "name": "PyRUA-Lean，用更少 token 换更高成功率的机器人智能体调用预算裁剪",
+   "github": "https://github.com/DAGroup-PKU/PyRUA-Lean",
+   "organization": "DAGroup-PKU",
+   "org": "DAGroup-PKU",
+   "category": "ai-agent-framework",
+   "description": "**PyRUA-Lean** 来自北京大学 DAGroup，主题非常明确：**Fewer Tokens, Better Action** —— 在 GPT-6 Astra 一类前沿模型驱动的机器人智能体上，用 **14% 更高的成功率**换取 **65% 更少的 token** 消耗。\n\n**问题背景**，RUA（Robot-Use Agent）把大模型当规划器，每一步感知、推理、重试都要走一遍云端 API。上下文越堆越长，成本与延迟同步上升，而长上下文本身还会稀释关键观测。PyRUA-Lean 研究的是**上下文与调用预算的治理**：哪些历史该留、哪些工具结果该压缩、什么时候该直接出动作而不是再想一轮。\n\n**适用方向**，基于大模型 planner 的机器人智能体成本优化、长程任务的上下文管理、以及与 uni-robot-agent / TinyAstral 等 Harness 工作做token 层面的对照实验。仓库以 Python 为主，Apache-2.0 协议。\n\n**注意**，结论绑定特定 planner 与任务集，换模型或换基准后收益幅度需重新测；把它当成「预算治理」的方法参考，而不是通用的固定配置。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "features": [
+    "成功率 +14%、token 消耗 -65% 的预算裁剪",
+    "面向长程任务的上下文与工具结果压缩",
+    "可与开源 RUA Harness 组合做对照实验",
+    "Apache-2.0 协议",
+    "北大 DAGroup 出品"
+   ],
+   "stars": 169,
+   "tags": [
+    "PyRUA-Lean",
+    "RUA",
+    "token预算",
+    "上下文治理",
+    "推理成本",
+    "北大DAGroup",
+    "具身Agent"
+   ],
+   "addedDate": "2026-11-04"
+  },
+  {
+   "id": "os237",
+   "name": "VLA-Handbook，全中文、实战导向的 VLA 算法学习与面试手册",
+   "github": "https://github.com/sou350121/VLA-Handbook",
+   "organization": "sou350121",
+   "org": "sou350121",
+   "category": "data-tools",
+   "description": "**VLA-Handbook** 是一份面向 VLA（Vision-Language-Action）方向算法工程师的**全中文、实战导向学习与面试手册**。与通用 CV / NLP 面试指南不同，它明确聚焦 Robotics 特有的挑战：动作表征与离散化、跨本体迁移、观测与动作空间对齐、真机评测口径、仿真到真实的落差、以及数据采集与质量治理。\n\n**为什么值得放进导航**，中文世界里系统讲 VLA 工程细节的材料仍然分散在论文、博客与零散笔记里，新人往往要先读完一打英文论文才能拼出完整图景。这类手册的价值是把概念、常见坑与面试考点收进一条可顺序阅读的路径，适合作为本站学习中心的配套速查资料。\n\n**适用方向**，VLA 方向入门、面试准备、团队内部 onboarding、以及给已有章节做术语对照。项目以 HTML 静态页为主，CC-BY-4.0 协议，转载需署名。\n\n**注意**，手册类项目更新节奏依赖维护者，涉及具体模型版本与榜单名次的条目要与原始论文核对后再引用。",
+   "language": "HTML",
+   "license": "CC-BY-4.0",
+   "features": [
+    "全中文、实战导向的 VLA 系统化手册",
+    "聚焦动作表征、跨本体迁移、真机评测等 Robotics 特有挑战",
+    "覆盖常见坑与面试考点，适合 onboarding",
+    "可作为学习中心的术语速查配套",
+    "CC-BY-4.0 协议，转载需署名"
+   ],
+   "stars": 758,
+   "tags": [
+    "VLA-Handbook",
+    "中文教程",
+    "VLA",
+    "学习路径",
+    "面试手册",
+    "速查",
+    "CC-BY-4.0"
+   ],
+   "addedDate": "2026-11-04"
+  },
   {
    "id": "os233",
    "name": "cyclotron，基于 Isaac Lab 的人形机器人强化学习训练框架（Asimov 系列本体）",
@@ -5749,5 +5866,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 220
+ "totalItems": 224
 }

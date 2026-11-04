@@ -54,7 +54,7 @@
     }
   ],
   "weeklyPlan": "**第1-2周**：OpenCV 图像处理 + 相机标定\n**第3周**：YOLO 目标检测训练与部署\n**第4-5周**：SAM 分割 + 6DoF 位姿估计\n**第6周**：集成到机器人抓取 Pipeline",
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-11-04T08:30",
   "maturity": "foundation",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -244,13 +244,13 @@
     {
       "id": "sec-08",
       "title": "3D 视觉与点云处理：从深度图到 SLAM",
-      "lastUpdated": "2026-10-27",
-      "chars": 4892,
+      "lastUpdated": "2026-11-04T08:30",
+      "chars": 10357,
       "shortTitle": "3D 视觉与点云处理",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 6,
+      "readingMinutes": 13,
       "headings": [
         "1. 3D 数据表示",
         "2. 点云基础操作",
@@ -259,6 +259,8 @@
         "5. 抓取点生成",
         "6. 3D 场景理解",
         "7. NeRF 与 Gaussian Splatting（前沿）",
+        "从深度图到度量 3D：反投影的完整推导与误差传播",
+        "场景流与 3D 位移 token：显式几何怎样进入生成模型",
         "练习题",
         "参考答案"
       ],
@@ -450,7 +452,7 @@
       "summary": "目标检测的输出是一个框，分割的输出是一个掩码。这两样东西对机器人来说都不够用。"
     }
   ],
-  "readingMinutes": 144,
+  "readingMinutes": 151,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 125404
+  "chars": 130869
 }
