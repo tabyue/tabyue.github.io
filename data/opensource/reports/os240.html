@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Worker (FFW)，ROBOTIS 开源的人形作业机器人整机栈 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">AI Worker (FFW)，ROBOTIS 开源的人形作业机器人整机栈 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="ai-worker-ffwrobotis">AI Worker (FFW)，ROBOTIS 开源的人形作业机器人整机栈</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/ROBOTIS-GIT/ai_worker">https://github.com/ROBOTIS-GIT/ai_worker</a>  </p>
+<p><strong>Stars</strong>: 207 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-05  </p>
+<p><strong>组织</strong>: ROBOTIS-GIT  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-05</p>
+</blockquote>
+<hr />
+<p>AI Worker（FFW，Freedom From Work）是 ROBOTIS 开源的<strong>作业型机器人整机项目</strong>。ROBOTIS 在机器人社区里长期以 Dynamixel 舵机、TurtleBot 与 ROS 2 生态著称，这个项目把积累从「零部件与移动底盘」延伸到「能干活的机器人本体」：以 C++ 为主的实现，配套官方站点 ai.robotis.com 提供文档与平台入口。</p>
+<p>本站硬件类条目大多集中在机械臂、灵巧手、传感器这类<strong>部件级</strong>项目，整机级、带官方维护与 ROS 2 接口的开源平台相对稀缺。对想从零搭一套可复现真机平台、又不想被商用本体封闭接口绑死的团队，AI Worker 的价值在于它把本体、驱动与上层接口放在同一个可版本控制的仓库里。</p>
+<p>需要如实说明：整机项目的开源不等于「下载即用」。加工、装配、电源、安全调试与 BOM 供应链都是真实成本，star 数与上手难度并不成正比。</p>
+<hr />
+<p>从仓库组织与 ROBOTIS 既有生态可以推断出大致分层（具体以仓库文档为准）：</p>
+<ol>
+<li><strong>本体与执行层</strong>：Dynamixel 系列执行器与机械结构，负责关节驱动与力/位反馈。</li>
+<li><strong>固件与驱动层</strong>：C++ 实现的底层通信、电机控制与状态上报，贴合实时控制与嵌入式部署。</li>
+<li><strong>ROS 2 接口层</strong>：把本体能力暴露成标准 topic / service / action，便于接入导航、操作与具身策略。</li>
+<li><strong>任务与平台层</strong>：面向实际作业场景的上层逻辑，配套官方站点的文档与工具。</li>
+</ol>
+<p>这种分层与本站 <code>ros2</code> 模块反复强调的「1 kHz 运控与 50 Hz 策略放进同一台机器」是同一套工程哲学：<strong>下层保证实时与确定性，上层保留可替换性</strong>。对具身智能研究来说，可替换性尤其关键——同一套 VLA 策略换本体时，只要接口契约不变，就不必重写底层。</p>
+<p>C++ 为主的语言选择也说明它偏向部署而非实验原型：研究侧可以照常用 Python 写策略，通过 ROS 2 桥接过来。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/ROBOTIS-GIT/ai_worker">AI Worker 仓库</a></strong> — ROBOTIS 开源作业型机器人整机栈。</li>
+<li><strong><a href="https://ai.robotis.com">ROBOTIS AI 官方站点</a></strong> — 文档、平台入口与配套工具。</li>
+<li><strong><a href="https://github.com/ROBOTIS-GIT">Dynamixel / ROS 2 生态</a></strong> — 执行器驱动与机器人操作系统接口。</li>
+<li><strong><a href="/learn/ros2">本站 ROS2 模块</a></strong> — 机器人运行时分层、频率对齐与接口契约的系统讲解。</li>
+<li><strong><a href="/learn/robot-kinematics">本站机器人运动学模块</a></strong> — 刚体变换、齐次矩阵与正逆运动学推导。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先读官方站点与 BOM</strong>：确认加工件、执行器型号、电源与安全件清单，评估自己是否具备装配条件。</li>
+<li><strong>按仓库文档搭 ROS 2 环境</strong>：先跑通单个执行器的读写与状态反馈，再往上叠。</li>
+<li><strong>逐层验证</strong>：执行器 → 关节 → 整机运动学 → 上层任务，每层单独测，不要一上来跑完整任务。</li>
+<li><strong>接入策略时保留接口契约</strong>：把 VLA / 控制策略通过 ROS 2 topic 接入，避免把上层逻辑硬编码进固件。</li>
+<li><strong>做好安全约束</strong>：整机调试阶段限制速度、力矩与工作空间，配备急停。</li>
+<li><strong>固定硬件与固件版本</strong>：整机项目里，机械装配差异与固件版本差异都会让实验不可复现，建议把 BOM 与 commit 一起记进实验记录。</li>
+</ol>
+<pre><code class="language-bash"># 示意流程，具体命令以仓库 README 为准
+git clone https://github.com/ROBOTIS-GIT/ai_worker.git
+cd ai_worker
+# 按官方文档安装 ROS 2 依赖与 Dynamixel 驱动
+colcon build
+ros2 launch ai_worker_bringup worker.launch.py
+</code></pre>
+<p>Apache-2.0 协议；机械图纸、固件与软件可能分属不同文件，引用前分别核对许可标注。</p>
+<hr />
+<p>整机项目不适合用单一分数评估，建议按以下维度看：</p>
+<ul>
+<li><strong>接口开放度</strong>：关节状态、力矩、控制指令是否都能通过标准接口读写。</li>
+<li><strong>实时性</strong>：底层控制周期与上层策略频率是否解耦、能否稳定跑在目标频率。</li>
+<li><strong>可复现性</strong>：BOM、装配公差、固件版本是否被完整记录。</li>
+<li><strong>可维护性</strong>：官方是否持续更新、文档是否覆盖从装配到任务的全流程。</li>
+<li><strong>社区与生态</strong>：能否复用 Dynamixel / TurtleBot / ROS 2 的既有工具链。</li>
+</ul>
+<h3 id="_2">注意</h3>
+<ul>
+<li>官方维护是优势也是约束：硬件迭代可能带来接口变更，长期实验要锁版本。</li>
+<li>整机调试的安全成本常被低估，务必把急停、限位、力矩上限当成第一优先级。</li>
+<li>与纯软件开源项目不同，这里的「可复现」包含物理装配误差，跨团队数字天然有差异。</li>
+</ul>
+<hr />
+<p><strong>对比部件级开源项目（如本站 os229 SO-ARM102、os234 OpenArm）</strong>：部件项目复现成本低、聚焦单一能力；AI Worker 是整机栈，覆盖更完整但装配与调试门槛更高。</p>
+<p><strong>对比商用本体（Franka、UR、各类人形）</strong>：商用本体精度与文档成熟，但接口与固件封闭、价格高；AI Worker 把本体纳入可版本控制的实验变量，代价是要自己承担集成与维护。</p>
+<p><strong>对比仿真优先平台（Isaac Lab、MuJoCo 生态）</strong>：仿真零硬件成本、可大规模并行；整机项目提供真实接触、摩擦、传动损耗与延迟，这些恰是 sim-to-real 里最难建模的部分。</p>
+<p><strong>和本站内容的关系</strong>：<code>ros2</code> 讲运行时分层与频率对齐，<code>robot-kinematics</code> 讲刚体变换与正逆运动学，<code>sensors-hardware</code> 讲执行器与反馈，<code>sim-to-real</code> 讲真机与仿真的落差——AI Worker 是把这些章节落到一台具体机器上的载体。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

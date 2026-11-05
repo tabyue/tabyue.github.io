@@ -1,7 +1,7 @@
 {
   "id": "linear-algebra",
   "name": "线性代数",
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-11-05T08:30",
   "stage": "阶段一：数学与编程基础",
   "importance": "核心",
   "estimatedHours": 60,
@@ -106,13 +106,13 @@
     {
       "id": "sec-02",
       "title": "向量运算的几何应用：点积、叉积、投影与机器人",
-      "lastUpdated": "2026-04-28T17:22",
-      "chars": 3513,
+      "lastUpdated": "2026-11-05T08:30",
+      "chars": 12255,
       "shortTitle": "向量运算的几何应用",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 4,
+      "readingMinutes": 14,
       "headings": [
         "向量运算在机器人中的直接应用",
         "一、点积的五种视角",
@@ -120,7 +120,15 @@
         "三、投影：把向量“分解”到给定方向",
         "四、反对称矩阵与叉积",
         "五、齐次坐标下的变换链",
-        "六、练习"
+        "六、从公理重新看点积：为什么 $\\sum a_i b_i$ 只是一个特例",
+        "七、算角度别用 arccos：数值稳定性",
+        "八、叉积的代数刻画与两个恒等式",
+        "九、投影其实是线性算子：$P^2 = P$",
+        "十、Gram-Schmidt 与为什么教科书版本会翻车",
+        "十一、外积、楔积与「叉积为什么只在 3 维」",
+        "十二、坐标无关性：换坐标系后这些量怎么变",
+        "十三、常见误区与自查清单",
+        "十四、练习"
       ],
       "summary": "前面几节从纯数学角度建立了线性代数的完整理论。本节回到具体应用——展示点积、叉积、投影如何在机器人系统中每天使用。"
     },
@@ -526,7 +534,7 @@
       "summary": "前面几节建立了线性代数的完整理论。本节展示三个在现代应用中无处不在的线性代数应用——这是 Strang 在 MIT 18.06 中花了整整半学期讲的内容，把前面所有抽象工具都用上了。"
     }
   ],
-  "readingMinutes": 109,
+  "readingMinutes": 119,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 119352
+  "chars": 128094
 }

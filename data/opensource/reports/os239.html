@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpamayo Recipes，NVIDIA 官方的机器人基础模型微调 / RL 后训练 / 量化部署配方库 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Alpamayo Recipes，NVIDIA 官方的机器人基础模型微调 / RL 后训练 / 量化部署配方库 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="alpamayo-recipesnvidia-rl">Alpamayo Recipes，NVIDIA 官方的机器人基础模型微调 / RL 后训练 / 量化部署配方库</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/NVlabs/alpamayo-recipes">https://github.com/NVlabs/alpamayo-recipes</a>  </p>
+<p><strong>Stars</strong>: 221 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-05  </p>
+<p><strong>组织</strong>: NVlabs  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-05</p>
+</blockquote>
+<hr />
+<p>Alpamayo Recipes 是 NVIDIA 为 Alpamayo 系列机器人基础模型维护的<strong>开发者配方库</strong>。它的定位不是又一个模型仓库，而是回答一个非常具体的问题：拿到开放权重的机器人基础模型之后，怎么把它调到自己的任务、自己的本体、自己的算力预算上。</p>
+<p>本站已收录 <strong>Alpamayo 1 Nano</strong>（os230）——100 亿参数推理型 VLA，把驾驶轨迹与「因果链」推理配对。alpamayo-recipes 是它的配套工程仓：主仓给权重与架构，recipes 仓给微调、强化学习后训练、量化与部署的可复现脚本。</p>
+<p>对正在做真机适配的团队，这类官方维护的 recipes 价值在于<strong>把零散的工程经验固化成可 diff、可逐个替换的配置</strong>：换一个 LoRA 秩、换一种量化位宽、换一套 RL 后训练目标，都能在同一份骨架上做消融，而不必每次重写训练脚本。</p>
+<hr />
+<p>仓库按「配方」组织，大致覆盖四层：</p>
+<ol>
+<li><strong>微调层</strong>：在自有示教数据上做监督微调（SFT）的配置与数据格式约定，含 LoRA / 全参两种路径。</li>
+<li><strong>RL 后训练层</strong>：把真机或仿真回报接进后训练回路的配方，与本期 p315（PrimeSim 用世界模型 rollout 支撑 GRPO）、p312（动作专家梯度路由）讨论的问题直接对应。</li>
+<li><strong>量化与压缩层</strong>：FP8 / INT 类量化、KV-Cache 优化与推理加速配置，面向边缘算力（Jetson 类设备）部署。</li>
+<li><strong>部署层</strong>：把权重导出成可服务格式、接到机器人运行时的脚本。</li>
+</ol>
+<p>结构上它和「框架」类项目不同：不追求抽象出统一 API，而是把每条路径写成<strong>可独立运行的最小完整脚本</strong>。好处是复现路径短，坏处是跨配方复用时需要自己对齐版本与环境变量。</p>
+<p>依赖栈绑定 NVIDIA GPU 生态（CUDA / TensorRT / 对应推理运行时），这是选型时必须先确认的约束。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/NVlabs/alpamayo-recipes">alpamayo-recipes 仓库</a></strong> — NVIDIA 官方微调 / RL 后训练 / 量化 / 部署配方。</li>
+<li><strong><a href="https://github.com/NVlabs/alpamayo">Alpamayo 1 Nano 主仓</a></strong> — 100 亿参数推理型 VLA 权重与架构（本站 os230）。</li>
+<li><strong><a href="/learn/training-inference-optimization">本站模型训练与推理优化模块</a></strong> — 量化、蒸馏与一步生成的原理讲解。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.04870">PrimeSim（arXiv 2611.04870）</a></strong> — 世界模型 rollout 支撑 GRPO 的同期工作，与 RL 后训练配方直接相关。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.05249">Should the Action Expert Train the VLM?（arXiv 2611.05249）</a></strong> — VLA 梯度路由的 2×2 消融，可用来指导 SFT / 后训练配置。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先锁定版本</strong>：核对仓库 README 要求的 CUDA、TensorRT、PyTorch 与模型权重版本，固定一个 commit 再开始，避免配方与权重不匹配。</li>
+<li><strong>跑通一条最短路径</strong>：先选一条 SFT 配方，用公开小规模数据跑完训练—导出—推理三步，确认识别环境无误。</li>
+<li><strong>再换组件做消融</strong>：在同一份配置上只改一个变量（LoRA 秩、量化位宽、RL 目标），记录成功率与延迟两个数。</li>
+<li><strong>接真机前先在仿真闭环验证</strong>：量化会引入数值偏差，务必在闭环 rollout 里测，而不是只比较开环动作误差。</li>
+<li><strong>记录部署口径</strong>：把设备型号、推理频率、动作块长度一起写进实验记录，否则跨设备数字不可比。</li>
+</ol>
+<pre><code class="language-python"># 典型的配方调用形态（示意，具体参数以仓库 README 为准）
+from recipes import load_recipe, run
+
+cfg = load_recipe(&quot;sft_lora&quot;, base=&quot;alpamayo-1-nano&quot;)
+cfg.data = &quot;my_demonstrations/&quot;
+cfg.lora_r = 16
+run(cfg)                    # 训练 + 导出 + 边缘推理评测一条龙
+</code></pre>
+<p>Apache-2.0 协议，商用友好；模型权重本身可能有独立许可，部署前分别核对。</p>
+<hr />
+<p>配方库本身不报告「模型分数」，评估应看工程指标：</p>
+<ul>
+<li><strong>复现性</strong>：同一 commit、同一数据、同一设备能否得到一致结果。</li>
+<li><strong>部署延迟</strong>：量化前后在目标边缘设备上的单步推理时间与控制频率。</li>
+<li><strong>闭环成功率</strong>：不能只看开环动作误差，量化与后训练的影响往往只在闭环里显现。</li>
+<li><strong>消融清晰度</strong>：每条配方是否只改一个变量，便于归因。</li>
+</ul>
+<h3 id="_2">注意</h3>
+<ul>
+<li>仓库更新频繁，配方与权重版本容易错配，<strong>固定 commit 是复现前提</strong>。</li>
+<li>官方 recipes 默认 NVIDIA 栈，迁到非 NVIDIA 设备需要自行替换推理后端。</li>
+<li>量化后务必重跑闭环评测；开环指标对数值偏差不敏感，容易给出过于乐观的结论。</li>
+<li>与本站 <code>training-inference-optimization</code> 模块对照读：那里讲量化 / 蒸馏 / 一步生成的原理，这里给可跑的工程实现。</li>
+</ul>
+<hr />
+<p><strong>对比 Alpamayo 主仓（os230）</strong>：主仓是模型与权重，recipes 是「拿到权重之后怎么办」。两者配套，不是重复收录。</p>
+<p><strong>对比通用训练框架（如 LeRobot、Isaac Lab）</strong>：通用框架提供数据与仿真抽象，不绑定某一族权重；recipes 绑定 Alpamayo，换来的是更短的路径与官方验证过的默认超参。</p>
+<p><strong>对比自己写微调脚本</strong>：自己写灵活但难复现、难消融；recipes 把变量显式化，适合做对照实验与团队交接。</p>
+<p><strong>对比纯推理优化仓库</strong>：多数只做 Serving 加速，不覆盖 SFT 与 RL 后训练；recipes 覆盖从训练到部署的完整链路。</p>
+<p><strong>和本站内容的关系</strong>：<code>training-inference-optimization</code> 讲原理与权衡，<code>ros2</code> 讲运行时分层与频率对齐，<code>platform-engineering</code> 讲评测契约；alpamayo-recipes 是把这些落到一套具体权重上的工程参考。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

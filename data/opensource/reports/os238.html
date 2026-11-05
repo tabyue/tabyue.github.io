@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RawVLA，把相机 ISP 变成可学习成像前端：让冻结 VLA 在暗光下也能看清目标 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">RawVLA，把相机 ISP 变成可学习成像前端：让冻结 VLA 在暗光下也能看清目标 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="rawvla-isp-vla">RawVLA，把相机 ISP 变成可学习成像前端：让冻结 VLA 在暗光下也能看清目标</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/ShuhongLL/RawVLA">https://github.com/ShuhongLL/RawVLA</a>  </p>
+<p><strong>Stars</strong>: 94 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-05  </p>
+<p><strong>组织</strong>: ShuhongLL  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-05</p>
+</blockquote>
+<hr />
+<p>RawVLA 处理的是一个几乎被所有 VLA 忽略的环节：<strong>图像信号处理器（ISP）</strong>。相机采集的是 RAW 数据，经过降噪、白平衡、色彩校正与色调映射后才变成模型看到的 RGB 图像。工程上这一串被当成相机固件里的固定预处理，调参由相机厂商按「人眼看着舒服」定，与下游机器人任务毫无关系。</p>
+<p>后果在暗光下最直观：同一任务、同一物体，换一组灯光，送进 VLA 的画面统计就变了，策略直接失效。地瓜机器人联合东京大学等机构提出 RawVLA，在<strong>冻结的 VLA 策略之前</strong>插入一个可学习的成像模块，从 RAW 出发、按当前画面与历史信息预测成像参数，并让这些参数直接由<strong>下游动作损失</strong>监督。</p>
+<p>这个定位很讨巧：不需要重新训练动辄几十亿参数的 VLA，只训练一个轻量成像前端，就能把「感知链路里不可调的那一块」变成可优化变量。项目开放代码、论文与 RawVLA-Bench 数据集，适合作为「感知—动作联合优化」的最小可复现案例。</p>
+<hr />
+<p>整体链路可以画成三段：</p>
+<ol>
+<li><strong>RAW 输入与历史编码</strong>：读取相机 RAW 帧，并把最近若干帧的信息编码成上下文，供成像模块判断当前光照条件。</li>
+<li><strong>可学习成像前端（Neural ISP）</strong>：输出降噪强度、白平衡增益、色彩校正矩阵、色调映射曲线等参数，作用于 RAW 生成任务导向的 RGB。</li>
+<li><strong>冻结的 VLA 策略</strong>：以生成的 RGB 为观测，输出动作。训练时<strong>只在成像前端回传梯度</strong>，VLA 权重不动。</li>
+</ol>
+<p>梯度路径是</p>
+<p>$$\text{动作损失} \;\longrightarrow\; \text{VLA（冻结，仅前向）} \;\longrightarrow\; \text{生成的 RGB} \;\longrightarrow\; \text{成像参数} \;\longrightarrow\; \text{ISP 模块参数} .$$</p>
+<p>这里有个容易被忽略的细节：VLA 虽然冻结，但它的梯度必须能<strong>穿过</strong>到达 RGB 输入，否则动作损失无法告诉成像模块「该往哪个方向调」。实现上冻结的是权重，不是计算图。</p>
+<p>配套基准 RawVLA-Bench 覆盖五种光照、53 项仿真任务与 2403 条配对训练轨迹，提供成对的 RAW / RGB / 动作标注，使「改成像」这件事第一次有了可比的评测口径。</p>
+<hr />
+<ul>
+<li><strong><a href="https://shuhongll.github.io/rawvla/">RawVLA 论文与项目主页</a></strong> — 具身神经图像信号处理器，含演示视频与结果表。</li>
+<li><strong><a href="https://github.com/ShuhongLL/RawVLA">RawVLA 开源代码</a></strong> — 可学习成像前端与训练脚本。</li>
+<li><strong><a href="https://huggingface.co/datasets/ToferFish/RawVLA-Bench">RawVLA-Bench 数据集</a></strong> — 五种光照、53 项任务、2403 条配对轨迹。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.03103">RoboTwin 2.0</a></strong> — 本工作仿真评测所用的双臂操作基准（另见 VLALagBench 对延迟的刻画）。</li>
+<li><strong><a href="/learn/vla-models">本站 VLA 模型模块</a></strong> — 冻结策略、动作专家与梯度路由的系统讲解。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先确认相机能拿到 RAW</strong>：多数 USB 摄像头只输出处理后 RGB，这一步是硬门槛；项目使用的是可输出 RAW 的传感器与配套采集流程。</li>
+<li><strong>下载 RawVLA-Bench</strong>：从 Hugging Face 拉取配对轨迹，先在不训练的情况下复现默认 ISP 与 RawVLA 的暗光基线差距。</li>
+<li><strong>加载冻结的 VLA 策略</strong>：项目以 π0.5 为例，按仓库说明加载权重并设为 <code>eval</code> / <code>requires_grad_(False)</code>。</li>
+<li><strong>只训练成像前端</strong>：把动作损失（或项目提供的代理损失）回传到 ISP 模块，注意保持 VLA 计算图可导但权重不更新。</li>
+<li><strong>在五种光照上分别评测</strong>：不要只报平均成功率，暗光子集的表现才是这个项目的核心证据。</li>
+<li><strong>真机复现前先做安全约束</strong>：成像参数变化会改变模型对距离、边界的判断，实际抓取前限制夹爪力度与速度。</li>
+</ol>
+<pre><code class="language-python">import torch
+
+# 冻结 VLA 权重，但保留计算图以便梯度回传到 RGB 输入
+for p in vla.parameters():
+    p.requires_grad_(False)
+
+raw = camera.capture_raw()          # 需要支持 RAW 输出的相机
+rgb = neural_isp(raw, history)      # 可学习成像前端
+rgb = rgb.requires_grad_(True)
+action = vla(rgb, instruction)      # VLA 仅前向
+loss = action_loss(action, target)
+loss.backward()                     # 梯度穿过 VLA 到 rgb，再更新 neural_isp
+optimizer_isp.step()
+</code></pre>
+<p>CC-BY / MIT 协议见仓库 LICENSE，数据与权重分别标注，引用时按各自许可处理。</p>
+<hr />
+<p>项目报告的主要数字（原文口径，复现时请对齐光照设置与任务集）：</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>默认 ISP</th>
+<th>RawVLA</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>暗光双臂真机（四项任务平均）</td>
+<td><strong>0%</strong></td>
+<td><strong>66.5%</strong></td>
+<td>π0.5 策略，VLA 冻结</td>
+</tr>
+<tr>
+<td>正常光照双臂真机</td>
+<td>76.5%</td>
+<td>75.0%</td>
+<td>两者接近，说明没有牺牲常规表现</td>
+</tr>
+<tr>
+<td>RoboTwin 2.0 仿真（五种光照 × 两种 VLA 策略）</td>
+<td>43.91%</td>
+<td><strong>54.98%</strong></td>
+<td>平均 +11.07 个百分点</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">怎么读这组数字</h3>
+<ul>
+<li><strong>暗光 0% → 66.5%</strong> 是核心证据：默认 ISP 在暗光下几乎完全失效，说明问题确实出在成像前端而非策略容量。</li>
+<li><strong>正常光照 75.0% 对 76.5%</strong> 同样重要：可学习成像没有把正常场景弄坏，因此不是靠「把画面调亮」这种单一作弊手段换来的增益。</li>
+<li><strong>仿真 +11.07 个百分点</strong> 说明增益跨策略、跨光照可迁移，不只是某一台真机的偶然。</li>
+<li>注意 66.5% 距离可靠部署仍有明显差距，RawVLA 解决的是「看得清」，不是「抓得稳」；接触与力控仍需另解。</li>
+</ul>
+<hr />
+<p><strong>对比常规做法（调相机曝光 / 后处理增强）</strong>：那些是按人眼观感或通用图像质量指标调参，与动作损失无关；RawVLA 的成像参数直接由下游任务监督，优化目标不同。</p>
+<p><strong>对比重新训练 / 微调 VLA 以适应光照</strong>：微调大模型成本高，且容易过拟合到特定光照分布；RawVLA 冻结 VLA，只训轻量前端，数据效率与部署成本都更友好。两者也可以叠加。</p>
+<p><strong>对比数据增强（随机亮度、色彩抖动）</strong>：增强让策略对光照变化更鲁棒，但不改变推理时输入的成像质量；RawVLA 是在<strong>推理链路上</strong>主动调整输入。增强治的是策略，RawVLA 治的是传感器前端。</p>
+<p><strong>和本站内容的关系</strong>：本站 <code>vla-models</code> 讲动作专家与训练配方，<code>computer-vision</code> 讲相机模型与成像几何，<code>sensors-hardware</code> 讲传感器选型；RawVLA 正好补上「从 RAW 到 RGB 这一段也能学」的空缺。与本期 p312（VLA 梯度路由）对照读尤其有意思：一个在讨论梯度该不该穿过 VLM，一个在讨论梯度该不该穿过成像前端。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

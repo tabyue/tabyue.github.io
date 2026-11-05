@@ -1,6 +1,147 @@
 {
- "lastUpdated": "2026-11-04T08:30",
+ "lastUpdated": "2026-11-05T08:30",
  "papers": [
+  {
+   "id": "p312",
+   "title": "Should the Action Expert Train the VLM? Action-Token Supervision and Gradient Routing in Mixture-of-Transformer VLAs",
+   "authors": "Asher James Hancock, Boyi Li, Yuxiao Chen, Shuhan Tan, Wenhao Ding, Thomas Tian, Yan Wang, Boris Ivanovic, Marco Pavone",
+   "venue": "arXiv 2611.05249 (cs.RO)",
+   "date": "2026-11-03",
+   "arxiv": "https://arxiv.org/abs/2611.05249",
+   "github": "",
+   "tags": [
+    "VLA",
+    "Mixture-of-Transformers",
+    "梯度隔离",
+    "动作 token 监督",
+    "Flow Matching",
+    "耦合训练"
+   ],
+   "tldr": "**问题**，Mixture-of-Transformer 类 VLA 把预训练 VLM 与 flow-matching 动作专家配对，专家以 VLM 的 KV 表征为条件生成动作。但 VLM 从未针对专家的 flow-matching 目标训练过。主流配方为保护 VLM 已有能力而**阻断专家到 VLM 的梯度（insulation）**，同时又在视觉语言数据与动作 token 上监督 VLM——既然视觉语言共训练本就意在保能力，insulation 额外提供的保护是否必要并不清楚，而且它切断了「连续动作预测需要哪些特征」这一直接信号。\n\n**方法**，在自动驾驶与机器人操作两个域上独立操控两个变量：是否给 VLM 加动作 token 监督、专家损失是否回传更新 VLM（coupling 对 insulation），做 2×2 消融。\n\n**结果**，开环驾驶中，有动作 token 监督时 insulation 与 coupling 相当；没有动作 token 时 coupling 把轨迹预测误差降低约 25%。两者从头联合训练时，coupling 使闭环驾驶路线进度在有动作 token 时提升约 17%、无动作 token 时提升约 40%，并在两种设置下都改善机器人操作表现。\n\n**为什么重要**，它把「梯度隔离」从默认配方降级为依赖条件的工程选择，结论直接落到 VLA 训练脚本里 stop_gradient 该放在哪。",
+   "category": "VLA / 训练范式",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把 insulation 的价值拆成两个可独立开关的因素：动作 token 监督与专家梯度是否回传，是这篇最值得复用的实验设计，避免把「保护 VLM」与「提供动作信号」混为一谈。",
+    "「无动作 token 时 coupling 降误差 25%」说明专家梯度本身就是一种有效的表征监督：当 VLM 没有别的动作信号时，flow-matching 损失会直接把 KV 表征往控制所需的方向拉。",
+    "开环与闭环结论不一致（开环相当、闭环 coupling 明显更好）提醒：只报开环轨迹误差会系统性低估耦合训练的价值，闭环路线进度才是部署相关指标。",
+    "17% 与 40% 的差距量化了动作 token 监督与梯度耦合的替代关系——两者都在给 VLM 动作信息，重复配置时边际收益会收窄。"
+   ],
+   "impact": "为 VLA 训练配方提供了可复现的 2×2 消融证据，说明梯度隔离不应作为默认设置；对使用 Mixture-of-Transformers 与 flow-matching 动作头的开源实现（如 π 系列、OpenVLA 衍生架构）有直接的训练配置指导意义。",
+   "addedDate": "2026-11-05"
+  },
+  {
+   "id": "p313",
+   "title": "Asynchronous Robot Policies",
+   "authors": "Sombit Dey, Luc Van Gool, Danda Pani Paudel",
+   "venue": "arXiv 2611.05155 (cs.RO, cs.AI)",
+   "date": "2026-11-03",
+   "arxiv": "https://arxiv.org/abs/2611.05155",
+   "github": "https://arp.insait.ai",
+   "tags": [
+    "异步策略",
+    "VLA",
+    "语义记忆",
+    "控制频率",
+    "推理延迟",
+    "实时性"
+   ],
+   "tldr": "**问题**，VLA 基础模型越大，推理延迟越高，而现有架构把高层语义推理与底层动作生成**串在同一条控制回路里**，语义能力与实时物理反应性形成根本张力。\n\n**方法**，提出 Asynchronous Robot Policy（ARP）：把语义推理与动作生成拆成**独立频率的异步进程**。高容量 VLM 以低频异步更新一份语义记忆；轻量 Vision-Action Expert 以语义记忆为条件、在远高于 VLM 的控制频率上生成动作。为解决异步带来的记忆陈旧，训练时让视觉动作专家显式暴露于语义陈旧与执行延迟，并使用跨进程时间错配的观测。\n\n**结果**，Franka 操作任务上准静态设置成功率 +18%、执行时间少 20%；动态仿真环境达到基线的 3—5 倍表现。VLM 可运行在标称频率的十分之一而无显著性能损失。\n\n**为什么重要**，它把「大模型太慢」从模型压缩问题转成系统架构问题：不必缩小模型，只要让慢思考与快动作在不同时钟上跑。",
+   "category": "VLA / 推理架构",
+   "difficulty": "中级",
+   "keyInsights": [
+    "频率解耦是比蒸馏或量化更省事的实时性路线：VLM 降到 1/10 频率仍不掉性能，说明语义记忆在多数操作步里是慢变量，不必每步重算。",
+    "把「记忆陈旧」当作训练分布而不是运行时 bug 来治，是 ARP 能成立的关键：专家在训练期见过时间错配的观测，部署时才能容忍 stale memory。",
+    "动态仿真里 3—5 倍提升远大于准静态下的 18%，印证了串行架构的瓶颈主要出现在环境快速变化、需要高频重规划的场景。",
+    "与本站 ros2「1 kHz 运控与 50 Hz 策略同机」、training-inference-optimization 的推理效率章节是同一问题的两种解法：一个改运行时分层，一个改策略时钟。"
+   ],
+   "impact": "给出了可落地的 VLA 实时部署架构模板（低频语义记忆 + 高频轻量动作专家），把基础模型规模与机器人控制频率解耦，对边缘算力受限的真机系统尤其有价值。",
+   "addedDate": "2026-11-05"
+  },
+  {
+   "id": "p314",
+   "title": "PACT: Pose-Robust Actuation Co-Design for Tendon-Driven Robotic Hands",
+   "authors": "Prashant Kumar, Rachael Granberry, Taylor Niehues, Andrew A. Stanley, Gabe Pirie",
+   "venue": "arXiv 2611.05302 (cs.RO)",
+   "date": "2026-11-03",
+   "arxiv": "https://arxiv.org/abs/2611.05302",
+   "github": "",
+   "tags": [
+    "腱驱动灵巧手",
+    "驱动协同设计",
+    "可行力",
+    "带宽约束",
+    "准直驱",
+    "N+1 腱拓扑"
+   ],
+   "tldr": "**问题**，人形灵巧手要在人手尺寸包络内同时提供足够力、速度与反向可驱动性。腱驱动把执行器移到手掌与前臂，但**走线路径、力臂与绞盘尺寸共同决定出力与关节速度**，逐个顺序选参数必然满足一个就牺牲另一个。\n\n**方法**，PACT 把腱走线、力臂与绞盘尺寸放进同一个优化：用可行力（feasible-force）形式在所有关节上强制执行器边界与静力平衡约束，并在**位姿相关**的力需求与传动带宽约束下，用 max-min 目标最大化最弱位姿下的任务力覆盖。\n\n**结果**，在四自由度手指上得到非对称 N+1 腱拓扑 + 准直驱执行器；八个位姿下任务力覆盖 0.88—1.00，预测最小单指屈伸带宽 5 Hz，且落在 70 百分位人手尺寸包络内。样机实测与预测最大偏差 24.5%，主要来自未建模的传动损耗。\n\n**为什么重要**，它把灵巧手设计从「先定机械再调控制」变成带约束的联合优化，并给出了可复算的力—带宽权衡口径。",
+   "category": "灵巧手 / 硬件协同设计",
+   "difficulty": "高级",
+   "keyInsights": [
+    "「max-min 最弱位姿」是这篇的问题定义精髓：灵巧手的失效几乎总发生在某个别扭姿态，用平均力或峰值力做目标会系统性地漏掉它。",
+    "把传动带宽写进约束而不是事后验算，避免了优化出「力够但动不快」的手——这正是顺序设计法最典型的翻车方式。",
+    "24.5% 的实测偏差被诚实归因于未建模传动损耗（摩擦、腱弹性、绕线间隙），是硬件论文里少见的误差溯源，也指明了下一步该建哪类损耗模型。",
+    "与本期机本智能「灵巧手竞争重心转向操作模型」的新闻对照读很有意思：硬件侧仍在补力与带宽的可计算性，软件侧在补接触与触觉对齐，两边都没有到终点。"
+   ],
+   "impact": "为腱驱动灵巧手提供了可复现的位姿鲁棒驱动协同设计框架，把力覆盖与带宽作为可优化、可验证的指标，对开源灵巧手本体与准直驱执行器选型有直接参考价值。",
+   "addedDate": "2026-11-05"
+  },
+  {
+   "id": "p315",
+   "title": "PrimeSim: A Generalist World Model Simulator from Large-Scale Cross-Embodiment Demonstrations",
+   "authors": "Travis Davies, Wentao Ma, Lihao Guo, Tengfei Ma, Xiaowen Chang, Jiafeng Xu, Shilong Wang, Yiqi Deng, Shaowen He, Xiaoqi Li, Qian Zhu, Ran Cheng, Hao Dong",
+   "venue": "arXiv 2611.04870 (cs.RO)",
+   "date": "2026-11-03",
+   "arxiv": "https://arxiv.org/abs/2611.04870",
+   "github": "",
+   "tags": [
+    "世界模型仿真器",
+    "跨本体",
+    "多视图一致性",
+    "自回归 rollout",
+    "GRPO",
+    "WorldSimProbe"
+   ],
+   "tldr": "**问题**，能当仿真器用的机器人世界模型，不能只生成看起来合理的视频：必须忠实跟随指令动作、跨相机视角保持一致、并在长程自回归 rollout 里不崩。\n\n**方法**，PrimeSim 从预训练视频生成器出发，在覆盖 22 个平台的 30110 小时机器人示教上做渐进式中训练与后训练。用统一跨本体动作表示 + 帧对齐双路条件化强化动作—帧对应；用带显式相机身份的视图感知交错注意力保持多视图一致；再用「快视频、慢记忆」后训练把双向生成器改造成高效自回归仿真器，结合快速因果生成、自 rollout 训练与层次化时间记忆抑制误差累积。\n\n**结果**，10.1 FPS 运行，在刚体与可变形操作上长程稳定，100—200 步梯度内迁移到留出平台；对五个开源动作条件世界模型，在 WorldSimProbe 五套里领先四套并取得最佳 EWMBench 总分，rollout 质量足以支撑 GRPO 策略优化，但细粒度局部标定仍落后。作者开放权重、推理代码与训练代码。\n\n**为什么重要**，它把「视频生成模型」推进到「可用来训策略的仿真器」，并诚实标出局部标定这块尚存短板。",
+   "category": "世界模型 / 仿真器",
+   "difficulty": "高级",
+   "keyInsights": [
+    "把「动作跟随、多视图一致、长程自回归稳定」并列成三项硬指标，比单看视频清晰度更贴近仿真器用途——这也是 WorldSimProbe / EWMBench 该被采用的理由。",
+    "「快视频、慢记忆」的分层时间记忆是自回归 rollout 不漂移的关键：自生成历史里的误差会 compounding，必须用慢速记忆保存长期结构、用快速因果生成保帧率。",
+    "rollout 足以支撑 GRPO 意味着世界模型不再只是可视化或数据增强，而能进入策略优化的回报回路，这是与 p311「预测误差不等于物理惊讶」互补的谨慎结论：可用，但要限域。",
+    "细粒度局部标定仍落后于同类，说明 30110 小时跨本体数据买来的是泛化与稳定，不是局部物理精度；做接触丰富任务时仍需真机数据兜底。"
+   ],
+   "impact": "以开放权重与训练代码的形式提供了一个可当仿真器用的通用世界模型基座，把世界模型从视频生成推进到策略优化闭环，并给出跨本体数据规模（22 平台 / 30110 小时）的可复现参照。",
+   "addedDate": "2026-11-05"
+  },
+  {
+   "id": "p316",
+   "title": "RoboColosseum: Evaluating Physical Intelligence at Scale In-The-Wild",
+   "authors": "Tan Sang Nguyen, Yi Ru Wang, Shailesh Shailesh, Gang Yang, Jiamo Hu, et al. (27 authors, incl. Dieter Fox, David Hsu, Thomas Wolf, Jiafei Duan)",
+   "venue": "arXiv 2611.02497 (cs.RO, cs.AI)",
+   "date": "2026-11-02",
+   "arxiv": "https://arxiv.org/abs/2611.02497",
+   "github": "https://robocolosseum.ai/",
+   "tags": [
+    "分布式评测",
+    "配对盲测",
+    "跨本体",
+    "Kendall W",
+    "部分进度",
+    "主动配对"
+   ],
+   "tldr": "**问题**，通用机器人策略必须跨本体、任务与环境工作，但让物理试验有信息量的那种多样性，恰恰也让试验难以复现。\n\n**方法**，RoboColosseum 是一个分布式评测框架：统一策略服务 + 标准化协议，接起分布在多样环境里、由本地操作的机器人网络。Open Track 在匹配本地条件下做盲测配对、不做任务特定适配；Fine-tune Track 给每个策略每任务同样 100 条示教，测跨 20 个任务的适应能力。\n\n**结果**，初版覆盖 5 个 VLA 策略、3 个前沿 Agent、4 种本体（SO-101 / Franka / Bimanual-YAM / G1）。124 个站点、5699 次 Open Track 配对比较显示前沿 Agent 可与专用 VLA 打平，但所有系统在开放世界任务上都难以可靠完成。微调后 GR00T N1.7 在 SO-101 领先、pi0.5 在 Franka 与 Bimanual-YAM 领先；跨本体任务套件排序一致性仅 Kendall W = 0.24，Open Track 排名难以预测微调后相对表现且出现大量排名反转。G1 上无策略完成任一任务，但平均部分进度从 13.3% 到 23.2% 不等。主动配对能用更少物理试验达到相近排序一致性。\n\n**为什么重要**，它用规模化的真实物理试验量化了一个常被回避的事实：单一本体上的排行榜基本不能外推。",
+   "category": "评测基准 / 分布式真机",
+   "difficulty": "中级",
+   "keyInsights": [
+    "Kendall W = 0.24 是全文最有分量的数字：不同本体上的任务套件几乎不共享策略排序，任何只在一种臂上刷出来的 SOTA 结论都必须附带本体限定。",
+    "「Open Track 排名预测不了微调后排名」直接质疑了零样本榜单作为选型依据的做法，尤其对采购或部署决策——应在本体与任务上做小规模适配后再比。",
+    "G1 上二值成功率全为 0，但部分进度 13.3%—23.2% 有显著差异，说明只看成功/失败会抹掉策略间真实的能力差；长程任务评测必须记录部分进度。",
+    "主动配对（active matchmaking）用更少物理试验达到相近排序一致性，给昂贵的真机评测提供了可操作的降本路径。",
+    "分布式、本地操作的机器人网络是对「复现性」的正确回应：不追求把环境搬进同一个实验室，而是统一服务与协议后承认环境差异并靠统计量控制它。"
+   ],
+   "impact": "建立了可扩展的分布式真机评测范式，用 5699 次配对盲测给出跨本体泛化与微调迁移的量化证据，对评测基准设计、策略选型与部分进度指标口径都有直接影响。",
+   "addedDate": "2026-11-05"
+  },
   {
    "id": "p307",
    "title": "Democratizing Robot-Use Agents: A Unified Harness with Open Models",
@@ -8253,5 +8394,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 285
+ "totalItems": 290
 }

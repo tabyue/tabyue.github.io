@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-04T08:30",
+ "lastUpdated": "2026-11-05T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,126 @@
   }
  ],
  "projects": [
+  {
+   "id": "os238",
+   "name": "RawVLA，把相机 ISP 变成可学习成像前端：让冻结 VLA 在暗光下也能看清目标",
+   "github": "https://github.com/ShuhongLL/RawVLA",
+   "organization": "ShuhongLL",
+   "org": "地瓜机器人 / 东京大学",
+   "category": "perception",
+   "description": "**RawVLA** 是地瓜机器人联合东京大学等机构开源的「具身神经图像信号处理器」方案：在已有 VLA 策略之前插入一个可学习的成像模块，直接从相机 RAW 数据出发，依据当前画面与历史信息预测降噪、白平衡、色彩校正与色调映射参数，让送进 VLA 的 RGB 图像更适合下游操作任务。训练时 **VLA 策略保持冻结**，成像参数由下游动作损失驱动，因此不需要重新训练大模型就能改善光照鲁棒性。\n\n**为什么值得关注**，几乎所有 VLA 都把 ISP 当作相机固件里的固定预处理，光线一变、画面统计一变，策略就失效。RawVLA 把这一环节纳入训练与评测闭环，等于给感知链路补上了一块此前不可调的自由度。\n\n**配套基准**，RawVLA-Bench 覆盖五种光照、53 项仿真任务与 2403 条配对训练轨迹，同时提供 Hugging Face 数据集，便于复现与横向比较。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 94,
+   "features": [
+    "冻结 VLA 策略，只训练 RAW 成像前端",
+    "成像参数由下游动作损失直接监督",
+    "暗光双臂真机平均成功率 66.5%（默认 ISP 为 0%）",
+    "RoboTwin 2.0 跨五种光照平均 +11.07 个百分点",
+    "开放 RawVLA-Bench：五种光照 / 53 任务 / 2403 条配对轨迹",
+    "MIT 协议，代码与数据集一并开放"
+   ],
+   "tags": [
+    "RawVLA",
+    "神经 ISP",
+    "光照鲁棒性",
+    "冻结 VLA",
+    "RawVLA-Bench",
+    "π0.5",
+    "地瓜机器人"
+   ],
+   "addedDate": "2026-11-05"
+  },
+  {
+   "id": "os239",
+   "name": "Alpamayo Recipes，NVIDIA 官方的机器人基础模型微调 / RL 后训练 / 量化部署配方库",
+   "github": "https://github.com/NVlabs/alpamayo-recipes",
+   "organization": "NVlabs",
+   "org": "NVIDIA",
+   "category": "framework",
+   "description": "**alpamayo-recipes** 是 NVIDIA Alpamayo 系列机器人基础模型的开发者中心，提供开箱即用的配方（recipes），覆盖微调、强化学习后训练、量化与部署全链路。它与本站已收录的 **Alpamayo 1 Nano**（os230，100 亿参数推理型 VLA，把驾驶轨迹与因果链推理配对）是配套关系：主仓库给模型权重与架构，recipes 仓库给「拿到权重之后怎么把它调到自己的机器人上」的工程路径。\n\n**适用读者**，已经在用 Alpamayo / GR00T / 通用 VLA 做真机适配，需要一份官方维护、可复现的后训练与部署参考实现的团队。\n\n**注意**，配方依赖 NVIDIA GPU 栈与特定版本的推理运行时，先核对 CUDA / TensorRT 版本再跑；仓库更新频繁，建议固定 commit 复现实验。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 221,
+   "features": [
+    "官方维护的微调 / RL 后训练 / 量化 / 部署 recipes",
+    "与 Alpamayo 1 Nano 权重仓库配套",
+    "覆盖从训练到边缘部署的完整链路",
+    "可复现的配方式组织，便于逐个替换组件做消融",
+    "Apache-2.0 协议，商用友好",
+    "2026-11 持续活跃更新"
+   ],
+   "tags": [
+    "NVIDIA",
+    "Alpamayo",
+    "recipes",
+    "RL 后训练",
+    "量化部署",
+    "机器人基础模型",
+    "Apache-2.0"
+   ],
+   "addedDate": "2026-11-05"
+  },
+  {
+   "id": "os240",
+   "name": "AI Worker (FFW)，ROBOTIS 开源的人形作业机器人整机栈",
+   "github": "https://github.com/ROBOTIS-GIT/ai_worker",
+   "organization": "ROBOTIS-GIT",
+   "org": "ROBOTIS",
+   "category": "hardware",
+   "description": "**AI Worker**（FFW，Freedom From Work）是 ROBOTIS 开源的作业型机器人项目，提供面向实际任务的整机软硬件栈。ROBOTIS 长期维护 Dynamixel 舵机、TurtleBot 与 ROS 2 生态，这个项目把积累延伸到「能干活的机器人本体」：以 C++ 为主的实现，配套 ai.robotis.com 上的文档与平台入口。\n\n**为什么收录**，本站硬件类条目多数是机械臂或灵巧手部件，整机级、带官方维护与 ROS 2 接口的开源项目相对稀缺。对想从零搭一套可复现真机平台、又不想被商用本体封闭接口绑死的团队，这类项目比单纯零件清单更接近可用起点。\n\n**注意**，整机项目复现涉及加工、装配、电源与安全调试，star 数不等于上手成本；动手前先评估 BOM 与供应链条件。",
+   "language": "C++",
+   "license": "Apache-2.0",
+   "stars": 207,
+   "features": [
+    "ROBOTIS 官方维护的作业型机器人整机栈",
+    "以 C++ 为主，贴合实时控制与嵌入式部署",
+    "承接 Dynamixel / TurtleBot / ROS 2 既有生态",
+    "面向实际作业任务而非单纯演示平台",
+    "配套官方文档站点 ai.robotis.com",
+    "Apache-2.0 协议"
+   ],
+   "tags": [
+    "ROBOTIS",
+    "AI Worker",
+    "FFW",
+    "开源整机",
+    "ROS 2",
+    "Dynamixel",
+    "C++"
+   ],
+   "addedDate": "2026-11-05"
+  },
+  {
+   "id": "os241",
+   "name": "Embodied Data Pyramid，具身操作数据金字塔综述与分层资源索引",
+   "github": "https://github.com/worldbench/awesome-embodied-data-pyramid",
+   "organization": "worldbench",
+   "org": "worldbench",
+   "category": "data-tools",
+   "description": "**Data Pyramid for Embodied Manipulation** 是 worldbench 维护的具身操作数据综述与资源索引，用「数据金字塔」的层级视角组织互联网视频、人类第一视角数据、遥操作示教、仿真生成数据与真机交互数据：越底层规模越大但噪声与域差越大，越顶层越贴近目标本体与任务但采集成本越高。配套站点给出分层图、代表数据集与文献入口。\n\n**为什么收录**，本站长期强调「数据质量与配比」而不是单纯堆小时数。《学习时报》11 月 4 日撰文指出国内合规真机交互数据仅约 50 万小时、距商业化所需数千万小时缺口超 99%；把这份索引和该结论对照读，能更清楚地规划「哪些层该自己采、哪些层可以借公开数据」。\n\n**定位**，它是综述 / 索引型仓库（HTML 站点），适合做选题地图与数据配比讨论的起点，不替代具体数据集文档。",
+   "language": "HTML",
+   "license": "Apache-2.0",
+   "stars": 208,
+   "features": [
+    "用数据金字塔分层组织具身操作数据来源",
+    "覆盖互联网视频 / Ego 数据 / 遥操作 / 仿真 / 真机交互",
+    "配套可视化站点与文献索引",
+    "与数据配比、质量治理讨论直接相关",
+    "Apache-2.0 协议",
+    "2026-11 持续更新"
+   ],
+   "tags": [
+    "数据金字塔",
+    "具身操作数据",
+    "综述",
+    "数据配比",
+    "worldbench",
+    "Ego 数据",
+    "遥操作"
+   ],
+   "addedDate": "2026-11-05"
+  },
   {
    "id": "os234",
    "name": "OpenArm，面向接触丰富场景的全开源人形机械臂（硬件 + 固件 + 控制栈整体开放）",
@@ -5866,5 +5986,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 224
+ "totalItems": 228
 }

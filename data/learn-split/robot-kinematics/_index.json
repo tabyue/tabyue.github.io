@@ -1,7 +1,7 @@
 {
   "id": "robot-kinematics",
   "name": "机器人运动学",
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-11-05T08:30",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 60,
@@ -96,16 +96,25 @@
     {
       "id": "sec-03",
       "title": "刚体变换与齐次矩阵",
-      "lastUpdated": "",
-      "chars": 3124,
+      "lastUpdated": "2026-11-05T08:30",
+      "chars": 12335,
       "shortTitle": "刚体变换与齐次矩阵",
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "tier": 0,
-      "readingMinutes": 3,
+      "readingMinutes": 14,
       "headings": [
         "SE(3) 变换矩阵",
         "指数坐标（Modern Robotics 核心思想）",
+        "一、为什么非要把三维变换写成四阶矩阵",
+        "二、SE(3) 是一个群，而且不交换",
+        "三、变换求逆的显式公式：别去算四阶矩阵的逆",
+        "四、最容易混的一件事：主动变换与被动变换",
+        "五、同一个矩阵的三种语义",
+        "六、伴随表示：把速度也带上",
+        "七、位姿插值：别对矩阵做线性平均",
+        "八、常见坑与自查清单",
+        "九、一段数学史与本章的衔接",
         "练习",
         "参考答案"
       ],
@@ -463,7 +472,7 @@
       "summary": "工业机械臂运动学有一个隐含前提：基座（base frame）固定在地面或工作台，所有关节都基于这个固定基座做位姿计算。但人形机器人 / 四足机器人有两个关键差异："
     }
   ],
-  "readingMinutes": 132,
+  "readingMinutes": 143,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 123024
+  "chars": 132235
 }
