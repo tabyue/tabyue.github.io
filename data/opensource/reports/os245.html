@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grounded Action Model：把 3D Grounding 作为机器人动作的基础 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Grounded Action Model：把 3D Grounding 作为机器人动作的基础 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="grounded-action-model-3d-grounding">Grounded Action Model：把 3D Grounding 作为机器人动作的基础</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/GehaoZhang6/Grounded-Action-Model">https://github.com/GehaoZhang6/Grounded-Action-Model</a>  </p>
+<p><strong>Stars</strong>: 55 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-06  </p>
+<p><strong>组织</strong>: GehaoZhang6  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-06</p>
+</blockquote>
+<hr />
+<p>Grounded Action Model (GAM) 提出的次序很明确：<strong>先定位，再行动</strong>。仓库标题即 <em>3D Grounding as a Foundation for Robotics</em>，主张把三维空间中的物体/部位定位能力作为机器人动作生成的公共前置，而不是让每个策略各自在隐式表征里重新学一遍「东西在哪」。</p>
+<p>这个切入点对准了 VLA 的一类高频失败：指令说「把左边那个杯子放到上层架子」，模型把注意力落到了别处——错的不是动作解码，而是<strong>指称与空间对应</strong>。把 3D Grounding 显式做成独立、可评测的基础层，一方面让错误可归因，另一方面让同一套定位能力被多个下游策略复用。仓库 2026-09-22 创建、2026-11-05 活跃推送，Python / MIT，约 55 star，属于新近开源、值得跟踪的早期项目。</p>
+<hr />
+<ol>
+<li><strong>3D Grounding 前端</strong>：接收语言指称与 RGB-D / 多视角观测，输出目标在三维空间中的位置、包围盒或部位掩码。</li>
+<li><strong>空间表征层</strong>：把定位结果转成下游可消费的几何量（中心点、姿态、相对关系），而不是只给一个 heatmap。</li>
+<li><strong>动作基座</strong>：以显式几何量为条件生成动作，使「定位错」与「动作错」在日志里可分离。</li>
+<li><strong>下游策略接口</strong>：同一套定位结果可被抓取、放置、导航等不同策略复用。</li>
+</ol>
+<p>显式化的代价是多一次前向与一次标定，收益是可解释、可复用、可单独评测。这与端到端 VLA 的取舍正好相反。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/GehaoZhang6/Grounded-Action-Model">Grounded Action Model 仓库</a></strong> — 3D Grounding 作为机器人动作基础的官方实现（MIT）。</li>
+<li><strong><a href="https://grounded-action-model.github.io/">项目主页</a></strong> — 方法、结果与可视化。</li>
+<li><strong><a href="/learn/multimodal-perception">本站 multimodal-perception 模块</a></strong> — 具身 Grounding 与视触觉对齐的原理。</li>
+<li><strong><a href="/learn/computer-vision">本站 computer-vision 模块</a></strong> — 开放词汇检测、针孔反投影与标定推导。</li>
+<li><strong><a href="https://github.com/cair-vinuni/RoboGaze">RoboGaze（世界模型结构化视觉语言分析评测）</a></strong> — 同属「把空间理解做成可评测层」的邻近工作。</li>
+<li><strong><a href="https://github.com/NVIDIA/cosmos">本站 os242 NVIDIA Cosmos</a></strong> — 交互式世界仿真平台，可作为定位与动作闭环的评测环境。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先看项目主页的任务定义</strong>：确认它做的是物体级、部位级还是空间关系级 Grounding，三者难度与接口都不同。</li>
+<li><strong>单独评测定位前端</strong>：在固定数据集上报定位准确率，不要一上来就接动作头，否则定位错误会被动作失败掩盖。</li>
+<li><strong>做错误归因实验</strong>：人为注入错误的定位结果，观察动作成功率的下降曲线，验证「动作层确实依赖定位层」。</li>
+<li><strong>检查坐标系与标定</strong>：3D Grounding 的输出必须在机器人基坐标系下，外参/深度标定的误差会直接放大到末端。</li>
+<li><strong>回到站内读原理</strong>：开放词汇检测与 Grounding 见 <code>computer-vision</code> 模块，具身 Grounding 见 <code>multimodal-perception</code> 模块。</li>
+</ol>
+<pre><code class="language-python"># 伪代码：把 3D 定位结果作为动作条件
+def act_with_grounding(obs_rgbd, instruction, grounder, policy, T_ext):
+    box3d, score = grounder(obs_rgbd, instruction)     # 相机坐标系
+    if score &lt; 0.5:
+        return 'relocalize'                            # 定位不可信时先重定位
+    target_base = T_ext @ box3d.center                  # 转到机器人基坐标系
+    return policy(obs_rgbd, instruction, target_base)
+</code></pre>
+<p>MIT 协议，可自由使用与二次开发；注意深度相机与机器人基坐标系之间的外参标定。</p>
+<hr />
+<p>建议分两层评估，避免把两类错误混在一起：</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3D Grounding</td>
+<td>指称定位准确率、遮挡/杂乱场景下的鲁棒性、跨视角一致性</td>
+</tr>
+<tr>
+<td>动作生成</td>
+<td>任务成功率，以及「定位正确时」与「定位错误时」的条件成功率</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">注意</h3>
+<ul>
+<li>早期项目（约 55 star），实现与接口仍在迭代，复现时锁定 commit。</li>
+<li>3D Grounding 的精度上限受深度传感器与外参标定约束，定位层的误差不会被动作层修正。</li>
+<li>「定位与动作解耦」是否真的带来净收益，需要用端到端基线做对照，不能只看模块化带来的可解释性。</li>
+</ul>
+<hr />
+<p><strong>对比端到端 VLA</strong>：VLA 把定位压进隐式表征，端到端优化但错误不可归因；GAM 把定位显式化，便于复用与调试，代价是多一次前向与标定误差传播。</p>
+<p><strong>对比开放词汇检测（如 GroundingDINO 类 2D 方法）</strong>：2D 检测给的是图像框，机器人需要的是三维可操作位姿；GAM 的差别在于输出的是 3D 几何量与相对空间关系。</p>
+<p><strong>对比本站 <code>multimodal-perception</code> 模块的「具身 Grounding」</strong>：模块讲视触觉对齐与指称—空间对应的原理，GAM 是把这一层做成独立基础模型的一次工程尝试。</p>
+<p><strong>对比 <code>computer-vision</code> 模块的开放词汇检测章节</strong>：那里给检测与标定推导，这里给「检测结果如何变成动作条件」的接口设计，两者可串成一条链。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

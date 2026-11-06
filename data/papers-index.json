@@ -1,6 +1,148 @@
 {
- "lastUpdated": "2026-11-05T08:30",
+ "lastUpdated": "2026-11-06T08:30",
  "papers": [
+  {
+   "id": "p317",
+   "title": "Perceptive Humanoid Motion from Simulation",
+   "authors": "Siyuan Hu, Abulikemu Abuduweili, Yue Meng, Shipeng Liu, Quentin Leboutet, Chen Chen, Matthias Müller, Vladlen Koltun",
+   "venue": "arXiv 2611.06908 (cs.RO)",
+   "date": "2026-11-04",
+   "arxiv": "https://arxiv.org/abs/2611.06908",
+   "github": "",
+   "tags": [
+    "HALO",
+    "人形自主",
+    "程序化场景",
+    "合成数据",
+    "零样本Sim-to-Real",
+    "长程任务"
+   ],
+   "tldr": "**问题**：把像素与自由-form 语言映射到低层关节指令需要成对监督，而这个语料根本不存在；遥操作与穿戴式采集至少要 1 小时人力换 1 小时数据，规模上不去。\n\n**方法**：HALO 在 **1000 个程序化生成的家庭**里合成视觉—语言—运动数据，语料规模随算力而非人力增长；系统习得坐下、走向指定物体、侧身过半开的门、蹲伏爬行、推箱子等技能，并把它们编排成复合长程任务。\n\n**结果**：训练中从未见过真实家庭，零样本迁移到 6 个未建图的真实环境，360 次试验成功率 **91%**。\n\n**为什么重要**：它把「人形数据瓶颈」从「怎么采更多」改写成「怎么让合成数据随算力扩展」，并给出了零样本真机的量化证据。项目页给出代码与视频。",
+   "category": "人形机器人 / 仿真迁移",
+   "difficulty": "高级",
+   "keyInsights": [
+    "数据生成管线以程序化家庭为单位扩展，成本结构从「人力小时」变成「算力小时」，这是与遥操作/动捕路线最本质的分野。",
+    "技能以可组合的原语（坐、导航、侧身过门、蹲爬、推箱）组织，再编排成长程任务，而不是端到端直接拟合整条轨迹。",
+    "零样本到 6 个未建图真实环境、360 次试验 91% 成功率，说明合成数据的多样性比「重建得像」更关键。",
+    "与本站 sim-to-real 模块对照读：这条路线绕过 Real2Sim 重建精度问题，改靠场景程序的可控随机化覆盖分布。"
+   ],
+   "impact": "为人形通用自主提供了一条不依赖人类遥操作的规模化数据路径；对仿真资产程序化生成、技能库编排与零样本迁移评测都有直接参考价值。",
+   "addedDate": "2026-11-06"
+  },
+  {
+   "id": "p318",
+   "title": "Interactive World Simulation with Cosmos for Physical AI",
+   "authors": "NVIDIA Cosmos Team (Anis Ahmad, Ming-Yu Liu, Chen-Hsuan Lin 等)",
+   "venue": "arXiv 2611.06627 (cs.AI)",
+   "date": "2026-11-04",
+   "arxiv": "https://arxiv.org/abs/2611.06627",
+   "github": "https://github.com/NVIDIA/cosmos",
+   "tags": [
+    "Cosmos",
+    "世界基础模型",
+    "交互式仿真",
+    "动作条件化",
+    "Physical AI",
+    "实时推演"
+   ],
+   "tldr": "**问题**：世界基础模型多被当作离线视频生成器，无法让 Agent 在循环里交互地「试」。\n\n**方法**：把 Cosmos 世界基础模型改造成统一的实时交互仿真框架，按动作与场景控制**流式**产出视觉观测；同时支持两种模式——预测动作的视觉后果，以及从外部仿真器维护的物理状态生成观测，用同一套接口承接「学出来的动力学」与「算出来的动力学」。\n\n**结果**：在相机导航、机器人操作、可控视频迁移、多视图自动驾驶仿真四类场景给出演示；代码与模型检查点在 `NVIDIA/cosmos`，示例集合在 Hugging Face。\n\n**为什么重要**：它把「世界模型」从评测用的视频生成器，推向可接进训练与评测闭环的交互式环境，且明确留出了与外部物理仿真器对接的口子。",
+   "category": "世界模型 / 交互仿真",
+   "difficulty": "中级",
+   "keyInsights": [
+    "双模式设计是关键：动作条件预测与「外部仿真器状态 → 观测」共用一套流式接口，避免把世界模型与物理引擎对立起来。",
+    "实时流式响应（而非一次性生成整段视频）是能接进闭环控制的前提，工程上对应自条件稳定性与时序记忆机制。",
+    "四类演示覆盖相机、机械臂、视频迁移与多视图 AV，说明框架定位是共享底座而不是单一任务模型。",
+    "与本站 os242 / physics-simulation 模块联动：这是「视频生成模型能否承担交互推演」这一命题最完整的开源实现。"
+   ],
+   "impact": "为 Physical AI 的训练与评测提供统一的交互式虚拟环境基础，代码与权重开放；把世界模型与仿真器的分工从争论变成可配置的工程选项。",
+   "addedDate": "2026-11-06"
+  },
+  {
+   "id": "p319",
+   "title": "Where Is VLA Inference Time Spent? Bottlenecks and Optimization Interactions Across GPUs",
+   "authors": "Muhammad Danish Waseem, Ahmed Ali-Eldin Hassan",
+   "venue": "arXiv 2611.06710 (cs.RO)",
+   "date": "2026-11-04",
+   "arxiv": "https://arxiv.org/abs/2611.06710",
+   "github": "",
+   "tags": [
+    "VLA",
+    "推理延迟",
+    "量化",
+    "CUDA Graphs",
+    "Token剪枝",
+    "Jetson Thor",
+    "VLA-Triage"
+   ],
+   "tldr": "**问题**：VLA 的大骨架与反复动作生成容易超过机器人实时性预算；已有量化、剪枝等优化结果多只报单一 GPU、少数模型，既没说清瓶颈在哪，也不知道组合起来是否还能叠加。\n\n**方法**：在 **7 个 SOTA VLA**、**4 代 GPU 家族**（数据中心 H100 到嵌入式 Jetson Thor）上，系统测量 **7 类推理优化**（CUDA Graphs、编译、token 剪枝、量化等），分析 CPU 发射开销、内存带宽、kernel 效率如何共同决定收益，以及「先做一种优化后另一种还剩多少收益」。\n\n**结果**：给出 **VLA-Triage**——在延迟预算下堆叠优化的指导规则，指出哪些阶段能提供所需节省、哪些组合必须在部署执行模式下实测。\n\n**为什么重要**：它把「某个优化加速 X%」的单点结论，换成可迁移到具体硬件与执行模式的决策流程。",
+   "category": "VLA / 推理优化",
+   "difficulty": "高级",
+   "keyInsights": [
+    "最有复用价值的是「优化交互」视角：一种方法改变另一种方法的收益，因此逐项报告加速比会系统性误导部署决策。",
+    "覆盖 H100 到 Jetson Thor 的跨代硬件，直接对应机器人「云端训练、本体端侧推理」的真实算力分层。",
+    "把 CPU launch overhead 与内存带宽/kernel 效率并列分析，解释了为什么某些优化在数据中心有效、在嵌入式反而无效。",
+    "与 p321 LoopQ 对读：一个给延迟瓶颈的测量方法，一个给量化方法的公平闭环评测，两者共同构成 VLA 部署优化的证据基础。"
+   ],
+   "impact": "为 VLA 部署提供了硬件感知的优化堆叠指南，对使用 Jetson / 边缘 GPU 的机器人团队有直接工程价值；也提示后续论文应报告执行模式与硬件族而非单点加速比。",
+   "addedDate": "2026-11-06"
+  },
+  {
+   "id": "p320",
+   "title": "AIRoA-0: Long-Horizon, Precise, Cross-Embodiment Manipulation from Handheld Data",
+   "authors": "Yueh-Hua Wu, Kei Ota, Hanlong Li, Hayata Yuasa, Jason Wang, Kengo Ikeuchi 等 20 人",
+   "venue": "arXiv 2611.03815 (cs.RO)",
+   "date": "2026-11-02",
+   "arxiv": "https://arxiv.org/abs/2611.03815",
+   "github": "",
+   "tags": [
+    "AIRoA-0",
+    "YUBI手持夹爪",
+    "16151小时",
+    "跨本体",
+    "双手操作",
+    "无机器人数据"
+   ],
+   "tldr": "**问题**： adapting 机器人基础模型到新任务仍重度依赖遥操作示教，而真机数据采集昂贵且绑定本体。\n\n**方法**：用开源的 **YUBI 手持夹爪**在任何地点采集人类操作数据，**全程 16151 小时示教、任何阶段都不采集机器人数据**；系统只用每只手腕上的相机（无头部/场景相机），学习哪些腕部视角区域与任务相关、预测任务进行到哪一步，并把动作解码成连续流。\n\n**结果**：在未经采集的场地完成分类十几个小零件、更换扫地机拖布与刷头、拉开笔袋、叠毛巾等十项任务，平均成功率 **78%**，而用相同示教后训练的四个 VLA 中最强仅 27%；本体无关，可跑在装有 YUBI 的双臂 Franka、TX-G2、OpenArm、UR 上。数据集、预训练权重与后训练配方一并开放，单节点 8 张 H200 四小时内可后训练自定义任务。\n\n**为什么重要**：它把「人类数据 → 机器人策略」链条里最贵的真机环节彻底拿掉，且给出了跨本体的可复现配方。",
+   "category": "数据 / 模仿学习",
+   "difficulty": "高级",
+   "keyInsights": [
+    "「机器人只在测试时出现」是最强的数据主张：16151 小时全部来自手持夹爪，避免了跨本体迁移里最麻烦的示教—执行域差。",
+    "仅用双腕相机、不用头部或场景相机，说明任务阶段预测与局部注意力足以支撑长程精细操作，对本体传感器配置是重要约束放松。",
+    "78% vs 27% 的对照是在同一批示教上后训练四个 VLA，口径相对干净；但需注意对照模型未必针对腕部视角设计。",
+    "开放数据集 + 权重 + 后训练配方 + 4 小时单节点复现门槛，使这条路线具备真正的可复现性，而不只是结果报告。"
+   ],
+   "impact": "把手持人类数据确立为可独立支撑长程精细操作的监督来源，降低了新任务适配对真机遥操作的依赖；对数据采集硬件与跨本体策略设计均有示范意义。",
+   "addedDate": "2026-11-06"
+  },
+  {
+   "id": "p321",
+   "title": "LoopQ: Fair, Closed-Loop Evaluation of Quantized Vision-Language-Action Models",
+   "authors": "Syed Umer Bukhari, Magnus Almgren, Ahmed Ali-Eldin",
+   "venue": "arXiv 2611.05093 (cs.RO)",
+   "date": "2026-11-03",
+   "arxiv": "https://arxiv.org/abs/2611.05093",
+   "github": "",
+   "tags": [
+    "LoopQ",
+    "VLA量化",
+    "PTQ",
+    "闭环评测",
+    "LIBERO-plus",
+    "Jetson Thor",
+    "动作专家"
+   ],
+   "tldr": "**问题**：现有 VLA 量化工作很难横向比较——不同 checkpoint、不同层、不同推理引擎混在一起，报出来的加速与成功率无法归因到量化方法本身。\n\n**方法**：LoopQ 在同一 checkpoint、同一批层、同一引擎上只改变量化方法与 kernel，比较 RTN / AWQ / GPTQ / ActQuant / QuantVLA，在 4 个 VLA 上跑 **18 万+ episode** 的 LIBERO 与 LIBERO-plus，并尝试复现四个公开的 VLA 量化实现；硬件覆盖 H100、L4、Jetson AGX Thor。\n\n**结果**：量化确实稳定省内存（真实低比特 2—3 倍），但 **VLA 专用 PTQ 方法不敌更简单的通用基线**——4 bit 下 RTN / AWQ / GPTQ 追平或超过 ActQuant / QuantVLA，朴素 RTN 追平校准方法，朴素 AWQ 就达到 QVLA 自报的成功率。标准 LIBERO 会掩盖损失：在 LIBERO 无显著退化的配置，配对 LIBERO-plus 扰动下掉 1.5—4.3 分。速度结论更弱：batch 1 下 H100 上没有任何量化配置快于 16-bit 模型（库 kernel 下反而慢 1.06—1.58 倍），只有 L4 的 int8 有 4—14% 收益，Thor 上所有 4-bit 都更慢；引擎本身就能带来 2.1 倍延迟差异。性能剖析给出解释：π0.5 的量化骨架是计算受限，而占 63% GPU 时间、仅 13% 参数的**动作专家仍留在 16 bit**、且是内存受限。\n\n**为什么重要**：它把「量化一定加速」的默认假设证伪，并指出真正的瓶颈是没被量化的动作专家。",
+   "category": "VLA / 量化评测",
+   "difficulty": "高级",
+   "keyInsights": [
+    "控制变量做到 checkpoint / 层 / 引擎三者一致，只变方法与 kernel，是这篇最值得复用的评测设计。",
+    "「标准 LIBERO 掩盖损失」是给整个 VLA 评测生态的提醒：配对扰动下的掉分才反映闭环鲁棒性。",
+    "延迟结论反直觉且有机制解释：动作专家占 63% GPU 时间却留在 16 bit 且内存受限，量化骨架自然换不来端到端加速。",
+    "与 p319 对读可得完整部署图景：先定位瓶颈阶段，再决定量化哪一部分，而不是对全模型统一低比特。"
+   ],
+   "impact": "为 VLA 量化提供了公平、闭环、可复现的评测协议，并给出明确的工程指向——要加速就应该针对动作专家而不是只压骨架；对边缘部署选型有直接决策价值。",
+   "addedDate": "2026-11-06"
+  },
   {
    "id": "p312",
    "title": "Should the Action Expert Train the VLM? Action-Token Supervision and Gradient Routing in Mixture-of-Transformer VLAs",
@@ -8394,5 +8536,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 290
+ "totalItems": 295
 }

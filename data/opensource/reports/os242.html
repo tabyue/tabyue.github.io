@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVIDIA Cosmos：把世界基础模型变成可交互的 Physical AI 仿真开放平台 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">NVIDIA Cosmos：把世界基础模型变成可交互的 Physical AI 仿真开放平台 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="nvidia-cosmos-physical-ai">NVIDIA Cosmos：把世界基础模型变成可交互的 Physical AI 仿真开放平台</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/NVIDIA/cosmos">https://github.com/NVIDIA/cosmos</a>  </p>
+<p><strong>Stars</strong>: 12292 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-06  </p>
+<p><strong>组织</strong>: NVIDIA  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-06</p>
+</blockquote>
+<hr />
+<p>NVIDIA Cosmos 是面向 Physical AI 的世界模型开放平台，把世界基础模型、数据集与工具链整合到一处，服务机器人、自动驾驶与智慧基础设施。2026 年 11 月 4 日发布的配套论文 <strong>Interactive World Simulation with Cosmos for Physical AI</strong>（arXiv 2611.06627）把它从「离线视频生成器」推进到「按动作流式产出观测」的<strong>实时交互式仿真器</strong>：既支持预测动作的视觉后果，也支持从外部仿真器维护的物理状态生成观测。</p>
+<p>对本站读者，这个仓库的价值在于它给出了一个可运行的答案：世界模型能不能承担一部分训练与评测闭环？答案是「能，但必须留出与传统物理引擎对接的口子」。代码与模型检查点在仓库内，示例集合在 Hugging Face，项目主页在 NVIDIA Research。</p>
+<hr />
+<p>按交互模式可分为两条通路，共用同一套流式接口：</p>
+<ol>
+<li><strong>动作条件通路</strong>：历史观测窗口 + 当前动作 → 下一帧观测。用于想象、规划与策略评测，动力学来自模型。</li>
+<li><strong>外部状态通路</strong>：外部仿真器维护的物理状态 → 渲染/生成观测。用于需要严格物理正确性的场景，动力学来自求解器。</li>
+</ol>
+<p>支撑实时流式生成的三块工程组件：</p>
+<ul>
+<li><strong>高速生成链路</strong>：蒸馏 / 少步采样 + 推理引擎优化，把单步延迟压进控制周期；</li>
+<li><strong>自条件稳定性</strong>：训练时混入模型自身滚出，抑制长程推演的误差累积与漂移；</li>
+<li><strong>分层时序记忆</strong>：把「近几帧的局部细节」与「几十帧前的场景布局」分开缓存，避免上下文窗口耗尽。</li>
+</ul>
+<p>下游演示覆盖相机导航、机器人操作、可控视频迁移与多视图 AV 仿真，四者共用同一框架而非各自一套模型。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2611.06627">Interactive World Simulation with Cosmos for Physical AI（arXiv 2611.06627）</a></strong> — 本仓库的配套论文，双模式实时交互仿真框架。</li>
+<li><strong><a href="https://github.com/NVIDIA/cosmos">NVIDIA Cosmos 仓库</a></strong> — 世界模型、数据集与工具链，代码与检查点入口。</li>
+<li><strong><a href="https://huggingface.co/collections/nvidia/cosmos3-examples">Cosmos 示例集合（Hugging Face）</a></strong> — 可运行的交互仿真示例。</li>
+<li><strong><a href="https://research.nvidia.com/labs/cosmos-lab/cosmos-simulation">项目主页（NVIDIA Research）</a></strong> — 演示视频与技术说明。</li>
+<li><strong><a href="/papers">本站 p318 论文解读</a></strong> — 流式生成、自条件稳定性与动作敏感性的数学拆解。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.06710">本站 p319 VLA 推理时间都花在哪</a></strong> — 实时性约束下的阶段级 profiling 方法。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.05093">本站 p321 LoopQ</a></strong> — 边缘硬件上量化与延迟的公平评测结论。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先定模式</strong>：需要多样性/快速想象用动作条件通路；需要物理可信/可复现用外部状态通路。两者不要在同一次评测里混用而不标注。</li>
+<li><strong>跑通一个最小循环</strong>：加载检查点 → <code>reset(首帧)</code> → 每步给动作取新观测 → 记录单步延迟。先确认延迟低于目标控制周期。</li>
+<li><strong>做动作敏感性检查</strong>：同一初始状态下给两个不同动作，滚出若干步，比较观测差异；差异接近 0 说明模型在忽略动作输入，不能用作策略评测器。</li>
+<li><strong>测长程漂移</strong>：逐步加长推演步数，记录场景统计与物体位置是否自洽，找出自条件开始崩坏的步数。</li>
+<li><strong>接站内方法</strong>：实时性与延迟分解见 <code>p319</code> 的 profiling 骨架；物理引擎侧的分工见 <code>physics-simulation</code> 模块。</li>
+</ol>
+<pre><code class="language-python"># 伪代码：交互式循环（真实 API 以仓库文档为准）
+wm = InteractiveWorldModel(mode='action', ctx_len=16)
+obs = wm.reset(first_frame)
+for t in range(T):
+    action = policy(obs)
+    obs = wm.step(action=action)      # 流式单步，必须 &lt; 控制周期
+    log_latency(t)
+</code></pre>
+<p>许可证为 NOASSERTION（自定义条款），商用与再分发前务必逐条核对仓库 LICENSE；Hugging Face 上的检查点可能有各自的模型许可。</p>
+<hr />
+<p>这类开放平台不宜用单一分数评估，建议按四个维度看：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>观察方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单步延迟</td>
+<td>目标硬件上 batch 1 的流式生成耗时，是否低于控制周期</td>
+</tr>
+<tr>
+<td>长程漂移</td>
+<td>连续数百帧后物体位置、光照、场景布局是否仍自洽</td>
+</tr>
+<tr>
+<td>动作—后果一致性</td>
+<td>不同动作是否产生可区分的观测差异（避免模型忽略动作）</td>
+</tr>
+<tr>
+<td>双模式一致性</td>
+<td>同一状态下动作条件通路与外部状态通路的观测是否可比</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">注意</h3>
+<ul>
+<li>视频质量指标（FVD / LPIPS）<strong>不能替代</strong>闭环指标：一段看起来合理的视频可能完全没响应动作输入。</li>
+<li>论文给出的是四类演示与框架能力，并未承诺在所有场景下超越传统仿真器的物理精度。</li>
+<li>实时性强烈依赖 GPU 型号与推理引擎，跨硬件结论不可直接迁移（参见本站 p319、p321 的硬件敏感性结论）。</li>
+</ul>
+<hr />
+<p><strong>对比传统物理仿真器（Isaac Sim / MuJoCo / Genesis）</strong>：传统求解器给出严格物理状态但外观与多样性受限；Cosmos 的动作条件通路反过来，多样性高但物理正确性靠学习。本文的「外部状态通路」不是要取代求解器，而是给两者一个共同接口。</p>
+<p><strong>对比离线视频世界模型</strong>：多数世界模型一次性生成整段视频、无法中途插入动作；这里的核心是<strong>流式、可交互</strong>，能接进闭环控制与评测。</p>
+<p><strong>对比本站 os243 Robotic World Model</strong>：RWM 把世界模型当可查询的神经网络仿真器、直接服务于策略优化与离线 MBRL；Cosmos 定位更靠「平台与底座」，提供模型、数据集、工具链与两类交互模式。前者问「能不能替掉真机 rollout」，后者问「能不能把世界模型接成环境」。</p>
+<p><strong>对比本站 p318 / physics-simulation 模块</strong>：p318 是这篇论文的解读与数学拆解，<code>physics-simulation</code> 给接触动力学与求解器的原理，三者合起来覆盖「算出来的动力学」与「学出来的动力学」两端。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

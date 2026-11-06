@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-05T08:30",
+ "lastUpdated": "2026-11-06T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,123 @@
   }
  ],
  "projects": [
+  {
+   "id": "os242",
+   "name": "NVIDIA Cosmos：把世界基础模型变成可交互的 Physical AI 仿真开放平台",
+   "github": "https://github.com/NVIDIA/cosmos",
+   "organization": "NVIDIA",
+   "org": "NVIDIA",
+   "category": "ai-model",
+   "description": "**NVIDIA Cosmos** 是面向 Physical AI 的世界模型开放平台，把世界基础模型、数据集与工具链放在同一屋檐下，服务机器人、自动驾驶与智慧基础设施等方向。2026 年 11 月 4 日 NVIDIA 发布 **Interactive World Simulation with Cosmos for Physical AI**（arXiv 2611.06627），把 Cosmos 从「离线生成视频」推进到「按动作流式产出观测」的**实时交互式仿真**：既支持预测动作的视觉后果，也支持从外部仿真器维护的物理状态生成观测。\n\n**为什么值得关注**：世界模型此前多半是评测用的视频生成器，难以接进训练与评测闭环。Cosmos 的这套框架留出了与外部物理仿真器对接的口子，等于让「学出来的动力学」与「算出来的动力学」共用一套接口，可以直接用于相机导航、机器人操作、可控视频迁移与多视图自动驾驶仿真。代码与模型检查点在仓库，示例集合在 Hugging Face。\n\n仓库 created 2024-12-30、2026-11-05 活跃推送，累计约 1.2 万 star；许可证为 NOASSERTION（自定义条款，商用前须逐条核对）。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 12292,
+   "features": [
+    "动作与场景控制下的实时流式视觉观测生成",
+    "同时支持动作后果预测与外部仿真器状态驱动",
+    "覆盖相机导航 / 机器人操作 / 可控视频迁移 / 多视图 AV 仿真",
+    "代码与模型检查点开放，配套 Hugging Face 示例集合",
+    "配套论文 arXiv 2611.06627 与项目主页",
+    "与本站 physics-simulation、world-models-llm 模块形成实现对照"
+   ],
+   "tags": [
+    "Cosmos",
+    "世界基础模型",
+    "交互式仿真",
+    "动作条件化",
+    "Physical AI",
+    "NVIDIA",
+    "实时推演"
+   ],
+   "addedDate": "2026-11-06"
+  },
+  {
+   "id": "os243",
+   "name": "Robotic World Model：把世界模型当神经网络仿真器，让离线 MBRL 在真机上跑通",
+   "github": "https://github.com/leggedrobotics/robotic_world_model",
+   "organization": "leggedrobotics",
+   "org": "ETH Zürich / Robotic Systems Lab",
+   "category": "simulation",
+   "description": "**Robotic World Model (RWM)** 来自 ETH Zürich 的 Robotic Systems Lab，收录两篇配套工作：**Robotic World Model: A Neural Network Simulator for Robust Policy Optimization in Robotics** 与 **Uncertainty-Aware Robotic World Model Makes Offline Model-Based Reinforcement Learning Work on Real Robots**。\n\n核心主张是：与其把世界模型当「生成看起来像的视频」，不如把它训练成**可查询、可 rollout 的神经网络仿真器**，让策略在里面做基于模型的强化学习；第二篇进一步引入**不确定性感知**，使离线 MBRL 不至于在模型失真的区域被「想象出来的高回报」带偏，从而把训练出的策略迁到真机。\n\n**为什么值得关注**：它回答的是具身学习里最实际的一个问题——真机 rollout 太贵，能不能用学出来的动力学模型替代一部分？RWM 给出的不是视频指标，而是策略优化与真机部署结果，且明确处理了 model bias 这一离线 MBRL 的老大难。仓库为 Python / Apache-2.0，配套项目主页给出论文与视频。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 701,
+   "features": [
+    "神经网络仿真器替代部分真机 rollout",
+    "不确定性感知抑制离线 MBRL 的模型偏差",
+    "两篇配套论文：鲁棒策略优化 + 真机离线 MBRL",
+    "以策略优化与真机部署结果为评价口径，而非视频质量",
+    "Apache-2.0 协议，PyTorch 生态",
+    "与本站 reinforcement-learning、physics-simulation 模块互补"
+   ],
+   "tags": [
+    "Robotic World Model",
+    "神经网络仿真器",
+    "离线MBRL",
+    "不确定性感知",
+    "ETH Zürich",
+    "Sim-to-Real"
+   ],
+   "addedDate": "2026-11-06"
+  },
+  {
+   "id": "os244",
+   "name": "EMERGE-Policy：让机器人心智从单一策略中「涌现」出来的框架",
+   "github": "https://github.com/EMERGE-Policy/EMERGE-Policy",
+   "organization": "EMERGE-Policy",
+   "org": "EMERGE-Policy Team",
+   "category": "framework",
+   "description": "**EMERGE-Policy** 的命题写在名字里：*A Robot Mind Emerges Beyond a Single Policy*——通用机器人能力不该被一个端到端策略完全装下。仓库给出配套论文与项目主页的实现，围绕「多个组件如何组织成一个会随经验变化的机器人心智」展开，而不是再训练一个更大的单一 VLA。\n\n**为什么值得关注**：当前主流路线把「通用」压进一个权重文件（VLA / WAM 基座），而 EMERGE-Policy 把问题重新拆回**结构层**：策略、记忆、评估与改进之间的关系如何组织。这与本站 `embodied-agent` 模块讨论的 Harness 层、失败感知与自主恢复是同一条问题线，可以和「把冻结模型组织成会自我改进的具身 Agent」对照阅读。\n\n仓库 2026-08-28 创建、2026-11-03 活跃推送，约 400 star，Python 实现；GitHub 未声明许可证（license 字段为空），复用前须先与作者确认授权。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 396,
+   "features": [
+    "主张机器人心智不能被单一策略表示",
+    "面向策略 / 记忆 / 评估 / 改进的结构层组织",
+    "配套论文与项目主页，含实验与可视化",
+    "与 Harness 层、自改进具身 Agent 路线形成对照",
+    "Python 实现，2026-11 活跃维护",
+    "许可证未声明，商用前需确认"
+   ],
+   "tags": [
+    "EMERGE-Policy",
+    "机器人心智",
+    "多组件组织",
+    "具身Agent",
+    "自改进",
+    "结构层"
+   ],
+   "addedDate": "2026-11-06"
+  },
+  {
+   "id": "os245",
+   "name": "Grounded Action Model：把 3D Grounding 作为机器人动作的基础",
+   "github": "https://github.com/GehaoZhang6/Grounded-Action-Model",
+   "organization": "GehaoZhang6",
+   "org": "Gehao Zhang 等",
+   "category": "perception",
+   "description": "**Grounded Action Model (GAM)** 提出的次序很明确：先**定位**，再**行动**。仓库标题即 *3D Grounding as a Foundation for Robotics*，主张把三维空间中的物体/部位定位能力作为机器人动作生成的公共前置，而不是让每个策略各自在隐式表征里重新学一遍「东西在哪」。\n\n**为什么值得关注**：VLA 的失败样本里，有相当一部分不是动作解码不准，而是**指称与空间对应错了**——指令说「把左边那个杯子放到上层架子」，模型把注意力落到了别处。把 3D Grounding 显式做成独立、可评测的基础层，一方面让错误可归因，另一方面让同一套定位能力被多个下游策略复用。这与本站 `multimodal-perception` 模块的「具身 Grounding」、`computer-vision` 模块的开放词汇检测内容可以直接接上。\n\n仓库 2026-09-22 创建、2026-11-05 活跃推送，Python / MIT 协议，配套项目主页；star 数不高（约 55），属于新近开源、值得跟踪的早期项目。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 55,
+   "features": [
+    "把 3D Grounding 显式作为动作生成的公共前置",
+    "定位与动作解耦，使错误可归因、能力可复用",
+    "面向指称—空间对应错误这类 VLA 高频失败",
+    "MIT 协议，Python 实现，配套项目主页",
+    "与具身 Grounding / 开放词汇检测内容直接衔接",
+    "早期项目，2026-11 活跃推送"
+   ],
+   "tags": [
+    "Grounded Action Model",
+    "3D Grounding",
+    "视觉定位",
+    "动作基座",
+    "空间指称",
+    "MIT"
+   ],
+   "addedDate": "2026-11-06"
+  },
   {
    "id": "os238",
    "name": "RawVLA，把相机 ISP 变成可学习成像前端：让冻结 VLA 在暗光下也能看清目标",
@@ -5986,5 +6103,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 228
+ "totalItems": 232
 }

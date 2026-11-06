@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMERGE-Policy：让机器人心智从单一策略中「涌现」出来的框架 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">EMERGE-Policy：让机器人心智从单一策略中「涌现」出来的框架 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="emerge-policy">EMERGE-Policy：让机器人心智从单一策略中「涌现」出来的框架</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/EMERGE-Policy/EMERGE-Policy">https://github.com/EMERGE-Policy/EMERGE-Policy</a>  </p>
+<p><strong>Stars</strong>: 396 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-06  </p>
+<p><strong>组织</strong>: EMERGE-Policy  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-06</p>
+</blockquote>
+<hr />
+<p>EMERGE-Policy 的命题写在名字里：<em>A Robot Mind Emerges Beyond a Single Policy</em>——通用机器人能力不该被一个端到端策略完全装下。仓库给出配套论文与项目主页的实现，围绕「多个组件如何组织成一个会随经验变化的机器人心智」展开，而不是再训练一个更大的单一 VLA。</p>
+<p>对本站读者，它和 <code>embodied-agent</code> 模块讨论的 Harness 层、失败感知与自主恢复是同一条问题线：当基座模型被冻结，能力增长从哪里来？主流答案是堆数据堆参数，EMERGE-Policy 给的答案是<strong>结构层</strong>——策略、记忆、评估与改进之间的关系如何组织。仓库 2026-08-28 创建、2026-11-03 活跃推送，Python 实现，约 400 star。</p>
+<hr />
+<p>从「单一策略」到「心智」的拆法大致对应四类组件：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>职责</th>
+<th>与单策略的差别</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>执行策略</td>
+<td>产生动作</td>
+<td>不再独自承担全部能力</td>
+</tr>
+<tr>
+<td>记忆 / 状态</td>
+<td>保留跨任务经验</td>
+<td>单策略只有上下文窗口内的短期信息</td>
+</tr>
+<tr>
+<td>评估</td>
+<td>判断做得对不对</td>
+<td>把「失败」变成可复用信号</td>
+</tr>
+<tr>
+<td>改进机制</td>
+<td>依据评估调整后续行为</td>
+<td>不靠重新训练整个基座</td>
+</tr>
+</tbody>
+</table>
+<p>这种拆法与 Harness 层思路一致：把冻结的模型组织成会自我改进的系统，能力增量来自组件间的反馈回路，而不是权重更新。也正因如此，它的可解释性与可调试性通常好于端到端黑盒。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/EMERGE-Policy/EMERGE-Policy">EMERGE-Policy 仓库</a></strong> — 论文配套实现。</li>
+<li><strong><a href="https://emerge-policy.github.io/EMERGE-Policy/">项目主页</a></strong> — 架构、实验与可视化。</li>
+<li><strong><a href="/learn/embodied-agent">本站 embodied-agent 模块</a></strong> — Harness 层、失败感知与自主恢复的方法讲解。</li>
+<li><strong><a href="https://github.com/leggedrobotics/robotic_world_model">本站 os243 Robotic World Model</a></strong> — 可作为「预演与评估」组件的世界模型实现。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.01560">uni-robot-agent / Democratizing Robot-Use Agents（arXiv 2611.01560）</a></strong> — 统一 Harness 把开源模型接进仿真与真机的对照工作。</li>
+<li><strong><a href="/papers">本站 p307 论文解读</a></strong> — 统一 Harness 与开源模型的工程基础。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先读项目主页的架构图</strong>，确认各组件的输入输出契约，再跑代码；这类仓库的精髓在组织方式而非某个算子。</li>
+<li><strong>对照 <code>embodied-agent</code> 模块</strong>：把 Harness 层、失败感知、自主恢复三节与仓库组件一一对应，判断哪些是新增、哪些是换名。</li>
+<li><strong>做一次组件消融</strong>：去掉记忆或评估组件，看长程任务与失败恢复是否退化——这是验证「涌现」主张是否成立的最直接实验。</li>
+<li><strong>记录反馈回路的时延</strong>：评估与改进若跑在控制周期之外，要明确它是慢思考层还是快反应层。</li>
+<li><strong>许可证先确认</strong>：GitHub 未声明 license 字段，复用、二次分发或商用前须联系作者确认授权。</li>
+</ol>
+<pre><code class="language-python"># 伪代码：把「评估 → 改进」做成显式回路
+class Mind:
+    def __init__(self, policy, memory, evaluator, improver):
+        self.policy, self.memory = policy, memory
+        self.evaluator, self.improver = evaluator, improver
+
+    def step(self, obs, goal):
+        ctx = self.memory.retrieve(obs, goal)
+        action = self.policy(obs, goal, ctx)
+        return action
+
+    def feedback(self, traj, outcome):
+        verdict = self.evaluator(traj, outcome)
+        self.memory.write(traj, verdict)
+        if not verdict.ok:
+            self.improver.update_hint(verdict.reason)   # 不重训基座，只改提示/路由
+</code></pre>
+<p>Python 实现；仓库未声明许可证，务必先确认授权再用于生产。</p>
+<hr />
+<p>结构层工作的评估不宜只报成功率，建议同时看：</p>
+<ul>
+<li><strong>长程任务完成率</strong>与<strong>失败后恢复率</strong>（体现评估/改进回路的价值）；</li>
+<li><strong>组件消融曲线</strong>：逐个去掉记忆、评估、改进，量化各组件贡献；</li>
+<li><strong>跨任务迁移</strong>：在一个任务上积累的经验能否被另一个任务复用；</li>
+<li><strong>反馈开销</strong>：评估与改进带来的额外延迟，是否在可接受范围。</li>
+</ul>
+<h3 id="_2">注意</h3>
+<ul>
+<li>「涌现」是主张而非保证：若消融显示组件几乎不起作用，就只是一个换名的单体系统。</li>
+<li>项目较新（2026-08 创建），接口与实验配置仍可能变动，复现时要锁定 commit。</li>
+<li>未声明许可证是实际使用的最大障碍，先确认再集成。</li>
+</ul>
+<hr />
+<p><strong>对比单一 VLA / WAM 基座</strong>：主流路线把通用能力压进一个权重文件；EMERGE-Policy 把问题拆回组件组织，能力增量来自反馈回路。前者擅长大规模预训练，后者擅长在冻结基座上做低成本改进。</p>
+<p><strong>对比本站 <code>embodied-agent</code> 模块的 Harness 层</strong>：两者几乎是同一命题的不同实现，可以对照读；模块里还给出失败感知与自主恢复的具体方法。</p>
+<p><strong>对比 os243 Robotic World Model</strong>：RWM 提供可查询的动力学/世界模型，正好可以当作 EMERGE-Policy 架构里「预演与评估」的一个组件；前者是组件，后者是组织方式。</p>
+<p><strong>对比强化学习式自改进</strong>：RL 靠奖励信号更新权重；这里靠评估信号调整路由、记忆与提示，不动基座权重，因此部署成本与风险都更低，但上限也受限于冻结模型本身。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

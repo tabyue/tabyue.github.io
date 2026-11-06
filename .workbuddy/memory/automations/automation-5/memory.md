@@ -171,6 +171,20 @@
 - 校验：`health_check` **首轮 ALL OK 且 0 告警**、`verify_learn_structure` ALL OK、`audit_learn_content` 硬缺陷全 0、unittest 34/34、node UI 32/32。已 push。
 - 新坑：① **PowerShell 数组切片 `1..0` 陷阱** —— 批量循环里 `$arg[1..($arg.Length-1)]` 对无参数脚本会返回 `@($null,$arg[0])`，把脚本名当多余参数传给 python，导致 normalize/health/audit 报 usage 错、sync 只处理 0 个模块并显示 `[skip] src not found`。校验脚本一律显式逐条 `& python tools/xxx.py` 调用，别写泛型循环。② **`audit_learn_content.py` 与 unittest 都会校验 `section['chars'] == len(content)`**，改正文必须同步 chars（本轮顺手修公式时漏了，unittest 挂 1 项）。③ **PowerShell 管道中文 mojibake**：先设 `[Console]::OutputEncoding = [System.Text.Encoding]::UTF8` + `$env:PYTHONIOENCODING='utf-8'`，或干脆让 Python 自己写 UTF-8 报告文件。④ 本轮 arXiv API 4 查询全 429，仍按 11-02 经验降级 HF Daily Papers + `WebFetch arxiv.org/abs/<id>`。
 
+### 2026-11-05 08:16—08:50
+- 投稿箱：无新投稿。开工工作树干净、HEAD==origin/main（0e916ca）。
+- 数据：新闻 +10（n609—n618）、论文 +5（p312—p316，含 detail）、开源 +4（os238—os241，含 detail + 报告页）、招聘 +6（j315—j320）、资源新增 r029（物理 AI 分布式评测 / 真实场景连续作业 / 成像与接触鲁棒性，category 众数「学术资源」）。
+- 学习：**延续 11-04 的「深化 tier0 薄章」**（用户长期任务要正文讲解 + 前置概念 + 可运行代码，不要只堆前沿章节）。robot-kinematics#3「刚体变换与齐次矩阵」3124→12335；linear-algebra#2「向量运算的几何应用」3513→12255。章节数仍 553，sitemap 不变。
+- 校验：`health_check` **首轮 ALL OK 且 0 告警** + `verify_learn_structure` ALL OK + `audit_learn_content` 硬缺陷全 0 + unittest 34/34 + node UI 32/32。已 push（0e916ca..d25cde3），远程 HEAD 一致，origin/main 已 update-ref 同步。
+- 经验：① **本轮无新坑，全流程一次通过**；② arXiv API 4 查询一次拿 100+ 候选，`WebFetch arxiv.org/abs/<id>` 核对 5 篇标题/作者/日期全准；③ GitHub Search API（urllib + `Bearer $(gh auth token)`）5 查询全成功，但**库已收录 205 个 repo，热门候选 DUP 率极高**——靠「解析 discover 报告里的全部 repo → 与 existing 集合比对」一次拿到 61 个 NEW 才够选（RawVLA / alpamayo-recipes / ai_worker / data-pyramid）；④ 深化已有章节用「定位 `### 练习` 标题 → 在其前插入带编号新小节 → 原练习标题编号顺延」稳定幂等，不新增练习就不碰参考答案；⑤ 深化已有章节务必同步 `chars`（unittest 校验）+ section 自身 `lastUpdated` + learn 顶层 + learning-path 三处；⑥ `git add data sitemap.xml`（**不用 -A**）+ 精确 Remove-Item 临时文件列表，避免误删历史 tracked 的 `_add_two.py` / `_cv_sec.md` / `_desktop_sec.md`；⑦ 用显式 URL push 后 `git status -sb` 显示的 ahead 是 origin/main 引用陈旧假象，`gh api ... --jq .sha` + `git update-ref` 修。
+
+### 2026-11-06 08:14—09:00
+- 投稿箱：无新投稿（open issue 返回 `[]`）。开工工作树干净、HEAD==origin/main（d25cde3）。
+- 数据：新闻 +10（n619—n628）、论文 +5（p317—p321，含 detail）、开源 +4（os242—os245，含 detail + 报告页）、招聘 +6（j321—j326）、资源新增 r030（交互式世界模型与神经仿真资源，category 众数「学术资源」）+ r001 扩充。totalItems 586 / 295 / 232 / 315。
+- 学习：**延续「深化已有 tier0/1 薄章」**。`control-theory#2` 状态估计基础 5429→15901（贝叶斯→KF 精确解、增益完整推导、Riccati/可观测性/Joseph、非线性滤波家族、多速率融合与 NIS）；`calculus-optimization#5` 梯度与 Jacobian 矩阵 5372→17128（方向导数最陡证明、局部线性化与体积伸缩、四种数值 Jacobian 可运行对比、2R 臂解析推导与奇异位形、Hessian 与二阶收敛）。章节数仍 553，sitemap 不变。
+- 校验：`health_check` **首轮 ALL OK 且 0 告警** + `verify_learn_structure` ALL OK + `audit_learn_content` 硬缺陷全 0 + unittest 34/34 + node UI 32/32。
+- 经验：① **无新坑，全流程一次通过**；② 深化正文用「定位 `### 练习` / `### 练习题` → 在其前插入 `### N.` / `### 深入N：` 新小节，子小节用 `####`，不新增练习就不碰参考答案」稳定幂等；③ 新增正文主体用 `###` 保证前端小节目录收录，`####` 只作二级细分；④ 正文一律中文引号「」、表格单元格内不写 `|`、范数用 `\lVert \rVert`、条件概率用 `\mid`，KaTeX 全过；⑤ 查重必须先导出全库 title/url/arxiv/github 清单再选题——本轮拦掉 Agility 上市(n570)、云蝶 B+(n462)、六项国标(n519)、蚂蚁灵波(n611)、智元便利店(n610)、uni-robot-agent(n605)；⑥ arXiv API 4 查询全成功拿 128 个 NEW，GitHub Search API 5 查询全成功，`WebFetch arxiv.org/abs/<id>` 核对 5 篇全准。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
