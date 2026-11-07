@@ -4,7 +4,7 @@
   "stage": "阶段六：项目实战",
   "importance": "进阶实战",
   "estimatedHours": 50,
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-11-07T08:30",
   "description": "构建一个能在室内自主导航的移动机器人。从 SLAM 建图到 Nav2 导航的完整实战。",
   "prerequisites": [
     "ROS2",
@@ -79,19 +79,38 @@
     {
       "id": "sec-02",
       "title": "地图表示与构建：从栅格地图到语义地图",
-      "lastUpdated": "2026-04-29T15:05",
-      "chars": 3660,
+      "lastUpdated": "2026-11-07T08:30",
+      "chars": 18149,
       "shortTitle": "地图表示与构建",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 4,
+      "readingMinutes": 21,
       "headings": [
         "1. 地图表示方法",
         "2. 占用栅格地图（Occupancy Grid）",
         "3. Costmap（代价地图）",
         "4. SLAM 建图流程",
         "5. 语义地图：不只是墙和空地",
+        "6. 从传感器观测到格子概率：贝叶斯更新与对数几率",
+        "贝叶斯更新为什么变成加法",
+        "逆传感器模型给出 $l_i(z_t)$",
+        "必须做 clamp",
+        "7. 逆传感器模型：一条 LiDAR 射线到底更新了哪些格子",
+        "射线遍历与 free / occupied 的分配",
+        "正模型与逆模型的取舍",
+        "冲突观测怎么处理",
+        "8. 距离场与 ESDF：把「能不能走」变成连续可微的代价",
+        "欧氏距离变换",
+        "ESDF 与代价地图的关系",
+        "9. 八叉树与分辨率权衡：3D 地图为什么不能照搬 2D 栅格",
+        "八叉树：只在需要处细分",
+        "分辨率怎么选",
+        "10. 代价地图的分层与膨胀：三层 Costmap 各自解决什么",
+        "膨胀层为什么要两个半径",
+        "与前端渲染的关系",
+        "11. 可运行实现：从零写一个带逆传感器模型的占据栅格",
+        "12. 与前沿的连接：地图层与世界模型引导的导航",
         "练习题"
       ],
       "summary": "导航的前提是地图——机器人需要知道\"世界长什么样\"才能规划路径。本节系统讲解各种地图表示方法和构建流程。"
@@ -502,7 +521,7 @@
       "summary": "在前面几节里，我们把导航系统拆成了定位、建图、规划、控制这些模块，每个模块都有成熟的算法与工程实现。但当任务从「从 A 点走到 B 点」变成「去厨房把昨天放在抽屉里的那把螺丝刀拿来」，成功率会断崖式下跌。"
     }
   ],
-  "readingMinutes": 165,
+  "readingMinutes": 182,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 141957
+  "chars": 156446
 }

@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-06T08:30",
+ "lastUpdated": "2026-11-07T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,126 @@
   }
  ],
  "projects": [
+  {
+   "id": "os246",
+   "name": "LongLive：NVIDIA 开放的长视频生成 / 世界模型 / 世界动作模型基础设施",
+   "github": "https://github.com/NVlabs/LongLive",
+   "organization": "NVIDIA Labs",
+   "org": "NVIDIA",
+   "category": "ai-model",
+   "description": "**NVlabs/LongLive** 把长视频生成、世界模型与世界动作模型（Embodied）放在同一套基础设施里：面向长时程、实时的视频与动作推演，仓库 topics 覆盖 real-time、parallel、NVFP4、video-generation、world-models、world-action-models 与 robotics。2026-11-06 活跃推送，Apache-2.0，约 2872 star，创建于 2025-09-22。\n\n**为什么值得关注**：长时程一致性是世界模型当仿真器用的硬门槛——自生成的历史一旦开始漂移，rollout 就无法支撑策略优化。LongLive 把实时推理、并行与低精度（NVFP4）这些工程手段和 WAM 训练放在一起，等于把「rollout 能不能撑得住」当成基础设施问题而不是模型技巧问题。配合本站 p324（La-JEPA 的紧凑策略）与 p325（GPWM 的 3D 粒子推演），可以串成一条从长视频基座到控制策略的对照链。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 2872,
+   "features": [
+    "长视频生成与世界模型 / 世界动作模型统一基础设施",
+    "面向实时推演：real-time、parallel 与 NVFP4 低精度支持",
+    "覆盖机器人、视频生成与世界动作模型三类 workloads",
+    "Apache-2.0，代码与工程链路完全开放",
+    "NVIDIA Labs 官方维护，2026-11-06 活跃推送",
+    "与本站 world-models-llm、physics-simulation 模块形成实现对照"
+   ],
+   "tags": [
+    "LongLive",
+    "NVIDIA",
+    "长视频生成",
+    "世界模型",
+    "世界动作模型",
+    "实时推演",
+    "NVFP4"
+   ],
+   "addedDate": "2026-11-07"
+  },
+  {
+   "id": "os247",
+   "name": "Spatial-Forcing / SLA：把 3D 空间监督注入 VLA 持续预训练的官方实现",
+   "github": "https://github.com/OpenHelix-Team/Spatial-Forcing",
+   "organization": "OpenHelix-Team",
+   "org": "OpenHelix-Team",
+   "category": "ai-model",
+   "description": "**Spatial-Forcing** 是 SLA（Scaling Spatial-Language-Action Model，arXiv 2611.08373 / 本站 p326）与 Spatial Forcing（ICLR 2026）系列空间智能机器人基座模型的官方实现。核心主张是：VLA 继承 2D 视觉语言预训练的表征，空间理解却常常只在下游适配时才补，因此应当把冻结 3D 感知模型提供的空间表征，在持续预训练阶段就对齐进 VLA 的中间层视觉嵌入。\n\n**工程上的关键取舍**：所有辅助组件（3D 教师、特征依赖门控、概率状态 dropout）只在训练期存在，推理架构与预训练 VLA 权重原样复用，部署零改动。仓库 MIT、Python、2026-11-06 活跃推送，约 335 star，SLA 分支路径见仓库 tree/master/SLA。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 335,
+   "features": [
+    "SLA 持续预训练与 Spatial Forcing（ICLR 2026）官方实现",
+    "冻结 3D 感知模型提供空间监督，特征依赖门控聚合多层视觉嵌入",
+    "支持部分可得的深度与相机标定等异构几何标注",
+    "概率状态 dropout 抑制对示范轨迹的过拟合",
+    "训练期辅助组件全部可丢弃，推理架构不变",
+    "配套 arXiv 2611.08373 与项目主页 SLA.github.io"
+   ],
+   "tags": [
+    "Spatial-Forcing",
+    "SLA",
+    "空间语言动作模型",
+    "3D 空间监督",
+    "持续预训练",
+    "ICLR 2026",
+    "OpenHelix"
+   ],
+   "addedDate": "2026-11-07"
+  },
+  {
+   "id": "os248",
+   "name": "Dive into Embodied AI：从零到一搭建具身智能机器人的中文工程教程",
+   "github": "https://github.com/datawhalechina/dive-into-embodied-ai",
+   "organization": "Datawhale",
+   "org": "Datawhale",
+   "category": "framework",
+   "description": "**dive-into-embodied-ai** 是 Datawhale 的中文开源教程，目标是从零到一搭建一台具身智能机器人：把强化学习、World-Model、VLA 等智能决策方法落到工程实现，贯穿仿真环境、控制器、运动规划、感知系统等技能树模块，并在真实项目里跑通「决策—控制—感知」完整链路。2026-11-06 活跃推送，Python，约 693 star，创建于 2026-04-28。\n\n**为什么值得关注**：中文具身教程多数停在论文导读或单点 demo，这份教程的价值在「链路完整」——它逼着读者把仿真、控制、规划与感知接成一个能跑的闭环，正好补上本站学习中心各模块之间的工程缝隙。许可证未在仓库声明（NOASSERTION），二次分发前需与维护者确认。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 693,
+   "features": [
+    "从零到一搭建具身智能机器人的完整中文教程",
+    "覆盖强化学习、World-Model、VLA 等决策方法的工程落地",
+    "贯穿仿真环境、控制器、运动规划、感知系统技能树",
+    "在真实项目中跑通决策—控制—感知闭环",
+    "Datawhale 社区维护，中文可读性好",
+    "与本站 learning-path 的 7 阶段路径可互相索引"
+   ],
+   "tags": [
+    "Datawhale",
+    "中文教程",
+    "从零到一",
+    "具身智能机器人",
+    "VLA",
+    "World-Model",
+    "工程闭环"
+   ],
+   "addedDate": "2026-11-07"
+  },
+  {
+   "id": "os249",
+   "name": "Workbench：证据优先的轮式家庭机器人运行时（ROS 2 / MoveIt 2 / 世界模型）",
+   "github": "https://github.com/Quchaosheng/workbench-mobile-home-robot",
+   "organization": "Quchaosheng",
+   "org": "Quchaosheng",
+   "category": "framework",
+   "description": "**workbench-mobile-home-robot** 是一个面向轮式家庭机器人的 evidence-first runtime：动作受限（bounded actions）、事件可重放（replayable events）、校验失败即闭合（fail-closed verification）。技术栈覆盖 ROS 2、MoveIt 2、Gazebo、SocketCAN 与任务规划，并把 world-model 纳入运行时。2026-11-06 活跃推送，Apache-2.0，Python，约 265 star，创建于 2026-08-04。\n\n**为什么值得关注**：家庭机器人最难的不是「能不能做」，而是「做错了能不能查、能不能安全停下」。把可重放事件与 fail-closed 校验做进运行时，等于把可观测性和安全边界放到架构层，而不是靠上层策略自觉。这与本站 mobile-robot-navigation 模块的地图表示与代价层、以及 platform-engineering 模块的评测基础设施可以直接对读。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 265,
+   "features": [
+    "证据优先运行时：bounded actions 与可重放事件",
+    "fail-closed 校验，动作与状态不满足条件即拒绝执行",
+    "ROS 2 / MoveIt 2 / Gazebo / SocketCAN 完整技术栈",
+    "任务规划与世界模型纳入运行时",
+    "Apache-2.0，可自由二次开发",
+    "与本站 mobile-robot-navigation、platform-engineering 模块形成对照"
+   ],
+   "tags": [
+    "workbench",
+    "轮式家庭机器人",
+    "ROS 2",
+    "MoveIt 2",
+    "fail-closed",
+    "可重放事件",
+    "世界模型"
+   ],
+   "addedDate": "2026-11-07"
+  },
   {
    "id": "os242",
    "name": "NVIDIA Cosmos：把世界基础模型变成可交互的 Physical AI 仿真开放平台",
@@ -6103,5 +6223,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 232
+ "totalItems": 236
 }

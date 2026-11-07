@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workbench：证据优先的轮式家庭机器人运行时（ROS 2 / MoveIt 2 / 世界模型） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Workbench：证据优先的轮式家庭机器人运行时（ROS 2 / MoveIt 2 / 世界模型） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="workbenchros-2-moveit-2">Workbench：证据优先的轮式家庭机器人运行时（ROS 2 / MoveIt 2 / 世界模型）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Quchaosheng/workbench-mobile-home-robot">https://github.com/Quchaosheng/workbench-mobile-home-robot</a>  </p>
+<p><strong>Stars</strong>: 265 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-07  </p>
+<p><strong>组织</strong>: Quchaosheng  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-07</p>
+</blockquote>
+<hr />
+<p><strong>workbench-mobile-home-robot</strong> 是一个面向轮式家庭机器人的 <strong>evidence-first runtime</strong>：动作受限（bounded actions）、事件可重放（replayable events）、校验失败即闭合（fail-closed verification）。技术栈覆盖 ROS 2、MoveIt 2、Gazebo、SocketCAN 与任务规划，并把 world-model 纳入运行时。</p>
+<p>仓库 Python / Apache-2.0，2026-11-06 活跃推送，约 265 star，创建于 2026-08-04。</p>
+<p><strong>为什么值得关注</strong>：家庭机器人最难的不是「能不能做」，而是「做错了能不能查、能不能安全停下」。把可重放事件与 fail-closed 校验做进运行时，等于把可观测性和安全边界放到架构层，而不是指望上层策略自觉。这与本站 <code>platform-engineering</code> 模块讲的评测基础设施、<code>mobile-robot-navigation</code> 模块讲的地图与代价层可以直接对读。</p>
+<hr />
+<ol>
+<li><strong>bounded actions</strong>：动作空间被显式限定，策略不能任意下发未声明的动作；</li>
+<li><strong>replayable events</strong>：所有关键事件带可重放记录，事后能精确复现当时的状态与决策；</li>
+<li><strong>fail-closed verification</strong>：任一前置校验不通过即拒绝执行，默认状态是「不动」而不是「先做再说」；</li>
+<li><strong>ROS 2 / MoveIt 2 / Gazebo / SocketCAN</strong>：标准的机器人软件栈，便于替换本体与执行器；</li>
+<li><strong>任务规划 + world-model</strong>：运行时内维护任务状态与对环境的预测，用于校验动作后果；</li>
+<li><strong>证据层</strong>：把「为什么允许这一步」写成可检查的证据，而不是散落在日志里的字符串。</li>
+</ol>
+<p>分层的要点是：<strong>校验在动作下发之前，证据在动作执行之后，二者构成闭环</strong>。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/Quchaosheng/workbench-mobile-home-robot">workbench-mobile-home-robot 仓库</a></strong> — 证据优先的轮式家庭机器人运行时（Apache-2.0）。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.07730">Seeing Beyond the Next Step</a></strong> — 世界模型引导的类人导航，本站 p322。</li>
+<li><strong><a href="https://github.com/NVlabs/LongLive">NVlabs/LongLive</a></strong> — 长时程世界模型推演基础设施，本站 os246。</li>
+<li><strong><a href="https://github.com/NVIDIA/cosmos">NVIDIA Cosmos</a></strong> — 可交互 Physical AI 仿真平台，本站 os242。</li>
+<li><strong><a href="/learn/mobile-robot-navigation">本站 mobile-robot-navigation 模块</a></strong> — 地图表示、占据栅格与代价地图层。</li>
+<li><strong><a href="/learn/platform-engineering">本站 platform-engineering 模块</a></strong> — 评测基础设施、统一契约与基准可复现性。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先跑 Gazebo 侧的轮式底盘 demo</strong>：确认 ROS 2 / MoveIt 2 / SocketCAN 链路通畅，再接运行时；</li>
+<li><strong>读 bounded actions 定义</strong>：先看动作白名单与参数范围，这决定了策略能做什么；</li>
+<li><strong>故意制造一次校验失败</strong>：拔掉某个前置条件，确认系统 fail-closed 而不是继续执行；</li>
+<li><strong>重放一段事件</strong>：用 replayable events 复现一次失败任务，检查证据是否足以定位原因；</li>
+<li><strong>再接 world-model</strong>：确认预测后果参与校验，而不只是被用来生成可视化；</li>
+<li><strong>回到站内读原理</strong>：地图与代价层见 <code>mobile-robot-navigation</code>，评测基础设施与统一契约见 <code>platform-engineering</code>，运行时分层见 <code>ros2</code>。</li>
+</ol>
+<pre><code class="language-python"># 伪代码：fail-closed 的动作下发路径
+def dispatch(runtime, action, evidence_store):
+    if action.kind not in runtime.allowed_actions:
+        return runtime.refuse('action not in whitelist')
+    checks = runtime.verify(action)          # 世界模型预测 + 状态 + 权限
+    if not all(checks.values()):
+        return runtime.refuse(checks)        # 默认不动
+    receipt = runtime.execute(action)
+    evidence_store.append(receipt, checks)   # 可重放证据
+    return receipt
+</code></pre>
+<p>Apache-2.0，可自由使用与二次开发；SocketCAN 与真机底盘相关部分需要对应硬件，纯仿真可先跳过。</p>
+<hr />
+<p>建议按运行时而非按任务评估：</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>安全性</td>
+<td>未授权动作拦截率、校验失败时的默认行为是否确实是「不动」</td>
+</tr>
+<tr>
+<td>可观测性</td>
+<td>事件重放能否复现失败、证据字段是否足以定位根因</td>
+</tr>
+<tr>
+<td>实时性</td>
+<td>校验链路引入的额外延迟、动作频率上限</td>
+</tr>
+<tr>
+<td>可移植性</td>
+<td>换本体 / 换执行器需要改几处配置</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">注意</h3>
+<ul>
+<li>约 265 star，个人维护的早期项目，接口与默认策略仍在迭代，复现请锁定 commit；</li>
+<li>fail-closed 会牺牲可用性：校验过严会让机器人在边缘场景下频繁拒动，需要按场景调阈值；</li>
+<li>world-model 若只用于生成可视化而未参与校验，就退化成装饰层，复现时要专门验证；</li>
+<li>与本站 os246（LongLive，长时程生成基础设施）对照：一个解决「推演撑得久」，一个解决「执行可核查」。</li>
+</ul>
+<hr />
+<p><strong>对比 ROS 2 原生导航栈（Nav2）</strong>：Nav2 提供成熟的建图、定位与路径规划，但默认不强制 fail-closed 校验、也不产出可重放证据；workbench 把安全边界与可观测性做成运行时约束，可与 Nav2 叠加而非替换。</p>
+<p><strong>对比 LongLive / Cosmos（本站 os246 / os242）</strong>：那两个是生成侧与世界模型侧的基础设施，关注推演质量与长时程一致性；workbench 关注动作下发前的校验与执行后的证据，属于运行时治理层。</p>
+<p><strong>对比 RoboHarness / uni-robot-agent（本站 r022 / n605）</strong>：Harness 类工作解决「把冻结模型组织成会调工具的 Agent」，重点是工具粒度与接口完备性；workbench 解决「工具调用之后机器人是否真的可以安全执行」，两者是上下游关系。</p>
+<p><strong>对比本站 <code>platform-engineering</code> 模块</strong>：模块讲统一契约、O(N+M) 适配层与基准可复现性，workbench 是把「可复现性」下沉到单次动作执行的一个具体实现。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

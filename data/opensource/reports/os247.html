@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spatial-Forcing / SLA：把 3D 空间监督注入 VLA 持续预训练的官方实现 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Spatial-Forcing / SLA：把 3D 空间监督注入 VLA 持续预训练的官方实现 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="spatial-forcing-sla-3d-vla">Spatial-Forcing / SLA：把 3D 空间监督注入 VLA 持续预训练的官方实现</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/OpenHelix-Team/Spatial-Forcing">https://github.com/OpenHelix-Team/Spatial-Forcing</a>  </p>
+<p><strong>Stars</strong>: 335 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-07  </p>
+<p><strong>组织</strong>: OpenHelix-Team  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-07</p>
+</blockquote>
+<hr />
+<p><strong>Spatial-Forcing</strong> 是 OpenHelix-Team 的官方实现仓库，覆盖 <strong>SLA（Scaling Spatial-Language-Action Model，arXiv 2611.08373 / 本站 p326）</strong> 与 <strong>Spatial Forcing（ICLR 2026）</strong> 这一系列空间智能机器人基座模型。仓库自述为 serial spatial intelligence robot foundation model 的实现。</p>
+<p>核心主张很直接：VLA 大多继承 2D 视觉语言预训练的表征，空间监督却常常只在下游任务适配时才补，导致空间理解难以成为可迁移的基座能力。SLA 把冻结 3D 感知模型提供的空间表征，在<strong>持续预训练阶段</strong>就对齐进 VLA 的中间层视觉嵌入。</p>
+<p>仓库 MIT / Python，2026-11-06 活跃推送，约 335 star，创建于 2025-10-11；SLA 分支位于 <code>tree/master/SLA</code>，项目主页在 SLA.github.io。</p>
+<hr />
+<ol>
+<li><strong>VLA 骨干</strong>：从预训练 $\pi_{0.5}$ 策略初始化，保持原有动作解码路径；</li>
+<li><strong>冻结 3D 感知教师</strong>：提供空间表征作为对齐目标，本身不参与梯度；</li>
+<li><strong>特征依赖门控</strong>：按输入自适应聚合 VLA 多个中间层的视觉嵌入，决定「该把空间监督打到哪一层」；</li>
+<li><strong>异构几何标注接口</strong>：教师侧可利用部分可得的深度与相机标定，RGB 观测始终可用，因此不同数据集不必强行统一标注；</li>
+<li><strong>概率状态 dropout</strong>：随机丢弃机器人状态，抑制对示范轨迹的过拟合；</li>
+<li><strong>训练期专用辅助头</strong>：门控、投影、对齐损失全部只在训练图里，训练结束后导出纯 VLA 权重。</li>
+</ol>
+<p><strong>最关键的架构约束</strong>：辅助组件只能通过梯度影响权重，不能通过前向连接进入部署图。因此推理架构与预训练 VLA 完全一致，给现成 VLA 补 3D 空间能力不需要改部署栈。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2611.08373">SLA: Scaling Spatial-Language-Action Model via Continual Pre-training</a></strong> — 本站 p326，方法论文。</li>
+<li><strong><a href="https://github.com/OpenHelix-Team/Spatial-Forcing">Spatial-Forcing 仓库</a></strong> — SLA 与 Spatial Forcing 官方实现（MIT）。</li>
+<li><strong><a href="https://SLA.github.io/">SLA 项目主页</a></strong> — 结果可视化与项目说明。</li>
+<li><strong><a href="https://github.com/GehaoZhang6/Grounded-Action-Model">Grounded Action Model</a></strong> — 显式 3D Grounding 前置层的对照实现，本站 os245。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.08156">La-JEPA: Compact Robot Policies</a></strong> — 同为冻结教师 + 训练期辅助目标的范式，本站 p324。</li>
+<li><strong><a href="/learn/imitation-learning">本站 imitation-learning 模块</a></strong> — 行为克隆、协变量偏移与 DAgger 推导。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先锁定基座 checkpoint</strong>：明确 $\pi_{0.5}$ 的版本，否则空间对齐带来的增益无法归因；</li>
+<li><strong>准备异构数据</strong>：刻意混入有 / 无深度与相机标定的样本，验证教师侧的降级路径是否真的能只凭 RGB 工作；</li>
+<li><strong>跑通对齐损失</strong>：先只训对齐头与门控、冻结骨干，确认余弦损失下降，再放开骨干；</li>
+<li><strong>做门控消融</strong>：把自适应门控换成固定选某一层，对比跨本体迁移表现；</li>
+<li><strong>扫描状态 dropout</strong>：0 / 0.1 / 0.3 / 0.5 各跑一遍，观察视觉依赖与示范轨迹过拟合的权衡；</li>
+<li><strong>导出校验</strong>：丢掉辅助组件后对比推理图、参数量与单步延迟，确认与原 VLA 一致；</li>
+<li><strong>回到站内读推导</strong>：对齐损失、门控 softmax 与 dropout 的形式化见本站 p326 的 mathDetails，行为克隆的协变量偏移见 <code>imitation-learning</code> 模块。</li>
+</ol>
+<pre><code class="language-python"># 伪代码：训练期对齐、部署期零残留
+def train_step(vla, teacher, gate, proj, obs, state, act, spatial_target):
+    vis = vla.intermediate_visuals(obs, dropout_state(state, p=0.3))
+    loss_act = mse(vla.action_head(vis[-1]), act)
+    z = normalize(proj(gate(vis)))
+    t = normalize(teacher(obs) if spatial_target is None else spatial_target)
+    loss_align = 1 - (z * t).sum(dim=-1).mean()
+    return loss_act + 0.5 * loss_align
+
+def export(vla):
+    return vla.state_dict()      # gate / proj / teacher 全部不导出
+</code></pre>
+<p>MIT 协议，可自由使用与二次开发；仓库仍在迭代，复现请锁定 commit。</p>
+<hr />
+<p>建议分两层评估：</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>空间能力</td>
+<td>持续预训练后的下游成功率、后训练后空间能力是否保持、跨本体迁移幅度</td>
+</tr>
+<tr>
+<td>部署成本</td>
+<td>导出后参数量、单步延迟、推理图是否与原 VLA 一致</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">注意</h3>
+<ul>
+<li>约 335 star，属于新近开源的官方实现，接口与默认超参仍在调整；</li>
+<li>「辅助组件只在训练期」需要自己验证：导出后务必 diff 推理图，不能只看 README 声明；</li>
+<li>异构几何标注的收益高度依赖深度与标定质量，标定误差会直接放大到末端；</li>
+<li>公开摘要未给出统一基准上的完整数值表，横向比较前先确认评测协议；</li>
+<li>与本站 os245（Grounded Action Model，把 3D Grounding 做成独立前置层）对照读：GAM 是显式模块化解法，SLA 是隐式表征对齐解法，二者正好是空间能力注入的两种范式。</li>
+</ul>
+<hr />
+<p><strong>对比 Grounded Action Model（本站 os245）</strong>：GAM 把 3D 定位做成独立、可评测的前置模块，显式输出几何量给动作层，收益是可归因、可复用，代价是多一次前向与标定误差传播；SLA 把空间能力<strong>隐式对齐进表征</strong>，推理路径零改动，代价是可解释性差、需要持续预训练。这是「显式模块 vs 隐式对齐」的典型取舍。</p>
+<p><strong>对比 NVIDIA Cosmos / LongLive（本站 os242 / os246）</strong>：那两个是生成侧与世界模型侧的基础设施，SLA 是判别侧策略的空间表征增强，不在同一层。</p>
+<p><strong>对比 La-JEPA（本站 p324）</strong>：La-JEPA 用冻结 V-JEPA 编码器提供潜空间目标、从零训紧凑策略；SLA 用冻结 3D 感知教师提供几何目标、在已有 $\pi_{0.5}$ 上做持续预训练。二者都遵循「冻结教师 + 训练期辅助目标 + 推理零残留」这一范式，是很好的对照样本。</p>
+<p><strong>对比本站 <code>vla-models</code> 与 <code>multimodal-perception</code> 模块</strong>：模块讲 VLA 架构与具身 Grounding 的原理，本仓库给出「把 3D 监督前移到预训练」的工程实现。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

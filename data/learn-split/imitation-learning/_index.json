@@ -4,7 +4,7 @@
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 50,
-  "lastUpdated": "2026-11-03T08:50",
+  "lastUpdated": "2026-11-07T08:30",
   "description": "从人类演示中学习机器人技能。Diffusion Policy 和 ACT 是当前最实用的模仿学习算法。",
   "prerequisites": [
     "能用 Tensor、Dataset、DataLoader 和优化器完成监督训练；可补学 [PyTorch 深度学习](/learn/python-scientific-computing/8) 与 [反向传播与自动微分](/learn/deep-learning/5)。",
@@ -89,18 +89,38 @@
     {
       "id": "sec-02",
       "title": "行为克隆 (BC)",
-      "lastUpdated": "2026-10-27",
-      "chars": 5857,
+      "lastUpdated": "2026-11-07T08:30",
+      "chars": 17924,
       "shortTitle": "行为克隆",
       "difficulty": "入门",
       "estimatedMinutes": 7,
       "tier": 0,
-      "readingMinutes": 7,
+      "readingMinutes": 22,
       "headings": [
         "什么是模仿学习？",
         "行为克隆（BC）的核心思想",
         "BC 的致命问题：分布偏移（Distribution Shift）",
         "为什么 BC 在 VLA 时代又火了？",
+        "从监督学习视角重新审视 BC",
+        "假设一：样本独立同分布",
+        "假设二：条件分布单峰且专家确定",
+        "假设三：马尔可夫性",
+        "协变量偏移的严格推导：误差为什么会平方级放大",
+        "设定",
+        "状态偏差的递推",
+        "为什么代价差是 $O(T^2\\varepsilon)$",
+        "推导的边界",
+        "DAgger 与动作分块：两条缓解路径的代价",
+        "DAgger：让训练集跟着策略走",
+        "动作分块：把 $T$ 换成 $T/H$",
+        "第三条路：不补数据，换监督信号的抽象层",
+        "多模态动作分布：为什么均方误差会输出「平均动作」",
+        "做法一：混合密度网络（MDN）",
+        "做法二：动作离散化 + 交叉熵",
+        "做法三：扩散 / 流匹配策略",
+        "可运行实验：在二维导航任务里复现复合误差",
+        "从 BC 到现代 VLA：数据规模改变了什么，没改变什么",
+        "与前沿研究的连接",
         "练习",
         "参考答案"
       ],
@@ -567,7 +587,7 @@
       "summary": "从人类视频学机器人操作，是具身智能里看起来最容易、实际最难的一条路。容易是因为数据遍地都是；难是因为人手和机器手不是一回事，而且示教只发生在一个具体位置。这一节讲的是一个能同时缓解这两个问题的抽象：把学习目标从手部轨迹搬到物体运动上。"
     }
   ],
-  "readingMinutes": 193,
+  "readingMinutes": 208,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 158031
+  "chars": 170098
 }

@@ -1,6 +1,141 @@
 {
- "lastUpdated": "2026-11-06T08:30",
+ "lastUpdated": "2026-11-07T08:30",
  "papers": [
+  {
+   "id": "p322",
+   "title": "Seeing Beyond the Next Step: World-Model-Guided Human-Like Navigation in Multi-Agent Scenes",
+   "authors": "Seong-Eun Hong, JuYeong Hwang, Jinhyun Kim, Hanyoung Jang, HyeongYeop Kang",
+   "venue": "arXiv 2611.07730 (cs.RO)",
+   "date": "2026-11-05",
+   "arxiv": "https://arxiv.org/abs/2611.07730",
+   "github": "",
+   "tags": [
+    "世界模型",
+    "人群导航",
+    "偏好蒸馏",
+    "NeurIPS 2026",
+    "预见能力"
+   ],
+   "category": "世界模型 / 导航规划",
+   "difficulty": "高级",
+   "tldr": "**问题**：人群中导航的失败往往不在「当前这一步会不会撞上」，而在「这一步会不会把自己带到车道上、切进人流、堵住窄道」——这些后果从当前状态看不出来。**做法**：把世界模型放到训练期当偏好裁判，用两个任务对齐的世界模型给候选动作按预测后果打分，再通过组相对偏好蒸馏把预见能力压进一个快策略；部署时两个世界模型全部移除。**结论**：五个留出场景上同时更安全、更符合社会与群体一致性、更朝向目标，盲评观察者认为动作更像人。",
+   "keyInsights": [
+    "局部可行不等于长期正确：漂向车道、切入穿越人流、堵住窄通道这三类失败，只有推理「这个动作会导致什么」才能提前发现，反应式策略与只看当前帧的代价图天然看不见。",
+    "作者反对「加速 rollout」这条路：把世界模型放在推理期做在线规划，成本是可部署导航系统付不起的；更划算的是在训练期把 rollout 摊销进策略参数。",
+    "两个世界模型分工而非合一：一个管近场社会动态，一个管未来场景语义，二者以预测后果给离散视觉动作先验筛出的候选打分，再做组相对偏好蒸馏。",
+    "部署时世界模型被完全移除，策略单次前向出动作，等于把「看得远」的成本一次性付在训练阶段；这给具身 Agent 的测试时扩展提供了反方向的思路。"
+   ],
+   "impact": "给「世界模型如何进入可部署系统」提供了一条不依赖推理期算力的路径：预见能力被蒸馏成策略的归纳偏置而非在线模块。对移动机器人导航、社会化路径规划与具身 Agent 的推理预算分配都有直接参考价值，也和本站 mobile-robot-navigation 模块的地图与代价层形成互补。",
+   "addedDate": "2026-11-07"
+  },
+  {
+   "id": "p323",
+   "title": "OopsieRecover: Learning Transferable VLA Corrections from Semantic Interventions",
+   "authors": "Arpit Bahety, Skand Peri, Sriniket Ambatipudi, Chen Xu, Haruki Nishimura, Masha Itkina, Roberto Martín-Martín",
+   "venue": "arXiv 2611.08462 (cs.RO)",
+   "date": "2026-11-05",
+   "arxiv": "https://arxiv.org/abs/2611.08462",
+   "github": "",
+   "tags": [
+    "VLA",
+    "失败恢复",
+    "DAgger",
+    "语义干预",
+    "空间代价图"
+   ],
+   "category": "VLA / 失败恢复",
+   "difficulty": "高级",
+   "tldr": "**问题**：VLA 部署时失败很常见，但教它纠错通常要几十到几百次交互（DAgger 式微调），而且学到的纠正很难泛化到没示范过的物体与场景。**做法**：用溯因推断少量纠正示范背后的意图，把推断出的知识编码成稠密空间表征与条件代价，让代价刻画「什么行为不可取」并把策略推向更可取的行动区域。**结论**：6 个任务、跨物体位姿与场景变化，仅用极少量纠正示范就能让 VLA 克服大范围新情境下的失败，不必为每个变体重采纠正数据。",
+   "keyInsights": [
+    "把「纠正动作」直接绑定到「示范时的观测」是泛化差的根因：同一类失败在不同物体位姿下观测完全不同，观测级记忆必然过拟合。",
+    "语义（意图）被当作失败与纠正之间的不变量：溯因推断出「为什么这次要这样改」，再把意图翻译成空间代价，而不是记下当时的图像与动作对。",
+    "条件代价是「何时不希望某种行为」的软约束，作用方式是把策略推向更可取的行动区域，属于对策略的引导而非硬规则覆盖。",
+    "与本站 imitation-learning 模块的协变量偏移 / DAgger 推导形成对照：DAgger 靠不断补数据把状态分布拉回来，这里靠改变监督信号的抽象层级来减少所需数据量。"
+   ],
+   "impact": "把 VLA 的失败恢复从「堆纠正数据」转向「推断纠正意图」，对真实部署中人工介入成本高的场景很实用；也给行为克隆的分布偏移问题提供了一条不依赖海量交互的缓解思路。",
+   "addedDate": "2026-11-07"
+  },
+  {
+   "id": "p324",
+   "title": "La-JEPA: Compact Robot Policies with Latent World Modeling",
+   "authors": "Mateo Clémente, George Z. Xue, Amin Abyaneh, Liheng Ma, Rui Heng Yang, Tongtong Cao, Zhanguang Zhang, Yingxue Zhang",
+   "venue": "arXiv 2611.08156 (cs.RO)",
+   "date": "2026-11-05",
+   "arxiv": "https://arxiv.org/abs/2611.08156",
+   "github": "https://github.com/mt-clemente/lajepa",
+   "tags": [
+    "JEPA",
+    "潜空间世界模型",
+    "紧凑策略",
+    "控制导向架构",
+    "RoboTwin 2.0"
+   ],
+   "category": "世界模型 / JEPA 策略",
+   "difficulty": "高级",
+   "tldr": "**问题**：世界动作模型继承预训练视频生成器、VLA 继承预训练视觉语言骨干，两者都把策略架构与推理成本绑在为「生成」而非「控制」设计的大 Transformer 上，这份 inheritance 到底代价多大并不清楚。**做法**：Latent Action JEPA 在预训练 V-JEPA 2.1 编码器的特征空间里从零训练一个小策略 Transformer，训练时联合预测未来特征与动作，推理时只输出动作。**结论**：在无具身预训练的策略里，RoboTwin 2.0 与修正后的 LIBERO-Plus 上达到 SOTA 且参数远少于最强竞品，速度显著快于 Fast-WAM；四个真机任务平均成功率与 π0.5 相当。",
+   "keyInsights": [
+    "为控制设计的架构可以优于从生成模型继承来的架构：去掉生成式预训练策略骨干后，模型更小更快且性能不降，说明「基座必须大」不是默认前提。",
+    "训练期预测未来特征、推理期跳过未来预测，这个非对称设计仍然显著影响学到的策略——未来预测是正则与目标，不是可随手删的辅助头。",
+    "JEPA 特征在分布外明显胜过视频 VAE 潜变量，这是紧凑策略仍能泛化的关键；分布内差距小、分布外差距大，正是表征选择最容易被掩盖的地方。",
+    "作者顺手修正了 LIBERO-Plus 官方评测器损坏的指令并重新评测多个开源基线，提醒对比数字前先核对评测器本身。"
+   ],
+   "impact": "给「机器人基础模型该长什么样」提供了一个反向证据：架构按控制而非生成来设计，可能同时换来参数量、速度与分布外鲁棒性。对端侧部署、推理预算受限的具身系统尤其有参考价值。",
+   "addedDate": "2026-11-07"
+  },
+  {
+   "id": "p325",
+   "title": "GPWM: Modeling the World as 3D Particle Motion",
+   "authors": "Robert Ren, Matthew Bronars, He Zhu, Yikai Tang, Jianing Zhang, Sergey Zakharov, Pavel Tokmakov, Katerina Fragkiadaki",
+   "venue": "arXiv 2611.08338 (cs.RO)",
+   "date": "2026-11-05",
+   "arxiv": "https://arxiv.org/abs/2611.08338",
+   "github": "",
+   "tags": [
+    "3D 世界模型",
+    "粒子动力学",
+    "流匹配",
+    "扩散强制",
+    "接触丰富规划"
+   ],
+   "category": "世界模型 / 3D 粒子动力学",
+   "difficulty": "高级",
+   "tldr": "**问题**：视频世界模型生成的是场景外观，而不是物理空间本身；不同材料过去往往要不同模型。**做法**：生成式粒子世界模型直接在 3D 物理空间预测粒子与刚体随时间的运动，用对象感知的多分辨率 Transformer 结合流匹配与扩散强制生成远超训练时长的连贯轨迹；训练语料 ParticleWorlds 有 2550 万帧，覆盖多样几何、材料、交互与机器人本体。**结论**：六个物理域平均把预测误差降 31%，单一 Unified GPWM 用一套权重覆盖异质区间、在两个域甚至超过各自的专用模型；还支持在潜噪声空间做接触丰富规划，开环执行即可完成推与抓。",
+   "keyInsights": [
+    "把预测目标从「像素」换成「3D 粒子的运动」，使同一个表征能覆盖刚性、可变形、布料与颗粒材料，以及被动物理与机器人交互两类区间。",
+    "流匹配加扩散强制解决长时程一致性：生成的物理轨迹可以远超训练视野仍保持连贯，这是世界模型当规划器用的前提。",
+    "规划不搜索动作序列，而是搜索模型潜噪声，找出能达成物体空间目标的交互；在推、抓这类接触序列难发现的任务上明显优于动作空间搜索。",
+    "同一套权重做统一建模在两个域超过专用模型，说明跨材料共享动力学先验本身带来了正则收益，而非简单的容量折衷。"
+   ],
+   "impact": "把世界模型从「看起来像」推进到「物理上可算、可直接拿来做开环规划」，对接触丰富的操作、可变形物体处理与基于模型的策略学习都是一条可复用的技术路线。",
+   "addedDate": "2026-11-07"
+  },
+  {
+   "id": "p326",
+   "title": "SLA: Scaling Spatial-Language-Action Model via Continual Pre-training",
+   "authors": "Fuhao Li, Wenxuan Song, Qizhou Huang, Ziyang Zhou, Jingbo Wang, Junwu E, Pengwei Wang, Yan Wang, Shunbo Zhou, Haoang Li",
+   "venue": "arXiv 2611.08373 (cs.RO)",
+   "date": "2026-11-05",
+   "arxiv": "https://arxiv.org/abs/2611.08373",
+   "github": "https://github.com/OpenHelix-Team/Spatial-Forcing/tree/master/SLA",
+   "tags": [
+    "空间语言动作模型",
+    "持续预训练",
+    "3D 空间监督",
+    "特征依赖门控",
+    "状态 dropout"
+   ],
+   "category": "VLA / 空间表征",
+   "difficulty": "高级",
+   "tldr": "**问题**：VLA 基座大多继承 2D 视觉语言预训练的表征，空间监督却常常只在任务适配阶段才补，导致空间理解很难成为可迁移的基座能力。**做法**：SLA 从预训练 π0.5 策略出发，联合优化动作预测，以及中间层视觉嵌入与冻结 3D 感知模型空间表征之间的对齐；统一异构机器人数据，用特征依赖门控自适应聚合多层视觉嵌入，教师侧利用部分可得的深度与相机标定，并以概率状态 dropout 抑制对示范轨迹的过拟合。**结论**：所有辅助组件只在训练期使用，可直接复用预训练 VLA 权重、推理架构原样不变。",
+   "keyInsights": [
+    "空间理解应当是基座能力而非下游适配的补丁：把空间对齐前移到持续预训练阶段，才可能在跨本体、跨任务、跨场景上迁移。",
+    "异构数据的关键不是强行统一标注，而是容纳「部分可得」的深度与标定：教师侧能用多少几何监督就用多少，RGB 观测始终可用。",
+    "特征依赖门控解决「该监督哪一层」：不同 VLA 层承载的空间信息不同，让门控按特征自适应聚合比固定选一层更稳。",
+    "概率状态 dropout 逼迫策略依赖视觉线索而非机器人状态轨迹，直接针对行为克隆式过拟合示范的老问题；辅助头训练后全部丢弃，部署零改动。"
+   ],
+   "impact": "给出一条给现成 VLA 补 3D 空间能力、且不改推理架构的低成本路径；配套官方实现 Spatial-Forcing（本站 os247）可直接复现，对端侧 VLA 的精度提升与跨本体迁移都很实用。",
+   "addedDate": "2026-11-07"
+  },
   {
    "id": "p317",
    "title": "Perceptive Humanoid Motion from Simulation",
@@ -8536,5 +8671,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 295
+ "totalItems": 300
 }

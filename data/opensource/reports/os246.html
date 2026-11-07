@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LongLive：NVIDIA 开放的长视频生成 / 世界模型 / 世界动作模型基础设施 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">LongLive：NVIDIA 开放的长视频生成 / 世界模型 / 世界动作模型基础设施 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="longlivenvidia">LongLive：NVIDIA 开放的长视频生成 / 世界模型 / 世界动作模型基础设施</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/NVlabs/LongLive">https://github.com/NVlabs/LongLive</a>  </p>
+<p><strong>Stars</strong>: 2872 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-07  </p>
+<p><strong>组织</strong>: NVIDIA Labs  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-07</p>
+</blockquote>
+<hr />
+<p><strong>NVlabs/LongLive</strong> 是 NVIDIA Labs 开放的长视频生成 / 世界模型 / 世界动作模型（Embodied）基础设施。仓库 topics 明确写着 infra、long、nvfp4、parallel、real-time、robotics、video-generation、world-action-models、world-models，说明它的定位不是又一个视频生成模型，而是<strong>支撑长时程推演的工程底座</strong>：把实时推理、并行、低精度（NVFP4）与世界模型训练放在同一套代码里。</p>
+<p>仓库创建于 2025-09-22，2026-11-06 活跃推送，Python / Apache-2.0，约 2872 star。</p>
+<p><strong>为什么值得关注</strong>：世界模型要当仿真器用，第一道门槛不是「单帧像不像」，而是自生成历史能不能撑住长 rollout。一旦历史开始漂移，后续预测与策略优化全部失效。LongLive 把这件事当基础设施问题处理——实时、并行、低精度都是为了让长时程推演跑得动、跑得久，而不是靠某个技巧去补单帧质量。</p>
+<hr />
+<ol>
+<li><strong>长视频生成主干</strong>：面向分钟级以上连续帧的生成与自条件（self-conditioning）推演，重点在长时程一致性而非单帧保真；</li>
+<li><strong>世界模型 / 世界动作模型接口</strong>：同一套基础设施服务「预测动作后果」与「按动作产出观测」两类用法，后者可直接接进策略评测闭环；</li>
+<li><strong>实时与并行层</strong>：real-time、parallel 相关实现负责把生成延迟压到可交互量级；</li>
+<li><strong>低精度推理（NVFP4）</strong>：4 位浮点格式，用更少的显存与带宽支撑更长的上下文与更大的批量；</li>
+<li><strong>机器人方向适配</strong>：topics 中的 robotics 与 world-action-models 表明仓库不止面向内容生成，也面向具身策略训练与评测。</li>
+</ol>
+<p>分层逻辑可以概括为：<strong>底层解决算力与带宽，中层解决长时程一致性，上层才谈世界模型能不能替掉真机 rollout</strong>。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/NVlabs/LongLive">NVlabs/LongLive 仓库</a></strong> — 长视频生成 / 世界模型 / 世界动作模型基础设施（Apache-2.0）。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.06627">Interactive World Simulation with Cosmos for Physical AI</a></strong> — NVIDIA 把世界基础模型改造成实时交互式仿真框架，本站 os242。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.04870">PrimeSim: A Generalist World Model Simulator</a></strong> — 跨 22 本体 30110 小时数据训练的动作条件化仿真器，本站 p315。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.08338">GPWM: Modeling the World as 3D Particle Motion</a></strong> — 直接在 3D 物理空间做长时程推演，本站 p325。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.08156">La-JEPA: Compact Robot Policies with Latent World Modeling</a></strong> — 控制导向的紧凑策略架构，本站 p324。</li>
+<li><strong><a href="/learn/world-models-llm">本站 world-models-llm 模块</a></strong> — 世界模型原理与训练期蒸馏脉络。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先读 topics 与 README 的定位</strong>：确认自己要用的是长视频生成、世界模型还是世界动作模型路径，三者的入口与依赖不同；</li>
+<li><strong>跑通最短生成链路</strong>：先用小分辨率、短片段验证环境，再拉长上下文，观察自条件推演何时开始漂移；</li>
+<li><strong>测延迟与显存基线</strong>：把实时 / 并行 / NVFP4 三项分别开关，记录单步延迟与显存占用，这是判断能否接进策略循环的依据；</li>
+<li><strong>做长时程一致性检查</strong>：固定初始帧，报告 2 倍、4 倍训练视野下的漂移曲线，而不是只看 FVD 类单帧指标；</li>
+<li><strong>再谈策略闭环</strong>：把生成观测接到评测器前，先确认动作条件确实可控——动作改了但生成结果不变，说明条件注入没生效；</li>
+<li><strong>回到站内读原理</strong>：长时程误差累积见 <code>world-models-llm</code> 模块，扩散强制与流匹配的推导见本站 p325（GPWM）。</li>
+</ol>
+<pre><code class="language-python"># 伪代码：把长时程生成当作策略评测的观测源
+def rollout_in_world_model(wm, policy, s0, T):
+    hist = wm.init_history(s0)
+    for t in range(T):
+        a = policy.act(hist.latest_obs())
+        obs = wm.step(hist, a)          # 动作条件化的下一观测
+        hist.append(obs)
+        if wm.drift_detector(hist) &gt; 0.5:
+            return hist, 'aborted: drift'   # 长时程漂移，评测作废
+    return hist, 'ok'
+</code></pre>
+<p>Apache-2.0，可自由使用与二次开发；注意 NVFP4 需要对应硬件与内核支持，低精度路径不是所有 GPU 都能跑。</p>
+<hr />
+<p>建议分三层评估，避免把三类问题混在一起：</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工程</td>
+<td>单步延迟、显存占用、NVFP4 开关前后的吞吐</td>
+</tr>
+<tr>
+<td>生成</td>
+<td>长时程漂移曲线、自条件稳定性、跨视角一致性</td>
+</tr>
+<tr>
+<td>具身</td>
+<td>动作条件是否可控、生成观测下的策略排序与真机排序相关性</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">注意</h3>
+<ul>
+<li>约 2872 star、2026-11-06 活跃推送，属于快速迭代中的基础设施仓库，复现时<strong>锁定 commit</strong>；</li>
+<li>「实时」是工程目标而非保证值，延迟强依赖 GPU 型号、批量与分辨率；</li>
+<li>长视频生成的质量指标不能直接等价为策略评测质量，二者需要分别验证；</li>
+<li>与本站 os243（Robotic World Model，神经网络仿真器 + 离线 MBRL）对照读，可以看清「生成式长视频基座」与「面向控制的神经仿真器」两条路线的分工。</li>
+</ul>
+<hr />
+<p><strong>对比 NVIDIA Cosmos（本站 os242）</strong>：Cosmos 强调的是把世界基础模型改造成<strong>可交互的实时仿真框架</strong>，留出与外部物理仿真器对接的接口；LongLive 更偏<strong>长时程生成的基础设施</strong>（实时、并行、NVFP4、自条件一致性）。前者解决「怎么接进闭环」，后者解决「 rollout 能不能撑得久」。</p>
+<p><strong>对比 PrimeSim（本站 p315 / r030）</strong>：PrimeSim 是具体的动作条件化多视图世界模型仿真器，用 30110 小时跨 22 本体数据训练并登顶 EWMBench / WorldSimProbe；LongLive 是可承载这类模型的底座，不是同一层级的产品。</p>
+<p><strong>对比 La-JEPA（本站 p324）</strong>：La-JEPA 主张策略架构应按控制而非生成来设计，去掉生成式骨干；LongLive 则把生成侧工程做到极致。二者代表「世界模型该多大」的光谱两端，放在一起读很有价值。</p>
+<p><strong>对比本站 <code>world-models-llm</code> 模块</strong>：模块讲 JEPA 潜空间预测、动作条件化与训练期蒸馏的原理，LongLive 给的是这些原理落到长视频生成时的工程约束。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
