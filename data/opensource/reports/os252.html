@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>world-model-eval：在世界模型里评测机器人策略的官方代码 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">world-model-eval：在世界模型里评测机器人策略的官方代码 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="world-model-eval">world-model-eval：在世界模型里评测机器人策略的官方代码</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/world-model-eval/world-model-eval">https://github.com/world-model-eval/world-model-eval</a>  </p>
+<p><strong>Stars</strong>: 117 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-08  </p>
+<p><strong>组织</strong>: world-model-eval  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-08</p>
+</blockquote>
+<hr />
+<p><strong>world-model-eval/world-model-eval</strong> 是论文「Evaluating Robot Policies in a World Model」的官方配套代码，研究一个越来越现实的问题：能不能用学到的世界模型代替真机或物理仿真器，给机器人策略打分与排序。</p>
+<p>仓库 Python / MIT，2025-06-09 创建、2026-10-22 推送，约 117 star，项目页 world-model-eval.github.io/abstract。</p>
+<p><strong>为什么值得关注</strong>：世界模型当<strong>评测器</strong>比当训练环境更贴近近期落地节奏——策略筛选不必逐条上真机，但必须回答「模型里的分数与真机成功率是否同序」。这与本站 n645（Cosmos 3 开放权重）、n646（PrimeSim 开放训练代码）处在同一条链上，也与 p331 里「策略排序与物理仿真器一致」的验收口径呼应。</p>
+<hr />
+<ol>
+<li><strong>世界模型接口</strong>：把候选世界模型包装成统一的「给定状态与动作、预测后续观测」接口；</li>
+<li><strong>策略接口</strong>：把候选机器人策略包装成统一的「给定观测、产出动作」接口；</li>
+<li><strong>Rollout 执行器</strong>：在世界模型里跑策略，记录预测轨迹与终止条件；</li>
+<li><strong>打分与排序</strong>：按任务成功判据给每条 rollout 打分，产出策略排序；</li>
+<li><strong>一致性检验</strong>：把世界模型内的排序与物理仿真器 / 真机排序做相关性对照。</li>
+</ol>
+<p>分层要点：<strong>评测器与被测策略解耦</strong>，因此同一套流程可用于比较不同世界模型，也可用于比较不同策略。</p>
+<hr />
+<ul>
+<li><strong>Evaluating Robot Policies in a World Model</strong>（本仓库对应论文）：把世界模型定位为策略评测器；</li>
+<li>本站 <strong>p322 / p324 / p325</strong>：世界模型用于导航偏好蒸馏、紧凑策略与 3D 粒子推演；</li>
+<li>本站 <strong>n645（Cosmos 3 Nano）</strong> 与 <strong>n646（PrimeSim）</strong>：可直接下载权重、按动作生成后续视频，是评测器的现成候选；</li>
+<li>本站 <strong>p331（Latent RL Priors）</strong>：报告了世界模型内策略成功率与物理仿真器的相关系数，是「排序一致性」的实操参照。</li>
+</ul>
+<hr />
+<ol>
+<li>克隆仓库，按 README 安装依赖并下载示例世界模型权重；</li>
+<li>先跑官方示例，确认 rollout 能正常生成并产出策略分数；</li>
+<li>用已知成功率的一组策略做校准，检查世界模型内排序是否与物理仿真器同序；</li>
+<li>只有校准通过后，才把世界模型当作筛选工具使用；</li>
+<li>保留一小部分真机 / 物理仿真复核，不要把世界模型分数写成最终验收结论。</li>
+</ol>
+<hr />
+<p>该仓库的验收指标不是某个成功率数字，而是<strong>排序一致性</strong>：世界模型给出的策略名次与真机 / 物理仿真器名次的相关程度。使用时应报告相关系数与置信区间，而不是只报「筛出了更好的策略」。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>world-model-eval</th>
+<th>物理仿真器评测</th>
+<th>真机评测</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>成本</td>
+<td>低，可批量并行</td>
+<td>中，需建模与算力</td>
+<td>高，逐条上机</td>
+</tr>
+<tr>
+<td>覆盖面</td>
+<td>可构造分布外场景</td>
+<td>受建模精度限制</td>
+<td>最真实但样本少</td>
+</tr>
+<tr>
+<td>主要风险</td>
+<td>视觉合理但物理不一致</td>
+<td>Sim-to-Real 鸿沟</td>
+<td>设备损耗与安全</td>
+</tr>
+<tr>
+<td>适用阶段</td>
+<td>策略初筛</td>
+<td>中期验证</td>
+<td>最终验收</td>
+</tr>
+</tbody>
+</table>
+<p>与 <strong>os253（SuperMimic，用世界模型改策略）</strong> 的区别：一个用世界模型<strong>评</strong>策略，一个用世界模型<strong>训</strong>策略；两者可串成同一条流水线的前后段。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

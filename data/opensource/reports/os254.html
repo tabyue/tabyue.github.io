@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tron2_openpi：OpenPI 面向 LimX TRON2 真机部署的分支 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">tron2_openpi：OpenPI 面向 LimX TRON2 真机部署的分支 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="tron2_openpiopenpi-limx-tron2">tron2_openpi：OpenPI 面向 LimX TRON2 真机部署的分支</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/limxdynamics/tron2_openpi">https://github.com/limxdynamics/tron2_openpi</a>  </p>
+<p><strong>Stars</strong>: 29 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-08  </p>
+<p><strong>组织</strong>: LimX Dynamics（逐际动力）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-08</p>
+</blockquote>
+<hr />
+<p><strong>limxdynamics/tron2_openpi</strong> 是 OpenPI 面向 LimX TRON2 操作的<strong>部署型分支</strong>：提供 pi0.5 策略服务、任务微调、TRON2 的坐标与观测变换，以及真机客户端示例。</p>
+<p>仓库 Python / Apache-2.0，2026-07-14 创建、2026-11-05 活跃推送，约 29 star，官网 limxdynamics.com。</p>
+<p><strong>为什么值得关注</strong>：VLA 论文到真机之间最常缺的就是「坐标变换、策略服务、客户端」这层适配代码。这个仓库把 openpi 从研究参考实现推到具体本体的可跑部署，适合与本站 VLA 模块、platform-engineering 的策略服务章节以及 p331（冻结控制解码器、只学视觉接口）对读：适配层到底要改什么、不能改什么，代码比架构图更清楚。</p>
+<hr />
+<ol>
+<li><strong>pi0.5 策略服务</strong>：把模型包装成可远程调用的动作推理服务，处理观测预处理与动作后处理；</li>
+<li><strong>任务微调</strong>：面向具体下游任务做参数高效适配，保留基座能力；</li>
+<li><strong>TRON2 变换层</strong>：相机内外参、本体坐标系、关节顺序与动作空间的映射，是跨本体迁移最容易出错的一层；</li>
+<li><strong>真机客户端示例</strong>：从采集观测、请求动作到下发的完整链路；</li>
+<li><strong>部署约定</strong>：频率、超时、急停与异常回退的工程处理。</li>
+</ol>
+<p>要点是<strong>变换层与策略层分离</strong>：策略尽量保持与上游 openpi 一致，本体差异全部收敛到变换层，升级基座时不必重写适配代码。</p>
+<hr />
+<ul>
+<li><strong>π0 / π0.5（Physical Intelligence）</strong>：flow matching 动作专家与 VLA 基座，是 openpi 的方法来源；</li>
+<li>本站 <strong>p331（Latent RL Priors）</strong>：冻结控制解码器、只学视觉接口的适配哲学，与本仓库「变换层与策略层分离」同构；</li>
+<li>本站 <strong>p330（Concertina）</strong>：把动作与认知放进共享骨干，代表另一种架构选择；</li>
+<li>本站 platform-engineering 模块：策略服务、可观测性与 fail-closed 校验的教材级背景。</li>
+</ul>
+<hr />
+<ol>
+<li>按 README 准备 Python 环境与 pi0.5 权重，先启动策略服务做离线推理自检；</li>
+<li>核对 TRON2 的相机外参、关节顺序与动作单位，用一组记录数据回放验证变换层；</li>
+<li>在仿真或低速真机上跑通客户端闭环，确认频率与超时设置；</li>
+<li>用少量本任务数据做微调，微调前后在同一批初始条件上对比成功率；</li>
+<li>上线前确认急停与异常回退路径，避免策略服务超时导致本体保持上一动作。</li>
+</ol>
+<hr />
+<p>该仓库的价值在<strong>部署链路完整性</strong>而非榜单指标。验收应看：变换层回放误差、策略服务端到端延迟、控制频率是否稳定、以及微调是否在不破坏基座能力的前提下带来本任务增益。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>tron2_openpi</th>
+<th>上游 openpi</th>
+<th>从零搭部署</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>目标本体</td>
+<td>LimX TRON2 明确适配</td>
+<td>通用参考实现</td>
+<td>需自行定义</td>
+</tr>
+<tr>
+<td>策略服务</td>
+<td>内置</td>
+<td>需自行封装</td>
+<td>需自行开发</td>
+</tr>
+<tr>
+<td>坐标变换</td>
+<td>显式 TRON2 层</td>
+<td>不含</td>
+<td>易出错</td>
+</tr>
+<tr>
+<td>真机示例</td>
+<td>提供客户端</td>
+<td>少量</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<p>与 <strong>os251（SimpleNav，研究接口统一）</strong> 对照：一个统一「实验怎么跑」，一个解决「真机怎么接」。两者分别覆盖 VLA 落地的两端。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

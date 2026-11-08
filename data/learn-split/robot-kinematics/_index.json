@@ -1,7 +1,7 @@
 {
   "id": "robot-kinematics",
   "name": "机器人运动学",
-  "lastUpdated": "2026-11-05T08:30",
+  "lastUpdated": "2026-11-08T08:35",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 60,
@@ -170,13 +170,13 @@
     {
       "id": "sec-06",
       "title": "逆运动学求解的完整方法论",
-      "lastUpdated": "2026-04-29T15:05",
-      "chars": 3188,
+      "lastUpdated": "2026-11-08T08:35",
+      "chars": 12692,
       "shortTitle": "逆运动学求解的完整方法论",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "tier": 1,
-      "readingMinutes": 3,
+      "readingMinutes": 15,
       "headings": [
         "逆运动学求解方法论",
         "1. IK 问题的数学本质",
@@ -187,6 +187,13 @@
         "阻尼最小二乘（DLS / Levenberg-Marquardt）",
         "4. 冗余臂的 IK：零空间利用",
         "5. IK 求解器对比",
+        "6. 前置概念：把 IK 放回正运动学的坐标系里",
+        "7. 解析法为什么只有特定构型才有闭式解",
+        "8. 数值法三兄弟的完整推导",
+        "9. 奇异位形与可操作度",
+        "10. 冗余臂的零空间：数学与工程",
+        "11. 完整可运行示例：平面 2R 臂的解析解、DLS 解与零空间对比",
+        "12. 工程落地清单与常见误区",
         "练习题"
       ],
       "summary": "正运动学（FK）是唯一的、简单的；逆运动学（IK）可能有多解、无解或无穷多解——是运动学中最有挑战性的问题。"
@@ -472,7 +479,7 @@
       "summary": "工业机械臂运动学有一个隐含前提：基座（base frame）固定在地面或工作台，所有关节都基于这个固定基座做位姿计算。但人形机器人 / 四足机器人有两个关键差异："
     }
   ],
-  "readingMinutes": 143,
+  "readingMinutes": 155,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 132235
+  "chars": 141739
 }

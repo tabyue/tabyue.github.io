@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuperMimic：mjlab 里基于世界模型的策略优化代码 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">SuperMimic：mjlab 里基于世界模型的策略优化代码 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="supermimicmjlab">SuperMimic：mjlab 里基于世界模型的策略优化代码</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/emoPointer/supermimic_manipulation">https://github.com/emoPointer/supermimic_manipulation</a>  </p>
+<p><strong>Stars</strong>: 72 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-08  </p>
+<p><strong>组织</strong>: emoPointer  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-08</p>
+</blockquote>
+<hr />
+<p><strong>emoPointer/supermimic_manipulation</strong> 是 SuperMimic 的官方实现：在 mjlab 中面向<strong>状态基（state-based）</strong>机器人操作，做世界模型引导的策略优化。</p>
+<p>仓库 Python / MIT，2026-10-25 创建、2026-10-31 推送，约 72 star。</p>
+<p><strong>为什么值得关注</strong>：多数世界模型工作把精力放在像素级视频预测上，而状态基设定把问题收回到「学到可用的动力学、再拿它改策略」这条更干净的链路，便于隔离表征误差与策略误差。配合本站 world-models-llm、reinforcement-learning 相关章节，可作为从「预测下一状态」走到「用预测改进动作」的最小可跑参照。</p>
+<hr />
+<ol>
+<li><strong>任务环境</strong>：基于 mjlab 的状态基操作任务，观测是低维状态而非图像；</li>
+<li><strong>世界模型 / 动力学模型</strong>：学习状态转移，预测动作后的后续状态；</li>
+<li><strong>策略优化</strong>：用学到的模型做 rollout 或提供梯度信号，改进操作策略；</li>
+<li><strong>真值校验</strong>：把模型预测与真实环境推进做对照，隔离模型误差；</li>
+<li><strong>闭环迭代</strong>：模型与策略交替更新，避免模型在策略分布外失准。</li>
+</ol>
+<p>要点是<strong>低维状态把表征问题暂时移出画面</strong>：如果在这条链路上策略仍改不动，问题更可能在优化或模型利用方式，而不是视觉编码。</p>
+<hr />
+<ul>
+<li><strong>SuperMimic</strong>（本仓库对应方法）：世界模型引导的状态基策略优化；</li>
+<li>本站 <strong>p325（GPWM，3D 粒子动力学推演）</strong> 与 <strong>p324（La-JEPA，紧凑策略）</strong>：世界模型路线里「预测什么、怎么用预测」的两种答案；</li>
+<li>本站 <strong>p331（Latent RL Priors）</strong>：用 RL 控制先验做策略改进，可与「用学到的模型改进策略」对照；</li>
+<li>本站 world-models-llm / reinforcement-learning 模块：世界模型与基于模型 RL 的教材级背景。</li>
+</ul>
+<hr />
+<ol>
+<li>按 README 安装 mjlab 与 Python 依赖；</li>
+<li>跑通一个状态基操作任务的环境推进，确认状态与动作维度；</li>
+<li>训练动力学模型，先在固定策略下核对一步 / 多步预测误差；</li>
+<li>开启策略优化，观察模型预测误差与策略收益是否同步改善；</li>
+<li>若收益停滞，先排查模型在策略访问区域内的误差，而不是急着调 RL 超参。</li>
+</ol>
+<hr />
+<p>评价这条路线应看三个量：模型的多步预测误差、策略优化前后的成功率差、以及模型误差与策略收益的相关性。状态基设定下这些量更容易归因，是它相对像素级世界模型的主要优势。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>SuperMimic（状态基）</th>
+<th>像素级视频世界模型</th>
+<th>无模型 RL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>观测</td>
+<td>低维状态</td>
+<td>图像 / 视频</td>
+<td>低维或图像</td>
+</tr>
+<tr>
+<td>主要误差源</td>
+<td>动力学建模</td>
+<td>表征 + 动力学</td>
+<td>采样效率</td>
+</tr>
+<tr>
+<td>可归因性</td>
+<td>高</td>
+<td>低</td>
+<td>中</td>
+</tr>
+<tr>
+<td>与本站联动</td>
+<td>os252 / p325</td>
+<td>n645 / n646</td>
+<td>RL 模块</td>
+</tr>
+</tbody>
+</table>
+<p>与 <strong>os252（world-model-eval）</strong> 组合：先用 SuperMimic 改进策略，再用 world-model-eval 检查排序一致性，可得一条完整的「训—评」链路。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

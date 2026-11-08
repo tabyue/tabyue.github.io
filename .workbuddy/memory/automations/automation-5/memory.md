@@ -185,6 +185,13 @@
 - 校验：`health_check` **首轮 ALL OK 且 0 告警** + `verify_learn_structure` ALL OK + `audit_learn_content` 硬缺陷全 0 + unittest 34/34 + node UI 32/32。已 push（d25cde3..17c0d79），gh api 远程 HEAD / 本地 HEAD / origin/main 三者一致。
 - 经验：① 数据/学习/校验全链路一次通过（push 唯一插曲见 ⑦）；② 深化正文用「定位 `### 练习` / `### 练习题` → 在其前插入 `### N.` / `### 深入N：` 新小节，子小节用 `####`，不新增练习就不碰参考答案」稳定幂等；③ 新增正文主体用 `###` 保证前端小节目录收录，`####` 只作二级细分；④ 正文一律中文引号「」、表格单元格内不写 `|`、范数用 `\lVert \rVert`、条件概率用 `\mid`，KaTeX 全过；⑤ 查重必须先导出全库 title/url/arxiv/github 清单再选题——本轮拦掉 Agility 上市(n570)、云蝶 B+(n462)、六项国标(n519)、蚂蚁灵波(n611)、智元便利店(n610)、uni-robot-agent(n605)；⑥ arXiv API 4 查询全成功拿 128 个 NEW，GitHub Search API 5 查询全成功，`WebFetch arxiv.org/abs/<id>` 核对 5 篇全准；⑦ **push 首次 RC=128 且零输出**（PowerShell `git push 2>&1 | Out-String` 吞掉了 git stderr，与 2026-10-11 记的 credential 子进程间歇性静默崩溃同现象）：改由 Python `subprocess.run` 直接调同一条 `!gh auth git-credential` 命令重试 1 次即 RC=0（d25cde3..17c0d79），**无需切到「空 cfg + token 嵌 URL」方案**；以后诊断/重试 push 一律用 Python `capture_output=True` 拿真实字节，别信 PowerShell 管道的空输出。
 
+### 2026-11-07 08:03—08:40
+- 投稿箱：无新投稿（open issue 返回 `[]`）。开工工作树干净、HEAD==origin/main（38666ab）。
+- 数据：新闻 +10（n629—n638）、论文 +5（p322—p326，含 detail）、开源 +4（os246—os249，含 detail + 报告页）、招聘 +6（j327—j334）、资源新增 r031。totalItems 596 / 300 / 236 / 321。
+- 学习：延续「深化 tier0 薄章」。mobile-robot-navigation#2 地图表示与构建 3660→18149（log-odds 贝叶斯更新 / 逆传感器模型 / EDT-ESDF / 八叉树 / Costmap 分层 / 可运行建图仿真）；imitation-learning#2 行为克隆 5857→17924（监督学习三假设 / 协变量偏移 T²ε 推导 / DAgger 与动作分块 / 多模态动作建模 / 可运行复现实验）。章节数仍 553，sitemap 不变。
+- 校验：health_check **首轮 ALL OK 且 0 告警** + verify_learn_structure ALL OK + audit 硬缺陷全 0（F5 仅历史遗留 academic-english#9 的 `# TODO`）+ unittest 34/34 + node UI 32/32。已 push（38666ab..87257dc），远程 / 本地 / origin/main 三者一致。
+- 经验：① **本轮无新坑，全链路一次通过**；② 查重必须先导出全库清单：10 条初选新闻里 8 条已在库（工信部标识码、EmArm、GO-3、后摩、智澄、机器科学、进博会 A3 Ultra、四川具身），靠 3-gram 全拦下后改从「11-06 新事件」切入；论文 PrimeSim 也已在库（p315），换 SLA 后正好与 os247（Spatial-Forcing 官方实现）联动。③ jobs 用 URL 查重会拦下同岗不同历史条目（斯坦德 j310 / 优才 j194），改用 (company,title) 判重再补 2 条不同公司岗位更准。④ arXiv API 4 查询拿 108 个 NEW、GitHub Search API（urllib + Bearer）6 查询 142 个候选，`WebFetch arxiv.org/abs/<id>` 核对 5 篇全准。⑤ 深化正文用「定位 `### 练习题` / `### 练习` → 在其前插入 `###` 新小节」稳定幂等，不新增练习就不碰参考答案卡；务必同步 chars + section / learn 顶层 / lp 三处 lastUpdated。⑥ push 用 Python `subprocess.run(capture_output=True)` 直调 gh 凭据 trick，一次 RC=0 且拿到真实 stderr，避免 PowerShell 吞输出。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
