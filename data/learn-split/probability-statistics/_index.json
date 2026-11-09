@@ -60,7 +60,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：概率基础、条件概率、贝叶斯定理（MIT 6.041 前 5 讲 + Think Bayes Ch1-3）\n**第2周**：高斯分布、MLE/MAP 估计、GMM（Bishop Ch2）\n**第3周**：卡尔曼滤波推导 + Python 实现（Probabilistic Robotics Ch3）\n**第4周**：粒子滤波 + 蒙特卡洛方法（Probabilistic Robotics Ch4 + 编程实践）",
-  "lastUpdated": "2026-11-04T08:30",
+  "lastUpdated": "2026-11-09T08:30",
   "maturity": "comprehensive",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -311,14 +311,14 @@
     {
       "id": "sec-10",
       "title": "随机过程初步：马尔可夫链、鞅与 Poisson 过程",
-      "lastUpdated": "2026-10-27",
-      "chars": 4556,
+      "lastUpdated": "2026-11-09T08:30",
+      "chars": 16030,
       "shortTitle": "随机过程初步",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 17,
       "headings": [
         "从“一次”到“序列”：随机过程",
         "一、随机过程定义",
@@ -328,6 +328,20 @@
         "五、Poisson 过程",
         "六、布朗运动（Wiener 过程）",
         "七、MCMC 采样",
+        "深入一：为什么机器人非学随机过程不可",
+        "深入二：马尔可夫链的严格构造与 Chapman-Kolmogorov 方程",
+        "Chapman-Kolmogorov 方程的证明",
+        "状态分类与稳态",
+        "可逆性与详细平衡",
+        "一点数学史",
+        "可运行验证",
+        "深入三：HMM、贝叶斯滤波与卡尔曼——信念递推的完整骨架",
+        "卡尔曼滤波是线性高斯情形下的精确解",
+        "可运行的一维卡尔曼滤波",
+        "深入四：泊松过程与指数分布——事件流的无记忆性",
+        "深入五：鞅、停时与可选停时定理",
+        "深入六：布朗运动与随机微分方程入门",
+        "深入七：概念对照与高频误区",
         "八、练习",
         "参考答案"
       ],
@@ -520,7 +534,7 @@
       "summary": "普通几何研究欧几里得空间的距离和角度。信息几何把概率分布族 $\\{p_\\theta\\}$ 视为“统计流形”，用 Fisher 信息矩阵作为黎曼度量——让“两个分布的距离”有了严格定义。"
     }
   ],
-  "readingMinutes": 125,
+  "readingMinutes": 138,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 127104
+  "chars": 138578
 }

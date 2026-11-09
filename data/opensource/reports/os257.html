@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LocoManiLab：人形移动操作的数据、策略、控制器与部署统一测试床 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">LocoManiLab：人形移动操作的数据、策略、控制器与部署统一测试床 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="locomanilab">LocoManiLab：人形移动操作的数据、策略、控制器与部署统一测试床</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Gamma-Robot/LocoManiLab">https://github.com/Gamma-Robot/LocoManiLab</a>  </p>
+<p><strong>Stars</strong>: 12 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-09  </p>
+<p><strong>组织</strong>: Gamma-Robot  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-09</p>
+</blockquote>
+<hr />
+<p><strong>Gamma-Robot/LocoManiLab</strong> 是面向人形 <strong>Loco-Manipulation</strong>（移动操作）的统一测试床，把数据采集、策略、控制器与部署四层接到同一套接口上。仓库 Python / MIT，2026-11-02 创建、2026-11-05 活跃推送，约 12 star，带 benchmark、humanoid、imitation-learning、loco-manipulation、robotics、simulation 六个 topic。</p>
+<p><strong>为什么值得关注</strong>：移动操作的失败往往不在某个算法，而在层与层之间的口径不一致——数据里记的动作空间和控制器吃的不一样、评测判据和训练奖励不一样、仿真跑通换真机又要重写一遍胶水。把这些收进一个 testbed，才有条件做可复现消融与跨本体对比。它很新，但定位正好补上本站 platform-engineering 模块里「评测基础设施」那一环。</p>
+<hr />
+<p>四层统一是它的核心：</p>
+<ol>
+<li><strong>数据层</strong>：统一轨迹格式、观测键与成功标签，避免每个策略各写一份 dataloader；</li>
+<li><strong>策略层</strong>：模仿学习 / RL 策略按同一接口接入，输出约定好维度的动作；</li>
+<li><strong>控制层</strong>：把策略动作转成全身关节目标，显式处理平衡与接触约束；</li>
+<li><strong>部署层</strong>：仿真与真机共用同一套动作—观测契约，换后端不改上层代码。</li>
+</ol>
+<p>再加一层<strong>基准与评测</strong>：把任务套件、初始状态分布与成功判据固定下来，让不同策略在同一把尺子上比。这种「先定契约、再谈算法」的组织方式，与本站 p279（RoboHarness）讨论的工具粒度与接口完备性是同一类工程判断。</p>
+<hr />
+<ul>
+<li><strong>LocoManiLab</strong> 技术报告 / 仓库文档：四层统一测试床的设计与基准定义；</li>
+<li>本站 <strong>p279（RoboHarness）</strong> 与 <strong>p307（统一 Harness）</strong>：接口完备性与调用治理，是测试床设计的方法背景；</li>
+<li>本站 <strong>p316（RoboColosseum）</strong>：分布式真机评测，可与 LocoManiLab 的仿真基准形成虚实两级对照；</li>
+<li>本站 <strong>p320（AIRoA-0）</strong>：手持数据的长时程跨本体操作，是数据层可接入的一类来源；</li>
+<li>本站 /learn/platform-engineering 与 /learn/mobile-robot-navigation：评测基础设施与导航背景。</li>
+</ul>
+<hr />
+<ol>
+<li>克隆仓库并读 README 里的「契约」章节，先弄清观测键、动作维度与成功判据；</li>
+<li>跑通一个最小示例任务，确认数据 → 策略 → 控制器 → 部署四层能串起来；</li>
+<li>用自带示范数据训一个基线模仿学习策略，记录同口径成功率；</li>
+<li>只替换其中一层（例如换控制器或换策略），观察指标变化，验证消融是否干净；</li>
+<li>把仿真配置切到真机后端前，逐项核对动作—观测契约，避免口径漂移。</li>
+</ol>
+<hr />
+<p>仓库 2026-11-02 才创建，<strong>不提供成熟榜单</strong>，价值在结构而非分数。判断它是否值得作为实验底座，看三点：换层时是否真的不用改其他层代码、仿真与真机是否共用同一契约、以及基准是否固定了初始状态分布与成功判据。这三点若成立，它就能省下大量重复胶水工作；若不成立，就只是一个示例工程。star 少、维护时间短，采用前建议先自行验证契约稳定性。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>LocoManiLab</th>
+<th>单任务参考实现</th>
+<th>通用仿真平台</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>覆盖层次</td>
+<td>数据 / 策略 / 控制 / 部署</td>
+<td>通常只覆盖策略</td>
+<td>只覆盖仿真与物理</td>
+</tr>
+<tr>
+<td>接口契约</td>
+<td>四层统一</td>
+<td>硬编码</td>
+<td>不规定</td>
+</tr>
+<tr>
+<td>评测基准</td>
+<td>内置固定判据</td>
+<td>各自为政</td>
+<td>需自行搭</td>
+</tr>
+<tr>
+<td>目标</td>
+<td>可复现消融</td>
+<td>复现一篇论文</td>
+<td>通用物理模拟</td>
+</tr>
+</tbody>
+</table>
+<p>与本站 <strong>os226（BEHAVIOR-1K）</strong> 对照：后者给 1000 项日常活动定义与场景资产，前者给把策略跑起来的四层管线，二者可组合使用。若只想要物理引擎本身，看 physics-simulation 模块；若想要真机级分布式评测，看 p316（RoboColosseum）。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

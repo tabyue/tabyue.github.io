@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GigaBrain-WBC-0.5：面向环境交互的鲁棒人形全身跟踪行为世界模型 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">GigaBrain-WBC-0.5：面向环境交互的鲁棒人形全身跟踪行为世界模型 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="gigabrain-wbc-05">GigaBrain-WBC-0.5：面向环境交互的鲁棒人形全身跟踪行为世界模型</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/open-gigaai/giga-brain-wbc">https://github.com/open-gigaai/giga-brain-wbc</a>  </p>
+<p><strong>Stars</strong>: 15 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-09  </p>
+<p><strong>组织</strong>: open-gigaai  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-09</p>
+</blockquote>
+<hr />
+<p><strong>open-gigaai/giga-brain-wbc</strong> 是 GigaBrain-WBC-0.5 的官方实现：一个面向<strong>带环境交互的鲁棒人形全身跟踪</strong>（Whole-Body Control, WBC）的行为世界模型。仓库 Python / Apache-2.0，2026-08-18 创建、2026-11-05 活跃推送，约 15 star，带 humanoid 与 robot-learning 两个 topic。</p>
+<p><strong>为什么值得关注</strong>：人形全身控制长期在两件事之间摇摆——参考运动要「跟踪得像」，接触环境又要「站得住、推得动」。多数工作把二者分开做，导致一遇到搬箱、倚靠、推车这类需要外力交互的任务就退化。行为世界模型把环境交互显式纳入预测，是 WBC 从纯运动模仿走向可用作业能力的一条务实路径，也正好接得上本站 humanoid-fullstack 与 robot-dynamics 两个模块。</p>
+<hr />
+<p>可以把它拆成四层来理解：</p>
+<ol>
+<li><strong>行为世界模型</strong>：在给定参考运动与环境状态下，预测人形接下来的全身状态与接触演化，而不是只回归关节角；</li>
+<li><strong>全身跟踪目标</strong>：把预测转成带接触约束的跟踪问题，同时守住平衡、关节限位与足端接触；</li>
+<li><strong>环境交互接口</strong>：显式表示被操作物体 / 支撑面，让「靠一下」「推一下」成为可控条件而非扰动；</li>
+<li><strong>训练与评测代码</strong>：仿真里的训练循环、域随机化与鲁棒性评测协议。</li>
+</ol>
+<p>关键设计取舍是<strong>把环境当成条件而不是噪声</strong>：传统 Sim-to-Real 靠域随机化把环境变化抹平，这里反过来把环境结构显式建模，让策略知道自己在和什么接触。对搬箱、开门、扶栏这类任务，这一区别决定了策略是「硬扛扰动」还是「利用接触」。</p>
+<hr />
+<ul>
+<li><strong>GigaBrain-WBC-0.5</strong>：本仓库对应的技术报告，行为世界模型用于鲁棒人形全身跟踪；</li>
+<li>本站 <strong>p317（Perceptive Humanoid Motion from Simulation）</strong>：苹果 HALO，感知式人形运动与仿真到真机迁移，可作 WBC 上层对照；</li>
+<li>本站 <strong>p303（∇Mimic）</strong>：可微仿真做超高效人形控制，与行为世界模型是「解析梯度 vs 学习预测」两条路线；</li>
+<li>本站 <strong>p306（ROOF）</strong>：头顶约束下的跌倒恢复，是 WBC 鲁棒性评测的极端用例；</li>
+<li>本站 /learn/humanoid-fullstack 与 /learn/robot-dynamics：全身控制与接触力学的教材级背景。</li>
+</ul>
+<hr />
+<ol>
+<li>克隆仓库并按 README 建独立虚拟环境，确认仿真后端与依赖版本；</li>
+<li>先跑通自带的预训练检查点做一次全身跟踪 demo，确认观测、动作与接触判据的口径；</li>
+<li>再切到训练脚本，从少量参考运动 + 简单环境开始，观察跟踪误差与接触稳定性两条曲线；</li>
+<li>逐步加入环境交互条件（被操作物体、支撑面变化），对比「显式条件」与「纯域随机化」的鲁棒性差异；</li>
+<li>用仓库自带的评测协议报成功率、跟踪误差与失衡次数，别只看单点 demo。</li>
+</ol>
+<hr />
+<p>仓库公开的是<strong>官方实现与训练 / 评测代码</strong>，不是一份刷榜成绩单。评价它更应看三件事：带接触的全身跟踪在分布外环境下是否仍稳、显式环境条件相对纯域随机化有多大收益、以及评测协议是否同时记录成功与失衡。star 数不高（约 15）说明它仍处早期，但官方实现 + Apache-2.0 + 2026-11 活跃推送，意味着可以作为后续实验的可改地基，而不是只读的结论。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>GigaBrain-WBC-0.5</th>
+<th>纯运动模仿 WBC</th>
+<th>通用人形 RL 框架</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>环境处理</td>
+<td>显式建成条件</td>
+<td>当扰动抹平</td>
+<td>多靠域随机化</td>
+</tr>
+<tr>
+<td>目标</td>
+<td>跟踪 + 接触鲁棒</td>
+<td>只求跟踪得像</td>
+<td>通用任务奖励</td>
+</tr>
+<tr>
+<td>建模方式</td>
+<td>行为世界模型预测</td>
+<td>直接回归关节</td>
+<td>模型无关</td>
+</tr>
+<tr>
+<td>适用任务</td>
+<td>搬箱、倚靠、推车</td>
+<td>行走、舞蹈</td>
+<td>依任务而定</td>
+</tr>
+</tbody>
+</table>
+<p>与本站 <strong>os232（PHUMA，物理可靠人形运动数据集）</strong> 对照：一个给数据，一个给把数据用起来的控制模型。若需要的是可微梯度而非学习预测，看 p303（∇Mimic）；若需要的是整机运行时分层，看 os258（EMOS）与 ros2 模块的相关章节。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

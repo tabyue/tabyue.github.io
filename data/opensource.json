@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-08T08:35",
+ "lastUpdated": "2026-11-09T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,110 @@
   }
  ],
  "projects": [
+  {
+   "id": "os255",
+   "name": "Awesome 3D/4D World Models：TPAMI 2026 三维与四维世界建模综述资源库",
+   "github": "https://github.com/worldbench/awesome-3d-4d-world-models",
+   "organization": "worldbench",
+   "org": "WorldBench",
+   "category": "framework",
+   "description": "**worldbench/awesome-3d-4d-world-models** 是 TPAMI 2026 综述《3D and 4D World Modeling: A Survey》的配套资源库：按 3D 生成、4D 生成、占据与 LiDAR 生成、空间智能、视频生成与世界模型等主题整理论文、代码与数据集。仓库 HTML / Apache-2.0，2025-06-20 创建、2026-10-31 活跃推送，约 1029 star。\n\n**为什么值得关注**：世界模型已经从「生成好看的视频」走到「显式建模三维与四维几何」，但资料散落在生成、重建、机器人与自动驾驶多个社区。这份综述把 3D/4D 建模的脉络收成一张可检索的地图，是本站世界模型与物理仿真模块现成的延伸阅读清单。",
+   "language": "HTML",
+   "license": "Apache-2.0",
+   "stars": 1029,
+   "features": [
+    "TPAMI 2026 综述配套：按主题分类的论文、代码与数据集索引",
+    "覆盖 3D / 4D 生成、占据与 LiDAR 生成、空间智能、视频生成、世界模型",
+    "14 个 topic 标签，含 embodied-ai / autonomous-driving / spatial-intelligence",
+    "Apache-2.0 许可，约 1029 star，持续更新"
+   ],
+   "tags": [
+    "世界模型",
+    "3D/4D 建模",
+    "TPAMI 2026",
+    "综述资源",
+    "空间智能"
+   ],
+   "addedDate": "2026-11-09"
+  },
+  {
+   "id": "os256",
+   "name": "GigaBrain-WBC-0.5：面向环境交互的鲁棒人形全身跟踪行为世界模型",
+   "github": "https://github.com/open-gigaai/giga-brain-wbc",
+   "organization": "open-gigaai",
+   "org": "OpenGigaAI",
+   "category": "locomotion",
+   "description": "**open-gigaai/giga-brain-wbc** 是 GigaBrain-WBC-0.5 的官方实现：一个面向带环境交互的鲁棒人形全身跟踪（Whole-Body Control）的行为世界模型，把参考运动、环境接触与全身跟踪放进同一套建模里。仓库 Python / Apache-2.0，2026-08-18 创建、2026-11-05 活跃推送，约 15 star，带 humanoid / robot-learning topic。\n\n**为什么值得关注**：人形全身控制长期在「跟踪得像」与「接触得住」之间摇摆，行为世界模型把环境交互显式纳入预测，是 WBC 从纯运动模仿走向可用作业能力的一条务实路径。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 15,
+   "features": [
+    "行为世界模型：预测全身运动同时考虑环境交互与接触",
+    "面向人形 Whole-Body Tracking 的训练与评测代码",
+    "Apache-2.0 许可，官方实现",
+    "humanoid / robot-learning topic，2026-11-05 活跃维护"
+   ],
+   "tags": [
+    "GigaBrain",
+    "WBC",
+    "行为世界模型",
+    "人形全身控制",
+    "环境交互"
+   ],
+   "addedDate": "2026-11-09"
+  },
+  {
+   "id": "os257",
+   "name": "LocoManiLab：人形移动操作的数据、策略、控制器与部署统一测试床",
+   "github": "https://github.com/Gamma-Robot/LocoManiLab",
+   "organization": "Gamma-Robot",
+   "org": "Gamma-Robot",
+   "category": "simulation",
+   "description": "**Gamma-Robot/LocoManiLab** 是人形 Loco-Manipulation 的统一测试床，把数据采集、策略、控制器与部署四层接到同一套接口上，避免每个环节各写一份胶水代码。仓库 Python / MIT，2026-11-02 创建、2026-11-05 活跃推送，约 12 star，带 benchmark / humanoid / imitation-learning / simulation topic。\n\n**为什么值得关注**：移动操作的失败常常不在算法而在层与层之间的口径不一致；把数据、策略、控制、部署收进一个 testbed，才有条件做可复现的消融与跨本体对比。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 12,
+   "features": [
+    "四层统一：数据、策略、控制器、部署共用一套接口与评测口径",
+    "面向人形 Loco-Manipulation 的仿真基准与示例",
+    "MIT 许可，2026-11-02 新建、活跃维护",
+    "benchmark / imitation-learning / simulation topic 齐全"
+   ],
+   "tags": [
+    "LocoManiLab",
+    "移动操作",
+    "统一测试床",
+    "人形机器人",
+    "基准"
+   ],
+   "addedDate": "2026-11-09"
+  },
+  {
+   "id": "os258",
+   "name": "EMOS：用 Go 写的具身操作系统，把 ROS 2、VLA 与多本体运行时收进同一层",
+   "github": "https://github.com/automatika-robotics/emos",
+   "organization": "automatika-robotics",
+   "org": "Automatika Robotics",
+   "category": "framework",
+   "description": "**automatika-robotics/emos** 定位为 The Embodied OS：用 Go 实现的机器人运行时层，覆盖 AMR、四足与人形本体，把控制、ROS 2 桥接、VLA 策略接入与物理 AI 部署收进同一套抽象。仓库 Go / MIT，2026-02-12 创建、2026-10-23 活跃推送，约 82 star，带 amr / control / humanoid / physical-ai / quadruped / ros2 / vla topic。\n\n**为什么值得关注**：当策略从 50 Hz 到运控 1 kHz 混跑，缺的是一层不偏向某个框架的运行时；Go 的并发模型与静态部署特性，正好适合做这层「不抢戏」的系统软件。",
+   "language": "Go",
+   "license": "MIT",
+   "stars": 82,
+   "features": [
+    "Go 实现的具身运行时：静态二进制、并发调度与低依赖部署",
+    "覆盖 AMR / 四足 / 人形多本体统一抽象",
+    "ROS 2 桥接与 VLA 策略接入层",
+    "MIT 许可，ros2 / vla / physical-ai topic 齐全"
+   ],
+   "tags": [
+    "EMOS",
+    "具身操作系统",
+    "Go",
+    "ROS 2",
+    "运行时"
+   ],
+   "addedDate": "2026-11-09"
+  },
   {
    "id": "os250",
    "name": "CaPtain：Code-as-Policy 机器人 Agent 的后训练流水线",
@@ -6361,5 +6465,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 241
+ "totalItems": 245
 }

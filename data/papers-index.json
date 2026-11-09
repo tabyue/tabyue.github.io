@@ -1,6 +1,141 @@
 {
- "lastUpdated": "2026-11-08T08:35",
+ "lastUpdated": "2026-11-09T08:30",
  "papers": [
+  {
+   "id": "p332",
+   "title": "VFlash: Fast, Accurate Visual Planning via Flash Primitive Decoding",
+   "authors": "Yu-Cheng Chou, Shihao Wang, Jin Huang, Chi-Pin Huang, Chiao-An Yang, Xianzhe Fan, Jing Wang, Zhiqi Li 等",
+   "venue": "arXiv 2611.08449 (cs.RO, cs.CV)",
+   "date": "2026-11-05",
+   "arxiv": "https://arxiv.org/abs/2611.08449",
+   "github": "",
+   "tags": [
+    "视觉规划",
+    "并行解码",
+    "世界动作模型",
+    "推理加速",
+    "MolmoSpaces"
+   ],
+   "category": "VLA / 视觉规划",
+   "difficulty": "高级",
+   "tldr": "**问题**：物理 AI 不必只用语言推理，点、框、轨迹这类视觉基元能直接表达空间目标；但自回归视觉语言模型一次只生成一个坐标 token，预测越丰富越慢。**做法**：VFlash 利用视觉基元已知的结构，让轻量 drafter 一次前向就产出整条基元，布局按基元类型、维度与长度自适应，覆盖紧凑框与变长轨迹；空间精度并不要求复现自回归模型的确切 token 序列，因此训练直接在标注基元上做，接受结构合法而不必逐 token 对齐的预测。**结论**：2D 与 3D 机器人轨迹任务上预测误差持续低于自回归解码，3D 点运动预测单次 rollout 约 25 倍加速；以 VFlash 计划为条件的世界动作模型在 MolmoSpaces 四套任务上平均成功率 70.2%，基线为 62.6%。",
+   "keyInsights": [
+    "把视觉基元当作有类型的结构化输出，而不是一串待解码的 token：一次前向产出整条点 / 框 / 轨迹，从根上绕开自回归的逐坐标串行等待。",
+    "提出「结构合法即可、不必 token 一致」的训练准则：空间精度与复现教师模型的确切 token 序列是两件事，解绑后可以直接用标注基元监督，大幅简化训练。",
+    "drafter 的布局随基元类型、维度和长度自适应，同一机制既覆盖 2 自由度紧凑框，也覆盖长且变长的 3D 轨迹。",
+    "加速不只来自少走几步解码，还来自把视觉计划直接喂给世界动作模型：规划误差下降会传导成下游任务成功率提升（70.2% 对 62.6%）。"
+   ],
+   "impact": "给「视觉规划 + 世界动作模型」这条路线补上了推理预算这一环。此前讨论多集中在让 VLA 生成更长的推理链，VFlash 反过来证明：当输出本身有结构时，把生成方式换掉比把链加长更划算。它与本站 T3R（p327，token 剪枝）从两个方向压缩开销——一个减少要算的 token，一个减少要走的解码步；与 SLA（p326）、Concertina（p330）一起看，可以串出「空间表征怎么进、动作怎么生成、推理怎么省」的完整链条。对本站学习中心而言，它是训练与推理优化模块里「结构化输出解码」的典型案例。",
+   "addedDate": "2026-11-09"
+  },
+  {
+   "id": "p333",
+   "title": "HITCH: Teaching a Vision-Language Model to Operate a Humanoid through a Whole-Body Harness",
+   "authors": "Qingzhou Lu, Chenxin Liu, Xinming Wang, Liu Cao, Yanjiang Guo, Mengdi Xu, Jianyu Chen",
+   "venue": "arXiv 2611.08039 (cs.RO)",
+   "date": "2026-11-05",
+   "arxiv": "https://arxiv.org/abs/2611.08039",
+   "github": "",
+   "tags": [
+    "人形机器人",
+    "全身控制",
+    "VLM",
+    "Harness 接口",
+    "Sim-to-Real"
+   ],
+   "category": "人形机器人 / VLM 控制",
+   "difficulty": "高级",
+   "tldr": "**问题**：让 VLM 直接控制人形机器人，缺的不只是模型能力，还缺一套可靠、跨任务可复用的全身接口，以及「怎么用这副身体」的知识。**做法**：HITCH（Harness Interfaces To Command Humanoids）把接口拆成两侧——感知侧返回 VLM 在图像中点选的任意点的 3D 位置；执行侧把骨盆、躯干、双手、行走与注视的命令交给一个学习式跟踪器转成全身运动。随后用教师策略通过 HITCH 解五类基础任务的轨迹微调 VLM，让它学会操作这副身体。**结论**：没有任务专属轨迹时，微调模型完成 SIMPLE 51%、HumanoidArena 42.5% 的 episode；每个 SIMPLE 任务仅加五条轨迹，SIMPLE 成功率升到 95%。在真实 G1 上，无需真实训练数据即可搬箱并行走至目标。论文同时发现测量场景与执行命令的准确性都会抬高任务成功率。",
+   "keyInsights": [
+    "把「接口」提升为一等研究对象：VLM 点选图像任意点 → 返回 3D 位置，是比固定动作词表更自然的全身指令通道。",
+    "执行侧用学习式跟踪器把骨盆 / 躯干 / 双手 / 行走 / 注视多通道命令统一成全身运动，避免 VLM 直接输出高维关节力矩。",
+    "跨任务复用的是「怎么用身体」的知识而非某个任务策略：教师策略只需解五类基础任务，微调后的 VLM 就能零样本迁移到新 episode。",
+    "给出清晰的数据效率曲线：每任务仅补五条轨迹，SIMPLE 成功率从 51% 跃升到 95%，说明瓶颈在接口知识而非动作数据量。"
+   ],
+   "impact": "为「VLM 当人形大脑」提供了可复用的工程范式：不追求端到端从像素到力矩，而是先定义稳定接口、再让模型学会用接口。这与本站具身 Agent / Harness 生态（os250 CaPtain、p307 统一 Harness）是同一思路在全身控制上的延伸；也与 humanoid-fullstack 模块里「感知—规划—WBC 分层」的结构互为印证。真实 G1 零真实数据搬箱的结果，对 Sim-to-Real 模块讨论「哪些能力可以不靠真机数据迁移」很有参考价值。",
+   "addedDate": "2026-11-09"
+  },
+  {
+   "id": "p334",
+   "title": "Open-HumanWAM: An Open Recipe for Scaling Human and Robot Experience for Embodied Foundation Models",
+   "authors": "Juncheng Ma, Jiaxin Li, Jiankai Tu, Bo Liang, Guodong Lv, Yufan Deng 等",
+   "venue": "arXiv 2611.06817 (cs.CV)",
+   "date": "2026-11-04",
+   "arxiv": "https://arxiv.org/abs/2611.06817",
+   "github": "https://github.com/DAGroup-PKU/HumanNet/tree/Open-HumanWAM",
+   "tags": [
+    "第一视角视频",
+    "世界动作模型",
+    "开放配方",
+    "数据缩放律",
+    "RoboTwin 2.0"
+   ],
+   "category": "世界模型 / 人类视频预训练",
+   "difficulty": "高级",
+   "tldr": "**问题**：第一视角人类视频是可扩展的操作先验来源，但把原始数据量变成可泛化的机器人策略，缺的是严谨的数据治理与训练配方，而非再堆一堆视频。**做法**：Open-HumanWAM 给出首个完全开放的配方，把第一视角预训练扩到 50000 小时，核心是 Open-HumanWAM-50K 语料——密集标注手部运动与自然语言；在闭环仿真评测里系统研究纯人类预训练，发现预训练小时数与下游机器人成功率之间的经验对数线性缩放律。据此训练只用人类视频的 HumanWAM-Vanilla，并进一步做视觉目标条件化的人机联合预训练 HumanWAM-Goal。**结论**：机器人在后训练后，Vanilla 在 RoboTwin 2.0 Clean2Clean 达 92.08%、Clean2Random 达 68.88%；Goal 把 Clean2Random 推到 84.60%，并在真机上涌现出不更新参数、按未见视觉目标调整操作行为的具身上下文学习。语料、治理与预训练管线、各阶段检查点、推理代码与仿真评测套件全部开放。",
+   "keyInsights": [
+    "第一次把「人类视频预训练」做成完全开放的配方：语料、治理管线、训练代码、检查点与评测套件一起放出，而不只是发布一个模型。",
+    "给出经验对数线性缩放律：预训练小时数与下游成功率呈 log-linear 关系，让「再买多少小时数据」变成可预算的工程决策。",
+    "区分纯人类预训练与人类—机器人联合预训练：Vanilla 证明纯人类视频也能撑起强策略，Goal 的视觉目标条件化则带来跨仿真与真机的零样本泛化。",
+    "报告真机上的具身上下文学习：策略不更新权重，仅凭未见视觉目标就动态调整操作行为，这是数据规模跨过阈值后涌现的能力。"
+   ],
+   "impact": "把「数据规模 → 策略能力」从口号变成可复现、可外推的曲线，是本站具身数据工程与数据采集模块最直接的实证补充。它与此前从人类视频学动作的工作（HandMimicX、FloMo、DreamX）形成互补：别人给方法，Open-HumanWAM 给配方与缩放律。开放 50K 小时语料与管线，也让中小团队第一次能在同一底座上做消融，而不是各自重复清洗。对资源导航而言，它和 RynnVLA-Latent、giga-brain-wbc 一起构成「数据—预训练—控制」的开源对照。",
+   "addedDate": "2026-11-09"
+  },
+  {
+   "id": "p335",
+   "title": "Time-to-Goal: Learned Temporal Metrics for Long-Horizon Planning with JEPA World Models",
+   "authors": "Ruilong Yu, Fei Ye",
+   "venue": "arXiv 2611.05847 (cs.RO, cs.CV)",
+   "date": "2026-11-04",
+   "arxiv": "https://arxiv.org/abs/2611.05847",
+   "github": "",
+   "tags": [
+    "JEPA",
+    "潜空间规划",
+    "时序度量",
+    "排序损失",
+    "长程任务"
+   ],
+   "category": "世界模型 / 长程规划",
+   "difficulty": "高级",
+   "tldr": "**问题**：JEPA 类世界模型通过比较预测潜状态与编码目标来规划，但要让比较引导时间推进，离目标更近的状态理应拿到更低代价；只训练预测与分布正则并不能保证这个序关系。作者在扁平 LeWorldModel 里分析欧氏目标代价随时间偏移的变化，找出长偏移下不同距离状态平均代价趋同、时序区分度被抹平的条件。**做法**：Time-to-Goal（T2G）用离线轨迹的潜状态三元组训练一个轻量度量，margin ranking 损失鼓励时间更近的状态距离更小，不需要奖励或策略标签；学好的度量替换欧氏规划代价，JEPA 编码器与预测器保持冻结。**结论**：AntMaze 与 FourRoom 的诊断显示 T2G 保留更强的时序对比、改善远近排序；四个导航与操作基准上平均规划成功率从扁平 LeWM 的 32.7% 提升到 63.0%，接近甚至超过分层 H-JEPA 基线。",
+   "keyInsights": [
+    "指出一个被忽略的失配：预测目标与分布正则不保证潜空间距离具有时间单调性，长时程下欧氏代价会把「快到了」和「还很远」压成同一个数。",
+    "解法极轻：只学一个度量，不动编码器与预测器，用无奖励、无策略标签的 margin ranking 损失从离线轨迹里恢复时序序关系。",
+    "把「层级化世界模型才擅长长程」这一默认假设撕开一个口子——扁平模型换掉代价函数就能逼近分层基线。",
+    "诊断先于刷榜：先在 AntMaze / FourRoom 上量化远近排序质量，再解释四个基准上的成功率提升，因果链清楚。"
+   ],
+   "impact": "给 JEPA / 潜空间规划这条线补上「代价函数该是什么」的答案，是本站世界模型与 LLM 模块、以及 LeWAM（os220）、Time-to-Goal 相关章节的直接延伸。它说明长程规划的瓶颈未必在模型容量或层级结构，而可能只在度量；这与本站 linear-algebra#10（SVD、度量与低秩）和 probability-statistics#10（随机过程与时序）两条基础线也能对读。对做模型预测控制与潜空间搜索的读者，它提供了一条几乎零额外训练成本的改进路径。",
+   "addedDate": "2026-11-09"
+  },
+  {
+   "id": "p336",
+   "title": "DreamX: Video Diffusion Model is a Universal Latent Action Learner",
+   "authors": "Jisoo Kim, Chaehyun Kim, Junsu Kim, Jiho Park, Seongchan Kim, Eunbeen Hong, Soowon Son, Fu-En Yang, Seungryong Kim",
+   "venue": "arXiv 2611.05377 (cs.CV, cs.AI, cs.RO)",
+   "date": "2026-11-03",
+   "arxiv": "https://arxiv.org/abs/2611.05377",
+   "github": "",
+   "tags": [
+    "视频扩散模型",
+    "潜动作",
+    "跨本体迁移",
+    "动作表征",
+    "零样本迁移"
+   ],
+   "category": "世界模型 / 潜动作表征",
+   "difficulty": "高级",
+   "tldr": "**问题**：从视频学通用动作表征，要求对同一动作的不同执行保持一致、又对本体与外观变化不敏感；已有潜动作模型从视觉变化反推动作，表征常把动作与无关视觉变化缠在一起，跨本体迁移因此受限。**做法**：DreamX 把预训练视频扩散模型改造成通用潜动作学习器，从其丰富时空特征里抽取紧凑潜动作，把每帧 1200 个 token 压到 4 个（300 倍压缩）；借助视频模型的生成先验，这些潜动作能抓住动作相关动态并与外观解耦。**结论**：所得潜空间成为跨本体（人与机器人）、跨环境、跨动作参数化的共享动作接口，在 LARY-Bench 上达到潜动作模型的最佳表现；一个设定里编码的动作在另一设定仍有效，支持任意到任意的视频迁移与零样本动作迁移，并让策略在紧凑潜动作空间里学习，降低视频扩散策略的计算成本。",
+   "keyInsights": [
+    "把预训练视频扩散模型当作现成的动作解耦器：生成先验已经学过关「什么变化来自动作、什么只是外观」，不必从头设计解耦目标。",
+    "300 倍压缩（1200 → 4 token/帧）说明动作信息在时空特征里高度冗余，紧凑潜空间反而更利于跨本体对齐。",
+    "共享动作接口同时支持任意到任意视频迁移与零样本动作迁移，把「跨本体」从一个训练技巧变成表征本身的性质。",
+    "紧凑潜动作空间可直接承载策略学习，顺带把视频扩散类策略的计算开销降下来，兼顾表征质量与部署成本。"
+   ],
+   "impact": "为「无本体数据 / 人类视频学动作」这条线提供了一个可分发的中间表示，与本站 Open-HumanWAM（p334，开放数据配方）、FloMo（3D 场景流作为世界动作模型中间量）、RynnVLA-Latent（os255，3D 对齐潜动作）能串成完整对照：数据怎么来、中间量怎么选、动作怎么压。对 imitation-learning 与 world-models-llm 两个学习模块，它是「潜动作作为共享接口」的教科书级案例；对平台侧，紧凑潜空间也直接影响动作 token 的传输与推理预算。",
+   "addedDate": "2026-11-09"
+  },
   {
    "id": "p327",
    "title": "T3R: Training-Free Two-Stage Token Refinement Towards Efficient and Robust VLA Models",
@@ -8806,5 +8941,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 305
+ "totalItems": 310
 }
