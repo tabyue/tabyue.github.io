@@ -192,6 +192,13 @@
 - 校验：health_check **首轮 ALL OK 且 0 告警** + verify_learn_structure ALL OK + audit 硬缺陷全 0（F5 仅历史遗留 academic-english#9 的 `# TODO`）+ unittest 34/34 + node UI 32/32。已 push（38666ab..87257dc），远程 / 本地 / origin/main 三者一致。
 - 经验：① **本轮无新坑，全链路一次通过**；② 查重必须先导出全库清单：10 条初选新闻里 8 条已在库（工信部标识码、EmArm、GO-3、后摩、智澄、机器科学、进博会 A3 Ultra、四川具身），靠 3-gram 全拦下后改从「11-06 新事件」切入；论文 PrimeSim 也已在库（p315），换 SLA 后正好与 os247（Spatial-Forcing 官方实现）联动。③ jobs 用 URL 查重会拦下同岗不同历史条目（斯坦德 j310 / 优才 j194），改用 (company,title) 判重再补 2 条不同公司岗位更准。④ arXiv API 4 查询拿 108 个 NEW、GitHub Search API（urllib + Bearer）6 查询 142 个候选，`WebFetch arxiv.org/abs/<id>` 核对 5 篇全准。⑤ 深化正文用「定位 `### 练习题` / `### 练习` → 在其前插入 `###` 新小节」稳定幂等，不新增练习就不碰参考答案卡；务必同步 chars + section / learn 顶层 / lp 三处 lastUpdated。⑥ push 用 Python `subprocess.run(capture_output=True)` 直调 gh 凭据 trick，一次 RC=0 且拿到真实 stderr，避免 PowerShell 吞输出。
 
+### 2026-11-09 08:12—08:40
+- 投稿箱：无新投稿（open issue 返回 `[]`）。开工工作树干净、HEAD==origin/main（0a3cd6b）。11-08 另有一轮更新（各文件 lastUpdated `2026-11-08T08:35`，本文件未记录），本轮从 11-08/11-09 新事件切入。
+- 数据：新闻 +10（n649—n658）、论文 +5（p332—p336，含 detail）、开源 +4（os255—os258，含 detail + 报告页）、招聘 +6（j341—j346）、资源新增 r033 + r001 扩充。totalItems 616 / 310 / 245 / 333。
+- 学习：延续「深化 tier0/1 薄章」。probability-statistics#10 随机过程初步 4556→16030；linear-algebra#10 SVD 分解 5078→16170。章节数仍 553，sitemap 553 章节 + 132 学习站页面。
+- 校验：health_check **首轮 ALL OK 且 0 告警** + verify_learn_structure ALL OK + audit 硬缺陷全 0（F5 仅历史学术英语#9）+ unittest 34/34 + node UI 32/32。已 push（0a3cd6b..07e6acd），远程 / 本地 / origin/main 三者一致。
+- 经验：① **`ghkey` 用 `.rstrip('.git')` 会按字符集误伤以 t/g/i/. 结尾的 repo 名**（RynnVLA-Latent → rynnvla-laten），改为 `if k.endswith('.git'): k = k[:-4]` 精确剥离；本轮该误判恰好拦下真重复（库里已有 RynnVLA-Latent），换 worldbench/awesome-3d-4d-world-models 补足。② **raw 字符串里写 `\n\n` 会变字面文本**，数据脚本经 `fix()` 归一化，详情脚本直接写真实换行更稳。③ 深化正文用「`### 深入N：` 新小节插在练习标题前、原编号与参考答案不动」，幂等且 verify/audit 全过。④ arXiv API 3 查询全成功拿 180 条候选、GitHub Search API（urllib + Bearer）4 查询全成功，`WebFetch arxiv.org/abs/<id>` 核对 5 篇全准。⑤ LaTeX 复查：`^\*`→`^{*}`、裸 `<`→`\lt`、`\lVert \rVert`、`\mid`，KaTeX 全过。⑥ 10 条新闻刻意错开主题（联合体 / 融资 / IPO / 车企产能 / 医疗基地 / 消费级量产 / 海外 MoU / 数据政策 / 场景图谱 / 开源平台），同日同事件 3-gram 0 命中。
+
 ## 稳定执行套路（后续沿用）
 1. `gh issue list --state open --json number,title,body,createdAt --limit 50` 查投稿；无则跳过
 2. WebSearch 抓近 1—7 天的中英文稿源；WebFetch arxiv.org/abs/<id> 取准确标题/作者/日期
