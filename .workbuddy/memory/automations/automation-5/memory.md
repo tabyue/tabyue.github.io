@@ -265,3 +265,10 @@
 - **章节正文用 `###` 三级标题，不是 `##`（2026-10-20）**：前端小节目录吃 `###`。ai-infra 那批 A 类跳转章节用的是 `##`（历史遗留），新增内容跟着所在章节的既有层级走。
 - **外层单引号字符串禁用裸 `'`（2026-10-23）**：脚本里正文用 `'...'` 时，LaTeX 撇号（`$A^{(i)}_{t'}$`）与示例代码里的 `approach='top'` 都会提前闭合字符串。报错为 `SyntaxError: invalid syntax. Perhaps you forgot a comma?`，caret 指向一大段无关文本——**直接搜 `'` 定位**。改法：LaTeX 用 `_{t2}`，代码里的引号用 `"top"`（代码块内允许 ASCII 双引号）。
 - **`gh api` 带 `-f` 参数会切到 POST（2026-10-23）**：`gh api search/repositories -f q=...` 返回 `Not Found (HTTP 404)`。必须写 `gh api -X GET 'search/repositories?q=<urlencoded>&sort=stars&per_page=30'`。URL 编码用 `urllib.parse.quote`，在 Python subprocess 里 `&` 安全。
+
+### 2026-11-10 08:03—08:40
+- 投稿箱：无新投稿（open issue 返回 `[]`）。开工工作树干净、HEAD==origin/main（884c5bd）。
+- 数据：新闻 +10（n659—n668）、论文 +5（p337—p341，含 detail）、开源 +4（os259—os262，含 detail + 报告页）、招聘 +6（j347—j352）、资源新增 r034 + r001 扩充。totalItems 626 / 315 / 249 / 339。
+- 学习：延续「深化 tier0/1 薄章」。linear-algebra#9 特征值与特征向量 5120→18322（谱定理证明 / 矩阵指数与稳定性 / 幂迭代与 QR / Gershgorin 与 Bauer-Fike / 雅可比·协方差·PCA 三用例 + 可运行代码，联动 p338/p340）；control-theory#7 MPC 完整 QP 推导 5903→17643（预测矩阵推导 / 约束与软约束 / Lyapunov 稳定性证明 / 带约束双积分器可运行仿真 / NMPC 与 RTI / 人形 WBC 分层，联动 p339/p341）。章节数仍 553，sitemap 553 章 + 132 学习站页面。
+- 校验：`health_check` 首轮 ALL OK 且 0 告警 + `verify_learn_structure` ALL OK + `audit_learn_content` 硬缺陷全 0（F5 仅历史学术英语#9）+ unittest 34/34 + node UI 32/32。已 push（884c5bd..d9e6d17），远程 / 本地 / origin/main 三者一致。
+- 经验：① **本轮无新坑，全链路一次通过**；② arXiv API 4 查询拿 92 个候选、`WebFetch arxiv.org/abs/<id>` 核对 5 篇全准，GitHub Search API（urllib + Bearer）7 查询 162 个候选；③ 论文查重里 3-gram 相似度 0.40—0.50 的命中几乎全是 VLA 通用词误报，**只有 arXiv ID 命中才是真 DUP**（本轮拦下 La-JEPA / SLA / OopsieRecover）；④ 新闻查重用「关键词命中」会把「优必选」「宇树」「GR00T」等泛词误判 DUP，须按 title 3-gram ≥0.6 或明确同事件人工复核；⑤ 深化正文用「`### 深入N：` 新小节插在练习标题前、原编号与参考答案不动」稳定幂等，务必同步 chars + 三处 lastUpdated；⑥ 学习正文里跨章节引用另一个脚本定义的函数会造成「代码不可运行」，本轮把 `mpc_unconstrained` 的跨片段依赖改成自洽调用，并把输入约束 jac 从 `-sign(u)*I` 改为常数矩阵 `-I`；⑦ `git add data sitemap.xml`（不用 -A）+ 精确 Remove-Item 临时文件列表，push 用 Python subprocess 直调 gh 凭据 trick 一次 RC=0。
