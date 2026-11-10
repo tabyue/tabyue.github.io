@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-09T08:30",
+ "lastUpdated": "2026-11-10T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,110 @@
   }
  ],
  "projects": [
+  {
+   "id": "os262",
+   "name": "Astra-on-RoboMME：规划—监控—执行三层的记忆增强操作系统",
+   "github": "https://github.com/bingaochen/Astra-on-RoboMME",
+   "organization": "bingaochen",
+   "org": "bingaochen",
+   "category": "framework",
+   "description": "**bingaochen/Astra-on-RoboMME** 给出一个三层记忆增强操作系统：Astra 负责规划、一个小 VLM 负责监控、VLA 负责执行，在 RoboMME 上报告 79.13% 成功率。仓库 Python / Apache-2.0，2026-09-21 创建、2026-11-05 活跃推送，约 32 star，带项目主页。\n\n**为什么值得关注**：本轮 p337（AMP1）用实验说明「跨 episode 的持久记忆能把双臂任务失败率再降 4.6 倍」，Astra 则给出一个具体可跑的分层实现——把「记什么、谁来判断进度、谁来执行」拆成三个角色。它与 p341（MR0 事件驱动 Agent 维护持久任务事件）、os261（宇树技能框架）一起，是本站 embodied-agent 模块「Harness 层」讨论最直接的开源参照。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 32,
+   "features": [
+    "Astra 规划 / 小 VLM 监控 / VLA 执行的三层分工",
+    "记忆增强的机器人操作，RoboMME 报告 79.13% 成功率",
+    "带项目主页与 Apache-2.0 许可，约 32 star",
+    "可作 Agentic 操作策略与 Harness 设计的教学样本"
+   ],
+   "tags": [
+    "记忆增强",
+    "分层 Agent",
+    "RoboMME",
+    "规划与监控",
+    "VLA"
+   ],
+   "addedDate": "2026-11-10"
+  },
+  {
+   "id": "os261",
+   "name": "Unitree RobotSkills：把前沿模型接进宇树机器人的官方技能框架",
+   "github": "https://github.com/unitreerobotics/unitree_robotskills",
+   "organization": "unitreerobotics",
+   "org": "宇树科技 Unitree",
+   "category": "ai-agent-framework",
+   "description": "**unitreerobotics/unitree_robotskills** 是宇树科技官方的机器人技能框架，用于把前沿 AI 模型（仓库示例为 GPT-6 Astra 一类）快速接到宇树本体上，并让开发者以较小代价编写多样技能，使机器人在开放、复杂的物理世界里自主完成任务。仓库 Python / Apache-2.0，2026-10-28 创建并推送。\n\n**为什么值得关注**：本体厂商亲自下场做「模型 → 技能 → 本体」的连接层，是 Agent 化操作从论文走向可用接口的一个信号；它与本轮 p337（AMP1 通用模型直控机械臂）、p341（MR0 事件驱动 Agent）以及 n662（宇树天津具身智能创新中心）构成同一条产业链上的三个断点。对本站 embodied-agent 与 ros2 模块而言，它是「工具粒度与接口完备性」讨论的真实样本。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 12,
+   "features": [
+    "宇树官方技能框架，连接前沿 AI 模型与宇树机器人本体",
+    "提供技能编排接口，降低「写一个新任务」的工程量",
+    "面向开放复杂物理世界的自主任务执行",
+    "Apache-2.0 许可，2026-10 新仓库"
+   ],
+   "tags": [
+    "宇树科技",
+    "技能框架",
+    "Agent 接口",
+    "模型接入",
+    "官方实现"
+   ],
+   "addedDate": "2026-11-10"
+  },
+  {
+   "id": "os260",
+   "name": "instantTrack：单卡三分钟完成 Unitree G1 全身运动跟踪",
+   "github": "https://github.com/Huy-Quang-Dao/instantTrack",
+   "organization": "Huy-Quang-Dao",
+   "org": "Huy Quang Dao",
+   "category": "locomotion",
+   "description": "**Huy-Quang-Dao/instantTrack** 面向 Unitree G1 的全身运动跟踪：官方报告在单张 GPU 上平均不到 3 分钟即可完成一次跟踪训练，return 0.82、40 个片段 0 失败，15 个随机种子均值 2.74 分钟（区间 2.21—3.61），迭代速度 11.87 it/s。仓库 Python / MIT，2026-10-29 创建、2026-11-07 活跃推送，约 184 star，带项目主页。\n\n**为什么值得关注**：速度来自工程组合——世界模型、Muon 优化器、重叠 CUDA 流与 mjlab 仿真后端一起把迭代压到秒级，而不是换一个更小的策略。它把「全身跟踪」从一次要跑几小时的实验变成可反复消融的单元，是 p339（DKWBC 解耦跟踪与平衡）与本站 robot-dynamics 模块现成的对照实现。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 184,
+   "features": [
+    "单 GPU 平均 3 分钟内完成 G1 全身运动跟踪，40 片段 0 失败",
+    "世界模型 + Muon 优化器 + 重叠 CUDA 流，mjlab 仿真后端",
+    "15 个随机种子给出均值与区间，报告可复现的速度分布",
+    "MIT 许可、带项目主页，约 184 star"
+   ],
+   "tags": [
+    "全身运动跟踪",
+    "Unitree G1",
+    "Muon",
+    "mjlab",
+    "数据效率"
+   ],
+   "addedDate": "2026-11-10"
+  },
+  {
+   "id": "os259",
+   "name": "BitVLA：1-bit 视觉语言动作模型（CoRL 2026 Spotlight）",
+   "github": "https://github.com/ustcwhy/BitVLA",
+   "organization": "ustcwhy",
+   "org": "USTC WHY",
+   "category": "ai-model",
+   "description": "**ustcwhy/BitVLA** 是论文《BitVLA: 1-bit Vision-Language-Action Models for Robotics Manipulation》的官方实现，获 CoRL 2026 Spotlight。仓库 Python / MIT，2025-06-09 创建、2026-11-09 活跃推送，约 175 star。\n\n**为什么值得关注**：VLA 的骨干越来越大，端侧部署的瓶颈从「能不能跑」变成「显存与带宽够不够」。1-bit 量化把权重压到极致，是推理预算这条线上最激进的一支；配合本站 p338（ODEAction 连续动作生成）、p332（VFlash 并行视觉基元解码）与 p327（T3R token 剪枝），可以串出「动作怎么生成、视觉 token 怎么省、权重怎么压」的完整链条。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 175,
+   "features": [
+    "CoRL 2026 Spotlight 官方实现，1-bit VLA 权重与训练代码",
+    "面向机器人操作的视觉语言动作模型极低位宽量化",
+    "MIT 许可，约 175 star，2026-11 仍活跃推送",
+    "与训练 / 推理优化模块的量化、剪枝、蒸馏路线直接对照"
+   ],
+   "tags": [
+    "1-bit 量化",
+    "VLA",
+    "CoRL 2026",
+    "端侧推理",
+    "模型压缩"
+   ],
+   "addedDate": "2026-11-10"
+  },
   {
    "id": "os255",
    "name": "Awesome 3D/4D World Models：TPAMI 2026 三维与四维世界建模综述资源库",
@@ -6465,5 +6569,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 245
+ "totalItems": 249
 }

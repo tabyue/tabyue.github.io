@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unitree RobotSkills：把前沿模型接进宇树机器人的官方技能框架 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Unitree RobotSkills：把前沿模型接进宇树机器人的官方技能框架 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="unitree-robotskills">Unitree RobotSkills：把前沿模型接进宇树机器人的官方技能框架</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/unitreerobotics/unitree_robotskills">https://github.com/unitreerobotics/unitree_robotskills</a>  </p>
+<p><strong>Stars</strong>: 12 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-10  </p>
+<p><strong>组织</strong>: unitreerobotics  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-10</p>
+</blockquote>
+<hr />
+<p><strong>unitreerobotics/unitree_robotskills</strong> 是宇树科技官方的机器人技能框架，用于把前沿 AI 模型（仓库示例为 GPT-6 Astra 一类）快速接到宇树本体上，并让开发者以较小代价编写多样技能，使机器人在开放、复杂的物理世界里自主完成任务。仓库 Python / Apache-2.0，2026-10-28 创建并推送，约 12 star。</p>
+<p><strong>为什么值得关注</strong>：本体厂商亲自下场做「模型 → 技能 → 本体」的连接层，是 Agent 化操作从论文走向可用接口的一个信号。它与本轮 p337（AMP1 通用模型直控机械臂）、p341（MR0 事件驱动 Agent）以及 n662（宇树天津具身智能创新中心）构成同一条产业链上的三个断点：模型能不能直控、接口由谁定义、本体侧谁来承接。</p>
+<hr />
+<p>按职责可拆成四层：</p>
+<ol>
+<li><strong>模型接入层</strong>：把前沿模型的输出（文本、结构化调用或动作建议）规范化成内部命令；</li>
+<li><strong>技能定义层</strong>：以技能为单位组织行为，一个技能封装前置条件、执行步骤与结束判据；</li>
+<li><strong>本体抽象层</strong>：屏蔽宇树不同机型（G1、Go 系列等）的接口差异，向上给统一的观察与执行接口；</li>
+<li><strong>运行时与回传</strong>：把执行结果、失败原因与观测回传给上层模型，形成闭环。</li>
+</ol>
+<p>设计要点是<strong>技能粒度</strong>：粒度太细，模型会把推理预算耗在低层控制；太粗，遇到未见任务就写不出新行为。这与本站 platform-engineering 模块「把机器人能力暴露给 Agent：工具粒度与接口完备性」是同一个工程判断。</p>
+<hr />
+<ul>
+<li><strong>unitree_robotskills 仓库文档</strong>：模型接入、技能定义与本体抽象的接口约定；</li>
+<li>本站 <strong>p337（On Agentic Manipulation Policies）</strong>：AMP1 harness 不内置技能，对照「技能该由谁提供」；</li>
+<li>本站 <strong>p341（Meituan-Robotics-0）</strong>：事件驱动 Agent 与统一末端执行器接口，是同一问题的产业级实现；</li>
+<li>本站 <strong>os262（Astra-on-RoboMME）</strong>：规划 / 监控 / 执行三层，可与技能层叠放；</li>
+<li>站内 /learn/embodied-agent 与 /learn/ros2：Harness 设计与机器人运行时分层的教材级讲解。</li>
+</ul>
+<hr />
+<ol>
+<li>克隆仓库，按 README 配好宇树本体 SDK 与网络连通，先在仿真或低风险模式下跑通一个内置技能；</li>
+<li>定义第一个自定义技能：写清前置条件、步骤、结束判据与失败回传，不要一上来就接大模型；</li>
+<li>接入一个前沿模型，观察它能否用现有技能组合出目标行为，记录每轮调用次数与失败原因；</li>
+<li>按失败日志调整技能粒度——若模型频繁请求过细的动作，就把若干步合并成一个技能；</li>
+<li>验收指标建议用「新任务从零到跑通所需的代码改动量」，而不是单次演示成功率。</li>
+</ol>
+<hr />
+<p>仓库公开的是<strong>框架实现</strong>而非算法榜单，约 12 star、2026-10 新建，属于早期项目，接口稳定性与文档完备度需要自行评估。评价它看三点：换一个前沿模型要改多少代码、写一个新技能要写多少样板、执行失败时上层能否拿到足够信息做恢复。作为本体厂商官方项目，它的价值更多在「接口由谁来定」而不是 star 数；与社区框架对照使用时，要留意它天然偏向宇树机型。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>unitree_robotskills</th>
+<th>ROS 2 直接开发</th>
+<th>通用 Agent 框架</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>抽象单位</td>
+<td>技能</td>
+<td>节点 / 话题</td>
+<td>工具调用</td>
+</tr>
+<tr>
+<td>本体耦合</td>
+<td>面向宇树优化</td>
+<td>与本体无关</td>
+<td>与本体无关</td>
+</tr>
+<tr>
+<td>上手成本</td>
+<td>低（官方 SDK）</td>
+<td>高</td>
+<td>中</td>
+</tr>
+<tr>
+<td>厂商锁定</td>
+<td>有</td>
+<td>无</td>
+<td>无</td>
+</tr>
+<tr>
+<td>适合场景</td>
+<td>宇树本体上的快速技能编排</td>
+<td>跨厂商系统</td>
+<td>与机器人无关的推理链</td>
+</tr>
+</tbody>
+</table>
+<p>与本站 <strong>os262（Astra-on-RoboMME）</strong> 对照：一个解决「能力怎么暴露」，一个解决「谁规划、谁监控、谁执行」，二者可以叠成同一套栈。若目标是跨厂商部署，ROS 2 仍是不可绕开的底座；若团队已选定宇树本体并希望尽快把模型接上真机，官方框架省掉的胶水代码很实在。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

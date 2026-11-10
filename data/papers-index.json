@@ -1,6 +1,141 @@
 {
- "lastUpdated": "2026-11-09T08:30",
+ "lastUpdated": "2026-11-10T08:30",
  "papers": [
+  {
+   "id": "p341",
+   "title": "Meituan-Robotics-0: A Vision-Language-Action Foundation Model for Desktop Manipulation",
+   "authors": "Meituan Robotics Team (Caicheng Wang, Chen Zhao, Chengpeng Jin 等 36 人)",
+   "venue": "arXiv 2611.08577 (cs.RO, cs.CV)",
+   "date": "2026-11-05",
+   "arxiv": "https://arxiv.org/abs/2611.08577",
+   "github": "https://github.com/Meituan-Robotics/Meituan-Robotics-0",
+   "tags": [
+    "VLA 基座",
+    "桌面操作",
+    "CFG-DAgger",
+    "事件驱动 Agent",
+    "跨本体"
+   ],
+   "category": "VLA / 基座模型",
+   "difficulty": "高级",
+   "tldr": "**问题**：桌面级操作要在多变推理延迟下稳定执行、并能从部署中的失败里持续改进，单靠一个静态策略不够。**做法**：美团发布 MR0——面向固定基座桌面操作的 VLA 基座与具身 Agent 系统，用 1.47 亿视觉语言样本加 15060 小时、覆盖 12 种本体的精选真机轨迹，走「离散动作 token 预训练 → 流匹配跨本体中段训练 → 真机后训练」三阶段；提出 Rollback，把被替换的策略片段与人类纠正配对，为 CFG-DAgger 提供正负监督而不需价值学习或优势标注；统一末端执行器接口支持异构本体，异步动作块合并缓解推理延迟抖动；事件驱动 Agent 维护持久任务事件，在进度或可行性变化时重估计划，支持跨任务检索与条件恢复。**结论**：RoboTwin 2.0 达 93.6% 成功率、RoboDojo VLA 赛道第五；匹配 HG-DAgger 后训练下三项真机任务的平均成功率与进度分优于 π0.5，以太网线插入任务用 Rollback 数据训练的 CFG-DAgger 达 70% 成功率、进度分 0.90。",
+   "keyInsights": [
+    "把「失败数据」变成可用监督：Rollback 用替换片段 + 人类纠正构造正负对，绕开价值函数与优势标注，是 DAgger 家族里很省事的一支。",
+    "工程侧三个细节都指向真实部署：统一末端执行器接口跨本体、异步动作块合并抗延迟抖动、事件驱动 Agent 支持条件恢复。",
+    "三阶段训练把「离散 token 预训练 → 连续流匹配 → 真机后训练」串成一条可复用的配方，数据与本体规模都公开。",
+    "报进度分而不只报成功率，能区分「差一点就成」与「完全没开始」，对长程操作评测更诚实。"
+   ],
+   "impact": "产业界把 VLA 基座、后训练与 Agent 层一起开源的一个完整样本，与本站 imitation-learning（DAgger / 行为克隆）、vla-models（跨本体动作头）、embodied-agent（事件与恢复）三条线都能接上。本轮 p337（AMP1 持久记忆降失败率 4.6 倍）、p338（ODEAction 消 chunk 边界）、os262（Astra 三层记忆）分别在通用模型、动作生成与记忆结构上给出对照；MR0 的价值在于把这些部件放进同一条可跑的产线级管线，并公开代码与项目页。",
+   "addedDate": "2026-11-10"
+  },
+  {
+   "id": "p340",
+   "title": "MDF++: Visuo-Tactile World Action Model with End-to-end Representation Learning",
+   "authors": "Zixuan Huang, Jinhao Yu, Zachary Charlick, Dmitry Berenson",
+   "venue": "arXiv 2611.09293 (cs.RO, CoRL 2026)",
+   "date": "2026-11-06",
+   "arxiv": "https://arxiv.org/abs/2611.09293",
+   "github": "",
+   "tags": [
+    "视触觉",
+    "世界动作模型",
+    "表征学习",
+    "接触密集操作",
+    "扩散"
+   ],
+   "category": "世界模型 / 多模态表征",
+   "difficulty": "高级",
+   "tldr": "**问题**：世界动作模型（WAM）联合建模动作生成与未来观测预测，但现有做法多依赖冻结的、以重建为目标预训练的编码器，得到的表征未必适合控制；而朴素端到端联合训练又容易特征坍塌。**做法**：MDF++ 用扩散骨干端到端学习多感官观测的潜表征，并引入多任务学习策略，借跨模态相关性把表征约束到任务相关；视觉与触觉在同一潜空间里共同支撑动作生成与未来预测。**结论**：在拧螺栓、螺母配合等真实接触密集操作任务上，相对基于冻结预训练表征的 WAM 最高提升 50%。",
+   "keyInsights": [
+    "点出 WAM 的一个结构性失配：重建目标最优的表征不等于控制最优的表征，冻结编码器把这一失配固化了。",
+    "端到端联合训练的真正障碍是特征坍塌，MDF++ 用多任务 + 跨模态相关性作正则，而不是简单加深网络。",
+    "触觉不是附加通道：视觉预测与触觉反馈在潜空间里互为约束，接触密集任务最能体现增益。",
+    "评测选真实拧螺栓 / 螺母配合，属于对接触建模最敏感的一类任务，比桌面抓取更能区分表征质量。"
+   ],
+   "impact": "把「表征该为谁优化」这个问题从 VLA 推进到 WAM，是本站 world-models-llm 与 multimodal-perception「视触觉对齐」两条线的交汇点。它与本轮 n663（徕木灵巧手）、n667（赛感离电触觉融资）构成产业侧对照：传感器量产在加速，模型侧如何把高频触觉真正用起来仍是开放问题；MDF++ 给出的是「别冻结、但要防坍塌」的答案。对 sensors-hardware 模块「触觉与手部姿态一体化采集」也是直接的下游注解。",
+   "addedDate": "2026-11-10"
+  },
+  {
+   "id": "p339",
+   "title": "DKWBC: Decoupling Motion Tracking and Balancing for Humanoid Whole-Body Control",
+   "authors": "Dingkun Wei, Zehong Shen, Huaijin Pi, Xueyang Wang, Xing Zhu, Hujun Bao, Yujun Shen, Xiaowei Zhou",
+   "venue": "arXiv 2611.09605 (cs.RO)",
+   "date": "2026-11-06",
+   "arxiv": "https://arxiv.org/abs/2611.09605",
+   "github": "",
+   "tags": [
+    "人形机器人",
+    "全身控制",
+    "逆动力学",
+    "残差策略",
+    "平衡"
+   ],
+   "category": "人形机器人 / 全身控制",
+   "difficulty": "高级",
+   "tldr": "**问题**：人形全身控制既要跟踪多样参考动作，又要在重力、力矩限制、接触切换与外部扰动下保持平衡；现有 RL 跟踪器把两件事合进一个策略，而相似参考姿态可能对应截然不同的动力学需求，学习变难且控制输出高频抖动。**做法**：DKWBC 受浮动基座动力学中模型项与环境外力项对关节力矩的贡献启发，把控制拆成两路——逆动力学前馈加关节 PD 反馈提供跟踪力矩，学习式残差策略只补平衡所需的关节力矩修正；显式承担随动作变化的力矩需求后，策略的学习任务被简化。**结论**：仿真与真机表明，单个平衡策略可跨动作数据集泛化，在地面支撑、附加负载与物理交互下同时保持跟踪精度与平衡。",
+   "keyInsights": [
+    "把「跟踪」与「平衡」在力矩层面解耦：前者交给模型（逆动力学 + PD），后者交给学习，符合浮动基座动力学里外力项的物理分工。",
+    "相似姿态对应不同动力学需求是抖动的根因——不要求一个网络同时拟合运动相关的力矩与扰动修正。",
+    "残差策略只学修正量，样本效率与跨数据集泛化都受益，一个策略可配多套动作库。",
+    "验证覆盖附加负载与物理交互，说明解耦后的平衡能力不是只对训练分布内的参考动作成立。"
+   ],
+   "impact": "为「模型基 WBC + 学习残差」这条混合路线补上清晰的人形实证，与本站 robot-dynamics 模块「全身接触操作力学」、control-theory#7（MPC 到 QP 的推导与约束处理）直接对读：MPC 显式处理约束，DKWBC 显式处理力矩分工，两者都在回答「哪部分该由模型保证、哪部分交给学习」。本轮 os260（instantTrack 三分钟全身跟踪）是从数据效率一侧切入同一个问题，p341（MR0）则在操作侧给出统一末端执行器接口，可以放在一堂「分层控制」里讲。",
+   "addedDate": "2026-11-10"
+  },
+  {
+   "id": "p338",
+   "title": "ODEAction: From Predicting Chunks to Evolving Actions",
+   "authors": "Qishen Wang, Pengxiang Ding, Shifeng Bao, Mingyang Sun, Hengtao Li, Cheng Chi 等",
+   "venue": "arXiv 2611.09672 (cs.RO)",
+   "date": "2026-11-06",
+   "arxiv": "https://arxiv.org/abs/2611.09672",
+   "github": "",
+   "tags": [
+    "动作生成",
+    "ODE",
+    "无分块",
+    "流匹配",
+    "精细操作"
+   ],
+   "category": "VLA / 动作头",
+   "difficulty": "高级",
+   "tldr": "**问题**：VLA 普遍以 action chunk 方式生成动作，把连续执行切成一段段独立预测的片段，chunk 交界处容易出现不连续，精细操作尤其敏感。**做法**：ODEAction 提出「无分块」范式，用连续动作演化（Continuous Action Evolution）替代分块预测：给定视觉观测、语言指令与本体 proprioception，模型在动作空间上学一个转移场，转移向量刻画当前动作相对演化时间的变化率；执行时以当前动作为初值，用常微分方程积分该场，递归生成显式带依赖的后续动作。它实现为一个动作头，不绑定特定视觉语言骨干。**结论**：在 LIBERO、EBench、RoboTwin 与真机上，任务表现与轨迹质量均优于同条件分块基线，精细操作任务增益最明显。",
+   "keyInsights": [
+    "把动作生成从「预测下一段」改成「对当前动作做演化」：显式的时间依赖消除了 chunk 边界处的跳变，而不是靠平滑后处理掩盖。",
+    "转移场定义在动作空间而非图像潜空间，ODE 积分的初值就是上一步实际执行的动作，闭环里天然接得上。",
+    "实现为可插拔动作头，与视觉语言骨干解耦，意味着同一套生成方式可移植到不同 VLA 骨架。",
+    "论文同时报任务成功率与轨迹质量，避免「任务成了但轨迹抖」这类被单一指标掩盖的退化。"
+   ],
+   "impact": "动作头这一层在 2026 年下半年密集翻新（分块、流匹配、一致性蒸馏、一步生成），ODEAction 提供的是「把离散分块换成连续动力系统」这条路，与本站 training-inference-optimization 模块「一步生成策略的工程化」形成互补：一个压缩步数、一个消除分段。理解它的数学前置正是本站 linear-algebra#9（特征值、矩阵指数与线性动力系统）与 probability-statistics#10（随机过程）；本轮 os259（BitVLA）则从量化角度压同一条推理预算，三者可串成一讲。",
+   "addedDate": "2026-11-10"
+  },
+  {
+   "id": "p337",
+   "title": "On Agentic Manipulation Policies",
+   "authors": "Chen Chen, Omid Bagherieh, Naveen Nikamanth Appiah Balaji, Jesse T. Gonzalez, Negin Heravi, Vladlen Koltun 等",
+   "venue": "arXiv 2611.09892 (cs.RO, cs.AI, cs.CV, cs.LG)",
+   "date": "2026-11-06",
+   "arxiv": "https://arxiv.org/abs/2611.09892",
+   "github": "",
+   "tags": [
+    "Agent 化操作",
+    "AMP1",
+    "通用模型",
+    "持久记忆",
+    "零样本"
+   ],
+   "category": "具身 Agent / 操作策略",
+   "difficulty": "高级",
+   "tldr": "**问题**：机器人操作长期由示教训练出的专用策略（VLA、WAM）主导，但通用 AI 模型能否直接、可靠地指挥机械臂，一直缺少系统对照。**做法**：论文系统分析 Agent 化操作策略（AMP）——让通用模型在任务展开过程中直接下令并自适应调整，给出在单臂、双臂与移动操作上无需改动的参考 harness AMP1；harness 不提供抓取、推、放等内置技能，Agent 需自行发展策略（寻找隐藏物体、把物体当工具用、自行标定相机），并可加跨 episode 的持久记忆表示。**结论**：RoboLab-120 上零样本 85.6% 成功率，领先 VLA 49.2% 与 WAM 42.9%；12 类任务、3 台真机共 108 次真实试验中 104 次零样本成功，相对强 VLA / WAM 基线把失败率分别降 20 倍与 15 倍；带记忆的增强 harness 在 RoboDojo 双臂任务上把失败率再降 4.6 倍。",
+   "keyInsights": [
+    "把「通用模型直控」做成可复现的对照实验：同一 harness 跨单臂、双臂、移动操作三种形态不变，零示教、零任务专属训练。",
+    "harness 刻意不内置抓取 / 推 / 放技能，逼出寻找隐藏物体、使用工具、自主标定相机等策略，说明能力来自模型而非工程封装。",
+    "持久记忆是最便宜的增益项：只加跨 episode 的记忆表示，RoboDojo 双臂失败率再降 4.6 倍，无需重训模型。",
+    "真机规模罕见：12 类任务 / 3 台本体 / 108 次试验中 104 次成功，且报告的是失败率而非仅成功率，便于与专用策略公平比较。"
+   ],
+   "impact": "给「VLA 专用策略 vs 通用 Agent」这条路线之争提供了目前最硬的一组数据，也是本站具身 Agent 与 Harness 生态（os250 CaPtain、p307 统一 Harness）的直接延伸。它与本轮 os262（Astra-on-RoboMME 的三层记忆系统）、os261（宇树技能框架）正好构成「记忆 → 规划 → 执行 → 技能编排」的开源对照；与 p341（美团 MR0 的事件驱动 Agent）互为印证：两者都发现让 Agent 维护跨任务状态，比只扩大策略容量更划算。对学习中心而言，它是 embodied-agent 模块「测试时扩展 / 失败恢复」之后的下一块拼图。",
+   "addedDate": "2026-11-10"
+  },
   {
    "id": "p332",
    "title": "VFlash: Fast, Accurate Visual Planning via Flash Primitive Decoding",
@@ -8941,5 +9076,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 310
+ "totalItems": 315
 }

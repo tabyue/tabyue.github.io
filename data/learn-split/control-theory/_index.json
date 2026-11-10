@@ -4,7 +4,7 @@
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 60,
-  "lastUpdated": "2026-11-06T08:30",
+  "lastUpdated": "2026-11-10T08:30",
   "description": "让机器人稳定、精确地执行期望运动的核心理论。从PID到MPC，从线性到非线性，控制理论是机器人的灵魂。",
   "prerequisites": [
     "微积分与优化",
@@ -221,13 +221,13 @@
     {
       "id": "sec-07",
       "title": "模型预测控制（MPC）在机器人中的实现",
-      "lastUpdated": "2026-10-27",
-      "chars": 5903,
+      "lastUpdated": "2026-11-10T08:30",
+      "chars": 17643,
       "shortTitle": "模型预测控制（MPC）在机器人中的实现",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 6,
+      "readingMinutes": 20,
       "headings": [
         "1. MPC 的核心思想",
         "2. 线性 MPC 与 QP",
@@ -239,6 +239,14 @@
         "5. MPC 的调参",
         "6. 实时性与求解加速",
         "7. MPC vs RL 对比",
+        "深入1：从开环最优控制到滚动时域",
+        "深入2：线性 MPC 的完整 QP 推导",
+        "深入3：约束怎么进来——从可行域到软约束",
+        "深入4：稳定性为什么需要终端代价",
+        "深入5：可运行实验——带输入与状态约束的双积分器",
+        "深入6：非线性 MPC 与实时迭代",
+        "深入7：人形与四足的 WBC 里，MPC 站在哪一层",
+        "深入8：调参与能力自检",
         "练习题",
         "参考答案"
       ],
@@ -561,7 +569,7 @@
       "summary": "一个反直觉但极其常见的现象：一套在自由空间里调得很好的控制器，一旦接触到环境就开始振荡；而同样的控制器，在刚性环境上振荡得更厉害。"
     }
   ],
-  "readingMinutes": 184,
+  "readingMinutes": 198,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 161563
+  "chars": 173303
 }
