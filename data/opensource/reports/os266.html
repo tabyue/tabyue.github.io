@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIBERO-Para：VLA 指令复述鲁棒性的诊断基准与指标（EMNLP 2026 Oral） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">LIBERO-Para：VLA 指令复述鲁棒性的诊断基准与指标（EMNLP 2026 Oral） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="libero-paravla-emnlp-2026-oral">LIBERO-Para：VLA 指令复述鲁棒性的诊断基准与指标（EMNLP 2026 Oral）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/cau-hai-lab/LIBERO-Para">https://github.com/cau-hai-lab/LIBERO-Para</a>  </p>
+<p><strong>Stars</strong>: 52 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-11  </p>
+<p><strong>组织</strong>: 中国农业大学 HAi Lab  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-11</p>
+</blockquote>
+<hr />
+<p><strong>cau-hai-lab/LIBERO-Para</strong> 是 EMNLP 2026 Main（Oral）论文 <em>LIBERO-Para: A Diagnostic Benchmark and Metrics for Paraphrase Robustness in VLA Models</em> 的官方代码，<strong>MIT</strong>，Python，约 <strong>52 star</strong>，带项目主页，2026-03-24 创建、2026-11-10 活跃推送。</p>
+<p><strong>为什么值得关注</strong>：VLA 评测几乎只用固定指令，但真实用户不会照着模板说话——「把杯子放到盘子右边」换成「把杯子挪到盘子右侧」「把那个杯子放在盘子右边一点」，语义相同、措辞不同，策略却可能崩。这个仓库专门测<strong>同一条指令的不同复述（paraphrase）下策略是否稳定</strong>，是语言鲁棒性这一长期被成功率掩盖的维度上少见的成套基准与指标。EMNLP Oral 与 MIT 许可，让它既是可信的研究基线，也能直接接进工程评测。</p>
+<hr />
+<p>一个「诊断基准 + 指标」仓库的价值在于把模糊的「鲁棒性」拆成可测的量。按论文定位，它至少包含四层：</p>
+<ol>
+<li><strong>复述数据集</strong>：在 LIBERO 任务之上，为每条原始指令生成一组语义等价、措辞不同的复述，并做语义等价性校验（避免把「改了意思」误当成 paraphrase）；</li>
+<li><strong>指标定义</strong>：不只是「复述后成功率」，还要度量<strong>同一任务不同措辞之间的结果方差</strong>、最差措辞表现、以及策略内部表征对措辞变化的敏感度；</li>
+<li><strong>诊断输出</strong>：定位是「语言编码器对措辞敏感」还是「动作头被语言扰动带偏」，前者换语言塔，后者要改条件融合；</li>
+<li><strong>统一协议</strong>：固定的任务集、复述集、随机种子与评测脚本，保证不同 VLA 之间可比。</li>
+</ol>
+<p><strong>为什么这件事在 VLA 上比在纯 LLM 上更难</strong>：语言模型输出文本，措辞变化只影响文本；VLA 的语言条件直接驱动连续动作，措辞扰动会被放大成轨迹差异，甚至触发完全不同的动作模式。因此「语言鲁棒性」在具身场景里是安全性问题，不只是 NLP 指标。</p>
+<p><strong>与 os265 的分工</strong>：ForesightSafety-VLA 测「动作过程危不危险」，LIBERO-Para 测「换个说法还稳不稳」，两者都是把单一成功率拆成正交维度。</p>
+<hr />
+<ul>
+<li><strong>LIBERO-Para（EMNLP 2026 Main, Oral）论文与项目主页</strong>：https://cau-hai-lab.github.io/LIBERO-Para/ ；</li>
+<li>本站 <strong>os265（ForesightSafety-VLA）</strong>：安全诊断基准，与语言鲁棒性诊断互补；</li>
+<li>本站 <strong>p344（VLA-MOPD，arXiv 2611.12286）</strong>：多教师按指令路由，侧面说明指令表述对策略影响很大；</li>
+<li>本站 <strong>p346（SFF，arXiv 2611.11688）</strong>：部署后策略/任务切换导致监控失效，与「措辞切换」是同类分布漂移；</li>
+<li>站内 /learn/vla-models：VLA 基座与动作头；/learn/platform-engineering：评测契约与基准可复现性。</li>
+</ul>
+<hr />
+<ol>
+<li>按 README 装依赖并下载复述数据集，先在<strong>原始指令</strong>上跑通一个 VLA，确认基线成功率与论文/仓库报告一致；</li>
+<li>切到复述集重跑，记录每条任务在各措辞下的成功率，先算<strong>最差措辞</strong>与<strong>方差</strong>，不要只看均值；</li>
+<li>做语义等价性抽查：确认复述没有偷偷改变任务目标，否则测出来的是「任务变了」不是「措辞变了」；</li>
+<li>消融：换一个语言编码器、或冻结语言塔，看鲁棒性是否改善，定位瓶颈在哪一层；</li>
+<li>把指标接进自己的评测 CI，作为上线前的固定检查项；</li>
+<li>验收建议报：原始指令成功率、复述平均/最差成功率、跨措辞方差、表征敏感度。</li>
+</ol>
+<hr />
+<p>公开可得的是仓库规模与资质：约 52 star、MIT、EMNLP 2026 Main Oral、带项目主页、2026-11-10 仍在推送、0 个 open issue。各 VLA 在复述集上的具体数字以论文与项目页为准，本站不代为编造。</p>
+<p><strong>读这类基准结果时最该盯的是「均值与最差值的差」</strong>：若平均成功率几乎没变，但某些措辞下成功率腰斩，说明策略存在隐性的措辞悬崖——这在真实用户口吻多变的场景里比平均分更重要。也正因为如此，LIBERO-Para 的价值不在给模型排名，而在<strong>暴露方差</strong>。</p>
+<p>MIT 许可 + Oral 论文 + 活跃维护，是这批新仓库里工程可用性最好的一个：可以直接把复述集与指标脚本搬进自己的评测栈。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>LIBERO-Para</th>
+<th>原始 LIBERO</th>
+<th>ForesightSafety-VLA（os265）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>变化来源</td>
+<td>指令措辞</td>
+<td>无（固定指令）</td>
+<td>危险场景条件</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>鲁棒性指标 + 方差</td>
+<td>成功率</td>
+<td>风险事件率</td>
+</tr>
+<tr>
+<td>暴露问题</td>
+<td>语言条件脆弱</td>
+<td>不暴露</td>
+<td>动作过程不安全</td>
+</tr>
+<tr>
+<td>与成功率正交</td>
+<td>是</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>适合用途</td>
+<td>上线前语言体检</td>
+<td>基线排序</td>
+<td>上线前安全体检</td>
+</tr>
+</tbody>
+</table>
+<p>三者叠起来正好是一张更诚实的评测表：<strong>固定指令下能不能做（LIBERO）→ 换个说法还行不行（LIBERO-Para）→ 做的过程危不危险（ForesightSafety-VLA）</strong>。本轮 p346（SFF）再补上「上线之后分布漂了还准不准」，评测就从一次性的排行榜变成了一条贯穿部署生命周期的线。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

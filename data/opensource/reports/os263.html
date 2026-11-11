@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OmTrackVLA：Tracking VLA 的开放可复现研究 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">OmTrackVLA：Tracking VLA 的开放可复现研究 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="omtrackvlatracking-vla">OmTrackVLA：Tracking VLA 的开放可复现研究</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/om-ai-lab/OmTrackVLA">https://github.com/om-ai-lab/OmTrackVLA</a>  </p>
+<p><strong>Stars</strong>: 289 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-11  </p>
+<p><strong>组织</strong>: Om AI Lab  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-11</p>
+</blockquote>
+<hr />
+<p><strong>om-ai-lab/OmTrackVLA</strong> 是面向 Tracking VLA（跟踪型视觉—语言—动作模型）的开放可复现研究仓库，Python 实现，约 <strong>289 star</strong>，2025-12-08 创建、2026-11-09 仍在活跃推送，仓库未声明许可证（本站记为「未声明」，使用前需自行确认授权）。</p>
+<p><strong>为什么值得关注</strong>：VLA 论文越来越多，但「照着论文复现不出来」仍是常态。这个仓库把一类 VLA 变体的<strong>训练、评测与消融配方</strong>整体公开，价值不在刷榜，而在给出一个能逐项拆开看的完整样本。对想从零读懂一类 VLA、或想对照自己实现的读者，它比一个只放权重的仓库有用得多。配合本轮 p343（DASH 把骨干与动作头拆成两个进程）、os266（LIBERO-Para 补齐语言鲁棒性评测），可以看到「VLA 研究的可复现性」正在从口号变成一个个具体仓库。</p>
+<hr />
+<p>按「开放可复现研究」的定位，仓库的组织应围绕三件事展开（具体目录以仓库 README 为准）：</p>
+<ol>
+<li><strong>模型与跟踪头</strong>：Tracking VLA 的核心是把「要跟踪的目标/轨迹」作为条件接进 VLA，而不是只输出单步动作。相比通用 VLA，它多了一层目标指定与时序关联；</li>
+<li><strong>训练配方</strong>：数据预处理、训练超参、冻结/解冻策略、以及各阶段的 checkpoint 约定，通常以配置文件的形式给出，便于逐项消融；</li>
+<li><strong>评测与复现脚本</strong>：固定的评测任务、随机种子、指标计算与结果表生成，保证「换个机器跑也能对上」。</li>
+</ol>
+<p><strong>读代码时建议的顺序</strong>：先找评测入口（知道优化目标是什么），再找数据管线（知道输入长什么样），最后看模型结构。反过来先啃模型，很容易在不知道监督信号的情况下误读设计。</p>
+<p><strong>与相邻项目的分工</strong>：HuRo（os264）解决「预训练数据从哪来」，LIBERO-Para（os266）解决「语言鲁棒性怎么测」，ForesightSafety-VLA（os265）解决「安全怎么测」，而 OmTrackVLA 提供的是<strong>一个具体 VLA 变体的完整可跑基线</strong>——四者合起来基本覆盖了一条 VLA 研究链路。</p>
+<hr />
+<ul>
+<li><strong>仓库 README 与复现脚本</strong>：OmTrackVLA 的训练、评测与消融配方，是最直接的一手资料；</li>
+<li>本站 <strong>p343（DASH，arXiv 2611.11854）</strong>：异步 VLA 系统，说明「推理延迟」也是可复现性的一部分；</li>
+<li>本站 <strong>p344（VLA-MOPD，arXiv 2611.12286）</strong>：多任务 VLA 专家整合，可作为训练配方设计的对照；</li>
+<li>本站 <strong>os264（HuRo）</strong>、<strong>os265（ForesightSafety-VLA）</strong>、<strong>os266（LIBERO-Para）</strong>：数据、安全、语言鲁棒性三条配套线；</li>
+<li>站内 /learn/vla-models：VLA 基座、动作头与评测的教材级讲解；/learn/training-inference-optimization：推理效率与异步执行。</li>
+</ul>
+<hr />
+<ol>
+<li>克隆仓库后<strong>先读 README 的复现章节</strong>，确认依赖、数据路径与 checkpoint 约定，不要直接开跑；</li>
+<li>跑通仓库给出的<strong>最小评测任务</strong>，把指标与 README 报告值对齐，先把基线立住；</li>
+<li>再用训练脚本复现一个完整训练，记录随机种子、GPU 型号与耗时——可复现性的一半在环境；</li>
+<li>做一次消融：关掉跟踪条件或换掉某一层输入，看指标变化是否符合论文预期；</li>
+<li>若打算接入自己的本体或传感器，先确认<strong>许可证状态</strong>（仓库未声明），必要时联系作者；</li>
+<li>验收建议报：任务成功率、复现指标与报告值的偏差、单次训练成本、消融结论。</li>
+</ol>
+<hr />
+<p>公开可得的是仓库规模与活跃度：约 289 star、Python、2026-11-09 仍在推送、14 个 open issue，说明有人在持续维护而非一次性放权重。本站不替它编造成功率数字——这类「开放可复现研究」仓库的性能指标以 README 与其论文为准。</p>
+<p><strong>真正该衡量的性能是「复现成本」</strong>：从克隆到跑出与报告一致的数字，需要几步、多少算力、是否依赖未公开的数据或权重。一个配方如果只有作者自己能跑通，star 再多也不构成可复现性。建议把自己的复现偏差也记进笔记，这比抄一个成功率更有价值。</p>
+<p>未声明许可证是实际使用中的硬约束：阅读、教学、做对照实验没问题，但要并入商业代码前必须取得明确授权。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>OmTrackVLA</th>
+<th>只放权重的 VLA 仓库</th>
+<th>大型 VLA 基座开源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>可复现性</td>
+<td>配方 + 评测脚本成套</td>
+<td>低，靠自己猜</td>
+<td>中，文档通常较全</td>
+</tr>
+<tr>
+<td>上手成本</td>
+<td>中，需完整跑训练</td>
+<td>低，直接推理</td>
+<td>高，算力门槛大</td>
+</tr>
+<tr>
+<td>适合用途</td>
+<td>读懂一类变体、做消融</td>
+<td>快速试效果</td>
+<td>做下游微调</td>
+</tr>
+<tr>
+<td>许可证风险</td>
+<td>未声明，需确认</td>
+<td>视仓库而定</td>
+<td>多数明确</td>
+</tr>
+</tbody>
+</table>
+<p>与 <strong>os266（LIBERO-Para）</strong> 对照最有意思：后者是「评测基准」，回答「模型有多大程度可靠」；OmTrackVLA 是「被评测对象 + 完整配方」，回答「这个模型怎么从头做出来」。做研究时两者通常一起用——用 LIBERO-Para 一类基准去测 OmTrackVLA 一类实现，才知道增益来自结构还是来自调参。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

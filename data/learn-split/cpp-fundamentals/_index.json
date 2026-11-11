@@ -4,7 +4,7 @@
   "stage": "阶段一：数学与编程基础",
   "importance": "重要",
   "estimatedHours": 40,
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-11-11T08:30",
   "description": "机器人底层控制、实时系统、ROS2 核心节点通常用 C++ 编写。不需要精通所有 C++ 特性，但智能指针、多线程和 CMake 是必须掌握的。",
   "prerequisites": [
     "基础编程经验"
@@ -78,13 +78,13 @@
     {
       "id": "sec-02",
       "title": "指针、引用与内存模型：C++ 的核心难点",
-      "lastUpdated": "2026-10-27",
-      "chars": 5519,
+      "lastUpdated": "2026-11-11T08:30",
+      "chars": 16337,
       "shortTitle": "指针、引用与内存模型",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 6,
+      "readingMinutes": 20,
       "headings": [
         "为什么 C++ 需要指针和引用",
         "一、栈（Stack）vs 堆（Heap）",
@@ -94,6 +94,32 @@
         "五、动态内存管理（new/delete）",
         "六、数组与 C 字符串",
         "七、内存布局与对齐",
+        "深入一：进程的虚拟地址空间，以及一次函数调用到底发生了什么",
+        "1.1 一个进程看到的内存布局",
+        "1.2 栈帧：分配只是移动一次栈指针",
+        "1.3 由此得到的第一条铁律：不要返回局部变量的地址",
+        "1.4 堆分配慢在哪",
+        "深入二：指针是「地址 + 类型」，引用是受限的指针",
+        "2.1 指针的三个组成部分",
+        "2.2 顶层 const 与底层 const",
+        "2.3 引用在汇编层就是指针，只是语法受限",
+        "2.4 数组退化与 nullptr",
+        "深入三：对象生命周期、RAII 与所有权",
+        "3.1 四种存储期",
+        "3.2 RAII 与三/五/零法则",
+        "3.3 异常安全",
+        "3.4 四类高频内存 bug 与对应工具",
+        "深入四：智能指针与移动语义",
+        "4.1 三种智能指针对应三种所有权",
+        "4.2 循环引用与 weak_ptr",
+        "4.3 移动语义解决的是什么",
+        "4.4 ROS 2 里的 shared_ptr",
+        "深入五：机器人实时代码里的内存纪律",
+        "5.1 Eigen 的固定尺寸对齐",
+        "5.2 控制循环里禁止动态分配",
+        "5.3 点云与图像的零拷贝",
+        "5.4 一份上线前检查表",
+        "5.5 与站内其它模块的接口",
         "八、练习",
         "参考答案"
       ],
@@ -522,7 +548,7 @@
       "summary": "在具身智能真实落地中，VLA（Vision-Language-Action）模型不会跑在云端 H100 上——机器人需要在本体侧的 Jetson Orin/Thor、昇腾 Atlas、Apple M4、高通 QCS8550 等 XPU 上做 20-50Hz 的实时推理。此时 Python + PyTorch 的启动开销、GIL、内存冗余都变得不可接受，C++"
     }
   ],
-  "readingMinutes": 160,
+  "readingMinutes": 174,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 141757
+  "chars": 152575
 }

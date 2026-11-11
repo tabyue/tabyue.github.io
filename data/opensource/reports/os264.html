@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HuRo：把人类视频机器人化，用于可扩展 VLA 预训练（CoRL 2026） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">HuRo：把人类视频机器人化，用于可扩展 VLA 预训练（CoRL 2026） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="huro-vla-corl-2026">HuRo：把人类视频机器人化，用于可扩展 VLA 预训练（CoRL 2026）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/3587jjh/HuRo">https://github.com/3587jjh/HuRo</a>  </p>
+<p><strong>Stars</strong>: 65 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-11  </p>
+<p><strong>组织</strong>: HuRo 作者团队（CoRL 2026）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-11</p>
+</blockquote>
+<hr />
+<p><strong>3587jjh/HuRo</strong> 是 CoRL 2026 论文 <em>HuRo: Robotizing Human Videos for Scalable VLA Pretraining</em> 的官方代码，<strong>Apache-2.0</strong>，Python，约 <strong>65 star</strong>，2026-09-12 创建、2026-11-10 活跃推送。</p>
+<p><strong>为什么值得关注</strong>：VLA 预训练最大的成本瓶颈是真机遥操作数据——要人一次次操着机械臂示范。HuRo 走的是另一条路：把<strong>大规模人类视频</strong>转成机器人可用的预训练监督（论文标题里的 robotizing），让互联网上现成的人类动作视频成为数据源。这与本轮 n672（菜鸟开放真实仓网补场景数据）、n675（原方智能用世界模型预演减少真机样本）指向同一个判断：<strong>具身数据的增量主要不在「多采几台真机」，而在「把已有的人类数据变成可训练信号」</strong>。Apache-2.0 让它可以直接进工程管线。</p>
+<hr />
+<p>「人类视频 → VLA 预训练监督」这条链路的难点不在视频理解，而在<strong>本体鸿沟</strong>：人手的运动学、视角、物体交互方式与机器人夹爪/灵巧手完全不同。一个可用的转换流水线通常要过四关：</p>
+<ol>
+<li><strong>人体与手部恢复</strong>：从视频里估计人体姿态、手部姿态与物体位置，得到结构化运动；</li>
+<li><strong>动作重定向（retargeting）</strong>：把人的关节/末端轨迹映射到目标机器人的可行空间，处理自由度不匹配与工作空间限制；</li>
+<li><strong>观测对齐</strong>：把人类第一/第三视角画面转成接近机器人相机视角的输入，否则预训练与部署的观测分布差太远；</li>
+<li><strong>监督构造</strong>：把重定向后的轨迹与对应视觉帧配成 VLA 可消费的 (观测, 语言, 动作) 三元组，并做质量过滤。</li>
+</ol>
+<p>HuRo 作为论文官方实现，核心价值是把这四关串成可跑的代码，而不是零散脚本。<strong>读代码时重点看第 2、3 步</strong>：这两步决定转换出来的监督是「能学的」还是「看似合理但策略学不到」。</p>
+<p><strong>与站内路线的对应</strong>：imitation-learning 模块的「从人类视频到机器人动作」章节讲的正是重定向、观测对齐与控制器输入离线精修；embodied-data-engineering 的「轨迹的可学性」章节提醒，成功的示教未必是有用的监督——这两条正好是 HuRo 流水线质量过滤环节的理论依据。</p>
+<hr />
+<ul>
+<li><strong>HuRo（CoRL 2026）论文与官方代码</strong>：人类视频机器人化用于可扩展 VLA 预训练；</li>
+<li>本站 <strong>p345（ObjectWorld，arXiv 2611.11085）</strong>：3D 全物体流作为可规模监督的中间表征，可与 HuRo 的动作监督对照；</li>
+<li>本站 <strong>os263（OmTrackVLA）</strong>：拿到预训练数据之后的可跑 VLA 基线；</li>
+<li>本站 <strong>n672（菜鸟开放全球仓网）</strong>、<strong>n675（原方智能 Rehearsal）</strong>：真实场景数据与预演路线的产业侧对照；</li>
+<li>站内 /learn/imitation-learning：从人类视频到机器人动作；/learn/embodied-data-engineering：轨迹可学性与数据闭环。</li>
+</ul>
+<hr />
+<ol>
+<li>先跑 README 里的<strong>小样本样例</strong>：用一两段人类视频走完整条流水线，看输出的三元组长什么样；</li>
+<li>检查重定向结果：把映射后的末端轨迹可视化，确认没有超出机器人工作空间或出现关节跳变；</li>
+<li>检查观测对齐：对比转换后的图像与真机相机画面，视角差过大时先修这一步再谈训练；</li>
+<li>用转换数据做一次小规模 VLA 预训练，与「不用人类视频」的基线比样本效率；</li>
+<li>做质量过滤消融：打开/关掉过滤，看下游成功率是否变化，验证「不是数据越多越好」；</li>
+<li>验收建议报：每小时视频产出的有效轨迹数、重定向失败率、预训练后的下游成功率与真机数据量节省比例。</li>
+</ol>
+<hr />
+<p>公开可得的是仓库规模：约 65 star、Apache-2.0、2026-11-10 仍在推送、4 个 open issue，属于新近发布但持续维护的论文官方实现。具体的数据规模与下游成功率以 CoRL 2026 论文为准，本站不代为编造。</p>
+<p><strong>这类项目的「性能」更适合用两个比值衡量</strong>：</p>
+<ul>
+<li><strong>转换产出率</strong>：每小时人类视频能产出多少条通过质量过滤的可用轨迹；</li>
+<li><strong>真机数据节省比</strong>：达到同等下游成功率，用了多少真机示范（相对纯遥操作基线）。</li>
+</ul>
+<p>只看「用了多少小时互联网视频」没有意义——视频廉价，但重定向失败、观测错配、动作不可学的部分都是噪声。Apache-2.0 是加分项：可以放心把流水线接进自己的数据系统，不必担心授权。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>HuRo（人类视频）</th>
+<th>真机遥操作采集</th>
+<th>仿真合成数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据成本</td>
+<td>低，视频现成</td>
+<td>高，要人与设备</td>
+<td>中，要算力与资产</td>
+</tr>
+<tr>
+<td>本体鸿沟</td>
+<td>大，需重定向</td>
+<td>无</td>
+<td>可控但域差存在</td>
+</tr>
+<tr>
+<td>动作真实性</td>
+<td>需过滤</td>
+<td>高</td>
+<td>依赖物理引擎</td>
+</tr>
+<tr>
+<td>适合阶段</td>
+<td>预训练规模化</td>
+<td>后训练 / 精修</td>
+<td>覆盖长尾场景</td>
+</tr>
+<tr>
+<td>许可证</td>
+<td>Apache-2.0</td>
+<td>依项目</td>
+<td>依项目</td>
+</tr>
+</tbody>
+</table>
+<p>三条路线不是互斥的：常见做法是 <strong>HuRo 类数据做预训练 → 少量真机示教做后训练 → 仿真补危险/长尾场景</strong>。本轮 n673（禾赛 Kosmo 把实景转成三维资产）与 p345（ObjectWorld 的 1210 小时数据集）其实是在补中间那层「可规模监督的表征」，把三者的接口打通，才是数据金字塔真正成立的样子。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

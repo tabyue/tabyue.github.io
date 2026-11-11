@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ForesightSafety-VLA：RoboTwin 上 VLA 的统一诊断安全基准（IROS 2026） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">ForesightSafety-VLA：RoboTwin 上 VLA 的统一诊断安全基准（IROS 2026） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="foresightsafety-vlarobotwin-vla-iros-2026">ForesightSafety-VLA：RoboTwin 上 VLA 的统一诊断安全基准（IROS 2026）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/tuotuoLyu/ForesightSafety-VLA">https://github.com/tuotuoLyu/ForesightSafety-VLA</a>  </p>
+<p><strong>Stars</strong>: 85 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-11  </p>
+<p><strong>组织</strong>: ForesightSafety-VLA 作者团队（IROS 2026）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-11</p>
+</blockquote>
+<hr />
+<p><strong>tuotuoLyu/ForesightSafety-VLA</strong> 是 IROS 2026 论文 <em>ForesightSafety-VLA</em> 的官方代码，Python，约 <strong>85 star</strong>，2026-10-29 创建并推送，带论文主页（arXiv 2606.27079），许可证为 NOASSERTION（本站记为「未声明」）。它在 <strong>RoboTwin</strong> 上提供一个面向 VLA 的<strong>统一诊断式安全基准</strong>。</p>
+<p><strong>为什么值得关注</strong>：VLA 的公开评测长期只看成功率，但「成功率高」和「不会做危险动作」是两件事。一个策略可能把任务做成了，过程中却撞到夹具、把物体甩出去、或在不确定时硬推。这个仓库把安全性拆成可诊断的维度，适合作为<strong>部署前验收</strong>的起点。配合本轮 p346（SFF 失败监控器部署后要继续学）与 n669（Gemini Robotics 2.5 进奔驰产线后评价体系转向真实产出），可以看到「按产出验收」正在细化成「按风险验收」。</p>
+<hr />
+<p>「诊断式基准」与「刷榜式基准」的差别在输出物：前者给的是一张分维度的体检表，后者只给一个总分。一个可用的 VLA 安全基准通常包含四层：</p>
+<ol>
+<li><strong>风险场景构造</strong>：在 RoboTwin 的任务里注入易出危险动作的条件——遮挡、易碎/易滑物体、狭窄空间、指令歧义、外力扰动；</li>
+<li><strong>危险事件定义</strong>：把「什么算危险」写成可自动判定的事件（碰撞冲量超限、末端速度越界、物体脱手、夹爪过载、超范围推力），而不是靠人看视频打分；</li>
+<li><strong>前瞻性指标</strong>：不只在危险发生<strong>之后</strong>计数，还要度量策略在动作前是否表现出预判（例如接触前减速、不确定时收缩动作幅度）——这正是标题里 Foresight 的含义；</li>
+<li><strong>统一诊断输出</strong>：同一套指标跑不同 VLA，输出可比的分维度报告，定位「是哪个环节不安全」。</li>
+</ol>
+<p><strong>与 p346（SFF）的分工</strong>：ForesightSafety-VLA 是<strong>部署前</strong>的离线体检，SFF 是<strong>部署后</strong>的在线监控。前者告诉你这个策略能不能上线，后者告诉你上线之后环境漂了还安不安全——二者是安全闭环的前后两半。</p>
+<p>许可证为 NOASSERTION，用于阅读与教学没问题，并入商业流程前需向作者确认授权。</p>
+<hr />
+<ul>
+<li><strong>ForesightSafety-VLA（IROS 2026）论文与项目页</strong>：arXiv 2606.27079，RoboTwin 上统一 VLA 安全诊断基准；</li>
+<li>本站 <strong>p346（Streaming Failure Forecasting，arXiv 2611.11688）</strong>：部署后持续学习的失败监控，与本项目构成前后半环；</li>
+<li>本站 <strong>p328（VLA 失败预测与校准潜探针）</strong>、<strong>p304（VLA 不该动时别动）</strong>：失败预测与启动抑制两条邻近路线；</li>
+<li>本站 <strong>os266（LIBERO-Para）</strong>：语言鲁棒性诊断基准，可与安全诊断并用做上线前体检；</li>
+<li>站内 /learn/embodied-agent：失败感知与自主恢复；/learn/platform-engineering：策略评测基础设施。</li>
+</ul>
+<hr />
+<ol>
+<li>按 README 装好 RoboTwin 与依赖，先跑通一个内置 VLA 的<strong>基线诊断</strong>，拿到分维度报告；</li>
+<li>逐条读危险事件定义，确认哪些事件对你的本体有意义——六维力阈值、末端速度上限这些参数要按真机改；</li>
+<li>换一个自己的策略跑同一套场景，比较分维度差异而不是只比总分；</li>
+<li>做「遮挡 / 歧义指令 / 外力扰动」单因素消融，定位策略在哪类风险上最脆；</li>
+<li>把诊断报告接到上线门禁：例如「碰撞冲量超限次数为零」才允许进入真机试验；</li>
+<li>验收建议报：各维度风险事件率、前瞻性指标、成功率与风险率的散点（看是否以安全换成功率）。</li>
+</ol>
+<hr />
+<p>公开可得的是仓库规模：约 85 star、Python、2026-10-29 创建并推送、0 个 open issue，属于刚发布的论文官方实现。具体指标（各 VLA 的风险率、前瞻性得分）以 IROS 2026 论文与项目页为准，本站不代为编造。</p>
+<p><strong>评估这类基准本身，看三件事</strong>：</p>
+<ul>
+<li><strong>危险事件是否可自动判定</strong>：靠人工看视频打分的基准不可扩展，也进不了 CI；</li>
+<li><strong>指标是否与成功率足够正交</strong>：若安全分与成功率高度相关，说明只是换了个说法报成功率；</li>
+<li><strong>能否迁移到自己的本体</strong>：RoboTwin 上的阈值搬到真机需要重新标定，仓库是否把参数显式暴露出来很关键。</li>
+</ul>
+<p>约 85 star 且无 open issue，说明还处在早期采用阶段；把它当「体检框架」来读、按自己场景改写事件定义，比直接抄它的分数更实际。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>ForesightSafety-VLA</th>
+<th>常规成功率基准</th>
+<th>LIBERO-Para（os266）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输出</td>
+<td>分维度风险体检表</td>
+<td>单一成功率</td>
+<td>语言鲁棒性指标</td>
+</tr>
+<tr>
+<td>关注阶段</td>
+<td>部署前验收</td>
+<td>全流程</td>
+<td>部署前验收</td>
+</tr>
+<tr>
+<td>危险定义</td>
+<td>显式可判定事件</td>
+<td>无</td>
+<td>不涉及</td>
+</tr>
+<tr>
+<td>与成功率关系</td>
+<td>刻意保持正交</td>
+<td>本身即目标</td>
+<td>正交维度之一</td>
+</tr>
+<tr>
+<td>适合用途</td>
+<td>上线门禁</td>
+<td>模型排序</td>
+<td>指令鲁棒性排查</td>
+</tr>
+</tbody>
+</table>
+<p>三个基准其实可以叠成一张上线前检查表：<strong>成功率够不够（常规基准）→ 换句指令还稳不稳（LIBERO-Para）→ 过程里会不会做危险动作（ForesightSafety-VLA）</strong>。再接上 p346 的部署后监控，就形成从离线验收到在线守护的完整链路。本轮 n669（VLA 进真实产线）之所以值得单独记，正是因为产线不会只看成功率——一次碰撞的代价可能高于一百次成功。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

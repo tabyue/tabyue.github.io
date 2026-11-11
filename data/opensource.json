@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-10T08:30",
+ "lastUpdated": "2026-11-11T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,106 @@
   }
  ],
  "projects": [
+  {
+   "name": "OmTrackVLA：Tracking VLA 的开放可复现研究",
+   "github": "https://github.com/om-ai-lab/OmTrackVLA",
+   "organization": "Om AI Lab",
+   "org": "Om AI Lab",
+   "category": "ai-model",
+   "description": "面向 Tracking VLA（跟踪型视觉—语言—动作模型）的开放可复现研究仓库，Python 实现，约 289 star，2026-11-09 仍在活跃推送。它把「训练—评测—复现」的配方公开出来，适合作为从零读懂一类 VLA 变体、并对照自己实现的最小样本。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 289,
+   "features": [
+    "Tracking VLA 的完整训练与评测配方",
+    "强调开放与可复现，便于逐项消融",
+    "Python 实现，适合作为 VLA 变体的教学样本",
+    "活跃维护（2026-11 仍在推送）"
+   ],
+   "tags": [
+    "VLA",
+    "Tracking VLA",
+    "可复现研究",
+    "评测配方"
+   ],
+   "id": "os263",
+   "addedDate": "2026-11-11"
+  },
+  {
+   "name": "HuRo：把人类视频机器人化，用于可扩展 VLA 预训练（CoRL 2026）",
+   "github": "https://github.com/3587jjh/HuRo",
+   "organization": "HuRo 作者团队（CoRL 2026）",
+   "org": "HuRo Team",
+   "category": "data-tools",
+   "description": "CoRL 2026 论文 HuRo（Robotizing Human Videos for Scalable VLA Pretraining）的官方代码，Apache-2.0，约 65 star。核心是把大规模人类视频转成可供 VLA 预训练的机器人化监督，绕开真机遥操作数据的昂贵瓶颈，是「人类视频 → 可训练轨迹」这条数据路线上的一个可跑实现。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 65,
+   "features": [
+    "人类视频到机器人可训练监督的转换流水线",
+    "CoRL 2026 论文官方实现",
+    "Apache-2.0，可商用可改造",
+    "面向 VLA 预训练的数据规模化"
+   ],
+   "tags": [
+    "人类视频",
+    "VLA 预训练",
+    "数据生成",
+    "CoRL 2026"
+   ],
+   "id": "os264",
+   "addedDate": "2026-11-11"
+  },
+  {
+   "name": "ForesightSafety-VLA：RoboTwin 上 VLA 的统一诊断安全基准（IROS 2026）",
+   "github": "https://github.com/tuotuoLyu/ForesightSafety-VLA",
+   "organization": "ForesightSafety-VLA 作者团队（IROS 2026）",
+   "org": "ForesightSafety-VLA",
+   "category": "ai-model",
+   "description": "IROS 2026 论文 ForesightSafety-VLA 的官方代码，约 85 star，在 RoboTwin 上提供面向 VLA 的统一诊断式安全基准。它不是只报一个成功率，而是把「模型什么时候会做危险动作」拆成可诊断的维度，适合作为部署前安全验收的起点。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 85,
+   "features": [
+    "RoboTwin 上的统一 VLA 安全诊断基准",
+    "IROS 2026 官方代码",
+    "面向部署前验收而非单点刷榜",
+    "带论文与项目页（arXiv 2606.27079）"
+   ],
+   "tags": [
+    "VLA 安全",
+    "诊断基准",
+    "RoboTwin",
+    "IROS 2026"
+   ],
+   "id": "os265",
+   "addedDate": "2026-11-11"
+  },
+  {
+   "name": "LIBERO-Para：VLA 指令复述鲁棒性的诊断基准与指标（EMNLP 2026 Oral）",
+   "github": "https://github.com/cau-hai-lab/LIBERO-Para",
+   "organization": "中国农业大学 HAi Lab",
+   "org": "CAU HAi Lab",
+   "category": "framework",
+   "description": "EMNLP 2026 Main（Oral）论文 LIBERO-Para 的官方代码，MIT，约 52 star，带项目主页。它专门测 VLA 对同一条指令的不同措辞是否稳定——把「把杯子放到盘子右边」换成 paraphrase 后策略会不会崩，是语言鲁棒性这一长期被成功率掩盖的维度上少见的成套基准与指标。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 52,
+   "features": [
+    "指令复述（paraphrase）鲁棒性的成套基准与指标",
+    "EMNLP 2026 Oral 官方实现",
+    "MIT 许可，带项目主页",
+    "补齐语言侧鲁棒性评测"
+   ],
+   "tags": [
+    "VLA 评测",
+    "语言鲁棒性",
+    "LIBERO",
+    "EMNLP 2026"
+   ],
+   "id": "os266",
+   "addedDate": "2026-11-11"
+  },
   {
    "id": "os262",
    "name": "Astra-on-RoboMME：规划—监控—执行三层的记忆增强操作系统",
@@ -6569,5 +6669,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 249
+ "totalItems": 253
 }
