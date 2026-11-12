@@ -1,7 +1,7 @@
 {
   "id": "ai-infra",
   "name": "AI Infra 具身基础设施",
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-11-12T08:38",
   "stage": "阶段六：系统工程与部署",
   "importance": "核心",
   "estimatedHours": 30,
@@ -181,14 +181,14 @@
     {
       "id": "sec-05",
       "title": "LoRA 与 PEFT：参数高效微调",
-      "lastUpdated": "2026-10-20T10:20",
-      "chars": 3059,
+      "lastUpdated": "2026-11-12T08:38",
+      "chars": 10856,
       "shortTitle": "LoRA 与 PEFT",
       "difficulty": "中级",
       "estimatedMinutes": 14,
       "isBrief": true,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 14,
       "headings": [
         "🔗 本节内容已在其他模块详细讲解",
         "LoRA 到底改了什么",
@@ -197,6 +197,12 @@
         "VLA 微调的特殊之处",
         "可运行代码",
         "合并与部署",
+        "深入一：为什么低秩增量足够——从内在维度说起",
+        "深入二：前向、反向与梯度耦合的完整推导",
+        "深入三：显存账本——省下来的到底是哪一块",
+        "深入四：可运行实验——从零手写 LoRA 并验证梯度与合并",
+        "深入五：VLA 与端侧部署的适配决策表",
+        "深入六：高频坑清单",
         "跳转入口",
         "为什么放在 AI Infra 模块？"
       ],
@@ -773,7 +779,7 @@
       "summary": "本模块 sec-22 Chunked VLA 推理基础设施 已经讲过 chunk size 的取舍，但留了一个没答完的问题："
     }
   ],
-  "readingMinutes": 175,
+  "readingMinutes": 185,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 154618
+  "chars": 162415
 }

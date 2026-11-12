@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-11T08:30",
+ "lastUpdated": "2026-11-12T08:34",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,110 @@
   }
  ],
  "projects": [
+  {
+   "name": "Alpamayo 2 Edge：NVIDIA 2B 参数端侧推理型 VLA",
+   "github": "https://github.com/NVlabs/alpamayo2-edge",
+   "organization": "NVIDIA Labs",
+   "org": "NVIDIA Labs",
+   "category": "ai-model",
+   "description": "NVIDIA 官方开放的 2B 参数车载推理型视觉—语言—动作模型，用自适应推理生成轨迹与因果解释，Apache-2.0 许可，2026-10 创建、11 月仍在活跃推送。适合作为「端侧算力—模型适配」链条上的一手样本。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 28,
+   "features": [
+    "2B 参数轻量 VLA，面向端侧与车载推理场景",
+    "自适应推理：按输入难度调节推理深度，输出轨迹并附带因果解释",
+    "NVIDIA Labs 官方维护，与 Alpamayo 系列 recipes / 工具链同源",
+    "Apache-2.0 明确授权，可放心用于二次开发与对照实验"
+   ],
+   "tags": [
+    "端侧VLA",
+    "自适应推理",
+    "轨迹生成",
+    "NVIDIA",
+    "Apache-2.0"
+   ],
+   "id": "os267",
+   "addedDate": "2026-11-12"
+  },
+  {
+   "name": "GEM-4D：几何增强的视频世界模型（ECCV 2026）",
+   "github": "https://github.com/kaichen-z/GEM-4d",
+   "organization": "GEM-4D 团队",
+   "org": "GEM-4D 团队",
+   "category": "ai-model",
+   "description": "ECCV 2026 收录的几何增强视频世界模型，面向机器人操作把几何先验注入未来视频预测。Python 实现，约 75 star，2026-08 创建、11 月活跃推送，仓库未声明许可证。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 75,
+   "features": [
+    "把 3D 几何先验注入视频世界模型，缓解纯 2D 预测的空间不一致",
+    "面向机器人操作任务的未来帧预测与策略评估",
+    "ECCV 2026 正式收录，有论文可对照消融",
+    "Python 实现，便于接入既有 VLA / 仿真评测管线"
+   ],
+   "tags": [
+    "世界模型",
+    "几何先验",
+    "视频预测",
+    "ECCV 2026",
+    "机器人操作"
+   ],
+   "id": "os268",
+   "addedDate": "2026-11-12"
+  },
+  {
+   "name": "SuperMimic-Reproduced：官方放出前的独立复现（mjlab / MuJoCo Warp）",
+   "github": "https://github.com/CuboiLeo/SuperMimic-Reproduced",
+   "organization": "CuboiLeo",
+   "org": "CuboiLeo",
+   "category": "framework",
+   "description": "在官方代码发布之前，仅依据论文（arXiv 2610.28480）独立复现 SuperMimic，基于 mjlab / MuJoCo Warp 实现，MIT 许可，约 457 star，2026-10 创建、11 月活跃推送。适合作为「可复现性」与可微世界模型策略优化的教学样本。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 457,
+   "features": [
+    "仅据论文、在官方代码放出前完成的独立复现，可逐项对照作者实现",
+    "基于 mjlab / MuJoCo Warp，GPU 并行物理仿真",
+    "面向人形全身控制的可微世界模型策略优化",
+    "MIT 许可，便于教学、二次开发与对照实验"
+   ],
+   "tags": [
+    "可复现研究",
+    "可微世界模型",
+    "人形全身控制",
+    "mjlab",
+    "MuJoCo Warp"
+   ],
+   "id": "os269",
+   "addedDate": "2026-11-12"
+  },
+  {
+   "name": "Machine Learning Systems：Harvard CS249r 四卷开源教科书（含 Physical AI）",
+   "github": "https://github.com/harvard-edge/cs249r_book",
+   "organization": "Harvard Edge Computing Lab",
+   "org": "Harvard Edge Computing Lab",
+   "category": "data-tools",
+   "description": "哈佛 CS249r《Machine Learning Systems》开源教科书，四卷覆盖基础、扩展、Agentic AI 与 Physical AI，配套站点 mlsysbook.ai。约 30149 star，2023-09 创建、2026-11 活跃推送，Python 实现，未声明许可证。作为系统级学习资源收录，与站内学习中心互补。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 30149,
+   "features": [
+    "四卷结构：基础、扩展、Agentic AI、Physical AI",
+    "面向 ML 系统工程而非单一算法，覆盖从训练到部署的全栈",
+    "配套站点 mlsysbook.ai，含可运行示例与课程材料",
+    "约 3 万 star，社区活跃、长期维护"
+   ],
+   "tags": [
+    "教材",
+    "ML Systems",
+    "Physical AI",
+    "开源课程",
+    "学习资源"
+   ],
+   "id": "os270",
+   "addedDate": "2026-11-12"
+  },
   {
    "name": "OmTrackVLA：Tracking VLA 的开放可复现研究",
    "github": "https://github.com/om-ai-lab/OmTrackVLA",
@@ -6669,5 +6773,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 253
+ "totalItems": 257
 }

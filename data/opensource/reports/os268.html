@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEM-4D：几何增强的视频世界模型（ECCV 2026） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">GEM-4D：几何增强的视频世界模型（ECCV 2026） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="gem-4deccv-2026">GEM-4D：几何增强的视频世界模型（ECCV 2026）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/kaichen-z/GEM-4d">https://github.com/kaichen-z/GEM-4d</a>  </p>
+<p><strong>Stars</strong>: 75 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-12  </p>
+<p><strong>组织</strong>: GEM-4D 团队  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-12</p>
+</blockquote>
+<hr />
+<p><strong>kaichen-z/GEM-4d</strong> 是 ECCV 2026 收录工作 <strong>GEM-4D: Geometry-Enhanced Video World Models for Robot Manipulation</strong> 的官方代码仓库，Python 实现，约 75 star，2026-08-31 创建、2026-11-11 仍在推送，仓库<strong>未声明许可证</strong>（本站记为「未声明」，使用前需自行确认授权）。</p>
+<p><strong>为什么值得关注</strong>：机器人世界模型大多在 2D 图像空间做未来帧预测，这类模型容易出现「看着像、几何上不对」的问题——物体被预测成穿过桌面、深度关系前后颠倒、或多视角下同一物体位置互相矛盾。GEM-4D 的思路是把<strong>几何先验</strong>显式注入视频世界模型，让预测不仅像素合理，也在三维上自洽。这与本轮 n684（DreamTrue 用离线几何标定修复动作—画面对齐）、p348（LaST0.5 用交互中心潜推理补局部物理表征）指向同一处：世界模型的短板不在生成质量，而在<strong>物理与几何一致性</strong>。</p>
+<hr />
+<p>按「几何增强的视频世界模型」定位，仓库组织应围绕三层（具体以 README 为准）：</p>
+<ol>
+<li><strong>几何分支</strong>：从输入帧或深度/位姿估计中取得 3D 线索（点云、深度图、相机参数或场景表示），作为条件或监督注入生成模型；</li>
+<li><strong>视频生成主干</strong>：在给定动作条件下预测未来帧，几何分支提供的约束用于抑制空间不一致的伪影；</li>
+<li><strong>机器人操作评测接口</strong>：把预测出的未来用于策略选择或策略评估，输出与真实 rollout 的可比指标。</li>
+</ol>
+<p><strong>读代码建议</strong>：先确认几何线索<strong>从哪来</strong>——是需要额外深度传感器/标定，还是仅从 RGB 与相机参数推导。这个区别决定了它能否直接用到只有 RGB 的历史数据集上；也决定了它与 n684 DreamTrue 的离线几何标定是竞争关系还是互补关系（后者专门解决公开数据集标定缺失）。</p>
+<hr />
+<ul>
+<li><strong>GEM-4D 论文（ECCV 2026）与仓库 README</strong>：几何增强的具体形式、数据与消融，一手资料；</li>
+<li>本站 <strong>n684（DreamTrue，arXiv 2610.12468）</strong>：离线几何标定与反事实后训练，治理世界模型幻觉；</li>
+<li>本站 <strong>p348（LaST0.5，arXiv 2611.14048）</strong>：交互中心潜推理，另一种「别只盯着整帧」的思路；</li>
+<li>本站 <strong>p349（Elastic-WAM，arXiv 2611.14257）</strong>：世界模型推理算力的自适应分配；</li>
+<li>站内 /learn/world-models-llm：世界模型与世界动作模型；/learn/computer-vision：多视图几何与相机标定。</li>
+</ul>
+<hr />
+<ol>
+<li>克隆后先读 README 的环境与数据要求，特别确认<strong>是否需要深度图、相机内参或额外标定数据</strong>；</li>
+<li>跑通最小预测示例，用仓库自带的样本对比「有几何分支 / 无几何分支」的输出，先建立直观；</li>
+<li>检查多视角一致性：同一动作从不同视角预测，看物体位置是否自洽，这是几何增强最该体现价值的地方；</li>
+<li>若接入自己的数据，先核对相机参数与动作坐标系，几何类方法对坐标系约定最敏感；</li>
+<li>做一次策略评估对照：用世界模型打分选动作，与真机/仿真 rollout 结果比对，报告相关性而非只报生成指标；</li>
+<li>使用前置确认<strong>许可证状态</strong>（未声明），教学与阅读无碍，并入商业代码前须取得明确授权。</li>
+</ol>
+<hr />
+<p>公开可得的是约 75 star、Python、2026-11 仍在推送，以及 ECCV 2026 收录这一同行评审背书。<strong>本站不替它编造成功率或 FVD / LPIPS 数字</strong>，具体指标以论文与 README 为准。</p>
+<p>对世界模型而言，最该盯的不是生成清晰度，而是<strong>「预测质量」与「策略评估质量」的相关性</strong>：一个 FVD 很低的模型，若把失败抓取脑补成成功，用来筛策略反而有害（正是 n684 DreamTrue 量化并治理的问题）。建议自行测三件事——多视角几何一致性、失败动作下的预测忠实度、以及世界模型打分与真实成功率的相关系数。</p>
+<p>未声明许可证是实际使用中的硬约束：复现实验、教学没问题，商业集成前必须联系作者确认。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>GEM-4D</th>
+<th>纯 2D 视频世界模型</th>
+<th>可微物理仿真器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>几何一致性</td>
+<td>显式注入先验</td>
+<td>隐式，易前后矛盾</td>
+<td>由物理方程保证</td>
+</tr>
+<tr>
+<td>输入要求</td>
+<td>需几何线索或相机参数</td>
+<td>仅 RGB</td>
+<td>需完整状态与参数</td>
+</tr>
+<tr>
+<td>生成质量</td>
+<td>高</td>
+<td>高</td>
+<td>不生成真实纹理</td>
+</tr>
+<tr>
+<td>适用环节</td>
+<td>策略评估 / 数据增强</td>
+<td>可视化 / 预训练</td>
+<td>控制与系统辨识</td>
+</tr>
+</tbody>
+</table>
+<p>与 <strong>n684（DreamTrue）</strong> 的分工很清晰：DreamTrue 从<strong>数据与后训练</strong>入手（离线标定 + 反事实样本 + 视频奖励模型），让模型不敢把失败脑补成成功；GEM-4D 从<strong>表示与架构</strong>入手，让预测在三维上说得通。两者叠加，才接近一个能当虚拟沙盘用的世界模型。与 <strong>p348（LaST0.5）</strong> 则是「整帧几何」与「局部交互」两种粒度。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

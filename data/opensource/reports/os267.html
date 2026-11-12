@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpamayo 2 Edge：NVIDIA 2B 参数端侧推理型 VLA — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Alpamayo 2 Edge：NVIDIA 2B 参数端侧推理型 VLA — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="alpamayo-2-edgenvidia-2b-vla">Alpamayo 2 Edge：NVIDIA 2B 参数端侧推理型 VLA</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/NVlabs/alpamayo2-edge">https://github.com/NVlabs/alpamayo2-edge</a>  </p>
+<p><strong>Stars</strong>: 28 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-12  </p>
+<p><strong>组织</strong>: NVIDIA Labs  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-12</p>
+</blockquote>
+<hr />
+<p><strong>NVlabs/alpamayo2-edge</strong> 是 NVIDIA 官方放出的 <strong>2B 参数端侧推理型 VLA</strong>：以自适应推理生成轨迹，并给出因果层面的解释。仓库 2026-10-06 创建、2026-11-10 仍在推送，Python 实现，采用 <strong>Apache-2.0</strong> 明确授权（本轮 4 个新收录项目里授权最清晰的一个）。</p>
+<p><strong>为什么值得关注</strong>：具身智能正在同时被两端拉扯——一端是 14k 小时预训练的通用世界动作模型（p348 LaST0.5），另一端是必须塞进机器人本体、受功耗与实时性约束的端侧芯片（n679 曦选创智对标 Thor 的「大小脑一体」SoC）。Alpamayo 2 Edge 正处在后一端：2B 的体量、按难度调节推理深度的<strong>自适应推理</strong>，都是把模型放进有限算力预算的具体手段。它和同门的 <code>NVlabs/alpamayo-recipes</code>（os239，微调 / RL 后训练 / 量化 / 部署的开发者中心）配套读，能看到 NVIDIA 从训练到端侧部署的完整一条线。</p>
+<hr />
+<p>按「端侧推理型 VLA」的定位，仓库的组织应围绕三件事（具体目录以 README 为准）：</p>
+<ol>
+<li><strong>轻量骨干与动作/轨迹头</strong>：2B 参数规模决定了它不能照搬 7B 以上通用 VLA 的结构，输入侧多模态编码与输出侧轨迹表示都需要压缩；轨迹而非单步关节指令，是它区别于操作类 VLA 的一个信号。</li>
+<li><strong>自适应推理模块</strong>：按输入难度决定推理深度或调用次数，把算力花在难样本上。这与本轮 p349（Elastic-WAM 用时空精化需求场自适应分配去噪算力）、p351（BEHAVIOR 方案用噪声—算力模型挑选流匹配样本数）是同一类工程思想在不同层的落地。</li>
+<li><strong>因果解释输出</strong>：除轨迹外给出因果层面的说明，便于调试与审计——在车载与机器人这类安全敏感场景，可解释性不是装饰而是验收项。</li>
+</ol>
+<p><strong>读代码建议顺序</strong>：先找推理入口与自适应判据（知道算力怎么被调度），再看轨迹头的表示与解码，最后看权重加载与量化路径。反过来先啃模型结构，很容易漏掉端侧方案真正的设计重点。</p>
+<hr />
+<ul>
+<li><strong>仓库 README 与模型卡</strong>：Alpamayo 2 Edge 的权重、推理示例与自适应推理判据，一手资料；</li>
+<li>本站 <strong>n679（曦选创智 5 亿元天使轮，对标 Thor 的具身端侧 SoC）</strong>：端侧算力的供给侧；</li>
+<li>本站 <strong>p349（Elastic-WAM，arXiv 2611.14257）</strong>、<strong>p351（BEHAVIOR 2026 方案，arXiv 2611.14432）</strong>：自适应计算预算的两种同期做法；</li>
+<li>本站 <strong>os239（NVlabs/alpamayo-recipes）</strong>：同门微调、RL 后训练、量化与部署配方；</li>
+<li>站内 /learn/ai-infra：模型量化与压缩、LoRA 与 PEFT；/learn/training-inference-optimization：推理效率三路线。</li>
+</ul>
+<hr />
+<ol>
+<li>克隆后<strong>先读 README 的模型卡与许可说明</strong>，确认权重获取方式、依赖版本与硬件要求（端侧模型通常对推理后端有指定）；</li>
+<li>跑通最小推理示例，记录<strong>单步延迟、显存/内存占用与自适应推理实际触发的档位</strong>，先把基线立住；</li>
+<li>做一次难度对照：构造简单与困难输入，观察自适应推理是否真的调用不同深度，若档位恒定说明判据没生效；</li>
+<li>与 <code>NVlabs/alpamayo-recipes</code>（os239）配合，试一次量化或微调，观察精度—延迟曲线；</li>
+<li>若要部署到机器人本体，先核对动作空间维度与控制频率，端侧模型最常见的事故是「推理跑得通但接不进控制回路」；</li>
+<li>验收建议报：p50 / p99 单步延迟、峰值内存、自适应档位分布、轨迹误差、以及在目标芯片上的实测帧率。</li>
+</ol>
+<hr />
+<p>公开可得的是仓库规模与活跃度：约 28 star、Python、Apache-2.0、2026-10 创建、11 月仍在推送。<strong>本站不替它编造成功率或延迟数字</strong>——端侧模型的性能高度依赖硬件后端与量化配置，以仓库 README 与官方模型卡为准。</p>
+<p>真正该衡量的性能是<strong>「在目标算力预算内能否守住控制周期」</strong>：平均延迟之外必须报 p99，因为自适应推理在困难输入上可能突然多算几步，长尾抖动对 50 Hz 策略回路比均值更危险。另一个易被忽略的指标是<strong>自适应档位分布</strong>：若绝大多数输入都落在同一档，那自适应就只是名字，实际退化成固定预算。</p>
+<p>授权清晰是这个项目相对多数新开源仓库的优势：Apache-2.0 允许二次开发与商业集成，只需保留版权与许可声明。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Alpamayo 2 Edge</th>
+<th>通用 7B 以上 VLA</th>
+<th>纯轨迹规划器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数规模</td>
+<td>2B</td>
+<td>7B 至数十 B</td>
+<td>通常很小</td>
+</tr>
+<tr>
+<td>算力预算</td>
+<td>端侧 / 车载</td>
+<td>数据中心</td>
+<td>极低</td>
+</tr>
+<tr>
+<td>推理方式</td>
+<td>自适应深度</td>
+<td>固定前向</td>
+<td>固定求解</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>轨迹 + 因果解释</td>
+<td>动作或动作块</td>
+<td>轨迹</td>
+</tr>
+<tr>
+<td>授权</td>
+<td>Apache-2.0 明确</td>
+<td>视仓库而定</td>
+<td>视仓库而定</td>
+</tr>
+</tbody>
+</table>
+<p>与 <strong>p349（Elastic-WAM）</strong> 对照最有意思：两者都在回答「世界/动作模型该花多少算力」，但一个把自适应做进推理深度，一个把自适应做进去噪的时间与空间轴。与 <strong>n679（曦选创智端侧 SoC）</strong> 则是供需两端——芯片定义要从模型负载反推，而 2B + 自适应推理正是这类负载的一个具体样本。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

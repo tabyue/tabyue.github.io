@@ -61,7 +61,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：数据集全景+格式标准\n**第2周**：数据采集系统搭建\n**第3周**：数据质量工程+清洗\n**第4周**：合成数据+增强\n**第5周**：数据闭环实战",
-  "lastUpdated": "2026-10-28T08:30",
+  "lastUpdated": "2026-11-12T08:38",
   "maturity": "growing",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -216,22 +216,28 @@
     {
       "id": "sec-08",
       "title": "数据格式标准与工具链",
-      "lastUpdated": "",
-      "chars": 3612,
+      "lastUpdated": "2026-11-12T08:38",
+      "chars": 14746,
       "shortTitle": "数据格式标准与工具链",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 18,
       "headings": [
         "主流数据格式对比",
         "LeRobot 数据集结构详解",
         "数据版本管理 (DVC)",
         "数据可视化工具",
+        "深入一：具身数据为什么比图像分类数据难——时间、多速率与因果对齐",
+        "深入二：LeRobot 的存储模型逐层拆解",
+        "深入三：五种格式该怎么选",
+        "深入四：数据契约与校验——可复现性的地基",
+        "深入五：从采集到训练的完整管线",
+        "深入六：可运行示例——构造一段多速率 episode 并跑通校验与统计",
         "练习",
         "参考答案"
       ],
-      "summary": "1. HDF5 → LeRobot 格式转换并上传"
+      "summary": "图像分类数据集的基本单位是「一张图 + 一个标签」，样本之间独立；具身数据的基本单位是一条带时间结构的轨迹，一个样本里同时有图像、本体状态、动作、力觉、任务描述，而且它们不同步、不同频、且有因果先后。这三点决定了具身数据格式不能照搬 CV 的约定。"
     },
     {
       "id": "sec-09",
@@ -514,7 +520,7 @@
       "summary": "数据工程里有一条默认假设几乎从没被质疑过：成功的轨迹就是好的训练数据。采集时按任务完成度过滤，标注时按是否达成目标打标，训练时把通过的 episode 整条喂进去。这条假设在单步任务上成立，但在多步、有状态、需要反复交互的任务上会漏掉真正决定成败的东西。"
     }
   ],
-  "readingMinutes": 152,
+  "readingMinutes": 166,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 126253
+  "chars": 137387
 }

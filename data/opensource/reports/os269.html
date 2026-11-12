@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuperMimic-Reproduced：官方放出前的独立复现（mjlab / MuJoCo Warp） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">SuperMimic-Reproduced：官方放出前的独立复现（mjlab / MuJoCo Warp） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="supermimic-reproducedmjlab-mujoco-warp">SuperMimic-Reproduced：官方放出前的独立复现（mjlab / MuJoCo Warp）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/CuboiLeo/SuperMimic-Reproduced">https://github.com/CuboiLeo/SuperMimic-Reproduced</a>  </p>
+<p><strong>Stars</strong>: 457 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-12  </p>
+<p><strong>组织</strong>: CuboiLeo  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-12</p>
+</blockquote>
+<hr />
+<p><strong>CuboiLeo/SuperMimic-Reproduced</strong> 是一个少见的项目类型：<strong>独立复现</strong>。作者在 SuperMimic（arXiv 2610.28480）官方代码发布之前，仅依据论文从零写出实现，基于 mjlab / MuJoCo Warp 做 GPU 并行仿真，采用 <strong>MIT</strong> 许可，约 457 star，2026-10-21 创建、2026-11-10 仍在推送。</p>
+<p><strong>为什么值得关注</strong>：可复现性在机器人学习里长期是口号。这个仓库的价值不在刷榜，而在给出一个<strong>可与作者实现逐项对照的第二份代码</strong>——同一篇论文，两个人独立读，差异处往往正是论文没写清、或实现里藏了隐性假设的地方。对想真正读懂可微世界模型如何用于人形全身控制的读者，它比一个只放权重的仓库有用得多。本站此前已收录 os253（SuperMimic 官方在 mjlab 里的策略优化代码），两者正好构成一组对照实验素材。</p>
+<hr />
+<p>按「复现 + 可微世界模型策略优化」的定位，仓库组织应围绕三块（具体以 README 为准）：</p>
+<ol>
+<li><strong>仿真层</strong>：mjlab / MuJoCo Warp 上的并行环境，负责状态转移与可微梯度通路；</li>
+<li><strong>世界模型层</strong>：学习或利用状态转移模型，为策略优化提供可微的「想象」通道；</li>
+<li><strong>策略优化层</strong>：在想象 rollout 里做梯度回传或策略改进，再在仿真里验证。</li>
+</ol>
+<p><strong>读代码建议顺序</strong>：先找与论文公式一一对应的那几个文件（可微损失、想象 rollout 长度、梯度截断位置），再看环境封装；最后跑一遍训练，把复现曲线与论文图对照。复现类仓库最忌讳「先通读再跑」，因为它的全部价值都在<strong>差异</strong>上，只有跑出数字才能定位差异在哪。</p>
+<p><strong>与相邻项目的分工</strong>：os253 是官方实现，回答「作者怎么写」；本仓库回答「第三方照论文能写成什么样」；p350（RedirectMimic）则回答「参考动作如何被有条件地服从」。三者把人形全身控制从实现、复现到约束编辑串成一条线。</p>
+<hr />
+<ul>
+<li><strong>SuperMimic 论文（arXiv 2610.28480）与本仓库 README</strong>：复现说明与差异清单，一手资料；</li>
+<li>本站 <strong>os253（emoPointer/supermimic_manipulation）</strong>：官方在 mjlab 里的策略优化实现，最佳对照对象；</li>
+<li>本站 <strong>p350（RedirectMimic，arXiv 2611.14049）</strong>：人形全身控制中的局部动作编辑与跟踪奖励设计；</li>
+<li>本站 <strong>n670（北京人形 Hi-WBC）</strong>：把人体动作当蓝本而非标准答案的工程取向；</li>
+<li>站内 /learn/humanoid-fullstack：人形全身控制与强化学习训练框架；/learn/physics-simulation：可微仿真与接触动力学。</li>
+</ul>
+<hr />
+<ol>
+<li>克隆后先读 README 的<strong>复现说明</strong>，特别记录作者列出的「与论文的偏差或不确定处」，这是最值钱的一段；</li>
+<li>按 README 装好 mjlab / MuJoCo Warp 环境（GPU 后端与版本要严格对齐，物理仿真对版本最敏感）；</li>
+<li>跑通最小训练，记录随机种子、GPU 型号、墙钟时间与最终指标，先立基线；</li>
+<li>与 os253（官方实现）逐项对照：损失函数、rollout 长度、梯度截断、奖励/归一化系数，列出差异表；</li>
+<li>做一次消融：关掉可微通道或缩短想象 rollout，看指标变化是否符合论文预期；</li>
+<li>报告：复现指标与论文报告值的偏差、单次训练成本、差异清单与归因。</li>
+</ol>
+<hr />
+<p>公开可得的是约 457 star、Python、MIT、2026-11 仍在推送。<strong>本站不替它编造成功率或训练曲线数字</strong>，指标以仓库 README 与作者记录为准。</p>
+<p>对复现类项目，真正的性能指标是<strong>复现成本与偏差</strong>：从克隆到跑出与论文一致的数字需要几步、多少算力、是否依赖未公开的权重或数据；以及最终指标与论文报告值差多少。一个只有作者自己能跑通的配方，star 再多也不构成可复现性。建议把自己的偏差与差异清单也记进笔记——这比抄一个成功率更有价值。</p>
+<p>MIT 许可让它在教学与二次开发上没有授权障碍，是本轮 4 个新收录项目里使用门槛最低的一个。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>SuperMimic-Reproduced</th>
+<th>官方实现 os253</th>
+<th>只放权重的仓库</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>来源</td>
+<td>第三方仅据论文</td>
+<td>作者本人</td>
+<td>作者本人</td>
+</tr>
+<tr>
+<td>价值</td>
+<td>暴露论文的隐性假设</td>
+<td>权威基线</td>
+<td>直接推理</td>
+</tr>
+<tr>
+<td>可对照性</td>
+<td>高，可与官方逐项 diff</td>
+<td>基准</td>
+<td>低</td>
+</tr>
+<tr>
+<td>上手成本</td>
+<td>中，需完整跑训练</td>
+<td>中</td>
+<td>低</td>
+</tr>
+<tr>
+<td>授权</td>
+<td>MIT</td>
+<td>见仓库</td>
+<td>视仓库而定</td>
+</tr>
+</tbody>
+</table>
+<p>与 <strong>os253（emoPointer/supermimic_manipulation）</strong> 一起用效果最好：先跑官方实现立住基线，再跑本仓库，把两者的<strong>差异表</strong>当成论文阅读笔记。这种做法比任何综述都更能说明「可复现」到底卡在哪一步。与 <strong>p350（RedirectMimic）</strong> 对照则能看到全身控制里「跟踪参考」与「有条件地改写参考」两种取向。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
