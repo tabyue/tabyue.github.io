@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-12T08:34",
+ "lastUpdated": "2026-11-13T08:35",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,114 @@
   }
  ],
  "projects": [
+  {
+   "name": "LIFE：智元 × 清华的终身具身智能框架（RoboBeats / Plastic Memory / EDM）",
+   "github": "https://github.com/AgibotTech/LIFE",
+   "organization": "智元机器人 AGIBOT / 清华",
+   "org": "智元机器人 AGIBOT / 清华",
+   "category": "ai-agent-framework",
+   "description": "智元远征 Research Team 与清华联合发布的终身具身智能框架，论文 arXiv 2611.00180、项目主页、代码与 RoboBeats-0.8B/2B/4B 权重同步开放，Apache-2.0。它要回答的是「没人下指令时机器人该做什么」：RoboBeats 做心跳式持续感知，Plastic Memory 把原图与结构化记录分开存以便日后回看，EDM 把编程智能体摸索出的办法沉淀成可复用工具。适合作为 embodied-agent 模块 Harness 层与具身记忆章节的一手工程样本。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 21,
+   "features": [
+    "RoboBeats 轻量决策模型：单张 RTX 5090 单帧约 75 ms、同时跟踪 16 个条件约 77 ms，延迟几乎不随条件数增长",
+    "Plastic Memory 原图 + JSON 结构化线索双轨存储，执行智能体走文本检索、编程智能体可回看原图补字段",
+    "EDM（探索—提炼—挂载）：把一次性摸索出的检索/去重办法验证后装进工具箱，跨任务复用",
+    "配套 SSS-Bench 与 FindingDory 评测：597 个未参与构建的查询成功率由 37.5% 升至 65.8%"
+   ],
+   "tags": [
+    "终身学习",
+    "持续感知",
+    "可塑性记忆",
+    "RoboBeats",
+    "EDM",
+    "Apache-2.0"
+   ],
+   "id": "os271",
+   "addedDate": "2026-11-13"
+  },
+  {
+   "name": "MetaWAM：把机器人信号折进单张 meta-frame 的世界动作模型统一潜接口（CoRL 2026）",
+   "github": "https://github.com/showlab/MetaWAM",
+   "organization": "Show Lab（新加坡国立大学）",
+   "org": "Show Lab（新加坡国立大学）",
+   "category": "ai-model",
+   "description": "CoRL 2026 官方实现，Apache-2.0。把本体感知、动作、价值等低维机器人信号按互不相交的频域通道带打包，经逆 DCT 抬成单张 meta-frame，无需新增模块即可对齐预训练视频扩散模型的先验。RoboCasa 68.9% 成功率、推理延迟降 39%，三台真实 Franka 任务 85.0%。与 p352 是同一工作的代码侧，适合作为 world-models-llm 与 training-inference-optimization 的接口层样本。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 1,
+   "features": [
+    "频域打包 + 逆 DCT：各信号占互不重叠的 DCT 通道带，正交性保证可解码，不需训练编解码器",
+    "用冻结去噪器的相对重建误差当探针，把接口设计从格式问题变成可测量的分布对齐问题",
+    "固定频带布局 + slot-aware routing，让策略 / 世界模型 / 价值预测共享同一张 meta-frame",
+    "把逐信号多帧压成单帧，去噪每步 token 数恒为 1，推理延迟降 39%"
+   ],
+   "tags": [
+    "世界动作模型",
+    "统一潜接口",
+    "频域打包",
+    "视频扩散",
+    "CoRL 2026",
+    "Apache-2.0"
+   ],
+   "id": "os272",
+   "addedDate": "2026-11-13"
+  },
+  {
+   "name": "Alloy：基于 Newton / MuJoCo Warp 的多材料并行物理引擎",
+   "github": "https://github.com/argonrobotics-ai/alloy",
+   "organization": "Argon Robotics AI",
+   "org": "Argon Robotics AI",
+   "category": "simulation",
+   "description": "2026-11-11 新建的开源物理引擎，Apache-2.0，Python 3.11/3.12。把刚体机器人、布料、液体与软体放进同一场景，基于 Newton、MuJoCo Warp 与 NVIDIA Warp 做 GPU 并行：自由刚体可上千并行世界，机械臂场景最高 4096 个并行世界，也支持 CPU。面向接触丰富操作与可微/大规模机器人学习，适合作为 physics-simulation 模块专用物理引擎、可微仿真章节的一手样本。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 18,
+   "features": [
+    "刚体、布料、液体、软体多材料同场景，不必为软体再接一套求解器",
+    "基于 Newton / MuJoCo Warp / Warp 的 GPU 并行：自由刚体上千世界，机械臂最高 4096 并行世界",
+    "同时提供 CPU 后端，无 GPU 环境也能复现与调试",
+    "Apache-2.0 明确授权，Python 3.11/3.12，2026-11 新建并活跃推送"
+   ],
+   "tags": [
+    "物理引擎",
+    "多材料",
+    "GPU并行",
+    "Newton",
+    "MuJoCo Warp",
+    "Apache-2.0"
+   ],
+   "id": "os273",
+   "addedDate": "2026-11-13"
+  },
+  {
+   "name": "xense-taccap-lerobot：XTac-UMI G1 手持夹爪的视触觉数采分支（LeRobot v5.1）",
+   "github": "https://github.com/XenseRobotics-AI/xense-taccap-lerobot",
+   "organization": "Xense Robotics AI（千觉机器人）",
+   "org": "Xense Robotics AI（千觉机器人）",
+   "category": "data-tools",
+   "description": "LeRobot v5.1 的视触觉数采分支，Apache-2.0，2026-06 创建、11-12 活跃推送。围绕 XTac-UMI G1 手持夹爪，集成 Pico4 遥操作、视触觉相机与现成 Docker 镜像，把触觉帧与本体/动作流一起落库。适合作为 sensors-hardware 触觉传感器、embodied-data-engineering 数据格式标准与工具链章节的一手工程样本。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 14,
+   "features": [
+    "LeRobot v5.1 分支：直接复用 LeRobot 的 dataset / 数据格式与训练工具链",
+    "XTac-UMI G1 手持夹爪 + 视触觉相机，采集时同步记录触觉帧、关节状态与动作",
+    "Pico4 遥操作接入，配套可即拉的 Docker 镜像，降低环境搭建成本",
+    "Apache-2.0 明确授权，与 Xense 的 xense-openpi（π₀/π₀.₅ 适配双臂平台）构成采集—训练闭环"
+   ],
+   "tags": [
+    "视触觉",
+    "数据采集",
+    "LeRobot",
+    "UMI",
+    "遥操作",
+    "Apache-2.0"
+   ],
+   "id": "os274",
+   "addedDate": "2026-11-13"
+  },
   {
    "name": "Alpamayo 2 Edge：NVIDIA 2B 参数端侧推理型 VLA",
    "github": "https://github.com/NVlabs/alpamayo2-edge",
@@ -6773,5 +6881,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 257
+ "totalItems": 261
 }

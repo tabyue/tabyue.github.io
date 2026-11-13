@@ -1,6 +1,146 @@
 {
- "lastUpdated": "2026-11-12T08:34",
+ "lastUpdated": "2026-11-13T08:35",
  "papers": [
+  {
+   "idx": 352,
+   "title": "From Video Frames to Robot Meta-Frames: A Unified Latent Interface for World Action Models",
+   "authors": "Guoqiang Liang, Yiqi Lin, Yanzhe Chen, Kevin Yuchen Ma, Mike Zheng Shou",
+   "venue": "arXiv 2611.14365 (cs.RO)",
+   "date": "2026-11-10",
+   "arxiv": "https://arxiv.org/abs/2611.14365",
+   "github": "https://github.com/showlab/MetaWAM",
+   "tags": [
+    "世界动作模型",
+    "统一潜接口",
+    "频域打包",
+    "视频扩散",
+    "CoRL 2026"
+   ],
+   "category": "VLA / 世界动作模型",
+   "difficulty": "高级",
+   "tldr": "**问题**：预训练视频扩散模型（VDM）做世界动作模型（WAM）时，要把本体感知、动作、价值这些低维机器人信号注入一个被自然视频塑形的潜空间。既有做法把它当格式问题——每个信号单独占一帧潜变量，或外加专用编解码器。**做法**：作者把信号注入重新定义成**分布对齐问题**，用「冻结 VDM 去噪器的相对重建误差」当探针：常规空间编码离预训练先验很远，而频域打包产生的潜变量被去噪器修正得少得多。据此提出 **MetaWAM**：把全部机器人信号折进单张统一 meta-frame，每个信号分配一段互不重叠的频域通道带，再经逆 DCT 抬到空间潜变量；固定频带布局 + slot-aware routing 让同一张 meta-frame 同时支撑策略、世界模型与价值预测，且**不加任何模块、不改架构**。结果：RoboCasa 68.9% 成功率，把逐信号多帧压成一帧、推理延迟降 39%，三台真实 Franka 任务 85.0%。一句话：接口设计的判据不是「能不能解码」，而是「去噪器愿不愿意把它当成自己见过的东西」。",
+   "keyInsights": [
+    "用冻结去噪器的相对重建误差当探针，把「接口怎么设计」从工程口味问题变成可测量的分布对齐问题。",
+    "频域打包 + 逆 DCT 的关键收益是**零新增模块**：既不加编码器也不改 UNet，迁移成本几乎全在信号布局上。",
+    "把 N 个信号帧压成 1 张 meta-frame，省下的不只是参数，更是每一步去噪都要过的 token 数与 39% 的推理延迟。",
+    "固定频带 + slot 路由让策略 / 世界模型 / 价值共享同一组机器人变量，暗示 WAM 的多头预测可以统一到一套接口契约。"
+   ],
+   "impact": "与 n691（Runway 开放 27B WAM 权重 Praxis-1）、os272（MetaWAM 官方实现）构成一条完整链：一个把可商用大模型交出来，一个把「低维信号怎么进潜空间」这件最容易被当成格式细节的事做成了方法。也与 p349（Elastic-WAM 自适应分配去噪算力）互补——前者省每步的 token，后者省每步的步数。站内 world-models-llm 的 VLM→VLA 训练范式、training-inference-optimization 的推理效率三路线都可直接引用：当 WAM 的开销主要来自视频去噪时，**接口层的压缩**往往比换骨干更划算。",
+   "id": "p352",
+   "addedDate": "2026-11-13"
+  },
+  {
+   "idx": 353,
+   "title": "CIALLO: Learning Shared Intent Representations for Cross-Embodiment Manipulation",
+   "authors": "Choo Sin Wai, Dake Zhong, Jingye Zhang, Zhifang Liu 等 13 位作者",
+   "venue": "arXiv 2611.13732 (cs.RO)",
+   "date": "2026-11-10",
+   "arxiv": "https://arxiv.org/abs/2611.13732",
+   "github": "",
+   "tags": [
+    "跨本体",
+    "动作编解码器",
+    "意图表征",
+    "少样本适配",
+    "Qwen-CIALLO"
+   ],
+   "category": "跨本体 / 表征学习",
+   "difficulty": "高级",
+   "tldr": "**问题**：不同机器人的示教里藏着可复用的操作知识，但控制接口（关节数、动作量纲、末端定义）不一样，光做「动作重建」并不能保证相似行为在不同本体上落到同一个表征。**做法**：CIALLO 是一个**动作编解码器**，把动作、视觉变化、以及有观测支撑的语言对齐到「短时行为意图」的共享空间；再用一个本体条件解码器把意图映射回各机器人专属动作。 eight 个本体预训练后，面对新机器人只需**一段不超过 10 秒的录像**、只更新本体嵌入即可标定；标定后编解码器冻结，策略只学「从观测与指令预测意图」。策略用 Qwen3.5-4B 实例化为 Qwen-CIALLO，主干无需大规模机器人动作预训练。**结果**：每任务 20 条示教，真实 SO-101 与单臂 Piper 平均成功率 76.7%（全量微调 π0 为 70.0%）；仿真中额外微调动作解码器后 LIBERO 97.3%、RoboTwin 2.0 52.7%，LIBERO 策略不微调直接迁移 LIBERO-Plus 得 80.8%。一句话：把「本体标定」和「任务学习」拆开，跨本体迁移才不用每次重训。",
+   "keyInsights": [
+    "把迁移单位从「动作」上移到「短时行为意图」，动作重建只是副产品，共享空间才是目标。",
+    "新本体适配只需 ≤10 秒录像 + 只更新本体嵌入，把适配成本从「重新采集示教」压到「拍一段视频」。",
+    "编解码器标定后冻结、策略只学意图预测，使 Qwen3.5-4B 这类通用 VLM 主干不必先吃机器人动作预训练。",
+    "LIBERO→LIBERO-Plus 不微调仍有 80.8%，是「意图空间确实与本体解耦」最有说服力的一条证据。"
+   ],
+   "impact": "与 n691（Praxis-1 开放权重）、p352（MetaWAM 统一潜接口）构成 WAM/VLA 接口层的三种解法：一个开放大模型、一个统一信号进潜空间、一个统一动作出潜空间。站内 imitation-learning 的行为克隆与跨本体迁移、embodied-data-engineering 的数据格式标准与本体无关性、robot-kinematics 的逆运动学与动作空间，都能直接接上：当动作空间从 7 自由度变 6 自由度时，是重训策略，还是只换一段本体嵌入？CIALLO 给的是后者的一份完整实验证据。",
+   "id": "p353",
+   "addedDate": "2026-11-13"
+  },
+  {
+   "idx": 354,
+   "title": "DexSeed: Expanding Human Hand-Object Interactions into Robot Demonstrations for Dexterous Policy Learning",
+   "authors": "Huaijin Pi, Zehong Shen, Yong Wang, Kechun Xu 等 11 位作者",
+   "venue": "arXiv 2611.14092 (cs.RO)",
+   "date": "2026-11-10",
+   "arxiv": "https://arxiv.org/abs/2611.14092",
+   "github": "",
+   "tags": [
+    "灵巧手",
+    "示教生成",
+    "重定向",
+    "人手视频",
+    "RL手指控制"
+   ],
+   "category": "灵巧操作 / 数据生成",
+   "difficulty": "高级",
+   "tldr": "**问题**：灵巧 VLA 需要大量示教，遥操作采集昂贵；人手—物交互（HOI）数据集是可复用的来源，但已有迁移方法主要是「复现给定交互」，而生成本质上需要**覆盖不同物体与操作位置**、有可执行的臂与手指动作、还要配对渲染观测。**做法**：DexSeed 以低成本从人手 HOI 生成灵巧机器人数据。先按抓取模式组织源序列并共享语言描述；再用 InteractionMesh 重定向 + 臂轨迹增广，把序列适配到机器人手、不同物体几何与取放位置，同时保持局部手—物关系；一个 RL 手指控制策略产生可执行 rollout，机械臂跟踪预计算轨迹；成功 rollout 的渲染观测与记录动作配上抓取描述，用于微调 VLA。**结果**：重定向的接触保真度与全臂执行可靠性优于对照基线；仅用生成示教微调的 VLA 能执行语言指定的抓取，仿真与真机部署均有验证。一句话：把「一段人手视频」扩成「一批物体、位置、姿态都可变的机器人示教」，是灵巧数据稀缺最直接的工程解。",
+   "keyInsights": [
+    "生成而非复现：按抓取模式组织 + 臂轨迹增广，让同一段 HOI 覆盖多物体、多取放位置，直击示教多样性瓶颈。",
+    "InteractionMesh 保持局部手—物关系，比逐帧姿态重定向更能保住接触点的物理合理性。",
+    "RL 手指控制 + 臂轨迹跟踪的分工，把「手指能不能抓稳」与「臂能不能到位」解耦，失败可归因。",
+    "只用生成示教微调的 VLA 就能执行语言指定抓取，说明合成数据已能撑起闭环策略，而不只是好看的渲染图。"
+   ],
+   "impact": "与 n693（黑漫万台灵巧手扩产）、n695（模感把触觉做进结构件）、os274（XTac-UMI 视触觉数采）构成「本体—感知—数据」三角：硬件开始按零部件放量、触觉开始进结构件，最缺的正是可规模化生成的灵巧示教。站内 imitation-learning 的行为克隆与 DAgger、embodied-data-engineering 的轨迹可学性、robot-dynamics 的接触力学，都能接上：生成的轨迹若接触点物理上不成立，再多的渲染观测也只是把错误监督放大。",
+   "id": "p354",
+   "addedDate": "2026-11-13"
+  },
+  {
+   "idx": 355,
+   "title": "ReACT: Reflection-Consistent Modulation and Cross-Load Consistency for Humanoid Velocity Tracking Under Asymmetric Loads",
+   "authors": "Xianghui Wang, Aoran Fu, Liyou Luo, Shanze Wang, Xiaoyu Shen, Dan Zhang, Wei Zhang",
+   "venue": "arXiv 2611.13929 (cs.RO)",
+   "date": "2026-11-10",
+   "arxiv": "https://arxiv.org/abs/2611.13929",
+   "github": "",
+   "tags": [
+    "人形运控",
+    "非对称负载",
+    "速度跟踪",
+    "宇树G1",
+    "反射一致性"
+   ],
+   "category": "人形控制 / 负载鲁棒性",
+   "difficulty": "高级",
+   "tldr": "**问题**：人形 loco-manipulation 已能全身抓、抬、搬，但把物体送到目的地依赖运动控制器准确执行导航策略给出的速度指令。**单手搬物会引入持续的非对称上身负载**，使速度跟踪产生持续偏差；偏差累积成位置与航向偏移，抬高碰撞与导航失败风险。**做法**：ReACT 用两件事对付它。① **反射一致性扰动调制**：用估计到的 wrench（力/力矩）调制 actor 特征做负载补偿，同时要求在「反射观测」下动作对应关系不被破坏（把左右镜像当作一种应当一致的对称性）；② **跨负载跟踪一致性训练**：在同一条速度指令下比较有载与无载两种条件，促使控制器在不同负载下给出一致的速度跟踪。**结果**：宇树 G1 仿真中在不同非对称负载下速度跟踪改善、方向偏置减小；真机 40 次单手负载导航试验在固定无图导航策略下全部无碰撞到达目标。一句话：搬运场景里最容易被忽略的误差源不是「抓没抓稳」，而是「手里多了一斤东西之后，走直线还准不准」。",
+   "keyInsights": [
+    "把「单手负载」从扰动特例升级成一类系统性问题：持续偏差会积分成位置与航向误差，比瞬时跟踪误差更危险。",
+    "反射一致性把左右镜像当对称性约束，等于免费多了一倍监督信号，且抑制了负载补偿过拟合到某一侧。",
+    "跨负载一致性训练直接对齐有载/无载的跟踪行为，比单纯在训练里随机加负载更可控。",
+    "真机 40/40 无碰撞到达用的是**固定无图导航策略**，说明改进落在运控层而非靠上层规划兜底。"
+   ],
+   "impact": "与 p352/p353/p354 一起构成本轮「控制—数据—接口」四篇里的控制侧样本，也与 n670（北京人形 Hi-WBC 通用全身控制）、站内 control-theory 模块的阻抗/导纳控制（本轮同步深化）、robot-dynamics 的全身接触操作力学直接相连：非对称负载本质上是一个持续作用在浮动基座上的外力矩，正是阻抗/导纳与 WBC 分层要处理的那类量。对做「搬箱子进厂」的团队，这篇提醒评测口径要从「能不能走到」升级到「带载时航向偏多少、每班要人接几次」。",
+   "id": "p355",
+   "addedDate": "2026-11-13"
+  },
+  {
+   "idx": 356,
+   "title": "LEASH: Stay Safe in Agentic Robotics",
+   "authors": "Qinfeng Zhu, Weiguang Zhao, Ke Sun, Xihao Guo, Yunxi Jiang, Rui Zhang, Lei Fan, Kaizhu Huang",
+   "venue": "arXiv 2611.14115 (cs.RO)",
+   "date": "2026-11-10",
+   "arxiv": "https://arxiv.org/abs/2611.14115",
+   "github": "",
+   "tags": [
+    "具身安全",
+    "RoboRisk",
+    "Agentic Robotics",
+    "安全门控",
+    "评测基准"
+   ],
+   "category": "具身安全 / Agent",
+   "difficulty": "高级",
+   "tldr": "**问题**：GPT / Claude 一类基础模型在空间理解与具身智能上越来越强，用它们直接驱动机器人成了通向机器人 AGI 的热门路径，但**用基础模型控机器人有明显安全风险，且缺少完整的安全评测**。**做法**：先给基准——**RoboRisk** 含 92 个仿真任务 + 13 个真机任务，分五类：任务级拒答（T）、计划修复（P）、执行期危险（E）、注入（I）、时序记忆（S）；此前基准最多覆盖两类，且不少只评文本输出，RoboRisk 五类全覆盖并**全部闭环执行**。评测 GPT-6 Astra / GPT-6.1 Sol / GPT-6 Luna、Claude Opus 5.5、Gemini 4 Argon、Grok 4.7 六个模型，伤害率普遍偏高；另评 Dream API、PokeBot RoboAPI 两个机器人专用接口。再给方案——**LEASH（Lease-Enforced Agentic Safety Harness）**：用决策模型（Jev 或 OpenAI Decisions API）实现任务门、动作门、提交门三道闸，分别在视觉上下文中审查任务、每个动作、以及每个不可逆操作；规划器与三门共享同一份安全策略。实验显示 LEASH 在六个模型上普遍降低伤害率，基本保住任务完成率，时间与 token 开销都很小。一句话：Agentic Robotics 的安全不能只靠模型自己「懂事」，要有一层与规划器同源、独立执行的运行时闸门。",
+   "keyInsights": [
+    "RoboRisk 把评测从「输出文本是否安全」推进到「闭环执行是否造成伤害」，且五类风险全覆盖，填补了 Agentic Robotics 的评测空白。",
+    "六个主流基础模型伤害率普遍偏高，说明「能力更强」并不自动带来「更安全」，安全是独立维度。",
+    "任务/动作/提交三道门与规划器共享同一份安全策略，避免「规划器一套规矩、闸门另一套」造成的策略打架。",
+    "LEASH 号称可嵌入几乎任何 agentic 架构，且时间与 token 开销小——这是安全层能真正落地的前提，而不只是评测结论。"
+   ],
+   "impact": "与 n683（智元 LIFE 让机器人持续在线）、n694（贡嘎因果推理与受阻重规划）、os271（LIFE 开源）构成一组张力：当机器人开始「没人叫它也在看、自己写工具、自己重规划」，运行时安全闸门就从可选项变成必选项。站内 embodied-agent 的 Harness 层、安全约束与人机交互章节，以及 platform-engineering 的策略评测基础设施，都能直接接上：LEASH 的三道门本质上是把安全策略从「提示词里的一句话」下沉成「每次不可逆提交前都要过的一道运行时契约」。",
+   "id": "p356",
+   "addedDate": "2026-11-13"
+  },
   {
    "title": "Is Your Robot's Memory Just a Clock? Temporal Shortcuts in Memory-Augmented VLA Policies",
    "authors": "Chubin Zhang, Bo An（南洋理工大学）",
@@ -9346,5 +9486,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 325
+ "totalItems": 330
 }

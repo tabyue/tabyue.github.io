@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MetaWAM：把机器人信号折进单张 meta-frame 的世界动作模型统一潜接口（CoRL 2026） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">MetaWAM：把机器人信号折进单张 meta-frame 的世界动作模型统一潜接口（CoRL 2026） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="metawam-meta-frame-corl-2026">MetaWAM：把机器人信号折进单张 meta-frame 的世界动作模型统一潜接口（CoRL 2026）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/showlab/MetaWAM">https://github.com/showlab/MetaWAM</a>  </p>
+<p><strong>Stars</strong>: 1 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-13  </p>
+<p><strong>组织</strong>: Show Lab（新加坡国立大学）  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-13</p>
+</blockquote>
+<hr />
+<p><strong>showlab/MetaWAM</strong> 是论文 From Video Frames to Robot Meta-Frames（arXiv 2611.14365, CoRL 2026）的官方仓库，Apache-2.0，Python，2026-10-13 创建、11-11 推送。仓库刚开放、star 仅 1，收录价值在方法而非热度。</p>
+<p>世界动作模型（WAM）用预训练视频扩散模型同时预测未来观测与动作，但必须把本体感知、动作、价值这类低维机器人信号注入被自然视频塑形的潜空间。既有做法把每个信号单独占一帧潜变量，或外挂专用编解码器；MetaWAM 把它重新定义成<strong>分布对齐问题</strong>，用冻结去噪器的相对重建误差做诊断，发现常规空间编码离预训练先验很远、频域打包则近得多，于是把全部信号折进单张 meta-frame。</p>
+<hr />
+<ol>
+<li><strong>诊断探针（无需训练）</strong>：对候选注入方式 $g$，用冻结去噪器 $\epsilon_\phi$ 计算相对重建误差 $\mathcal{E}(g) = \lVert \epsilon_\phi(z_s,t) - \epsilon_\phi(z_{\text{clean}},t)\rVert / (\lVert \epsilon_\phi(z_{\text{clean}},t)\rVert + \varepsilon)$，误差越大说明去噪器纠偏越多、离先验越远；</li>
+<li><strong>频域打包</strong>：为每个信号分配一段互不相交的 DCT 通道带，把投影后的信号填进稀疏谱，再经逆 DCT 抬到空间潜变量，得到单张 $z_{\text{meta}}$；</li>
+<li><strong>可解码性来自正交性</strong>：DCT 正交 + 频带不重叠，按带切回即可精确恢复各信号，接口是「算出来可解码」而非「训练出来可解码」；</li>
+<li><strong>slot-aware routing</strong>：固定频带布局下，策略头、世界模型头、价值头读同一张 meta-frame 的不同 slot，共享一组机器人变量；</li>
+<li><strong>零架构改动</strong>：不加编码器、不改 UNet，迁移成本几乎全在信号频带布局上。</li>
+</ol>
+<hr />
+<ul>
+<li><strong>MetaWAM 论文</strong>：arXiv 2611.14365, CoRL 2026 — 分布对齐诊断、频域打包与全部实验；</li>
+<li><strong>官方仓库</strong>：github.com/showlab/MetaWAM — 频带布局与推理代码；</li>
+<li>站内 <strong>p352</strong>（同篇解读）、<strong>p349</strong>（Elastic-WAM 自适应去噪算力）、<strong>n691</strong>（Praxis-1 开放权重）、<strong>os271</strong>（LIFE 终身具身框架）；</li>
+<li>站内 /learn/world-models-llm、/learn/training-inference-optimization、/learn/vla-models。</li>
+</ul>
+<hr />
+<ol>
+<li><code>git clone https://github.com/showlab/MetaWAM</code>，按 README 准备预训练视频扩散骨干与 RoboCasa 环境；</li>
+<li>先做<strong>无损往返断言</strong>：构造多信号输入，按频带解码回各信号，误差应为数值精度量级；这一步能提前抓出频带重叠；</li>
+<li>实现 $\mathcal{E}(g)$ 探针，对「逐信号空间编码 / 简单拼接 / 频域打包」三种注入各测一遍，确认排序与论文一致；</li>
+<li>检查 slot 隔离：把某个 slot 置零，只有对应预测头应退化，其余不受影响；</li>
+<li>复现 RoboCasa 68.9%，同时记录每步去噪 token 数与端到端延迟，验证 39% 的来源；</li>
+<li>换一个预训练视频骨干重跑第 3 步：若排序变了，说明频带布局需按新骨干标校；</li>
+<li>与 p352 的解读、站内 /learn/world-models-llm、/learn/training-inference-optimization 交叉阅读。</li>
+</ol>
+<hr />
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>结果</th>
+<th>口径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RoboCasa 成功率</td>
+<td>68.9%</td>
+<td>仿真大规模任务集</td>
+</tr>
+<tr>
+<td>三台真实 Franka 任务</td>
+<td>85.0%</td>
+<td>小样本案例，未给尝试次数</td>
+</tr>
+<tr>
+<td>推理延迟</td>
+<td>降 39%</td>
+<td>相对逐信号多帧基线</td>
+</tr>
+<tr>
+<td>每步去噪潜变量帧数</td>
+<td>恒为 1</td>
+<td>原方案随信号数 $K$ 线性</td>
+</tr>
+</tbody>
+</table>
+<p><strong>口径提醒</strong>：68.9% 与 85.0% 不是同一评测集，真机数字更容易受任务挑选影响；论文未披露任务级失败分布与频带布局对 $K$ 的敏感性。可迁移的结论是接口层的<strong>分布对齐诊断</strong>，而非这几个绝对数值。仓库 star 极少，第三方复现尚缺，引用时保留「作者自测」限定。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>逐信号独立帧 / 外挂编解码器</th>
+<th>MetaWAM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>每步去噪 token</td>
+<td>随信号数 $K$ 线性</td>
+<td>恒为 1 帧</td>
+</tr>
+<tr>
+<td>新增模块</td>
+<td>编码器 + 解码器</td>
+<td>无</td>
+</tr>
+<tr>
+<td>可解码性</td>
+<td>靠训练</td>
+<td>靠 DCT 正交性</td>
+</tr>
+<tr>
+<td>换骨干成本</td>
+<td>重训编解码器</td>
+<td>重标频带布局</td>
+</tr>
+</tbody>
+</table>
+<p>与 <strong>p349（Elastic-WAM）</strong> 正交：后者按任务与状态自适应分配去噪深度，省「步数」；MetaWAM 省「每步帧数」，理论上可叠加。与 <strong>n691（Runway Praxis-1，27B 开放权重 WAM）</strong> 是同期的两条路线：一个把可商用大模型交出来，一个把「低维信号怎么进潜空间」做成方法。与站内 <strong>world-models-llm</strong>（VLM→VLA 训练范式）、<strong>training-inference-optimization</strong>（推理效率三路线）关系最近。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

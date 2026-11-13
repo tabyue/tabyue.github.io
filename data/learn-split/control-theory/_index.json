@@ -4,7 +4,7 @@
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 60,
-  "lastUpdated": "2026-11-10T08:30",
+  "lastUpdated": "2026-11-13T08:54",
   "description": "让机器人稳定、精确地执行期望运动的核心理论。从PID到MPC，从线性到非线性，控制理论是机器人的灵魂。",
   "prerequisites": [
     "微积分与优化",
@@ -281,17 +281,22 @@
     {
       "id": "sec-09",
       "title": "阻抗/导纳控制",
-      "lastUpdated": "",
-      "chars": 6067,
+      "lastUpdated": "2026-11-13T08:54",
+      "chars": 18200,
       "shortTitle": "阻抗/导纳控制",
       "difficulty": "中级",
       "estimatedMinutes": 7,
       "tier": 1,
-      "readingMinutes": 7,
+      "readingMinutes": 22,
       "headings": [
         "核心思想",
         "阻抗控制 vs 导纳控制",
         "应用场景",
+        "深入一：为什么纯位置控制在接触任务里会失效",
+        "深入二：目标阻抗方程的完整形式、稳态接触解与二阶系统",
+        "深入三：阻抗与导纳的对偶性、实现差异与稳定性边界",
+        "深入四：从任务空间到关节空间——Jacobian 转置、重力补偿与零空间",
+        "深入五：参数整定、离散化与工程误差源",
         "练习",
         "参考答案"
       ],
@@ -569,7 +574,7 @@
       "summary": "一个反直觉但极其常见的现象：一套在自由空间里调得很好的控制器，一旦接触到环境就开始振荡；而同样的控制器，在刚性环境上振荡得更厉害。"
     }
   ],
-  "readingMinutes": 198,
+  "readingMinutes": 213,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 173303
+  "chars": 185436
 }

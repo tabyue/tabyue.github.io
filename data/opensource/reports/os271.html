@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIFE：智元 × 清华的终身具身智能框架（RoboBeats / Plastic Memory / EDM） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">LIFE：智元 × 清华的终身具身智能框架（RoboBeats / Plastic Memory / EDM） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="life-robobeats-plastic-memory-edm">LIFE：智元 × 清华的终身具身智能框架（RoboBeats / Plastic Memory / EDM）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/AgibotTech/LIFE">https://github.com/AgibotTech/LIFE</a>  </p>
+<p><strong>Stars</strong>: 21 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-13  </p>
+<p><strong>组织</strong>: 智元机器人 AGIBOT / 清华  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-13</p>
+</blockquote>
+<hr />
+<p><strong>AgibotTech/LIFE</strong>（Learning to Live: A Step Toward Lifelong Embodied Intelligence）是智元远征 Research Team 与清华 2026-11-11 发布的终身具身智能框架，Apache-2.0，代码、论文（arXiv 2611.00180）、项目主页与 RoboBeats 系列模型权重同步开放。仓库 2026-11-04 创建、11-10 仍在推送，Python。</p>
+<p><strong>它解决什么</strong>：今天的 VLM 智能体多按「推理—调工具—等结果」串行走，工具没返回世界已经变了；任务一结束状态清零，下次进同一间办公室仍像陌生人。LIFE 把调度单位从「一次任务」换成「一整天」——没人叫它时也在持续留意环境，把值得记的变化存下来，等新问题出现时再调用。</p>
+<p><strong>为什么收录</strong>：本站 embodied-agent 模块讲 Harness 层「把冻结模型组织成会自我改进的具身 Agent」，mobile-robot-navigation 讲长程导航记忆，p347 从评测侧证明「按时间均匀采帧」会造出幻影进度。LIFE 是这三者的<strong>工程合流</strong>：RoboBeats 管「持续看」，Plastic Memory 管「按什么写」，EDM 管「能力怎么长出来」。与 n683 是同一事件的代码侧，与 n694（成都贡嘎层次化场景图 + 时空记忆）构成两条可对照的技术路线。</p>
+<hr />
+<p>框架由三块协同，外加一个 VLM Agent Core 调度：</p>
+<ol>
+<li><strong>RoboBeats（心脏 / 轻量决策模型）</strong>：不生成文字，直接判断每个自然语言条件成立与否的概率，并复用视频流计算缓存。单张 RTX 5090 上 RoboBeats-2B 处理一帧新画面约 75 ms，同时盯 16 个条件约 77 ms——多留意几件事，延迟几乎不变。有任务时 Agent 用自然语言告诉它盯什么；没任务时它也在看，把「有人经过 / 物品换位 / 门开了」这类事件挑出来交给下游。</li>
+<li><strong>Plastic Memory（可塑性记忆）</strong>：把当时的画面和当时的理解<strong>分开保存</strong>——原图留现场，JSON 记时间、位置、人物、物品等线索。扁平化设计让同一份记忆有两种用法：执行智能体通过工具快速检索文本线索；会读文件、写程序的编程智能体可回看原图，补上门牌、物品颜色等当初没写进文字的细节。</li>
+<li><strong>EDM（Explore–Distill–Mount，能力复用）</strong>：沿用前作 ReSight 的机制。遇到「这样的电话亭我以前见过几个」这类现有工具答不了的问题，编程智能体查看历史证据、写程序摸索检索与去重办法；有效办法经提炼、验证后装进工具箱，下次不用从头再来。记忆里的画面没变，机器人却多了一种使用它们的方式。</li>
+<li><strong>Agent Core</strong>：把眼前看到的、过去记住的与用户需求放一起，判断下一步做什么，再编排工具（证据检索、移动探索、操作物体、安装新技能）。</li>
+</ol>
+<p><strong>读法</strong>：先看 RoboBeats 的条件跟踪接口，再看 Plastic Memory 的双轨写入，最后看 EDM 如何把「一次性的代码」变成「可挂载的工具」——这三步正好对应「感知—记忆—能力」的递进。</p>
+<hr />
+<ul>
+<li><strong>LIFE 论文</strong>：Learning to Live: A Step Toward Lifelong Embodied Intelligence, arXiv 2611.00180 — 一手方法与全部实验；</li>
+<li><strong>项目主页与仓库</strong>：agibotgeneral.github.io/life-site、github.com/AgibotTech/LIFE — 代码、RoboBeats 权重与 SSS-Bench；</li>
+<li><strong>ReSight / EDM 前作</strong>：探索—提炼—挂载机制的来源；</li>
+<li>站内 <strong>p347</strong>（记忆增强 VLA 的时间捷径与幻影进度）、<strong>n683</strong>（LIFE 发布报道）、<strong>n694</strong>（第五代贡嘎时空记忆）：三条互证的当期材料；</li>
+<li>站内 /learn/embodied-agent（Harness 层、具身记忆）、/learn/mobile-robot-navigation（长程导航记忆）、/learn/world-models-llm（世界模型作为自改进引擎）。</li>
+</ul>
+<hr />
+<ol>
+<li>先读项目主页 agibotgeneral.github.io/life-site 的 24 小时真机实验：远征 A3 Ultra 连续采集一天第一视角视频，离线回放构建记忆后回答「外套最后在哪」，系统从 12:18 的画面定位到茶水间椅背；</li>
+<li><code>git clone https://github.com/AgibotTech/LIFE</code>，按 README 装依赖并拉取 RoboBeats-0.8B / 2B / 4B 权重（Hugging Face 上 superbigsaw/RoboBeats-*）；</li>
+<li>先跑<strong>单条件跟踪</strong>（例如「电梯门是否打开」），量一下单帧延迟，再逐步加到 16 个条件，验证延迟几乎不随条件数增长；</li>
+<li>用一段自己的短视频跑 Plastic Memory 写入，然后故意问一个「当初没写进 JSON」的细节（如门牌号），确认编程智能体能回看原图补出答案；</li>
+<li>复现 SSS-Bench 的「仅凭文本记忆作答」设置：写入同样数量画面、用相同问答模型，观察 40.9% → 60.5% 的提升；</li>
+<li>跑 FindingDory 的 597 个未参与能力构建的查询，验证挂载 EDM 后 37.5% → 65.8%；</li>
+<li>与站内 /learn/embodied-agent、/learn/mobile-robot-navigation 交叉阅读，把「记忆索引方式」当成一等设计变量记录下来。</li>
+</ol>
+<hr />
+<p>以下均为<strong>论文自测口径</strong>，非第三方复现：</p>
+<table>
+<thead>
+<tr>
+<th>评测</th>
+<th>指标</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>StreamingBench</td>
+<td>参考时刻前后 2 秒首次触发准确率</td>
+<td>21.2% → 64.0%（RoboBeats-4B）</td>
+</tr>
+<tr>
+<td>SPOT-Bench</td>
+<td>动作边界检测 T-F1@5</td>
+<td>26.4 → 45.8</td>
+</tr>
+<tr>
+<td>SSS-Bench（171 段视频 / 618 问题）</td>
+<td>仅凭文本记忆作答准确率</td>
+<td>40.9% → 60.5%（+19.6 pt）</td>
+</tr>
+<tr>
+<td>OVO-Bench 写入端</td>
+<td>输入 token</td>
+<td>减少约 45%</td>
+</tr>
+<tr>
+<td>FindingDory</td>
+<td>597 个未参与构建的查询成功率</td>
+<td>37.5% → 65.8%</td>
+</tr>
+<tr>
+<td>24 小时真机记忆问答</td>
+<td>6 题 × 3 次，同一 GPT-6.1-sol</td>
+<td>29.5/30，平均 80.6 s（对照 Codex 28.5/30，554.7 s）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>最该注意的一条</strong>：24 小时实验是<strong>录像回放 + 6 道题</strong>，不是连续几天在线、记忆越积越多后的表现；论文自己把「长期在线部署」列为下一步。因此这些数字证明的是「按事件写入比按时间采样好」，不是「终身记忆已经解决」。仓库 star 数（21）也说明它刚开放，社区复现还很少，引用时应保留「公司自测」的限定。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>LIFE</th>
+<th>传统任务型 VLM Agent</th>
+<th>纯向量记忆库</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>调度单位</td>
+<td>一整天 / 持续在线</td>
+<td>一次任务</td>
+<td>一次查询</td>
+</tr>
+<tr>
+<td>无指令时</td>
+<td>RoboBeats 持续观察</td>
+<td>静默等待</td>
+<td>不感知</td>
+</tr>
+<tr>
+<td>记忆写入</td>
+<td>原图 + JSON 双轨，可回看补字段</td>
+<td>多不留存</td>
+<td>只存向量</td>
+</tr>
+<tr>
+<td>新能力</td>
+<td>EDM 验证后挂载为工具</td>
+<td>需重训或改提示</td>
+<td>无</td>
+</tr>
+<tr>
+<td>与 p347 的关系</td>
+<td>按事件写入</td>
+<td>按时间采帧（幻影进度）</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>与 <strong>p347（记忆增强 VLA 的时间捷径）</strong> 是评测侧与框架侧的呼应：一个证明「数时钟滴答」会造出幻影进度，一个给出「按事件写入」的工程实现。与 <strong>n694（成都贡嘎物理时空记忆引擎）</strong> 目标相近但证据强度不同：LIFE 给了基准、测试次数与开源权重，贡嘎目前主要是演示视频。与 <strong>muellerberndt/cadence</strong>（System 1 感知/记忆/可塑性 + 可选 System 2）可作轻量对照实现。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

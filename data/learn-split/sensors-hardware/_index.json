@@ -1,7 +1,7 @@
 {
   "id": "sensors-hardware",
   "name": "传感器与硬件接口",
-  "lastUpdated": "2026-11-02T08:30",
+  "lastUpdated": "2026-11-13T08:43",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 40,
@@ -324,18 +324,23 @@
     {
       "id": "sec-12",
       "title": "编码器与电机反馈",
-      "lastUpdated": "2026-10-27",
-      "chars": 3502,
+      "lastUpdated": "2026-11-13T08:43",
+      "chars": 20468,
       "shortTitle": "编码器与电机反馈",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 25,
       "headings": [
         "编码器类型",
         "推荐硬件采购",
         "绝对式 vs 增量式",
         "关节力矩估计（无力矩传感器时）",
+        "深入一：为什么闭环控制必须先知道「自己在哪里」",
+        "深入二：增量式编码器的物理与正交解码",
+        "深入三：绝对式编码器、格雷码与串行协议",
+        "深入四：从位置到速度——M 法、T 法、M/T 法与量化噪声",
+        "深入五：力矩估计、误差预算与工程选型",
         "练习",
         "参考答案"
       ],
@@ -571,7 +576,7 @@
       "summary": "2026 年灵巧手进入量产阶段，全年出货量以万台计；相比之下，能同时提供经过标定的指尖力和可靠手部姿态的采集手套，仍然是稀缺品。这个反差初看不合理——手套又不需驱动电机，结构上比灵巧手简单得多。"
     }
   ],
-  "readingMinutes": 172,
+  "readingMinutes": 193,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 145395
+  "chars": 162361
 }
