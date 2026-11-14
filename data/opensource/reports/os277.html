@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InterMimic：面向人—物交互的通用全身控制（CVPR 2025 Highlight） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">InterMimic：面向人—物交互的通用全身控制（CVPR 2025 Highlight） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="intermimiccvpr-2025-highlight">InterMimic：面向人—物交互的通用全身控制（CVPR 2025 Highlight）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Sirui-Xu/InterMimic">https://github.com/Sirui-Xu/InterMimic</a>  </p>
+<p><strong>Stars</strong>: 559 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-14  </p>
+<p><strong>组织</strong>: Sirui Xu / 研究团队  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-14</p>
+</blockquote>
+<hr />
+<p><strong>Sirui-Xu/InterMimic</strong> 做的是物理仿真下的人形<strong>全身动作跟踪</strong>，目标不是复现单人舞蹈，而是让同一套控制器跟随含<strong>人与物体交互</strong>的参考运动（搬箱、推拉、坐下、接触支撑等），并把技能迁移到真机（CVPR 2025 Highlight，MIT，约 559 star）。</p>
+<p>它把「参考运动里有人—物接触」这一常见却难处理的情形显式建模：无接触的动作跟踪可以靠纯运动学匹配加平衡奖励糊过去，一旦人要靠在桌子上有支撑力、或双手抬着一个箱子，缺少接触力的跟踪策略会因为动力学不一致而崩溃——仿真里看着跟上了，真机上直接摔。</p>
+<p><strong>为什么收录</strong>：本站 robot-dynamics#0（拉格朗日动力学与浮动基座 WBC）、control-theory#8（阻抗导纳控制）、p360（FORGE 力感知 loco-manipulation）都在讲「接触与力怎么进控制环」，InterMimic 是这一链条上可运行的一手参考实现。与 os269（SuperMimic 官方放出前的独立复现）对读，还能看到同一类方法从论文到可复现代码之间要补多少工程细节。</p>
+<hr />
+<ol>
+<li><strong>参考运动处理</strong>：把含人—物交互的人体运动序列重定向到人形本体，得到关节角 / 关键点参考轨迹，并标注接触区间；</li>
+<li><strong>接触显式建模</strong>：把参考运动里的接触约束（哪只手扶哪里、哪只脚支撑、物体被抬起的时序）写进训练目标与奖励，而不是让策略自己猜；</li>
+<li><strong>物理仿真训练</strong>：在物理引擎里用强化学习训练跟踪策略，奖励同时覆盖姿态匹配、接触一致、平衡与平滑；</li>
+<li><strong>域随机化</strong>：对摩擦、质量、延迟、物体尺寸做随机化，为真机迁移留出鲁棒性余量；</li>
+<li><strong>真机迁移</strong>：把仿真策略部署到真实人形，配合状态估计与安全约束，验证接触动作不因支撑力缺失而失效；</li>
+<li><strong>配置与权重</strong>：仓库按 CVPR 2025 Highlight 的复现要求组织配置、检查点与评测脚本。</li>
+</ol>
+<p><strong>读法</strong>：先看它把「接触」放在奖励里还是放在观测 / 约束里。放在奖励里实现简单但容易被策略绕过；放在约束或观测里更稳，却要求仿真器给出可信的接触力——这正好是 os275（Warp 可微仿真）与 physics-simulation 模块讨论的求解器可信度问题。</p>
+<hr />
+<ul>
+<li><strong>官方仓库</strong>：github.com/Sirui-Xu/InterMimic — CVPR 2025 Highlight，配置 / 检查点 / 评测脚本；</li>
+<li><strong>p360 FORGE</strong>（站内，arXiv 2611.17142）：力感知多粒度人形 loco-manipulation，从本体感知反推腕部等效力；</li>
+<li><strong>p355 ReACT</strong>（站内，arXiv 2611.13929）：非对称负载下的人形速度跟踪；</li>
+<li><strong>os269 SuperMimic-Reproduced</strong>（站内）：官方放出前的独立复现，mjlab / MuJoCo Warp；</li>
+<li><strong>os275 NVIDIA/warp</strong>（站内）：可微仿真与 GPU kernel 底座，接触力可信度的上游；</li>
+<li><strong>r015 人形全身控制与运动生成开源生态</strong>（站内资源）；</li>
+<li>站内 /learn/robot-dynamics、/learn/control-theory、/learn/sim-to-real。</li>
+</ul>
+<hr />
+<ol>
+<li><code>git clone https://github.com/Sirui-Xu/InterMimic</code>，按 README 装物理仿真后端与依赖，先跑通一个不含接触的参考动作确认基线；</li>
+<li>跑一个含人—物接触的参考动作（如搬箱），观察跟踪误差在什么阶段开始变大——通常正是接触建立 / 断开的瞬间；</li>
+<li>做消融：关掉接触一致性奖励，记录失败模式是否变成「失去支撑摔倒」而非「姿态偏一点」；</li>
+<li>扫描域随机化范围，找出真机迁移成功率对哪一类参数最敏感（摩擦、质量、时延通常排前三）；</li>
+<li>换一个未见过的物体尺寸 / 质量重跑，验证策略学到的是接触结构而不是特定物体的动力学；</li>
+<li>若要做真机部署，先补安全约束（关节限位、落脚保护、急停），再谈成功率；</li>
+<li>与站内 /learn/robot-dynamics（拉格朗日动力学、RNEA、浮动基座 WBC）、/learn/control-theory（阻抗导纳控制，11-13 已深化）、/learn/sim-to-real（Sim-to-Real 全流程）交叉阅读。</li>
+</ol>
+<pre><code class="language-python">import numpy as np
+
+def tracking_reward(ref, sim, contact_ref, contact_sim, w=(1.0, 0.5, 0.3, 0.2)):
+    '''Decompose the reward so contact failure is visible.
+
+    ref / sim: dict of joint angles, root pose, end-effector positions
+    contact_ref / contact_sim: binary contact flags per end effector
+    '''
+    pose = -np.mean((np.array(ref['q']) - np.array(sim['q'])) ** 2)
+    eef = -np.mean(np.linalg.norm(
+        np.array(ref['eef']) - np.array(sim['eef']), axis=-1) ** 2)
+    contact = -np.mean(np.abs(
+        np.array(contact_ref) - np.array(contact_sim)))
+    smooth = -np.mean(np.diff(np.array(sim['q']), axis=0) ** 2)
+    return float(w[0] * pose + w[1] * eef + w[2] * contact + w[3] * smooth), {
+        'pose': pose, 'eef': eef, 'contact': contact, 'smooth': smooth}
+
+# 消融第 3 步：把 w[2] 置 0，看失败是否集中在接触建立瞬间。
+# 只看总奖励会掩盖「姿态跟上了但接触全错」这一最危险的失效。
+</code></pre>
+<hr />
+<p>公开可得的是论文与仓库口径：CVPR 2025 Highlight、MIT 许可、Python、约 559 star、2026-11-12 仍在推送，仓库提供配置与评测脚本。摘要与仓库 README 不给统一的跨任务成功率表，本站不替它编造数字。</p>
+<p>对含接触的全身动作跟踪，该核对的是四项：</p>
+<ol>
+<li><strong>接触建立 / 断开瞬间的误差</strong>：平均跟踪误差低不代表接触时序对，分段统计才有意义；</li>
+<li><strong>消融后的失败模式</strong>：关掉接触项后是摔倒还是姿态偏移，决定了接触建模是否真的在起作用；</li>
+<li><strong>域随机化的敏感参数</strong>：真机迁移对哪类参数最脆弱，决定部署前要标定什么；</li>
+<li><strong>未见物体的泛化</strong>：学到的是接触结构还是特定物体动力学，决定它能不能叫「通用」全身控制。</li>
+</ol>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>InterMimic</th>
+<th>无接触动作跟踪</th>
+<th>FORGE（p360）</th>
+<th>SuperMimic 复现（os269）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参考运动</td>
+<td>含人—物交互</td>
+<td>单人无接触</td>
+<td>稀疏腕部位姿 + 粗指令</td>
+<td>运动库跟踪</td>
+</tr>
+<tr>
+<td>接触建模</td>
+<td>显式进训练目标</td>
+<td>隐式 / 无</td>
+<td>动量观测器估力</td>
+<td>视实现</td>
+</tr>
+<tr>
+<td>力传感器</td>
+<td>不依赖腕部六维力</td>
+<td>不涉及</td>
+<td>明确不需要</td>
+<td>视实现</td>
+</tr>
+<tr>
+<td>训练数据</td>
+<td>参考运动序列</td>
+<td>参考运动序列</td>
+<td>无需全身动捕</td>
+<td>参考运动序列</td>
+</tr>
+<tr>
+<td>主要目标</td>
+<td>通用交互动作跟踪</td>
+<td>复现舞蹈 / 行走</td>
+<td>力感知移动操作</td>
+<td>独立复现可验证性</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+<td>视项目</td>
+<td>论文</td>
+<td>视仓库</td>
+</tr>
+</tbody>
+</table>
+<p>与 <strong>p360（FORGE）</strong> 是互补而非替代：InterMimic 从参考运动出发学交互动作，FORGE 从稀疏遥操作出发做力感知操作；两者都要回答「接触力从哪来」，一个靠仿真里的显式约束，一个靠本体感知反推。与 <strong>os269（SuperMimic 独立复现）</strong> 对读可看清论文到代码的工程落差。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

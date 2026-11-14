@@ -1,6 +1,146 @@
 {
- "lastUpdated": "2026-11-13T08:35",
+ "lastUpdated": "2026-11-14T08:28",
  "papers": [
+  {
+   "idx": 357,
+   "title": "STVLA: Spatial-aware and Temporal-memory for Vision-Language-Action Models",
+   "authors": "Zhuo Han, Yeqiang Wang, Xinran Wang, Hongwei Han, Yi Xiong, Zunian Wan, Jianbo Mao, Huan Peng, Yongcheng Liu, Wei Shan, Maoqing Yao",
+   "venue": "arXiv 2611.16589 (cs.RO)",
+   "date": "2026-11-12",
+   "arxiv": "https://arxiv.org/abs/2611.16589",
+   "github": "https://stvla.github.io/",
+   "tags": [
+    "时空记忆",
+    "视觉几何基础模型",
+    "VLA",
+    "历史检索",
+    "LIBERO-Mem"
+   ],
+   "category": "VLA / 记忆机制",
+   "difficulty": "高级",
+   "tldr": "**问题**：多数 VLA 策略只看当前观测，既没显式建模场景的三维结构，也记不住任务执行过程中场景发生过什么变化。基于外观的记忆怕遮挡与视角变化，只存当前帧的几何表征又留不下历史。**做法**：STVLA 把预训练视觉几何基础模型（VGFM）的特征与视觉表征一起写进时序记忆，让策略能回看过去的场景结构；并用一条有数学依据的打分规则挑选历史帧——同时权衡「与当前观测的相关性」和「记忆能提供的互补证据」，避免只挑最像当前帧的冗余历史。**结果**：在 LIBERO、LIBERO-Mem、MIKASA-Robo、SimplerEnv Bridge 四个基准上平均成功率最高；真机叠方块、物体整理、手机包装相对 π0.5 分别提升 58.33 / 30.00 / 35.00 个百分点。一句话：记忆该按「场景结构变了什么」索引，而不是按时间均匀采样。",
+   "keyInsights": [
+    "把视觉几何基础模型的特征写进时序记忆，使「过去的场景结构」成为可检索的上下文，而不是只留 RGB 外观。",
+    "历史帧选择被写成一个同时最大化相关性与互补性的打分规则，避免了近邻帧冗余与纯时间采样的捷径。",
+    "与站内 p347（Is Your Robot's Memory Just a Clock? 时间采样记忆的时间捷径）构成同一问题的正反两面：一个诊断，一个给出带几何结构的解法。",
+    "真机三项任务的提升幅度远大于仿真基准，说明带几何结构的历史对遮挡、物体被移动这类真实扰动更关键。"
+   ],
+   "impact": "与 p347、r036（具身记忆资源）连成一条链：先证明「按时钟采样记忆」是捷径，再给出把场景几何写进记忆的实现。对本站 learning 侧，embodied-agent 的「具身记忆」章节与 world-models-llm 的潜空间世界模型都可以直接引用——**记忆的索引单位应该是事件与场景变化，不是帧号**。工程上值得注意的是：VGFM 特征比 RGB 更抗视角变化，但多一路几何编码器会增加推理开销，与 p358（XInfer 在物理执行约束下做 VLA serving）要一起算延迟预算。",
+   "id": "p357",
+   "addedDate": "2026-11-14"
+  },
+  {
+   "idx": 358,
+   "title": "Scaling VLA Serving Under Robotic Execution Constraints",
+   "authors": "Yue Zhang, Zicong Ye, Lufang Chen, Dance Yang, Mingyang Li, Zhenwei Duan, Michael Zhao, Ziye Deng, Starrick Liu, Ruizhi Chengze, YongHua Chen, SongAo Han, Yu Sun, Ran Yu, Xiaofan Li, Ruyi Gan, Hao Wang",
+   "venue": "arXiv 2611.14969 (cs.RO, cs.DC)",
+   "date": "2026-11-11",
+   "arxiv": "https://arxiv.org/abs/2611.14969",
+   "github": "https://github.com/X-Square-Robot/xinfer",
+   "tags": [
+    "VLA serving",
+    "集群推理",
+    "GPU 效率",
+    "实时反馈",
+    "XInfer"
+   ],
+   "category": "VLA / 推理架构",
+   "difficulty": "高级",
+   "tldr": "**问题**：论文来自一个已有数百台 VLA 驱动机器人在真实环境运行的生产系统——单机推理优化到这里已经不够，需要的是面向机器人集群的 serving 系统。难点在于 VLA 的计算是异构的（视觉编码、语言主干、动作头负载不同），而机器人执行对反馈时延有硬约束：GPU 提效不能以牺牲控制环路的及时反馈为代价。**做法**：XInfer 把异构 VLA 计算与不断变化的机器人响应需求联合调度，在挖掘并行度的同时显式管理干扰，保护时间关键的控制反馈。**结果**：在三个 VLA 模型、生产导出的负载上，达到当前系统 1.26—3.75 倍的有效机器人容量（ERC），代码已开源。一句话：机器人集群里，「能同时服务多少台机器人」比「单卡每秒多少 token」更接近真实指标。",
+   "keyInsights": [
+    "提出 ERC（有效机器人容量）作为 serving 指标，把物理执行约束写进系统评价，而不是沿用纯 LLM 的吞吐口径。",
+    "「挖掘并行度」与「管理干扰」必须同时做：GPU 上混跑异构 VLA 计算会互相抢资源，控制环路反馈被拖慢等于策略失效。",
+    "来自数百台真机在跑的生产环境，负载是生产导出的而非合成 benchmark，这类系统论文的工程可信度通常高于仿真。",
+    "把优化层级从「单模型压缩」抬到「集群调度」，与量化 / 蒸馏是正交的两条路线。"
+   ],
+   "impact": "直接补上本站 ai-infra 模块长期缺的一层：此前 /learn/ai-infra 讲模型量化与压缩、/learn/training-inference-optimization 讲单模型推理效率，都是单机视角；XInfer 说明当部署规模到数百台时，瓶颈变成调度与干扰隔离。本轮深化的 ai-infra#5（模型量化与压缩）在「深入五」里把量化接进端到端延迟预算，并明确区分单机量化与集群 serving 两个优化维度。与 n707（昆腾动力近 5000 台订单）、n706（菜鸟 135 台 ZeeBot）同属「规模部署倒逼基础设施」的一组信号。",
+   "id": "p358",
+   "addedDate": "2026-11-14"
+  },
+  {
+   "idx": 359,
+   "title": "ActionCodec2: A Streaming Action Tokenizer",
+   "authors": "Zibin Dong, Yicheng Liu, Shiduo Zhang, Tianyuan Yuan, Baijun Ye, Jinqiu Wang, Hang Zhao",
+   "venue": "arXiv 2611.15490 (cs.RO)",
+   "date": "2026-11-11",
+   "arxiv": "https://arxiv.org/abs/2611.15490",
+   "github": "https://zibindong.github.io/actioncodec2-page/",
+   "tags": [
+    "流式动作分词",
+    "残差量化",
+    "几何覆盖",
+    "Set-BPE",
+    "闭环反馈"
+   ],
+   "category": "VLA / 动作表示",
+   "difficulty": "高级",
+   "tldr": "**问题**：自回归 VLA 的动作 tokenizer 普遍把一段运动压成一个 chunk，必须整段解码完动作才可执行——这既带来首动作延迟，也让策略在 chunk 执行期间拿不到状态反馈，物体一动就失效。**做法**：ActionCodec2 是一个非神经的流式 tokenizer，边编码边逐步释放动作，且把轨迹重建误差控制在给定容差内。关键设计是编码器每一帧相对「解码器已重建的状态」做量化，所选运动原语修正的是残差误差，而不是让独立量化的增量误差累积；求最小原语集被化成一个几何覆盖问题，平移给出精确最小值、旋转给出常数因子紧的界。Set-BPE 再无损合并跨坐标与相邻步共现的原语符号。在 24 种本体、2 万小时数据上拟合的通用版本，对 15 Hz 末端运动平均每秒 8.8 个 token。**结果**：同一 VLA 骨干下在三个仿真基准与零样本真机上优于对比 tokenizer；流式表示让策略能在动作块内纳入状态反馈，在随机动力学、外部扰动与移动物体下显著优于开环执行。",
+   "keyInsights": [
+    "把动作量化从「独立量化增量」改成「相对解码器重建状态量化残差」，从源头阻断误差累积，这是流式可用的前提。",
+    "最小原语集被形式化为几何覆盖问题并给出平移的精确解与旋转的常数因子紧界——少见的带理论保证的动作分词工作。",
+    "流式表示真正换来的不是压缩率，而是「块内可接收状态反馈」，直接对应动态操作里最要命的闭环能力。",
+    "同一套 token 还能作为 VLM Agent 的直接控制接口，可把成功动作序列组合成可复用宏，减少控制决策与 thinking-token 开销。"
+   ],
+   "impact": "与 p357（STVLA 给记忆加几何结构）、p358（XInfer 做集群 serving）合起来看，是本轮 VLA 工程化的三条不同切面：记忆、动作接口、系统调度。对本站 learning 侧，vla-models 的动作头与分块章节、robot-kinematics#8（轨迹生成，本轮深化）里「动作块内能否插补状态反馈」是同一个问题的两种表述；station 里 /learn/vla-models 与 /learn/imitation-learning 的动作分块讨论可直接引用这篇作为「为什么必须流式」的依据。",
+   "id": "p359",
+   "addedDate": "2026-11-14"
+  },
+  {
+   "idx": 360,
+   "title": "FORGE: Force-Aware Multi-Granularity Control for Efficient Humanoid Loco-Manipulation",
+   "authors": "Liangjun Xing, Ke Fan, Kailin Li, Bin Wang, Xiaojie Niu, Qingwei Ben, Jiafei Cao, Wei Yao, Yebin Liu, Jingbo Wang, Weinan Zhang",
+   "venue": "arXiv 2611.17142 (cs.RO)",
+   "date": "2026-11-12",
+   "arxiv": "https://arxiv.org/abs/2611.17142",
+   "github": "https://bb0928.github.io/forge/",
+   "tags": [
+    "人形 loco-manipulation",
+    "力感知",
+    "动量观测器",
+    "稀疏遥操作",
+    "WBC"
+   ],
+   "category": "人形机器人 / 全身控制",
+   "difficulty": "高级",
+   "tldr": "**问题**：人形移动操作要同时协调行走、平衡与接触下的操作，示教数据极难采——全尺寸人体动捕、关节角参考、腕部力传感器都抬高了门槛。**做法**：FORGE 给出从粗到细的命令空间（速度导航 → 平面落脚 → 腕部位姿跟踪 → 可选力条件输入），策略训练不需要全身人体运动轨迹或关节角参考，部署只吃相对骨盆的稀疏双侧腕部位姿、粗粒度运动指令与可选期望腕部负载。持续接触时，用动量观测器加一个以仿真接触力监督训练出的修正项，从本体感知与重建的底层臂 PD 力矩里估计低频腕部等效力，**不需要腕部力 / 力矩传感器**；准静态虚拟目标环据此与可选期望作用力一起调整腕目标。冻结的运动先验加非对称残差动作，稳住操作引起的全身修正。**结果**：在统一控制稳定性、任务空间跟踪、准静态力估计、刚性箱体挤压与不同负载下的深蹲搬箱扩散策略执行上做了系统评测。",
+   "keyInsights": [
+    "把遥操作接口压缩到「双侧腕部位姿 + 粗速度指令」，去掉全身动捕与关节角参考，直接降低人形操作示教的采集成本。",
+    "从本体感知与重建 PD 力矩反推腕部等效力，绕开腕部六维力传感器——这是能否上真机的成本分水岭。",
+    "冻结运动先验 + 非对称残差动作，把「操作引起的全身扰动」当成对 locomotion 的修正，而不是重新训练一整套策略。",
+    "可选力条件输入让同一套控制器既能做自由空间跟踪，也能做持续接触作业，是力位混合控制的一种轻量实现。"
+   ],
+   "impact": "与站内 p355（ReACT 非对称负载下的人形速度跟踪）、control-theory#8（阻抗导纳控制，11-13 已深化）、robot-dynamics#0（动力学建模，11-11 已深化）连成一条「从力控原理到真机接口」的链。对本站 robot-kinematics#8（轨迹生成，本轮深化）尤其相关：FORGE 说明在人形移动操作里，轨迹的终点不只是位姿，还带期望接触力——这正好是「深入十」讲前馈力矩与跟踪误差时要补的一维。",
+   "id": "p360",
+   "addedDate": "2026-11-14"
+  },
+  {
+   "idx": 361,
+   "title": "FAME-QP: A GPU-Accelerated Quadratic-Programming Solver for Real-Time Model Predictive Control",
+   "authors": "Santosh Mohan Rajkumar, Debdipta Goswami, Stephanie Stockar",
+   "venue": "arXiv 2611.13766 (cs.RO, cs.GR, eess.SY)",
+   "date": "2026-11-10",
+   "arxiv": "https://arxiv.org/abs/2611.13766",
+   "github": "",
+   "tags": [
+    "QP 求解器",
+    "模型预测控制",
+    "CUDA Graphs",
+    "实时控制",
+    "GPU"
+   ],
+   "category": "系统架构 / 实时推理",
+   "difficulty": "高级",
+   "tldr": "**问题**：线性 MPC 每个控制周期都要解一个稠密二次规划，人形与四旋翼的 1 kHz 级控制环留给求解器的时间只有毫秒级；通用 GPU 求解器在这样的小问题、高频率场景里，kernel 启动与算子表示的开销常常盖过计算本身。**做法**：FAME-QP 把「约束相关的算子表示」与「融合后的单 / 双 kernel 迭代」结合，用 CUDA Graphs 重放迭代，并通过设备标定与问题特定的计时自动选择执行配置；它探测一个缓存的算子库来选初始罚参数，问题矩阵变化时才惰性更新算子。**结果**：数值基准与人形、四旋翼仿真控制实验显示，相较对比 GPU 求解器降低延迟，同时保持求解精度与控制性能。一句话：在实时 MPC 里，优化的是「每周期固定开销」而不是大矩阵吞吐。",
+   "keyInsights": [
+    "把 kernel 融合 + CUDA Graphs 重放用于 MPC 的迭代求解，打的是启动开销而非 FLOPs，这正是小问题高频场景的正确优化方向。",
+    "约束相关的算子表示 + 缓存算子库 + 惰性更新，说明求解器把「问题结构在相邻周期基本不变」当成了可利用的先验。",
+    "设备标定自动选执行配置，避免把某台 GPU 上的调参硬编码成通用默认值。",
+    "与 CUDA Graphs 路线绑定也意味着可移植性代价：换硬件或换求解器后端需要重新标定。"
+   ],
+   "impact": "与 control-theory#7（MPC 完整 QP 推导，11-10 已深化）直接对接：那里推的是预测矩阵、约束与软约束、Lyapunov 稳定性，这里解决的是「推完之后每个控制周期怎么在 1 ms 内算完」。本轮深化的 robot-kinematics#8 在「深入九」用纯 numpy 实现了一个简化的时间最优路径参数化，并明确说明它与实时 QP 求解器的分工——离线参数化给轨迹，在线 QP 给跟踪。也与 p358（XInfer）同属「把系统级约束写进算法设计」的一组工作。",
+   "id": "p361",
+   "addedDate": "2026-11-14"
+  },
   {
    "idx": 352,
    "title": "From Video Frames to Robot Meta-Frames: A Unified Latent Interface for World Action Models",
@@ -9486,5 +9626,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 330
+ "totalItems": 335
 }

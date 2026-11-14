@@ -1,7 +1,7 @@
 {
   "id": "ai-infra",
   "name": "AI Infra 具身基础设施",
-  "lastUpdated": "2026-11-12T08:38",
+  "lastUpdated": "2026-11-14T08:47",
   "stage": "阶段六：系统工程与部署",
   "importance": "核心",
   "estimatedHours": 30,
@@ -211,14 +211,14 @@
     {
       "id": "sec-06",
       "title": "模型量化与压缩：从 FP16 到 INT4 的工程取舍",
-      "lastUpdated": "2026-10-27",
-      "chars": 3254,
+      "lastUpdated": "2026-11-14T08:47",
+      "chars": 16610,
       "shortTitle": "模型量化与压缩",
       "difficulty": "中级",
       "estimatedMinutes": 14,
       "isBrief": true,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 21,
       "headings": [
         "🔗 本节内容已在其他模块详细讲解",
         "量化的数学：把浮点映射成整数",
@@ -227,6 +227,11 @@
         "可运行代码",
         "校准集的讲究",
         "量化之外：结构化剪枝与蒸馏",
+        "深入一：量化误差从哪来——把舍入噪声当成加性噪声建模",
+        "深入二：校准的三种判据与一个可复现实验",
+        "深入三：per-channel 为什么比 per-tensor 好——用一组权重算给你看",
+        "深入四：INT4 / NF4 / GPTQ / AWQ 到底改了什么",
+        "深入五：把量化接进 VLA 部署链路——端到端延迟与精度预算",
         "跳转入口",
         "为什么放在 AI Infra 模块？"
       ],
@@ -779,7 +784,7 @@
       "summary": "本模块 sec-22 Chunked VLA 推理基础设施 已经讲过 chunk size 的取舍，但留了一个没答完的问题："
     }
   ],
-  "readingMinutes": 185,
+  "readingMinutes": 202,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 162415
+  "chars": 175771
 }

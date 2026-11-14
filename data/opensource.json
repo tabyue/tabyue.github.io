@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-13T08:35",
+ "lastUpdated": "2026-11-14T08:27",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,111 @@
   }
  ],
  "projects": [
+  {
+   "name": "NVIDIA Warp：GPU 加速的可微仿真与机器人内核框架",
+   "github": "https://github.com/NVIDIA/warp",
+   "organization": "NVIDIA",
+   "org": "NVIDIA",
+   "category": "simulation",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 7312,
+   "description": "Warp 是 NVIDIA 开源的 Python 框架，用类似 Python 的语法写 GPU kernel，运行时编译成 CUDA / C++，面向仿真、机器人与机器学习中「需要自己写算子」的部分。它提供数组、稀疏矩阵、自动微分（可微仿真）、CUDA Graphs 与和 PyTorch / JAX / NumPy 的互操作，Newton 物理引擎与 MuJoCo Warp 都建立在它之上。本站收录它是因为 os273（Alloy 多材料并行物理引擎）、MuJoCo Warp、以及大量可微接触动力学与梯度型策略学习工作，底层都落在同一套 kernel 抽象上——学 Warp 不是为了换框架，是为了读懂「为什么这一代仿真器能把梯度一路传到接触点」。",
+   "features": [
+    "用 @wp.kernel 装饰的 Python 子集写 GPU kernel，运行时 JIT 到 native code，避免手写 CUDA 又能拿到接近原生性能",
+    "内置自动微分（wp.Tape），支持可微仿真：从接触力、碰撞响应一路反传到控制参数与初始状态",
+    "数组 / 稀疏矩阵 / 网格 / 哈希网格等数据结构，覆盖粒子法、有限元与基于网格的物理求解所需原语",
+    "CUDA Graphs 重放降低高频小 kernel 的启动开销，与 p361（FAME-QP 实时 MPC 求解器）是同一类系统级优化思路",
+    "与 PyTorch / JAX / NumPy / DLPack 双向零拷贝或近零拷贝互操作，可嵌进现有训练管线"
+   ],
+   "tags": [
+    "可微仿真",
+    "GPU kernel",
+    "自动微分",
+    "Newton",
+    "MuJoCo Warp"
+   ],
+   "id": "os275",
+   "addedDate": "2026-11-14"
+  },
+  {
+   "name": "RoboVerse：统一机器人学习平台、数据集与基准",
+   "github": "https://github.com/RoboVerseOrg/RoboVerse",
+   "organization": "RoboVerse Org",
+   "org": "RoboVerse Org",
+   "category": "data-tools",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 1883,
+   "description": "RoboVerse 面向「可扩展、可泛化」的机器人学习，把仿真平台、数据集与基准三件事放进同一套接口：同一份任务定义可以跨多个仿真后端运行，同一套数据格式可以跨本体复用，同一组评测指标可以在不同方法之间比较。它要治的是机器人学习里最耗人力的适配成本——换一个仿真器就要重写一遍任务与观测管线，换一个本体就要重做一遍数据转换。适合作为本站 platform-engineering（统一评测契约、O(N+M) 适配层）与 embodied-data-engineering（数据格式标准与工具链）的一手工程样本。",
+   "features": [
+    "统一任务 / 观测 / 动作接口，把「换仿真后端」的成本从重写任务降到实现一个适配层",
+    "配套大规模机器人学习数据集与基准，强调跨本体、跨仿真器的可迁移性而非单一榜单分数",
+    "Apache-2.0 开源，Python 实现，2026-11 仍在活跃推送",
+    "与站内 p351（BEHAVIOR 2026 单策略百任务）、r020（评测基准与榜单）同属「评测可复现性」这条线"
+   ],
+   "tags": [
+    "统一平台",
+    "机器人学习",
+    "数据集",
+    "基准",
+    "跨本体"
+   ],
+   "id": "os276",
+   "addedDate": "2026-11-14"
+  },
+  {
+   "name": "InterMimic：面向人—物交互的通用全身控制（CVPR 2025 Highlight）",
+   "github": "https://github.com/Sirui-Xu/InterMimic",
+   "organization": "Sirui Xu / 研究团队",
+   "org": "Sirui Xu",
+   "category": "locomotion",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 559,
+   "description": "InterMimic 做的是物理仿真下的人形全身动作跟踪，目标不是复现单人舞蹈，而是让同一套控制器跟随含人与物体交互的参考运动（搬箱、推拉、坐下、接触支撑等），并把技能迁移到真机。它把「参考运动里有人—物接触」这一常见但难处理的情形显式建模，避免跟踪策略在接触发生时因为缺少支撑力而崩溃。本站收录它作为 robot-dynamics#0（拉格朗日动力学与浮动基座 WBC）、control-theory#8（阻抗导纳）、p360（FORGE 力感知 loco-manipulation）之间可运行的一手参考实现。",
+   "features": [
+    "面向人—物交互参考运动的通用全身控制，不是只跟踪无接触的人体运动",
+    "物理仿真训练 + 真机迁移流程，覆盖接触丰富的交互动作",
+    "CVPR 2025 Highlight，MIT 许可，代码与权重 / 配置可复现",
+    "与 os269（SuperMimic 独立复现）、p360（FORGE）构成「动作跟踪 → 力感知操作」的对照"
+   ],
+   "tags": [
+    "全身控制",
+    "人—物交互",
+    "动作跟踪",
+    "Sim-to-Real",
+    "CVPR 2025"
+   ],
+   "id": "os277",
+   "addedDate": "2026-11-14"
+  },
+  {
+   "name": "RoboScript：用世界上下文学习组织 Agentic 机器人操作",
+   "github": "https://github.com/ArcheOne-AI/RoboScript",
+   "organization": "ArcheOne AI",
+   "org": "ArcheOne AI",
+   "category": "ai-agent-framework",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 172,
+   "description": "RoboScript 提出 World In-Context Learning：把世界模型的预测结果当作上下文示例塞给机器人 Agent，让它在不更新权重的情况下，用「预演出来的未来」决定当前动作序列。仓库给出从世界模型滚动预测、上下文构造到操作策略调用的完整链路，是「把推理预算花在预演上」这一路线少数可运行的开源实现。适合对照本站 embodied-agent（测试时扩展、Harness 层）、world-models-llm（世界模型作为自改进引擎）与 vla-models（推理预算该怎么花）三个章节阅读。",
+   "features": [
+    "World In-Context Learning：世界模型的想象轨迹作为 in-context 示例，权重冻结即可改进行为",
+    "把「预演多少步、选哪条想象轨迹」变成可调的推理预算参数，与测试时扩展（test-time scaling）同构",
+    "覆盖从世界模型预测、上下文组织到真机 / 仿真动作执行的完整链路",
+    "Apache-2.0，2026-11 活跃推送；与 r022（具身 Agent 框架与 Harness 生态）互补"
+   ],
+   "tags": [
+    "World In-Context Learning",
+    "Agentic 操作",
+    "世界模型",
+    "测试时扩展",
+    "Harness"
+   ],
+   "id": "os278",
+   "addedDate": "2026-11-14"
+  },
   {
    "name": "LIFE：智元 × 清华的终身具身智能框架（RoboBeats / Plastic Memory / EDM）",
    "github": "https://github.com/AgibotTech/LIFE",
@@ -6881,5 +6986,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 261
+ "totalItems": 265
 }

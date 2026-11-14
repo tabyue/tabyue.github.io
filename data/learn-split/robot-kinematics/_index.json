@@ -1,7 +1,7 @@
 {
   "id": "robot-kinematics",
   "name": "机器人运动学",
-  "lastUpdated": "2026-11-08T08:35",
+  "lastUpdated": "2026-11-14T08:37",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 60,
@@ -253,13 +253,13 @@
     {
       "id": "sec-09",
       "title": "轨迹生成：从关节空间到笛卡尔空间的平滑运动",
-      "lastUpdated": "2026-10-27",
-      "chars": 4887,
+      "lastUpdated": "2026-11-14T08:37",
+      "chars": 19449,
       "shortTitle": "轨迹生成",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 22,
       "headings": [
         "1. 关节空间轨迹",
         "多项式插值",
@@ -272,6 +272,11 @@
         "3. 时间最优轨迹",
         "4. 运动约束处理",
         "5. 在线轨迹生成 vs 离线规划",
+        "6. 为什么「平滑」是一个数学约束，而不是审美偏好",
+        "7. 五次多项式系数为什么能解析求出：边界条件矩阵的完整推导",
+        "8. 梯形与 S 曲线：从速度剖面反推位置，以及三角形分支的判别",
+        "9. 多关节同步与时间最优：为什么 TOPP-RA 比「各关节独立梯形」快",
+        "10. 从轨迹到控制器：采样、插补与实时性预算",
         "练习题",
         "参考答案"
       ],
@@ -479,7 +484,7 @@
       "summary": "工业机械臂运动学有一个隐含前提：基座（base frame）固定在地面或工作台，所有关节都基于这个固定基座做位姿计算。但人形机器人 / 四足机器人有两个关键差异："
     }
   ],
-  "readingMinutes": 155,
+  "readingMinutes": 172,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 141739
+  "chars": 156301
 }

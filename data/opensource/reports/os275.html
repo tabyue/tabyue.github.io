@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVIDIA Warp：GPU 加速的可微仿真与机器人内核框架 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">NVIDIA Warp：GPU 加速的可微仿真与机器人内核框架 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="nvidia-warpgpu">NVIDIA Warp：GPU 加速的可微仿真与机器人内核框架</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/NVIDIA/warp">https://github.com/NVIDIA/warp</a>  </p>
+<p><strong>Stars</strong>: 7312 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-14  </p>
+<p><strong>组织</strong>: NVIDIA  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-14</p>
+</blockquote>
+<hr />
+<p><strong>NVIDIA/warp</strong> 是一个用 Python 写 GPU kernel 的开源框架（Apache-2.0）：用 Python 语法的一个子集写计算内核，运行时 JIT 编译成 CUDA / C++ 原生代码，面向仿真、机器人与机器学习里「现成算子不够用、得自己写算子」的部分。它提供数组、稀疏矩阵、网格、哈希网格等数据结构，内置自动微分（wp.Tape），并支持 CUDA Graphs 重放与 PyTorch / JAX / NumPy / DLPack 互操作。</p>
+<p><strong>为什么收录</strong>：本站此前已收 os273（Alloy，基于 Newton / MuJoCo Warp 的多材料并行物理引擎），而 Newton、MuJoCo Warp 以及大量可微接触动力学、梯度型策略学习工作的底层都落在同一套 kernel 抽象上。学 Warp 不是为了换框架，是为了读懂一件事——<strong>为什么这一代仿真器能把梯度一路传到接触点</strong>。robot-dynamics#0 讲拉格朗日方程与 RNEA，p360 讲从本体感知反推接触力，而 Warp 提供的是「把力对参数的导数算出来」的工程底座。</p>
+<p>另一个值得对照的点：Warp 用 CUDA Graphs 压低高频小 kernel 的启动开销，与 p361（FAME-QP 用 CUDA Graphs 重放 MPC 迭代）是同一类系统级优化思路——优化对象都是<strong>每周期固定开销</strong>而非大矩阵吞吐。</p>
+<hr />
+<ol>
+<li><strong>编程层</strong>：用 <code>@wp.kernel</code> 装饰的 Python 函数，函数体内是受限的 Python 子集（显式类型、无动态分配），由 Warp 在首次调用时 JIT 到 PTX / C++；</li>
+<li><strong>数据层</strong>：<code>wp.array</code> 为主，另有稀疏矩阵、体素网格、哈希网格、BVH 等物理求解常用结构，全部可在 host 与 device 之间显式搬移；</li>
+<li><strong>微分层</strong>：<code>wp.Tape</code> 记录 kernel 执行，反向模式自动微分把梯度从输出传回输入——这是可微仿真的核心，也是「接触力对初始状态 / 控制参数求导」能落地的前提；</li>
+<li><strong>执行层</strong>：CUDA Graphs 把一串高频小 kernel 录制成图反复重放，消掉反复 launch；模块缓存让 JIT 结果跨进程复用；</li>
+<li><strong>互操作层</strong>：通过 DLPack 与 PyTorch / JAX 近乎零拷贝交换张量，可把 Warp kernel 嵌进现有训练管线，而不必把整条管线搬进 Warp。</li>
+</ol>
+<p><strong>读法</strong>：先看 <code>wp.Tape</code> 怎么处理「kernel 里有分支 / 原子操作」时的梯度记录——这决定了接触、碰撞这类不连续算子能不能被反传，也是可微仿真最容易出偏差的地方。</p>
+<hr />
+<ul>
+<li><strong>官方仓库与文档</strong>：github.com/NVIDIA/warp — kernel 编程模型、wp.Tape、CUDA Graphs 与示例集合；</li>
+<li><strong>Newton 物理引擎</strong>：基于 Warp 的可微物理引擎，多材料并行求解的上层应用；</li>
+<li><strong>MuJoCo Warp</strong>：MuJoCo 的 Warp 后端，把经典接触求解器搬上 GPU 并保留梯度通路；</li>
+<li><strong>os273 Alloy</strong>（站内）：基于 Newton / MuJoCo Warp 的多材料并行物理引擎；</li>
+<li><strong>p361 FAME-QP</strong>（站内，arXiv 2611.13766）：CUDA Graphs 重放 + 融合 kernel 的实时 MPC 求解器；</li>
+<li><strong>p360 FORGE</strong>（站内，arXiv 2611.17142）：从本体感知反推腕部等效力，与可微接触动力学互补；</li>
+<li>站内 /learn/robot-dynamics、/learn/physics-simulation、/learn/control-theory。</li>
+</ul>
+<hr />
+<ol>
+<li><code>pip install warp-lang</code>（CUDA 环境需匹配本地 toolkit），先跑官方 <code>examples</code> 里的 <code>example_sim_*</code>，确认 JIT 与设备可用；</li>
+<li>写一个最小 kernel：两个 <code>wp.array</code> 逐元素相加，用 <code>@wp.kernel</code> + <code>wp.launch</code> 启动，观察首次调用的 JIT 耗时与后续调用耗时差；</li>
+<li>用 <code>wp.Tape</code> 包住一次 kernel 执行，对输入 <code>requires_grad=True</code>，反向后读出梯度，与解析解对照；</li>
+<li>做一个可微弹簧质点：位置对刚度参数求导，验证梯度与有限差分一致（相对误差应到数值精度量级）；</li>
+<li>用 <code>wp.from_torch</code> / <code>wp.to_torch</code> 把一个 PyTorch 张量送进 Warp kernel 再取回，确认零拷贝路径成立；</li>
+<li>录一段 CUDA Graph 重放同一串 kernel，对比开启前后的 P50 与 P99 时延——这一步直接对应 p361 的开销分解；</li>
+<li>与站内 /learn/robot-dynamics（拉格朗日动力学与浮动基座 WBC）、/learn/physics-simulation（接触动力学与约束求解器）、/learn/control-theory（MPC 完整 QP 推导）交叉阅读。</li>
+</ol>
+<pre><code class="language-python">import warp as wp
+import numpy as np
+
+wp.init()
+
+@wp.kernel
+def add_kernel(a: wp.array(dtype=wp.float32),
+               b: wp.array(dtype=wp.float32),
+               out: wp.array(dtype=wp.float32)):
+    i = wp.tid()
+    out[i] = a[i] + b[i]
+
+n = 1_000_000
+a = wp.array(np.ones(n, dtype=np.float32), dtype=wp.float32)
+b = wp.array(np.full(n, 2.0, dtype=np.float32), dtype=wp.float32)
+out = wp.zeros(n, dtype=wp.float32)
+wp.launch(add_kernel, dim=n, inputs=[a, b, out])
+print(float(np.max(np.abs(out.numpy() - 3.0))))  # expect 0.0
+
+# 自动微分：把标量输出对输入求导
+@wp.kernel
+def scale_sum(a: wp.array(dtype=wp.float32),
+              s: wp.float32,
+              out: wp.array(dtype=wp.float32)):
+    i = wp.tid()
+    wp.atomic_add(out, 0, a[i] * s)
+
+x = wp.array(np.ones(8, dtype=np.float32), dtype=wp.float32, requires_grad=True)
+y = wp.zeros(1, dtype=wp.float32, requires_grad=True)
+tape = wp.Tape()
+with tape:
+    wp.launch(scale_sum, dim=8, inputs=[x, wp.float32(2.0), y])
+tape.backward(y)
+print(x.grad.numpy())  # each element should be 2.0
+</code></pre>
+<hr />
+<p>公开可得的是工程事实而非榜单分数：Apache-2.0、Python 为主、约 7312 star、2026-11-13 仍在推送，NVIDIA 官方维护，Newton / MuJoCo Warp 等下游项目建立在它之上。仓库不提供统一的「比手写 CUDA 快多少」这类跨场景基准，本站也不替它编造数字。</p>
+<p>对可微仿真框架，该核对的是四项工程指标，比 star 数更能决定它能不能进训练管线：</p>
+<ol>
+<li><strong>JIT 首次耗时与缓存命中率</strong>：控制环路里首次编译造成的长尾抖动是否可接受；</li>
+<li><strong>不连续算子的梯度可信度</strong>：接触、碰撞、 clamp 分支处的反传是否与物理直觉一致，需用有限差分逐点抽查；</li>
+<li><strong>CUDA Graph 重放的适用边界</strong>：输入形状 / 控制流变化时图是否需要重建，重建开销多大；</li>
+<li><strong>跨框架互操作是否真的零拷贝</strong>：DLPack 路径在不同 PyTorch 版本与设备上的实际内存行为。</li>
+</ol>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Warp</th>
+<th>手写 CUDA</th>
+<th>Taichi</th>
+<th>JAX / XLA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>编程入口</td>
+<td>Python 子集 JIT</td>
+<td>C++ / CUDA</td>
+<td>Python 装饰器</td>
+<td>函数式数组变换</td>
+</tr>
+<tr>
+<td>自动微分</td>
+<td>wp.Tape 显式记录</td>
+<td>需自己写反向</td>
+<td>支持</td>
+<td>内建</td>
+</tr>
+<tr>
+<td>物理数据结构</td>
+<td>网格 / 哈希 / BVH 内置</td>
+<td>全自研</td>
+<td>部分内置</td>
+<td>需自研</td>
+</tr>
+<tr>
+<td>CUDA Graphs</td>
+<td>原生支持</td>
+<td>手动</td>
+<td>视后端</td>
+<td>视后端</td>
+</tr>
+<tr>
+<td>与 PyTorch 互操作</td>
+<td>DLPack 近零拷贝</td>
+<td>需自定义</td>
+<td>需桥接</td>
+<td>生态内</td>
+</tr>
+<tr>
+<td>适合场景</td>
+<td>可微仿真、自定义接触算子</td>
+<td>极致性能内核</td>
+<td>图形 / 物理原型</td>
+<td>纯张量计算</td>
+</tr>
+</tbody>
+</table>
+<p>与 <strong>os273（Alloy）</strong> 是「底座 vs 应用」关系；与 <strong>p361（FAME-QP）</strong> 共享 CUDA Graphs 重放这一系统级优化思路，但一个面向物理仿真 kernel，一个面向 MPC 的 QP 迭代；与站内 <strong>robot-dynamics#0</strong>、<strong>physics-simulation#16（接触动力学与约束求解器）</strong> 构成「方程 → 求解器 → 可微实现」的一条链。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

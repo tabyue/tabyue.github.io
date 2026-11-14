@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboScript：用世界上下文学习组织 Agentic 机器人操作 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">RoboScript：用世界上下文学习组织 Agentic 机器人操作 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="roboscript-agentic">RoboScript：用世界上下文学习组织 Agentic 机器人操作</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/ArcheOne-AI/RoboScript">https://github.com/ArcheOne-AI/RoboScript</a>  </p>
+<p><strong>Stars</strong>: 172 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-14  </p>
+<p><strong>组织</strong>: ArcheOne AI  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-14</p>
+</blockquote>
+<hr />
+<p><strong>ArcheOne-AI/RoboScript</strong> 提出 World In-Context Learning：把世界模型的预测结果当作上下文示例交给机器人 Agent，让它在<strong>不更新权重</strong>的前提下，用「预演出来的未来」决定当前动作序列（Apache-2.0，Python，约 172 star，2026-11-10 活跃推送）。</p>
+<p>它对应一个正在成形的判断：与其把预算全花在训练更大的策略，不如把一部分推理预算花在<strong>测试时的预演</strong>上。世界模型滚动出几条候选未来，Agent 把这些想象轨迹当 in-context 示例，挑选最有希望的一条执行；执行反馈再回到下一轮上下文。仓库给出从世界模型滚动预测、上下文构造到操作策略调用的完整链路，是这条路线少数可运行的开源实现。</p>
+<p><strong>为什么收录</strong>：作为本站 embodied-agent（测试时扩展、Harness 层）、world-models-llm（世界模型作为自改进引擎）与 vla-models（推理预算该怎么花）三个章节的一手工程样本。它把「世界模型有用」这句抽象判断变成了「预演多少步、选哪条想象轨迹、每轮花多少 token」这些可以调、可以测的参数。</p>
+<hr />
+<ol>
+<li><strong>世界模型 rollout</strong>：给定当前观测与候选动作前缀，世界模型滚动生成若干条未来观测 / 状态序列；</li>
+<li><strong>想象轨迹评估</strong>：按任务目标给每条候选未来打分（是否达成、代价、风险），这一步决定预演有没有用；</li>
+<li><strong>上下文构造</strong>：把得分高的想象轨迹连同当前观测、任务描述组织成 in-context 示例，喂给冻结的策略 / Agent；</li>
+<li><strong>动作决策</strong>：Agent 依据上下文输出动作序列，不更新任何权重——行为改变来自上下文而非梯度；</li>
+<li><strong>执行与反馈</strong>：真机 / 仿真执行后把新观测写回，进入下一轮预演，失败轨迹也进上下文用于纠错；</li>
+<li><strong>预算参数</strong>：预演步数、候选条数、上下文长度、每轮 token 上限都是显式可调项，构成测试时扩展的调节旋钮。</li>
+</ol>
+<p><strong>读法</strong>：重点看「想象轨迹评估」用什么信号。若只用世界模型自身的预测置信度，容易被模型的系统性偏差带偏（planner exploits deterministic error，见 p358 资源组里 arXiv 2611.11780）；引入外部任务判据或真实反馈做校准，是这条路线能不能稳的关键。</p>
+<hr />
+<ul>
+<li><strong>官方仓库</strong>：github.com/ArcheOne-AI/RoboScript — World In-Context Learning，世界模型 rollout → 上下文构造 → 策略调用；</li>
+<li><strong>arXiv 2611.11780 Planners Exploit Deterministic Error</strong>：低比特 / 确定性世界模型在采样规划器下会被利用，评估环节需外部判据校准；</li>
+<li><strong>p358 XInfer</strong>（站内，arXiv 2611.14969）：生产集群 VLA serving 与 ERC 指标；</li>
+<li><strong>p359 ActionCodec2</strong>（站内，arXiv 2611.15490）：流式动作 token 作为 VLM Agent 直接控制接口与可复用宏；</li>
+<li><strong>p357 STVLA</strong>（站内，arXiv 2611.16589）：把场景几何写进时序记忆，与「想象轨迹入上下文」互补；</li>
+<li><strong>r022 具身 Agent 框架与 Harness 生态</strong>（站内资源）；</li>
+<li>站内 /learn/embodied-agent、/learn/world-models-llm、/learn/vla-models。</li>
+</ul>
+<hr />
+<ol>
+<li><code>git clone https://github.com/ArcheOne-AI/RoboScript</code>，按 README 配好世界模型与仿真 / 真机接口，先跑通一次单轮预演；</li>
+<li>打印一条想象轨迹与对应的真实执行结果，直观看出世界模型在哪一步开始偏；</li>
+<li>扫描「候选未来条数」与「预演步数」两个旋钮，记录任务成功率与每轮 token 开销的权衡曲线；</li>
+<li>做关键消融：关掉世界模型预演、只给当前观测，确认增益确实来自想象轨迹而不是更长的提示词；</li>
+<li>故意喂一条系统性地偏乐观的世界模型，复现「planner 利用确定性误差」的失效，验证评估环节是否需要外部判据校准；</li>
+<li>把失败轨迹也写进上下文，看下一轮是否真的减少同类错误——这是「自改进」能不能成立的判据；</li>
+<li>与站内 /learn/embodied-agent（Harness 层、失败感知与自主恢复、测试时扩展）、/learn/world-models-llm（世界模型作为自改进引擎）、/learn/vla-models（推理预算该怎么花）交叉阅读。</li>
+</ol>
+<pre><code class="language-python">import numpy as np
+
+def world_in_context_step(world_model, agent, obs, task,
+                          n_rollouts=4, horizon=8):
+    '''One round of World In-Context Learning (schematic).'''
+    candidates = []
+    for k in range(n_rollouts):
+        prefix = agent.propose_prefix(obs, task)
+        imagined = world_model.rollout(obs, prefix, steps=horizon)
+        score = task.score(imagined[-1])          # external criterion matters
+        candidates.append((score, prefix, imagined))
+
+    candidates.sort(key=lambda z: -z[0])
+    top = candidates[:2]
+    context = agent.build_context(obs, task, top)  # imagined futures as examples
+    action_seq = agent.act(context)                # weights stay frozen
+    return action_seq, [c[0] for c in candidates]
+
+# 消融第 4 步：把 context 里只留 obs + task（删掉 imagined），
+# 若成功率几乎不掉，说明增益来自更长的提示而非世界模型预演。
+</code></pre>
+<hr />
+<p>公开可得的是工程事实：Apache-2.0、Python、约 172 star、2026-11-10 活跃推送，仓库给出世界模型 rollout 到策略调用的完整链路。仓库不提供跨任务统一成功率表，本站不替它编造数字。</p>
+<p>对「把推理预算花在预演上」这类方法，该核对的是四项：</p>
+<ol>
+<li><strong>预演 vs 纯提示的净增益</strong>：消融掉想象轨迹后成功率掉多少，这是路线成立与否的唯一硬判据；</li>
+<li><strong>预算曲线</strong>：成功率随候选条数 / 预演步数的饱和点在哪，超过之后就是在白烧 token；</li>
+<li><strong>世界模型偏差的传导</strong>：模型系统性偏乐观时，Agent 是否被带偏，评估环节是否需要外部判据；</li>
+<li><strong>失败轨迹的复用</strong>：写回上下文后同类错误是否真的减少，而不是每轮重新犯。</li>
+</ol>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>RoboScript</th>
+<th>微调 / 后训练</th>
+<th>纯提示工程</th>
+<th>模型预测控制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>权重</td>
+<td>冻结</td>
+<td>更新</td>
+<td>冻结</td>
+<td>不涉及</td>
+</tr>
+<tr>
+<td>改进行为的来源</td>
+<td>想象轨迹入上下文</td>
+<td>梯度</td>
+<td>提示措辞</td>
+<td>在线优化</td>
+</tr>
+<tr>
+<td>预算花在哪</td>
+<td>测试时预演</td>
+<td>训练时算力</td>
+<td>上下文长度</td>
+<td>每周期求解</td>
+</tr>
+<tr>
+<td>需要世界模型</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+<td>是（解析 / 学习）</td>
+</tr>
+<tr>
+<td>迭代速度</td>
+<td>每轮可改</td>
+<td>需重训</td>
+<td>即时</td>
+<td>每周期</td>
+</tr>
+<tr>
+<td>主要风险</td>
+<td>世界模型偏差被利用</td>
+<td>过拟合 / 遗忘</td>
+<td>收益天花板低</td>
+<td>建模误差</td>
+</tr>
+</tbody>
+</table>
+<p>与 <strong>p358（XInfer）</strong> 同属「系统级地花预算」的一组工作，但一个花在集群调度，一个花在单任务的测试时预演；与 <strong>r022（具身 Agent 框架与 Harness 生态）</strong> 互补——Harness 层负责把冻结模型组织成会自我改进的系统，RoboScript 给了其中一个具体机制。与 <strong>p359（ActionCodec2）</strong> 也有交集：后者把动作 token 变成 VLM Agent 可直接组合的宏，前者把想象轨迹变成上下文，两者都在降低「Agent 直接控制机器人」的接口成本。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
