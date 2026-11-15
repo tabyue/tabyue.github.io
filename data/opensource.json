@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-14T08:27",
+ "lastUpdated": "2026-11-15T08:32",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,114 @@
   }
  ],
  "projects": [
+  {
+   "name": "Cadence：以 System 1 为主、System 2 慢修正的在线学习认知架构",
+   "github": "https://github.com/muellerberndt/cadence",
+   "organization": "muellerberndt",
+   "org": "muellerberndt",
+   "category": "ai-agent-framework",
+   "language": "Python",
+   "license": "GPL-3.0",
+   "stars": 625,
+   "description": "一个「从实时经验里学习」的认知架构实验：默认走 System 1——感知、记忆、可塑性与动作组成低延迟在线回路；System 2 是可选的慢速层，只做自我观察与稀疏纠正。实现上基于平衡网络（equilibrium networks）与局部学习规则，强调不依赖大规模离线反向传播就能持续适应，仓库带可交互演示，2026-09 建立、11 月高频迭代。\n\n它与本轮 n716（OpenAI 认为通用前沿模型可直接当机器人大脑）构成一条值得对照的路线：一个把智能压在云端大模型的推理里，一个把适应压在本体本地的在线可塑性里。对具身系统而言，端侧小模型、离线可用性与持续适应恰恰是学者反驳「通用模型包办」时点名的三件事（CMU 的 Guanya Shi、MIT 的 Russ Tedrake 均在本轮报道中提及）。配合 /learn/embodied-agent（Harness 层、失败感知与自主恢复）与 /learn/reinforcement-learning 读，可以把它当作「慢系统如何约束快系统」的一个可运行样本。",
+   "features": [
+    "System 1 默认在线回路：感知—记忆—可塑性—动作全在低延迟路径上完成",
+    "System 2 为可选慢层，只做自我观察与稀疏纠正，避免高频大模型调用",
+    "基于平衡网络与局部学习规则，不依赖大规模离线反传即可持续适应",
+    "自带交互式演示，便于直观观察在线可塑性与慢纠正的分工",
+    "与 n716 的通用模型路线形成对照，回应端侧离线可用性与持续适应问题"
+   ],
+   "tags": [
+    "System1/System2",
+    "在线学习",
+    "平衡网络",
+    "具身认知",
+    "端侧"
+   ],
+   "id": "os282",
+   "addedDate": "2026-11-15"
+  },
+  {
+   "name": "Space Robotics Bench：面向太空作业的机器人学习基准（Isaac Lab）",
+   "github": "https://github.com/AndrejOrsula/space_robotics_bench",
+   "organization": "Andrej Orsula",
+   "org": "AndrejOrsula",
+   "category": "simulation",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 215,
+   "description": "建立在 Isaac Lab / Isaac Sim 之上的机器人学习基准，把实验场景从地面搬到太空作业：轨道环境下的机械臂操作、自由漂浮基座动力学、极端光照与通信延迟等约束都被纳入统一的仿真与评测接口。仓库提供环境定义、任务与训练脚本，Apache-2.0 许可。\n\n收录理由是它把「仿真域」这个变量推到了常规具身基准之外。本轮 p364（BlinkMimic 在可微世界模型里分钟级训完跟踪策略）说明训练速度高度依赖仿真器的梯度与并行能力，而 Space Robotics Bench 提供了检验这类方法是否只在地面假设下成立的对照组：基座不再固定、接触不再有地面支撑时，同一套策略与积分格式还稳不稳。配合 /learn/physics-simulation（刚体动力学、碰撞与数值积分）与 /learn/robot-dynamics（浮动基座动力学边界）阅读最合适。",
+   "features": [
+    "基于 Isaac Lab / Isaac Sim 的标准化太空机器人学习环境与任务接口",
+    "覆盖自由漂浮基座、微重力与轨道作业等地面基准缺失的动力学条件",
+    "提供训练与评测脚本，可作为可微仿真 / 策略迁移方法的分布外检验场",
+    "Apache-2.0 许可，环境定义可直接复用作自定义任务起点",
+    "与 p364、os275（Warp 可微仿真）构成「仿真器能力 → 训练速度 → 域外泛化」的完整链条"
+   ],
+   "tags": [
+    "Isaac Lab",
+    "太空机器人",
+    "仿真基准",
+    "浮动基座",
+    "分布外泛化"
+   ],
+   "id": "os281",
+   "addedDate": "2026-11-15"
+  },
+  {
+   "name": "CityWalker：从网络规模视频学习城市具身导航（CVPR 2025）",
+   "github": "https://github.com/ai4ce/CityWalker",
+   "organization": "ai4ce (NYU)",
+   "org": "ai4ce",
+   "category": "ai-model",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 242,
+   "description": "CVPR 2025 工作 CityWalker 的官方实现：不从人工标注的导航轨迹学，而是直接从网络规模的城市行走视频里学户外点目标导航（point-goal navigation），把海量第一视角人类视频当作具身导航的监督来源。仓库给出训练与评测代码、项目页与数据说明，Apache-2.0 许可。\n\n它对应具身导航里一个长期瓶颈：真机采集的导航数据贵且场景单一，而人类第一视角视频几乎无限但缺少动作标签。CityWalker 的价值正是绕开动作标签、从视频里抽可迁移的导航先验。与本轮 p363（EgoX 用第一视角跨本体示教）是同一条思路在导航与操作两个任务上的落点，也和站内 /learn/mobile-robot-navigation（地图表示与构建）、/learn/imitation-learning（从人类视频到机器人动作）形成对照。",
+   "features": [
+    "以网络规模城市行走视频为监督，绕开真机导航轨迹的动作标签瓶颈",
+    "面向户外 point-goal navigation，覆盖四足等移动本体的城市尺度泛化",
+    "提供 CVPR 2025 官方训练 / 评测代码与项目页，可复现而非仅论文描述",
+    "Apache-2.0 许可、Python 实现，便于接入现有导航栈做对比实验",
+    "与 p363 EgoX 对照阅读：同为「人类第一视角视频 → 机器人能力」，一个做操作一个做导航"
+   ],
+   "tags": [
+    "具身导航",
+    "网络视频",
+    "模仿学习",
+    "CVPR2025",
+    "第一视角"
+   ],
+   "id": "os280",
+   "addedDate": "2026-11-15"
+  },
+  {
+   "name": "Awesome World Models：世界建模研究一站式资源索引",
+   "github": "https://github.com/knightnemo/Awesome-World-Models",
+   "organization": "knightnemo",
+   "org": "knightnemo",
+   "category": "data-tools",
+   "language": "Markdown",
+   "license": "BSD-3-Clause",
+   "stars": 3526,
+   "description": "一个按主题整理世界建模（World Modeling）工作的精选索引，覆盖生成式模型、动力系统、具身 AI 与视频预测等分支，目标是给研究者与工程师提供「一站找齐」的入口。仓库以分类论文清单为主，配合简要归类与链接，2025-10 建立、2026-11 仍在活跃维护，累计 3.5K star。\n\n本站收录它不是因为又一个 awesome 清单，而是本轮 p366（Prediction or Persistence?）暴露了一个真问题：世界模型领域连「分数该怎么比」都还在补课，选型时更需要一张能把 V-JEPA、动作条件世界模型、视频生成式世界模型、世界动作模型放在同一坐标系下的地图。配合站内 os255（Awesome 3D/4D World Models，偏三维与四维几何）与 /learn/world-models-llm，两张清单正好一个按几何维度、一个按建模范式，互补而不重叠。",
+   "features": [
+    "按生成模型 / 动力系统 / 具身 AI / 世界模型等主题分类，把散落在 arXiv 与项目页的工作收敛成可检索清单",
+    "覆盖从 JEPA 类潜空间预测到视频扩散、动作条件世界模型的多条技术路线，便于横向比较评测口径",
+    "条目含论文与代码链接，可直接作为复现与选型的起点，减少从综述里二次翻找",
+    "BSD-3-Clause 许可、持续维护（2026-11-09 推送），适合作为站内学习章节的外部延伸阅读",
+    "与 p366 的 persistence 基线方法配合：先按清单确定候选模型族，再用配对对照做选型"
+   ],
+   "tags": [
+    "世界模型",
+    "论文索引",
+    "生成模型",
+    "具身AI",
+    "选型地图"
+   ],
+   "id": "os279",
+   "addedDate": "2026-11-15"
+  },
   {
    "name": "NVIDIA Warp：GPU 加速的可微仿真与机器人内核框架",
    "github": "https://github.com/NVIDIA/warp",
@@ -6986,5 +7094,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 265
+ "totalItems": 269
 }

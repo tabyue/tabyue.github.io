@@ -60,7 +60,7 @@
     }
   ],
   "weeklyPlan": "**第1-2周**：多元微积分复习，重做梯度和 Jacobian 练习题（MIT 18.02 讲义）\n**第3周**：凸集、凸函数、凸优化问题建模（Boyd Ch1-3）\n**第4周**：对偶理论、KKT 条件（Boyd Ch4-5）\n**第5周**：梯度下降、牛顿法、L-BFGS 实现与对比\n**第6周**：CVXPY 实践，解一个机器人轨迹优化问题",
-  "lastUpdated": "2026-11-06T08:30",
+  "lastUpdated": "2026-11-15T08:41",
   "maturity": "comprehensive",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -151,13 +151,13 @@
     {
       "id": "sec-04",
       "title": "积分理论：Riemann 积分、重积分、换元、Fubini",
-      "lastUpdated": "2026-10-27",
-      "chars": 6403,
+      "lastUpdated": "2026-11-15T08:41",
+      "chars": 18011,
       "shortTitle": "积分理论",
       "difficulty": "入门",
       "estimatedMinutes": 5,
       "tier": 0,
-      "readingMinutes": 5,
+      "readingMinutes": 17,
       "headings": [
         "积分：从“面积”到严格定义",
         "一、Riemann 积分的严格定义",
@@ -171,6 +171,11 @@
         "九、面积、体积与测度的推广",
         "十、曲线积分与曲面积分（初步）",
         "十一、机器人学中的积分",
+        "深入一：数值求积——从 Newton-Cotes 到 Gauss",
+        "深入二：Euler-Maclaurin 公式与 Romberg 外推",
+        "深入三：Monte Carlo 积分与高维困境",
+        "深入四：Lebesgue 积分的构造与三大收敛定理",
+        "深入五：积分变换——卷积、Fourier 与 Laplace",
         "十二、数学练习",
         "参考答案要点"
       ],
@@ -571,7 +576,7 @@
       "summary": "在机器人学和深度学习中，经常遇到以下形式的期望计算："
     }
   ],
-  "readingMinutes": 126,
+  "readingMinutes": 138,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 134350
+  "chars": 145958
 }

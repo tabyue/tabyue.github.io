@@ -1,6 +1,146 @@
 {
- "lastUpdated": "2026-11-14T08:28",
+ "lastUpdated": "2026-11-15T08:32",
  "papers": [
+  {
+   "title": "Prediction or Persistence? What Future-Prediction Scores Miss About World Models",
+   "authors": "Animesh Maheshwari",
+   "venue": "arXiv 2611.15082 (CoRL 2026 Workshop)",
+   "date": "2026-11-11",
+   "arxiv": "https://arxiv.org/abs/2611.15082",
+   "github": "",
+   "tags": [
+    "世界模型评测",
+    "persistence baseline",
+    "V-JEPA",
+    "未来预测分数",
+    "CoRL 2026 Workshop"
+   ],
+   "category": "评测/世界模型",
+   "difficulty": "中级",
+   "tldr": "**问题**：预训练视频世界模型主要靠「未来预测分数」被比较和挑选，但这个分数把编码器质量、近未来与最近过去的相似度、预测器自身贡献混在一起，单独看并不能证明模型真的在预测。**做法**：用配对对照把三者分开——在家庭第一视角视频上做 27,000 次未来检索试验，模型要从同一视频的 11 个候选里按自身训练准则零样本挑出真实续段（随机 0.091）；每个模型配一个 persistence 对照（同一副本但从不调用预测器），配对差值即预测器净贡献。**结果**：仅在原生视频 V-JEPA 家族内部，分数与贡献就分离：V-JEPA 2.1 的预测器贡献 +0.291 top-1，而同样试验上的 V-JEPA 2 只有 +0.03 到 +0.04；五个模型的贡献从 +0.291 到负值不等，且只有两个动作条件模型为负（在训练分布外被评测）。persistence 单独能恢复预训练应有的编码器排序，说明探针确实跟到了真实信号。作者建议每个未来预测分数都连同 persistence 基线一起报告，差值而非分数本身才可解释，代价只是一次前向。",
+   "keyInsights": [
+    "把世界模型评测从「比绝对分数」改成「比配对差值」，用 persistence 对照把预测器贡献从编码器与数据捷径里干净地隔离出来。",
+    "同一 V-JEPA 家族内贡献差近一个数量级，说明架构相近不代表都在做预测，榜单名次可能主要由编码器决定。",
+    "动作条件模型在分布外出现负贡献，提示训练准则与评测 regime 错配时，预测器反而会拖累选择。",
+    "基线只需一次前向即可复算，是极低成本、可立即加进现有评测管线的必要检查。"
+   ],
+   "impact": "对站内 /learn/world-models-llm（世界模型作为自改进引擎、潜空间世界动作模型）与 /learn/probability-statistics（假设检验、配对设计）都是很好的方法学补充：配对控制、差值而非绝对值、明确评测 regime，正是把「看起来更好」变成「确实更好」的那套统计纪律。它也给本轮 n702（华为云 CloudRobo-WM1.2）、n691（Praxis-1 榜单 46.2%）这类厂商口径的榜单成绩提了个醒：没有 persistence 基线的分数不能直接当作预测能力的证据。要注意作者自己也强调，下游规划或控制是否有用是另一回事，需单独评测。",
+   "idx": 366,
+   "id": "p366",
+   "addedDate": "2026-11-15"
+  },
+  {
+   "title": "Runtime Safety and Emergency Stops on a Full-Size Humanoid: Deployment Lessons and a Case for Graduated Force Authority",
+   "authors": "Max Conway, Yutong Zhang, Allen Devaraj, William Xie, Alessandro Roncone, Nikolaus Correll",
+   "venue": "arXiv 2611.15928 (cs.RO)",
+   "date": "2026-11-11",
+   "arxiv": "https://arxiv.org/abs/2611.15928",
+   "github": "",
+   "tags": [
+    "急停",
+    "安全层",
+    "Unitree H1-2",
+    "力权限分级",
+    "部署经验"
+   ],
+   "category": "具身安全 / 系统",
+   "difficulty": "中级",
+   "tldr": "**问题**：全尺寸人形被考虑用于拆解电动车电池这类危险作业，现有安全机制在真实失衡时到底够不够用？**做法**：作者描述 Unitree H1-2 开源自主栈的安全层——所有关节命令经过一个独立于控制软件运行的层，强制关节位置/速度/力矩限值，并在状态估计过期、硬线急停按下或断开时停机；随后把站立机器人推到失衡，记录恢复行为。**结果**：配模型预测下半身控制器时机器人每次都无法恢复，操作员每次都得按急停；而按急停会移除平衡控制、机器人直接倒下，安全层自身的限位也触发同样的停止，且为操作选的限位在正常行走时就被超过。在人 or 电池包附近，这一跌可能比触发停机的原因更危险。作者由此主张：关节限值约束了「能施多大力」，却没约束「什么时候适合施力」，应把力权限分阶段授予机器人，并由明确的人或组织对其使用负责。",
+   "keyInsights": [
+    "把「安全 = 限值 + 急停」这套默认做法在真机上推到极限，暴露出停机本身可能比不停更危险的悖论。",
+    "独立安全层、状态估计过期检测、硬线急停断线检测这三项工程细节，是可迁移到任何全尺寸人形的最小安全契约。",
+    "为操作任务选的关节限位在正常行走时被超过，说明限值不能按单一工况静态整定。",
+    "提出「分级力权限」这一治理层概念：技术约束管力的大小，组织责任管力的时机，二者不能互相替代。"
+   ],
+   "impact": "这篇的价值不在算法而在部署事实，适合和站内 /learn/control-theory（阻抗导纳控制、稳定性）、/learn/sensors-hardware（编码器与力矩反馈）一起读：控制系统讲怎么稳住，这篇讲稳不住时停机链条会怎么反噬。对本轮 n717（超百台机器人进产线）、n703（华硕 Gallop 上主板工厂包装工位）也是必要的冷思考——产线规模化之前，急停策略、限值整定工况与现场责任划分必须先于节拍指标定下来。论文明确是经验性案例而非大规模统计，引用时保留定性口径。",
+   "idx": 365,
+   "id": "p365",
+   "addedDate": "2026-11-15"
+  },
+  {
+   "title": "BlinkMimic: Training a Humanoid Motion Tracker in Minutes on a Single GPU",
+   "authors": "Fuyi Chen",
+   "venue": "arXiv 2611.16422 (cs.RO, cs.LG)",
+   "date": "2026-11-12",
+   "arxiv": "https://arxiv.org/abs/2611.16422",
+   "github": "https://github.com/fuyichen0725/blinkmimic",
+   "tags": [
+    "可微仿真",
+    "世界模型",
+    "运动跟踪",
+    "单卡训练",
+    "LAFAN1"
+   ],
+   "category": "人形机器人 / 全身控制",
+   "difficulty": "高级",
+   "tldr": "**问题**：让仿真人形跟踪一整库参考动作，训练一个跟踪策略通常要数小时 GPU。**做法**：承接 SuperMimic（从并行仿真学到的世界模型里反传梯度）与 InstantTrack（Muon 更新、参考轨迹附近的残差策略、部署策略平均），BlinkMimic 把训练时间显式拆成三项——单次迭代成本、拟合动作所需迭代数、清除最后失败所需迭代数，再逐项归因；新增组件是训练推进后递减的步长、按部署条件下失败来定向的 reset，以及整轮迭代的 CUDA Graph capture。**结果**：仿真 Unitree G1 上，单张 RTX 4090 用 3.4 分钟训出一个覆盖全部 40 段 LAFAN1 片段的策略（三个种子均值，判据是连续三个 checkpoint 归一化回报 ≥0.82 且无失败片段）。带三组种子逐项 leave-one-out 消融，并从梯度、更新规则与失败案例解释每项影响，代码与逐种子结果均公开。",
+   "keyInsights": [
+    "把「训练快」拆成迭代成本 × 拟合迭代数 × 清除失败迭代数三项，让每个工程技巧都有了可归因的位置，而不是笼统报一个加速比。",
+    "失败定向的 reset 针对的是最后几个顽固片段——长尾失败而非平均回报决定了整体训练时间。",
+    "CUDA Graph capture 整轮迭代压的是 kernel 启动开销，与 p361（FAME-QP 实时 MPC 求解器）是同一类系统级思路。",
+    "沿用「通过可微世界模型反传」这一路线，说明可微仿真的价值不止于梯度策略优化，也在于把策略训练本身变成可微分、可加速的短流程。"
+   ],
+   "impact": "与 os275（NVIDIA Warp 可微仿真内核）、os281（Space Robotics Bench）、站内 /learn/physics-simulation（数值积分与仿真步长）连成一条链：可微世界模型把「小时级 RL」压到「分钟级」，前提是仿真本身足够快且梯度能穿过接触。对工程团队最可迁移的是那套时间分解方法——先量出三项各占多少，再决定该优化算力、优化器还是 reset 策略，避免盲目加卡。需要注意 3.4 分钟是在单一仿真人形与固定 40 段动作上的口径，换本体或扩大动作库后三项占比会变。",
+   "idx": 364,
+   "id": "p364",
+   "addedDate": "2026-11-15"
+  },
+  {
+   "title": "EgoX: Egocentric Cross-Embodiment Manipulation with Embodiment Dreaming",
+   "authors": "Yaru Niu, Binghong Chen, Changwei Yao, Shangtao Li, Zhenlong Fang, Revanth Krishna Senthilkumaran, et al. (22 authors)",
+   "venue": "arXiv 2611.16728 (cs.RO, cs.AI, cs.LG)",
+   "date": "2026-11-12",
+   "arxiv": "https://arxiv.org/abs/2611.16728",
+   "github": "http://egox-dream.github.io",
+   "tags": [
+    "跨本体",
+    "第一视角",
+    "Embodiment Dreaming",
+    "MXT+",
+    "人类视频"
+   ],
+   "category": "VLA / 跨本体迁移",
+   "difficulty": "高级",
+   "tldr": "**问题**：人类、真机、仿真智能体的示教各有互补经验，但形态、传感与控制接口不同，混在一起训练往往学不动。**做法**：EgoX 用语义对应的观测/动作模态把异构示教组织起来，预训练 Modularized Cross-Embodiment Transformer with Embodiment Dreaming（MXT+）——每个观测模态配专用 tokenizer、每个动作模态配专用 expert，Transformer 主干跨本体共享；再加一个只在训练期生效的 embodiment-dreaming 目标，预测未来视觉与本体感觉状态的潜表征，逼主干去学各本体自身的动力学，最后用目标本体示教微调。**结果**：在 5 个任务、6 种本体（5 台真机＋1 个仿真人形）共 13 组任务-本体对上，跨本体预训练把平均归一化任务进度从 0.63 抬到 0.80；分布外条件下从 0.53 抬到 0.77，增益更明显。消融显示更宽的预训练混合、模块化接口与 dreaming 各自有贡献，dreaming 还让不同本体的潜几何更接近。",
+   "keyInsights": [
+    "用「语义对应的模态」而非统一动作空间来对齐异构本体，绕开了跨本体最麻烦的维度与接口对齐问题。",
+    "embodiment-dreaming 是训练期的辅助监督：预测未来潜状态而不产生额外推理成本，属于把世界模型当正则项用。",
+    "分布外增益（0.53→0.77）大于平均增益（0.63→0.80），说明跨本体预训练的主要价值是泛化而非拟合见过的任务。",
+    "潜几何跨本体更接近这一消融证据，把「共享主干学到了共用动力学」从直觉变成了可测的量。"
+   ],
+   "impact": "与站内 /learn/embodied-data-engineering（数据格式标准与工具链、轨迹可学性）、/learn/vla-models（跨本体适配）直接呼应：当数据来自人类第一视角视频、遥操作与仿真混合时，接口设计比数据量更先决定能不能学。它也和本轮 n716（OpenAI 押注通用模型直控机器人）构成有意思的张力——EgoX 表明把异构经验塞进同一主干需要相当具体的结构先验，通用模型「顺带」吸收机器人数据未必免费。落地时要留意：13 组任务-本体对规模不大，dreaming 的收益是否随本体数继续增长仍是开放问题。",
+   "idx": 363,
+   "id": "p363",
+   "addedDate": "2026-11-15"
+  },
+  {
+   "title": "I See What You Want: Decoding Hierarchical Operator Intent from Visual Teleoperation History",
+   "authors": "Xiangyi Jia, Kaixian Qu, Shengzhi Wang, Chenyu Yang, Robert Katzschmann, Marco Hutter",
+   "venue": "arXiv 2611.16419 (cs.RO, cs.CV)",
+   "date": "2026-11-12",
+   "arxiv": "https://arxiv.org/abs/2611.16419",
+   "github": "https://see-want.github.io/",
+   "tags": [
+    "遥操作",
+    "分层意图预测",
+    "VIAMO",
+    "VLM",
+    "人机接管"
+   ],
+   "category": "VLA / 人机协同",
+   "difficulty": "高级",
+   "tldr": "**问题**：遥操作时操作员没有给出显式指令，机器人能否只从一小段视觉历史里读出「正在做的原子动作」和「它服务于什么任务」？这直接决定策略能否在任务中途平滑接管。**做法**：把问题形式化为分层意图预测，构建 VIAMO 数据集——11 个机器人来源、6600 段 episode、13,653 条时间对齐的动作标注与 9702 条任务标注；在其上微调 VLM 得到 Vision-Intention Model（VIM）。**结果**：GPT-4o 在留出集上的动作/任务 Sentence-BERT 相似度仅 0.563/0.470，GPT-5.6 Luna 为 0.581/0.554，VIM 提升到 0.825/0.821；在训练集中两个标签都没出现过的 35.4% 测试动作上仍有 0.726/0.717。下游把 VIM 预测的任务交给 VLA 策略在未见过的真实环境中途接管，遥操作时间比 GPT-4o 少 34.6%、比 GPT-5.6 Luna 少 39.8%，意图预测延迟平均降约 70%。",
+   "keyInsights": [
+    "把「意图」拆成原子动作与上层任务两层联合推断，比只识别动作更接近接管决策真正需要的信息。",
+    "VIAMO 覆盖 11 个机器人来源，并用 35.4% 双标签未见的留出动作专门测组合泛化，避免只在见过的动作词上刷分。",
+    "大参数专有模型在零样本下并不擅长读遥操作历史，微调 smaller VLM 反而同时拿到精度与约 70% 的延迟下降。",
+    "把意图预测接成 VLA 中途接管，使这项能力有了可量化的下游收益（遥操作时间），而不只是一组语义相似度。"
+   ],
+   "impact": "对数据采集与人机协同这条线，这篇给出了一个很实用的接口：遥操作不必全程由人做完，模型读出上层任务后可以让策略接着执行，直接压缩昂贵的人工示教时长。它与站内 /learn/data-collection（第一视角采集、手部姿态难点）、/learn/imitation-learning（行为克隆与动作分块）互补——那里讲怎么采，这里讲采的过程中机器人能提前接手多少。工程上要注意延迟与接管时机的耦合：意图预测的 70% 延迟下降只有在接入真实控制环后才有意义，否则只是离线指标。",
+   "idx": 362,
+   "id": "p362",
+   "addedDate": "2026-11-15"
+  },
   {
    "idx": 357,
    "title": "STVLA: Spatial-aware and Temporal-memory for Vision-Language-Action Models",
@@ -9626,5 +9766,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 335
+ "totalItems": 340
 }

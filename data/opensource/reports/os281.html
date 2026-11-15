@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Space Robotics Bench：面向太空作业的机器人学习基准（Isaac Lab） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Space Robotics Bench：面向太空作业的机器人学习基准（Isaac Lab） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="space-robotics-benchisaac-lab">Space Robotics Bench：面向太空作业的机器人学习基准（Isaac Lab）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/AndrejOrsula/space_robotics_bench">https://github.com/AndrejOrsula/space_robotics_bench</a>  </p>
+<p><strong>Stars</strong>: 215 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-15  </p>
+<p><strong>组织</strong>: Andrej Orsula  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-15</p>
+</blockquote>
+<hr />
+<p><strong>AndrejOrsula/space_robotics_bench</strong> 是建立在 Isaac Lab / Isaac Sim 之上的机器人学习基准，把实验场景从地面搬到太空作业：轨道环境下的机械臂操作、自由漂浮基座动力学、极端光照与通信延迟等约束被纳入统一的仿真与评测接口。仓库提供环境定义、任务与训练脚本，Python / Apache-2.0，215 star，项目页 AndrejOrsula.github.io/space_robotics_bench。</p>
+<p>收录理由是它把「仿真域」这个变量推到了常规具身基准之外。本轮 p364（BlinkMimic 在可微世界模型里分钟级训完跟踪策略）说明训练速度高度依赖仿真器的梯度与并行能力；而 Space Robotics Bench 提供了一个检验这类方法是否只在地面假设下成立的对照组：当基座不再固定、接触不再有地面支撑时，同一套策略与数值积分格式还稳不稳。</p>
+<p><strong>为什么值得进站</strong>：与 /learn/physics-simulation（刚体动力学、碰撞检测、数值积分）、/learn/robot-dynamics（浮动基座动力学边界）配套读最合适——教材里推导「浮动基座」时往往一句带过，这个基准把它变成了可跑的任务。</p>
+<hr />
+<ol>
+<li><strong>Isaac Lab / Isaac Sim 底座</strong>：复用 GPU 并行仿真与标准环境接口，任务定义与训练脚本可对接现有 RL 栈；</li>
+<li><strong>自由漂浮基座</strong>：取消地面固定假设，机械臂运动与基座姿态通过动量守恒耦合，控制输入会反作用于本体；</li>
+<li><strong>轨道作业任务</strong>：面向在轨服务、捕获与装配类操作，包含常规地面基准没有的接触与光照条件；</li>
+<li><strong>统一评测接口</strong>：环境、任务与指标分层，便于把同一策略在地面版与太空版之间做对照；</li>
+<li><strong>可扩展环境定义</strong>：Apache-2.0，环境配置可复用作自定义任务的起点。</li>
+</ol>
+<p><strong>读法</strong>：先跑一遍地面固定基座版本再切到自由漂浮版本，观察同一策略的回报与稳定性变化——这个差值就是把「基座固定」这一隐含先验去掉的代价。另一个要盯的是积分格式：自由漂浮系统对能量漂移比地面系统敏感，/learn/physics-simulation 里显式欧拉与辛积分器的长期能量差异在这里会被放大。</p>
+<hr />
+<ul>
+<li><strong>官方仓库</strong>：github.com/AndrejOrsula/space_robotics_bench — Robot Learning Beyond Earth（Isaac Lab / Isaac Sim，Apache-2.0）；</li>
+<li><strong>项目页</strong>：AndrejOrsula.github.io/space_robotics_bench；</li>
+<li><strong>p364 BlinkMimic</strong>（站内，arXiv 2611.16422）：可微世界模型里的分钟级运动跟踪训练与三项时间分解；</li>
+<li><strong>p365 Runtime Safety on a Full-Size Humanoid</strong>（站内，arXiv 2611.15928）：域外工况下安全层限值整定；</li>
+<li><strong>os275 NVIDIA Warp</strong>（站内）：可微仿真内核；</li>
+<li>站内 /learn/physics-simulation、/learn/robot-dynamics。</li>
+</ul>
+<hr />
+<ol>
+<li><code>git clone https://github.com/AndrejOrsula/space_robotics_bench</code>，按 README 配好 Isaac Lab / Isaac Sim 环境，先跑通一个官方示例任务；</li>
+<li>把同一策略分别在「固定基座」与「自由漂浮基座」配置下各训一次，记录回报曲线与失败模式差异；</li>
+<li>做积分器敏感性实验：切换仿真步长与积分格式，统计长期动量/能量漂移，验证 /learn/physics-simulation 的稳定性结论在浮动基坐下是否更明显；</li>
+<li>复现 p364 的时间分解思路：记录单次迭代成本、拟合迭代数与清除失败迭代数，看太空域里哪一项占比变大；</li>
+<li>换一个未见过的初始角动量重测，量化分布外衰减；</li>
+<li>与 os275（Warp 可微仿真）、p364（BlinkMimic）对照：可微世界模型在浮动基坐下反传的梯度是否还稳定；</li>
+<li>与站内 /learn/physics-simulation、/learn/robot-dynamics 交叉阅读。</li>
+</ol>
+<pre><code class="language-python"># Fixed-base vs free-floating base: the same policy, two dynamics regimes.
+def compare_regimes(policy, make_env, seeds=(0, 1, 2)):
+    out = {}
+    for regime in ('fixed_base', 'free_floating'):
+        rets = []
+        for s in seeds:
+            env = make_env(regime=regime, seed=s)
+            rets.append(policy.evaluate(env))
+        out[regime] = {'mean': sum(rets) / len(rets), 'all': rets}
+    out['regime_gap'] = out['fixed_base']['mean'] - out['free_floating']['mean']
+    return out
+
+# 第 3 步：漂移用总动量而非只看回报，
+# 自由漂浮系统里能量守恒被破坏会先于任务失败出现。
+</code></pre>
+<p>第 2 步的差值比任何绝对分数都更能说明「地面先验」值多少。</p>
+<hr />
+<p>公开可得的是工程事实：215 star、Python、Apache-2.0、2024-10 建立、2026-11-09 活跃推送、5 个 open issue，topics 含 benchmark / isaac-lab / isaac-sim / robot-learning / simulation，项目页 AndrejOrsula.github.io/space_robotics_bench。仓库不提供跨任务统一成功率表，本站不替它编造数字。</p>
+<p>对<strong>仿真基准</strong>类项目，该核对的是四项：</p>
+<ol>
+<li><strong>域差可测性</strong>：能否方便切换固定基座与自由漂浮基座，这是它相对普通 Isaac 环境最核心的价值；</li>
+<li><strong>物理保真度边界</strong>：动量守恒、接触求解与延迟建模在哪些条件下失效，文档是否说明；</li>
+<li><strong>评测可复现性</strong>：随机种子、初始条件分布、成功判据是否显式固定；</li>
+<li><strong>与主流 RL 栈的兼容性</strong>：能否不改动策略代码就接入现有训练脚本。</li>
+</ol>
+<p>本站把它归在 <code>simulation</code>，与 os275（可微仿真内核）、os279（索引）、os280（导航模型）分工不同：它是检验「方法是否只在地面成立」的对照场，而不是又一个刷分榜。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Space Robotics Bench</th>
+<th>常规 Isaac Lab 地面任务</th>
+<th>真实太空在轨试验</th>
+<th>p364 BlinkMimic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基座假设</td>
+<td>自由漂浮为主</td>
+<td>固定于地面</td>
+<td>真实自由漂浮</td>
+<td>地面人形</td>
+</tr>
+<tr>
+<td>成本</td>
+<td>GPU 仿真</td>
+<td>GPU 仿真</td>
+<td>极高</td>
+<td>单卡分钟级</td>
+</tr>
+<tr>
+<td>可微 / 并行</td>
+<td>复用 Isaac 栈</td>
+<td>复用 Isaac 栈</td>
+<td>不适用</td>
+<td>可微世界模型反传</td>
+</tr>
+<tr>
+<td>主要用途</td>
+<td>域外泛化检验</td>
+<td>常规策略训练</td>
+<td>最终验证</td>
+<td>训练速度归因</td>
+</tr>
+<tr>
+<td>主要风险</td>
+<td>保真度边界未明</td>
+<td>隐含地面先验</td>
+<td>不可重复</td>
+<td>口径窄</td>
+</tr>
+</tbody>
+</table>
+<p>与 <strong>p364（BlinkMimic）</strong>、<strong>os275（NVIDIA Warp）</strong> 构成「仿真器能力 → 训练速度 → 域外泛化」的完整链条：Warp 提供可微内核，BlinkMimic 展示可微仿真能把训练压到分钟级，而 Space Robotics Bench 检验这类加速在换掉地面假设后还剩多少。</p>
+<p>与站内 /learn/physics-simulation（数值积分、稳定性与接触求解）、/learn/robot-dynamics（浮动基座动力学）是直接的理论—实践配对；与 <strong>p365（全尺寸人形运行时安全）</strong> 也有一层呼应——域外工况下安全层的限值整定问题会更突出。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
