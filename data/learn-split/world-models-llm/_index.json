@@ -42,7 +42,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：世界模型概念+经典论文\n**第2周**：LLM+机器人论文\n**第3周**：前沿跟踪",
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-11-16T08:32",
   "maturity": "comprehensive",
   "sectionsMeta": [
     {
@@ -178,19 +178,24 @@
     {
       "id": "sec-07",
       "title": "具身奖励模型与RLEF：用环境反馈强化VLA",
-      "lastUpdated": "2026-04-27T11:33",
-      "chars": 4412,
+      "lastUpdated": "2026-11-16T08:32",
+      "chars": 14188,
       "shortTitle": "具身奖励模型与RLEF",
       "difficulty": "中级",
       "estimatedMinutes": 5,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 16,
       "headings": [
         "从RLHF到RLEF",
         "具身奖励模型",
         "Embodied-R1的RFT方法",
         "VLM作为奖励函数",
         "RLEF vs RLHF vs 纯BC",
+        "深入一：把 RLHF 的账本搬到机器人上",
+        "深入二：奖励塑形与策略不变性",
+        "深入三：VLM 当奖励函数时的校准",
+        "深入四：冻结世界模型作为「进展评估器」",
+        "深入五：从偏好对到 DPO——动作块级的写入",
         "练习"
       ],
       "summary": "LLM领域用RLHF（人类反馈强化学习）对齐模型行为。具身智能领域的类比是RLEF（环境反馈强化学习）——用机器人与环境的交互结果来强化VLA。"
@@ -380,7 +385,7 @@
       "summary": "前面几节把世界模型讲成了一台预测机器：给定当前观测 $o_t$ 与动作序列 $a_{t:t+k}$，输出未来观测 $\\hat{o}_{t+k}$。这个定义没错，但它把世界模型的用途说窄了。"
     }
   ],
-  "readingMinutes": 172,
+  "readingMinutes": 183,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 143254
+  "chars": 153030
 }

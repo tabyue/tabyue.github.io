@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awesome Robots ICL：机器人 In-Context Learning 方法、数据集与基准分类索引 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Awesome Robots ICL：机器人 In-Context Learning 方法、数据集与基准分类索引 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="awesome-robots-icl-in-context-learning">Awesome Robots ICL：机器人 In-Context Learning 方法、数据集与基准分类索引</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/JethroJames/awesome-robots-icl">https://github.com/JethroJames/awesome-robots-icl</a>  </p>
+<p><strong>Stars</strong>: 229 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-16  </p>
+<p><strong>组织</strong>: JethroJames  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-16</p>
+</blockquote>
+<hr />
+<p><strong>JethroJames/awesome-robots-icl</strong> 是综述《In-Context Learning for Robots: Methods and Applications》的配套仓库（MIT，约 229 star，2026-09 建立，2026-11 仍在更新）。它把机器人上下文学习（In-Context Learning, ICL）的<strong>方法、数据集与基准</strong>按分类体系与发布日期组织起来，并配一个可直接浏览的项目主页 jethrojames.github.io/awesome-robots-icl。</p>
+<p>ICL 指「不更新权重、只改上下文」这条适应路线：把示范、历史或检索到的经验放进提示 / 条件里，让冻结模型在新任务上表现改变。这与另一条「少量更新写进权重」的路线正好互补——本轮 p371（H2E 用 LoRA 把 Agent 会话经验蒸馏进 8B VLA，REVERIE-CE 35.0%→44.9%）是后者的代表，p369（FLUX-mimic 用视频预训练省示教）则介于两者之间。</p>
+<p>仓库的用处不在代码，而在<strong>判别</strong>：一个新方法究竟是真在做上下文适应，还是只是把示范塞进 prompt 后顺带微调了？分类表把方法、数据与基准分列，读者可以沿同一行核对「用了什么上下文、在哪个基准上、有没有更新权重」。对站内 /learn/ai-infra（LoRA 与 PEFT）与 /learn/embodied-agent（Harness 层）的读者，这是一份现成的适应路线地图。</p>
+<hr />
+<ol>
+<li><strong>三层分类</strong>：方法（Methods）、数据集（Datasets）、基准（Benchmarks）各自成表，避免把「某方法在某数据集上跑」混成一列。</li>
+<li><strong>双轴组织</strong>：按分类体系归类 + 按发布日期排序，既能横向比方法族，也能沿时间线看 ICL 在机器人领域的演进。</li>
+<li><strong>项目主页</strong>：独立 GitHub Pages 站点提供可浏览视图，不必 clone 仓库即可查条目。</li>
+<li><strong>覆盖交叉区</strong>：模仿学习、世界模型、VLA、机器人学习与 Agent 记忆 / 检索的交叉工作都在收录范围。</li>
+<li><strong>边界</strong>：以清单与主页为主，不含可训练的策略实现、不含评测脚本；MIT 许可允许 fork 成内部阅读表。</li>
+</ol>
+<p>关键设计是把「是否更新权重」隐含在方法分类里：ICL 条目默认权重冻结，凡涉及 LoRA / 全量微调的工作应归到相邻路线，读表时这一区分决定了你该把它和 p371 还是和 Harness 层放一起比较。</p>
+<hr />
+<ul>
+<li><strong>In-Context Learning for Robots: Methods and Applications</strong>（配套综述）— 仓库的分类依据，jethrojames.github.io/awesome-robots-icl。</li>
+<li><strong>Awesome Robots ICL 仓库</strong>（JethroJames，MIT，2026-09 起）— 方法 / 数据集 / 基准三类清单本体，github.com/JethroJames/awesome-robots-icl。</li>
+<li><strong>What Can a VLA Learn from the Agent That Calls It?</strong>（arXiv 2611.16246，库内 p371）— 对照路线：任务级经验蒸馏 H2E 用 LoRA 把 Agent 经验写进 8B VLA，REVERIE-CE 35.0%→44.9%。</li>
+<li><strong>Video-Action Models for Data-Efficient Industrial Manipulation</strong>（arXiv 2611.15974，库内 p369）— 介于两条路线之间：视频预训练提供先验，只靠两小时动作标注适配新工位。</li>
+<li><strong>站内联动</strong>：/learn/ai-infra 第 4 节 LoRA 与 PEFT；/learn/embodied-agent Harness 层与失败感知；/learn/world-models-llm 世界模型作为自改进引擎。</li>
+</ul>
+<hr />
+<ol>
+<li>先打开项目主页 <code>https://jethrojames.github.io/awesome-robots-icl/</code> 浏览分类视图，确认方法与基准两栏的对应关系。</li>
+<li>读配套综述《In-Context Learning for Robots: Methods and Applications》建立术语：什么算 context、什么算 adaptation、什么只是 prompt engineering。</li>
+<li>按「方法族 → 对应数据集 → 对应基准」三列竖着读同一行，避免只看方法名就下结论。</li>
+<li>判断一个新工作是否属 ICL：检查推理时权重是否冻结、性能提升是否来自上下文内容而非参数更新；若涉及 LoRA，归到 p371 那条路线。</li>
+<li>与站内路径对读：/learn/ai-infra 的「LoRA 与 PEFT」讲怎么写进权重，/learn/embodied-agent 的「Harness 层」讲怎么组织冻结模型，本仓库补上「只改上下文」这条第三种写法。</li>
+<li>团队使用可 fork 后按内部任务补一列「是否已在自有本体验证」，把清单变成选型表。</li>
+</ol>
+<p><strong>注意</strong>：仓库建立于 2026-09，属于较新的索引，ICL 在机器人领域仍快速扩张，条目覆盖会滞后于最新预印本；追最新进展仍需配合 arXiv API（本轮自动化正是用 <code>cat:cs.RO AND abs:...</code> + sortBy=submittedDate 发现候选）。</p>
+<hr />
+<p>该仓库为资源索引，不以运行性能为指标。公开可核的工程事实：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 229</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>建立时间</td>
+<td>2026-09-02</td>
+</tr>
+<tr>
+<td>最近推送</td>
+<td>2026-11-15</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python（清单 / 主页仓库）</td>
+</tr>
+<tr>
+<td>主页</td>
+<td>jethrojames.github.io/awesome-robots-icl</td>
+</tr>
+<tr>
+<td>内容形态</td>
+<td>方法 / 数据集 / 基准三类清单，无训练代码</td>
+</tr>
+</tbody>
+</table>
+<p>评价这类仓库应看<strong>分类是否可判别</strong>：把方法与权重更新方式分开、把数据集与基准分开，才能让「上下文适应」这个说法可被检验。相比之下，只按时间堆论文链接的清单无法回答「这条路线到底改了什么」。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>In-Context Learning（本仓库主题）</th>
+<th>LoRA / PEFT 经验蒸馏（p371 H2E）</th>
+<th>Harness 层组织（/learn/embodied-agent）</th>
+<th>全量微调</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>权重是否更新</td>
+<td>不更新</td>
+<td>低秩增量更新</td>
+<td>被组织的模型冻结，外部加框架</td>
+<td>全部更新</td>
+</tr>
+<tr>
+<td>适应载体</td>
+<td>上下文 / 示范 / 检索结果</td>
+<td>写进 $BA$ 增量</td>
+<td>技能编排、记忆、失败恢复</td>
+<td>新权重</td>
+</tr>
+<tr>
+<td>单任务成本</td>
+<td>一次前向，随上下文长度增长</td>
+<td>少量梯度步</td>
+<td>外部系统工程</td>
+<td>高</td>
+</tr>
+<tr>
+<td>遗忘风险</td>
+<td>无（基座不动）</td>
+<td>低（低秩约束）</td>
+<td>无</td>
+<td>高</td>
+</tr>
+<tr>
+<td>测试时是否需 LLM</td>
+<td>常需要组织上下文</td>
+<td>不需要（VLA 独立导航）</td>
+<td>需要</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>代表条目</td>
+<td>本仓库方法表</td>
+<td>arXiv 2611.16246</td>
+<td>站内 Harness 章节</td>
+<td>常规后训练</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么选</strong>：上下文极短、任务变化频繁且不愿动权重 → ICL；有少量成功会话、想把经验固化成常驻能力并去掉每 episode 的 LLM 调用 → H2E 式 LoRA 蒸馏；要组织多个冻结模型协同、处理失败恢复 → Harness 层；三者可叠加，但评测时必须分开报「是否更新权重」与「测试时是否依赖 LLM」，否则成本与延迟不可比。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

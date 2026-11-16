@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-15T08:32",
+ "lastUpdated": "2026-11-16T08:16",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,116 @@
   }
  ],
  "projects": [
+  {
+   "id": "os283",
+   "name": "Praxis-1：Runway 以 Apache 2.0 开放的 27B 世界动作模型（视频与动作联合预测）",
+   "github": "https://github.com/runwayml/praxis-1-oss",
+   "organization": "Runway",
+   "org": "Runway",
+   "category": "ai-model",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 107,
+   "description": "**runwayml/praxis-1-oss** 是 Runway 于 2026 年 11 月 11 日以 Apache 2.0 开放的世界动作模型（World Action Model），权重、推理代码与微调代码（含全量微调与 LoRA）一并放出，允许商用。架构是 27.2B 参数 MoE 视频扩散主干（20 层里 17 层用 MoE，1 共享 + 128 路由专家、每 token 激活 8，冻结 Wan2.2 VAE 与 Qwen3.5-2B 编码器）配一个 314M 的 16 层动作专家；每次控制调用吃语言指令、最近相机帧与本体 proprioceptive 状态，联合预测 6 个潜视频帧与 1.6 秒动作（24 步 @ 15 Hz）。\n\n发布内容覆盖 base、DROID、DROID-LeRobot、双臂 YAM 与 RoboLab-120 评测五类 checkpoint，Hugging Face 原生 LeRobot 支持，并进 vLLM-Omni 与 Runway Reactor 托管推理；硬件从 H100 / B200 数据中心卡一路到 RTX 5090、RTX PRO 6000 与机器人本体的 Jetson Thor。官方口径的 RoboLab-120 成绩为 1,200 episode 上 46.2% 成功率（555/1200），居世界动作模型与开放权重 VLA 首位；在从未进入训练数据的 Google RT-1 机器人上微调后 SimplerEnv 达 80.0%（原 RT-1 策略 52.4%）。\n\n**为什么值得看**：Runway 的主张是「网络视频作为预训练数据与遥操作机器人视频等价」，若成立，机器人大脑的瓶颈就从采集真机数据转移到能学多少通用视频。仓库还给出 `scripts/init_heads.py`，用 6 个轻量投影张量为新本体初始化状态与动作头——这是跨本体适配最实用的一小块工程。与本轮 p369（FLUX-mimic 在汽车制造工位上两小时示教达 77.5%）合读，正好是同一判断的开源侧与工业侧两条证据。**注意**：46.2% 与 80.0% 均为厂商自报、RoboLab-120 是仿真基准，仿真成功不等于真机部署成功；榜单整体排名第五，前列还有不同类型的 Agentic 语言模型策略，不直接可比。",
+   "features": [
+    "Apache 2.0 开放权重 + 推理 + 全量微调 / LoRA 代码，明确允许商用",
+    "27.2B MoE 视频扩散主干（每 token 激活约 2.8B）+ 314M 动作专家，联合预测未来视频与 1.6 秒动作",
+    "五类 checkpoint：base / DROID / DROID-LeRobot / 双臂 YAM / RoboLab-120 评测，Hugging Face 原生 LeRobot 支持",
+    "跨本体适配只换 6 个轻量状态与动作投影张量，仓库带 init_heads.py 初始化脚本",
+    "覆盖 H100 / B200 → RTX 5090 → Jetson Thor 的部署谱系，另有 NVFP4 量化变体",
+    "RoboLab-120 46.2%（1200 episode）居世界动作模型首位；未见过的 RT-1 上微调后 SimplerEnv 80.0%"
+   ],
+   "tags": [
+    "Praxis-1",
+    "Runway",
+    "世界动作模型",
+    "MoE 扩散",
+    "Apache 2.0",
+    "LeRobot"
+   ],
+   "addedDate": "2026-11-16"
+  },
+  {
+   "id": "os284",
+   "name": "Awesome Humanoid Robot Learning：人形机器人学习论文清单（Yanjie Ze 维护）",
+   "github": "https://github.com/YanjieZe/awesome-humanoid-robot-learning",
+   "organization": "YanjieZe",
+   "org": "Yanjie Ze",
+   "category": "data-tools",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 2900,
+   "description": "**YanjieZe/awesome-humanoid-robot-learning** 是维护时间最长、star 最高的人形机器人学习论文清单之一（2024-10 建立、2026-11 仍在高频更新，MIT，约 2900 star）。它按研究主题把全身控制、 locomotion、模仿学习、强化学习、sim-to-real、人形操作与 VLA 等方向的论文系统归档，长期被用作该领域的入门索引与相关工作速查表。\n\n**为什么值得看**：人形学习这条线近两年的论文密度极高，且横跨控制、RL、视觉与大模型多个社区，单靠 arXiv 关键字很容易漏掉跨会议的工作。这份清单的价值不在代码，而在把「这个方向已经做到哪一步」整理成可浏览的结构——写综述、做开题、给新同学定阅读顺序时，比逐个检索更省时间。与本轮 p364（BlinkMimic，单张 RTX 4090 上 3.4 分钟训完 40 段 LAFAN1 运动跟踪）、p368（ManiLadder 分级难度基准）以及 n726（启元累计下线破万台、本体量产提速）合读，可以看出清单里「训练更快」与「评测更准」这两条线正在同时加速。仓库本身以 Markdown 清单为主，适合当索引用而非当框架跑。",
+   "features": [
+    "按主题归档人形全身控制、locomotion、模仿 / 强化学习、sim-to-real、操作与 VLA 方向的论文",
+    "2024-10 建立、持续高频更新至 2026-11，约 2900 star，是该方向引用最多的索引之一",
+    "MIT 许可，Markdown 清单可直接 fork 成课题组内部阅读路线",
+    "适合做开题调研、相关工作章节与新成员入门阅读顺序的底稿",
+    "与本轮 BlinkMimic / ManiLadder / 人形量产新闻构成「训练提速 + 评测分级」的同期参照"
+   ],
+   "tags": [
+    "论文清单",
+    "人形机器人学习",
+    "awesome list",
+    "全身控制",
+    "Sim-to-Real"
+   ],
+   "addedDate": "2026-11-16"
+  },
+  {
+   "id": "os285",
+   "name": "Awesome Robots ICL：机器人 In-Context Learning 方法、数据集与基准分类索引",
+   "github": "https://github.com/JethroJames/awesome-robots-icl",
+   "organization": "JethroJames",
+   "org": "JethroJames",
+   "category": "data-tools",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 229,
+   "description": "**JethroJames/awesome-robots-icl** 是综述《In-Context Learning for Robots: Methods and Applications》的配套仓库，把机器人上下文学习（In-Context Learning, ICL）的方法、数据集与基准按分类体系与发布日期组织起来，并配一个可直接浏览的项目主页（jethrojames.github.io/awesome-robots-icl）。MIT 许可，2026-09 建立，2026-11 仍在更新。\n\n**为什么值得看**：ICL 是「不更新权重、只改上下文」这条适应路线的总称，正好与另一条「少量更新写进权重」形成对照——本轮 p371（H2E 用 LoRA 把 Agent 经验蒸馏进 8B VLA，REVERIE-CE 35.0%→44.9%）是后者的代表，p369（FLUX-mimic 用视频预训练省示教）则介于两者之间。仓库把模仿学习、世界模型、VLA、机器人学习里的 ICL 工作收在同一张分类表里，便于判断某个新方法是真的在做上下文适应，还是只是把示范塞进 prompt。对站内 /learn/ai-infra（LoRA 与 PEFT）与 /learn/embodied-agent（Harness 层）的读者，这是一份现成的「适应路线地图」。仓库以清单与主页为主，不含可训练的策略实现。",
+   "features": [
+    "配套综述 In-Context Learning for Robots: Methods and Applications，方法 / 数据集 / 基准三类齐全",
+    "按分类体系 + 发布日期双重组织，便于沿时间线看 ICL 在机器人领域的演进",
+    "有独立项目主页可直接浏览，MIT 许可、2026-11 仍在更新",
+    "把「不更新权重的上下文适应」与本轮 p371 的 LoRA 经验蒸馏构成清晰的路线对照",
+    "覆盖模仿学习、世界模型、VLA 与机器人学习交叉处的工作"
+   ],
+   "tags": [
+    "In-Context Learning",
+    "机器人学习",
+    "综述索引",
+    "awesome list",
+    "适应路线"
+   ],
+   "addedDate": "2026-11-16"
+  },
+  {
+   "id": "os286",
+   "name": "Spark-0：空间对齐触觉预训练，面向机器人灵巧操作",
+   "github": "https://github.com/XsparkAI/Spark-0",
+   "organization": "XsparkAI",
+   "org": "XsparkAI",
+   "category": "perception",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 15,
+   "description": "**XsparkAI/Spark-0** 是《Scaling Spatially Aligned Tactile Pretraining for Robot Dexterous Manipulation》的官方仓库（MIT，项目页 xsparkai.com/spark-0，2026-10 建立）。核心主张是：触觉信号若只在时间维度上做预训练，会因传感器阵列与接触位置的空间错位而难以迁移；把触觉表征与接触空间对齐后再规模化预训练，才能让同一套表征服务不同手型与不同任务。\n\n**为什么值得看**：灵巧手是本轮产业侧被反复点名的瓶颈——n726 提到 IDC 预计 2026 年全球灵巧手出货约 2.5 万台、中国厂商占比超 85%，而 n719 那篇晨报里智元王闯直言大部分客户还不敢每天真实使用灵巧手。触觉要解决的不只是「有没有信号」，更是「信号能不能跨本体复用」；Spark-0 的空间对齐思路，与本轮 p370（VOKE 从视觉侧显式估计物体速度 / 加速度，构成完整运动学状态）恰好一个补接触、一个补运动学，是灵巧操作感知层的两半。仓库规模较小（约 15 star），适合作为读论文与复现实验的入口，不宜当作生产级框架。**注意**：项目页与仓库公开信息有限，预训练数据规模与下游任务列表需以论文与后续 release 为准。",
+   "features": [
+    "提出空间对齐的触觉预训练：把触觉表征与接触空间对齐，缓解阵列 / 接触位置错位导致的迁移困难",
+    "面向机器人灵巧操作，目标是同一套触觉表征服务不同手型与任务",
+    "MIT 许可，官方仓库 + 独立项目页（xsparkai.com/spark-0）",
+    "与本轮 VOKE（视觉侧运动学状态估计）构成触觉 / 视觉两条互补的感知路径",
+    "规模较小，定位为论文复现与研究入口，非生产级框架"
+   ],
+   "tags": [
+    "触觉预训练",
+    "空间对齐",
+    "灵巧操作",
+    "触觉表征",
+    "XsparkAI"
+   ],
+   "addedDate": "2026-11-16"
+  },
   {
    "name": "Cadence：以 System 1 为主、System 2 慢修正的在线学习认知架构",
    "github": "https://github.com/muellerberndt/cadence",
@@ -7094,5 +7204,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 269
+ "totalItems": 273
 }

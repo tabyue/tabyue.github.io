@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spark-0：空间对齐触觉预训练，面向机器人灵巧操作 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Spark-0：空间对齐触觉预训练，面向机器人灵巧操作 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="spark-0">Spark-0：空间对齐触觉预训练，面向机器人灵巧操作</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/XsparkAI/Spark-0">https://github.com/XsparkAI/Spark-0</a>  </p>
+<p><strong>Stars</strong>: 15 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-16  </p>
+<p><strong>组织</strong>: XsparkAI  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-16</p>
+</blockquote>
+<hr />
+<p><strong>XsparkAI/Spark-0</strong> 是论文《Scaling Spatially Aligned Tactile Pretraining for Robot Dexterous Manipulation》的官方仓库（MIT，约 15 star，2026-10-16 建立，项目页 xsparkai.com/spark-0）。核心主张是：触觉信号若只在时间维度上做预训练，会因传感器阵列排布与接触位置的空间错位而难以迁移；把触觉表征与<strong>接触空间对齐</strong>之后再规模化预训练，同一套表征才能服务不同手型与不同任务。</p>
+<p>为什么这件事在本轮值得收：灵巧手是产业侧被反复点名的瓶颈。n726 引 IDC 预计 2026 年全球灵巧手出货约 2.5 万台、中国厂商占比超 85%；而 n719 那篇晨报里智元合伙人王闯直言「大部分客户并不敢在真实场景中每天使用灵巧手」，均胜灵犀给出灵巧手约占整机 20% 成本、其中执行器约占手成本 50% 的拆解。触觉要解决的不只是「有没有信号」，更是「信号能不能跨本体复用」——这正是 Spark-0 的空间对齐要回答的。</p>
+<p>与本轮 p370（VOKE 从视觉侧显式估计物体线 / 角速度与加速度，构成完整运动学状态）恰好互补：一个补接触，一个补运动学，是灵巧操作感知层的两半。仓库规模较小，适合读论文与复现实验的入口，不宜当作生产级框架。</p>
+<hr />
+<ol>
+<li><strong>输入</strong>：触觉传感器阵列的多帧信号（taxel 时序），可选配同步的视觉 / 本体状态。</li>
+<li><strong>空间对齐层</strong>：把 taxel 索引映射到接触发生的物理空间位置，使不同手型、不同阵列排布下的同一接触模式落在可对齐的表征坐标里；这一步是 Spark-0 与「纯时序触觉预训练」的分水岭。</li>
+<li><strong>预训练目标</strong>：在对齐后的表征上做规模化自监督预训练（论文标题里的 Scaling 指数据 / 模型规模带来的增益）。</li>
+<li><strong>下游适配</strong>：把预训练表征接到灵巧操作策略上，用少量任务数据微调或线性探针评估迁移性。</li>
+<li><strong>仓库形态</strong>：Python，MIT，含项目页；公开信息以论文与官方 release 为准。</li>
+</ol>
+<p>需要留意的边界：官方仓库与项目页公开的实现细节有限（约 15 star，2026-10 后未见高频推送），本条目的架构描述依据论文标题、摘要性表述与项目定位推断，具体模块名与训练配置应以论文正文和后续 release 为准。</p>
+<hr />
+<ul>
+<li><strong>Scaling Spatially Aligned Tactile Pretraining for Robot Dexterous Manipulation</strong>（Spark-0 论文）— 项目页 xsparkai.com/spark-0，仓库 github.com/XsparkAI/Spark-0（MIT）。</li>
+<li><strong>VOKE: Visual Object Kinematics Estimator for Dexterous In-Hand Manipulation</strong>（arXiv 2611.16423，库内 p370）— 视觉侧补出线 / 角速度与加速度，与 Spark-0 的接触表征互补。</li>
+<li><strong>Learning Heterogeneous Tactile Representation for General Dexterous Manipulation</strong>（arXiv 2611.12806）— 同期异质触觉表征工作，可作方法对照。</li>
+<li><strong>Which Taxels, Not How Many: Tactile Sensor Placement for Dexterous Policies</strong>（arXiv 2611.10647）— 从传感器布局角度讨论触觉信息量，与「空间对齐」前提直接相关。</li>
+<li><strong>站内联动</strong>：n726 启元万台下线与灵巧手出货数据；n719 蔚建融资稿里智元王闯关于灵巧手「作业关」的判断；/learn/sensors-hardware 触觉传感器、编码器与电机反馈。</li>
+</ul>
+<hr />
+<ol>
+<li>打开项目页 <code>https://xsparkai.com/spark-0</code> 与仓库 <code>https://github.com/XsparkAI/Spark-0</code>，先确认论文 PDF、权重与数据是否已 release（新项目常分批发）。</li>
+<li>核对传感器前提：确认自有触觉阵列的 taxel 排布与空间标定信息可用——没有接触空间坐标，空间对齐这一步无法复现。</li>
+<li>按 README 安装 Python 依赖；若只放预训练配置而未放权重，先跑仓库自带的评测脚本确认基线可运行。</li>
+<li>复现顺序建议：先在单一手型上验证预训练表征的线性探针，再换第二种手型测迁移掉点，这一步最能体现「空间对齐」的价值。</li>
+<li>与本轮资产对读：视觉侧运动学状态估计看 p370 VOKE，产业侧灵巧手瓶颈看 n726 与 n719，判断自己缺的是接触信息还是运动学信息。</li>
+<li>若用于真机，务必先做时间同步与标定检查——触觉与视觉 / 本体不同步会让对齐层学到的空间关系整体偏移。</li>
+</ol>
+<p><strong>注意</strong>：仓库规模小、文档可能不完整，遇到缺文件优先查项目页与论文附录，不要自行猜测配置；本条目不承诺任何未公开的性能数值。</p>
+<hr />
+<p>公开可得的是工程事实，论文性能数值以官方 release 为准：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 15</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>建立时间</td>
+<td>2026-10-16</td>
+</tr>
+<tr>
+<td>最近推送</td>
+<td>2026-10-24</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>项目页</td>
+<td>xsparkai.com/spark-0</td>
+</tr>
+<tr>
+<td>主张</td>
+<td>空间对齐的触觉预训练，面向跨手型 / 跨任务迁移</td>
+</tr>
+</tbody>
+</table>
+<p><strong>不编造数值</strong>：仓库与项目页在本轮核查时未给出可引用的成功率、数据规模或下游任务列表，因此这里不填性能数字。产业侧可参照的公开口径来自新闻：IDC 预计 2026 年全球灵巧手出货约 2.5 万台、中国厂商占比超 85%（n726）；灵巧手约占整机成本 20%、执行器约占手成本 50%（n719）。这些是市场与成本数据，不是 Spark-0 的模型指标，不要混用。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Spark-0（空间对齐触觉预训练）</th>
+<th>纯时序触觉预训练</th>
+<th>视觉侧运动学估计（VOKE, p370）</th>
+<th>视觉—触觉联合世界模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主要信号</td>
+<td>触觉 taxel 时序 + 接触空间坐标</td>
+<td>触觉 taxel 时序</td>
+<td>RGB / 深度视频</td>
+<td>视觉 + 触觉</td>
+</tr>
+<tr>
+<td>对齐对象</td>
+<td>接触空间位置</td>
+<td>时间轴</td>
+<td>物体 SE(3) 状态</td>
+<td>跨模态潜空间</td>
+</tr>
+<tr>
+<td>跨本体迁移</td>
+<td>设计目标之一</td>
+<td>受阵列排布限制</td>
+<td>依赖位姿估计器泛化</td>
+<td>依赖配对数据</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>可迁移触觉表征</td>
+<td>触觉表征</td>
+<td>位姿 + 线 / 角速度 + 加速度</td>
+<td>未来状态 / 动作</td>
+</tr>
+<tr>
+<td>典型用途</td>
+<td>灵巧手接触判别、策略输入</td>
+<td>单一手型内任务</td>
+<td>手内操作控制</td>
+<td>策略评测与学习</td>
+</tr>
+<tr>
+<td>成熟度</td>
+<td>研究预览、小规模仓库</td>
+<td>常见做法</td>
+<td>论文配套、有 DexYCB / OakInk 评测</td>
+<td>前沿方向</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么选</strong>：只有触觉阵列、且要跨手型复用 → 看 Spark-0 的空间对齐思路；已有时序触觉管线且不换本体 → 纯时序预训练成本更低；缺的是「物体怎么动」而非「接触到了没」 → 用 VOKE 那套显式运动学状态；两者都缺且有多模态配对数据 → 才考虑联合世界模型（如本轮候选里的 PhysCanvas 类工作）。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

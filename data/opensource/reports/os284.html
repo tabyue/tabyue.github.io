@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awesome Humanoid Robot Learning：人形机器人学习论文清单（Yanjie Ze 维护） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Awesome Humanoid Robot Learning：人形机器人学习论文清单（Yanjie Ze 维护） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="awesome-humanoid-robot-learningyanjie-ze">Awesome Humanoid Robot Learning：人形机器人学习论文清单（Yanjie Ze 维护）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/YanjieZe/awesome-humanoid-robot-learning">https://github.com/YanjieZe/awesome-humanoid-robot-learning</a>  </p>
+<p><strong>Stars</strong>: 2900 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-16  </p>
+<p><strong>组织</strong>: YanjieZe  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-16</p>
+</blockquote>
+<hr />
+<p><strong>YanjieZe/awesome-humanoid-robot-learning</strong> 是人形机器人学习方向维护时间最长、星标最高的论文清单之一（MIT，约 2900 star，2024-10 建立，2026-11 仍在高频更新）。它以 Markdown 清单形式把全身控制、locomotion、模仿学习、强化学习、sim-to-real、人形操作与 VLA 等方向的论文按主题归档，长期被用作该领域的入门索引与相关工作速查表。</p>
+<p>仓库本身不含可训练的策略实现，价值在<strong>结构化的领域地图</strong>：人形学习横跨控制、RL、视觉与大模型多个社区，论文散落在 CoRL、RSS、ICRA、IROS、NeurIPS 与各类 workshop，单靠 arXiv 关键字检索极易漏掉跨社区工作。这份清单把「这个方向已经做到哪一步」整理成可浏览的层级，适合开题调研、综述相关工作章节、以及给新成员定阅读顺序。</p>
+<p>与本轮 p364（BlinkMimic，单张 RTX 4090 上 3.4 分钟训完 40 段 LAFAN1 全身运动跟踪）、p368（ManiLadder 分级难度基准）以及 n726（启元累计下线破万台、本体量产提速）合读，可以清楚看到清单里「训练更快」与「评测更准」两条线在 2026 年 11 月同时加速。</p>
+<hr />
+<ol>
+<li><strong>组织方式</strong>：单一 README 为主体的分层 Markdown 清单，按研究主题分节（全身控制 / locomotion / 模仿与强化学习 / sim-to-real / 操作与 VLA 等）。</li>
+<li><strong>条目粒度</strong>：每条通常含论文标题、作者 / 年份、会议或 arXiv 链接，部分条目附项目页或代码仓库。</li>
+<li><strong>维护模式</strong>：靠人工整理与社区 PR 增量更新，按时间追加新工作而非重写旧分类，因此能沿清单看方向演进。</li>
+<li><strong>许可与依赖</strong>：MIT，纯文本资源，无运行时依赖；可整体 fork 成课题组内部阅读路线。</li>
+<li><strong>边界</strong>：不含基准、数据集、评测脚本或训练代码，不是框架；使用方式是当索引，不是当依赖装进项目。</li>
+</ol>
+<p>对工程团队的实际用法：把清单按节拆成「必读 10 篇 / 选读 / 前沿追踪」三层，再与本轮新增的论文详情（p364 训练提速、p368 难度基准、p370 灵巧手运动学）交叉标注，形成一条从控制基础到前沿评测的阅读路径。</p>
+<hr />
+<ul>
+<li><strong>Awesome Humanoid Robot Learning 仓库</strong>（Yanjie Ze，MIT，2024-10 起持续更新）— 官方清单本体，github.com/YanjieZe/awesome-humanoid-robot-learning。</li>
+<li><strong>BlinkMimic: Training a Humanoid Motion Tracker in Minutes on a Single GPU</strong>（arXiv 2611.16422，库内 p364）— 单卡 3.4 分钟训完 40 段 LAFAN1，可作为「训练提速」线的当前代表。</li>
+<li><strong>ManiLadder</strong>（arXiv 2611.16374，库内 p368）— 112 任务 / 4 难度级的操作基准，代表「评测更准」线，虽偏操作但对人形上半身策略同样适用。</li>
+<li><strong>SuperMimic / InstantTrack</strong>（BlinkMimic 的前置工作）— 可微世界模型反向传播训跟踪策略、Muon 更新与残差策略，读清单里 sim-to-real 章节时可顺这条链追。</li>
+<li><strong>站内联动</strong>：n726 启元 Q1/T1 累计下线破万台（本体量产提速）；/learn/robot-dynamics 动力学建模方法；/learn/reinforcement-learning 强化学习。</li>
+</ul>
+<hr />
+<ol>
+<li>打开仓库主页 <code>https://github.com/YanjieZe/awesome-humanoid-robot-learning</code>，先通读目录结构，确认自己关心的小节位置。</li>
+<li>按主题而非按时间读：建议顺序为 locomotion / 全身控制 → 模仿学习与 RL → sim-to-real → 操作与 VLA，先建立「状态—动作—奖励—迁移」的共同语言。</li>
+<li>每个小节挑 2-3 篇带代码的论文精读，其余只记标题与结论，避免陷入通读全部条目。</li>
+<li>需要复现时，从条目里的项目页 / 代码链接跳转，别在清单仓库里找实现（这里只有链接）。</li>
+<li>团队使用可直接 fork 后按内部方向重排章节，MIT 许可允许改写与再分发。</li>
+<li>与本轮站内资源配合：读「训练提速」类条目时对照 p364 的迭代成本 / 拟合迭代数 / 清除失败迭代数三分法；读「评测」类条目时对照 p368 的固定数据量 + 统一策略难度校准。</li>
+</ol>
+<p><strong>注意</strong>：awesome 类清单的时效依赖维护者活跃度，本仓库 2026-11-15 仍有推送，但个别条目可能未同步最新 v2 版本；写正式综述时仍需逐条回 arXiv 核对版本号。</p>
+<hr />
+<p>该仓库不以运行性能为指标，公开可核的工程事实为：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 2900（同方向清单中最高之一）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>建立时间</td>
+<td>2024-10-30</td>
+</tr>
+<tr>
+<td>最近推送</td>
+<td>2026-11-15</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python（清单仓库，实际以 Markdown 为主）</td>
+</tr>
+<tr>
+<td>内容形态</td>
+<td>分层 Markdown 论文清单，无 benchmark / 无训练代码</td>
+</tr>
+</tbody>
+</table>
+<p>「性能」在这里应理解为<strong>覆盖度与维护活跃度</strong>：2900 star 与两年持续更新说明它被社区当作默认索引使用；但对具体研究问题，仍需回到论文原文核对实验设置。这也是把它归到 data-tools 而非 framework 的原因——它优化的是检索成本，不是计算吞吐。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Awesome Humanoid Robot Learning（os284）</th>
+<th>Awesome World Models 类清单</th>
+<th>综述论文</th>
+<th>arXiv 关键字检索</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>覆盖焦点</td>
+<td>人形全身控制与学习，垂直且深</td>
+<td>世界模型，跨具身 / 自驾 / 视频生成</td>
+<td>一个子方向的阶段性总结</td>
+<td>单次查询命中</td>
+</tr>
+<tr>
+<td>更新频率</td>
+<td>持续高频（2026-11 仍推送）</td>
+<td>视维护者</td>
+<td>一次性，很快过时</td>
+<td>实时但无结构</td>
+</tr>
+<tr>
+<td>可浏览性</td>
+<td>按主题分层，适合定阅读顺序</td>
+<td>按主题 + 应用领域</td>
+<td>线性叙述</td>
+<td>无结构</td>
+</tr>
+<tr>
+<td>代码 / 基准</td>
+<td>无，只有链接</td>
+<td>部分附代码</td>
+<td>无</td>
+<td>视结果</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>开题、相关工作、新人入门</td>
+<td>世界模型选题</td>
+<td>快速了解一个子方向</td>
+<td>追最新一篇</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么选</strong>：做人形运动控制 / 全身策略，os284 是首选入口；做世界模型或 WAM，应改看库内已收录的 Awesome World Models 类清单（os279 / 相关条目）与本轮 os285；要写正式综述，任何清单都只是起点，必须逐条回原文核对。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

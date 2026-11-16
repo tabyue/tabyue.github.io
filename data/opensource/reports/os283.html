@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Praxis-1：Runway 以 Apache 2.0 开放的 27B 世界动作模型（视频与动作联合预测） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Praxis-1：Runway 以 Apache 2.0 开放的 27B 世界动作模型（视频与动作联合预测） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="praxis-1runway-apache-20-27b">Praxis-1：Runway 以 Apache 2.0 开放的 27B 世界动作模型（视频与动作联合预测）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/runwayml/praxis-1-oss">https://github.com/runwayml/praxis-1-oss</a>  </p>
+<p><strong>Stars</strong>: 107 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-16  </p>
+<p><strong>组织</strong>: Runway  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-16</p>
+</blockquote>
+<hr />
+<p><strong>runwayml/praxis-1-oss</strong> 是 Runway 在 2026 年 11 月 11 日以 <strong>Apache 2.0</strong> 放出的世界动作模型（World Action Model）Praxis-1 官方仓库。它不是只放权重：推理代码、全量微调与 LoRA 微调代码一并开放，明确允许商用。模型定位是「一个系统同时预测场景接下来长什么样、机器人接下来该怎么动」——与纯 VLA 直接把观测映射成动作不同，Praxis-1 把未来视频块与动作块放在同一次去噪过程里联合生成。</p>
+<p>发布规格：27.2B 参数 MoE 视频扩散主干（20 层 Dual-stream Diffusion Transformer 里 17 层用 MoE，1 共享专家 + 128 路由专家、每 token 激活 8，DeepSeek-V3 式无辅助损失负载均衡；冻结 Wan2.2 VAE 与 Qwen3.5-2B 编码器），配 314M 参数 16 层动作专家（宽度 1024，自注意力与交叉注意力交替，8 个 encoder block）。base checkpoint 为 BF16 54.4 GB，分 17 个 safetensors 分片，另有 NVFP4 量化变体。</p>
+<p>分发渠道覆盖 GitHub、Hugging Face（原生 LeRobot 支持）、vLLM-Omni 与 Runway Reactor 托管推理；官方称可在 H100 / B200 数据中心卡、RTX 5090 / RTX PRO 6000 工作站卡，直到机器人本体上的 Jetson Thor 运行。它也是 Runway 作为 Cosmos Coalition 创始成员、与 NVIDIA 一起推动开放世界模型的一部分。</p>
+<hr />
+<ol>
+<li><strong>输入层</strong>：语言指令（文本）、最近若干相机帧（外部视角 + 腕部视角，224×416 tiles）、当前本体 proprioceptive 状态。</li>
+<li><strong>编码层</strong>：冻结的 Wan2.2 VAE 把图像压成潜帧；Qwen3.5-2B 文本编码器处理指令；本体状态经轻量投影进入同一 token 空间。</li>
+<li><strong>主干</strong>：26.9B MoE 视频扩散 DDT（每 token 约 2.8B 激活参数，1 共享 + 128 路由专家、top-8），chunk-causal 结构保证一个控制块内的时序因果。</li>
+<li><strong>动作专家</strong>：314M 稠密网络，16 层，自注意力与对视频主干的交叉注意力交替，负责输出动作块。</li>
+<li><strong>联合输出</strong>：每次控制调用产出 6 个潜视频帧 + 24 步动作（15 Hz，合计 1.6 秒），视频与动作在共享的去噪时间轴上共同生成。</li>
+<li><strong>跨本体适配层</strong>：新本体只需 6 个轻量状态 / 动作投影张量；仓库提供 <code>scripts/init_heads.py</code> 为任意新机器人初始化这些头，无需重训主干。</li>
+<li><strong>量化与部署</strong>：BF16 与 NVFP4 两类 checkpoint，配 vLLM-Omni 推理路径与 Reactor 托管入口。</li>
+</ol>
+<p>这个结构的要点是「视频与动作共享一条去噪轨迹」：动作专家不是读一段生成好的视频再规划，而是在同一潜空间里与视频块共同被去噪出来，因此视频预训练学到的物理直觉能直接约束动作输出。</p>
+<hr />
+<ul>
+<li><strong>Praxis-1 Is Now Available</strong>（Runway，2026-11-11）— 官方发布说明，含 Apache 2.0 许可、RoboLab-120 46.2%、RT-1 微调 80.0% 与完整分发渠道，见 pubt.io/view/1E51450DC3107F14A7096BC3E4775884959F9EFD。</li>
+<li><strong>Runway open-sources 27.2B Praxis-1 world action model</strong>（2026-11-11）— 架构拆解：26.9B MoE DDT + 314M 动作专家、6 隐帧 + 24 动作步 @ 15 Hz、17 个 safetensors 分片与六类 projection tensor。</li>
+<li><strong>NVIDIA RoboLab-120 Leaderboard</strong>（2026-11 访问）— 1,200 episode 仿真评测，Praxis-1 555/1200，含 FLUX 3 Action、Cosmos3 Nano、π0.5 与 GR00T N1.6 对照。</li>
+<li><strong>Cosmos Coalition / GR00T 2</strong>（NVIDIA，2026-11）— 同周发布的闭源对照，同样押注「从人类视频学物理直觉」，可用于判断开源与闭源路线的分工。</li>
+<li><strong>站内联动</strong>：p369 Video-Action Models for Data-Efficient Industrial Manipulation（arXiv 2611.15974）给出视频预训练在工业工位上的示教成本量化；p366 Prediction or Persistence?（arXiv 2611.15082）提醒任何未来预测分数都应配 persistence 基线。</li>
+</ul>
+<hr />
+<ol>
+<li>克隆仓库：<code>git clone https://github.com/runwayml/praxis-1-oss &amp;&amp; cd praxis-1-oss</code>，按 README 安装依赖（Python + PyTorch，建议 CUDA 环境）。</li>
+<li>从 Hugging Face 拉 checkpoint：<code>praxis-1-base</code>（BF16 54.4 GB，17 分片）或按显存选 NVFP4 变体；单张 80 GB GPU 可放 base。</li>
+<li>先用现成 embodiment checkpoint 跑通推理：<code>praxis-1-droid</code>（单臂 Franka DROID 平台）、<code>praxis-1-droid-lerobot</code>（LeRobot 格式）、<code>praxis-1-yam</code>（双臂 YAM），确认相机输入与动作维度对齐。</li>
+<li>走 LeRobot 路径：若已有 LeRobot 数据集，用 <code>praxis-1-droid-lerobot</code> 的配置直接加载，避免自己写数据适配。</li>
+<li>适配新本体：运行 <code>scripts/init_heads.py</code>，按新机器人的状态维度与动作维度生成 6 个投影张量，再用自有示教数据做 LoRA 微调（仓库含全量微调与 LoRA 两条脚本）。</li>
+<li>上机前先在仿真里验一遍动作块频率：默认 24 步 @ 15 Hz = 1.6 秒，若控制器频率不是 15 Hz，需在部署层做插补或重采样，不要直接改模型输出头。</li>
+<li>端侧部署：Jetson Thor 上用 NVFP4 量化变体，配合 vLLM-Omni；数据中心评测用 <code>praxis-1-eval</code> checkpoint 对齐 RoboLab-120 协议。</li>
+</ol>
+<p><strong>注意</strong>：仓库 star 数不高（约 107）且建立于 2026-10-26，属于新发布项目，issue 与文档仍在补齐；首次跑通建议严格按 README 的 checkpoint 名，不要自行合并分片。</p>
+<hr />
+<p>公开可得的性能与工程事实（以厂商 2026-11 口径为主）：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RoboLab-120</td>
+<td>1,200 episode 上 46.2% 成功率（555/1200），居世界动作模型与开放权重 VLA 首位</td>
+</tr>
+<tr>
+<td>同期对照</td>
+<td>FLUX 3 Action 42.9%、Cosmos3 Nano 36.8%、π0.5 28.0%</td>
+</tr>
+<tr>
+<td>整体榜单</td>
+<td>在含 Agentic 语言模型策略的总表中排第五，前列有 86.0% 与 49.2% 的不同类型系统</td>
+</tr>
+<tr>
+<td>跨本体</td>
+<td>未见过的 Google RT-1 机器人上微调后 SimplerEnv 80.0%（原 RT-1 策略 52.4%）</td>
+</tr>
+<tr>
+<td>模型规模</td>
+<td>27.2B 总参数（约 2.8B 激活）+ 314M 动作专家，BF16 54.4 GB</td>
+</tr>
+<tr>
+<td>单次输出</td>
+<td>6 潜视频帧 + 24 动作步 @ 15 Hz = 1.6 秒</td>
+</tr>
+<tr>
+<td>仓库事实</td>
+<td>107 star、Python、Apache-2.0、2026-10-26 建立、2026-11-12 推送</td>
+</tr>
+</tbody>
+</table>
+<p><strong>必须带上的限定</strong>：RoboLab-120 是仿真基准，NVIDIA 称其排名与真实基准强相关但仿真成功不等于部署成功；46.2% 与 80.0% 都是 Runway 自报，榜单当时处于 submissions paused 状态；「超过所有开放权重 VLA」取决于哪些条目被算作开放权重，与总表前列的不同类型系统不直接可比。launch partners（Noble Machines、Standard Bots、Ultra）在腿式人形、六轴工业臂与双臂仓储机器人上的运行也属厂商口径。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Praxis-1（os283）</th>
+<th>FLUX 3 Action（库内已收录）</th>
+<th>π0.5</th>
+<th>纯 VLA（如 OpenVLA 类）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>范式</td>
+<td>世界动作模型，视频与动作联合去噪</td>
+<td>世界动作模型，动作与未来帧联合去噪</td>
+<td>VLA 策略</td>
+<td>观测到动作的映射</td>
+</tr>
+<tr>
+<td>规模</td>
+<td>27.2B MoE + 314M 动作专家</td>
+<td>7B</td>
+<td>未公开统一口径</td>
+<td>通常 7B 量级</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache 2.0，商用明确允许</td>
+<td>Apache 2.0</td>
+<td>部分开放</td>
+<td>多为研究许可</td>
+</tr>
+<tr>
+<td>预训练数据主张</td>
+<td>网络视频与遥操作机器人视频对策略性能等价</td>
+<td>图像生成模型跨界</td>
+<td>真机示教 + 跨本体数据</td>
+<td>机器人示范数据</td>
+</tr>
+<tr>
+<td>跨本体适配</td>
+<td>6 个轻量投影张量 + init_heads.py</td>
+<td>独立 DROID / SO-101 策略权重</td>
+<td>每任务监督微调</td>
+<td>需重训动作头</td>
+</tr>
+<tr>
+<td>部署谱系</td>
+<td>H100 / B200 → RTX 5090 → Jetson Thor</td>
+<td>六个推理配方（BF16 / FP8r × 三类步数）</td>
+<td>主要云端 / 工作站</td>
+<td>视实现而定</td>
+</tr>
+<tr>
+<td>主要风险</td>
+<td>新仓库、榜单为仿真且自报</td>
+<td>参数小但榜单口径不同</td>
+<td>闭源程度高</td>
+<td>数据效率与泛化受限</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么选</strong>：要商用与可审计权重，Praxis-1 的 Apache 2.0 是最清晰的入口；已在 LeRobot 生态里、只想快速验证某个夹爪任务，FLUX 3 Action 的 7B 更轻；若关心「视频预训练到底省多少真机示教」，把 os283 与本轮 p369（FLUX-mimic，工业工位两小时示教达 77.5%）合读，一个是开源侧权重、一个是工业侧量化，互为佐证。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

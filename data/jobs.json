@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-15T08:32",
+ "lastUpdated": "2026-11-16T08:16",
  "categories": [
   "全部",
   "算法研究",
@@ -27,6 +27,150 @@
   "实习"
  ],
  "jobs": [
+  {
+   "id": "j383",
+   "title": "履约技术 - VLA 开发工程师（机械臂抓取端到端，深圳龙华）",
+   "company": "美团（北京三快在线科技有限公司）",
+   "city": "深圳",
+   "type": "社招",
+   "category": "算法研究",
+   "salary": "面议（10-8 双休）",
+   "education": "硕士及以上（优秀本科亦可）",
+   "experience": "经验不限",
+   "tags": [
+    "VLA 端到端抓取",
+    "π0 / π0.5 / ACT",
+    "真机数据闭环",
+    "SFT / RL 后训练 / LoRA",
+    "Sim2Real 数据增强"
+   ],
+   "description": "负责机器人机械臂抓取的 VLA（Vision-Language-Action）端到端算法研发，覆盖模型选型、训练、评测与真机部署（参考路线 π0 / π0.5、SmolVLA、ACT、RT-2）；构建真机数据采集与训练闭环，设计遥操作示教方案与数据规范，主导数据清洗、标注与版本管理；探索 VLA 后训练技术路径（SFT、RL 后训练、LoRA / PEFT 高效微调）在抓取任务上的落地，提升成功率、泛化性与鲁棒性；结合 Isaac Sim / MuJoCo 开展 Sim2Real 与数据增强，用 real2sim 场景重建扩充训练数据；跟踪世界模型、视频生成式预训练与 Open X-Embodiment 等大规模机器人数据集进展。要求计算机、自动化、机器人学、数学或物理相关专业硕士及以上，熟练 PyTorch，具备 Transformer / 扩散模型 / VLM 训练调优经验，有机器人操作、模仿学习、强化学习或 VLA 研究经历与真机部署经验者优先；熟悉 ROS / ROS 2、机械臂运动学、手眼标定与相机内外参标定，能独立完成数据—训练—评测—部署全链路闭环。工作地深圳龙华区。可与站内 /learn/vla-models、/learn/imitation-learning 配套学习。",
+   "postedDate": "2026-11-14",
+   "postDate": "2026-11-14",
+   "url": "https://www.zhaopin.com/jobdetail/CCL1480117890J40906537205.htm",
+   "source": "智联招聘",
+   "addedDate": "2026-11-16"
+  },
+  {
+   "id": "j384",
+   "title": "校招 - VLA 模型算法工程师（预训练 scaling law / 后训练 / 真机评测，北京 / 苏州）",
+   "company": "简智机器人（GenRobot）",
+   "city": "北京",
+   "type": "校招",
+   "category": "算法研究",
+   "salary": "面议",
+   "education": "硕士及以上（2026-2027 届）",
+   "experience": "在校 / 应届",
+   "tags": [
+    "预训练 scaling law",
+    "后训练适配",
+    "真机评测系统",
+    "具身数据基础设施",
+    "真机强化学习"
+   ],
+   "description": "探究具身智能模型在预训练过程中的 scaling law（该用什么数据、采用什么算法）；探究如何进行后训练，把通用具身模型适配到机器人本体上；负责构建多维度真机评测系统，量化评估模型性能并探索真机强化学习；跟踪多模态大模型、具身大模型方向的最新研究进展并推动落地。要求 2026-2027 届硕士及以上，具备多模态大模型或强化学习基础，有优秀开源项目经历或顶会论文者优先，Base 北京 / 苏州。公司是面向具身智能与世界模型的数据与评测基础设施公司，已构建大规模人类技能数据收集、Data Foundation Model 训练与数据处理、真机集群评测验证的闭环，为下一代具身与世界模型的训练、评测与场景应用提供底层支撑。可与站内 /learn/embodied-data-engineering（数据格式标准与工具链）、/learn/platform-engineering（策略评测基础设施）配套学习。",
+   "postedDate": "2026-11-10",
+   "postDate": "2026-11-10",
+   "url": "https://www.zhipin.com/job_detail/7cda19acb832f0e10nd52tW5FlFX.html",
+   "source": "BOSS直聘",
+   "addedDate": "2026-11-16"
+  },
+  {
+   "id": "j385",
+   "title": "具身 Agent 算法实习生（长程规划 / Harness / 递归自我改进）",
+   "company": "北京思灵机器人科技（Agile Robots）",
+   "city": "北京",
+   "type": "实习",
+   "category": "实习",
+   "salary": "面议",
+   "education": "硕士 / 博士在读（优秀本科高年级亦可）",
+   "experience": "实习 6 个月、每周 5 天",
+   "tags": [
+    "具身 Agent",
+    "LLM / VLM 规划",
+    "Agent Harness",
+    "失败恢复",
+    "仿真评测"
+   ],
+   "description": "基于 LLM/VLM 研究任务理解、场景推理与分层规划，结合工具调用、代码生成与 VLA 策略把自然语言目标转成可执行机器人任务；参与 Agent 运行框架开发（感知—规划—控制连接、技能编排、状态与记忆管理、执行监控、结果验证、失败恢复）；基于执行反馈做失败归因、技能发现与策略更新，让更新后的系统参与下一轮改进；参与仿真任务与自动评测、前沿复现与真机验证。要求人工智能、机器人、计算机、自动化、控制、数学相关专业硕博在读，熟练 Python / Linux / Git / PyTorch，在具身 Agent、多模态理解、任务规划、机器人学习、RL 或程序生成至少一个方向有项目或论文复现经历。工作地北京海淀。可与站内 /learn/embodied-agent（Harness 层、失败感知与自主恢复）配套学习。",
+   "postedDate": "2026-11-14",
+   "postDate": "2026-11-14",
+   "url": "https://www.zhaopin.com/jobdetail/CC822193520J40889860401.htm?refcode=4017&srccode=401708&preactionid=3d498300-d3c8-460d-9b6a-ee9ade85f8d3",
+   "source": "智联招聘",
+   "addedDate": "2026-11-16"
+  },
+  {
+   "id": "j386",
+   "title": "运动控制算法实习生（Isaac Lab 操作任务 / Sim2Real）",
+   "company": "深圳市优必选科技",
+   "city": "深圳",
+   "type": "实习",
+   "category": "实习",
+   "salary": "7-12K/月",
+   "education": "硕士 / 博士在读",
+   "experience": "在校生",
+   "tags": [
+    "Isaac Lab",
+    "动捕 Retarget",
+    "VLA / 世界模型",
+    "模仿学习",
+    "Sim2Real"
+   ],
+   "description": "搭建和配置 NVIDIA Isaac Lab 仿真环境中的机器人操作任务（抓取、插拔、物体重排、装配等），做参数调整与任务调试；负责动捕 Video 或遥操作数据的采集与 Retarget 处理，清洗并优化数据质量；实现和测试 VLA、世界模型、模仿学习（IL）等算法，用真实或合成操作数据做策略训练与调试；协助把仿真训练策略迁移到真实机器人平台，参与 Sim2Real 工程化实现与实验验证。要求计算机、自动化、AI、机器人、控制理论相关专业硕博在读，熟练 Python，有 PPO / SAC / TD3 等强化学习项目经验，了解 Behavior Cloning / GAIL / Diffusion 等模仿学习、熟悉 IsaacSim / Isaac Lab / MuJoCo / PyBullet 者优先。可与站内 /learn/sim-to-real 与 /learn/reinforcement-learning 配套学习。",
+   "postedDate": "2026-11-12",
+   "postDate": "2026-11-12",
+   "url": "https://metal.jdjob88.com/mobile/jobdetail_53700238.htm",
+   "source": "机电英才网",
+   "addedDate": "2026-11-16"
+  },
+  {
+   "id": "j387",
+   "title": "实习研发工程师（具身智能算法 / 具身数据 / Agent / 情感与心智模型）",
+   "company": "昆数星启",
+   "city": "上海",
+   "type": "实习",
+   "category": "实习",
+   "salary": "200-300 元/天",
+   "education": "硕士及以上在读",
+   "experience": "实习 6 个月、每周 5 天",
+   "tags": [
+    "具身数据基础设施",
+    "VLA / 世界模型",
+    "多模态数据处理",
+    "AI Agent",
+    "情感计算"
+   ],
+   "description": "公司专注具身智能数据基础设施与智能算法研发，四个实习方向：具身智能算法（VLA、世界模型、机器人学习、模仿学习、强化学习、跨本体迁移，了解 OpenVLA、π0、ACT、LeRobot 等开源框架）；具身数据处理（Ego 视觉、动作、触觉、力觉多模态数据处理，自动标注、质量评估、轨迹分割、数据清洗与数据生成，探索数据处理 Agent、数据引擎与仿真真实数据协同）；AI Agent 算法（大模型智能体规划、推理、工具调用、多智能体协作、Memory、RAG、Agentic Workflow）；情感计算与心智模型（多模态情感理解、意图推理、长期记忆、Theory of Mind）。要求计算机、AI、机器人、自动化相关专业硕士在读，熟练 Python / PyTorch，具备论文阅读、算法复现与实验分析能力。工作地上海杨浦。",
+   "postedDate": "2026-11-06",
+   "postDate": "2026-11-06",
+   "url": "https://m.liepin.com/lptjob/86532015",
+   "source": "猎聘",
+   "addedDate": "2026-11-16"
+  },
+  {
+   "id": "j388",
+   "title": "具身智能算法工程师（模仿学习 / 强化学习 / 世界动作模型，杭州西湖）",
+   "company": "知来具身智能科技（重庆）有限公司",
+   "city": "杭州",
+   "type": "社招",
+   "category": "算法研究",
+   "salary": "20000-30000 元/月",
+   "education": "本科及以上（硕博优先）",
+   "experience": "不限",
+   "tags": [
+    "模仿学习",
+    "强化学习",
+    "世界动作模型",
+    "VLA",
+    "真机调试"
+   ],
+   "description": "负责具身智能算法的研究与工业场景落地，包括模仿学习、强化学习、世界动作模型等；负责算法的研究、实现与工程化落地，覆盖训练、预测和真机调试。要求统招全日制本科及以上计算机、AI、自动化、机器人相关专业，熟练 PyTorch 并能独立实现 CNN / Transformer / RNN / ResNet 等主流模型完成训练评估全流程；了解机器人学基础（正逆运动学），有实际机器人平台操作经验者优先；熟悉 OpenVLA、GR00T、RT-2、Pi0 等主流 VLA 架构并有实际项目经验，有 PPO / SAC 等 RL 或 WAM 研究经验者优先。招聘 3 人，工作地杭州西湖区西投浙滨西源大厦。公司聚焦机器人视觉、位控、力控与智能末端，交付熨烫、打磨、装配、包覆、缝纫等智能体。",
+   "postedDate": "2026-11-03",
+   "postDate": "2026-11-03",
+   "url": "https://www.cqbys.com/job/view/id/1427345",
+   "source": "重庆市普通高校毕业生智慧就业平台",
+   "addedDate": "2026-11-16"
+  },
   {
    "title": "激光 SLAM 算法工程师（应届 / 实习，200-400 元/天）",
    "company": "迈睿机器人",
@@ -9473,5 +9617,5 @@
    "description": "Boss直聘上具身智能相关的全部岗位。"
   }
  ],
- "totalItems": 369
+ "totalItems": 375
 }

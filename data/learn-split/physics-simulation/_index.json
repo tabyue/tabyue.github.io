@@ -1,7 +1,7 @@
 {
   "id": "physics-simulation",
   "name": "物理仿真引擎",
-  "lastUpdated": "2026-11-15T08:41",
+  "lastUpdated": "2026-11-16T08:32",
   "stage": "阶段五：仿真与 Sim-to-Real",
   "importance": "核心",
   "estimatedHours": 40,
@@ -183,14 +183,14 @@
     {
       "id": "sec-06",
       "title": "仿真基准与性能对比：MuJoCo vs Isaac vs Genesis",
-      "lastUpdated": "2026-10-27",
-      "chars": 4087,
+      "lastUpdated": "2026-11-16T08:32",
+      "chars": 12520,
       "shortTitle": "仿真基准与性能对比",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 14,
       "headings": [
         "仿真器选型与性能对比",
         "1. 主流仿真器全景",
@@ -200,6 +200,11 @@
         "5. Genesis 的优势（2025 新秀）",
         "6. 选型决策树",
         "7. 迁移常见痛点",
+        "深入一：把「快」拆成可测的三层",
+        "深入二：吞吐量的测量口径与三种常见误报",
+        "深入三：收敛墙钟时间的三分法",
+        "深入四：难度是测出来的，不是标出来的",
+        "深入五：配对对照——为什么绝对分数不可解释",
         "练习题",
         "参考答案"
       ],
@@ -556,7 +561,7 @@
       "summary": "过去两年，「世界模型」这个词在具身智能语境里被用了太多次，含义漂移得很厉害。要理解 2026 年这批新工作，先把两次转向讲清楚。"
     }
   ],
-  "readingMinutes": 183,
+  "readingMinutes": 193,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 154342
+  "chars": 162775
 }
