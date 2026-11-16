@@ -308,3 +308,11 @@
 - 校验：26 个 JSON 全解析通过；normalize 无改动、fix_learn_links --dry fixed=0、sync_learn_split 同步 2 模块 4 文件、health_check **ALL OK**、verify_learn_structure **ALL OK**、audit 硬缺陷全 0、unittest 34/34、node UI 32/32。
 - 提交：内容 `2133fa7`（25 files，+1608/-62），日志与记忆随后提交并一并推送。
 - 经验：① **详情页不带 `lastUpdated` 是全站历史惯例**（既有 334 篇论文详情 / os270—os278 均无），health_check 只查文件存在，别为「所有数据文件更新时间戳」给详情页硬加字段；② `learning-path.json` 是 `stages[].modules[]`，`lp['modules']` 会 KeyError；③ PowerShell `if(){@('--dry')}` 赋值后 `@a` splat 会把单元素数组退化成字符串按字符展开（`- - d r y`），要用 `$a=@(); $a+='--dry'`；④ 原章节 3 行伪代码引用未定义变量导致代码块实跑 NameError，补成自包含示例后再验全绿 —— **正文里的伪代码片段也应能独立运行**；⑤ 数值断言先实跑再写；⑥ push 用 Python subprocess 直调。
+
+### 2026-11-16 08:14—08:45
+- 投稿箱：无新投稿（open issue 返回 `[]`，未限制 label）；未启动浏览器，无凭据风险。开工工作树干净、HEAD==origin/main（188a09f）。
+- 数据：新闻 +10（n719—n728，686）、论文 +5（p367—p371，345，含 detail）、开源 +4（os283—os286，273，含 detail + 报告页）、招聘 +6（j383—j388，375）、资源 r040 + r001 扩充。25 条新条目全部 `addedDate=2026-11-16`。
+- 学习：`physics-simulation#5` 仿真基准与性能对比 4087→12520；`world-models-llm#6` 具身奖励模型与 RLEF 4412→14188；各 5 段「深入」正文 + 11 段实跑代码，三处 lastUpdated 同步 `2026-11-16T08:32`。章节数仍 553，sitemap 553 章 + 132 学习页。
+- 校验：normalize 无改动、fix_learn_links --dry fixed=0、sync_learn_split 同步 2 模块 4 文件、health_check **ALL OK**、verify_learn_structure **ALL OK**、audit 硬缺陷全 0、unittest 34/34、node UI 32/32；4 个开源报告页 rc=0。
+- 提交：内容与日志/记忆一并推送，远程 / 本地 / origin/main 三者一致。
+- 经验：① **arXiv 查重存完整 URL 会漏判**——`_dedup.json` 的 `arxivs` 是 `https://arxiv.org/abs/2611.16589` 这类 URL，按字符串比对 ID 必然落空，3 篇已收录论文（p357/p362/p364）初判 NEW；修法为 `ID_RE=re.compile(r'26\d{2}\.\d{4,5}')` 全文扫 papers-index + news 的 `arxiv/title/tldr/venue/impact/tags/keyInsights`，并与 `resources[-1]` 中记录的论文编号交叉核对。② 论文 3-gram 相似度在本轮 40 个关键词命中里大量误报（「曦选创智」「Agile Robots」等泛词），**只有 arXiv ID / URL / github repo 命中才是真 DUP**。③ 岗位 j383/j384 初稿撞 j353 松延动力、j355 元思无界被正确拦下，补搜换成美团 VLA 开发、简智机器人校招 VLA 算法后复用 ID；jobs 查重 URL + (company,title) 双判仍必要。④ 资源导航 `items` 里硬写 `os286 RoboGaze` 与当期 `os286 Spark-0` 撞号，改仓库名即可，别写内部编号。⑤ 后台 `_discover.py` 堆 GitHub 查询 + sleep 累积到 2m 超时失败（stdout 零输出），拆成轻量 `_arxiv2.py`（max_results=30 / timeout=25 / 2 次重试）一次拿到 364 行。⑥ 11 段示例代码全部 `exec` 实跑再定稿，正文数值断言以实测为准。⑦ `git add -A` 前先精确清理根目录 `_*`（保留三个历史 tracked），push 用 Python subprocess 直调 gh 凭据 trick。
