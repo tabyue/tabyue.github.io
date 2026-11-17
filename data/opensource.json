@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-16T08:16",
+ "lastUpdated": "2026-11-17T08:20",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,114 @@
   }
  ],
  "projects": [
+  {
+   "name": "humanoid-motion-intelligence：人形机器人运动智能的中文论文、开源项目与求职知识库",
+   "github": "https://github.com/RealXiaoze/humanoid-motion-intelligence",
+   "organization": "RealXiaoze",
+   "org": "Humanoid Motion Intelligence",
+   "category": "data-tools",
+   "language": "Markdown",
+   "license": "未声明",
+   "stars": 714,
+   "description": "**RealXiaoze/humanoid-motion-intelligence** 是 2026 年 7 月建立、11 月 16 日仍在更新的中文知识库，按「论文 / 开源项目 / 产业 / 求职」四条线归档人形机器人运动智能方向，覆盖全身控制、locomotion、模仿学习、强化学习、sim-to-real 与运动生成。仓库以 Markdown 清单为主体，不提供训练代码或基准，价值在把散落在 CoRL、RSS、ICRA、IROS 与各类 workshop 的跨社区工作整理成可浏览的中文阅读路径。\n\n**为什么值得看**：本轮 p372 的 VLA 生命周期综述指出，人形全身控制与世界动作模型正被纳入同一套讨论框架，而这类跨社区工作靠 arXiv 关键字检索极易漏掉；一份持续更新的中文索引恰好补上入门与开题阶段的检索成本。与库内已收录的 os284（Awesome Humanoid Robot Learning，英文清单）形成中英互补，也与 /learn/humanoid-fullstack、/learn/robot-dynamics 的章节顺序可以互相参照。**注意**：仓库未声明许可（核验为 NOASSERTION），转载与再分发前需先与维护者确认；清单时效依赖维护活跃度，写正式综述时仍须逐条回原文核对版本号。",
+   "features": [
+    "中文归档人形运动智能：论文 / 开源项目 / 产业 / 求职四条线",
+    "覆盖全身控制、locomotion、模仿与强化学习、sim-to-real、运动生成",
+    "2026-07 建立、2026-11-16 仍在更新，约 714 star",
+    "与 os284 英文清单形成中英互补，降低中文读者的开题检索成本",
+    "纯 Markdown 清单，无运行时依赖，可直接 fork 成内部阅读路线"
+   ],
+   "tags": [
+    "人形机器人",
+    "运动智能",
+    "中文知识库",
+    "论文清单",
+    "全身控制"
+   ],
+   "id": "os290",
+   "addedDate": "2026-11-17"
+  },
+  {
+   "name": "robot-weight-debugging：用 LLM 直接编辑机器人策略权重的可复现实验包",
+   "github": "https://github.com/jushengzhang/robot-weight-debugging",
+   "organization": "jushengzhang",
+   "org": "Robot Weight Debugging",
+   "category": "framework",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 153,
+   "description": "**jushengzhang/robot-weight-debugging** 是论文《Can LLMs Debug Robots by Editing Their Weights?》的首发代码与证据包（Apache 2.0，Python，2026-11-09 建立并推送）。仓库给出的不是训练框架，而是一组刻意小到能人工审阅的工件：一次 65 行的权重编辑、16 组实验日志与配套证据，用来检验一个反直觉问题——大语言模型能否不通过重新训练、而是直接改动策略网络的权重来修正机器人行为。\n\n**为什么值得看**：本轮 p375（JustRUA）证明「不改模型、只改外围 harness」能带来巨大分数变化，这个仓库则把问题推到另一个极端：「不改外围，直接改模型权重的最小一处，能不能修 bug」。两者共同构成对「机器人能力到底住在哪儿」的一次对照实验。仓库把编辑量压到 65 行、把日志全量公开，是可复现性做得相当扎实的一个小样本，适合作为站内 /learn/embodied-agent 与 /learn/platform-engineering 讨论「模型可干预层级」的教学案例。**注意**：README 明确说明 V2 与真机实验尚在后续计划，当前证据主要来自仿真与离线日志；153 star 反映的是话题关注度，不是方法已验证有效。",
+   "features": [
+    "Apache 2.0 发布，含 65 行权重编辑、16 组实验日志与完整证据链",
+    "研究问题明确：LLM 能否不经重训、直接编辑策略权重来修正机器人行为",
+    "工件刻意保持最小可审阅规模，便于逐行核对因果",
+    "与本轮 JustRUA 形成「改外围 harness」vs「改权重」的对照",
+    "2026-11-09 建立并推送，属本轮最新的具身开源项目之一"
+   ],
+   "tags": [
+    "权重编辑",
+    "机器人调试",
+    "LLM Agent",
+    "可复现实验",
+    "Apache 2.0"
+   ],
+   "id": "os289",
+   "addedDate": "2026-11-17"
+  },
+  {
+   "name": "AffordanceVLA：把可供性感知注入动作生成的 VLA 官方实现",
+   "github": "https://github.com/Skywalker-yqz/AffordanceVLA",
+   "organization": "Skywalker-yqz",
+   "org": "AffordanceVLA Team",
+   "category": "ai-model",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 77,
+   "description": "**Skywalker-yqz/AffordanceVLA** 是论文《AffordanceVLA: Empowering Action Generation through Affordance-Aware Understanding》的官方代码（MIT，Python，2026-06 建立、10 月仍有推送）。核心主张是：VLA 不该只从整幅图像回归动作，而应显式识别物体「可以怎么被操作」的可供性（affordance）——哪个部位可抓、哪个面可推、哪个开口可插入——再把这份结构化理解注入动作生成。\n\n**为什么值得看**：本轮 p373（MOSAIC）用三类角色掩码（目标 / 目的地 / 障碍）加几何 token 增强预训练 VLA，在杂乱场景拿到 +5.1%、视觉扰动下 +9.7%；AffordanceVLA 走的是同一条「显式空间/语义线索 → 动作专家」路线，只是把线索换成了可供性。两者合读可以看清 2026 年 VLA 的一个稳定方向：主干不动，靠注入结构化中间预测补空间短板。也与站内 /learn/computer-vision 的开放词汇检测与 Grounding、/learn/vla-models 的动作输出设计直接相关。**注意**：仓库 star 数不高、未提供权威基准对照表；MIT 许可允许自由 fork，但复现需要自行准备数据与算力。",
+   "features": [
+    "论文官方实现，MIT 许可、Python，可自由 fork 与二次开发",
+    "显式建模可供性（可抓部位 / 可推面 / 可插入开口），注入动作生成",
+    "与 MOSAIC 同属「结构化中间预测增强 VLA」路线，可对照消融",
+    "保留预训练 VLA 主干，新增参数集中在可供性头与轻量投影",
+    "适合作为 /learn/vla-models 与 /learn/computer-vision 的工程阅读样本"
+   ],
+   "tags": [
+    "AffordanceVLA",
+    "可供性",
+    "VLA",
+    "动作生成",
+    "MIT"
+   ],
+   "id": "os288",
+   "addedDate": "2026-11-17"
+  },
+  {
+   "name": "OpenGenieMaster：带执行、反馈与持续改进回路的开源具身 Agent 框架",
+   "github": "https://github.com/eust-w/opengeniemaster",
+   "organization": "eust-w",
+   "org": "eust-w",
+   "category": "ai-agent-framework",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 460,
+   "description": "**eust-w/opengeniemaster** 是 2026 年 10 月末建立、11 月仍在高频推送的开源具身 Agent 框架（MIT，Python），定位是把「执行—反馈—持续改进」做成一条可运行的回路，而不是只提供一次性的任务规划器。仓库把基座模型当作不可改的外部能力，围绕它组织工具调用、执行结果回收、失败归因与经验沉淀，让 Agent 在多轮任务里能基于上一轮的反馈修正下一轮行为。\n\n**为什么值得看**：本轮 p375（JustRUA 受控研究）用实验说明了一个反直觉结论——在同一个冻结模型下，只改 harness（保留完整 episode 历史、让动作提前停止）就能把 RoboDojo 分数从 29.7 提到 50.3，经验复用「改变行为但并非免费午餐」。OpenGenieMaster 正是把这类 harness 层设计工程化的开源侧对应物：它要回答的不是「模型多强」，而是「外围的执行与反馈结构怎么组织」。与站内 /learn/embodied-agent 的 Harness 层、失败感知与自主恢复两章可以直接对照阅读。**注意**：项目建立时间短、文档与 API 仍在快速变动；官方未披露标准基准上的对照分数，能力声明以仓库 README 为准。",
+   "features": [
+    "MIT 许可的 Python 具身 Agent 框架，聚焦执行—反馈—持续改进闭环",
+    "把基座模型视为冻结外部能力，改动集中在外围 harness 与工具组织",
+    "内建执行结果回收与失败归因，支撑多轮任务里的行为修正",
+    "经验沉淀机制对应 JustRUA 讨论的「经验复用不是免费午餐」",
+    "2026-10 建立、11 月持续推送，适合作为 Harness 层教学的工程样本"
+   ],
+   "tags": [
+    "OpenGenieMaster",
+    "具身 Agent",
+    "Harness",
+    "反馈回路",
+    "MIT"
+   ],
+   "id": "os287",
+   "addedDate": "2026-11-17"
+  },
   {
    "id": "os283",
    "name": "Praxis-1：Runway 以 Apache 2.0 开放的 27B 世界动作模型（视频与动作联合预测）",
@@ -7204,5 +7312,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 273
+ "totalItems": 277
 }

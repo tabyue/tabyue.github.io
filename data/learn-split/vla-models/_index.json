@@ -4,7 +4,7 @@
   "stage": "阶段四：AI 大脑",
   "importance": "前沿",
   "estimatedHours": 40,
-  "lastUpdated": "2026-11-02T09:40",
+  "lastUpdated": "2026-11-17T08:54",
   "description": "结合视觉理解、语言指令和动作生成的端到端模型。VLA 是具身智能的前沿方向。",
   "prerequisites": [
     "能解释图像特征、token、自注意力和监督训练；可补学 [CNN 架构](/learn/deep-learning/1)、[Transformer](/learn/deep-learning/2) 与 [反向传播](/learn/deep-learning/5)。",
@@ -148,18 +148,24 @@
     {
       "id": "sec-04",
       "title": "VLA评估基准与系统性测试方法",
-      "lastUpdated": "2026-10-27",
-      "chars": 5323,
+      "lastUpdated": "2026-11-17T08:54",
+      "chars": 14770,
       "shortTitle": "VLA评估基准与系统性测试方法",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 6,
+      "readingMinutes": 20,
       "headings": [
         "为什么需要标准化评估？",
         "主流评估基准",
         "系统性评估框架",
         "评估最佳实践",
+        "前置概念：把一次试错看成一次伯努利试验",
+        "评估指标的分类学：成功率远远不是全部",
+        "仿真与真机之间：SIMPLER 的对齐思想与可信度边界",
+        "泛化与鲁棒性的形式化：从「见过」到「没见过」",
+        "从成功率到显著结论：一套可运行的统计推断工具",
+        "常见误区与工程清单",
         "练习",
         "参考答案"
       ],
@@ -863,7 +869,7 @@
       "summary": "大多数已落地的 VLA 有一个共同的结构性缺陷：它是前馈的。动作只条件化于当前观测与语言指令，既没有显式的历史记忆，也没有利用预训练 VLM 内部的分层表征结构。这一节以 PRIME W0（arXiv 2610.39528）为线索，把「前馈 VLA 该怎么补上下文」这件事拆成三个可独立验证的组件来讲。"
     }
   ],
-  "readingMinutes": 296,
+  "readingMinutes": 310,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 256567
+  "chars": 266014
 }

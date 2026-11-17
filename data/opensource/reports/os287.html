@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenGenieMaster：带执行、反馈与持续改进回路的开源具身 Agent 框架 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">OpenGenieMaster：带执行、反馈与持续改进回路的开源具身 Agent 框架 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="opengeniemaster-agent">OpenGenieMaster：带执行、反馈与持续改进回路的开源具身 Agent 框架</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/eust-w/opengeniemaster">https://github.com/eust-w/opengeniemaster</a>  </p>
+<p><strong>Stars</strong>: 460 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-17  </p>
+<p><strong>组织</strong>: eust-w  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-17</p>
+</blockquote>
+<hr />
+<p><strong>eust-w/opengeniemaster</strong> 是 2026 年 10 月 27 日建立、11 月 6 日仍有推送的开源具身 Agent 框架（MIT，Python，约 460 star）。它的定位不是再做一个规划器，而是把「执行 → 反馈 → 持续改进」串成一条可运行的回路：基座模型负责给出意图与动作提案，框架负责把这些提案翻译成工具调用、回收执行结果、对失败做归因，并把可用经验沉淀下来供后续回合检索。</p>
+<p>这一分层与当前具身 Agent 研究的主线一致。当 GPT-6 Astra 一类基础模型已能直接通过固定 harness 驱动机械臂时，可改动的空间就转移到了模型外围：它看到什么历史、能调用什么粒度的工具、什么时候被叫停、失败后如何回到可恢复状态。本轮 p375 的受控实验量化了其中两条设计的收益，OpenGenieMaster 则提供了把这些设计落成代码的工程骨架。</p>
+<p>对站内读者，最合适的用法是把它和 /learn/embodied-agent 的「Harness 层：把冻结模型组织成会自我改进的具身 Agent」「失败感知与自主恢复」两章并读：讲义讲设计原则，仓库给出一份可参考的实现组织方式。</p>
+<hr />
+<ol>
+<li><strong>分层原则</strong>：基座模型权重不改动，所有可迭代逻辑放在外围。框架自身承担工具注册、调用治理、执行状态维护与反馈回收。</li>
+<li><strong>执行层</strong>：把模型输出的动作提案翻译成具体工具调用，记录每次调用的输入、输出与耗时，形成可回放的 episode 历史。</li>
+<li><strong>反馈层</strong>：回收执行结果与环境观测，对失败做结构化归因（感知错误 / 执行偏差 / 工具不可用 / 任务定义问题），而不是只记一个成功标志。</li>
+<li><strong>改进层</strong>：把可用经验写入可检索的记忆结构，供后续回合按相关性与互补性取用；对应 JustRUA 强调的「经验复用需要带预算的检索」。</li>
+<li><strong>边界</strong>：框架不提供训练策略、不自带仿真器与真机驱动，也不承诺特定基准分数；它优化的是 Agent 外围的组织方式，不是模型能力本身。</li>
+</ol>
+<p>这个结构与 /learn/platform-engineering 讨论的「把机器人能力暴露给 Agent：工具粒度、接口完备性与调用治理」是同一张设计图的两个视角：一个从平台侧看接口，一个从 Agent 侧看回路。</p>
+<hr />
+<ul>
+<li><strong>JustRUA: A Controlled Study of GPT-6 Robot-Use Agents</strong>（arXiv 2611.16009，https://arxiv.org/abs/2611.16009） — 受控拆解 harness、动作接口、经验复用与场景几何，精简 harness 把 RoboDojo 从 29.7 提到 50.3；本框架设计的主要实证依据。</li>
+<li><strong>Vision-Language-Action Models: A Life-Cycle Survey</strong>（arXiv 2611.18372，https://arxiv.org/abs/2611.18372） — 七轴框架里的「实时执行」轴，说明为什么 harness 层不适合承担高频控制。</li>
+<li><strong>A brain that learns from live experience / Cadence</strong>（os282） — 同样讨论从在线经验中学习，侧重 System 1 / System 2 分工，可与本框架的改进层对照。</li>
+<li>站内阅读：/learn/embodied-agent（Harness 层、失败感知与自主恢复）、/learn/platform-engineering（工具粒度与调用治理）。</li>
+</ul>
+<hr />
+<ol>
+<li>克隆仓库并阅读 README，先确认它依赖的基座模型接入方式与所需的工具后端（仿真器或真机驱动）。</li>
+<li>从最小任务起步：注册一个能返回明确成功/失败标志的工具，跑通「提案 → 调用 → 结果回收」单回合，别一上来接多工具长时程任务。</li>
+<li>打开 episode 历史记录，检查框架是否保留了完整上下文；p375 的结论表明截断历史会显著改变行为。</li>
+<li>配置失败归因的分类口径，先人工标注十几条失败回合，核对自动归因与人工判断的一致性。</li>
+<li>逐步启用经验复用，并扫历史窗口长度（0 / 最近 k 步 / 全量），画成功率—窗口曲线，验证是否单调。</li>
+<li>与站内路径配合：把工具粒度对照 /learn/platform-engineering，把失败分类对照 /learn/embodied-agent 的自主恢复章节。</li>
+</ol>
+<p><strong>注意</strong>：项目 2026-10 才建立，API 与目录结构可能随推送变化；遇到与本文描述不一致时以仓库当前 README 与源码为准。</p>
+<hr />
+<p>该仓库不以基准分数为主要交付，公开可核的工程事实为：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 460（2026-11 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2026-10-27 / 2026-11-06</td>
+</tr>
+<tr>
+<td>形态</td>
+<td>具身 Agent 框架，非策略权重、非仿真器</td>
+</tr>
+<tr>
+<td>自报基准分数</td>
+<td>未在 README 中给出对照实验结果</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么理解「性能」</strong>：对 harness 类框架，真正该测的是「同一冻结模型在不同外围配置下的分数差」，而不是框架自身的绝对成功率。建议按 p375 的受控拆解方式，固定模型、种子、测试子集与成功判据，只逐项开关框架提供的历史策略、动作终止条件与经验复用，报均值与标准差。缺少这组对照时，任何「框架让成功率提升 X」的说法都不可归因。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>OpenGenieMaster</th>
+<th>单次规划型 Agent</th>
+<th>端到端 VLA 策略</th>
+<th>JustRUA（p375）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否改基座模型</td>
+<td>否</td>
+<td>否</td>
+<td>是（需训练）</td>
+<td>否</td>
+</tr>
+<tr>
+<td>执行反馈回路</td>
+<td>有，显式回收</td>
+<td>通常无</td>
+<td>隐含在闭环控制里</td>
+<td>有，但为极简 harness</td>
+</tr>
+<tr>
+<td>失败归因</td>
+<td>结构化分类</td>
+<td>少数有</td>
+<td>一般不显式</td>
+<td>不显式</td>
+</tr>
+<tr>
+<td>经验复用</td>
+<td>可检索记忆，需调窗口</td>
+<td>无</td>
+<td>靠权重</td>
+<td>受控测试，结论为「非免费午餐」</td>
+</tr>
+<tr>
+<td>交付物</td>
+<td>工程框架</td>
+<td>提示模板</td>
+<td>策略权重</td>
+<td>受控实验结论 + 代码</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>多轮、需迭代的具身任务</td>
+<td>单回合问答式任务</td>
+<td>高频连续控制</td>
+<td>评测方法学研究</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么选</strong>：需要把冻结大模型组织成能多轮试错、能记住失败的具身 Agent，看 OpenGenieMaster 这类框架；只想知道「哪些 harness 设计真正有用」，读 p375 的受控拆解更省时间；要 1 kHz 级的连续控制，仍应走端到端 VLA / WBC 路线，harness 层的调用延迟不适合进实时回路。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

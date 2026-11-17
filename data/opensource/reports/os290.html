@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>humanoid-motion-intelligence：人形机器人运动智能的中文论文、开源项目与求职知识库 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">humanoid-motion-intelligence：人形机器人运动智能的中文论文、开源项目与求职知识库 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="humanoid-motion-intelligence">humanoid-motion-intelligence：人形机器人运动智能的中文论文、开源项目与求职知识库</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/RealXiaoze/humanoid-motion-intelligence">https://github.com/RealXiaoze/humanoid-motion-intelligence</a>  </p>
+<p><strong>Stars</strong>: 714 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-17  </p>
+<p><strong>组织</strong>: RealXiaoze  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-17</p>
+</blockquote>
+<hr />
+<p><strong>RealXiaoze/humanoid-motion-intelligence</strong> 是 2026 年 7 月 19 日建立、11 月 16 日仍有推送的中文知识库（约 714 star），按「论文 / 开源项目 / 产业 / 求职」四条线归档人形机器人运动智能方向。覆盖主题包括全身控制（WBC）、locomotion、模仿学习、强化学习、sim-to-real 迁移与运动生成。</p>
+<p>仓库以分层 Markdown 清单为主体，不含训练代码、数据集或评测脚本。它的价值是<strong>结构化的领域地图</strong>：人形运动智能横跨控制、RL、视觉与大模型多个社区，论文散落在 CoRL、RSS、ICRA、IROS、NeurIPS 与各类 workshop，单靠 arXiv 关键字检索极易漏掉跨社区工作。中文归档进一步降低了入门与开题阶段的语言与检索成本，这一点与库内 os284（Yanjie Ze 维护的英文清单）形成互补。</p>
+<p>本轮 p372 的 VLA 生命周期综述把人形全身控制与世界动作模型纳入同一套七轴讨论，正说明这个方向的边界在变宽；一份持续更新的中文索引，恰好是读者进入这套框架前最省力的起点。可与 /learn/humanoid-fullstack、/learn/robot-dynamics 的章节顺序互相参照。</p>
+<hr />
+<ol>
+<li><strong>四条主线</strong>：论文（按主题归档）、开源项目（带仓库链接）、产业（公司 / 产品动态）、求职（岗位与方向），兼顾研究、工程与职业信息。</li>
+<li><strong>组织方式</strong>：以 README 为主体的分层 Markdown 清单，条目通常含标题、作者/年份、会议或 arXiv 链接，部分附项目页。</li>
+<li><strong>维护模式</strong>：靠人工整理与社区 PR 增量追加，按时间补新工作而非重写旧分类，因此能沿清单看方向演进。</li>
+<li><strong>形态与依赖</strong>：纯文本资源，无运行时依赖，可整体 fork 成课题组内部阅读路线。</li>
+<li><strong>许可状态</strong>：核验为 NOASSERTION（未声明）。引用条目一般无问题，但整体转载、改写与再分发前应先与维护者确认授权。</li>
+<li><strong>边界</strong>：不是框架、不是基准、不含可训练策略；使用方式是当索引，不是当依赖装进项目。</li>
+</ol>
+<p>与 os284 的结构差异主要语言与侧重：英文清单更偏学术谱系，本仓库额外纳入产业与求职信息，对中文读者更复杂但更贴近实际落地与就业场景。</p>
+<hr />
+<ul>
+<li><strong>Vision-Language-Action Models: A Life-Cycle Survey</strong>（arXiv 2611.18372，https://arxiv.org/abs/2611.18372） — 七轴框架，可作为清单里各类工作归位的坐标系。</li>
+<li><strong>BlinkMimic</strong>（p364，arXiv 2611.16422） — 单卡 3.4 分钟训完 40 段 LAFAN1，清单里「训练更快」一线的代表。</li>
+<li><strong>Awesome Humanoid Robot Learning</strong>（os284，https://github.com/YanjieZe/awesome-humanoid-robot-learning） — 英文对照清单，学术谱系更完整。</li>
+<li>站内阅读：/learn/humanoid-fullstack（人形机器人产业生态、全身运动控制）、/learn/robot-dynamics（全身接触操作力学）、/learn/sim-to-real（Real2Sim 工程化）。</li>
+</ul>
+<hr />
+<ol>
+<li>打开仓库主页先通读目录，确认四条主线各自的位置，别把产业动态与学术论文混着读。</li>
+<li>按主题而非按时间读：建议 WBC / locomotion → 模仿学习与 RL → sim-to-real → 运动生成，先建立「状态—动作—奖励—迁移」的共同语言。</li>
+<li>每个小节挑 2—3 篇带代码的论文精读，其余只记标题与结论，避免陷进通读全部条目。</li>
+<li>需要复现时从条目里的项目页 / 代码链接跳转，别在清单仓库里找实现。</li>
+<li>与英文清单交叉核对：同一方向对照 os284，补齐中文清单可能漏掉的早期经典工作。</li>
+<li>与站内路径配合：读 WBC 类条目时对照 /learn/robot-dynamics 的全身接触操作力学，读 sim-to-real 时对照 /learn/sim-to-real 的 Real2Sim 章节。</li>
+</ol>
+<p><strong>注意</strong>：awesome 类清单的时效依赖维护活跃度，本仓库 2026-11-16 仍有推送，但个别条目可能未同步最新 v2 版本；写正式综述时仍需逐条回 arXiv 核对。许可未声明，团队内部分发前请确认授权。</p>
+<hr />
+<p>该仓库不以运行性能为指标，公开可核的工程事实为：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 714（2026-11 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>未声明（NOASSERTION）</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2026-07-19 / 2026-11-16</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Markdown（清单仓库，无运行时）</td>
+</tr>
+<tr>
+<td>内容形态</td>
+<td>论文 / 项目 / 产业 / 求职四条线</td>
+</tr>
+<tr>
+<td>代码 / 基准</td>
+<td>无，只有链接</td>
+</tr>
+</tbody>
+</table>
+<p>「性能」在这里应理解为<strong>覆盖度与维护活跃度</strong>：714 star 与四个月持续更新说明它被中文社区当作默认入口之一；但对具体研究问题，仍需回到论文原文核对实验设置。这也是把它归到 data-tools 而非 framework 的原因——它优化的是检索成本，不是计算吞吐。与 os284（约 2900 star，2024 年建立）相比，本仓库更年轻、更中文、更兼顾产业与求职，两者不是替代关系。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>本仓库（中文）</th>
+<th>os284 Awesome Humanoid Robot Learning</th>
+<th>arXiv 关键字检索</th>
+<th>综述论文（p372）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>语言</td>
+<td>中文</td>
+<td>英文</td>
+<td>英文为主</td>
+<td>英文</td>
+</tr>
+<tr>
+<td>覆盖</td>
+<td>论文 + 项目 + 产业 + 求职</td>
+<td>论文为主，学术谱系全</td>
+<td>单次查询命中</td>
+<td>一个子方向的阶段总结</td>
+</tr>
+<tr>
+<td>可浏览性</td>
+<td>四条线分层，适合定阅读顺序</td>
+<td>按主题分层</td>
+<td>无结构</td>
+<td>线性叙述</td>
+</tr>
+<tr>
+<td>更新</td>
+<td>持续（2026-11 仍推送）</td>
+<td>持续高频</td>
+<td>实时</td>
+<td>一次性，很快过时</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>未声明</td>
+<td>MIT</td>
+<td>—</td>
+<td>视出版方</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>中文入门、开题、求职</td>
+<td>学术相关工作、新人阅读路线</td>
+<td>追最新一篇</td>
+<td>建立坐标系</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么选</strong>：中文读者入门或找岗位方向，从本仓库的四条线切入最省力；写英文综述的相关工作章节，os284 的学术谱系更完整；要建立「设计—训练—部署」的坐标，读 p372 的七轴框架；只想确认某篇最新论文，直接检索即可。任何清单都只是起点，正式引用必须回原文核对。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

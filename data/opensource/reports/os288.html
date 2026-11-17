@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AffordanceVLA：把可供性感知注入动作生成的 VLA 官方实现 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">AffordanceVLA：把可供性感知注入动作生成的 VLA 官方实现 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="affordancevla-vla">AffordanceVLA：把可供性感知注入动作生成的 VLA 官方实现</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Skywalker-yqz/AffordanceVLA">https://github.com/Skywalker-yqz/AffordanceVLA</a>  </p>
+<p><strong>Stars</strong>: 77 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-17  </p>
+<p><strong>组织</strong>: Skywalker-yqz  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-17</p>
+</blockquote>
+<hr />
+<p><strong>Skywalker-yqz/AffordanceVLA</strong> 是《AffordanceVLA: Empowering Action Generation through Affordance-Aware Understanding》的官方代码仓库（MIT，Python，约 77 star，2026-06-05 建立、2026-10-20 最近推送）。</p>
+<p>标准 VLA 的做法是让视觉—语言主干直接从观测与指令回归动作块，物体「可以怎么被操作」这一层知识只能隐式地压进权重里。AffordanceVLA 把它显式化：先识别可供性——哪个部位可抓、哪个面可推、哪个开口可插入——再把这份结构化理解作为条件送入动作生成。可供性本质上是介于「看见物体」与「决定动作」之间的中间表示，正好落在本轮 p372 VLA 综述所说「中间预测」那一轴上。</p>
+<p>对本轮内容体系，它最有价值的身份是 MOSAIC（p373）的对照样本：两者都不重训主干，都往动作专家里注入显式的空间/语义线索，区别只在注入的是「角色掩码 + 几何 token」还是「可供性」。把两个仓库并排读，比单独读任何一个都更容易理解这条技术路线的设计空间。</p>
+<hr />
+<ol>
+<li><strong>可供性头</strong>：在预训练 VLA 主干旁增加轻量分支，输出物体部位级的可操作属性（抓取点、接触面、插入方向等），不改动主干权重。</li>
+<li><strong>条件注入</strong>：把可供性表示作为条件拼入动作专家的输入或中间层，让动作生成在「知道哪里能碰」的前提下解码轨迹。</li>
+<li><strong>主干保留</strong>：沿用预训练视觉—语言对齐能力，避免为空间理解重训整个 VLA——与 /learn/ai-infra 的适配器思路一致。</li>
+<li><strong>训练信号</strong>：可供性分支需要部位级标注或由分割/关键点模型生成的伪标签，这部分数据准备是复现时的主要工作量。</li>
+<li><strong>边界</strong>：仓库提供的是模型与训练/推理代码，不自带大规模数据集与真机驱动；官方未给出跨基准的统一对照表。</li>
+</ol>
+<p>与 MOSAIC 的结构差异值得留意：MOSAIC 的线索来自「目标 / 目的地 / 障碍」这类任务角色，AffordanceVLA 的线索来自物体自身的物理属性。前者更贴近任务规划，后者更贴近抓取几何，二者在原理上可以叠加。</p>
+<hr />
+<ul>
+<li><strong>MOSAIC: Modular Obstacle and Spatial-Aware Framework for Manipulation In Cluttered Scenes</strong>（arXiv 2611.15937，https://arxiv.org/abs/2611.15937） — 同属「显式中间预测注入 VLA」路线的最直接对照，附 RoboPRO 杂乱/扰动增益数据。</li>
+<li><strong>Vision-Language-Action Models: A Life-Cycle Survey</strong>（arXiv 2611.18372，https://arxiv.org/abs/2611.18372） — 把「中间预测」列为独立一轴，为可供性这类设计提供分类坐标。</li>
+<li><strong>AffordanceVLA 原论文</strong>（仓库 README 内链接） — 方法定义与原始实验设置。</li>
+<li>站内阅读：/learn/vla-models（动作输出与中间预测）、/learn/computer-vision（开放词汇检测与 Grounding）、/learn/ai-infra（适配器而非重训基座）。</li>
+</ul>
+<hr />
+<ol>
+<li>克隆仓库，先读 README 里的环境依赖与 checkpoint 获取方式；官方实现通常需要特定版本的 PyTorch 与视觉主干权重。</li>
+<li>准备最小数据：挑一类物体、少量带部位标注的样本，先跑通可供性头的单独训练/推理，别一上来接完整 VLA 训练。</li>
+<li>验证坐标格式：可供性点/框与图像、深度之间的坐标变换是本项目最容易出错的一环，与站内 /learn/computer-vision 里 DINO 归一化 cxcywh 转像素 xyxy 的坑同源。</li>
+<li>做一次消融：关掉可供性注入只保留主干，比较有/无条件下的动作误差或抓取成功率，确认注入确实带来净收益。</li>
+<li>与 MOSAIC 的思路对照：若有深度可用，试着把可供性点反投影到三维度量空间，观察是否复现 p373 报告的「视觉扰动下增益更大」。</li>
+<li>与站内路径配合：动作输出设计看 /learn/vla-models，可供性与 grounding 的关系看 /learn/computer-vision。</li>
+</ol>
+<p><strong>注意</strong>：star 数与文档完整度都有限，复现时遇到依赖冲突属正常；建议先固定 Python / CUDA / PyTorch 版本再排查模型代码。</p>
+<hr />
+<p>仓库未在 README 中给出可跨基准比较的权威对照表，公开可核的工程事实为：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 77（2026-11 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2026-06-05 / 2026-10-20</td>
+</tr>
+<tr>
+<td>形态</td>
+<td>论文官方实现（模型 + 训练/推理代码）</td>
+</tr>
+<tr>
+<td>自报基准分数</td>
+<td>未公开统一对照表</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么评估它</strong>：可供性注入类方法的正确评测姿势是「同主干、同数据、同 episode 数」下做有/无消融，并单独报视觉扰动条件下的增益。参考 p373 MOSAIC 的口径（干净杂乱场景 +5.1%、扰动下 +9.7%、最困难子集最高 +25.0%），若可供性注入的增益也随扰动强度放大，才说明它买的是鲁棒性而非对某个数据集的过拟合。只报一个总体成功率无法把可供性头的贡献从主干能力里分离出来。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>AffordanceVLA</th>
+<th>MOSAIC（p373）</th>
+<th>标准 VLA 主干</th>
+<th>Grounding DINO + SAM 流水线</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>注入的线索</td>
+<td>物体可供性（可抓/可推/可插）</td>
+<td>任务角色掩码 + 几何 token</td>
+<td>无显式中间预测</td>
+<td>bbox + mask</td>
+</tr>
+<tr>
+<td>线索来源</td>
+<td>物体自身物理属性</td>
+<td>任务定义与三维重建深度</td>
+<td>—</td>
+<td>文本描述</td>
+</tr>
+<tr>
+<td>是否改主干</td>
+<td>否</td>
+<td>否</td>
+<td>是（本身即主干）</td>
+<td>否（外接感知）</td>
+</tr>
+<tr>
+<td>主要收益方向</td>
+<td>抓取几何合理性</td>
+<td>杂乱/扰动鲁棒性</td>
+<td>通用能力</td>
+<td>开放词汇定位</td>
+</tr>
+<tr>
+<td>需要额外标注</td>
+<td>部位级可供性</td>
+<td>三类角色掩码 + 深度</td>
+<td>动作轨迹</td>
+<td>无（零样本）</td>
+</tr>
+<tr>
+<td>适用环节</td>
+<td>动作生成</td>
+<td>动作生成</td>
+<td>全流程</td>
+<td>感知前端</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么选</strong>：只想让系统认出「文本说的那个东西在哪」，用 Grounding DINO 类零样本检测即可；要提升抓取与接触动作的几何合理性，看 AffordanceVLA；主要痛点是杂乱场景误碰与视觉扰动，看 MOSAIC；三者其实处在同一条流水线的不同位置——感知定位 → 可供性/几何理解 → 动作生成，可以按需叠加而非互斥。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

@@ -54,7 +54,7 @@
     }
   ],
   "weeklyPlan": "**第1-2周**：OpenCV 图像处理 + 相机标定\n**第3周**：YOLO 目标检测训练与部署\n**第4-5周**：SAM 分割 + 6DoF 位姿估计\n**第6周**：集成到机器人抓取 Pipeline",
-  "lastUpdated": "2026-11-04T08:30",
+  "lastUpdated": "2026-11-17T08:54",
   "maturity": "foundation",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -178,17 +178,23 @@
     {
       "id": "sec-06",
       "title": "开放词汇检测与Grounding：让机器人理解任意物体描述",
-      "lastUpdated": "2026-10-27",
-      "chars": 4335,
+      "lastUpdated": "2026-11-17T08:54",
+      "chars": 12796,
       "shortTitle": "开放词汇检测与Grounding",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 18,
       "headings": [
         "传统检测 vs 开放词汇检测",
         "Grounding DINO",
         "机器人中的应用Pipeline",
+        "前置概念：对比学习怎样把文字和图像放进同一个空间",
+        "从固定分类头到语言驱动的动态分类头",
+        "Grounding DINO 架构拆解",
+        "能力边界：开放词汇不等于理解语言",
+        "可运行示例：提示词构造、阈值校准与多实例消歧",
+        "工程落地清单",
         "练习",
         "参考答案"
       ],
@@ -452,7 +458,7 @@
       "summary": "目标检测的输出是一个框，分割的输出是一个掩码。这两样东西对机器人来说都不够用。"
     }
   ],
-  "readingMinutes": 151,
+  "readingMinutes": 164,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 130869
+  "chars": 139330
 }

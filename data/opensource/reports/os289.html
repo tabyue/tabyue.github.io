@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>robot-weight-debugging：用 LLM 直接编辑机器人策略权重的可复现实验包 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">robot-weight-debugging：用 LLM 直接编辑机器人策略权重的可复现实验包 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="robot-weight-debugging-llm">robot-weight-debugging：用 LLM 直接编辑机器人策略权重的可复现实验包</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/jushengzhang/robot-weight-debugging">https://github.com/jushengzhang/robot-weight-debugging</a>  </p>
+<p><strong>Stars</strong>: 153 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-17  </p>
+<p><strong>组织</strong>: jushengzhang  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-17</p>
+</blockquote>
+<hr />
+<p><strong>jushengzhang/robot-weight-debugging</strong> 是《Can LLMs Debug Robots by Editing Their Weights?》的首发代码与证据包（Apache 2.0，Python，约 153 star，2026-11-09 建立并推送）。</p>
+<p>它要检验的问题相当反直觉：当机器人策略表现不对时，大语言模型能不能跳过「采集数据 → 重新训练」这条标准路径，直接定位并编辑策略网络里的一小段权重来修正行为？仓库没有把它包装成通用框架，而是给出一组刻意小到能人工审阅的工件——一次 65 行的权重编辑、16 组实验日志与配套证据——让读者能逐行核对「改了哪里、为什么改、改完发生了什么」。</p>
+<p>放到本轮内容体系里，它和 p375（JustRUA）构成一组漂亮的对照：JustRUA 保持模型完全冻结、只改外围 harness，就把 RoboDojo 从 29.7 提到 50.3；这个仓库反过来保持外围不变、只动权重的最小一处。两篇放在一起，逼出一个更基本的问题——机器人系统的「能力」究竟主要住在权重里，还是住在模型外围的组织方式里？答案大概率是两者都有，但这类刻意设计的对照实验正是把它拆清楚的方式。</p>
+<p><strong>注意</strong>：README 明确 V2 与真机实验仍在后续计划，当前证据以仿真与离线日志为主。star 数反映话题关注度，不代表方法已被独立验证。</p>
+<hr />
+<ol>
+<li><strong>研究对象</strong>：一个可加载、可逐层访问的机器人策略网络（而非黑盒 API），因此权重级的定位与编辑才可能进行。</li>
+<li><strong>编辑工件</strong>：一次 65 行的权重编辑是核心交付物，规模被刻意压到可人工审阅，便于核对每一步改动的意图与效果。</li>
+<li><strong>证据链</strong>：16 组实验日志把「编辑前 / 编辑后 / 对照条件」串起来，避免只报一个最好看的回合。</li>
+<li><strong>LLM 的角色</strong>：负责阅读失败现象、提出权重层面的假设与具体编辑，而不是生成动作或重训模型；这把 LLM 放在了「调试者」而非「控制器」的位置。</li>
+<li><strong>边界</strong>：不含通用权重编辑 SDK、不含大规模训练管线、不含真机驱动；V2 与真机验证尚未发布。</li>
+</ol>
+<p>这个分层对站内读者有直接价值：/learn/embodied-agent 讨论 Agent 如何观察并改进系统，这里的「系统」被下沉到了权重张量；/learn/platform-engineering 讨论接口与治理，这里则提醒我们，当接口不可改时还有一层更底干预面存在——同时也说明它有多难验证。</p>
+<hr />
+<ul>
+<li><strong>JustRUA: A Controlled Study of GPT-6 Robot-Use Agents</strong>（arXiv 2611.16009，https://arxiv.org/abs/2611.16009） — 「改外围不改模型」的极端对照，与本仓库「改权重不改外围」正好互补。</li>
+<li><strong>Can LLMs Debug Robots by Editing Their Weights?</strong>（仓库 README 内链接） — 方法原始问题设定与 16 组实验说明。</li>
+<li><strong>Vision-Language-Action Models: A Life-Cycle Survey</strong>（arXiv 2611.18372，https://arxiv.org/abs/2611.18372） — 七轴框架里「后训练」一轴，说明权重级干预在生命周期中的位置。</li>
+<li>站内阅读：/learn/embodied-agent（失败感知与自主恢复）、/learn/platform-engineering（接口完备性与调用治理）、/learn/deep-learning（权重与表征）。</li>
+</ul>
+<hr />
+<ol>
+<li>克隆仓库后先读 README 与 16 组日志的目录结构，确认每组实验对应的失败现象、编辑位置与评测条件。</li>
+<li>复现环境：固定随机种子、策略 checkpoint 与评测 episode 数；权重级编辑对初始值极敏感，环境不固定则结论不可比。</li>
+<li>逐行审阅那 65 行编辑，标出「哪一层、哪一组参数、改动幅度」，再对照日志里的行为变化，检查因果链是否成立。</li>
+<li>跑编辑前/编辑后/随机编辑三组对照：随机编辑是必要的 placebo，否则无法区分「定位准确」与「随便扰动一下也会变」。</li>
+<li>检查是否只在单一任务上有效：在未见过的初始条件上复测，确认不是把策略调成只适合那一个回合。</li>
+<li>与 p375 对照阅读：把「改 harness」与「改权重」两条路径的成本、可解释性与可迁移性列成一张表。</li>
+</ol>
+<p><strong>注意</strong>：不要把「65 行编辑」理解成通用调试配方；它是一份为可审阅性而设计的实验证据，直接搬到自己的策略上需要重新定位与重新验证。</p>
+<hr />
+<p>仓库以可复现证据而非基准分数为交付，公开可核的工程事实为：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 153（2026-11 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2026-11-09 / 2026-11-09</td>
+</tr>
+<tr>
+<td>权重编辑规模</td>
+<td>65 行</td>
+</tr>
+<tr>
+<td>实验日志</td>
+<td>16 组，附证据</td>
+</tr>
+<tr>
+<td>真机验证</td>
+<td>尚未发布（README 标注为后续计划）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么评估它</strong>：这类工作最该看的指标不是「成功率提升多少」，而是<strong>因果可核对性</strong>——编辑前后的行为差异能否被 16 组日志完整解释、随机编辑对照是否无效、改动是否迁移到未参与调试的初始条件。若只在一个回合上有效、或随机扰动也能产生类似变化，那么「LLM 定位到了权重 bug」这一主张就不成立。把它当作可复现性教学样本，比当作方法结论更合适。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>robot-weight-debugging</th>
+<th>JustRUA（p375）</th>
+<th>标准重训 / 微调</th>
+<th>OpenGenieMaster（os287）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>改动位置</td>
+<td>策略权重（最小一处）</td>
+<td>模型外围 harness</td>
+<td>权重（大规模）</td>
+<td>模型外围回路</td>
+</tr>
+<tr>
+<td>是否需要训练</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>可解释性</td>
+<td>高（65 行可逐行审）</td>
+<td>中（配置项可枚举）</td>
+<td>低（分布式改动）</td>
+<td>中（日志可回放）</td>
+</tr>
+<tr>
+<td>验证成本</td>
+<td>低—中（离线日志）</td>
+<td>低（基准分数）</td>
+<td>高（数据 + 算力）</td>
+<td>中（多轮任务）</td>
+</tr>
+<tr>
+<td>风险</td>
+<td>易过拟合单回合</td>
+<td>结论绑定基准</td>
+<td>灾难性遗忘</td>
+<td>依赖工具后端质量</td>
+</tr>
+<tr>
+<td>当前成熟度</td>
+<td>首发证据包，真机待做</td>
+<td>受控实验结论</td>
+<td>成熟</td>
+<td>早期框架</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么选</strong>：想快速验证「外围设计有没有用」，走 JustRUA / OpenGenieMaster 路线；想研究「模型内部到底哪里错了」，这个仓库提供了最小可审阅的起点；要解决生产环境里稳定的能力缺陷，标准微调仍是最可控的路径。四者不在同一抽象层，按需组合即可，别把它们当成互相替代的方案。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
