@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillEvaluator：用对照实验判断一个 Agent 技能到底值不值得装 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">SkillEvaluator：用对照实验判断一个 Agent 技能到底值不值得装 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="skillevaluator-agent">SkillEvaluator：用对照实验判断一个 Agent 技能到底值不值得装</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/NVIDIA/SkillEvaluator">https://github.com/NVIDIA/SkillEvaluator</a>  </p>
+<p><strong>Stars</strong>: 2843 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-17  </p>
+<p><strong>组织</strong>: NVIDIA  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-17</p>
+</blockquote>
+<hr />
+<p><strong>NVIDIA/SkillEvaluator</strong> 是给 Agent 技能与插件做「装了有没有用」体检的开源框架，2026-11-13 发布 v0.9.0、11-17 仍有推送，Apache-2.0，约 2843 star，主语言 Python。</p>
+<p>团队积累了大量 Agent 技能之后，常见困境是说不清哪些该留、哪些只是增加 token 开销。SkillEvaluator 把这个问题变成一个可复跑的对照实验：同一任务跑两遍，一遍带技能、一遍不带，对照质量门槛与花费，判断技能带来的提升是否值得它的成本。0.9 版新增预算控制与版本前后对比，框架还提供分层评估、语义重叠检测与合成评测数据集生成。</p>
+<hr />
+<ol>
+<li><strong>成对执行器</strong>：同一任务、同一输入、同一预算下分别跑「带技能」与「不带技能」两条执行路径，只让技能这一个变量变化。</li>
+<li><strong>质量门槛</strong>：由使用者自定义判定函数（通过率、正确率、格式合规等），框架不预设什么叫「好」。</li>
+<li><strong>成本记账</strong>：记录 token 用量、调用次数与耗时，与质量提升一起进入结论，而不是只报质量。</li>
+<li><strong>预算控制（v0.9）</strong>：给对照实验设上限，避免评估本身花掉过多推理预算。</li>
+<li><strong>版本前后对比（v0.9）</strong>：同一技能改版前后可跑同一组任务，形成纵向对照。</li>
+<li><strong>辅助模块</strong>：语义重叠检测（判断两个技能是否在做同一件事）、合成评测数据集生成、分层评估结果汇总。</li>
+</ol>
+<p>这个结构本质上是把 /learn/vla-models 里讲的配对设计搬到了 Agent 技能层：同任务、同种子、只变一个变量，再看差值与区间。</p>
+<hr />
+<ul>
+<li>框架本身为 NVIDIA 工程开源项目，无同名论文；方法学来源是配对对照实验与带成本约束的消融分析。</li>
+<li><strong>ESI: An Embodied Self-Improvement Flywheel for LLM-VLA Agents</strong>（arXiv 2611.18176，本轮 p379）：把共享技能接口列为可联合后训练的对象，说明技能不是固定胶水层。</li>
+<li><strong>Joint World Action Models through Differentiable Trajectory Optimization</strong>（arXiv 2611.17626，本轮 p377）：同样强调同时报效果与部署开销。</li>
+<li>延伸阅读：/learn/embodied-agent 的 Harness 层、/learn/vla-models 的评估基准与系统性测试方法（配对设计、置信区间、多重比较）。</li>
+</ul>
+<hr />
+<ol>
+<li>安装后先写一个最小质量门槛函数，例如「输出 JSON 可被解析且字段齐全」，跑通一次成对对照，确认两条路径确实只在技能上不同。</li>
+<li>准备一组覆盖技能典型用途与无关用途的任务：只在典型用途上提升、在无关用途上不退化，才算真有用。</li>
+<li>打开成本记账，把质量提升换算成「每提升一个百分点花多少 token」，这比单看通过率更能决定技能去留。</li>
+<li>设预算上限后重跑，确认结论在预算收紧后仍然成立。</li>
+<li>用语义重叠检测扫一遍已有技能库，先把功能重复的技能合并，再逐个评估；否则对照实验会把重复技能的收益算到单个技能头上。</li>
+<li>接入具身任务时，把自定义质量门槛换成「真机或仿真回合成功率」，并固定随机种子与初始布局，与 /learn/vla-models 的配对评估方法保持一致。</li>
+</ol>
+<p><strong>注意</strong>：对照跑法天然多花一份推理开销；质量门槛定义不当会让整个评估失去意义。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 2843（2026-11-17 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2026-06-24 / 2026-11-17</td>
+</tr>
+<tr>
+<td>当前版本</td>
+<td>v0.9.0（2026-11-13）</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+</tbody>
+</table>
+<p>框架本身不以「跑分」为指标，输出是每个技能的成对质量差与成本差。约 2843 star 与 11-17 当天仍有推送，说明维护活跃、社区验证相对充分，这一点与本轮另几个刚建立的小仓库形成对比。<strong>注意</strong>：具体收益数字完全取决于使用者的技能库与质量门槛，没有可跨团队比较的公开基准值。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>人工试用 / 体感判断</th>
+<th>单次跑分</th>
+<th>SkillEvaluator</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>变量控制</td>
+<td>无</td>
+<td>常有混杂</td>
+<td>成对执行，只变技能</td>
+</tr>
+<tr>
+<td>成本可见性</td>
+<td>不可见</td>
+<td>通常不记</td>
+<td>质量与 token 同时记</td>
+</tr>
+<tr>
+<td>可复跑性</td>
+<td>低</td>
+<td>中</td>
+<td>高，含版本前后对比</td>
+</tr>
+<tr>
+<td>适用对象</td>
+<td>少量技能</td>
+<td>整体 Agent</td>
+<td>技能库逐项验货</td>
+</tr>
+</tbody>
+</table>
+<p>与站内已收录的 os287（OpenGenieMaster，具身 Agent 执行—反馈—持续改进框架）是互补关系：后者负责让 Agent 跑起来并持续改进，前者负责判断改进到底值不值。与本轮 p379（ESI 把技能接口当作可训练对象）合读尤其有意思——一个把技能接口当优化变量，一个把技能效果当被测量，评测与优化应当成对出现。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

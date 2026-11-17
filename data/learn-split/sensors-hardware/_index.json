@@ -1,7 +1,7 @@
 {
   "id": "sensors-hardware",
   "name": "传感器与硬件接口",
-  "lastUpdated": "2026-11-13T08:43",
+  "lastUpdated": "2026-11-17T12:12",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 40,
@@ -207,14 +207,14 @@
     {
       "id": "sec-07",
       "title": "视觉传感器选型指南",
-      "lastUpdated": "2026-10-27",
-      "chars": 3650,
+      "lastUpdated": "2026-11-17T12:12",
+      "chars": 12242,
       "shortTitle": "视觉传感器选型指南",
       "difficulty": "中级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 16,
       "headings": [
         "相机类型全景",
         "RGB 相机",
@@ -222,6 +222,14 @@
         "事件相机与热红外相机",
         "深度图处理演示",
         "选型决策树",
+        "从成像链路建立选型的判断框架",
+        "前置概念：一张数字图像是怎么来的",
+        "三种测距原理与它们的误差模型",
+        "指标怎么读：厂商标称值的陷阱",
+        "时间同步、坐标系与外参",
+        "接口与带宽预算",
+        "把选型变成可验收的流程",
+        "常见误区与工程清单",
         "练习",
         "参考答案"
       ],
@@ -576,7 +584,7 @@
       "summary": "2026 年灵巧手进入量产阶段，全年出货量以万台计；相比之下，能同时提供经过标定的指尖力和可靠手部姿态的采集手套，仍然是稀缺品。这个反差初看不合理——手套又不需驱动电机，结构上比灵巧手简单得多。"
     }
   ],
-  "readingMinutes": 193,
+  "readingMinutes": 205,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 162361
+  "chars": 170953
 }

@@ -1,7 +1,7 @@
 {
   "id": "desktop-arm-project",
   "name": "桌面级机械臂项目",
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-11-17T12:12",
   "stage": "阶段六：项目实战",
   "importance": "入门实战",
   "estimatedHours": 40,
@@ -111,13 +111,13 @@
     {
       "id": "sec-04",
       "title": "桌面机械臂运动学：正逆解与工作空间",
-      "lastUpdated": "2026-04-28T18:57",
-      "chars": 4447,
+      "lastUpdated": "2026-11-17T12:12",
+      "chars": 15841,
       "shortTitle": "桌面机械臂运动学",
       "difficulty": "入门",
       "estimatedMinutes": 5,
       "tier": 0,
-      "readingMinutes": 5,
+      "readingMinutes": 20,
       "headings": [
         "运动学求解",
         "1. 正运动学求解",
@@ -128,6 +128,15 @@
         "3. 工作空间分析",
         "4. 奇异位型分析",
         "5. 关节空间 vs 笛卡尔空间规划对比",
+        "把骨架补成推导：从刚体运动表示到可验收的求解器",
+        "前置概念：刚体运动为什么用齐次变换",
+        "正运动学：从 2 连杆闭式解看连乘到底在算什么",
+        "雅可比：关节速度到末端速度的线性映射",
+        "操作度、条件数与奇异的定量判据",
+        "解析逆解：把 atan2 的每个分支讲清楚",
+        "阻尼最小二乘：从最小二乘目标推出来",
+        "工作空间：把点云变成可交付的指标",
+        "工程落地检查清单",
         "练习题"
       ],
       "summary": "掌握了 DH 参数和齐次变换后，本节深入讲解正运动学（FK）和逆运动学（IK）的完整求解方法，以及工作空间分析。"
@@ -513,7 +522,7 @@
       "summary": "本模块前面十九节把桌面级机械臂的硬件、运动学、视觉抓取、模仿学习、力控都走了一遍。走到这里你会发现一个共同的天花板：所有这些能力都是开环的。"
     }
   ],
-  "readingMinutes": 153,
+  "readingMinutes": 168,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 130907
+  "chars": 142301
 }

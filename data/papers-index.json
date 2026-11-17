@@ -1,6 +1,144 @@
 {
- "lastUpdated": "2026-11-17T08:20",
+ "lastUpdated": "2026-11-17T12:05",
  "papers": [
+  {
+   "title": "Zero-Shot VLA Adaptation with Retrieved Guidance",
+   "authors": "Subin Kim, Anh-Quan Pham, Dinesh Jayaraman",
+   "venue": "arXiv 2611.10894",
+   "date": "2026-11-07",
+   "arxiv": "https://arxiv.org/abs/2611.10894",
+   "github": "",
+   "tags": [
+    "RAGu",
+    "检索增强",
+    "零样本适配",
+    "flow matching",
+    "跨本体"
+   ],
+   "category": "VLA 泛化 / 检索增强",
+   "difficulty": "中级",
+   "tldr": "**问题**：大规模示范预训练的 VLA 在相机视角、背景、物体身份或机器人形态发生小幅变化时仍然脆弱。**做法**：借鉴语言模型的 RAG，从 DROID 这类域不匹配的真实示范数据里检索轨迹来引导目标域上的 VLA：先用简单几何标定把源示范变换到目标设置；再用粗到细检索（DTW 粗筛 top-N，再按 guidance gradient norm 选出与基座 VLA 最兼容的轨迹）；最后在 flow-matching 推理过程中施加引导，而不是重训基座模型或扩展其上下文窗口。**结果**：真机 VLA 成功率从 20% 提升到 80%，并在仿真、sim-to-real 迁移与跨本体人形操作上优于最接近的对照基线。**注意**：20%→80% 为作者报告的真机结果，依赖检索库与目标域的轨迹可迁移性。",
+   "keyInsights": [
+    "把 RAG 从「把检索结果塞进上下文」改造成「用检索轨迹引导去噪过程」，正好绕开 VLA 上下文窗口有限与实时推理的硬约束。",
+    "几何标定先消除源域与目标域的坐标系差异，是检索能跨本体生效的前提；不做这一步，相似度排序会被视角差异主导。",
+    "用 guidance gradient norm 而非单纯轨迹距离选参考，判据是「哪条示范与基座模型当前意图最兼容」，这是把检索与生成模型对齐的关键一步。",
+    "零样本、不重训、不改上下文，与本轮 WATO、ESI、残差适配共同构成「不动基座」的适配方法族。"
+   ],
+   "impact": "与 /learn/vla-models 的泛化与分布外评测、/learn/computer-vision 的检索与跨模态对齐、/learn/embodied-data-engineering 的轨迹复用章节直接呼应：前者给出 OOD 成功率 gap 的测量方法，本工作给出在不重训前提下压缩这个 gap 的具体手段。它也与本轮 WATO（把优化放训练期）形成有趣对照：两者都在 flow/扩散式动作生成上做文章，一个改训练信号，一个改推理引导。对做数据复用的团队，「检索库里的轨迹要不要先几何标定」是可立即验证的一条工程结论。",
+   "idx": 381,
+   "id": "p381",
+   "addedDate": "2026-11-17"
+  },
+  {
+   "title": "Few-Shot Residual Adaptation of Pretrained Latent World Models",
+   "authors": "Jakub Suliga, Pankhuri Vanjani, Nisarga Nilavadi, Wolfram Burgard, Rudolf Lioutikov",
+   "venue": "arXiv 2611.13592",
+   "date": "2026-11-10",
+   "arxiv": "https://arxiv.org/abs/2611.13592",
+   "github": "https://github.com/Robot-Learning-Collective/behavior-1k-solution-2026",
+   "tags": [
+    "潜世界模型",
+    "少样本适配",
+    "残差修正",
+    "动力学偏移",
+    "冻结主干"
+   ],
+   "category": "世界模型 / Sim-to-Real",
+   "difficulty": "中级",
+   "tldr": "**问题**：预训练潜世界模型能支持视觉规划与控制，但部署时物理动力学一变预测就可能失效；能否只靠极少交互适配，既不改预训练权重、也不去辨识变化了的物理参数。**做法**：从潜空间预测误差以自监督方式学习修正项，并把修正同时施加在潜预测器内部与它输出的预测潜状态上（双点），预训练世界模型保持冻结。**结果**：仿真与真机分别引入质心偏移和摩擦变化，两类偏移把冻结模型成功率压到接近零；仅用 3 段交互适配后，真机在质心偏移下恢复到 90%、摩擦变化下恢复到 100%；消融显示双点修正优于任一单点。诊断还指出，学到的修正有相当一部分只是在消除通用预测失配，要真正控得住还必须依赖适配过程中捕获的、与本次偏移相关的信息。**注意**：3 段交互与恢复率为作者报告值，适配效果依赖偏移类型。",
+   "keyInsights": [
+    "把「适配」从辨识物理参数改成学习预测残差，绕开了系统辨识在少样本下的病态性，也保住了预训练权重不被破坏。",
+    "双点修正（预测器内部 + 输出潜状态）优于单点，说明动力学偏移同时污染了转移过程与观测到的状态表征。",
+    "诊断把修正拆成「通用预测失配」与「本次偏移特定信息」两部分，避免把残差适配误解成万能补丁，是很诚实的消融。",
+    "与 /learn/sim-to-real、/learn/world-models-llm 的域偏移章节可直接合读：这是冻结主干 + 轻量适配路线在真机上的少见实证。"
+   ],
+   "impact": "与 /learn/sim-to-real 的域随机化与 Real-to-Sim 建模、/learn/world-models-llm 的潜空间世界模型两章直接呼应：前者讨论如何让策略覆盖动力学变化，后者讨论潜预测如何支撑规划，本工作给出第三条路——部署后用极少交互在线补一个残差。它也与本轮 NEO-VLA（改架构）、ESI（改 agent 接口）形成「改什么」的完整光谱。对工程读者最有价值的是那条诊断结论：若只学到通用失配修正，换一种偏移就会失效，因此上线前必须按偏移类型分别验证。",
+   "idx": 380,
+   "id": "p380",
+   "addedDate": "2026-11-17"
+  },
+  {
+   "title": "ESI: An Embodied Self-Improvement Flywheel for LLM-VLA Agents",
+   "authors": "Yundi Cai, Zihan Wang, Chenxi Han, Yi Cheng, Houde Liu, Zilei Wang",
+   "venue": "arXiv 2611.18176",
+   "date": "2026-11-13",
+   "arxiv": "https://arxiv.org/abs/2611.18176",
+   "github": "",
+   "tags": [
+    "ESI",
+    "LLM-VLA 协同",
+    "自我改进飞轮",
+    "技能接口",
+    "RoboDojo"
+   ],
+   "category": "具身 Agent / 后训练",
+   "difficulty": "高级",
+   "tldr": "**问题**：独立预训练的语言模型与 VLA 策略拼在一起并不会自动协调：VLA 会偏离 LLM 指定的子任务，纠正后重新接管时又可能破坏 LLM 刚恢复的良好状态。**做法**：ESI 把「模块化 agent 整体」当作后训练单元，用环境交互反复精修引导 LLM 的提示词、表达其意图的共享技能接口、以及实现意图的 VLA 参数，再把三者一起重新部署；核心洞察是协作过程本身就能提供监督——LLM 的子任务决策给出语义监督，有效纠正与后续学生延续给出动作级监督。**结果**：RoboDojo 十个任务上平均 Score 62.03、平均成功率 49.41%，超过含 GO-3 Nano Preview（47.27 / 36.60%）在内的混合式具身 agent 与全部对照的 code-based 方法，且不生成任务专用控制代码。**注意**：技术报告，未经同行评审；论文给出的代码仓库在收录核验时尚不可访问。",
+   "keyInsights": [
+    "后训练单元从「单个模型」上移到「模块化 agent 整体」，提示词、技能接口与策略参数被当成同一套可联合优化的对象。",
+    "协作即监督：不需要额外人工标注，LLM 的子任务分解、有效纠正与学生的成功延续自动产生语义级与动作级两类训练信号。",
+    "允许局部有效的经验在整体回合失败时仍贡献梯度，缓解具身任务里稀疏成功信号导致的样本浪费。",
+    "「纠正后接管又破坏状态」是一个被长期忽视的接口问题，论文把它显式化为 handoff 监督，值得与站内 Agent 失败恢复章节对照。"
+   ],
+   "impact": "与 /learn/embodied-agent 的 Harness 层与失败感知自主恢复、/learn/vla-models 的训练范式章节直接呼应：前者讲模块化系统如何分工，本工作指出分工之后还需要联合后训练才能真正对齐。它也与本轮 WATO（把任务损失穿过优化器）、Few-Shot Residual Adaptation（冻结主干只学残差）构成一组「改什么」的对照：分别改训练信号、改适配项、改整个 agent 接口。对做具身 Agent 工程落地的读者，技能接口应被视为可训练对象而非固定胶水层，是最可直接迁移的一条结论。",
+   "idx": 379,
+   "id": "p379",
+   "addedDate": "2026-11-17"
+  },
+  {
+   "title": "From Pixels to Actions -- Towards Native Vision-Language-Action Policies",
+   "authors": "Weichen Fan, Haiwen Diao, Penghao Wu, Siyuan Hu, Ziqi Huang, Tianqi Liu, Mingze Sun, Ziyi Wang, Zhongang Cai, Hanming Deng, Quan Wang, Lei Yang, Lewei Lu, Fangzhou Hong, Zhaoxi Chen, Dahua Lin, Ziwei Liu",
+   "venue": "arXiv 2611.06918",
+   "date": "2026-11-04",
+   "arxiv": "https://arxiv.org/abs/2611.06918",
+   "github": "https://github.com/EvolvingLMMs-Lab/NEO/tree/main/VLAKit",
+   "tags": [
+    "NEO-VLA",
+    "无编码器架构",
+    "原生多模态",
+    "flow matching",
+    "层间表征"
+   ],
+   "category": "VLA 架构 / 表征",
+   "difficulty": "高级",
+   "tldr": "**问题**：主流 VLA 先用 CLIP、SigLIP、DINOv2 等预训练视觉编码器压缩图像，动作推理只能从编码器固定末端输出开始；而抓取、对齐、插入依赖的局部几何、边界、深度与细微状态变化，恰恰在逐层抽象中最容易丢失。**做法**：NEO-VLA 采用结构上无编码器的框架，图像经轻量 patch 卷积层 token 化后与语言一起进入主干共同演化，flow-matching 动作专家按指令条件从不同深度抽取视觉表征。**结果**：受控对比下原生架构稳定优于编码器式对照；全量微调缩小但不消除差距，单纯扩大规模也无法弥补；逐层探针显示对动作最关键的信号常在最终视觉表征之前达到峰值。**注意**：v3 版本 11 月 9 日更新，代码在 VLAKit 子目录。",
+   "keyInsights": [
+    "把「视觉编码器输出」从默认接口变成可被质疑的设计选择：不是换更强编码器，而是问动作模块是否应该被限制在视觉计算的终点。",
+    "全量微调缩小但不消除差距、加规模也无法弥补，两条对照共同把结论指向架构而非优化不足或容量不足，归因设计干净。",
+    "逐层探针发现动作关键信号在中间层达到峰值，为「动作专家应跨层取表征」提供直接证据，也解释了固定末端输出为何丢信息。"
+   ],
+   "impact": "与 /learn/vla-models 的 VLA 架构与表征章节、/learn/computer-vision 的开放词汇检测与 Grounding 章节直接呼应：后者讲 CLIP 式图文对齐如何把类别空间变成语言生成，本工作则说明同一套预训练编码器在精细操作上可能成为信息瓶颈。它补上本轮 WATO 改训练信号、RAGu 改推理过程之外的第三条路径——改架构接口。对站内桌面机械臂与灵巧操作章节，逐层探针的结论尤其有用：把「该用哪一层特征」从经验调参变成可测量问题。",
+   "idx": 378,
+   "id": "p378",
+   "addedDate": "2026-11-17"
+  },
+  {
+   "title": "Joint World Action Models through Differentiable Trajectory Optimization",
+   "authors": "Mintae Kim, Koushil Sreenath",
+   "venue": "arXiv 2611.17626",
+   "date": "2026-11-13",
+   "arxiv": "https://arxiv.org/abs/2611.17626",
+   "github": "",
+   "tags": [
+    "WATO",
+    "世界动作模型",
+    "可微轨迹优化",
+    "动力学一致性",
+    "部署提速"
+   ],
+   "category": "世界模型 / 规划控制",
+   "difficulty": "高级",
+   "tldr": "**问题**：联合世界动作模型（WAM）同时生成未来动作与状态，但轨迹模仿只保证「像示范」，不保证轨迹对任务有效、也不保证符合动力学。**做法**：提出 WATO，把生成的动作与未来状态同时作为参考放进带动力学约束的轨迹优化问题，再把任务损失对优化后的轨迹求导，用该梯度训练生成器；轨迹优化只在训练期使用，部署时直接生成候选轨迹并用世界模型排序。**结果**：7 个视觉控制环境平均成功率从模仿式联合 WAM 的 79.9% 提到 91.7%，超过强模型基线、目标条件 RL 与生成式控制基线；相比 CEM 平均快 11.5 倍，部署期世界模型评估次数少 600.5 倍。**注意**：数值均为作者口径，结论限于所测 7 个环境。",
+   "keyInsights": [
+    "把「生成得像示范」与「生成得能完成任务」分开：前者是模仿目标，后者才是控制目标，WATO 用任务损失的梯度把两者接起来。",
+    "轨迹优化只放在训练期、部署期换成「生成候选 + 世界模型排序」，是把可微优化成本一次性付掉的关键工程取舍，也解释了 600.5 倍评估次数下降。",
+    "把动作与未来状态同时作为优化变量，使动力学一致性成为可微约束而非事后过滤；这与只预测动作、再交给控制器纠偏的流水线有本质差别。"
+   ],
+   "impact": "与 /learn/world-models-llm 的世界模型作为规划器、/learn/vla-models 的评估基准与系统性测试方法两章直接呼应：前者讲预测增强表征如何进入策略，后者讲只报成功率会掩盖部署成本。WATO 提供了少见的、把「训练时可微优化」与「部署时采样排序」明确分工的实现样本，适合与 CEM 类迭代规划放在同一张对照表里讲。也与本轮 ESI、RAGu 共同指向一条趋势：不改基座模型、改训练信号或推理过程，正在成为具身模型提升的主要路径。",
+   "idx": 377,
+   "id": "p377",
+   "addedDate": "2026-11-17"
+  },
   {
    "title": "WorldDraft: If Code Builds the World, Can Video Models Just Render It?",
    "authors": "Zhiyu Hou, Wen-Jie Shu, Harold Haodong Chen, Weilin Ruan, Chenfei Liao, Liuzhou Zhang, Disen Lan, Xiaogang Xu, Qi Chen, Ser-Nam Lim",
@@ -10046,5 +10184,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 350
+ "totalItems": 355
 }

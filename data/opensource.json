@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-17T08:20",
+ "lastUpdated": "2026-11-17T12:05",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,114 @@
   }
  ],
  "projects": [
+  {
+   "name": "SkillEvaluator：用对照实验判断一个 Agent 技能到底值不值得装",
+   "github": "https://github.com/NVIDIA/SkillEvaluator",
+   "organization": "NVIDIA",
+   "org": "NVIDIA",
+   "category": "ai-agent-framework",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 2843,
+   "description": "**NVIDIA/SkillEvaluator** 是给 Agent 技能与插件做「装了有没有用」体检的开源框架，2026-11-13 发布 v0.9.0，11-17 仍有推送，Apache-2.0，约 2843 star。核心思路是同一任务跑两遍：一遍带技能、一遍不带，对照质量门槛与 token 花费，判断技能带来的提升是否值得它的开销；0.9 版新增预算控制与版本前后对比。框架还提供分层评估、语义重叠检测与合成评测数据集生成能力。\n\n**为什么值得看**：具身 Agent 越做越像「一堆技能 + 一个编排器」，但团队往往说不清哪些技能该留；SkillEvaluator 把「体感有用」变成可复跑、可比价的对照实验，与站内 /learn/embodied-agent 的 Harness 层、/learn/vla-models 的配对设计方法学是同一套思路——同任务、同预算、只变一个变量，再看差值与成本。本轮 p379（ESI 把技能接口当可训练对象）正好说明技能不是固定胶水层，评测与优化应该成对出现。**注意**：质量门槛需要使用者自行定义，对照跑法会多花一份推理开销；框架面向通用 Agent 技能，接入具身任务前需把「成功率」而非文本质量设为主指标。",
+   "features": [
+    "带技能 / 不带技能的成对对照实验，同时量质量与 token 成本",
+    "0.9 版支持预算控制与技能版本前后对比",
+    "分层评估、语义重叠检测、合成评测数据集生成",
+    "Apache-2.0，NVIDIA 维护，约 2843 star",
+    "可直接把具身任务的成功率作为自定义质量门槛接入"
+   ],
+   "tags": [
+    "SkillEvaluator",
+    "Agent 技能",
+    "对照实验",
+    "成本评估",
+    "NVIDIA"
+   ],
+   "id": "os294",
+   "addedDate": "2026-11-17"
+  },
+  {
+   "name": "Lingbot-ALOHA / HALO：全身移动操作的动觉示教数据采集系统",
+   "github": "https://github.com/robbyant-research/Lingbot-ALOHA",
+   "organization": "robbyant-research",
+   "org": "蚂蚁灵波 Robbyant Research",
+   "category": "data-tools",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 7,
+   "description": "**robbyant-research/Lingbot-ALOHA** 是 HALO 数据采集系统的项目仓库：面向全身移动操作，解决「双手操作需要与跨大工作空间的移动底盘协同」这一示教难题。操作者通过动觉示教直接引导机器人末端，同时推动一个低阻力平台代替实际部署的移动底座，从而在保留直接物理反馈与自然移动的前提下采集更自然的全身示范。系统配套「部署对齐的示范处理」：把平台运动与部署底座的响应做标定和时间对齐，并对录制观测里操作者的手做掩码与修补。论文报告相比 Mobile ALOHA 与 VR 遥操作，示教采集最快提速 2.9 倍且成功率相当或更高；用 HALO 数据训练的策略可完成扎带紧固等精细任务，六阶段长时序移动操作任务成功率 73.3%。仓库 2026-11-04 建立、11-13 仍有推送，Apache-2.0，约 7 star。\n\n**为什么值得看**：它把「示教设置与部署设置不一致」当成一等公民来处理，而不是等策略训练时再靠域随机化硬扛；掩码修补与运动时间对齐这两步，正是 /learn/embodied-data-engineering 讨论轨迹可学性的具体实现。**注意**：2.9 倍是作者报告的「最高」值而非典型值；仓库较新、描述信息少，硬件搭建需参照项目页，star 规模说明社区验证仍有限。",
+   "features": [
+    "动觉示教引导双臂末端 + 低阻力平台代替移动底座",
+    "部署对齐处理：平台运动标定、时间对齐、操作者手部掩码与修补",
+    "输出可直接用于模仿学习的全身移动操作示范",
+    "覆盖精细任务与六阶段长时序移动操作评测",
+    "Apache-2.0，与蚂蚁灵波 LingBot 系列生态同源"
+   ],
+   "tags": [
+    "HALO",
+    "Lingbot-ALOHA",
+    "动觉示教",
+    "全身移动操作",
+    "数据采集"
+   ],
+   "id": "os293",
+   "addedDate": "2026-11-17"
+  },
+  {
+   "name": "NEO / VLAKit：无独立视觉编码器的原生视觉语言动作策略实现",
+   "github": "https://github.com/EvolvingLMMs-Lab/NEO/tree/main/VLAKit",
+   "organization": "EvolvingLMMs-Lab",
+   "org": "EvolvingLMMs-Lab（南洋理工 S-Lab / 商汤 / Ropedia）",
+   "category": "ai-model",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 928,
+   "description": "**EvolvingLMMs-Lab/NEO** 是「原生视觉语言模型」系列仓库，VLAKit 子目录提供本轮 p378（From Pixels to Actions）对应的 VLA 实现：图像经轻量 patch 卷积层 token 化后与语言一起进入主干共同演化，flow-matching 动作专家按指令条件从不同深度抽取视觉表征，整条视觉通路不依赖 CLIP / SigLIP / DINOv2 这类预训练编码器。仓库 2026-11-11 仍有推送，Apache-2.0，约 928 star；论文另给出 Hugging Face 上的 NEO-VLA 权重与动作预训练数据条目。\n\n**为什么值得看**：它把「动作模块是否只能读编码器末端输出」这个架构问题变成了可直接跑的对照实验，仓库里逐层取表征的实现与论文的层探针结论一一对应。对做桌面机械臂精细操作（抓取、对齐、插入）的读者，这是检验「局部几何线索在哪一层最清楚」最省事的起点。与 /learn/vla-models、/learn/computer-vision 两章的表征讨论互补。**注意**：VLAKit 只是 NEO 系列的一个子目录，克隆后需按子目录说明安装；权重版本要与论文 v3 对应， Apache-2.0 覆盖代码但模型权重可能有独立条款。",
+   "features": [
+    "结构上无独立视觉编码器，patch 卷积 token 与文本在主干内共同演化",
+    "flow-matching 动作专家可跨主干层读取指令条件表征",
+    "提供与论文逐层探针结论对应的跨层连接实现",
+    "支持仿真与真机操作设定、分布偏移评测",
+    "NEO 系列主仓库 Apache-2.0，约 928 star 且持续更新"
+   ],
+   "tags": [
+    "NEO-VLA",
+    "VLAKit",
+    "无编码器",
+    "flow matching",
+    "原生多模态"
+   ],
+   "id": "os292",
+   "addedDate": "2026-11-17"
+  },
+  {
+   "name": "USDCraft：让大模型读懂网格，生成可直接仿真的铰链 3D 资产",
+   "github": "https://github.com/NVlabs/USDCraft",
+   "organization": "NVlabs",
+   "org": "NVIDIA Labs",
+   "category": "simulation",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 43,
+   "description": "**NVlabs/USDCraft** 把铰链资产重建定义为「以局部几何证据为依据的程序化建模」：一个无需微调的现成大模型根据源网格与参考图片写出可执行的资产程序，编译、检查、再修改，并自主决定收集哪些几何证据。为了让读不懂网格的大模型拿到尺寸与结构，仓库设计了全局切片（把源网格表面沿轴向切片，配包围盒、开口、凸起等度量摘要压成文本）与主动观测（智能体主动选视角渲染并在关键区域查询包围盒、点分布与表面朝向）两个组件，再辅以视觉反馈和物理建模。仓库于 2026-10-20 建立、11-04 仍有推送，Apache-2.0，约 43 star。\n\n**为什么值得看**：仿真训练的前提是有几何准确、关节正确、物理参数完整的可交互物体，而现有两条路线各有短板——网格分割切不开粘连部件、补不出缺失部件，智能体编程从零造物体又对不上具体那个物体的尺寸。USDCraft 用真实几何去引导程序编写，同时保留补全与拆分的自由度，正好补上 Real-to-Sim 资产生产这一环。可与 /learn/physics-simulation、/learn/sim-to-real 的场景构建章节配套阅读。**注意**：仓库较新、star 数不高，配套数据集与论文另有入口；生产使用前需自行验证生成资产的物理参数合理性。",
+   "features": [
+    "以真实网格为几何证据的程序化建模，兼顾尺寸对齐与补全缺失部件",
+    "全局切片把三维表面压成大模型可读的度量摘要文本",
+    "主动观测让智能体自行选视角、查询包围盒与表面朝向",
+    "编译—检查—修改的迭代闭环，支持生成、重建与 Real2Sim2Real 三类用法",
+    "输出可直接进仿真的铰链资产，Apache-2.0 许可"
+   ],
+   "tags": [
+    "USDCraft",
+    "铰链资产",
+    "Real-to-Sim",
+    "程序化建模",
+    "仿真资产"
+   ],
+   "id": "os291",
+   "addedDate": "2026-11-17"
+  },
   {
    "name": "humanoid-motion-intelligence：人形机器人运动智能的中文论文、开源项目与求职知识库",
    "github": "https://github.com/RealXiaoze/humanoid-motion-intelligence",
@@ -7312,5 +7420,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 277
+ "totalItems": 281
 }
