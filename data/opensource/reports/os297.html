@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADAPT：解析式扰动感知的人形运动策略训练（CoRL 2026 官方代码） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">ADAPT：解析式扰动感知的人形运动策略训练（CoRL 2026 官方代码） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="adaptcorl-2026">ADAPT：解析式扰动感知的人形运动策略训练（CoRL 2026 官方代码）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/NTUMARS/ADAPT">https://github.com/NTUMARS/ADAPT</a>  </p>
+<p><strong>Stars</strong>: 29 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-18  </p>
+<p><strong>组织</strong>: NTU MARS Lab  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-18</p>
+</blockquote>
+<hr />
+<p><strong>NTUMARS/ADAPT</strong> 是 CoRL 2026 论文《ADAPT: Analytical Disturbance-Aware Policy Training for Humanoid Locomotion》的官方代码，2026-06-18 建立、2026-11-15 仍有推送，约 29 star，主语言 Python，GitHub API 返回 license 为 null（未声明）。</p>
+<p>人形运动策略最容易在「被推一下」或「踩到不平地面」时失效。常见做法是 domain randomization：随机加大推力、摩擦、质量，希望策略见过就学会抗扰。ADAPT 的不同在于把扰动<strong>解析地</strong>写进训练：扰动的来源、作用点、持续时间都可参数化，策略因此能学到与扰动结构对应的恢复行为，而不是对噪声做平均意义上的鲁棒。</p>
+<hr />
+<ol>
+<li><strong>扰动参数化</strong>：把外部力 $F_{\text{ext}}$、作用点、持续时长写成可采样也可显式指定的参数，而不是无结构的随机噪声。</li>
+<li><strong>解析式注入</strong>：在动力学方程里显式加入扰动项，梯度或策略更新能感知扰动与状态偏差之间的对应关系。</li>
+<li><strong>恢复目标</strong>：损失里除了常规跟踪/存活项，还包含扰动撤除后的回归项，逼策略学「怎么回到稳定步态」而不只是「别倒」。</li>
+<li><strong>强度扫描评测</strong>：按扰动幅值分档报告成功率，形成可比较的鲁棒性曲线而不是单点分数。</li>
+<li><strong>训练与评测脚本分离</strong>：官方代码同时给训练配置和评测配置，便于复现论文表格。</li>
+</ol>
+<p>这与站内 /learn/control-theory 的鲁棒 / 自适应控制、/learn/sim-to-real 的分布外鲁棒性章节是同一条思路的学习版：<strong>把「没见过什么」变成可检索、可扫参的运动先验</strong>。</p>
+<hr />
+<ul>
+<li><strong>ADAPT: Analytical Disturbance-Aware Policy Training for Humanoid Locomotion</strong>（CoRL 2026）：本仓库即其官方代码，引用时以论文为准。</li>
+<li><strong>XMimic and XSoma</strong>（arXiv 2611.20452，本轮 p384）与 <strong>InstantAMP</strong>（本轮 os296）：同属「解析梯度 / 解析建模」这一族，区别在于一个求快、一个求稳。</li>
+<li><strong>QTOP: Scaling Humanoid Motion Tracking with Quantile Critics</strong>（arXiv 2611.20791）：从价值分布角度处理人形跟踪的泛化，可与 ADAPT 的扰动视角对照。</li>
+<li>延伸阅读：/learn/control-theory 的鲁棒控制与状态估计、/learn/sim-to-real 的分布外鲁棒性工程、/learn/robot-dynamics 的浮动基座与接触力学。</li>
+</ul>
+<hr />
+<ol>
+<li>先核对许可：仓库未声明 license，商用或再分发前联系作者；论文引用按 CoRL 2026 格式。</li>
+<li>按 README 固定仿真器与依赖版本；扰动相关实现通常对接触求解器参数敏感，版本漂移会让鲁棒性曲线整体位移。</li>
+<li>跑「零扰动」基线，确认正常步态本身收敛，再开扰动；顺序反了会把步态问题误判成鲁棒性问题。</li>
+<li>用<strong>固定</strong>的扰动序列（同一组力、作用点、时刻）做评测，与随机扰动各报一次，区分「记住了这批扰动」与「真泛化」。</li>
+<li>扫扰动强度画成功率曲线，并单列「扰动撤除后回到稳定步态所需步数」——这才是 ADAPT 相对纯 randomization 的增量所在。</li>
+<li>与纯 domain randomization 基线同预算对比，别用更多训练步数换来的提升冒充方法收益。</li>
+</ol>
+<p><strong>注意</strong>：官方代码未必包含全部真机实验配置；README 未给出真机硬件清单时，不要据仿真曲线推断真机表现。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 29（2026-11-18 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>未声明</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2026-06-18 / 2026-11-15</td>
+</tr>
+<tr>
+<td>会议</td>
+<td>CoRL 2026</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>公开基准</td>
+<td>以论文表格为准，README 未完整转录</td>
+</tr>
+</tbody>
+</table>
+<p>29 star、有会议论文背书、11-15 仍在推送，说明是<strong>有正式出处的官方实现</strong>而非个人实验仓库；但许可未声明这一点限制了直接集成。<strong>注意</strong>：具体成功率与抗扰幅值请以论文正文为准，不要用 star 数替代性能判断。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>纯 domain randomization</th>
+<th>课程式 randomization</th>
+<th>ADAPT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>扰动表示</td>
+<td>无结构随机噪声</td>
+<td>按难度调度</td>
+<td>解析参数化</td>
+</tr>
+<tr>
+<td>策略能学到对应恢复吗</td>
+<td>弱</td>
+<td>中</td>
+<td>强（显式回归项）</td>
+</tr>
+<tr>
+<td>评测方式</td>
+<td>单点成功率</td>
+<td>分档曲线</td>
+<td>强度扫描 + 恢复步数</td>
+</tr>
+<tr>
+<td>实现代价</td>
+<td>低</td>
+<td>中</td>
+<td>需改动力学注入</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮 InstantAMP（单卡可微世界模型）是互补关系：InstantAMP 解决「怎么训得快」，ADAPT 解决「训出来的策略抗不抗扰」。与本轮新闻里小米 8 小时整班作业、禾川关节模组批量供货合读，可以看出产业侧对「扰动下连续运行」的需求正在变成训练期的显式目标。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

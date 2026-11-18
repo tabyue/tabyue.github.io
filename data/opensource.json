@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-17T12:05",
+ "lastUpdated": "2026-11-18T08:21",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,113 @@
   }
  ],
  "projects": [
+  {
+   "id": "os298",
+   "name": "CCIL：用连续性判据做纠正式模仿学习的数据增强",
+   "github": "https://github.com/personalrobotics/CCIL",
+   "organization": "Personal Robotics Lab",
+   "org": "Personal Robotics Lab",
+   "category": "data-tools",
+   "description": "**personalrobotics/CCIL** 是《CCIL: Continuity-based Data Augmentation for Corrective Imitation Learning》的代码发布与项目页，2024-04-02 建立、2026-11-13 有代码推送，MIT 许可，约 24 star，主语言 Python。它针对模仿学习里最贵的一类数据——人工接管纠正（corrective intervention）：当策略跑偏、人类接管把机器人拉回正轨时，这段「纠偏轨迹」很短、很少，直接拿来训练容易过拟合。CCIL 用轨迹连续性判据，从这些稀疏纠偏片段里合成更多可用的纠正示范。\n\n**为什么值得看**：本轮招聘岗位里日冕开物把「人类在环纠正数据 + 成败样本配比」写进后训练职责，正是 CCIL 要解决的问题；站内 /learn/imitation-learning 的 DAgger 与协变量偏移章节给出了理论，CCIL 给了数据侧的工程实现。**注意**：仓库 2024 年建立、2026-11 才推送代码，属于「论文先行、代码后补」，README 与论文版本需对应核对；MIT 许可允许使用，但依赖版本较老。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 24,
+   "features": [
+    "基于轨迹连续性的数据增强判据，而非随机扰动",
+    "面向人工接管纠正片段的稀疏示范扩增",
+    "纠正式模仿学习的训练与评测脚本",
+    "MIT 许可，附项目页"
+   ],
+   "tags": [
+    "CCIL",
+    "纠正式模仿学习",
+    "数据增强",
+    "DAgger",
+    "人类在环",
+    "协变量偏移"
+   ],
+   "addedDate": "2026-11-18"
+  },
+  {
+   "id": "os297",
+   "name": "ADAPT：解析式扰动感知的人形运动策略训练（CoRL 2026 官方代码）",
+   "github": "https://github.com/NTUMARS/ADAPT",
+   "organization": "NTU MARS Lab",
+   "org": "NTU MARS Lab",
+   "category": "framework",
+   "description": "**NTUMARS/ADAPT** 是 CoRL 2026 论文《ADAPT: Analytical Disturbance-Aware Policy Training for Humanoid Locomotion》的官方代码，2026-06-18 建立、11-15 仍有推送，约 29 star，主语言 Python，仓库未声明许可。它把人形运动训练中的外部扰动（推力、地面不平、负载变化）用解析式显式建模，而不是只靠 domain randomization 盲目加噪声，让策略对「被推一下之后怎么恢复」有结构化的先验。\n\n**为什么值得看**：本轮禾川科技把关节模组送进整机厂批量供货、小米人形机器人完成 8 小时整班作业，两条新闻共同指向「扰动下的连续稳定性」；ADAPT 给的是这一能力在训练期的形式化做法。站内 /learn/control-theory 的鲁棒控制与 /learn/robot-dynamics 的浮动基座章节可与它对照。**注意**：仓库未声明许可，论文与代码的分工、依赖的仿真器版本需按 README 核对；star 数不高，社区复现报告有限。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 29,
+   "features": [
+    "把外部扰动写成解析项而非纯随机噪声",
+    "面向人形运动（locomotion）的策略训练框架",
+    "CoRL 2026 官方实现，含训练与评测脚本",
+    "与扰动强度可扫参的对照配置"
+   ],
+   "tags": [
+    "ADAPT",
+    "CoRL 2026",
+    "扰动感知",
+    "人形运动",
+    "鲁棒控制",
+    "domain randomization"
+   ],
+   "addedDate": "2026-11-18"
+  },
+  {
+   "id": "os296",
+   "name": "InstantAMP：单卡 30 分钟训练 Unitree G1 运动与起身策略",
+   "github": "https://github.com/RoboticsResearchHubVN/InstantAMP",
+   "organization": "Robotics Research Hub VN",
+   "org": "Robotics Research Hub VN",
+   "category": "locomotion",
+   "description": "**RoboticsResearchHubVN/InstantAMP** 把「可微世界模型 + 解析梯度」这条人形运动学习路线做成了单卡可复现的开源实现：一张 RTX 5090 上约 30 分钟训练 Unitree G1 的运动与 get-up（跌倒起身）策略，技术栈是 JAX + MuJoCo Warp。仓库 2026-11-13 建立并当天推送，MIT 许可，约 24 star。\n\n**为什么值得看**：本轮 XMimic / XSoma（arXiv 2611.20452）用 4 张 H100 把同类方法压到 0.86 分钟，InstantAMP 则证明这条思路在**单张消费级显卡**上也能在半小时内跑通——把论文级的加速结论从「需要 4×H100」降到了个人开发者可复现的门槛。站内 /learn/physics-simulation 与 /learn/reinforcement-learning 的解析梯度章节正好用它做实验配套。**注意**：star 与时长数字均为仓库自述，单卡结论依赖具体 GPU 与 JAX 编译预热是否计入，复现前先核对脚本里的硬件假设。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 24,
+   "features": [
+    "JAX 编译的可微世界模型与 MuJoCo Warp 仿真器",
+    "单张 RTX 5090 约 30 分钟收敛",
+    "Unitree G1 运动与跌倒起身两类任务",
+    "解析梯度短 rollout，不依赖 PPO / SAC 采样"
+   ],
+   "tags": [
+    "InstantAMP",
+    "可微仿真",
+    "JAX",
+    "MuJoCo Warp",
+    "Unitree G1",
+    "解析梯度"
+   ],
+   "addedDate": "2026-11-18"
+  },
+  {
+   "id": "os295",
+   "name": "TWLA：用快触觉弥补慢视觉的 VLA 动作头",
+   "github": "https://github.com/kaichen-z/TWLA",
+   "organization": "kaichen-z",
+   "org": "kaichen-z",
+   "category": "ai-model",
+   "description": "**kaichen-z/TWLA** 是 T-WLA（Bridging Slow Vision and Fast Touch）的开源实现，2026-10-14 建立、11-17 仍有推送，约 133 star，主语言 Python，仓库未声明许可。它处理的是一个长期被 VLA 忽略的错配：视觉通常以 20—30 Hz 到达，而触觉与力反馈在数百 Hz 甚至 1 kHz 上变化；把触觉降采样到视觉帧率再一起喂进策略，接触建立、滑移、碰撞这些决定性瞬间就被抹平了。\n\n**为什么值得看**：本轮 WinDEX（度量级手部重建）解决的是「手部动作参考从哪来」，TWLA 解决的是「触觉进来之后策略怎么用」——两者正好是灵巧操作数据链路的上下游。站内 /learn/sensors-hardware 的多模态主动感知章节讨论过同步与选型，TWLA 给出了它在动作头层面的具体落地。**注意**：仓库未声明许可，商用前需联系作者确认；README 未给出完整基准分数与真机硬件清单，复现门槛偏高。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 133,
+   "features": [
+    "慢视觉与快触觉双速率输入的时间对齐，而不是简单降采样",
+    "把触觉事件当作动作头的条件而非附加 token",
+    "面向接触丰富操作的动作块生成",
+    "配套 T-WLA 方法的训练与推理脚本"
+   ],
+   "tags": [
+    "T-WLA",
+    "触觉",
+    "VLA",
+    "多速率融合",
+    "灵巧操作"
+   ],
+   "addedDate": "2026-11-18"
+  },
   {
    "name": "SkillEvaluator：用对照实验判断一个 Agent 技能到底值不值得装",
    "github": "https://github.com/NVIDIA/SkillEvaluator",
@@ -7420,5 +7527,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 281
+ "totalItems": 285
 }

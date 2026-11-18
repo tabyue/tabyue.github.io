@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TWLA：用快触觉弥补慢视觉的 VLA 动作头 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">TWLA：用快触觉弥补慢视觉的 VLA 动作头 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="twla-vla">TWLA：用快触觉弥补慢视觉的 VLA 动作头</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/kaichen-z/TWLA">https://github.com/kaichen-z/TWLA</a>  </p>
+<p><strong>Stars</strong>: 133 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-18  </p>
+<p><strong>组织</strong>: kaichen-z  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-18</p>
+</blockquote>
+<hr />
+<p><strong>kaichen-z/TWLA</strong> 是 T-WLA（Bridging Slow Vision and Fast Touch）的开源实现，2026-10-14 建立、2026-11-17 仍有推送，约 133 star，主语言 Python，仓库未声明许可（GitHub API 返回 license 为 null）。</p>
+<p>VLA 模型通常把观测打包成单一时间步的多模态 token：一张图、一句指令、一段本体状态。这个约定隐含一个假设——各模态在<strong>同一时刻、同一速率</strong>可用。触觉打破了这个假设：视觉 20—30 Hz，关节与力矩 500 Hz 到 1 kHz，接触事件甚至是异步触发的。T-WLA 的核心主张是不要让快模态去迁就慢模态，而是在动作头里显式处理两种速率，让触觉在视觉帧之间也能影响动作。</p>
+<hr />
+<ol>
+<li><strong>慢流（视觉 / 语言）</strong>：以较低频率编码图像与指令，产出语义条件 $c_{\text{slow}}$，在两帧视觉之间复用，避免重复前向。</li>
+<li><strong>快流（触觉 / 本体）</strong>：以控制周期频率读取触觉阵列、关节力矩与本体状态，产出 $c_{\text{fast}}(t)$。</li>
+<li><strong>时间对齐层</strong>：把快流样本按时间戳对齐到当前动作块内的子步，而不是重采样到视觉帧率；对齐用相对时间编码而非绝对帧号。</li>
+<li><strong>条件动作头</strong>：动作块生成以 $(c_{\text{slow}}, c_{\text{fast}}(t))$ 为条件，$c_{\text{slow}}$ 决定「做什么」，$c_{\text{fast}}(t)$ 决定「此刻怎么施力」。</li>
+<li><strong>训练目标</strong>：在示范轨迹上做动作块的条件回归或 flow matching，触觉扰动作为数据增强的一部分注入。</li>
+</ol>
+<p>这个分工与站内 /learn/ros2 讨论的「1 kHz 运控与 50 Hz 策略放进同一台机器」是同一问题的策略内版本：<strong>慢的量负责意图，快的量负责闭环</strong>。</p>
+<hr />
+<ul>
+<li><strong>WinDEX: Metric 3D Hand Motion Reconstruction in the Wild for Dexterous Teleoperation and Policy Learning</strong>（arXiv 2611.21143，本轮 p385）：提供度量级 3D 手部动作参考，是 TWLA 上游的数据来源。</li>
+<li><strong>WiTac: Wrist-Informed Tactile Representations for Contact-Rich Manipulation</strong>（arXiv 2611.21057）：同样主张在策略注入前先融合触觉与腕部视觉，可作为 TWLA 设计动机的旁证。</li>
+<li><strong>T-WLA</strong> 方法本身对应本仓库（T-WLA: Bridging Slow Vision and Fast Touch），仓库描述未给出独立 arXiv 编号，引用时请以仓库 README 为准，不要替作者补编号。</li>
+<li>延伸阅读：/learn/sensors-hardware 的多模态主动感知（选型、同步、标定）与 /learn/ros2 的机器人运行时分层。</li>
+</ul>
+<hr />
+<ol>
+<li>先确认许可状态：仓库未声明 license，商用或二次分发前必须联系作者；研究用途也应保留原始出处。</li>
+<li>按 README 装好依赖后，第一件事是打印各模态的实际时间戳与频率，确认数据管线没有悄悄把触觉降采样到视觉帧率——这是最容易静默失效的一步。</li>
+<li>用一个只含单次接触的短任务跑通：关掉快流仅用视觉条件，再打开快流，比较接触建立瞬间的动作差异；若两者几乎一致，说明对齐层没生效。</li>
+<li>把触觉通道人为加一段滑移扰动，观察动作块是否在视觉帧之间就作出修正，而不是等到下一帧图像。</li>
+<li>固定随机种子与初始布局，与本轮 WinDEX 提供的度量级手部参考配合，才能把「触觉有没有用」从体感变成可复跑的对照。</li>
+</ol>
+<p><strong>注意</strong>：README 未给出完整基准分数与真机硬件清单；没有触觉硬件时可用仿真接触力做代理，但不要据此宣称真机结论。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 133（2026-11-18 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>未声明</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2026-10-14 / 2026-11-17</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>公开基准分数</td>
+<td>未在 README 中给出</td>
+</tr>
+</tbody>
+</table>
+<p>133 star 且 11-17 当天仍有推送，说明仓库处于活跃开发期；但<strong>未声明许可 + 无公开基准</strong>这两点决定了它目前更适合作为方法参考而非可直接集成的依赖。<strong>注意</strong>：star 数与推送时间来自 GitHub API 核验，不含 fork 活跃度与 issue 响应情况。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>常规 VLA 多模态融合</th>
+<th>TWLA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>速率假设</td>
+<td>各模态对齐到同一帧</td>
+<td>显式区分慢流与快流</td>
+</tr>
+<tr>
+<td>触觉用法</td>
+<td>降采样后作为附加 token</td>
+<td>按子步条件化动作头</td>
+</tr>
+<tr>
+<td>接触瞬间的响应</td>
+<td>受限于视觉帧率</td>
+<td>可在视觉帧之间修正</td>
+</tr>
+<tr>
+<td>工程代价</td>
+<td>低</td>
+<td>需要时间戳对齐与硬件同步</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮 WinDEX（arXiv 2611.21143，野外度量级手部重建）是上下游关系：WinDEX 提供可训练的手部动作参考，TWLA 决定触觉进入策略后的作用点。与本轮 CCIL（纠正式模仿学习数据增强）则是互补关系——一个改输入接口，一个改数据分布。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

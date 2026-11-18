@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InstantAMP：单卡 30 分钟训练 Unitree G1 运动与起身策略 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">InstantAMP：单卡 30 分钟训练 Unitree G1 运动与起身策略 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="instantamp-30-unitree-g1">InstantAMP：单卡 30 分钟训练 Unitree G1 运动与起身策略</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/RoboticsResearchHubVN/InstantAMP">https://github.com/RoboticsResearchHubVN/InstantAMP</a>  </p>
+<p><strong>Stars</strong>: 24 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-18  </p>
+<p><strong>组织</strong>: Robotics Research Hub VN  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-18</p>
+</blockquote>
+<hr />
+<p><strong>RoboticsResearchHubVN/InstantAMP</strong> 是「30 分钟训练 AMP」的开源实现，仓库描述为「Train AMP in 30 minutes on 1 RTX 5090: Unitree G1 locomotion and get-up through a differentiable world model (JAX + MuJoCo Warp)」。2026-11-13 建立并当天推送，MIT 许可，约 24 star，主语言 Python。</p>
+<p>它的意义不在提出新算法，而在把一类方法<strong>平民化</strong>：可微世界模型 + 解析梯度训练人形运动策略，此前给人的印象是需要多卡集群（本轮 XMimic / XSoma 用 4×H100），InstantAMP 说明单张消费级显卡、半小时量级就能得到可演示的运动与起身策略。</p>
+<hr />
+<ol>
+<li><strong>可微动力学</strong>：用 MuJoCo Warp 提供可微分的接触与刚体动力学，梯度可以穿过仿真步直接回传到策略参数。</li>
+<li><strong>JAX 全图编译</strong>：策略、仿真、损失、梯度更新编进同一张 XLA 图，消除 Python 侧逐步调度开销——这正是分钟级训练能成立的关键。</li>
+<li><strong>短 rollout 解析梯度</strong>：不做长时域蒙特卡洛回报估计，沿短 rollout 的链式法则直接求 $\nabla_{\theta} \mathcal{L}$，方差远低于似然比估计。</li>
+<li><strong>AMP 风格对抗项</strong>：用示范动作（motion prior）提供风格信号，策略既要完成运动/起身任务，又要让状态—动作分布贴近示范。</li>
+<li><strong>两类任务共享骨架</strong>：locomotion 与 get-up 复用同一套编译与训练管线，只换参考动作与初始状态分布。</li>
+</ol>
+<p>与 XMimic / XSoma 的「只让世界模型学动力学、其余精确计算」是同一族取舍：<strong>能用解析式算准的量，不交给学出来的模型</strong>。</p>
+<hr />
+<ul>
+<li><strong>XMimic and XSoma: Learning Humanoid Motion Tracking and Locomotion in Under a Minute</strong>（arXiv 2611.20452，本轮 p384）：4×H100 上 0.86 / 0.77 分钟，是 InstantAMP 所复现思路的论文来源。</li>
+<li><strong>SuperMimic</strong>：用可微世界模型 + 解析梯度优化策略的原始框架，XMimic / XSoma 与 InstantAMP 均沿用其短 rollout 思想。</li>
+<li><strong>BlinkMimic: Training a Humanoid Motion Tracker in Minutes on a Single GPU</strong>（arXiv 2611.16422）：同为单卡分钟级跟踪，可作横向对照。</li>
+<li><strong>ADAPT: Analytical Disturbance-Aware Policy Training for Humanoid Locomotion</strong>（CoRL 2026，本轮 os297 为其官方代码）：同样强调解析式扰动建模。</li>
+<li>延伸阅读：/learn/physics-simulation 的接触动力学与约束求解器、/learn/reinforcement-learning 的策略优化算法。</li>
+</ul>
+<hr />
+<ol>
+<li>先确认 JAX 版本与 GPU 后端匹配，MuJoCo Warp 对 CUDA / XLA 版本较敏感；首次编译预热时间单独计时，不要算进「30 分钟」。</li>
+<li>跑最小 get-up 任务验证管线：初始姿态设为倒地，确认损失曲线在前几十次迭代就下降；若不降，优先查接触可微性而不是调学习率。</li>
+<li>打印每一步的梯度范数，确认解析梯度没有爆炸或消失——短 rollout 的作用正是把连乘链截断在数值稳定区间。</li>
+<li>记录环境步数与 wall-clock 两个指标：前者对应样本效率，后者对应系统吞吐，二者不能互相替代。</li>
+<li>换一张卡复跑并报数字，验证「单卡 30 分钟」是否依赖 5090 的特定显存/算力；与本轮 XMimic 的 4×H100 数字并列看，才能得到完整的成本曲线。</li>
+</ol>
+<p><strong>注意</strong>：RTX 5090 为仓库自述硬件，其他显卡不保证同样时长；MIT 许可允许自由使用，但模型权重与示范数据的来源需另行核对。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 24（2026-11-18 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2026-11-13 / 2026-11-13</td>
+</tr>
+<tr>
+<td>硬件</td>
+<td>1 × RTX 5090（仓库自述）</td>
+</tr>
+<tr>
+<td>训练时长</td>
+<td>约 30 分钟（仓库自述）</td>
+</tr>
+<tr>
+<td>任务</td>
+<td>Unitree G1 运动 + 跌倒起身</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python（JAX）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：24 star 且刚建立不久，社区验证还有限，但 MIT + 单卡 + 明确任务这三点是它相对同批次仓库最实用的地方。对照本轮 XMimic / XSoma 的 4×H100 / 0.86 分钟，可以看出「分钟级」这条路线的成本区间已从集群降到单卡，只是绝对时长随硬件线性变化。<strong>注意</strong>：30 分钟与 24 star 均为仓库/API 当时口径，不含编译预热与资产准备。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>PPO / SAC 类 model-free</th>
+<th>4×H100 的 XMimic</th>
+<th>InstantAMP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>梯度来源</td>
+<td>采样估计，高方差</td>
+<td>解析梯度</td>
+<td>解析梯度</td>
+</tr>
+<tr>
+<td>硬件门槛</td>
+<td>多 CPU / 单 GPU 可跑</td>
+<td>4 × H100</td>
+<td>1 × RTX 5090</td>
+</tr>
+<tr>
+<td>训练量级</td>
+<td>小时到天</td>
+<td>0.86 分钟</td>
+<td>约 30 分钟</td>
+</tr>
+<tr>
+<td>可复现性</td>
+<td>高</td>
+<td>依赖多卡集群</td>
+<td>个人开发者可跑</td>
+</tr>
+</tbody>
+</table>
+<p>三者并非替代关系：model-free 方法对不可微接触更鲁棒，多卡方案适合大规模动作库搜索，InstantAMP 的价值在于把门槛降到「一张卡、一节课」。站内 /learn/physics-simulation 的接触动力学与 /learn/reinforcement-learning 的策略梯度章节可与之对照阅读。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

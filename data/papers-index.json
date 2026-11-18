@@ -1,6 +1,143 @@
 {
- "lastUpdated": "2026-11-17T12:05",
+ "lastUpdated": "2026-11-18T08:21",
  "papers": [
+  {
+   "id": "p386",
+   "title": "PlanDiv: Test-Time Scaling with Latent Plans for Vision-Language-Action Models",
+   "authors": "Hanbo Zhang, Lianlei Shan, Liuhaichen Yang, Zezhi Tang",
+   "venue": "arXiv 2611.20010",
+   "date": "2026-11-15",
+   "arxiv": "https://arxiv.org/abs/2611.20010",
+   "github": "",
+   "tags": [
+    "PlanDiv",
+    "测试时扩展",
+    "潜计划",
+    "masked diffusion",
+    "CALVIN"
+   ],
+   "category": "VLA 推理 / 测试时扩展",
+   "difficulty": "中级",
+   "tldr": "**问题**：测试时扩展靠多采几个动作候选再挑最好的来提升 VLA，但收益衰减很快——本文发现从同一个解码器重采样出来的候选只是噪声不同、不是计划不同，三种重采样源从 4 个候选增到 8 个，CALVIN 上平均完成任务数只多 0.06—0.07。**做法**：PlanDiv 换一个动作头：轻量规划器提出 K 个潜计划假设，共享的 masked-diffusion 执行器从一次骨干前向里为每个计划解码一个动作块，策略执行自身似然排序最高的那个；计划仅从示范中学习，不需要计划标签或奖励。**结果**：固定骨干、数据与训练配方，八个按计划分化的候选把 CALVIN ABC→D 五任务链成功率从 56.9% 提到 69.9%，而自回归、无计划、同计划重采样最多 64.9%（同计划基线就是 PlanDiv 自己把计划固定住的 checkpoint，因此差距来自计划而非多采样）；LIBERO-Long 上四个计划消除 40% 的单候选失败，匹配重采样最多 21%；真机 Franka 上单解任务与 OpenVLA-OFT+ 持平，两个双解任务 51/54 对 40/54。**注意**：增益集中在任务存在多个解的场合，单解任务上不显著。",
+   "keyInsights": [
+    "把测试时扩展的失效原因从「采得不够多」改判为「采得不够不一样」，是一个可证伪的机制假设；同计划对照（用 PlanDiv 自己的 checkpoint 固定计划）把样本数与计划多样性干净地分离了。",
+    "一次骨干前向 + 共享执行器解码 K 个动作块，让多样性几乎不增加推理开销——这对 50 Hz 级策略比堆采样数现实得多。",
+    "计划完全从示范里无监督学出，不需要额外的计划标注或奖励模型，工程上比引入外部 verifier 轻。",
+    "真机上只在多解任务上赢，说明让候选按计划分化本质是在保留合理备选解，而不是提高单条轨迹精度；这与站内 /learn/embodied-agent 讨论的推理预算该怎么花是同一个问题的两面。"
+   ],
+   "impact": "给 VLA 的测试时扩展划出了有效边界：多样性必须来自结构化的潜计划，而不是解码噪声。对站内 /learn/vla-models 与 /learn/embodied-agent 的意义是，推理预算该花在生成几个不同的意图，而不是同一个意图多抖几次；本轮 ScaleVLA（大基座表征）与 The Flip Test（状态可辨识性）分别从表征与评测两端补上了同一张图。",
+   "addedDate": "2026-11-18"
+  },
+  {
+   "id": "p385",
+   "title": "WinDEX: Metric 3D Hand Motion Reconstruction in the Wild for Dexterous Teleoperation and Policy Learning",
+   "authors": "Hongyu Ma, Hairong Qu, Shiqi Zhao, Yongsong Yang, Kai Shi, Jiahao Ai, Xin You, Peng Yin",
+   "venue": "arXiv 2611.21143",
+   "date": "2026-11-16",
+   "arxiv": "https://arxiv.org/abs/2611.21143",
+   "github": "",
+   "tags": [
+    "WinDEX",
+    "度量级 3D 重建",
+    "第一视角",
+    "灵巧遥操作",
+    "视觉惯性 SLAM"
+   ],
+   "category": "数据采集 / 手部姿态",
+   "difficulty": "中级",
+   "tldr": "**问题**：人类手部操作数据是训练机器人灵巧度的主要来源，但野外低成本大规模采集一直受限于三件事：缺少几何上有度量尺度的 3D 重建、真实场景泛化差、推理速度跟不上遥操作。**做法**：WinDEX 由四部分组成——用几何—时序优化从野外第一视角立体视频标注度量级 3D 手部姿态并结合视觉惯性 SLAM 做世界坐标系重建；WinDEX-Net 是鱼眼原生的端到端网络，融合标定立体、局部细节与时序上下文，配「模型辅助标注—再训练」的数据飞轮；蒸馏出离线重建与因果流式两套模型，分别服务 RL 与遥操作；低成本 CyberCap 立体惯性采集装置，形成含 1000 小时训练标注的 WinDEX-Hand 数据集，并留出人工标注的野外 2D 与独立光学动捕评测集。**结果**：离线重建 43.61 FPS、因果流式 171 FPS；留出集上野外重投影误差 14.5 像素、配合 VIO 的世界系关节误差 37.29 mm；用其动作参考训练的 RL 策略任务成功率分别是 WiLoR 的 7.6 倍、HaWoR 的 3.6 倍，并完成实时臂手遥操作。**注意**：7.6 / 3.6 倍为特定任务上的相对成功率，不宜外推为通用策略增益。",
+   "keyInsights": [
+    "度量尺度是灵巧操作数据最容易被忽略的一环：只有像素级 2D 关键点的手部数据无法直接给出抓取时的距离与接触几何，WinDEX 用立体 + VIO 把尺度钉死在世界坐标系。",
+    "鱼眼原生网络而不是先去畸变再推理，避免了广角第一视角下边缘手部被裁切或畸变放大，这是野外场景泛化的关键设计。",
+    "数据飞轮（模型辅助标注 → 人工校验 → 再训练）比一次性标注更能支撑 1000 小时量级，且与站内 /learn/embodied-data-engineering 的数据闭环是同一套方法论。",
+    "离线 / 因果流式双蒸馏模型分别对应训练时求准与遥操作时求快，把精度与时延的取舍显式做成两个模型，而不是一个模型硬扛。"
+   ],
+   "impact": "把野外第一视角视频变成可直接用于 RL 与遥操作的度量级手部动作参考，绕开了动捕棚与遥操作示教的高成本。对站内 /learn/data-collection 与 /learn/sensors-hardware 的意义是：手部姿态这个具身数据硬骨头第一次有了千小时级、带独立评测集的公开方案；本轮开源的 TWLA（慢视觉快触觉）与 CCIL（纠正式数据增强）正好覆盖它下游的策略侧。",
+   "addedDate": "2026-11-18"
+  },
+  {
+   "id": "p384",
+   "title": "XMimic and XSoma: Learning Humanoid Motion Tracking and Locomotion in Under a Minute",
+   "authors": "Nico Bohlinger, Jan Peters",
+   "venue": "arXiv 2611.20452",
+   "date": "2026-11-16",
+   "arxiv": "https://arxiv.org/abs/2611.20452",
+   "github": "",
+   "tags": [
+    "XMimic",
+    "XSoma",
+    "SuperMimic",
+    "可微仿真",
+    "JAX",
+    "MuJoCo Warp"
+   ],
+   "category": "人形运动控制 / 可微仿真",
+   "difficulty": "高级",
+   "tldr": "**问题**：SuperMimic 一类用可微世界模型 + 解析梯度训练人形运动跟踪策略的方法，每次迭代都是一长串串行的小 GPU 操作，吃不满大显卡，训练一库动作往往要数小时。**做法**：XMimic 与 XSoma 缩短这条链，把每次迭代的各步并行放到最多 4 张 GPU 上，并用 JAX 把包括 MuJoCo Warp 仿真器在内的完整训练环整体编译；XSoma 在运动任务里只把机器人动力学交给世界模型，足下地形高度等其余量全部精确计算，采用 1 秒时域且不用 critic。**结果**：4 张 H100 上 XMimic 用 0.86 分钟学会 Unitree G1 跟踪全部 40 段 LAFAN1 片段，比单卡 BlinkMimic 快 3.7 倍；XSoma 用 0.77 分钟达到 Holosoma 为 FastSAC 设定的跟踪目标，比单卡 FastSAC 快 12.3 倍，且只需其八分之一的环境步数。**注意**：加速比依赖 4×H100 与 JAX 全图编译，单卡或换框架不保证同样数字；不到一分钟指训练时长，不含仿真资产准备与真机部署。",
+   "keyInsights": [
+    "瓶颈被定位得很准：不是算法不收敛，而是「长串小 kernel 串行」造成的 GPU 空转，属于系统问题而非学习问题。",
+    "把 MuJoCo Warp 一起编进 JAX 图，消除了 Python 侧逐步调度开销，这是分钟级训练能成立的关键工程决策。",
+    "XSoma 的「只让世界模型学动力学，其余精确算」是很有价值的建模取舍：能用解析式算准的量就不要交给学出来的模型，直接减少复合误差。",
+    "不用 critic 加 1 秒短时域仍能达标，说明在可微仿真里，短 rollout 的解析梯度已经足够提供低方差的方向信号。"
+   ],
+   "impact": "把人形运动跟踪从小时级压到分钟级，直接改变了这类算法的迭代方式——超参搜索、动作库扩充、本体参数变更都可以在一次实验会话里完成。对站内 /learn/physics-simulation 与 /learn/reinforcement-learning 的意义是：可微仿真 + 解析梯度这条路线第一次有了可与 PPO / SAC 类方法正面比训练成本的公开数据；本轮开源的 InstantAMP（单卡 30 分钟）是同一思路的社区复现版本。",
+   "addedDate": "2026-11-18"
+  },
+  {
+   "id": "p383",
+   "title": "The Flip Test: Video World Models Fail to Learn the World State",
+   "authors": "Mi Luo, Lijun Yu, Adams Wei Yu, Ang Cao, Baochen Sun, Ming-Hsuan Yang, Nan Hua, Yuan Hao, Alex Dimakis, Ya Xu, Ed H. Chi, Xuezhi Wang, Yinxiao Liu",
+   "venue": "arXiv 2611.19822",
+   "date": "2026-11-15",
+   "arxiv": "https://arxiv.org/abs/2611.19822",
+   "github": "",
+   "tags": [
+    "FlipTest",
+    "反事实检验",
+    "视频世界模型",
+    "因果状态",
+    "最小对"
+   ],
+   "category": "世界模型 / 评测方法",
+   "difficulty": "中级",
+   "tldr": "**问题**：视频世界模型号称能从当前帧预测未来，但它们是否真的学到了控制未来动态的世界状态？**做法**：用反事实方式构造 FlipTest 三级测试——视觉最小对（两帧几乎相同但真实未来不同，检验预测是否随边界翻转）、匹配控制（检验是否只在未来改变处变化）、密集扫描（定位变化究竟发生在哪一步）；覆盖 1680 个初始帧、10 个仿真任务与 15 个真实任务，评测 11 个视频世界模型。**结果**：全部不达标，最好的模型在真实与仿真场景平均成对准确率仅 18.3%，低于随机猜测的 25%；模型在「未来不变」与「未来改变」的步骤上翻转得一样频繁，且响应在密集扫描上保持平坦；同帧上 VLM 却表现出选择性、在边界附近呈近 S 形曲线，一个测量图像的 coding agent 也接近真实边界。**注意**：结论是像素级下一帧预测不足以识别因果状态，不等于所有世界模型路线失败；18.3% 为该基准上的成对准确率口径。",
+   "keyInsights": [
+    "把「预测得像不像」换成「该翻转时有没有翻转」，是世界模型评测里少见的反事实判据：画面合理性与状态跟踪被明确拆成两件事。",
+    "三级测试逐级收紧，能区分三种失败：完全不敏感（最小对不过）、乱敏感（匹配控制不过）、敏感但定位不准（密集扫描不过）——比一个总分更能指导改进。",
+    "对照实验是全文最有力的一笔：同帧上 VLM 有选择性、coding agent 能测出边界，说明决定性信息确实在图像里，是视频模型的训练目标漏掉了它，而不是任务本身不可解。",
+    "对本轮把可微或粒子化世界模型写进技术栈的产业条目是一记及时的方法学提醒：长时视频连贯生成不等于状态可辨识。"
+   ],
+   "impact": "给「世界模型 = 视频预测」这一默认范式划出了可证伪的边界。对站内 /learn/world-models-llm 与 /learn/vla-models 的意义是：今后评估世界模型除了报画质类指标，还应报状态敏感性与反事实一致性；这也是本轮 ScaleVLA（大基座当表征）与 PlanDiv（让候选按计划分化）共同指向的「表征必须编码因果变量」这一更一般的问题。",
+   "addedDate": "2026-11-18"
+  },
+  {
+   "id": "p382",
+   "title": "ScaleVLA: Scaling Vision-Language-Action Models to 552 Billion Parameters",
+   "authors": "Ruixi Yu, Dairu Liu, Xuchuan Chen, Zekun Qi, Zekai Li, Zhuo Cao, Luyang Niu, Yingsheng Zhang, Sikai Liang, Ke Fan, He Wang, Li Yi",
+   "venue": "arXiv 2611.21607",
+   "date": "2026-11-16",
+   "arxiv": "https://arxiv.org/abs/2611.21607",
+   "github": "",
+   "tags": [
+    "ScaleVLA",
+    "552B",
+    "DeepSeek-V4.1-Flash",
+    "action DiT",
+    "样本效率",
+    "泛化"
+   ],
+   "category": "VLA 缩放 / 基座表征",
+   "difficulty": "中级",
+   "tldr": "**问题**：前沿 VLM（如 GPT-6 Astra）已展现直接控机器人的能力，但多数 VLA 仍用 2B—7B 级小基座，广泛预训练带来的物理知识基本没被用上。**做法**：ScaleVLA 把冻结的 552B DeepSeek-V4.1-Flash 接到可训练的动作 DiT 上，在统一训练设置下系统比较 2B 到 552B 的 VLM 基座，考察样本效率、泛化、精密操作三项基础能力。**结果**：10 条示范即达 87.8%，超过 2B 基座用 50 条示范的 85.6%；LIBERO-PRO 成功率 45.1%，小基座最高 31.3%；真机充电器插入从 4/10 提升到 9/10，增益集中在接触敏感的对齐阶段；动作块中位延迟 216 ms。**注意**：552B 基座为冻结推理 + 动作头训练，216 ms 是作者报告的中位延迟，部署侧显存与吞吐账未完整披露。",
+   "keyInsights": [
+    "把「前沿 VLM 该当推理大脑还是当表征底座」变成一个可测问题：三项能力全部在统一训练设置下跨 2B—552B 扫描，而不是拿不同论文的数字互比。",
+    "样本效率的增益方向最值得注意——10 条示范超过小基座 50 条示范，说明大基座的价值更多体现在「少样本下不崩」，而不只是绝对成功率上限。",
+    "精密操作的提升集中在接触敏感对齐（充电器插入 4/10 → 9/10），这与大基座带来的细粒度视觉—几何先验一致，也与本轮 WinDEX 指向的同一类几何精度瓶颈呼应。",
+    "216 ms 动作块延迟说明作者用「冻结大基座 + 轻量动作 DiT」换了实时性：不微调 552B 本体，是这条路线能落地的工程前提。"
+   ],
+   "impact": "在「通用大模型直接控机器人 vs 专用具身模型」的路线之争里，ScaleVLA 提供了少见的中间答案：前沿 VLM 不必替代策略，也可以作为高效、可泛化的表征底座。对站内 /learn/vla-models 与 /learn/ai-infra 的意义是，缩放讨论从此要同时报「示范条数—成功率」曲线与推理延迟，而不是只报模型参数量。",
+   "addedDate": "2026-11-18"
+  },
   {
    "title": "Zero-Shot VLA Adaptation with Retrieved Guidance",
    "authors": "Subin Kim, Anh-Quan Pham, Dinesh Jayaraman",
@@ -10184,5 +10321,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 355
+ "totalItems": 360
 }

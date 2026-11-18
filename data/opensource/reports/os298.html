@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCIL：用连续性判据做纠正式模仿学习的数据增强 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">CCIL：用连续性判据做纠正式模仿学习的数据增强 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="ccil">CCIL：用连续性判据做纠正式模仿学习的数据增强</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/personalrobotics/CCIL">https://github.com/personalrobotics/CCIL</a>  </p>
+<p><strong>Stars</strong>: 24 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-18  </p>
+<p><strong>组织</strong>: Personal Robotics Lab  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-18</p>
+</blockquote>
+<hr />
+<p><strong>personalrobotics/CCIL</strong> 是《CCIL: Continuity-based Data Augmentation for Corrective Imitation Learning》的代码发布与项目页，2024-04-02 建立、2026-11-13 有代码推送，MIT 许可，约 24 star，主语言 Python。</p>
+<p>行为克隆有个老问题：策略一旦偏离示范分布，误差会随回合长度平方级放大（协变量偏移）。DAgger 的解法是让人类在策略自己访问到的状态上不断给纠正标签，但真机上每一次人工接管都很贵，纠偏片段又短又稀疏。CCIL 问的是：<strong>能不能从已有的少量纠偏片段里，用连续性判据合成更多合法的纠正示范</strong>，从而把纠正数据的价值放大。</p>
+<hr />
+<ol>
+<li><strong>纠偏片段输入</strong>：记录策略跑偏时刻的状态、人类接管后的动作序列，以及回到示范分布的连接点。</li>
+<li><strong>连续性判据</strong>：合格的合成轨迹必须在状态与动作上满足局部连续性——不能凭空拼接两段动力学上不相容的轨迹，否则会教出物理上不可执行的动作。</li>
+<li><strong>增强生成器</strong>：在连续性约束下对纠偏片段做插值、时间重参数化与局部扰动，产出新的 $(s, a)$ 对。</li>
+<li><strong>与原始示范合并</strong>：把合成纠正数据与原始示范按比例混合训练，比例本身是需要扫的超参。</li>
+<li><strong>评测协议</strong>：在策略自己诱导的状态分布上测成功率，而不是只在示范状态上测模仿损失——这是检验协变量偏移有没有被缓解的唯一正确口径。</li>
+</ol>
+<p>这与站内 /learn/imitation-learning 的 DAgger、协变量偏移 $T^2 \varepsilon$ 推导是同一条理论线的工程实现：<strong>数据增强不能只看「像不像示范」，还要看「接不接得上」</strong>。</p>
+<hr />
+<ul>
+<li><strong>CCIL: Continuity-based Data Augmentation for Corrective Imitation Learning</strong>：本仓库即其代码发布与项目页，引用时以论文为准。</li>
+<li><strong>DAgger / 协变量偏移经典推导</strong>：见 /learn/imitation-learning 的行为克隆章节，给出 $T^2 \varepsilon$ 形式的误差放大与在线纠偏的必要性。</li>
+<li><strong>PlanDiv: Test-Time Scaling with Latent Plans for VLA</strong>（arXiv 2611.20010，本轮 p386）：从推理侧补「单条示范不够用」，与 CCIL 的训练侧增强成对。</li>
+<li><strong>WinDEX</strong>（arXiv 2611.21143，本轮 p385）：提供可作为纠正示范来源的度量级手部动作参考。</li>
+<li>延伸阅读：/learn/embodied-data-engineering 的轨迹可学性、/learn/imitation-learning 的 DAgger 与动作分块。</li>
+</ul>
+<hr />
+<ol>
+<li>先固定依赖版本：仓库建立于 2024 年，2026-11 才推代码，老版 PyTorch / 仿真接口可能与当前环境不兼容，先按 README 建虚拟环境。</li>
+<li>用一小段人工接管数据跑通生成，打印合成轨迹与原始纠偏段的状态—动作曲线，肉眼确认连接处没有跳变。</li>
+<li>把连续性约束关掉做一次消融：若关掉后成功率反而更高，说明判据过严或实现有 bug，不要硬套。</li>
+<li><strong>混合比例单独扫参</strong>：0% / 25% / 50% / 75% 各跑一次，画出成功率—比例曲线；纠正数据不是越多越好，过量会把策略拽离主示范分布。</li>
+<li>评测必须让策略自己 rollout，记录它访问到的状态分布；只在示范状态上报模仿损失会得到虚假的安全感。</li>
+<li>与本轮 PlanDiv（按计划分化的候选）合读尤其有意思：一个改训练数据的覆盖，一个改推理时候选的多样性，二者都在补「单条示范不够用」这个缺口。</li>
+</ol>
+<p><strong>注意</strong>：MIT 许可允许使用，但项目页与论文版本要对应；合成数据的合法性依赖连续性判据的阈值，换任务需重新校准。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 24（2026-11-18 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2024-04-02 / 2026-11-13</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>公开基准</td>
+<td>以论文表格为准，README 未完整转录</td>
+</tr>
+</tbody>
+</table>
+<p>值得注意的时间线：仓库 2024 年建立、2026-11-13 才推送代码，属于论文先行、代码后补的类型。24 star 不高，但有 Personal Robotics Lab 出处与 MIT 许可，作为方法参考比作为生产依赖更合适。<strong>注意</strong>：具体成功率提升请以论文为准，别用「代码刚开源」推断方法新旧。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>随机扰动增强</th>
+<th>单纯 DAgger</th>
+<th>CCIL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据来源</td>
+<td>原始示范加噪</td>
+<td>在线人工接管</td>
+<td>稀疏纠偏片段 + 连续性合成</td>
+</tr>
+<tr>
+<td>合法性保证</td>
+<td>无</td>
+<td>有（真人在环）</td>
+<td>有（连续性判据）</td>
+</tr>
+<tr>
+<td>人工成本</td>
+<td>低</td>
+<td>高</td>
+<td>中</td>
+</tr>
+<tr>
+<td>主要风险</td>
+<td>生成物理不可执行动作</td>
+<td>接管次数太多</td>
+<td>判据阈值需按任务校准</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮 TWLA（慢视觉快触觉接口）是互补关系：TWLA 改的是输入接口，CCIL 改的是训练数据分布；与本轮 WinDEX（度量级手部参考）则是上下游——WinDEX 产出的手部轨迹若用于纠正示范，连续性判据正好用来筛掉拼接不合法的段。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
