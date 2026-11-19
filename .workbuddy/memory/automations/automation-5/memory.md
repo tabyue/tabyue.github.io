@@ -329,3 +329,11 @@
 - 学习：`desktop-arm-project#3` 4447→15841、`sensors-hardware#6` 3650→12242，三处 lastUpdated 同步 `2026-11-17T12:12`，章节数 553，sitemap 553 章 + 132 学习页。
 - 校验：payload 预检 PASS、normalize 无改动、`fix_learn_links --dry` fixed=0、sync_learn_split 同步 2 模块 4 文件、health_check ALL OK、verify_learn_structure ALL OK、audit 硬缺陷全 0（F5 仅历史 academic-english#9）、unittest 34/34、node UI 32/32、专项一致性 PASS。
 - 经验：① **7 段示例代码先实跑再定稿**，本轮据实测修 3 处相反结论：2R 中心差分雅可比误差打印 0.0（三角函数二次项抵消，非 1e-7）、λ 从 0.001→0.2 迭代 8→115 次（阻尼增大是变慢而非精度变差）、蒙特卡洛栅格覆盖率 1.027 属边界整格计入的系统性高估；**正文写数值断言前必跑代码拿真实输出**。② 写入前用 `_r2_precheck.py` 做字段/白名单/日期/ASCII 双引号/内链章节号预检，能拦下 category 越界与缺字段；但 `papers.github` 允许空串，别当成缺失。③ 论文详情与索引分离成 `_r2_pdN.json` / `_r2_p_papers.json`，避免单个 payload 过长被截断（上一轮 `_r2_p_papers.json` 首版在第 2 篇 `_detail` 处截断）。④ 3-gram 相似度对 WATO/NEO-VLA 标题误报 0.77/0.57，仍按「只有 arXiv ID / URL / repo key 命中才是真 DUP」处理。⑤ 插入脚本按「首行标题识别 ADD 区块」做幂等替换，改正文后可直接重跑，无需回滚 JSON。⑥ `git add` 用精确路径 `data sitemap.xml .workbuddy/memory`，push 用 Python `subprocess.run(capture_output=True)` 直调 gh 凭据 trick。
+
+### 2026-11-19 08:04—08:45
+- 投稿箱：无新投稿（open issue 返回 `[]`，未限制 label）；未启动浏览器，无凭据风险。开工 HEAD==origin/main（661aacc），工作树含昨天遗留的未跟踪日志 2026-11-18.md。
+- 数据：新闻 +10（n759—n768，726）、论文 +5（p387—p391，365，含 detail）、开源 +4（os299—os302，289，含 detail + 报告页 4 个 rc=0）、招聘 +6（j407—j412，399）、资源 r044（44）。25 条新条目 `addedDate=2026-11-19`，`lastUpdated=2026-11-19T08:30`。
+- 学习：延续「深化 tier0/1 薄章」。`reinforcement-learning#3` TRPO→PPO 完整推导 5985→25625；`ai-infra#14` 可观测性五联与时间对齐 3098→20686；各 5 段「深入」正文 + 10 段纯 NumPy 可运行代码，三处 lastUpdated 同步 `2026-11-19T08:35`。章节数仍 553，sitemap 553 章 + 132 学习页。
+- 校验：payload 预检 PASS（首版漏 addedDate 被拦）、normalize 无改动、fix_learn_links --dry fixed=0、sync_learn_split 同步 2 模块 4 文件、health_check **ALL OK**、verify_learn_structure **ALL OK**、audit 硬缺陷全 0（F5 仅历史 academic-english#9）、unittest 34/34、node UI 32/32。
+- 提交：内容 `e435153`（26 files，1705+/62-），日志与记忆随后 chore 提交一并推送。
+- 经验：① 10 段示例代码全部 `exec` 实跑再定稿，据实测修正 6 处数值/结论偏差（RL 稠密塑形与 LR、KL 误差减半、GAE 截断数值、Infra 粗细桶 p99 与时间对齐乱序假阳性）；② 顺手补交昨天遗留在工作树的未跟踪日志；③ 清理临时文件必须精确列名，`git clean` 会误删正式新增的 `data/opensource/os*.json` 与 `data/papers/p*.json`；④ `git add data sitemap.xml .workbuddy/memory/2026-11-18.md` 精确路径，push 用 Python subprocess argv 直调。
