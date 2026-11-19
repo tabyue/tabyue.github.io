@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>openamr-platform-sw：ROS 2 Jazzy 移动底盘的全套开源软件栈 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">openamr-platform-sw：ROS 2 Jazzy 移动底盘的全套开源软件栈 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="openamr-platform-swros-2-jazzy">openamr-platform-sw：ROS 2 Jazzy 移动底盘的全套开源软件栈</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/openAMRobot/openamr-platform-sw">https://github.com/openAMRobot/openamr-platform-sw</a>  </p>
+<p><strong>Stars</strong>: 217 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-19  </p>
+<p><strong>组织</strong>: OpenAMRobot  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-19</p>
+</blockquote>
+<hr />
+<p><strong>openAMRobot/openamr-platform-sw</strong> 于 2026-05-13 建立、2026-11-18 仍有推送，MIT 许可，约 217 star，主语言 Python，文档站 docs.openamrobot.ai。它给的是 OpenAMRobot 移动底座的完整 ROS 2 Jazzy 软件栈：仿真、Nav2 导航、SLAM 建图、自动回充（docking）、控制、驱动与 bringup，一个仓库里全部齐备。</p>
+<p>在本轮四个新仓库里，它是 star 最高、结构最完整、也最像「能真的跑起来」的一个。topics 同时覆盖 autonomous-navigation、nav2、slam、gazebo、mobile-manipulation、nvidia-jetson、ros2-jazzy、physical-ai，说明它把移动操作（mobile manipulation）而不是单纯移动当目标；同组织另有 openamr-upperbody-sw，提供可 lifting 的双臂上身（OpenArm 2.0）URDF、MoveIt 与 Gazebo 资源，两者可组合。</p>
+<p><strong>为什么值得看</strong>：站内 /learn/ros2 讲运行时分层、/learn/mobile-robot-navigation 讲 SLAM 与 Costmap、/learn/ai-infra 讲边缘部署，这三块在文档里通常是分离的；这个仓库把它们放在同一套可运行的 launch 配置里，正好可以当作一条端到端的实机链路来读。</p>
+<hr />
+<ol>
+<li><strong>驱动与 bringup 层</strong>：底盘电机、IMU、LiDAR 的 ROS 2 驱动与统一启动配置，是所有上层能力的入口。</li>
+<li><strong>状态估计与 SLAM 层</strong>：里程计融合与建图，产出供导航使用的地图与位姿。</li>
+<li><strong>导航层（Nav2）</strong>：全局 / 局部规划、Costmap 分层、行为树与恢复行为；导航与回充都是典型的长时 ROS 2 action。</li>
+<li><strong>自动回充（docking）</strong>：把「低电量 → 自主回桩 → 对准 → 充电确认」做成可调用 action，是移动机器人连续作业的关键闭环。</li>
+<li><strong>仿真与数字孪生</strong>：Gazebo + URDF，让导航策略先在仿真里回归再上真机。</li>
+<li><strong>边缘部署</strong>：topics 里的 nvidia-jetson 指向本体侧算力布局，与远端策略服务形成对照。</li>
+</ol>
+<p>与本轮 ROSMonitoring in Action（arXiv 2611.22407）的联系很直接：导航、回充、双臂操作全是带完整生命周期的 action，正是运行时验证需要按 goal id 关联并做协议感知强制的对象；GDM Robotics Skills 编排的上层技能，最终也要落到这类 action 上。</p>
+<p><strong>注意</strong>：分层按仓库描述与 topics 整理，具体包名、launch 文件与依赖版本以 README 和文档站为准。</p>
+<hr />
+<ul>
+<li><strong>ROSMonitoring in Action: Runtime Monitoring and Enforcement for ROS 2 Actions</strong>（arXiv 2611.22407，本轮 p389）：导航与回充 action 的运行时验证与协议感知强制，是本仓库最直接的方法论配套。</li>
+<li><strong>Nav2 / SLAM Toolbox / ROS 2 Jazzy 官方文档</strong>：仓库所依赖的核心栈，行为树、Costmap 与生命周期语义以其文档为准。</li>
+<li><strong>Hidden Variables Behind Real-Robot Data Quality</strong>（arXiv 2611.22388，本轮 p388）：若用该底盘采集示教数据，工作空间、接口延迟与标定对齐的结论可直接套用。</li>
+<li><strong>openamr-upperbody-sw</strong>（同组织）：OpenArm 2.0 双臂上身的 URDF / MoveIt / Gazebo 资源，与底盘组合成移动操作平台。</li>
+<li>延伸阅读：/learn/ros2 的运行时分层、/learn/mobile-robot-navigation 的 SLAM 建图与 Costmap、/learn/ai-infra 的边缘部署与可观测性。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先按文档站锁版本</strong>：ROS 2 Jazzy 与 Nav2、Gazebo 的版本组合很敏感，先照 docs.openamrobot.ai 建环境，别用系统里已有的其它 ROS 发行版混跑。</li>
+<li><strong>只跑 bringup</strong>：先把驱动与 /tf、/odom、/scan 打通，用 rviz 确认坐标系与时间戳正确；这一步没过，后面 SLAM 与导航的报错都很难定位。</li>
+<li><strong>Gazebo 里先建图再导航</strong>：用仿真跑一遍 SLAM 与 Nav2，保存地图；真机建图前先确认雷达与 IMU 标定参数。</li>
+<li><strong>把 action 列出来</strong>：用 ROS 2 命令行列出所有 action server（导航、回充等），记录每个的 goal / feedback / result 结构——这既是调试清单，也是接 ROSMonitoring 时的插桩清单。</li>
+<li><strong>回充单独验收</strong>：自动回充涉及接触与位姿对准，必须记录成功率、对准误差与失败原因标签，和站内 /learn/ai-infra 深化的任务层指标一致。</li>
+<li><strong>再考虑双臂上身</strong>：底盘稳定后再接 openamr-upperbody-sw，避免两个子系统同时调试。</li>
+</ol>
+<p><strong>注意</strong>：软件与 OpenAMRobot 底座绑定，迁移到其它底盘要重做 URDF、驱动与回充逻辑；MIT 许可允许修改，但硬件接口文档有限。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 217（2026-11-19 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2026-05-13 / 2026-11-18</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>文档站</td>
+<td>docs.openamrobot.ai</td>
+</tr>
+<tr>
+<td>公开基准</td>
+<td>以文档站与 README 为准，无统一成功率榜单</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：217 star 在移动底盘软件栈里属于早期但活跃的社区规模；这里没有可引用的导航成功率或回充准确率，任何性能结论都要自己在目标场景里测。<strong>注意</strong>：star 是核验时点快照，且该组织还有 upperbody 等配套仓库，统计时不要混算。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>单纯导航教程仓库</th>
+<th>商业底盘 SDK</th>
+<th>openamr-platform-sw</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>覆盖范围</td>
+<td>通常只到 SLAM 或 Nav2</td>
+<td>闭源、绑定硬件</td>
+<td>仿真 / 导航 / SLAM / 回充 / 驱动全栈</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>多为 MIT</td>
+<td>商用授权</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>可复现性</td>
+<td>依赖教程环境</td>
+<td>需购硬件</td>
+<td>URDF + Gazebo 可纯软件复现</td>
+</tr>
+<tr>
+<td>长时 action</td>
+<td>少</td>
+<td>有但不开放</td>
+<td>导航与回充均可插桩</td>
+</tr>
+<tr>
+<td>主要风险</td>
+<td>不成体系</td>
+<td>无法修改</td>
+<td>绑定自家底座，迁移成本高</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮另外三个仓库构成一条自上而下的链：GDM Robotics Skills（上层技能编排）→ sequence-ai（远端策略服务）→ provael（部署前仿真红队）→ openamr-platform-sw（本体侧 ROS 2 执行）。四者都不改基座模型，改的是接口、评测与组织方式；这正是站内 /learn/ai-infra「具身领域为什么需要专属基础设施」的一个具体注脚。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-18T08:21",
+ "lastUpdated": "2026-11-19T08:30",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,121 @@
   }
  ],
  "projects": [
+  {
+   "id": "os299",
+   "name": "GDM Robotics Skills：把 Gemini Robotics 工作流封装成可复用的 Agent 技能包",
+   "github": "https://github.com/google-deepmind/robotics-antigravity-plugin",
+   "organization": "Google DeepMind",
+   "org": "Google DeepMind",
+   "category": "ai-agent-framework",
+   "description": "**google-deepmind/robotics-antigravity-plugin** 是 Google DeepMind 官方发布的 GDM Robotics Skills：面向仿真与真机的 agentic robotics 工作流技能集合，2026-11-16 建立、11-17 仍在推送，Apache-2.0 许可，约 68 star，主语言 Python，仓库把 Gemini Robotics 与 MuJoCo 一起写进 topics，项目主页指向 deepmind.google 的 Gemini Robotics 页面。\n\n**为什么值得看**：大厂第一次把「机器人能力」按 Agent 技能（skill）粒度而不是按模型权重发布，等于把站内 /learn/embodied-agent 里讨论的工具粒度、接口完备性与调用治理落到一份可直接复用的清单上；与本轮 ROSMonitoring in Action（arXiv 2611.22407）合读，正好是「上层技能怎么组织」与「下层 action 怎么被验证」的两侧。**注意**：仓库很新、描述极简，技能清单的完整性、依赖的 Gemini 接口权限与 MuJoCo 版本需按 README 逐项核对；68 star 说明社区验证还很有限。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 68,
+   "features": [
+    "Google DeepMind 官方发布的 agentic robotics 工作流技能集合",
+    "覆盖仿真与真机两侧，topics 明确含 Gemini Robotics 与 MuJoCo",
+    "Apache-2.0 许可，可自由用于二次封装",
+    "以技能（skill）而非模型权重为交付粒度，便于 Agent 直接调用"
+   ],
+   "tags": [
+    "GDM Robotics Skills",
+    "Google DeepMind",
+    "Agent 技能",
+    "Gemini Robotics",
+    "MuJoCo",
+    "agentic robotics"
+   ],
+   "addedDate": "2026-11-19"
+  },
+  {
+   "id": "os300",
+   "name": "sequence-ai：把机器人策略放到远端 GPU 上服务的开源推理层",
+   "github": "https://github.com/General-Sequences/sequence-ai",
+   "organization": "General Sequences",
+   "org": "General Sequences",
+   "category": "framework",
+   "description": "**General-Sequences/sequence-ai** 是面向广域网（WAN）的机器人策略服务开源框架：让本体只保留轻量客户端，把 VLA / WAM 推理放到远端 GPU 上执行。仓库 2026-11-17 建立、11-18 仍在推送，Apache-2.0 许可，约 21 star，主语言 Python，about 21 star 时点在核验日。它明确分了三层——推理层（CUDA Graphs 保持输出一致、在每个机器人的 slack 内做 batching、多副本）、网络层（机器人到 GPU 的连接）、以及托管 GPU 的客户端。\n\n**为什么值得看**：这是「云边端协同」从概念变成可运行代码的一份样本：站内 /learn/cloud-edge-collaboration 讲的算力解耦、/learn/ai-infra 讲的 KV-Cache 与动作块批处理，在这里被写成了具体的调度约束——**必须在本体等待动作块的 slack 内完成 batching**，否则远程推理省下的算力会被控制延迟吃回去。与本轮 VSpark（arXiv 2611.22666）的投机解码、Task Convergent Flow Matching（arXiv 2611.22609）的并行 rollout 精修放在一起看，正好构成一张「推理预算该花在哪」的对照表。**注意**：仓库极新、star 低，广域网抖动、断连降级与真机闭环延迟尚无公开实测；CUDA Graphs 的「输出一致」需要按具体模型核对。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 21,
+   "features": [
+    "推理层：CUDA Graphs 复用计算图并保持输出一致",
+    "在每个机器人等待动作块的 slack 内做 batching，避免拉长控制周期",
+    "网络层：维护机器人到远端 GPU 的长连接",
+    "托管 GPU 客户端 + 多副本调度",
+    "topics 覆盖 gr00t、openpi、lerobot、action-chunking、remote-inference"
+   ],
+   "tags": [
+    "sequence-ai",
+    "远程推理",
+    "策略服务",
+    "CUDA Graphs",
+    "动作分块",
+    "云边协同",
+    "广域网"
+   ],
+   "addedDate": "2026-11-19"
+  },
+  {
+   "id": "os301",
+   "name": "provael：在仿真里对开源 VLA 策略做红队评测并给出攻击成功率",
+   "github": "https://github.com/provael/provael",
+   "organization": "Provael",
+   "org": "Provael",
+   "category": "data-tools",
+   "description": "**provael/provael** 是一个面向开源 VLA 机器人策略的红队（red-team）评测工具：在仿真里对策略发起对抗攻击，并统一报告 Attack Success Rate（ASR）。仓库 2026-06-03 建立、2026-11-18 仍有推送，Apache-2.0 许可，约 7 star，主语言 Python，topics 覆盖 adversarial-attacks、ai-red-teaming、ai-safety、eu-ai-act、libero、lerobot、machinery-regulation，项目主页 provael.com。\n\n**为什么值得看**：具身策略的评测长期只看任务成功率，安全性没有可比的量化口径；provael 把文本/视觉对抗攻击里的 ASR 概念搬到机器人策略上，配合 LIBERO 与 LeRobot 生态，让「这个策略在扰动下会不会做危险动作」变成可复现的指标。与本轮 ROSMonitoring in Action（arXiv 2611.22407）合读尤其互补：一个在仿真里主动找失败，一个在真机协议层拦截违规。也呼应站内 /learn/vla-models 的评估基准与 /learn/platform-engineering 的策略评测基础设施。**注意**：仓库 star 很低、ASR 定义与攻击集尚未形成社区共识；eu-ai-act 与 machinery-regulation 只是 topics 标签，不代表已通过任何合规认证。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 7,
+   "features": [
+    "面向开源 VLA 策略的仿真红队攻击流水线",
+    "统一报告 Attack Success Rate（ASR）",
+    "对接 LIBERO 与 LeRobot 生态、支持 GitHub Action 集成",
+    "topics 覆盖对抗攻击、AI 安全与欧盟法规语境",
+    "Apache-2.0 许可"
+   ],
+   "tags": [
+    "provael",
+    "红队评测",
+    "VLA 安全",
+    "ASR",
+    "对抗攻击",
+    "LIBERO",
+    "LeRobot"
+   ],
+   "addedDate": "2026-11-19"
+  },
+  {
+   "id": "os302",
+   "name": "openamr-platform-sw：ROS 2 Jazzy 移动底盘的全套开源软件栈",
+   "github": "https://github.com/openAMRobot/openamr-platform-sw",
+   "organization": "OpenAMRobot",
+   "org": "OpenAMRobot",
+   "category": "framework",
+   "description": "**openAMRobot/openamr-platform-sw** 是 OpenAMRobot 移动底座的 ROS 2 Jazzy 软件栈：仿真、Nav2 导航、SLAM、自动回充（docking）、控制、驱动与 bringup 一次性给全，配套 URDF、Gazebo 与 MoveIt 资源。仓库 2026-05-13 建立、2026-11-18 仍在推送，MIT 许可，约 217 star，主语言 Python，文档站 docs.openamrobot.ai。\n\n**为什么值得看**：四个候选里 star 最高、结构最完整，属于「能真的跑起来」而不是「只有 README」的一类；topics 明确含 autonomous-navigation、nav2、slam、gazebo、mobile-manipulation、nvidia-jetson、ros2-jazzy，把站内 /learn/ros2 的运行时分层、/learn/mobile-robot-navigation 的 SLAM 建图与 Costmap、/learn/ai-infra 的边缘部署串成一条可复现的实机链路。与本轮 ROSMonitoring in Action（arXiv 2611.22407）合读也顺理成章：它提供了大量真实 ROS 2 action（导航、回充），正好是运行时验证要插桩的对象。**注意**：MIT 许可允许自由使用，但硬件绑定 OpenAMRobot 底座，迁移到其它底盘需重做 URDF、驱动与回充逻辑；217 star 仍属早期社区规模。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 217,
+   "features": [
+    "ROS 2 Jazzy 全栈：仿真、Nav2、SLAM、docking、control、drivers、bringup",
+    "配套 URDF / Gazebo / MoveIt 资源，支持移动操作扩展",
+    "topics 覆盖 nvidia-jetson 边缘部署与 autonomous-navigation",
+    "MIT 许可，附独立文档站 docs.openamrobot.ai",
+    "与 openamr-upperbody-sw 双臂上身仓库可组合"
+   ],
+   "tags": [
+    "OpenAMRobot",
+    "ROS 2 Jazzy",
+    "Nav2",
+    "SLAM",
+    "自动回充",
+    "Gazebo",
+    "移动底盘",
+    "Jetson"
+   ],
+   "addedDate": "2026-11-19"
+  },
   {
    "id": "os298",
    "name": "CCIL：用连续性判据做纠正式模仿学习的数据增强",
@@ -7527,5 +7642,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 285
+ "totalItems": 289
 }

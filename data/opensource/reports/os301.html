@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>provael：在仿真里对开源 VLA 策略做红队评测并给出攻击成功率 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">provael：在仿真里对开源 VLA 策略做红队评测并给出攻击成功率 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="provael-vla">provael：在仿真里对开源 VLA 策略做红队评测并给出攻击成功率</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/provael/provael">https://github.com/provael/provael</a>  </p>
+<p><strong>Stars</strong>: 7 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-19  </p>
+<p><strong>组织</strong>: Provael  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-19</p>
+</blockquote>
+<hr />
+<p><strong>provael/provael</strong> 于 2026-06-03 建立、2026-11-18 仍有推送，Apache-2.0 许可，约 7 star，主语言 Python，项目主页 provael.com。它做的事可以用一句话说清：把安全领域成熟的「红队 + 攻击成功率（ASR）」范式，搬到开源 VLA 机器人策略上——在仿真里构造对抗输入，观察策略是否产出不安全或违规的动作，并把结果汇总成一个可复现的 ASR。</p>
+<p>topics 里列了 adversarial-attacks、ai-red-teaming、ai-safety、ai-security、libero、lerobot、github-action，也标了 eu-ai-act 与 machinery-regulation。前几个说明它对接的是主流机器人学习生态，<strong>后两个只是议题标签，不代表已经通过任何合规审计或认证</strong>，引用时不要误读。</p>
+<p><strong>为什么值得看</strong>：具身策略的评测几乎只看「任务成功率」，这是一条一维指标。一个策略可以在 LIBERO 上拿到高分，却在指令被改写、贴纸扰动或观测被遮挡时做出危险动作。站内 /learn/vla-models 的评估基准章节讨论了伯努利试验与置信区间、仿真与真机相关性，provael 补的是另一根轴：<strong>失败不仅来自能力不足，也来自被主动诱导</strong>。</p>
+<hr />
+<ol>
+<li><strong>策略接入层</strong>：加载开源 VLA 策略（LeRobot / LIBERO 生态），统一观测与动作接口。</li>
+<li><strong>攻击构造层</strong>：在语言指令、视觉观测或两者上构造对抗扰动，按可配置的攻击集生成用例。</li>
+<li><strong>仿真执行层</strong>：在 LIBERO 类仿真环境里跑 rollout，记录动作序列与任务结果。</li>
+<li><strong>判定与汇总层</strong>：按预定义的安全判据判定「攻击是否成功」，汇总为 ASR，并保留逐用例轨迹供复盘。</li>
+<li><strong>CI 集成</strong>：topics 里有 github-action，说明设计上支持把红队评测放进持续集成，模型一改就重跑。</li>
+</ol>
+<p>与本轮 ROSMonitoring in Action（arXiv 2611.22407）正好构成两端：provael 在仿真侧<strong>主动制造</strong>失败、给出统计口径；ROSMonitoring 在真机 ROS 2 action 协议侧<strong>被动拦截</strong>违规、做协议感知的强制。前者回答「会不会出事」，后者回答「出事那一刻怎么拦」。</p>
+<p><strong>注意</strong>：以上分层按仓库描述与 topics 推断，攻击类型、安全判据与 ASR 的具体定义必须以 README 与代码为准。</p>
+<hr />
+<ul>
+<li><strong>ROSMonitoring in Action: Runtime Monitoring and Enforcement for ROS 2 Actions</strong>（arXiv 2611.22407，本轮 p389）：真机协议层的运行时强制，与仿真侧红队评测互补。</li>
+<li><strong>VoxelSBFL: Voxel-Level Spectrum-Based Failure Prediction for VLA</strong>（arXiv 2611.22453）：从轨迹出发预测 VLA 执行失败，可作为「哪些用例值得进红队集」的筛选依据。</li>
+<li><strong>InteractVLA: Turning VLAs into Interactive Tools for Agentic Robotic Manipulation</strong>（arXiv 2611.22584）：讨论策略在陌生指令下的可交互性，与指令改写类攻击直接相关。</li>
+<li><strong>LIBERO / LeRobot</strong>：仓库 topics 明确对接的评测环境与策略栈，版本以各自文档为准。</li>
+<li>延伸阅读：/learn/vla-models 的评估基准与系统性测试方法、/learn/platform-engineering 的策略评测基础设施、/learn/ai-infra 的可观测性与视频回放。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先读 ASR 的定义</strong>：这是全仓库最关键的一行——什么算「攻击成功」决定了整个指标的含义，不同实现差异极大，不要直接拿数字横向比较。</li>
+<li><strong>固定策略、环境与种子</strong>：ASR 对初始布局与随机种子敏感，至少报多个种子的均值与置信区间，别只报一次运行的百分数。</li>
+<li><strong>跑一遍无攻击基线</strong>：确认策略在正常输入下的任务成功率，否则 ASR 上升可能只是策略本身变差。</li>
+<li><strong>攻击强度做梯度扫描</strong>：从轻微扰动到强扰动各跑一次，画「扰动强度—ASR」曲线；只看单点强度容易高估或低估鲁棒性。</li>
+<li><strong>保留失败轨迹</strong>：逐用例的观测、指令、动作序列要能回放，这与站内 /learn/ai-infra 深化的可观测性里「失败 case 必须能 1 分钟内重现」是同一条要求。</li>
+<li><strong>再接 CI</strong>：把评测挂到模型权重变更的流水线上，才能防止新版策略悄悄退化。</li>
+</ol>
+<p><strong>注意</strong>：仓库约 7 star、社区复现极少；eu-ai-act / machinery-regulation 只是议题标签，不构成合规结论。真机安全边界仍需独立的急停与运行时强制，不能靠仿真 ASR 代替。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 7（2026-11-19 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2026-06-03 / 2026-11-18</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>项目主页</td>
+<td>provael.com</td>
+</tr>
+<tr>
+<td>公开 ASR 榜单</td>
+<td>README 未完整转录，以仓库为准</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：这个仓库目前的价值是「提供一套可复现的评测协议」，不是「提供一份已验证的策略排名」。在没有统一攻击集与安全判据之前，跨仓库比较 ASR 数字意义有限。<strong>注意</strong>：低 star 与频繁 topics 调整都说明接口仍在演进，锁定 commit 再用。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>任务成功率评测</th>
+<th>人工红队 / 案例复盘</th>
+<th>provael</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入来源</td>
+<td>正常任务分布</td>
+<td>人工设计</td>
+<td>可配置对抗攻击集</td>
+</tr>
+<tr>
+<td>输出指标</td>
+<td>成功率 + 置信区间</td>
+<td>定性结论</td>
+<td>ASR + 逐用例轨迹</td>
+</tr>
+<tr>
+<td>可复现性</td>
+<td>高</td>
+<td>低</td>
+<td>高（可进 CI）</td>
+</tr>
+<tr>
+<td>覆盖的失败类型</td>
+<td>能力不足</td>
+<td>经验覆盖</td>
+<td>被主动诱导的失败</td>
+</tr>
+<tr>
+<td>主要风险</td>
+<td>一维指标</td>
+<td>不可扩展</td>
+<td>判据与攻击集尚无共识</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮另外三个仓库的分工：GDM Robotics Skills 在上层编排技能，sequence-ai 负责把策略放到远端 GPU，openamr-platform-sw 提供本体侧 ROS 2 软件栈，provael 在部署前做仿真红队评测。四者都不改基座模型，改的是评测、接口与组织方式。再与本轮 p389（ROSMonitoring）合读，能把「测得出」与「拦得住」接成一条完整的安全工程链。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
