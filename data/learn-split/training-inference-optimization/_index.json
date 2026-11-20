@@ -1,7 +1,7 @@
 {
   "id": "training-inference-optimization",
   "name": "模型训练与推理优化",
-  "lastUpdated": "2026-10-30T08:30",
+  "lastUpdated": "2026-11-20T08:34",
   "stage": "阶段四：AI 大脑",
   "importance": "核心",
   "estimatedHours": 50,
@@ -89,19 +89,27 @@
     {
       "id": "sec-02",
       "title": "GPU 架构与 CUDA 编程入门",
-      "lastUpdated": "2026-10-27",
-      "chars": 5577,
+      "lastUpdated": "2026-11-20T08:34",
+      "chars": 23743,
       "shortTitle": "GPU 架构与 CUDA 编程入门",
       "difficulty": "入门",
       "estimatedMinutes": 4,
       "tier": 0,
-      "readingMinutes": 6,
+      "readingMinutes": 28,
       "headings": [
         "1. CPU vs GPU 架构",
         "2. NVIDIA GPU 层次结构",
         "3. CUDA 编程基础",
         "4. 显存管理",
         "5. 性能分析工具",
+        "6. 前置概念：为什么深度学习需要另一台「为吞吐而生」的机器",
+        "7. SIMT 执行模型：一条指令如何驱动几千个线程",
+        "8. 内存层次与 Roofline：算得快不如喂得上",
+        "9. 亲手写第一个 CUDA Kernel：从向量加法到分块矩阵乘",
+        "10. 数值格式：FP32、TF32、BF16、FP16 与 Tensor Core",
+        "11. 显存账本：一个训练步到底吃了多少显存",
+        "12. 从单卡到多卡：通信进入延迟预算",
+        "13. 常见误区与调试清单",
         "练习题",
         "参考答案"
       ],
@@ -526,7 +534,7 @@
       "summary": "「VLA 好还是世界动作模型（WAM）好」是 2026 年具身领域最热闹的争论之一。但这场争论有一个前提问题：二者之间其实捆着三个可以分别决定的选择，把它们混在一起谈，任何结论都不可比。"
     }
   ],
-  "readingMinutes": 167,
+  "readingMinutes": 189,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 149897
+  "chars": 168063
 }

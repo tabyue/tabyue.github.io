@@ -337,3 +337,11 @@
 - 校验：payload 预检 PASS（首版漏 addedDate 被拦）、normalize 无改动、fix_learn_links --dry fixed=0、sync_learn_split 同步 2 模块 4 文件、health_check **ALL OK**、verify_learn_structure **ALL OK**、audit 硬缺陷全 0（F5 仅历史 academic-english#9）、unittest 34/34、node UI 32/32。
 - 提交：内容 `e435153`（26 files，1705+/62-），日志与记忆随后 chore 提交一并推送。
 - 经验：① 10 段示例代码全部 `exec` 实跑再定稿，据实测修正 6 处数值/结论偏差（RL 稠密塑形与 LR、KL 误差减半、GAE 截断数值、Infra 粗细桶 p99 与时间对齐乱序假阳性）；② 顺手补交昨天遗留在工作树的未跟踪日志；③ 清理临时文件必须精确列名，`git clean` 会误删正式新增的 `data/opensource/os*.json` 与 `data/papers/p*.json`；④ `git add data sitemap.xml .workbuddy/memory/2026-11-18.md` 精确路径，push 用 Python subprocess argv 直调。
+
+
+### 2026-11-20 08:03—09:00
+- 投稿箱：无新投稿（open issue 返回 `[]`，未限制 label）；未启动浏览器，无凭据风险。开工 HEAD==origin/main（00eaf1f），工作树干净。
+- 数据：新闻 +10（n769—n778，736）、论文 +5（p392—p396，370，含 detail）、开源 +4（os303—os306，293，含 detail + 报告页 4 个 rc=0）、招聘 +6（j413—j418，405）、资源 r045（45）。25 条新条目 `addedDate=2026-11-20`，`lastUpdated=2026-11-20T08:34`；cities 白名单补「沈阳」。
+- 学习：`training-inference-optimization#1` GPU 架构与 CUDA 5577→23713；`sensors-hardware#5` IMU 与惯性导航 4463→21577。三处 lastUpdated 同步 `2026-11-20T08:34`，章节数仍 553。资源 r045「动作块的里与外」把本轮 5 论文 + 4 开源串成分层参照系。
+- 校验：normalize 无改动、fix_learn_links --dry fixed=0、sync_learn_split 同步 2 模块 4 文件、health_check **ALL OK**、verify_learn_structure **ALL OK**、audit 硬缺陷全 0（F5 仅历史 academic-english#9）、unittest 34/34、node UI 32/0。
+- 经验：① 含 LaTeX 的 JSON payload 反斜杠必须双写，首版因未转义控制字符与 `\mathcal` 单反斜杠两次解析失败，改用独立 .md 暂存再注入；② 15 段示例代码用 venv（torch 2.14.1+cpu）实跑，13 PASS / 2 SKIP，据实测修 7 处数值结论（Roofline GB/s、伪代码块标记、重力补偿打印 x 分量、FP16 下溢口径、漂移 15.41 m、姿态与 ESKF 数值）；③ `learning-path.json` 是 `stages[].modules[]` 嵌套，按 id 匹配要遍历 stages；④ 注入脚本按 marker 整块替换而非幂等跳过，改正文后可直接重跑；⑤ `git add -A` 前精确清理根目录 `_*`（保留三个历史 tracked），push 用 Python subprocess argv 直调 gh 凭据 trick。

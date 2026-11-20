@@ -1,7 +1,7 @@
 {
   "id": "sensors-hardware",
   "name": "传感器与硬件接口",
-  "lastUpdated": "2026-11-17T12:12",
+  "lastUpdated": "2026-11-20T08:34",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 40,
@@ -186,19 +186,28 @@
     {
       "id": "sec-06",
       "title": "IMU 与惯性导航",
-      "lastUpdated": "2026-10-27",
-      "chars": 4463,
+      "lastUpdated": "2026-11-20T08:34",
+      "chars": 21576,
       "shortTitle": "IMU 与惯性导航",
       "difficulty": "中级",
       "estimatedMinutes": 5,
       "tier": 1,
-      "readingMinutes": 5,
+      "readingMinutes": 26,
       "headings": [
         "IMU 基本原理",
         "核心器件",
         "关键性能参数",
         "常用芯片",
         "推荐硬件采购",
+        "前置概念：惯性导航到底在解什么方程",
+        "坐标系约定与姿态的四种参数化",
+        "MEMS 器件的物理原理与误差来源",
+        "误差模型的严格推导与 Allan 方差",
+        "姿态解算：从互补滤波到 Mahony 与 EKF",
+        "捷联惯导机械编排与漂移为何必然增长",
+        "多传感器融合：误差状态卡尔曼滤波与可观性",
+        "标定：六面法、椭球拟合与温度补偿",
+        "常见误区与工程检查清单",
         "练习",
         "参考答案"
       ],
@@ -584,7 +593,7 @@
       "summary": "2026 年灵巧手进入量产阶段，全年出货量以万台计；相比之下，能同时提供经过标定的指尖力和可靠手部姿态的采集手套，仍然是稀缺品。这个反差初看不合理——手套又不需驱动电机，结构上比灵巧手简单得多。"
     }
   ],
-  "readingMinutes": 205,
+  "readingMinutes": 226,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 170953
+  "chars": 188066
 }

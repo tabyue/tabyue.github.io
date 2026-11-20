@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hiRobot：跨本体机器人的统一接口层（Infra） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">hiRobot：跨本体机器人的统一接口层（Infra） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="hirobotinfra">hiRobot：跨本体机器人的统一接口层（Infra）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/humanoidintelligence/hiRobot">https://github.com/humanoidintelligence/hiRobot</a>  </p>
+<p><strong>Stars</strong>: 12 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-20  </p>
+<p><strong>组织</strong>: Humanoid Intelligence  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-20</p>
+</blockquote>
+<hr />
+<p><strong>humanoidintelligence/hiRobot</strong> 是一个面向「控制多种不同机器人」的统一接口层（A Unified Interface Layer for Controlling Diverse Robots），Apache-2.0 许可，Python，2026-11-03 建立、11-14 仍有推送，约 12 star（2026-11-20 核验）。仓库把自身定位直接写成 <strong>[Infra]</strong>，topics 覆盖 agent、agibot、deployment、fftai、humanoid-robot、infrastructure、robotics、unitree、vision-language-action。</p>
+<p>它值得收录的原因是把一个模型侧难题提到了接口侧：本轮 n771 北京行动方案把「具身智能模型的跨本体泛化能力」点名为产业木桶短板，p393 SHAPE 与 p395 BiCAT 都在处理「同一套表征怎么挂不同执行头」。hiRobot 的答案是让上层 Agent / VLA 面对一套统一契约，由下层适配 Unitree、智元、傅利叶等不同本体，把 N 个策略 × M 个本体的适配从 N·M 降到 N+M。</p>
+<hr />
+<ol>
+<li><strong>上层契约</strong>：面向 Agent / VLA 的统一能力描述（观测格式、动作语义、任务与失败上报），让策略不必为每个本体写专用胶水代码。</li>
+<li><strong>适配层</strong>：把统一动作语义翻译成本体相关的关节指令、控制频率与坐标系，吸收各家 SDK 差异。</li>
+<li><strong>本体驱动层</strong>：对接 Unitree、智元（agibot）、傅利叶（fftai）等具体机器人运行时与通信协议。</li>
+<li><strong>部署与状态层</strong>：topics 含 deployment，负责生命周期、状态回传与失败语义，供上层做恢复决策。</li>
+</ol>
+<p>这四层与站内 /learn/ai-infra 反复讲的「适配层把组合复杂度从乘积降到求和」、以及 /learn/ros2 的运行时分层是同一套工程判断。<strong>注意</strong>：仓库处早期阶段，已适配本体清单、契约完备性与失败语义须按 README 逐项核验，上述分层为按 topics 与定位做的结构性推断。</p>
+<hr />
+<ul>
+<li><strong>hiRobot: A Unified Interface Layer for Controlling Diverse Robots</strong>（本仓库项目说明）：统一契约与适配层设计的原始出处，以 README 为准。</li>
+<li><strong>北京市具身智能机器人产业高质量发展行动方案（2026—2028）</strong>（本轮 n771）：把跨本体泛化点名为产业短板，是 hiRobot 这类接口层的需求背景。</li>
+<li><strong>SHAPE</strong>（arXiv 2611.24585，本轮 p393）与 <strong>BiCAT</strong>（arXiv 2611.23499，本轮 p395）：模型侧处理跨本体 / 双臂动作读出的两条路线，与接口层形成上下互补。</li>
+<li><strong>Z-sight</strong>（arXiv 2611.24940，本轮 p392）：统一 VLA 骨干 + 动作专家，可作为「上层策略面对统一契约」的参照。</li>
+<li>延伸阅读：/learn/ai-infra 适配层与 O(N+M) 设计、/learn/ros2 运行时分层、/learn/embodied-agent 工具粒度与接口完备性。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先列已适配本体清单</strong>：确认目标机器人是否真的在支持列表里，不要按 topics 里出现名字就假定可用。</li>
+<li><strong>核对动作语义与单位</strong>：统一契约里动作是关节角、末端位姿还是速度指令、单位与坐标系是什么，这是跨本体适配最容易出错的一处。</li>
+<li><strong>从仿真 / 只读状态跑通</strong>：先只读回传状态、不下发动作，确认驱动层与坐标系理解无误。</li>
+<li><strong>做一次失败注入</strong>：故意给不满足前置条件的指令，看错误是结构化上报还是静默超时——决定上层 Agent 能否正确恢复。</li>
+<li><strong>真机前设安全边界</strong>：限位、急停、动作幅值上限逐项确认，跨本体适配层尤其容易出现「语义对但量纲错」的危险动作。</li>
+</ol>
+<p><strong>注意</strong>：约 12 star、Phase 0 类状态，社区验证有限，不建议直接作生产依赖；把它当接口设计参考更合适。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 12（2026-11-20 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2026-11-03 / 2026-11-14</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>跨本体统一接口层（Infra）</td>
+</tr>
+<tr>
+<td>适配本体</td>
+<td>topics 含 Unitree / 智元 / 傅利叶，清单以 README 为准</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：这里没有可引用的成功率或延迟数字，价值在出处与定位——把「跨本体泛化」从模型问题改写成接口问题。<strong>注意</strong>：star 与推送时间都是核验时点快照，仓库处于早期，接口可能频繁变动。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>每本体写胶水代码</th>
+<th>单一本体专用栈</th>
+<th>hiRobot 统一接口层</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>适配复杂度</td>
+<td>N·M</td>
+<td>仅 1 个本体</td>
+<td>约 N+M</td>
+</tr>
+<tr>
+<td>上层策略</td>
+<td>需为每个本体改</td>
+<td>绑定本体</td>
+<td>面对统一契约</td>
+</tr>
+<tr>
+<td>失败语义</td>
+<td>各写各的</td>
+<td>单一</td>
+<td>契约里显式声明</td>
+</tr>
+<tr>
+<td>主要风险</td>
+<td>重复劳动</td>
+<td>无法复用</td>
+<td>抽象漏掉本体特性</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮另外三个仓库正好凑成一条链：os303 ReCogDrive 给出「动作怎么产出」（策略层），os304 LADDER 给出「长程怎么评」（评测层），os306 BICMap 给出「空间数据怎么看」（观测层），而 hiRobot 站在「策略怎么接到不同本体」的适配层。四者都不改基座模型，改的是接口与组织方式——这正是站内 /learn/ai-infra 反复强调的判断。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-19T08:30",
+ "lastUpdated": "2026-11-20T08:34",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,120 @@
   }
  ],
  "projects": [
+  {
+   "id": "os303",
+   "name": "ReCogDrive：小米 ICLR 2026 端到端自动驾驶认知框架（VLA + 扩散策略 + 强化学习）",
+   "github": "https://github.com/xiaomi-research/recogdrive",
+   "organization": "Xiaomi Research",
+   "org": "Xiaomi Research",
+   "category": "ai-model",
+   "description": "**xiaomi-research/recogdrive** 是小米研究院开源的 ICLR 2026 论文 ReCogDrive 官方实现，Apache-2.0 许可，Python，约 631 star，topics 覆盖 vision-language-action、diffusion-policy、end-to-end-autonomous-driving、reinforcement-learning、navsim。项目把「认知」引入端到端自动驾驶：用视觉—语言模型承担场景理解与推理，扩散策略生成连续轨迹，再以强化学习/后训练对齐驾驶行为，形成 VLA 在真实移动本体上的一套可复现基线。\n\n**为什么值得看**：本轮 /learn/vla-models 反复讨论动作分词与跨本体复用，ReCogDrive 提供了「VLM 负责看懂、扩散头负责连续动作、RL 负责对齐」这一组合在量产级载体上的完整工程样本；与本轮 p393 SHAPE（EEF/关节双流读出）、p395 BiCAT（动作分词器即接口）合读，能看清「动作由谁产出」这一设计选择的三种答案。**注意**：仓库主要面向自动驾驶（NAVSIM 等基准），迁移到机械臂/人形需重做动作空间与评测协议；631 star 为 2026-11-20 核验快照。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 631,
+   "features": [
+    "ICLR 2026 官方实现，Apache-2.0 许可，可自由二次开发",
+    "VLM 场景认知 + 扩散策略连续轨迹 + 强化学习后训练三段式",
+    "对接 NAVSIM 等端到端自动驾驶基准，评测协议公开",
+    "小米研究院官方维护，topics 明确标注 VLA 与 diffusion-policy"
+   ],
+   "tags": [
+    "ReCogDrive",
+    "小米",
+    "ICLR 2026",
+    "端到端自动驾驶",
+    "VLA",
+    "扩散策略",
+    "强化学习",
+    "NAVSIM"
+   ],
+   "addedDate": "2026-11-20"
+  },
+  {
+   "id": "os304",
+   "name": "LADDER：面向长程机器人操作的评测基准与排行榜",
+   "github": "https://github.com/insait-institute/ladder",
+   "organization": "INSAIT Institute",
+   "org": "INSAIT Institute",
+   "category": "simulation",
+   "description": "**insait-institute/ladder** 是 INSAIT 开源的长程机器人操作评测基准（LADDER: a long-horizon robot manipulation benchmark），MIT 许可，Python，2026-09 建立、2026-11-19 仍在推送，约 7 star。topics 覆盖 benchmark、embodied-ai、leaderboard、long-horizon、robot-manipulation、simulation、VLA、VLM，定位是给「需要多步相互依赖操作」的策略提供统一任务集与排行榜，而不是又一个单次抓放数据集。\n\n**为什么值得看**：本轮 p396 RePlan-VLA 指出长程退化源于把推理、记忆、进度跟踪、错误恢复全塞给 VLA，n775 EFE 具身第一考则用 1156 个任务量化了「不可重置时智能体大幅退化」——两者都缺一个专门针对长程的统一考卷，LADDER 正是补这一格的基础设施；站内 /learn/platform-engineering 的策略评测基础设施、/learn/embodied-agent 的失败感知章节可直接对接。**注意**：仓库很新、star 少、社区复现报告有限，任务集规模与判定口径须按 README 逐项核对；把它当评测协议参考比当成熟榜单更合适。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 7,
+   "features": [
+    "专注长程（long-horizon）多步依赖操作，而非单步抓放",
+    "带 leaderboard 的公开排行榜，便于跨方法比较",
+    "topics 明确含 simulation、VLA、VLM，可对接主流策略接口",
+    "MIT 许可，2026-11 仍在活跃推送"
+   ],
+   "tags": [
+    "LADDER",
+    "INSAIT",
+    "长程操作",
+    "评测基准",
+    "leaderboard",
+    "仿真评测",
+    "VLA 评测"
+   ],
+   "addedDate": "2026-11-20"
+  },
+  {
+   "id": "os305",
+   "name": "hiRobot：跨本体机器人的统一接口层（Infra）",
+   "github": "https://github.com/humanoidintelligence/hiRobot",
+   "organization": "Humanoid Intelligence",
+   "org": "Humanoid Intelligence",
+   "category": "framework",
+   "description": "**humanoidintelligence/hiRobot** 是一个面向「控制多种不同机器人」的统一接口层（A Unified Interface Layer for Controlling Diverse Robots），Apache-2.0 许可，Python，2026-11-03 建立、11-14 仍有推送，约 12 star。topics 覆盖 agent、agibot、deployment、fftai、humanoid-robot、infrastructure、robotics、unitree、vision-language-action，明确把自家定位写成 Infra：上层 Agent/VLA 面对一套统一契约，下层适配 Unitree、智元、傅利叶等不同本体。\n\n**为什么值得看**：本轮 n771 北京行动方案把「具身智能模型的跨本体泛化能力」点名为产业木桶短板，p393 SHAPE 与 p395 BiCAT 也都在处理「同一套表征怎么挂不同执行头」——hiRobot 把这个问题从模型内部提到接口层，正是站内 /learn/ai-infra 的适配层设计与 /learn/ros2 的运行时分层讨论的工程落点。**注意**：仓库处早期（Phase 0 类状态），已适配本体清单、接口完备性与失败语义须按 README 核验；12 star 说明社区验证很有限，不建议直接作生产依赖。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 12,
+   "features": [
+    "以统一接口层屏蔽不同机器人本体的控制差异",
+    "topics 明确含 Unitree / 智元 / 傅利叶等多家本体与 VLA",
+    "面向 Agent 上层调用，契约化部署入口",
+    "Apache-2.0 许可，定位为基础设施而非单一策略"
+   ],
+   "tags": [
+    "hiRobot",
+    "统一接口层",
+    "跨本体",
+    "机器人 Infra",
+    "Unitree",
+    "VLA",
+    "Agent"
+   ],
+   "addedDate": "2026-11-20"
+  },
+  {
+   "id": "os306",
+   "name": "BICMap：WebGL 机器人地图 / 点云 / 三维模型可视化 SDK",
+   "github": "https://github.com/Open-X-Humanoid/BICMap",
+   "organization": "Open-X-Humanoid",
+   "org": "Open-X-Humanoid",
+   "category": "data-tools",
+   "description": "**Open-X-Humanoid/BICMap** 是一个基于 WebGL 的机器人地图可视化 SDK，覆盖 SLAM 地图、点云、三维模型与机器人导航路径，JavaScript，约 100 star，2026-06 建立、11-09 仍有推送，topics 含 maplibre、point-cloud、slam、path-planning、3d-visualization、geojson、robot-map、indoor-outdoor。它解决的是一类常被忽视的工程问题：导航与建图产生的栅格/点云/轨迹数据散落在不同格式里，缺少一个能在浏览器里叠起来看、支持室内外统一坐标的工具。\n\n**为什么值得看**：站内 /learn/mobile-robot-navigation 的地图表示与构建、/learn/3d-vision-pointcloud 的点云处理都产生大量空间数据，本轮 n771 北京行动方案又强调训练场与实景实训的数据闭环——BICMap 正好是这套数据的「可观测性前端」，与 /learn/ai-infra 讨论的观测三件套互补。**注意**：仓库 license 为 NOASSERTION（未声明标准开源许可），商用前须向作者确认授权；GitHub 显示主语言 JavaScript，与站内多数 Python 工具链不同，集成时需单独评估。",
+   "language": "JavaScript",
+   "license": "未声明",
+   "stars": 100,
+   "features": [
+    "WebGL 渲染，浏览器端叠加 SLAM 栅格、点云与三维模型",
+    "支持导航路径与室内外统一坐标（geojson / maplibre）",
+    "覆盖点云、路径规划结果等多类机器人空间数据",
+    "面向机器人地图可视化的专用 SDK，非通用图表库"
+   ],
+   "tags": [
+    "BICMap",
+    "WebGL",
+    "地图可视化",
+    "SLAM",
+    "点云",
+    "路径规划",
+    "geojson",
+    "机器人地图"
+   ],
+   "addedDate": "2026-11-20"
+  },
   {
    "id": "os299",
    "name": "GDM Robotics Skills：把 Gemini Robotics 工作流封装成可复用的 Agent 技能包",
@@ -7642,5 +7756,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 289
+ "totalItems": 293
 }

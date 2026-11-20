@@ -1,6 +1,146 @@
 {
- "lastUpdated": "2026-11-19T08:30",
+ "lastUpdated": "2026-11-20T08:34",
  "papers": [
+  {
+   "id": "p392",
+   "title": "Z-sight: Unifying Vision-Language-Action and Latent World Modeling",
+   "authors": "Junjie Ye, Yiqi Zhao, Muchen Xu, Celina Shiyu Wang, Hao Dong, Ruohai Ge, Rong Xue, Benjamin J Kolligs, Aditya Dutt, Sasanka Nagavalli, Nassim A. Samad, Gaurav S. Sukhatme, Jyotirmoy V. Deshmukh, Yue Wang, Yuliang Guo",
+   "venue": "arXiv 2611.24940",
+   "date": "2026-11-18",
+   "arxiv": "https://arxiv.org/abs/2611.24940",
+   "github": "",
+   "tags": [
+    "Z-sight",
+    "VLA",
+    "潜空间世界模型",
+    "未来 token 预测",
+    "Mixture-of-Transformers",
+    "无像素生成"
+   ],
+   "category": "VLA / 世界-动作模型",
+   "difficulty": "高级",
+   "tldr": "**问题**：视频世界动作模型（WAM）证明「联合预测未来与动作」对控制有价值，但继承了视频生成器的巨大开销；走潜空间路线的策略虽避开像素生成，却通常去对齐中间特征或依赖冻结的目标编码器，把「未来预测」与 VLM 原生的感知特征空间切开。**做法**：Z-sight 直接在 VLM 感知当下所用的那套视觉 token 空间里预测未来，用 Mixture-of-Transformers 把「预见专家」与「连续动作专家」和 VLM 耦合，推理时对未来的空间 token 与动作联合去噪，全程不做像素重建、不接外部编码器。训练数据用人类视频加机器人轨迹。**结果**：SIMPLE 基准 81.9% 成功率（比最强基线高 9.6 个百分点），Unitree G1 六项任务平均 73.3%（高 20.0 个百分点），每个动作块 110 ms，桌面操作基准仍具竞争力。**注意**：110 ms 是动作块级延迟，能否支撑更高频闭环要看控制周期与动作块长度的换算；联合去噪的收敛稳定性未在文中给出消融。",
+   "keyInsights": [
+    "把「未来预测应该发生在哪个空间」当作第一性问题：不在像素空间（太贵），也不在外部编码器的冻结特征空间（与 VLM 感知脱节），而是直接在 VLM 自己看世界所用的 visual token 空间里预测，让预测与感知共享同一套语义。",
+    "用 Mixture-of-Transformers 把异构专家（离散的未来空间 token、连续的动作）放进同一次前向联合去噪，避免了「先生成视频再从中读动作」的串行流水线，这是 110 ms/块能成立的结构前提。",
+    "训练混合人类视频与机器人轨迹，等于把本轮 SHAPE、Movens-5M 讨论的「人类数据怎么用」问题，从动作监督改写成未来表征预训练——人类视频提供的是世界如何演化的先验，而非可直接执行的关节指令。",
+    "对站内 /learn/world-models-llm 与 /learn/vla-models 的意义：世界模型不再只是「预测未来给策略看」的旁路，而是与动作专家共享骨干、共同参与去噪的一个专家，这条边界比 JEPA 类冻结编码器路线更靠近端到端。"
+   ],
+   "impact": "给「世界模型 + VLA 统一」提供了一条不依赖像素生成的工程路径：把生成代价从高维视频压到 VLM 原生 token 空间，同时保留未来预测对控制的增益。对站内 /learn/training-inference-optimization 的延迟预算讨论尤其关键——它把「要不要额外跑一个视频生成器」这个开销项直接删掉，改由骨干内部的一个专家承担；与本轮 p396 RePlan-VLA 合读，可看出「短程统一模型负责动作块、外层框架负责长程重规划」正在成为一套可组合的架构。",
+   "addedDate": "2026-11-20"
+  },
+  {
+   "id": "p393",
+   "title": "SHAPE: Discrete Supervision and Parallel Continuous Streams for Learning Dexterous Manipulation from Egocentric Human Data",
+   "authors": "Yaping Li, Zhihong Liu, Jiacheng Li, Yi Yang, Wenchao Yue, Mingzhe Ye, Xiangcheng Liu, Yiyang Chen, Haotian He, Qi Zhang, Haonan Wang, Dahua Lin, Zhijie Deng",
+   "venue": "arXiv 2611.24585",
+   "date": "2026-11-18",
+   "arxiv": "https://arxiv.org/abs/2611.24585",
+   "github": "",
+   "tags": [
+    "SHAPE",
+    "第一视角人类数据",
+    "灵巧操作",
+    "离散动作 token",
+    "流匹配",
+    "双臂 22 自由度"
+   ],
+   "category": "VLA / 动作表示",
+   "difficulty": "高级",
+   "tldr": "**问题**：第一视角人类录像比灵巧手真机示教便宜得多，但人与机器人形态、运动学不同，人类数据没有关节位置与执行器指令，重定向后只剩末端执行器（EEF）动作——于是有两个问题：人类数据该以什么形式监督策略？部署时灵巧手该读出哪种动作？**做法**：SHAPE 让 VLA 骨干把「EEF 动作块的离散 token 预测」当辅助任务，同时用一个共享的流匹配专家输出 EEF 与关节两条可执行连续流；离散监督负责驱动骨干梯度、塑造跨领域动作表征，两条连续流负责部署时按场景选读出方式。**结果**：在 22 自由度双手双臂机器人上，直接关节读出在六项任务平均 0.80（π0.5 为 0.63），细粒度控制更强；基于 IK 的 EEF 读出在人类到机器人迁移上更优；用人类数据加离散 token 预训练后，无需任务专属机器人数据即可学新任务。**注意**：0.80 是作者设定协议下的评分，非跨库可比的成功率；两条流的切换策略与失败回滚未展开。",
+   "keyInsights": [
+    "把「人类数据不能提供关节监督」从缺陷改写成设计约束：用离散 EEF token 做辅助监督，只负责把骨干表征往「动作信息量」方向塑形，不奢求它直接给出可执行指令——监督信号与执行信号被刻意解耦。",
+    "共享流匹配专家同时输出 EEF 与关节两条流，把「部署时读哪个」变成可按任务选择的开关而非架构改动：真机示教充分时关节读出精度高，人类迁移时 IK/EEF 读出更稳，这一对照实验是全文最有工程价值的部分。",
+    "与本轮 Z-sight、Movens-5M 构成「人类数据三种用法」的完整光谱：Z-sight 用人类视频学未来表征，Movens-5M 用人体动作做规模化预训练，SHAPE 用离散辅助监督驱动骨干梯度，都不要求人类数据带关节标签。",
+    "对站内 /learn/imitation-learning 的意义：它把行为克隆里「观测对齐」的难题从像素/视角层，下沉到动作读出层——同一套表征可以挂不同的执行头，这是跨本体泛化比强行统一动作空间更稳妥的一条路。"
+   ],
+   "impact": "给「用廉价人类数据训练灵巧手」提供了可复现的架构模板，且明确回答了部署侧最容易被忽略的问题：训练时的监督形式与真机执行时的读出形式不必相同。对站内 /learn/data-collection 的第一视角采集、/learn/vla-models 的动作分词章节都是直接补充；与本轮 3DTouch 的触觉几何条件化合读，可看出灵巧操作的瓶颈正从「看不清」转向「读不准、切不快」。",
+   "addedDate": "2026-11-20"
+  },
+  {
+   "id": "p394",
+   "title": "3DTouch: A Tactile-aware VLA Model with 3D Geometric Relations for Dexterous Manipulation",
+   "authors": "Xin Zhang, Shiqi Zhang, Siyuan Cao, Juncheng Cai, Yedong Shen, Yuxuan Gao, Dianlong Wen, Kaixue Long, Lu Zhang, Yao Li, Jiajun Deng, Yanyong Zhang",
+   "venue": "arXiv 2611.23961",
+   "date": "2026-11-18",
+   "arxiv": "https://arxiv.org/abs/2611.23961",
+   "github": "",
+   "tags": [
+    "3DTouch",
+    "触觉感知 VLA",
+    "3D 几何关系",
+    "视触觉共享表征",
+    "接触丰富操作",
+    "XHand"
+   ],
+   "category": "VLA / 多模态感知",
+   "difficulty": "高级",
+   "tldr": "**问题**：接触丰富的灵巧操作里，手指与物体互相遮挡，纯视觉观测看不全接触位置；视觉上几乎一样的场景，物体间相对位置可能只差一点、接触状态却完全不同。**做法**：3DTouch 把 RGB-D 场景点与五指密集触觉测量统一表达在机器人基座坐标系下，保留每个触觉单元（taxel）的空间位置与力矢量，构建共享的三维视触觉表征；再从手部关键点与位姿对齐后的重建曲面导出手—物、物—物关系，显式描述交互实体的相对排布，用这两类信息条件化 VLA 动作专家。**结果**：在 UR7e 机械臂 + XHand 灵巧手的五项真机接触丰富任务上，平均成功率比对应 VLA 基线高 42 个百分点、比最强对照方法高 20 个百分点；消融显示场景几何与空间触觉反馈互补，共享空间 grounding 与显式几何关系还带来额外增益。**注意**：五指密集触觉阵列与 RGB-D 重建都对标定敏感，跨硬件复用成本未评估；42 个百分点来自单一真机平台。",
+   "keyInsights": [
+    "关键不是「加了触觉」而是「把触觉放回三维空间」：每个 taxel 保留位置与力矢量、与 RGB-D 点同处基座坐标系，让触觉不再是拼在图像旁的一维向量，而成为可与几何对齐的空间量。",
+    "显式构造手—物、物—物相对关系，针对的是纯视觉最难受的失败模式——视觉相似但接触状态不同；这把「 Implicitly 从像素里猜接触」改成「把相对排布写进条件」，是本轮最值得迁移到其它 VLA 的一条设计。",
+    "与本轮 SHAPE 互补：SHAPE 解决动作读出与人类数据监督，3DTouch 解决观测侧接触信息不完备；二者都指向站内 /learn/multimodal-perception 讲的视触觉对齐与触觉分辨率瓶颈。",
+    "对站内 /learn/sensors-hardware 的意义：它给出了触觉数据该以什么粒度进入策略的具体答案——不是标量力峰值，而是带空间索引的力矢量场，这直接决定采集系统的标定与同步要求。"
+   ],
+   "impact": "把触觉从「辅助模态」提升为与三维几何共享坐标系的结构化条件，为接触丰富的灵巧操作提供了 42 个百分点级的真机增益证据。对站内 /learn/multimodal-perception 与 /learn/sensors-hardware 是標志性补充；与本轮 n776 提到的蚂蚁灵波开源 LingBot-Touch（跨硬件触觉 Token）合读，可以看出触觉正同时沿「结构化几何条件」与「跨硬件统一表征」两条路线标准化。",
+   "addedDate": "2026-11-20"
+  },
+  {
+   "id": "p395",
+   "title": "BiCAT: Bimanual Coordination Action Tokenization",
+   "authors": "Xuanwei Liu, Guipu Cao, Zhongyi Luo, Jiafei Duan",
+   "venue": "arXiv 2611.23499",
+   "date": "2026-11-17",
+   "arxiv": "https://arxiv.org/abs/2611.23499",
+   "github": "",
+   "tags": [
+    "BiCAT",
+    "双臂协调",
+    "动作分词",
+    "跨臂注意力",
+    "并行解码",
+    "RoboTwin 2.0"
+   ],
+   "category": "VLA / 动作表示",
+   "difficulty": "高级",
+   "tldr": "**问题**：自回归 VLA 用 next-token 目标预测离散动作 token，动作分词器因此定义了策略与机器人之间的接口；双臂操作里两条手臂共享一套动作库、又通过互补角色协调，但现有分词器多把两臂拼成一个动作向量，双臂共有的运动模式没被共享、跨臂依赖又缠在每个 token 里，策略只能隐式地学这两件事。**做法**：BiCAT 在两臂间共享一套运动表征，用对称的跨臂注意力与联合解码器让每臂 token 以其伙伴为条件；策略并行预测每臂的全部 token，先生成左臂、再条件于左臂生成右臂。**结果**：RoboTwin 2.0 十项任务与三种本体六项真机任务上取得所有对比分词器中最高成功率；仿真中相对八个基线里最强者平均成功率 +17.6 个百分点，越需要双臂紧密协调的任务增益越大，每个动作块仅 40.5 ms。**注意**：+17.6 是相对本文所选最强基线，跨论文不可直接比较；左臂先行的顺序是否引入偏置未做对称化消融。",
+   "keyInsights": [
+    "把「动作分词器 = 策略与机器人的接口」这句话落到双臂场景：分词器不该只是压缩动作，还应该承载「两臂共享什么、如何互相条件化」这类结构先验，否则这些都得靠策略隐式学。",
+    "共享运动表征 + 对称跨臂注意力，把两臂的共有模式与互补角色显式拆开；并行预测每臂全部 token 又把自回归的串行步数压下来，40.5 ms/动作块正是结构改造带来的，而非单纯工程优化。",
+    "增益集中在「需要紧密协调」的任务上，是对「分词器确实在建模协调而非只是提点」最有说服力的证据；这比只报平均成功率更能说明方法生效的位置。",
+    "对站内 /learn/vla-models 的动作分词章节、/learn/imitation-learning 的行为克隆讨论是直接延伸；与本轮 p392 Z-sight（110 ms/块）、p387 VSpark（推测解码加速）合读，可看出动作块的「结构」与「解码调度」正在一起决定控制频率。"
+   ],
+   "impact": "指出动作分词器是建模双臂协调最自然的着力点，并给出共享表征 + 跨臂条件化 + 并行解码的完整实现与真机验证。对站内 /learn/vla-models 与 /learn/training-inference-optimization 的意义是：动作 token 的结构设计本身就是一种推理预算优化——把跨臂依赖放进分词器，比让骨干隐式学更省步数；与本轮 amazon-far/dreamfar 的长程双臂世界模型形成上下层呼应。",
+   "addedDate": "2026-11-20"
+  },
+  {
+   "id": "p396",
+   "title": "RePlan-VLA: Progress-Aware Replanning for Long-Horizon Vision-Language-Action Models",
+   "authors": "Apoorva Vashisth, Manav Kulshrestha, Damon Conover, Zachary Kingston, Aniket Bera",
+   "venue": "arXiv 2611.23843",
+   "date": "2026-11-18",
+   "arxiv": "https://arxiv.org/abs/2611.23843",
+   "github": "",
+   "tags": [
+    "RePlan-VLA",
+    "长程任务",
+    "进度感知",
+    "自适应重规划",
+    "VLA 无关框架",
+    "免微调"
+   ],
+   "category": "VLA / 长程规划",
+   "difficulty": "中级",
+   "tldr": "**问题**：VLA 在需要多步相互依赖操作的长程任务上明显退化，因为策略被同时要求承担长程推理、记忆、动作生成、进度跟踪与错误恢复。**做法**：RePlan-VLA 不把这些都塞给 VLA，而是提出一个 VLA 无关（VLA-agnostic）的执行感知框架：显式监控机器人运动做进度评估，并根据观测到的结果自适应修订未来计划；底层 VLA 权重完全保留、不需要任何额外微调。**结果**：RoboCasa365 与 CALVIN 基准上相对次强基线成功率分别提升 21.9% 与 10.4%，并在 Franka Research 3 真机上验证部署。**注意**：进度评估依赖运动监控信号，遮挡或传感缺失时的鲁棒性未充分评估；21.9%/10.4% 为相对提升而非绝对百分点。",
+   "keyInsights": [
+    "核心判断是「不要在 VLA 内部解决长程问题」：把长程推理、记忆与恢复从策略里剥出来交给外层框架，VLA 只保留它擅长的短程操作能力，这与本轮 n776 讲的「上层低频规划 + 下层高频控制」是同一条分层逻辑。",
+    "进度感知不是加一个分类器，而是显式监控机器人运动、据观测结果修订计划——它把「执行是否推进了任务」变成可反馈的信号，正是站内 /learn/embodied-agent 失败感知与自主恢复章节讨论的闭环。",
+    "VLA 无关 + 免微调让它能直接套在已部署权重上，工程代价远低于重训长程 VLA；对站内 /learn/platform-engineering 的策略评测基础设施也是好消息——外层框架可与具体策略解耦、独立迭代。",
+    "与本轮 p392 Z-sight 形成清晰分工：统一模型负责一个动作块内的动作与未来联合生成，RePlan-VLA 负责跨动作块的进度监控与重规划，两者可叠成一套完整长程栈。"
+   ],
+   "impact": "给长程操作提供了一条「不动权重、只加外层执行框架」的低成本路线，并用两个仿真基准加一台真机做了验证。对站内 /learn/embodied-agent（失败感知与自主恢复）、/learn/vla-models（长程任务推理范式）是直接落地参照；与本轮 n775 EFE 具身第一考揭示的「不可重置、状态不全时智能体大幅退化」合读，恰好说明为什么需要专门的外层进度监控。",
+   "addedDate": "2026-11-20"
+  },
   {
    "id": "p387",
    "title": "VSpark: Speculative Decoding for Autoregressive Vision-Language-Action Models",
@@ -10462,5 +10602,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 365
+ "totalItems": 370
 }

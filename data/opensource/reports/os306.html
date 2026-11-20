@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BICMap：WebGL 机器人地图 / 点云 / 三维模型可视化 SDK — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">BICMap：WebGL 机器人地图 / 点云 / 三维模型可视化 SDK — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="bicmapwebgl-sdk">BICMap：WebGL 机器人地图 / 点云 / 三维模型可视化 SDK</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Open-X-Humanoid/BICMap">https://github.com/Open-X-Humanoid/BICMap</a>  </p>
+<p><strong>Stars</strong>: 100 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-20  </p>
+<p><strong>组织</strong>: Open-X-Humanoid  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-20</p>
+</blockquote>
+<hr />
+<p><strong>Open-X-Humanoid/BICMap</strong> 是一个基于 WebGL 的机器人地图可视化 SDK，覆盖 SLAM 栅格地图、点云、三维模型与机器人导航路径，JavaScript，约 100 star（2026-11-20 核验），2026-06-29 建立、11-09 仍有推送，license 为 NOASSERTION（未声明标准开源许可）。topics 含 3d-visualization、geojson、humanoid-robot、indoor-outdoor、maplibre、mapping、path-planning、point-cloud、robot-map、robotics-visualization、slam。</p>
+<p>它解决的是一类常被忽视的工程问题：导航与建图产生的栅格、点云、轨迹数据散落在不同格式与坐标系里，缺少一个能在浏览器里叠加查看、支持室内外统一坐标的工具。对本轮门户内容而言，站内 /learn/mobile-robot-navigation 的地图表示、/learn/3d-vision-pointcloud 的点云处理都会产出这类空间数据，而 n771 北京行动方案强调训练场与实景实训的数据闭环，BICMap 正好是这套数据的「可观测性前端」。</p>
+<hr />
+<ol>
+<li><strong>数据接入层</strong>：读 SLAM 栅格 / 占据地图、点云、三维模型、geojson 轨迹等异构空间数据。</li>
+<li><strong>坐标与投影层</strong>：topics 含 indoor-outdoor 与 maplibre，说明支持室内局部坐标与室外地理坐标的统一映射与投影。</li>
+<li><strong>渲染层</strong>：WebGL 绘制，把栅格、点云、网格模型与路径叠在同一视图，浏览器端交互。</li>
+<li><strong>交互与分析层</strong>：路径规划结果、机器人位姿与地图要素的联动查看，服务于调试而非出图。</li>
+</ol>
+<p>这四层与站内 /learn/ai-infra 讨论的可观测性三件套（指标、日志、轨迹）互补：前者管「系统跑得稳不稳」，BICMap 管「空间数据看得清不清」。<strong>注意</strong>：以上分层按 topics 与项目描述推断，具体 API 与数据格式以 README 为准。</p>
+<hr />
+<ul>
+<li><strong>BICMap 项目 README</strong>（Open-X-Humanoid/BICMap）：数据格式、坐标投影与 API 的原始出处，也是确认授权口径的唯一依据。</li>
+<li><strong>Hidden Variables Behind Real-Robot Data Quality</strong>（arXiv 2611.22388，站内已收录）：采集系统的工作空间与标定对齐决定下游数据质量，是空间可视化必要性的背景。</li>
+<li><strong>ROSMonitoring in Action</strong>（arXiv 2611.22407）：运行时验证与协议感知强制，与 BICMap 的空间数据观测分属「行为合规」与「数据可读」两侧。</li>
+<li><strong>北京市具身智能机器人产业高质量发展行动方案（2026—2028）</strong>（本轮 n771）：训练场与实景实训的数据闭环，是这类观测工具的需求来源。</li>
+<li>延伸阅读：/learn/mobile-robot-navigation 地图表示与构建、/learn/3d-vision-pointcloud 点云处理、/learn/ai-infra 可观测性。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先确认授权</strong>：license 为 NOASSERTION，商用或再分发前必须向作者确认，这是本仓库与其它三个最不同的一点。</li>
+<li><strong>准备一份最小样例数据</strong>：用一小块占据栅格 + 一条轨迹点云，先跑通加载与叠加，别一上来灌全量建图数据。</li>
+<li><strong>核对坐标系与单位</strong>：室内栅格的米制坐标与 geojson 的经纬度必须明确换算关系，否则会出现「地图和轨迹错开一条街」的典型问题。</li>
+<li><strong>控制点云规模</strong>：WebGL 浏览器端有显存上限，大规模点云先做下采样 / 分块加载。</li>
+<li><strong>与仿真 / 真机日志对齐时间戳</strong>：把机器人位姿叠到地图上时，时间不同步会误判成定位漂移。</li>
+</ol>
+<p><strong>注意</strong>：主语言 JavaScript，与站内多数 Python 工具链不同，集成需单独评估；仓库 2026-06 建立，API 仍可能变动。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 100（2026-11-20 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>NOASSERTION（未声明标准开源许可）</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2026-06-29 / 2026-11-09</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>JavaScript</td>
+</tr>
+<tr>
+<td>渲染</td>
+<td>WebGL，浏览器端</td>
+</tr>
+<tr>
+<td>公开基准</td>
+<td>无，以 README 为准</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：可视化 SDK 没有「成功率」这类指标，评价维度是支持的数据格式、渲染规模与坐标一致性。<strong>注意</strong>：未声明标准开源许可是实打实的使用风险，不能因为 star 过百就默认可商用。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>RViz / 桌面可视化</th>
+<th>通用图表库</th>
+<th>BICMap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>运行环境</td>
+<td>桌面 / ROS 环境</td>
+<td>浏览器</td>
+<td>浏览器（WebGL）</td>
+</tr>
+<tr>
+<td>空间数据</td>
+<td>强，但绑定 ROS</td>
+<td>弱</td>
+<td>栅格 / 点云 / 三维 / 路径</td>
+</tr>
+<tr>
+<td>室内外统一</td>
+<td>通常只管室内</td>
+<td>不涉及</td>
+<td>topics 明确含 indoor-outdoor</td>
+</tr>
+<tr>
+<td>主要代价</td>
+<td>需装桌面端</td>
+<td>表达力不足</td>
+<td>需处理坐标投影与点云规模</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮另外三个仓库形成一条完整链路：os303 ReCogDrive 管动作产出、os304 LADDER 管长程评测、os305 hiRobot 管跨本体接口，BICMap 管空间数据观测。四者分别落在策略、评测、适配、观测四层，都是「模型之外」的工程能力——这正是站内 /learn/platform-engineering 与 /learn/ai-infra 反复强调的主题。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

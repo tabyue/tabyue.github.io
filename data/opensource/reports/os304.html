@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LADDER：面向长程机器人操作的评测基准与排行榜 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">LADDER：面向长程机器人操作的评测基准与排行榜 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="ladder">LADDER：面向长程机器人操作的评测基准与排行榜</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/insait-institute/ladder">https://github.com/insait-institute/ladder</a>  </p>
+<p><strong>Stars</strong>: 7 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-20  </p>
+<p><strong>组织</strong>: INSAIT Institute  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-20</p>
+</blockquote>
+<hr />
+<p><strong>insait-institute/ladder</strong> 是 INSAIT（Institute for Computer Science, Artificial Intelligence and Technology）开源的长程机器人操作评测基准 LADDER（a long-horizon robot manipulation benchmark），MIT 许可，Python，2026-09-29 建立、2026-11-19 仍在推送，约 7 star（2026-11-20 核验）。topics 覆盖 benchmark、embodied-ai、leaderboard、long-horizon、robot-manipulation、simulation、vision-language-action、vlm，定位是给「需要多步相互依赖操作」的策略提供统一任务集与排行榜。</p>
+<p>它值得收录的原因在于补了一格长期缺失的基础设施：主流操作基准多聚焦单次抓放或短链指令，而本轮 p396 RePlan-VLA 指出长程退化源于把推理、记忆、进度跟踪与错误恢复全塞给 VLA，n775 EFE 具身第一考又用 1156 个任务量化了「不可重置时智能体大幅退化」——两者都缺一个专门针对长程、带公开榜单的考卷。</p>
+<hr />
+<ol>
+<li><strong>任务层</strong>：一组需要多步相互依赖操作的任务，子目标之间存在前置条件与状态依赖，而非可独立完成的抓放集合。</li>
+<li><strong>仿真层</strong>：topics 含 simulation，任务在仿真环境中定义与执行，保证可复现与可批量评测。</li>
+<li><strong>接口层</strong>：topics 含 VLA / VLM，说明基准面向视觉—语言—动作策略的标准输入输出（观测 + 指令 → 动作块）。</li>
+<li><strong>排行榜层</strong>：带 leaderboard，把不同方法放到同一套判定口径下比较，避免各论文自报协议。</li>
+</ol>
+<p>这四层与站内 /learn/platform-engineering 讲的「统一契约、O(N+M) 适配层、基准可复现性」是同一套思路。<strong>注意</strong>：仓库很新，上述层级是按 topics 与项目定位做的结构性推断，任务数量、判定脚本与leaderboard 提交流程以 README 为准。</p>
+<hr />
+<ul>
+<li><strong>LADDER: a long-horizon robot manipulation benchmark</strong>（本仓库官方项目，INSAIT）：长程任务集、判定口径与 leaderboard 的原始出处。</li>
+<li><strong>RePlan-VLA: Progress-Aware Replanning for Long-Horizon VLA Models</strong>（arXiv 2611.23843，本轮 p396）：不动 VLA 权重、靠外层进度监控与自适应重规划提升长程成功率，正是本基准想测的能力。</li>
+<li><strong>Embodied First Exam / EFE</strong>（arXiv 2611.12177，本轮 n775）：1156 任务、47 种机器人、特权与标准模式的落差，可作为长程基准设计的广度参照。</li>
+<li><strong>BiCAT</strong>（arXiv 2611.23499，本轮 p395）与 <strong>SHAPE</strong>（arXiv 2611.24585，本轮 p393）：动作块内部结构的两条近期路线。</li>
+<li>延伸阅读：/learn/platform-engineering 策略评测基础设施、/learn/embodied-agent 失败感知与自主恢复、/learn/reinforcement-learning 长程信用分配。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先读任务定义与判定口径</strong>：长程基准最容易被误用的是「成功条件」——确认每步的完成判据、是否允许重试、失败后是否重置，再决定怎么接策略。</li>
+<li><strong>固定仿真器版本</strong>：建独立环境锁依赖，长程任务对物理与渲染版本比单步任务更敏感。</li>
+<li><strong>先跑一个随机 / 常量策略基线</strong>：拿到成功率的地板，确认评测脚本与回报计算没写错，再接 VLA。</li>
+<li><strong>按子目标深度分层报结果</strong>：把成功率按「已完成子目标数」画曲线，才能看出方法是在第几步开始崩，这与 p396 的进度监控直接对应。</li>
+<li><strong>记录评测预算</strong>：长程 rollout 昂贵，报清楚 trial 数、种子数与总机时，否则榜单数字不可复核。</li>
+</ol>
+<p><strong>注意</strong>：约 7 star、社区复现报告极少，把它当评测协议参考比当成熟榜单更稳妥；提交 leaderboard 前先确认许可与数据使用条款。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 7（2026-11-20 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>建立 / 最近推送</td>
+<td>2026-09-29 / 2026-11-19</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>长程操作 benchmark + leaderboard</td>
+</tr>
+<tr>
+<td>公开指标</td>
+<td>以 README 与 leaderboard 为准，此处不转录</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：star 少不代表价值低——评测基准的价值在协议与榜单，不在代码量。但正因为新，任务集规模、基线覆盖与判定稳定性都还没经过社区压力测试，引用其数字前必须核对版本。<strong>注意</strong>：本仓库不提供策略权重，不能当模型用。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>单次抓放基准</th>
+<th>通用具身评测（如 EFE）</th>
+<th>LADDER</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>任务长度</td>
+<td>单步</td>
+<td>覆盖短到长，种类极多</td>
+<td>专注长程多步依赖</td>
+</tr>
+<tr>
+<td>状态依赖</td>
+<td>弱</td>
+<td>依任务而定</td>
+<td>子目标间强前置条件</td>
+</tr>
+<tr>
+<td>榜单</td>
+<td>多有</td>
+<td>有</td>
+<td>有 leaderboard</td>
+</tr>
+<tr>
+<td>主要用途</td>
+<td>测动作精度</td>
+<td>测通用智能体广度</td>
+<td>测长程规划与恢复</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮内容形成一条完整链路：LADDER 提供长程考卷（评测层），p396 RePlan-VLA 提供外层进度监控与重规划（框架层），p395 BiCAT 与 p393 SHAPE 提供动作块内部的结构（策略层），n775 EFE 则给出跨 47 种机器人的广度对照。四者合起来是站内 /learn/embodied-agent 长程任务推理范式的当前前沿。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

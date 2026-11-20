@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReCogDrive：小米 ICLR 2026 端到端自动驾驶认知框架（VLA + 扩散策略 + 强化学习） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">ReCogDrive：小米 ICLR 2026 端到端自动驾驶认知框架（VLA + 扩散策略 + 强化学习） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="recogdrive-iclr-2026-vla">ReCogDrive：小米 ICLR 2026 端到端自动驾驶认知框架（VLA + 扩散策略 + 强化学习）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/xiaomi-research/recogdrive">https://github.com/xiaomi-research/recogdrive</a>  </p>
+<p><strong>Stars</strong>: 631 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-20  </p>
+<p><strong>组织</strong>: Xiaomi Research  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-20</p>
+</blockquote>
+<hr />
+<p><strong>xiaomi-research/recogdrive</strong> 是小米研究院为 ICLR 2026 论文 ReCogDrive 开源的官方实现，Apache-2.0 许可，Python，约 631 star（2026-11-20 核验），topics 覆盖 vision-language-action、diffusion-policy、end-to-end-autonomous-driving、reinforcement-learning、navsim。ReCogDrive 的全称可理解为 A Reinforced Cognitive Framework for End-to-End Autonomous Driving：把「认知」显式引入端到端自动驾驶，用视觉—语言模型承担场景理解与推理，扩散策略生成连续轨迹，再以强化学习后训练对齐驾驶行为。</p>
+<p>它值得单独收录的原因在于交付的完整度：不是一段 demo 脚本，而是「VLM + 扩散头 + RL」三段式在真实移动本体上的可复现基线，并挂到 NAVSIM 这类公开评测协议上。对本轮门户内容而言，它与 p393 SHAPE（EEF / 关节双流读出）、p395 BiCAT（分词器即接口）恰好构成「连续动作由谁产出、以什么形式交给执行器」这一问题的三种答案。</p>
+<hr />
+<ol>
+<li><strong>感知认知层</strong>：预训练视觉—语言模型读多相机 / 环视输入与导航指令，产出场景语义与推理表征，替代纯视觉 encoder 的「只看不懂」。</li>
+<li><strong>动作生成层</strong>：扩散策略（diffusion-policy）以认知表征为条件，去噪出连续、多模态可行的未来轨迹；相比离散动作 token，连续轨迹更适合高频控制。</li>
+<li><strong>对齐层</strong>：强化学习 / 后训练把「模仿出来的轨迹」按闭环驾驶的奖励（安全、舒适、进度）进一步对齐，缓解行为克隆的协变量偏移。</li>
+<li><strong>评测层</strong>：对接 NAVSIM 等端到端自动驾驶基准，给定统一指标与协议。</li>
+</ol>
+<p>这四层与站内 /learn/vla-models 的「VLM 骨干 + 动作专家」骨架高度同构，差别在动作专家用的是扩散而非流匹配 / 离散自回归，且执行载体是车而非机械臂。<strong>注意</strong>：以上分层是按论文标题、topics 与仓库定位做的结构性归纳，具体模块划分、损失权重与训练阶段以论文与 README 为准，不要把归纳当成官方架构声明。</p>
+<hr />
+<ul>
+<li><strong>ReCogDrive: A Reinforced Cognitive Framework for End-to-End Autonomous Driving</strong>（ICLR 2026，本仓库官方论文）：三段式架构与 NAVSIM 评测的原始出处。</li>
+<li><strong>SHAPE: Discrete Supervision and Parallel Continuous Streams for Learning Dexterous Manipulation from Egocentric Human Data</strong>（arXiv 2611.24585，本轮 p393）：EEF / 关节双流读出的对照，讨论「训练监督形式与部署读出形式解耦」。</li>
+<li><strong>BiCAT: Bimanual Coordination Action Tokenization</strong>（arXiv 2611.23499，本轮 p395）：把动作分词器当作策略—机器人接口，与本仓库的连续轨迹动作头形成对照。</li>
+<li><strong>VSpark: Speculative Decoding for Autoregressive VLA</strong>（arXiv 2611.22666，站内 p387）：自回归 VLA 的延迟优化路线，可与扩散去噪的步数开销对照读。</li>
+<li>延伸阅读：/learn/vla-models 的动作分词与骨干设计、/learn/imitation-learning 的行为克隆与协变量偏移、/learn/training-inference-optimization 的延迟预算。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先锁环境与权重</strong>：按 README 建独立虚拟环境，确认所需 VLM 基座权重、扩散策略 checkpoint 与 NAVSIM 数据/评测包的版本，端到端项目通常对这几项版本敏感。</li>
+<li><strong>先跑评测不跑训练</strong>：用官方 checkpoint 在 NAVSIM 子集上复现一次指标，确认数据路径与指标脚本无误，再考虑训练，避免在错误基线上调参。</li>
+<li><strong>核对动作空间</strong>：车用的是连续轨迹（含速度 / 曲率或 waypoint），迁移到机械臂 / 人形前必须重定义动作空间、控制频率与坐标系，不能复用动作头。</li>
+<li><strong>分段验证三段式</strong>：分别冻结 / 开启认知层、扩散层、RL 后训练，观察各自对闭环指标的贡献，确认收益来源而非只看总分。</li>
+<li><strong>记录算力与延迟</strong>：VLM 推理 + 多步去噪对车载算力是硬约束，复现时同时报单帧延迟与去噪步数。</li>
+</ol>
+<p><strong>注意</strong>：仓库主要面向自动驾驶，站内 /learn/vla-models 与 /learn/imitation-learning 的操作任务读者需自行评估迁移成本；631 star 为核验时点快照，会快速变化。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 631（2026-11-20 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>论文</td>
+<td>ICLR 2026 ReCogDrive</td>
+</tr>
+<tr>
+<td>评测基准</td>
+<td>NAVSIM 等端到端自动驾驶基准</td>
+</tr>
+<tr>
+<td>公开指标</td>
+<td>以论文与 README 为准，此处不转录具体数值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：这里最有信息量的不是某个成功率，而是「挂了公开基准 + 官方实现 + 明确许可」这三点，意味着结论可被第三方复核。<strong>注意</strong>：任何「相对基线提升多少」的说法都应回到论文表格，且闭环驾驶指标与机器人操作成功率口径完全不同，不可横向比较。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>离散自回归 VLA</th>
+<th>纯模仿学习端到端</th>
+<th>ReCogDrive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>动作形式</td>
+<td>离散 token，串行解码</td>
+<td>回归 / 单次输出</td>
+<td>扩散去噪的连续轨迹</td>
+</tr>
+<tr>
+<td>语义理解</td>
+<td>依赖 VLM 骨干</td>
+<td>通常无显式认知层</td>
+<td>显式 VLM 认知层</td>
+</tr>
+<tr>
+<td>闭环对齐</td>
+<td>靠数据覆盖</td>
+<td>协变量偏移明显</td>
+<td>RL 后训练对齐奖励</td>
+</tr>
+<tr>
+<td>主要代价</td>
+<td>解码步数</td>
+<td>分布外脆弱</td>
+<td>VLM + 多步去噪的延迟</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮三篇论文正好凑成一张动作生成设计表：p395 BiCAT 把跨臂协调放进分词器、p393 SHAPE 用共享流匹配专家输出双流、p387 VSpark 用推测解码压自回归步数，而 ReCogDrive 选择连续扩散 + RL 对齐。四条路线都在回答同一个问题——在给定延迟预算内，动作怎么产出才既准又稳。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
