@@ -352,3 +352,6 @@
 - 学习：延续「深化 tier0/1 薄章」。`probability-statistics#4` 多维随机变量 5708→17052（条件密度与可测函数 / 协方差几何与马氏距离 / Schur 补与卡尔曼增益 / Jacobian 密度变换 / 高维样本协方差与收缩估计，5 节 + 5 段代码）；`sensors-hardware#9` 触觉传感器 4112→13362（Hertz 接触与摩擦锥 / 视触觉标定积分 / CoP 与滑动滞回判据 / 时间对齐与触觉创新 / PI 力控与滑动恢复，5 节 + 5 段代码）。三处 lastUpdated 同步，章节数仍 553。
 - 校验：normalize 无改动、fix_learn_links --dry fixed=0、sync 同步 2 模块 4 文件、health_check **ALL OK 且 0 告警**、verify_learn_structure ALL OK、audit 硬缺陷全 0（F5 仅历史 academic-english#9）、unittest 34/34、node UI 32/32。
 - 经验：① **幂等深化脚本的「增长断言」写成绝对阈值**（`len(new)>10000`），别用 `before + 5000`——重跑时 before 已含旧 ADD 区块会误 FAIL 且不写盘（本轮修了一次）；② 正文数值断言以实跑为准，据实测把视触觉重建「还原峰值量级」改为「峰值只有真实值一半左右」；③ 深化正文用 raw `r'''...'''`、示例代码不写 docstring、`\text{}` 内不放中文，KaTeX 全过；④ 论文发现走 arXiv API（4 查询 106 候选）+ WebFetch 核对 5 篇全准，开源走 GitHub Search API（urllib + Bearer，7 查询 163 候选）+ `gh api repos/<r>` 批量核验许可证与 star；⑤ 新闻 10 条刻意错开主题（政策标准 / 会议 / 产能 / 融资 / 触觉开源 / 开源社区 / 学术开源 / APEC 部署 / 全球消费级 / 世界模型开源），同日同事件 3-gram 0 命中。
+### 2026-11-21 08:40 收尾
+- 判定 learn/*.json 缩进主流为 indent=2（27/32），sensors-hardware.json 在 db8d223 的全文件重排是一次性格式对齐而非缺陷，不要回退成 indent=1。
+- 推送常规方案（`credential.helper=!gh auth git-credential`）在本机再次失败（停在 git credential-manager get），2026-11-21 主提交靠「空 GIT_CONFIG_GLOBAL/SYSTEM + `gh auth token` 嵌入 URL + `http.sslBackend=schannel`」推送成功，后续沿用此方案。
