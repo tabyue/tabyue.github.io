@@ -1,7 +1,7 @@
 {
   "id": "sensors-hardware",
   "name": "传感器与硬件接口",
-  "lastUpdated": "2026-11-20T08:34",
+  "lastUpdated": "2026-11-21T08:35",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 40,
@@ -296,17 +296,22 @@
     {
       "id": "sec-10",
       "title": "触觉传感器",
-      "lastUpdated": "",
-      "chars": 4112,
+      "lastUpdated": "2026-11-21T08:35",
+      "chars": 13362,
       "shortTitle": "触觉传感器",
       "difficulty": "中级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 18,
       "headings": [
         "为什么需要触觉",
         "四种主流技术路线",
         "推荐硬件采购",
+        "深入一：接触力学——触觉信号到底测的是什么",
+        "深入二：视触觉标定——把像素形变还原成三维接触形貌",
+        "深入三：taxel 阵列的信号调理与滑动检测",
+        "深入四：多模态时间对齐与「触觉创新」的信息量",
+        "深入五：从触觉反馈到闭环——力控、抓握力规划与滑动恢复",
         "练习",
         "参考答案"
       ],
@@ -593,7 +598,7 @@
       "summary": "2026 年灵巧手进入量产阶段，全年出货量以万台计；相比之下，能同时提供经过标定的指尖力和可靠手部姿态的采集手套，仍然是稀缺品。这个反差初看不合理——手套又不需驱动电机，结构上比灵巧手简单得多。"
     }
   ],
-  "readingMinutes": 226,
+  "readingMinutes": 240,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 188066
+  "chars": 197316
 }

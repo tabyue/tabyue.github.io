@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>rofacto：用机器人渲染做因子化世界模型 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">rofacto：用机器人渲染做因子化世界模型 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="rofacto">rofacto：用机器人渲染做因子化世界模型</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/bjkim95/rofacto">https://github.com/bjkim95/rofacto</a>  </p>
+<p><strong>Stars</strong>: 32 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-21  </p>
+<p><strong>组织</strong>: bjkim95  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-21</p>
+</blockquote>
+<hr />
+<p><strong>bjkim95/rofacto</strong> 是 CoRL 2026 论文 Robot-Factored World Models via Robot Rendering 的官方实现，约 32 star（2026-11-21 核验），Apache-2.0 许可，Python，2026-06-25 创建、11-10 更新，配有项目主页。</p>
+<p>它切的是世界模型里一个常被忽略的混淆项：机器人自己也在画面里。当策略用相机观测训练世界模型时，观测变化同时来自「环境 / 物体在动」和「机器人本体在动」，单体模型必须把两者一起解释，参数被大量花在拟合本体运动这种与任务无关的规律上。rofacto 用可微的机器人渲染（robot rendering）把本体对观测的贡献显式建模并从场景中因子化出来，让世界模型专注预测环境与物体的演化。</p>
+<p>值得单独收录，是因为它和本轮 p397 MoRE 正好给出两种正交的分解维度：MoRE 在模型内部按刚体 / 可变形 / 可抓握的物理机制分专家，rofacto 在建模对象上把「机器人」与「世界」分开。两者可以叠加，也提示 /learn/world-models-llm 与 /learn/computer-vision 的读者：世界模型该以什么为条件，本身就是设计决策而不是默认设定。</p>
+<hr />
+<p>按论文标题、项目主页与仓库定位，可归纳为四个部分（<strong>注意</strong>：结构性归纳，具体网络结构、渲染器与损失权重以论文与 README 为准）：</p>
+<ol>
+<li><strong>可微机器人渲染器</strong>：给定本体状态（关节角、位姿）与已知几何 / URDF，渲染出机器人在当前视角下应出现的像素或特征，作为「本体贡献」的估计。可微是关键——它需要把梯度从世界模型传回本体状态与渲染参数。</li>
+<li><strong>因子化表征</strong>：把观测拆成本体相关分量与场景相关分量，世界模型只在后者上做未来预测，避免用容量去记机器人自己的运动规律。</li>
+<li><strong>场景动力学预测</strong>：在剥离本体后的表征上预测物体与环境的演化，并支持按动作条件化，供规划或 MPC 使用。</li>
+<li><strong>评测与可视化</strong>：把本体渲染、残差场景与预测未来分别可视化，方便判断因子化是否真的把本体分离干净。</li>
+</ol>
+<p>这里最需要警惕的是「可微渲染」的代价：它要求已知本体几何与标定，且渲染本身要参与前向与反向，训练开销明显高于纯 2D 世界模型。若本体几何不准或相机外参漂移，渲染出的本体贡献会与真实观测错位，因子化反而引入系统性残差。</p>
+<hr />
+<ul>
+<li><strong>Robot-Factored World Models via Robot Rendering</strong>（CoRL 2026，本仓库官方论文）：本体因子化与可微机器人渲染的原始出处。</li>
+<li><strong>MoRE: Mixture-of-Experts for Multi-Physics Robotic World Models</strong>（arXiv 2611.25336，本轮 p397）：按物理机制分专家，与本仓库按建模对象分解构成正交维度。</li>
+<li><strong>PhyDEX: A Benchmark for Physical Reasoning in VLA Models via Dynamic Extrinsic Dexterity</strong>（arXiv 2611.26565，本轮 p400）：提醒世界模型必须真正预测重力、摩擦与惯量，而不只是把观测重建得像。</li>
+<li><strong>One Prior, Two Dynamics: Repurposing Video Diffusion Transformers for Self-Supervised Dynamics Modeling</strong>（arXiv 2611.26617）：视频扩散骨干复用于动力学建模的同期思路，可作为「不显式建本体几何」一侧的对照。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先核对本体几何与相机标定</strong>：这是全仓库最硬的前提。确认 URDF / mesh、相机内外参与论文设置一致，否则可微渲染一步就错。</li>
+<li><strong>按 README 建环境</strong>：可微渲染通常依赖特定版本的 PyTorch 与渲染 / 光栅化库，别用系统预装环境混跑。</li>
+<li><strong>先跑可视化不看指标</strong>：把本体渲染、剥离后的场景与预测未来并排看一眼，肉眼确认因子化确实生效，再开始扫指标。</li>
+<li><strong>做一次「去掉因子化」的消融</strong>：用同一套骨干跑不分本体的对照，确认收益来自因子化而非调参或数据量。</li>
+<li><strong>扫渲染精度与训练开销</strong>：渲染分辨率、可微步数直接影响显存与吞吐，报告指标时同时给出每步耗时。</li>
+<li><strong>换视角复跑</strong>：因子化若真的成立，换相机视角后本体贡献应能由几何一致地推出；只在单一视角成立多半是过拟合。</li>
+</ol>
+<p><strong>高频坑</strong>：把 robot rendering 当成普通图像分割（它要求可微且与本体状态绑定）；忽略相机外参漂移；用没有本体几何的数据集硬套方法；只报预测误差不报训练开销，让「更准」掩盖「更慢一个量级」。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 32（2026-11-21 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>创建 / 最近更新</td>
+<td>2026-06-25 / 2026-11-10</td>
+</tr>
+<tr>
+<td>会议</td>
+<td>CoRL 2026</td>
+</tr>
+<tr>
+<td>项目主页</td>
+<td>bjkim95.github.io/rofacto/</td>
+</tr>
+<tr>
+<td>公开指标</td>
+<td>以论文与 README 为准，此处不转录具体数值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：32 star 不高，但「CoRL 2026 官方实现 + Apache-2.0 + 项目主页 + 明确技术主张」这四点让它值得作为方法类参考收录，而非按热度收录。方法类仓库的价值在可复现的分解思路，不在 Star 数。</p>
+<p><strong>注意</strong>：Star 为核验时点快照；可微渲染方案的指标与本体几何精度、相机标定强相关，跨数据集横比前必须对齐这些前提；论文未给出的推理延迟不要按 2D 世界模型估算。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>单体 2D 世界模型</th>
+<th>潜空间 JEPA 类</th>
+<th>显式 3D 世界模型</th>
+<th>rofacto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本体运动的处理</td>
+<td>混在观测里一起拟合</td>
+<td>常被表征吸收</td>
+<td>依赖 3D 重建</td>
+<td>可微渲染显式因子化</td>
+</tr>
+<tr>
+<td>是否需要本体几何</td>
+<td>否</td>
+<td>否</td>
+<td>部分需要</td>
+<td><strong>是（硬前提）</strong></td>
+</tr>
+<tr>
+<td>是否可微</td>
+<td>是</td>
+<td>是</td>
+<td>视实现</td>
+<td>是（渲染需参与反传）</td>
+</tr>
+<tr>
+<td>额外训练开销</td>
+<td>低</td>
+<td>低</td>
+<td>中高</td>
+<td>中高（渲染）</td>
+</tr>
+<tr>
+<td>换本体成本</td>
+<td>低</td>
+<td>低</td>
+<td>中</td>
+<td>需重配几何与渲染</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮 p397 MoRE 的对照是最值得记的一格：MoRE 分的是「物理机制」，rofacto 分的是「建模对象」，二者不冲突，理论上可以先按对象剥离本体、再按物理机制给场景配专家。这也提示 /learn/world-models-llm 的读者，世界模型的条件化维度不止「动作 / 语言」两项，本体状态与物理域都可以成为条件。</p>
+<p><strong>注意</strong>：表中对 rofacto 的描述按论文主张归纳，不是官方基准对比结果。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

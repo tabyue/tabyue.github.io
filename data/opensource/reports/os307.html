@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SteerAct：少样本时序引导解锁动作模型 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">SteerAct：少样本时序引导解锁动作模型 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="steeract">SteerAct：少样本时序引导解锁动作模型</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/kaichen-z/SteerAct">https://github.com/kaichen-z/SteerAct</a>  </p>
+<p><strong>Stars</strong>: 287 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-21  </p>
+<p><strong>组织</strong>: kaichen-z  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-21</p>
+</blockquote>
+<hr />
+<p><strong>kaichen-z/SteerAct</strong> 是 SteerAct: Unlocking Action Models through Few-Shot Temporal Steering 的官方仓库，约 287 star（2026-11-21 核验），Python，2026-10-14 创建、11-19 仍在更新，topics 覆盖 robot、robot-learning、robotics、test-time-adaptation，关联论文 arXiv 2610.25632。仓库未声明开源许可证（GitHub 显示 NOASSERTION），复用代码前需先与作者确认授权边界，这是收录时最该说明的一点。</p>
+<p>它解决的问题很具体：一个已经训好的动作模型（VLA / 动作专家）到了新任务、新本体或新视角，通常要么全量微调（数据、算力、过拟合代价都高），要么直接零样本硬上（成功率明显掉）。SteerAct 走中间路线——用极少量示范在<strong>时序维度</strong>上对冻结模型做引导（temporal steering），把测试时适应（test-time adaptation）引入机器人动作模型，而不改动基座权重。</p>
+<p>值得单独收录的原因在于方向：把「适应」从参数空间搬到推理时的轨迹 / 时序引导空间，与站内 /learn/vla-models 的微调与评估、/learn/imitation-learning 的少样本示教两条线索都能对上；也和本轮 p400 PhyDEX 揭示的预训练鲁棒性不足形成互补——一个从适应侧补，一个从评测侧量。</p>
+<hr />
+<p>按仓库定位与论文标题，可以把结构归纳成四层（<strong>注意</strong>：这是结构性归纳，具体模块划分、引导算子与损失形式以 README 与论文为准）：</p>
+<ol>
+<li><strong>冻结动作模型</strong>：预训练好的 VLA / 动作专家作为基座，权重在整个适应过程中不更新，保证已学到的通用技能不被少量新样本破坏。</li>
+<li><strong>少样本示范编码器</strong>：把每个新任务的几条成功轨迹编码成任务条件，重点不是记住动作序列，而是抽出「这个任务的时序节奏与目标状态」。</li>
+<li><strong>时序引导模块</strong>：在推理时对动作块的生成过程施加引导——例如调整去噪 / 流匹配轨迹的中间状态、动作块长度与块间衔接，使输出向示范的时序结构靠拢。这里的关键词是 temporal：引导作用在时间结构而非单帧动作幅度上。</li>
+<li><strong>测试时适应循环</strong>：用新任务上的在线反馈（成功 / 失败、状态偏差）迭代更新引导量，而不回传梯度到基座。</li>
+</ol>
+<p>与常见参数高效微调（LoRA / adapter）相比，这四层全程不产生新的可训练权重副本，部署时只需保留一份基座 + 每任务一份很小的引导状态；代价是推理时要多跑引导步，延迟与引导步数成正比。</p>
+<hr />
+<ul>
+<li><strong>SteerAct: Unlocking Action Models through Few-Shot Temporal Steering</strong>（arXiv 2610.25632，本仓库官方论文）：少样本时序引导与测试时适应的原始出处。</li>
+<li><strong>PhyDEX: A Benchmark for Physical Reasoning in Vision-Language-Action Models via Dynamic Extrinsic Dexterity</strong>（arXiv 2611.26565，本轮 p400）：量化预训练 VLA 在新物理任务上的鲁棒性缺口，是「为什么需要适应层」的评测侧证据。</li>
+<li><strong>CauSyncVLA: Causal Latent World Modeling for Asynchronous Robot Control</strong>（arXiv 2611.25667，本轮 p398）：同样在推理期用结构化修正替代额外训练，可对照「引导作用在时序」与「修正作用在动作块衔接」两种不同切入点。</li>
+<li><strong>PGX: Physically Grounded Execution for Long-Horizon Humanoid Loco-Manipulation</strong>（arXiv 2611.26596，本轮 p401）：把时序结构交给免训练组件，是「不改动基座、外层补结构」这条路线在长程任务上的另一实例。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先确认许可证</strong>：仓库当前无 LICENSE 文件（NOASSERTION），内部使用或二次分发前先联系作者，别默认按 MIT / Apache 处理。</li>
+<li><strong>锁环境与基座权重</strong>：按 README 建独立虚拟环境，确认所用动作模型 checkpoint 与论文复现版本一致；冻结基座的方案对权重版本极其敏感。</li>
+<li><strong>先跑零样本基线</strong>：在新任务上先记录不引导时的成功率，作为后续所有引导步数实验的唯一参照。</li>
+<li><strong>扫引导步数与示范条数</strong>：这是最敏感的二维网格。建议固定 1 / 3 / 5 条示范，分别扫 0 / 1 / 2 / 4 步引导，观察成功率与单步延迟的权衡。</li>
+<li><strong>记录延迟与吞吐</strong>：引导发生在推理期，必须同时报每动作块的额外耗时，否则「成功率提升」无法与直接多跑几次去噪的朴素做法区分。</li>
+<li><strong>换本体再验一次</strong>：至少在一个不同构型上复跑，确认引导状态捕获的是任务结构而不是某台机器人的运动学特征。</li>
+</ol>
+<p><strong>高频坑</strong>：把少样本引导当成少样本微调去报告「训练收敛曲线」（这里没有训练）；用与论文不同的示范采集协议（视角、控制频率、动作块长度）却直接横比数字；忽略许可证状态直接把代码并入内部仓库。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 287（2026-11-21 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>未声明（NOASSERTION）</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>创建 / 最近更新</td>
+<td>2026-10-14 / 2026-11-19</td>
+</tr>
+<tr>
+<td>关联论文</td>
+<td>arXiv 2610.25632</td>
+</tr>
+<tr>
+<td>核心方向</td>
+<td>少样本时序引导、测试时适应</td>
+</tr>
+<tr>
+<td>公开指标</td>
+<td>以论文与 README 为准，此处不转录具体成功率</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：这个仓库当前最有信息量的不是某个成功率，而是「287 star + 一个月内持续更新 + 明确挂在 test-time-adaptation 主题下」——说明少样本适应正在成为动作模型落地时的独立工程环节。任何「相对基线提升多少」的说法都应回到论文表格，且要对齐示范条数、任务集与动作块长度三个口径。</p>
+<p><strong>注意</strong>：Star 是核验时点快照，会快速变化；NOASSERTION 意味着法律上的复用边界未定，评估时不要把它当成已授权依赖。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>全量微调</th>
+<th>LoRA / Adapter</th>
+<th>提示 / 上下文示例</th>
+<th>SteerAct 时序引导</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基座权重</td>
+<td>更新</td>
+<td>大部分冻结</td>
+<td>冻结</td>
+<td>冻结</td>
+</tr>
+<tr>
+<td>新增可训练参数</td>
+<td>全部</td>
+<td>低秩小矩阵</td>
+<td>无</td>
+<td>无（仅引导状态）</td>
+</tr>
+<tr>
+<td>每任务存储</td>
+<td>完整副本</td>
+<td>适配器副本</td>
+<td>示例文本</td>
+<td>少量引导状态</td>
+</tr>
+<tr>
+<td>新增推理开销</td>
+<td>无</td>
+<td>几乎无</td>
+<td>上下文变长</td>
+<td>引导步 × 前向次数</td>
+</tr>
+<tr>
+<td>主要风险</td>
+<td>过拟合、遗忘</td>
+<td>容量不足</td>
+<td>上下文长度与对齐</td>
+<td>引导步数与时延权衡</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮另外三个开源正好凑成一条适应—训练—评测链：Eden（os308）解决在多物理仿真里把策略训出来，sample-rfm-simulation-on-aws（os310）解决在云端一键拉起评测环境，SteerAct 解决模型到了新任务怎么用最少数据对齐。四者都不改动基座权重这一点并非巧合——它反映出当前具身开源生态的一个共识：基座越来越重，围绕基座的轻量适配层比反复重训更现实。</p>
+<p><strong>注意</strong>：表中对 SteerAct 的描述按仓库定位归纳，不是官方基准对比结果，不同方法的数字不可直接横比。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

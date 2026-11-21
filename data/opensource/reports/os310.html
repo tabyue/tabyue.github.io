@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sample-rfm-simulation-on-aws：云端一键拉起机器人基础模型仿真评测 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">sample-rfm-simulation-on-aws：云端一键拉起机器人基础模型仿真评测 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="sample-rfm-simulation-on-aws">sample-rfm-simulation-on-aws：云端一键拉起机器人基础模型仿真评测</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/aws-samples/sample-rfm-simulation-on-aws">https://github.com/aws-samples/sample-rfm-simulation-on-aws</a>  </p>
+<p><strong>Stars</strong>: 8 · <strong>License</strong>: MIT-0 · <strong>收录日期</strong>: 2026-11-21  </p>
+<p><strong>组织</strong>: aws-samples  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-21</p>
+</blockquote>
+<hr />
+<p><strong>aws-samples/sample-rfm-simulation-on-aws</strong> 是 AWS 官方样例仓库，约 8 star（2026-11-21 核验），MIT-0 许可，Python，2026-04-21 创建、11-19 仍在更新。定位写得很直白：用 AWS CDK 在 GPU 实例上<strong>一键</strong>拉起机器人基础模型（robot foundation model，含 VLA、世界动作模型与 LLM Agent）的仿真与评测环境。topics 串起 amazon-ec2、aws-cdk、embodied-ai、gr00t、isaac-lab、lerobot、libero、mujoco，基本覆盖当前具身评测的主流栈。</p>
+<p>它的价值不在算法新颖，而在把「复现一篇论文要装多少东西」这件事压缩成一条基础设施命令：Isaac Lab / MuJoCo 仿真、LeRobot 数据格式、LIBERO 基准、GR00T 一类基座模型，各自的安装坑、CUDA 版本冲突与数据路径约定，是具身研究里最耗时间又最没有产出的部分。把这些固化成 CDK 模板，等于给站内 /learn/ai-infra 的分布式训练与云边协同章节补上了「跑起来」的那一段。</p>
+<p>MIT-0 是比 MIT 更宽松的变体（去掉了署名保留要求），对内部集成最友好。收录它是因为它把本轮多篇论文的评测协议变成可一键复现的环境，而不是又一个模型仓库。</p>
+<hr />
+<p>按仓库描述与 topics，可归纳为四层（<strong>注意</strong>：结构性归纳，具体 CDK stack 划分与实例规格以 README 与模板为准）：</p>
+<ol>
+<li><strong>基础设施层（AWS CDK）</strong>：声明式定义 GPU 实例（EC2）、网络、存储与镜像，一键创建 / 销毁，避免手工配环境留下的不可复现状态。</li>
+<li><strong>仿真层</strong>：集成 Isaac Lab 与 MuJoCo 等仿真后端，提供机器人与任务环境。</li>
+<li><strong>模型层</strong>：挂载 VLA、世界动作模型（WAM）与 LLM Agent 三类基座，覆盖从直接出动作到上层规划的不同范式；GR00T 出现在 topics 里，说明至少提供了相关工作流入口。</li>
+<li><strong>评测层</strong>：对接 LeRobot 数据格式与 LIBERO 等基准，给出统一的指标脚本与结果落盘路径。</li>
+</ol>
+<p>这套分层的意义在于把「模型」与「评测环境」解耦：换一个 VLA 只需替换模型层挂载，仿真、数据与指标脚本不动，横向比较才有一致口径。对本轮 p400 PhyDEX 强调的「基准任务分布决定它在测什么」是个很实际的补充——评测环境可复现，讨论口径才有意义。</p>
+<p><strong>注意</strong>：云端 GPU 实例按量计费，一键拉起也意味着一键产生成本；模板默认实例规格与并发数要先看清再启动。</p>
+<hr />
+<ul>
+<li><strong>sample-rfm-simulation-on-aws 仓库 README 与 CDK 模板</strong>（aws-samples/sample-rfm-simulation-on-aws）：部署前提、实例规格、集成栈与评测入口的原始出处，先读它再启动资源。</li>
+<li><strong>PhyDEX: A Benchmark for Physical Reasoning in VLA Models via Dynamic Extrinsic Dexterity</strong>（arXiv 2611.26565，本轮 p400）：说明基准任务分布决定评测在测什么，是「环境必须可复现」这一主张的评测侧依据。</li>
+<li><strong>MoRE: Mixture-of-Experts for Multi-Physics Robotic World Models</strong>（arXiv 2611.25336，本轮 p397）：需要在多物理后端上验证跨机制预测，正是云端仿真评测环境的典型用例。</li>
+<li><strong>Open X-Embodiment / LeRobot 与 LIBERO 相关文档</strong>：数据格式与基准协议的权威出处，接入自有数据前按其字段约定对齐时间戳、动作空间与坐标系。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先读 CDK 模板里的实例规格</strong>：确认默认 GPU 型号、磁盘与区域，估算小时成本；不需要常驻的实例用完立即 destroy。</li>
+<li><strong>确认 IAM 与网络前提</strong>：CDK 部署需要相应权限与 VPC / 子网，按 README 的前置条件清单逐项核对，别在权限上反复试错。</li>
+<li><strong>先跑一次评测不跑训练</strong>：用官方提供的 checkpoint 在 LIBERO 子集上复现一遍指标，确认数据路径、仿真后端与指标脚本一致，再考虑换模型或训练。</li>
+<li><strong>核对数据格式契约</strong>：LeRobot 与 LIBERO 的时间戳、动作空间、相机坐标系约定不同，接入自己的数据前先打印一条样本逐字段比对。</li>
+<li><strong>一次只换一个变量</strong>：换模型、换仿真后端、换基准三者同时变会让结果无法归因，固定另外两项做单变量实验。</li>
+<li><strong>把结果与环境一起归档</strong>：记录 CDK 版本、镜像 tag、实例型号与随机种子，云端环境可复现的前提是这些元数据被留下来。</li>
+</ol>
+<p><strong>高频坑</strong>：把样例当成生产平台（它是 sample，不是托管服务）；忽略计费与实例回收；用本地装好的 CUDA 版本去套云端镜像；只报成功率不记录环境元数据，导致几周后无法复现自己的数字。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 8（2026-11-21 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT-0</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>创建 / 最近更新</td>
+<td>2026-04-21 / 2026-11-19</td>
+</tr>
+<tr>
+<td>部署方式</td>
+<td>AWS CDK + EC2 GPU 实例</td>
+</tr>
+<tr>
+<td>集成栈</td>
+<td>GR00T、Isaac Lab、LeRobot、LIBERO、MuJoCo</td>
+</tr>
+<tr>
+<td>公开指标</td>
+<td>以样例 README 为准，此处不转录评测数值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：8 star 极低，但 AWS 官方样例仓库的价值不看热度——它提供的是经过验证的环境编排与依赖组合，MIT-0 也让二次集成没有法律负担。对「想复现本轮 p397—p401 任意一篇的评测协议」这件事，它可能是最省时间的入口。</p>
+<p><strong>注意</strong>：Star 为核验时点快照；云端评测结论与实例型号、镜像版本、仿真后端版本强相关，报告数字时必须附环境元数据；样例仓库不承诺长期维护 SLA。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>本地手写环境</th>
+<th>Docker 镜像</th>
+<th>Colab / Notebook</th>
+<th>sample-rfm-simulation-on-aws</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>环境复现</td>
+<td>差</td>
+<td>较好</td>
+<td>中</td>
+<td>声明式（CDK）</td>
+</tr>
+<tr>
+<td>GPU 资源</td>
+<td>受本机限制</td>
+<td>受本机限制</td>
+<td>受限且不稳定</td>
+<td>按需 GPU 实例</td>
+</tr>
+<tr>
+<td>多仿真后端</td>
+<td>自行拼装</td>
+<td>自行拼装</td>
+<td>通常单一</td>
+<td>模板内集成</td>
+</tr>
+<tr>
+<td>数据 / 基准契约</td>
+<td>自行约定</td>
+<td>自行约定</td>
+<td>自行约定</td>
+<td>LeRobot / LIBERO 对齐</td>
+</tr>
+<tr>
+<td>主要成本</td>
+<td>时间</td>
+<td>时间</td>
+<td>会话限制</td>
+<td>云资源计费 + CDK 学习成本</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮另外三个开源合起来看，正好是一条从适配到评测的链：SteerAct（os307）做新任务的少样本引导、Eden（os308）做闭环训练编排、rofacto（os309）做世界模型的对象分解、本仓库做云端一键评测。四者都围绕「不重训基座」或「不改评测口径」组织，反映出基础设施侧正在收敛到「轻量适配 + 可复现评测」这套共同工程语言。</p>
+<p><strong>注意</strong>：表中对样例仓库的描述按 README 定位归纳，不是官方性能基准对比。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

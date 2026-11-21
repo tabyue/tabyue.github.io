@@ -345,3 +345,10 @@
 - 学习：`training-inference-optimization#1` GPU 架构与 CUDA 5577→23713；`sensors-hardware#5` IMU 与惯性导航 4463→21577。三处 lastUpdated 同步 `2026-11-20T08:34`，章节数仍 553。资源 r045「动作块的里与外」把本轮 5 论文 + 4 开源串成分层参照系。
 - 校验：normalize 无改动、fix_learn_links --dry fixed=0、sync_learn_split 同步 2 模块 4 文件、health_check **ALL OK**、verify_learn_structure **ALL OK**、audit 硬缺陷全 0（F5 仅历史 academic-english#9）、unittest 34/34、node UI 32/0。
 - 经验：① 含 LaTeX 的 JSON payload 反斜杠必须双写，首版因未转义控制字符与 `\mathcal` 单反斜杠两次解析失败，改用独立 .md 暂存再注入；② 15 段示例代码用 venv（torch 2.14.1+cpu）实跑，13 PASS / 2 SKIP，据实测修 7 处数值结论（Roofline GB/s、伪代码块标记、重力补偿打印 x 分量、FP16 下溢口径、漂移 15.41 m、姿态与 ESKF 数值）；③ `learning-path.json` 是 `stages[].modules[]` 嵌套，按 id 匹配要遍历 stages；④ 注入脚本按 marker 整块替换而非幂等跳过，改正文后可直接重跑；⑤ `git add -A` 前精确清理根目录 `_*`（保留三个历史 tracked），push 用 Python subprocess argv 直调 gh 凭据 trick。
+
+### 2026-11-21 08:05—09:00
+- 投稿箱：无新投稿（open issue 返回 `[]`，未限制 label）；未启动浏览器，无凭据风险。开工工作树干净、HEAD==origin/main（7333bee）。
+- 数据：新闻 +10（n779—n788，746）、论文 +5（p397—p401，375，含 detail）、开源 +4（os307—os310，297，含 detail + 报告页 4 个 rc=0）、招聘 +6（j419—j424，411）、资源 r046（46）。25 条新条目 `addedDate=2026-11-21`，`lastUpdated=2026-11-21T08:35`；cities 白名单补「济南」「宁波」。
+- 学习：延续「深化 tier0/1 薄章」。`probability-statistics#4` 多维随机变量 5708→17052（条件密度与可测函数 / 协方差几何与马氏距离 / Schur 补与卡尔曼增益 / Jacobian 密度变换 / 高维样本协方差与收缩估计，5 节 + 5 段代码）；`sensors-hardware#9` 触觉传感器 4112→13362（Hertz 接触与摩擦锥 / 视触觉标定积分 / CoP 与滑动滞回判据 / 时间对齐与触觉创新 / PI 力控与滑动恢复，5 节 + 5 段代码）。三处 lastUpdated 同步，章节数仍 553。
+- 校验：normalize 无改动、fix_learn_links --dry fixed=0、sync 同步 2 模块 4 文件、health_check **ALL OK 且 0 告警**、verify_learn_structure ALL OK、audit 硬缺陷全 0（F5 仅历史 academic-english#9）、unittest 34/34、node UI 32/32。
+- 经验：① **幂等深化脚本的「增长断言」写成绝对阈值**（`len(new)>10000`），别用 `before + 5000`——重跑时 before 已含旧 ADD 区块会误 FAIL 且不写盘（本轮修了一次）；② 正文数值断言以实跑为准，据实测把视触觉重建「还原峰值量级」改为「峰值只有真实值一半左右」；③ 深化正文用 raw `r'''...'''`、示例代码不写 docstring、`\text{}` 内不放中文，KaTeX 全过；④ 论文发现走 arXiv API（4 查询 106 候选）+ WebFetch 核对 5 篇全准，开源走 GitHub Search API（urllib + Bearer，7 查询 163 候选）+ `gh api repos/<r>` 批量核验许可证与 star；⑤ 新闻 10 条刻意错开主题（政策标准 / 会议 / 产能 / 融资 / 触觉开源 / 开源社区 / 学术开源 / APEC 部署 / 全球消费级 / 世界模型开源），同日同事件 3-gram 0 命中。

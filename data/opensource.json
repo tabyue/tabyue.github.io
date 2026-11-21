@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-20T08:34",
+ "lastUpdated": "2026-11-21T08:35",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,114 @@
   }
  ],
  "projects": [
+  {
+   "id": "os307",
+   "name": "SteerAct：少样本时序引导解锁动作模型",
+   "github": "https://github.com/kaichen-z/SteerAct",
+   "organization": "kaichen-z",
+   "org": "kaichen-z",
+   "category": "ai-model",
+   "description": "SteerAct: Unlocking Action Models through Few-Shot Temporal Steering。面向测试时适应（test-time adaptation）的动作模型方法：用极少量示范在时序维度上对冻结的动作模型做引导，让策略在新任务、新本体上快速对齐而不必全量微调。仓库 Python、2026-10-14 创建、11-19 仍在更新，topics 覆盖 robot、robot-learning、test-time-adaptation，关联论文 arXiv 2610.25632。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 287,
+   "features": [
+    "少样本时序引导",
+    "测试时适应",
+    "冻结动作模型",
+    "新任务快速对齐",
+    "无需全量微调"
+   ],
+   "tags": [
+    "SteerAct",
+    "few-shot",
+    "test-time adaptation",
+    "动作模型",
+    "时序引导"
+   ],
+   "addedDate": "2026-11-21"
+  },
+  {
+   "id": "os308",
+   "name": "Eden：面向多物理仿真的 Agent 原生机器人学习框架",
+   "github": "https://github.com/embodied-ai-nexus/Eden",
+   "organization": "embodied-ai-nexus",
+   "org": "embodied-ai-nexus",
+   "category": "framework",
+   "description": "Agent native framework for robot learning with multi-physics。Apache-2.0 许可的 Python 框架，把 Agent 原生抽象引入机器人学习，围绕 real2sim2real 与 sim2sim 组织训练与迁移流程，并在多物理仿真下统一管理策略、环境与数据。2026-05-10 创建、11-20 仍在活跃更新，配有项目主页。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 305,
+   "features": [
+    "Agent 原生抽象",
+    "多物理仿真",
+    "real2sim2real / sim2sim",
+    "统一训练与迁移流程",
+    "Apache-2.0"
+   ],
+   "tags": [
+    "Eden",
+    "agentic robotics",
+    "multi-physics",
+    "real2sim2real",
+    "robot learning"
+   ],
+   "addedDate": "2026-11-21"
+  },
+  {
+   "id": "os309",
+   "name": "rofacto：用机器人渲染做因子化世界模型",
+   "github": "https://github.com/bjkim95/rofacto",
+   "organization": "bjkim95",
+   "org": "bjkim95",
+   "category": "ai-model",
+   "description": "[CoRL 2026] Robot-Factored World Models via Robot Rendering。把机器人本体从场景动力学里因子化出来，通过可微的机器人渲染显式建模本体对观测的贡献，让世界模型专注于预测环境与物体的演化，减少本体运动带来的观测混淆。Apache-2.0 许可、Python，配有项目主页；与本轮 MoRE 按物理机制分专家构成两种不同的分解维度。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 32,
+   "features": [
+    "机器人因子化",
+    "机器人渲染",
+    "世界模型",
+    "CoRL 2026",
+    "观测解耦"
+   ],
+   "tags": [
+    "rofacto",
+    "robot-factored",
+    "world model",
+    "robot rendering",
+    "CoRL 2026"
+   ],
+   "addedDate": "2026-11-21"
+  },
+  {
+   "id": "os310",
+   "name": "sample-rfm-simulation-on-aws：云端一键拉起机器人基础模型仿真评测",
+   "github": "https://github.com/aws-samples/sample-rfm-simulation-on-aws",
+   "organization": "aws-samples",
+   "org": "aws-samples",
+   "category": "simulation",
+   "description": "1-click robot foundation model (VLA, world action model, LLM agent) simulation and evaluation on AWS GPU instances with AWS CDK。AWS 官方样例，用 CDK 在 GPU 实例上一键部署 VLA、世界动作模型与 LLM Agent 的仿真与评测环境，topics 串起 GR00T、Isaac Lab、LeRobot、LIBERO 与 MuJoCo。MIT-0 许可、Python，2026-11-19 仍在更新；对想在云端复现本轮多篇论文评测协议的读者是最省事的入口。",
+   "language": "Python",
+   "license": "MIT-0",
+   "stars": 8,
+   "features": [
+    "AWS CDK 一键部署",
+    "GPU 实例仿真评测",
+    "VLA / WAM / LLM Agent",
+    "集成 Isaac Lab 与 LeRobot",
+    "MIT-0"
+   ],
+   "tags": [
+    "AWS",
+    "robot foundation model",
+    "simulation",
+    "Isaac Lab",
+    "LeRobot"
+   ],
+   "addedDate": "2026-11-21"
+  },
   {
    "id": "os303",
    "name": "ReCogDrive：小米 ICLR 2026 端到端自动驾驶认知框架（VLA + 扩散策略 + 强化学习）",
@@ -7756,5 +7864,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 293
+ "totalItems": 297
 }
