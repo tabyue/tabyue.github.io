@@ -1,6 +1,146 @@
 {
- "lastUpdated": "2026-11-21T08:35",
+ "lastUpdated": "2026-11-22T08:35",
  "papers": [
+  {
+   "id": "p402",
+   "title": "Learning What Actions Change: Action Effect Matching for Dynamics-Faithful World Models",
+   "authors": "John Won, Yonghoon Dong, Jinwoo Shin (KAIST)",
+   "venue": "arXiv 2611.25980",
+   "date": "2026-11-19",
+   "arxiv": "https://arxiv.org/abs/2611.25980",
+   "github": "",
+   "tags": [
+    "AFFECT",
+    "动作效应匹配",
+    "动力学忠实性",
+    "世界模型",
+    "策略评测",
+    "DROID"
+   ],
+   "category": "世界模型 / 动作条件",
+   "difficulty": "高级",
+   "tldr": "**问题**：世界模型生成的视频越来越逼真，却常常对「动作微调会怎样改变结果」不敏感；而策略评测与基于模型的规划恰恰依赖这种敏感性——几乎相同的动作可能导向性质完全不同的结果。**做法**：提出 AFFECT 辅助训练目标，在任务无关的人类遥操作策略的动作上注入时间相关噪声，再要求生成视频对该噪声的响应与真实录像一致，从而无需从同一初始状态重复执行就能学到动作扰动的视觉变化分布。**结果**：在 OGBench 仿真与真实 DROID、ALOHA-2 上，世界模型 rollout 更贴近真实结果；DROID 上策略成功率在世界模型与真机之间的 Pearson 相关从 0.47 升到 0.79，FVD 最多降低 23%，用其选动作可让任务成功率最多提升 8.3%。",
+   "keyInsights": [
+    "把「动作敏感性」本身变成可训练的监督信号，而不是继续优化像素真实度：视频逼真与动力学忠实是两件事，FVD 低不等于能用来给策略排序。",
+    "时间相关噪声注入 + 响应一致性，绕开了「同一初态重复执行不同动作」这个真机上几乎不可得的反事实数据；这是把反事实监督做成可扩展训练目标的关键工程技巧。",
+    "Pearson 相关 0.47→0.79 是「世界模型能否当评测代理」最直接的量化证据，比 FVD 更贴近用途；评测场景关心的是排序一致性，不是逐帧重建误差。",
+    "与站内 /learn/world-models-llm 的规划器线索、/learn/platform-engineering 的策略评测基础设施直接呼应：评测环境可复现的前提还包括模型对动作差异的分辨力。"
+   ],
+   "impact": "给「视频好看但不可用于决策」的世界模型提供了可操作的修正：把动作扰动下的视觉变化分布纳入训练目标。对策略评测（用世界模型替代真机跑成功率排序）与 model-based planning 两个落地场景都有直接价值；与本轮 Fast-JEPA（p403）、Counterfactual World Models（p405）一起，构成本轮「世界模型到底在预测什么」的三条不同答案——分别回答动作敏感性、反事实可回答性与规划延迟。",
+   "addedDate": "2026-11-22"
+  },
+  {
+   "id": "p403",
+   "title": "Fast-JEPA: Advancing the Success-Latency Frontier for Latent World Models",
+   "authors": "Yao Zhang, Bin Yu, Shijie Lian, Haishan Liu, Changti Wu, Yu Wu, Kai Chen",
+   "venue": "arXiv 2611.25927",
+   "date": "2026-11-19",
+   "arxiv": "https://arxiv.org/abs/2611.25927",
+   "github": "https://github.com/Sofilyzia/Fast-JEPA",
+   "tags": [
+    "Fast-JEPA",
+    "潜空间世界模型",
+    "预测式搜索",
+    "规划延迟",
+    "DynaGoal",
+    "JEPA"
+   ],
+   "category": "世界模型 / 规划效率",
+   "difficulty": "高级",
+   "tldr": "**问题**：潜空间世界模型要靠递归 rollout 逐个展开候选动作序列来比较计划，测试时计算昂贵，成功率和延迟被绑在同一条帕累托曲线上。**做法**：Fast-JEPA 重组预测式计算，先构造目标导向的计划引导搜索，再直接预测完整候选序列的结果用于高效比较，在精修阶段避开递归状态展开；同时提出 DynaGoal 基准，专门评测分布外动态、执行截止与受控响应延迟下的世界模型规划。**结果**：在 PushT、Reacher、Cube、TwoRoom 上取得 96.50% 平均成功率，规划速度比 INTACT 快 2.41 倍；搜索预算扫描显示优势跨候选数与精修深度稳定，DynaGoal-Shift 与 DynaGoal-Deadline 分别达 73.83% 与 87.67%。",
+   "keyInsights": [
+    "把规划成本从「递归展开多少步」改写成「一次预测完整候选结果」，是 JEPA 类潜空间模型相对像素生成模型的结构性优势第一次被系统用在延迟上。",
+    "成功—延迟帕累托前沿比单点成功率更有工程意义：真机控制有硬截止，规划慢一拍再准也用不上，DynaGoal 把执行截止与响应延迟做成了一等评测维度。",
+    "目标导向计划 + 直接结果预测两级结构，说明「搜索该往哪走」与「候选好不好」可以解耦；这和站内 /learn/world-models-llm 的规划器分层、/learn/training-inference-optimization 的推理预算分配是同一套思路。",
+    "搜索预算扫描覆盖候选数与精修深度，避免了只在单一预算下报数的常见漏洞，是评测设计上值得复用的做法。"
+   ],
+   "impact": "把「预测式规划能不能实时跑」从定性讨论推进到有基准、有延迟数字的可比结论。对本轮 os311 LingBot-Touch 的触觉输入、os312 vla-evaluation-harness 这类统一评测框架的部署侧，以及站内 /learn/ros2 的机器人运行时分层（1 kHz 运控与 50 Hz 策略共存）给出了规划延迟预算的参照；与 Dune（p406）的零阶适配一起，说明世界模型的工程化正同时从训练目标与推理路径两端收紧。",
+   "addedDate": "2026-11-22"
+  },
+  {
+   "id": "p404",
+   "title": "LocoMuJoCo: A Comprehensive Imitation Learning Benchmark for Whole-Body Control",
+   "authors": "Firas Al-Hafez, Davide Tateo, Oleg Kaidanov, Aditya Bhatt, Artur Zelik, Zhengyi Luo, Jan Peters (TU Darmstadt)",
+   "venue": "arXiv 2611.26293",
+   "date": "2026-11-19",
+   "arxiv": "https://arxiv.org/abs/2611.26293",
+   "github": "https://github.com/robfiras/loco-mujoco",
+   "tags": [
+    "LocoMuJoCo",
+    "全身控制",
+    "模仿学习基准",
+    "MuJoCo / MJX",
+    "动作重定向",
+    "MIT"
+   ],
+   "category": "全身控制 / 基准",
+   "difficulty": "中级",
+   "tldr": "**问题**：人形全身控制的模仿学习与强化学习缺少一个把多本体、动捕数据、算法实现与真机部署串起来的统一基准，各家自建环境导致结果无法横向比较。**做法**：LocoMuJoCo 在单一 API 下把 MuJoCo（CPU）与 MJX、MjWarp（GPU）后端打通，提供 9 个人形、3 个肌骨、4 个四足本体，为每个人形附带精选原生动捕数据集，并支持把 AMASS 与 LAFAN1 重定向过来；观察、奖励、控制模式、地形与域随机化由插件式架构自由替换，配套紧凑的 JAX 版 RL / IL 算法实现可 JIT 端到端训练，另有 loco-mujoco-real 负责 sim-to-real 部署。**结果**：论文给出设计、SMPL 到机器人与机器人到机器人的重定向流水线及使用示例，仓库以 MIT 许可开放。",
+   "keyInsights": [
+    "统一 API 同时覆盖 CPU 与 GPU 后端，把「换仿真后端就要重写训练代码」这个隐性成本消掉，是基准能否被长期复用的关键。",
+    "重定向流水线是全身控制基准里最容易被低估的部分：SMPL 人体参数与机器人关节自由度并不一一对应，映射质量直接决定模仿学习的上限。",
+    "观察 / 奖励 / 控制模式 / 地形全插件化，意味着可以做严格的单变量消融；配合站内 /learn/robot-dynamics 的浮动基座建模与 /learn/reinforcement-learning 的 PPO / AMP 线索，是难得的教材级配套实验台。",
+    "JAX + JIT 端到端训练与独立的 real 部署仓库，把「跑得快」和「上真机」分开维护，避免基准仓库被部署代码污染。"
+   ],
+   "impact": "给全身控制方向提供了一个可横向比较、可扩展本体、可追到真机的公共底座。对本轮 p406 Dune 的低显存适配、os311 触觉表征的策略评测，以及站内 /learn/humanoid-fullstack 的人形全栈项目都是直接的实验环境；MIT 许可与 26 页文档也降低了教学与二次集成的门槛。",
+   "addedDate": "2026-11-22"
+  },
+  {
+   "id": "p405",
+   "title": "Counterfactual World Models: JEPAs That Reason About What If",
+   "authors": "Randall Balestriero, Yann LeCun, Kerda Varaku",
+   "venue": "arXiv 2611.24778",
+   "date": "2026-11-18",
+   "arxiv": "https://arxiv.org/abs/2611.24778",
+   "github": "",
+   "tags": [
+    "反事实世界模型",
+    "JEPA",
+    "隐扰动",
+    "一阶近似",
+    "DINOv2",
+    "事后规划"
+   ],
+   "category": "世界模型 / 反事实推理",
+   "difficulty": "高级",
+   "tldr": "**问题**：世界模型只能部分观测世界；当暗流把船推偏时，真正要回答的是「在同一扰动下换一个动作会怎样」，这个答案才能把坏决策与坏运气分开。作者证明：只在实际发生的转移上训练的世界模型，无论数据量与容量多大，都无法独自回答反事实问题。**做法**：利用许多物理系统满足的「自然不跃变」性质——动作与扰动作为两股独立力，其交互在时间上是二阶量——于是反事实结果在一阶近似下等于观测结果加上世界模型在备选动作与实际动作下预测之差，无需反事实数据、额外参数或重训。**结果**：对持续时长 h 的转移证明相对扰动方差的 O(h²) 误差界与匹配的 minimax 下界；用冻结 DINOv2 / MAE 编码器的 JEPA 在四个渲染仿真器上把反事实 R² 从 38—46% 提到 86—96%，第五个水下机器人加十六倍事实数据达 90—94%，另有 DINOv3、SigLIP 2、CLIP、EVA-02 四种冻结编码器给出 81—95%；事后规划在 35—69% 事件中找回本可达成目标的动作，而知道仿真器但不知道结果的 oracle 规划器只有 14—23%。",
+   "keyInsights": [
+    "「只训事实转移不足以回答反事实」是一个不可能性结论，不是经验观察：它划清了单纯放大世界模型规模的能力边界。",
+    "把动作—扰动交互识别为时间二阶量，是全文最漂亮的一步：一阶近似让反事实预测退化成两次前向预测之差，几乎零成本，却带有 O(h²) 误差保证与匹配下界。",
+    "失败模式被明确刻画在间断点、坐标折叠与扰动缩放指令的地方——这提示一阶近似不是万能补丁，接触突变与碰撞场景要额外小心。",
+    "事后规划优于「知道仿真器但不知道结果」的 oracle，说明分辨坏决策与坏运气比拥有精确动力学更有价值；这与站内 /learn/probability-statistics 的条件分布、/learn/linear-algebra 的二次型与局部线性化是同一套数学语言。"
+   ],
+   "impact": "把反事实推理从需要专门数据的问题，变成对已有 JEPA 世界模型的一次算术改写，且给出可证明的误差界。对本轮 p402 AFFECT 的动作敏感性训练、p403 Fast-JEPA 的规划效率形成互补：三者分别处理「预测对不对」「算得动不动」「没发生过的能不能问」。对站内 /learn/world-models-llm 的 JEPA 潜空间线索与 /learn/calculus-optimization 的一阶近似工具是最直接的进阶材料。",
+   "addedDate": "2026-11-22"
+  },
+  {
+   "id": "p406",
+   "title": "Dune: A Zeroth-Order Optimizer with Time-Conditioned Historical Error Regression for VLA Test-Time Adaptation",
+   "authors": "Chengyang Dong, Ze Chen, Kai Ye, Chutian Wang, Heng Xu, Wei Mo, Maomao Li, Jiayan Xu, Jiayuan Wu, Yihao Xiao, Linhua Ye, Zhonghua Peng, Ruize Han, Jialong Sun",
+   "venue": "arXiv 2611.25400",
+   "date": "2026-11-19",
+   "arxiv": "https://arxiv.org/abs/2611.25400",
+   "github": "",
+   "tags": [
+    "Dune",
+    "零阶优化",
+    "测试时适应",
+    "方差缩减",
+    "LIBERO",
+    "边缘部署"
+   ],
+   "category": "VLA / 测试时适应",
+   "difficulty": "高级",
+   "tldr": "**问题**：测试时适应（TTA）让 VLA 在部署时应对分布漂移而不必回源域重训，但反向传播在资源受限机器人上显存开销大，零阶（ZO）方法又在有限扰动预算下方差高；作者观察到 ZO 估计虽能低显存快速起步，却常因梯度估计噪声在长程更新中停滞甚至倒退。**做法**：Dune 用一个轻量、时间条件化的误差预测器从过往优化动态里学出历史误差，再把它与瞬时 ZO 估计融合，在不做反向传播、不增加前向次数的前提下压低方差；理论上刻画了高维、小种群情形下估计方差如何限制收敛，从动机上说明为什么需要历史统计量。**结果**：在 LIBERO 与真机实验中以低显存取得更高成功率，消融验证了闭环稳定性与扰动后恢复能力的改善。",
+   "keyInsights": [
+    "把「优化器的历史」当作可学习的信号：ZO 估计的噪声不是纯随机的，其时间结构可被一个轻量预测器建模，这比单纯加大扰动次数更省预算。",
+    "方差缩减不靠额外前向传播，正好卡在机器人边缘部署最紧的两个约束（显存与算力）上；与站内 /learn/ai-infra 的 PEFT / 量化、/learn/training-inference-optimization 的推理预算是同一条工程线。",
+    "理论分析聚焦高维、小种群情形，解释了为什么在 VLA 这种参数规模下长程 TTA 会退化——这是把经验现象提升为设计依据的关键一步。",
+    "与本轮 os307 SteerAct 的少样本时序引导、os313 Motus2 的自演化闭环形成对照：三者都在回答「冻结的基座模型如何在部署侧被低成本改写」。"
+   ],
+   "impact": "给 VLA 的部署时适应提供了一条不依赖反向传播的实用路径，并把「历史统计量能压多少方差」讲成了可分析的问题。对本轮 p404 LocoMuJoCo 这类需要真机长时间运行的基准、以及站内 /learn/linear-algebra 正定矩阵与二次型（Hessian、二次型优化与收敛性判定）和 /learn/control-theory 的闭环稳定性章节，都是很好的现实对照。",
+   "addedDate": "2026-11-22"
+  },
   {
    "id": "p397",
    "title": "MoRE: Mixture-of-Experts for Multi-Physics Robotic World Models",
@@ -10742,5 +10882,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 375
+ "totalItems": 380
 }

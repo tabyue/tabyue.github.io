@@ -53,20 +53,20 @@
     }
   ],
   "weeklyPlan": "**第1周**：NumPy 向量化运算 + Matplotlib 可视化，实现一个卡尔曼滤波器\n**第2周**：PyTorch 基础，训练一个 MNIST 分类器，学会用 Wandb 记录实验",
-  "lastUpdated": "2026-10-27",
+  "lastUpdated": "2026-11-22T08:35",
   "maturity": "comprehensive",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
       "title": "Python 语言基础：变量、类型系统与动态特性",
-      "lastUpdated": "2026-04-28T17:11",
-      "chars": 5691,
+      "lastUpdated": "2026-11-22T08:35",
+      "chars": 16177,
       "shortTitle": "Python 语言基础",
       "difficulty": "入门",
       "estimatedMinutes": 6,
       "tier": 0,
-      "readingMinutes": 6,
+      "readingMinutes": 19,
       "headings": [
         "Python 是什么？",
         "一、变量与赋值",
@@ -77,6 +77,11 @@
         "六、动态类型与 Duck Typing",
         "七、真值判断与常见陷阱",
         "八、Python 对象模型",
+        "深入一：变量不是盒子——CPython 对象模型与名字绑定",
+        "深入二：整数、浮点数与 IEEE 754——机器人代码里最安静的误差源",
+        "深入三：容器背后的数据结构、复杂度与拷贝语义",
+        "深入四：名字空间、LEGB 与可变默认参数的真正根因",
+        "深入五：从 Python 到 NumPy——向量化为什么能快近百倍",
         "九、数学练习（编程题）"
       ],
       "summary": "Python 是解释型、动态类型、垃圾回收的高级语言。它在机器人/AI 领域的统治地位来自于简洁的语法 + 丰富的生态（NumPy/PyTorch/ROS2/OpenCV...）。但在用这些库之前，你需要先扎实掌握 Python 语言本身。"
@@ -428,7 +433,7 @@
       "summary": "2026 年开源 VLA 基座迎来井喷：高德 ABot-M0 600 万轨迹、生数 Motus 跨本体统一、ICLR 2026 D2E 1B 参数 96.6% LIBERO，背后都是同一个故事——数据工程比模型架构更难。"
     }
   ],
-  "readingMinutes": 141,
+  "readingMinutes": 154,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 126370
+  "chars": 136856
 }

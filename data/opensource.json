@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-21T08:35",
+ "lastUpdated": "2026-11-22T08:35",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,118 @@
   }
  ],
  "projects": [
+  {
+   "id": "os311",
+   "name": "LingBot-Touch：面向通用灵巧操作的异构触觉表征",
+   "github": "https://github.com/Robbyant/lingbot-touch",
+   "organization": "蚂蚁灵波 Robbyant",
+   "org": "蚂蚁灵波 Robbyant",
+   "category": "perception",
+   "description": "Learning Heterogeneous Tactile Representation for General Dexterous Manipulation，对应 arXiv 2611.12806。针对商用触觉传感器在阵列密度、信号形式与安装位置上差异极大、单一编码器难以跨硬件复用的问题，学习一套能统一多源触觉输入的异构表征，供通用灵巧操作策略使用。仓库 Python、Apache-2.0、2026-11-09 创建、11-11 更新，约 794 star，是蚂蚁灵波在 LingBot-World 交互世界模型之外的触觉侧开源。收录价值在于把「触觉数据怎么变成可迁移的表征」这件基础工作单独开放，配合站内 /learn/sensors-hardware 触觉传感器一章可直接上手。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 794,
+   "features": [
+    "异构触觉传感统一表征",
+    "跨硬件触觉迁移",
+    "通用灵巧操作策略",
+    "触觉预训练权重",
+    "Apache-2.0 可商用"
+   ],
+   "tags": [
+    "LingBot-Touch",
+    "触觉表征",
+    "Robbyant",
+    "灵巧操作",
+    "visuo-tactile",
+    "arXiv 2611.12806"
+   ],
+   "addedDate": "2026-11-22"
+  },
+  {
+   "id": "os312",
+   "name": "vla-evaluation-harness：任意 VLA × 任意仿真基准的统一评测框架",
+   "github": "https://github.com/allenai/vla-evaluation-harness",
+   "organization": "Allen Institute for AI (AI2)",
+   "org": "Allen Institute for AI",
+   "category": "framework",
+   "description": "One framework to evaluate any VLA model on any robot simulation benchmark。把「换一个 VLA 就要重写一遍评测脚本」这件事抽象成统一接口：模型侧与仿真基准侧各自适配一次，之后任意组合都能在同一套指标与结果落盘口径下横向比较。仓库 Python、Apache-2.0、2026-03-13 创建、11-15 仍在更新，约 682 star，项目主页给出文档与接入说明。收录价值在于它把本轮 p402 AFFECT 强调的「世界模型与真机排序一致性」、p404 LocoMuJoCo 的多本体基准，以及站内 /learn/vla-models 的 VLA 评估基准一章串成可执行的一条评测链。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 682,
+   "features": [
+    "任意 VLA 可插拔",
+    "多仿真基准统一接口",
+    "一致指标与结果落盘",
+    "横向可复现对比",
+    "Apache-2.0"
+   ],
+   "tags": [
+    "vla-evaluation-harness",
+    "VLA 评测",
+    "统一框架",
+    "仿真基准",
+    "AllenAI",
+    "可复现性"
+   ],
+   "addedDate": "2026-11-22"
+  },
+  {
+   "id": "os313",
+   "name": "Motus2：面向灵巧操作的自演化通用世界模型",
+   "github": "https://github.com/shengshu-ai/Motus2",
+   "organization": "生数科技 ShengShu AI",
+   "org": "生数科技 ShengShu AI",
+   "category": "ai-model",
+   "description": "Motus2: A Self-Evolving General World Model for Dexterous Manipulation。把视频生成底座的世界模型能力用于灵巧操作，强调模型随自身交互数据持续自演化的训练闭环，而非一次性预训练后冻结。仓库 Python、Apache-2.0、2026-09-11 创建、11-17 仍在更新，约 583 star，与生数科技在视频生成方向的积累一脉相承。收录它因为本轮四条开源正好构成一条链：LingBot-Touch 给多源感知输入、vla-evaluation-harness 给统一评测口径、HandsOn 给灵巧操作仿真基准、Motus2 给自演化的世界模型范式，四者合起来覆盖从感知、评测、环境到训练范式的四个面。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 583,
+   "features": [
+    "自演化世界模型",
+    "通用灵巧操作",
+    "视频生成底座迁移",
+    "交互数据闭环",
+    "开源权重与训练代码"
+   ],
+   "tags": [
+    "Motus2",
+    "自演化",
+    "世界模型",
+    "灵巧操作",
+    "ShengShu AI",
+    "Apache-2.0"
+   ],
+   "addedDate": "2026-11-22"
+  },
+  {
+   "id": "os314",
+   "name": "HandsOn：大规模可泛化灵巧操作仿真基准",
+   "github": "https://github.com/TsinghuaC3I/HandsOn",
+   "organization": "清华大学 C3I 实验室",
+   "org": "TsinghuaC3I",
+   "category": "simulation",
+   "description": "HandsOn: a large-scale simulation benchmark for generalizable dexterous manipulation。面向灵巧手操作的规模化仿真基准，重点考察策略在未见物体、未见任务与不同手型之间的泛化能力，而不是在固定任务上刷成功率。仓库 Python、MIT、2026-10-13 创建、11-17 仍在更新，约 82 star，配套项目主页给出任务与结果展示。收录价值在于：本轮 p404 LocoMuJoCo 解决的是全身控制基准，HandsOn 补上的是手级灵巧操作基准，两者与 os311 的触觉表征、os313 的自演化世界模型共同覆盖从本体运动到接触精细操作的评测谱系。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 82,
+   "features": [
+    "大规模灵巧操作任务",
+    "跨物体跨任务泛化",
+    "多手型支持",
+    "统一仿真接口",
+    "MIT 许可"
+   ],
+   "tags": [
+    "HandsOn",
+    "灵巧操作",
+    "仿真基准",
+    "泛化评测",
+    "TsinghuaC3I",
+    "MIT"
+   ],
+   "addedDate": "2026-11-22"
+  },
   {
    "id": "os307",
    "name": "SteerAct：少样本时序引导解锁动作模型",
@@ -7864,5 +7976,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 297
+ "totalItems": 301
 }

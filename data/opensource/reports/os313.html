@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motus2：面向灵巧操作的自演化通用世界模型 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Motus2：面向灵巧操作的自演化通用世界模型 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="motus2">Motus2：面向灵巧操作的自演化通用世界模型</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/shengshu-ai/Motus2">https://github.com/shengshu-ai/Motus2</a>  </p>
+<p><strong>Stars</strong>: 583 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-22  </p>
+<p><strong>组织</strong>: 生数科技 ShengShu AI  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-22</p>
+</blockquote>
+<hr />
+<p><strong>shengshu-ai/Motus2</strong> 是生数科技（ShengShu AI）开放的自演化通用世界模型，全称 Motus2: A Self-Evolving General World Model for Dexterous Manipulation。仓库 Python、Apache-2.0、2026-09-11 创建、11-17 仍在更新，约 583 star（2026-11-22 核验）。</p>
+<p>它代表的是与「一次预训练后冻结」不同的路线：把视频生成底座的世界模型能力用于灵巧操作，强调模型随自身交互数据<strong>持续自演化</strong>的训练闭环——策略产生的新轨迹回流为世界模型的新监督，改进的预测又反过来生成更好的计划或数据。这与本轮 p405 Counterfactual World Models 讨论的「模型在预测什么」、p402 AFFECT 讨论的「动作敏感性」形成互补：前者管训练范式，后两者管预测内容。</p>
+<p>收录它因为本轮四条开源正好构成一条链：os311 给多源感知输入、os312 给统一评测口径、os314 给手级仿真基准、Motus2 给自演化的世界模型范式，四者合起来覆盖从感知、评测、环境到训练范式的四个面，且互不重叠。</p>
+<hr />
+<p>按仓库描述与自演化的一般工程形态，可归纳为四层（<strong>注意</strong>：结构性归纳，具体训练阶段与数据流以 README 与论文为准）：</p>
+<ol>
+<li><strong>视频 / 世界模型底座</strong>：以预训练视频生成模型为起点，具备对场景未来帧的预测能力。</li>
+<li><strong>动作条件接口</strong>：把机器人动作作为条件注入生成过程，使预测可用于评估候选动作而非单纯生成视频。</li>
+<li><strong>交互数据闭环</strong>：策略在真机或仿真中产生的新轨迹经筛选后回流，作为下一轮世界模型训练的监督。</li>
+<li><strong>策略 / 规划头</strong>：从世界模型给出的预测里选择动作，或用于生成合成训练数据供下游策略使用。</li>
+</ol>
+<p>自演化最难的不是网络结构，而是<strong>回流数据的质量控制</strong>：低质量轨迹会把世界模型带偏，形成正反馈退化。因此闭环里通常需要成功判据、多样性筛选与分布监控，这与站内 /learn/embodied-data-engineering 的轨迹可学性、/learn/platform-engineering 的数据闭环治理是同一套工程问题。</p>
+<hr />
+<ul>
+<li><strong>Motus2 仓库 README 与项目说明</strong>（shengshu-ai/Motus2）：训练阶段、开放内容与推理入口的原始出处。</li>
+<li><strong>Counterfactual World Models: JEPAs That Reason About What If</strong>（arXiv 2611.24778，本轮 p405）：证明只训事实转移无法回答反事实，是判断「持续加数据能否解决结构性问题」的理论参照。</li>
+<li><strong>Learning What Actions Change: Action Effect Matching for Dynamics-Faithful World Models</strong>（arXiv 2611.25980，本轮 p402）：把动作敏感性写成显式训练目标，与自演化的隐式改进形成对照。</li>
+<li><strong>站内 /learn/world-models-llm 世界模型作为自改进的引擎一章</strong>：自改进闭环的教材级梳理。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先读 README 的阶段划分</strong>：确认哪些权重是预训练底座、哪些是自演化后训练产物，别把两者混用。</li>
+<li><strong>用官方 checkpoint 跑一次推理</strong>：在示例动作条件上生成预测，确认动作接口与输出帧范围。</li>
+<li><strong>先把闭环拆开验</strong>：单独测「新数据回流是否让预测变好」，不要一上来就跑完整自演化。</li>
+<li><strong>给回流数据设质量门槛</strong>：成功判据、轨迹多样性与分布漂移监控三者至少要有前两项。</li>
+<li><strong>冻结一个基线做对照</strong>：保留初始底座的预测结果，否则无法判断自演化到底带来增益还是漂移。</li>
+<li><strong>记录每轮数据快照</strong>：自演化的结论与第几轮回流强相关，报告里必须写清轮次。</li>
+</ol>
+<p><strong>高频坑</strong>：把自演化当成无监督地无限喂数据（低质量回流会正反馈退化）；忽略动作条件注入方式导致预测与实际动作脱钩；不保留初始基线，无法区分改进与漂移；用生成画面的观感代替下游成功率作为验收指标。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 583（2026-11-22 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>创建 / 最近更新</td>
+<td>2026-09-11 / 2026-11-17</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>自演化通用世界模型 / 灵巧操作</td>
+</tr>
+<tr>
+<td>开放内容</td>
+<td>以 README 为准，此处不臆测权重与训练代码范围</td>
+</tr>
+<tr>
+<td>公开指标</td>
+<td>以论文与 README 为准，此处不转录评测数值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：583 star 且两个多月持续更新，说明是有维护的活跃仓库。但「自演化」类工作的结论高度依赖回流轮次与数据筛选策略，看指标时要先确认它对应第几轮。</p>
+<p><strong>注意</strong>：Star 为核验时点快照；摘要未给出仓库内具体开放了哪些权重、训练阶段与真机实验设置，这些需回 README 与论文确认。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>冻结的预训练世界模型</th>
+<th>一次性后训练</th>
+<th>Motus2 自演化闭环</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据来源</td>
+<td>离线固定</td>
+<td>离线固定</td>
+<td>策略交互持续回流</td>
+</tr>
+<tr>
+<td>适应能力</td>
+<td>弱</td>
+<td>中</td>
+<td>设计目标为强</td>
+</tr>
+<tr>
+<td>退化风险</td>
+<td>低</td>
+<td>低</td>
+<td>需质量门槛约束</td>
+</tr>
+<tr>
+<td>结论依赖</td>
+<td>数据集</td>
+<td>数据集</td>
+<td>回流轮次</td>
+</tr>
+<tr>
+<td>主要成本</td>
+<td>预训练算力</td>
+<td>后训练算力</td>
+<td>闭环治理与监控</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮 p405 Counterfactual World Models 对照尤其有意思：后者证明只训事实转移的世界模型无法回答反事实问题，而自演化闭环不断产出新的事实转移；二者合起来提示「光靠加数据不足以解决结构性问题」，与本轮 p402 AFFECT 把动作敏感性写成显式目标的主张一致。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

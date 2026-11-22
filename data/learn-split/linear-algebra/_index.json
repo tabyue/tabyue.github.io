@@ -1,7 +1,7 @@
 {
   "id": "linear-algebra",
   "name": "线性代数",
-  "lastUpdated": "2026-11-10T08:30",
+  "lastUpdated": "2026-11-22T08:35",
   "stage": "阶段一：数学与编程基础",
   "importance": "核心",
   "estimatedHours": 60,
@@ -359,13 +359,13 @@
     {
       "id": "sec-11",
       "title": "正定矩阵与二次型",
-      "lastUpdated": "2026-10-27",
-      "chars": 5520,
+      "lastUpdated": "2026-11-22T08:35",
+      "chars": 17139,
       "shortTitle": "正定矩阵与二次型",
       "difficulty": "中级",
       "estimatedMinutes": 6,
       "tier": 1,
-      "readingMinutes": 6,
+      "readingMinutes": 20,
       "headings": [
         "为什么重要",
         "正定的三种等价定义",
@@ -378,6 +378,11 @@
         "Cholesky 分解应用",
         "Lyapunov 稳定性",
         "Schur 补与正定性",
+        "深入一：正定矩阵为什么恰好是「一把合法的尺子」",
+        "深入二：四条判据的完整证明链与各自的有效范围",
+        "深入三：Cholesky 的逐元素推导、浮点行为与退化处理",
+        "深入四：优化里的二阶条件——Hessian 正定到底保证了什么",
+        "深入五：机器人里的三个落点——质量矩阵、协方差与 LQR 代价",
         "练习补充"
       ],
       "summary": "正定矩阵是机器人学和优化理论的核心概念： - 质量矩阵 M(q) 是正定的 → 保证动力学方程有唯一解 - 协方差矩阵 Σ 是半正定的 → 卡尔曼滤波的数学基础 - 优化问题的 Hessian 矩阵正定 → 确认是局部最小值 - LQR 控制中的 Q 和 R 矩阵要求正(半)定 → 保证代价函数有下界"
@@ -555,7 +560,7 @@
       "summary": "前面几节建立了线性代数的完整理论。本节展示三个在现代应用中无处不在的线性代数应用——这是 Strang 在 MIT 18.06 中花了整整半学期讲的内容，把前面所有抽象工具都用上了。"
     }
   ],
-  "readingMinutes": 158,
+  "readingMinutes": 172,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 161982
+  "chars": 173601
 }

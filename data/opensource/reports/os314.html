@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HandsOn：大规模可泛化灵巧操作仿真基准 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">HandsOn：大规模可泛化灵巧操作仿真基准 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="handson">HandsOn：大规模可泛化灵巧操作仿真基准</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/TsinghuaC3I/HandsOn">https://github.com/TsinghuaC3I/HandsOn</a>  </p>
+<p><strong>Stars</strong>: 82 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-22  </p>
+<p><strong>组织</strong>: 清华大学 C3I 实验室  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-22</p>
+</blockquote>
+<hr />
+<p><strong>TsinghuaC3I/HandsOn</strong> 是清华大学 C3I 实验室开放的大规模灵巧操作仿真基准，全称 HandsOn: a large-scale simulation benchmark for generalizable dexterous manipulation。仓库 Python、MIT、2026-10-13 创建、11-17 仍在更新，约 82 star（2026-11-22 核验），配套项目主页 https://llltttwww.github.io/HandsOn-website/ 给出任务与结果展示。</p>
+<p>它关注的是<strong>泛化</strong>而不是在固定任务上刷成功率：策略在未见物体、未见任务、不同手型之间能否迁移。这与本轮 p404 LocoMuJoCo 形成明确分工——后者解决的是人形 / 四足的<strong>全身控制</strong>基准，HandsOn 补上的是<strong>手级灵巧操作</strong>基准；两者与 os311 的触觉表征、os313 的自演化世界模型一起，覆盖从本体运动到接触精细操作的评测谱系。</p>
+<p>MIT 许可与独立项目主页也降低了教学与二次集成的门槛，适合作为站内 /learn/imitation-learning 与 /learn/robot-dynamics 章节的配套实验环境。</p>
+<hr />
+<p>按仓库描述与灵巧操作基准的一般结构，可归纳为四层（<strong>注意</strong>：结构性归纳，具体任务清单与评测协议以 README 与项目主页为准）：</p>
+<ol>
+<li><strong>手型与本体层</strong>：多款灵巧手 / 夹爪模型与对应 URDF，统一关节与接触接口。</li>
+<li><strong>任务与物体层</strong>：大规模物体集合与操作任务，按已见 / 未见划分训练与测试分布，用于测泛化。</li>
+<li><strong>观测与动作层</strong>：视觉、本体状态与可选触觉观测统一封装；动作空间注明是关节角还是 tendon / 指尖目标。</li>
+<li><strong>评测协议层</strong>：成功率、泛化差距（已见减未见）与失败归因统一口径，避免各家自定义指标。</li>
+</ol>
+<p>「已见 / 未见」的显式划分是这个基准最关键的设计：它把 /learn/vla-models 评估基准一章里讲的分布外泛化形式化，从定性口号变成可测的分数差。配合 os312 vla-evaluation-harness 的统一评测接口，还能把不同策略放进同一口径比较。</p>
+<hr />
+<ul>
+<li><strong>HandsOn 仓库 README 与项目主页</strong>（llltttwww.github.io/HandsOn-website）：任务清单、已见 / 未见划分与评测协议的原始出处。</li>
+<li><strong>LocoMuJoCo: A Comprehensive Imitation Learning Benchmark for Whole-Body Control</strong>（arXiv 2611.26293，本轮 p404）：全身控制侧基准，与手级基准互补。</li>
+<li><strong>Learning Heterogeneous Tactile Representation for General Dexterous Manipulation</strong>（arXiv 2611.12806，本轮 os311）：灵巧操作的多源触觉观测来源。</li>
+<li><strong>站内 /learn/imitation-learning 行为克隆一章</strong>：协变量偏移、DAgger 与动作分块的教材级前置，配合本基准的泛化划分一起读。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先确认手型与动作空间</strong>：不同灵巧手的自由度、腱驱动与关节限位差异极大，先打印一条观测与动作样本。</li>
+<li><strong>跑通一个已见任务</strong>：确认仿真后端、接触参数与成功判据，再动泛化实验。</li>
+<li><strong>严格区分已见 / 未见划分</strong>：不要用自己的随机切分，否则泛化差距不可比。</li>
+<li><strong>报泛化差距而不只报成功率</strong>：已见减未见的差值才是这个基准真正要测的量。</li>
+<li><strong>单独测接触参数敏感性</strong>：摩擦、接触刚度与求解器迭代次数对灵巧操作结果影响很大，扫一遍再定。</li>
+<li><strong>记录仿真器与求解器版本</strong>：接触丰富场景的数值结果对版本敏感，报告必须附环境元数据。</li>
+</ol>
+<p><strong>高频坑</strong>：把已见任务成功率当成泛化能力；忽略接触参数导致结果不可复现；用自定义成功判据跨方法比较；同时换手型、任务与观测使结果无法归因。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 82（2026-11-22 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>创建 / 最近更新</td>
+<td>2026-10-13 / 2026-11-17</td>
+</tr>
+<tr>
+<td>项目主页</td>
+<td>llltttwww.github.io/HandsOn-website</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>大规模可泛化灵巧操作仿真基准</td>
+</tr>
+<tr>
+<td>公开指标</td>
+<td>以项目主页与论文为准，此处不转录基线分数</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：82 star 在新建基准里属于正常起步，热度不是判断依据。要看的是已见 / 未见划分是否清晰、任务与物体规模是否够大、评测协议是否公开可复现。</p>
+<p><strong>注意</strong>：Star 为核验时点快照；摘要未给出任务数量、手型清单与基线方法分数，这些需回项目主页与论文确认。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>单一抓取任务环境</th>
+<th>通用操作基准（如 LIBERO 类）</th>
+<th>HandsOn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关注点</td>
+<td>单点成功率</td>
+<td>多任务成功率</td>
+<td>跨物体跨任务泛化</td>
+</tr>
+<tr>
+<td>手型覆盖</td>
+<td>单一</td>
+<td>多为夹爪</td>
+<td>多款灵巧手</td>
+</tr>
+<tr>
+<td>已见 / 未见划分</td>
+<td>无</td>
+<td>弱</td>
+<td>显式设计</td>
+</tr>
+<tr>
+<td>接触丰富度</td>
+<td>中</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>主要成本</td>
+<td>低</td>
+<td>中</td>
+<td>接触求解算力</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮 p404 LocoMuJoCo 合起来看，正好构成「全身 + 手级」两级基准：LocoMuJoCo 管 9 个人形、3 个肌骨、4 个四足本体的运动与模仿学习，HandsOn 管手内精细操作与泛化。os311 的触觉表征为后者提供多源观测输入，os312 的评测框架为两者提供统一口径，os313 的自演化世界模型则给出训练范式侧的答案。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LingBot-Touch：面向通用灵巧操作的异构触觉表征 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">LingBot-Touch：面向通用灵巧操作的异构触觉表征 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="lingbot-touch">LingBot-Touch：面向通用灵巧操作的异构触觉表征</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Robbyant/lingbot-touch">https://github.com/Robbyant/lingbot-touch</a>  </p>
+<p><strong>Stars</strong>: 794 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-22  </p>
+<p><strong>组织</strong>: 蚂蚁灵波 Robbyant  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-22</p>
+</blockquote>
+<hr />
+<p><strong>Robbyant/lingbot-touch</strong> 是蚂蚁灵波（Robbyant）开放的触觉表征仓库，对应论文 Learning Heterogeneous Tactile Representation for General Dexterous Manipulation（arXiv 2611.12806）。仓库 Python、Apache-2.0、2026-11-09 创建、11-11 更新，约 794 star（2026-11-22 核验）。</p>
+<p>它要解决的问题很具体：商用触觉传感器在阵列密度（几十到上千 taxel）、信号形式（电阻 / 电容 / 视触觉图像 / 磁力）、安装位置（指尖 / 指腹 / 掌面）上差异极大，同一套编码器换一块传感器就要重训。lingbot-touch 学一套能统一多源触觉输入的<strong>异构表征</strong>，让下游灵巧操作策略不必为每种硬件单独设计输入头。</p>
+<p>收录价值在于：触觉侧的开源多半是单点数据集或单个传感器驱动，把「跨硬件表征」作为独立可复用模块开放的不多。配合站内 /learn/sensors-hardware 的触觉传感器一章（Hertz 接触、视触觉标定、CoP 与滑动判据）可以直接上手，也呼应本轮 p404 LocoMuJoCo 与 os314 HandsOn 对灵巧操作评测的需求。</p>
+<hr />
+<p>按仓库定位与论文标题，可归纳为三层（<strong>注意</strong>：结构性归纳，具体网络结构与训练配置以 README 与论文正文为准）：</p>
+<ol>
+<li><strong>多源输入层</strong>：把不同传感器的原始信号（taxel 阵列、视触觉图像、力 / 力矩序列）统一成时间对齐的张量，处理采样率不一致与量纲差异。</li>
+<li><strong>异构表征层</strong>：为每类传感器保留专用编码器，再映射到共享潜空间；训练目标通常包含跨模态对齐与时序预测，使同一物理接触在不同硬件上得到相近表示。</li>
+<li><strong>策略接口层</strong>：把潜表示作为下游模仿学习 / 强化学习策略的观测输入，替换原本的纯视觉观测或拼接触觉原始值。</li>
+</ol>
+<p>这套分层的意义在于把「传感器硬件」与「策略」解耦：换传感器只需重训或替换该分支的编码器，共享潜空间与策略侧不动。对本轮 p402 AFFECT 强调的「什么观测才是真正的新增信息」也是个实际注脚——若触觉变化可由视觉与已执行动作预测，直接拼原始触觉值往往带不来增益，先做表征再谈融合更合理。</p>
+<hr />
+<ul>
+<li><strong>Learning Heterogeneous Tactile Representation for General Dexterous Manipulation</strong>（arXiv 2611.12806）：本仓库对应论文，异构触觉表征的方法与实验原始出处。</li>
+<li><strong>Learning What Actions Change: Action Effect Matching for Dynamics-Faithful World Models</strong>（arXiv 2611.25980，本轮 p402）：说明「观测里哪些变化才是动作造成的新增信息」，是判断触觉输入是否带来增益的评测侧参照。</li>
+<li><strong>TacInno: Teaching Vision-Language-Action Models the Contact Dynamics Beyond Vision and Action</strong>（arXiv 2611.26405）：提出触觉创新（tactile innovation）作为监督信号，与「先做表征再融合」形成有趣对照。</li>
+<li><strong>站内 /learn/sensors-hardware 触觉传感器一章</strong>：Hertz 接触、摩擦锥、视触觉标定与滑动检测的教材级前置知识。</li>
+</ul>
+<hr />
+<ol>
+<li><strong>先读 README 的数据契约</strong>：确认支持哪些传感器、输入张量形状与采样率，别拿自己的 CSV 硬套。</li>
+<li><strong>跑通一个预训练编码器的推理</strong>：用官方 checkpoint 在示例样本上打印潜向量维度与数值范围，确认加载无误。</li>
+<li><strong>对齐时间戳</strong>：触觉、视觉与机器人状态的采样率通常不同，先做时间对齐再谈融合，这是触觉管线最常见的隐性错误。</li>
+<li><strong>做一次「有没有增益」的对照</strong>：纯视觉基线 vs 拼接触觉表征，同一策略同一随机种子，别只报加了触觉的版本。</li>
+<li><strong>单独测跨硬件迁移</strong>：在 A 传感器上学、在 B 传感器上推理，量化异构表征的实际价值。</li>
+<li><strong>记录传感器元数据</strong>：型号、标定参数、安装位置与固件版本一并归档，触觉数据离开这些元数据几乎无法复现。</li>
+</ol>
+<p><strong>高频坑</strong>：把异构表征当成即插即用的通用插件（它仍需要按硬件做适配）；忽略时间对齐导致触觉与动作错位；用原始触觉值直接与图像 token 拼接造成量纲失衡；只报成功率提升却不做纯视觉对照。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 / 说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 794（2026-11-22 核验）</td>
+</tr>
+<tr>
+<td>许可</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>创建 / 最近更新</td>
+<td>2026-11-09 / 2026-11-11</td>
+</tr>
+<tr>
+<td>对应论文</td>
+<td>arXiv 2611.12806</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>跨硬件异构触觉表征</td>
+</tr>
+<tr>
+<td>公开指标</td>
+<td>以论文与 README 为准，此处不转录评测数值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：794 star 对 11 月新建仓库属于很高的关注度，但仓库很年轻（创建到更新仅两天），API 与 checkpoint 仍可能变动。价值判断应看「跨硬件迁移」这一项是否被单独验证，而不是 star 数。</p>
+<p><strong>注意</strong>：Star 为核验时点快照；摘要未给出仓库内是否附带预训练权重、支持的具体传感器型号与下游策略实现，这些需回 README 确认。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>单点触觉数据集</th>
+<th>单传感器驱动 + 原始值拼接</th>
+<th>lingbot-touch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>跨硬件复用</td>
+<td>无</td>
+<td>弱</td>
+<td>设计目标</td>
+</tr>
+<tr>
+<td>输入形式</td>
+<td>原始信号</td>
+<td>原始值 / 图像</td>
+<td>共享潜表示</td>
+</tr>
+<tr>
+<td>换传感器成本</td>
+<td>重采数据</td>
+<td>重训策略</td>
+<td>适配编码器分支</td>
+</tr>
+<tr>
+<td>与视觉融合</td>
+<td>自行约定</td>
+<td>易量纲失衡</td>
+<td>潜空间对齐</td>
+</tr>
+<tr>
+<td>主要风险</td>
+<td>规模小</td>
+<td>增益不稳定</td>
+<td>表征训练成本</td>
+</tr>
+</tbody>
+</table>
+<p>与本轮另外三个开源合起来看，正好是一条灵巧操作的评测与训练链：os312 vla-evaluation-harness 给统一评测口径、os314 HandsOn 给手级仿真基准、os313 Motus2 给自演化世界模型范式、lingbot-touch 补上多源感知输入。四者分别覆盖评测、环境、训练范式与感知，彼此不重复。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
