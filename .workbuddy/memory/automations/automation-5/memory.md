@@ -355,3 +355,11 @@
 ### 2026-11-21 08:40 收尾
 - 判定 learn/*.json 缩进主流为 indent=2（27/32），sensors-hardware.json 在 db8d223 的全文件重排是一次性格式对齐而非缺陷，不要回退成 indent=1。
 - 推送常规方案（`credential.helper=!gh auth git-credential`）在本机再次失败（停在 git credential-manager get），2026-11-21 主提交靠「空 GIT_CONFIG_GLOBAL/SYSTEM + `gh auth token` 嵌入 URL + `http.sslBackend=schannel`」推送成功，后续沿用此方案。
+
+### 2026-11-22 08:05—09:00
+- 投稿箱：无新投稿（open issue 返回 `[]`，未限制 label）；未启动浏览器，无凭据风险。开工工作树干净、HEAD==origin/main（5f92083）。
+- 数据：新闻 +10（n789—n798，756）、论文 +5（p402—p406，380，含 detail）、开源 +4（os311—os314，301，含 detail + 4 报告页）、招聘 +6（j425—j430，417）、资源 r047（47）+ r001 扩充。25 条新条目 `addedDate=2026-11-22`，`lastUpdated=2026-11-22T08:35`。
+- 学习：延续「深化 tier0/1 薄章」。`linear-algebra#10` 正定矩阵与二次型 5520→17139；`python-scientific-computing#0` Python 语言基础 5691→16177；各 5 段「深入」正文 + 5 段可运行代码，三处 lastUpdated 同步。章节数仍 553，sitemap 553 章 + 132 学习页。
+- 校验：normalize 无改动、fix_learn_links --dry fixed=0、sync 同步 2 模块 4 文件、health_check **ALL OK 且 0 告警**、verify_learn_structure ALL OK、audit 硬缺陷全 0（F5 仅历史 academic-english#9）、unittest 34/34、node UI 32/32。
+- 提交：内容 `53f1fc2`（25 files，+1636/-66），日志与记忆随后 chore 提交一并推送，远程 / 本地 / origin/main 三者一致。
+- 经验：① 10 段代码全部 exec 实跑再定稿，据实测修 5 处数值断言（LA 半正定三判据全 False / Cholesky 5.6e-17 与 1.41e-6；PY dict-list 1718 倍 / 向量化 93 倍 / 广播首行 `[0,-1,-2]`）；② **JSON 重写前必做 roundtrip 格式校验**：learn 文件末尾换行不一致（linear-algebra 无、python-scientific-computing 有），统一加 `\n` 会产生整文件 diff，改为按目标文件探测；③ `learning-path.json` 是 `stages[].modules[]`，模块 `chars`/`readingMinutes` 由 sync 自动派生（161982→173601 = +11619）；④ **PowerShell 直接 `git push` 仍 RC=128 零输出**（`--dry-run`、gh 凭据 trick、默认 manager 全试过），`git ls-remote` RC=0、`gh auth status` 正常 → 确认 PowerShell 凭据子进程静默崩溃；改用「空 GIT_CONFIG_GLOBAL/SYSTEM（ASCII 空文件）+ `gh auth token` 嵌 URL + `http.sslBackend=schannel` + Python subprocess.run(capture_output=True)」一次 RC=0，随后 `gh api ...commits/main --jq .sha` + `git update-ref` 消除 ahead 假象；⑤ `git add -A` 前精确清理根目录 `_*`（保留三个历史 tracked），本轮 30 个临时文件清干净。
