@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DreamFAR：实时长程动作条件世界模型（双臂操作） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">DreamFAR：实时长程动作条件世界模型（双臂操作） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="dreamfar">DreamFAR：实时长程动作条件世界模型（双臂操作）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/amazon-far/dreamfar">https://github.com/amazon-far/dreamfar</a>  </p>
+<p><strong>Stars</strong>: 9 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-23  </p>
+<p><strong>组织</strong>: Amazon FAR  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-23</p>
+</blockquote>
+<hr />
+<p><strong>amazon-far/dreamfar</strong> 是 Amazon FAR 团队开放的 <em>DreamFAR: a real-time, long-horizon action-conditioned world model for bimanual robot manipulation</em>，仓库 2026-11-16 创建、11-20 更新，Python、Apache-2.0，配套项目主页 https://amazon-far.github.io/dreamfar/ 。</p>
+<p>它把世界模型定位成三个硬约束的组合：<strong>实时</strong>、<strong>长程</strong>、<strong>动作条件</strong>。给定动作序列要能持续预测未来观测，且推理速度要能进闭环，而不是只做离线视频生成。这个定位正好补上本轮 p409 O2LaF 学到的动作变量的下游用途——有了可迁移的潜动作，还需要一个能按动作推演长程后果的世界模型来做规划、评测与数据增广。</p>
+<p>Apache-2.0 与独立项目主页降低了教学与二次集成门槛，适合作为 /learn/world-models-llm 与 /learn/physics-simulation 的配套实验环境。仓库较新（约 9 star），属于值得跟踪而非已经成熟的 early-stage 项目。</p>
+<hr />
+<p>按项目描述与动作条件世界模型的一般结构，可归纳为四层（<strong>结构性归纳</strong>，具体以 README 与项目主页为准）：</p>
+<ol>
+<li><strong>观测编码层</strong>：把多视角图像与本体状态压成潜状态。</li>
+<li><strong>动作条件层</strong>：把动作序列作为条件注入，使预测结果随动作改变——这是「动作条件」与「纯视频预测」的分界线。</li>
+<li><strong>长程推演层</strong>：以自回归或分块方式持续展开未来，需控制误差累积，否则几十步后画面与状态都会漂。</li>
+<li><strong>实时接口层</strong>：把单步推理延迟压进控制周期，供闭环规划调用。</li>
+</ol>
+<p>第 3 层与第 4 层是互相拉扯的：推得越远越容易累积误差，而实时性又限制每步能用的计算量。DreamFAR 的价值就在于把这两个约束同时摆上台面，而不是只优化单步预测质量。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/amazon-far/dreamfar">DreamFAR 官方仓库</a></strong> — Amazon FAR，Apache-2.0，实时长程动作条件世界模型。</li>
+<li><strong><a href="https://amazon-far.github.io/dreamfar/">DreamFAR 项目主页</a></strong> — 方法说明与结果展示。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.26617">One Prior, Two Dynamics / O2LaF（arXiv 2611.26617）</a></strong> — 本轮 p409，从无标注视频学出可迁移潜动作，是动作条件世界模型的上游。</li>
+<li><strong><a href="/learn/world-models-llm">Counterfactual World Models（arXiv，本站 p405）</a></strong> — 反事实推理方向，可与长程 rollout 对照。</li>
+<li><strong><a href="/learn/world-models-llm">站内 /learn/world-models-llm</a></strong> — 世界模型的统一讲解与分层参照系。</li>
+</ul>
+<hr />
+<h3 id="_2">最小上手路径</h3>
+<ol>
+<li>打开项目主页 https://amazon-far.github.io/dreamfar/ 与仓库 https://github.com/amazon-far/dreamfar ，先读 README 的环境与权重说明。</li>
+<li>按 README 建环境（Python，Apache-2.0）：</li>
+</ol>
+<pre><code>git clone https://github.com/amazon-far/dreamfar.git
+cd dreamfar
+pip install -r requirements.txt
+</code></pre>
+<ol>
+<li>先跑单步动作条件预测，确认「同一初始状态 + 不同动作」确实给出不同未来；若差异不明显，说明动作条件没真正生效。</li>
+<li>再做长程 rollout，记录第 1、10、50、100 步的预测误差与单步延迟，画出误差累积曲线。</li>
+<li>把 rollout 接到规划器或评测脚本，观察用世界模型选动作是否比随机 / 启发式更好。</li>
+</ol>
+<h3 id="_3">常见坑</h3>
+<ul>
+<li>只报短程 FVD 或 SSIM，长程可用性看不出来；必须报随步数的误差曲线。</li>
+<li>不测单步延迟，「实时」这一主张无法验证。</li>
+<li>长程 rollout 里不做误差累积监控，容易把漂移当成环境本身的随机性。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 9（2026-11-23 核验，early-stage）</td>
+</tr>
+<tr>
+<td>创建 / 最后更新</td>
+<td>2026-11-16 / 2026-11-20</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>许可证</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>任务域</td>
+<td>双臂机器人操作</td>
+</tr>
+<tr>
+<td>配套</td>
+<td>独立项目主页</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：仓库很新，star 数不能代表质量。判断它是否可用，看 README 是否给出可复现的推理命令、是否提供预训练权重或明确的数据准备流程，以及长程 rollout 的误差曲线是否公开。本轮核验时项目主页与仓库均在 11-20 前后活跃。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>对照对象</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>os313 Motus2 自演化世界模型</td>
+<td>强调自演化与灵巧操作，非实时闭环定位</td>
+</tr>
+<tr>
+<td>p405 Counterfactual World Models</td>
+<td>关注「如果当时换动作会怎样」的反事实推理</td>
+</tr>
+<tr>
+<td>p409 O2LaF</td>
+<td>学可迁移潜动作变量，不直接做长程未来预测</td>
+</tr>
+<tr>
+<td>os316 VITA</td>
+<td>改动作生成器的确定性与延迟，不做世界预测</td>
+</tr>
+<tr>
+<td>NVIDIA Cosmos / os283 Praxis-1</td>
+<td>大规模通用视频 / 世界动作基座，参数量与部署成本更高</td>
+</tr>
+</tbody>
+</table>
+<p>DreamFAR 的差异化在「双臂操作 + 实时 + 长程 + 动作条件」这四项同时成立，且以 Apache-2.0 开放、体量小，适合教学与二次集成。与 p409 连起来读，正好是一条完整链路：先学动作变量，再用动作条件世界模型推演后果。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

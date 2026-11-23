@@ -1,7 +1,7 @@
 {
   "id": "ai-infra",
   "name": "AI Infra 具身基础设施",
-  "lastUpdated": "2026-11-19T08:35",
+  "lastUpdated": "2026-11-23T08:40",
   "stage": "阶段六：系统工程与部署",
   "importance": "核心",
   "estimatedHours": 30,
@@ -362,14 +362,14 @@
     {
       "id": "sec-11",
       "title": "数据集格式标准（LeRobot / RLDS / Open-X-Embodiment）",
-      "lastUpdated": "2026-10-20T10:20",
-      "chars": 3112,
+      "lastUpdated": "2026-11-23T08:40",
+      "chars": 14418,
       "shortTitle": "数据集格式标准",
       "difficulty": "中级",
       "estimatedMinutes": 14,
       "isBrief": true,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 19,
       "headings": [
         "🔗 本节内容已在其他模块详细讲解",
         "为什么具身数据的格式统一这么难",
@@ -377,6 +377,29 @@
         "选型决策",
         "最小可运行：先用假数据打通管道",
         "三个高频坑",
+        "深入一：把「格式标准」当作一份数据契约",
+        "文件布局不是重点，契约才是",
+        "契约的最小可运行实现",
+        "契约要拦的四类故障",
+        "与国家标准的关系",
+        "深入二：时间轴的唯一真相——多速率对齐的误差从哪来",
+        "「降采样」三个字藏了多少坑",
+        "实测：最近邻与线性插值差多少",
+        "为什么是几十倍而不是几倍",
+        "工程清单",
+        "深入三：分片、索引与随机访问——shard 大小是性能参数",
+        "为什么不能一个 episode 一个文件",
+        "实测：200 次随机读要开多少次文件",
+        "怎么选一个分片大小",
+        "深入四：schema 演进、版本与 lineage——可复现性的最低成本实现",
+        "数据集会变，变了怎么不炸",
+        "最小可运行 manifest",
+        "lineage 与标准试点验证",
+        "深入五：I/O 预算——数据管道到底喂不喂得饱 GPU",
+        "把带宽写成算式",
+        "实测：裸 uint8 与 H.264 差多少",
+        "结论：瓶颈会转移，不会消失",
+        "本节的完整学习路径",
         "跳转入口",
         "为什么放在 AI Infra 模块？"
       ],
@@ -810,7 +833,7 @@
       "summary": "本模块 sec-22 Chunked VLA 推理基础设施 已经讲过 chunk size 的取舍，但留了一个没答完的问题："
     }
   ],
-  "readingMinutes": 225,
+  "readingMinutes": 240,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 193359
+  "chars": 204665
 }

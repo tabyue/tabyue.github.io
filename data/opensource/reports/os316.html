@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VITA：无噪声流匹配策略学习（ICLR 2026） — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">VITA：无噪声流匹配策略学习（ICLR 2026） — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="vitaiclr-2026">VITA：无噪声流匹配策略学习（ICLR 2026）</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/ucd-dare/VITA">https://github.com/ucd-dare/VITA</a>  </p>
+<p><strong>Stars</strong>: 147 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-23  </p>
+<p><strong>组织</strong>: UC Davis DARE Lab / ucd-dare  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-23</p>
+</blockquote>
+<hr />
+<p><strong>ucd-dare/VITA</strong> 是 ICLR 2026 论文 <em>Flowing from Vision to Action: Noise-Free Flow Matching Policy Learning</em> 的官方实现，仓库以 Jupyter Notebook 为主，约 147 star，2026-11-22 仍在更新，配套项目主页 https://ucd-dare.github.io/VITA/ 。</p>
+<p>它针对的是扩散 / 流匹配策略一个很实际的部署痛点：推理时需要多步去噪、且噪声采样带来输出方差与延迟。VITA 探索「无噪声」的流匹配策略学习，把动作生成做成更确定、更容易在真机控制频率上部署的过程。对机器人而言，确定性不只是省时间——同一观测多次推理给出不同动作，会让安全校验、日志记录与失败复现都变复杂。</p>
+<p>与本轮新增论文形成明确分工：p409 O2LaF 解决「动作变量从无标注视频里怎么学出来」，p410 TipDex-VTLA 解决「执行期触觉何时介入」，VITA 解决「动作本身怎么生成得确定且快」。<strong>许可证为 NOASSERTION</strong>，商用前需核对仓库声明。</p>
+<hr />
+<p>按论文标题与 Notebook 型仓库的一般结构，可归纳为三层（<strong>结构性归纳</strong>，具体以仓库 README 与 Notebook 为准）：</p>
+<ol>
+<li><strong>观测编码</strong>：把图像与本体状态编码成条件向量，作为流匹配的条件输入。</li>
+<li><strong>动作生成</strong>：用流匹配（flow matching）在动作空间里学一个从简单先验到目标动作分布的连续变换。「无噪声」的核心在于去掉随机采样环节，使给定条件时输出确定。</li>
+<li><strong>部署接口</strong>：把生成的动作块按控制频率送给仿真器或真机，记录每次推理的动作与耗时。</li>
+</ol>
+<p>理解这一结构的关键，是把「去噪步数」当成显式的延迟预算：传统扩散策略要在每步里权衡采样数与动作质量，VITA 试图把这项权衡从推理期挪到训练期，让部署侧只剩一次确定性前向。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/ucd-dare/VITA">VITA 官方仓库</a></strong> — ICLR 2026，Noise-Free Flow Matching Policy Learning。</li>
+<li><strong><a href="https://ucd-dare.github.io/VITA/">VITA 项目主页</a></strong> — 论文、结果与可视化入口。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.26617">One Prior, Two Dynamics / O2LaF（arXiv 2611.26617）</a></strong> — 本轮 p409，从视频 DiT 学可迁移潜动作，与 VITA 的动作生成层互补。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.25683">TipDex-VTLA（arXiv 2611.25683）</a></strong> — 本轮 p410，执行期对尚未执行动作做有界修正，前提是动作块推理。</li>
+<li><strong><a href="/learn/imitation-learning">站内 /learn/imitation-learning 扩散模型的崛起</a></strong> — 理解扩散 / 流匹配策略的起点。</li>
+</ul>
+<hr />
+<h3 id="_2">最小上手路径</h3>
+<ol>
+<li>打开项目主页 https://ucd-dare.github.io/VITA/ 与仓库 https://github.com/ucd-dare/VITA ，先确认 ICLR 2026 论文版本与 Notebook 的对应关系。</li>
+<li>按 README 建环境（仓库以 Jupyter Notebook 为主，通常只需 Python + PyTorch + Notebook 依赖）：</li>
+</ol>
+<pre><code>git clone https://github.com/ucd-dare/VITA.git
+cd VITA
+pip install -r requirements.txt
+jupyter notebook
+</code></pre>
+<ol>
+<li>先跑推理 Notebook，记录单次动作生成的耗时与同一观测重复推理的动作差异；这两项是「无噪声」主张最直接的检验。</li>
+<li>再跑训练 Notebook，对比不同推理步数下成功率与延迟的取舍曲线。</li>
+<li>想接真机时，把动作块输出接到 /learn/ros2 与 /learn/training-inference-optimization 里的控制循环，注意控制频率与推理延迟的匹配。</li>
+</ol>
+<h3 id="_3">常见坑</h3>
+<ul>
+<li>Notebook 型仓库常把路径写成本机绝对路径，换机器后先核对数据集路径。</li>
+<li>不要只看成功率，务必记录 p99 推理延迟；确定性带来的收益主要在部署侧。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>收录会议</td>
+<td>ICLR 2026</td>
+</tr>
+<tr>
+<td>Star</td>
+<td>约 147（2026-11-23 核验）</td>
+</tr>
+<tr>
+<td>创建 / 最后更新</td>
+<td>2025-07-17 / 2026-11-22</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Jupyter Notebook</td>
+</tr>
+<tr>
+<td>许可证</td>
+<td>NOASSERTION，未声明</td>
+</tr>
+<tr>
+<td>配套</td>
+<td>独立项目主页</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：摘要层面最该复现的两条曲线是「成功率 vs 推理步数」与「同一观测的动作方差」。前者衡量是否真的少步可用，后者衡量是否真的确定。仓库未在本轮核验中提供统一排行榜，具体数值以论文与 Notebook 为准。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>对照对象</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>扩散策略 Diffusion Policy</td>
+<td>需多步去噪与噪声采样，推理有随机性</td>
+</tr>
+<tr>
+<td>p391 Task Convergent Flow Matching</td>
+<td>从任务收敛角度改流匹配目标</td>
+</tr>
+<tr>
+<td>p409 O2LaF</td>
+<td>从视频里自监督学潜动作变量，不直接改生成器随机性</td>
+</tr>
+<tr>
+<td>os304 LADDER / os314 HandsOn</td>
+<td>提供长程与灵巧操作评测基准，可作为 VITA 的下游考卷</td>
+</tr>
+</tbody>
+</table>
+<p>VITA 的位置在「动作生成器」这一层：它不负责评测、不负责数据、也不负责动作表示学习，而是把生成过程做成确定且低延迟。对站内读者，配合 /learn/training-inference-optimization 的推理效率章节与 /learn/imitation-learning 的动作分块章节读最顺。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Embodied-AI-Guide：Lumina 具身智能社区中文技术指南 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Embodied-AI-Guide：Lumina 具身智能社区中文技术指南 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="embodied-ai-guidelumina">Embodied-AI-Guide：Lumina 具身智能社区中文技术指南</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/TianxingChen/Embodied-AI-Guide">https://github.com/TianxingChen/Embodied-AI-Guide</a>  </p>
+<p><strong>Stars</strong>: 17028 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-23  </p>
+<p><strong>组织</strong>: Lumina 具身智能社区 / TianxingChen  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-23</p>
+</blockquote>
+<hr />
+<p><strong>TianxingChen/Embodied-AI-Guide</strong> 是 Lumina 具身智能社区维护的中文技术指南，仓库 2024-05 创建、2026-11-17 仍在更新，约 17028 star，是本轮 GitHub 发现里星标最高的中文具身智能系统性索引。它按技术方向组织论文、课程、工具链、数据集与开源项目，目标是把「从零入门到复现前沿」做成一份可增量维护的文档仓库，而不是零散链接收藏。</p>
+<p>收录价值有两层。其一，国家数据局刚在 11 月 22 日启动具身智能数据国家标准研制（见 n799），标准落地时最需要对齐的正是这类社区指南里的「事实上的教学口径」——术语、数据格式、评测口径往往先在社区指南里收敛，再进入标准文本。其二，站内 /learn 的 32 个模块可以把这份指南当作外部交叉引用，读者遇到某个方向想看更宽的论文谱系时，有了一个中文入口。</p>
+<p><strong>许可证提示</strong>：GitHub API 返回 <code>NOASSERTION</code>（仓库未声明标准许可证），二次分发或整体镜像前需自行核对仓库内的 LICENSE 与说明，不要默认按 MIT / Apache 处理。</p>
+<hr />
+<p>按文档仓库的一般组织方式，可归纳为四层（<strong>结构性归纳</strong>，具体目录以 README 为准）：</p>
+<ol>
+<li><strong>入门与数学底座</strong>：线性代数、概率统计、优化与机器人学基础，对应站内 /learn/linear-algebra、/learn/probability-statistics、/learn/calculus-optimization。</li>
+<li><strong>感知与表征</strong>：相机模型、3D 视觉、点云、多模态与视觉语言模型，对应 /learn/computer-vision、/learn/3d-vision-pointcloud。</li>
+<li><strong>决策与动作</strong>：模仿学习、强化学习、VLA / 世界模型、运动规划与控制，对应 /learn/imitation-learning、/learn/vla-models、/learn/world-models-llm。</li>
+<li><strong>系统与工程</strong>：仿真、数据采集与格式、训练推理基础设施、本体与硬件，对应 /learn/ai-infra、/learn/embodied-data-engineering、/learn/physics-simulation。</li>
+</ol>
+<p>这种分层与本站的学习路径高度同构，差别在于指南是「索引 + 导航」，本站每个模块是「可独立学完的正文 + 练习 + 参考答案」。两者互补：用指南找方向，用正文把概念学扎实。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/TianxingChen/Embodied-AI-Guide">Embodied-AI-Guide 仓库</a></strong> — Lumina 具身智能社区维护的中文技术指南，本条目的主体。</li>
+<li><strong><a href="https://www.nda.gov.cn/sjj/swdt/mtsy/1122/20261122201646034268538_pc.html">国家数据局：具身智能数据国家标准研制启动</a></strong> — 2026-11-22，「十五五」将形成 20 余项专项国标；社区指南的术语与格式口径是标准落地时最需要对齐的一层。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.26434">HumanCOIN（arXiv 2611.26434）</a></strong> — 本轮 p408，12500 小时意图数据集随数据发布时钟与标定信息，是「数据格式标准」最具体的工程样本。</li>
+<li><strong><a href="/learn/ai-infra">站内 /learn/ai-infra 数据集格式标准</a></strong> — 配合阅读，理解 schema、多速率时间对齐与分片 I/O 为什么是基础设施问题。</li>
+</ul>
+<hr />
+<h3 id="_2">怎么用这份指南</h3>
+<ol>
+<li>打开 https://github.com/TianxingChen/Embodied-AI-Guide ，先读 README 的目录与维护说明，确认当前版本覆盖到哪个时间段。</li>
+<li>按自己所在阶段挑一层：补数学看第 1 层，做策略看第 3 层，搭数据管道看第 4 层。</li>
+<li>遇到具体概念想深挖时，回到站内对应模块的章节页（例如数据集格式标准见 /learn/ai-infra，流匹配策略见 /learn/deep-learning），用正文把指南里的一句话展开成推导与可运行代码。</li>
+<li>想贡献时先看仓库的 Issue / PR 规范，论文清单类仓库通常需要给出 arXiv 编号、年份与一句话归类，避免重复条目。</li>
+</ol>
+<h3 id="_3">本地镜像（可选）</h3>
+<pre><code>git clone https://github.com/TianxingChen/Embodied-AI-Guide.git
+cd Embodied-AI-Guide
+</code></pre>
+<p>仓库以 Markdown 为主，不需要安装依赖即可阅读；若要本地渲染，用任意静态站点生成器即可。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 17028（2026-11-23 核验）</td>
+</tr>
+<tr>
+<td>创建 / 最后更新</td>
+<td>2024-05-17 / 2026-11-17</td>
+</tr>
+<tr>
+<td>主语言</td>
+<td>Markdown 文档（GitHub 未标注语言）</td>
+</tr>
+<tr>
+<td>许可证</td>
+<td>NOASSERTION，未声明</td>
+</tr>
+<tr>
+<td>维护形态</td>
+<td>社区持续增量维护</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：指南类仓库的「性能」不是跑分，而是覆盖率与新鲜度。判断它是否还值得参考，看三件事：最近一次提交距今多久、新增条目是否带可核验的 arXiv / GitHub 链接、以及目录是否随新方向（世界动作模型、具身 RSI、动作级评测）扩张。本轮核验时它仍在 11-17 更新，属于活跃状态。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>对照对象</th>
+<th>定位差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>os290 humanoid-motion-intelligence</td>
+<td>聚焦人形运动智能的论文 / 项目 / 求职知识库，范围更窄</td>
+</tr>
+<tr>
+<td>os284 Awesome Humanoid Robot Learning</td>
+<td>英文、Yanjie Ze 维护的人形学习论文清单</td>
+</tr>
+<tr>
+<td>os279 Awesome World Models</td>
+<td>只覆盖世界建模一个方向</td>
+</tr>
+<tr>
+<td>本站 /learn 32 模块</td>
+<td>提供正文讲解、推导、可运行代码与练习参考答案</td>
+</tr>
+</tbody>
+</table>
+<p>Embodied-AI-Guide 的定位是<strong>中文、全方向、入门友好</strong>的综合索引。历史轮次已收录多份英文 awesome 清单，本轮补上中文综合入口，正好覆盖不同语言与不同深度的读者。注意它与「开源代码库」不是一类产物，收录它是因为对门户读者有明确的导航价值。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

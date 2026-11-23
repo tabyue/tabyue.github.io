@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-22T08:35",
+ "lastUpdated": "2026-11-23T08:35",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,114 @@
   }
  ],
  "projects": [
+  {
+   "id": "os318",
+   "name": "NERV：把语言模型大脑、机器人本体与世界耦合到一个平台",
+   "github": "https://github.com/Yanshi-Robotics/nerv",
+   "organization": "言识机器人 Yanshi Robotics",
+   "org": "言识机器人",
+   "category": "ai-agent-framework",
+   "description": "NERV — a nervous system for robots: a language-model brain, a robot body and a world, coupled by one platform。仓库 2026-09 创建、2026-11-22 仍在更新，Python、MIT，约 100 star。它不做单点算法，而是把「语言模型当大脑、本体当身体、仿真或真实环境当世界」三者的连接做成统一平台，让具身 Agent 的感知、决策与执行在同一套接口里闭环。与本轮 p411 AgentRoboCritic 的动作级评判、n806 Mind2Act World 的诊断卡形成上下游：平台负责把 Agent 接进机器人，评测负责判断接进去之后每一步做得对不对。MIT 许可与活跃更新适合作为 /learn/embodied-agent 与 /learn/ros2 的实验底座。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 100,
+   "features": [
+    "语言模型大脑与本体耦合",
+    "统一感知决策执行接口",
+    "面向具身 Agent 的平台层",
+    "MIT 许可",
+    "持续更新"
+   ],
+   "tags": [
+    "NERV",
+    "具身 Agent",
+    "机器人操作系统",
+    "LLM 大脑",
+    "MIT"
+   ],
+   "addedDate": "2026-11-23"
+  },
+  {
+   "id": "os317",
+   "name": "DreamFAR：实时长程动作条件世界模型（双臂操作）",
+   "github": "https://github.com/amazon-far/dreamfar",
+   "organization": "Amazon FAR",
+   "org": "Amazon FAR",
+   "category": "ai-model",
+   "description": "DreamFAR: a real-time, long-horizon action-conditioned world model for bimanual robot manipulation，Amazon FAR 团队 2026-11-16 创建、11-20 更新，Python、Apache-2.0，配套项目主页 https://amazon-far.github.io/dreamfar/ 。它把世界模型定位成「实时、长程、动作条件」：给定动作序列持续预测未来观测，且推理速度要能进闭环，而不是只做离线视频生成。这正好补上本轮 p409 O2LaF 学到的动作变量的下游用途——有了可迁移动作，还需要一个能按动作推演长程后果的世界模型来做规划与评测。Apache-2.0 与独立项目主页降低了教学与二次集成门槛。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 9,
+   "features": [
+    "实时动作条件世界模型",
+    "长程未来预测",
+    "双臂机器人操作",
+    "Apache-2.0",
+    "配套项目主页"
+   ],
+   "tags": [
+    "DreamFAR",
+    "世界模型",
+    "动作条件预测",
+    "双臂操作",
+    "Amazon FAR"
+   ],
+   "addedDate": "2026-11-23"
+  },
+  {
+   "id": "os316",
+   "name": "VITA：无噪声流匹配策略学习（ICLR 2026）",
+   "github": "https://github.com/ucd-dare/VITA",
+   "organization": "UC Davis DARE Lab / ucd-dare",
+   "org": "UC Davis DARE Lab",
+   "category": "ai-model",
+   "description": "Flowing from Vision to Action: Noise-Free Flow Matching Policy Learning，ICLR 2026 收录，仓库以 Jupyter Notebook 为主，约 147 star、2026-11-22 仍在更新，配套项目主页 https://ucd-dare.github.io/VITA/ 。工作针对扩散 / 流匹配策略在推理时需要多步去噪、噪声采样带来方差与延迟的问题，探索「无噪声」的流匹配策略学习路径，把动作生成做成更确定、更容易在真机控制频率上部署的过程。与本轮 p409 O2LaF 的「从视频里学可迁移动作变量」、p410 TipDex-VTLA 的「执行期有界修正」形成互补：一个改动作变量来源，一个改生成过程的随机性，一个改执行期的介入时机。许可证 NOASSERTION，商用前需核对。",
+   "language": "Jupyter Notebook",
+   "license": "未声明",
+   "stars": 147,
+   "features": [
+    "无噪声流匹配策略",
+    "确定性动作生成",
+    "ICLR 2026 官方实现",
+    "Jupyter 可复现实验",
+    "配套项目主页"
+   ],
+   "tags": [
+    "VITA",
+    "Flow Matching",
+    "流匹配策略",
+    "ICLR 2026",
+    "动作生成"
+   ],
+   "addedDate": "2026-11-23"
+  },
+  {
+   "id": "os315",
+   "name": "Embodied-AI-Guide：Lumina 具身智能社区中文技术指南",
+   "github": "https://github.com/TianxingChen/Embodied-AI-Guide",
+   "organization": "Lumina 具身智能社区 / TianxingChen",
+   "org": "Lumina 具身智能社区",
+   "category": "data-tools",
+   "description": "[Lumina具身智能社区] 具身智能技术指南 Embodied-AI-Guide，仓库 2024-05 创建、2026-11-17 仍在更新，约 17028 star，是本轮发现里星标最高的中文具身智能系统性学习索引。它按技术方向组织论文、课程、工具链、数据集与开源项目，把「从零入门到复现前沿」的路径做成可增量维护的文档仓库，而不是零散链接收藏。收录价值在于：配合国家数据局刚启动的具身智能数据国家标准研制（n799），这类社区指南正是标准落地时最需要被对齐的「事实上的教学口径」；站内 /learn 各模块的推荐资源也可与之交叉引用。许可证为 NOASSERTION，二次分发前需自行核对仓库内声明。",
+   "language": "Markdown",
+   "license": "未声明",
+   "stars": 17028,
+   "features": [
+    "中文具身智能技术指南",
+    "论文与课程系统化索引",
+    "工具链与数据集导航",
+    "社区持续维护",
+    "约 1.7 万 star"
+   ],
+   "tags": [
+    "Embodied-AI-Guide",
+    "Lumina",
+    "中文学习路径",
+    "资源索引",
+    "具身智能入门"
+   ],
+   "addedDate": "2026-11-23"
+  },
   {
    "id": "os311",
    "name": "LingBot-Touch：面向通用灵巧操作的异构触觉表征",
@@ -7976,5 +8084,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 301
+ "totalItems": 305
 }
