@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DreamForge：把世界模型的「想象」变成可证伪的策略纠错训练数据 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">DreamForge：把世界模型的「想象」变成可证伪的策略纠错训练数据 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="dreamforge">DreamForge：把世界模型的「想象」变成可证伪的策略纠错训练数据</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/rzc156/dreamforge">https://github.com/rzc156/dreamforge</a>  </p>
+<p><strong>Stars</strong>: 130 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-23  </p>
+<p><strong>组织</strong>: rzc156  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-23</p>
+</blockquote>
+<hr />
+<p><strong>rzc156/dreamforge</strong> 是一个把世界模型「想象」转成机器人策略纠错训练数据的单卡管线，MIT、Python，2026-10-12 创建，约 130 star。</p>
+<p>它的定位很克制：不做更炫的视频生成，而是回答一个工程问题——如果世界模型会幻觉，怎么保证由它生成的数据真的能用来纠正策略？仓库给出的答案是<strong>可证伪</strong>：以 SmolVLA 为策略、LIBERO 为任务集，用 CEM 在世界模型里搜候选动作，再用<strong>成对的仿真器回放</strong>（paired simulator replays）核验想象结果与真实动力学是否一致，只把被证伪的轨迹对转成纠错样本。</p>
+<p>topics 覆盖 embodied-ai、vla、lerobot、libero、world-model、imitation-learning，适合作为数据闭环的动手实验底座。</p>
+<hr />
+<p>按仓库描述与此类管线的一般结构，可归纳为五段（结构性归纳，具体以 README 为准）：</p>
+<ol>
+<li><strong>策略快照</strong>：加载当前 SmolVLA 检查点，在 LIBERO 任务上采样失败/次优片段，作为「哪里需要纠错」的种子。</li>
+<li><strong>想象搜索</strong>：在世界模型里对候选动作序列做 CEM（交叉熵法）搜索，挑出模型认为能改善结果的一段。</li>
+<li><strong>成对回放</strong>：把同一初始状态、同一动作序列分别送到世界模型与真实仿真器，得到成对轨迹；这一步是「可证伪」的核心。</li>
+<li><strong>一致性判据</strong>：比较两条轨迹的状态/奖励差异，超过阈值即判为模型幻觉，剔除或降权；留下的才是可信的纠错信号。</li>
+<li><strong>数据回灌</strong>：把通过核验的轨迹对写成纠错训练样本（LeRobot / LIBERO 格式），增量微调策略，回到第 1 步形成闭环。</li>
+</ol>
+<p>第 3–4 步最容易被跳过，也最决定项目价值：没有它们，世界模型只是一个会生成漂亮失败样本的噪声源。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/rzc156/dreamforge">DreamForge 仓库</a></strong> — MIT，单卡可证伪纠错数据管线。</li>
+<li><strong><a href="https://huggingface.co/lerobot/smolvla_base">SmolVLA</a></strong> — LeRobot 生态的轻量 VLA 策略底座。</li>
+<li><strong><a href="https://libero-project.github.io/">LIBERO 基准</a></strong> — 机器人操作终身学习任务集。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.26105">本轮 p415 PhysVAM（arXiv 2611.26105）</a></strong> — 不用未来像素、改用未来任务价值引导动作，可作路线对照。</li>
+<li><strong><a href="/learn/embodied-data-engineering/10">站内 /learn/embodied-data-engineering 数据闭环与主动学习</a></strong> — 纠错样本如何进入数据闭环。</li>
+</ul>
+<hr />
+<h3 id="_2">最小上手路径</h3>
+<pre><code>git clone https://github.com/rzc156/dreamforge.git
+cd dreamforge
+pip install -r requirements.txt
+</code></pre>
+<ol>
+<li>先读 README 确认 SmolVLA 权重、LIBERO 任务与世界模型检查点的获取方式；单卡是设计目标，但显存下限要看实际配置。</li>
+<li>用<strong>单个任务、少量种子</strong>跑通完整闭环：采样失败片段 → CEM 搜索 → 成对回放 → 一致性筛选 → 生成纠错样本，先确认数据格式与数量。</li>
+<li>做<strong>可证伪消融</strong>：关掉成对回放、直接把所有想象轨迹当训练数据，比较策略微调后的成功率。这一步能直接验证项目主张。</li>
+<li>记录三笔账：世界模型推理耗时、仿真器回放耗时、纠错样本通过率；判断单卡是否真的够用。</li>
+<li>把生成的样本按 /learn/embodied-data-engineering 的数据契约（schema、时间对齐、分片）整理，便于跨任务复用。</li>
+</ol>
+<h3 id="_3">常见坑</h3>
+<ul>
+<li>把「单卡可跑」理解成「几分钟跑完」：CEM 搜索与成对仿真回放本身都要算力。</li>
+<li>一致性阈值设得过松，等于没做可证伪；设得过严，通过率太低、闭环没数据。</li>
+<li>只报微调后成功率，不报纠错样本通过率与幻觉比例，无法判断收益来自数据还是来自额外训练。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 130（2026-11-23 核验）</td>
+</tr>
+<tr>
+<td>创建 / 最后更新</td>
+<td>2026-10-12 / 2026-10-12</td>
+</tr>
+<tr>
+<td>主语言 / 许可</td>
+<td>Python / MIT</td>
+</tr>
+<tr>
+<td>算力目标</td>
+<td>单张 GPU</td>
+</tr>
+<tr>
+<td>组件</td>
+<td>SmolVLA、LIBERO、CEM、paired simulator replays</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>可证伪的纠错训练数据，而非视频</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：仓库自述是 falsifiable pipeline，摘要未给具体成功率提升数值，且最后更新与创建同为 10-12，属于一次性发布的研究型仓库，成熟度低于持续维护的框架。评估它应看三件事：纠错样本通过率、关掉核验后的性能差、以及单卡端到端耗时。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>对照对象</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>os321 TwoPass（本轮）</td>
+<td>压低视频生成的去噪步数，优化「生成未来画面」的成本；DreamForge 输出的是训练数据</td>
+</tr>
+<tr>
+<td>os319 SuperMimic（本轮）</td>
+<td>把世界模型当<strong>可微优化通道</strong>直接给策略解析梯度；DreamForge 把世界模型当<strong>数据生成器</strong></td>
+</tr>
+<tr>
+<td>p415 PhysVAM（本轮）</td>
+<td>干脆不重建未来视觉状态，只预测未来任务价值</td>
+</tr>
+<tr>
+<td>/learn/embodied-data-engineering 数据闭环与主动学习</td>
+<td>站内正文，讲主动学习的采样判据与数据契约</td>
+</tr>
+</tbody>
+</table>
+<p>这四者恰好覆盖世界模型用于策略改进的四条不同路径：当优化器、当数据工厂、当少步生成器、当价值预测器。DreamForge 的独特性是引入了独立仿真器作为「裁判」，把幻觉风险显式建模。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

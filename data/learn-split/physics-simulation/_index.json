@@ -1,7 +1,7 @@
 {
   "id": "physics-simulation",
   "name": "物理仿真引擎",
-  "lastUpdated": "2026-11-16T08:32",
+  "lastUpdated": "2026-11-23T09:30",
   "stage": "阶段五：仿真与 Sim-to-Real",
   "importance": "核心",
   "estimatedHours": 40,
@@ -277,20 +277,27 @@
     {
       "id": "sec-10",
       "title": "可微分仿真与基于梯度的轨迹优化",
-      "lastUpdated": "2026-10-27",
-      "chars": 3410,
+      "lastUpdated": "2026-11-23T09:30",
+      "chars": 11871,
       "shortTitle": "可微分仿真与基于梯度的轨迹优化",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 4,
+      "readingMinutes": 14,
       "headings": [
         "可微分物理仿真：用梯度优化一切",
         "为什么可微分仿真很重要？",
         "Genesis引擎：可微分仿真实战",
         "可微分仿真的关键挑战",
         "仿真器可微分性对比",
+        "先补一层：这一章到底在优化什么",
+        "一、梯度方差：解析梯度为什么省算力",
+        "二、BPTT：梯度怎么穿过时间",
+        "三、critic 自举：短视界为什么不会算错",
+        "四、接触不可微：零梯度平台与三条出路",
+        "五、把「可微」用在真正影响目标的量上",
+        "六、落地清单与最容易踩的坑",
         "练习",
         "参考答案"
       ],
@@ -561,7 +568,7 @@
       "summary": "过去两年，「世界模型」这个词在具身智能语境里被用了太多次，含义漂移得很厉害。要理解 2026 年这批新工作，先把两次转向讲清楚。"
     }
   ],
-  "readingMinutes": 193,
+  "readingMinutes": 203,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 162775
+  "chars": 171236
 }

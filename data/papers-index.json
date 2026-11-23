@@ -1,6 +1,146 @@
 {
- "lastUpdated": "2026-11-23T08:35",
+ "lastUpdated": "2026-11-23T09:20",
  "papers": [
+  {
+   "id": "p416",
+   "title": "TuringPAI: A Foundation for On-Device Physical AI",
+   "authors": "Qiman Wu, Hanlin Chen, Yuhua Wei, Mingyuan Wang, Shaman Tang et al. (28 authors)",
+   "venue": "arXiv 2611.25474",
+   "date": "2026-11-19",
+   "arxiv": "https://arxiv.org/abs/2611.25474",
+   "github": "",
+   "tags": [
+    "TuringPAI",
+    "端侧Physical AI",
+    "HybridViT-MLQ",
+    "Orin-X",
+    "LIBERO",
+    "VLA"
+   ],
+   "category": "端侧模型 / VLA",
+   "difficulty": "高级",
+   "tldr": "**问题**：Physical AI 要在有限车载/机载算力下理解空间关系与动态环境，并把观测转成动作；把云端多模态大模型直接搬上 Orin 级 SoC 不现实。**做法**：TuringPAI 是一族端侧模型，含共享视觉语言理解的 TuringPAI-VL、自动驾驶的 TuringPAI-Drive 与机器人操作的 TuringPAI-Embodied。VL 是 0.65B 的 HybridViT-MLQ，把卷积局部聚合与 Transformer 全局建模结合，Multi-scale Latent Queries 在同一个视觉 Transformer 内整合空间特征与观测历史，给语言模型一个紧凑结构化接口；训练混合通用视觉语言数据与几何、跨视角、时序监督。**结果**：TuringPAI-VL 在定量几何感知上优于 Qwen2-VL-2B，并作为两个下游 VLA 的共享初始化。Drive 用 MLQ 接口把所有 ADE/FDE 指标保持在全 token HybridViT 基线的 1.2% 以内，在单颗 NVIDIA Orin-X SoC 上借 XPeng Native Runtime 以 12 Hz 生成轨迹；Embodied 在 LIBERO 四套基准上平均成功率 96.8%。",
+   "keyInsights": [
+    "用 0.65B 共享视觉语言底座同时服务驾驶与操作，证明端侧 Physical AI 不必为每个域各训一个大模型",
+    "Multi-scale Latent Queries 把空间特征与观测历史压成紧凑接口，是端侧时延能压下来的关键结构",
+    "几何、跨视角、时序三类监督补齐了通用 VLM 最缺的空间与动态理解",
+    "给出 Orin-X 上 12 Hz 的实车数字，把「端侧可跑」从口号变成可核验的工程指标"
+   ],
+   "impact": "与站内 /learn/ai-infra 模型量化与压缩、云边端协同与 OTA 两章直接对应：0.65B 底座、紧凑查询接口与 12 Hz 实车推理，是「把模型送进机器人」这一工程问题的完整参照。本轮 os322 roboskills（机器人 Agent 工作流）与 n817 零部件量价拆解则分别给出软件侧与硬件侧的成本约束。",
+   "addedDate": "2026-11-23"
+  },
+  {
+   "id": "p415",
+   "title": "PhysVAM: Physics-oriented Future Value Action Model for Dynamic Object Manipulation",
+   "authors": "Yuxiang Yang, Jingbo Zhang, Jiaru Zhong, Junliang Chen, Yirui Zhou, Guangming Wang, Haitao Lin, Huaiyuan Xu, Yi Wang, Lap-Pui Chau",
+   "venue": "arXiv 2611.26105",
+   "date": "2026-11-19",
+   "arxiv": "https://arxiv.org/abs/2611.26105",
+   "github": "https://metarobo.github.io/physvam.github.io/",
+   "tags": [
+    "PhysVAM",
+    "动态操作",
+    "未来价值",
+    "多时域预测",
+    "门控交叉注意力",
+    "价值引导"
+   ],
+   "category": "操作 / 世界动作模型",
+   "difficulty": "高级",
+   "tldr": "**问题**：预测未来场景或物体状态，并不等于回答「机器人与物体的交互会推进还是阻碍任务」；在动态操作里物体在感知与执行期间还在运动，只建模物体动力学、生成未来画面，容易把算力花在与任务无关的像素上。**做法**：PhysVAM 用「面向物理的未来价值动作模型」把预期交互表示成它对未来任务进度的影响，以价值形式给出任务导向的预见，而不重建未来视觉状态。模型以当前观测与历史物体/机器人运动为条件，联合学习动作生成与多时域未来价值预测；价值分支从成功与失败轨迹中按未来任务价值预测学到时域特定的潜表示，再经门控交叉注意力注入动作策略，把动作生成导向有利于任务成功的交互。**结果**：仿真与真机实验均优于基线，相对最强基线在仿真与真机任务上分别取得 27.0 与 27.5 个百分点的绝对成功率提升。23 页、10 图，项目页已公开。",
+   "keyInsights": [
+    "把「预测未来画面」换成「预测未来任务价值」，让世界模型的容量花在任务相关量上",
+    "用成功与失败轨迹共同训练价值分支，使价值表示天然带有失败模式的信息",
+    "多时域价值 + 门控交叉注意力，让不同提前量的预见以可学习的权重影响当前动作",
+    "价值引导直接对齐成功率指标，27 个百分点级别的提升说明动态操作的主要瓶颈确实在预见而非感知"
+   ],
+   "impact": "与站内 /learn/world-models-llm 世界动作模型、/learn/reinforcement-learning 价值函数一脉相承：PhysVAM 可看成把价值函数从「评估状态」搬到「评估未来交互对任务进度的贡献」。本轮 os320 DreamForge（世界模型想象生成纠错训练数据）与 os321 TwoPass（少步视频预测）分别是同一思路的数据侧与生成侧实现，三者可对照阅读。",
+   "addedDate": "2026-11-23"
+  },
+  {
+   "id": "p414",
+   "title": "ECHO: In-Context Behavior foundation model for Humanoid Whole-Body Control",
+   "authors": "Xingyi Wang, Bin Li, Jiyuan Shi, Chenyun Zhang, Weiji Xie, Xiangyu Miao, Junsong Wu, Wei Song, Shiqiang Zhu, Chenjia Bai",
+   "venue": "arXiv 2611.25778",
+   "date": "2026-11-19",
+   "arxiv": "https://arxiv.org/abs/2611.25778",
+   "github": "https://mwondering.github.io/echo-bfm/",
+   "tags": [
+    "ECHO",
+    "行为基础模型",
+    "人形全身控制",
+    "上下文适应",
+    "残差适配",
+    "Unitree G1"
+   ],
+   "category": "运动控制 / 基础模型",
+   "difficulty": "高级",
+   "tldr": "**问题**：人形行为基础模型（BFM）靠大规模动作模仿与海量并行强化学习拿到广谱技能，但「会很多动作」不等于「在具体物理条件下做得准」；不区分底层动力学，策略往往收敛到跨环境都安全的保守折中。**做法**：ECHO 把交互经验变成环境特定的控制，把通用行为能力与动力学特定的执行拆开。Mixed and Annealed Sampling 在单一预训练阶段里平衡针对性练习与广谱动作覆盖，先建立行为先验；在此之上，Context Representation and Residual Adaptation 从交互历史中学结构化的动力学表示，用来指导对冻结先验的残差修正，因此测试时不需要更新任何参数。**结果**：在多种动作与物理条件下优于所有基线方法；宇树 G1 部署展示了覆盖极端特技与地形交互的全身遥操作，以及操作与全身控制中的负载适应。项目页已公开。",
+   "keyInsights": [
+    "把「通用能力」与「动力学特定的执行」解耦，避免一条策略为了兼容所有工况而退化成保守折中",
+    "冻结先验 + 残差修正，使在线适应不需要测试时梯度更新，对真机部署的时延与稳定性更友好",
+    "用交互历史学结构化动力学表示，本质是把系统辨识做成 in-context 推断而不是显式参数估计",
+    "混合退火采样在单一预训练阶段同时兼顾难动作练习与动作覆盖，省掉多阶段课程"
+   ],
+   "impact": "与本轮 p412 FAB（从视频得到人体动作参考）、os319 SuperMimic（把共享刚体动力学学成可微世界模型）构成同一问题的三种答案：FAB 解决参考从哪来，SuperMimic 解决怎么便宜地训，ECHO 解决训完之后怎么按环境微调。配合 /learn/physics-simulation 可微分仿真与基于梯度的轨迹优化一章，可对比「改参数」与「改上下文」两条适应路线。",
+   "addedDate": "2026-11-23"
+  },
+  {
+   "id": "p413",
+   "title": "MIR-Depth: Multi-Range Refinement for Single-View RGB-D Depth Completion of Transparent Objects",
+   "authors": "Xinzhe Fu, Qi Shao, Yuanfei Xie, Taoyu Wu, Zhihao Cao, Long Hu, Hong Liang, Xianzhi Li, Anh Nguyen, Baoru Huang, Rongsheng Li",
+   "venue": "arXiv 2611.25417",
+   "date": "2026-11-19",
+   "arxiv": "https://arxiv.org/abs/2611.25417",
+   "github": "",
+   "tags": [
+    "MIR-Depth",
+    "透明物体",
+    "深度补全",
+    "RGB-D",
+    "6-DoF抓取",
+    "ConvGRU"
+   ],
+   "category": "感知 / 深度补全",
+   "difficulty": "高级",
+   "tldr": "**问题**：透明物体的镜面反射让 RGB-D 深度大面积缺失，折射又会把非零读数污染成背景深度，原始测量根本不能当表面锚点；在固定采样预算下，只在单一搜索区间里精修初始预测，要么漏掉大折射偏移、要么牺牲局部细分辨率。**做法**：MIR-Depth 构造坐标感知的多区间假设——一个 3D 聚合的全局逆深度体，加上围绕先验引导初始深度、沿深度轴滤波的逐像素局部体；选择性循环精修用越界查找掩码与有效性掩码 softmax 融合，在多尺度 ConvGRU 里迭代更新逆深度；最后用空间门控修正，对全分辨率残差学一个逐像素门，保住初始几何而不把原始传感器读数当硬约束。**结果**：在 TransCG、TODD、TRansPose、ClearPose、HouseCat6D 上误差低于 ReMake、DFNet、BP-Net、PSD；真机评测确认表面几何足以支撑 6-DoF 抓取位姿预测。作者声明代码与预训练模型将公开，9 页正文。",
+   "keyInsights": [
+    "把「单一搜索区间」换成全局逆深度体 + 深度轴滤波的逐像素局部体，显式化解大折射偏移与局部精度的预算冲突",
+    "越界查找掩码与有效性掩码 softmax，让循环精修不会被无效假设和背景污染带偏",
+    "空间门控把修正项变成可学习的软约束，而不是把不可靠的 RGB-D 读数写进硬约束",
+    "评测直接落到 6-DoF 抓取位姿，而不是停在深度误差指标上"
+   ],
+   "impact": "透明物体是闭环抓取最难的一块盲区：没有可信深度，PBVS 的位姿误差无从算起，IBVS 也不得不绕开。配合本轮深化的 /learn/computer-vision 视觉伺服章节，可以理解为什么「深度是否可信」会直接决定控制律的选择；与 p412 FAB 一起看，则覆盖了从静态几何到动态人体的两条感知入口。",
+   "addedDate": "2026-11-23"
+  },
+  {
+   "id": "p412",
+   "title": "FAB: Fast and Accurate Body Estimation in Pixels, World Space and Scenes",
+   "authors": "Jinkun Cao",
+   "venue": "arXiv 2611.25801",
+   "date": "2026-11-19",
+   "arxiv": "https://arxiv.org/abs/2611.25801",
+   "github": "https://www.jinkuncao.com/FAB",
+   "tags": [
+    "FAB",
+    "人体姿态估计",
+    "稠密表面点",
+    "SMPL",
+    "人体到人形重定向",
+    "Unitree G1"
+   ],
+   "category": "感知 / 姿态估计",
+   "difficulty": "高级",
+   "tldr": "**问题**：参数化人体网格模型只回归 SMPL 一类参数，既慢又丢失骨架关节与表面稠密几何，导致后续做人到机器人的动作迁移时只能靠专门重定向器补回细节。**做法**：FAB 直接预测人体骨架关节与稠密表面点，同时给出 2D/3D 稠密点和一个参数化 MHR（Momentum Human Rig）头，用一次学习式拟合加两步 Gauss-Newton 得到 SMPL；同一网络还预测脚跟、脚趾、手、膝的接触点，把人体与场景连接起来，并估计世界空间运动、融合人物周围静态场景深度、用接触点对齐人体与场景。ViT-L 学生 FAB-L 由微调后的 SAM 3D Body 蒸馏而来，在 RTX 4070 Ti SUPER 上从检测到拟合对单人实时运行，速度为 SAM 3D Body 的 eager-PyTorch 纯身体路径的 4.6 倍，且在多数相机空间基准上精度更高。**结果**：面向人到人形的 real-to-sim 迁移，模型内的 G1 头与 FAB-Retarget（读取稠密点或拟合网格的动作级重定向器）把动作映射到宇树 G1；论文称其参考轨迹比 SOMA、GMR、UMR、OmniRetarget 等专用重定向器更贴合真人，也明显优于 Fast SAM 3D Body 加序列 IK 的方案。项目页与 28 页正文（9 页主文、16 图）已公开。",
+   "keyInsights": [
+    "把「只回归参数」改成「直接回归关节 + 稠密表面点」，让下游重定向不必再从稀疏参数反推几何",
+    "一次学习式拟合 + 两步 Gauss-Newton，在精度与推理速度之间给出可解释的折中，而不是纯端到端黑箱",
+    "同一网络顺带预测脚跟/脚趾/手/膝接触，把人体估计与世界空间场景对齐合成一个任务",
+    "蒸馏后的 ViT-L 学生把教师模型的能力压到消费级显卡可实时运行，4.6 倍加速同时精度不降"
+   ],
+   "impact": "与站内 /learn/computer-vision 视觉伺服与闭环抓取控制、/learn/robot-kinematics 运动学互为上下游：FAB 解决的是「从像素拿到可信的人体几何与接触」，这正是 Real-to-Sim 与遥操作数据管线的入口。配合本轮 p414 ECHO（人形全身控制）与 os319 SuperMimic（可微世界模型训练全身跟踪），可以看清一条完整链路：感知出动作 → 重定向成参考轨迹 → 用低成本训练把策略做出来。",
+   "addedDate": "2026-11-23"
+  },
   {
    "id": "p411",
    "title": "AgentRoboCritic: Understanding the Capability of Frontier Agents on Direct Robot Control",
@@ -11017,5 +11157,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 385
+ "totalItems": 390
 }

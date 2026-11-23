@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuperMimic：CoRL 2026 最佳论文官方实现，用一个可微世界模型做全身动作跟踪 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">SuperMimic：CoRL 2026 最佳论文官方实现，用一个可微世界模型做全身动作跟踪 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="supermimiccorl-2026">SuperMimic：CoRL 2026 最佳论文官方实现，用一个可微世界模型做全身动作跟踪</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/HybridRobotics/supermimic">https://github.com/HybridRobotics/supermimic</a>  </p>
+<p><strong>Stars</strong>: 1943 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-23  </p>
+<p><strong>组织</strong>: UC Berkeley Hybrid Robotics  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-23</p>
+</blockquote>
+<hr />
+<p><strong>HybridRobotics/supermimic</strong> 是 CoRL 2026 最佳论文《SuperMimic: Scaling Humanoid Whole-Body Control with One Differentiable World Model》（arXiv 2610.28480，Oral）的<strong>官方实现</strong>，Apache-2.0，2026-11-10 创建、11-21 仍在更新，约 1900 star。</p>
+<p>一句话概括它的经济学：动作库每扩一分，无模型 RL 就要再付一份集群账单；但所有动作共享的只有一具身体、一套混合刚体动力学。SuperMimic 把这笔「跟动作数成正比」的成本，换成「跟身体数成正比」的成本。做法是从标准刚体仿真器的转移日志里拟合一个可微世界模型，策略在模型内部做短视界想象、用 BPTT 反传解析梯度，从而绕开「刚体接触不光滑、仿真器不可微」这个卡了很多年的老问题。</p>
+<p>站内 os253 / os269 是官方放码前的社区独立复现，本条是正式仓库。</p>
+<hr />
+<p>按论文与 README 可归纳为三步训练环（结构性归纳，具体以仓库为准）：</p>
+<ol>
+<li><strong>采集（Collect）</strong>：当前确定性策略在 MuJoCo Warp 里执行带噪声的动作，把状态转移写进固定长度 replay buffer；旧策略采的转移仍可用于拟合，因为动力学不依赖于是谁采的。每张 GPU 约 4096 个并行环境。</li>
+<li><strong>拟合（Fit）</strong>：从 buffer 采 <strong>8 步自回归窗口</strong>训练世界模型——三层宽 2048 的 MLP，带状态、奖励、无噪声观测、终止概率四个头。模型条件于本回合的仿真上下文（摩擦、关节标定偏置、躯干质心），因此保持确定性；观测噪声在模型外添加。</li>
+<li><strong>想象改进（Imagine）</strong>：冻结世界模型权重，从 buffer 状态出发在模型里想象 <strong>32 步</strong>，对想象回报做随时间反向传播（BPTT）拿解析梯度；32 步之后由 critic 用 GAE 自举，所以模型只需在短视界内准确。</li>
+</ol>
+<p>配套设计：目标编码器看未来 10 帧参考而非单帧，本体感觉取最近 10 帧；跟踪奖励沿用 BeyondMimic 但去掉自碰撞惩罚（想象轨迹里策略是确定的，没有奖励黑客空间），关节限位权重从 −10 降到 −2；终止只看根部高度/倾斜，不因末端偏差终止。</p>
+<p><strong>为什么 8 步拟合能撑 32 步想象</strong>：8 步自回归训练让模型学会修正自己的预测误差，因此长滚动仍稳定；论文报告动作库从 1 小时扩到 264 小时，8 步预测误差稳在 0.007–0.011。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/HybridRobotics/supermimic">SuperMimic 官方仓库</a></strong> — Apache-2.0，CoRL 2026 最佳论文官方实现。</li>
+<li><strong><a href="https://arxiv.org/abs/2610.28480">论文 arXiv 2610.28480</a></strong> — Scaling Humanoid Whole-Body Control with One Differentiable World Model。</li>
+<li><strong><a href="https://supermimic.github.io/">项目主页</a></strong> — 真机动作演示与结果汇总。</li>
+<li><strong><a href="https://k.sina.com.cn/article_1650111241_625ab30902001i9ea.html">本轮 n815 中国经营报报道</a></strong> — 从产业视角看训练成本，提醒世界模型开发、仿真环境与真机验证的投入也要计入。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.25778">本轮 p414 ECHO（arXiv 2611.25778）</a></strong> — 训完之后怎么按动力学条件适应，与 SuperMimic 互补。</li>
+<li><strong><a href="/learn/physics-simulation/10">站内 /learn/physics-simulation 可微分仿真与基于梯度的轨迹优化</a></strong> — 本轮深化章节，讲清解析梯度为什么比采样梯度省算力。</li>
+</ul>
+<hr />
+<h3 id="_2">最小上手路径</h3>
+<ol>
+<li>克隆仓库并读 README：</li>
+</ol>
+<pre><code>git clone https://github.com/HybridRobotics/supermimic.git
+cd supermimic
+</code></pre>
+<ol>
+<li>按 README 准备同级依赖仓库 <code>HybridRobotics/mjlab_research</code> 与 MuJoCo Warp、wandb；回放命令读取 wandb run，先确认示例配置指向哪个 run。</li>
+<li>数据：公开的 G1 重定向 <strong>BONES-SEED</strong>（原始 142220 条 → 名称过滤 129667 → 可行性过滤 129514 条、264.56 小时）；对照实验另用 LAFAN1 的 40 段、2.45 小时。</li>
+<li>先跑单卡短预算（3 小时以内）复现「超过 SONIC 发布检查点归一化回报 0.90」这一结论，再考虑双卡 9.8 小时的清零实验。</li>
+<li>真机部署前核对：策略权重是否可下载、G1 的关节限位与足底摩擦设置、以及世界模型是否只用在训练期（部署时演员只吃带噪声的本体感觉与目标）。</li>
+</ol>
+<h3 id="_3">常见坑</h3>
+<ul>
+<li>论文与 README <strong>未声明已放出可下载的策略权重</strong>，只靠代码不一定能直接复现报告曲线。</li>
+<li>把「1000 倍卡时」当成纯算法收益：作者自己给了 wall-clock 约 56 倍、GPU 小时约 7200 倍两个口径，且 H100 与 L40 峰值算力不同、动作时长 264.56 h vs 611 h 也不对齐。</li>
+<li>想象视界越长越好：消融显示 64→128 步后到达目标回报的时间接近三倍且最终回报下降，128 步是单张 H100 的上限。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>数值（作者自报，未经独立复现）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单卡 3 小时</td>
+<td>归一化回报超过 SONIC 发布检查点（图中标 0.90）</td>
+</tr>
+<tr>
+<td>失败动作数</td>
+<td>129514 条上：SONIC 179 → 单卡 3 小时 25 → 双卡 9.8 小时 0</td>
+</tr>
+<tr>
+<td>对照算力</td>
+<td>SONIC：128 张 L40 × 7 天 ≈ 2.1 万 GPU 小时</td>
+</tr>
+<tr>
+<td>卡时比</td>
+<td>约 7200 倍（对外口径「超过 1000 倍」）</td>
+</tr>
+<tr>
+<td>墙钟比</td>
+<td>约 56 倍（对外口径「超过 50 倍」）</td>
+</tr>
+<tr>
+<td>世界模型推演</td>
+<td>比 MuJoCo Warp 快 10× 以上，6.4 万环境时 62×</td>
+</tr>
+<tr>
+<td>同栈 PPO 对照</td>
+<td>LAFAN1 上 SuperMimic 单卡 1.2 h 达 0.82；PPO-Sim 18 h 内 1/4/8 卡分别 0.60/0.70/0.72</td>
+</tr>
+<tr>
+<td>真机</td>
+<td>Unitree G1：跨越跳、侧滚、90° 翻、原地 360° 翻（无论文报告成功率）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：最值得看的不是「1000 倍」，而是同栈 PPO 对照——4 卡加到 8 卡几乎没帮助，说明无模型路线在这组设定下已接近收益递减。真机四段动作只给了连续照片，没有试验次数与成功率，属于演示级证据。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>对照对象</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>os253 / os269（站内）</td>
+<td>官方放码前的社区独立复现，可作实现对照</td>
+</tr>
+<tr>
+<td>SONIC（论文基线）</td>
+<td>128 卡无模型通才策略，动作库越大账单越大</td>
+</tr>
+<tr>
+<td>SHAC / 可微仿真路线</td>
+<td>穿过<strong>可微仿真器</strong>求导，要求接触光滑化；SuperMimic 穿过<strong>学到的模型</strong>，刚体仿真器可原样使用</td>
+</tr>
+<tr>
+<td>RWM / RWM-U</td>
+<td>也在神经仿真器里训策略并迁真机，但想象滚动仍用 PPO、世界模型用其他策略轨迹预训练</td>
+</tr>
+<tr>
+<td>BeyondMimic</td>
+<td>单动作专家蒸馏路线，跟踪奖励设计被 SuperMimic 沿用并调整</td>
+</tr>
+<tr>
+<td>p414 ECHO（本轮）</td>
+<td>先验训完后按环境做 in-context 适应；SuperMimic 解决的是先验怎么便宜地训</td>
+</tr>
+</tbody>
+</table>
+<p>SuperMimic 的独特性在「对回报本身求导 + 模型在训练中拟合自己策略采到的数据」，以及把接触非平滑这个老大难用「学一个可微代理」绕过去，而不是改造物理引擎。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

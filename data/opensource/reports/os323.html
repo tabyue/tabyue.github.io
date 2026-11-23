@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hiWBC：把人形机器人全身控制收敛成一层统一基础设施 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">hiWBC：把人形机器人全身控制收敛成一层统一基础设施 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="hiwbc">hiWBC：把人形机器人全身控制收敛成一层统一基础设施</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/humanoidintelligence/hiWBC">https://github.com/humanoidintelligence/hiWBC</a>  </p>
+<p><strong>Stars</strong>: 7 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-23  </p>
+<p><strong>组织</strong>: Humanoid Intelligence  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-23</p>
+</blockquote>
+<hr />
+<p><strong>humanoidintelligence/hiWBC</strong> 是一个定位为 <code>[Infra]</code> 的<strong>统一人形全身控制层</strong>（Unified Whole-Body Control Layer），Apache-2.0、Python，2026-11-03 创建、11-13 更新，约 7 star。</p>
+<p>它不做新算法，而是把人形 WBC 里反复出现的工程负担收进同一层：多任务优先级、接触/支撑状态管理、目标编码器与控制器接口、宇树本体的部署适配。topics 含 whole-body-control、humanoid-robot、infrastructure、unitree、deployment、unified。</p>
+<p>star 数很低，但工程位置关键：本轮 p414 ECHO（冻结先验 + in-context 残差适应）与 os319 SuperMimic（共享可微世界模型训通才跟踪器）都默认存在这样一个统一 WBC 接口层，hiWBC 把这个默认假设显式实现出来。</p>
+<hr />
+<p>按仓库标题与 topics 可归纳为四块（结构性归纳，具体以 README 为准）：</p>
+<ol>
+<li><strong>任务优先级与求解</strong>：全身控制本质是多任务带优先级的二次规划或层级投影——平衡、接触、跟踪、姿态正则按严格优先级堆叠，低优先级任务只能在高层任务的零空间里实现。</li>
+<li><strong>接触状态机</strong>：支撑脚切换、腾空相、落地冲击的状态管理，把「哪些约束此刻生效」显式化，避免用一套固定权重硬扛所有相位。</li>
+<li><strong>目标接口</strong>：统一目标编码器，让跟踪参考动作、速度指令、遥操作输入等不同接口共用同一套动力学与部署通道。</li>
+<li><strong>部署适配</strong>：宇树本体的关节限位、控制周期、状态话题与遥测对齐，把仿真里的策略搬到真机时不必重写接口。</li>
+</ol>
+<p><strong>为什么需要独立一层</strong>：没有它，每个新策略都要自己实现一遍接触管理与优先级投影，论文之间的对比就变成「比策略」还是「比 WBC 实现」都分不清。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/humanoidintelligence/hiWBC">hiWBC 仓库</a></strong> — Apache-2.0，统一全身控制层。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.25778">本轮 p414 ECHO（arXiv 2611.25778）</a></strong> — 冻结先验 + in-context 残差适应，需要稳定 WBC 接口承接。</li>
+<li><strong><a href="https://github.com/HybridRobotics/supermimic">本轮 os319 SuperMimic 官方实现</a></strong> — 通才跟踪策略，可作 hiWBC 的上层策略。</li>
+<li><strong><a href="/learn/robot-dynamics">站内 /learn/robot-dynamics</a></strong> — 动力学建模与计算力矩控制。</li>
+<li><strong><a href="/learn/humanoid-fullstack">站内 /learn/humanoid-fullstack 人形全栈</a></strong> — 本体、运控、策略的分层视角。</li>
+</ul>
+<hr />
+<h3 id="_2">最小上手路径</h3>
+<pre><code>git clone https://github.com/humanoidintelligence/hiWBC.git
+cd hiWBC
+pip install -r requirements.txt
+</code></pre>
+<ol>
+<li>先读 README 确认支持的本体与仿真器，以及是否带示例策略/权重的接口契约。</li>
+<li>跑通最小闭环：给定一条参考动作 → 经统一 WBC 层 → 输出关节指令 → 仿真里跟踪，记录跟踪误差与接触状态切换日志。</li>
+<li>做优先级消融：交换平衡与跟踪的优先级，观察失稳时刻，确认层级投影真的生效。</li>
+<li>换一个上层接口（跟踪参考 vs 速度指令），检查是否无需改动底层动力学与部署代码。</li>
+<li>真机前核对关节限位、控制周期与足底摩擦假设，别把仿真默认参数直接搬过去。</li>
+</ol>
+<h3 id="_3">常见坑</h3>
+<ul>
+<li>仓库很小（约 7 star、11 月新建），文档与测试覆盖可能有限，先评估可维护性再作为长期依赖。</li>
+<li>把 WBC 层当成策略本身，期待它直接给成功率；它提供的是接口与约束求解。</li>
+<li>忽略接触状态机，用固定权重跑所有相位，腾空/落地切换时最容易出问题。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 7（2026-11-23 核验）</td>
+</tr>
+<tr>
+<td>创建 / 最后更新</td>
+<td>2026-11-03 / 2026-11-13</td>
+</tr>
+<tr>
+<td>主语言 / 许可</td>
+<td>Python / Apache-2.0</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>[Infra] 统一 WBC 层</td>
+</tr>
+<tr>
+<td>本体</td>
+<td>Unitree（topics）</td>
+</tr>
+<tr>
+<td>覆盖</td>
+<td>多任务优先级、接触状态、目标接口、部署</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：这是本轮 star 最低但结构性最强的条目。评估它不看 star，看三件事：优先级投影是否严格（低优先级不越界）、接触状态切换是否可观测、以及换上层接口时底层代码是否零改动。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>对照对象</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>os319 SuperMimic（本轮）</td>
+<td>用可微世界模型训通才跟踪策略，属策略层；hiWBC 属其下方的控制/接口层</td>
+</tr>
+<tr>
+<td>p414 ECHO（本轮）</td>
+<td>按动力学做 in-context 残差适应，需一个稳定 WBC 层承接</td>
+</tr>
+<tr>
+<td>os322 roboskills（本轮）</td>
+<td>任务级工作流与数据管线，频率在秒级；hiWBC 在毫秒级</td>
+</tr>
+<tr>
+<td>/learn/robot-dynamics 计算力矩控制</td>
+<td>站内正文，讲控制律与动力学建模</td>
+</tr>
+<tr>
+<td>/learn/humanoid-fullstack 人形全栈</td>
+<td>站内正文，讲从本体到策略的分层</td>
+</tr>
+</tbody>
+</table>
+<p>hiWBC 的价值是把「分层」这件事落到代码：上层论文可以换，下面这层不必每次重写。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

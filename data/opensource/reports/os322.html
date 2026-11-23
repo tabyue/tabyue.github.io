@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>roboskills：面向机器人的最小 Agent 工作流与工具集 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">roboskills：面向机器人的最小 Agent 工作流与工具集 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="roboskills-agent">roboskills：面向机器人的最小 Agent 工作流与工具集</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/openrobokit/roboskills">https://github.com/openrobokit/roboskills</a>  </p>
+<p><strong>Stars</strong>: 197 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-23  </p>
+<p><strong>组织</strong>: OpenRoboKit  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-23</p>
+</blockquote>
+<hr />
+<p><strong>openrobokit/roboskills</strong> 是 OpenRoboKit 开源的一套「刻意做小」的机器人 Agent 工作流与工具集，MIT、Python，2026-10-30 创建、11-09 更新，约 200 star。</p>
+<p>它不提供新模型，也不绑定某个本体，补的是<strong>模型与本体之间的连接层</strong>：遥操作数据采集、real2sim、动作生成、机器人仿真、任务编排，这些每个具身团队都要重写一遍的胶水代码，被收成一组可组合的最小工作流。topics 含 agentic-robotics、llm-agents、motion-generation、real2sim、robot-learning、robot-simulation。</p>
+<p>与本轮 p416 TuringPAI（端侧模型怎么跑）、p414 ECHO（策略怎么按环境适应）配套：模型解决了 intelligence，工作流解决的是 repeatability——能不能把一次成功的实验原样再跑一遍、把数据原样再采一遍。</p>
+<hr />
+<p>按仓库描述与同类工具集的一般结构，可归纳为四层（结构性归纳，具体以 README 为准）：</p>
+<ol>
+<li><strong>采集层</strong>：遥操作接口、 episode 记录与元数据（本体、任务、操作者、时间戳），输出符合机器人数据格式标准的轨迹。</li>
+<li><strong>转换层</strong>：real2sim / sim2real 的场景与本体映射，把真实采集的轨迹放进仿真器回放或生成对应仿真配置。</li>
+<li><strong>动作层</strong>：动作生成与技能编排，把高层任务描述拆成可执行的技能序列，供 Agent 调用。</li>
+<li><strong>执行与观测层</strong>：对接仿真或真实机器人，回传执行状态与成败信号，形成闭环。</li>
+</ol>
+<p>「最小」二字是设计取舍：不内建训练框架、不内建大模型，因此不会和 SmolVLA / GR00T / LeRobot 这类生态抢位置，反而容易接进去。评估这类仓库的标准是<strong>接口是否稳定、元数据是否完整、失败是否可复现</strong>，而不是某个任务的成功率。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/openrobokit/roboskills">roboskills 仓库</a></strong> — MIT，最小机器人 Agent 工作流与工具集。</li>
+<li><strong><a href="https://github.com/huggingface/lerobot">LeRobot</a></strong> — 数据集格式与策略工具链，与 roboskills 的采集层衔接。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.25474">本轮 p416 TuringPAI（arXiv 2611.25474）</a></strong> — 端侧 VLA 模型，可作为工作流里可替换的策略实现。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.25801">本轮 p412 FAB（arXiv 2611.25801）</a></strong> — 从视频得到人体动作与稠密点，可作为遥操作之外的动作来源。</li>
+<li><strong><a href="/learn/embodied-agent">站内 /learn/embodied-agent</a></strong> — Harness 层与失败恢复的正文。</li>
+</ul>
+<hr />
+<h3 id="_2">最小上手路径</h3>
+<pre><code>git clone https://github.com/openrobokit/roboskills.git
+cd roboskills
+pip install -r requirements.txt
+</code></pre>
+<ol>
+<li>先读 README 的工作流清单，挑一条最短的：一次遥操作采集 → 存 episode → 仿真回放。</li>
+<li>检查输出 episode 的元数据是否带齐本体型号、任务 ID、时间戳与操作者；缺了这些，后续数据闭环无法做 lineage。</li>
+<li>把同一条 episode 在仿真里回放两次，比对末端轨迹是否一致——这是「可复现」的最低门槛。</li>
+<li>接一个现成策略（如 SmolVLA 或 os320 DreamForge 生成的纠错样本），看工作流能否不改代码就换成另一个模型。</li>
+<li>记录每个环节的耗时与失败点，判断瓶颈在采集、转换还是执行。</li>
+</ol>
+<h3 id="_3">常见坑</h3>
+<ul>
+<li>把工具集当成训练框架，期待它给出成功率提升；它的产出是可复现的流程与数据。</li>
+<li>不写元数据就存 episode，几周后无法追溯哪批数据来自哪个本体/标定版本。</li>
+<li>仿真回放通过就直接上真机，跳过频率、延迟与传感器噪声差异的检查。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 197（2026-11-23 核验）</td>
+</tr>
+<tr>
+<td>创建 / 最后更新</td>
+<td>2026-10-30 / 2026-11-09</td>
+</tr>
+<tr>
+<td>主语言 / 许可</td>
+<td>Python / MIT</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>最小机器人 Agent 工作流与工具</td>
+</tr>
+<tr>
+<td>覆盖</td>
+<td>遥操作、real2sim、动作生成、仿真、编排</td>
+</tr>
+<tr>
+<td>生态</td>
+<td>OpenRoboKit</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：约 200 star、两个月内新建，属于快速成形的基础设施仓库。star 数不能直接代表成熟度，应看 README 的示例能否一键跑通、接口是否冻结、以及是否有版本化的数据格式。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>对照对象</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>os323 hiWBC（本轮）</td>
+<td>统一全身控制层，管的是毫秒级控制接口；roboskills 管的是任务级工作流</td>
+</tr>
+<tr>
+<td>os318 NERV（站内）</td>
+<td>脑—体—世界三元耦合平台，偏运行时；roboskills 偏可组合的工具脚本</td>
+</tr>
+<tr>
+<td>LeRobot</td>
+<td>数据集格式、策略与训练工具链；roboskills 负责把数据采进来</td>
+</tr>
+<tr>
+<td>p416 TuringPAI（本轮）</td>
+<td>端侧 VLA 模型本身；roboskills 不提供模型</td>
+</tr>
+<tr>
+<td>/learn/embodied-agent 具身 Agent 与 Harness 层</td>
+<td>站内正文，讲失败感知、恢复与 Harness 设计</td>
+</tr>
+</tbody>
+</table>
+<p>roboskills 的独特性在「小」：不抢模型层与操作系统层的位置，只把跨团队重复的胶水流程标准化。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

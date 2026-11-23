@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-23T08:35",
+ "lastUpdated": "2026-11-23T09:20",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,141 @@
   }
  ],
  "projects": [
+  {
+   "id": "os323",
+   "name": "hiWBC：把人形机器人全身控制收敛成一层统一基础设施",
+   "github": "https://github.com/humanoidintelligence/hiWBC",
+   "organization": "Humanoid Intelligence",
+   "org": "Humanoid Intelligence",
+   "category": "framework",
+   "description": "Apache-2.0、Python，2026-11-03 创建、11-13 更新，约 7 star，定位是 [Infra] 层的统一全身控制（Unified Whole-Body Control Layer）。它不做新算法，而是把人形 WBC 里重复出现的东西——多任务优先级、接触/支撑状态管理、目标编码器与控制器接口、宇树本体部署适配——收进同一层，让上层的跟踪策略、遥操作接口与速度指令可以共用一套动力学与部署通道。topics 含 whole-body-control、humanoid-robot、infrastructure、unitree、deployment。star 数不高但工程位置关键：本轮 p414 ECHO 用冻结先验加残差适配实现环境特定执行，os319 SuperMimic 用共享可微世界模型训练通才跟踪器，两者都默认存在这样一个统一的 WBC 接口层；hiWBC 把这个默认假设显式实现出来，适合作为 /learn/humanoid-fullstack 与 /learn/robot-dynamics 的实验参照。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 7,
+   "features": [
+    "统一 WBC 层与接口抽象",
+    "多任务优先级与接触状态管理",
+    "宇树本体部署适配",
+    "支持上层跟踪与遥操作复用",
+    "Apache-2.0"
+   ],
+   "tags": [
+    "hiWBC",
+    "全身控制",
+    "基础设施",
+    "Unitree",
+    "接口抽象"
+   ],
+   "addedDate": "2026-11-23"
+  },
+  {
+   "id": "os322",
+   "name": "roboskills：面向机器人的最小 Agent 工作流与工具集",
+   "github": "https://github.com/openrobokit/roboskills",
+   "organization": "OpenRoboKit",
+   "org": "OpenRoboKit",
+   "category": "ai-agent-framework",
+   "description": "MIT 许可、Python，2026-10-30 创建、11-09 更新，约 200 star。roboskills 提供一套刻意做小的机器人 Agent 工作流与工具集，覆盖遥操作数据采集、real2sim、动作生成、机器人仿真与任务编排，不绑定某个大模型或某套本体。topics 含 agentic-robotics、llm-agents、motion-generation、real2sim、robot-learning、robot-simulation。它补的是「模型与本体的连接层」：本轮 p416 TuringPAI 解决端侧模型怎么跑，p414 ECHO 解决策略怎么按环境适应，而实际部署还需要有人把遥操作数据、仿真回放、动作生成与评测串成可重复执行的工作流。与站内 /learn/embodied-agent 具身 Agent 与 Harness 层、/learn/ros2 机器人操作系统两章配套阅读效果最好。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 197,
+   "features": [
+    "最小可组合的机器人 Agent 工作流",
+    "遥操作 / real2sim / 动作生成工具",
+    "不绑定模型与本体",
+    "MIT 许可",
+    "OpenRoboKit 生态"
+   ],
+   "tags": [
+    "roboskills",
+    "具身Agent",
+    "工作流",
+    "real2sim",
+    "OpenRoboKit"
+   ],
+   "addedDate": "2026-11-23"
+  },
+  {
+   "id": "os321",
+   "name": "TwoPass：草稿引导的少步视频预测，把机器人操作的未来画面压到几步生成",
+   "github": "https://github.com/PlantPotatoOnMoon/TwoPass",
+   "organization": "PlantPotatoOnMoon",
+   "org": "PlantPotatoOnMoon",
+   "category": "ai-model",
+   "description": "Apache-2.0、Python，2026-11-18 创建、11-20 更新，约 29 star，是本轮最新鲜的仓库之一。TwoPass 面向机器人操作的动作条件视频预测（action-conditioned video prediction），用「先出草稿、再少步精修」的两遍式生成替代标准扩散模型的长采样链，结合 flow matching 与 self-conditioning，在 Bridge Dataset、Language-Table 等基准上把去噪步数压下来。topics 覆盖 diffusion-models、few-step-generation、flow-matching、video-diffusion、robot-manipulation。它与本轮 p415 PhysVAM 形成有趣对照：PhysVAM 主张不必重建未来视觉状态、只预测未来任务价值，TwoPass 则把「如果一定要生成未来画面」这条路的推理成本尽量压低——两者分别从任务侧与生成侧回答同一个世界模型算力问题。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 29,
+   "features": [
+    "草稿引导的两遍式少步生成",
+    "flow matching 与自条件",
+    "动作条件视频预测",
+    "Bridge / Language-Table 基准",
+    "2026-11 新建并持续更新"
+   ],
+   "tags": [
+    "TwoPass",
+    "少步生成",
+    "视频预测",
+    "flow matching",
+    "机器人操作"
+   ],
+   "addedDate": "2026-11-23"
+  },
+  {
+   "id": "os320",
+   "name": "DreamForge：把世界模型的「想象」变成可证伪的策略纠错训练数据",
+   "github": "https://github.com/rzc156/dreamforge",
+   "organization": "rzc156",
+   "org": "rzc156",
+   "category": "data-tools",
+   "description": "MIT 许可、Python，2026-10-12 创建，约 130 star。DreamForge 把世界模型想象出来的画面转成机器人策略的纠错训练数据，并把整条管线压到单张 GPU 上：以 SmolVLA 为策略底座、LIBERO 为任务集，用 CEM 在世界模型里搜索候选动作，再用成对的仿真器回放（paired simulator replays）核验想象结果是否与真实动力学一致，只把被证伪的轨迹对转成纠正样本。这个「可证伪」设计直指世界模型落地最大的风险——模型幻觉出来的失败会被当成真失败喂给策略；与只做视频预测的项目相比，它把输出落在数据管线而非视觉效果上。仓库 topics 覆盖 embodied-ai、vla、lerobot、libero、world-model、imitation-learning，适合作为 /learn/embodied-data-engineering 数据闭环与主动学习、以及本轮 p415 PhysVAM 价值引导动作模型的动手实验底座。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 130,
+   "features": [
+    "单卡可跑的纠错数据生成管线",
+    "CEM 动作搜索",
+    "成对仿真回放做可证伪核验",
+    "SmolVLA + LIBERO + LeRobot 生态",
+    "MIT 许可"
+   ],
+   "tags": [
+    "DreamForge",
+    "纠错数据",
+    "世界模型",
+    "SmolVLA",
+    "LIBERO"
+   ],
+   "addedDate": "2026-11-23"
+  },
+  {
+   "id": "os319",
+   "name": "SuperMimic：CoRL 2026 最佳论文官方实现，用一个可微世界模型做全身动作跟踪",
+   "github": "https://github.com/HybridRobotics/supermimic",
+   "organization": "UC Berkeley Hybrid Robotics",
+   "org": "UC Berkeley",
+   "category": "ai-model",
+   "description": "CoRL 2026 最佳论文《SuperMimic: Scaling Humanoid Whole-Body Control with One Differentiable World Model》（arXiv 2610.28480）的官方开源实现，Apache-2.0，2026-11-10 创建、11-21 仍在更新，约 1900 star。核心观察是：参考动作千变万化，但执行它们的身体只有一套混合刚体动力学；与其让每个动作各自在黑盒仿真器里用无模型 RL 试错，不如把动力学学成一个可微世界模型，让策略在模型里做 32 步想象、用 BPTT 反传解析梯度。官方口径下单张 H100 训练 3 小时即超过 SONIC 用 128 张 L40 训 7 天（约 2.1 万 GPU 小时）发布的检查点，在 129514 条 BONES-SEED 动作上失败数从 179 降到 25，双卡 9.8 小时后清零，并已在宇树 G1 上完成跳过、侧滚、90 度翻与原地 360 度翻的真机迁移。站内此前收录的 os253 / os269 是官方放码前的社区独立复现，本条是正式仓库，README 依赖同级 mjlab_research 与 wandb run 回放，论文与 README 未声明已放出可下载策略权重，复现时需留意。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 1943,
+   "features": [
+    "可微世界模型 + 短视界 BPTT 解析梯度",
+    "绕过刚体仿真器不可微与接触非平滑",
+    "单卡 3 小时级全身跟踪训练",
+    "宇树 G1 真机动作迁移",
+    "Apache-2.0 官方实现"
+   ],
+   "tags": [
+    "SuperMimic",
+    "可微世界模型",
+    "人形全身控制",
+    "CoRL 2026",
+    "Unitree G1"
+   ],
+   "addedDate": "2026-11-23"
+  },
   {
    "id": "os318",
    "name": "NERV：把语言模型大脑、机器人本体与世界耦合到一个平台",
@@ -8084,5 +8219,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 305
+ "totalItems": 310
 }

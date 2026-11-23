@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TwoPass：草稿引导的少步视频预测，把机器人操作的未来画面压到几步生成 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">TwoPass：草稿引导的少步视频预测，把机器人操作的未来画面压到几步生成 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="twopass">TwoPass：草稿引导的少步视频预测，把机器人操作的未来画面压到几步生成</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/PlantPotatoOnMoon/TwoPass">https://github.com/PlantPotatoOnMoon/TwoPass</a>  </p>
+<p><strong>Stars</strong>: 29 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-23  </p>
+<p><strong>组织</strong>: PlantPotatoOnMoon  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-23</p>
+</blockquote>
+<hr />
+<p><strong>PlantPotatoOnMoon/TwoPass</strong> 是《TwoPass: Draft-Guided Few-Step Video Prediction for Robotic Manipulation》的官方代码，Apache-2.0、Python，2026-11-18 创建、11-20 更新，约 29 star，是本轮最新鲜的仓库。</p>
+<p>它面向<strong>动作条件视频预测</strong>（action-conditioned video prediction）：机器人执行一段动作后，未来画面会怎样？标准扩散/流匹配模型要几十步去噪才能出图，放在策略在环的推演里太慢。TwoPass 的思路是「先出草稿、再少步精修」——第一遍生成一个粗糙但结构正确的草稿，第二遍以草稿为条件只用很少的步数完成细化，配合 flow matching 与 self-conditioning 把采样链压短。</p>
+<p>topics 覆盖 diffusion-models、few-step-generation、flow-matching、video-diffusion、robot-manipulation、bridge-dataset、language-table、pytorch。</p>
+<hr />
+<p>按论文标题与仓库 topics 可归纳为两遍式结构（结构性归纳，具体以代码为准）：</p>
+<ol>
+<li><strong>Draft Pass（草稿）</strong>：以当前观测与动作序列为条件，快速生成一个低精度的未来帧/潜表示。草稿不追求纹理正确，只要求物体位置、机械臂形态与运动方向大致对。</li>
+<li><strong>Refine Pass（精修）</strong>：把草稿作为额外条件送入同一个（或轻量）网络，用少步 flow matching 求解从噪声到目标的流，self-conditioning 把上一轮输出回灌为条件，避免重复长链采样。</li>
+<li><strong>动作条件注入</strong>：动作序列通过交叉注意力或自适应归一化逐帧注入，保证「改一个动作、未来画面跟着改」，而不是生成一段与动作无关的视频。</li>
+<li><strong>训练目标</strong>：以 flow matching 的向量场回归为主，可能配合草稿一致性损失；评测在 Bridge Dataset 与 Language-Table 等机器人操作视频上做。</li>
+</ol>
+<p><strong>为什么值得看</strong>：它不否认「生成未来画面」这条路，而是把这条路最被诟病的推理成本往下压，因此与 PhysVAM（p415）的「干脆不生成」形成干净的对照实验条件。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/PlantPotatoOnMoon/TwoPass">TwoPass 仓库</a></strong> — Apache-2.0，草稿引导少步视频预测官方代码。</li>
+<li><strong><a href="https://github.com/google-deepmind/bridge">Bridge Dataset</a></strong> — 大规模机器人操作演示数据。</li>
+<li><strong><a href="https://arxiv.org/abs/2210.02747">Flow Matching 原始论文</a></strong> — 理解少步生成背后的连续归一化流。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.26105">本轮 p415 PhysVAM（arXiv 2611.26105）</a></strong> — 不重建未来像素、改用未来任务价值的对照路线。</li>
+<li><strong><a href="/learn/world-models-llm">站内 /learn/world-models-llm</a></strong> — 世界动作模型与潜空间推理的正文。</li>
+</ul>
+<hr />
+<h3 id="_2">最小上手路径</h3>
+<pre><code>git clone https://github.com/PlantPotatoOnMoon/TwoPass.git
+cd TwoPass
+pip install -r requirements.txt
+</code></pre>
+<ol>
+<li>先读 README 确认权重/数据（Bridge Dataset、Language-Table）的下载方式与推理脚本入口。</li>
+<li>用<strong>单条轨迹</strong>跑一次推理，记录去噪步数 $N$、单步耗时与端到端延迟，确认「few-step」的实际量级。</li>
+<li>做步数扫描：$N = 1,2,4,8,16$，画 FVD/LPIPS（或仓库给定指标）—步数曲线，找质量拐点。</li>
+<li>做动作敏感性检查：把同一初始帧配两条不同动作，比较生成未来是否随之改变，验证动作条件真的生效。</li>
+<li>做草稿消融：去掉 Draft Pass、直接用同等步数从纯噪声生成，量化草稿带来的收益。</li>
+</ol>
+<h3 id="_3">常见坑</h3>
+<ul>
+<li>仓库很新（11-18 创建），权重与数据可能尚未放齐，先确认可复现性再排期。</li>
+<li>只比 FVD 不比延迟，会丢掉「few-step」这件事的全部意义。</li>
+<li>用固定动作或单帧条件评测，容易把画面连续性当成动作条件能力。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 29（2026-11-23 核验）</td>
+</tr>
+<tr>
+<td>创建 / 最后更新</td>
+<td>2026-11-18 / 2026-11-20</td>
+</tr>
+<tr>
+<td>主语言 / 许可</td>
+<td>Python / Apache-2.0</td>
+</tr>
+<tr>
+<td>任务</td>
+<td>动作条件视频预测（机器人操作）</td>
+</tr>
+<tr>
+<td>数据</td>
+<td>Bridge Dataset、Language-Table</td>
+</tr>
+<tr>
+<td>技术</td>
+<td>Draft-Guided、flow matching、self-conditioning、少步生成</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：本轮核验时未取得论文 PDF 与逐项数值表，摘要级信息不足以给出质量/步数的定量结论。评估应以仓库自带评测脚本为准，重点看「质量拐点出现在第几步」与「同质量下比标准扩散省多少步」，而非绝对 FVD。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>对照对象</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>os319 SuperMimic（本轮）</td>
+<td>世界模型只预测状态/奖励/终止，不生成像素；TwoPass 生成像素</td>
+</tr>
+<tr>
+<td>os320 DreamForge（本轮）</td>
+<td>用想象结果产出纠错训练数据；TwoPass 只优化生成效率</td>
+</tr>
+<tr>
+<td>p415 PhysVAM（本轮）</td>
+<td>明确主张不重建未来视觉状态、只预测未来任务价值</td>
+</tr>
+<tr>
+<td>标准视频扩散</td>
+<td>长去噪链，几十步起；TwoPass 用草稿把链压到少步</td>
+</tr>
+<tr>
+<td>/learn/world-models-llm 世界动作模型</td>
+<td>站内正文，讲清「预测像素」与「预测价值」两条路线的分野</td>
+</tr>
+</tbody>
+</table>
+<p>Three 条世界模型路线（当优化器 / 当生成器 / 当价值预测器）里，TwoPass 代表的是「如果一定要生成，就把生成做便宜」。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

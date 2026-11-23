@@ -54,7 +54,7 @@
     }
   ],
   "weeklyPlan": "**第1-2周**：OpenCV 图像处理 + 相机标定\n**第3周**：YOLO 目标检测训练与部署\n**第4-5周**：SAM 分割 + 6DoF 位姿估计\n**第6周**：集成到机器人抓取 Pipeline",
-  "lastUpdated": "2026-11-17T08:54",
+  "lastUpdated": "2026-11-23T09:30",
   "maturity": "foundation",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -295,20 +295,27 @@
     {
       "id": "sec-10",
       "title": "视觉伺服与闭环抓取控制",
-      "lastUpdated": "2026-10-27",
-      "chars": 3985,
+      "lastUpdated": "2026-11-23T09:30",
+      "chars": 13030,
       "shortTitle": "视觉伺服与闭环抓取控制",
       "difficulty": "高级",
       "estimatedMinutes": 3,
       "isBrief": true,
       "tier": 2,
-      "readingMinutes": 5,
+      "readingMinutes": 16,
       "headings": [
         "什么是视觉伺服？",
         "两大范式",
         "IBVS 核心公式",
         "闭环抓取Pipeline",
         "深度学习+视觉伺服",
+        "前置：把视觉伺服的三个「深度」分清楚",
+        "一、交互矩阵的完整推导",
+        "二、透明物体：为什么原始 RGB-D 不能当硬锚点",
+        "三、采样预算：多区间假设为什么是必需的",
+        "四、时延、预测与开环/闭环的真实差距",
+        "五、从像素到控制：本轮两篇感知论文放在链路的哪一段",
+        "六、落地清单与常见坑",
         "练习",
         "参考答案"
       ],
@@ -458,7 +465,7 @@
       "summary": "目标检测的输出是一个框，分割的输出是一个掩码。这两样东西对机器人来说都不够用。"
     }
   ],
-  "readingMinutes": 164,
+  "readingMinutes": 175,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 139330
+  "chars": 148375
 }
