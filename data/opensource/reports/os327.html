@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>vibe：面向感知控制任务的人形全身跟踪器后训练 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">vibe：面向感知控制任务的人形全身跟踪器后训练 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="vibe">vibe：面向感知控制任务的人形全身跟踪器后训练</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/lok-i/vibe">https://github.com/lok-i/vibe</a>  </p>
+<p><strong>Stars</strong>: 77 · <strong>License</strong>: BSD-3-Clause · <strong>收录日期</strong>: 2026-11-24  </p>
+<p><strong>组织</strong>: lok-i  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-24</p>
+</blockquote>
+<hr />
+<p><strong>lok-i/vibe</strong> 是 2026 年 9 月创建、11 月 14 日更新的人形控制项目，BSD-3-Clause、Python，约 77 star，项目页 lok-i.github.io/vibe-control/。定位很具体：<strong>post-training humanoid whole-body trackers for perceptive control tasks</strong>——在已有的人形全身运动跟踪器之上做后训练，让策略能处理带感知的控制任务。</p>
+<p>topics 含 humanoid-control、mjlab、perceptive-locomotion、PPO、reinforcement-learning、robot-learning，说明它是 mjlab + PPO 训练栈上的全身跟踪器后训练方案。「perceptive」是关键：从盲走（blind locomotion）升级到要看地形、要处理视觉/深度输入的闭环控制。</p>
+<p>它与本轮 p418 Latent Jacobian Steer 构成同一问题族的两种解法。LJS <strong>冻结</strong>预训练控制器，在测试时用策略雅可比把动作扰动映射成潜命令、靠搜索组合出 OOD 行为；vibe 则走<strong>训练期后训练</strong>路线，用 PPO 继续改造跟踪器。两者对照，正好把「冻结基础模型 + 测试时搜索」与「后训练适配」的分工讲清楚。</p>
+<hr />
+<p>按仓库描述与 topics 可归纳为四块（结构性归纳，具体以 README 与项目页为准）：</p>
+<ol>
+<li><strong>预训练跟踪器底座</strong>：以已有的人形全身运动跟踪器为起点（跟踪参考动作/速度指令），不从头训。</li>
+<li><strong>后训练阶段</strong>：在底座上用 PPO 继续训练，把任务目标从「跟得像」扩展到「在带感知的任务里做成」。</li>
+<li><strong>感知输入接入</strong>：把地形/视觉/深度观测接进策略，形成 perceptive locomotion 的闭环，同时要处理感知噪声与时延。</li>
+<li><strong>mjlab 训练与评估</strong>：仿真训练、域随机化与策略评估沿用 mjlab 栈。</li>
+</ol>
+<p><strong>为什么是「后训练」而非「重训」</strong>：全身跟踪器已经学到了协调的步态与平衡先验，从零训感知控制会丢掉这些先验、样本效率极差。后训练保留先验、只增量适配，这与 p418 里「潜空间探索保留协调性」的动机其实是同一个判断。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/lok-i/vibe">vibe 仓库</a></strong> — BSD-3-Clause，人形全身跟踪器后训练。</li>
+<li><strong><a href="https://lok-i.github.io/vibe-control/">vibe 项目页</a></strong> — 方法与演示说明。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.27338">本轮 p418 Latent Jacobian Steer（arXiv 2611.27338）</a></strong> — 冻结控制器 + 测试时潜命令搜索，与后训练路线的对照。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.11090">本轮 p421 ADMM 层次决策（arXiv 2611.11090）</a></strong> — 求解器热启动，与「保留预训练先验」同属增量复用思想。</li>
+<li><strong><a href="/learn/robot-kinematics">站内 /learn/robot-kinematics</a></strong> — Jacobian 与速度/力分析，本轮深化章节。</li>
+</ul>
+<hr />
+<h3 id="_2">最小上手路径</h3>
+<pre><code>git clone https://github.com/lok-i/vibe.git
+cd vibe
+pip install -r requirements.txt
+</code></pre>
+<ol>
+<li>先读项目页与 README，确认所需的预训练跟踪器权重从哪来、后训练入口脚本叫什么。</li>
+<li>复现基线：加载预训练跟踪器，在盲走任务上记录跟踪误差，作为后训练前的对照。</li>
+<li>跑一段感知控制后训练，比较后训练前后在带地形/障碍任务上的成功率与跟踪误差。</li>
+<li>做消融：冻结底座只训感知适配头 vs 全量后训练，验证「保留先验」是否真的带来样本效率。</li>
+<li>对照 p418 的思路做一次「不训权重、只搜索输入」的轻量实验，直观比较两条路线的成本与效果。</li>
+</ol>
+<h3 id="_3">常见坑</h3>
+<ul>
+<li>没有先拿到可用的预训练跟踪器权重就想跑后训练，仓库通常不自带底座。</li>
+<li>把 perceptive locomotion 当成纯视觉任务：感知时延与本体状态估计同样决定成败。</li>
+<li>只报成功率不报跟踪误差，看不出后训练是否损害了原有步态质量。</li>
+<li>约 77 star、新建两个月，宜作方法论参照；商用依赖前评估维护活跃度与文档完整度。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 77（2026-11-24 核验）</td>
+</tr>
+<tr>
+<td>创建 / 最后更新</td>
+<td>2026-09-08 / 2026-11-14</td>
+</tr>
+<tr>
+<td>主语言 / 许可</td>
+<td>Python / BSD-3-Clause</td>
+</tr>
+<tr>
+<td>训练栈</td>
+<td>mjlab、PPO</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>人形全身跟踪器后训练，面向 perceptive control</td>
+</tr>
+<tr>
+<td>项目页</td>
+<td>lok-i.github.io/vibe-control/</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：仓库描述未给成功率或跟踪误差数值。评估它看三件事——后训练相对底座的增益、感知任务上的失败模式、以及后训练是否损害了原有步态协调。star 低不减损它作为「后训练 vs 测试时搜索」对照样本的价值。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>对照对象</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本轮 p418 Latent Jacobian Steer</td>
+<td>冻结控制器 + 测试时雅可比搜索；vibe 是训练期 PPO 后训练</td>
+</tr>
+<tr>
+<td>本轮 os326 microduck-playground</td>
+<td>小型双足从零 PPO 全链路；vibe 是人形跟踪器之上的增量适配</td>
+</tr>
+<tr>
+<td>/learn/robot-kinematics Jacobian 与速度/力分析</td>
+<td>站内正文，本轮深化章节；p418 与 vibe 都依赖全身跟踪器给出的运动先验</td>
+</tr>
+<tr>
+<td>/learn/humanoid-fullstack 人形全栈</td>
+<td>站内正文，讲本体、运控、策略分层</td>
+</tr>
+<tr>
+<td>/learn/reinforcement-learning 无监督技能发现 / PPO</td>
+<td>站内正文，讲行为基础模型与策略后训练的理论</td>
+</tr>
+</tbody>
+</table>
+<p>本轮深化的 /learn/calculus-optimization 约束优化章节也可并读：后训练本质是带约束（别丢先验）的优化，与 ADMM 的热启动思想遥相呼应。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

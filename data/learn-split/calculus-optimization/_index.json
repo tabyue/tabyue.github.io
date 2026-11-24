@@ -60,7 +60,7 @@
     }
   ],
   "weeklyPlan": "**第1-2周**：多元微积分复习，重做梯度和 Jacobian 练习题（MIT 18.02 讲义）\n**第3周**：凸集、凸函数、凸优化问题建模（Boyd Ch1-3）\n**第4周**：对偶理论、KKT 条件（Boyd Ch4-5）\n**第5周**：梯度下降、牛顿法、L-BFGS 实现与对比\n**第6周**：CVXPY 实践，解一个机器人轨迹优化问题",
-  "lastUpdated": "2026-11-15T08:41",
+  "lastUpdated": "2026-11-24T08:37",
   "maturity": "comprehensive",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
@@ -349,13 +349,13 @@
     {
       "id": "sec-11",
       "title": "约束优化理论：KKT 条件、对偶理论、Slater 条件",
-      "lastUpdated": "2026-10-27",
-      "chars": 5204,
+      "lastUpdated": "2026-11-24T08:37",
+      "chars": 16855,
       "shortTitle": "约束优化理论",
       "difficulty": "高级",
       "estimatedMinutes": 4,
       "tier": 1,
-      "readingMinutes": 4,
+      "readingMinutes": 16,
       "headings": [
         "约束是现实问题的本质",
         "一、约束优化的标准形式",
@@ -368,6 +368,14 @@
         "八、最小范数解与 SVD",
         "九、对偶差距与优化算法",
         "十、工程中的约束优化",
+        "补充 A：从可行方向与切锥重新推导 KKT 条件",
+        "补充 B：二阶条件与临界锥",
+        "补充 C：对偶的几何——支撑超平面、共轭函数与影子价格",
+        "补充 D：增广 Lagrangian 与 ADMM 的完整推导",
+        "补充 E：约束二次规划的 KKT 矩阵与数值求解",
+        "补充 F：阻尼最小二乘——伪逆在约束下的推广",
+        "补充 G：可运行示例——纯 NumPy 实现 ADMM 与阻尼最小二乘",
+        "补充 H：数学史与常见误区",
         "十一、数学练习",
         "参考答案要点"
       ],
@@ -576,7 +584,7 @@
       "summary": "在机器人学和深度学习中，经常遇到以下形式的期望计算："
     }
   ],
-  "readingMinutes": 138,
+  "readingMinutes": 150,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 145958
+  "chars": 157609
 }

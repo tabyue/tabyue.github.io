@@ -1,6 +1,146 @@
 {
- "lastUpdated": "2026-11-23T09:20",
+ "lastUpdated": "2026-11-24T08:37",
  "papers": [
+  {
+   "id": "p421",
+   "title": "Large-Scale Hierarchical Decision-Making in Robot Control via ADMM",
+   "authors": "Kai Pfeiffer, Jia Wang, Gordon Owusu Boateng, Yuquan Wang, Vincent Bonnet, Abderrahmane Kheddar",
+   "venue": "arXiv 2611.11090",
+   "date": "2026-11-08",
+   "arxiv": "https://arxiv.org/abs/2611.11090",
+   "github": "",
+   "tags": [
+    "ADMM",
+    "稀疏层次优化",
+    "SHQP",
+    "内点法",
+    "全身动力学控制",
+    "热启动"
+   ],
+   "category": "优化求解器 / 机器人控制",
+   "difficulty": "高级",
+   "tldr": "**问题**：基于 $\\ell_0$ 范数的稀疏层次非线性规划（SH-NLP）为机器人运动控制中的大规模层次决策（例如大量候选末端位置）提供了高效框架；但用内点法解 SHQP 子问题的 S-SHQP 路线，在连续、相干的控制步之间难以有效热启动。**做法**：把 ADMM（交替方向乘子法）用于求解相关的 SHQP 子问题，为表示 $\\ell_0$ 范数替代量的辅助变量引入高效替换，并按合适顺序求值线性代数表达式以处理可分离决策函数。**结果**：在大规模运动学与动力学控制中，低到中等精度区间相比利用结构的内点法计算时间最多降低 23.5%；并把层次决策扩展到人形行走的全身动力学控制，指出该场景对高精度解的需求更突出。",
+   "keyInsights": [
+    "把「热启动」这一工程细节提升为求解器选型的一阶判据：内点法解 SHQP 子问题在连续控制步之间难复用，ADMM 的乘子与辅助变量天然可承接上一步，这才是 23.5% 提速的主要来源。",
+    "为 $\\ell_0$ 范数替代量的辅助变量设计高效替换，并按合适顺序求值线性代数表达式，使可分离决策函数能被拆开处理——这是 ADMM 能在大规模问题上跑通的关键工程化。",
+    "收益集中在低到中等精度区间；人形行走的全身动力学控制反而强调高精度解的必要性，说明「快」与「够准」之间存在明确的场景依赖权衡。",
+    "ADMM 与增广拉格朗日、对偶分解同源，把凸优化里的经典分解器直接落到实时控制循环，是优化理论到机器人系统的完整闭环案例。"
+   ],
+   "impact": "与站内 /learn/calculus-optimization 的约束优化理论（KKT、对偶、ADMM、增广 Lagrangian）章节完全对齐——本轮正是把该章从 5K 字深化到教材级，ADMM 论文给出了它在真实控制回路里的工程落点与数值口径。/learn/control-theory 的 MPC 完整 QP 推导与 /learn/robot-dynamics 的全身接触操作力学则分别提供 QP 建模与动力学约束的上游。本轮 p418 LJS 用雅可比做冻结模型的局部搜索，ADMM 用分解求解层次 QP，两者是「结构化求解」在人形控制上的两条路线。",
+   "addedDate": "2026-11-24"
+  },
+  {
+   "id": "p420",
+   "title": "BeyondEgo: Learning to Act Beyond Egocentric Perception via Humanoid Ego-Exo Foresight",
+   "authors": "Zhaoshan Yang, Chenglei Li, Haoyu Lei, Yutao Zhang, Yuyu Yang et al. (12 authors)",
+   "venue": "arXiv 2611.27047",
+   "date": "2026-11-20",
+   "arxiv": "https://arxiv.org/abs/2611.27047",
+   "github": "",
+   "tags": [
+    "BeyondEgo",
+    "Ego-Exo",
+    "DINOv3",
+    "foresight",
+    "HELM",
+    "人形移动操作"
+   ],
+   "category": "人形感知 / VLA",
+   "difficulty": "高级",
+   "tldr": "**问题**：人形移动操作需要协调全身运动，但纯第一视角（egocentric）VLA 策略会漏掉关键的本体—场景关系，单纯动作模仿又不给未来场景演化任何显式监督。**做法**：BeyondEgo 在空间与时间两个维度扩展 VLA 感知——空间上用冻结的 DINOv3 编码同步的第三视角（exocentric）并把 token 与第一视角 VLM token 拼接来条件化动作专家；时间上把双视角的未来观测作为特权监督，训练一个残差适配器与一个 foresight expert 去回归 0.6 秒后的 DINOv3 表征，部署时丢弃 foresight expert、只保留 4.2M 参数的适配器。同时提出 HELM，据作者所知是首个带同步第一/第三视角的闭环人形移动操作基准（五类全身任务）。**结果**：在 HELM 上分布内成功率从 48.0% 升到 92.0%，200 个留出场景（布局、资产、材质、光照变化）从 23.5% 升到 65.0%；消融显示双视角 DINOv3 foresight 的迁移效果最好。",
+   "keyInsights": [
+    "把「看得更全」拆成空间（同步第三视角 token 拼接）与时间（回归 0.6 秒后的 DINOv3 表征）两条独立通路，且时间通路只在训练期作为特权监督存在，部署期零额外推理开销。",
+    "部署时只保留 4.2M 参数残差适配器、丢弃 foresight expert，是「训练期多给监督、推理期不加负担」的典型工程折中，对端侧人形尤其关键。",
+    "留出场景（布局/资产/材质/光照四重偏移）从 23.5% 到 65.0% 的大幅提升，说明双视角 foresight 主要买到的是泛化而非单纯的分布内拟合。",
+    "HELM 作为首个同步 ego/exo 的闭环人形移动操作基准，补上了此前基准缺少「本体—场景关系」观测的空白。"
+   ],
+   "impact": "与站内 /learn/multimodal-perception 的多视角与视触觉对齐、/learn/world-models-llm 的世界模型作为预测引擎两章直接对应：foresight expert 本质是一个轻量的、只服务于表征学习的世界模型头。本轮 p417 SCAP 处理预训练阶段的模态通路，BeyondEgo 处理感知阶段的空间/时间覆盖，p419 RoboDyna 则给出评测阶段的物理接地考场，三篇串成 VLA「预训练—感知—评测」的完整链条。",
+   "addedDate": "2026-11-24"
+  },
+  {
+   "id": "p419",
+   "title": "RoboDyna: A Benchmark for Evaluating Robotic Manipulation under Physically Grounded Dynamics",
+   "authors": "Zhiyuan Li, Rui Heng Yang, Xuan Zhao, Amir Rasouli",
+   "venue": "arXiv 2611.26969",
+   "date": "2026-11-20",
+   "arxiv": "https://arxiv.org/abs/2611.26969",
+   "github": "",
+   "tags": [
+    "RoboDyna",
+    "动态操作",
+    "物理接地",
+    "同步异步评测",
+    "推理时延",
+    "基准"
+   ],
+   "category": "评测基准 / 物理推理",
+   "difficulty": "中级",
+   "tldr": "**问题**：真实动态世界里的物体操作要求理解环境如何演化并据此行动，但现有基准要么只评预测保真度不评闭环动作，要么用物理上不合理的简化物体运动，且普遍采用同步评测（推理时冻结环境）让计算时间与任务结果无关。**做法**：RoboDyna 含 20 个概念性动态任务（覆盖五类能力、双因子难度设计、简单物体与最小场景杂乱）与 10 个在视觉语义更丰富的仿真真实环境中实例化同样能力的家务任务，提供 3500 条专家示教、配对同步/异步评测协议、任务成功与部分完成指标，以及人类基线评测的交互工具。**结果**：在 5.4K 回合上评测 VLA 模型与世界动作模型，所有策略成功率均低于 20%；世界动作模型能捕捉简单物理动态但难处理复杂交互，且预测保真度与任务成功率不一致；同步—异步对比显示推理时延翻转 5—12% 的回合结果，而平均成功率变化最多 3%。",
+   "keyInsights": [
+    "把「推理时延」变成可测的一等变量：配对的同步/异步协议证明延迟会翻转 5—12% 的回合成败，却几乎不改变平均成功率（≤3%）——只看均值会完全漏掉这个动态场景里的系统性风险。",
+    "所有被测 VLA 与世界动作模型成功率低于 20%，人类基线在同等条件下大幅领先，说明「理解物理演化并闭环行动」仍是当前策略最明显的短板。",
+    "世界动作模型的预测保真度与任务成功率不总一致，直接质疑了「把视频预测练准就能操作好」这一隐含假设。",
+    "20 个概念任务 + 10 个家务任务的双因子难度设计，把「物理接地」拆成可归因的能力类别，而不是一个笼统总分。"
+   ],
+   "impact": "与站内 /learn/platform-engineering 的策略评测基础设施、/learn/vla-models 的 VLA 评估基准与系统性测试方法两章直接对应：RoboDyna 的同步/异步对照是「评测协议本身会改变结论」的教科书案例。本轮深化的约束优化章节涉及优化算法收敛与数值口径，可与这里「时延翻转回合、均值却不动」的统计陷阱对照阅读。本轮 p417 SCAP 与 p420 BeyondEgo 分别从预训练与感知两侧提升 VLA，而 RoboDyna 给出了它们必须通过的更严格考场。",
+   "addedDate": "2026-11-24"
+  },
+  {
+   "id": "p418",
+   "title": "Latent Jacobian Steer: Eliciting Contact-Rich Out-of-Distribution Behaviors from Pretrained Humanoid Controllers",
+   "authors": "S K Swaminathan, Shivam Sood, Shreyansh Kansal, Chengyang He, Guillaume Adrien Sartoretti",
+   "venue": "arXiv 2611.27338",
+   "date": "2026-11-20",
+   "arxiv": "https://arxiv.org/abs/2611.27338",
+   "github": "",
+   "tags": [
+    "Latent Jacobian Steer",
+    "行为基础模型",
+    "策略雅可比",
+    "接触丰富",
+    "OOD 行为",
+    "人形控制"
+   ],
+   "category": "人形控制 / 行为基础模型",
+   "difficulty": "高级",
+   "tldr": "**问题**：给定一个预训练的、以潜变量为条件的全身人形控制器（行为基础模型 BFM），如何诱导它做出复杂的、接触丰富的分布外行为？直接在关节动作空间探索会破坏预训练控制器学到的协调性，在潜空间探索保留了协调性却难以导向想要的物理效果。**做法**：LJS 把两者耦合——对任务所需的物理效果采样关节动作扰动，再经过策略雅可比（policy Jacobian）的阻尼局部逆映射成候选潜命令 z，命令由冻结的预训练策略执行，候选结果在仿真里评估并组合成潜命令序列。**结果**：消融显示单一空间的探索都达不到耦合的能力；跨多个 OOD 任务产生跨栏、操作铰接物体、以非抓握接触开门等接触丰富行为，十个种子下完成度均高于任一单空间搜索，还能引导目标条件灵巧手策略完成四项装配任务。",
+   "keyInsights": [
+    "把「策略雅可比」从运动学里连接关节速度与末端速度的工具，迁移成连接动作扰动与潜命令的局部线性算子：用阻尼局部逆 $\\mathbf{J}^{\\dagger}_{\\lambda}$ 把任务级物理效果翻译成冻结 BFM 能执行的 z 序列。",
+    "动作空间探索（直接、任务特定）与潜空间探索（保留协调性）是互补而非竞争关系，耦合后才有接触丰富的 OOD 行为；单独任一空间的消融都明显更差。",
+    "控制器全程冻结，不改权重、不做微调，能力来自对输入潜命令的搜索与组合——这给「冻结基础模型 + 测试时搜索」提供了人形控制上的实证。",
+    "方法同时迁移到目标条件灵巧手策略的四项装配任务，说明它不是人形专属技巧，而是潜条件策略的通用操控接口。"
+   ],
+   "impact": "与站内 /learn/robot-kinematics 的 Jacobian 与速度/力分析、/learn/reinforcement-learning 的行为基础模型两章直接对应：本轮深化的「约束优化理论」章节给出了伪逆、阻尼最小二乘与零空间投影的完整推导，LJS 正是把这套工具用在了策略输入空间而非关节空间，是理解「雅可比为什么处处出现」的绝佳前沿案例。本轮 p421 ADMM 与 os327 也在同一「冻结模型 + 结构化搜索/分解」的问题族里。",
+   "addedDate": "2026-11-24"
+  },
+  {
+   "id": "p417",
+   "title": "SCAP: Stochastic Context for Action Expert Pretraining",
+   "authors": "Xiao Lin, Yaoxu Lyu, Ronghao Dang, Zhili Liu, Kaijing Ma et al. (12 authors)",
+   "venue": "arXiv 2611.27187",
+   "date": "2026-11-20",
+   "arxiv": "https://arxiv.org/abs/2611.27187",
+   "github": "",
+   "tags": [
+    "SCAP",
+    "VLA",
+    "动作专家预训练",
+    "随机掩码",
+    "视觉捷径",
+    "诊断模型"
+   ],
+   "category": "VLA 预训练 / 表征",
+   "difficulty": "高级",
+   "tldr": "**问题**：单模态动作专家预训练能抑制视觉捷径（visual shortcut），却可能永久损伤后续 VLA 联合预测所需的视觉—语言交互通路。**做法**：构造一个可解析的诊断模型，证明 VA/LA 预训练会关掉一条原本活跃的联合建模通路，且后续用完整输入训练、甚至无限适配都无法恢复；据此提出 SCAP（Stochastic Context for Action Expert Pretraining）——在全输入训练之前新增一个阶段，把视觉与文本 token 随机掩码后再送进 VLM。**结果**：在四种不同 VLA 架构上一致提升，真机三项指令条件操作任务平均成功率 76.67%，比全输入预训练高 25 个百分点。",
+   "keyInsights": [
+    "把「预训练损害下游能力」从经验现象变成可证明的诊断模型：VA/LA 预训练会禁用一条联合视觉—语言建模通路，且完整输入训练不可逆地无法恢复它。",
+    "SCAP 的机制是在动作专家预训练阶段对视觉与文本 token 做随机掩码，让联合通路在预训练与后续全输入训练中都被保留，而不是靠更大的适配预算去补救。",
+    "随机上下文同时降低对视觉捷径的依赖、提高对语言指令的依赖——这正是指令条件操作最需要的能力，也解释了 25 个百分点的真机增益来自何处。",
+    "在四种 VLA 架构上一致提升，说明结论不绑定某个特定动作头或骨干，更接近预训练阶段的通用设计原则。"
+   ],
+   "impact": "与站内 /learn/vla-models 的 VLA 架构与训练范式、/learn/deep-learning 的表征学习两章直接对应：它把「预训练阶段怎么设计」提升为与架构同等重要的一阶变量。本轮 p420 BeyondEgo 讨论的是空间与时间维度上如何扩展 VLA 感知，SCAP 则回答输入模态层面如何不把通路练坏，两者合起来构成 VLA 预训练的两条互补约束。对做真机复现的团队，最实用的结论是：先检查动作专家预训练是否用了单模态，再考虑加数据或调架构。",
+   "addedDate": "2026-11-24"
+  },
   {
    "id": "p416",
    "title": "TuringPAI: A Foundation for On-Device Physical AI",
@@ -11157,5 +11297,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 390
+ "totalItems": 395
 }

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>microduck-playground：可复现的 Microduck 双足 RL 实验、策略与仿真资产 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">microduck-playground：可复现的 Microduck 双足 RL 实验、策略与仿真资产 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="microduck-playground-microduck-rl">microduck-playground：可复现的 Microduck 双足 RL 实验、策略与仿真资产</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Vottivott/microduck-playground">https://github.com/Vottivott/microduck-playground</a>  </p>
+<p><strong>Stars</strong>: 155 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-24  </p>
+<p><strong>组织</strong>: Vottivott  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-24</p>
+</blockquote>
+<hr />
+<p><strong>Vottivott/microduck-playground</strong> 是 2026 年 9 月创建、11 月 21 日更新的可复现强化学习仓库，Apache-2.0、Python，约 155 star。它把「可复现」直接写进定位：同时提供 Microduck 双足机器人的 RL 实验配置、训好的策略、仿真资产，以及 3D 打印的硬件附加件。</p>
+<p>技术栈从 topics 就能读出来：mjlab、MuJoCo、MuJoCo-Warp、ONNX、PPO、bipedal-locomotion、3d-printing、physics-simulation。也就是说，它覆盖的是一条完整链路——<strong>仿真资产 → PPO 训练配置 → 策略导出（ONNX）→ 实物硬件</strong>。</p>
+<p>这条链路恰好补上站内 /learn/physics-simulation 与 /learn/reinforcement-learning 之间最容易断的一环：论文里的 PPO 曲线，怎么变成一台真的会走的小机器人。它没有新算法，价值全在「照着做能跑通」。</p>
+<hr />
+<p>按仓库描述与 topics 可归纳为四块（结构性归纳，具体以 README 为准）：</p>
+<ol>
+<li><strong>仿真资产与场景</strong>：MuJoCo / MuJoCo-Warp 的 Microduck 模型与地形配置，mjlab 提供训练封装。</li>
+<li><strong>训练配置</strong>：PPO 超参、奖励项、域随机化范围、观测与动作空间定义，全部随仓库给出，保证别人能复现同一条曲线。</li>
+<li><strong>策略与导出</strong>：提供训好的策略与 ONNX 导出路径，让仿真策略能脱离 Python 训练栈、部署到算力有限的控制器。</li>
+<li><strong>硬件附加件</strong>：3D 打印件把仿真里的本体映射到实物，形成 sim-to-real 的最后一公里。</li>
+</ol>
+<p><strong>为什么强调可复现</strong>：RL 对超参、随机种子与仿真器版本极度敏感，只给论文公式不给配置，复现几乎不可能。把配置、资产、策略、硬件一起开源，等于把「能不能复现」从信任问题变成工程问题。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/Vottivott/microduck-playground">microduck-playground 仓库</a></strong> — Apache-2.0，可复现 PPO 双足 RL 实验、策略、仿真资产与硬件件。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.27338">本轮 p418 Latent Jacobian Steer（arXiv 2611.27338）</a></strong> — 冻结人形控制器上的测试时结构化搜索，与本仓库的从零训练形成对照。</li>
+<li><strong><a href="/learn/physics-simulation">站内 /learn/physics-simulation</a></strong> — 仿真环境设计、域随机化与奖励函数。</li>
+<li><strong><a href="/learn/reinforcement-learning">站内 /learn/reinforcement-learning</a></strong> — TRPO 到 PPO 的完整推导。</li>
+<li><strong><a href="https://mujoco.readthedocs.io/">MuJoCo 官方文档</a></strong> — 仿真器版本与模型格式参考。</li>
+</ul>
+<hr />
+<h3 id="_2">最小上手路径</h3>
+<pre><code>git clone https://github.com/Vottivott/microduck-playground.git
+cd microduck-playground
+pip install -r requirements.txt
+</code></pre>
+<ol>
+<li>先读 README 确认 MuJoCo / mjlab 版本要求与训练入口脚本名，版本不一致是复现失败最常见的原因。</li>
+<li>用仓库给出的 PPO 配置跑一段短训练，确认奖励曲线形状与作者报告一致（不必跑满）。</li>
+<li>加载随仓库提供的预训练策略做评估，记录步态稳定性与前进速度，作为基线。</li>
+<li>走一遍 ONNX 导出，确认导出后策略输出与原策略数值一致。</li>
+<li>若要做实物，先核对 3D 打印件尺寸、关节限位与仿真模型参数，别把仿真默认摩擦系数直接搬上真机。</li>
+</ol>
+<h3 id="_3">常见坑</h3>
+<ul>
+<li>仿真器或 mjlab 版本不匹配，PPO 曲线对不上就误判为「复现不了」。</li>
+<li>只跑训练不看随仓库策略，漏掉最有价值的对照基线。</li>
+<li>忽略域随机化范围：仿真里稳、真机上倒，通常先查这里。</li>
+<li>约 155 star、新建两个月，硬件装配文档可能不完整，作为教学项目比作为产品依赖更合适。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 155（2026-11-24 核验）</td>
+</tr>
+<tr>
+<td>创建 / 最后更新</td>
+<td>2026-09-02 / 2026-11-21</td>
+</tr>
+<tr>
+<td>主语言 / 许可</td>
+<td>Python / Apache-2.0</td>
+</tr>
+<tr>
+<td>仿真栈</td>
+<td>mjlab、MuJoCo、MuJoCo-Warp</td>
+</tr>
+<tr>
+<td>算法 / 导出</td>
+<td>PPO、ONNX</td>
+</tr>
+<tr>
+<td>覆盖</td>
+<td>实验配置、策略、仿真资产、3D 打印硬件件</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：仓库描述未给成功率或速度 benchmark。评估它看三件事——按 README 能否一次跑通、随仓库策略的实测表现、以及 ONNX 导出前后是否数值一致。这类仓库的价值是可复现性，不是 SOTA 指标。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>对照对象</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本轮 p418 Latent Jacobian Steer</td>
+<td>在冻结 BFM 上做测试时潜命令搜索；microduck 是从零 PPO 训练的完整可复现基线</td>
+</tr>
+<tr>
+<td>本轮 os327 vibe</td>
+<td>人形全身跟踪器后训练（大本体、感知控制）；microduck 是小型双足、教学向全链路</td>
+</tr>
+<tr>
+<td>/learn/physics-simulation 仿真环境设计</td>
+<td>站内正文，讲域随机化、奖励函数与并行仿真</td>
+</tr>
+<tr>
+<td>/learn/reinforcement-learning PPO 章节</td>
+<td>站内正文，讲 TRPO→PPO 的完整推导与本仓库使用的算法同源</td>
+</tr>
+<tr>
+<td>/learn/sim-to-real</td>
+<td>站内正文，讲 Reality Gap 与迁移策略；本仓库提供可动手的最小实例</td>
+</tr>
+</tbody>
+</table>
+<p>把 p418 与 microduck 并读能看清两种研究范式：一边是在大模型上做结构化搜索，一边是把小系统从头到尾跑通、让结论可复核。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

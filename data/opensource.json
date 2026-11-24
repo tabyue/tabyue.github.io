@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-23T09:20",
+ "lastUpdated": "2026-11-24T08:37",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,119 @@
   }
  ],
  "projects": [
+  {
+   "id": "os327",
+   "name": "vibe：面向感知控制任务的人形全身跟踪器后训练",
+   "github": "https://github.com/lok-i/vibe",
+   "organization": "lok-i",
+   "org": "lok-i",
+   "category": "locomotion",
+   "description": "BSD-3-Clause、Python，2026-09-08 创建、11-14 更新，约 77 star。定位是「post-training humanoid whole-body trackers for perceptive control tasks」：在已有人形全身运动跟踪器之上做后训练，让策略能处理带感知的（perceptive）控制任务，技术栈含 mjlab、PPO、humanoid-control、perceptive-locomotion、robot-learning，项目页在 lok-i.github.io/vibe-control/。它与本轮 p418 Latent Jacobian Steer 是同一问题族的两种解法：LJS 冻结控制器、在测试时靠策略雅可比搜索潜命令；vibe 则走训练期的后训练路线改造跟踪器。两者对照阅读，能把「冻结基础模型 + 测试时搜索」与「后训练适配」的分工看得更清楚。star 低，宜作方法论参照而非生产依赖。",
+   "language": "Python",
+   "license": "BSD-3-Clause",
+   "stars": 77,
+   "features": [
+    "人形全身跟踪器后训练",
+    "面向感知控制任务（perceptive control）",
+    "mjlab + PPO 训练栈",
+    "humanoid-control 与人形运控",
+    "BSD-3-Clause 许可"
+   ],
+   "tags": [
+    "vibe",
+    "全身控制",
+    "后训练",
+    "perceptive locomotion",
+    "PPO",
+    "人形跟踪器"
+   ],
+   "addedDate": "2026-11-24"
+  },
+  {
+   "id": "os326",
+   "name": "microduck-playground：可复现的 Microduck 双足 RL 实验、策略与仿真资产",
+   "github": "https://github.com/Vottivott/microduck-playground",
+   "organization": "Vottivott",
+   "org": "Vottivott",
+   "category": "simulation",
+   "description": "Apache-2.0、Python，2026-09-02 创建、11-21 更新，约 155 star。仓库把「可复现」写进定位：同时提供 Microduck 双足机器人的 RL 实验配置、训好的策略、仿真资产与 3D 打印硬件附加件，技术栈覆盖 mjlab、MuJoCo、MuJoCo-Warp、ONNX、PPO、双足步态（bipedal-locomotion）。它给的不是新算法，而是一条从仿真资产、训练配置、策略导出（ONNX）到实物硬件的完整可跑通链路，恰好补上站内 /learn/physics-simulation 与 /learn/reinforcement-learning 之间最容易断掉的那一环——论文里的 PPO 曲线怎么变成一台会走的小机器人。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 155,
+   "features": [
+    "可复现 RL 实验配置与训练脚本",
+    "预训练策略与 ONNX 导出",
+    "mjlab / MuJoCo / MuJoCo-Warp 仿真资产",
+    "3D 打印硬件附加件",
+    "PPO 双足步态全流程"
+   ],
+   "tags": [
+    "microduck",
+    "双足步态",
+    "PPO",
+    "MuJoCo",
+    "ONNX",
+    "可复现性",
+    "sim-to-real"
+   ],
+   "addedDate": "2026-11-24"
+  },
+  {
+   "id": "os325",
+   "name": "Flex-π：一个 checkpoint 按需部署成 VLA 或世界模型的多流世界动作模型",
+   "github": "https://github.com/geyan21/flex-pi",
+   "organization": "geyan21",
+   "org": "geyan21",
+   "category": "ai-model",
+   "description": "Python，2026-08-12 创建、11-14 更新，约 240 star，许可证为 GitHub NOASSERTION（未声明，勿臆断为 MIT/Apache）。核心主张是 compute flexibility：一个 checkpoint 可以按部署时的算力预算，作为 VLA、完整世界模型，或介于两者之间的任意形态运行，靠多流（multi-stream）结构在不同计算量下复用同一套权重。项目页在 flex-pi.github.io。它与本轮 n822 Embo「用世界模型造机器人大脑」、p420 BeyondEgo「foresight 训练期监督、部署期零开销」指向同一个工程问题：世界模型的预测能力与动作策略的执行能力，能不能在不同算力档位上共享一套参数，而不是各训一个模型。star 不高但选题处在 2026 年 11 月世界动作模型争论的正中央。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 240,
+   "features": [
+    "单 checkpoint 多算力档位部署",
+    "VLA / 世界模型 / 中间形态连续切换",
+    "多流世界动作模型架构",
+    "训练与推理计算量可调",
+    "提供项目主页与文档"
+   ],
+   "tags": [
+    "Flex-π",
+    "世界动作模型",
+    "WAM",
+    "compute flexibility",
+    "多流架构",
+    "VLA"
+   ],
+   "addedDate": "2026-11-24"
+  },
+  {
+   "id": "os324",
+   "name": "forge：机器人数据集格式互转与质量检查工具箱",
+   "github": "https://github.com/arpitg1304/forge",
+   "organization": "arpitg1304",
+   "org": "arpitg1304",
+   "category": "data-tools",
+   "description": "MIT、Python，2026-01-22 创建、11-23 更新，约 185 star。定位是 Robotics Data Toolkit：在 RLDS、LeRobot v2/v3、Zarr、HDF5、Rosbag 等常见机器人数据集格式之间互转，并提供数据集检查（inspect）、可视化与质量分析能力，可直接对接 HuggingFace Hub。topics 里含 data-quality-checks、dataset-conversion、hdf5-to-rlds、lerobot、openvla、physical-ai、rlds。它的价值不在算法，而在把「数据格式不统一」这个具身数据工程里最耗时的脏活收进一个可复用的转换层——正好是站内 /learn/ai-infra 数据集格式标准一章里 schema、时间对齐、分片与 I/O 预算讨论的工程落点。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 185,
+   "features": [
+    "RLDS / LeRobot v2-v3 / Zarr / HDF5 / Rosbag 互转",
+    "数据集检查与可视化",
+    "data-quality-checks 质量校验",
+    "对接 HuggingFace Hub",
+    "MIT 许可"
+   ],
+   "tags": [
+    "forge",
+    "数据集格式",
+    "RLDS",
+    "LeRobot",
+    "HDF5",
+    "数据质量"
+   ],
+   "addedDate": "2026-11-24"
+  },
   {
    "id": "os323",
    "name": "hiWBC：把人形机器人全身控制收敛成一层统一基础设施",
@@ -8219,5 +8332,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 310
+ "totalItems": 314
 }

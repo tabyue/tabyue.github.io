@@ -1,7 +1,7 @@
 {
   "id": "robot-kinematics",
   "name": "机器人运动学",
-  "lastUpdated": "2026-11-14T08:37",
+  "lastUpdated": "2026-11-24T08:37",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 60,
@@ -201,19 +201,27 @@
     {
       "id": "sec-07",
       "title": "Jacobian 与速度/力分析",
-      "lastUpdated": "",
-      "chars": 5524,
+      "lastUpdated": "2026-11-24T08:37",
+      "chars": 15445,
       "shortTitle": "Jacobian 与速度/力分析",
       "difficulty": "中级",
       "estimatedMinutes": 6,
       "tier": 1,
-      "readingMinutes": 6,
+      "readingMinutes": 17,
       "headings": [
         "Jacobian 矩阵：连接关节空间和笛卡尔空间的桥梁",
         "直觉理解",
         "Jacobian 的多种用途",
         "奇异构型",
         "速度椭球",
+        "补充 A：Jacobian 从哪里来——正运动学的严格微分",
+        "补充 B：虚功原理与力传递对偶",
+        "补充 C：伪逆、SVD 与零空间投影",
+        "补充 D：阻尼最小二乘与奇异性处理",
+        "补充 E：奇异位形的分类与可操作度",
+        "补充 F：策略雅可比——把 Jacobian 搬进潜空间",
+        "补充 G：可运行示例——解析 Jacobian、阻尼逆与虚功的数值验证",
+        "补充 H：数学史与常见误区",
         "练习",
         "参考答案"
       ],
@@ -484,7 +492,7 @@
       "summary": "工业机械臂运动学有一个隐含前提：基座（base frame）固定在地面或工作台，所有关节都基于这个固定基座做位姿计算。但人形机器人 / 四足机器人有两个关键差异："
     }
   ],
-  "readingMinutes": 172,
+  "readingMinutes": 183,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 156301
+  "chars": 166222
 }

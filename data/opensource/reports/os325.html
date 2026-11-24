@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flex-π：一个 checkpoint 按需部署成 VLA 或世界模型的多流世界动作模型 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">Flex-π：一个 checkpoint 按需部署成 VLA 或世界模型的多流世界动作模型 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="flex-checkpoint-vla">Flex-π：一个 checkpoint 按需部署成 VLA 或世界模型的多流世界动作模型</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/geyan21/flex-pi">https://github.com/geyan21/flex-pi</a>  </p>
+<p><strong>Stars</strong>: 240 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-24  </p>
+<p><strong>组织</strong>: geyan21  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-24</p>
+</blockquote>
+<hr />
+<p><strong>geyan21/flex-pi</strong>（Flex-π）是 2026 年 8 月创建、11 月 14 日更新的世界动作模型项目，Python，约 240 star，项目主页 flex-pi.github.io。GitHub 把它的许可证识别为 NOASSERTION——<strong>未声明</strong>，不要臆断成 MIT 或 Apache-2.0，商用前需向作者确认。</p>
+<p>一句话主张是 <strong>compute flexibility</strong>：一个 checkpoint，按部署时的算力预算，可以作为 VLA（只出动作）、作为完整世界模型（出未来观测），或作为介于两者之间的任意形态运行。多流（multi-stream）结构让不同计算量档位复用同一套权重，而不是为每档各训一个模型。</p>
+<p>它正落在本轮几条线索的交汇处：n822 Embo 用 1.1 亿美元种子轮押注「互联网视频预训练统一世界模型 → 想象里练 RL → 真机微调」；p420 BeyondEgo 让 foresight 只在训练期提供监督、部署期丢弃；而 Flex-π 问的是更前置的问题——<strong>世界模型与动作策略能不能根本就是同一套参数</strong>。</p>
+<hr />
+<p>按仓库描述可归纳为三块（结构性归纳，具体以 README 与项目页为准）：</p>
+<ol>
+<li><strong>多流共享主干</strong>：一个主干网络在不同「流」上产出不同粒度的输出——纯动作流、动作 + 短期预测流、完整未来观测流。流的选择在推理时按算力预算决定。</li>
+<li><strong>统一训练目标</strong>：用同一批数据同时监督动作预测与未来表征预测，让共享主干同时学到「怎么动」与「世界会怎么变」，这是单 checkpoint 能多形态部署的前提。</li>
+<li><strong>弹性推理路径</strong>：部署时按可用算力选择激活哪些流，低算力档只跑动作流，高算力档额外跑世界模型流做预演/校验。</li>
+</ol>
+<p><strong>与 BeyondEgo 的关键差别</strong>：BeyondEgo 的 foresight expert 在部署时<strong>整个丢弃</strong>，只留 4.2M 适配器；Flex-π 是把预测能力<strong>保留在权重里</strong>、按需调用。前者省的是训练期到推理期的监督落差，后者省的是多档位部署要维护多个模型的成本。两者都指向「一份参数，多种用途」，但切入点不同。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/geyan21/flex-pi">Flex-π 仓库</a></strong> — 多流世界动作模型，许可证未声明（NOASSERTION）。</li>
+<li><strong><a href="https://flex-pi.github.io/">Flex-π 项目页</a></strong> — 架构说明与算力档位口径。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.27047">本轮 p420 BeyondEgo（arXiv 2611.27047）</a></strong> — 训练期 foresight 监督、部署期零开销的另一条路径。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.26969">本轮 p419 RoboDyna（arXiv 2611.26969）</a></strong> — 世界动作模型预测保真度与任务成功率不一致的实证。</li>
+<li><strong><a href="/learn/world-models-llm">站内 /learn/world-models-llm</a></strong> — 世界模型作为预测引擎与自改进引擎。</li>
+</ul>
+<hr />
+<h3 id="_2">最小上手路径</h3>
+<pre><code>git clone https://github.com/geyan21/flex-pi.git
+cd flex-pi
+pip install -r requirements.txt
+</code></pre>
+<ol>
+<li>先读项目页与 README：确认提供的 checkpoint、支持的算力档位、以及每档对应的评测协议。</li>
+<li>用同一 checkpoint 分别以 VLA 档与世界模型档跑同一批任务，记录成功率、时延与显存，画「算力—能力」曲线。</li>
+<li>做档位消融：逐步增加激活的流，观察动作成功率与未来预测保真度是否同步变化（若不相关，说明统一训练的假设需要复核）。</li>
+<li>对照单独训练的 VLA 与单独训练的世界模型，验证「一个 checkpoint」是否真的没在各档位上明显劣化。</li>
+<li><strong>许可证核查</strong>：GitHub 显示 NOASSERTION，商用或再分发前必须联系作者确认授权条款。</li>
+</ol>
+<h3 id="_3">常见坑</h3>
+<ul>
+<li>把 NOASSERTION 当成「默认开源可商用」——这是法务风险，不是技术问题。</li>
+<li>把「一个 checkpoint」理解成「所有档位能力相同」：多流结构通常意味着低档位会牺牲预测能力换速度。</li>
+<li>只报最高档位的成功率，不报低算力档位，就体现不出 compute flexibility 的价值。</li>
+<li>用不同评测协议比较不同档位，曲线不可比。</li>
+</ul>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 240（2026-11-24 核验）</td>
+</tr>
+<tr>
+<td>创建 / 最后更新</td>
+<td>2026-08-12 / 2026-11-14</td>
+</tr>
+<tr>
+<td>主语言 / 许可</td>
+<td>Python / 未声明（GitHub NOASSERTION）</td>
+</tr>
+<tr>
+<td>定位</td>
+<td>多流世界动作模型，单 checkpoint 弹性部署</td>
+</tr>
+<tr>
+<td>部署形态</td>
+<td>VLA / 完整世界模型 / 中间档位</td>
+</tr>
+<tr>
+<td>项目页</td>
+<td>flex-pi.github.io</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：摘要与仓库描述未给具体 benchmark 数值。评估它应看「算力—能力」曲线是否单调、以及单 checkpoint 相对各档位独立模型的性能损失有多大。约 240 star 说明关注度属早期，宜作架构参照而非生产基线。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>对照对象</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本轮 p420 BeyondEgo</td>
+<td>foresight 仅训练期监督、部署期丢弃；Flex-π 把预测能力留在权重里按需调用</td>
+</tr>
+<tr>
+<td>本轮 n822 Embo</td>
+<td>从零预训练统一世界模型再接真机；Flex-π 关注训好后如何按算力弹性部署</td>
+</tr>
+<tr>
+<td>本轮 p419 RoboDyna</td>
+<td>指出世界动作模型的预测保真度与任务成功率不总一致，是 Flex-π 多档位设计必须面对的拷问</td>
+</tr>
+<tr>
+<td>/learn/world-models-llm 世界模型与 LLM+机器人</td>
+<td>站内正文，讲世界模型作为预测引擎与自改进引擎</td>
+</tr>
+<tr>
+<td>/learn/training-inference-optimization 一步生成策略</td>
+<td>站内正文，讲压缩推理步数；Flex-π 是压缩部署形态</td>
+</tr>
+</tbody>
+</table>
+<p>把它和 p419 并读最有意思：如果预测保真度本来就不保证任务成功，那么「高算力档多跑世界模型流」到底买到的是什么，需要实验回答，而不是架构叙事回答。</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
