@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-24T08:37",
+ "lastUpdated": "2026-11-25T08:35",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,124 @@
   }
  ],
  "projects": [
+  {
+   "id": "os328",
+   "name": "ζ₀ Zeta0：把分层 VLA 改造成联合预见场景与全身关节的世界动作模型",
+   "github": "https://github.com/chenyizhi123/Zeta0",
+   "organization": "chenyizhi123",
+   "org": "chenyizhi123",
+   "category": "ai-model",
+   "description": "Apache-2.0、Python，2026-11-22 创建、11-24 更新，约 57 star，v0.2.0。定位是把分层／双系统 VLA（Ψ₀、GR00T N1.7，规划中的 π0.5）变成 World Action Models：从因果输入预见未来场景特征与全部 29 个可测全身关节在 +0.2／+0.4／+0.6 s 的状态，并在动作空间以 Dual-Response Transfer 施加监督。v0.2.0 放出完整真机栈（Unitree G1 + GEAR-SONIC + BrainCo Revo2 + D415 腕部相机可打印支架），强调 no-private-weights：`--init-mode scratch` 走 Qwen3-VL／Cosmos-Reason2-2B，`--init-mode gr00t_n1d7` 走 GR00T N1.7-3B，另提供统一 G1 RTC 部署与 import zeta0 SDK。同时公开真实数据集 SII-yizhi/zeta0-real-dataset（739 episodes、872409 帧、6 主 + 1 附加 G1 任务）。与本轮 p423 Native LAM 恰好构成两条路线：一个用预训练视频 DiT 抽紧凑潜动作且推理时不生成视频，一个显式预见场景与身体并直接当动作监督。star 低但数据集、权重路线、部署件齐全，宜作真机复现起点。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 57,
+   "features": [
+    "World Action Model 联合场景与身体预见",
+    "29 关节 +0.2/0.4/0.6 s 多尺度预见",
+    "Dual-Response Transfer 动作空间监督",
+    "no-private-weights 双初始化路线",
+    "739 episodes 真机 G1 公开数据集",
+    "Apache-2.0 许可"
+   ],
+   "tags": [
+    "Zeta0",
+    "ζ₀",
+    "世界动作模型",
+    "WAM",
+    "全身预见",
+    "Unitree G1",
+    "GR00T N1.7"
+   ],
+   "addedDate": "2026-11-25"
+  },
+  {
+   "id": "os329",
+   "name": "MimicX：视频驱动人形运动跟踪的策略在环监督精修",
+   "github": "https://github.com/NEBULIS-Lab/MimicX",
+   "organization": "NEBULIS-Lab",
+   "org": "NEBULIS-Lab",
+   "category": "locomotion",
+   "description": "Apache-2.0、Python 3.10+，2026-09-11 创建、11-14 更新，约 38 star，配套 arXiv 2610.09055 与项目页 nebulis-lab.com/MimicX/。核心是 policy-in-the-loop：从视频重定向得到人形跟踪参考动作后，用策略自身 rollout 的诊断定位困难时间窗，再据此精修训练监督，形成闭环，而不是一次性把视频动作喂给策略。仓库带 CPU 测试工作流，Hugging Face 公开策略权重（Shuaijun/MimicX-Policies）与资产（Shuaijun/MimicX-Assets），README 展示 G1 网球挥拍等高动态动作跟踪。与本轮 p425 CHAMP 对照可看清「视频学运动先验」链路上监督精修与共享表征的分工；与 p424 Real2Worlds2Real 的「执行反馈回退重建决策」同构，只是一个作用在动作参考、一个作用在仿真世界。star 低但论文／权重／资产／测试四件齐全，适合作可复现基线。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 38,
+   "features": [
+    "Policy-in-the-Loop 监督精修",
+    "视频到人形运动重定向",
+    "rollout 困难时间窗诊断",
+    "公开策略权重与资产",
+    "CPU 测试工作流",
+    "Apache-2.0 许可"
+   ],
+   "tags": [
+    "MimicX",
+    "人形运动跟踪",
+    "视频重定向",
+    "监督精修",
+    "Unitree G1",
+    "policy-in-the-loop"
+   ],
+   "addedDate": "2026-11-25"
+  },
+  {
+   "id": "os330",
+   "name": "LeRobot Dataset Visualizer：训练前把机器人数据看明白的官方可视化器",
+   "github": "https://github.com/huggingface/lerobot-dataset-visualizer",
+   "organization": "huggingface",
+   "org": "huggingface",
+   "category": "data-tools",
+   "description": "Hugging Face 官方 LeRobot 数据集可视化 Web 应用，Apache-2.0、TypeScript，2025-09-03 创建、2026-11-16 更新，约 139 star，面向 LeRobot v2.0+ 格式。把同步视频播放与交互时序图表放在同一时间轴：三级导航（组织／数据集／episode）、数据集统计（episode 数、总时长、帧率、时长直方图）、Action Insights（自相关、状态—动作对齐、速度分布、跨 episode 方差热力图）、Filtering（低运动／抖动／时长离群 episode 标记并导出可直接运行的 LeRobot CLI 命令）、基于 USD 模型的 3D 逐帧重放与末端轨迹（支持 SO-100／SO-101／OpenArm 双臂／Unitree G1 多种手），以及原生 SOMA156 手部标注的 21 关节骨架显示。部署形态是 HF Space（Docker、7860 端口、HF OAuth read-repos）。与站内 /learn/ai-infra 数据集格式标准、/learn/embodied-data-engineering 数据格式标准与工具链形成上下游：格式标准决定数据能否复用，可视化器决定复用前能否发现脏数据。",
+   "language": "TypeScript",
+   "license": "Apache-2.0",
+   "stars": 139,
+   "features": [
+    "LeRobot v2.0+ 数据格式",
+    "视频与时序图表同步播放",
+    "动作质量诊断与问题 episode 导出",
+    "USD 模型 3D 逐帧重放与末端轨迹",
+    "SOMA156 手部 21 关节骨架",
+    "HF Space / Docker 部署"
+   ],
+   "tags": [
+    "LeRobot",
+    "数据集可视化",
+    "数据质量",
+    "时序对齐",
+    "3D重放",
+    "Hugging Face"
+   ],
+   "addedDate": "2026-11-25"
+  },
+  {
+   "id": "os331",
+   "name": "world-use：把大模型输出约束进 100 Hz 控制环的机械臂工具层",
+   "github": "https://github.com/anyact-ai/world-use",
+   "organization": "anyact-ai",
+   "org": "anyact-ai",
+   "category": "ai-agent-framework",
+   "description": "Apache-2.0、Python，2026-09-27 创建、11-24 更新，约 8 star。让 AI Agent 操作机械臂：Agent 看相机图选物体并决策，world-use 用 EdgeTAM 跟踪目标、测量位置、把每个动作与机器人限位逐一核对、在 100 Hz 控制环执行并回报位置误差／接触／夹持状态，可通过 MCP、Python API 或 wu CLI 接入；起步在 MuJoCo 仿真，仓库称已在 Seeed reBot 臂上测试。README 的 LIBERO-10 成对对照把「给 Agent 加工具值多少」量化了：GPT-6.2 Sol 驱动仿真 Franka Panda，裸模型解出 15/50，接工具后 30/50，模型调用 3095→815（少 74%）、估算成本 61.44→8.73 美元；换 GPT-6.2 Astra 并加入可倾斜手腕的 grasp 后是 43/50 对 19/50。与本轮 n835 IDEA 大会谈的智能体 Harness 与安全盒子原型是同一思路的具体实现，也对应站内 /learn/embodied-agent 的工具粒度与调用治理。star 极低，宜作 Harness 设计参照，不宜作生产依赖；50 个 episode 中 30 对为留出状态且只跑一次，应视为方向性证据。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 8,
+   "features": [
+    "EdgeTAM 目标跟踪与腕部相机位置估计",
+    "动作级限位核对与安全内核",
+    "100 Hz 控制环 + grasp/place/push 工具",
+    "MCP / Python / wu CLI 三种接入",
+    "LIBERO-10 成对对照实验",
+    "Apache-2.0 许可"
+   ],
+   "tags": [
+    "world-use",
+    "具身Agent",
+    "Harness",
+    "安全内核",
+    "MCP",
+    "LIBERO",
+    "100Hz控制"
+   ],
+   "addedDate": "2026-11-25"
+  },
   {
    "id": "os327",
    "name": "vibe：面向感知控制任务的人形全身跟踪器后训练",
@@ -8332,5 +8450,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 314
+ "totalItems": 318
 }

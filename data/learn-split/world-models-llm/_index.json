@@ -42,7 +42,7 @@
     }
   ],
   "weeklyPlan": "**第1周**：世界模型概念+经典论文\n**第2周**：LLM+机器人论文\n**第3周**：前沿跟踪",
-  "lastUpdated": "2026-11-16T08:32",
+  "lastUpdated": "2026-11-25T08:35",
   "maturity": "comprehensive",
   "sectionsMeta": [
     {
@@ -155,13 +155,13 @@
     {
       "id": "sec-06",
       "title": "VLMVLA训练范式：预训练、中间训练与微调",
-      "lastUpdated": "2026-10-27",
-      "chars": 4797,
+      "lastUpdated": "2026-11-25T08:35",
+      "chars": 16291,
       "shortTitle": "VLMVLA训练范式",
       "difficulty": "中级",
       "estimatedMinutes": 5,
       "tier": 1,
-      "readingMinutes": 6,
+      "readingMinutes": 21,
       "headings": [
         "从 VLM 到 VLA：训练流程中的分布鸿沟",
         "三阶段训练范式",
@@ -170,6 +170,11 @@
         "对比其他训练范式",
         "实验对照框架",
         "请记住的核心观点",
+        "深入一：把「分布鸿沟」从比喻变成可测量的量",
+        "深入二：灾难性遗忘与梯度冲突——为什么直接微调会退化",
+        "深入三：动作头接口——离散 token、连续回归与动作分块",
+        "深入四：潜动作模型与反事实配对——没有动作标签怎么办",
+        "深入五：PAWlicy 与不生成视频的世界模型教师",
         "练习",
         "参考答案"
       ],
@@ -385,7 +390,7 @@
       "summary": "前面几节把世界模型讲成了一台预测机器：给定当前观测 $o_t$ 与动作序列 $a_{t:t+k}$，输出未来观测 $\\hat{o}_{t+k}$。这个定义没错，但它把世界模型的用途说窄了。"
     }
   ],
-  "readingMinutes": 183,
+  "readingMinutes": 198,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 153030
+  "chars": 164524
 }

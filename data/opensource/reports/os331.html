@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>world-use：把大模型输出约束进 100 Hz 控制环的机械臂工具层 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">world-use：把大模型输出约束进 100 Hz 控制环的机械臂工具层 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="world-use-100-hz">world-use：把大模型输出约束进 100 Hz 控制环的机械臂工具层</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/anyact-ai/world-use">https://github.com/anyact-ai/world-use</a>  </p>
+<p><strong>Stars</strong>: 8 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-25  </p>
+<p><strong>组织</strong>: anyact-ai  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-25</p>
+</blockquote>
+<hr />
+<p><strong>anyact-ai/world-use</strong> 是一套让 AI Agent 真正操作机械臂的工具层，Apache-2.0、Python，2026-09-27 创建、11-24 更新，约 8 star。README 的一句话定位很直白：Agent 看相机图像、挑出物体并决定做什么，world-use 负责用 EdgeTAM 跟踪这些物体、测量它们的位置、把每个动作拿去和机器人限位逐一核对、在 100 Hz 控制环里执行并回报结果。可以通过 MCP、Python API 或 <code>wu</code> CLI 三种方式接入；起步在 MuJoCo 里做，不需要真机，仓库称已在仿真与 Seeed reBot 臂上测试过。</p>
+<p>README 给出的 LIBERO-10 对照实验是它最有价值的信息：GPT-6.2 Sol 驱动仿真 Franka Panda，单独用模型从图像里选手部位姿解出 50 个 episode 中的 15 个；接上 world-use 后解出 30 个，同时模型调用次数减少 74%（3095 → 815，估算模型成本 61.44 → 8.73 美元）。50 对里有 30 对是留出状态、只跑一次。换成 GPT-6.2 Astra 并加入可倾斜手腕、从杯柄抓取的 <code>grasp</code>，同一批用例是 43/50 对 19/50。</p>
+<p>star 极低，宜作 Harness 层设计参照与实验复现起点，不宜作生产依赖；但它把「给 Agent 加工具到底值多少」量化成了成功率与调用成本两个数，这在当下讨论里比较少见。</p>
+<hr />
+<p>按 README 可归纳为四块（结构性归纳，具体以仓库文档为准）：</p>
+<ol>
+<li><strong>感知与目标跟踪</strong>：用 EdgeTAM 跟随 Agent 选中的物体，提供腕部相机在无深度条件下的位置估计，把「图里有个杯子」变成可测量的三维位置。</li>
+<li><strong>安全内核与限位核对</strong>：每个候选动作先与机器人限位、可达性做检查，再交给执行层；这是把大模型的不确定输出约束在物理可执行域内的关键一道。</li>
+<li><strong>100 Hz 控制环与动作工具</strong>：grasp／place／push 等工具在控制环内执行，并回报位置误差、接触与夹持状态，让 Agent 拿到的是执行结果而非「指令已发送」。</li>
+<li><strong>接入层</strong>：MCP、Python、<code>wu</code> CLI 三种入口，把上述能力包装成 Agent 可调用的工具；配套 LIBERO、RoboCasa 示例与厨房类演示（形状分拣、饭盒打包、烤箱旋钮）。</li>
+</ol>
+<p>这个结构与本轮 n835 记录的 2026 IDEA 大会讨论遥相呼应：沈向洋谈智能体执行框架（Harness）可能形成新商业模式，王嘉平展示把凭据与工具执行放在本地的「安全盒子」原型。world-use 是同一思路在机械臂上的一个具体实现，同时可与站内 /learn/embodied-agent 的 Harness 层、工具粒度与调用治理章节对照。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/anyact-ai/world-use">world-use 仓库</a></strong> — Apache-2.0，含 LIBERO 与 RoboCasa 示例。</li>
+<li><strong><a href="https://github.com/anyact-ai/world-use/tree/main/examples/libero">LIBERO-10 复现说明</a></strong> — 成对对照实验、逐任务结果与局限。</li>
+<li><strong><a href="https://github.com/facebookresearch/sam2">EdgeTAM</a></strong> — 仓库所用的目标跟踪基础。</li>
+<li><strong><a href="https://www.hkcd.com.hk/hkcdweb/content/2026/11/24/content_8787189.html">本轮 n835 IDEA 大会报道</a></strong> — 智能体 Harness 与安全盒子的产业背景。</li>
+</ul>
+<hr />
+<h3 id="_2">最小上手路径</h3>
+<pre><code>git clone https://github.com/anyact-ai/world-use.git
+cd world-use
+# 按 README 安装依赖，起步用 MuJoCo，不需要真机
+</code></pre>
+<ol>
+<li>先在 MuJoCo 里跑通一个 LIBERO-10 用例，确认 100 Hz 控制环与 EdgeTAM 跟踪可用；不要一上来接真机。</li>
+<li>复现 README 的<strong>成对对照</strong>：同一初始状态下分别跑「裸模型」与「接 world-use」，记录成功率、模型调用次数与估算成本；留出状态只跑一次，避免调参过拟合。</li>
+<li>打开限位核对的日志，统计被拦截的候选动作数量与原因——这个数字能说明安全内核究竟拦下了多少物理不可行动作。</li>
+<li>试三种接入方式（MCP / Python / <code>wu</code> CLI），确认工具返回的是位置误差、接触与夹持状态，而不是单纯的成功布尔值。</li>
+<li>用 <code>grasp</code> 的倾斜手腕参数复现 Astra 的 43/50 结果，体会「工具参数化」比换模型更能撬动成功率。</li>
+<li>上 Seeed reBot 真机前，把所有动作的限位、速度与急停策略在仿真里跑一遍，并保留 Human-in-the-loop 急停。</li>
+</ol>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 8（2026-11-25 核验）</td>
+</tr>
+<tr>
+<td>创建 / 最后更新</td>
+<td>2026-09-27 / 2026-11-24</td>
+</tr>
+<tr>
+<td>主语言 / 许可</td>
+<td>Python / Apache-2.0</td>
+</tr>
+<tr>
+<td>接入方式</td>
+<td>MCP、Python API、<code>wu</code> CLI</td>
+</tr>
+<tr>
+<td>控制频率</td>
+<td>100 Hz</td>
+</tr>
+<tr>
+<td>LIBERO-10 / GPT-6.2 Sol</td>
+<td>30/50 对 15/50；模型调用 815 对 3095（少 74%）</td>
+</tr>
+<tr>
+<td>估算模型成本</td>
+<td>8.73 美元对 61.44 美元（README 口径）</td>
+</tr>
+<tr>
+<td>LIBERO-10 / GPT-6.2 Astra</td>
+<td>43/50 对 19/50（含倾斜手腕 grasp）</td>
+</tr>
+<tr>
+<td>验证范围</td>
+<td>MuJoCo 仿真 + Seeed reBot 真机</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：50 个 episode 里 30 对是留出状态且只跑一次，样本量小、无误差棒，应看作方向性证据而非稳定结论。成功率翻倍与调用成本下降 74% 是<strong>同一件事的两面</strong>：工具把「靠模型反复猜位姿」换成「测量 + 受控执行」，因此既更准又更少调模型。成本是 README 的估算值，依赖具体模型定价，不能跨时段横比。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>对照对象</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本轮 n835 IDEA 大会的 Harness / 安全盒子</td>
+<td>议题与原型层面的讨论；world-use 是机械臂域里可运行的具体实现</td>
+</tr>
+<tr>
+<td>本轮 p426 LoopQ</td>
+<td>解决「模型怎么塞进端侧」；world-use 解决「模型输出怎么被安全执行」，是部署链路的两端</td>
+</tr>
+<tr>
+<td>本轮 os330 lerobot-dataset-visualizer</td>
+<td>训练前的数据体检工具；world-use 是推理时的执行与验证工具</td>
+</tr>
+<tr>
+<td>/learn/embodied-agent Harness 层</td>
+<td>站内正文，讲工具粒度、接口完备性与调用治理，是理解本项目设计的理论底座</td>
+</tr>
+<tr>
+<td>/learn/robot-kinematics 逆运动学</td>
+<td>站内正文，限位核对与可达性判断的数学来源</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

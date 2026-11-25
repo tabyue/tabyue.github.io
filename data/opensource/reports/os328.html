@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ζ₀ Zeta0：把分层 VLA 改造成联合预见场景与全身关节的世界动作模型 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">ζ₀ Zeta0：把分层 VLA 改造成联合预见场景与全身关节的世界动作模型 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="0-zeta0-vla">ζ₀ Zeta0：把分层 VLA 改造成联合预见场景与全身关节的世界动作模型</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/chenyizhi123/Zeta0">https://github.com/chenyizhi123/Zeta0</a>  </p>
+<p><strong>Stars</strong>: 57 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-25  </p>
+<p><strong>组织</strong>: chenyizhi123  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-25</p>
+</blockquote>
+<hr />
+<p><strong>chenyizhi123/Zeta0</strong> 是 ζ₀（Zeta0）「A Framework for World Action Models with Joint Scene and Body Foresight in Humanoid Control」的官方开源实现，Apache-2.0、Python，2026-11-22 创建、11-24 更新，约 57 star，配套论文 arXiv 2611.29277 与项目页 chenyizhi123.github.io/zeta0-project/。</p>
+<p>定位很具体：把<strong>分层／双系统 VLA</strong>（Ψ₀、GR00T N1.7，以及规划中的 π0.5）改造成<strong>世界动作模型</strong>——不只预测动作，还从因果输入预见未来场景特征与全部 29 个可测全身关节在未来 +0.2／+0.4／+0.6 s 的状态，并在动作空间里通过 <strong>Dual-Response Transfer</strong> 施加监督。一句话概括：让「慢系统」在出动作之前，先对未来场景与自身身体做一次联合预见。</p>
+<p>v0.2.0（2026-11）已放出完整真机开源栈，覆盖 Unitree G1 + GEAR-SONIC + BrainCo Revo2；强调 <strong>no-private-weights</strong> 训练：<code>--init-mode scratch</code> 走 Qwen3-VL／Cosmos-Reason2-2B，<code>--init-mode gr00t_n1d7</code> 走 NVIDIA GR00T N1.7-3B，并提供统一 G1 RTC 部署与 <code>import zeta0</code> SDK。同时公开真实机器人数据集 SII-yizhi/zeta0-real-dataset（739 episodes、872409 帧、6 个主任务 + 1 个附加 G1 任务）与可 3D 打印的 D415 腕部相机支架。star 低但交付物完整，适合作为世界动作模型真机复现的起点。</p>
+<hr />
+<p>按 README 可归纳为四块（结构性归纳，具体以仓库与方法章节为准）：</p>
+<ol>
+<li><strong>分层底座接入层</strong>：以 Ψ₀ 或 GR00T N1.7-3B 这类分层／双系统 VLA 为起点，通过 <code>--init-mode</code> 选择从零初始化（Qwen3-VL + Cosmos-Reason2-2B）还是接 GR00T 权重；no-private-weights 意味着复现不依赖未公开检查点。</li>
+<li><strong>联合预见头</strong>：从因果输入同时预测未来场景特征与 29 个全身可测关节在 +0.2／+0.4／+0.6 s 三个时间尺度的状态。「场景 + 身体」两条预见支路是本方法与只看视频未来的世界模型的分界。</li>
+<li><strong>Dual-Response Transfer</strong>：把上述预见在<strong>动作空间</strong>中作为监督信号迁移回策略，使预见能力不只是辅助损失，而能影响实际动作输出。</li>
+<li><strong>真机闭环</strong>：GEAR-SONIC 采集、BrainCo Revo2 手部、统一 G1 RTC 部署与腕部 D415 相机支架（含 3D 打印件），把数据采集、训练、部署三段接成同一套硬件口径。</li>
+</ol>
+<p>这四块与本轮 p423 Native LAM 形成有意思的对照：Native LAM 用预训练视频 DiT 抽紧凑潜动作、推理时从不生成视频；ζ₀ 则在人形控制里显式预见未来场景与全身关节，把预见直接当动作监督。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/chenyizhi123/Zeta0">Zeta0 仓库</a></strong> — Apache-2.0，v0.2.0 完整真机开源栈。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.29277">ζ₀ 论文（arXiv 2611.29277）</a></strong> — Joint Scene and Body Foresight in Humanoid Control。</li>
+<li><strong><a href="https://chenyizhi123.github.io/zeta0-project/">ζ₀ 项目页</a></strong> — 方法说明与真机演示。</li>
+<li><strong><a href="https://huggingface.co/datasets/SII-yizhi/zeta0-real-dataset">zeta0-real-dataset</a></strong> — 739 episodes／872409 帧真实 G1 数据。</li>
+<li><strong><a href="https://arxiv.org/abs/2611.30898">本轮 p423 Native LAM（arXiv 2611.30898）</a></strong> — 潜动作路线的对照读物。</li>
+</ul>
+<hr />
+<h3 id="_2">最小上手路径</h3>
+<pre><code>git clone https://github.com/chenyizhi123/Zeta0.git
+cd Zeta0
+# 按 README 安装依赖；v0.2.0 提供 import zeta0 SDK 与统一 G1 RTC 部署入口
+</code></pre>
+<ol>
+<li>先读项目页与论文（arXiv 2611.29277），确认「场景预见」与「身体预见」各自的监督口径、29 关节的编号定义与 +0.2／+0.4／+0.6 s 的采样方式。</li>
+<li><strong>不下真机也能起步</strong>：用公开的 SII-yizhi/zeta0-real-dataset（739 episodes／872409 帧）跑数据加载与预见头的前向，核对形状与时间戳对齐。</li>
+<li>选择初始化路线：无私有权重优先 <code>--init-mode scratch</code>；若要复现论文主结果则按 README 用 <code>--init-mode gr00t_n1d7</code> 并确认 GR00T N1.7-3B 权重获取方式。</li>
+<li>做消融：只开动作损失 vs 加场景预见 vs 加身体预见 vs 两者都开，观察在长程任务上的差异，验证「联合」是否真的必要。</li>
+<li>上真机前先在仿真里核对 G1 RTC 部署接口与腕部相机外参；D415 支架打印件需按 README 校验装配尺寸。</li>
+<li>用 <code>import zeta0</code> 把 SDK 接到自有数据管线，注意记录数据集版本以保证可复现。</li>
+</ol>
+<hr />
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Star</td>
+<td>约 57（2026-11-25 核验）</td>
+</tr>
+<tr>
+<td>创建 / 最后更新</td>
+<td>2026-11-22 / 2026-11-24</td>
+</tr>
+<tr>
+<td>主语言 / 许可</td>
+<td>Python / Apache-2.0</td>
+</tr>
+<tr>
+<td>版本</td>
+<td>v0.2.0（2026-11）</td>
+</tr>
+<tr>
+<td>配套论文</td>
+<td>arXiv 2611.29277</td>
+</tr>
+<tr>
+<td>公开数据集</td>
+<td>SII-yizhi/zeta0-real-dataset，739 episodes、872409 帧、6 主 + 1 附加真机 G1 任务</td>
+</tr>
+<tr>
+<td>硬件栈</td>
+<td>Unitree G1、GEAR-SONIC、BrainCo Revo2、D415 腕部相机（含可打印支架）</td>
+</tr>
+<tr>
+<td>预见口径</td>
+<td>未来场景特征 + 29 个全身关节，+0.2／+0.4／+0.6 s</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读</strong>：README 的性能展示以真机演示视频与数据集规模为主，没有可直接横比的统一成功率表格；因此它更适合作为<strong>复现起点与硬件口径参考</strong>，不宜据 star 数或演示片段推断方法优越性。739 episodes 的规模对真机世界动作模型而言是公开数据里相当扎实的一档，但跨域泛化仍需自行评测。</p>
+<hr />
+<table>
+<thead>
+<tr>
+<th>对照对象</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本轮 p423 Native LAM</td>
+<td>用预训练视频 DiT 抽紧凑潜动作、推理时不生成视频；ζ₀ 显式预见未来场景与全身关节并在动作空间做监督</td>
+</tr>
+<tr>
+<td>本轮 p425 CHAMP</td>
+<td>用 2298 小时异构数据预训练身体／手部运动先验 + 稀疏路由 CAE；ζ₀ 从分层 VLA 出发加联合预见头，两者是「先验从哪来」的不同答案</td>
+</tr>
+<tr>
+<td>本轮 os329 MimicX</td>
+<td>视频驱动的人形运动跟踪 + 策略在环监督精修；ζ₀ 面向上层世界动作模型与真机任务，不替代跟踪器</td>
+</tr>
+<tr>
+<td>/learn/world-models-llm VLM/VLA 训练范式</td>
+<td>站内正文，本轮深化的章节；讲清预训练分布鸿沟与三阶段训练，是理解 ζ₀ 为什么挂在分层 VLA 上的前提</td>
+</tr>
+<tr>
+<td>/learn/humanoid-fullstack 全身运动控制</td>
+<td>站内正文，提供 29 关节全身控制与感知—决策—执行一体化的基础概念</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
