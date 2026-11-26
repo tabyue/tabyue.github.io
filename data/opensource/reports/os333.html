@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboDojo-Mirror：一面镜子就能测出策略鲁棒性缺口的开源基准 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">RoboDojo-Mirror：一面镜子就能测出策略鲁棒性缺口的开源基准 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="robodojo-mirror">RoboDojo-Mirror：一面镜子就能测出策略鲁棒性缺口的开源基准</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/iPPLab/robodojo-mirror">https://github.com/iPPLab/robodojo-mirror</a>  </p>
+<p><strong>Stars</strong>: 8 · <strong>License</strong>: MIT · <strong>收录日期</strong>: 2026-11-26  </p>
+<p><strong>组织</strong>: iPPLab  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-26</p>
+</blockquote>
+<hr />
+<p><strong>iPPLab/robodojo-mirror</strong> 是 arXiv 2611.33010（本轮 p430）的官方开源基准，MIT、Python，2026-11-25 最后更新、约 8 star。README 一句话定位：在反射环境中评测机器人操作策略。它保持任务目标、成功判据与策略权重不变，只加入单镜、双镜、镜面桌面三种条件，并用几何匹配的非反射挡板做对照，把物理障碍效应与视觉混淆效应分开。</p>
+<hr />
+<p>按论文与仓库说明可归纳为三块（结构性归纳，具体以仓库文档为准）：  1. <strong>条件构造</strong>：无镜基线、单镜、双镜、镜面桌面四组，共享同一批任务实例与初始状态。 2. <strong>对照与分层</strong>：几何尺寸完全匹配的非反射挡板 + 接触事件日志；按「有接触 / 无接触」分层统计失败率，直接检验碰撞解释是否成立。 3. <strong>诊断输出</strong>：轨迹与接触分析、镜像附近抓取行为、按策略区分的推动进度、主相机遮挡下的物理目标交互，并给出 π0.5 与 FastWAM 的真机复验配置。  基准覆盖 VLA、世界动作模型与 Agentic 三类共五种策略，保证结论不是单一架构的个案。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2611.33010">Embodied AI Fails the Mirror Test（arXiv 2611.33010）</a></strong> — 受控对照设计、接触分层与失效诊断。 - <strong><a href="https://github.com/iPPLab/robodojo-mirror">iPPLab/robodojo-mirror 仓库</a></strong> — MIT 许可的基准代码与配置。 - <strong><a href="https://github.com/iPPLab/robodojo-mirror">RoboDojo 基准</a></strong> — 任务目标、成功判据与策略权重的来源说明。</li>
+</ul>
+<hr />
+<h3 id="git-clone-httpsgithubcomipplabrobodojo-mirrorgit-cd-robodojo-mirror-readme-robodojo-1-2-3-4">最小上手路径 <code>git clone https://github.com/iPPLab/robodojo-mirror.git cd robodojo-mirror # 按 README 安装 RoboDojo 与依赖，先跑无镜基线</code> 1. 固定策略权重、成功判据与相机参数，先跑无镜基线并逐任务记录成功率。 2. 依次加入单镜、双镜、镜面桌面，用同一组初始状态跑成对对照。 3. 加入几何匹配的非反射挡板，导出接触日志，按有无接触分层统计失败率。 4. 把反射条件接进团队的仿真回归流水线，作为每次策略更新的固定扰动项；真机复验至少覆盖两种策略并记录镜面材质与反光率。</h3>
+<hr />
+<p>| 维度 | 情况 | | --- | --- | | Star | 约 8（2026-11-26 核验） | | 最后更新 | 2026-11-25 | | 主语言 / 许可 | Python / MIT | | 条件数 | 4（无镜 / 单镜 / 双镜 / 镜面桌面）+ 非反射挡板对照 | | 覆盖策略 | 5 类，横跨 VLA / WAM / Agentic | | 平均成功率跌幅 | 10.8—56.7 个百分点 | | 镜面桌面最大跌幅 | 62.5 个百分点 | | 无接触的镜面特有失败 | 50%—88% |</p>
+<hr />
+<p>| 对照对象 | 差异 | | --- | --- | | 本轮 os332 RoboUniverse-10K | 万级环境与冻结评测集解决「覆盖面」；RoboDojo-Mirror 只改一个变量解决「归因」 | | 站内已收录的通用 OOD 基准 | 多数同时改变光照、纹理、物体位置，难以分离单一因素 | | 本轮 p428 的隔离 harness | 都是防止评测被捷径污染：一个隐藏特权状态，一个隔离物理障碍 | | 本轮深化的 CI/CD 章 | 基准给出扰动项，CI/CD 给出把它变成每次提交都跑的回归机制 |</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-25T08:35",
+ "lastUpdated": "2026-11-26T08:35",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,122 @@
   }
  ],
  "projects": [
+  {
+   "id": "os332",
+   "name": "RoboUniverse-10K：把真实操作视频转成万级可验证 RL 环境的评测代码库",
+   "github": "https://github.com/Einsia/RoboUniverse-10K",
+   "organization": "Einsia",
+   "org": "Einsia",
+   "category": "simulation",
+   "description": "Apache-2.0、Python，2026-11-24 最后更新，约 71 star（2026-11-26 核验）。这是 RoboUniverse-10K 论文（arXiv 2611.31002，本轮 p428）的官方评测代码仓库：10,807 个由真实机器人操作视频经 Real2Sim 流水线生成的交互环境中，10,307 个用于训练、500 个冻结为 RoboUniverse-Verified 零样本基准，规模约为 RoboCasa365 的 30 倍，双臂任务占比超六成。仓库定位是 evaluation code，配合项目页给出的环境、评测集与 RoboUniverse-35B-A3B 模型一起用。每个环境跑在 Harbor 兼容的隔离 harness 中，隐藏特权状态与评分逻辑，专门治理大规模 RL 里的 Reward Hacking。与本轮深化的 Isaac Lab 章、资源导航 r052 第一层直接对应，适合作为「万级环境怎么造、怎么验」的复现起点。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 71,
+   "features": [
+    "10,807 个可复位可验证 Isaac Sim 环境",
+    "500 任务冻结评测集 RoboUniverse-Verified",
+    "五级去重规范防止虚增任务规模",
+    "Harbor 兼容隔离 harness 隐藏特权状态",
+    "11 个闭源/开源模型的基线结果",
+    "论文与项目页双向可追溯"
+   ],
+   "tags": [
+    "RoboUniverse-10K",
+    "Real2Sim",
+    "Isaac Sim",
+    "Agentic Robotics",
+    "冻结评测集",
+    "Reward Hacking"
+   ],
+   "addedDate": "2026-11-26"
+  },
+  {
+   "id": "os333",
+   "name": "RoboDojo-Mirror：一面镜子就能测出策略鲁棒性缺口的开源基准",
+   "github": "https://github.com/iPPLab/robodojo-mirror",
+   "organization": "iPPLab",
+   "org": "iPPLab",
+   "category": "data-tools",
+   "description": "MIT、Python，2026-11-25 最后更新，约 8 star（2026-11-26 核验）。这是本轮 p430（arXiv 2611.33010）的官方代码仓库，定位是「在反射环境中评测机器人操作策略」。做法保持任务目标、成功判据与策略权重不变，只增加单镜、双镜、镜面桌面三种条件，并用几何匹配的非反射挡板做对照，把「镜子作为物理障碍」与「镜子作为视觉混淆」分离开。论文覆盖 VLA、世界动作模型与 Agentic 五类策略，平均成功率跌幅 10.8—56.7 个百分点，镜面桌面最高 62.5 个百分点；50%—88% 的镜面特有失败没有接触记录，指向对镜像目标的虚幻指向。仓库很新、star 低，但评测思路极简可复用：适合作为团队自建回归测试里「最小干预扰动」的模板，与本轮深化的平台工程 CI/CD 章直接配套。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 8,
+   "features": [
+    "无镜/单镜/双镜/镜面桌面四条件受控对照",
+    "几何匹配非反射挡板隔离碰撞解释",
+    "覆盖 VLA/WAM/Agentic 五类策略",
+    "轨迹与接触日志诊断虚幻指向",
+    "π0.5 与 FastWAM 真机复验配置",
+    "MIT 许可、改动成本低"
+   ],
+   "tags": [
+    "RoboDojo-Mirror",
+    "反射鲁棒性",
+    "OOD评测",
+    "受控对照",
+    "虚幻目标",
+    "回归测试"
+   ],
+   "addedDate": "2026-11-26"
+  },
+  {
+   "id": "os334",
+   "name": "dimos：把人形、四足与无人机统一编排的物理空间 Agent 操作系统",
+   "github": "https://github.com/dimensionalOS/dimos",
+   "organization": "dimensionalOS",
+   "org": "dimensionalOS",
+   "category": "ai-agent-framework",
+   "description": "Apache-2.0、Python，约 4774 star（2026-11-26 核验），2026 年 11 月持续活跃。README 把它定位为「面向物理空间的 Agent 操作系统」：用同一套编排层指挥人形机器人、四足与无人机，把自然语言目标转成跨设备的可执行计划，并统一管理感知、记忆、技能与设备状态。这与只管单机控制环的运行时不同——dimos 解决的是「多台异构本体在同一物理空间里由谁编排、状态怎么同步」。仓库采用 Apache-2.0，适合作为具身 Agent 框架层的教学与二次开发底座。与本轮 n840 众擎开放的本体/数据/算力、os331 world-use 的 100 Hz 安全内核、资源导航 r052 第四层一起读，可以拼出「模型能训出来之后，谁负责把它稳定跑起来」的完整答案。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 4774,
+   "features": [
+    "跨人形/四足/无人机的统一编排层",
+    "自然语言到设备计划与技能调用",
+    "物理空间状态与记忆统一管理",
+    "异构本体的设备抽象与适配",
+    "Apache-2.0 可商用二次开发",
+    "活跃的社区与持续更新"
+   ],
+   "tags": [
+    "dimos",
+    "Agent OS",
+    "物理空间",
+    "多本体编排",
+    "设备抽象",
+    "具身Agent"
+   ],
+   "addedDate": "2026-11-26"
+  },
+  {
+   "id": "os335",
+   "name": "dexbotic：从数据到训练与评测的开源 VLA 工具箱",
+   "github": "https://github.com/dexmal/dexbotic",
+   "organization": "dexmal",
+   "org": "dexmal",
+   "category": "framework",
+   "description": "MIT、Python，约 3234 star（2026-11-26 核验）。dexbotic 是开源的 Vision-Language-Action 工具箱，把数据转换、策略训练、微调与评测串成一条可复用流水线，目标不是再提出一个基座模型，而是让研究者能用自己的机器人数据快速跑通 VLA 全流程。它与同组织的 open-world 基座模型项目形成「工具层 / 模型层」分工。对站内学习中心而言，这类工具箱的价值在于把散落在论文里的工程细节固化成可运行代码：数据格式怎么统一、动作块怎么切、评测指标怎么算。配合本轮 p428 的万级环境、os332 的冻结评测集、本轮深化的 Isaac Lab 章一起用，可以把「环境—数据—训练—评测」四段闭环补齐。MIT 许可、Python 实现，适合作为课程实验与复现实验的底座。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 3234,
+   "features": [
+    "数据转换与统一的训练格式",
+    "VLA 训练/微调流水线可复用",
+    "内置评测与指标计算",
+    "支持自定义机器人数据接入",
+    "与同组织基座模型项目分工清晰",
+    "MIT 许可、Python 实现"
+   ],
+   "tags": [
+    "dexbotic",
+    "VLA工具箱",
+    "数据流水线",
+    "策略训练",
+    "评测",
+    "开源框架"
+   ],
+   "addedDate": "2026-11-26"
+  },
   {
    "id": "os328",
    "name": "ζ₀ Zeta0：把分层 VLA 改造成联合预见场景与全身关节的世界动作模型",
@@ -8450,5 +8566,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 318
+ "totalItems": 322
 }

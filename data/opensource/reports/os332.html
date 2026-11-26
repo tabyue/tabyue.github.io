@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoboUniverse-10K：把真实操作视频转成万级可验证 RL 环境的评测代码库 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">RoboUniverse-10K：把真实操作视频转成万级可验证 RL 环境的评测代码库 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="robouniverse-10k-rl">RoboUniverse-10K：把真实操作视频转成万级可验证 RL 环境的评测代码库</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/Einsia/RoboUniverse-10K">https://github.com/Einsia/RoboUniverse-10K</a>  </p>
+<p><strong>Stars</strong>: 71 · <strong>License</strong>: Apache-2.0 · <strong>收录日期</strong>: 2026-11-26  </p>
+<p><strong>组织</strong>: Einsia  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-26</p>
+</blockquote>
+<hr />
+<p><strong>Einsia/RoboUniverse-10K</strong> 是 arXiv 2611.31002（本轮 p428）的官方评测代码仓库，Apache-2.0、Python，2026-11-24 最后更新、约 71 star。项目由 Einsia AI 联合清华大学、北京大学、UIUC、香港大学、UCL、UNC-Chapel Hill 六校完成，把真实机器人操作视频经自动化 Real2Sim 与质检流水线转成 10,807 个可交互、可复位、可验证的 Isaac Sim 环境。仓库本身定位是 evaluation code，完整环境、500 任务冻结评测集与 RoboUniverse-35B-A3B 模型由项目页分发，三者需要配合使用。</p>
+<hr />
+<p>按论文与仓库说明可归纳为四层（结构性归纳，具体以仓库文档为准）：  1. <strong>Real2Sim 生成层</strong>：从真实操作视频还原任务语义、物体布局与动作轨迹，输出可在 Isaac Sim 中运行的场景与任务定义；单臂侧融合 DROID、BridgeData V2、BC-Z、RT-1、RoboCook 等十余个数据集，双臂侧整合 RoboDesk、RoboCOIN、GM100、RoboMIND2 等遥操作数据。 2. <strong>质检与去重层</strong>：机器人本体、任务族、具体任务、场景布局、操作轨迹五级去重，以具体任务为最小计数单元，专门防止换贴图或挪物体位置虚增规模。 3. <strong>隔离 harness 层</strong>：每个环境跑在 Harbor 兼容的隔离容器里，隐藏特权状态与 grading 逻辑，Agent 只能拿到模拟真实传感的观测；这是治理 Reward Hacking 的关键一道。 4. <strong>评测层</strong>：500 个冻结任务构成 RoboUniverse-Verified，配套 11 个闭源/开源模型的基线结果与分任务族成功率。</p>
+<hr />
+<ul>
+<li><strong><a href="https://arxiv.org/abs/2611.31002">RoboUniverse-10K 论文（arXiv 2611.31002）</a></strong> — 环境构建、五级去重、隔离 harness 与后训练的完整方法。 - <strong><a href="https://github.com/Einsia/RoboUniverse-10K">Einsia/RoboUniverse-10K 仓库</a></strong> — Apache-2.0 评测代码。 - <strong><a href="https://lab.einsia.ai/robo-universe/">项目主页</a></strong> — 环境、RoboUniverse-Verified 评测集与 RoboUniverse-35B-A3B 模型入口。 - <strong><a href="https://github.com/Einsia/RoboUniverse-10K">Harbor 兼容 harness 说明</a></strong> — 特权状态隔离与自动判分接口。</li>
+</ul>
+<hr />
+<h3 id="git-clone-httpsgithubcomeinsiarobouniverse-10kgit-cd-robouniverse-10k-readme-isaac-sim-harbor-1-reset-step-grade-grading-agent-2-500-3-4">最小上手路径 <code>git clone https://github.com/Einsia/RoboUniverse-10K.git cd RoboUniverse-10K # 按 README 安装 Isaac Sim 与 Harbor 兼容依赖，先跑单环境</code> 1. 先在单个环境里跑通 reset / step / grade 三段接口，确认 grading 逻辑对 Agent 不可见。 2. 用冻结的 500 任务跑一次零样本基线，按任务族记录成功率；不要在训练集任务上调提示词。 3. 把失败轨迹按「规划错误 / 抓取失败 / 可变形物体 / 接触后控制」四类归因，验证开源模型是否集中在后三类。 4. 若做后训练，先用小规模轨迹做缩放曲线，再决定是否全参微调；真机段只做零样本迁移验证。</h3>
+<hr />
+<p>| 维度 | 情况 | | --- | --- | | Star | 约 71（2026-11-26 核验） | | 最后更新 | 2026-11-24 | | 主语言 / 许可 | Python / Apache-2.0 | | 环境总数 | 10,807（训练 10,307，冻结评测 500） | | 规模对照 | 约 RoboCasa365 的 30 倍，双臂任务占比超六成 | | 前沿模型 vs 开源基线 | 85.8% 对 2.6%—10.0% | | SFT 后零样本 | 0.8% → 21.2%（单臂 40.5%，抓取放置 62.2%） |</p>
+<hr />
+<p>| 对照对象 | 差异 | | --- | --- | | 本轮 os333 RoboDojo-Mirror | 一个把环境规模做上去，一个把扰动控制到只有一个变量；前者回答「够不够多」，后者回答「稳不稳」 | | 站内已收录 RoboCasa / ManiSkill | 人工搭建的中等规模基准，任务数与可验证性都不在同一量级 | | 本轮 os335 dexbotic | 提供训练与数据流水线，RoboUniverse-10K 提供环境与冻结评测集，是训练链路的两端 | | 本轮 p429 DiffGR00T | 用学出来的可微世界模型替代仿真器求梯度；RoboUniverse 坚持用真实物理引擎换可验证性 |</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

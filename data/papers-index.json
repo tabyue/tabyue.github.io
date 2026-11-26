@@ -1,6 +1,146 @@
 {
- "lastUpdated": "2026-11-25T08:35",
+ "lastUpdated": "2026-11-26T08:35",
  "papers": [
+  {
+   "id": "p427",
+   "title": "OmniAct: One Policy, One Million Embodiments",
+   "authors": "Xiang Fan, Yuheng Wang, Jiayuan Yan, Bohan Fang, Wisdom Oluchi Ikezogwo, Ainaz Eftekhar, Max Argus, Jason Ren, Jiafei Duan, Ranjay Krishna",
+   "venue": "arXiv 2611.33158",
+   "date": "2026-11-24",
+   "arxiv": "https://arxiv.org/abs/2611.33158",
+   "github": "",
+   "tags": [
+    "OmniAct",
+    "跨本体",
+    "运动学图",
+    "流匹配",
+    "程序化本体",
+    "One Million Embodiments"
+   ],
+   "category": "跨本体策略 / 形态条件化",
+   "difficulty": "高级",
+   "tldr": "**问题**：单一策略控制多种机器人时，共享动作表征只解决「任务知识怎么迁移」，没有回答「形态差异该如何改变操作策略」。**做法**：OmniAct 把机器人在当前场景中的运动学图（关节位置、运动轴、连通性）与视觉观测一起送进策略，用流匹配预测每个节点的相对关节运动，从而适配不同自由度与运动学配置；为学出物理结构如何塑造行为，程序化设计并筛选一百万个物理可行本体，在仿真中为全部本体生成轨迹并跨任务训练。**结果**：2000 个本体—场景留出评测回合上成功率 63.0%，pi 0.5 为 17.8%、最强基线 57.9%；在 GPT-6 Astra 评测过的任务族上 64.7% 对 41.1%；未见过的真机机器人上接近次优方法 MolmoAct2 的两倍。",
+   "keyInsights": [
+    "形态不是要被消掉的噪声，而是要被条件化的输入：共享动作空间让策略「能控制」，运动学图让策略「知道该用什么方式控制」。",
+    "一百万个本体解决的是监督信号问题而非评测问题：留出评测按本体与场景双重 hold-out，才能说明策略学到的是结构到行为的关系，而不是记住了若干机型。",
+    "预测相对关节运动而不是绝对位姿，使同一动作头可以接不同自由度；这是跨本体泛化能成立的关键接口选择。",
+    "真机未见本体上近两倍的增益比仿真榜单更有说服力，但论文口径是成功率而非长时程稳定性，落地时仍需看接触丰富任务的失败模式。"
+   ],
+   "impact": "与本轮 p431 Any2Act 构成「本体侧」与「示教侧」的一组对照：OmniAct 把执行者的运动学结构显式喂给策略，Any2Act 把示教重写到执行者的相机布局与动作空间。配合本轮 os332 RoboUniverse-10K 的万级环境、资源导航 r052 第二层，以及站内运动学模块的齐次变换与 DH 参数法章节一起读，可以看清「形态先验」在 2026 年底的两条注入路径。",
+   "addedDate": "2026-11-26"
+  },
+  {
+   "id": "p428",
+   "title": "RoboUniverse-10K: Toward the Scaling Era of Agentic Robotics via Real-to-Sim Environments",
+   "authors": "Jinkun Liu, Yingze Wang, Situ Wang, Deyao Hong, Mingju Gao, Wenyi Li, Yizhe Chi, Youjie Zheng, Kaisen Yang, Xiangyang Wang, Bingxiang He, Yuxin Zuo, Boyuan Chen, Yue Chen, Cheng Qian, Tianxing Chen, Huichi Zhou, Huaxiu Yao, Hao Tang, Hao Zhou, Ya-Qin Zhang, Calvin Xiao, Tiga Altman, Huan-ang Gao",
+   "venue": "arXiv 2611.31002",
+   "date": "2026-11-23",
+   "arxiv": "https://arxiv.org/abs/2611.31002",
+   "github": "https://github.com/Einsia/RoboUniverse-10K",
+   "tags": [
+    "RoboUniverse-10K",
+    "Real2Sim",
+    "Agentic Robotics",
+    "Isaac Sim",
+    "RoboUniverse-Verified",
+    "冻结评测集"
+   ],
+   "category": "仿真环境规模化 / Agentic Robotics",
+   "difficulty": "高级",
+   "tldr": "**问题**：软件工程有海量可执行环境支撑后训练，机器人却仍受限于小规模、人工搭建、分布内评测的基准。**做法**：用自动化 Real2Sim 与质检流水线把真实操作视频转成 10,807 个可交互、可复位、可验证的物理环境，每个跑在隔离的 Harbor 兼容 harness 里隐藏特权状态与评分逻辑；留出 500 个未见任务构成专家核验的零样本基准 RoboUniverse-Verified；再用 GPT-6 Astra 采集约 1.7 万条多轮轨迹（0.79B token）对 Qwen3.6-35B-A3B 全参微调。**结果**：11 个模型评测中前沿模型 85.8%、开源基线 2.6%—10.0%；RoboUniverse-35B-A3B 零样本成功率 0.8%→21.2%，并在 LIBERO-MAX、RoboCasa、RoboTwin 2.0 与真实 Franka 臂上零样本完成任务。",
+   "keyInsights": [
+    "把「环境数量」做成一等变量：五级去重规范以具体任务为最小计数单元，直接堵住换贴图、挪物体位置虚增规模的口径漏洞。",
+    "可验证性与隔离性和数量同等重要：harness 隐藏特权状态与 grading 逻辑，模型只能从真实传感条件下拿信息，否则大规模环境会变成奖励黑客的温床。",
+    "开源与闭源在 Agentic Robotics 上的差距（85.8% 对 2.6%—10.0%）集中在底层抓取、可变形物体与接触后控制，说明瓶颈不在高层任务规划而在物理执行。",
+    "1.7 万条轨迹带来 0.8%→21.2% 的跃迁，但绝对成功率仍低；这篇工作的价值更像「把 RL 的训练场铺好」，而不是给出可用策略。"
+   ],
+   "impact": "与本轮 os332（同项目开源仓库）、n842（产业报道）三方联动；与本轮深化的 Isaac Lab 章直接对应：GPU 并行仿真、张量化观测与奖励接口、域随机化正是万级环境能跑起来的前提。评测层的「冻结 500 任务 + 隐藏特权状态」与本轮深化的 CI/CD 章、p430 反射失效基准、资源导航 r052 第一/第三层一起构成「怎么造环境、怎么验策略」的完整链条。",
+   "addedDate": "2026-11-26"
+  },
+  {
+   "id": "p429",
+   "title": "DiffGR00T: Execution-Aware Differentiable Training for Humanoid Whole-Body Vision-Language-Action Models",
+   "authors": "Sichen Wu, Qian Sun, Mengfan Liu, Weikai Qin, Bike Zhu, Hesheng Wang",
+   "venue": "arXiv 2611.32665",
+   "date": "2026-11-24",
+   "arxiv": "https://arxiv.org/abs/2611.32665",
+   "github": "",
+   "tags": [
+    "DiffGR00T",
+    "可微训练",
+    "世界模型",
+    "全身控制",
+    "GR00T N1.7",
+    "SONIC"
+   ],
+   "category": "人形全身 VLA / 可微训练",
+   "difficulty": "高级",
+   "tldr": "**问题**：分层式人形 VLA 把动作生成与物理执行解耦，跟踪误差与平衡误差无法直接优化上层生成器。**做法**：把 GR00T N1.7 与预训练全身行为基座模型 SONIC 端到端耦合，用学出来的动作条件世界模型替代不可微仿真器，让多步身体执行损失穿过冻结的全身控制器与流匹配采样器，直接回传到 VLA 动作头。**结果**：HumanoidArena 四个仿真任务上平均成功率由监督基线 59.2% 提升到 71.7%（+12.5 个百分点）。",
+   "keyInsights": [
+    "可仿真的替代物必须可微：把物理执行链写进计算图，是把「生成得像」变成「执行得成」的唯一通路。",
+    "冻结全身控制器而只训动作头，等价于把底层稳定性当作固定约束而非可学变量，既省算力也避免破坏已训好的平衡能力。",
+    "世界模型在这里承担的角色是梯度桥而非预测器，其误差会直接变成动作头的错误梯度，因此模型保真度与 rollout 长度需要单独消融。",
+    "+12.5 个百分点来自四个仿真任务，尚无真机结果；落地风险集中在学出来的世界模型与真实接触动力学之间的分布偏移。"
+   ],
+   "impact": "与本轮 p427 的「形态条件化」、p423（上一轮）的「原生潜动作模型」同属动作变量设计谱系；配合站内全身控制、可微仿真与流匹配策略相关章节，以及资源导航 r052 第二层一起读，可以看清「让执行误差回传到生成端」这条路线与「直接换动作表征」路线的分工。",
+   "addedDate": "2026-11-26"
+  },
+  {
+   "id": "p430",
+   "title": "Embodied AI Fails the Mirror Test: How a Simple Mirror Breaks Robot Policies",
+   "authors": "Xuanchen Liu, Hejun Zhang, Boxuan Dong, Ying Wu, Heshuai Li, Wen Gao, Yonghong Tian, Weihao Yu",
+   "venue": "arXiv 2611.33010",
+   "date": "2026-11-24",
+   "arxiv": "https://arxiv.org/abs/2611.33010",
+   "github": "https://github.com/iPPLab/robodojo-mirror",
+   "tags": [
+    "RoboDojo-Mirror",
+    "反射环境",
+    "鲁棒性评测",
+    "虚幻目标",
+    "空间误定位",
+    "VLA失效"
+   ],
+   "category": "评测基准 / 感知鲁棒性",
+   "difficulty": "高级",
+   "tldr": "**问题**：一面镜子能否暴露当前操作策略的局限。**做法**：在 RoboDojo 上保持任务目标、成功判据与策略权重不变，只对比无镜基线与单镜、双镜、镜面桌面三种条件；再用几何匹配的非反射挡板做对照，把「镜子作为物理障碍」与「镜子作为视觉混淆」分开。**结果**：覆盖 VLA、世界动作模型与 Agentic 策略的五类策略在三种镜面条件下聚合成功率全部下降，平均跌幅 10.8—56.7 个百分点，镜面桌面最高 62.5 个百分点；50%—88% 的镜面特有失败没有记录到机器人与挡板接触，轨迹与接触分析指向对镜像目标的虚幻指向与真实目标的空间误定位；π0.5 与 FastWAM 真机实验同样下降。",
+   "keyInsights": [
+    "评测设计的价值在于「只改一个因素」：任务、判据、权重全部不变，仅引入反射面，才能把性能下降归因到感知而不是任务难度。",
+    "几何匹配的非反射挡板是关键对照：没有它，镜子既是视觉混淆又是物理障碍，结论会被碰撞解释掉。",
+    "失败模式是语义层面的（把镜像当成可抓目标），不是几何遮挡，说明当前策略对观测的因果来源缺乏分辨能力。",
+    "跨 VLA / WAM / Agentic 三类架构一致退化，指向共享的视觉表征短板，而非某个模型的实现缺陷；反射感知应进入标准 OOD 评测项。"
+   ],
+   "impact": "与本轮 os333（同项目开源基准）、p428 的冻结评测集、以及本轮深化的 CI/CD 章形成评测三件套：冻结任务集、隔离特权状态、最小干预扰动。配合资源导航 r052 第三层与站内视觉鲁棒性、开放词汇检测章节一起读，可以把「榜单高分」与「真实环境稳定」之间的差距具体化。",
+   "addedDate": "2026-11-26"
+  },
+  {
+   "id": "p431",
+   "title": "Any2Act: Scaling In-Context Robot Learning from Heterogeneous Demonstrations",
+   "authors": "Ziang Ren, Zifan Wang, Zhuoyang Li, Benhao Qin, Haoyang Li, Qingtao Liu, Xuchuan Chen, Zekun Qi, He Wang, Yanchao Yang, Li Yi",
+   "venue": "arXiv 2611.32353",
+   "date": "2026-11-24",
+   "arxiv": "https://arxiv.org/abs/2611.32353",
+   "github": "",
+   "tags": [
+    "Any2Act",
+    "In-Context Learning",
+    "异构示教",
+    "执行者坐标系",
+    "源路由适配器",
+    "长程跟踪"
+   ],
+   "category": "上下文学习 / 异构示教",
+   "difficulty": "高级",
+   "tldr": "**问题**：机器人上下文学习靠示教完成未见任务，但以人类视频为条件的方法受限于稀缺的人—机配对，以机器人示教为条件的方法又只接受一两种来源、规模有限。**做法**：提出示教应表达在执行者（执行任务的那台机器人）的相机布局与动作空间里，而不是提供者的；用 1.2M 条真实轨迹、1 万任务学一次「跟随」，人类视频、仿真、UMI 与其他机器人再翻译到该统一表征，由每种来源仅数百对训练的源路由适配器吸收残差，预训练模型保持冻结；长时程任务用免训练跟踪器按执行进度只喂入示教窗口并支持回滚重做。**结果**：单条示教下未见任务成功率 57.5%，超过每任务用 50 条示教微调的 VLA；其他来源示教保留执行者自身示教成功率的 74%—91%。",
+   "keyInsights": [
+    "统一表征的坐标系选择是方法核心：把示教重写到执行者侧，使「学会跟随」与「接纳新来源」两件事解耦。",
+    "源路由适配器只训几百对、主干冻结，说明异构示教之间的差距主要是坐标与传感口径的残差，不是需要重新学习的任务知识。",
+    "按进度滚动喂示教窗口并允许回滚，把长时程的上下文长度约束与失败恢复一并处理，比一次性塞完整示教更贴近闭环执行。",
+    "单条示教 57.5% 超过 50 条示教微调的 VLA，是「跟随能力可迁移」的强证据，但仍需看跨本体与接触丰富任务上的表现。"
+   ],
+   "impact": "与本轮 p427 OmniAct 互为镜像：一个把执行者形态喂给策略，一个把示教重写到执行者坐标系；与 p428 的 1.7 万条轨迹一起，勾勒出 2026 年底「数据从哪来、怎么统一」的两条主线。配合资源导航 r052 第二层与站内模仿学习、动作分块章节阅读效果最好。",
+   "addedDate": "2026-11-26"
+  },
   {
    "id": "p422",
    "title": "WeaveVLA: 3D Relational Grounding for Vision-Language-Action Models",
@@ -11441,5 +11581,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 400
+ "totalItems": 405
 }
