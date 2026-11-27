@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-26T08:35",
+ "lastUpdated": "2026-11-27T08:44",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,122 @@
   }
  ],
  "projects": [
+  {
+   "id": "os336",
+   "name": "RoboManipBaselines：把多种模仿学习方法与基准环境收进同一套可比对框架",
+   "github": "https://github.com/isri-aist/RoboManipBaselines",
+   "organization": "National Institute of Advanced Industrial Science and Technology (AIST)",
+   "org": "isri-aist",
+   "category": "framework",
+   "description": "BSD-2-Clause、Python，2026-11-23 最后更新，约 410 star（2026-11-27 核验）。日本产业技术综合研究所（AIST）ISR 组维护的软件框架，把多种模仿学习方法与机器人操作基准环境整合到统一接口下，目标不是再提一个 SOTA，而是让行为克隆、动作分块、扩散策略等基线在相同环境、相同数据、相同评测口径下可比。对站内学习中心而言，它的价值在于把论文里散落的工程细节固化成可运行代码：观测与动作的数据契约、动作归一化、评测回合与成功率统计。适合作为复现本轮 p436 CoTacWAM 多模态策略或 p434 Harness 受控实验的基线骨架——先确认统一框架里的基线能跑通，再替换自己的策略头，避免把实现差异误读成方法增益。",
+   "language": "Python",
+   "license": "BSD-2-Clause",
+   "stars": 410,
+   "features": [
+    "多种模仿学习方法统一接口",
+    "配套机器人操作基准环境",
+    "一致的数据加载与动作归一化",
+    "统一评测回合与成功率统计",
+    "AIST 维护，BSD-2-Clause 可商用",
+    "配置文件驱动，便于替换策略与本体"
+   ],
+   "tags": [
+    "RoboManipBaselines",
+    "模仿学习基线",
+    "AIST",
+    "基准环境",
+    "可比对评测",
+    "BSD-2-Clause"
+   ],
+   "addedDate": "2026-11-27"
+  },
+  {
+   "id": "os337",
+   "name": "open-embodied：面向具身时间的开源机器人系统",
+   "github": "https://github.com/open-embodied/open-embodied",
+   "organization": "Open Embodied",
+   "org": "open-embodied",
+   "category": "ai-agent-framework",
+   "description": "Apache-2.0、Python，2026-11-25 最后更新，约 386 star（2026-11-27 核验）。定位是开源的具身机器人系统，把感知、记忆、调度与执行组织成一个可持续运行的整体，而不是单点算法仓库。仓库名里的「embodied time」强调机器人要在连续时间轴上维护状态：观测按时间戳进入、动作按控制周期发出、任务状态跨回合延续，这与本轮 p434 关于 Harness 设计需要长时记忆与推理介入的结论直接相关。对站内读者，它可以和 /learn/embodied-agent 的失败感知与自主恢复、/learn/ros2 的机器人运行时分层两章配合，用来理解「模型之外还需要一层系统」这句话在代码里长什么样。仓库描述较简略，具体能力边界以 README 为准。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 386,
+   "features": [
+    "开源具身机器人系统而非单点算法",
+    "强调连续时间轴上的状态维护",
+    "感知 / 记忆 / 调度 / 执行一体组织",
+    "Apache-2.0 许可",
+    "可作为 Harness 层研究的项目骨架",
+    "中文与英文社区均可参与"
+   ],
+   "tags": [
+    "open-embodied",
+    "具身系统",
+    "Agent 运行时",
+    "长时状态",
+    "开源机器人",
+    "Apache-2.0"
+   ],
+   "addedDate": "2026-11-27"
+  },
+  {
+   "id": "os338",
+   "name": "terrain-grounded-imagination：用可微地形查询的世界模型训练稀疏粗糙地形上的四足运动",
+   "github": "https://github.com/leggedrobotics/terrain-grounded-imagination",
+   "organization": "Robotic Systems Lab, ETH Zurich",
+   "org": "leggedrobotics",
+   "category": "simulation",
+   "description": "MIT、Python，2026-11-26 最后更新，约 169 star（2026-11-27 核验）。ETH 苏黎世机器人系统实验室的工作，提出一套在稀疏、粗糙与三维地形上训练腿式机器人运动的配方：把世界模型与可微地形查询结合，让策略在想象出来的地形几何上获得密集的梯度信号，而不是只靠稀疏的真机或仿真奖励。对具身智能读者，这条路线把「世界模型」从生成画面推进到生成可微的环境几何，与站内 /learn/physics-simulation 的接触动力学、可微仿真两章以及 /learn/mobile-robot-navigation 的地形建图内容互补。适合用来做课程实验：同一套策略分别用平坦地形、稀疏奖励地形与可微地形想象训练，对比收敛速度与跨地形泛化。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 169,
+   "features": [
+    "世界模型 + 可微地形查询",
+    "面向稀疏 / 粗糙 / 三维地形",
+    "腿式机器人运动训练配方",
+    "ETH RSL 维护，MIT 许可",
+    "可复现实验与配置",
+    "与可微仿真课程互补"
+   ],
+   "tags": [
+    "Terrain Grounded Imagination",
+    "可微地形",
+    "世界模型",
+    "四足运动",
+    "ETH RSL",
+    "MIT"
+   ],
+   "addedDate": "2026-11-27"
+  },
+  {
+   "id": "os339",
+   "name": "WorldPhy：机器人世界模型细粒度物理合理性的评测基准与奖励模型",
+   "github": "https://github.com/chuziyuan139/WorldPhy",
+   "organization": "WorldPhy Team",
+   "org": "chuziyuan139",
+   "category": "data-tools",
+   "description": "Python，未声明许可证，2026-11-26 最后更新，约 2 star（2026-11-27 核验，仓库 11-25 新建）。这是本轮 p435 WorldPhy 论文（arXiv 2611.34130）的官方代码库：提供 300 个由初始帧图像与任务指令组成的评测任务，覆盖多样机器人场景、任务类别、视角与本体配置，以及基于 1.2 万余条人工标注训练的 WorldPhyReward，可在六个细粒度物理维度与一个指令遵循维度上输出分数和理由。论文用它系统评测了 13 个前沿开源与闭源世界模型，结论是当前模型难以跨场景一致维持细粒度物理合理性。对站内读者，它把「生成视频看起来真不真」变成可分解、可复现的评测问题，配合 /learn/computer-vision 计算机视觉基础章（本轮深化）理解像素到几何的证据链。仓库较新、star 少且未声明许可证，商用前需与作者确认授权。",
+   "language": "Python",
+   "license": "未声明",
+   "stars": 2,
+   "features": [
+    "300 个初始帧 + 指令的评测任务",
+    "1.2 万余条高质量人工标注",
+    "WorldPhyReward 六维物理评分 + 理由",
+    "覆盖多视角与多本体配置",
+    "13 个前沿世界模型的基线结果",
+    "论文与代码双向可追溯"
+   ],
+   "tags": [
+    "WorldPhy",
+    "物理合理性",
+    "评测基准",
+    "WorldPhyReward",
+    "世界模型",
+    "细粒度标注"
+   ],
+   "addedDate": "2026-11-27"
+  },
   {
    "id": "os332",
    "name": "RoboUniverse-10K：把真实操作视频转成万级可验证 RL 环境的评测代码库",
@@ -8566,5 +8682,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 322
+ "totalItems": 326
 }

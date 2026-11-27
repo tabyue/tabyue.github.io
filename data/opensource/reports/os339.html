@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorldPhy：机器人世界模型细粒度物理合理性的评测基准与奖励模型 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">WorldPhy：机器人世界模型细粒度物理合理性的评测基准与奖励模型 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="worldphy">WorldPhy：机器人世界模型细粒度物理合理性的评测基准与奖励模型</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href="https://github.com/chuziyuan139/WorldPhy">https://github.com/chuziyuan139/WorldPhy</a>  </p>
+<p><strong>Stars</strong>: 2 · <strong>License</strong>: 未声明 · <strong>收录日期</strong>: 2026-11-27  </p>
+<p><strong>组织</strong>: WorldPhy Team  </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-27</p>
+</blockquote>
+<hr />
+<p><strong>chuziyuan139/WorldPhy</strong> 是本轮 p435 论文《WorldPhy: Benchmarking Fine-Grained Physical Plausibility of World Models in Robotics》（arXiv 2611.34130）的官方代码库，Python、仓库未声明许可证，约 2 star（2026-11-27 核验，2026-11-25 新建、11-26 更新）。它提供 300 个由初始帧图像与任务指令组成的评测任务，覆盖多样机器人场景、任务类别、视角与本体配置，以及基于 1.2 万余条人工标注训练的 WorldPhyReward——可在六个细粒度物理维度与一个指令遵循维度上输出分数与理由。论文用它系统评测 13 个前沿开源与闭源世界模型，结论是当前模型难以跨场景一致维持细粒度物理合理性。仓库较新、star 少且未声明许可证，商用前需与作者确认授权。</p>
+<hr />
+<p>按论文与仓库定位可归纳为四块（结构性归纳，具体以仓库文档为准）： 1. <strong>任务集层</strong>：300 个任务各由一张初始帧图像与一条任务指令构成，刻意不给后续帧，逼世界模型自己生成物理演化过程。 2. <strong>标注层</strong>：超过 1.2 万条高质量人工标注，按六个细粒度物理维度与一个指令遵循维度打分，并附判断理由。 3. <strong>奖励模型层</strong>：WorldPhyReward 从标注中学习，对新生成视频输出维度分数与理由，与人类评分的对齐优于通用 VLM 与已有奖励模型。 4. <strong>评测层</strong>：固定初始帧、指令与生成长度，对多个世界模型批量评分，并支持按场景聚合统计跨场景一致性。 输出理由这一设计是有意的：把评判器从黑箱回归变成可审计的结构化预测，便于定位模型具体在哪类物理约束上出错。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/chuziyuan139/WorldPhy">WorldPhy 仓库</a></strong> — 官方代码，含任务集与 WorldPhyReward。 - <strong><a href="https://arxiv.org/abs/2611.34130">WorldPhy 论文（arXiv 2611.34130）</a></strong> — 基准设计、标注方案与 13 个模型的评测结论。 - <strong><a href="https://github.com/chuziyuan139/WorldPhy">仓库 README</a></strong> — 安装、数据组织与最小评分示例。 - <strong><a href="https://info.arxiv.org/help/openaccess/index.html">arXiv 开放获取说明</a></strong> — 对照理解论文预印本与官方代码的对应关系。</li>
+</ul>
+<hr />
+<h3 id="git-clone-httpsgithubcomchuziyuan139worldphygit-cd-worldphy-readme-1-worldphyreward-2-3-vlm-4-5-learncomputer-vision">最小上手路径 <code>git clone https://github.com/chuziyuan139/WorldPhy.git cd WorldPhy # 按 README 安装依赖，先用少量任务跑通一次评分流程</code> 1. 先在一个小样本子集上跑通「加载初始帧与指令 → 生成视频 → WorldPhyReward 评分」全链路，确认维度分数与理由都能正常输出。 2. 抽查高分与低分样本的理由，确认奖励模型没有依赖画面清晰度等与物理无关的捷径。 3. 在留出的人工标注集上复现与人类评分的对齐度，并与通用 VLM 做同一样本的配对比较。 4. 对同一模型统计跨场景得分的方差——论文的核心结论是「一致性不足」而不只是平均分低，这一步不能省。 5. 配合站内 /learn/computer-vision 计算机视觉基础章（本轮深化）理解像素到几何的证据链，再看物理约束为何无法由像素分布拟合保证。</h3>
+<hr />
+<p>| 维度 | 情况 | | --- | --- | | Star | 约 2（2026-11-27 核验，仓库较新） | | 主语言 / 许可 | Python / 未声明 | | 任务数 | 300（初始帧 + 指令） | | 人工标注 | 超过 12,000 条 | | 评分维度 | 6 个细粒度物理维度 + 1 个指令遵循维度 | | 被评模型 | 13 个前沿开源与闭源世界模型 | | 主要结论 | 当前模型难以跨场景一致维持细粒度物理合理性 |</p>
+<hr />
+<p>| 对照对象 | 差异 | | --- | --- | | 本轮 os336 RoboManipBaselines | 策略侧的可比对训练与评测框架；WorldPhy 评的是生成画面的物理合理性 | | 本轮 os338 terrain-grounded-imagination | 用可微地形几何直接改进控制；WorldPhy 只做评测与诊断 | | 本轮 p433 力感知审计 | 问表征里有没有力的信息；WorldPhy 问生成画面守不守物理约束 | | 通用视频生成指标 | 主要约束像素分布；WorldPhy 约束交互状态转移是否合物理 |</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

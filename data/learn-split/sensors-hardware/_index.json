@@ -1,7 +1,7 @@
 {
   "id": "sensors-hardware",
   "name": "传感器与硬件接口",
-  "lastUpdated": "2026-11-21T08:35",
+  "lastUpdated": "2026-11-27T08:44",
   "stage": "阶段二：机器人学基础",
   "importance": "核心",
   "estimatedHours": 40,
@@ -67,13 +67,13 @@
     {
       "id": "sec-01",
       "title": "电子学基础：电路原理、信号调理与接口协议",
-      "lastUpdated": "2026-10-27",
-      "chars": 5715,
+      "lastUpdated": "2026-11-27T08:44",
+      "chars": 17883,
       "shortTitle": "电子学基础",
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "tier": 0,
-      "readingMinutes": 6,
+      "readingMinutes": 21,
       "headings": [
         "1. 基本电路定律",
         "2. 模拟信号与数字信号",
@@ -81,6 +81,10 @@
         "4. 常用通信接口",
         "5. 信号调理",
         "6. 接地与噪声抑制",
+        "7. 从物理量到电压：传感器等效电路与电桥线性化的完整推导",
+        "8. 运算放大器、共模抑制与噪声预算",
+        "9. ADC 的频域视角：采样、量化噪声谱与 SNR 公式推导",
+        "10. 过采样、抽取与从信号链看力这个隐藏变量",
         "练习题",
         "参考答案"
       ],
@@ -598,7 +602,7 @@
       "summary": "2026 年灵巧手进入量产阶段，全年出货量以万台计；相比之下，能同时提供经过标定的指尖力和可靠手部姿态的采集手套，仍然是稀缺品。这个反差初看不合理——手套又不需驱动电机，结构上比灵巧手简单得多。"
     }
   ],
-  "readingMinutes": 240,
+  "readingMinutes": 255,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 197316
+  "chars": 209484
 }

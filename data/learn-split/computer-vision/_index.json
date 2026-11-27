@@ -54,20 +54,20 @@
     }
   ],
   "weeklyPlan": "**第1-2周**：OpenCV 图像处理 + 相机标定\n**第3周**：YOLO 目标检测训练与部署\n**第4-5周**：SAM 分割 + 6DoF 位姿估计\n**第6周**：集成到机器人抓取 Pipeline",
-  "lastUpdated": "2026-11-23T09:30",
+  "lastUpdated": "2026-11-27T08:44",
   "maturity": "foundation",
   "sectionOrderVersion": 2,
   "sectionsMeta": [
     {
       "id": "sec-01",
       "title": "计算机视觉基础：从图像处理到深度学习检测",
-      "lastUpdated": "2026-10-27",
-      "chars": 5308,
+      "lastUpdated": "2026-11-27T08:44",
+      "chars": 19306,
       "shortTitle": "计算机视觉基础",
       "difficulty": "入门",
       "estimatedMinutes": 3,
       "tier": 0,
-      "readingMinutes": 6,
+      "readingMinutes": 23,
       "headings": [
         "1. 图像的数学表示",
         "2. 相机模型",
@@ -75,6 +75,11 @@
         "4. 深度学习目标检测",
         "5. 6D 物体位姿估计",
         "6. 机器人视觉的特殊需求",
+        "7. 光怎么变成数字：成像链路的完整物理背景",
+        "8. 采样、混叠与尺度空间：像素不是连续函数",
+        "9. 卷积与线性移不变系统：从滤波到边缘",
+        "10. 从像素回到三维：针孔模型完整推导与深度误差传播",
+        "11. 颜色、光照不变性与本轮前沿的接口",
         "练习题",
         "参考答案"
       ],
@@ -465,7 +470,7 @@
       "summary": "目标检测的输出是一个框，分割的输出是一个掩码。这两样东西对机器人来说都不够用。"
     }
   ],
-  "readingMinutes": 175,
+  "readingMinutes": 192,
   "readingEstimateMethod": "browse-v1: Chinese 400 chars/min; English 220 words/min; code 900 chars/min; excludes practice",
-  "chars": 148375
+  "chars": 162373
 }
