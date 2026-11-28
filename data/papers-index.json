@@ -1,6 +1,151 @@
 {
- "lastUpdated": "2026-11-27T08:44",
+ "lastUpdated": "2026-11-28T08:40",
  "papers": [
+  {
+   "id": "p437",
+   "title": "RoboEvo²: Recursive Robot Self-Improvement via Harness-Policy Co-Evolution",
+   "authors": "Chenzhi Liu, Jiehong Lin, Wei Huang, Xuzhao Huang, Haoyuan Li, Yang Zhang, Junchao Huang, Chenyeyang Cai, Bo Wang, Kazuhiro Kosuge, Zhongrui Wang, Xiaojuan Qi",
+   "venue": "arXiv 2611.34675",
+   "date": "2026-11-25",
+   "arxiv": "https://arxiv.org/abs/2611.34675",
+   "github": "",
+   "tags": [
+    "RoboEvo2",
+    "递归自我改进",
+    "Harness-Policy",
+    "Code as Policy",
+    "反事实偏好蒸馏",
+    "LIBERO-PRO"
+   ],
+   "category": "具身 Agent / 自改进框架",
+   "difficulty": "高级",
+   "tldr": "**问题**：VLA 策略控制高效但遇到陌生场景要靠新增人类示教；推理智能体能凭先验调用机器人控制 API 找出解法，却要为每一步反复推理与修复付高昂代价。已有做法要么只演化 Harness 而冻结策略，要么只训策略而让 Harness 静止，两者都不闭环。**做法**：RoboEvo² 用当前策略的失败同时驱动两端。Policy-to-Harness（P2H）中编码智能体沿 Code、Code+ICL、Code+Policy 三条路线并行搜索修复，把验证过的解沉淀成可复用技能、路由策略与经验记忆；Harness-to-Policy（H2P）中验证轨迹做监督训练，并用反事实偏好蒸馏（CPD）教策略在同一初始状态下偏向成功修正、远离失败方案。改进后的策略给后续搜索提供更强的运动技能，剩余失败再重定向 Harness 演化。**结果**：全程不增加人类示教，LIBERO-PRO 上独立执行成功率 11.0%→84.1%、混合执行 30.4%→90.5%；RoboTwin C2R 有类似增益且智能体开销下降；另验证自主任务获取、跨本体 Harness 迁移，Unitree G1-D 混合执行 95.0%。作者称模型与代码将公开。",
+   "keyInsights": [
+    "把「失败」同时当作两端的更新信号而非只当评测结果，是闭环成立的关键：策略改进会改变智能体可用的运动技能，也就改变了仍需探索的失败分布，Harness 必须跟着动。",
+    "反事实偏好蒸馏要求成功与失败轨迹从同一初始状态出发，否则策略学到的是初始状态差异而不是修正动作的质量差异——这是偏好数据构造里最容易被跳过的一步。",
+    "三条修复路线（纯代码、代码＋上下文示例、代码＋策略）并行，本质是在搜索空间里给「可用已有控制器」留了不同粒度的接口，避免把所有失败都推给写代码。",
+    "报告里区分独立执行与混合执行两套口径，并给出智能体开销下降：如果只看混合成功率，就无法判断能力究竟沉淀进了策略还是仍留在 Harness 里。",
+    "跨本体 Harness 迁移与真机 G1-D 结果说明组织层有一定的本体无关性，但 LIBERO-PRO 与 RoboTwin 仍是仿真为主，真机只给了总体成功率，缺长时运行与失败类型分解。"
+   ],
+   "impact": "与 n861 商汤 RoboRSI-27B 的「仅改工具 10.0→24.8、仅训模型 10.0→32.2、两者结合 34.7」构成同一结论的两种证据：工具层与策略层必须协同演化，单独优化任一边都会触顶。对站内 /learn/embodied-agent 的 Harness 章节与 /learn/imitation-learning 的失败恢复章节，这篇给出可操作的训练信号构造方式；对 os340 Hebbian-Robotics/rua 与 os341 inspect-robots，分别对应 RUA 实现与跨本体评测契约。",
+   "addedDate": "2026-11-28"
+  },
+  {
+   "id": "p438",
+   "title": "FineDex: Bridging Fine-Grained Human-Object Interaction Generation to Dexterous Humanoid Manipulation",
+   "authors": "Yujia Zeng, Yuxin Chen, Yuzhen Song, Runhan Huang, Chensheng Peng, Yiyang Shao, Koushil Sreenath, Masayoshi Tomizuka, Yilun Du",
+   "venue": "arXiv 2611.34884",
+   "date": "2026-11-25",
+   "arxiv": "https://arxiv.org/abs/2611.34884",
+   "github": "",
+   "tags": [
+    "FineDex",
+    "细粒度 HOI 生成",
+    "手指级意图",
+    "数字孪生",
+    "测试时适配",
+    "灵巧人形"
+   ],
+   "category": "灵巧操作 / 人-物交互生成",
+   "difficulty": "高级",
+   "tldr": "**问题**：灵巧的本质是手指级控制，但现有灵巧操作与人物交互（HOI）生成方法很少允许指定「怎么交互」——五指手常被简化成夹爪，或只能从单条人类示教里复制手指用法。**做法**：FineDex 让手指级意图既可表达又可执行。它学习人体、手与物体的协同运动，服从关于选哪只手、用哪几根手指、与铰接物体哪些部位接触的细粒度指令；生成结果不是直接当轨迹执行，而是作为可执行的先验交给一个智能体，在基于物理的数字孪生里通过练习发现物理可行的接触策略。测试时适配，无需逐实例重训。**结果**：HOI 生成质量与细粒度可控性达到 SOTA，灵巧操作成功率有大幅提升，并在真实灵巧人形机器人上完成部署。",
+   "keyInsights": [
+    "把生成模型的输出定位成「先验」而不是「轨迹」，是从 HOI 生成跨到可执行操作的关键接口选择：生成管意图与多样性，物理可行性交给数字孪生里的练习去筛。",
+    "指令粒度下沉到单根手指与具体接触部位，意味着策略的输入空间从任务标签扩展到接触拓扑；这对数据采集与标注协议的要求远高于普通抓取数据集。",
+    "铰接物体被显式纳入接触目标，比只处理刚体位姿的抓取生成更接近真实家务与装配场景，但也让接触约束数量随关节数增长。",
+    "测试时适配而不逐实例重训，是这条路线能覆盖新物体配置的前提；但论文摘要未给出适配所需的仿真步数或真机时间预算，工程成本仍需看正文实验。",
+    "与 p440 DexLink 形成互补：一个从语言指令生成细粒度交互，一个从稀疏模板重定向出参考轨迹，两者都在回答「如何少依赖密集人类示教」，但一个偏生成、一个偏优化。"
+   ],
+   "impact": "为本轮深化的 /learn/robot-dynamics 接触力学基础提供了直接应用出口：摩擦锥与力闭合判据正是「物理可行的接触策略」在数字孪生里被筛选时所用的约束。与 p440 DexLink、n862 云深处绝影 X50 一并读，可以看到「意图—接触—整机负载」三个尺度的约束如何逐级收紧；os342 lerobot-xense 的多本体遥操作与触觉夹爪则是复现这类细粒度接触数据最现成的采集入口。",
+   "addedDate": "2026-11-28"
+  },
+  {
+   "id": "p439",
+   "title": "μMPC: Microsecond-Scale Nonlinear and World Model Control from Edge to GPU via Koopman-Linearized Precompilation",
+   "authors": "Devesh Nath, Glen Chou",
+   "venue": "arXiv 2611.34597",
+   "date": "2026-11-25",
+   "arxiv": "https://arxiv.org/abs/2611.34597",
+   "github": "",
+   "tags": [
+    "μMPC",
+    "Koopman 线性化",
+    "Koopman-Compiled QP",
+    "模型预测控制",
+    "微控制器部署",
+    "可微 QP"
+   ],
+   "category": "控制优化 / 实时求解",
+   "difficulty": "高级",
+   "tldr": "**问题**：非线性 MPC 与基于世界模型的视觉规划在在线求解时被提升维状态轨迹拖累，难以同时满足微控制器上的实时性与 GPU 上的批量规模。**做法**：μMPC 学习 Koopman 线性化动力学，并预计算有限时域的控制到输出映射，直接消掉提升维状态轨迹，得到只含 H·nᵤ 个决策变量的 Koopman-Compiled QP（KC-QP），变量数与提升维无关。固定的预计算原始算子使原始—对偶迭代只需矩阵向量乘与投影，目标与约束变化也无需重分解。这套结构还允许把可微 KC-QP 放进训练回路做控制感知的动力学学习，并用批量 DAgger 式数据聚合。**结果**：桌面 CPU 求解低至 23μs，168 MHz Crazyflie 微控制器上 24 ms；4096D 四足控制低于 5 ms，2048D 世界模型视觉规划 0.4 ms，200 架四旋翼的避碰规划在 GPU 上超过 30 Hz；对比方法有约束 MPC 最高快 108 倍、视觉运动规划最高快 1907 倍。",
+   "keyInsights": [
+    "消去提升维状态轨迹是整篇最关键的一步：Koopman 提升通常把维度放大到几千，但决策变量只与控制序列有关，预计算控制到输出映射后在线问题规模与提升维解耦。",
+    "预计算的固定原始算子让目标或约束变化时无需重做矩阵分解，这把「离线编译、在线只做迭代」的范式从编译型控制推进到可变任务的 MPC。",
+    "把可微 QP 放进训练回路，意味着动力学学习直接以控制性能为目标而不是以预测误差为目标；这与 /learn/control-theory 的 MPC 章节里预测矩阵推导是同一套对象，只是把求解器也变成可训练层。",
+    "23μs 与 1907 倍是不同基准、不同硬件下的最优值，不能相乘或当作端到端吞吐；论文给的是求解时间而非包含感知与通信的闭环延迟。",
+    "边缘侧（Crazyflie 24 ms）与 GPU 侧（200 架 30 Hz）同时报告，说明这套编译思路是跨算力档的结构性收益，而非只靠 GPU 批量的工程加速。"
+   ],
+   "impact": "与 /learn/control-theory 的 MPC 完整 QP 推导、/learn/calculus-optimization 的 KKT 条件两章形成理论到系统的闭环：前者解释为什么可以把状态消去，后者解释原始—对偶迭代在做什么。对 n862 绝影 X50 的「50kg 负载下 3m/s 持续奔跑」这类高带宽运控，以及 p441 Nav4Manip 的长程导航实时重规划，微秒级求解是把世界模型从离线想象推进到在线控制的前提。",
+   "addedDate": "2026-11-28"
+  },
+  {
+   "id": "p440",
+   "title": "DexLink: Synthesizing Dexterous Behaviors from Chained Hand-object Poses",
+   "authors": "Meenal Parakh, Deep Patel, Beining Han, Jia Deng",
+   "venue": "arXiv 2611.34936",
+   "date": "2026-11-25",
+   "arxiv": "https://arxiv.org/abs/2611.34936",
+   "github": "",
+   "tags": [
+    "DexLink",
+    "手物交互模板",
+    "位姿重定向",
+    "残差强化学习",
+    "无示教",
+    "零样本部署"
+   ],
+   "category": "灵巧操作 / 参考轨迹合成",
+   "difficulty": "高级",
+   "tldr": "**问题**：合成多样化的灵巧操作策略很难——仿真方法要么依赖难以规模化的人类示教，要么用通用奖励函数，对手物交互过程几乎无法指定。**做法**：DexLink 从稀疏、可复用的手物交互模板出发生成行为。给定任务关键路点，先用一个保持空间手物关系的优化把静态模板重定向到目标物体，再把重定向后的位姿链成近似参考轨迹，最后用残差强化学习在仿真里把这条参考细化成闭环策略。**结果**：覆盖单手、双手、铰接物体与动态任务，能对任务时序、抓取类型与高层执行方式做细粒度控制；交互模板可跨物体尺度、实例与类别迁移；不需要物体专属的人类示教也能达到密集参考跟踪方法的性能；纯仿真训练的策略零样本部署显示可行。",
+   "keyInsights": [
+    "把示教压缩成「稀疏交互模板＋关键路点」而不是整条轨迹，是降低数据成本的核心：模板只编码手与物体的相对几何，重定向时靠优化保持这层关系不变。",
+    "参考轨迹明确写成「近似」，再用残差 RL 细化成闭环策略，avoid 了把开环轨迹当真值跟踪导致的接触失稳——残差学习承担的是接触阶段的不确定性。",
+    "对任务时序与抓取类型可控，意味着模板本身成为一种可组合的行为编程语言；这比调奖励函数权重更接近工程师表达意图的方式。",
+    "跨尺度、跨实例、跨类别迁移与零样本真机部署同时报告，说明重定向优化保留的是关系不变量而非物体外观，但摘要未给出真机成功率，需看正文实验。",
+    "与 p438 FineDex 构成「优化派 vs 生成派」的一对：都绕开密集示教，但 DexLink 的可控性来自模板与约束，泛化则依赖重定向优化而非生成模型的先验。"
+   ],
+   "impact": "为本轮深化的 /learn/robot-dynamics 接触力学基础提供了「接触模板」这一工程抽象：模板重定向时保持的空间手物关系，本质上就是接触法向、摩擦锥与力闭合条件在物体坐标系里的表达。与 os342 lerobot-xense 的多本体遥操作数据采集结合，可以先用少量人手示范建模板，再按物体尺度批量重定向；与 p438 对照阅读能看清生成先验与优化先验各自的适用边界。",
+   "addedDate": "2026-11-28"
+  },
+  {
+   "id": "p441",
+   "title": "Nav4Manip: From Navigation to Dexterous Mobile Manipulation through Co-Evolution",
+   "authors": "Yusen Feng, Zixi Kang, Zhijun Yin, Changxiao Liu, Tianhong Gao, Jiazhao Zhang, Jiahang Liu, Libin Liu, Zhizheng Zhang, He Wang",
+   "venue": "arXiv 2611.34655",
+   "date": "2026-11-25",
+   "arxiv": "https://arxiv.org/abs/2611.34655",
+   "github": "",
+   "tags": [
+    "Nav4Manip",
+    "移动操作",
+    "导航-操作协同",
+    "RFT",
+    "RLAIF",
+    "Nav-N-Manip 基准"
+   ],
+   "category": "移动操作 / 长程任务",
+   "difficulty": "高级",
+   "tldr": "**问题**：长程灵巧移动操作有两个被低估的瓶颈：导航对下游操作太粗——后者需要精确的基座位置与接近朝向，而不是到达米级目标区域；导航与操作通常分开训练，缺少让两种能力互相反馈的闭环。**做法**：Nav4Manip 是双向耦合的协同演化系统，含 Nav4Manip-N（学习长程导航并用操作反馈精修策略）与 Nav4Manip-M（为下游灵巧操作训练世界动作模型）。N 分三阶段：多任务协同微调学导航行为与操作感知的可供性预测；拒绝采样微调剔除低质量策略生成路径并在保留轨迹上微调；基于 AI 反馈的强化学习用反事实偏好进一步改进导航决策。配套建立 Nav-N-Manip 基准与从基准 rollout 构造的 Nav4Manip-Pairs，提供大规模成对导航—操作轨迹与可供性监督。**结果**：在公开 VLN 基准与 Nav-N-Manip 上达到 SOTA，真机评测完成多种灵巧移动操作任务。",
+   "keyInsights": [
+    "把「导航到米级区域」重新定义为「把基座放到可操作的位姿」，是整篇最有价值的问题重构：下游操作的可达性成了导航的奖励信号，而不是导航结束后才检查的约束。",
+    "拒绝采样微调与反事实偏好两步是递进的：前者用轨迹质量筛掉坏路径，后者在同一状态下构造偏好对，避免把「起点更好」误学成「决策更好」——与 p437 的 CPD 是同一条方法论。",
+    "Nav4Manip-Pairs 把导航轨迹与操作结果成对保存，使得「什么样的基座位姿导致什么样的操作成败」成为可监督的数据，这比孤立收集导航数据或操作数据更贴近长程任务。",
+    "同时报告公开 VLN 基准与自建 Nav-N-Manip，能区分通用导航能力与面向操作的导航能力；但自建基准的规模、场景多样性与真机任务数需看正文，摘要未给具体数值。",
+    "与 n866 的轮式人形路线讨论呼应：轮式底盘在平整工厂里成本更低，但对接近朝向的精度要求反而更高，因为少了双足可以原地微调自由度的余量。"
+   ],
+   "impact": "直接对应本轮深化的 /learn/mobile-robot-navigation SLAM 建图章节：位姿图优化与回环一致性决定基座位姿估计误差，这个误差正是操作反馈信号能否归因于导航决策的前提。与 p439 μMPC 的微秒级求解、p437 的协同演化一起读，可以拼出长程移动操作系统的三层结构——地图与定位、实时控制、能力协同演化；os341 inspect-robots 提供的跨本体评测契约则是把这套系统在仿真与真机之间对齐的工程入口。",
+   "addedDate": "2026-11-28"
+  },
   {
    "id": "p432",
    "title": "Cairn: Object-Centric 3D Trajectory Priors for Steering Frozen VLAs",
@@ -11721,5 +11866,5 @@
    "impact": "Legged Gym 成为足式机器人强化学习训练的事实标准，宇树、智元等国内企业均基于此框架"
   }
  ],
- "totalItems": 410
+ "totalItems": 415
 }

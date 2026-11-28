@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>os340 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">os340 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="os340">os340</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href=""></a>  </p>
+<p><strong>Stars</strong>:  · <strong>License</strong>:  · <strong>收录日期</strong>:   </p>
+<p><strong>组织</strong>:   </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-28</p>
+</blockquote>
+<hr />
+<p><strong>Hebbian-Robotics/rua</strong> 是 Hebbian Robotics 在 2026-11-14 建仓、11-27 仍在更新的 Robot-Use Agent（RUA）运行时，Rust、MIT 许可，约 123 star（2026-11-28 核验）。RUA 范式把「像用电脑一样用机器人」具体化：模型读取多路相机与本体状态，输出下一步动作或工具调用，下层控制器负责执行，失败轨迹回灌给智能体做修复与经验沉淀。仓库把这个循环做成可运行的系统而非论文伪代码，并用 Rust 承担长时运行下的内存安全、确定性调度与低延迟工具调用。它对应本轮 p437 RoboEvo² 里 Harness 那一侧：反复搜索修复、累积技能与经验记忆的工程载体。</p>
+<hr />
+<p>按 RUA 范式可归纳为四层（结构性归纳，具体以仓库文档为准）： 1. <strong>观测层</strong>：多路相机、本体状态与外部事件统一成模型可读的观测对象，处理不同采样率的时间对齐。 2. <strong>决策层</strong>：模型以观测为条件输出动作或工具调用；Code as Policy 一类的分流决策也落在这一层。 3. <strong>执行层</strong>：工具调用经明确接口交给下层控制器与运动规划，运行时只负责调度与超时，不越权改写控制律。 4. <strong>记忆层</strong>：失败与验证过的修复被记录为可复用技能、路由与经验，供后续回合检索。 用 Rust 写这一层的直接收益是：智能体循环可能连续跑几小时甚至几天，Python 侧的引用计数、GC 暂停与异常栈膨胀会成为长稳运行的隐性故障源；而 Harness 这类「不更新权重只更新组织」的系统恰恰最怕运行时本身不可靠。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/Hebbian-Robotics/rua">rua 仓库</a></strong> — MIT，Rust 实现的 Robot-Use Agent 运行时与最小示例。 - <strong><a href="https://github.com/Hebbian-Robotics/rua">仓库 README</a></strong> — 构建方式、观测接口与工具调用约定。 - <strong><a href="https://kaiknower.github.io/RoboEvo2/">RoboEvo2 项目页</a></strong> — 理解 Harness—Policy 协同演化需要哪些失败信号与记忆结构。 - <strong><a href="https://damodev.csdn.net/6b09ac9140858c2d881e75cd.html">PEAR：Training Reasoning Models in Simulation to Natively Use Real Robots</a></strong> — 中文解读，说明无 Harness 的 RUA 路线与工程代价。</li>
+</ul>
+<hr />
+<h3 id="git-clone-httpsgithubcomhebbian-roboticsruagit-cd-rua-readme-rust-1-2-3-p437-4-os341-inspect-robots-5-agent">最小上手路径 <code>git clone https://github.com/Hebbian-Robotics/rua.git cd rua # 按仓库 README 构建 Rust 工程，先跑通最小的观测—决策—执行回路</code> 1. 先接一个仿真本体与单路相机，确认观测对象的时间戳、维度与单位与文档一致。 2. 只开放一个工具（例如移动到指定位姿），跑通调用、超时、失败回传三条路径，不要一上来就接全套技能库。 3. 记录失败轨迹的结构：初始状态、调用序列、工具返回、验证结果，缺任何一项都无法构造 p437 要求的同初始状态偏好对。 4. 把本轮 os341 inspect-robots 的评测契约接进来，让「修复是否真的有效」由统一评测层判定，而不是由智能体自己说了算。 5. 配合站内学习中心的具身 Agent 章节做一次对照实验：关闭记忆层与开启记忆层，比较同类失败重复出现的次数与智能体调用开销。</h3>
+<hr />
+<p>| 维度 | 情况 | | --- | --- | | Star | 约 123（2026-11-28 核验） | | 主语言 / 许可 | Rust / MIT | | 建仓 / 最后更新 | 2026-11-14 / 2026-11-27 | | 定位 | 智能体运行时，不是策略模型 | | 覆盖环节 | 观测接入 / 决策与工具调用 / 执行调度 / 经验记忆 | | 适用边界 | 仓库未提供统一的成功率基准，性能取决于所接模型与本体 |</p>
+<hr />
+<p>| 对照对象 | 差异 | | --- | --- | | 本轮 os341 inspect-robots | os341 管评测口径，os340 管运行时循环；两者接起来才构成可复现的 Harness 实验 | | 本轮 p437 RoboEvo² | 论文给出 Harness—Policy 协同演化的方法与结果，rua 提供 Harness 侧可运行的实现骨架 | | n861 商汤 RoboRSI-27B | 后者是 27B 决策模型与代码分流策略，rua 是与模型无关的运行时，两者层次不同 | | 站内已收录的 Agent 框架 | 多数以 Python 为主并面向通用工具调用，rua 侧重机器人本体的长时运行与低延迟调度 |</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

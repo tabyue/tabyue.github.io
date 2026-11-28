@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>os342 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">os342 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="os342">os342</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href=""></a>  </p>
+<p><strong>Stars</strong>:  · <strong>License</strong>:  · <strong>收录日期</strong>:   </p>
+<p><strong>组织</strong>:   </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-28</p>
+</blockquote>
+<hr />
+<p><strong>XenseRobotics-AI/lerobot-xense</strong> 是 LeRobot v5.1 的多本体分支，Apache-2.0、Python，2025-09 建仓、2026-11-25 最后更新，约 22 star（2026-11-28 核验）。它在上游 LeRobot 基础上新增 Flexiv Rizon4、Elite CS66、ARX5 等机械臂与触觉夹爪，覆盖单臂与双臂构型，并提供 VR、SpaceMouse 与游戏手柄三种遥操作入口。价值不在多一个本体驱动，而在把「多本体 + 触觉」收进同一份数据契约：采集时观测维度、动作归一化与时间对齐一致，训练时才能把不同本体、带不带触觉的数据放在同一张表里做对照。</p>
+<hr />
+<p>按分支定位可归纳为四块（结构性归纳，具体以仓库文档为准）： 1. <strong>上游核心</strong>：沿用 LeRobot 的数据集格式、策略接口与训练脚本，保证与生态里已有的工具链兼容。 2. <strong>本体驱动层</strong>：为新增机械臂与触觉夹爪实现统一的读写接口，屏蔽通信协议与采样率差异。 3. <strong>遥操作层</strong>：VR、SpaceMouse、游戏手柄三类输入映射成同一套动作指令，并统一记录操作者时间戳。 4. <strong>数据层</strong>：把视觉、本体状态、触觉与动作写入同一份数据集，处理多路异步采样的时间对齐。 时间对齐是这里最容易被低估的一环：触觉采样率常高于图像一个数量级，若只按帧号粗略配对，训练出的策略会把相位差当成因果，在真机上表现为接触瞬间动作提前或滞后。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/XenseRobotics-AI/lerobot-xense">lerobot-xense 仓库</a></strong> — Apache-2.0，LeRobot v5.1 多本体与触觉分支。 - <strong><a href="https://github.com/XenseRobotics-AI/lerobot-xense">仓库 README</a></strong> — 支持本体清单、遥操作配置与采集示例。 - <strong><a href="https://github.com/huggingface/lerobot">LeRobot 项目</a></strong> — 上游数据集格式、动作块表示与训练脚本。 - <strong><a href="https://finedex.github.io/">FineDex 项目页</a></strong> — 理解细粒度手指意图需要哪些接触标注字段。</li>
+</ul>
+<hr />
+<h3 id="git-clone-httpsgithubcomxenserobotics-ailerobot-xensegit-cd-lerobot-xense-readme-lerobot-1-2-3-4-os341-5-p438-finedexp440-dexlink">最小上手路径 <code>git clone https://github.com/XenseRobotics-AI/lerobot-xense.git cd lerobot-xense # 按 README 安装 LeRobot 依赖，先接一个已支持本体做一次短采集</code> 1. 先只用一个本体、一路相机、无触觉跑通采集—保存—回放，确认数据能读回且时间戳连续。 2. 加触觉通道，单独打印图像帧与触觉帧的时间差分布，确认对齐策略后再开始正式采集。 3. 换第二个本体重复同一任务，核对观测维度与动作归一化范围是否一致，这是跨本体数据能否合训的前提。 4. 做三条对照：纯视觉、视觉加触觉、跨本体合训，用 os341 的评测契约统一判据。 5. 配合本轮 p438 FineDex、p440 DexLink 的细粒度接触意图，尝试在同一数据集上标注接触部位与手指用法字段。</h3>
+<hr />
+<p>| 维度 | 情况 | | --- | --- | | Star | 约 22（2026-11-28 核验） | | 主语言 / 许可 | Python / Apache-2.0 | | 建仓 / 最后更新 | 2025-09-05 / 2026-11-25 | | 上游 | LeRobot v5.1 | | 覆盖环节 | 多本体驱动 / 遥操作 / 触觉接入 / 数据契约 | | 适用边界 | 具体采集质量取决于本体标定与传感器同步，仓库不承诺上限 |</p>
+<hr />
+<p>| 对照对象 | 差异 | | --- | --- | | 上游 LeRobot | 上游偏通用格式与策略生态，本分支补多本体与触觉夹爪的实机驱动 | | 本轮 os341 inspect-robots | os342 负责产出可训练数据，os341 负责评测训练出来的策略 | | 本轮 p438 FineDex / p440 DexLink | 两篇论文要求细粒度接触标注与手物关系，本分支是采集这类数据最现成的入口 | | n867 物理 AI 数据需求 | 需求从 100 万小时抬到 1000 万小时，采集链能否跨本体复用比单点采集速度更关键 |</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>

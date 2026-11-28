@@ -1,5 +1,5 @@
 {
- "lastUpdated": "2026-11-27T08:44",
+ "lastUpdated": "2026-11-28T08:40",
  "categories": [
   {
    "id": "all",
@@ -48,6 +48,122 @@
   }
  ],
  "projects": [
+  {
+   "id": "os340",
+   "name": "rua：用 Rust 写成的 Robot-Use Agent 运行时，把「模型直接用机器人」做成工程实现",
+   "github": "https://github.com/Hebbian-Robotics/rua",
+   "organization": "Hebbian Robotics",
+   "org": "Hebbian-Robotics",
+   "category": "ai-agent-framework",
+   "description": "MIT、Rust，2026-11-14 建仓、11-27 最后更新，约 123 star（2026-11-28 核验）。仓库自述为 Hebbian Robot-Use Agents（RUA）：把「像用电脑一样用机器人」的智能体范式落成可运行的运行时，而不是只停在论文里的 Agent 循环伪代码。RUA 的核心接口是让模型读取多路相机与本体状态、输出下一步动作或工具调用，再由下层控制器执行；失败由运行时记录并回灌给智能体用于修复与经验沉淀。选 Rust 而不是 Python 做这一层，指向的是长时运行下的内存安全、确定性调度与低延迟工具调用——这正是 p437 RoboEvo² 里 Harness 反复搜索修复、经验记忆持续累积时最容易出问题的部分。适合作为复现 Harness—Policy 协同演化或对照 n861 商汤 Code as Policy 分流的最小骨架。",
+   "language": "Rust",
+   "license": "MIT",
+   "stars": 123,
+   "features": [
+    "Robot-Use Agent 运行时",
+    "Rust 实现，面向长时稳定运行",
+    "多路观测与本体状态统一接入",
+    "工具调用与下层控制器解耦",
+    "失败轨迹记录与经验回灌",
+    "MIT 许可可商用"
+   ],
+   "tags": [
+    "rua",
+    "Robot-Use Agent",
+    "Rust",
+    "Harness",
+    "智能体运行时",
+    "MIT"
+   ],
+   "addedDate": "2026-11-28"
+  },
+  {
+   "id": "os341",
+   "name": "inspect-robots：把任意 LLM/VLA 接到任意机械臂或人形上，用同一套契约跑仿真与真机评测",
+   "github": "https://github.com/robodeltas/inspect-robots",
+   "organization": "RoboDeltas",
+   "org": "robodeltas",
+   "category": "framework",
+   "description": "MIT、Python，2026-11-26 建仓并更新，约 51 star（2026-11-28 核验）。仓库定位是物理 AI 的开源评测层：让任意 LLM 或 VLA 模型、任意机械臂或人形本体、任意仿真或真机基准按同一套接口组合运行。它解决的是具身评测里最普遍的可比性问题——换一个模型要重写一遍数据加载与回合统计，换一个本体又要重写一遍，最后报告的成功率差异里混入大量适配代码差异。把评测契约独立出来后，「同模型跨本体」「同本体跨模型」两类对照实验才能只改一个变量。配套还有 stationerybench 等双臂桌面任务集。对站内 /learn/platform-engineering 的策略评测基础设施章与 p437 RoboEvo² 的递归演化实验，这套契约是控制混淆变量最直接的工程入口。",
+   "language": "Python",
+   "license": "MIT",
+   "stars": 51,
+   "features": [
+    "模型—本体—基准三层解耦",
+    "统一评测回合与成功率统计",
+    "仿真与真机同一套接口",
+    "支持 LLM 与 VLA 两类策略",
+    "配套双臂桌面任务集",
+    "MIT 许可"
+   ],
+   "tags": [
+    "inspect-robots",
+    "评测契约",
+    "跨本体",
+    "VLA 评测",
+    "基准",
+    "MIT"
+   ],
+   "addedDate": "2026-11-28"
+  },
+  {
+   "id": "os342",
+   "name": "lerobot-xense：LeRobot v5.1 的多本体分支，把 Flexiv、ARX5 与触觉夹爪接进同一套遥操作采集链",
+   "github": "https://github.com/XenseRobotics-AI/lerobot-xense",
+   "organization": "Xense Robotics AI",
+   "org": "XenseRobotics-AI",
+   "category": "data-tools",
+   "description": "Apache-2.0、Python，2025-09 建仓、2026-11-25 最后更新，约 22 star（2026-11-28 核验）。这是 LeRobot v5.1 的分支，新增 Flexiv Rizon4、Elite CS66、ARX5 等机械臂以及触觉夹爪的支持，覆盖单臂与双臂构型，并提供 VR、SpaceMouse 与游戏手柄三种遥操作入口。价值不在又加了一个本体驱动，而在于把「多本体 + 触觉」这一组合收进同一份数据契约：采集时观测维度、动作归一化与时间对齐方式一致，训练时才能把不同本体、是否带触觉的数据放在一起做对照。与 p438 FineDex 的手指级接触意图、p440 DexLink 的手物交互模板配合，它是搭建细粒度接触数据集最现成的起点；与 n867 提到的物理 AI 数据需求从 100 万小时抬到 1000 万小时对照着读，也能看出为什么采集链的可复用性比单点采集速度更关键。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 22,
+   "features": [
+    "LeRobot v5.1 分支",
+    "Flexiv Rizon4 / Elite CS66 / ARX5 多本体",
+    "单臂与双臂构型",
+    "触觉夹爪接入",
+    "VR / SpaceMouse / 游戏手柄遥操作",
+    "统一示教数据契约"
+   ],
+   "tags": [
+    "lerobot-xense",
+    "LeRobot",
+    "遥操作",
+    "触觉夹爪",
+    "多本体",
+    "数据采集"
+   ],
+   "addedDate": "2026-11-28"
+  },
+  {
+   "id": "os343",
+   "name": "tron2_rl_lab：面向 LimX TRON2A 的 Isaac Lab + PPO 全身 RL 训练管线，三种底盘构型共用一套流程",
+   "github": "https://github.com/limxdynamics/tron2_rl_lab",
+   "organization": "LimX Dynamics",
+   "org": "limxdynamics",
+   "category": "simulation",
+   "description": "Apache-2.0、Python，2026-06 建仓、11-27 最后更新，约 15 star（2026-11-28 核验）。这是 LimX Dynamics 面向 TRON2A 人形机器人的 RL 训练管线：Isaac Lab 环境 + rsl_rl 的 PPO，覆盖 sole-foot、wheel-foot 与 whole-body dual-arm DASF 三类构型。同一仓库还配套有 URDF/MuJoCo/USD 模型、MuJoCo 仿真桥接、ONNX 部署与操作控制器等子项目，构成从描述文件、仿真训练到真机部署的完整链条。它的教学价值在于把「同一套算法换底盘构型」这个变量控制得很干净：对照 n866 讨论的轮式与双足路线分化，可以直接看观测空间、奖励项与部署接口在两种构型下究竟差多少。与 p439 μMPC 的微秒级求解、p441 Nav4Manip 的导航—操作协同相比，这类管线更接近工程基线而非方法创新，适合作为 /learn/reinforcement-learning 与 /learn/physics-simulation 课程实验的落点。",
+   "language": "Python",
+   "license": "Apache-2.0",
+   "stars": 15,
+   "features": [
+    "Isaac Lab + rsl_rl PPO",
+    "sole-foot / wheel-foot / 双臂 DASF 三构型",
+    "构型间共用训练流程",
+    "配套 URDF / MJCF / USD 模型",
+    "ONNX 推理与真机部署链路",
+    "Apache-2.0 可商用"
+   ],
+   "tags": [
+    "tron2_rl_lab",
+    "LimX Dynamics",
+    "Isaac Lab",
+    "PPO",
+    "人形 RL",
+    "sim-to-real"
+   ],
+   "addedDate": "2026-11-28"
+  },
   {
    "id": "os336",
    "name": "RoboManipBaselines：把多种模仿学习方法与基准环境收进同一套可比对框架",
@@ -8682,5 +8798,5 @@
    "category": "framework"
   }
  ],
- "totalItems": 326
+ "totalItems": 330
 }

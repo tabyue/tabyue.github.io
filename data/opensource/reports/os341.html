@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>os341 — 深度分析报告 | 具身智能知识门户</title>
+<style>
+:root {
+    --bg: #0a0a0c; --bg2: #16161a; --bg3: #1f1f24; --bg4: #2c2c33;
+    --t1: #f0f0f5; --t2: #b8b8c8; --t3: #7a7a8c;
+    --p: #3aa3ff; --gn: #32d974; --pk: #ff6b9d;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg); color: var(--t1);
+    line-height: 1.7; padding: 40px 20px;
+    max-width: 900px; margin: 0 auto;
+}
+h1 { font-size: 1.8rem; color: var(--p); margin: 32px 0 12px; }
+h2 { font-size: 1.4rem; color: var(--t1); margin: 28px 0 12px; border-bottom: 1px solid var(--bg4); padding-bottom: 6px; }
+h3 { font-size: 1.15rem; color: var(--t2); margin: 20px 0 8px; }
+h4 { font-size: 1rem; color: var(--t2); margin: 16px 0 6px; }
+p { margin: 8px 0; }
+a { color: var(--p); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--p); font-weight: 600; }
+code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.85em; background: var(--bg3);
+    padding: 2px 6px; border-radius: 3px; color: #e0e0e0;
+}
+pre {
+    background: #1e1e2e; color: #cdd6f4;
+    padding: 16px 20px; border-radius: 8px;
+    overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    margin: 12px 0; border: 1px solid var(--bg4);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.88rem; }
+th { background: var(--bg3); color: var(--p); padding: 10px 12px; text-align: left; font-weight: 600; }
+td { border: 1px solid var(--bg4); padding: 8px 12px; }
+tr:nth-child(even) { background: var(--bg2); }
+blockquote {
+    border-left: 3px solid var(--p); padding: 8px 16px;
+    color: var(--t2); margin: 12px 0; background: var(--bg2); border-radius: 0 6px 6px 0;
+}
+hr { border: none; border-top: 1px solid var(--bg4); margin: 24px 0; }
+ul, ol { padding-left: 24px; margin: 8px 0; }
+li { margin: 4px 0; }
+
+/* 顶部工具栏 */
+.toolbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg2); border-bottom: 1px solid var(--bg4);
+    padding: 10px 20px; display: flex; align-items: center; gap: 12px;
+}
+.toolbar a, .toolbar button {
+    padding: 6px 14px; border-radius: 6px; font-size: 0.85rem;
+    cursor: pointer; text-decoration: none; border: none;
+}
+.toolbar .btn-back { background: var(--bg3); color: var(--t2); }
+.toolbar .btn-back:hover { background: var(--bg4); }
+.toolbar .btn-print { background: var(--p); color: #fff; }
+.toolbar .btn-print:hover { opacity: 0.9; }
+.toolbar .title { flex: 1; font-size: 0.9rem; color: var(--t3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+body { padding-top: 60px; }
+
+/* 打印样式 */
+@media print {
+    :root { --bg: #fff; --bg2: #f8f9fa; --bg3: #eee; --bg4: #ddd; --t1: #1a1a1a; --t2: #333; --t3: #666; --p: #0056b3; }
+    body { background: #fff; color: #1a1a1a; padding: 0; max-width: 100%; font-size: 10pt; }
+    .toolbar { display: none; }
+    pre { background: #f4f4f4; color: #333; border: 1px solid #ddd; font-size: 8pt; }
+    code { background: #f0f0f0; color: #333; }
+    table { font-size: 9pt; }
+    th { background: #0056b3; color: #fff; }
+    td { border-color: #ccc; }
+    tr:nth-child(even) { background: #f8f9fa; }
+    h1 { color: #0056b3; }
+    strong { color: #0056b3; }
+    a { color: #0056b3; }
+    blockquote { background: #f8f9fa; border-left-color: #0056b3; }
+    @page { size: A4; margin: 1.5cm; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <a href="/" class="btn-back">← 返回门户</a>
+    <span class="title">os341 — 深度分析报告</span>
+    <button class="btn-print" onclick="window.print()">🖨️ 打印 / 保存 PDF</button>
+</div>
+<h1 id="os341">os341</h1>
+<h2 id="_1">深度分析报告</h2>
+<blockquote>
+<p><strong>GitHub</strong>: <a href=""></a>  </p>
+<p><strong>Stars</strong>:  · <strong>License</strong>:  · <strong>收录日期</strong>:   </p>
+<p><strong>组织</strong>:   </p>
+<p><strong>报告生成</strong>: 具身智能知识门户 www.tabyue.com · 2026-11-28</p>
+</blockquote>
+<hr />
+<p><strong>robodeltas/inspect-robots</strong> 是 2026-11-26 建仓的开源物理 AI 评测层，Python、MIT 许可，约 51 star（2026-11-28 核验）。仓库自述一句话说清定位：让任意 LLM 或 VLA、在任意机械臂或人形上、对任意仿真或真机基准跑评测。它把模型、本体、基准三者之间的适配代码抽成统一契约，使「换模型」「换本体」「换基准」三类对照实验各自只改一个变量。这对本轮 p437 RoboEvo² 的递归演化尤其重要：Harness 每次修复是否真的带来提升，必须由与策略解耦的评测层判定，否则智能体既当运动员又当裁判。</p>
+<hr />
+<p>按定位可归纳为四层（结构性归纳，具体以仓库文档为准）： 1. <strong>模型适配层</strong>：把 LLM / VLA 包装成统一的预测接口，规定输入观测结构、输出动作格式与调用预算。 2. <strong>本体适配层</strong>：把机械臂或人形包装成统一的执行接口，规定状态回传、动作空间与复位流程。 3. <strong>基准层</strong>：仿真或真机任务集提供回合初始化、成功判据与终止条件，判据不随模型变化。 4. <strong>统计层</strong>：固定种子与回合数，输出成功率、置信区间与失败类型分布，避免只报一个平均数。 配套子项目 stationerybench 提供五项双臂桌面文具操作任务，可作为最小可用任务集。这一分层与站内学习中心「策略评测基础设施」一章讲的 O(N+M) 适配层是同一件事：N 个模型、M 个本体，只需要 N+M 个适配器而不是 N×M 套脚本。</p>
+<hr />
+<ul>
+<li><strong><a href="https://github.com/robodeltas/inspect-robots">inspect-robots 仓库</a></strong> — MIT，跨模型跨本体的物理 AI 评测契约。 - <strong><a href="https://github.com/robodeltas/inspect-robots">仓库 README</a></strong> — 适配器接口、任务配置与最小评测示例。 - <strong><a href="https://github.com/robodeltas/stationerybench">stationerybench</a></strong> — 五项双臂桌面文具操作任务，最小可用任务集。 - <strong><a href="https://github.com/huggingface/lerobot">LeRobot 项目</a></strong> — 对照理解示教数据格式与评测回合的统计口径。</li>
+</ul>
+<hr />
+<h3 id="git-clone-httpsgithubcomrobodeltasinspect-robotsgit-cd-inspect-robots-readme-1-2-3-5-4-p437-5-wilson">最小上手路径 <code>git clone https://github.com/robodeltas/inspect-robots.git cd inspect-robots # 按 README 安装依赖，先用一个模型 + 一个仿真本体跑通一个任务</code> 1. 先固定随机种子、回合数与成功判据，跑一条基线并把结果表存下来，作为后续所有对照的锚。 2. 只换模型不改本体与任务，确认差异来自策略；再只换本体，确认差异来自本体能力边界。 3. 检查统计层是否给出区间而不只是点估计——回合数少时两点成功率差 5 个百分点通常不显著。 4. 把 p437 的「独立执行 / 混合执行」两套口径实现成两个评测配置，观察能力究竟沉淀在策略还是组织层。 5. 配合站内学习中心的概率统计章节，用 Wilson 区间或双比例检验判断一次改动是否构成真实回归。</h3>
+<hr />
+<p>| 维度 | 情况 | | --- | --- | | Star | 约 51（2026-11-28 核验） | | 主语言 / 许可 | Python / MIT | | 建仓 / 最后更新 | 2026-11-26 / 2026-11-26 | | 定位 | 评测契约与统计层，不是策略或本体 | | 覆盖环节 | 模型适配 / 本体适配 / 基准 / 统计 | | 适用边界 | 仓库不承诺性能上限，可信度取决于任务集与回合数设置 |</p>
+<hr />
+<p>| 对照对象 | 差异 | | --- | --- | | 本轮 os340 rua | rua 负责智能体运行时循环，inspect-robots 负责判定结果；接起来才闭环 | | 本轮 os336 RoboManipBaselines | 后者面向模仿学习基线的训练与评测一体化，inspect-robots 只做跨模型跨本体的评测契约 | | 本轮 p437 RoboEvo² | 论文关注能力如何递归演化，评测层负责给出不随演化漂移的判据 | | 站内已收录的评测基准 | 多数绑定单一仿真器或任务集，inspect-robots 强调基准可替换 |</p>
+<hr />
+<footer style="margin-top:40px;padding:20px 0;border-top:1px solid var(--bg4);text-align:center;font-size:0.8rem;color:var(--t3)">
+    具身智能知识门户 · www.tabyue.com · 本报告由 AI 自动生成，仅供学习研究参考
+</footer>
+</body>
+</html>
